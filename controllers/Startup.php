@@ -2,9 +2,9 @@
 namespace micro\controllers;
 use micro\orm\DAO;
 use micro\utils\StrUtils;
+use micro\log\Logger;
 use micro\controllers\Autoloader;
 use micro\views\engine\TemplateEngine;
-use micro\log\Logger;
 
 class Startup{
 	private $urlParts;
@@ -19,8 +19,9 @@ class Startup{
 					$engineOptions=$config["templateEngineOptions"];
 				}
 				$engine=new $config["templateEngine"]($engineOptions);
-				if ($engine instanceof TemplateEngine)
+				if ($engine instanceof TemplateEngine){
 					$GLOBALS["config"]["templateEngine"]=$engine;
+				}
 			}
 		} catch (\Exception $e) {
 			echo $e->getTraceAsString();
@@ -65,6 +66,16 @@ class Startup{
 	public static function runAction($u,$initialise=true,$finalize=true){
 		$urlSize=sizeof($u);
 		$obj=new $u[0]();
+		$config=$GLOBALS["config"];
+		//Dependency injection
+		if(\array_key_exists("di", $config)){
+			$di=$config["di"];
+			if(\is_array($di)){
+				foreach ($di as $k=>$v){
+					$obj->$k=$v();
+				}
+			}
+		}
 		if($initialise)
 			$obj->initialize();
 		try{

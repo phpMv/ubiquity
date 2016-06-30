@@ -1,8 +1,7 @@
 <?php
 namespace micro\controllers;
 
-use micro\views\engine\TemplateEngine;
-use micro\utils\StrUtils;
+use micro\views\View;
 /**
  * Classe de base des contrôleurs
  * @author jc
@@ -47,33 +46,9 @@ abstract class Controller {
 	 * @return string
 	 */
 	public function loadView($viewName,$pData="",$asString=false){
-		$config=$GLOBALS["config"];
-		$fileName=ROOT.DS."views/".$viewName;
-		$ext=pathinfo($fileName,PATHINFO_EXTENSION);
-		if($ext==null)
-			$viewName=$viewName.".php";
-		$fileName=ROOT.DS."views/".$viewName;
-		if(file_exists($fileName)){
-			$data=$pData;
-			if(!StrUtils::endswith($fileName, ".php") && @$config["templateEngine"] instanceof TemplateEngine){
-				return $config["templateEngine"]->render($viewName, $pData, $asString);
-			}
-
-			if(is_array($pData)){
-				extract($pData);
-			}
-			if($asString)
-					return $this->includeFileAsString($fileName);
-				else
-					include($fileName);
-		}else{
-			throw new \Exception("Vue inexistante : ".$viewName);
-		}
-	}
-	private function includeFileAsString($file){
-		ob_start();
-		include $file;
-		return ob_get_clean();
+		$view=new View();
+		$view->setVars($pData);
+		return $view->render($viewName,$asString);
 	}
 
 	/**
