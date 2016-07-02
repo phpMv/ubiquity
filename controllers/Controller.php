@@ -5,7 +5,7 @@ use micro\views\View;
 /**
  * Classe de base des contrôleurs
  * @author jc
- * @version 1.0.0.1
+ * @version 1.0.2
  * @package controllers
  */
 abstract class Controller {
@@ -79,21 +79,12 @@ abstract class Controller {
 	 * @throws Exception
 	 */
 	public function forward($controller,$action="index",$params=array(),$initialize=false,$finalize=false){
-		try{
-			$obj=new $controller();
-			if($initialize===true){
-				$obj->initialize();
-			}
-			if(method_exists($obj, $action)){
-				$obj->$action($params);
-			}else{
-				throw new \Exception("La méthode `{$action}` n'existe pas sur le contrôleur `{$controller}`");
-			}
-			if($finalize===true){
-				$obj->finalize();
-			}
-		}catch(\Exception $e){
-			echo $e->getMessage();
+		$u=array($controller,$action);
+		if(\is_array($params)){
+			$u=\array_merge($u,$params);
+		}else{
+			$u=\array_merge($u,[$params]);
 		}
+		return Startup::runAction($u,$initialize,$finalize);
 	}
 }

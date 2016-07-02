@@ -68,4 +68,12 @@ class RequestUtils{
 	public static function post($key, $default=NULL) {
 		return array_key_exists($key, $_POST) ? $_POST[$key] : $default;
 	}
+
+	public static function getUrl($url){
+		$config=$GLOBALS["config"];
+		if(StrUtils::startswith($url, "/")==false){
+			$url="/".$url;
+		}
+		return $config["siteUrl"].$url;
+	}
 }
