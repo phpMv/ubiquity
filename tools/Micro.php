@@ -2,28 +2,21 @@
 class Micro {
 
 	public static function downloadZip($url,$zipFile="tmp/tmp.zip"){
-		$zipResource = fopen($zipFile, "w");
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_FAILONERROR, true);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER,true);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_FILE, $zipResource);
-		$page = curl_exec($ch);
-		if(!$page) {
-			echo "Error :- ".curl_error($ch);
-		}
-		curl_close($ch);
+		$f = file_put_contents($zipFile, fopen($url, 'r'), LOCK_EX);
+	if(FALSE === $f)
+		die("Couldn't write to file.");
+	else{
+		echo $f." téléchargés.\n";
+	}
 	}
 
-	public static function unzip($zipFile,$extractPath="./"){
+	public static function unzip($zipFile,$extractPath="."){
 		$zip = new \ZipArchive();
-		if($zip->open($zipFile) != "true"){
+		if (! $zip) {
+			echo "<br>Could not make ZipArchive object.";
+			exit;
+		}
+		if($zip->open($zipFile) !== TRUE){
 			echo "Error :- Unable to open the Zip File";
 		}
 		/* Extract Zip File */
@@ -57,7 +50,7 @@ class Micro {
 			}
 
 			// Deep copy directories
-			xcopy("$source/$entry", "$dest/$entry", $permissions);
+			self::xcopy("$source/$entry", "$dest/$entry", $permissions);
 		}
 
 		// Clean up
@@ -65,14 +58,57 @@ class Micro {
 		return true;
 	}
 
+	public static function openFile($filename){
+		if(file_exists($filename)){
+			return file_get_contents($filename);
+		}
+		return false;
+	}
+
+	public static function writeFile($filename,$data){
+			return file_put_contents($filename,$data);
+	}
+
+	public static function replaceAll($array,$subject){
+		return str_replace(array_keys($array), array_values($array), $subject);
+	}
+
+	public static function openReplaceWrite($source,$destination,$keyAndValues){
+		$str=self::openFile($source);
+		$str=self::replaceAll($keyAndValues,$str);
+		return self::writeFile($destination,$str);
+	}
+
+	private static function getOption($option,$default=NULL){
+		$options=getopt("b::",array("dbName::"));
+		if(array_key_exists($option, $options))
+			$option=$options["dbName"];
+		else if(isset($default)===true){
+			$option=$default;
+		}else
+			$option="";
+		return $option;
+	}
+
 	public static function create($projectName){
 		if(mkdir($projectName)==true){
 			chdir($projectName);
 			echo "Downloading micro.git from https://github.com/phpMv/...\n";
 			mkdir("tmp");
-			self::downloadZip("https://github.com/phpMv/micro.git","tmp/tmp.zip");
-			echo "Extraction des fichiers...\n";
-			self::unzip("tmp/tmp.zip");
+			self::downloadZip("https://github.com/phpMv/micro/archive/master.zip","tmp/tmp.zip");
+			echo "Files extraction...\n";
+			self::unzip("tmp/tmp.zip","tmp/");
+			mkdir("app");
+			echo "Files copy...\n";
+			self::xcopy("tmp/micro-master/micro/","app/micro");
+			echo "Config files creation...";
+			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
+			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", array(
+					"%documentRoot%"=>"","%siteUrl%"=>"http://127.0.0.1/".$projectName."/",
+					"%dbName%"=>self::getOption("dbName",$projectName),
+			));
+			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
+			echo "project {$projectName} successfully created.\n";
 		}
 	}
 }
