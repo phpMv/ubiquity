@@ -6,7 +6,7 @@ class Micro {
 	if(FALSE === $f)
 		die("Couldn't write to file.");
 	else{
-		echo $f." téléchargés.\n";
+		echo $f." downloaded.\n";
 	}
 	}
 
@@ -80,9 +80,9 @@ class Micro {
 	}
 
 	private static function getOption($option,$default=NULL){
-		$options=getopt("b::",array("dbName::"));
+		$options=self::parseArguments();
 		if(array_key_exists($option, $options))
-			$option=$options["dbName"];
+			$option=$options[$option];
 		else if(isset($default)===true){
 			$option=$default;
 		}else
@@ -101,15 +101,53 @@ class Micro {
 			mkdir("app");
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
-			echo "Config files creation...";
+			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
 			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", array(
 					"%documentRoot%"=>"","%siteUrl%"=>"http://127.0.0.1/".$projectName."/",
-					"%dbName%"=>self::getOption("dbName",$projectName),
+					"%dbName%"=>self::getOption("b",$projectName),
 			));
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
 			echo "project {$projectName} successfully created.\n";
 		}
+	}
+
+	private static function parseArguments(){
+		global $argv;
+		array_shift($argv);
+		$out = array();
+		foreach($argv as $arg){
+			if(substr($arg, 0, 2) == '--'){
+				preg_match ("/\=|\:|\ /", $arg, $matches, PREG_OFFSET_CAPTURE);
+				$eqPos=$matches[0][1];
+				//$eqPos = strpos($arg, '=');
+				if($eqPos === false){
+					$key = substr($arg, 2);
+					$out[$key] = isset($out[$key]) ? $out[$key] : true;
+				}
+				else{
+					$key = substr($arg, 2, $eqPos - 2);
+					$out[$key] = substr($arg, $eqPos + 1);
+				}
+			}
+			else if(substr($arg, 0, 1) == '-'){
+				if(substr($arg, 2, 1) == '='||substr($arg, 2, 1) == ':' || substr($arg, 2, 1) == ' '){
+					$key = substr($arg, 1, 1);
+					$out[$key] = substr($arg, 3);
+				}
+				else{
+					$chars = str_split(substr($arg, 1));
+					foreach($chars as $char){
+						$key = $char;
+						$out[$key] = isset($out[$key]) ? $out[$key] : true;
+					}
+				}
+			}
+			else{
+				$out[] = $arg;
+			}
+		}
+		return $out;
 	}
 }
 
