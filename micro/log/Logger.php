@@ -5,7 +5,7 @@ require_once ROOT.DS.'micro/log/chromePhp.php';
 class Logger{
 	public static $test;
 	public static function init(){
-		Logger::$test=$GLOBALS["config"]["test"];
+		Logger::$test=$GLOBALS["config"]["debug"];
 		\ChromePhp::getInstance()->addSetting(\ChromePhp::BACKTRACE_LEVEL, 2);
 	}
 	public static function log($id,$message){

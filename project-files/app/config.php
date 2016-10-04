@@ -14,5 +14,6 @@ return array(
 		"directories"=>[],
 		"templateEngine"=>'micro\views\engine\Twig',
 		"templateEngineOptions"=>array("cache"=>false),
-		"test"=>false
+		"test"=>false,
+		"debug"=>false
 );
