@@ -79,10 +79,13 @@ class Micro {
 		return self::writeFile($destination,$str);
 	}
 
-	private static function getOption($option,$default=NULL){
+	private static function getOption($option,$longOption,$default=NULL){
 		$options=self::parseArguments();
-		if(array_key_exists($option, $options))
+		if(array_key_exists($option, $options)){
 			$option=$options[$option];
+		}else if(array_key_exists($longOption, $options)){
+			$option=$options[$longOption];
+		}
 		else if(isset($default)===true){
 			$option=$default;
 		}else
@@ -91,6 +94,16 @@ class Micro {
 	}
 
 	public static function create($projectName){
+		$arguments=[
+				["b","dbName",$projectName],
+				["r","documentRoot",""],
+				["d","dbName",$projectName],
+				["s","serverName","127.0.0.1"],
+				["p","port","3306"],
+				["u","user","root"],
+				["w","password",""],
+
+		];
 		if(mkdir($projectName)==true){
 			chdir($projectName);
 			echo "Downloading micro.git from https://github.com/phpMv/...\n";
@@ -103,12 +116,13 @@ class Micro {
 			self::xcopy("tmp/micro-master/micro/","app/micro");
 			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
-			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", array(
-					"%documentRoot%"=>"","%siteUrl%"=>"http://127.0.0.1/".$projectName."/",
-					"%dbName%"=>self::getOption("b",$projectName),
-			));
+			$configOptions=["%siteUrl%"=>"http://127.0.0.1/".$projectName."/"];
+			foreach ($arguments as $argument){
+				$configOptions["%".$argument[1]."%"]=self::getOption($argument[0], $argument[1],$argument[2]);
+			}
+			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", $configOptions);
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
-			echo "project {$projectName} successfully created.\n";
+			echo "project `{$projectName}` successfully created.\n";
 		}
 	}
 

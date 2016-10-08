@@ -4,10 +4,10 @@ return array(
 		"documentRoot"=>"%documentRoot%",
 		"database"=>[
 				"dbName"=>"%dbName%",
-				"serverName"=>"127.0.0.1",
-				"port"=>"3306",
-				"user"=>"root",
-				"password"=>""
+				"serverName"=>"%serverName%",
+				"port"=>"%port%",
+				"user"=>"%user%",
+				"password"=>"%password%"
 		],
 		"onStartup"=>function($action){
 		},
