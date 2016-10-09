@@ -13,10 +13,11 @@ class OneToMany extends BaseAnnotation{
 	public $fetch;
 	public $className;
 	public function checkConstraints($target){
-		if(is_null($this->mappedBy))
+		/*if(is_null($this->mappedBy))
 			throw new \Exception("L'attribut mappedBy est obligatoire pour une annotation de type OneToMany");
 		if(is_null($this->className))
 			throw new \Exception("L'attribut className est obligatoire pour une annotation de type OneToMany");
+			*/
 	}
 
 }
