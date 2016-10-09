@@ -1,4 +1,7 @@
 <?php
+use micro\orm\creator\Model;
+use micro\orm\creator\Member;
+
 class ModelsCreator {
 	private static $config;
 	private static $pdoObject;
