@@ -31,7 +31,7 @@ class BaseAnnotation extends \Annotation {
 		$exts=array();
 		$extsStr="";
 		foreach ($fields as $k=>$v){
-			if(StrUtils::isBoolean($v)){
+			if(StrUtils::isBoolean($v)===true){
 				$exts[]=$k."=".StrUtils::getBooleanStr($v);
 			}else{
 				$exts[]=$k."=\"".$v."\"";
