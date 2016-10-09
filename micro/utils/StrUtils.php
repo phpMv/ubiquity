@@ -32,7 +32,7 @@ class StrUtils {
 	}
 
 	public static function isBoolean($value){
-		return $value==true || $value==false;
+		return \is_bool($value);
 	}
 
 	public static function pluralize($count,$caption,$plural=NULL){
