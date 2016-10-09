@@ -23,6 +23,6 @@ class Member {
 	}
 
 	public function setPrimary(){
-		$this->annotations=new Id();
+		$this->annotations[]=new Id();
 	}
 }
