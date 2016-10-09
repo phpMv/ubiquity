@@ -1,4 +1,5 @@
 <?php
+use micro\controllers\Autoloader;
 include 'ModelsCreator.php';
 class Micro {
 	private static $configOptions;
@@ -123,6 +124,7 @@ class Micro {
 			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", self::$configOptions);
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
 			require_once 'app/micro/controllers/Autoloader.php';
+			Autoloader::register();
 			ModelsCreator::create();
 			echo "project `{$projectName}` successfully created.\n";
 		}
