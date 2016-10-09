@@ -6,7 +6,7 @@ namespace micro\annotations;
  * @author jc
  * @version 1.0.0.1
  * @package annotations
- * @Target("property")
+ * @Target({"property","nested"})
  */
 class JoinTable extends BaseAnnotation{
 	public $name;

@@ -6,7 +6,7 @@ class ModelsCreator {
 	private static $config;
 	private static $pdoObject;
 	private static $tables=array();
-
+	private static $classes=array();
 	/**
 	 * Réalise la connexion à la base de données
 	 */
@@ -42,7 +42,25 @@ class ModelsCreator {
 				}
 				$class->addMember($member);
 			}
+			self::$classes[$table]=$class;
+		}
+		self::createRelations();
+		foreach (self::$classes as $table=>$class){
 			self::writeFile("app/models/".$table.".php", $class);
+		}
+	}
+
+	private static function createRelations(){
+		foreach (self::$classes as $table=>$class){
+			$keys=self::getPrimaryKeys($table);
+			foreach ($keys as $key){
+				$fks=self::getForeignKeys($table, $key);
+				foreach ($fks as $fk){
+					$field=strtolower($table);
+					self::$classes[$table]->addOneToMany($fk["TABLE_NAME"], $field, $class->getName());
+					self::$classes[$fk["TABLE_NAME"]]->addManyToOne($field, $fk["COLUMN_NAME"], $class->getName());
+				}
+			}
 		}
 	}
 
@@ -76,7 +94,7 @@ class ModelsCreator {
 	private static function getForeignKeys($tableName,$pkName){
 		$recordset = self::$pdoObject->query("SELECT *
 												FROM
-												  KEY_COLUMN_USAGE
+												 information_schema.KEY_COLUMN_USAGE
 												WHERE
 												 REFERENCED_TABLE_NAME = '".$tableName."'
 												 AND REFERENCED_COLUMN_NAME = '".$pkName."'

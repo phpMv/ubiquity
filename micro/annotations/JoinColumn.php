@@ -6,6 +6,7 @@ namespace micro\annotations;
  * @author jc
  * @version 1.0.0.1
  * @package annotations
+ * @Target({"property","nested"})
  */
 class JoinColumn extends Column{
 	public $className;

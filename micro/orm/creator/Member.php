@@ -1,13 +1,18 @@
 <?php
 namespace micro\orm\creator;
 use micro\annotations\Id;
+use micro\annotations\ManyToOne;
+use micro\annotations\JoinColumn;
+use micro\annotations\OneToMany;
 class Member {
 	private $name;
+	private $primary;
 	private $annotations;
 
 	public function __construct($name){
 		$this->name=$name;
 		$this->annotations=array();
+		$this->primary=false;
 	}
 
 	public function __toString(){
@@ -16,13 +21,37 @@ class Member {
 			$annotationsStr="\n\t/**";
 			$annotations=$this->annotations;
 			\array_walk($annotations,function($item){return $item."";});
-			$annotationsStr.=implode("\n\t* ", $annotations);
-			$annotationsStr.="\t*/";
+			$annotationsStr.=implode("\n\t * ", $annotations);
+			$annotationsStr.="\n\t*/";
 		}
 		return $annotationsStr."\n\tprivate $".$this->name.";\n";
 	}
 
 	public function setPrimary(){
-		$this->annotations[]=new Id();
+		if($this->primary===false){
+			$this->annotations[]=new Id();
+			$this->primary=true;
+		}
 	}
+
+	public function addManyToOne($name,$className,$nullable=false){
+		$this->annotations[]=new ManyToOne();
+		$joinColumn=new JoinColumn();
+		$joinColumn->name=$name;
+		$joinColumn->className=$className;
+		$joinColumn->nullable=$nullable;
+		$this->annotations[]=$joinColumn;
+	}
+
+	public function addOneToMany($mappedBy,$className){
+		$oneToMany=new OneToMany();
+		$oneToMany->mappedBy=$mappedBy;
+		$oneToMany->className=$className;
+		$this->annotations[]=$oneToMany;
+	}
+
+	public function getName() {
+		return $this->name;
+	}
+
 }
