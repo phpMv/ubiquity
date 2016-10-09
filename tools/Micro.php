@@ -111,7 +111,7 @@ class Micro {
 			echo "Files extraction...\n";
 			self::unzip("tmp/tmp.zip","tmp/");
 			mkdir("app");
-			define('ROOT', realpath('app').DS);
+			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
 			echo "Config files creation...\n";
@@ -122,7 +122,7 @@ class Micro {
 			}
 			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", self::$configOptions);
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
-			require_once ROOT.'micro/controllers/Autoloader.php';
+			require_once 'app/micro/controllers/Autoloader.php';
 			ModelsCreator::create();
 			echo "project `{$projectName}` successfully created.\n";
 		}

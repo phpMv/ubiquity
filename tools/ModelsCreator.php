@@ -30,6 +30,8 @@ class ModelsCreator {
 		self::connect();
 		self::$tables=self::getTablesName();
 		mkdir("app/models");
+		echo "\n".ROOT."\n";
+
 		foreach (self::$tables as $table){
 			$class=new Model($table);
 			$fields=self::getFieldsName($table);
