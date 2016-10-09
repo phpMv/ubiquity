@@ -7,12 +7,15 @@ use micro\annotations\OneToMany;
 class Member {
 	private $name;
 	private $primary;
+	private $manyToOne;
+
 	private $annotations;
 
 	public function __construct($name){
 		$this->name=$name;
 		$this->annotations=array();
 		$this->primary=false;
+		$this->manyToOne=false;
 	}
 
 	public function __toString(){
@@ -45,6 +48,7 @@ class Member {
 		$joinColumn->className=$className;
 		$joinColumn->nullable=$nullable;
 		$this->annotations[]=$joinColumn;
+		$this->manyToOne=true;
 	}
 
 	public function addOneToMany($mappedBy,$className){
@@ -57,5 +61,10 @@ class Member {
 	public function getName() {
 		return $this->name;
 	}
+
+	public function isManyToOne() {
+		return $this->manyToOne;
+	}
+
 
 }
