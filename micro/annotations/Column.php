@@ -12,7 +12,8 @@ class Column extends BaseAnnotation{
 	public $nullable=false;
 
 	public function checkConstraints($target){
-		if(is_null($this->name))
+		/*if(is_null($this->name))
 			throw new \Exception("L'attribut name est obligatoire pour une annotation de type Column");
+			*/
 	}
 }
