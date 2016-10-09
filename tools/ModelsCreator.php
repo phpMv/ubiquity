@@ -36,12 +36,13 @@ class ModelsCreator {
 			$fields=self::getFieldsName($table);
 			$keys=self::getPrimaryKeys($table);
 			foreach ($fields as $field){
-				$field=new Member($field);
+				$member=new Member($field);
 				if(in_array($field, $keys)){
-					$field->setPrimary();
+					$member->setPrimary();
 				}
+				$class->addMember($member);
 			}
-			self::writeFile($table.".php", $class);
+			self::writeFile("app/models/".$table.".php", $class);
 		}
 	}
 
@@ -58,6 +59,7 @@ class ModelsCreator {
 		foreach ($fields as $field) {
 			$fieldNames[] = $field['Field'];
 		}
+		var_dump($fieldNames);
 		return $fieldNames;
 	}
 
@@ -81,6 +83,7 @@ class ModelsCreator {
 												 AND TABLE_SCHEMA = '".self::$config["dbName"]."';");
 		return $recordset->fetchAll(PDO::FETCH_ASSOC);
 	}
+
 	private static function writeFile($filename,$data){
 		return file_put_contents($filename,$data);
 	}

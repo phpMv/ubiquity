@@ -1,6 +1,8 @@
 <?php
 namespace micro\annotations;
 
+require_once ROOT.DS.'micro/addendum/annotations.php';
+
 class BaseAnnotation extends \Annotation {
 
 	public function getProperties(){
