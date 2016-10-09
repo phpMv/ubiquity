@@ -29,11 +29,13 @@ class Autoloader{
 			$find=true;
 		}
 		else{
-			foreach ($config["directories"] as $directory){
-				if(file_exists(ROOT.DS.$directory.DS.$class.".php")){
-					require_once(ROOT.DS.$directory.DS.$class.".php");
-					$find=true;
-					break;
+			if(\sizeof($config["directories"])>0){
+				foreach ($config["directories"] as $directory){
+					if(file_exists(ROOT.DS.$directory.DS.$class.".php")){
+						require_once(ROOT.DS.$directory.DS.$class.".php");
+						$find=true;
+						break;
+					}
 				}
 			}
 		}
