@@ -11,13 +11,15 @@ class Member {
 	}
 
 	public function __toString(){
-		$annotations="";
+		$annotationsStr="";
 		if(sizeof($this->annotations)>0){
-			$annotations="\t/**";
-			$annotations.=implode("\n\t* ", \array_walk($this->annotations,function($item){return $item."";}));
-			$annotations.="\t*/";
+			$annotationsStr="\t/**";
+			$annotations=$this->annotations;
+			\array_walk($annotations,function($item){return $item."";});
+			$annotationsStr.=implode("\n\t* ", $annotations);
+			$annotationsStr.="\t*/";
 		}
-		return $annotations."\n\tprivate $".$this->name.";\n";
+		return $annotationsStr."\n\tprivate $".$this->name.";\n";
 	}
 
 	public function setPrimary(){
