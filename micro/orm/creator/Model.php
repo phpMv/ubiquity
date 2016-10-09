@@ -15,13 +15,16 @@ class Model {
 	}
 
 	public function addManyToOne($member,$name,$className,$nullable=false){
-		if(\array_key_exists($member, $this->members)){
-			$this->members[$member]->addManyToOne($name,$className,$nullable);
+		if(\array_key_exists($member, $this->members)===false){
+			$this->addMember(new Member($member));
 		}
+		$this->members[$member]->addManyToOne($name,$className,$nullable);
 	}
 
 	public function addOneToMany($member,$mappedBy,$className){
-		$this->addMember(new Member($member));
+		if(\array_key_exists($member, $this->members)===false){
+			$this->addMember(new Member($member));
+		}
 		$this->members[$member]->addOneToMany($mappedBy,$className);
 	}
 	public function __toString(){

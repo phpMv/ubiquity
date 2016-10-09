@@ -21,7 +21,11 @@ class Member {
 			$annotationsStr="\n\t/**";
 			$annotations=$this->annotations;
 			\array_walk($annotations,function($item){return $item."";});
-			$annotationsStr.=implode("\n\t * ", $annotations);
+			if(\sizeof($annotations)>1){
+				$annotationsStr.=implode("\n\t * ", $annotations);
+			}else{
+				$annotationsStr.="\n\t * ".$annotations[0];
+			}
 			$annotationsStr.="\n\t*/";
 		}
 		return $annotationsStr."\n\tprivate $".$this->name.";\n";
