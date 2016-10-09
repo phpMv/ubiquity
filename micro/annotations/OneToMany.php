@@ -1,4 +1,5 @@
 <?php
+namespace micro\annotations;
 
 /**
  * Annotation OneToMany
@@ -7,7 +8,7 @@
  * @package annotations
  * @Target("property")
  */
-class OneToMany extends \Annotation{
+class OneToMany extends BaseAnnotation{
 	public $mappedBy;
 	public $fetch;
 	public $className;
@@ -17,4 +18,5 @@ class OneToMany extends \Annotation{
 		if(is_null($this->className))
 			throw new \Exception("L'attribut className est obligatoire pour une annotation de type OneToMany");
 	}
+
 }

@@ -1,6 +1,7 @@
 <?php
+include 'ModelsCreator.php';
 class Micro {
-
+	private static $configOptions;
 	public static function downloadZip($url,$zipFile="tmp/tmp.zip"){
 		$f = file_put_contents($zipFile, fopen($url, 'r'), LOCK_EX);
 	if(FALSE === $f)
@@ -97,12 +98,10 @@ class Micro {
 		$arguments=[
 				["b","dbName",$projectName],
 				["r","documentRoot",""],
-				["d","dbName",$projectName],
 				["s","serverName","127.0.0.1"],
 				["p","port","3306"],
 				["u","user","root"],
 				["w","password",""],
-
 		];
 		if(mkdir($projectName)==true){
 			chdir($projectName);
@@ -112,16 +111,19 @@ class Micro {
 			echo "Files extraction...\n";
 			self::unzip("tmp/tmp.zip","tmp/");
 			mkdir("app");
+			define('ROOT', realpath('app').DS);
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
 			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
-			$configOptions=["%siteUrl%"=>"http://127.0.0.1/".$projectName."/"];
+			self::$configOptions=["%siteUrl%"=>"http://127.0.0.1/".$projectName."/"];
 			foreach ($arguments as $argument){
-				$configOptions["%".$argument[1]."%"]=self::getOption($argument[0], $argument[1],$argument[2]);
+				self::$configOptions["%".$argument[1]."%"]=self::getOption($argument[0], $argument[1],$argument[2]);
 			}
-			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", $configOptions);
+			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", self::$configOptions);
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
+			require_once ROOT.'micro/controllers/Autoloader.php';
+			ModelsCreator::create();
 			echo "project `{$projectName}` successfully created.\n";
 		}
 	}
@@ -164,5 +166,8 @@ class Micro {
 		return $out;
 	}
 }
+error_reporting(E_ALL);
+
+define('DS', DIRECTORY_SEPARATOR);
 
 Micro::create($argv[1]);

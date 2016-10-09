@@ -1,4 +1,5 @@
 <?php
+namespace micro\annotations;
 
 /**
  * Annotation Transient
@@ -7,6 +8,6 @@
  * @package annotations
  * @Target("property")
  */
-class Transient extends \Annotation{
+class Transient extends BaseAnnotation{
 
 }

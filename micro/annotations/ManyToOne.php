@@ -1,4 +1,5 @@
 <?php
+namespace micro\annotations;
 
 /**
  * Annotation ManyToOne
@@ -7,6 +8,5 @@
  * @package annotations
  * @Target("property")
  */
-class ManyToOne extends \Annotation{
-
+class ManyToOne extends BaseAnnotation{
 }

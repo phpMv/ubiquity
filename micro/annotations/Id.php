@@ -1,4 +1,6 @@
 <?php
+namespace micro\annotations;
+
 /**
  * Annotation Id
  * @author jc
@@ -6,6 +8,6 @@
  * @package annotations
  * @Target("property")
  */
-class Id extends \Annotation{
+class Id extends BaseAnnotation{
 
 }
