@@ -14,7 +14,7 @@ class Member {
 		$annotations="";
 		if(sizeof($this->annotations)>0){
 			$annotations="\t/**";
-			$annotations.=implode("\n\t* ", $this->annotations);
+			$annotations.=implode("\n\t* ", \array_walk($this->annotations,function($item){return $item."";}));
 			$annotations.="\t*/";
 		}
 		return $annotations."\n\tprivate $".$this->name.";\n";

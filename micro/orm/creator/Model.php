@@ -16,7 +16,7 @@ class Model {
 
 	public function __toString(){
 		$result="<?php\nclass ".ucfirst($this->name)."{";
-		$result.=implode("\n", $this->members);
+		$result.=implode("\n", \array_walk($this->members,function($item){return $item."";}));
 		$result.="\n}";
 		return $result;
 	}
