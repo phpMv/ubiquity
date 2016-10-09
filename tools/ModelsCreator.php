@@ -1,6 +1,7 @@
 <?php
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
+use micro\utils\StrUtils;
 
 class ModelsCreator {
 	private static $config;
@@ -57,7 +58,8 @@ class ModelsCreator {
 				$fks=self::getForeignKeys($table, $key);
 				foreach ($fks as $fk){
 					$field=strtolower($table);
-					self::$classes[$table]->addOneToMany($fk["TABLE_NAME"], $field, $class->getName());
+					$rTable=strtolower($fk["REFERENCED_TABLE_NAME"]);
+					self::$classes[$table]->addOneToMany($fk["TABLE_NAME"], $rTable."s", self::$classes[$rTable]->getName());
 					self::$classes[$fk["TABLE_NAME"]]->addManyToOne($field, $fk["COLUMN_NAME"], $class->getName());
 				}
 			}

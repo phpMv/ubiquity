@@ -31,6 +31,10 @@ class StrUtils {
 		return (isset($s) && NULL!==$s && ""!==$s);
 	}
 
+	public static function isBoolean($value){
+		return $value==true || $value==false;
+	}
+
 	public static function pluralize($count,$caption,$plural=NULL){
 		if($plural==NULL){
 			$pluralChar="s";

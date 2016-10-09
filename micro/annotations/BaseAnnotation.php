@@ -1,6 +1,7 @@
 <?php
 namespace micro\annotations;
 
+use micro\utils\StrUtils;
 require_once ROOT.DS.'micro/addendum/annotations.php';
 
 class BaseAnnotation extends \Annotation {
@@ -30,7 +31,11 @@ class BaseAnnotation extends \Annotation {
 		$exts=array();
 		$extsStr="";
 		foreach ($fields as $k=>$v){
-			$exts[]=$k."=\"".$v."\"";
+			if(StrUtils::isBoolean($v)){
+				$exts[]=$k."=".StrUtils::getBooleanStr($v);
+			}else{
+				$exts[]=$k."=\"".$v."\"";
+			}
 		}
 		if(\sizeof($exts)>0){
 			$extsStr="(".\implode(",", $exts).")";
