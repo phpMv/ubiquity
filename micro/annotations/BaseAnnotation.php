@@ -36,6 +36,6 @@ class BaseAnnotation extends \Annotation {
 			$extsStr="(".\implode(",", $exts).")";
 		}
 
-		return "@".get_class().$extsStr;
+		return "@".get_class($this).$extsStr;
 	}
 }

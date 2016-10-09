@@ -13,7 +13,7 @@ class Member {
 	public function __toString(){
 		$annotationsStr="";
 		if(sizeof($this->annotations)>0){
-			$annotationsStr="\t/**";
+			$annotationsStr="\n\t/**";
 			$annotations=$this->annotations;
 			\array_walk($annotations,function($item){return $item."";});
 			$annotationsStr.=implode("\n\t* ", $annotations);
