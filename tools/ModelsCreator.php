@@ -58,9 +58,9 @@ class ModelsCreator {
 				$fks=self::getForeignKeys($table, $key);
 				foreach ($fks as $fk){
 					$field=strtolower($table);
-					$rTable=strtolower($fk["REFERENCED_TABLE_NAME"]);
-					self::$classes[$table]->addOneToMany($fk["TABLE_NAME"], $rTable."s", self::$classes[$rTable]->getName());
-					self::$classes[$fk["TABLE_NAME"]]->addManyToOne($field, $fk["COLUMN_NAME"], $class->getName());
+					$fkTable=$fk["TABLE_NAME"];
+					self::$classes[$table]->addOneToMany($fkTable."s",$table, self::$classes[$fkTable]->getName());
+					self::$classes[$fkTable]->addManyToOne($field, $fk["COLUMN_NAME"], $class->getName());
 				}
 			}
 		}
