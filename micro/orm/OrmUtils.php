@@ -4,7 +4,7 @@ namespace micro\orm;
 /**
  * Utilitaires de mappage Objet/relationnel
  * @author jc
- * @version 1.0.0.2
+ * @version 1.0.0.3
  * @package orm
  */
 class OrmUtils{

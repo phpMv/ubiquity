@@ -2,6 +2,7 @@
 namespace micro\orm;
 require_once ROOT.DS.'micro/addendum/annotations.php';
 
+require_once ROOT.DS.'micro/annotations/BaseAnnotation.php';
 require_once ROOT.DS.'micro/annotations/Column.php';
 require_once ROOT.DS.'micro/annotations/Transient.php';
 require_once ROOT.DS.'micro/annotations/Table.php';
@@ -50,15 +51,13 @@ class Reflexion{
 		return $ret;
 	}
 
-	public static function getAnnotationClass($class,$annotation)
-	{
+	public static function getAnnotationClass($class,$annotation){
 		$rac=new \ReflectionAnnotatedClass($class);
 		$annot=$rac->getAnnotation($annotation);
 		return $annot;
 	}
 
-	public static function getAnnotationMember($class,$member,$annotation)
-	{
+	public static function getAnnotationMember($class,$member,$annotation){
 		$rap=new \ReflectionAnnotatedProperty($class, $member);
 		if($rap!=null)
 			$annot=$rap->getAnnotation($annotation);
