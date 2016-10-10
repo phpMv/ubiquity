@@ -1,7 +1,6 @@
 <?php
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
-use micro\utils\StrUtils;
 
 class ModelsCreator {
 	private static $config;
