@@ -1,6 +1,7 @@
 <?php
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
+use micro\orm\Reflexion;
 
 class ModelsCreator {
 	private static $config;
@@ -30,7 +31,7 @@ class ModelsCreator {
 		self::connect();
 		self::$tables=self::getTablesName();
 		mkdir("app/models");
-
+		new Reflexion();
 		foreach (self::$tables as $table){
 			$class=new Model($table);
 			$fields=self::getFieldsName($table);
