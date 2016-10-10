@@ -1,5 +1,4 @@
 <?php
-namespace micro\annotations;
 
 /**
  * Annotation Id
@@ -8,6 +7,6 @@ namespace micro\annotations;
  * @package annotations
  * @Target({"property","nested"})
  */
-class Id extends BaseAnnotation{
+class Id extends \BaseAnnotation{
 
 }

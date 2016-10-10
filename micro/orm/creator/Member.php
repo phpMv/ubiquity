@@ -66,5 +66,10 @@ class Member {
 		return $this->manyToOne;
 	}
 
+	public function isPrimary() {
+		return $this->primary;
+	}
+
+
 
 }

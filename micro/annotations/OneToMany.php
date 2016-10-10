@@ -1,5 +1,4 @@
 <?php
-namespace micro\annotations;
 
 /**
  * Annotation OneToMany
@@ -8,7 +7,7 @@ namespace micro\annotations;
  * @package annotations
  * @Target({"property","nested"})
  */
-class OneToMany extends BaseAnnotation{
+class OneToMany extends \BaseAnnotation{
 	public $mappedBy;
 	public $fetch;
 	public $className;

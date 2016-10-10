@@ -1,6 +1,4 @@
 <?php
-namespace micro\annotations;
-
 use micro\utils\StrUtils;
 require_once ROOT.DS.'micro/addendum/annotations.php';
 

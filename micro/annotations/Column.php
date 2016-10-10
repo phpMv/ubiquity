@@ -1,5 +1,4 @@
 <?php
-namespace micro\annotations;
 /**
  * Annotation Column
  * @author jc
@@ -7,7 +6,7 @@ namespace micro\annotations;
  * @package annotations
  * @Target("property")
  */
-class Column extends BaseAnnotation{
+class Column extends \BaseAnnotation{
 	public $name;
 	public $nullable=false;
 

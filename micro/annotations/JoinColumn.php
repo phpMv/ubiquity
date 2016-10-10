@@ -1,6 +1,4 @@
 <?php
-namespace micro\annotations;
-
 /**
  * Annotation JoinColumn
  * @author jc

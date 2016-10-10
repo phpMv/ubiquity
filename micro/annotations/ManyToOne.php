@@ -1,5 +1,4 @@
 <?php
-namespace micro\annotations;
 
 /**
  * Annotation ManyToOne
@@ -8,5 +7,5 @@ namespace micro\annotations;
  * @package annotations
  * @Target({"property","nested"})
  */
-class ManyToOne extends BaseAnnotation{
+class ManyToOne extends \BaseAnnotation{
 }

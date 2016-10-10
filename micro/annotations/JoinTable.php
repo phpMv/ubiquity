@@ -1,5 +1,4 @@
 <?php
-namespace micro\annotations;
 
 /**
  * Annotation JoinTable
@@ -8,7 +7,7 @@ namespace micro\annotations;
  * @package annotations
  * @Target({"property","nested"})
  */
-class JoinTable extends BaseAnnotation{
+class JoinTable extends \BaseAnnotation{
 	public $name;
 	public $joinColumns;
 	public $inverseJoinColumns;

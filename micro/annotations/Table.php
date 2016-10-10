@@ -1,5 +1,4 @@
 <?php
-namespace micro\annotations;
 
 /**
  * Annotation Table
@@ -9,7 +8,7 @@ namespace micro\annotations;
  * @Target("class")
  */
 
-class Table extends BaseAnnotation{
+class Table extends \BaseAnnotation{
 	public $name;
 	public function checkConstraints($target){
 		if(is_null($this->name))

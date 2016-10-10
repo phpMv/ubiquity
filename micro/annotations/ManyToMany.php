@@ -1,5 +1,4 @@
 <?php
-namespace micro\annotations;
 
 /**
  * Annotation ManyToMany
@@ -8,7 +7,7 @@ namespace micro\annotations;
  * @package annotations
  * @Target({"property","nested"})
  */
-class ManyToMany extends BaseAnnotation{
+class ManyToMany extends \BaseAnnotation{
 	public $targetEntity;
 	public $inversedBy;
 	public $mappedBy;
