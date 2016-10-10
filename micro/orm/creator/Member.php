@@ -1,6 +1,6 @@
 <?php
 namespace micro\orm\creator;
-
+use micro\orm\Reflexion;
 class Member {
 	private $name;
 	private $primary;
