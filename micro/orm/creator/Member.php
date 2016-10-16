@@ -87,15 +87,15 @@ class Member {
 
 	public function getGetter(){
 		$result="\n\t public function get".\ucfirst($this->name)."(){\n";
-		$result.='\t\treturn $this->'.$this->name.';\n';
+		$result.="\t\t".'return $this->'.$this->name.";\n";
 		$result.="\t}\n";
 		return $result;
 	}
 
 	public function getSetter(){
-		$result='\n\t public function set'.\ucfirst($this->name).'($'.$this->name.'){\n';
-		$result.='\t\t$this->'.$this->name.'='.$this->name.';\n';
-		$result.='\t}\n';
+		$result="\n\t public function set".\ucfirst($this->name).'($'.$this->name."){\n";
+		$result.="\t\t".'$this->'.$this->name.'=$'.$this->name.";\n";
+		$result.="\t}\n";
 		return $result;
 	}
 
