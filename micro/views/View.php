@@ -3,7 +3,6 @@ namespace micro\views;
 
 use micro\utils\StrUtils;
 use micro\views\engine\TemplateEngine;
-use micro\controllers\Autoloader;
 
 /**
  * Représente une vue

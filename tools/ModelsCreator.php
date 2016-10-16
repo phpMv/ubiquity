@@ -25,6 +25,7 @@ class ModelsCreator {
 			die();
 		}
 	}
+
 	public static function create(){
 		$config=require_once 'app/config.php';
 		self::$config=$config["database"];
