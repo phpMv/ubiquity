@@ -17,13 +17,14 @@ class Model {
 	public function addManyToOne($member,$name,$className,$nullable=false){
 		if(\array_key_exists($member, $this->members)===false){
 			$this->addMember(new Member($member));
-			//$this->removeMember($name);
+			$this->removeMember($name);
 		}
 		$this->members[$member]->addManyToOne($name,$className,$nullable);
 	}
 
 	public function removeMember($memberName){
-		unset($this->members[$memberName]);
+		if($this->members[$memberName]->isPrimary()===false)
+			unset($this->members[$memberName]);
 	}
 
 	public function addOneToMany($member,$mappedBy,$className){
