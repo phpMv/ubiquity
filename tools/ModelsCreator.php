@@ -75,11 +75,13 @@ class ModelsCreator {
 				if(sizeof($members)==2){
 					$manyToOne1=$members[0]->getManyToOne();
 					$manyToOne2=$members[1]->getManyToOne();
-					$class1=self::$classes[$manyToOne1->className];
-					$class1->addManyToMany(strtolower($manyToOne2->className)."s", $manyToOne2->className, strtolower($manyToOne1->className)."s", $members[0]->getName());
+					$table1=strtolower($manyToOne1->className);
+					$table2=strtolower($manyToOne2->className);
+					$class1=self::$classes[$table1];
+					$class1->addManyToMany($table2."s", $manyToOne2->className, $table1."s", $members[0]->getName());
 					$class1->removeMember($table."s");
-					$class2=self::$classes[$manyToOne2->className];
-					$class2->addManyToMany(strtolower($manyToOne1->className)."s", $manyToOne1->className, strtolower($manyToOne2->className)."s", $members[1]->getName());
+					$class2=self::$classes[$table2];
+					$class2->addManyToMany($table1."s", $manyToOne1->className, $table2."s", $members[1]->getName());
 					$class2->removeMember($table."s");
 					unset(self::$classes[$table]);
 				}else{
