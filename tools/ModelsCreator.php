@@ -78,10 +78,10 @@ class ModelsCreator {
 					$table1=strtolower($manyToOne1->className);
 					$table2=strtolower($manyToOne2->className);
 					$class1=self::$classes[$table1];
-					$class1->addManyToMany($table2."s", $manyToOne2->className, $table1."s", $members[0]->getName());
+					$class1->addManyToMany($table2."s", $manyToOne2->className, $table1."s", $table);
 					$class1->removeMember($table."s");
 					$class2=self::$classes[$table2];
-					$class2->addManyToMany($table1."s", $manyToOne1->className, $table2."s", $members[1]->getName());
+					$class2->addManyToMany($table1."s", $manyToOne1->className, $table2."s", $table);
 					$class2->removeMember($table."s");
 					unset(self::$classes[$table]);
 				}else{

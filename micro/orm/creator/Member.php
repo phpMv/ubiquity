@@ -60,6 +60,7 @@ class Member {
 		$manyToMany->inversedBy=$inversedBy;
 		$jt=new \JoinTable();
 		$jt->name=$joinTable;
+		$this->annotations[]=$manyToMany;
 		$this->annotations[]=$jt;
 	}
 
