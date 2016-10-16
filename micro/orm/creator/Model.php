@@ -34,6 +34,13 @@ class Model {
 		$this->members[$member]->addOneToMany($mappedBy,$className);
 	}
 
+	public function addManyToMany($member,$targetEntity,$inversedBy,$joinTable){
+		if(\array_key_exists($member, $this->members)===false){
+			$this->addMember(new Member($member));
+		}
+		$this->members[$member]->addManyToMany($targetEntity,$inversedBy,$joinTable);
+	}
+
 	public function __toString(){
 		$result="<?php\nclass ".ucfirst($this->name)."{";
 		$members=$this->members;
@@ -50,11 +57,21 @@ class Model {
 	public function isAssociation(){
 		$count=0;
 		foreach ($this->members as $member){
-			if($member->isManyToOne()===true){
+			if($member->isManyToOne()===true || $member->isPrimary()===true){
 				$count++;
 			}
 		}
 		return $count==\sizeof($this->members);
+	}
+
+	public function getManyToOneMembers(){
+		$result=array();
+		foreach ($this->members as $member){
+			if($member->isManyToOne()===true){
+				$result[]=$member;
+			}
+		}
+		return $result;
 	}
 
 }

@@ -65,6 +65,28 @@ class ModelsCreator {
 				}
 			}
 		}
+		self::createManyToMany();
+	}
+
+	private static function createManyToMany(){
+		foreach (self::$classes as $table=>$class){
+			if($class->isAssociation()===true){
+				$members=$class->getManyToOneMembers();
+				if(sizeof($members)==2){
+					$manyToOne1=$members[0]->getManyToOne();
+					$manyToOne2=$members[1]->getManyToOne();
+					$class1=self::$classes[$manyToOne1->className];
+					$class1->addManyToMany(strtolower($manyToOne2->className)."s", $manyToOne2->className, strtolower($manyToOne1->className)."s", $members[0]->getName());
+					$class1->removeMember($table."s");
+					$class2=self::$classes[$manyToOne2->className];
+					$class2->addManyToMany(strtolower($manyToOne1->className)."s", $manyToOne1->className, strtolower($manyToOne2->className)."s", $members[1]->getName());
+					$class2->removeMember($table."s");
+					unset(self::$classes[$table]);
+				}else{
+					return;
+				}
+			}
+		}
 	}
 
 	private static function getTablesName(){

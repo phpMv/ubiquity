@@ -54,6 +54,15 @@ class Member {
 		$this->annotations[]=$oneToMany;
 	}
 
+	public function addManyToMany($targetEntity,$inversedBy,$joinTable){
+		$manyToMany=new \ManyToMany();
+		$manyToMany->targetEntity=$targetEntity;
+		$manyToMany->inversedBy=$inversedBy;
+		$jt=new \JoinTable();
+		$jt->name=$joinTable;
+		$this->annotations[]=$jt;
+	}
+
 	public function getName() {
 		return $this->name;
 	}
@@ -64,7 +73,7 @@ class Member {
 
 	public function getManyToOne(){
 		foreach ($this->annotations as $annotation){
-			if($annotation instanceof \ManyToOne){
+			if($annotation instanceof \JoinColumn){
 				return $annotation;
 			}
 		}
