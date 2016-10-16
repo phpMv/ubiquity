@@ -21,7 +21,7 @@ class Member {
 			$annotations=$this->annotations;
 			\array_walk($annotations,function($item){return $item."";});
 			if(\sizeof($annotations)>1){
-				$annotationsStr.=implode("\n\t * ", $annotations);
+				$annotationsStr.="\n\t *".implode("\n\t * ", $annotations);
 			}else{
 				$annotationsStr.="\n\t * ".$annotations[0];
 			}
@@ -83,6 +83,20 @@ class Member {
 
 	public function isPrimary() {
 		return $this->primary;
+	}
+
+	public function getGetter(){
+		$result="\n\t public function get".\ucfirst($this->name)."(){\n";
+		$result.='\t\treturn $this->'.$this->name.';\n';
+		$result.="\t}\n";
+		return $result;
+	}
+
+	public function getSetter(){
+		$result='\n\t public function set'.\ucfirst($this->name).'($'.$this->name.'){\n';
+		$result.='\t\t$this->'.$this->name.'='.$this->name.';\n';
+		$result.='\t}\n';
+		return $result;
 	}
 
 }

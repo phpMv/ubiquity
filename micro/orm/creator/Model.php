@@ -46,6 +46,10 @@ class Model {
 		$members=$this->members;
 		\array_walk($members,function($item){return $item."";});
 		$result.=implode("", $members);
+		foreach ($members as $member){
+			$result.=$member->getGetter();
+			$result.=$member->getSetter();
+		}
 		$result.="\n}";
 		return $result;
 	}
