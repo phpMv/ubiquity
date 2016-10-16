@@ -17,7 +17,7 @@ class Model {
 	public function addManyToOne($member,$name,$className,$nullable=false){
 		if(\array_key_exists($member, $this->members)===false){
 			$this->addMember(new Member($member));
-			$this->removeMember($name);
+			//$this->removeMember($name);
 		}
 		$this->members[$member]->addManyToOne($name,$className,$nullable);
 	}
@@ -44,6 +44,16 @@ class Model {
 
 	public function getName() {
 		return $this->name;
+	}
+
+	public function isAssociation(){
+		$count=0;
+		foreach ($this->members as $member){
+			if($member->isManyToOne()===true){
+				$count++;
+			}
+		}
+		return $count==\sizeof($this->members);
 	}
 
 }

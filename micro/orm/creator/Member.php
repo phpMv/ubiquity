@@ -62,10 +62,17 @@ class Member {
 		return $this->manyToOne;
 	}
 
+	public function getManyToOne(){
+		foreach ($this->annotations as $annotation){
+			if($annotation instanceof \ManyToOne){
+				return $annotation;
+			}
+		}
+		return null;
+	}
+
 	public function isPrimary() {
 		return $this->primary;
 	}
-
-
 
 }
