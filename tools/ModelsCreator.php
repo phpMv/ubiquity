@@ -2,6 +2,7 @@
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
 use micro\orm\Reflexion;
+use micro\controllers\Autoloader;
 
 class ModelsCreator {
 	private static $config;
@@ -27,6 +28,8 @@ class ModelsCreator {
 	}
 
 	public static function create(){
+		require_once 'app/micro/controllers/Autoloader.php';
+		Autoloader::register();
 		$config=require_once 'app/config.php';
 		self::$config=$config["database"];
 		self::connect();

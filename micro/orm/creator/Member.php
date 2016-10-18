@@ -21,7 +21,7 @@ class Member {
 			$annotations=$this->annotations;
 			\array_walk($annotations,function($item){return $item."";});
 			if(\sizeof($annotations)>1){
-				$annotationsStr.="\n\t *".implode("\n\t * ", $annotations);
+				$annotationsStr.="\n\t * ".implode("\n\t * ", $annotations);
 			}else{
 				$annotationsStr.="\n\t * ".$annotations[0];
 			}
