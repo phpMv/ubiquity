@@ -31,6 +31,14 @@ class StrUtils {
 		return (isset($s) && NULL!==$s && ""!==$s);
 	}
 
+	public static function isBooleanTrue($s){
+		return $s===true || $s==="true" || $s===1 || $s==="1";
+	}
+
+	public static function isBooleanFalse($s){
+		return $s===false || $s==="false" || $s===0 || $s==="0";
+	}
+
 	public static function isBoolean($value){
 		return \is_bool($value);
 	}

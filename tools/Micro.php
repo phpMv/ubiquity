@@ -1,5 +1,6 @@
 <?php
 use micro\controllers\Autoloader;
+use micro\utils\StrUtils;
 include 'ModelsCreator.php';
 class Micro {
 	private static $configOptions;
@@ -60,6 +61,14 @@ class Micro {
 		return true;
 	}
 
+	public static function delTree($dir) {
+		$files = array_diff(scandir($dir), array('.','..'));
+		foreach ($files as $file) {
+			(is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+		}
+		return rmdir($dir);
+	}
+
 	public static function openFile($filename){
 		if(file_exists($filename)){
 			return file_get_contents($filename);
@@ -98,11 +107,12 @@ class Micro {
 	public static function create($projectName){
 		$arguments=[
 				["b","dbName",$projectName],
-				["r","documentRoot",""],
+				["r","documentRoot","Main"],
 				["s","serverName","127.0.0.1"],
 				["p","port","3306"],
 				["u","user","root"],
 				["w","password",""],
+				["m","all-models",true],
 		];
 		if(mkdir($projectName)==true){
 			chdir($projectName);
@@ -125,7 +135,10 @@ class Micro {
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
 			require_once 'app/micro/controllers/Autoloader.php';
 			Autoloader::register();
-			ModelsCreator::create();
+			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
+				ModelsCreator::create();
+			echo "deleting temporary files...\n";
+			self::delTree("tmp");
 			echo "project `{$projectName}` successfully created.\n";
 		}
 	}
@@ -167,9 +180,23 @@ class Micro {
 		}
 		return $out;
 	}
+	public static function init($command){
+		global $argv;
+		switch ($command) {
+			case "project":case "create-project":
+			self::create($argv[2]);
+			break;
+			case "all-models":
+				ModelsCreator::create();
+			default:
+				;
+			break;
+		}
+
+	}
 }
 error_reporting(E_ALL);
 
 define('DS', DIRECTORY_SEPARATOR);
 
-Micro::create($argv[1]);
+Micro::init($argv[1]);

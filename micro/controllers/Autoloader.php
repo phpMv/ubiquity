@@ -48,7 +48,6 @@ class Autoloader{
 				}
 			}
 			$class = implode(DS, $nameSpace);
-			echo "\n***".$class."***\n";
 
 			if(strstr($class,"micro".DS)===false){
 				if(file_exists($class.'.php'))
