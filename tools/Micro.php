@@ -64,7 +64,7 @@ class Micro {
 	public static function delTree($dir) {
 		$files = array_diff(scandir($dir), array('.','..'));
 		foreach ($files as $file) {
-			(is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+			(is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
 		}
 		return rmdir($dir);
 	}
@@ -90,8 +90,7 @@ class Micro {
 		return self::writeFile($destination,$str);
 	}
 
-	private static function getOption($option,$longOption,$default=NULL){
-		$options=self::parseArguments();
+	private static function getOption($options,$option,$longOption,$default=NULL){
 		if(array_key_exists($option, $options)){
 			$option=$options[$option];
 		}else if(array_key_exists($longOption, $options)){
@@ -112,7 +111,7 @@ class Micro {
 				["p","port","3306"],
 				["u","user","root"],
 				["w","password",""],
-				["m","all-models",true],
+				["m","all-models",false],
 		];
 		if(mkdir($projectName)==true){
 			chdir($projectName);
@@ -128,13 +127,15 @@ class Micro {
 			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
 			self::$configOptions=["%siteUrl%"=>"http://127.0.0.1/".$projectName."/"];
+			$options=self::parseArguments();
 			foreach ($arguments as $argument){
-				self::$configOptions["%".$argument[1]."%"]=self::getOption($argument[0], $argument[1],$argument[2]);
+				self::$configOptions["%".$argument[1]."%"]=self::getOption($options,$argument[0], $argument[1],$argument[2]);
 			}
 			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", self::$configOptions);
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
 			require_once 'app/micro/controllers/Autoloader.php';
 			Autoloader::register();
+			echo "#".self::$configOptions["%all-models%"]."#";
 			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
 				ModelsCreator::create();
 			echo "deleting temporary files...\n";
@@ -188,6 +189,7 @@ class Micro {
 			break;
 			case "all-models":
 				ModelsCreator::create();
+				break;
 			default:
 				;
 			break;
