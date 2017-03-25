@@ -155,7 +155,7 @@ class Micro {
 			self::createComposerFile();
 			$answer=Console::question("Do you want to run composer ?",["y","n"]);
 			if(Console::isYes($answer))
-				system("composer -install");
+				system("composer install");
 			echo "project `{$projectName}` successfully created.\n";
 		}else{
 			echo "The {$projectName} folder already exists !\n";
