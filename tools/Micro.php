@@ -141,7 +141,7 @@ class Micro {
 			echo "#".self::$configOptions["%all-models%"]."#";
 			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
 				ModelsCreator::create();
-			self::createController("Main");
+			self::createController("Main","\n\techo '<h1>Micro framework</h1>It works !';\n");
 			echo "deleting temporary files...\n";
 			self::delTree("tmp");
 			echo "project `{$projectName}` successfully created.\n";
@@ -155,17 +155,17 @@ class Micro {
 		}
 	}
 
-	public static function createController($controllerName,$force=false){
+	public static function createController($controllerName,$indexContent=null,$force=false){
 		$controllerName=ucfirst($controllerName);
 		self::safeMkdir("app/controllers");
 		$filename="app/controllers/{$controllerName}.php";
 		if(file_exists($filename)){
 			$answer=Console::question("The file {$filename} exists.\nWould you like to replace it?",["y","n"]);
 			if(Console::isYes($answer))
-				self::createController($controllerName,true);
+				self::createController($controllerName,$indexContent,true);
 		}else{
 			echo "Creating the Controller {$controllerName} at the location {$filename}\n";
-			self::openReplaceWrite("tmp/micro-master/project-files/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName]);
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%",$indexContent]);
 		}
 	}
 
