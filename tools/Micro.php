@@ -153,6 +153,9 @@ class Micro {
 			echo "deleting temporary files...\n";
 			self::delTree("tmp");
 			self::createComposerFile();
+			$answer=Console::question("Do you want to run composer ?",["y","n"]);
+			if(Console::isYes($answer))
+				exec("composer -install");
 			echo "project `{$projectName}` successfully created.\n";
 		}else{
 			echo "The {$projectName} folder already exists !\n";
