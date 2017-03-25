@@ -9,6 +9,14 @@ class ModelsCreator {
 	private static $pdoObject;
 	private static $tables=array();
 	private static $classes=array();
+
+	private static function init(){
+		require_once 'app/micro/controllers/Autoloader.php';
+		Autoloader::register();
+		$config=require_once 'app/config.php';
+		self::$config=$config["database"];
+		self::connect();
+	}
 	/**
 	 * Réalise la connexion à la base de données
 	 */
@@ -27,14 +35,11 @@ class ModelsCreator {
 		}
 	}
 
-	public static function create(){
-		require_once 'app/micro/controllers/Autoloader.php';
-		Autoloader::register();
-		$config=require_once 'app/config.php';
-		self::$config=$config["database"];
-		self::connect();
+	public static function create($singleTable=null){
+		self::init();
 		self::$tables=self::getTablesName();
-		mkdir("app/models");
+		if(!is_dir("app/models"))
+			mkdir("app/models");
 		new Reflexion();
 		foreach (self::$tables as $table){
 			$class=new Model($table);
@@ -50,8 +55,23 @@ class ModelsCreator {
 			self::$classes[$table]=$class;
 		}
 		self::createRelations();
-		foreach (self::$classes as $table=>$class){
-			self::writeFile("app/models/".$table.".php", $class);
+		if(isset($singleTable)){
+			self::createOneClass($singleTable);
+		}else{
+			foreach (self::$classes as $table=>$class){
+				echo "Creating the {$class->getName()} class\n";
+				self::writeFile("app/models/".$table.".php", $class);
+			}
+		}
+	}
+
+	private static function createOne($singleTable){
+		if(isset(self::$classes[$singleTable])){
+			$class=self::$classes[$singleTable];
+			echo "Creating the {$class->getName()} class\n";
+			self::writeFile("app/models/".$singleTable.".php", $class);
+		}else{
+			echo "The {$singleTable} table does not exist in the database\n";
 		}
 	}
 
@@ -107,7 +127,6 @@ class ModelsCreator {
 		foreach ($fields as $field) {
 			$fieldNames[] = $field['Field'];
 		}
-		var_dump($fieldNames);
 		return $fieldNames;
 	}
 

@@ -113,10 +113,11 @@ class Micro {
 				["w","password",""],
 				["m","all-models",false],
 		];
-		if(mkdir($projectName)==true){
+		if(!is_dir($projectName)){
+			mkdir($projectName);
 			chdir($projectName);
 			echo "Downloading micro.git from https://github.com/phpMv/...\n";
-			mkdir("tmp");
+			mkdir("tmp");mkdir(".micro");
 			self::downloadZip("https://github.com/phpMv/micro/archive/master.zip","tmp/tmp.zip");
 			echo "Files extraction...\n";
 			self::unzip("tmp/tmp.zip","tmp/");
@@ -141,7 +142,25 @@ class Micro {
 			echo "deleting temporary files...\n";
 			self::delTree("tmp");
 			echo "project `{$projectName}` successfully created.\n";
+		}else{
+			echo "The {$projectName} folder already exists !";
 		}
+	}
+
+	private static function setDir($dir=null){
+		echo $dir."\n";
+		if(file_exists($dir) && is_dir($dir)){
+			$microDir=$dir.DIRECTORY_SEPARATOR.".micro";
+			if(file_exists($microDir) && is_dir($microDir)){
+				chdir($dir);
+				return true;
+			}
+		}
+		$newDir=dirname($dir);
+		if($newDir===$dir)
+			return false;
+		else
+			return self::setDir($newDir);
 	}
 
 	private static function parseArguments(){
@@ -184,17 +203,31 @@ class Micro {
 	public static function init($command){
 		global $argv;
 		switch ($command) {
-			case "project":case "create-project":
+			case "project":case "create-project":case "new":
 			self::create($argv[2]);
 			break;
 			case "all-models":
+				self::_init();
 				ModelsCreator::create();
+				break;
+			case "model":
+				self::_init();
+				ModelsCreator::create($argv[2]);
 				break;
 			default:
 				;
 			break;
 		}
+	}
+	private static function _init(){
+		if(!self::setDir(getcwd())){
+			echo "Unable to identify project folder";
+			return ;
+		}
+		define('ROOT', realpath('./app').DS);
 
+		require_once 'app/micro/controllers/Autoloader.php';
+		Autoloader::register();
 	}
 }
 error_reporting(E_ALL);
