@@ -141,6 +141,7 @@ class Micro {
 			echo "#".self::$configOptions["%all-models%"]."#";
 			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
 				ModelsCreator::create();
+			self::createController("Main");
 			echo "deleting temporary files...\n";
 			self::delTree("tmp");
 			echo "project `{$projectName}` successfully created.\n";
@@ -163,6 +164,7 @@ class Micro {
 			if(Console::isYes($answer))
 				self::createController($controllerName,true);
 		}else{
+			echo "Creating the Controller {$controllerName} at the location {$filename}\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName]);
 		}
 	}
