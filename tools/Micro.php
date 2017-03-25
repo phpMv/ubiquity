@@ -2,6 +2,7 @@
 use micro\controllers\Autoloader;
 use micro\utils\StrUtils;
 include 'ModelsCreator.php';
+include 'Console.php';
 class Micro {
 	private static $configOptions;
 	public static function downloadZip($url,$zipFile="tmp/tmp.zip"){
@@ -103,7 +104,7 @@ class Micro {
 		return $option;
 	}
 
-	public static function create($projectName){
+	public static function create($projectName,$force=false){
 		$arguments=[
 				["b","dbName",$projectName],
 				["r","documentRoot","Main"],
@@ -113,15 +114,16 @@ class Micro {
 				["w","password",""],
 				["m","all-models",false],
 		];
-		if(!is_dir($projectName)){
-			mkdir($projectName);
+		if(!is_dir($projectName) || $force){
+			if(!$force)
+				self::safeMkdir($projectName);
 			chdir($projectName);
 			echo "Downloading micro.git from https://github.com/phpMv/...\n";
-			mkdir("tmp");mkdir(".micro");
+			self::safeMkdir("tmp");self::safeMkdir(".micro");
 			self::downloadZip("https://github.com/phpMv/micro/archive/master.zip","tmp/tmp.zip");
 			echo "Files extraction...\n";
 			self::unzip("tmp/tmp.zip","tmp/");
-			mkdir("app");
+			self::safeMkdir("app");
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
@@ -144,7 +146,17 @@ class Micro {
 			echo "project `{$projectName}` successfully created.\n";
 		}else{
 			echo "The {$projectName} folder already exists !";
+			$answer=Console::question("Would you like to continue ?",["y","n"]);
+			if(Console::isYes($answer)){
+				self::create($projectName,true);
+			}else
+				die();
 		}
+	}
+
+	private static function safeMkdir($dir){
+		if(!is_dir($dir))
+			return mkdir($dir);
 	}
 
 	private static function setDir($dir=null){
