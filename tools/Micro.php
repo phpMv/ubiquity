@@ -145,12 +145,25 @@ class Micro {
 			self::delTree("tmp");
 			echo "project `{$projectName}` successfully created.\n";
 		}else{
-			echo "The {$projectName} folder already exists !";
+			echo "The {$projectName} folder already exists !\n";
 			$answer=Console::question("Would you like to continue ?",["y","n"]);
 			if(Console::isYes($answer)){
 				self::create($projectName,true);
 			}else
 				die();
+		}
+	}
+
+	public static function createController($controllerName,$force=false){
+		$controllerName=ucfirst($controllerName);
+		self::safeMkdir("app/controllers");
+		$filename="app/controllers/{$controllerName}.php";
+		if(file_exists($filename)){
+			$answer=Console::question("The file {$filename} exists.\nWould you like to replace it?",["y","n"]);
+			if(Console::isYes($answer))
+				self::createController($controllerName,true);
+		}else{
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName]);
 		}
 	}
 
@@ -225,6 +238,10 @@ class Micro {
 			case "model":
 				self::_init();
 				ModelsCreator::create($argv[2]);
+				break;
+			case "controller":
+				self::_init();
+				self::createController($argv[2]);
 				break;
 			default:
 				;
