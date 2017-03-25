@@ -5,6 +5,8 @@ include 'ModelsCreator.php';
 include 'Console.php';
 class Micro {
 	private static $configOptions;
+	private static $composer=["require"=>["twig/twig"=>"~1.0"]];
+
 	public static function downloadZip($url,$zipFile="tmp/tmp.zip"){
 		$f = file_put_contents($zipFile, fopen($url, 'r'), LOCK_EX);
 	if(FALSE === $f)
@@ -12,6 +14,12 @@ class Micro {
 	else{
 		echo $f." downloaded.\n";
 	}
+	}
+
+	public static function createComposerFile(){
+		$composer=json_encode(self::$composer);
+		echo "Composer file creation...\n";
+		self::writeFile("composer.json", $composer);
 	}
 
 	public static function unzip($zipFile,$extractPath="."){
@@ -144,6 +152,7 @@ class Micro {
 			self::createController("Main","\n\techo '<h1>Micro framework</h1>It works !';\n");
 			echo "deleting temporary files...\n";
 			self::delTree("tmp");
+			self::createComposerFile();
 			echo "project `{$projectName}` successfully created.\n";
 		}else{
 			echo "The {$projectName} folder already exists !\n";
