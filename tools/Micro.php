@@ -148,11 +148,11 @@ class Micro {
 	}
 
 	private static function setDir($dir=null){
-		echo $dir."\n";
 		if(file_exists($dir) && is_dir($dir)){
 			$microDir=$dir.DIRECTORY_SEPARATOR.".micro";
 			if(file_exists($microDir) && is_dir($microDir)){
 				chdir($dir);
+				echo "The project folder is {$dir}\n";
 				return true;
 			}
 		}
@@ -221,8 +221,9 @@ class Micro {
 	}
 	private static function _init(){
 		if(!self::setDir(getcwd())){
-			echo "Unable to identify project folder";
-			return ;
+			echo "Failed to locate project root folder\n";
+			echo "A Micro project must contain the .micro empty folder.\n";
+			die();
 		}
 		define('ROOT', realpath('./app').DS);
 

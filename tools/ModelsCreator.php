@@ -65,7 +65,7 @@ class ModelsCreator {
 		}
 	}
 
-	private static function createOne($singleTable){
+	private static function createOneClass($singleTable){
 		if(isset(self::$classes[$singleTable])){
 			$class=self::$classes[$singleTable];
 			echo "Creating the {$class->getName()} class\n";
