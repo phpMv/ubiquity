@@ -15,5 +15,6 @@ return array(
 		"templateEngine"=>'micro\views\engine\Twig',
 		"templateEngineOptions"=>array("cache"=>false),
 		"test"=>false,
-		"debug"=>false
+		"debug"=>false,
+		"di"=>[%injections%]
 );
