@@ -6,6 +6,7 @@ include 'Console.php';
 class Micro {
 	private static $configOptions;
 	private static $composer=["require"=>["twig/twig"=>"~1.0"]];
+	private static $toolsConfig;
 
 	public static function downloadZip($url,$zipFile="tmp/tmp.zip"){
 		$f = file_put_contents($zipFile, fopen($url, 'r'), LOCK_EX);
@@ -90,6 +91,7 @@ class Micro {
 	}
 
 	public static function replaceAll($array,$subject){
+		array_walk($array, function(&$item){if(is_array($item)) $item=implode("\n", $item);});
 		return str_replace(array_keys($array), array_values($array), $subject);
 	}
 
@@ -113,6 +115,7 @@ class Micro {
 	}
 
 	public static function create($projectName,$force=false){
+		self::$toolsConfig=include("toolsConfig.php");
 		$arguments=[
 				["b","dbName",$projectName],
 				["r","documentRoot","Main"],
@@ -121,6 +124,7 @@ class Micro {
 				["u","user","root"],
 				["w","password",""],
 				["m","all-models",false],
+				["q","phpmv",false],
 		];
 		if(!is_dir($projectName) || $force){
 			if(!$force)
@@ -132,9 +136,11 @@ class Micro {
 			echo "Files extraction...\n";
 			self::unzip("tmp/tmp.zip","tmp/");
 			self::safeMkdir("app");
+			self::safeMkdir("app/views");
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
+
 			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
 			self::$configOptions=["%siteUrl%"=>"http://127.0.0.1/".$projectName."/"];
@@ -142,18 +148,24 @@ class Micro {
 			foreach ($arguments as $argument){
 				self::$configOptions["%".$argument[1]."%"]=self::getOption($options,$argument[0], $argument[1],$argument[2]);
 			}
-			self::openReplaceWrite("tmp/micro-master/project-files/app/config.php", "app/config.php", self::$configOptions);
+			self::showConfigOptions();
+
+			self::includePhpmv();
+
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/config.tpl", "app/config.php", self::$configOptions);
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/vHeader.tpl", "app/views/vHeader.html", self::$configOptions);
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/vFooter.tpl", "app/views/vFooter.html", self::$configOptions);
+
 			require_once 'app/micro/controllers/Autoloader.php';
 			Autoloader::register();
-			echo "#".self::$configOptions["%all-models%"]."#";
 			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
 				ModelsCreator::create();
 			self::createController("Main","\n\techo '<h1>Micro framework</h1>It works !';\n");
 			echo "deleting temporary files...\n";
 			self::delTree("tmp");
 			self::createComposerFile();
-			$answer=Console::question("Do you want to run composer ?",["y","n"]);
+			$answer=Console::question("Do you want to run composer install ?",["y","n"]);
 			if(Console::isYes($answer))
 				system("composer install");
 			echo "project `{$projectName}` successfully created.\n";
@@ -166,6 +178,52 @@ class Micro {
 				die();
 		}
 	}
+	private static function includePhpmv(){
+		if(self::$configOptions["%phpmv%"]!==false){
+			$phpmv=self::$configOptions["%phpmv%"];
+			switch ($phpmv){
+				case "bootstrap":case "semantic":
+					self::$configOptions["%injections%"]="\"jquery\"=>function(){
+					\n\t\$jquery=new Ajax\php\micro\JsUtils();
+					\n\t\$jquery->{$phpmv}(new Ajax\\".ucfirst($phpmv)."());
+															\n\treturn \$jquery;
+															\n}";
+					break;
+				default:
+					throw new Exception($phpmv." is not a valid option for phpMv-UI.");
+					break;
+			}
+			self::$composer["require"]["phpmv/php-mv-ui"]="dev-master";
+			if($phpmv==="bootstrap"){
+				self::$configOptions["%cssFiles%"][]=self::$toolsConfig["cdn"]["bootstrap"]["css"];
+				self::$configOptions["%jsFiles%"][]=self::$toolsConfig["cdn"]["jquery"];
+				self::$configOptions["%jsFiles%"][]=self::$toolsConfig["cdn"]["bootstrap"]["js"];
+			}
+			elseif($phpmv==="semantic"){
+				self::$configOptions["%cssFiles%"][]=self::$toolsConfig["cdn"]["semantic"]["css"];
+				self::$configOptions["%jsFiles%"][]=self::$toolsConfig["cdn"]["jquery"];
+				self::$configOptions["%jsFiles%"][]=self::$toolsConfig["cdn"]["semantic"]["js"];
+			}
+		}
+	}
+
+	private static function includeCss($filename){
+		return "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$filename}\">";
+	}
+
+	private static function includeJs($filename){
+		return "<script src=\"{$filename}\"></script>";
+	}
+
+	private static function showConfigOptions(){
+		$output = implode(', ', array_map(
+		function ($v, $k) { return sprintf("%s='%s'", str_ireplace("%", "", $k), $v); },
+		self::$configOptions,
+		array_keys(self::$configOptions)
+		));
+		echo "command line arguments :\n";
+		echo $output."\n";
+	}
 
 	public static function createController($controllerName,$indexContent=null,$force=false){
 		$controllerName=ucfirst($controllerName);
@@ -177,7 +235,7 @@ class Micro {
 				self::createController($controllerName,$indexContent,true);
 		}else{
 			echo "Creating the Controller {$controllerName} at the location {$filename}\n";
-			self::openReplaceWrite("tmp/micro-master/project-files/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%",$indexContent]);
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent]);
 		}
 	}
 
