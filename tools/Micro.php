@@ -195,7 +195,7 @@ class Micro {
 			switch ($phpmv){
 				case "bootstrap":case "semantic":
 					self::$configOptions["%injections%"]="\"jquery\"=>function(){
-					\t\t\$jquery=new Ajax\php\micro\JsUtils();
+					\t\t\$jquery=new Ajax\php\micro\JsUtils([\"defer\"=>true]);
 					\t\t\$jquery->{$phpmv}(new Ajax\\".ucfirst($phpmv)."());
 					\t\treturn \$jquery;
 					\t}";
@@ -237,7 +237,9 @@ class Micro {
 
 	private static function showConfigOptions(){
 		$output = implode(', ', array_map(
-		function ($v, $k) { return sprintf("%s='%s'", str_ireplace("%", "", $k), $v); },
+		function ($v, $k) {if(is_array($v))
+			$v=implode(",",$v );
+			return sprintf("%s='%s'", str_ireplace("%", "", $k), $v); },
 		self::$configOptions,
 		array_keys(self::$configOptions)
 		));
