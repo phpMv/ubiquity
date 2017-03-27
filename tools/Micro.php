@@ -7,6 +7,8 @@ class Micro {
 	private static $configOptions;
 	private static $composer=["require"=>["twig/twig"=>"~1.0"]];
 	private static $toolsConfig;
+	private static $indexContent="\n\t\$this->loadView('index.html');\n";
+	private static $mainViewTemplate="index.html";
 
 	public static function downloadZip($url,$zipFile="tmp/tmp.zip"){
 		$f = file_put_contents($zipFile, fopen($url, 'r'), LOCK_EX);
@@ -137,10 +139,13 @@ class Micro {
 			self::unzip("tmp/tmp.zip","tmp/");
 			self::safeMkdir("app");
 			self::safeMkdir("app/views/main");
+			self::safeMkdir("app/controllers");
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
 			self::xcopy("tmp/micro-master/project-files/templates", "app/micro/tools/templates");
+			self::xcopy("tmp/micro-master/project-files/app/controllers/ControllerBase.php", "app/controllers/ControllerBase.php");
+
 
 			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
@@ -166,7 +171,8 @@ class Micro {
 			Autoloader::register();
 			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
 				ModelsCreator::create();
-			self::createController("Main","\n\techo '<h1>Micro framework</h1>It works !';\n");
+			self::createController("Main",self::$indexContent);
+			self::xcopy("tmp/micro-master/project-files/app/views/".self::$mainViewTemplate, "app/views/index.html");
 			echo "deleting temporary files...\n";
 			self::delTree("tmp");
 			self::createComposerFile();
@@ -203,11 +209,20 @@ class Micro {
 				self::$configOptions["%cssFiles%"][]=self::includeCss(self::$toolsConfig["cdn"]["bootstrap"]["css"]);
 				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["jquery"]);
 				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["bootstrap"]["js"]);
+				self::$mainViewTemplate="bootstrap.html";
 			}
 			elseif($phpmv==="semantic"){
 				self::$configOptions["%cssFiles%"][]=self::includeCss(self::$toolsConfig["cdn"]["semantic"]["css"]);
 				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["jquery"]);
 				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["semantic"]["js"]);
+				self::$indexContent='
+		$semantic=$this->jquery->semantic();
+		$semantic->htmlHeader("header",1,"Micro framework");
+		$bt=$semantic->htmlButton("btTest","Semantic-UI Button");
+		$bt->onClick("$(\'#test\').html(\'It works with Semantic-UI too !\');");
+		$this->jquery->compile($this->view);
+		$this->loadView("index.html");';
+				self::$mainViewTemplate="semantic.html";
 			}
 		}
 	}
