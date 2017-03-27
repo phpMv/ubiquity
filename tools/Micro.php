@@ -251,7 +251,7 @@ class Micro {
 		$controllerName=ucfirst($controllerName);
 		self::safeMkdir("app/controllers");
 		$filename="app/controllers/{$controllerName}.php";
-		if(file_exists($filename)){
+		if(file_exists($filename) && !$force){
 			$answer=Console::question("The file {$filename} exists.\nWould you like to replace it?",["y","n"]);
 			if(Console::isYes($answer))
 				self::createController($controllerName,$indexContent,true);
