@@ -146,6 +146,8 @@ class Micro {
 			self::$configOptions=["%siteUrl%"=>"http://127.0.0.1/".$projectName."/"];
 			self::$configOptions["%projectName%"]=$projectName;
 			self::$configOptions["%injections%"]="";
+			self::$configOptions["%cssFiles%"]=[];
+			self::$configOptions["%jsFiles%"]=[];
 			$options=self::parseArguments();
 			foreach ($arguments as $argument){
 				self::$configOptions["%".$argument[1]."%"]=self::getOption($options,$argument[0], $argument[1],$argument[2]);
