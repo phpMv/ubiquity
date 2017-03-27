@@ -145,6 +145,7 @@ class Micro {
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
 			self::$configOptions=["%siteUrl%"=>"http://127.0.0.1/".$projectName."/"];
 			self::$configOptions["%projectName%"]=$projectName;
+			self::$configOptions["%injections%"]="";
 			$options=self::parseArguments();
 			foreach ($arguments as $argument){
 				self::$configOptions["%".$argument[1]."%"]=self::getOption($options,$argument[0], $argument[1],$argument[2]);
