@@ -51,7 +51,7 @@ class Micro {
 
 		// Make destination directory
 		if (!is_dir($dest)) {
-			mkdir($dest, $permissions);
+			mkdir($dest, $permissions,true);
 		}
 
 		// Loop through the folder
@@ -140,7 +140,7 @@ class Micro {
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
-			self::xcopy("tmp/micro-master/project-files/templates", "app/micro/tools");
+			self::xcopy("tmp/micro-master/project-files/templates", "app/micro/tools/templates");
 
 			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
