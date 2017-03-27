@@ -84,11 +84,12 @@ class Startup{
 					$obj->index();
 					break;
 				case 2:
+					$action=$u[1];
 					//Appel de la méthode (2ème élément du tableau)
-					if(method_exists($obj, $u[1])){
-						$obj->$u[1]();
+					if(method_exists($obj, $action)){
+						$obj->$action();
 					}else{
-						print "La méthode `{$u[1]}` n'existe pas sur le contrôleur `".$u[0]."`<br/>";
+						print "La méthode `{$action}` n'existe pas sur le contrôleur `".$u[0]."`<br/>";
 					}
 					break;
 				default:

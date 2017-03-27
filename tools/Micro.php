@@ -136,7 +136,7 @@ class Micro {
 			echo "Files extraction...\n";
 			self::unzip("tmp/tmp.zip","tmp/");
 			self::safeMkdir("app");
-			self::safeMkdir("app/views");
+			self::safeMkdir("app/views/main");
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
@@ -144,6 +144,7 @@ class Micro {
 			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
 			self::$configOptions=["%siteUrl%"=>"http://127.0.0.1/".$projectName."/"];
+			self::$configOptions["%projectName%"]=$projectName;
 			$options=self::parseArguments();
 			foreach ($arguments as $argument){
 				self::$configOptions["%".$argument[1]."%"]=self::getOption($options,$argument[0], $argument[1],$argument[2]);
@@ -154,8 +155,8 @@ class Micro {
 
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/config.tpl", "app/config.php", self::$configOptions);
 			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
-			self::openReplaceWrite("tmp/micro-master/project-files/templates/vHeader.tpl", "app/views/vHeader.html", self::$configOptions);
-			self::openReplaceWrite("tmp/micro-master/project-files/templates/vFooter.tpl", "app/views/vFooter.html", self::$configOptions);
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/vHeader.tpl", "app/views/main/vHeader.html", self::$configOptions);
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/vFooter.tpl", "app/views/main/vFooter.html", self::$configOptions);
 
 			require_once 'app/micro/controllers/Autoloader.php';
 			Autoloader::register();
@@ -184,10 +185,10 @@ class Micro {
 			switch ($phpmv){
 				case "bootstrap":case "semantic":
 					self::$configOptions["%injections%"]="\"jquery\"=>function(){
-					\n\t\$jquery=new Ajax\php\micro\JsUtils();
-					\n\t\$jquery->{$phpmv}(new Ajax\\".ucfirst($phpmv)."());
-															\n\treturn \$jquery;
-															\n}";
+					\t\t\$jquery=new Ajax\php\micro\JsUtils();
+					\t\t\$jquery->{$phpmv}(new Ajax\\".ucfirst($phpmv)."());
+					\t\treturn \$jquery;
+					\t}";
 					break;
 				default:
 					throw new Exception($phpmv." is not a valid option for phpMv-UI.");
@@ -195,14 +196,14 @@ class Micro {
 			}
 			self::$composer["require"]["phpmv/php-mv-ui"]="dev-master";
 			if($phpmv==="bootstrap"){
-				self::$configOptions["%cssFiles%"][]=self::$toolsConfig["cdn"]["bootstrap"]["css"];
-				self::$configOptions["%jsFiles%"][]=self::$toolsConfig["cdn"]["jquery"];
-				self::$configOptions["%jsFiles%"][]=self::$toolsConfig["cdn"]["bootstrap"]["js"];
+				self::$configOptions["%cssFiles%"][]=self::includeCss(self::$toolsConfig["cdn"]["bootstrap"]["css"]);
+				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["jquery"]);
+				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["bootstrap"]["js"]);
 			}
 			elseif($phpmv==="semantic"){
-				self::$configOptions["%cssFiles%"][]=self::$toolsConfig["cdn"]["semantic"]["css"];
-				self::$configOptions["%jsFiles%"][]=self::$toolsConfig["cdn"]["jquery"];
-				self::$configOptions["%jsFiles%"][]=self::$toolsConfig["cdn"]["semantic"]["js"];
+				self::$configOptions["%cssFiles%"][]=self::includeCss(self::$toolsConfig["cdn"]["semantic"]["css"]);
+				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["jquery"]);
+				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["semantic"]["js"]);
 			}
 		}
 	}
@@ -241,7 +242,7 @@ class Micro {
 
 	private static function safeMkdir($dir){
 		if(!is_dir($dir))
-			return mkdir($dir);
+			return mkdir($dir,0777,true);
 	}
 
 	private static function setDir($dir=null){
