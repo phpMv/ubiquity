@@ -140,6 +140,7 @@ class Micro {
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
 			self::xcopy("tmp/micro-master/micro/","app/micro");
+			self::xcopy("tmp/micro-master/project-files/templates", "app/micro/tools");
 
 			echo "Config files creation...\n";
 			self::openReplaceWrite("tmp/micro-master/project-files/.htaccess", getcwd()."/.htaccess", array("%rewriteBase%"=>$projectName));
@@ -239,7 +240,7 @@ class Micro {
 				self::createController($controllerName,$indexContent,true);
 		}else{
 			echo "Creating the Controller {$controllerName} at the location {$filename}\n";
-			self::openReplaceWrite("tmp/micro-master/project-files/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent]);
+			self::openReplaceWrite("app/micro/tools/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent]);
 		}
 	}
 
