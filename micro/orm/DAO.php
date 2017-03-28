@@ -268,7 +268,7 @@ class DAO {
 	 * Supprime $instance dans la base de données
 	 * @param Classe $instance instance à supprimer
 	 */
-	public static function delete($instance){
+	public static function remove($instance){
 		$tableName=OrmUtils::getTableName(get_class($instance));
 		$keyAndValues=OrmUtils::getKeyFieldsAndValues($instance);
 		$sql="DELETE FROM ".$tableName." WHERE ".SqlUtils::getWhere($keyAndValues);

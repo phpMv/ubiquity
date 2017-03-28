@@ -32,7 +32,8 @@ class Startup{
 		}
 		extract($config["database"]);
 		$db=$config["database"];
-		DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"]);
+		if($db!=="")
+			DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"]);
 		$url=$_GET["c"];
 
 		if(!$url){
