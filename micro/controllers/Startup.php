@@ -56,7 +56,6 @@ class Startup{
 				self::runAction($u);
 			}catch (\Exception $e){
 				print "Error!: " . $e->getMessage() . "<br/>";
-				die();
 			}
 
 		}else{
@@ -101,7 +100,6 @@ class Startup{
 			}
 		}catch (\Exception $e){
 			print "Error!: " . $e->getMessage() . "<br/>";
-			die();
 		}
 		if($finalize)
 			$obj->finalize();
