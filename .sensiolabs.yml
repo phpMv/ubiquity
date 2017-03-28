@@ -2,6 +2,7 @@ global_exclude_dirs:
     - tools
     - project-files
     - micro/addendum
+    - micro/annotations
 
 exclude_patterns:
     - micro/log/chromePhp.php

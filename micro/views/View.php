@@ -17,9 +17,9 @@ class View {
 		$this->vars=array();
 	}
 
-	private function includeFileAsString($file){
+	protected function includeFileAsString($filename){
 		\ob_start();
-		include $file;
+		include($filename);
 		return \ob_get_clean();
 	}
 
@@ -66,9 +66,7 @@ class View {
 					extract($data);
 				}
 				if($asString){
-					\ob_start();
-					include ($fileName);
-					return \ob_get_clean();
+					return $this->includeFileAsString($fileName);
 				}else{
 					include($fileName);
 				}
