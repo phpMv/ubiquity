@@ -16,15 +16,15 @@ class DAO {
 	private static $objects;
 
 	private static function getObjects(){
-		if(is_null(DAO::$objects)){
-			DAO::$objects=array();
+		if(is_null(self::$objects)){
+			self::$objects=array();
 			Logger::log("getObjects","Instanciation de Objects");
 		}
-		return DAO::$objects;
+		return self::$objects;
 	}
 
 	private static function getInstanceIdInObjects($instance){
-		$condition=DAO::getCondition(OrmUtils::getKeyFieldsAndValues($instance));
+		$condition=self::getCondition(OrmUtils::getKeyFieldsAndValues($instance));
 		$condition=preg_replace('/\s|\'+/', '', $condition);
 		return get_class($instance)."#".$condition;
 	}
@@ -43,13 +43,13 @@ class DAO {
 	}
 
 	private static function addInstanceInObjects($instance){
-		DAO::getObjects();
-		DAO::$objects[DAO::getInstanceIdInObjects($instance)]=$instance;
+		self::getObjects();
+		self::$objects[self::getInstanceIdInObjects($instance)]=$instance;
 	}
 
 	private static function getInstanceInObjects($className,$keyValue){
-		$objects=DAO::getObjects();
-		$condition=DAO::getCondition($keyValue);
+		$objects=self::getObjects();
+		$condition=self::getCondition($keyValue);
 		$condition=preg_replace('/\s|\'+/', '', $condition);
 		$key=$className."#".$condition;
 		if(array_key_exists($key,$objects)){
@@ -75,7 +75,7 @@ class DAO {
 					$key=OrmUtils::getFirstKey($annot->className);
 					$kv=array($key=>$keyValues[$annot->name]);
 
-					$obj=DAO::getOne($annot->className, $kv,false);
+					$obj=self::getOne($annot->className, $kv,false);
 					if($obj!=null){
 						Logger::log("getOneManyToOne", "Chargement de ".$member->getName()." pour l'objet ".$class);
 						$accesseur="set".ucfirst($member->getName());
@@ -104,7 +104,7 @@ class DAO {
 			$fk=Reflexion::getAnnotationMember($annot->className, $annot->mappedBy, "JoinColumn");
 			$fkv=OrmUtils::getFirstKeyValue($instance);
 			if(is_null($array)){
-				$ret=DAO::getAll($annot->className,$fk->name."='".$fkv."'");
+				$ret=self::getAll($annot->className,$fk->name."='".$fkv."'");
 			}
 			else{
 				$elementAccessor="get".ucfirst($annot->mappedBy);
@@ -132,7 +132,7 @@ class DAO {
 		$accessor="get".ucfirst($parser->getPk());
 		$sql="SELECT * FROM `".$parser->getJoinTable()."` WHERE `".$parser->getMyFkField()."`='".$instance->$accessor()."'";
 		Logger::log("ManyToMany", "Exécution de ".$sql);
-		return DAO::$db->query($sql);
+		return self::$db->query($sql);
 	}
 	/**
 	 * Affecte/charge les enregistrements fils dans le membre $member de $instance.
@@ -146,11 +146,11 @@ class DAO {
 		$class=get_class($instance);
 		$parser=new ManyToManyParser($instance, $member);
 		if($parser->init()){
-			$joinTableCursor=DAO::getSQLForJoinTable($instance,$parser);
+			$joinTableCursor=self::getSQLForJoinTable($instance,$parser);
 			if(is_null($array)){
 				foreach($joinTableCursor as $row){
 					$fkv=$row[$parser->getFkField()];
-					$tmp=DAO::getOne($parser->getTargetEntity(),"`".$parser->getPk()."`='".$fkv."'");
+					$tmp=self::getOne($parser->getTargetEntity(),"`".$parser->getPk()."`='".$fkv."'");
 					array_push($ret,$tmp);
 				}
 			}
@@ -205,7 +205,7 @@ class DAO {
 		$tableName=OrmUtils::getTableName($className);
 		if($condition!='')
 			$condition=" WHERE ".$condition;
-		$query=DAO::$db->query("SELECT * FROM ".$tableName.$condition);
+		$query=self::$db->query("SELECT * FROM ".$tableName.$condition);
 		Logger::log("getAll","SELECT * FROM ".$tableName.$condition);
 		foreach ($query as $row){
 			//Pour chaque enregistrement : instanciation d'un objet
@@ -219,11 +219,11 @@ class DAO {
 						$o->$accesseur($v);
 					}
 					if($loadManyToOne===true && OrmUtils::isMemberInManyToOne($className,$membersManyToOne, $k)) {
-						DAO::getOneManyToOne($o, array($k=>$v), $membersManyToOne);
+						self::getOneManyToOne($o, array($k=>$v), $membersManyToOne);
 					}
 				}
 			}
-			DAO::addInstanceInObjects($o);
+			self::addInstanceInObjects($o);
 		}
 		return $objects;
 	}
@@ -236,7 +236,7 @@ class DAO {
 		$tableName=OrmUtils::getTableName($className);
 		if($condition!='')
 			$condition=" WHERE ".$condition;
-		return DAO::$db->query("SELECT COUNT(*) FROM ".$tableName.$condition)->fetchColumn();
+		return self::$db->query("SELECT COUNT(*) FROM ".$tableName.$condition)->fetchColumn();
 	}
 
 	/**
@@ -251,10 +251,10 @@ class DAO {
 			}elseif ($keyValues=="")
 				$keyValues="";
 		}
-		$condition=DAO::getCondition($keyValues);
-		$retour=DAO::getInstanceInObjects($className,$condition);
+		$condition=self::getCondition($keyValues);
+		$retour=self::getInstanceInObjects($className,$condition);
 		if(!isset($retour)){
-			$retour=DAO::getAll($className,$condition,$loadManyToOne);
+			$retour=self::getAll($className,$condition,$loadManyToOne);
 			if(sizeof($retour)<1)
 				return null;
 			else
@@ -273,9 +273,9 @@ class DAO {
 		$keyAndValues=OrmUtils::getKeyFieldsAndValues($instance);
 		$sql="DELETE FROM ".$tableName." WHERE ".SqlUtils::getWhere($keyAndValues);
 		Logger::log("delete", $sql);
-		$statement=DAO::$db->prepareStatement($sql);
+		$statement=self::$db->prepareStatement($sql);
 		foreach ($keyAndValues as $key=>$value){
-			DAO::$db->bindValueFromStatement($statement,$key,$value);
+			self::$db->bindValueFromStatement($statement,$key,$value);
 		}
 		return $statement->execute();
 	}
@@ -292,16 +292,16 @@ class DAO {
 		$sql="INSERT INTO ".$tableName."(".SqlUtils::getInsertFields($keyAndValues).") VALUES(".SqlUtils::getInsertFieldsValues($keyAndValues).")";
 		Logger::log("insert", $sql);
 		Logger::log("Key and values", json_encode($keyAndValues));
-		$statement=DAO::$db->prepareStatement($sql);
+		$statement=self::$db->prepareStatement($sql);
 		foreach ($keyAndValues as $key=>$value){
-				DAO::$db->bindValueFromStatement($statement,$key,$value);
+				self::$db->bindValueFromStatement($statement,$key,$value);
 		}
 		$result=$statement->execute();
 		if($result){
 			$accesseurId="set".ucfirst(OrmUtils::getFirstKey(get_class($instance)));
-			$instance->$accesseurId(DAO::$db->lastInserId());
+			$instance->$accesseurId(self::$db->lastInserId());
 			if($insertMany){
-				DAO::insertOrUpdateAllManyToMany($instance);
+				self::insertOrUpdateAllManyToMany($instance);
 			}
 		}
 		return $result;
@@ -314,7 +314,7 @@ class DAO {
 	public static function insertOrUpdateAllManyToMany($instance){
 		$members=Reflexion::getMembersWithAnnotation(get_class($instance), "ManyToMany");
 		foreach ($members as $member){
-			DAO::insertOrUpdateManyToMany($instance, $member->name);
+			self::insertOrUpdateManyToMany($instance, $member->name);
 		}
 	}
 
@@ -336,18 +336,18 @@ class DAO {
 			$accessorId="get".ucfirst($parser->getPk());
 			$id=$instance->$myAccessorId();
 			if(!is_null($memberValues)){
-				DAO::$db->execute("DELETE FROM `".$parser->getJoinTable()."` WHERE `".$myField."`='".$id."'");
-				$statement=DAO::$db->prepareStatement($sql);
+				self::$db->execute("DELETE FROM `".$parser->getJoinTable()."` WHERE `".$myField."`='".$id."'");
+				$statement=self::$db->prepareStatement($sql);
 				foreach ($memberValues as $k=>$targetInstance){
 					$foreignId=$targetInstance->$accessorId();
-					$foreignInstances=DAO::getAll($parser->getTargetEntity(), "`".$parser->getPk()."`"."='".$foreignId."'");
+					$foreignInstances=self::getAll($parser->getTargetEntity(), "`".$parser->getPk()."`"."='".$foreignId."'");
 					if(!OrmUtils::exists($targetInstance, $parser->getPk(), $foreignInstances)){
-						DAO::insert($targetInstance,false);
+						self::insert($targetInstance,false);
 						$foreignId=$targetInstance->$accessorId();
 						Logger::log("InsertMany", "Insertion d'une instance de ".get_class($instance));
 					}
-					DAO::$db->bindValueFromStatement($statement,$myField,$id);
-					DAO::$db->bindValueFromStatement($statement,$field,$foreignId);
+					self::$db->bindValueFromStatement($statement,$myField,$id);
+					self::$db->bindValueFromStatement($statement,$field,$foreignId);
 					$result=$statement->execute();
 					Logger::log("InsertMany", "Insertion des valeurs dans la table association '".$parser->getJoinTable()."'");
 				}
@@ -368,13 +368,13 @@ class DAO {
 		$sql="UPDATE ".$tableName." SET ".SqlUtils::getUpdateFieldsKeyAndValues($ColumnskeyAndValues)." WHERE ".SqlUtils::getWhere($keyFieldsAndValues);
 		Logger::log("update", $sql);
 		Logger::log("Key and values", json_encode($ColumnskeyAndValues));
-		$statement=DAO::$db->prepareStatement($sql);
+		$statement=self::$db->prepareStatement($sql);
 		foreach ($ColumnskeyAndValues as $key=>$value){
-				DAO::$db->bindValueFromStatement($statement,$key,$value);
+				self::$db->bindValueFromStatement($statement,$key,$value);
 		}
 		$result= $statement->execute();
 		if($result && $updateMany)
-			DAO::insertOrUpdateAllManyToMany($instance);
+			self::insertOrUpdateAllManyToMany($instance);
 		return $result;
 	}
 
@@ -387,7 +387,7 @@ class DAO {
 	 * @param string $password
 	 */
 	public static function connect($dbName,$serverName="127.0.0.1",$port="3306",$user="root",$password=""){
-		DAO::$db=new Database($dbName,$serverName,$port,$user,$password);
-		DAO::$db->connect();
+		self::$db=new Database($dbName,$serverName,$port,$user,$password);
+		self::$db->connect();
 	}
 }
