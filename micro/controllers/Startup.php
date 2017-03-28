@@ -22,7 +22,7 @@ class Startup{
 				}
 			}
 		} catch (\Exception $e) {
-			//echo $e->getTraceAsString();
+			echo $e->getTraceAsString();
 		}
 		session_start();
 
