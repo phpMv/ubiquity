@@ -68,10 +68,18 @@ class Gui{
 		return $value;
 	}
 
+	/**
+	 * @param object $value
+	 * @return string
+	 */
 	public static function addDelete($value){
 		return "<tr><td class='element'><input title='Sélectionner' type='checkbox' class='ck' id='ck".$value->getId()."' value='".$value->getId()."'><span title='Modifier...' class='update' id='update".$value->getId()."'>&nbsp;".$value->toString()."<span></td><td><span title='Supprimer...' class='delete' id='delete".$value->getId()."'>&nbsp;</span></td></tr>";
 	}
 
+	/**
+	 * @param object $value
+	 * @return string
+	 */
 	public static function toSelect($value){
 		return "<option class='element' id='element".$value->getId()."' value='".$value->getId()."'>".$value->toString()."</option>";
 	}

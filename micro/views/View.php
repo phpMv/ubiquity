@@ -53,7 +53,7 @@ class View {
 		$config=$GLOBALS["config"];
 		$fileName=ROOT.DS."views/".$viewName;
 		$ext=pathinfo($fileName,PATHINFO_EXTENSION);
-		if($ext==null)
+		if($ext===null)
 			$viewName=$viewName.".php";
 			$fileName=ROOT.DS."views/".$viewName;
 			if(file_exists($fileName)){

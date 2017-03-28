@@ -59,7 +59,7 @@ class Reflexion{
 
 	public static function getAnnotationMember($class,$member,$annotation){
 		$rap=new \ReflectionAnnotatedProperty($class, $member);
-		if($rap!=null)
+		if($rap!==null)
 			$annot=$rap->getAnnotation($annotation);
 		return $annot;
 	}

@@ -61,7 +61,7 @@ class DAO {
 
 	/**
 	 * Charge les membres associés à $instance par une relation de type ManyToOne
-	 * @param Classe $instance
+	 * @param object $instance
 	 * @param array $keyValues
 	 * @param array $members
 	 */
@@ -69,14 +69,14 @@ class DAO {
 		$class=get_class($instance);
 		foreach ($members as $member){
 			$annot=Reflexion::getAnnotationMember($class, $member->getName(), "JoinColumn");
-			if($annot!=false){
+			if($annot!==false){
 				reset($keyValues);
 				if($annot->name==key($keyValues)){
 					$key=OrmUtils::getFirstKey($annot->className);
 					$kv=array($key=>$keyValues[$annot->name]);
 
 					$obj=self::getOne($annot->className, $kv,false);
-					if($obj!=null){
+					if($obj!==null){
 						Logger::log("getOneManyToOne", "Chargement de ".$member->getName()." pour l'objet ".$class);
 						$accesseur="set".ucfirst($member->getName());
 						if(method_exists($instance,$accesseur)){
@@ -92,7 +92,7 @@ class DAO {
 	/**
 	 * Affecte/charge les enregistrements fils dans le membre $member de $instance.
 	 * Si $array est null, les fils sont chargés depuis la base de données
-	 * @param Classe $instance
+	 * @param object $instance
 	 * @param string $member Membre sur lequel doit être présent une annotation OneToMany
 	 * @param array $array paramètre facultatif contenant la liste des fils possibles
 	 */
@@ -100,7 +100,7 @@ class DAO {
 		$ret=array();
 		$class=get_class($instance);
 		$annot=Reflexion::getAnnotationMember($class, $member, "OneToMany");
-		if($annot!=false){
+		if($annot!==false){
 			$fk=Reflexion::getAnnotationMember($annot->className, $annot->mappedBy, "JoinColumn");
 			$fkv=OrmUtils::getFirstKeyValue($instance);
 			if(is_null($array)){
@@ -128,6 +128,11 @@ class DAO {
 		}
 		return $ret;
 	}
+	/**
+	 * @param object $instance
+	 * @param ManyToManyParser $parser
+	 * @return PDOStatement
+	 */
 	private static function getSQLForJoinTable($instance,ManyToManyParser $parser){
 		$accessor="get".ucfirst($parser->getPk());
 		$sql="SELECT * FROM `".$parser->getJoinTable()."` WHERE `".$parser->getMyFkField()."`='".$instance->$accessor()."'";
@@ -137,7 +142,7 @@ class DAO {
 	/**
 	 * Affecte/charge les enregistrements fils dans le membre $member de $instance.
 	 * Si $array est null, les fils sont chargés depuis la base de données
-	 * @param Classe $instance
+	 * @param object $instance
 	 * @param string $member Membre sur lequel doit être présent une annotation OneToMany
 	 * @param array $array paramètre facultatif contenant la liste des fils possibles
 	 */
@@ -282,7 +287,7 @@ class DAO {
 
 	/**
 	 * Insère $instance dans la base de données
-	 * @param Classe $instance instance à insérer
+	 * @param object $instance instance à insérer
 	 * @param $insertMany si vrai, sauvegarde des instances reliées à $instance par un ManyToMany
 	 */
 	public static function insert($instance,$insertMany=false){
@@ -309,7 +314,7 @@ class DAO {
 
 	/**
 	 * Met à jour les membres de $instance annotés par un ManyToMany
-	 * @param Object $instance
+	 * @param object $instance
 	 */
 	public static function insertOrUpdateAllManyToMany($instance){
 		$members=Reflexion::getMembersWithAnnotation(get_class($instance), "ManyToMany");
@@ -348,7 +353,7 @@ class DAO {
 					}
 					self::$db->bindValueFromStatement($statement,$myField,$id);
 					self::$db->bindValueFromStatement($statement,$field,$foreignId);
-					$result=$statement->execute();
+					$statement->execute();
 					Logger::log("InsertMany", "Insertion des valeurs dans la table association '".$parser->getJoinTable()."'");
 				}
 			}

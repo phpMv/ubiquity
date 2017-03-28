@@ -14,3 +14,5 @@ rules:
         enabled: false
     php.silenced_error:
         enabled: false
+    php.psr1:
+        enabled: false

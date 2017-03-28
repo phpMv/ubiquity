@@ -9,7 +9,7 @@ class Model {
 		$this->members=array();
 	}
 
-	public function addMember($member){
+	public function addMember(Member $member){
 		$this->members[$member->getName()]=$member;
 		return $this;
 	}

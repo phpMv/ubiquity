@@ -11,7 +11,7 @@ class RequestUtils{
 	/**
 	 * Affecte membre à membre les valeurs du tableau associatif $values aux membres de l'objet $object
 	 * Utilisé par exemple pour récupérer les variables postées et les affecter aux membres d'un objet
-	 * @param Class $object
+	 * @param object $object
 	 * @param associative array $values
 	 */
 	public static function setValuesToObject($object,$values=null){
@@ -71,7 +71,7 @@ class RequestUtils{
 
 	public static function getUrl($url){
 		$config=$GLOBALS["config"];
-		if(StrUtils::startswith($url, "/")==false){
+		if(StrUtils::startswith($url, "/")===false){
 			$url="/".$url;
 		}
 		return $config["siteUrl"].$url;

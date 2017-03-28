@@ -25,7 +25,7 @@ class Jquery {
 
 	private static function _prep_value($value){
 		if(is_array($value)){
-			$array=array_map("micro\js\Jquery::_prep_value",$value);
+			$array=array_map("micro\js\self::_prep_value",$value);
 			$value=implode(",", $array);
 		}else if (strrpos($value,'this')===false && strrpos($value,'event')===false && is_numeric($value)===false){
 			$value = '"'.$value.'"';
@@ -38,7 +38,7 @@ class Jquery {
 	 */
 	private static function addToCodes($code){
 		$codeObject=new JsCode($code);
-		Jquery::$codes[]=$codeObject;
+		self::$codes[]=$codeObject;
 		return $codeObject;
 	}
 
@@ -56,7 +56,7 @@ class Jquery {
 			if(StrUtils::isNotNull($attr)){
 				if ($attr=="value")
 					$retour.="url=url+'".$slash."'+$(this).val();\n";
-					else if($attr!=null && $attr!=="")
+					else if($attr!==null && $attr!=="")
 						$retour.="url=url+'".$slash."'+($(this).attr('".$attr."')||'');\n";
 			}
 			return $retour;
@@ -97,18 +97,18 @@ class Jquery {
 		if($stopPropagation){
 			$function.="event.stopPropagation();";
 		}
-		if(isset(Jquery::$condition)){
-			$jsCode="if(".Jquery::$condition."){".$jsCode."}";
-			if(isset(Jquery::$else)){
-				$jsCode.=" else{".Jquery::$else."}";
+		if(isset(self::$condition)){
+			$jsCode="if(".self::$condition."){".$jsCode."}";
+			if(isset(self::$else)){
+				$jsCode.=" else{".self::$else."}";
 			}
 		}
-		if(!Jquery::$persists){
-			Jquery::$condition=NULL;
-			Jquery::$else=NULL;
+		if(!self::$persists){
+			self::$condition=NULL;
+			self::$else=NULL;
 		}
 		$function.=$jsCode."}";
-		return Jquery::addToCodes("$(".Jquery::_prep_element($element).").bind('".$event."',".$function.");");
+		return self::addToCodes("$(".self::_prep_element($element).").bind('".$event."',".$function.");");
 	}
 
 	/**
@@ -119,7 +119,7 @@ class Jquery {
 	 * @return mixed
 	 */
 	public static function executeOn($element,$event,$script,$parameters=array("preventDefault"=>false,"stopPropagation"=>false)){
-		return Jquery::bindToElement($element, $event, $script,$parameters);
+		return self::bindToElement($element, $event, $script,$parameters);
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Jquery {
 	 * @return mixed
 	 */
 	public static function execute($script){
-		return Jquery::addToCodes($script);
+		return self::addToCodes($script);
 	}
 
 
@@ -169,7 +169,7 @@ class Jquery {
 	 * @param array $parameters default : array("jsCallback"=>NULL,"attr"=>"id","params"=>"{}")
 	 */
 	public static function get($url,$responseElement="",$parameters=array()){
-		return Jquery::addToCodes(Jquery::_get($url,$responseElement,$parameters));
+		return self::addToCodes(self::_get($url,$responseElement,$parameters));
 	}
 
 	/**
@@ -189,7 +189,7 @@ class Jquery {
 	 * @param array $parameters default : array("jsCallback"=>NULL,"attr"=>"id","params"=>"{}")
 	 */
 	public static function post($url,$responseElement="",$parameters=array()){
-				return Jquery::addToCodes(Jquery::_post($url,$responseElement,$parameters));
+				return self::addToCodes(self::_post($url,$responseElement,$parameters));
 
 	}
 
@@ -232,7 +232,7 @@ class Jquery {
 	 * @param array $parameters default : array("jsCallback"=>NULL,"attr"=>"id","validation"=>false)
 	 */
 	public static function postForm($url,$form,$responseElement,$parameters=array()){
-		return Jquery::addToCodes(Jquery::_postForm($url, $form, $responseElement,$parameters));
+		return self::addToCodes(self::_postForm($url, $form, $responseElement,$parameters));
 	}
 
 	/**
@@ -241,7 +241,7 @@ class Jquery {
 	 * @param string $value
 	 */
 	public static function _setVal($element,$value,$jsCallback=""){
-		return "$(".Jquery::_prep_element($element).").val(".$value.");\n".$jsCallback;
+		return "$(".self::_prep_element($element).").val(".$value.");\n".$jsCallback;
 	}
 
 	/**
@@ -250,11 +250,11 @@ class Jquery {
 	 * @param string $value
 	 */
 	public static function setVal($element,$value,$jsCallback=""){
-		return Jquery::addToCodes(Jquery::_setVal($element, $value,$jsCallback));
+		return self::addToCodes(self::_setVal($element, $value,$jsCallback));
 	}
 
 	public static function _setHtml($element,$html="",$jsCallback=""){
-		return "$(".Jquery::_prep_element($element).").html('".$html."');\n".$jsCallback;
+		return "$(".self::_prep_element($element).").html('".$html."');\n".$jsCallback;
 	}
 
 	/**
@@ -263,7 +263,7 @@ class Jquery {
 	 * @param string $html
 	 */
 	public static function setHtml($element,$html="",$jsCallback=""){
-		return Jquery::addToCodes(Jquery::_setHtml($element, $html,$jsCallback));
+		return self::addToCodes(self::_setHtml($element, $html,$jsCallback));
 	}
 
 	private static function _setAttr($element,$attr,$value="",$jsCallback=""){
@@ -277,7 +277,7 @@ class Jquery {
 	 * @param string $value nouvelle valeur
 	 */
 	public static function setAttr($element,$attr,$value="",$jsCallback=""){
-		return Jquery::addToCodes(Jquery::_setAttr($element, $attr, $value,$jsCallback));
+		return self::addToCodes(self::_setAttr($element, $attr, $value,$jsCallback));
 	}
 
 	/**
@@ -288,7 +288,7 @@ class Jquery {
 	 * @return mixed
 	 */
 	public static function _doJquery($element,$someThing,$param="",$jsCallback=""){
-		return "$(".Jquery::_prep_element($element).").".$someThing."(".Jquery::_prep_value($param).");\n".$jsCallback;
+		return "$(".self::_prep_element($element).").".$someThing."(".self::_prep_value($param).");\n".$jsCallback;
 	}
 
 	/**
@@ -299,7 +299,7 @@ class Jquery {
 	 * @return mixed
 	 */
 	public static function doJquery($element,$someThing,$param="",$jsCallback=""){
-		return Jquery::addToCodes(Jquery::_doJquery($element, $someThing,$param,$jsCallback));
+		return self::addToCodes(self::_doJquery($element, $someThing,$param,$jsCallback));
 	}
 
 	/**
@@ -312,7 +312,7 @@ class Jquery {
 	 * @param array $parameters default : array("preventDefault"=>true,"stopPropagation"=>true,"jsCallback"=>NULL,"attr"=>"id","params"=>"{}")
 	 */
 	 public static function getOn($event,$element,$url,$responseElement="",$parameters=array()){
-		return Jquery::bindToElement($element, $event, Jquery::_get($url, $responseElement,$parameters),$parameters);
+		return self::bindToElement($element, $event, self::_get($url, $responseElement,$parameters),$parameters);
 	}
 
 	/**
@@ -325,7 +325,7 @@ class Jquery {
 	 * @param array $parameters default : array("preventDefault"=>true,"stopPropagation"=>true,"jsCallback"=>NULL,"attr"=>"id","params"=>"{}")
 	 */
 	public static function postOn($event,$element,$url,$responseElement="",$parameters=array()){
-		return Jquery::bindToElement($element, $event,Jquery::_post($url,$responseElement,$parameters),$parameters);
+		return self::bindToElement($element, $event,self::_post($url,$responseElement,$parameters),$parameters);
 	}
 
 	/**
@@ -339,7 +339,7 @@ class Jquery {
 	 * @param array $parameters default : array("preventDefault"=>true,"stopPropagation"=>true,"jsCallback"=>NULL,"attr"=>"id","validation"=>false)
 	 */
 	public static function postFormOn($event,$element,$url,$form,$responseElement="",$parameters=array()){
-		return Jquery::bindToElement($element, $event,Jquery::_postForm($url,$form,$responseElement,$parameters),$parameters);
+		return self::bindToElement($element, $event,self::_postForm($url,$form,$responseElement,$parameters),$parameters);
 	}
 
 	/**
@@ -353,7 +353,7 @@ class Jquery {
 	 */
 	public static function setOn($event,$element,$elementToModify,$value="",$parameters=array("preventDefault"=>false,"stopPropagation"=>false)){
 		$jsCallback=JArray::getDefaultValue($parameters, "jsCallback", null);
-		return Jquery::bindToElement($element, $event,Jquery::_setVal($elementToModify, $value,$jsCallback),$parameters);
+		return self::bindToElement($element, $event,self::_setVal($elementToModify, $value,$jsCallback),$parameters);
 	}
 
 	/**
@@ -366,7 +366,7 @@ class Jquery {
 	 * @return mixed
 	 */
 	public static function setHtmlOn($event,$element,$elementToModify,$value="",$jsCallback=""){
-		return Jquery::bindToElement($element, $event,Jquery::_setHtml($elementToModify, $value,$jsCallback));
+		return self::bindToElement($element, $event,self::_setHtml($elementToModify, $value,$jsCallback));
 	}
 
 	/**
@@ -378,7 +378,7 @@ class Jquery {
 	 * @param string $param
 	 */
 	public static function doJqueryOn($element,$event,$elementToModify,$someThing,$param="",$jsCallback=""){
-		return Jquery::bindToElement($element, $event,Jquery::_doJquery($elementToModify, $someThing,$param,$jsCallback));
+		return self::bindToElement($element, $event,self::_doJquery($elementToModify, $someThing,$param,$jsCallback));
 	}
 
 	public static function setChecked($elementPrefix,$values){
@@ -389,7 +389,7 @@ class Jquery {
 			}
 		}else
 			$retour="$('#".$elementPrefix."').attr('checked', ".StrUtils::getBooleanStr($values).");\n";
-		return Jquery::addToCodes($retour);
+		return self::addToCodes($retour);
 	}
 
 	/**
@@ -398,17 +398,17 @@ class Jquery {
 	 */
 	public static function compile(){
 		$result="";
-		foreach (Jquery::$codes as $c){
+		foreach (self::$codes as $c){
 			$result.=$c->getCode();
 		}
-		return Jquery::addScript($result);
+		return self::addScript($result);
 	}
 
 	/**
 	 * Efface les codes js à exécuter
 	 */
 	public static function clearCodes(){
-		Jquery::$codes=array();
+		self::$codes=array();
 	}
 
 	/**
@@ -418,17 +418,17 @@ class Jquery {
 	 * @param boolean $persists détermine si la condition est persistante.<br> Si vrai, elle sera appliquée également pour les évènements suivants
 	 */
 	public static function startCondition($condition,$else=NULL,$persists=true){
-		Jquery::$condition=$condition;
-		Jquery::$else=$else;
-		Jquery::$persists=$persists;
+		self::$condition=$condition;
+		self::$else=$else;
+		self::$persists=$persists;
 	}
 
 	/**
 	 * Désactive une condition activée avec l'option $persists à true
 	 */
 	public static function endCondition(){
-		Jquery::$condition=NULL;
-		Jquery::$else=NULL;
-		Jquery::$persists=false;
+		self::$condition=NULL;
+		self::$else=NULL;
+		self::$persists=false;
 	}
 }

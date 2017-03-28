@@ -3,7 +3,6 @@ namespace micro\controllers;
 use micro\orm\DAO;
 use micro\utils\StrUtils;
 use micro\log\Logger;
-use micro\controllers\Autoloader;
 use micro\views\engine\TemplateEngine;
 
 class Startup{
@@ -26,13 +25,14 @@ class Startup{
 			//echo $e->getTraceAsString();
 		}
 		session_start();
-		Logger::init();
+
 		if($config["test"]){
+			Logger::init();
 			$GLOBALS["config"]["siteUrl"]="http://127.0.0.1:8090/";
 		}
 		extract($config["database"]);
 		$db=$config["database"];
-		if($db!=="")
+		if($db["dbName"]!=="")
 			DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"]);
 		$url=$_GET["c"];
 
@@ -94,7 +94,6 @@ class Startup{
 					break;
 				default:
 					//Appel de la méthode en lui passant en paramètre le reste du tableau
-					//$obj->$u[1](array_slice($u, 2));
 					\call_user_func_array(array($obj,$u[1]), array_slice($u, 2));
 					break;
 			}

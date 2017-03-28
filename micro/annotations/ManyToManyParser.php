@@ -32,7 +32,7 @@ class ManyToManyParser{
 		$instance=$this->instance;
 		$class=get_class($instance);
 		$annot=Reflexion::getAnnotationMember($class, $member, "ManyToMany");
-		if($annot!=false){
+		if($annot!==false){
 			$this->targetEntity=$annot->targetEntity;
 			$this->inversedBy=strtolower($this->targetEntity)."s";
 			if(!is_null($annot->inversedBy))

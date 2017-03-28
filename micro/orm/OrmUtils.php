@@ -26,7 +26,7 @@ class OrmUtils{
 
 	public static function getFieldName($class,$member){
 		$ret=Reflexion::getAnnotationMember($class, $member, "Column");
-		if($ret==false)
+		if($ret===false)
 			$ret=$member;
 		else
 			$ret=$ret->name;
@@ -35,7 +35,7 @@ class OrmUtils{
 
 	public static function getTableName($class){
 		$ret=Reflexion::getAnnotationClass($class, "Table");
-		if($ret==false)
+		if($ret===false)
 			$ret=$class;
 		else
 			$ret=$ret->name;
@@ -58,6 +58,10 @@ class OrmUtils{
 		return reset($fkv);
 	}
 
+	/**
+	 * @param object $instance
+	 * @return mixed[]
+	 */
 	public static function getManyToOneMembersAndValues($instance){
 		$ret=array();
 		$class=get_class($instance);
@@ -77,10 +81,16 @@ class OrmUtils{
 		return $ret;
 	}
 
+	/**
+	 * @param object $instance
+	 * @param string $memberKey
+	 * @param array $array
+	 * @return boolean
+	 */
 	public static function exists($instance,$memberKey,$array){
 		$accessor="get".ucfirst($memberKey);
 		if(method_exists($instance, $accessor)){
-			if($array!=null){
+			if($array!==null){
 				foreach ($array as $value){
 					if($value->$accessor()==$instance->$accessor())
 						return true;
@@ -92,7 +102,7 @@ class OrmUtils{
 
 	public static function getJoinColumn($class,$member){
 		$annot=Reflexion::getAnnotationMember($class, $member, "JoinColumn");
-		if($annot==false){
+		if($annot===false){
 			$annot=new \JoinColumn();
 			$annot->name="id".ucfirst(OrmUtils::getTableName(ucfirst($member)));
 		}
