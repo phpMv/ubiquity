@@ -2,7 +2,6 @@
 namespace micro\controllers;
 use micro\orm\DAO;
 use micro\utils\StrUtils;
-use micro\log\Logger;
 use micro\views\engine\TemplateEngine;
 
 class Startup{
@@ -27,7 +26,7 @@ class Startup{
 		session_start();
 
 		if($config["test"]){
-			Logger::init();
+			\micro\log\Logger::init();
 			$GLOBALS["config"]["siteUrl"]="http://127.0.0.1:8090/";
 		}
 		extract($config["database"]);
@@ -63,7 +62,7 @@ class Startup{
 		}
 	}
 
-	public static function runAction($u,$initialise=true,$finalize=true){
+	public static function runAction($u,$initialize=true,$finalize=true){
 		$urlSize=sizeof($u);
 		$obj=new $u[0]();
 		$config=self::getConfig();
@@ -76,7 +75,7 @@ class Startup{
 				}
 			}
 		}
-		if($initialise)
+		if($initialize)
 			$obj->initialize();
 		try{
 			switch ($urlSize) {
