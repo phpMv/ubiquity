@@ -1,0 +1,13 @@
+global_exclude_dirs:
+    - tools
+    - project-files
+    - micro/addendum
+
+exclude_patterns:
+    - micro/log/chromePhp.php
+
+rules:
+    doctrine.database_query_contains_string_and_variable_concatenation:
+        enabled: false
+    php.use_php_eval_function:
+        enabled: false
