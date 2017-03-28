@@ -16,3 +16,5 @@ rules:
         enabled: false
     php.psr1:
         enabled: false
+    php.object_parameter_not_type_hinted:
+        enabled: false

@@ -39,11 +39,11 @@ class SqlUtils{
 	}
 
 	public static function getInsertFields($keyAndValues){
-		return implode(",", SqlUtils::getQuotedKeys($keyAndValues));
+		return implode(",", self::getQuotedKeys($keyAndValues));
 	}
 
 	public static function getInsertFieldsValues($keyAndValues){
-		return implode(",", SqlUtils::getParameters($keyAndValues));
+		return implode(",", self::getParameters($keyAndValues));
 	}
 
 	public static function getUpdateFieldsKeyAndValues($keyAndValues,$quote="`"){

@@ -10,8 +10,6 @@ use micro\utils\JArray;
  */
 class Jquery {
 	private static $codes=array();
-	private static $stopPropagation=false;
-	private static $preventDefault=false;
 	private static $condition=NULL;
 	private static $else=NULL;
 	private static $persists=false;
