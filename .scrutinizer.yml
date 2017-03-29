@@ -2,10 +2,10 @@ filter:
     excluded_paths:
         - micro/log/chromePhp.php
         - micro/controllers/Autoloader.php
-        - tools
-        - project-files
-        - micro/addendum
-        - micro/annotations
+        - tools/
+        - project-files/
+        - micro/addendum/
+        - micro/annotations/
 checks:
     php:
         code_rating: true
