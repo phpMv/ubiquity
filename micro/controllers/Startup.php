@@ -90,12 +90,12 @@ class Startup{
 
 		if($initialize)
 			$controller->initialize();
-		self::CallController($controller,$u);
+		self::callController($controller,$u);
 		if($finalize)
 			$controller->finalize();
 	}
 
-	private static function CallController(Controller $controller,$u){
+	private static function callController(Controller $controller,$u){
 		$urlSize=sizeof($u);
 		try{
 			switch ($urlSize) {
