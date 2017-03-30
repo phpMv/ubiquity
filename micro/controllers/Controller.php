@@ -17,7 +17,7 @@ abstract class Controller {
 	/**
 	 * action par défaut
 	 */
-	public abstract function index();
+	abstract public function index();
 	/**
 	 * Constructeur<br>
 	 * Appelle automatiquement la méthode isValid() pour vérifier l'accès autorisé

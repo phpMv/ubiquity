@@ -6,9 +6,9 @@ use micro\views\engine\TemplateEngine;
 
 class Startup{
 	public static $urlParts;
-	public static function run(){
+	private static $config;
+	public static function run(array &$config,$url){
 		@set_exception_handler(array('Startup', 'errorHandler'));
-		$config=self::getConfig();
 		try {
 			$engineOptions=array('cache' => ROOT.DS."views/cache/");
 			if(array_key_exists("templateEngine", $config)){
@@ -17,7 +17,7 @@ class Startup{
 				}
 				$engine=new $config["templateEngine"]($engineOptions);
 				if ($engine instanceof TemplateEngine){
-					$GLOBALS["config"]["templateEngine"]=$engine;
+					$config["templateEngine"]=$engine;
 				}
 			}
 		} catch (\Exception $e) {
@@ -27,13 +27,12 @@ class Startup{
 
 		if($config["test"]){
 			\micro\log\Logger::init();
-			$GLOBALS["config"]["siteUrl"]="http://127.0.0.1:8090/";
+			$config["siteUrl"]="http://127.0.0.1:8090/";
 		}
-		extract($config["database"]);
+
 		$db=$config["database"];
 		if($db["dbName"]!=="")
 			DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"]);
-		$url=$_GET["c"];
 
 		if(!$url){
 			$url=$config["documentRoot"];
@@ -104,7 +103,7 @@ class Startup{
 	}
 
 	public static function getConfig(){
-		return $GLOBALS["config"];
+		return self::$config;
 	}
 
 	public static function errorHandler($severity, $message, $filename, $lineno) {
