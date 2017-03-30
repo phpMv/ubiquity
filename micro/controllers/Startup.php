@@ -9,6 +9,7 @@ class Startup{
 	private static $config;
 	public static function run(array &$config,$url){
 		@set_exception_handler(array('Startup', 'errorHandler'));
+		self::$config=$config;
 		try {
 			$engineOptions=array('cache' => ROOT.DS."views/cache/");
 			if(array_key_exists("templateEngine", $config)){
