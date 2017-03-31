@@ -59,8 +59,9 @@ class ModelsCreator {
 			self::createOneClass($singleTable);
 		}else{
 			foreach (self::$classes as $table=>$class){
-				echo "Creating the {$class->getName()} class\n";
-				self::writeFile("app/models/".$table.".php", $class);
+				$name=$class->getName();
+				echo "Creating the {$name} class\n";
+				self::writeFile("app/models/".$name.".php", $class);
 			}
 		}
 	}
