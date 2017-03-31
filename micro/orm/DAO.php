@@ -30,7 +30,6 @@ class DAO {
 	}
 
 	private static function getCondition($keyValues){
-		$condition="";
 		$retArray=array();
 		if(is_array($keyValues)){
 			foreach ($keyValues as $key=>$value){
@@ -117,16 +116,19 @@ class DAO {
 					}
 				}
 			}
-			$accessor="set".ucfirst($member);
-			if(method_exists($instance,$accessor)){
-				Logger::log("getOneToMany", "Chargement de ".$member." pour l'objet ".$class);
-				$instance->$accessor($ret);
-			}else{
-				Logger::warn("getOneToMany", "L'accesseur ".$accessor." est manquant pour ".$class);
-			}
-
+			self::setToMember($member, $instance, $ret, $class, "getOneToMany");
 		}
 		return $ret;
+	}
+
+	private static function setToMember($member,$instance,$value,$class,$part){
+		$accessor="set".ucfirst($member);
+		if(method_exists($instance,$accessor)){
+			Logger::log($part, "Affectation de ".$member." pour l'objet ".$class);
+			$instance->$accessor($value);
+		}else{
+			Logger::warn($part, "L'accesseur ".$accessor." est manquant pour ".$class);
+		}
 	}
 	/**
 	 * @param object $instance
@@ -186,15 +188,7 @@ class DAO {
 					Logger::warn("ManyToMany", "L'accesseur au membre ".$parser->getInversedBy()." est manquant pour ".$parser->getTargetEntity());
 				}
 			}
-			$accessor="set".ucfirst($member);
-
-			if(method_exists($instance,$accessor)){
-				Logger::log("getManyToMany", "Chargement de ".$member." pour l'objet ".$class);
-				$instance->$accessor($ret);
-			}else{
-				Logger::warn("getManyToMany", "L'accesseur ".$accessor." est manquant pour ".$class);
-			}
-
+			self::setToMember($member, $instance, $ret, $class, "getManyToMany");
 		}
 		return $ret;
 	}
@@ -202,7 +196,7 @@ class DAO {
 	 * Retourne un tableau d'objets de $className depuis la base de données
 	 * @param string $className nom de la classe du model à charger
 	 * @param string $condition Partie suivant le WHERE d'une instruction SQL
-	 * @return multitype:$className
+	 * @return array
 	 */
 	public static function getAll($className,$condition='',$loadManyToOne=true){
 		$objects=array();

@@ -29,7 +29,7 @@ class RequestUtils{
 	/**
 	 * Appel d'une fonction de nettoyage sur le post
 	 * @param string $function
-	 * @return multitype:
+	 * @return array
 	 */
 	public static function getPost($function="htmlentities"){
 		return array_map($function, $_POST);
