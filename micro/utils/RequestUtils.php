@@ -1,6 +1,8 @@
 <?php
 namespace micro\utils;
 
+use micro\controllers\Startup;
+
 /**
  * Utilitaires liés à la requête $_POST ou $_GET
  * @author jc
@@ -70,7 +72,7 @@ class RequestUtils{
 	}
 
 	public static function getUrl($url){
-		$config=$GLOBALS["config"];
+		$config=Startup::getConfig();
 		if(StrUtils::startswith($url, "/")===false){
 			$url="/".$url;
 		}

@@ -3,6 +3,7 @@ namespace micro\views;
 
 use micro\utils\StrUtils;
 use micro\views\engine\TemplateEngine;
+use micro\controllers\Startup;
 
 /**
  * Représente une vue
@@ -50,7 +51,7 @@ class View {
 	 * @return string
 	 */
 	public function render($viewName,$asString=false){
-		$config=$GLOBALS["config"];
+		$config=Startup::getConfig();
 		$fileName=ROOT.DS."views/".$viewName;
 		$ext=pathinfo($fileName,PATHINFO_EXTENSION);
 		if($ext===null)

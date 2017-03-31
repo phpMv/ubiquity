@@ -23,13 +23,13 @@ require_once ROOT.DS.'micro/annotations/JoinTable.php';
 class Reflexion{
 	public static function getProperties($instance){
 		$reflect = new \ReflectionClass($instance);
-		$props   = $reflect->getProperties();
+		$props = $reflect->getProperties();
 		return $props;
 	}
 
-	public static function getPropertie($instance,$property){
+	public static function getProperty($instance,$property){
 		$reflect = new \ReflectionClass($instance);
-		$prop   = $reflect->getPropertie($property);
+		$prop = $reflect->getProperty($property);
 		return $prop;
 	}
 
@@ -58,6 +58,7 @@ class Reflexion{
 	}
 
 	public static function getAnnotationMember($class,$member,$annotation){
+		$annot=false;
 		$rap=new \ReflectionAnnotatedProperty($class, $member);
 		if($rap!==null)
 			$annot=$rap->getAnnotation($annotation);

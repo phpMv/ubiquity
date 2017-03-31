@@ -2,6 +2,7 @@
 namespace micro\js;
 use micro\utils\StrUtils;
 use micro\utils\JArray;
+use micro\controllers\Startup;
 /**
  * Utilitaires d'insertion de scripts côté client (JQuery)
  * @author jc
@@ -71,7 +72,7 @@ class Jquery {
 		if (StrUtils::endsWith($url, "/"))
 			$url=substr($url, 0, strlen($url)-1);
 			if (strncmp($url, 'http://', 7)!=0&&strncmp($url, 'https://', 8)!=0) {
-				$url=$GLOBALS["config"]["siteUrl"].$url;
+				$url=Startup::getConfig()["siteUrl"].$url;
 			}
 			return $url;
 	}
@@ -360,7 +361,7 @@ class Jquery {
 	 * @param string $element
 	 * @param string $elementToModify
 	 * @param string $value
- 	 * @param array $parameters default : array("preventDefault"=>true,"stopPropagation"=>true,"jsCallback"=>NULL)
+ 	 * @param string $jsCallback
 	 * @return mixed
 	 */
 	public static function setHtmlOn($event,$element,$elementToModify,$value="",$jsCallback=""){

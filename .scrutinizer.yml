@@ -1,6 +1,6 @@
 filter:
     excluded_paths:
-        - micro/log/chromePhp.php
+        - micro/log/
         - micro/controllers/Autoloader.php
         - tools/
         - project-files/

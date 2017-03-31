@@ -1,6 +1,8 @@
 <?php
 namespace micro\views\engine;
 
+use micro\controllers\Startup;
+
 class Twig extends TemplateEngine{
 	private $twig;
 	public function __construct($options=array()){
@@ -11,7 +13,7 @@ class Twig extends TemplateEngine{
 	 * @see TemplateEngine::render()
 	 */
 	public function render($viewName, $pData, $asString) {
-		$pData["config"]=$GLOBALS["config"];
+		$pData["config"]=Startup::getConfig();
 		$render=$this->twig->render($viewName,$pData);
 		if($asString){
 			return $render;
