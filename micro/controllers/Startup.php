@@ -52,7 +52,7 @@ class Startup{
 	}
 
 	private static function register(AnnotationManager $annotationManager){
-		$annotationManager->registry=[
+		$annotationManager->registry=array_merge($annotationManager->registry,[
 				'id' => 'micro\annotations\IdAnnotation',
 				'manyToOne' => 'micro\annotations\ManyToOneAnnotation',
 				'oneToMany' => 'micro\annotations\OneToManyAnnotation',
@@ -62,7 +62,7 @@ class Startup{
 				'transient' => 'micro\annotations\TransientAnnotation',
 				'column' => 'micro\annotations\ColumnAnnotation',
 				'joinTable' => 'micro\annotations\JoinTableAnnotation'
-		];
+		]);
 	}
 
 	private static function parseUrl($config,$url){
