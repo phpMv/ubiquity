@@ -1,5 +1,12 @@
 <?php
 namespace micro\orm\creator;
+use micro\annotations\IdAnnotation;
+use micro\annotations\ManyToOneAnnotation;
+use micro\annotations\JoinColumnAnnotation;
+use micro\annotations\OneToManyAnnotation;
+use micro\annotations\ManyToManyAnnotation;
+use micro\annotations\JoinTableAnnotation;
+
 class Member {
 	private $name;
 	private $primary;
@@ -32,14 +39,14 @@ class Member {
 
 	public function setPrimary(){
 		if($this->primary===false){
-			$this->annotations[]=new \Id();
+			$this->annotations[]=new IdAnnotation();
 			$this->primary=true;
 		}
 	}
 
 	public function addManyToOne($name,$className,$nullable=false){
-		$this->annotations[]=new \ManyToOne();
-		$joinColumn=new \JoinColumn();
+		$this->annotations[]=new ManyToOneAnnotation();
+		$joinColumn=new JoinColumnAnnotation();
 		$joinColumn->name=$name;
 		$joinColumn->className=$className;
 		$joinColumn->nullable=$nullable;
@@ -48,17 +55,17 @@ class Member {
 	}
 
 	public function addOneToMany($mappedBy,$className){
-		$oneToMany=new \OneToMany();
+		$oneToMany=new OneToManyAnnotation();
 		$oneToMany->mappedBy=$mappedBy;
 		$oneToMany->className=$className;
 		$this->annotations[]=$oneToMany;
 	}
 
 	public function addManyToMany($targetEntity,$inversedBy,$joinTable){
-		$manyToMany=new \ManyToMany();
+		$manyToMany=new ManyToManyAnnotation();
 		$manyToMany->targetEntity=$targetEntity;
 		$manyToMany->inversedBy=$inversedBy;
-		$jt=new \JoinTable();
+		$jt=new JoinTableAnnotation();
 		$jt->name=$joinTable;
 		$this->annotations[]=$manyToMany;
 		$this->annotations[]=$jt;
