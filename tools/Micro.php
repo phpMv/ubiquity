@@ -5,7 +5,7 @@ include 'ModelsCreator.php';
 include 'Console.php';
 class Micro {
 	private static $configOptions;
-	private static $composer=["require"=>["twig/twig"=>"~1.0"]];
+	private static $composer=["require"=>["twig/twig"=>"~1.0","mindplay/annotations"=>"~1.2"]];
 	private static $toolsConfig;
 	private static $indexContent="\n\t\$this->loadView('index.html');\n";
 	private static $mainViewTemplate="index.html";

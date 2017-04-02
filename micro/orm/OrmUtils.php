@@ -9,15 +9,15 @@ namespace micro\orm;
  */
 class OrmUtils{
 	public static function isSerializable($class,$member){
-		if (Reflexion::getAnnotationMember($class,$member,"Transient")!==FALSE || Reflexion::getAnnotationMember($class,$member,"ManyToOne")!==FALSE ||
-		Reflexion::getAnnotationMember($class,$member,"ManyToMany")!==FALSE || Reflexion::getAnnotationMember($class,$member,"OneToMany")!==FALSE)
+		if (Reflexion::getAnnotationMember($class,$member,"@transient")!==false || Reflexion::getAnnotationMember($class,$member,"@manyToOne")!==false ||
+				Reflexion::getAnnotationMember($class,$member,"@manyToMany")!==false || Reflexion::getAnnotationMember($class,$member,"@oneToMany")!==false)
 			return false;
 		else
 			return true;
 	}
 
 	public static function isNullable($class,$member){
-		$ret=Reflexion::getAnnotationMember($class,$member,"Column");
+		$ret=Reflexion::getAnnotationMember($class,$member,"@column");
 		if (!$ret)
 			return false;
 		else
@@ -25,7 +25,7 @@ class OrmUtils{
 	}
 
 	public static function getFieldName($class,$member){
-		$ret=Reflexion::getAnnotationMember($class, $member, "Column");
+		$ret=Reflexion::getAnnotationMember($class, $member, "@column");
 		if($ret===false)
 			$ret=$member;
 		else
@@ -34,21 +34,22 @@ class OrmUtils{
 	}
 
 	public static function getTableName($class){
-		$ret=Reflexion::getAnnotationClass($class, "Table");
-		if($ret===false)
+		$ret=Reflexion::getAnnotationClass($class, "@table");
+		if(\sizeof($ret)==0)
 			$ret=$class;
-		else
-			$ret=$ret->name;
+		else{
+			$ret=$ret[0]->name;
+		}
 		return $ret;
 	}
 
 	public static function getKeyFieldsAndValues($instance){
-		$kf=Reflexion::getMembersWithAnnotation(get_class($instance), "Id");
+		$kf=Reflexion::getMembersWithAnnotation(get_class($instance), "@id");
 		return Reflexion::getPropertiesAndValues($instance,$kf);
 	}
 
 	public static function getFirstKey($class){
-		$kf=Reflexion::getMembersWithAnnotation($class, "Id");
+		$kf=Reflexion::getMembersWithAnnotation($class, "@id");
 		if(sizeof($kf)>0)
 			return $kf[0]->getName();
 	}
@@ -65,7 +66,7 @@ class OrmUtils{
 	public static function getManyToOneMembersAndValues($instance){
 		$ret=array();
 		$class=get_class($instance);
-		$members=Reflexion::getMembersWithAnnotation($class, "ManyToOne");
+		$members=Reflexion::getMembersWithAnnotation($class, "@manyToOne");
 		foreach ($members as $member){
 			$annot=OrmUtils::getJoinColumn($class, $member->getName());
 			$memberAccessor="get".ucfirst($member->getName());
@@ -101,8 +102,8 @@ class OrmUtils{
 	}
 
 	public static function getJoinColumn($class,$member){
-		$annot=Reflexion::getAnnotationMember($class, $member, "JoinColumn");
-		if($annot===false){
+		$annot=Reflexion::getAnnotationMember($class, $member, "@joinColumn");
+		if($annot!==false){
 			$annot=new \JoinColumn();
 			$annot->name="id".ucfirst(OrmUtils::getTableName(ucfirst($member)));
 		}
@@ -111,8 +112,8 @@ class OrmUtils{
 
 	public static function isMemberInManyToOne($class,$array,$member){
 		foreach ($array as $memberMTO){
-			$annot=Reflexion::getAnnotationMember($class, $memberMTO->getName(), "JoinColumn");
-			if($annot->name==$member)
+			$annot=Reflexion::getAnnotationMember($class, $memberMTO->getName(), "@joinColumn");
+			if($annot!==false && $annot->name==$member)
 				return true;
 		}
 		return false;

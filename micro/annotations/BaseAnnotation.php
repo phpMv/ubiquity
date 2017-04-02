@@ -1,8 +1,12 @@
 <?php
+namespace micro\annotations;
 use micro\utils\StrUtils;
-require_once ROOT.DS.'micro/addendum/annotations.php';
+use mindplay\annotations\standard\PropertyAnnotation;
 
-class BaseAnnotation extends \Annotation {
+/**
+ * @usage('property'=>true, 'inherited'=>true)
+ */
+class BaseAnnotation extends PropertyAnnotation {
 
 	public function getProperties(){
 		$reflect = new \ReflectionClass($this);
@@ -30,15 +34,15 @@ class BaseAnnotation extends \Annotation {
 		$extsStr="";
 		foreach ($fields as $k=>$v){
 			if(\is_bool($v)===true){
-				$exts[]=$k."=".StrUtils::getBooleanStr($v);
+				$exts[]="\"".$k."\"=>".StrUtils::getBooleanStr($v);
 			}else{
-				$exts[]=$k."=\"".$v."\"";
+				$exts[]="\"".$k."\"=>\"".$v."\"";
 			}
 		}
 		if(\sizeof($exts)>0){
 			$extsStr="(".\implode(",", $exts).")";
 		}
 
-		return "@".get_class($this).$extsStr;
+		return "@".\lcfirst(get_class($this)).$extsStr;
 	}
 }

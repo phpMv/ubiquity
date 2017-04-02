@@ -11,6 +11,7 @@ return array(
 		],
 		"onStartup"=>function($action){
 		},
+		"sessionToken"=>"%temporaryToken%",
 		"directories"=>[],
 		"templateEngine"=>'micro\views\engine\Twig',
 		"templateEngineOptions"=>array("cache"=>false),

@@ -67,7 +67,7 @@ class DAO {
 	private static function getOneManyToOne($instance,$keyValues,$members){
 		$class=get_class($instance);
 		foreach ($members as $member){
-			$annot=Reflexion::getAnnotationMember($class, $member->getName(), "JoinColumn");
+			$annot=Reflexion::getAnnotationMember($class, $member->getName(), "@joinColumn");
 			if($annot!==false){
 				reset($keyValues);
 				if($annot->name==key($keyValues)){
@@ -98,9 +98,9 @@ class DAO {
 	public static function getOneToMany($instance,$member,$array=null){
 		$ret=array();
 		$class=get_class($instance);
-		$annot=Reflexion::getAnnotationMember($class, $member, "OneToMany");
-		if($annot!==false){
-			$fk=Reflexion::getAnnotationMember($annot->className, $annot->mappedBy, "JoinColumn");
+		$annot=Reflexion::getAnnotationMember($class, $member, "@oneToMany");
+		if($annot!=false){
+			$fk=Reflexion::getAnnotationMember($annot->className, $annot->mappedBy, "@joinColumn");
 			$fkv=OrmUtils::getFirstKeyValue($instance);
 			if(is_null($array)){
 				$ret=self::getAll($annot->className,$fk->name."='".$fkv."'");
@@ -200,7 +200,7 @@ class DAO {
 	 */
 	public static function getAll($className,$condition='',$loadManyToOne=true){
 		$objects=array();
-		$membersManyToOne=Reflexion::getMembersWithAnnotation($className, "ManyToOne");
+		$membersManyToOne=Reflexion::getMembersWithAnnotation($className, "@manyToOne");
 		$tableName=OrmUtils::getTableName($className);
 		if($condition!='')
 			$condition=" WHERE ".$condition;
@@ -311,7 +311,7 @@ class DAO {
 	 * @param object $instance
 	 */
 	public static function insertOrUpdateAllManyToMany($instance){
-		$members=Reflexion::getMembersWithAnnotation(get_class($instance), "ManyToMany");
+		$members=Reflexion::getMembersWithAnnotation(get_class($instance), "manyToMany");
 		foreach ($members as $member){
 			self::insertOrUpdateManyToMany($instance, $member->name);
 		}

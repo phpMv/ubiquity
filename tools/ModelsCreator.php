@@ -38,8 +38,8 @@ class ModelsCreator {
 	public static function create($singleTable=null){
 		self::init();
 		self::$tables=self::getTablesName();
-		if(!is_dir("app/models"))
-			mkdir("app/models");
+		if(!is_dir("app/models/runtime"))
+			mkdir("app/models/runtime",0777,true);
 		new Reflexion();
 		foreach (self::$tables as $table){
 			$class=new Model($table);

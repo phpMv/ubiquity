@@ -31,7 +31,7 @@ class ManyToManyParser{
 		$member=$this->member;
 		$instance=$this->instance;
 		$class=get_class($instance);
-		$annot=Reflexion::getAnnotationMember($class, $member, "ManyToMany");
+		$annot=Reflexion::getAnnotationMember($class, $member, "@manyToMany");
 		if($annot!==false){
 			$this->targetEntity=$annot->targetEntity;
 			$this->inversedBy=strtolower($this->targetEntity)."s";
@@ -39,7 +39,7 @@ class ManyToManyParser{
 				$this->inversedBy=$annot->inversedBy;
 			$this->targetEntityClass=get_class(new $this->targetEntity());
 
-			$annotJoinTable=Reflexion::getAnnotationMember($class, $member, "JoinTable");
+			$annotJoinTable=Reflexion::getAnnotationMember($class, $member, "@joinTable");
 			$this->joinTable=$annotJoinTable->name;
 			$joinColumnsAnnot=$annotJoinTable->joinColumns;
 			$this->myFkField="id".OrmUtils::getTableName($class);

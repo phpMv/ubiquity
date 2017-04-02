@@ -1,18 +1,8 @@
 <?php
 namespace micro\orm;
-require_once ROOT.DS.'micro/addendum/annotations.php';
 
-require_once ROOT.DS.'micro/annotations/BaseAnnotation.php';
-require_once ROOT.DS.'micro/annotations/Column.php';
-require_once ROOT.DS.'micro/annotations/Transient.php';
-require_once ROOT.DS.'micro/annotations/Table.php';
-require_once ROOT.DS.'micro/annotations/Id.php';
-require_once ROOT.DS.'micro/annotations/ManyToOne.php';
-require_once ROOT.DS.'micro/annotations/JoinColumn.php';
-require_once ROOT.DS.'micro/annotations/OneToMany.php';
-require_once ROOT.DS.'micro/annotations/ManyToMany.php';
-require_once ROOT.DS.'micro/annotations/JoinTable.php';
-
+use mindplay\annotations\Annotation;
+use mindplay\annotations\Annotations;
 
 /**
  * Utilitaires de Reflexion
@@ -52,17 +42,15 @@ class Reflexion{
 	}
 
 	public static function getAnnotationClass($class,$annotation){
-		$rac=new \ReflectionAnnotatedClass($class);
-		$annot=$rac->getAnnotation($annotation);
+		$annot=Annotations::ofClass($class,$annotation);
 		return $annot;
 	}
 
 	public static function getAnnotationMember($class,$member,$annotation){
-		$annot=false;
-		$rap=new \ReflectionAnnotatedProperty($class, $member);
-		if($rap!==null)
-			$annot=$rap->getAnnotation($annotation);
-		return $annot;
+		$annot=Annotations::ofProperty($class,$member,$annotation);
+		if(\sizeof($annot)>0)
+			return $annot[0];
+		return false;
 	}
 
 	public static function getMembersWithAnnotation($class,$annotation){
@@ -70,7 +58,7 @@ class Reflexion{
 		$ret=array();
 		foreach ($props as $prop){
 			$annot=Reflexion::getAnnotationMember($class, $prop->getName(), $annotation);
-			if($annot!==FALSE)
+			if($annot!==false)
 				$ret[]=$prop;
 		}
 		return $ret;

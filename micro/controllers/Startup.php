@@ -3,6 +3,9 @@ namespace micro\controllers;
 use micro\orm\DAO;
 use micro\utils\StrUtils;
 use micro\views\engine\TemplateEngine;
+use mindplay\annotations\Annotations;
+use mindplay\annotations\AnnotationCache;
+use mindplay\annotations\AnnotationManager;
 
 class Startup{
 	public static $urlParts;
@@ -20,9 +23,10 @@ class Startup{
 		}
 
 		$db=$config["database"];
-		if($db["dbName"]!=="")
+		if($db["dbName"]!==""){
 			DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"]);
-
+			self::startAnnotations();
+		}
 		$u=self::parseUrl($config, $url);
 
 		if(class_exists($u[0]) && StrUtils::startswith($u[0],"_")===false){
@@ -40,6 +44,18 @@ class Startup{
 		}else{
 			print "Le contrôleur `".$u[0]."` n'existe pas <br/>";
 		}
+	}
+
+	private static function startAnnotations(){
+		Annotations::$config['cache'] = new AnnotationCache(ROOT.DS.'models/runtime');
+		self::register(Annotations::getManager());
+	}
+
+	private static function register(AnnotationManager $annotationManager){
+		$annotationManager->registry['id'] = 'micro\annotations\IdAnnotation';
+		$annotationManager->registry['manyToOne'] = 'micro\annotations\ManyToOneAnnotation';
+		$annotationManager->registry['oneToMany'] = 'micro\annotations\OneToManyAnnotation';
+		$annotationManager->registry['joinColumn'] = 'micro\annotations\JoinColumnAnnotation';
 	}
 
 	private static function parseUrl($config,$url){
@@ -63,7 +79,7 @@ class Startup{
 				}
 				$engine=new $templateEngine($engineOptions);
 				if ($engine instanceof TemplateEngine){
-					self::$config["templateEngine"]=$engine;
+					$config["templateEngine"]=$engine;
 				}
 			}
 		} catch (\Exception $e) {
