@@ -58,9 +58,9 @@ class Startup{
 				'oneToMany' => 'micro\annotations\OneToManyAnnotation',
 				'manyToMany' => 'micro\annotations\ManyToManyAnnotation',
 				'joinColumn' => 'micro\annotations\JoinColumnAnnotation',
-				'Table' => 'micro\annotations\TableAnnotation',
-				'Transient' => 'micro\annotations\TransientAnnotation',
-				'Column' => 'micro\annotations\ColumnAnnotation',
+				'table' => 'micro\annotations\TableAnnotation',
+				'transient' => 'micro\annotations\TransientAnnotation',
+				'column' => 'micro\annotations\ColumnAnnotation',
 				'joinTable' => 'micro\annotations\JoinTableAnnotation'
 		];
 	}

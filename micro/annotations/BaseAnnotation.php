@@ -2,6 +2,7 @@
 namespace micro\annotations;
 use micro\utils\StrUtils;
 use mindplay\annotations\standard\PropertyAnnotation;
+use mindplay\annotations\Annotations;
 
 /**
  * @usage('property'=>true, 'inherited'=>true)
@@ -42,7 +43,9 @@ class BaseAnnotation extends PropertyAnnotation {
 		if(\sizeof($exts)>0){
 			$extsStr="(".\implode(",", $exts).")";
 		}
-
-		return "@".\lcfirst(get_class($this)).$extsStr;
+		$className=get_class($this);
+		$annotName=\substr($className, \sizeof("micro\annotations\\"));
+		$annotName = substr($annotName, 0, strlen($annotName)-strlen("Annotation"));
+		return "@".\lcfirst($className).$extsStr;
 	}
 }
