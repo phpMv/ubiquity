@@ -167,6 +167,11 @@ class Micro {
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/vHeader.tpl", "app/views/main/vHeader.html", self::$configOptions);
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/vFooter.tpl", "app/views/main/vFooter.html", self::$configOptions);
 
+			self::createComposerFile();
+			$answer=Console::question("Do you want to run composer install ?",["y","n"]);
+			if(Console::isYes($answer)){
+				system("composer install");
+			}
 			require_once 'app/micro/controllers/Autoloader.php';
 			Autoloader::register();
 
@@ -174,10 +179,6 @@ class Micro {
 			self::xcopy("tmp/micro-master/project-files/app/views/".self::$mainViewTemplate, "app/views/index.html");
 			echo "deleting temporary files...\n";
 			self::delTree("tmp");
-			self::createComposerFile();
-			$answer=Console::question("Do you want to run composer install ?",["y","n"]);
-			if(Console::isYes($answer))
-				system("composer install");
 
 			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
 				ModelsCreator::create();
