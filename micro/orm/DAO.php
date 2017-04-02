@@ -8,7 +8,7 @@ use micro\log\Logger;
 /**
  * Classe passerelle entre base de données et modèle objet
  * @author jc
- * @version 1.0.0.4
+ * @version 1.0.0.5
  * @package orm
  */
 class DAO {
@@ -311,7 +311,7 @@ class DAO {
 	 * @param object $instance
 	 */
 	public static function insertOrUpdateAllManyToMany($instance){
-		$members=Reflexion::getMembersWithAnnotation(get_class($instance), "manyToMany");
+		$members=Reflexion::getMembersWithAnnotation(get_class($instance), "@manyToMany");
 		foreach ($members as $member){
 			self::insertOrUpdateManyToMany($instance, $member->name);
 		}

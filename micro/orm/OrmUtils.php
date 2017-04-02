@@ -55,7 +55,7 @@ class OrmUtils{
 	}
 
 	public static function getFirstKeyValue($instance){
-		$fkv=OrmUtils::getKeyFieldsAndValues($instance);
+		$fkv=self::getKeyFieldsAndValues($instance);
 		return reset($fkv);
 	}
 
@@ -68,19 +68,22 @@ class OrmUtils{
 		$class=get_class($instance);
 		$members=Reflexion::getMembersWithAnnotation($class, "@manyToOne");
 		foreach ($members as $member){
-			$annot=OrmUtils::getJoinColumn($class, $member->getName());
 			$memberAccessor="get".ucfirst($member->getName());
 			if(method_exists($instance,$memberAccessor)){
 				$memberInstance=$instance->$memberAccessor();
 				if(isset($memberInstance)){
-					$keyValues=OrmUtils::getKeyFieldsAndValues($memberInstance);
-					if(sizeof($keyValues)>0)
-						$ret[$annot->name]=reset($keyValues);
+					$keyValues=self::getKeyFieldsAndValues($memberInstance);
+					if(sizeof($keyValues)>0){
+						$fkName=self::getJoinColumnName($class, $member->getName());
+						$ret[$fkName]=reset($keyValues);
+					}
 				}
 			}
 		}
 		return $ret;
 	}
+
+
 
 	/**
 	 * @param object $instance
@@ -101,13 +104,14 @@ class OrmUtils{
 		return false;
 	}
 
-	public static function getJoinColumn($class,$member){
+	public static function getJoinColumnName($class,$member){
 		$annot=Reflexion::getAnnotationMember($class, $member, "@joinColumn");
 		if($annot!==false){
-			$annot=new \JoinColumn();
-			$annot->name="id".ucfirst(OrmUtils::getTableName(ucfirst($member)));
+			$fkName=$annot->name;
+		}else{
+			$fkName="id".ucfirst(self::getTableName(ucfirst($member)));
 		}
-		return $annot;
+		return $fkName;
 	}
 
 	public static function isMemberInManyToOne($class,$array,$member){

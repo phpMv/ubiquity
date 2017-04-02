@@ -52,10 +52,17 @@ class Startup{
 	}
 
 	private static function register(AnnotationManager $annotationManager){
-		$annotationManager->registry['id'] = 'micro\annotations\IdAnnotation';
-		$annotationManager->registry['manyToOne'] = 'micro\annotations\ManyToOneAnnotation';
-		$annotationManager->registry['oneToMany'] = 'micro\annotations\OneToManyAnnotation';
-		$annotationManager->registry['joinColumn'] = 'micro\annotations\JoinColumnAnnotation';
+		$annotationManager->registry=[
+				'id' => 'micro\annotations\IdAnnotation',
+				'manyToOne' => 'micro\annotations\ManyToOneAnnotation',
+				'oneToMany' => 'micro\annotations\OneToManyAnnotation',
+				'manyToMany' => 'micro\annotations\ManyToManyAnnotation',
+				'joinColumn' => 'micro\annotations\JoinColumnAnnotation',
+				'Table' => 'micro\annotations\TableAnnotation',
+				'Transient' => 'micro\annotations\TransientAnnotation',
+				'Column' => 'micro\annotations\ColumnAnnotation',
+				'joinTable' => 'micro\annotations\JoinTableAnnotation'
+		];
 	}
 
 	private static function parseUrl($config,$url){

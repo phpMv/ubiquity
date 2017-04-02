@@ -27,7 +27,7 @@ class Reflexion{
 		$ret=array();
 		$className=get_class($instance);
 		if(is_null($props))
-			$props=Reflexion::getProperties($instance);
+			$props=self::getProperties($instance);
 		foreach ($props as $prop){
 			$prop->setAccessible(true);
 			$v=$prop->getValue($instance);
@@ -54,10 +54,10 @@ class Reflexion{
 	}
 
 	public static function getMembersWithAnnotation($class,$annotation){
-		$props=Reflexion::getProperties(new $class());
+		$props=self::getProperties(new $class());
 		$ret=array();
 		foreach ($props as $prop){
-			$annot=Reflexion::getAnnotationMember($class, $prop->getName(), $annotation);
+			$annot=self::getAnnotationMember($class, $prop->getName(), $annotation);
 			if($annot!==false)
 				$ret[]=$prop;
 		}
