@@ -46,6 +46,6 @@ class BaseAnnotation extends PropertyAnnotation {
 		$className=get_class($this);
 		$annotName=\substr($className, \sizeof("micro\annotations\\"));
 		$annotName = substr($annotName, 0, strlen($annotName)-strlen("Annotation"));
-		return "@".\lcfirst($className).$extsStr;
+		return "@".\lcfirst($annotName).$extsStr;
 	}
 }
