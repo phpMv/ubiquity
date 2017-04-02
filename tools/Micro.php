@@ -171,6 +171,7 @@ class Micro {
 			$answer=Console::question("Do you want to run composer install ?",["y","n"]);
 			if(Console::isYes($answer)){
 				system("composer install");
+				require_once ROOT.'./../vendor/autoload.php';
 			}
 			require_once 'app/micro/controllers/Autoloader.php';
 			Autoloader::register();
