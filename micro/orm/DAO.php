@@ -99,7 +99,7 @@ class DAO {
 		$ret=array();
 		$class=get_class($instance);
 		$annot=Reflexion::getAnnotationMember($class, $member, "@oneToMany");
-		if($annot!=false){
+		if($annot!==false){
 			$fk=Reflexion::getAnnotationMember($annot->className, $annot->mappedBy, "@joinColumn");
 			$fkv=OrmUtils::getFirstKeyValue($instance);
 			if(is_null($array)){
