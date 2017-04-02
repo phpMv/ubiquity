@@ -79,7 +79,7 @@ class Startup{
 				}
 				$engine=new $templateEngine($engineOptions);
 				if ($engine instanceof TemplateEngine){
-					$config["templateEngine"]=$engine;
+					self::$config["templateEngine"]=$engine;
 				}
 			}
 		} catch (\Exception $e) {
