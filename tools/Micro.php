@@ -169,8 +169,7 @@ class Micro {
 
 			require_once 'app/micro/controllers/Autoloader.php';
 			Autoloader::register();
-			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
-				ModelsCreator::create();
+
 			self::createController("Main",self::$indexContent);
 			self::xcopy("tmp/micro-master/project-files/app/views/".self::$mainViewTemplate, "app/views/index.html");
 			echo "deleting temporary files...\n";
@@ -179,6 +178,9 @@ class Micro {
 			$answer=Console::question("Do you want to run composer install ?",["y","n"]);
 			if(Console::isYes($answer))
 				system("composer install");
+
+			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
+				ModelsCreator::create();
 			echo "project `{$projectName}` successfully created.\n";
 		}else{
 			echo "The {$projectName} folder already exists !\n";
