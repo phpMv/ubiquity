@@ -102,4 +102,10 @@ class Database {
 		return $this->pdoObject->lastInsertId();
 	}
 
+	public function getTablesName(){
+		$sql = 'SHOW TABLES';
+		$query = $this->pdoObject->query($sql);
+		return $query->fetchAll(\PDO::FETCH_COLUMN);
+	}
+
 }

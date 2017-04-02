@@ -48,6 +48,28 @@ class OrmUtils{
 		return Reflexion::getPropertiesAndValues($instance,$kf);
 	}
 
+	public static function getKeyFields($instance){
+		return Reflexion::getMembersNameWithAnnotation(get_class($instance), "@id");
+	}
+
+	public static function getFieldsInRelations($instance){
+		$result=Reflexion::getMembersWithAnnotation($instance, "@manyToOne");
+		$result=\array_merge($result,Reflexion::getMembersWithAnnotation($instance, "@manyToMany"));
+		$result=\array_merge($result,Reflexion::getMembersWithAnnotation($instance, "@oneToMany"));
+		return $result;
+	}
+
+	public static function getSerializableFields($instance){
+		$result=[];
+		$properties=Reflexion::getProperties($instance);
+		foreach ($properties as $property){
+			if(self::isSerializable($instance, $property->getName())){
+				$result[]=$property;
+			}
+		}
+		return $result;
+	}
+
 	public static function getFirstKey($class){
 		$kf=Reflexion::getMembersWithAnnotation($class, "@id");
 		if(sizeof($kf)>0)

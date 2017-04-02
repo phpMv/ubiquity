@@ -12,6 +12,9 @@ use mindplay\annotations\Annotations;
  */
 class Reflexion{
 	public static function getProperties($instance){
+		if(\is_string($instance)){
+			$instance=new $instance();
+		}
 		$reflect = new \ReflectionClass($instance);
 		$props = $reflect->getProperties();
 		return $props;
@@ -54,12 +57,23 @@ class Reflexion{
 	}
 
 	public static function getMembersWithAnnotation($class,$annotation){
-		$props=self::getProperties(new $class());
+		$props=self::getProperties($class);
 		$ret=array();
 		foreach ($props as $prop){
 			$annot=self::getAnnotationMember($class, $prop->getName(), $annotation);
 			if($annot!==false)
 				$ret[]=$prop;
+		}
+		return $ret;
+	}
+
+	public static function getMembersNameWithAnnotation($class,$annotation){
+		$props=self::getProperties($class);
+		$ret=array();
+		foreach ($props as $prop){
+			$annot=self::getAnnotationMember($class, $prop->getName(), $annotation);
+			if($annot!==false)
+				$ret[]=$prop->getName();
 		}
 		return $ret;
 	}
