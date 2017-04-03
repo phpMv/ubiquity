@@ -175,7 +175,7 @@ class Micro {
 			}
 			require_once 'app/micro/controllers/Autoloader.php';
 			$config=require_once 'app/config.php';
-			Autoloader::register();
+			Autoloader::register($config);
 
 			self::createController("Main",self::$indexContent);
 			self::xcopy("tmp/micro-master/project-files/app/views/".self::$mainViewTemplate, "app/views/index.html");
