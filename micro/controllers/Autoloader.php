@@ -23,14 +23,14 @@ class Autoloader{
 
 	public static function autoload($class){
 		global $config;
-		$directories=array_merge(["controllers","models"],@$config["directories"]);
+		$directories=array_merge(["controllers","models"],$config["directories"]);
 		$find=false;
 		foreach ($directories as $directory){
 			if($find=self::tryToRequire($directory,$class))
 				break;
 		}
 		if($find===false){
-			$namespaces=@$config["namespaces"];
+			$namespaces=$config["namespaces"];
 			$posSlash=strrpos($class, '\\');
 			$classname=substr($class,  $posSlash+ 1);
 			$namespace=substr($class, 0, $posSlash);
