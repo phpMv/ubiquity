@@ -12,8 +12,8 @@ class ModelsCreator {
 
 	private static function init(){
 		require_once 'app/micro/controllers/Autoloader.php';
-		Autoloader::register();
 		$config=require_once 'app/config.php';
+		Autoloader::register();
 		self::$config=$config["database"];
 		self::connect();
 	}
