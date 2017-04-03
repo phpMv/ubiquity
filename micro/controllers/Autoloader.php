@@ -25,7 +25,10 @@ class Autoloader{
 
 	public static function autoload($class){
 		$config=self::$config;
-		$directories=array_merge(["controllers","models"],$config["directories"]);
+		$directories=["controllers","models"];
+		if(is_array($config["directories"])){
+			$directories=array_merge($directories,$config["directories"]);
+		}
 		$find=false;
 		foreach ($directories as $directory){
 			if($find=self::tryToRequire($directory,$class))
