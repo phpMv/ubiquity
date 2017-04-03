@@ -12,31 +12,32 @@ class Autoloader{
 	public static function register(){
 		spl_autoload_register(array(__CLASS__, 'autoload'));
 	}
+	
+	private static function tryToRequire($directory,$class){
+		if(file_exists(ROOT.DS.$directory.DS.$class.".php")){
+			require_once(ROOT.DS.$directory.DS.$class.".php");
+			return true;
+		}
+		return false;
+	}
 
 	public static function autoload($class){
 		global $config;
+		$directories=array_merge(["controllers","models"],@$config["directories"]);
 		$find=false;
-		if(file_exists(ROOT.DS."controllers".DS.$class.".php")){
-			require_once(ROOT.DS."controllers".DS.$class.".php");
-			$find=true;
+		foreach ($directories as $directory){
+			if($find=self::tryToRequire($directory,$class))
+				break;
 		}
-		else if(file_exists(ROOT.DS."models".DS.$class.".php")){
-			require_once(ROOT.DS."models".DS.$class.".php");
-			$find=true;
-		}
-		else if(file_exists(ROOT.DS."framework".DS.$class.".php")){
-			require_once(ROOT.DS."framework".DS.$class.".php");
-			$find=true;
-		}
-		else{
-			if(\sizeof($config["directories"])>0){
-				foreach ($config["directories"] as $directory){
-					if(file_exists(ROOT.DS.$directory.DS.$class.".php")){
-						require_once(ROOT.DS.$directory.DS.$class.".php");
-						$find=true;
-						break;
-					}
-				}
+		if($find===false){
+			$namespaces=@$config["namespaces"];
+			$posSlash=strrpos($class, '\\');
+			$classname=substr($class,  $posSlash+ 1);
+			$namespace=substr($class, 0, $posSlash);
+			if(isset($namespaces[$namespace])){
+				$directory=$namespaces[$namespace];
+				if($find=self::tryToRequire($directory,$classname))
+					break;
 			}
 		}
 		if($find===false){

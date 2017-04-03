@@ -13,6 +13,7 @@ return array(
 		},
 		"sessionToken"=>"%temporaryToken%",
 		"directories"=>[],
+		"namespaces"=>[],
 		"templateEngine"=>'micro\views\engine\Twig',
 		"templateEngineOptions"=>array("cache"=>false),
 		"test"=>false,
