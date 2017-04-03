@@ -35,9 +35,7 @@ class Autoloader{
 			$classname=substr($class,  $posSlash+ 1);
 			$namespace=substr($class, 0, $posSlash);
 			if(isset($namespaces[$namespace])){
-				$directory=$namespaces[$namespace];
-				if($find=self::tryToRequire($directory,$classname))
-					break;
+				$find=self::tryToRequire($namespaces[$namespace],$classname);
 			}
 		}
 		if($find===false){
