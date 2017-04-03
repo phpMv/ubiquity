@@ -11,21 +11,21 @@ class ModelsCreator {
 	private static $classes=array();
 
 	private static function init(){
-		require_once 'app/micro/controllers/Autoloader.php';
-		$config=require_once 'app/config.php';
+		$dir=getcwd();
+		require_once $dir.'/app/micro/controllers/Autoloader.php';
+		$config=include_once $dir.'config.php';
 		Autoloader::register($config);
-		self::$config=$config["database"];
-		self::connect();
+		self::connect($config["database"]);
 	}
 	/**
 	 * Réalise la connexion à la base de données
 	 */
-	private static function connect() {
+	private static function connect($config) {
 		try {
 			self::$pdoObject = new \PDO(
-					'mysql:host=' . self::$config["serverName"] . ';dbname='
-					. self::$config["dbName"] . ';port:' . self::$config["port"],
-					self::$config["user"], self::$config["password"]);
+					'mysql:host=' . $config["serverName"] . ';dbname='
+					. $config["dbName"] . ';port:' . $config["port"],
+					$config["user"], $config["password"]);
 			self::$pdoObject->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			self::$pdoObject->exec("SET CHARACTER SET utf8");
 

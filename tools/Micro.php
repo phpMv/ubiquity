@@ -354,9 +354,9 @@ class Micro {
 			die();
 		}
 		define('ROOT', realpath('./app').DS);
-
+		$config=require_once 'app/config.php';
 		require_once 'app/micro/controllers/Autoloader.php';
-		Autoloader::register();
+		Autoloader::register($config);
 	}
 }
 error_reporting(E_ALL);
