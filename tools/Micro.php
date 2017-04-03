@@ -331,12 +331,12 @@ class Micro {
 			self::create($argv[2]);
 			break;
 			case "all-models":
-				self::_init();
-				ModelsCreator::create();
+				$config=self::_init();
+				ModelsCreator::create($config);
 				break;
 			case "model":
 				self::_init();
-				ModelsCreator::create($argv[2]);
+				ModelsCreator::create($config,$argv[2]);
 				break;
 			case "controller":
 				self::_init();
@@ -357,6 +357,7 @@ class Micro {
 		$config=require_once 'app/config.php';
 		require_once 'app/micro/controllers/Autoloader.php';
 		Autoloader::register($config);
+		return $config;
 	}
 }
 error_reporting(E_ALL);

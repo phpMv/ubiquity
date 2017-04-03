@@ -10,11 +10,7 @@ class ModelsCreator {
 	private static $tables=array();
 	private static $classes=array();
 
-	private static function init(){
-		$dir=getcwd();
-		require_once $dir.'/app/micro/controllers/Autoloader.php';
-		$config=include_once $dir.'config.php';
-		Autoloader::register($config);
+	private static function init($config){
 		self::connect($config["database"]);
 	}
 	/**
@@ -35,8 +31,8 @@ class ModelsCreator {
 		}
 	}
 
-	public static function create($singleTable=null){
-		self::init();
+	public static function create($config,$singleTable=null){
+		self::init($config);
 		self::$tables=self::getTablesName();
 		if(!is_dir("app/models/runtime"))
 			mkdir("app/models/runtime",0777,true);
