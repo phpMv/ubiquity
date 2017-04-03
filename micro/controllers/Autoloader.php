@@ -4,14 +4,18 @@ namespace micro\controllers;
 /**
  * Classe Autoloader
  * @author jc
- * @version 1.0.0.1
+ * @version 1.0.0.2
  * @package controllers
  */
 class Autoloader{
 	private static $config;
-	public static function register(){
-		global $config;
+	private static $directories;
+	public static function register($config){
 		self::$config=$config;
+		self::$directories=["controllers","models"];
+		if(is_array($config["directories"])){
+			self::$directories=array_merge(self::$directories,$config["directories"]);
+		}
 		spl_autoload_register(array(__CLASS__, 'autoload'));
 	}
 	
@@ -25,16 +29,12 @@ class Autoloader{
 
 	public static function autoload($class){
 		$config=self::$config;
-		$directories=["controllers","models"];
-		if(is_array($config["directories"])){
-			$directories=array_merge($directories,$config["directories"]);
-		}
 		$find=false;
-		foreach ($directories as $directory){
+		foreach (self::$directories as $directory){
 			if($find=self::tryToRequire($directory,$class))
 				break;
 		}
-		if($find===false){
+		if($find===false && is_array($config["namespaces"])){
 			$namespaces=$config["namespaces"];
 			$posSlash=strrpos($class, '\\');
 			$classname=substr($class,  $posSlash+ 1);
