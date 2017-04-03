@@ -23,6 +23,7 @@ class Autoloader{
 
 	public static function autoload($class){
 		global $config;
+		var_dump($config);
 		$directories=array_merge(["controllers","models"],$config["directories"]);
 		$find=false;
 		foreach ($directories as $directory){
