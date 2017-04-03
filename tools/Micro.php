@@ -3,12 +3,15 @@ use micro\controllers\Autoloader;
 use micro\utils\StrUtils;
 include 'ModelsCreator.php';
 include 'Console.php';
+include 'Command.php';
 class Micro {
+	private static $version="1.0.2";
+	private static $appName="#micro devtools";
 	private static $configOptions;
-	private static $composer=["require"=>["twig/twig"=>"~1.0","mindplay/annotations"=>"~1.2"]];
 	private static $toolsConfig;
 	private static $indexContent="\n\t\$this->loadView('index.html');\n";
 	private static $mainViewTemplate="index.html";
+	private static $commands=["new"=>["Creates a new project"]];
 
 	public static function downloadZip($url,$zipFile="tmp/tmp.zip"){
 		$f = file_put_contents($zipFile, fopen($url, 'r'), LOCK_EX);
@@ -20,7 +23,7 @@ class Micro {
 	}
 
 	public static function createComposerFile(){
-		$composer=json_encode(self::$composer);
+		$composer=json_encode(self::$toolsConfig["composer"]);
 		echo "Composer file creation...\n";
 		self::writeFile("composer.json", $composer);
 	}
@@ -34,41 +37,27 @@ class Micro {
 		if($zip->open($zipFile) !== TRUE){
 			echo "Error :- Unable to open the Zip File";
 		}
-		/* Extract Zip File */
 		$zip->extractTo($extractPath);
 		$zip->close();
 	}
 
-	public static function xcopy($source, $dest, $permissions = 0755)
-	{
-		// Check for symlinks
+	public static function xcopy($source, $dest, $permissions = 0755){
 		if (is_link($source)) {
 			return symlink(readlink($source), $dest);
 		}
-
-		// Simple copy for a file
 		if (is_file($source)) {
 			return copy($source, $dest);
 		}
-
-		// Make destination directory
 		if (!is_dir($dest)) {
 			mkdir($dest, $permissions,true);
 		}
-
-		// Loop through the folder
 		$dir = dir($source);
 		while (false !== $entry = $dir->read()) {
-			// Skip pointers
 			if ($entry == '.' || $entry == '..') {
 				continue;
 			}
-
-			// Deep copy directories
 			self::xcopy("$source/$entry", "$dest/$entry", $permissions);
 		}
-
-		// Clean up
 		$dir->close();
 		return true;
 	}
@@ -209,7 +198,7 @@ class Micro {
 					throw new Exception($phpmv." is not a valid option for phpMv-UI.");
 					break;
 			}
-			self::$composer["require"]["phpmv/php-mv-ui"]="dev-master";
+			self::$toolsConfig["composer"]["require"]["phpmv/php-mv-ui"]="dev-master";
 			if($phpmv==="bootstrap"){
 				self::$configOptions["%cssFiles%"][]=self::includeCss(self::$toolsConfig["cdn"]["bootstrap"]["css"]);
 				self::$configOptions["%jsFiles%"][]=self::includeJs(self::$toolsConfig["cdn"]["jquery"]);
@@ -343,8 +332,17 @@ class Micro {
 				self::createController($argv[2]);
 				break;
 			default:
-				;
+				self::info();
 			break;
+		}
+	}
+
+	private static function info(){
+		echo self::$appName." (".self::$version.")\n";
+		$commands=Command::getCommands();
+		foreach ($commands as $command){
+			echo $command->longString();
+			echo "\n";
 		}
 	}
 	private static function _init(){
@@ -355,7 +353,8 @@ class Micro {
 		}
 		define('ROOT', realpath('./app').DS);
 		$config=require_once 'app/config.php';
-		require_once 'app/micro/controllers/Autoloader.php';
+		require_once ROOT.'micro/controllers/Autoloader.php';
+		require_once ROOT.'./../vendor/autoload.php';
 		Autoloader::register($config);
 		return $config;
 	}
@@ -364,4 +363,4 @@ error_reporting(E_ALL);
 
 define('DS', DIRECTORY_SEPARATOR);
 
-Micro::init($argv[1]);
+Micro::init(@$argv[1]);
