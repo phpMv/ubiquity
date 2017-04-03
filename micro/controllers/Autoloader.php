@@ -8,8 +8,10 @@ namespace micro\controllers;
  * @package controllers
  */
 class Autoloader{
-
+	private static $config;
 	public static function register(){
+		global $config;
+		self::$config=$config;
 		spl_autoload_register(array(__CLASS__, 'autoload'));
 	}
 	
@@ -22,8 +24,7 @@ class Autoloader{
 	}
 
 	public static function autoload($class){
-		global $config;
-		var_dump($config);
+		$config=self::$config;
 		$directories=array_merge(["controllers","models"],$config["directories"]);
 		$find=false;
 		foreach ($directories as $directory){
