@@ -319,15 +319,15 @@ class Micro {
 			case "project":case "create-project":case "new":
 			self::create($argv[2]);
 			break;
-			case "all-models":
+			case "all-models":case "create-all-models":
 				$config=self::_init();
 				ModelsCreator::create($config);
 				break;
-			case "model":
+			case "model":case "create-model":
 				self::_init();
 				ModelsCreator::create($config,$argv[2]);
 				break;
-			case "controller":
+			case "controller":case "create-controller":
 				self::_init();
 				self::createController($argv[2]);
 				break;

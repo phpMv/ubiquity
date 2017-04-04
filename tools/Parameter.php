@@ -12,7 +12,7 @@ class Parameter {
 	}
 
 	public function __toString(){
-		$dec="\t\t\t\t";
+		$dec="\t\t\t";
 		$result= "\tshortcut of --".$this->name."\n".$dec.$this->description;
 		if(sizeof($this->values)>0){
 			$result.="\n".$dec."Possibles values :";
