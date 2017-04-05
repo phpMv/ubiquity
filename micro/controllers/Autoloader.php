@@ -15,7 +15,7 @@ class Autoloader{
 	public static function register($config){
 		self::$config=$config;
 		self::$directories=["controllers","models"];
-		if(\is_array($config["namespaces"]))
+		if(@\is_array($config["namespaces"]))
 			self::$namespaces=$config["namespaces"];
 		if(is_array($config["directories"])){
 			self::$directories=array_merge(self::$directories,$config["directories"]);

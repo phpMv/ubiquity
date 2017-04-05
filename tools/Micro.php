@@ -172,7 +172,7 @@ class Micro {
 			self::delTree("tmp");
 
 			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
-				ModelsCreator::create();
+				ModelsCreator::create($config);
 			echo "project `{$projectName}` successfully created.\n";
 		}else{
 			echo "The {$projectName} folder already exists !\n";
