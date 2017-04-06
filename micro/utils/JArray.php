@@ -23,4 +23,34 @@ class JArray {
 		} else
 			return $default;
 	}
+
+	public static function asPhpArray($array,$prefix=""){
+		$exts=array();
+		$extsStr="";
+		if(self::isAssociative($array)){
+			foreach ($array as $k=>$v){
+					$exts[]="\"".$k."\"=>".self::parseValue($v,$prefix);
+			}
+		}else{
+			foreach ($array as $v){
+				$exts[]=self::parseValue($v,$prefix);
+			}
+		}
+		if(\sizeof($exts)>0 || $prefix!==""){
+			$extsStr="(".\implode(",", $exts).")";
+		}
+		return $prefix.$extsStr;
+	}
+
+	private static function parseValue($v,$prefix=""){
+		if(\is_bool($v)===true){
+			$result=StrUtils::getBooleanStr($v);
+		}elseif(\is_array($v)){
+			$result=self::asPhpArray($v,$prefix);
+		}
+		else{
+			$result="\"".$v."\"";
+		}
+		return $result;
+	}
 }

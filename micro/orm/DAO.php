@@ -61,29 +61,22 @@ class DAO {
 	/**
 	 * Charge les membres associés à $instance par une relation de type ManyToOne
 	 * @param object $instance
-	 * @param array $keyValues
-	 * @param array $members
+	 * @param string $key
+	 * @param mixed $value
+	 * @param array $annotationArray
 	 */
-	private static function getOneManyToOne($instance,$keyValues,$members){
+	private static function getOneManyToOne($instance,$value,$annotationArray){
 		$class=get_class($instance);
-		foreach ($members as $member){
-			$annot=Reflexion::getAnnotationMember($class, $member->getName(), "@joinColumn");
-			if($annot!==false){
-				reset($keyValues);
-				if($annot->name==key($keyValues)){
-					$key=OrmUtils::getFirstKey($annot->className);
-					$kv=array($key=>$keyValues[$annot->name]);
-
-					$obj=self::getOne($annot->className, $kv,false);
-					if($obj!==null){
-						Logger::log("getOneManyToOne", "Chargement de ".$member->getName()." pour l'objet ".$class);
-						$accesseur="set".ucfirst($member->getName());
-						if(method_exists($instance,$accesseur)){
-							$instance->$accesseur($obj);
-							return;
-						}
-					}
-				}
+		$member=$annotationArray["member"];
+		$key=OrmUtils::getFirstKey($annotationArray["className"]);
+		$kv=array($key=>$value);
+		$obj=self::getOne($annotationArray["className"], $kv,false);
+		if($obj!==null){
+			Logger::log("getOneManyToOne", "Chargement de ".$member." pour l'objet ".$class);
+			$accesseur="set".ucfirst($member);
+			if(method_exists($instance,$accesseur)){
+				$instance->$accesseur($obj);
+				return;
 			}
 		}
 	}
@@ -94,30 +87,33 @@ class DAO {
 	 * @param object $instance
 	 * @param string $member Membre sur lequel doit être présent une annotation OneToMany
 	 * @param array $array paramètre facultatif contenant la liste des fils possibles
+	 * @param array $annot used internally
 	 */
-	public static function getOneToMany($instance,$member,$array=null){
+	public static function getOneToMany($instance,$member,$array=null,$annot=null){
 		$ret=array();
 		$class=get_class($instance);
-		$annot=Reflexion::getAnnotationMember($class, $member, "@oneToMany");
+		if(!isset($annot))
+			$annot=OrmUtils::getAnnotationInfoMember($class,"#oneToMany", $member);
 		if($annot!==false){
-			$fk=Reflexion::getAnnotationMember($annot->className, $annot->mappedBy, "@joinColumn");
-			$fkv=OrmUtils::getFirstKeyValue($instance);
-			if(is_null($array)){
-				$ret=self::getAll($annot->className,$fk->name."='".$fkv."'");
-			}
-			else{
-				$elementAccessor="get".ucfirst($annot->mappedBy);
-				foreach ($array as $element){
-					$elementRef=$element->$elementAccessor();
-					if(!is_null($elementRef)){
-						$idElementRef=OrmUtils::getFirstKeyValue($elementRef);
-						if($idElementRef==$fkv)
-							$ret[]=$element;
+			$fkAnnot=OrmUtils::getAnnotationInfoMember($annot["className"], "#joinColumn",$annot["mappedBy"]);
+			if($fkAnnot!==false){
+				$fkv=OrmUtils::getFirstKeyValue($instance);
+				if(is_null($array)){
+					$ret=self::getAll($annot["className"],$fkAnnot["name"]."='".$fkv."'");
+				}else{
+					$elementAccessor="get".ucfirst($annot->mappedBy);
+					foreach ($array as $element){
+						$elementRef=$element->$elementAccessor();
+						if(!is_null($elementRef)){
+							$idElementRef=OrmUtils::getFirstKeyValue($elementRef);
+							if($idElementRef==$fkv)
+								$ret[]=$element;
+						}
 					}
 				}
+				self::setToMember($member, $instance, $ret, $class, "getOneToMany");
+				}
 			}
-			self::setToMember($member, $instance, $ret, $class, "getOneToMany");
-		}
 		return $ret;
 	}
 
@@ -198,28 +194,34 @@ class DAO {
 	 * @param string $condition Partie suivant le WHERE d'une instruction SQL
 	 * @return array
 	 */
-	public static function getAll($className,$condition='',$loadManyToOne=true){
+	public static function getAll($className,$condition='',$loadManyToOne=true,$loadOneToMany=false){
 		$objects=array();
-		$membersManyToOne=Reflexion::getMembersWithAnnotation($className, "@manyToOne");
 		$tableName=OrmUtils::getTableName($className);
+		$metaDatas=OrmUtils::getModelMetadata($className);
+		if($loadManyToOne && isset($metaDatas["#invertedJoinColumn"]))
+			$invertedJoinColumns=$metaDatas["#invertedJoinColumn"];
+		if($loadOneToMany && isset($metaDatas["#oneToMany"])){
+			$oneToManyFields=$metaDatas["#oneToMany"];
+		}
 		if($condition!='')
 			$condition=" WHERE ".$condition;
-		$query=self::$db->query("SELECT * FROM ".$tableName.$condition);
+		$query=self::$db->prepareAndExecute("SELECT * FROM ".$tableName.$condition);
 		Logger::log("getAll","SELECT * FROM ".$tableName.$condition);
 		foreach ($query as $row){
-			//Pour chaque enregistrement : instanciation d'un objet
 			$o=new $className();
 			$objects[]=$o;
 			foreach ($row as $k=>$v){
-				//Modificateur et test de son existance
-				if(!is_numeric($k)){
-					$accesseur="set".ucfirst($k);
-					if(method_exists($o,$accesseur)){
-						$o->$accesseur($v);
-					}
-					if($loadManyToOne===true && OrmUtils::isMemberInManyToOne($className,$membersManyToOne, $k)) {
-						self::getOneManyToOne($o, array($k=>$v), $membersManyToOne);
-					}
+				$accesseur="set".ucfirst($k);
+				if(method_exists($o,$accesseur)){
+					$o->$accesseur($v);
+				}
+				if(isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
+					self::getOneManyToOne($o,$v, $invertedJoinColumns[$k]);
+				}
+			}
+			if(isset($oneToManyFields)){
+				foreach ($oneToManyFields as $k=>$annot){
+					self::getOneToMany($o, $k,null,$annot);
 				}
 			}
 			self::addInstanceInObjects($o);
@@ -311,9 +313,12 @@ class DAO {
 	 * @param object $instance
 	 */
 	public static function insertOrUpdateAllManyToMany($instance){
-		$members=Reflexion::getMembersWithAnnotation(get_class($instance), "@manyToMany");
-		foreach ($members as $member){
-			self::insertOrUpdateManyToMany($instance, $member->name);
+		$members=OrmUtils::getAnnotationInfo(get_class($instance), "#manyToMany");
+		if($members!==false){
+			$members=\array_keys($members);
+			foreach ($members as $member){
+				self::insertOrUpdateManyToMany($instance, $member);
+			}
 		}
 	}
 

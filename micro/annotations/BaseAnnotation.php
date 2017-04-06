@@ -1,8 +1,8 @@
 <?php
 namespace micro\annotations;
-use micro\utils\StrUtils;
 use mindplay\annotations\standard\PropertyAnnotation;
 use mindplay\annotations\Annotations;
+use micro\utils\JArray;
 
 /**
  * @usage('property'=>true, 'inherited'=>true)
@@ -29,20 +29,13 @@ class BaseAnnotation extends PropertyAnnotation {
 			return $ret;
 	}
 
-	public function __toString(){
+	public function asPhpArray(){
 		$fields=$this->getPropertiesAndValues();
-		$exts=array();
-		$extsStr="";
-		foreach ($fields as $k=>$v){
-			if(\is_bool($v)===true){
-				$exts[]="\"".$k."\"=>".StrUtils::getBooleanStr($v);
-			}else{
-				$exts[]="\"".$k."\"=>\"".$v."\"";
-			}
-		}
-		if(\sizeof($exts)>0){
-			$extsStr="(".\implode(",", $exts).")";
-		}
+		return JArray::asPhpArray($fields);
+	}
+
+	public function __toString(){
+		$extsStr=$this->asPhpArray();
 		$className=get_class($this);
 		$annotName=\substr($className, \strlen("micro\annotations\\"));
 		$annotName = \substr($annotName, 0, \strlen($annotName)-\strlen("Annotation"));

@@ -1,7 +1,6 @@
 <?php
-namespace micro\annotations;
+namespace micro\orm;
 
-use micro\orm\Reflexion;
 use micro\orm\OrmUtils;
 /**
  * Annotation ManyToManyParser
@@ -31,30 +30,30 @@ class ManyToManyParser{
 		$member=$this->member;
 		$instance=$this->instance;
 		$class=get_class($instance);
-		$annot=Reflexion::getAnnotationMember($class, $member, "@manyToMany");
+		$annot=OrmUtils::getAnnotationInfoMember($class, "#manyToMany",$member);
 		if($annot!==false){
-			$this->targetEntity=$annot->targetEntity;
+			$this->targetEntity=$annot["targetEntity"];
 			$this->inversedBy=strtolower($this->targetEntity)."s";
-			if(!is_null($annot->inversedBy))
-				$this->inversedBy=$annot->inversedBy;
+			if(!is_null($annot["inversedBy"]))
+				$this->inversedBy=$annot[inversedBy];
 			$this->targetEntityClass=get_class(new $this->targetEntity());
 
-			$annotJoinTable=Reflexion::getAnnotationMember($class, $member, "@joinTable");
-			$this->joinTable=$annotJoinTable->name;
-			$joinColumnsAnnot=$annotJoinTable->joinColumns;
+			$annotJoinTable=OrmUtils::getAnnotationInfoMember($class, "#joinTable",$member);
+			$this->joinTable=$annotJoinTable["name"];
+			$joinColumnsAnnot=$annotJoinTable["joinColumns"];
 			$this->myFkField="id".OrmUtils::getTableName($class);
 			$this->myPk=OrmUtils::getFirstKey($class);
 			if(!is_null($joinColumnsAnnot)){
-				$this->myFkField=$joinColumnsAnnot->name;
-				$this->myPk=$joinColumnsAnnot->referencedColumnName;
+				$this->myFkField=$joinColumnsAnnot["name"];
+				$this->myPk=$joinColumnsAnnot["referencedColumnName"];
 			}
 			$this->targetEntityTable=OrmUtils::getTableName($this->targetEntity);
 			$this->fkField="id".ucfirst($this->targetEntityTable);
 			$this->pk=OrmUtils::getFirstKey($this->targetEntityClass);
-			$inverseJoinColumnsAnnot=$annotJoinTable->inverseJoinColumns;
+			$inverseJoinColumnsAnnot=$annotJoinTable["inverseJoinColumns"];
 			if(!is_null($inverseJoinColumnsAnnot)){
-				$this->fkField=$inverseJoinColumnsAnnot->name;
-				$this->pk=$inverseJoinColumnsAnnot->referencedColumnName;
+				$this->fkField=$inverseJoinColumnsAnnot["name"];
+				$this->pk=$inverseJoinColumnsAnnot["referencedColumnName"];
 			}
 		return true;
 		}

@@ -1,4 +1,5 @@
 <?php
+namespace controllers;
  /**
  * Controller %controllerName%
  **/

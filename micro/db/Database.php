@@ -14,6 +14,7 @@ class Database {
 	private $user;
 	private $password;
 	private $pdoObject;
+	private $statements=[];
 
 	/**
 	 * Constructeur
@@ -56,6 +57,23 @@ class Database {
 	 */
 	public function query($sql) {
 		return $this->pdoObject->query($sql);
+	}
+
+	public function prepareAndExecute($sql){
+		$statement=$this->getStatement($sql);
+		$statement->execute();
+		$result= $statement->fetchAll();
+		$statement->closeCursor();
+		return $result;
+	}
+
+	private function getStatement($sql){
+		if(!isset($this->statements[$sql])){
+			$this->statements[$sql]=$this->pdoObject->prepare($sql);
+			$this->statements[$sql]->setFetchMode(\PDO::FETCH_ASSOC);
+
+		}
+		return $this->statements[$sql];
 	}
 
 	/**

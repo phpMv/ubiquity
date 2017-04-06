@@ -3,10 +3,12 @@ namespace micro\orm\creator;
 class Model {
 	private $members;
 	private $name;
+	private $namespace;
 
-	public function __construct($name){
+	public function __construct($name,$namespace="models\\"){
 		$this->name=\ucfirst($name);
 		$this->members=array();
+		$this->namespace=$namespace;
 	}
 
 	public function addMember(Member $member){
@@ -42,7 +44,11 @@ class Model {
 	}
 
 	public function __toString(){
-		$result="<?php\nclass ".ucfirst($this->name)."{";
+		$result="<?php\n";
+		if($this->namespace!=="" && $this->namespace!==null){
+			$result.="namespace ".$this->namespace.";\n";
+		}
+		$result.="class ".ucfirst($this->name)."{";
 		$members=$this->members;
 		\array_walk($members,function($item){return $item."";});
 		$result.=implode("", $members);
@@ -55,6 +61,10 @@ class Model {
 	}
 
 	public function getName() {
+		return $this->namespace.$this->name;
+	}
+
+	public function getSimpleName() {
 		return $this->name;
 	}
 

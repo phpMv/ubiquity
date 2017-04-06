@@ -4,81 +4,101 @@ namespace micro\orm;
 /**
  * Utilitaires de mappage Objet/relationnel
  * @author jc
- * @version 1.0.0.3
+ * @version 1.0.0.4
  * @package orm
  */
 class OrmUtils{
+	public static $ormCache;
+	private static $modelsMetadatas;
+
+	public static function createOrmModelCache($className){
+		$key=\str_replace("\\", DIRECTORY_SEPARATOR, $className);
+		if(!self::$ormCache->exists($key)){
+			$p=new ModelParser();
+			$p->parse($className);
+			self::$ormCache->store($key, $p->__toString());
+		}
+		self::$modelsMetadatas[$className]=self::$ormCache->fetch($key);
+		return self::$modelsMetadatas[$className];
+	}
+
+	public static function getModelMetadata($className){
+		if(!isset(self::$modelsMetadatas[$className])){
+			self::createOrmModelCache($className);
+		}
+		return self::$modelsMetadatas[$className];
+	}
+
 	public static function isSerializable($class,$member){
-		if (Reflexion::getAnnotationMember($class,$member,"@transient")!==false || Reflexion::getAnnotationMember($class,$member,"@manyToOne")!==false ||
-				Reflexion::getAnnotationMember($class,$member,"@manyToMany")!==false || Reflexion::getAnnotationMember($class,$member,"@oneToMany")!==false)
-			return false;
+		$ret=self::getAnnotationInfo($class,"#notSerializable");
+		if ($ret!==false)
+			return \array_search($member, $ret)===false;
 		else
 			return true;
 	}
 
 	public static function isNullable($class,$member){
-		$ret=Reflexion::getAnnotationMember($class,$member,"@column");
-		if (!$ret)
-			return false;
+		$ret=self::getAnnotationInfo($class,"#nullable");
+		if ($ret!==false)
+			return \array_search($member, $ret)!==false;
 		else
-			return $ret->nullable;
+			return false;
 	}
 
 	public static function getFieldName($class,$member){
-		$ret=Reflexion::getAnnotationMember($class, $member, "@column");
+		$ret=self::getAnnotationInfo($class, "#fieldNames");
 		if($ret===false)
 			$ret=$member;
 		else
-			$ret=$ret->name;
+			$ret=$ret[$member];
 		return $ret;
 	}
 
 	public static function getTableName($class){
-		$ret=Reflexion::getAnnotationClass($class, "@table");
-		if(\sizeof($ret)==0)
-			$ret=$class;
-		else{
-			$ret=$ret[0]->name;
+		return self::getModelMetadata($class)["#tableName"];
+	}
+
+	public static function getKeyFieldsAndValues($instance){
+		$kf=self::getAnnotationInfo(get_class($instance), "#primaryKeys");
+		return self::getMembersAndValues($instance,$kf);
+	}
+
+	public static function getKeyFields($instance){
+		return self::getAnnotationInfo(get_class($instance), "#primaryKeys");
+	}
+
+	public function getMembers($className){
+		$fieldNames=self::getAnnotationInfo($className, "#fieldNames");
+		if($fieldNames!==false)
+			return \array_keys($fieldNames);
+		return [];
+	}
+
+	public static function getMembersAndValues($instance,$members=NULL){
+		$ret=array();
+		$className=get_class($instance);
+		if(is_null($members))
+			$members=self::getMembers($className);
+		foreach ($members as $member){
+			if(OrmUtils::isSerializable($className,$member)){
+				$v=Reflexion::getMemberValue($instance, $member);
+				if(($v!==null && $v!=="") || (($v===null || $v==="") && OrmUtils::isNullable($className, $member))){
+					$name=self::getFieldName($className, $member);
+					$ret[$name]=$v;
+				}
+			}
 		}
 		return $ret;
 	}
 
-	public static function getKeyFieldsAndValues($instance){
-		$kf=Reflexion::getMembersWithAnnotation(get_class($instance), "@id");
-		return Reflexion::getPropertiesAndValues($instance,$kf);
-	}
-
-	public static function getKeyFields($instance){
-		return Reflexion::getMembersNameWithAnnotation(get_class($instance), "@id");
-	}
-
-	public static function getFieldsInRelations($instance){
-		$result=Reflexion::getMembersWithAnnotation($instance, "@manyToOne");
-		$result=\array_merge($result,Reflexion::getMembersWithAnnotation($instance, "@manyToMany"));
-		$result=\array_merge($result,Reflexion::getMembersWithAnnotation($instance, "@oneToMany"));
-		return $result;
-	}
-
-	public static function getSerializableFields($instance){
-		$result=[];
-		$properties=Reflexion::getProperties($instance);
-		foreach ($properties as $property){
-			if(self::isSerializable($instance, $property->getName())){
-				$result[]=$property;
-			}
-		}
-		return $result;
-	}
-
 	public static function getFirstKey($class){
-		$kf=Reflexion::getMembersWithAnnotation($class, "@id");
-		if(sizeof($kf)>0)
-			return $kf[0]->getName();
+		$kf=self::getAnnotationInfo($class, "#primaryKeys");
+		return \reset($kf);
 	}
 
 	public static function getFirstKeyValue($instance){
 		$fkv=self::getKeyFieldsAndValues($instance);
-		return reset($fkv);
+		return \reset($fkv);
 	}
 
 	/**
@@ -88,21 +108,29 @@ class OrmUtils{
 	public static function getManyToOneMembersAndValues($instance){
 		$ret=array();
 		$class=get_class($instance);
-		$members=Reflexion::getMembersWithAnnotation($class, "@manyToOne");
-		foreach ($members as $member){
-			$memberAccessor="get".ucfirst($member->getName());
-			if(method_exists($instance,$memberAccessor)){
-				$memberInstance=$instance->$memberAccessor();
-				if(isset($memberInstance)){
-					$keyValues=self::getKeyFieldsAndValues($memberInstance);
-					if(sizeof($keyValues)>0){
-						$fkName=self::getJoinColumnName($class, $member->getName());
-						$ret[$fkName]=reset($keyValues);
+		$members=self::getAnnotationInfo($class, "#manyToOne");
+		if($members!==false){
+			foreach ($members as $member){
+				$memberAccessor="get".ucfirst($member);
+				if(method_exists($instance,$memberAccessor)){
+					$memberInstance=$instance->$memberAccessor();
+					if(isset($memberInstance)){
+						$keyValues=self::getKeyFieldsAndValues($memberInstance);
+						if(sizeof($keyValues)>0){
+							$fkName=self::getJoinColumnName($class, $member);
+							$ret[$fkName]=reset($keyValues);
+						}
 					}
 				}
 			}
 		}
 		return $ret;
+	}
+
+	public static function getMembersWithAnnotation($class,$annotation){
+		if(isset(self::getModelMetadata($class)[$annotation]))
+			return self::getModelMetadata($class)[$annotation];
+		return [];
 	}
 
 
@@ -127,21 +155,45 @@ class OrmUtils{
 	}
 
 	public static function getJoinColumnName($class,$member){
-		$annot=Reflexion::getAnnotationMember($class, $member, "@joinColumn");
+		$annot=self::getAnnotationInfoMember($class, "#joinColumn",$member);
 		if($annot!==false){
-			$fkName=$annot->name;
+			$fkName=$annot["name"];
 		}else{
 			$fkName="id".ucfirst(self::getTableName(ucfirst($member)));
 		}
 		return $fkName;
 	}
 
-	public static function isMemberInManyToOne($class,$array,$member){
-		foreach ($array as $memberMTO){
-			$annot=Reflexion::getAnnotationMember($class, $memberMTO->getName(), "@joinColumn");
-			if($annot!==false && $annot->name==$member)
-				return true;
+	public static function getAnnotationInfo($class,$keyAnnotation){
+		if(isset(self::getModelMetadata($class)[$keyAnnotation]))
+			return self::getModelMetadata($class)[$keyAnnotation];
+		return false;
+	}
+
+	public static function getAnnotationInfoMember($class,$keyAnnotation,$member){
+		$info=self::getAnnotationInfo($class, $keyAnnotation);
+		if($info!==false){
+			if(isset($info[$member])){
+				return $info[$member];
+			}
 		}
 		return false;
+	}
+
+	public static function getSerializableFields($class){
+		$notSerializable=self::getAnnotationInfo($class, "#notSerializable");
+		$fieldNames=\array_keys(self::getAnnotationInfo($class, "#fieldNames"));
+		return \array_diff($fieldNames, $notSerializable);
+	}
+
+	public static function getFieldsInRelations($class){
+		$result=[];
+		if($manyToOne=self::getAnnotationInfo($class, "#manyToOne")){
+			$result=\array_merge($result,$manyToOne);
+		}
+		if($oneToMany=self::getAnnotationInfo($class, "#oneToMany")){
+			$result=\array_merge($result,\array_keys($oneToMany));
+		}
+		return $result;
 	}
 }

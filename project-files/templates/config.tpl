@@ -18,5 +18,7 @@ return array(
 		"templateEngineOptions"=>array("cache"=>false),
 		"test"=>false,
 		"debug"=>false,
-		"di"=>[%injections%]
+		"di"=>[%injections%],
+		"ormCache"=>["cacheDirectory"=>"/models/cache/"],
+		"mvcNS"=>["models"=>"models\\","controllers"=>"controllers\\"]
 );

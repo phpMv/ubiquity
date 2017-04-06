@@ -2,6 +2,7 @@
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
 use micro\orm\Reflexion;
+use micro\controllers\Startup;
 
 class ModelsCreator {
 	private static $config;
@@ -33,11 +34,12 @@ class ModelsCreator {
 	public static function create($config,$singleTable=null){
 		self::init($config);
 		self::$tables=self::getTablesName();
-		if(!is_dir("app/models/runtime"))
-			mkdir("app/models/runtime",0777,true);
+		$cacheDirectory=Startup::getCacheDirectory($config);
+		if(!is_dir("app".DS.$cacheDirectory.DS."annotations"))
+			mkdir("app".DS.$cacheDirectory.DS."annotations",0777,true);
 		new Reflexion();
 		foreach (self::$tables as $table){
-			$class=new Model($table);
+			$class=new Model($table,$config["mvcNS"]["models"]);
 			$fields=self::getFieldsName($table);
 			$keys=self::getPrimaryKeys($table);
 			foreach ($fields as $field){

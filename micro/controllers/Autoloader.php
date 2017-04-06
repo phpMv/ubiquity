@@ -1,6 +1,8 @@
 <?php
 namespace micro\controllers;
 
+use micro\orm\OrmUtils;
+
 /**
  * Classe Autoloader
  * @author jc
@@ -14,53 +16,34 @@ class Autoloader{
 
 	public static function register($config){
 		self::$config=$config;
-		self::$directories=["controllers","models"];
 		if(@\is_array($config["namespaces"]))
 			self::$namespaces=$config["namespaces"];
-		if(is_array($config["directories"])){
-			self::$directories=array_merge(self::$directories,$config["directories"]);
-		}
 		spl_autoload_register(array(__CLASS__, 'autoload'));
 	}
 
-	private static function tryToRequire($directory,$class){
-		if(file_exists(ROOT.DS.$directory.DS.$class.".php")){
-			require_once(ROOT.DS.$directory.DS.$class.".php");
+	private static function tryToRequire($file){
+		if(file_exists($file)){
+			require_once($file);
 			return true;
 		}
 		return false;
 	}
 
 	public static function autoload($class){
-		$find=false;
-		foreach (self::$directories as $directory){
-			if($find=self::tryToRequire($directory,$class))
-				break;
-		}
-		if($find===false && is_array(self::$namespaces)){
-			$posSlash=strrpos($class, '\\');
-			$classname=substr($class,  $posSlash+ 1);
-			$namespace=substr($class, 0, $posSlash);
-			if(isset(self::$namespaces[$namespace])){
-				$find=self::tryToRequire(self::$namespaces[$namespace],$classname);
-			}
-		}
-		if($find===false){
-			$nameSpace = explode('\\', $class);
-			foreach($nameSpace as $key =>  $value){
-				$keys=array_keys($nameSpace);
-				if(end($keys) !== $key){
-					$nameSpace[$key] = strtolower($value);
-				}
-			}
-			$class = implode(DS, $nameSpace);
+		$classname = \str_replace("\\",DS, $class);
+		$find=self::tryToRequire(ROOT.DS.$classname.'.php');
+		$posSlash=strrpos($class, '\\');
+		$namespace=substr($class, 0, $posSlash);
 
-			if(strstr($class,"micro".DS)===false){
-				if(file_exists($class.'.php'))
-				require $class.'.php';
+		if($find===false && is_array(self::$namespaces)){
+			$classname=substr($class,  $posSlash+ 1);
+			if(isset(self::$namespaces[$namespace])){
+				$classnameToDir = \str_replace("\\",DS, $namespace);
+				$find=self::tryToRequire(self::$namespaces[$namespace].$classnameToDir.$classname.".php");
 			}
-			else
-				require ROOT.DS.$class.'.php';
+		}
+		if(substr($namespace, 0, strlen(self::$config["mvcNS"]["models"]))===self::$config["mvcNS"]["models"]){
+			OrmUtils::createOrmModelCache($class);
 		}
 	}
 

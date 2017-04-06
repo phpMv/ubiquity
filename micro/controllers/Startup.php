@@ -6,6 +6,7 @@ use micro\views\engine\TemplateEngine;
 use mindplay\annotations\Annotations;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
+use micro\orm\OrmUtils;
 
 class Startup{
 	public static $urlParts;
@@ -15,7 +16,6 @@ class Startup{
 		@set_exception_handler(array('Startup', 'errorHandler'));
 		self::$config=$config;
 		self::startTemplateEngine($config);
-		session_start();
 
 		if($config["test"]){
 			\micro\log\Logger::init();
@@ -25,11 +25,12 @@ class Startup{
 		$db=$config["database"];
 		if($db["dbName"]!==""){
 			DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"]);
-			self::startAnnotations();
+			self::startOrm($config);
 		}
-		$u=self::parseUrl($config, $url);
+		session_start();
 
-		if(class_exists($u[0]) && StrUtils::startswith($u[0],"_")===false){
+		$u=self::parseUrl($config, $url);
+		if(class_exists($config["mvcNS"]["controllers"].$u[0]) && StrUtils::startswith($u[0],"_")===false){
 			//Construction de l'instance de la classe (1er élément du tableau)
 			try{
 				if(isset($config['onStartup'])){
@@ -42,13 +43,25 @@ class Startup{
 				print "Error!: " . $e->getMessage() . "<br/>";
 			}
 		}else{
-			print "Le contrôleur `".$u[0]."` n'existe pas <br/>";
+			print "Le contrôleur `".$config["controllerNS"].$u[0]."` n'existe pas <br/>";
 		}
 	}
 
-	private static function startAnnotations(){
-		Annotations::$config['cache'] = new AnnotationCache(ROOT.DS.'models/runtime');
+	public static function getCacheDirectory($config){
+		$config=self::$config;
+		$cacheDirectory=@$config["ormCache"]["cacheDirectory"];
+		if(!isset($cacheDirectory)){
+			self::$config["ormCache"]=["cacheDirectory"=>"models/cache/"];
+			$cacheDirectory=self::$config["ormCache"]["cacheDirectory"];
+		}
+		return $cacheDirectory;
+	}
+
+	private static function startOrm($config){
+		$cacheDirectory=ROOT.DS.self::getCacheDirectory($config);
+		Annotations::$config['cache'] = new AnnotationCache($cacheDirectory.'/annotations');
 		self::register(Annotations::getManager());
+		OrmUtils::$ormCache=new AnnotationCache($cacheDirectory);
 	}
 
 	private static function register(AnnotationManager $annotationManager){
@@ -95,12 +108,13 @@ class Startup{
 	}
 
 	public static function runAction($u,$initialize=true,$finalize=true){
-		$controller=new $u[0]();
+		$config=self::getConfig();
+		$ctrl=$config["mvcNS"]["controllers"].$u[0];
+		$controller=new $ctrl();
 		if(!$controller instanceof Controller){
 			print "`{$u[0]}` n'est pas une instance de contrôleur.`<br/>";
 			return;
 		}
-		$config=self::getConfig();
 		//Dependency injection
 		if(\array_key_exists("di", $config)){
 			$di=$config["di"];
