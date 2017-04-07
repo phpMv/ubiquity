@@ -20,5 +20,5 @@ return array(
 		"debug"=>false,
 		"di"=>[%injections%],
 		"ormCache"=>["cacheDirectory"=>"/models/cache/"],
-		"mvcNS"=>["models"=>"models\\","controllers"=>"controllers\\"]
+		"mvcNS"=>["models"=>"models","controllers"=>"controllers"]
 );

@@ -81,7 +81,7 @@ class Member {
 
 	public function getManyToOne(){
 		foreach ($this->annotations as $annotation){
-			if($annotation instanceof \JoinColumn){
+			if($annotation instanceof JoinColumnAnnotation){
 				return $annotation;
 			}
 		}

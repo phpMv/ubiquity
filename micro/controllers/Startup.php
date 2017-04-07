@@ -11,6 +11,7 @@ use micro\orm\OrmUtils;
 class Startup{
 	public static $urlParts;
 	private static $config;
+	private static $ctrlNS;
 
 	public static function run(array &$config,$url){
 		@set_exception_handler(array('Startup', 'errorHandler'));
@@ -30,7 +31,8 @@ class Startup{
 		session_start();
 
 		$u=self::parseUrl($config, $url);
-		if(class_exists($config["mvcNS"]["controllers"].$u[0]) && StrUtils::startswith($u[0],"_")===false){
+		self::setCtrlNS($config);
+		if(class_exists(self::$ctrlNS.$u[0]) && StrUtils::startswith($u[0],"_")===false){
 			//Construction de l'instance de la classe (1er élément du tableau)
 			try{
 				if(isset($config['onStartup'])){
@@ -45,6 +47,14 @@ class Startup{
 		}else{
 			print "Le contrôleur `".$config["controllerNS"].$u[0]."` n'existe pas <br/>";
 		}
+	}
+
+	private static function setCtrlNS($config){
+		$ns=$config["mvcNS"]["controllers"];
+		if($ns!=="" && $ns!==null){
+			$ns.="\\";
+		}
+		self::$ctrlNS=$ns;
 	}
 
 	public static function getCacheDirectory($config){
@@ -109,7 +119,7 @@ class Startup{
 
 	public static function runAction($u,$initialize=true,$finalize=true){
 		$config=self::getConfig();
-		$ctrl=$config["mvcNS"]["controllers"].$u[0];
+		$ctrl=self::$ctrlNS.$u[0];
 		$controller=new $ctrl();
 		if(!$controller instanceof Controller){
 			print "`{$u[0]}` n'est pas une instance de contrôleur.`<br/>";
