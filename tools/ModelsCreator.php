@@ -1,7 +1,6 @@
 <?php
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
-use micro\orm\Reflexion;
 use micro\controllers\Startup;
 
 class ModelsCreator {
@@ -11,6 +10,7 @@ class ModelsCreator {
 	private static $classes=array();
 
 	private static function init($config){
+		self::$config=$config["database"];
 		self::connect($config["database"]);
 	}
 	/**
