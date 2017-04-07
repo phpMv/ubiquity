@@ -5,7 +5,7 @@ class Model {
 	private $name;
 	private $namespace;
 
-	public function __construct($name,$namespace="models\\"){
+	public function __construct($name,$namespace="models"){
 		$this->name=\ucfirst($name);
 		$this->members=array();
 		$this->namespace=$namespace;
@@ -61,7 +61,9 @@ class Model {
 	}
 
 	public function getName() {
-		return $this->namespace.$this->name;
+		if($this->namespace!=="" && $this->namespace!==null)
+			$namespace=$this->namespace."\\";
+		return $namespace.$this->name;
 	}
 
 	public function getSimpleName() {

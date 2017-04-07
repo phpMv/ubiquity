@@ -37,7 +37,7 @@ class ModelsCreator {
 		$cacheDirectory=Startup::getCacheDirectory($config);
 		if(!is_dir("app".DS.$cacheDirectory.DS."annotations"))
 			mkdir("app".DS.$cacheDirectory.DS."annotations",0777,true);
-		new Reflexion();
+
 		foreach (self::$tables as $table){
 			$class=new Model($table,$config["mvcNS"]["models"]);
 			$fields=self::getFieldsName($table);
@@ -89,6 +89,12 @@ class ModelsCreator {
 		self::createManyToMany();
 	}
 
+	private static function getTableName($classname){
+		$posSlash=strrpos($classname, '\\');
+		$tablename=substr($classname,  $posSlash+ 1);
+		return lcfirst($tablename);
+	}
+
 	private static function createManyToMany(){
 		foreach (self::$classes as $table=>$class){
 			if($class->isAssociation()===true){
@@ -96,8 +102,8 @@ class ModelsCreator {
 				if(sizeof($members)==2){
 					$manyToOne1=$members[0]->getManyToOne();
 					$manyToOne2=$members[1]->getManyToOne();
-					$table1=strtolower($manyToOne1->className);
-					$table2=strtolower($manyToOne2->className);
+					$table1=self::getTableName($manyToOne1->className);
+					$table2=self::getTableName($manyToOne2->className);
 					$class1=self::$classes[$table1];
 					$class1->addManyToMany($table2."s", $manyToOne2->className, $table1."s", $table);
 					$class1->removeMember($table."s");
