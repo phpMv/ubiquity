@@ -61,12 +61,18 @@ class Member {
 		$this->annotations[]=$oneToMany;
 	}
 
-	public function addManyToMany($targetEntity,$inversedBy,$joinTable){
+	public function addManyToMany($targetEntity,$inversedBy,$joinTable,$joinColumns=[],$inverseJoinColumns=[]){
 		$manyToMany=new ManyToManyAnnotation();
 		$manyToMany->targetEntity=$targetEntity;
 		$manyToMany->inversedBy=$inversedBy;
 		$jt=new JoinTableAnnotation();
 		$jt->name=$joinTable;
+		if(\sizeof($joinColumns)==2){
+			$jt->joinColumns=$joinColumns;
+		}
+		if(\sizeof($inverseJoinColumns)==2){
+			$jt->inverseJoinColumns=$inverseJoinColumns;
+		}
 		$this->annotations[]=$manyToMany;
 		$this->annotations[]=$jt;
 	}

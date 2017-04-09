@@ -3,10 +3,8 @@ namespace micro\controllers;
 use micro\orm\DAO;
 use micro\utils\StrUtils;
 use micro\views\engine\TemplateEngine;
-use mindplay\annotations\Annotations;
-use mindplay\annotations\AnnotationCache;
-use mindplay\annotations\AnnotationManager;
 use micro\orm\OrmUtils;
+
 
 class Startup{
 	public static $urlParts;
@@ -49,43 +47,16 @@ class Startup{
 		}
 	}
 
+	public static function startOrm(&$config){
+		OrmUtils::startOrm($config);
+	}
+
 	private static function setCtrlNS($config){
 		$ns=$config["mvcNS"]["controllers"];
 		if($ns!=="" && $ns!==null){
 			$ns.="\\";
 		}
 		self::$ctrlNS=$ns;
-	}
-
-	public static function getCacheDirectory($config){
-		$config=self::$config;
-		$cacheDirectory=@$config["ormCache"]["cacheDirectory"];
-		if(!isset($cacheDirectory)){
-			self::$config["ormCache"]=["cacheDirectory"=>"models/cache/"];
-			$cacheDirectory=self::$config["ormCache"]["cacheDirectory"];
-		}
-		return $cacheDirectory;
-	}
-
-	private static function startOrm($config){
-		$cacheDirectory=ROOT.DS.self::getCacheDirectory($config);
-		Annotations::$config['cache'] = new AnnotationCache($cacheDirectory.'/annotations');
-		self::register(Annotations::getManager());
-		OrmUtils::$ormCache=new AnnotationCache($cacheDirectory);
-	}
-
-	private static function register(AnnotationManager $annotationManager){
-		$annotationManager->registry=array_merge($annotationManager->registry,[
-				'id' => 'micro\annotations\IdAnnotation',
-				'manyToOne' => 'micro\annotations\ManyToOneAnnotation',
-				'oneToMany' => 'micro\annotations\OneToManyAnnotation',
-				'manyToMany' => 'micro\annotations\ManyToManyAnnotation',
-				'joinColumn' => 'micro\annotations\JoinColumnAnnotation',
-				'table' => 'micro\annotations\TableAnnotation',
-				'transient' => 'micro\annotations\TransientAnnotation',
-				'column' => 'micro\annotations\ColumnAnnotation',
-				'joinTable' => 'micro\annotations\JoinTableAnnotation'
-		]);
 	}
 
 	private static function parseUrl($config,$url){

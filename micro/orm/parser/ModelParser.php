@@ -1,6 +1,6 @@
 <?php
 
-namespace micro\orm;
+namespace micro\orm\parser;
 
 use micro\utils\JArray;
 
@@ -11,6 +11,7 @@ class ModelParser {
 	protected $oneToManyMembers;
 	protected $manyToManyMembers;
 	protected $joinColumnMembers;
+	protected $joinTableMembers;
 	protected $nullableMembers;
 	protected $notSerializableMembers=[];
 	protected $fieldNames;
@@ -22,6 +23,7 @@ class ModelParser {
 		$this->manytoOneMembers=Reflexion::getMembersNameWithAnnotation($modelClass, "@manyToOne");
 		$this->manyToManyMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@manyToMany");
 		$this->joinColumnMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@joinColumn");
+		$this->joinTableMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@joinTable");
 		$properties=Reflexion::getProperties($instance);
 		foreach ($properties as $property){
 			$propName=$property->getName();
@@ -49,6 +51,11 @@ class ModelParser {
 		foreach ($this->manyToManyMembers as $member=>$annotation){
 			$result["#manyToMany"][$member]=$annotation->getPropertiesAndValues();
 		}
+
+		foreach ($this->joinTableMembers as $member=>$annotation){
+			$result["#joinTable"][$member]=$annotation->getPropertiesAndValues();
+		}
+
 		foreach ($this->joinColumnMembers as $member=>$annotation){
 			$result["#joinColumn"][$member]=$annotation->getPropertiesAndValues();
 			$result["#invertedJoinColumn"][$annotation->name]=["member"=>$member,"className"=>$annotation->className];

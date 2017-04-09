@@ -1,12 +1,11 @@
 <?php
-namespace micro\orm;
+namespace micro\orm\parser;
 
 use micro\orm\OrmUtils;
 /**
- * Annotation ManyToManyParser
+ * ManyToManyParser
  * @author jc
- * @version 1.0.0.1
- * @package annotations
+ * @version 1.0.0.3
  */
 
 class ManyToManyParser{
@@ -35,20 +34,20 @@ class ManyToManyParser{
 			$this->targetEntity=$annot["targetEntity"];
 			$this->inversedBy=strtolower($this->targetEntity)."s";
 			if(!is_null($annot["inversedBy"]))
-				$this->inversedBy=$annot[inversedBy];
+				$this->inversedBy=$annot["inversedBy"];
 			$this->targetEntityClass=get_class(new $this->targetEntity());
 
 			$annotJoinTable=OrmUtils::getAnnotationInfoMember($class, "#joinTable",$member);
 			$this->joinTable=$annotJoinTable["name"];
 			$joinColumnsAnnot=$annotJoinTable["joinColumns"];
-			$this->myFkField="id".OrmUtils::getTableName($class);
+			$this->myFkField=OrmUtils::getDefaultFk($class);
 			$this->myPk=OrmUtils::getFirstKey($class);
 			if(!is_null($joinColumnsAnnot)){
 				$this->myFkField=$joinColumnsAnnot["name"];
 				$this->myPk=$joinColumnsAnnot["referencedColumnName"];
 			}
 			$this->targetEntityTable=OrmUtils::getTableName($this->targetEntity);
-			$this->fkField="id".ucfirst($this->targetEntityTable);
+			$this->fkField=OrmUtils::getDefaultFk($this->targetEntityClass);
 			$this->pk=OrmUtils::getFirstKey($this->targetEntityClass);
 			$inverseJoinColumnsAnnot=$annotJoinTable["inverseJoinColumns"];
 			if(!is_null($inverseJoinColumnsAnnot)){

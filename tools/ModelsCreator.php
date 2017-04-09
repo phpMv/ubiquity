@@ -2,6 +2,7 @@
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
 use micro\controllers\Startup;
+use micro\annotations\JoinColumnAnnotation;
 
 class ModelsCreator {
 	private static $config;
@@ -105,10 +106,13 @@ class ModelsCreator {
 					$table1=self::getTableName($manyToOne1->className);
 					$table2=self::getTableName($manyToOne2->className);
 					$class1=self::$classes[$table1];
-					$class1->addManyToMany($table2."s", $manyToOne2->className, $table1."s", $table);
-					$class1->removeMember($table."s");
 					$class2=self::$classes[$table2];
-					$class2->addManyToMany($table1."s", $manyToOne1->className, $table2."s", $table);
+					$joinTable1=self::getJoinTableArray($class1, $manyToOne1);
+					$joinTable2=self::getJoinTableArray($class2, $manyToOne2);
+					$class1->addManyToMany($table2."s", $manyToOne2->className, $table1."s", $table,$joinTable1,$joinTable2);
+					$class1->removeMember($table."s");
+
+					$class2->addManyToMany($table1."s", $manyToOne1->className, $table2."s", $table,$joinTable2,$joinTable1);
 					$class2->removeMember($table."s");
 					unset(self::$classes[$table]);
 				}else{
@@ -116,6 +120,17 @@ class ModelsCreator {
 				}
 			}
 		}
+	}
+
+	private function getJoinTableArray(Model $class,JoinColumnAnnotation $joinColumn){
+		$pk=$class->getPrimaryKey();
+		$fk=$joinColumn->name;
+		$dFk=$class->getDefaultFk();
+		if($fk!==$dFk){
+			if($pk!==null && $fk!==null && $pk!==null)
+				return ["name"=>$fk, "referencedColumnName"=>$pk];
+		}
+		return [];
 	}
 
 	private static function getTablesName(){

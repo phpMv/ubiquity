@@ -1,10 +1,16 @@
 <?php
 namespace micro\orm;
 
+use mindplay\annotations\Annotations;
+use mindplay\annotations\AnnotationCache;
+use mindplay\annotations\AnnotationManager;
+use micro\orm\parser\ModelParser;
+use micro\orm\parser\Reflexion;
+
 /**
  * Utilitaires de mappage Objet/relationnel
  * @author jc
- * @version 1.0.0.4
+ * @version 1.0.0.5
  * @package orm
  */
 class OrmUtils{
@@ -20,6 +26,36 @@ class OrmUtils{
 		}
 		self::$modelsMetadatas[$className]=self::$ormCache->fetch($key);
 		return self::$modelsMetadatas[$className];
+	}
+
+	public static function getCacheDirectory(&$config){
+		$cacheDirectory=@$config["ormCache"]["cacheDirectory"];
+		if(!isset($cacheDirectory)){
+			$config["ormCache"]=["cacheDirectory"=>"models/cache/"];
+			$cacheDirectory=$config["ormCache"]["cacheDirectory"];
+		}
+		return $cacheDirectory;
+	}
+
+	public static function startOrm(&$config){
+		$cacheDirectory=ROOT.DS.OrmUtils::getCacheDirectory($config);
+		Annotations::$config['cache'] = new AnnotationCache($cacheDirectory.'/annotations');
+		self::register(Annotations::getManager());
+		self::$ormCache=new AnnotationCache($cacheDirectory);
+	}
+
+	private static function register(AnnotationManager $annotationManager){
+		$annotationManager->registry=array_merge($annotationManager->registry,[
+				'id' => 'micro\annotations\IdAnnotation',
+				'manyToOne' => 'micro\annotations\ManyToOneAnnotation',
+				'oneToMany' => 'micro\annotations\OneToManyAnnotation',
+				'manyToMany' => 'micro\annotations\ManyToManyAnnotation',
+				'joinColumn' => 'micro\annotations\JoinColumnAnnotation',
+				'table' => 'micro\annotations\TableAnnotation',
+				'transient' => 'micro\annotations\TransientAnnotation',
+				'column' => 'micro\annotations\ColumnAnnotation',
+				'joinTable' => 'micro\annotations\JoinTableAnnotation'
+		]);
 	}
 
 	public static function getModelMetadata($className){
@@ -195,5 +231,9 @@ class OrmUtils{
 			$result=\array_merge($result,\array_keys($oneToMany));
 		}
 		return $result;
+	}
+
+	public static function getDefaultFk($classname){
+		return "id".\ucfirst(self::getTableName($classname));
 	}
 }

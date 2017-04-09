@@ -1,13 +1,14 @@
 <?php
-namespace micro\orm;
+namespace micro\orm\parser;
 
 use mindplay\annotations\Annotation;
 use mindplay\annotations\Annotations;
+use micro\orm\OrmUtils;
 
 /**
  * Utilitaires de Reflexion
  * @author jc
- * @version 1.0.0.1
+ * @version 1.0.0.2
  * @package orm
  */
 class Reflexion{

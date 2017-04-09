@@ -36,11 +36,11 @@ class Model {
 		$this->members[$member]->addOneToMany($mappedBy,$className);
 	}
 
-	public function addManyToMany($member,$targetEntity,$inversedBy,$joinTable){
+	public function addManyToMany($member,$targetEntity,$inversedBy,$joinTable,$joinColumns=[],$inverseJoinColumns=[]){
 		if(\array_key_exists($member, $this->members)===false){
 			$this->addMember(new Member($member));
 		}
-		$this->members[$member]->addManyToMany($targetEntity,$inversedBy,$joinTable);
+		$this->members[$member]->addManyToMany($targetEntity,$inversedBy,$joinTable,$joinColumns,$inverseJoinColumns);
 	}
 
 	public function __toString(){
@@ -78,6 +78,19 @@ class Model {
 			}
 		}
 		return $count==\sizeof($this->members);
+	}
+
+	public function getPrimaryKey(){
+		foreach ($this->members as $member){
+			if($member->isPrimary()===true){
+				return $member;
+			}
+		}
+		return null;
+	}
+
+	public function getDefaultFk(){
+		return "id".$this->name;
 	}
 
 	public function getManyToOneMembers(){

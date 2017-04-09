@@ -1,9 +1,10 @@
 <?php
 namespace micro\orm;
-use micro\annotations\ManyToManyParser;
 use micro\db\SqlUtils;
 use micro\db\Database;
 use micro\log\Logger;
+use micro\orm\parser\ManyToManyParser;
+use micro\orm\parser\Reflexion;
 
 /**
  * Classe passerelle entre base de données et modèle objet
@@ -141,7 +142,7 @@ class DAO {
 	 * Affecte/charge les enregistrements fils dans le membre $member de $instance.
 	 * Si $array est null, les fils sont chargés depuis la base de données
 	 * @param object $instance
-	 * @param string $member Membre sur lequel doit être présent une annotation OneToMany
+	 * @param string $member Membre sur lequel doit être présent une annotation ManyToMany
 	 * @param array $array paramètre facultatif contenant la liste des fils possibles
 	 */
 	public static function getManyToMany($instance,$member,$array=null){

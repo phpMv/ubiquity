@@ -9,7 +9,6 @@ namespace micro\annotations;
  */
 class JoinColumnAnnotation extends ColumnAnnotation{
 	public $className;
-	public $name;
 	public $referencedColumnName;
 	public function checkConstraints($target){
 		/*parent::checkConstraints($target);
