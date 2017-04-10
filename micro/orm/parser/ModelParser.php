@@ -12,7 +12,7 @@ class ModelParser {
 	protected $manyToManyMembers;
 	protected $joinColumnMembers;
 	protected $joinTableMembers;
-	protected $nullableMembers;
+	protected $nullableMembers=[];
 	protected $notSerializableMembers=[];
 	protected $fieldNames;
 

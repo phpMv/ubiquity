@@ -105,7 +105,7 @@ class Micro {
 		return $option;
 	}
 
-	public static function create($projectName,$force=false){
+	public static function create($projectName,$options,$force=false){
 		self::$toolsConfig=include("toolsConfig.php");
 		$arguments=[
 				["b","dbName",$projectName],
@@ -143,7 +143,6 @@ class Micro {
 			self::$configOptions["%injections%"]="";
 			self::$configOptions["%cssFiles%"]=[];
 			self::$configOptions["%jsFiles%"]=[];
-			$options=self::parseArguments();
 			foreach ($arguments as $argument){
 				self::$configOptions["%".$argument[1]."%"]=self::getOption($options,$argument[0], $argument[1],$argument[2]);
 			}
@@ -178,7 +177,7 @@ class Micro {
 			echo "The {$projectName} folder already exists !\n";
 			$answer=Console::question("Would you like to continue ?",["y","n"]);
 			if(Console::isYes($answer)){
-				self::create($projectName,true);
+				self::create($projectName,$options,true);
 			}else
 				die();
 		}
@@ -315,9 +314,10 @@ class Micro {
 	}
 	public static function init($command){
 		global $argv;
+		$options=self::parseArguments();
 		switch ($command) {
 			case "project":case "create-project":case "new":
-			self::create($argv[2]);
+			self::create($argv[2],$options);
 			break;
 			case "all-models":case "create-all-models":
 				$config=self::_init();
@@ -330,6 +330,11 @@ class Micro {
 			case "controller":case "create-controller":
 				self::_init();
 				self::createController($argv[2]);
+				break;
+			case "clear-cache":
+				$all=self::getOption($options, "a", "all",false);
+				$config=self::_init();
+				ModelsCreator::clearCache($config,$all);
 				break;
 			default:
 				self::info();

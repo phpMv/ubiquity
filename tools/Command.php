@@ -65,7 +65,11 @@ class Command {
 		return new Command("all-models", "","Generates all models from database.",["create-all-models"]);
 	}
 
+	public static function clearCache(){
+		return new Command("clear-cache", "","Clear models cache.",[],["a"=>Parameter::create("all", "Clear annotations and models cache.", ["true","false"])]);
+	}
+
 	public static function getCommands(){
-		return [self::project(),self::controller(),self::model(),self::allModels()];
+		return [self::project(),self::controller(),self::model(),self::allModels(),self::clearCache()];
 	}
 }

@@ -1,10 +1,7 @@
 <?php
 namespace micro\controllers;
-use micro\orm\DAO;
 use micro\utils\StrUtils;
 use micro\views\engine\TemplateEngine;
-use micro\orm\OrmUtils;
-
 
 class Startup{
 	public static $urlParts;
@@ -16,16 +13,6 @@ class Startup{
 		self::$config=$config;
 		self::startTemplateEngine($config);
 
-		if($config["test"]){
-			\micro\log\Logger::init();
-			$config["siteUrl"]="http://127.0.0.1:8090/";
-		}
-
-		$db=$config["database"];
-		if($db["dbName"]!==""){
-			DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"]);
-			self::startOrm($config);
-		}
 		session_start();
 
 		$u=self::parseUrl($config, $url);
@@ -43,12 +30,8 @@ class Startup{
 				print "Error!: " . $e->getMessage() . "<br/>";
 			}
 		}else{
-			print "Le contrôleur `".$config["controllerNS"].$u[0]."` n'existe pas <br/>";
+			print "Le contrôleur `".self::$ctrlNS.$u[0]."` n'existe pas <br/>";
 		}
-	}
-
-	public static function startOrm(&$config){
-		OrmUtils::startOrm($config);
 	}
 
 	private static function setCtrlNS($config){

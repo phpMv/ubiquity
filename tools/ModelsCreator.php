@@ -3,6 +3,7 @@ use micro\orm\creator\Model;
 use micro\orm\creator\Member;
 use micro\controllers\Startup;
 use micro\annotations\JoinColumnAnnotation;
+use micro\orm\OrmUtils;
 
 class ModelsCreator {
 	private static $config;
@@ -61,6 +62,23 @@ class ModelsCreator {
 				echo "Creating the {$name} class\n";
 				self::writeFile("app/models/".$name.".php", $class);
 			}
+		}
+	}
+
+	public static function clearCache($config,$all=true){
+		$cacheDirectory=OrmUtils::getCacheDirectory($config);
+		echo "cache directory is ".ROOT.$cacheDirectory;
+		if($all){
+			self::deleteAllFilesFromFolder(ROOT.$cacheDirectory."annotations");
+		}
+		self::deleteAllFilesFromFolder(ROOT.$cacheDirectory.$config["mvcNS"]["models"]);
+	}
+
+	private static function deleteAllFilesFromFolder($folder){
+		$files = glob($folder.'/*');
+		foreach($files as $file){
+			if(is_file($file))
+				unlink($file);
 		}
 	}
 
