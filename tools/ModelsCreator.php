@@ -65,22 +65,43 @@ class ModelsCreator {
 		}
 	}
 
-	public static function clearCache($config,$all=true){
+	private static function checkCache(&$config){
 		$cacheDirectory=OrmUtils::getCacheDirectory($config);
-		echo "cache directory is ".ROOT.$cacheDirectory;
-		if($all){
-			self::deleteAllFilesFromFolder(ROOT.$cacheDirectory."annotations");
-		}
-		self::deleteAllFilesFromFolder(ROOT.$cacheDirectory.$config["mvcNS"]["models"]);
+		$modelsDir=str_replace("\\", DS, $config["mvcNS"]["models"]);
+		echo "cache directory is ".ROOT.$cacheDirectory."\n";
+		$annotationCacheDir=ROOT.$cacheDirectory."annotations";
+		$modelsCacheDir=ROOT.$cacheDirectory.$modelsDir;
+		FileUtils::safeMkdir(ROOT.$cacheDirectory."annotations");
+		FileUtils::safeMkdir(ROOT.$cacheDirectory.$modelsDir);
+		return ["annotations"=>$annotationCacheDir,"models"=>$modelsCacheDir];
 	}
 
-	private static function deleteAllFilesFromFolder($folder){
-		$files = glob($folder.'/*');
+	public static function clearCache(&$config,$all=true){
+		$cacheDirectories=self::checkCache($config);
+		if($all){
+			FileUtils::deleteAllFilesFromFolder($cacheDirectories["annotations"]);
+		}
+		FileUtils::deleteAllFilesFromFolder($cacheDirectories["models"]);
+	}
+
+	public static function initCache(&$config){
+		self::checkCache($config);
+		$modelsDir=ROOT.str_replace("\\", DS, $config["mvcNS"]["models"]);
+		echo "Models directory is ".ROOT.$config["mvcNS"]["models"];
+		OrmUtils::startOrm($config);
+		$files = glob($modelsDir.DS.'*');
+		$namespace="";
+		if(isset($config["mvcNS"]["models"]) && $config["mvcNS"]["models"]!=="")
+			$namespace=$config["mvcNS"]["models"]."\\";
 		foreach($files as $file){
-			if(is_file($file))
-				unlink($file);
+			if(is_file($file)){
+				$fileName=pathinfo($file, PATHINFO_FILENAME);
+				$model=$namespace.ucfirst($fileName);
+				new $model();
+			}
 		}
 	}
+
 
 	private static function createOneClass($singleTable){
 		if(isset(self::$classes[$singleTable])){

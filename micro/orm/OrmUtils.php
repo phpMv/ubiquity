@@ -24,8 +24,7 @@ class OrmUtils{
 			$p->parse($className);
 			self::$ormCache->store($key, $p->__toString());
 		}
-		self::$modelsMetadatas[$className]=self::$ormCache->fetch($key);
-		return self::$modelsMetadatas[$className];
+		return self::$modelsMetadatas[$className]=self::$ormCache->fetch($key);
 	}
 
 	public static function getCacheDirectory(&$config){
@@ -168,8 +167,6 @@ class OrmUtils{
 			return self::getModelMetadata($class)[$annotation];
 		return [];
 	}
-
-
 
 	/**
 	 * @param object $instance

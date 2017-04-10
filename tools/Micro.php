@@ -4,6 +4,8 @@ use micro\utils\StrUtils;
 include 'ModelsCreator.php';
 include 'Console.php';
 include 'Command.php';
+include 'utils/FileUtils.php';
+
 class Micro {
 	private static $version="1.0.2";
 	private static $appName="#micro devtools";
@@ -25,7 +27,7 @@ class Micro {
 	public static function createComposerFile(){
 		$composer=json_encode(self::$toolsConfig["composer"]);
 		echo "Composer file creation...\n";
-		self::writeFile("composer.json", $composer);
+		FileUtils::writeFile("composer.json", $composer);
 	}
 
 	public static function unzip($zipFile,$extractPath="."){
@@ -41,55 +43,15 @@ class Micro {
 		$zip->close();
 	}
 
-	public static function xcopy($source, $dest, $permissions = 0755){
-		if (is_link($source)) {
-			return symlink(readlink($source), $dest);
-		}
-		if (is_file($source)) {
-			return copy($source, $dest);
-		}
-		if (!is_dir($dest)) {
-			mkdir($dest, $permissions,true);
-		}
-		$dir = dir($source);
-		while (false !== $entry = $dir->read()) {
-			if ($entry == '.' || $entry == '..') {
-				continue;
-			}
-			self::xcopy("$source/$entry", "$dest/$entry", $permissions);
-		}
-		$dir->close();
-		return true;
-	}
-
-	public static function delTree($dir) {
-		$files = array_diff(scandir($dir), array('.','..'));
-		foreach ($files as $file) {
-			(is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
-		}
-		return rmdir($dir);
-	}
-
-	public static function openFile($filename){
-		if(file_exists($filename)){
-			return file_get_contents($filename);
-		}
-		return false;
-	}
-
-	public static function writeFile($filename,$data){
-			return file_put_contents($filename,$data);
-	}
-
 	public static function replaceAll($array,$subject){
 		array_walk($array, function(&$item){if(is_array($item)) $item=implode("\n", $item);});
 		return str_replace(array_keys($array), array_values($array), $subject);
 	}
 
 	public static function openReplaceWrite($source,$destination,$keyAndValues){
-		$str=self::openFile($source);
+		$str=FileUtils::openFile($source);
 		$str=self::replaceAll($keyAndValues,$str);
-		return self::writeFile($destination,$str);
+		return FileUtils::writeFile($destination,$str);
 	}
 
 	private static function getOption($options,$option,$longOption,$default=NULL){
@@ -119,21 +81,21 @@ class Micro {
 		];
 		if(!is_dir($projectName) || $force){
 			if(!$force)
-				self::safeMkdir($projectName);
+				FileUtils::safeMkdir($projectName);
 			chdir($projectName);
 			echo "Downloading micro.git from https://github.com/phpMv/...\n";
-			self::safeMkdir("tmp");self::safeMkdir(".micro");
+			FileUtils::safeMkdir("tmp");FileUtils::safeMkdir(".micro");
 			self::downloadZip("https://github.com/phpMv/micro/archive/master.zip","tmp/tmp.zip");
 			echo "Files extraction...\n";
 			self::unzip("tmp/tmp.zip","tmp/");
-			self::safeMkdir("app");
-			self::safeMkdir("app/views/main");
-			self::safeMkdir("app/controllers");
+			FileUtils::safeMkdir("app");
+			FileUtils::safeMkdir("app/views/main");
+			FileUtils::safeMkdir("app/controllers");
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
-			self::xcopy("tmp/micro-master/micro/","app/micro");
-			self::xcopy("tmp/micro-master/project-files/templates", "app/micro/tools/templates");
-			self::xcopy("tmp/micro-master/project-files/app/controllers/ControllerBase.php", "app/controllers/ControllerBase.php");
+			FileUtils::xcopy("tmp/micro-master/micro/","app/micro");
+			FileUtils::xcopy("tmp/micro-master/project-files/templates", "app/micro/tools/templates");
+			FileUtils::xcopy("tmp/micro-master/project-files/app/controllers/ControllerBase.php", "app/controllers/ControllerBase.php");
 
 
 			echo "Config files creation...\n";
@@ -151,7 +113,7 @@ class Micro {
 			self::includePhpmv();
 
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/config.tpl", "app/config.php", self::$configOptions);
-			self::xcopy("tmp/micro-master/project-files/index.php", "index.php");
+			FileUtils::xcopy("tmp/micro-master/project-files/index.php", "index.php");
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/vHeader.tpl", "app/views/main/vHeader.html", self::$configOptions);
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/vFooter.tpl", "app/views/main/vFooter.html", self::$configOptions);
 
@@ -166,9 +128,9 @@ class Micro {
 			Autoloader::register($config);
 
 			self::createController("Main",self::$indexContent);
-			self::xcopy("tmp/micro-master/project-files/app/views/".self::$mainViewTemplate, "app/views/index.html");
+			FileUtils::xcopy("tmp/micro-master/project-files/app/views/".self::$mainViewTemplate, "app/views/index.html");
 			echo "deleting temporary files...\n";
-			self::delTree("tmp");
+			FileUtils::delTree("tmp");
 
 			if(StrUtils::isBooleanTrue(self::$configOptions["%all-models%"]))
 				ModelsCreator::create($config);
@@ -240,23 +202,21 @@ class Micro {
 		echo $output."\n";
 	}
 
-	public static function createController($controllerName,$indexContent=null,$force=false){
+	public static function createController($config,$controllerName,$indexContent=null,$force=false){
 		$controllerName=ucfirst($controllerName);
-		self::safeMkdir("app/controllers");
+		FileUtils::safeMkdir("app/controllers");
 		$filename="app/controllers/{$controllerName}.php";
 		if(file_exists($filename) && !$force){
 			$answer=Console::question("The file {$filename} exists.\nWould you like to replace it?",["y","n"]);
 			if(Console::isYes($answer))
-				self::createController($controllerName,$indexContent,true);
+				self::createController($config,$controllerName,$indexContent,true);
 		}else{
 			echo "Creating the Controller {$controllerName} at the location {$filename}\n";
-			self::openReplaceWrite("app/micro/tools/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent]);
+			$namespace="";
+			if(isset($config["mvcNS"]["controllers"]) && $config["mvcNS"]["controllers"]!=="")
+				$namespace="namespace ".$config["mvcNS"]["controllers"].";";
+			self::openReplaceWrite("app/micro/tools/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent,"%namespace%"=>$namespace]);
 		}
-	}
-
-	private static function safeMkdir($dir){
-		if(!is_dir($dir))
-			return mkdir($dir,0777,true);
 	}
 
 	private static function setDir($dir=null){
@@ -314,10 +274,11 @@ class Micro {
 	}
 	public static function init($command){
 		global $argv;
+		$what=@$argv[2];
 		$options=self::parseArguments();
 		switch ($command) {
 			case "project":case "create-project":case "new":
-			self::create($argv[2],$options);
+			self::create($what,$options);
 			break;
 			case "all-models":case "create-all-models":
 				$config=self::_init();
@@ -325,16 +286,20 @@ class Micro {
 				break;
 			case "model":case "create-model":
 				self::_init();
-				ModelsCreator::create($config,$argv[2]);
+				ModelsCreator::create($config,$what);
 				break;
 			case "controller":case "create-controller":
-				self::_init();
-				self::createController($argv[2]);
+				$config=self::_init();
+				self::createController($config,$what);
 				break;
 			case "clear-cache":
 				$all=self::getOption($options, "a", "all",false);
 				$config=self::_init();
 				ModelsCreator::clearCache($config,$all);
+				break;
+			case "init-cache":
+				$config=self::_init();
+				ModelsCreator::initCache($config);
 				break;
 			default:
 				self::info();
