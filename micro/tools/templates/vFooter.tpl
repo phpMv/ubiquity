@@ -1,3 +1,0 @@
-%jsFiles%
-</body>
-</html>
