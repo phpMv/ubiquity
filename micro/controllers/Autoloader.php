@@ -43,7 +43,7 @@ class Autoloader{
 			}
 		}
 		if(substr($namespace, 0, strlen(self::$config["mvcNS"]["models"]))===self::$config["mvcNS"]["models"]){
-			OrmUtils::createOrmModelCache($class);
+			OrmUtils::getModelMetadata($class);
 		}
 	}
 

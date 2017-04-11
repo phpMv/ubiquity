@@ -21,6 +21,15 @@ class Reflexion{
 		return $props;
 	}
 
+	public static function getMethods($instance,$filter=null){
+		if(\is_string($instance)){
+			$instance=new $instance();
+		}
+		$reflect = new \ReflectionClass($instance);
+		$methods = $reflect->getMethods();
+		return $methods;
+	}
+
 	public static function getKeyFields($instance){
 		return Reflexion::getMembersNameWithAnnotation(get_class($instance), "@id");
 	}
@@ -64,6 +73,13 @@ class Reflexion{
 		$annot=Annotations::ofProperty($class,$member,$annotation);
 		if(\sizeof($annot)>0)
 			return $annot[0];
+		return false;
+	}
+
+	public static function getAnnotationsMethod($class,$method,$annotation){
+		$annots=Annotations::ofMethod($class,$method,$annotation);
+		if(\sizeof($annots)>0)
+			return $annots;
 		return false;
 	}
 

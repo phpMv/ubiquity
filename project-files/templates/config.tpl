@@ -18,6 +18,6 @@ return array(
 		"test"=>false,
 		"debug"=>false,
 		"di"=>[%injections%],
-		"ormCache"=>["cacheDirectory"=>"/models/cache/"],
+		"cacheDirectory"=>"cache/",
 		"mvcNS"=>["models"=>"models","controllers"=>"controllers"]
 );

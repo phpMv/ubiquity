@@ -1,0 +1,26 @@
+<?php
+namespace micro\annotations\router;
+use micro\annotations\BaseAnnotation;
+use mindplay\annotations\AnnotationException;
+
+/**
+ * @usage('method'=>true,'class'=>true,'multiple'=>true, 'inherited'=>true)
+ */
+class RouteAnnotation extends BaseAnnotation {
+	public $path;
+	public $methods;
+	public $name;
+
+	/**
+	 * Initialize the annotation.
+	 */
+	public function initAnnotation(array $properties)
+	{
+		if (isset($properties[0])) {
+			$this->path=$properties[0];
+			unset($properties[0]);
+		}else
+			$this->path="";
+		parent::initAnnotation($properties);
+	}
+}

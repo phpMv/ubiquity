@@ -1,9 +1,8 @@
 <?php
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
-use micro\controllers\Startup;
 use micro\annotations\JoinColumnAnnotation;
-use micro\orm\OrmUtils;
+
 
 class ModelsCreator {
 	private static $config;
@@ -36,9 +35,7 @@ class ModelsCreator {
 	public static function create($config,$singleTable=null){
 		self::init($config);
 		self::$tables=self::getTablesName();
-		$cacheDirectory=Startup::getCacheDirectory($config);
-		if(!is_dir("app".DS.$cacheDirectory.DS."annotations"))
-			mkdir("app".DS.$cacheDirectory.DS."annotations",0777,true);
+		self::checkCache($config);
 
 		foreach (self::$tables as $table){
 			$class=new Model($table,$config["mvcNS"]["models"]);
@@ -64,44 +61,6 @@ class ModelsCreator {
 			}
 		}
 	}
-
-	private static function checkCache(&$config){
-		$cacheDirectory=OrmUtils::getCacheDirectory($config);
-		$modelsDir=str_replace("\\", DS, $config["mvcNS"]["models"]);
-		echo "cache directory is ".ROOT.$cacheDirectory."\n";
-		$annotationCacheDir=ROOT.$cacheDirectory."annotations";
-		$modelsCacheDir=ROOT.$cacheDirectory.$modelsDir;
-		FileUtils::safeMkdir(ROOT.$cacheDirectory."annotations");
-		FileUtils::safeMkdir(ROOT.$cacheDirectory.$modelsDir);
-		return ["annotations"=>$annotationCacheDir,"models"=>$modelsCacheDir];
-	}
-
-	public static function clearCache(&$config,$all=true){
-		$cacheDirectories=self::checkCache($config);
-		if($all){
-			FileUtils::deleteAllFilesFromFolder($cacheDirectories["annotations"]);
-		}
-		FileUtils::deleteAllFilesFromFolder($cacheDirectories["models"]);
-	}
-
-	public static function initCache(&$config){
-		self::checkCache($config);
-		$modelsDir=ROOT.str_replace("\\", DS, $config["mvcNS"]["models"]);
-		echo "Models directory is ".ROOT.$config["mvcNS"]["models"];
-		OrmUtils::startOrm($config);
-		$files = glob($modelsDir.DS.'*');
-		$namespace="";
-		if(isset($config["mvcNS"]["models"]) && $config["mvcNS"]["models"]!=="")
-			$namespace=$config["mvcNS"]["models"]."\\";
-		foreach($files as $file){
-			if(is_file($file)){
-				$fileName=pathinfo($file, PATHINFO_FILENAME);
-				$model=$namespace.ucfirst($fileName);
-				new $model();
-			}
-		}
-	}
-
 
 	private static function createOneClass($singleTable){
 		if(isset(self::$classes[$singleTable])){

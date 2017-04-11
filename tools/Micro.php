@@ -1,13 +1,15 @@
 <?php
 use micro\controllers\Autoloader;
 use micro\utils\StrUtils;
+use micro\cache\CacheManager;
+use micro\controllers\Startup;
 include 'ModelsCreator.php';
 include 'Console.php';
 include 'Command.php';
 include 'utils/FileUtils.php';
 
 class Micro {
-	private static $version="1.0.2";
+	private static $version="1.0.3";
 	private static $appName="#micro devtools";
 	private static $configOptions;
 	private static $toolsConfig;
@@ -274,6 +276,7 @@ class Micro {
 	}
 	public static function init($command){
 		global $argv;
+		register_shutdown_function(array("Micro","error"));
 		$what=@$argv[2];
 		$options=self::parseArguments();
 		switch ($command) {
@@ -293,13 +296,14 @@ class Micro {
 				self::createController($config,$what);
 				break;
 			case "clear-cache":
-				$all=self::getOption($options, "a", "all",false);
+				$type=self::getOption($options, "t", "type","all");
 				$config=self::_init();
-				ModelsCreator::clearCache($config,$all);
+				CacheManager::clearCache($config,$type);
 				break;
 			case "init-cache":
+				$type=self::getOption($options, "t", "type","all");
 				$config=self::_init();
-				ModelsCreator::initCache($config);
+				CacheManager::initCache($config,$type);
 				break;
 			default:
 				self::info();
@@ -327,6 +331,13 @@ class Micro {
 		require_once ROOT.'./../vendor/autoload.php';
 		Autoloader::register($config);
 		return $config;
+	}
+
+	public static function error(){
+		/*$last_error = error_get_last();
+		if ($last_error['type'] === E_ERROR) {
+			Startup::errorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line']);
+		}*/
 	}
 }
 error_reporting(E_ALL);

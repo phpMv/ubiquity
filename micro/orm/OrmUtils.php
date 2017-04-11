@@ -4,8 +4,8 @@ namespace micro\orm;
 use mindplay\annotations\Annotations;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
-use micro\orm\parser\ModelParser;
 use micro\orm\parser\Reflexion;
+use micro\cache\CacheManager;
 
 /**
  * Utilitaires de mappage Objet/relationnel
@@ -14,52 +14,11 @@ use micro\orm\parser\Reflexion;
  * @package orm
  */
 class OrmUtils{
-	public static $ormCache;
 	private static $modelsMetadatas;
-
-	public static function createOrmModelCache($className){
-		$key=\str_replace("\\", DIRECTORY_SEPARATOR, $className);
-		if(!self::$ormCache->exists($key)){
-			$p=new ModelParser();
-			$p->parse($className);
-			self::$ormCache->store($key, $p->__toString());
-		}
-		return self::$modelsMetadatas[$className]=self::$ormCache->fetch($key);
-	}
-
-	public static function getCacheDirectory(&$config){
-		$cacheDirectory=@$config["ormCache"]["cacheDirectory"];
-		if(!isset($cacheDirectory)){
-			$config["ormCache"]=["cacheDirectory"=>"models/cache/"];
-			$cacheDirectory=$config["ormCache"]["cacheDirectory"];
-		}
-		return $cacheDirectory;
-	}
-
-	public static function startOrm(&$config){
-		$cacheDirectory=ROOT.DS.OrmUtils::getCacheDirectory($config);
-		Annotations::$config['cache'] = new AnnotationCache($cacheDirectory.'/annotations');
-		self::register(Annotations::getManager());
-		self::$ormCache=new AnnotationCache($cacheDirectory);
-	}
-
-	private static function register(AnnotationManager $annotationManager){
-		$annotationManager->registry=array_merge($annotationManager->registry,[
-				'id' => 'micro\annotations\IdAnnotation',
-				'manyToOne' => 'micro\annotations\ManyToOneAnnotation',
-				'oneToMany' => 'micro\annotations\OneToManyAnnotation',
-				'manyToMany' => 'micro\annotations\ManyToManyAnnotation',
-				'joinColumn' => 'micro\annotations\JoinColumnAnnotation',
-				'table' => 'micro\annotations\TableAnnotation',
-				'transient' => 'micro\annotations\TransientAnnotation',
-				'column' => 'micro\annotations\ColumnAnnotation',
-				'joinTable' => 'micro\annotations\JoinTableAnnotation'
-		]);
-	}
 
 	public static function getModelMetadata($className){
 		if(!isset(self::$modelsMetadatas[$className])){
-			self::createOrmModelCache($className);
+			self::$modelsMetadatas[$className]=CacheManager::createOrmModelCache($className);
 		}
 		return self::$modelsMetadatas[$className];
 	}

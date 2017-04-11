@@ -2,7 +2,7 @@
 use micro\controllers\Startup;
 use micro\controllers\Autoloader;
 use micro\orm\DAO;
-use micro\orm\OrmUtils;
+use micro\cache\CacheManager;
 error_reporting(E_ALL);
 
 define('DS', DIRECTORY_SEPARATOR);
@@ -21,6 +21,8 @@ Autoloader::register($config);
 $db=$config["database"];
 if($db["dbName"]!==""){
 	DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"]);
-	OrmUtils::startOrm($config);
 }
+CacheManager::start($config);
+//To use in production, when models and router cache are created
+//CacheManager::startProd($config);
 Startup::run($config,$_GET["c"]);
