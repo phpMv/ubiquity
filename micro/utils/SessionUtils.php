@@ -23,11 +23,11 @@ class SessionUtils{
 		return $array;
 	}
 
-	public static function addOrRemoveValueFromArray($arrayKey,$value){
-		$array=SessionUtils::getArray($arrayKey);
+	public static function addOrRemoveValueFromArray($arrayKey,$value,$add=true){
+		$array=self::getArray($arrayKey);
 		$_SESSION[$arrayKey]=$array;
 		$search=array_search($value, $array);
-		if($search===FALSE){
+		if($search===FALSE && $add){
 			$_SESSION[$arrayKey][]=$value;
 			return true;
 		}else{
@@ -35,18 +35,11 @@ class SessionUtils{
 			$_SESSION[$arrayKey] = array_values($_SESSION[$arrayKey]);
 			return false;
 		}
+		return false;
 	}
 
 	public static function removeValueFromArray($arrayKey,$value){
-		$array=SessionUtils::getArray($arrayKey);
-		$_SESSION[$arrayKey]=$array;
-		$search=array_search($value, $array);
-		if($search!==FALSE){
-			unset($_SESSION[$arrayKey][$search]);
-			$_SESSION[$arrayKey] = array_values($_SESSION[$arrayKey]);
-			return true;
-		}
-		return false;
+		return self::addOrRemoveValueFromArray($arrayKey, $value,false);
 	}
 
 	public static function checkBoolean($key){
