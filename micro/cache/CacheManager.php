@@ -50,7 +50,7 @@ class CacheManager {
 			try {
 				$parser->parse($classname);
 				self::$routes=\array_merge($parser->asArray(),self::$routes);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 			}
 
 	}

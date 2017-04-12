@@ -2,10 +2,10 @@
 namespace micro\orm\creator;
 use micro\annotations\IdAnnotation;
 use micro\annotations\ManyToOneAnnotation;
-use micro\annotations\JoinColumnAnnotation;
 use micro\annotations\OneToManyAnnotation;
 use micro\annotations\ManyToManyAnnotation;
 use micro\annotations\JoinTableAnnotation;
+use micro\annotations\JoinColumnAnnotation;
 
 class Member {
 	private $name;

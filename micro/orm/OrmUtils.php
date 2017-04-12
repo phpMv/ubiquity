@@ -3,6 +3,7 @@ namespace micro\orm;
 
 use micro\orm\parser\Reflexion;
 use micro\cache\CacheManager;
+use micro\utils\StrUtils;
 
 /**
  * Utilitaires de mappage Objet/relationnel
@@ -73,13 +74,18 @@ class OrmUtils{
 		foreach ($members as $member){
 			if(OrmUtils::isSerializable($className,$member)){
 				$v=Reflexion::getMemberValue($instance, $member);
-				if(($v!==null && $v!=="") || (($v===null || $v==="") && OrmUtils::isNullable($className, $member))){
+				if(self::isNotNullOrNullAccepted($v,$className, $member)){
 					$name=self::getFieldName($className, $member);
 					$ret[$name]=$v;
 				}
 			}
 		}
 		return $ret;
+	}
+
+	public static function isNotNullOrNullAccepted($v,$className,$member){
+		$notNull=StrUtils::isNotNull($v);
+		return ($notNull) || (!$notNull && OrmUtils::isNullable($className, $member));
 	}
 
 	public static function getFirstKey($class){

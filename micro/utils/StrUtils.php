@@ -51,7 +51,6 @@ class StrUtils {
 			}
 			$plural=$caption.$pluralChar;
 		}
-		$result=$caption;
 		switch ($count){
 			case 0:
 				$result="aucun ".$caption;

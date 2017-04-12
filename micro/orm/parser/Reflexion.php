@@ -52,7 +52,7 @@ class Reflexion{
 			$prop->setAccessible(true);
 			$v=$prop->getValue($instance);
 			if(OrmUtils::isSerializable($className,$prop->getName())){
-				if(($v!==null && $v!=="") || (($v===null || $v==="") && OrmUtils::isNullable($className, $prop->getName()))){
+				if(OrmUtils::isNotNullOrNullAccepted($v,$className, $prop->getName())){
 					$name=OrmUtils::getFieldName($className, $prop->getName());
 					$ret[$name]=$v;
 				}

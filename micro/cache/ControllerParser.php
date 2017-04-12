@@ -18,12 +18,13 @@ class ControllerParser {
 				$this->mainRouteClass=$annotsClass[0];
 			$methods=Reflexion::getMethods($instance,\ReflectionMethod::IS_PUBLIC);
 			foreach ($methods as $method){
-				$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->getName(), "@route");
+				$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
 				if($annots!==false)
 					$this->routesMethods[$method->getName()]=["annotations"=>$annots,"method"=>$method];
 			}
 		}
 	}
+
 	private function cleanpath($prefix,$path=""){
 		if(!StrUtils::endswith($prefix, "/"))
 			$prefix=$prefix."/";
@@ -34,6 +35,7 @@ class ControllerParser {
 			$path=\substr($path, 0,\strlen($path)-1);
 		return $path;
 	}
+
 	public function asArray(){
 		$result=[];
 		$prefix="";$httpMethods=false;

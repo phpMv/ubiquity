@@ -62,7 +62,6 @@ class DAO {
 	/**
 	 * Charge les membres associés à $instance par une relation de type ManyToOne
 	 * @param object $instance
-	 * @param string $key
 	 * @param mixed $value
 	 * @param array $annotationArray
 	 */
@@ -170,7 +169,6 @@ class DAO {
 					$continue=method_exists($array[0], $accessorToMember);
 				if($continue){
 					foreach($joinTableCursor as $row){
-						$fkv=$row[$parser->getFkField()];
 						foreach($array as $targetEntityInstance){
 							$instances=$targetEntityInstance->$accessorToMember();
 							if(is_array($instances)){

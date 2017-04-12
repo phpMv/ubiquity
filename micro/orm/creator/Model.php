@@ -61,6 +61,7 @@ class Model {
 	}
 
 	public function getName() {
+		$namespace="";
 		if($this->namespace!=="" && $this->namespace!==null)
 			$namespace=$this->namespace.'\\';
 		return $namespace.$this->name;
