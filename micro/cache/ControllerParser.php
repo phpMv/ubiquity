@@ -20,12 +20,12 @@ class ControllerParser {
 			foreach ($methods as $method){
 				$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
 				if($annots!==false)
-					$this->routesMethods[$method->getName()]=["annotations"=>$annots,"method"=>$method];
+					$this->routesMethods[$method->name]=["annotations"=>$annots,"method"=>$method];
 			}
 		}
 	}
 
-	private function cleanpath($prefix,$path=""){
+	private static function cleanpath($prefix,$path=""){
 		if(!StrUtils::endswith($prefix, "/"))
 			$prefix=$prefix."/";
 		if($path!=="" && StrUtils::startswith($path, "/"))
@@ -54,40 +54,51 @@ class ControllerParser {
 		foreach ($this->routesMethods as $method=>$arrayAnnotsMethod){
 			$routeAnnotations=$arrayAnnotsMethod["annotations"];
 			foreach ($routeAnnotations as $routeAnnotation){
-				if(isset($routeAnnotation->path)){
-					$parameters=[];
-					$path=$routeAnnotation->path;
-					preg_match_all('@\{(.+?)\}@s', $path, $matches);
-					if(isset($matches[1]) && \sizeof($matches[1])>0){
-						$path=\preg_quote($path);
-						$params=Reflexion::getMethodParameters($arrayAnnotsMethod["method"]);
-						foreach ($matches[1] as $paramMatch){
-							$find=\array_search($paramMatch, $params);
-							if($find!==false){
-								$parameters[]=$find;
-								$path=\str_replace("\{".$paramMatch."\}", "(.+?)", $path);
-							}else{
-								throw new \Exception("{$paramMatch} is not a parameter of the method ".$arrayAnnotsMethod["method"]->getName());
-							}
-						}
-					}
-					$path=$this->cleanpath($prefix,$path)."$";
-					if(isset($routeAnnotation->methods) && \is_array($routeAnnotation->methods)){
-						$this->createRouteMethod($result,$path,$routeAnnotation->methods,$method,$parameters);
-					}elseif(\is_array($httpMethods)){
-						$this->createRouteMethod($result,$path,$httpMethods,$method,$parameters);
-					}else{
-						$result[$path]=["controller"=>$this->controllerClass,"action"=>$method,"parameters"=>$parameters];
-					}
-				}
+				self::parseRouteArray($result, $this->controllerClass,["path"=>$routeAnnotation->path,"methods"=>$routeAnnotation->methods,"name"=>$routeAnnotation->name], $arrayAnnotsMethod["method"], $method,$prefix,$httpMethods);
 			}
 		}
 		return $result;
 	}
 
-	private function createRouteMethod(&$result,$path,$httpMethods,$method,$parameters){
+	public static function parseRouteArray(&$result,$controllerClass,$routeArray,\ReflectionMethod $method,$methodName,$prefix="",$httpMethods=NULL){
+		if(isset($routeArray["path"])){
+			$pathParameters=self::addParamsPath($routeArray["path"], $method);
+			$name=$routeArray["name"];
+			$path=$pathParameters["path"];
+			$parameters=$pathParameters["parameters"];
+			$path=self::cleanpath($prefix,$path);
+			if(isset($routeArray["methods"]) && \is_array($routeArray["methods"])){
+				self::createRouteMethod($result,$controllerClass,$path,$routeArray["methods"],$methodName,$parameters,$name);
+			}elseif(\is_array($httpMethods)){
+				self::createRouteMethod($result,$controllerClass,$path,$httpMethods,$methodName,$parameters,$name);
+			}else{
+				$result[$path]=["controller"=>$controllerClass,"action"=>$methodName,"parameters"=>$parameters,"name"=>$name];
+			}
+		}
+	}
+
+	public static function addParamsPath($path,\ReflectionMethod $method){
+		$parameters=[];
+		preg_match_all('@\{(.+?)\}@s', $path, $matches);
+		if(isset($matches[1]) && \sizeof($matches[1])>0){
+			$path=\preg_quote($path);
+			$params=Reflexion::getMethodParameters($method);
+			foreach ($matches[1] as $paramMatch){
+				$find=\array_search($paramMatch, $params);
+				if($find!==false){
+					$parameters[]=$find;
+					$path=\str_replace("\{".$paramMatch."\}", "(.+?)", $path);
+				}else{
+					throw new \Exception("{$paramMatch} is not a parameter of the method ".$method->name);
+				}
+			}
+		}
+		return ["path"=>$path,"parameters"=>$parameters];
+	}
+
+	private static function createRouteMethod(&$result,$controllerClass,$path,$httpMethods,$method,$parameters,$name){
 		foreach ($httpMethods as $httpMethod){
-				$result[$path][$httpMethod]=["controller"=>$this->controllerClass,"action"=>$method,"parameters"=>$parameters];
+				$result[$path][$httpMethod]=["controller"=>$controllerClass,"action"=>$method,"parameters"=>$parameters,"name"=>$name];
 		}
 	}
 }

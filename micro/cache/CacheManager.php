@@ -111,11 +111,15 @@ class CacheManager {
 			$namespace=$modelsNS."\\";
 		foreach($files as $file){
 			if(is_file($file)){
-				$fileName=pathinfo($file, PATHINFO_FILENAME);
-				$model=$namespace.ucfirst($fileName);
+				$model=self::getClassNameFromFile($file,$namespace);
 				new $model();
 			}
 		}
+	}
+
+	private static function getClassNameFromFile($file,$namespace=""){
+		$fileName=pathinfo($file, PATHINFO_FILENAME);
+		return $namespace.ucfirst($fileName);
 	}
 
 	private static function initControllersCache(&$config){
@@ -128,8 +132,7 @@ class CacheManager {
 			$namespace=$controllersNS."\\";
 		foreach($files as $file){
 			if(is_file($file)){
-				$fileName=pathinfo($file, PATHINFO_FILENAME);
-				$controller=$namespace.ucfirst($fileName);
+				$controller=self::getClassNameFromFile($file,$namespace);
 				self::addControllerCache($controller);
 			}
 		}

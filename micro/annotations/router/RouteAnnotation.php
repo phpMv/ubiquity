@@ -1,7 +1,6 @@
 <?php
 namespace micro\annotations\router;
 use micro\annotations\BaseAnnotation;
-use mindplay\annotations\AnnotationException;
 
 /**
  * @usage('method'=>true,'class'=>true,'multiple'=>true, 'inherited'=>true)

@@ -13,7 +13,7 @@ class Router {
 	public static function getRoute($path){
 		$path="/".$path;
 		foreach (self::$routes as $routePath=>$routeDetails){
-			if (preg_match("@".$routePath."@s",$path,$matches)){
+			if (preg_match("@^".$routePath."$@s",$path,$matches)){
 				if(!isset($routeDetails["controller"])){
 					$method=RequestUtils::getMethod();
 					if(isset($routeDetails[$method]))
