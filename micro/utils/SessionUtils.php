@@ -35,7 +35,6 @@ class SessionUtils{
 			$_SESSION[$arrayKey] = array_values($_SESSION[$arrayKey]);
 			return false;
 		}
-		return false;
 	}
 
 	public static function removeValueFromArray($arrayKey,$value){
