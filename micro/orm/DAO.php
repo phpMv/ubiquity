@@ -101,20 +101,24 @@ class DAO {
 				if(is_null($array)){
 					$ret=self::getAll($annot["className"],$fkAnnot["name"]."='".$fkv."'");
 				}else{
-					$elementAccessor="get".ucfirst($annot->mappedBy);
-					foreach ($array as $element){
-						$elementRef=$element->$elementAccessor();
-						if(!is_null($elementRef)){
-							$idElementRef=OrmUtils::getFirstKeyValue($elementRef);
-							if($idElementRef==$fkv)
-								$ret[]=$element;
-						}
-					}
+					self::getOneToManyFromArray($ret, $array, $fkv, $annot);
 				}
 				self::setToMember($member, $instance, $ret, $class, "getOneToMany");
 				}
 			}
 		return $ret;
+	}
+
+	private static function getOneToManyFromArray(&$ret,$array,$fkv,$annot){
+		$elementAccessor="get".ucfirst($annot["mappedBy"]);
+		foreach ($array as $element){
+			$elementRef=$element->$elementAccessor();
+			if(!is_null($elementRef)){
+				$idElementRef=OrmUtils::getFirstKeyValue($elementRef);
+				if($idElementRef==$fkv)
+					$ret[]=$element;
+			}
+		}
 	}
 
 	private static function setToMember($member,$instance,$value,$class,$part){
@@ -149,8 +153,8 @@ class DAO {
 		$class=get_class($instance);
 		$parser=new ManyToManyParser($instance, $member);
 		if($parser->init()){
-			$joinTableCursor=self::getSQLForJoinTable($instance,$parser);
 			if(is_null($array)){
+				$joinTableCursor=self::getSQLForJoinTable($instance,$parser);
 				foreach($joinTableCursor as $row){
 					$fkv=$row[$parser->getFkField()];
 					$tmp=self::getOne($parser->getTargetEntity(),"`".$parser->getPk()."`='".$fkv."'");
@@ -158,34 +162,36 @@ class DAO {
 				}
 			}
 			else{
-				$continue=true;
-				$accessorToMember="get".ucfirst($parser->getInversedBy());
-				$myPkAccessor="get".ucfirst($parser->getMyPk());
-
-				if(!method_exists($instance, $myPkAccessor)){
-					Logger::warn("ManyToMany", "L'accesseur au membre clé primaire ".$myPkAccessor." est manquant pour ".$class);
-				}
-				if(count($array)>0)
-					$continue=method_exists($array[0], $accessorToMember);
-				if($continue){
-					foreach($joinTableCursor as $row){
-						foreach($array as $targetEntityInstance){
-							$instances=$targetEntityInstance->$accessorToMember();
-							if(is_array($instances)){
-								foreach ($instances as $inst){
-									if($inst->$myPkAccessor==$instance->$myPkAccessor)
-										array_push($array, $targetEntityInstance);
-								}
-							}
-						}
-					}
-				}else{
-					Logger::warn("ManyToMany", "L'accesseur au membre ".$parser->getInversedBy()." est manquant pour ".$parser->getTargetEntity());
-				}
+				self::getManyToManyFromArray($ret, $instance, $array, $class, $parser);
 			}
 			self::setToMember($member, $instance, $ret, $class, "getManyToMany");
 		}
 		return $ret;
+	}
+
+	private static function getManyToManyFromArray(&$ret,$instance,$array,$class,$parser){
+		$continue=true;
+		$accessorToMember="get".ucfirst($parser->getInversedBy());
+		$myPkAccessor="get".ucfirst($parser->getMyPk());
+
+		if(!method_exists($instance, $myPkAccessor)){
+			Logger::warn("ManyToMany", "L'accesseur au membre clé primaire ".$myPkAccessor." est manquant pour ".$class);
+		}
+		if(count($array)>0)
+			$continue=method_exists($array[0], $accessorToMember);
+			if($continue){
+				foreach($array as $targetEntityInstance){
+					$instances=$targetEntityInstance->$accessorToMember();
+					if(is_array($instances)){
+						foreach ($instances as $inst){
+							if($inst->$myPkAccessor()==$instance->$myPkAccessor())
+								array_push($ret, $targetEntityInstance);
+						}
+					}
+				}
+			}else{
+				Logger::warn("ManyToMany", "L'accesseur au membre ".$parser->getInversedBy()." est manquant pour ".$parser->getTargetEntity());
+			}
 	}
 	/**
 	 * Retourne un tableau d'objets de $className depuis la base de données
@@ -207,25 +213,30 @@ class DAO {
 		$query=self::$db->prepareAndExecute("SELECT * FROM ".$tableName.$condition);
 		Logger::log("getAll","SELECT * FROM ".$tableName.$condition);
 		foreach ($query as $row){
-			$o=new $className();
+			$o=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields);
 			$objects[]=$o;
-			foreach ($row as $k=>$v){
-				$accesseur="set".ucfirst($k);
-				if(method_exists($o,$accesseur)){
-					$o->$accesseur($v);
-				}
-				if(isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
-					self::getOneManyToOne($o,$v, $invertedJoinColumns[$k]);
-				}
-			}
-			if(isset($oneToManyFields)){
-				foreach ($oneToManyFields as $k=>$annot){
-					self::getOneToMany($o, $k,null,$annot);
-				}
-			}
 			self::addInstanceInObjects($o);
 		}
 		return $objects;
+	}
+
+	private static function loadObjectFromRow($row,$className,$invertedJoinColumns,$oneToManyFields){
+		$o=new $className();
+		foreach ($row as $k=>$v){
+			$accesseur="set".ucfirst($k);
+			if(method_exists($o,$accesseur)){
+				$o->$accesseur($v);
+			}
+			if(isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
+				self::getOneManyToOne($o,$v, $invertedJoinColumns[$k]);
+			}
+		}
+		if(isset($oneToManyFields)){
+			foreach ($oneToManyFields as $k=>$annot){
+				self::getOneToMany($o, $k,null,$annot);
+			}
+		}
+		return $o;
 	}
 	/**
 	 * Retourne le nombre d'objets de $className depuis la base de données respectant la condition éventuellement passée en paramètre
@@ -244,7 +255,7 @@ class DAO {
 	 * @param String $className nom de la classe du model à charger
 	 * @param Array|string $keyValues valeurs des clés primaires ou condition
 	 */
-	public static function getOne($className,$keyValues,$loadManyToOne=true){
+	public static function getOne($className,$keyValues,$loadManyToOne=true,$loadOneToMany=false){
 		if(!is_array($keyValues)){
 			if(strrpos($keyValues,"=")===false){
 				$keyValues="`".OrmUtils::getFirstKey($className)."`='".$keyValues."'";
@@ -254,7 +265,7 @@ class DAO {
 		$condition=self::getCondition($keyValues);
 		$retour=self::getInstanceInObjects($className,$condition);
 		if(!isset($retour)){
-			$retour=self::getAll($className,$condition,$loadManyToOne);
+			$retour=self::getAll($className,$condition,$loadManyToOne,$loadOneToMany);
 			if(sizeof($retour)<1)
 				return null;
 			else
@@ -341,7 +352,7 @@ class DAO {
 			if(!is_null($memberValues)){
 				self::$db->execute("DELETE FROM `".$parser->getJoinTable()."` WHERE `".$myField."`='".$id."'");
 				$statement=self::$db->prepareStatement($sql);
-				foreach ($memberValues as $k=>$targetInstance){
+				foreach ($memberValues as $targetInstance){
 					$foreignId=$targetInstance->$accessorId();
 					$foreignInstances=self::getAll($parser->getTargetEntity(), "`".$parser->getPk()."`"."='".$foreignId."'");
 					if(!OrmUtils::exists($targetInstance, $parser->getPk(), $foreignInstances)){
