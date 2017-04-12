@@ -22,11 +22,8 @@ class Reflexion{
 	}
 
 	public static function getMethods($instance,$filter=null){
-		if(\is_string($instance)){
-			$instance=new $instance();
-		}
 		$reflect = new \ReflectionClass($instance);
-		$methods = $reflect->getMethods();
+		$methods = $reflect->getMethods($filter);
 		return $methods;
 	}
 
@@ -153,5 +150,13 @@ class Reflexion{
 			$ret=$ret[0]->name;
 		}
 		return $ret;
+	}
+
+	public static function getMethodParameters(\ReflectionMethod $method) {
+		$result = array();
+		foreach ($method->getParameters() as $param) {
+			$result[] = $param->name;
+		}
+		return $result;
 	}
 }

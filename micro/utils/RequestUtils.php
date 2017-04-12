@@ -78,4 +78,8 @@ class RequestUtils{
 		}
 		return $config["siteUrl"].$url;
 	}
+
+	public static function getMethod(){
+		return \strtolower($_SERVER['REQUEST_METHOD']);
+	}
 }

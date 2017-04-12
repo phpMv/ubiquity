@@ -13,7 +13,9 @@ class ControllerParser {
 		$reflect=new \ReflectionClass($controllerClass);
 		if(!$reflect->isAbstract()){
 			$instance=new $controllerClass();
-			$this->mainRouteClass= Reflexion::getAnnotationClass($controllerClass, "@route");
+			$annotsClass= Reflexion::getAnnotationClass($controllerClass, "@route");
+			if(\sizeof($annotsClass)>0)
+				$this->mainRouteClass=$annotsClass[0];
 			$methods=Reflexion::getMethods($instance,\ReflectionMethod::IS_PUBLIC);
 			foreach ($methods as $method){
 				$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->getName(), "@route");

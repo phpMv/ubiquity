@@ -22,6 +22,10 @@ class CacheManager {
 		self::$cache=new AnnotationCache($cacheDirectory);
 	}
 
+	public static function getControllerCache(){
+		return self::$cache->fetch("controllers/routes");
+	}
+
 	public static function getCacheDirectory(&$config){
 		$cacheDirectory=@$config["cacheDirectory"];
 		if(!isset($cacheDirectory)){
@@ -129,6 +133,8 @@ class CacheManager {
 				self::addControllerCache($controller);
 			}
 		}
+		if($config["debug"])
+			self::addAdminRoutes();
 		self::$cache->store("controllers/routes", "return ".JArray::asPhpArray(self::$routes,"array").";");
 	}
 
@@ -147,4 +153,12 @@ class CacheManager {
 		]);
 	}
 
+	public static function addAdminRoutes(){
+		self::addControllerCache("micro\controllers\Admin");
+	}
+
+	public static function getRoutes(){
+		$result=self::getControllerCache();
+		return $result;
+	}
 }

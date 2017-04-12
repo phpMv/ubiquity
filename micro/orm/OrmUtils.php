@@ -1,9 +1,6 @@
 <?php
 namespace micro\orm;
 
-use mindplay\annotations\Annotations;
-use mindplay\annotations\AnnotationCache;
-use mindplay\annotations\AnnotationManager;
 use micro\orm\parser\Reflexion;
 use micro\cache\CacheManager;
 

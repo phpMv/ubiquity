@@ -45,6 +45,8 @@ class JArray {
 	private static function parseValue($v,$prefix=""){
 		if(\is_bool($v)===true){
 			$result=StrUtils::getBooleanStr($v);
+		}elseif (\is_numeric($v)){
+			$result=$v;
 		}elseif(\is_array($v)){
 			$result=self::asPhpArray($v,$prefix);
 		}

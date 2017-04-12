@@ -16,21 +16,32 @@ class Startup{
 		session_start();
 
 		$u=self::parseUrl($config, $url);
-		self::setCtrlNS($config);
-		if(class_exists(self::$ctrlNS.$u[0]) && StrUtils::startswith($u[0],"_")===false){
-			//Construction de l'instance de la classe (1er élément du tableau)
-			try{
-				if(isset($config['onStartup'])){
-					if(is_callable($config['onStartup'])){
-						$config["onStartup"]($u);
-					}
-				}
-				self::runAction($u);
-			}catch (\Exception $e){
-				print "Error!: " . $e->getMessage() . "<br/>";
-			}
+
+		Router::start();
+		if(($ru=Router::getRoute($url))!==false){
+			self::onStartupAndRun($config, $ru,true);
 		}else{
-			print "Le contrôleur `".self::$ctrlNS.$u[0]."` n'existe pas <br/>";
+			self::setCtrlNS($config);
+			if(class_exists(self::$ctrlNS.$u[0]) && StrUtils::startswith($u[0],"_")===false){
+				self::onStartupAndRun($config, $u);
+			}else{
+				print "Le contrôleur `".self::$ctrlNS.$u[0]."` n'existe pas <br/>";
+			}
+		}
+	}
+
+	private static function onStartupAndRun($config,$urlParts,$hasctrlNS=false){
+		try{
+			if(isset($config['onStartup'])){
+				if(is_callable($config['onStartup'])){
+					$config["onStartup"]($urlParts);
+				}
+			}
+			if(!$hasctrlNS)
+				$urlParts[0]=self::$ctrlNS.$urlParts[0];
+			self::runAction($urlParts);
+		}catch (\Exception $e){
+			print "Error!: " . $e->getMessage() . "<br/>";
 		}
 	}
 
@@ -42,7 +53,7 @@ class Startup{
 		self::$ctrlNS=$ns;
 	}
 
-	private static function parseUrl($config,$url){
+	private static function parseUrl($config,&$url){
 		if(!$url){
 			$url=$config["documentRoot"];
 		}
@@ -73,7 +84,7 @@ class Startup{
 
 	public static function runAction($u,$initialize=true,$finalize=true){
 		$config=self::getConfig();
-		$ctrl=self::$ctrlNS.$u[0];
+		$ctrl=$u[0];
 		$controller=new $ctrl();
 		if(!$controller instanceof Controller){
 			print "`{$u[0]}` n'est pas une instance de contrôleur.`<br/>";

@@ -66,5 +66,22 @@ class StrUtils {
 		return $result;
 
 	}
+
+	public static function firstReplace($haystack,$needle,$replace){
+		$newstring=$haystack;
+		$pos = strpos($haystack, $needle);
+		if ($pos !== false) {
+			$newstring = substr_replace($haystack, $replace, $pos, strlen($needle));
+		}
+		return $newstring;
+	}
+
+	public static function replaceArray($haystack,$needle,$replaceArray){
+		$result=$haystack;
+		foreach ($replaceArray as $replace){
+			$result=self::firstReplace($result, $needle, $replace);
+		}
+		return $result;
+	}
 }
 
