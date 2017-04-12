@@ -1,17 +1,21 @@
 <?php
 namespace micro\controllers;
 
-use micro\controllers\Controller;
 use micro\cache\CacheManager;
+use controllers\ControllerBase;
+use micro\utils\JArray;
 
 /**
  * @route("/admin")
  */
-class Admin extends Controller{
+class Admin extends ControllerBase{
 	/**
 	 * @route("/routes")
 	 */
 	public function index(){
-		print_r(CacheManager::getRoutes());
+		$routes=CacheManager::getRoutes();
+		foreach ($routes as $path=>$infosroute){
+			echo $path."=>".JArray::asPhpArray($infosroute);
+		}
 	}
 }

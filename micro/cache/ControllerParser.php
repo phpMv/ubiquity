@@ -71,9 +71,9 @@ class ControllerParser {
 					}
 					$path=$this->cleanpath($prefix,$path)."$";
 					if(isset($routeAnnotation->methods) && \is_array($routeAnnotation->methods)){
-						$this->createRouteMethod($result,$path,$routeAnnotation->methods,$method,$routeAnnotation,$parameters);
+						$this->createRouteMethod($result,$path,$routeAnnotation->methods,$method,$parameters);
 					}elseif(\is_array($httpMethods)){
-						$this->createRouteMethod($result,$path,$httpMethods,$method,$routeAnnotation,$parameters);
+						$this->createRouteMethod($result,$path,$httpMethods,$method,$parameters);
 					}else{
 						$result[$path]=["controller"=>$this->controllerClass,"action"=>$method,"parameters"=>$parameters];
 					}
@@ -83,7 +83,7 @@ class ControllerParser {
 		return $result;
 	}
 
-	private function createRouteMethod(&$result,$path,$httpMethods,$method,$routeAnnotation,$parameters){
+	private function createRouteMethod(&$result,$path,$httpMethods,$method,$parameters){
 		foreach ($httpMethods as $httpMethod){
 				$result[$path][$httpMethod]=["controller"=>$this->controllerClass,"action"=>$method,"parameters"=>$parameters];
 		}
