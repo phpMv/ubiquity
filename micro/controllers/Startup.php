@@ -15,27 +15,18 @@ class Startup{
 
 		session_start();
 
-		$u=self::parseUrl($config, $url);
+		$u=self::parseUrl($url);
 
 		if(($ru=Router::getRoute($url))!==false){
-			self::onStartupAndRun($ru,true);
+			self::runAction($ru);
 		}else{
 			self::setCtrlNS($config);
-			if(class_exists(self::$ctrlNS.$u[0]) && StrUtils::startswith($u[0],"_")===false){
-				self::onStartupAndRun($u);
+			$u[0]=self::$ctrlNS.$u[0];
+			if(class_exists($u[0])){
+				self::runAction($u);
 			}else{
-				print "Le contrôleur `".self::$ctrlNS.$u[0]."` n'existe pas <br/>";
+				print "Le contrôleur `".$u[0]."` n'existe pas <br/>";
 			}
-		}
-	}
-
-	private static function onStartupAndRun($urlParts,$hasctrlNS=false){
-		try{
-			if(!$hasctrlNS)
-				$urlParts[0]=self::$ctrlNS.$urlParts[0];
-			self::runAction($urlParts);
-		}catch (\Exception $e){
-			print "Error!: " . $e->getMessage() . "<br/>";
 		}
 	}
 
@@ -47,7 +38,7 @@ class Startup{
 		self::$ctrlNS=$ns;
 	}
 
-	private static function parseUrl($config,&$url){
+	private static function parseUrl(&$url){
 		if(!$url){
 			$url="_default";
 		}
