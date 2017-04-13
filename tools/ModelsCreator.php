@@ -61,6 +61,7 @@ class ModelsCreator {
 				self::writeFile("app/models/".$name.".php", $class);
 			}
 		}
+		CacheManager::initCache($config,"models");
 	}
 
 	private static function createOneClass($singleTable){

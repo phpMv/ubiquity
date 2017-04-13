@@ -57,7 +57,7 @@ class CacheManager {
 
 	}
 
-	private static function checkCache(&$config){
+	public static function checkCache(&$config){
 		$cacheDirectory=self::getCacheDirectory($config);
 		$modelsDir=str_replace("\\", DS, $config["mvcNS"]["models"]);
 		$controllersDir=str_replace("\\", DS, $config["mvcNS"]["controllers"]);
