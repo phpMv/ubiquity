@@ -91,6 +91,7 @@ class Micro {
 			FileUtils::safeMkdir("app");
 			FileUtils::safeMkdir("app/views/main");
 			FileUtils::safeMkdir("app/controllers");
+			FileUtils::safeMkdir("app/models");
 			FileUtils::safeMkdir("app/config");
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";

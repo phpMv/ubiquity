@@ -24,7 +24,9 @@ class CacheManager {
 	}
 
 	public static function getControllerCache(){
-		return self::$cache->fetch("controllers/routes");
+		if(self::$cache->exists("controllers/routes"))
+			return self::$cache->fetch("controllers/routes");
+		return [];
 	}
 
 	public static function getCacheDirectory(&$config){
@@ -168,7 +170,7 @@ class CacheManager {
 	}
 
 	public static function addRoute($path,$controller,$action="index",$methods=null,$name=""){
-		$controllerCache=self::$cache->fetch("controllers/routes");
+		$controllerCache=self::getControllerCache();
 		Router::addRouteToRoutes($controllerCache, $path, $controller,$action,$methods,$name);
 		self::$cache->store("controllers/routes","return ".JArray::asPhpArray($controllerCache,"array").";");
 	}
