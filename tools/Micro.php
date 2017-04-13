@@ -129,7 +129,7 @@ class Micro {
 			$config=require_once 'app/config/config.php';
 			Autoloader::register($config);
 
-			self::createController("Main",self::$indexContent);
+			self::createController($config,"Main",self::$indexContent);
 			FileUtils::xcopy("tmp/micro-master/project-files/app/views/".self::$mainViewTemplate, "app/views/index.html");
 			echo "deleting temporary files...\n";
 			FileUtils::delTree("tmp");

@@ -2,6 +2,7 @@
 use micro\orm\creator\Model;
 use micro\orm\creator\Member;
 use micro\annotations\JoinColumnAnnotation;
+use micro\cache\CacheManager;
 
 
 class ModelsCreator {
@@ -35,7 +36,7 @@ class ModelsCreator {
 	public static function create($config,$singleTable=null){
 		self::init($config);
 		self::$tables=self::getTablesName();
-		self::checkCache($config);
+		CacheManager::checkCache($config);
 
 		foreach (self::$tables as $table){
 			$class=new Model($table,$config["mvcNS"]["models"]);
