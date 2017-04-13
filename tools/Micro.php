@@ -327,7 +327,7 @@ class Micro {
 			die();
 		}
 		define('ROOT', realpath('./app').DS);
-		$config=require_once 'app/config.php';
+		$config=require_once 'app/config/config.php';
 		require_once ROOT.'micro/controllers/Autoloader.php';
 		require_once ROOT.'./../vendor/autoload.php';
 		Autoloader::register($config);
