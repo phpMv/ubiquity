@@ -1,7 +1,6 @@
 <?php
 return array(
 		"siteUrl"=>"%siteUrl%",
-		"documentRoot"=>"%documentRoot%",
 		"database"=>[
 				"dbName"=>"%dbName%",
 				"serverName"=>"%serverName%",
@@ -9,8 +8,6 @@ return array(
 				"user"=>"%user%",
 				"password"=>"%password%"
 		],
-		"onStartup"=>function($action){
-		},
 		"sessionToken"=>"%temporaryToken%",
 		"namespaces"=>[],
 		"templateEngine"=>'micro\views\engine\Twig',

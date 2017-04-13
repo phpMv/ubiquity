@@ -5,6 +5,7 @@ use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 use micro\orm\parser\ModelParser;
 use micro\utils\JArray;
+use micro\controllers\Router;
 
 class CacheManager {
 	public static $cache;
@@ -164,5 +165,11 @@ class CacheManager {
 	public static function getRoutes(){
 		$result=self::getControllerCache();
 		return $result;
+	}
+
+	public static function addRoute($path,$controller,$action="index",$methods=null,$name=""){
+		$controllerCache=self::$cache->fetch("controllers/routes");
+		Router::addRouteToRoutes($controllerCache, $path, $controller,$action,$methods,$name);
+		self::$cache->store("controllers/routes","return ".JArray::asPhpArray($controllerCache,"array").";");
 	}
 }

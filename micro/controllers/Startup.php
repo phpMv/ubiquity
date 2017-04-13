@@ -17,26 +17,20 @@ class Startup{
 
 		$u=self::parseUrl($config, $url);
 
-		Router::start();
 		if(($ru=Router::getRoute($url))!==false){
-			self::onStartupAndRun($config, $ru,true);
+			self::onStartupAndRun($ru,true);
 		}else{
 			self::setCtrlNS($config);
 			if(class_exists(self::$ctrlNS.$u[0]) && StrUtils::startswith($u[0],"_")===false){
-				self::onStartupAndRun($config, $u);
+				self::onStartupAndRun($u);
 			}else{
 				print "Le contrôleur `".self::$ctrlNS.$u[0]."` n'existe pas <br/>";
 			}
 		}
 	}
 
-	private static function onStartupAndRun($config,$urlParts,$hasctrlNS=false){
+	private static function onStartupAndRun($urlParts,$hasctrlNS=false){
 		try{
-			if(isset($config['onStartup'])){
-				if(is_callable($config['onStartup'])){
-					$config["onStartup"]($urlParts);
-				}
-			}
 			if(!$hasctrlNS)
 				$urlParts[0]=self::$ctrlNS.$urlParts[0];
 			self::runAction($urlParts);
@@ -55,7 +49,7 @@ class Startup{
 
 	private static function parseUrl($config,&$url){
 		if(!$url){
-			$url=$config["documentRoot"];
+			$url="_default";
 		}
 		if(StrUtils::endswith($url, "/"))
 			$url=substr($url, 0,strlen($url)-1);

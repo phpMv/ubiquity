@@ -2,7 +2,6 @@
 use micro\controllers\Autoloader;
 use micro\utils\StrUtils;
 use micro\cache\CacheManager;
-use micro\controllers\Startup;
 include 'ModelsCreator.php';
 include 'Console.php';
 include 'Command.php';
@@ -73,7 +72,6 @@ class Micro {
 		self::$toolsConfig=include("toolsConfig.php");
 		$arguments=[
 				["b","dbName",$projectName],
-				["r","documentRoot","Main"],
 				["s","serverName","127.0.0.1"],
 				["p","port","3306"],
 				["u","user","root"],
@@ -93,6 +91,7 @@ class Micro {
 			FileUtils::safeMkdir("app");
 			FileUtils::safeMkdir("app/views/main");
 			FileUtils::safeMkdir("app/controllers");
+			FileUtils::safeMkdir("app/config");
 			define('ROOT', realpath('./app').DS);
 			echo "Files copy...\n";
 			FileUtils::xcopy("tmp/micro-master/micro/","app/micro");
@@ -114,7 +113,8 @@ class Micro {
 
 			self::includePhpmv();
 
-			self::openReplaceWrite("tmp/micro-master/project-files/templates/config.tpl", "app/config.php", self::$configOptions);
+			self::openReplaceWrite("tmp/micro-master/project-files/templates/config.tpl", "app/config/config.php", self::$configOptions);
+			FileUtils::xcopy("tmp/micro-master/project-files/templates/services.tpl", "app/config/services.php");
 			FileUtils::xcopy("tmp/micro-master/project-files/index.php", "index.php");
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/vHeader.tpl", "app/views/main/vHeader.html", self::$configOptions);
 			self::openReplaceWrite("tmp/micro-master/project-files/templates/vFooter.tpl", "app/views/main/vFooter.html", self::$configOptions);

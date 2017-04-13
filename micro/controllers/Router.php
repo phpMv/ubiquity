@@ -2,6 +2,7 @@
 namespace micro\controllers;
 use micro\cache\CacheManager;
 use micro\utils\RequestUtils;
+use micro\cache\ControllerParser;
 
 class Router {
 	private static $routes;
@@ -33,5 +34,18 @@ class Router {
 			$result[]=$params[$order];
 		}
 		return $result;
+	}
+
+	public static function addRoute($path,$controller,$action="index",$methods=null,$name=""){
+		self::addRouteToRoutes(self::$routes, $path, $controller,$action,$methods,$name);
+	}
+
+	public static function addRouteToRoutes(&$routesArray,$path,$controller,$action="index",$methods=null,$name=""){
+		$result=[];
+		$method=new \ReflectionMethod($controller,$action);
+		ControllerParser::parseRouteArray($result, $controller, ["path"=>$path,"methods"=>$methods,"name"=>$name], $method, $action);
+		foreach ($result as $k=>$v){
+			$routesArray[$k]=$v;
+		}
 	}
 }
