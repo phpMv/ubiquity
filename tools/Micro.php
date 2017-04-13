@@ -126,7 +126,7 @@ class Micro {
 				require_once ROOT.'./../vendor/autoload.php';
 			}
 			require_once 'app/micro/controllers/Autoloader.php';
-			$config=require_once 'app/config.php';
+			$config=require_once 'app/config/config.php';
 			Autoloader::register($config);
 
 			self::createController("Main",self::$indexContent);
