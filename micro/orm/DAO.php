@@ -201,6 +201,7 @@ class DAO {
 	 */
 	public static function getAll($className,$condition='',$loadManyToOne=true,$loadOneToMany=false){
 		$objects=array();
+		$invertedJoinColumns=null; $oneToManyFields=null;
 		$tableName=OrmUtils::getTableName($className);
 		$metaDatas=OrmUtils::getModelMetadata($className);
 		if($loadManyToOne && isset($metaDatas["#invertedJoinColumn"]))
