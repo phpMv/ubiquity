@@ -13,8 +13,8 @@ micro-framework User guide
 
 Installation
 ------------
-  * :ref:`download`
-  * :ref:`createproject`
+  * :doc:`download`
+  * :doc:`createproject`
 
 
 Indices and tables
