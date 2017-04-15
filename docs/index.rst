@@ -13,7 +13,7 @@ micro-framework User guide
 
 Installation
 ------------
-  * :doc:`download`
+  * :doc:`install`
   * :doc:`createproject`
 
 

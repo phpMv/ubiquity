@@ -18,11 +18,11 @@ class Micro {
 
 	public static function downloadZip($url,$zipFile="tmp/tmp.zip"){
 		$f = file_put_contents($zipFile, fopen($url, 'r'), LOCK_EX);
-	if(FALSE === $f)
-		die("Couldn't write to file.");
-	else{
-		echo $f." downloaded.\n";
-	}
+		if(FALSE === $f)
+			die("Couldn't write to file.");
+		else{
+			echo $f." downloaded.\n";
+		}
 	}
 
 	public static function createComposerFile(){
