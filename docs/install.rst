@@ -7,7 +7,8 @@ Install Composer
 
 Install micro-devtools
 ----------------------
-Download the Micro-devtools installer using Composer. ::
+Download the Micro-devtools installer using Composer.
+::
     composer global require "phpmv/micro-devtools=dev-master"
 
 Make sure to place the `~/.composer/vendor/bin` directory in your PATH so the **Micro** executable can be located by your system.
