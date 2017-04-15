@@ -47,8 +47,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'micro-framework'
-copyright = '2017, jcheron phpmv'
-author = 'jcheron phpmv'
+copyright = '2017, phpmv'
+author = 'phpmv'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -128,7 +128,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'micro-framework.tex', 'micro-framework Documentation',
-     'jcheron phpmv', 'manual'),
+     'phpmv', 'manual'),
 ]
 
 
