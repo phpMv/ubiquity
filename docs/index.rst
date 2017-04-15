@@ -11,6 +11,11 @@ micro-framework User guide
    :caption: Contents:
 
 
+Installation
+------------
+  * :ref:`download`
+  * :ref:`createproject`
+
 
 Indices and tables
 ==================
