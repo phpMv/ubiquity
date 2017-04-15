@@ -51,7 +51,7 @@ class JArray {
 			$result=self::asPhpArray($v,$prefix);
 		}
 		else{
-			$result="\"".$v."\"";
+			$result="\"".\str_replace('$', '\$', $v)."\"";
 		}
 		return $result;
 	}

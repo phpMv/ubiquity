@@ -14,21 +14,6 @@ use micro\orm\parser\Reflexion;
  */
 class DAO {
 	public static $db;
-	private static $objects;
-
-	private static function getObjects(){
-		if(is_null(self::$objects)){
-			self::$objects=array();
-			Logger::log("getObjects","Instanciation de Objects");
-		}
-		return self::$objects;
-	}
-
-	private static function getInstanceIdInObjects($instance){
-		$condition=self::getCondition(OrmUtils::getKeyFieldsAndValues($instance));
-		$condition=preg_replace('/\s|\'+/', '', $condition);
-		return get_class($instance)."#".$condition;
-	}
 
 	private static function getCondition($keyValues){
 		$retArray=array();
@@ -42,35 +27,19 @@ class DAO {
 		return $condition;
 	}
 
-	private static function addInstanceInObjects($instance){
-		self::getObjects();
-		self::$objects[self::getInstanceIdInObjects($instance)]=$instance;
-	}
-
-	private static function getInstanceInObjects($className,$keyValue){
-		$objects=self::getObjects();
-		$condition=self::getCondition($keyValue);
-		$condition=preg_replace('/\s|\'+/', '', $condition);
-		$key=$className."#".$condition;
-		if(array_key_exists($key,$objects)){
-			Logger::log("getInstanceInObjects", "Récupération d'une instance de ".$className."(".$condition.") dans objects");
-			return $objects[$key];
-		}
-		return null;
-	}
-
 	/**
 	 * Charge les membres associés à $instance par une relation de type ManyToOne
 	 * @param object $instance
 	 * @param mixed $value
 	 * @param array $annotationArray
+	 * @param boolean $useCache
 	 */
-	private static function getOneManyToOne($instance,$value,$annotationArray){
+	private static function getOneManyToOne($instance,$value,$annotationArray,$useCache=NULL){
 		$class=get_class($instance);
 		$member=$annotationArray["member"];
 		$key=OrmUtils::getFirstKey($annotationArray["className"]);
 		$kv=array($key=>$value);
-		$obj=self::getOne($annotationArray["className"], $kv,false);
+		$obj=self::getOne($annotationArray["className"], $kv,false,false,$useCache);
 		if($obj!==null){
 			Logger::log("getOneManyToOne", "Chargement de ".$member." pour l'objet ".$class);
 			$accesseur="set".ucfirst($member);
@@ -87,9 +56,10 @@ class DAO {
 	 * @param object $instance
 	 * @param string $member Membre sur lequel doit être présent une annotation OneToMany
 	 * @param array $array paramètre facultatif contenant la liste des fils possibles
+	 * @param boolean $useCache
 	 * @param array $annot used internally
 	 */
-	public static function getOneToMany($instance,$member,$array=null,$annot=null){
+	public static function getOneToMany($instance,$member,$array=null,$useCache=NULL,$annot=null){
 		$ret=array();
 		$class=get_class($instance);
 		if(!isset($annot))
@@ -99,7 +69,7 @@ class DAO {
 			if($fkAnnot!==false){
 				$fkv=OrmUtils::getFirstKeyValue($instance);
 				if(is_null($array)){
-					$ret=self::getAll($annot["className"],$fkAnnot["name"]."='".$fkv."'");
+					$ret=self::getAll($annot["className"],$fkAnnot["name"]."='".$fkv."'",true,false,$useCache);
 				}else{
 					self::getOneToManyFromArray($ret, $array, $fkv, $annot);
 				}
@@ -147,8 +117,9 @@ class DAO {
 	 * @param object $instance
 	 * @param string $member Membre sur lequel doit être présent une annotation ManyToMany
 	 * @param array $array paramètre facultatif contenant la liste des fils possibles
+	 * @param boolean $useCache
 	 */
-	public static function getManyToMany($instance,$member,$array=null){
+	public static function getManyToMany($instance,$member,$array=null,$useCache=NULL){
 		$ret=array();
 		$class=get_class($instance);
 		$parser=new ManyToManyParser($instance, $member);
@@ -157,7 +128,7 @@ class DAO {
 				$joinTableCursor=self::getSQLForJoinTable($instance,$parser);
 				foreach($joinTableCursor as $row){
 					$fkv=$row[$parser->getFkField()];
-					$tmp=self::getOne($parser->getTargetEntity(),"`".$parser->getPk()."`='".$fkv."'");
+					$tmp=self::getOne($parser->getTargetEntity(),"`".$parser->getPk()."`='".$fkv."'",false,false,$useCache);
 					array_push($ret,$tmp);
 				}
 			}
@@ -197,9 +168,12 @@ class DAO {
 	 * Retourne un tableau d'objets de $className depuis la base de données
 	 * @param string $className nom de la classe du model à charger
 	 * @param string $condition Partie suivant le WHERE d'une instruction SQL
+	 * @param boolean $loadManyToOne
+	 * @param boolean $loadOneToMany
+	 * @param boolean $useCache
 	 * @return array
 	 */
-	public static function getAll($className,$condition='',$loadManyToOne=true,$loadOneToMany=false){
+	public static function getAll($className,$condition='',$loadManyToOne=true,$loadOneToMany=false,$useCache=NULL){
 		$objects=array();
 		$invertedJoinColumns=null; $oneToManyFields=null;
 		$tableName=OrmUtils::getTableName($className);
@@ -211,17 +185,16 @@ class DAO {
 		}
 		if($condition!='')
 			$condition=" WHERE ".$condition;
-		$query=self::$db->prepareAndExecute("SELECT * FROM ".$tableName.$condition);
+		$query=self::$db->prepareAndExecute("SELECT * FROM ".$tableName.$condition,$useCache);
 		Logger::log("getAll","SELECT * FROM ".$tableName.$condition);
 		foreach ($query as $row){
-			$o=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields);
+			$o=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$useCache);
 			$objects[]=$o;
-			self::addInstanceInObjects($o);
 		}
 		return $objects;
 	}
 
-	private static function loadObjectFromRow($row,$className,$invertedJoinColumns,$oneToManyFields){
+	private static function loadObjectFromRow($row,$className,$invertedJoinColumns,$oneToManyFields,$useCache=NULL){
 		$o=new $className();
 		foreach ($row as $k=>$v){
 			$accesseur="set".ucfirst($k);
@@ -229,12 +202,12 @@ class DAO {
 				$o->$accesseur($v);
 			}
 			if(isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
-				self::getOneManyToOne($o,$v, $invertedJoinColumns[$k]);
+				self::getOneManyToOne($o,$v, $invertedJoinColumns[$k],$useCache);
 			}
 		}
 		if(isset($oneToManyFields)){
 			foreach ($oneToManyFields as $k=>$annot){
-				self::getOneToMany($o, $k,null,$annot);
+				self::getOneToMany($o, $k,null,$useCache,$annot);
 			}
 		}
 		return $o;
@@ -255,8 +228,9 @@ class DAO {
 	 * Retourne une instance de $className depuis la base de données, à  partir des valeurs $keyValues de la clé primaire
 	 * @param String $className nom de la classe du model à charger
 	 * @param Array|string $keyValues valeurs des clés primaires ou condition
+	 * @param boolean $useCache
 	 */
-	public static function getOne($className,$keyValues,$loadManyToOne=true,$loadOneToMany=false){
+	public static function getOne($className,$keyValues,$loadManyToOne=true,$loadOneToMany=false,$useCache=NULL){
 		if(!is_array($keyValues)){
 			if(strrpos($keyValues,"=")===false){
 				$keyValues="`".OrmUtils::getFirstKey($className)."`='".$keyValues."'";
@@ -264,14 +238,11 @@ class DAO {
 				$keyValues="";
 		}
 		$condition=self::getCondition($keyValues);
-		$retour=self::getInstanceInObjects($className,$condition);
-		if(!isset($retour)){
-			$retour=self::getAll($className,$condition,$loadManyToOne,$loadOneToMany);
-			if(sizeof($retour)<1)
-				return null;
-			else
-				return $retour[0];
-		}
+		$retour=self::getAll($className,$condition,$loadManyToOne,$loadOneToMany,$useCache);
+		if(sizeof($retour)<1)
+			return null;
+		else
+			return $retour[0];
 		return $retour;
 
 	}

@@ -56,7 +56,6 @@ class CacheManager {
 			} catch (\Exception $e) {
 				//Nothing to do
 			}
-
 	}
 
 	public static function checkCache(&$config){
@@ -66,11 +65,13 @@ class CacheManager {
 		echo "cache directory is ".ROOT.DS.$cacheDirectory."\n";
 		$annotationCacheDir=ROOT.DS.$cacheDirectory.DS."annotations";
 		$modelsCacheDir=ROOT.DS.$cacheDirectory.DS.$modelsDir;
+		$queriesCacheDir=ROOT.DS.$cacheDirectory.DS."queries";
 		$controllersCacheDir=ROOT.DS.$cacheDirectory.DS.$controllersDir;
 		self::safeMkdir($annotationCacheDir);
 		self::safeMkdir($modelsCacheDir);
 		self::safeMkdir($controllersCacheDir);
-		return ["annotations"=>$annotationCacheDir,"models"=>$modelsCacheDir,"controllers"=>$controllersCacheDir];
+		self::safeMkdir($queriesCacheDir);
+		return ["annotations"=>$annotationCacheDir,"models"=>$modelsCacheDir,"controllers"=>$controllersCacheDir,"queries"=>$queriesCacheDir];
 	}
 
 	private static function safeMkdir($dir){
@@ -94,6 +95,8 @@ class CacheManager {
 			self::deleteAllFilesFromFolder($cacheDirectories["controllers"]);
 		if($type==="all" || $type==="models")
 			self::deleteAllFilesFromFolder($cacheDirectories["models"]);
+		if($type==="all" || $type==="queries")
+			self::deleteAllFilesFromFolder($cacheDirectories["queries"]);
 	}
 
 	public static function initCache(&$config,$type="all"){

@@ -1,5 +1,7 @@
 <?php
 namespace micro\db;
+use micro\cache\QueryCache;
+
 /**
  * Classe d'accès aux Bases de données encapsulant un objet PDO
  * @author heron
@@ -59,11 +61,20 @@ class Database {
 		return $this->pdoObject->query($sql);
 	}
 
-	public function prepareAndExecute($sql){
-		$statement=$this->getStatement($sql);
-		$statement->execute();
-		$result= $statement->fetchAll();
-		$statement->closeCursor();
+	public function prepareAndExecute($sql,$useCache=NULL){
+		$cache=(QueryCache::$active && $useCache!==false) || (!QueryCache::$active && $useCache===true);
+		if($cache){
+			$result=QueryCache::fetch($sql);
+		}
+		if($result===false){
+			$statement=$this->getStatement($sql);
+			$statement->execute();
+			$result= $statement->fetchAll();
+			$statement->closeCursor();
+			if($cache){
+				QueryCache::store($sql, $result);
+			}
+		}
 		return $result;
 	}
 
