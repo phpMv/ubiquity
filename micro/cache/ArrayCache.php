@@ -39,7 +39,7 @@ class ArrayCache{
 		$this->_fileMode = $fileMode;
 		$this->postfix=$postfix;
 		if(!is_dir($root))
-			return mkdir($root,$fileMode,true);
+			mkdir($root,$fileMode,true);
 	}
 
 	/**
@@ -54,7 +54,7 @@ class ArrayCache{
 	/**
 	 * Caches the given data with the given key.
 	 * @param string $key cache key
-	 * @param array $code the source-code to be cached
+	 * @param string $code the source-code to be cached
 	 * @throws AnnotationException if file could not be written
 	 */
 	public function store($key, $code){
