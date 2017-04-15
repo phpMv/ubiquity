@@ -241,11 +241,8 @@ class DAO {
 		$retour=self::getAll($className,$condition,$loadManyToOne,$loadOneToMany,$useCache);
 		if(sizeof($retour)<1)
 			return null;
-		else
-			return $retour[0];
-		return $retour;
-
-	}
+		return $retour[0];
+		}
 
 	/**
 	 * Supprime $instance dans la base de données

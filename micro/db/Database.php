@@ -63,6 +63,7 @@ class Database {
 
 	public function prepareAndExecute($sql,$useCache=NULL){
 		$cache=(QueryCache::$active && $useCache!==false) || (!QueryCache::$active && $useCache===true);
+		$result=false;
 		if($cache){
 			$result=QueryCache::fetch($sql);
 		}

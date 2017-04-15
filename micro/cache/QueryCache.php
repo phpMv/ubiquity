@@ -1,7 +1,6 @@
 <?php
 
 namespace micro\cache;
-use mindplay\annotations\AnnotationCache;
 use micro\utils\JArray;
 
 class QueryCache{
@@ -16,7 +15,7 @@ class QueryCache{
 	public static function start(&$config){
 		self::$config=$config;
 		$cacheDirectory=ROOT.DS.CacheManager::getCacheDirectory($config).DS."queries";
-		self::$cache=new AnnotationCache($cacheDirectory);
+		self::$cache=new ArrayCache($cacheDirectory,".query");
 		self::$active=true;
 	}
 
@@ -32,13 +31,11 @@ class QueryCache{
 	}
 
 	public function clear(){
-		CacheManager::clearCache(self::$config,"queries");
+		self::$cache->clear();
 	}
 
 	public function remove($query){
-		$file=self::$cache->getRoot(). DIRECTORY_SEPARATOR . self::getKey($query) . '.annotations.php';
-		if(\is_file($file))
-			unlink($file);
+		self::$cache->remove($query);
 	}
 
 	public static function setActive($value=true){

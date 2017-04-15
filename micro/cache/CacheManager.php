@@ -15,12 +15,12 @@ class CacheManager {
 		$cacheDirectory=ROOT.DS.self::getCacheDirectory($config);
 		Annotations::$config['cache'] = new AnnotationCache($cacheDirectory.'/annotations');
 		self::register(Annotations::getManager());
-		self::$cache=new AnnotationCache($cacheDirectory);
+		self::$cache=new ArrayCache($cacheDirectory,".cache");
 	}
 
 	public static function startProd(&$config){
 		$cacheDirectory=ROOT.DS.self::getCacheDirectory($config);
-		self::$cache=new AnnotationCache($cacheDirectory);
+		self::$cache=new ArrayCache($cacheDirectory,".cache");
 	}
 
 	public static function getControllerCache(){
