@@ -14,7 +14,8 @@ Download the Micro-devtools installer using Composer.
 Make sure to place the ``~/.composer/vendor/bin`` directory in your PATH so the **Micro** executable can be located by your system.
 
 
-Once installed, the simple micro new command will create a fresh micro installation in the directory you specify.
-For instance, ``Micro new blog`` would create a directory named **blog** containing a fresh Micro installation with all dependencies installed. This method of installation is much faster than installing via Composer: ::
+Once installed, the simple ``Micro new`` command will create a fresh micro installation in the directory you specify.
+For instance, ``Micro new blog`` would create a directory named **blog** containing a Micro project:
+::
     Micro new blog
 
