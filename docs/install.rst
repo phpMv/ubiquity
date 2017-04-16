@@ -19,3 +19,4 @@ For instance, ``Micro new blog`` would create a directory named **blog** contain
 ::
     Micro new blog
 
+You can see more options about installation by reading the :doc:`createproject` section.

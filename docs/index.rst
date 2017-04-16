@@ -15,6 +15,7 @@ Installation
 ------------
   * :doc:`install`
   * :doc:`createproject`
+  * :doc:`confproject`
 
 
 Indices and tables
