@@ -55,14 +55,11 @@ Apache
 The framework ships with an **.htaccess** file that is used to allow URLs without index.php. If you use Apache to serve your Micro application, be sure to enable the **mod_rewrite** module.
 
 If the .htaccess file that ships with Laravel does not work with your Apache installation, try this one:
-
 ::
 	AddDefaultCharset UTF-8
-	
 	<IfModule mod_rewrite.c>
 		RewriteEngine On
 		RewriteBase /blog/
-		
 		RewriteCond %{REQUEST_FILENAME} !-f  
 		RewriteCond %{HTTP_ACCEPT} !(.*images.*)
 		RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]
