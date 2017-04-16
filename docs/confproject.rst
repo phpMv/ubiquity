@@ -2,7 +2,7 @@ Project configuration
 =====================
 Normally, the installer limits the modifications to be performed in the configuration files and your application is operational after installation
 
-.. image:: `_static/firstProject.png`
+.. image:: _static/firstProject.png
 
 Main configuration
 ------------------
