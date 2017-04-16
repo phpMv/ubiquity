@@ -1,7 +1,7 @@
 Project configuration
 =====================
-Normally, the installer limits the modifications to be performed in the configuration files :
-
+Normally, the installer limits the modifications to be performed in the configuration files and your application is operational after installation
+image:: _static/firstProject.png
 Main configuration
 ------------------
 The main configuration of a project is localised in the ``app/conf/config.php`` file.
@@ -53,8 +53,6 @@ Pretty URLs
 Apache
 ^^^^^^
 The framework ships with an **.htaccess** file that is used to allow URLs without index.php. If you use Apache to serve your Micro application, be sure to enable the **mod_rewrite** module.
-
-If the .htaccess file that ships with Laravel does not work with your Apache installation, try this one:
 ::
 	AddDefaultCharset UTF-8
 	<IfModule mod_rewrite.c>
