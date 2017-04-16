@@ -16,7 +16,6 @@ The main configuration of a project is localised in the ``app/conf/config.php`` 
     				"user"=>"%user%",
     				"password"=>"%password%"
     		],
-    		"sessionToken"=>"%temporaryToken%",
     		"namespaces"=>[],
     		"templateEngine"=>'micro\views\engine\Twig',
     		"templateEngineOptions"=>array("cache"=>false),
@@ -58,21 +57,21 @@ The framework ships with an **.htaccess** file that is used to allow URLs withou
 If the .htaccess file that ships with Laravel does not work with your Apache installation, try this one:
 
 ::
-AddDefaultCharset UTF-8
-
-<IfModule mod_rewrite.c>
-	RewriteEngine On
-	RewriteBase /blog/
+	AddDefaultCharset UTF-8
 	
-	RewriteCond %{REQUEST_FILENAME} !-f  
-	RewriteCond %{HTTP_ACCEPT} !(.*images.*)
-	RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]
-</IfModule>
+	<IfModule mod_rewrite.c>
+		RewriteEngine On
+		RewriteBase /blog/
+		
+		RewriteCond %{REQUEST_FILENAME} !-f  
+		RewriteCond %{HTTP_ACCEPT} !(.*images.*)
+		RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]
+	</IfModule>
 
 Nginx
 ^^^^^
 On Nginx, the following directive in your site configuration will allow "pretty" URLs:
-
-location / {
-    try_files $uri $uri/ /index.php?c=$query_string;
-}
+::
+	location / {
+	    try_files $uri $uri/ /index.php?c=$query_string;
+	}
