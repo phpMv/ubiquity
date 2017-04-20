@@ -243,8 +243,6 @@ class DAO {
 			return null;
 		else
 			return $retour[0];
-		return $retour;
-
 	}
 
 	/**

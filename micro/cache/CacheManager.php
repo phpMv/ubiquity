@@ -66,7 +66,7 @@ class CacheManager {
 	}
 
 	public static function checkCache(&$config){
-		$cacheDirectory=self::getCacheDirectory($config);
+		$cacheDirectory=self::initialGetCacheDirectory($config);
 		$modelsDir=str_replace("\\", DS, $config["mvcNS"]["models"]);
 		$controllersDir=str_replace("\\", DS, $config["mvcNS"]["controllers"]);
 		echo "cache directory is ".ROOT.DS.$cacheDirectory."\n";
