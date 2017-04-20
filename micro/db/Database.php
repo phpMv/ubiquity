@@ -1,6 +1,7 @@
 <?php
 namespace micro\db;
 use micro\cache\QueryCache;
+use micro\cache\database\DbCache;
 
 /**
  * Classe d'accès aux Bases de données encapsulant un objet PDO
@@ -17,6 +18,7 @@ class Database {
 	private $password;
 	private $pdoObject;
 	private $statements=[];
+	private $cache;
 
 	/**
 	 * Constructeur
@@ -27,12 +29,15 @@ class Database {
 	 * @param string $password
 	 */
 	public function __construct($dbName, $serverName = "localhost", $port = "3306",
-			$user = "root", $password = "") {
+			$user = "root", $password = "",$cache=false) {
 		$this->dbName = $dbName;
 		$this->serverName = $serverName;
 		$this->port = $port;
 		$this->user = $user;
 		$this->password = $password;
+		if($cache!==false){
+			$this->cache=new $cache();
+		}
 	}
 
 	/**
@@ -61,19 +66,19 @@ class Database {
 		return $this->pdoObject->query($sql);
 	}
 
-	public function prepareAndExecute($sql,$useCache=NULL){
-		$cache=(QueryCache::$active && $useCache!==false) || (!QueryCache::$active && $useCache===true);
+	public function prepareAndExecute($tableName,$condition,$useCache=NULL){
+		$cache=(DbCache::$active && $useCache!==false) || (!DbCache::$active && $useCache===true);
 		$result=false;
 		if($cache){
-			$result=QueryCache::fetch($sql);
+			$result=$this->cache->fetch($tableName,$condition);
 		}
 		if($result===false){
-			$statement=$this->getStatement($sql);
+			$statement=$this->getStatement("SELECT * FROM ".$tableName.$condition);
 			$statement->execute();
 			$result= $statement->fetchAll();
 			$statement->closeCursor();
 			if($cache){
-				QueryCache::store($sql, $result);
+				$this->cache->store($tableName,$condition, $result);
 			}
 		}
 		return $result;

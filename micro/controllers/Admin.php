@@ -18,4 +18,11 @@ class Admin extends ControllerBase{
 			echo $path."=>".JArray::asPhpArray($infosroute);
 		}
 	}
+
+	/**
+	 * @route("/reset/cache")
+	 */
+	public function opCacheReset(){
+		\opcache_reset();
+	}
 }

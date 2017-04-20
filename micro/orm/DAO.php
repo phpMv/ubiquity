@@ -185,7 +185,7 @@ class DAO {
 		}
 		if($condition!='')
 			$condition=" WHERE ".$condition;
-		$query=self::$db->prepareAndExecute("SELECT * FROM ".$tableName.$condition,$useCache);
+		$query=self::$db->prepareAndExecute($tableName,$condition,$useCache);
 		Logger::log("getAll","SELECT * FROM ".$tableName.$condition);
 		foreach ($query as $row){
 			$o=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$useCache);
@@ -241,8 +241,11 @@ class DAO {
 		$retour=self::getAll($className,$condition,$loadManyToOne,$loadOneToMany,$useCache);
 		if(sizeof($retour)<1)
 			return null;
-		return $retour[0];
-		}
+		else
+			return $retour[0];
+		return $retour;
+
+	}
 
 	/**
 	 * Supprime $instance dans la base de données
@@ -369,8 +372,8 @@ class DAO {
 	 * @param string $user
 	 * @param string $password
 	 */
-	public static function connect($dbName,$serverName="127.0.0.1",$port="3306",$user="root",$password=""){
-		self::$db=new Database($dbName,$serverName,$port,$user,$password);
+	public static function connect($dbName,$serverName="127.0.0.1",$port="3306",$user="root",$password="",$cache=false){
+		self::$db=new Database($dbName,$serverName,$port,$user,$password,$cache);
 		self::$db->connect();
 	}
 }

@@ -1,6 +1,4 @@
 global_exclude_dirs:
-    - tools
-    - project-files
     - micro/annotations
     - docs
 

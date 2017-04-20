@@ -1,5 +1,5 @@
-micro-framework installation
-============================
+micro-devtools installation
+===========================
 
 Install Composer
 ----------------

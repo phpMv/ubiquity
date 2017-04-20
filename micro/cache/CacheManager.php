@@ -10,16 +10,19 @@ use micro\controllers\Router;
 class CacheManager {
 	public static $cache;
 	private static $routes=[];
+	private static $cacheDirectory;
 
 	public static function start(&$config){
-		$cacheDirectory=ROOT.DS.self::getCacheDirectory($config);
+		self::$cacheDirectory=self::initialGetCacheDirectory($config);
+		$cacheDirectory=ROOT.DS.self::$cacheDirectory;
 		Annotations::$config['cache'] = new AnnotationCache($cacheDirectory.'/annotations');
 		self::register(Annotations::getManager());
 		self::$cache=new ArrayCache($cacheDirectory,".cache");
 	}
 
 	public static function startProd(&$config){
-		$cacheDirectory=ROOT.DS.self::getCacheDirectory($config);
+		self::$cacheDirectory=self::initialGetCacheDirectory($config);
+		$cacheDirectory=ROOT.DS.self::$cacheDirectory;
 		self::$cache=new ArrayCache($cacheDirectory,".cache");
 	}
 
@@ -29,13 +32,17 @@ class CacheManager {
 		return [];
 	}
 
-	public static function getCacheDirectory(&$config){
+	private static function initialGetCacheDirectory(&$config){
 		$cacheDirectory=@$config["cacheDirectory"];
 		if(!isset($cacheDirectory)){
 			$config["cacheDirectory"]="cache/";
 			$cacheDirectory=$config["cacheDirectory"];
 		}
 		return $cacheDirectory;
+	}
+
+	public static function getCacheDirectory(){
+		return self::$cacheDirectory;
 	}
 
 	public static function createOrmModelCache($className){
