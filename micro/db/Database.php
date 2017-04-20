@@ -1,6 +1,5 @@
 <?php
 namespace micro\db;
-use micro\cache\QueryCache;
 use micro\cache\database\DbCache;
 
 /**
