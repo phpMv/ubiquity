@@ -6,6 +6,7 @@ use mindplay\annotations\AnnotationManager;
 use micro\orm\parser\ModelParser;
 use micro\utils\JArray;
 use micro\controllers\Router;
+use micro\controllers\Startup;
 
 class CacheManager {
 	public static $cache;
@@ -30,6 +31,31 @@ class CacheManager {
 		if(self::$cache->exists("controllers/routes"))
 			return self::$cache->fetch("controllers/routes");
 		return [];
+	}
+
+	public static function getRouteCache($routePath){
+		$key=self::getRouteKey($routePath);
+		if(self::$cache->exists("controllers/".$key))
+			return self::$cache->fetch("controllers/".$key);
+		else{
+			$response=Startup::runAsString($routePath);
+			return self::storeRouteResponse($key, $response);
+		}
+	}
+
+	public static function setRouteCache($routePath){
+		$key=self::getRouteKey($routePath);
+		$response=Startup::runAsString($routePath);
+		return self::storeRouteResponse($key, $response);
+	}
+
+	private static function storeRouteResponse($key,$response){
+		self::$cache->store("controllers/".$key, $response);
+		return $response;
+	}
+
+	private static function getRouteKey($routePath){
+		return \md5(\implode("", $routePath));
 	}
 
 	private static function initialGetCacheDirectory(&$config){

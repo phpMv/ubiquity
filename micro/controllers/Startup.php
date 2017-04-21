@@ -18,7 +18,10 @@ class Startup{
 		$u=self::parseUrl($url);
 
 		if(($ru=Router::getRoute($url))!==false){
-			self::runAction($ru);
+			if(\is_array($ru))
+				self::runAction($ru);
+			else
+				echo $ru;
 		}else{
 			self::setCtrlNS($config);
 			$u[0]=self::$ctrlNS.$u[0];
@@ -90,6 +93,12 @@ class Startup{
 		self::callController($controller,$u);
 		if($finalize)
 			$controller->finalize();
+	}
+
+	public static function runAsString($u,$initialize=true,$finalize=true){
+		\ob_start();
+		self::runAction($u,$initialize,$finalize);
+		return \ob_get_clean();
 	}
 
 	private static function callController(Controller $controller,$u){

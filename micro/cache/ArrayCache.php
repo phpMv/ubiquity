@@ -39,7 +39,7 @@ class ArrayCache{
 		$this->_fileMode = $fileMode;
 		$this->postfix=$postfix;
 		if(!is_dir($root))
-			mkdir($root,$fileMode,true);
+			\mkdir($root,$fileMode,true);
 	}
 
 	/**
@@ -51,15 +51,30 @@ class ArrayCache{
 		return file_exists($this->_getPath($key));
 	}
 
+	public function expired($key,$duration){
+		if($this->exists($key)){
+			if(\is_int($duration)){
+				return \time()-$this->getTimestamp($key)<=$duration;
+			}else{
+				return false;
+			}
+		}else{
+			return true;
+		}
+	}
+
 	/**
 	 * Caches the given data with the given key.
 	 * @param string $key cache key
 	 * @param string $code the source-code to be cached
 	 * @throws AnnotationException if file could not be written
 	 */
-	public function store($key, $code){
+	public function store($key, $code,$php=true){
 		$path = $this->_getPath($key);
-		$content = self::PHP_TAG . $code . "\n";
+		$content="";
+		if($php)
+			$content = self::PHP_TAG;
+		$content .= $code . "\n";
 		if (@file_put_contents($path, $content, LOCK_EX) === false) {
 			throw new \Exception("Unable to write cache file: {$path}");
 		}
@@ -84,7 +99,7 @@ class ArrayCache{
 	 * @return int unix timestamp
 	 */
 	public function getTimestamp($key){
-		return filemtime($this->_getPath($key));
+		return \filemtime($this->_getPath($key));
 	}
 
 	/**
@@ -100,14 +115,14 @@ class ArrayCache{
 	public function remove($key){
 		$file=$this->_getPath($key);
 		if(\file_exists($file))
-			unlink($file);
+			\unlink($file);
 	}
 
 	public function clear(){
 		$files = glob($this->_root.'/*');
 		foreach($files as $file){
-			if(is_file($file))
-				unlink($file);
+			if(\is_file($file))
+				\unlink($file);
 		}
 	}
 

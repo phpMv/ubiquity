@@ -18,20 +18,23 @@ class Router {
 				if(!isset($routeDetails["controller"])){
 					$method=RequestUtils::getMethod();
 					if(isset($routeDetails[$method]))
-						return self::getRouteUrlParts(["path"=>$routePath,"details"=>$routeDetails[$method]],$matches);
+						return self::getRouteUrlParts(["path"=>$routePath,"details"=>$routeDetails[$method]],$matches,$routeDetails["cache"],$routeDetails["duration"]);
 				}else
-					return self::getRouteUrlParts(["path"=>$routePath,"details"=>$routeDetails],$matches);
+					return self::getRouteUrlParts(["path"=>$routePath,"details"=>$routeDetails],$matches,$routeDetails["cache"],$routeDetails["duration"]);
 			}
 		}
 		return false;
 	}
 
-	public static function getRouteUrlParts($routeArray,$params){
+	public static function getRouteUrlParts($routeArray,$params,$cached=false,$duration=NULL){
 		$params=array_slice($params, 1);
 		$result=[$routeArray["details"]["controller"],$routeArray["details"]["action"]];
 		$paramsOrder=$routeArray["details"]["parameters"];
 		foreach ($paramsOrder as $order){
 			$result[]=$params[$order];
+		}
+		if($cached===true){
+			return CacheManager::getRouteCache($result,$duration);
 		}
 		return $result;
 	}
