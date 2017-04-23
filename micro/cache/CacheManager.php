@@ -37,10 +37,10 @@ class CacheManager {
 		$key=self::getRouteKey($routePath);
 		if(self::$cache->exists("controllers/".$key))
 			return self::$cache->fetch("controllers/".$key);
-		else{
-			$response=Startup::runAsString($routePath);
-			return self::storeRouteResponse($key, $response);
-		}
+			else{
+				$response=Startup::runAsString($routePath);
+				return self::storeRouteResponse($key, $response);
+			}
 	}
 
 	public static function setRouteCache($routePath){
@@ -50,12 +50,12 @@ class CacheManager {
 	}
 
 	private static function storeRouteResponse($key,$response){
-		self::$cache->store("controllers/".$key, $response);
+		self::$cache->store("controllers/".$key, $response,false);
 		return $response;
 	}
 
 	private static function getRouteKey($routePath){
-		return \md5(\implode("", $routePath));
+		return "path".\md5(\implode("", $routePath));
 	}
 
 	private static function initialGetCacheDirectory(&$config){
