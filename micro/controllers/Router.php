@@ -39,14 +39,14 @@ class Router {
 		return $result;
 	}
 
-	public static function addRoute($path,$controller,$action="index",$methods=null,$name=""){
-		self::addRouteToRoutes(self::$routes, $path, $controller,$action,$methods,$name);
+	public static function addRoute($path,$controller,$action="index",$methods=null,$name="",$cache=false,$duration=null){
+		self::addRouteToRoutes(self::$routes, $path, $controller,$action,$methods,$name,$cache,$duration);
 	}
 
-	public static function addRouteToRoutes(&$routesArray,$path,$controller,$action="index",$methods=null,$name=""){
+	public static function addRouteToRoutes(&$routesArray,$path,$controller,$action="index",$methods=null,$name="",$cache=false,$duration=null){
 		$result=[];
 		$method=new \ReflectionMethod($controller,$action);
-		ControllerParser::parseRouteArray($result, $controller, ["path"=>$path,"methods"=>$methods,"name"=>$name], $method, $action);
+		ControllerParser::parseRouteArray($result, $controller, ["path"=>$path,"methods"=>$methods,"name"=>$name,"cache"=>$cache,"duration"=>$duration], $method, $action);
 		foreach ($result as $k=>$v){
 			$routesArray[$k]=$v;
 		}
