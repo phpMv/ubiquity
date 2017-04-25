@@ -10,4 +10,9 @@ php MVC micro framework, One of the fastest frameworks, with the main features o
   - Dependency injection
   - PSR-4 Autoloader
   - Router based on annotations
-  - ORM implementing Data Mapper  
+  - ORM implementing Data Mapper
+  - Multi-level cache
+  
+# Installation
+
+The easiest way to install **Micro** is to use [devtools](https://github.com/phpMv/micro-devtools)
