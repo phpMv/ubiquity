@@ -1,13 +1,13 @@
 <?php
 namespace micro\annotations;
-use mindplay\annotations\standard\PropertyAnnotation;
 use mindplay\annotations\Annotations;
 use micro\utils\JArray;
+use mindplay\annotations\Annotation;
 
 /**
  * @usage('property'=>true, 'inherited'=>true)
  */
-class BaseAnnotation extends PropertyAnnotation {
+class BaseAnnotation extends Annotation {
 
 	public function getProperties(){
 		$reflect = new \ReflectionClass($this);
