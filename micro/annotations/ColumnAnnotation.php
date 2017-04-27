@@ -1,4 +1,5 @@
 <?php
+
 namespace micro\annotations;
 
 /**
@@ -7,13 +8,7 @@ namespace micro\annotations;
  * @version 1.0.0.1
  * @package annotations
  */
-class ColumnAnnotation extends BaseAnnotation{
+class ColumnAnnotation extends BaseAnnotation {
 	public $name;
 	public $nullable=false;
-
-	public function checkConstraints($target){
-		/*if(is_null($this->name))
-			throw new \Exception("L'attribut name est obligatoire pour une annotation de type Column");
-			*/
-	}
 }
