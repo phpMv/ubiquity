@@ -1,4 +1,5 @@
 <?php
+
 namespace micro\orm;
 
 use micro\orm\parser\Reflexion;
@@ -9,72 +10,71 @@ use micro\utils\StrUtils;
  * Utilitaires de mappage Objet/relationnel
  * @author jc
  * @version 1.0.0.5
- * @package orm
  */
-class OrmUtils{
+class OrmUtils {
 	private static $modelsMetadatas;
 
-	public static function getModelMetadata($className){
-		if(!isset(self::$modelsMetadatas[$className])){
+	public static function getModelMetadata($className) {
+		if (!isset(self::$modelsMetadatas[$className])) {
 			self::$modelsMetadatas[$className]=CacheManager::createOrmModelCache($className);
 		}
 		return self::$modelsMetadatas[$className];
 	}
 
-	public static function isSerializable($class,$member){
-		$ret=self::getAnnotationInfo($class,"#notSerializable");
-		if ($ret!==false)
-			return \array_search($member, $ret)===false;
+	public static function isSerializable($class, $member) {
+		$ret=self::getAnnotationInfo($class, "#notSerializable");
+		if ($ret !== false)
+			return \array_search($member, $ret) === false;
 		else
 			return true;
 	}
 
-	public static function isNullable($class,$member){
-		$ret=self::getAnnotationInfo($class,"#nullable");
-		if ($ret!==false)
-			return \array_search($member, $ret)!==false;
+	public static function isNullable($class, $member) {
+		$ret=self::getAnnotationInfo($class, "#nullable");
+		if ($ret !== false)
+			return \array_search($member, $ret) !== false;
 		else
 			return false;
 	}
 
-	public static function getFieldName($class,$member){
+	public static function getFieldName($class, $member) {
 		$ret=self::getAnnotationInfo($class, "#fieldNames");
-		if($ret===false)
+		if ($ret === false)
 			$ret=$member;
 		else
 			$ret=$ret[$member];
 		return $ret;
 	}
 
-	public static function getTableName($class){
+	public static function getTableName($class) {
 		return self::getModelMetadata($class)["#tableName"];
 	}
 
-	public static function getKeyFieldsAndValues($instance){
+	public static function getKeyFieldsAndValues($instance) {
 		$kf=self::getAnnotationInfo(get_class($instance), "#primaryKeys");
-		return self::getMembersAndValues($instance,$kf);
+		return self::getMembersAndValues($instance, $kf);
 	}
 
-	public static function getKeyFields($instance){
+	public static function getKeyFields($instance) {
 		return self::getAnnotationInfo(get_class($instance), "#primaryKeys");
 	}
 
-	public function getMembers($className){
+	public function getMembers($className) {
 		$fieldNames=self::getAnnotationInfo($className, "#fieldNames");
-		if($fieldNames!==false)
+		if ($fieldNames !== false)
 			return \array_keys($fieldNames);
-		return [];
+		return [ ];
 	}
 
-	public static function getMembersAndValues($instance,$members=NULL){
-		$ret=array();
+	public static function getMembersAndValues($instance, $members=NULL) {
+		$ret=array ();
 		$className=get_class($instance);
-		if(is_null($members))
+		if (is_null($members))
 			$members=self::getMembers($className);
-		foreach ($members as $member){
-			if(OrmUtils::isSerializable($className,$member)){
+		foreach ( $members as $member ) {
+			if (OrmUtils::isSerializable($className, $member)) {
 				$v=Reflexion::getMemberValue($instance, $member);
-				if(self::isNotNullOrNullAccepted($v,$className, $member)){
+				if (self::isNotNullOrNullAccepted($v, $className, $member)) {
 					$name=self::getFieldName($className, $member);
 					$ret[$name]=$v;
 				}
@@ -83,37 +83,38 @@ class OrmUtils{
 		return $ret;
 	}
 
-	public static function isNotNullOrNullAccepted($v,$className,$member){
+	public static function isNotNullOrNullAccepted($v, $className, $member) {
 		$notNull=StrUtils::isNotNull($v);
 		return ($notNull) || (!$notNull && OrmUtils::isNullable($className, $member));
 	}
 
-	public static function getFirstKey($class){
+	public static function getFirstKey($class) {
 		$kf=self::getAnnotationInfo($class, "#primaryKeys");
 		return \reset($kf);
 	}
 
-	public static function getFirstKeyValue($instance){
+	public static function getFirstKeyValue($instance) {
 		$fkv=self::getKeyFieldsAndValues($instance);
 		return \reset($fkv);
 	}
 
 	/**
+	 *
 	 * @param object $instance
 	 * @return mixed[]
 	 */
-	public static function getManyToOneMembersAndValues($instance){
-		$ret=array();
+	public static function getManyToOneMembersAndValues($instance) {
+		$ret=array ();
 		$class=get_class($instance);
 		$members=self::getAnnotationInfo($class, "#manyToOne");
-		if($members!==false){
-			foreach ($members as $member){
-				$memberAccessor="get".ucfirst($member);
-				if(method_exists($instance,$memberAccessor)){
+		if ($members !== false) {
+			foreach ( $members as $member ) {
+				$memberAccessor="get" . ucfirst($member);
+				if (method_exists($instance, $memberAccessor)) {
 					$memberInstance=$instance->$memberAccessor();
-					if(isset($memberInstance)){
+					if (isset($memberInstance)) {
 						$keyValues=self::getKeyFieldsAndValues($memberInstance);
-						if(sizeof($keyValues)>0){
+						if (sizeof($keyValues) > 0) {
 							$fkName=self::getJoinColumnName($class, $member);
 							$ret[$fkName]=reset($keyValues);
 						}
@@ -124,24 +125,25 @@ class OrmUtils{
 		return $ret;
 	}
 
-	public static function getMembersWithAnnotation($class,$annotation){
-		if(isset(self::getModelMetadata($class)[$annotation]))
+	public static function getMembersWithAnnotation($class, $annotation) {
+		if (isset(self::getModelMetadata($class)[$annotation]))
 			return self::getModelMetadata($class)[$annotation];
-		return [];
+		return [ ];
 	}
 
 	/**
+	 *
 	 * @param object $instance
 	 * @param string $memberKey
 	 * @param array $array
 	 * @return boolean
 	 */
-	public static function exists($instance,$memberKey,$array){
-		$accessor="get".ucfirst($memberKey);
-		if(method_exists($instance, $accessor)){
-			if($array!==null){
-				foreach ($array as $value){
-					if($value->$accessor()==$instance->$accessor())
+	public static function exists($instance, $memberKey, $array) {
+		$accessor="get" . ucfirst($memberKey);
+		if (method_exists($instance, $accessor)) {
+			if ($array !== null) {
+				foreach ( $array as $value ) {
+					if ($value->$accessor() == $instance->$accessor())
 						return true;
 				}
 			}
@@ -149,50 +151,50 @@ class OrmUtils{
 		return false;
 	}
 
-	public static function getJoinColumnName($class,$member){
-		$annot=self::getAnnotationInfoMember($class, "#joinColumn",$member);
-		if($annot!==false){
+	public static function getJoinColumnName($class, $member) {
+		$annot=self::getAnnotationInfoMember($class, "#joinColumn", $member);
+		if ($annot !== false) {
 			$fkName=$annot["name"];
-		}else{
-			$fkName="id".ucfirst(self::getTableName(ucfirst($member)));
+		} else {
+			$fkName="id" . ucfirst(self::getTableName(ucfirst($member)));
 		}
 		return $fkName;
 	}
 
-	public static function getAnnotationInfo($class,$keyAnnotation){
-		if(isset(self::getModelMetadata($class)[$keyAnnotation]))
+	public static function getAnnotationInfo($class, $keyAnnotation) {
+		if (isset(self::getModelMetadata($class)[$keyAnnotation]))
 			return self::getModelMetadata($class)[$keyAnnotation];
 		return false;
 	}
 
-	public static function getAnnotationInfoMember($class,$keyAnnotation,$member){
+	public static function getAnnotationInfoMember($class, $keyAnnotation, $member) {
 		$info=self::getAnnotationInfo($class, $keyAnnotation);
-		if($info!==false){
-			if(isset($info[$member])){
+		if ($info !== false) {
+			if (isset($info[$member])) {
 				return $info[$member];
 			}
 		}
 		return false;
 	}
 
-	public static function getSerializableFields($class){
+	public static function getSerializableFields($class) {
 		$notSerializable=self::getAnnotationInfo($class, "#notSerializable");
 		$fieldNames=\array_keys(self::getAnnotationInfo($class, "#fieldNames"));
 		return \array_diff($fieldNames, $notSerializable);
 	}
 
-	public static function getFieldsInRelations($class){
-		$result=[];
-		if($manyToOne=self::getAnnotationInfo($class, "#manyToOne")){
-			$result=\array_merge($result,$manyToOne);
+	public static function getFieldsInRelations($class) {
+		$result=[ ];
+		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
+			$result=\array_merge($result, $manyToOne);
 		}
-		if($oneToMany=self::getAnnotationInfo($class, "#oneToMany")){
-			$result=\array_merge($result,\array_keys($oneToMany));
+		if ($oneToMany=self::getAnnotationInfo($class, "#oneToMany")) {
+			$result=\array_merge($result, \array_keys($oneToMany));
 		}
 		return $result;
 	}
 
-	public static function getDefaultFk($classname){
-		return "id".\ucfirst(self::getTableName($classname));
+	public static function getDefaultFk($classname) {
+		return "id" . \ucfirst(self::getTableName($classname));
 	}
 }

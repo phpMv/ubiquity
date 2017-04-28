@@ -1,5 +1,7 @@
 <?php
+
 namespace micro\db;
+
 use micro\cache\database\DbCache;
 
 /**
@@ -16,7 +18,7 @@ class Database {
 	private $user;
 	private $password;
 	private $pdoObject;
-	private $statements=[];
+	private $statements=[ ];
 	private $cache;
 
 	/**
@@ -27,14 +29,13 @@ class Database {
 	 * @param string $user
 	 * @param string $password
 	 */
-	public function __construct($dbName, $serverName = "localhost", $port = "3306",
-			$user = "root", $password = "",$cache=false) {
-		$this->dbName = $dbName;
-		$this->serverName = $serverName;
-		$this->port = $port;
-		$this->user = $user;
-		$this->password = $password;
-		if($cache!==false){
+	public function __construct($dbName, $serverName="localhost", $port="3306", $user="root", $password="", $cache=false) {
+		$this->dbName=$dbName;
+		$this->serverName=$serverName;
+		$this->port=$port;
+		$this->user=$user;
+		$this->password=$password;
+		if ($cache !== false) {
 			$this->cache=new $cache();
 		}
 	}
@@ -44,14 +45,10 @@ class Database {
 	 */
 	public function connect() {
 		try {
-			$this->pdoObject = new \PDO(
-					'mysql:host=' . $this->serverName . ';dbname='
-							. $this->dbName . ';port:' . $this->port,
-					$this->user, $this->password);
+			$this->pdoObject=new \PDO('mysql:host=' . $this->serverName . ';dbname=' . $this->dbName . ';port:' . $this->port, $this->user, $this->password);
 			$this->pdoObject->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			$this->pdoObject->exec("SET CHARACTER SET utf8");
-
-		} catch (\PDOException $e) {
+		} catch ( \PDOException $e ) {
 			print "Error!: " . $e->getMessage() . "<br/>";
 		}
 	}
@@ -65,29 +62,28 @@ class Database {
 		return $this->pdoObject->query($sql);
 	}
 
-	public function prepareAndExecute($tableName,$condition,$useCache=NULL){
-		$cache=(DbCache::$active && $useCache!==false) || (!DbCache::$active && $useCache===true);
+	public function prepareAndExecute($tableName, $condition, $useCache=NULL) {
+		$cache=(DbCache::$active && $useCache !== false) || (!DbCache::$active && $useCache === true);
 		$result=false;
-		if($cache){
-			$result=$this->cache->fetch($tableName,$condition);
+		if ($cache) {
+			$result=$this->cache->fetch($tableName, $condition);
 		}
-		if($result===false){
-			$statement=$this->getStatement("SELECT * FROM ".$tableName.$condition);
+		if ($result === false) {
+			$statement=$this->getStatement("SELECT * FROM " . $tableName . $condition);
 			$statement->execute();
-			$result= $statement->fetchAll();
+			$result=$statement->fetchAll();
 			$statement->closeCursor();
-			if($cache){
-				$this->cache->store($tableName,$condition, $result);
+			if ($cache) {
+				$this->cache->store($tableName, $condition, $result);
 			}
 		}
 		return $result;
 	}
 
-	private function getStatement($sql){
-		if(!isset($this->statements[$sql])){
+	private function getStatement($sql) {
+		if (!isset($this->statements[$sql])) {
 			$this->statements[$sql]=$this->pdoObject->prepare($sql);
 			$this->statements[$sql]->setFetchMode(\PDO::FETCH_ASSOC);
-
 		}
 		return $this->statements[$sql];
 	}
@@ -105,7 +101,7 @@ class Database {
 	}
 
 	public function setServerName($serverName) {
-		$this->serverName = $serverName;
+		$this->serverName=$serverName;
 	}
 
 	/**
@@ -113,7 +109,7 @@ class Database {
 	 * @param String $sql
 	 * @return PDOStatement
 	 */
-	public function prepareStatement($sql){
+	public function prepareStatement($sql) {
 		return $this->pdoObject->prepare($sql);
 	}
 
@@ -124,22 +120,21 @@ class Database {
 	 * @param mixed $value
 	 * @return boolean
 	 */
-	public function bindValueFromStatement(\PDOStatement $statement,$parameter,$value){
-		return $statement->bindValue(":".$parameter, $value);
+	public function bindValueFromStatement(\PDOStatement $statement, $parameter, $value) {
+		return $statement->bindValue(":" . $parameter, $value);
 	}
 
 	/**
 	 * retourne le dernier auto-increment généré
 	 * @return integer
 	 */
-	public function lastInserId(){
+	public function lastInserId() {
 		return $this->pdoObject->lastInsertId();
 	}
 
-	public function getTablesName(){
-		$sql = 'SHOW TABLES';
-		$query = $this->pdoObject->query($sql);
+	public function getTablesName() {
+		$sql='SHOW TABLES';
+		$query=$this->pdoObject->query($sql);
 		return $query->fetchAll(\PDO::FETCH_COLUMN);
 	}
-
 }

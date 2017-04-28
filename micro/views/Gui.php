@@ -1,26 +1,28 @@
 <?php
+
 namespace micro\views;
+
 /**
  * Classe technique destinée à la conception des interfaces
  * @author jc
- * @package views
  *
  */
-class Gui{
+class Gui {
+
 	/**
 	 * Affiche un objet ou un tableau d'objets en appliquant au préalable la méthode $method à chacun d'entre eux
 	 * @param mixed $values Valeur(s) à afficher
 	 * @param string $method Méthode de la classe GUI ou de la classe de $value
 	 * @param string $implode séparateur
 	 */
-	public static function show($values,$method='toString',$implode="<br/>"){
-		if(is_array($values)){
-			foreach ($values as $v){
-				Gui::showOne($v,$method);
+	public static function show($values, $method='toString', $implode="<br/>") {
+		if (is_array($values)) {
+			foreach ( $values as $v ) {
+				Gui::showOne($v, $method);
 				echo $implode;
 			}
-		}else
-			Gui::showOne($values,$method);
+		} else
+			Gui::showOne($values, $method);
 	}
 
 	/**
@@ -29,14 +31,14 @@ class Gui{
 	 * @param string $method Méthode de la classe GUI ou de la classe de $value
 	 * @param string $implode séparateur
 	 */
-	public static function get($values,$method='toString',$implode="<br/>"){
+	public static function get($values, $method='toString', $implode="<br/>") {
 		$result="";
-		if(is_array($values)){
-			foreach ($values as $v){
-				$result.=Gui::getOne($v,$method).$implode;
+		if (is_array($values)) {
+			foreach ( $values as $v ) {
+				$result.=Gui::getOne($v, $method) . $implode;
 			}
-		}else
-			$result=Gui::getOne($values,$method);
+		} else
+			$result=Gui::getOne($values, $method);
 		return $result;
 	}
 
@@ -45,8 +47,8 @@ class Gui{
 	 * @param Object $value
 	 * @param string $method Méthode de la classe GUI ou de la classe de $value
 	 */
-	public static function showOne($value,$method='toString'){
-		echo Gui::getOne($value,$method);
+	public static function showOne($value, $method='toString') {
+		echo Gui::getOne($value, $method);
 	}
 
 	/**
@@ -54,34 +56,35 @@ class Gui{
 	 * @param Object $value
 	 * @param string $method Méthode de la classe GUI ou de la classe de $value
 	 */
-	public static function getOne($value,$method='toString'){
-		if(method_exists("GUI", $method)){
+	public static function getOne($value, $method='toString') {
+		if (method_exists("GUI", $method)) {
 			$value=GUI::$method($value);
-
-		}else{
-			if(method_exists($value, $method)){
+		} else {
+			if (method_exists($value, $method)) {
 				$value=$value->$method();
-			}else{
-				$value=$value.'';
+			} else {
+				$value=$value . '';
 			}
 		}
 		return $value;
 	}
 
 	/**
+	 *
 	 * @param object $value
 	 * @return string
 	 */
-	public static function addDelete($value){
-		return "<tr><td class='element'><input title='Sélectionner' type='checkbox' class='ck' id='ck".$value->getId()."' value='".$value->getId()."'><span title='Modifier...' class='update' id='update".$value->getId()."'>&nbsp;".$value->toString()."<span></td><td><span title='Supprimer...' class='delete' id='delete".$value->getId()."'>&nbsp;</span></td></tr>";
+	public static function addDelete($value) {
+		return "<tr><td class='element'><input title='Sélectionner' type='checkbox' class='ck' id='ck" . $value->getId() . "' value='" . $value->getId() . "'><span title='Modifier...' class='update' id='update" . $value->getId() . "'>&nbsp;" . $value->toString() . "<span></td><td><span title='Supprimer...' class='delete' id='delete" . $value->getId() . "'>&nbsp;</span></td></tr>";
 	}
 
 	/**
+	 *
 	 * @param object $value
 	 * @return string
 	 */
-	public static function toSelect($value){
-		return "<option class='element' id='element".$value->getId()."' value='".$value->getId()."'>".$value->toString()."</option>";
+	public static function toSelect($value) {
+		return "<option class='element' id='element" . $value->getId() . "' value='" . $value->getId() . "'>" . $value->toString() . "</option>";
 	}
 
 	/**
@@ -89,21 +92,21 @@ class Gui{
 	 * @param mixed $values Valeur(s) à afficher
 	 * @param string $value Valeur actuelle
 	 */
-	public static function select($values,$value,$first=null){
+	public static function select($values, $value, $first=null) {
 		$result="";
-		if($first){
-			$result.="<option class='element'>".$first."</option>";
+		if ($first) {
+			$result.="<option class='element'>" . $first . "</option>";
 		}
-		foreach ($values as $v){
+		foreach ( $values as $v ) {
 			$selected="";
 			$id=$v;
-			if(is_object($v)===true){
+			if (is_object($v) === true) {
 				$id=$v->getId();
 			}
-			if($id===$value){
+			if ($id === $value) {
 				$selected="selected";
 			}
-			$result.="<option ".$selected." class='element' id='element".$id."' value='".$id."'>".$v."</option>";
+			$result.="<option " . $selected . " class='element' id='element" . $id . "' value='" . $id . "'>" . $v . "</option>";
 		}
 		return $result;
 	}
@@ -114,11 +117,11 @@ class Gui{
 	 * @param string $pluriel
 	 * @param int $nb
 	 */
-	public static function pluriel($singulier,$pluriel,$nb){
-		if($nb==0){
-			$result="Aucun ".$singulier;
-		}else{
-			$result=sprintf(ngettext("%d ".$singulier, "%d ".$pluriel, $nb),$nb);
+	public static function pluriel($singulier, $pluriel, $nb) {
+		if ($nb == 0) {
+			$result="Aucun " . $singulier;
+		} else {
+			$result=sprintf(ngettext("%d " . $singulier, "%d " . $pluriel, $nb), $nb);
 		}
 		return $result;
 	}

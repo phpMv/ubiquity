@@ -1,14 +1,15 @@
 <?php
+
 namespace micro\orm\parser;
 
 use micro\orm\OrmUtils;
+
 /**
  * ManyToManyParser
  * @author jc
  * @version 1.0.0.3
  */
-
-class ManyToManyParser{
+class ManyToManyParser {
 	private $member;
 	private $joinTable;
 	private $myFkField;
@@ -20,29 +21,30 @@ class ManyToManyParser{
 	private $inversedBy;
 	private $pk;
 	private $instance;
-	public function __construct($instance,$member){
+
+	public function __construct($instance, $member) {
 		$this->instance=$instance;
 		$this->member=$member;
 	}
 
-	public function init(){
+	public function init() {
 		$member=$this->member;
 		$instance=$this->instance;
 		$class=get_class($instance);
-		$annot=OrmUtils::getAnnotationInfoMember($class, "#manyToMany",$member);
-		if($annot!==false){
+		$annot=OrmUtils::getAnnotationInfoMember($class, "#manyToMany", $member);
+		if ($annot !== false) {
 			$this->targetEntity=$annot["targetEntity"];
-			$this->inversedBy=strtolower($this->targetEntity)."s";
-			if(!is_null($annot["inversedBy"]))
+			$this->inversedBy=strtolower($this->targetEntity) . "s";
+			if (!is_null($annot["inversedBy"]))
 				$this->inversedBy=$annot["inversedBy"];
 			$this->targetEntityClass=get_class(new $this->targetEntity());
 
-			$annotJoinTable=OrmUtils::getAnnotationInfoMember($class, "#joinTable",$member);
+			$annotJoinTable=OrmUtils::getAnnotationInfoMember($class, "#joinTable", $member);
 			$this->joinTable=$annotJoinTable["name"];
 			$joinColumnsAnnot=$annotJoinTable["joinColumns"];
 			$this->myFkField=OrmUtils::getDefaultFk($class);
 			$this->myPk=OrmUtils::getFirstKey($class);
-			if(!is_null($joinColumnsAnnot)){
+			if (!is_null($joinColumnsAnnot)) {
 				$this->myFkField=$joinColumnsAnnot["name"];
 				$this->myPk=$joinColumnsAnnot["referencedColumnName"];
 			}
@@ -50,14 +52,13 @@ class ManyToManyParser{
 			$this->fkField=OrmUtils::getDefaultFk($this->targetEntityClass);
 			$this->pk=OrmUtils::getFirstKey($this->targetEntityClass);
 			$inverseJoinColumnsAnnot=$annotJoinTable["inverseJoinColumns"];
-			if(!is_null($inverseJoinColumnsAnnot)){
+			if (!is_null($inverseJoinColumnsAnnot)) {
 				$this->fkField=$inverseJoinColumnsAnnot["name"];
 				$this->pk=$inverseJoinColumnsAnnot["referencedColumnName"];
 			}
-		return true;
+			return true;
 		}
 		return false;
-
 	}
 
 	public function getMember() {
@@ -65,7 +66,7 @@ class ManyToManyParser{
 	}
 
 	public function setMember($member) {
-		$this->member = $member;
+		$this->member=$member;
 		return $this;
 	}
 
@@ -74,7 +75,7 @@ class ManyToManyParser{
 	}
 
 	public function setJoinTable($joinTable) {
-		$this->joinTable = $joinTable;
+		$this->joinTable=$joinTable;
 		return $this;
 	}
 
@@ -83,7 +84,7 @@ class ManyToManyParser{
 	}
 
 	public function setMyFkField($myFkField) {
-		$this->myFkField = $myFkField;
+		$this->myFkField=$myFkField;
 		return $this;
 	}
 
@@ -92,7 +93,7 @@ class ManyToManyParser{
 	}
 
 	public function setFkField($fkField) {
-		$this->fkField = $fkField;
+		$this->fkField=$fkField;
 		return $this;
 	}
 
@@ -101,7 +102,7 @@ class ManyToManyParser{
 	}
 
 	public function setTargetEntity($targetEntity) {
-		$this->targetEntity = $targetEntity;
+		$this->targetEntity=$targetEntity;
 		return $this;
 	}
 
@@ -110,7 +111,7 @@ class ManyToManyParser{
 	}
 
 	public function setTargetEntityClass($targetEntityClass) {
-		$this->targetEntityClass = $targetEntityClass;
+		$this->targetEntityClass=$targetEntityClass;
 		return $this;
 	}
 
@@ -119,7 +120,7 @@ class ManyToManyParser{
 	}
 
 	public function setTargetEntityTable($targetEntityTable) {
-		$this->targetEntityTable = $targetEntityTable;
+		$this->targetEntityTable=$targetEntityTable;
 		return $this;
 	}
 
@@ -128,7 +129,7 @@ class ManyToManyParser{
 	}
 
 	public function setMyPk($myPk) {
-		$this->myPk = $myPk;
+		$this->myPk=$myPk;
 		return $this;
 	}
 
@@ -137,7 +138,7 @@ class ManyToManyParser{
 	}
 
 	public function setPk($pk) {
-		$this->pk = $pk;
+		$this->pk=$pk;
 		return $this;
 	}
 
@@ -146,7 +147,7 @@ class ManyToManyParser{
 	}
 
 	public function setInversedBy($inversedBy) {
-		$this->inversedBy = $inversedBy;
+		$this->inversedBy=$inversedBy;
 		return $this;
 	}
 
@@ -155,9 +156,7 @@ class ManyToManyParser{
 	}
 
 	public function setInstance($instance) {
-		$this->instance = $instance;
+		$this->instance=$instance;
 		return $this;
 	}
-
-
 }

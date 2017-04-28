@@ -1,4 +1,5 @@
 <?php
+
 namespace micro\orm\parser;
 
 use mindplay\annotations\Annotation;
@@ -9,50 +10,50 @@ use micro\orm\OrmUtils;
  * Utilitaires de Reflexion
  * @author jc
  * @version 1.0.0.2
- * @package orm
  */
-class Reflexion{
-	public static function getProperties($instance){
-		if(\is_string($instance)){
+class Reflexion {
+
+	public static function getProperties($instance) {
+		if (\is_string($instance)) {
 			$instance=new $instance();
 		}
-		$reflect = new \ReflectionClass($instance);
-		$props = $reflect->getProperties();
+		$reflect=new \ReflectionClass($instance);
+		$props=$reflect->getProperties();
 		return $props;
 	}
 
-	public static function getMethods($instance,$filter=null){
-		$reflect = new \ReflectionClass($instance);
-		$methods = $reflect->getMethods($filter);
+	public static function getMethods($instance, $filter=null) {
+		$reflect=new \ReflectionClass($instance);
+		$methods=$reflect->getMethods($filter);
 		return $methods;
 	}
 
-	public static function getKeyFields($instance){
+	public static function getKeyFields($instance) {
 		return Reflexion::getMembersNameWithAnnotation(get_class($instance), "@id");
 	}
 
-	public static function getMemberValue($instance,$member){
+	public static function getMemberValue($instance, $member) {
 		$prop=self::getProperty($instance, $member);
 		$prop->setAccessible(true);
 		return $prop->getValue($instance);
 	}
 
-	public static function getProperty($instance,$member){
-		$reflect = new \ReflectionClass($instance);
-		$prop = $reflect->getProperty($member);
+	public static function getProperty($instance, $member) {
+		$reflect=new \ReflectionClass($instance);
+		$prop=$reflect->getProperty($member);
 		return $prop;
 	}
 
-	public static function getPropertiesAndValues($instance,$props=NULL){
-		$ret=array();
+	public static function getPropertiesAndValues($instance, $props=NULL) {
+		$ret=array ();
 		$className=get_class($instance);
-		if(is_null($props))
+		if (is_null($props))
 			$props=self::getProperties($instance);
-		foreach ($props as $prop){
+		foreach ( $props as $prop ) {
 			$prop->setAccessible(true);
 			$v=$prop->getValue($instance);
-			if(OrmUtils::isSerializable($className,$prop->getName())){
-				if(OrmUtils::isNotNullOrNullAccepted($v,$className, $prop->getName())){
+			if (OrmUtils::isSerializable($className, $prop->getName())) {
+				if (OrmUtils::isNotNullOrNullAccepted($v, $className, $prop->getName())) {
 					$name=OrmUtils::getFieldName($className, $prop->getName());
 					$ret[$name]=$v;
 				}
@@ -61,101 +62,99 @@ class Reflexion{
 		return $ret;
 	}
 
-	public static function getAnnotationClass($class,$annotation){
-		$annot=Annotations::ofClass($class,$annotation);
+	public static function getAnnotationClass($class, $annotation) {
+		$annot=Annotations::ofClass($class, $annotation);
 		return $annot;
 	}
 
-	public static function getAnnotationMember($class,$member,$annotation){
-		$annot=Annotations::ofProperty($class,$member,$annotation);
-		if(\sizeof($annot)>0)
+	public static function getAnnotationMember($class, $member, $annotation) {
+		$annot=Annotations::ofProperty($class, $member, $annotation);
+		if (\sizeof($annot) > 0)
 			return $annot[0];
 		return false;
 	}
 
-	public static function getAnnotationsMethod($class,$method,$annotation){
-		$annots=Annotations::ofMethod($class,$method,$annotation);
-		if(\sizeof($annots)>0)
+	public static function getAnnotationsMethod($class, $method, $annotation) {
+		$annots=Annotations::ofMethod($class, $method, $annotation);
+		if (\sizeof($annots) > 0)
 			return $annots;
 		return false;
 	}
 
-	public static function getMembersAnnotationWithAnnotation($class,$annotation){
+	public static function getMembersAnnotationWithAnnotation($class, $annotation) {
 		$props=self::getProperties($class);
-		$ret=array();
-		foreach ($props as $prop){
+		$ret=array ();
+		foreach ( $props as $prop ) {
 			$annot=self::getAnnotationMember($class, $prop->getName(), $annotation);
-			if($annot!==false)
+			if ($annot !== false)
 				$ret[$prop->getName()]=$annot;
 		}
 		return $ret;
 	}
 
-	public static function getMembersWithAnnotation($class,$annotation){
+	public static function getMembersWithAnnotation($class, $annotation) {
 		$props=self::getProperties($class);
-		$ret=array();
-		foreach ($props as $prop){
+		$ret=array ();
+		foreach ( $props as $prop ) {
 			$annot=self::getAnnotationMember($class, $prop->getName(), $annotation);
-			if($annot!==false)
+			if ($annot !== false)
 				$ret[]=$prop;
 		}
 		return $ret;
 	}
 
-	public static function getMembersNameWithAnnotation($class,$annotation){
+	public static function getMembersNameWithAnnotation($class, $annotation) {
 		$props=self::getProperties($class);
-		$ret=array();
-		foreach ($props as $prop){
+		$ret=array ();
+		foreach ( $props as $prop ) {
 			$annot=self::getAnnotationMember($class, $prop->getName(), $annotation);
-			if($annot!==false)
+			if ($annot !== false)
 				$ret[]=$prop->getName();
 		}
 		return $ret;
 	}
 
-	public static function isNullable($class,$member){
-		$ret=self::getAnnotationMember($class,$member,"@column");
+	public static function isNullable($class, $member) {
+		$ret=self::getAnnotationMember($class, $member, "@column");
 		if (!$ret)
 			return false;
 		else
 			return $ret->nullable;
 	}
 
-	public static function isSerializable($class,$member){
-		if (self::getAnnotationMember($class,$member,"@transient")!==false || self::getAnnotationMember($class,$member,"@manyToOne")!==false ||
-				self::getAnnotationMember($class,$member,"@manyToMany")!==false || self::getAnnotationMember($class,$member,"@oneToMany")!==false)
+	public static function isSerializable($class, $member) {
+		if (self::getAnnotationMember($class, $member, "@transient") !== false || self::getAnnotationMember($class, $member, "@manyToOne") !== false || self::getAnnotationMember($class, $member, "@manyToMany") !== false || self::getAnnotationMember($class, $member, "@oneToMany") !== false)
 			return false;
 		else
 			return true;
 	}
 
-	public static function getFieldName($class,$member){
+	public static function getFieldName($class, $member) {
 		$ret=self::getAnnotationMember($class, $member, "@column");
-		if($ret===false)
+		if ($ret === false)
 			$ret=$member;
 		else
 			$ret=$ret->name;
 		return $ret;
 	}
 
-	public static function getTableName($class){
+	public static function getTableName($class) {
 		$ret=Reflexion::getAnnotationClass($class, "@table");
-		if(\sizeof($ret)===0){
+		if (\sizeof($ret) === 0) {
 			$posSlash=strrpos($class, '\\');
-			if($posSlash!==false)
-				$class=substr($class,  $posSlash+ 1);
+			if ($posSlash !== false)
+				$class=substr($class, $posSlash + 1);
 			$ret=$class;
-		}
-		else{
+		} else {
 			$ret=$ret[0]->name;
 		}
 		return $ret;
 	}
 
 	public static function getMethodParameters(\ReflectionMethod $method) {
-		$result = array();
-		foreach ($method->getParameters() as $param) {
-			$result[] = $param->name;
+		$result=array ();
+		foreach ( $method->getParameters() as $param ) {
+			$result[]=$param->name;
 		}
 		return $result;
 	}

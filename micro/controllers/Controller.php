@@ -1,95 +1,104 @@
 <?php
+
+/**
+ * This file is part of micro framework
+ *
+ */
 namespace micro\controllers;
 
 use micro\views\View;
+
 /**
- * Classe de base des contrôleurs
- * @author jc
+ * Base class for controllers
+ *
+ * @author jcheron
  * @version 1.0.3
- * @package controllers
  */
 abstract class Controller {
-
 	/**
+	 * The view
+	 *
 	 * @var View
 	 */
 	protected $view;
+
 	/**
-	 * action par défaut
+	 * Default action
 	 */
 	abstract public function index();
+
 	/**
-	 * Constructeur<br>
-	 * Appelle automatiquement la méthode isValid() pour vérifier l'accès autorisé
+	 * Constructor<br>
+	 * Automatically invokes the isValid () method to check if access is allowed
 	 */
-	public function __construct(){
-		if(!$this->isValid())
+	public function __construct() {
+		if (!$this->isValid())
 			$this->onInvalidControl();
 		$this->view=new View();
 	}
 
 	/**
-	 * Méthode appelée avant chaque action
+	 * Method called before each action
+	 * Can be override in derived class
 	 */
-	public function initialize(){
-
+	public function initialize() {
 	}
 
 	/**
-	 * Méthode appelée après chaque action
+	 * Method called after each action
+	 * Can be override in derived class
 	 */
-	public function finalize(){
-
+	public function finalize() {
 	}
 
 	/**
-	 * Charge la vue $viewName en lui passant éventuellement les variables $pdata
-	 * @param string $viewName nom de la vue à charger
-	 * @param mixed $pData variable ou tableau associatif à passer à la vue<br>Si une variable est passée, elle aura pour nom <b>$data</b> dans la vue,<br>
-	 * Si un tableau associatif est passé, la vue récupère des variables du nom des clés du tableau
-	 * @param boolean $asString Si vrai, la vue n'est pas affichée mais retournée sous forme de chaîne (utilisable dans une variable)
+	 * Loads the view $viewName possibly passing the variables $pdata
+	 * @param string $viewName view name to load
+	 * @param mixed $pData Variable or associative array to pass to the view <br> If a variable is passed, it will have the name <b> $ data </ b> in the view, <br>
+	 * If an associative array is passed, the view retrieves variables from the table's key names
+	 * @param boolean $asString If true, the view is not displayed but returned as a string (usable in a variable)
 	 * @throws Exception
 	 * @return string
 	 */
-	public function loadView($viewName,$pData=NULL,$asString=false){
-		if(isset($pData))
+	public function loadView($viewName, $pData=NULL, $asString=false) {
+		if (isset($pData))
 			$this->view->setVars($pData);
-		return $this->view->render($viewName,$asString);
+		return $this->view->render($viewName, $asString);
 	}
 
 	/**
-	 * retourne Vrai si l'accès au contrôleur est autorisé
-	 * A surdéfinir dans les classes dérivées
+	 * Returns True if access to the controller is allowed
+	 * To be override in sub classes
 	 * @return boolean
 	 */
-	public function isValid(){
-			return true;
+	public function isValid() {
+		return true;
 	}
 
 	/**
-	 * Appelée si isValid() a retourné faux<br>
-	 * A surdéfinir dans les classes dérivées
+	 * Called if isValid () returns false <br>
+	 * To be override in sub classes
 	 */
-	public function onInvalidControl(){
-		header('HTTP/1.1 401 Unauthorized', true, 401);
+	public function onInvalidControl() {
+		\header('HTTP/1.1 401 Unauthorized', true, 401);
 	}
 
 	/**
-	 * Charge le contrôleur $controller et appelle sa méthode $action en lui passant les paramètres $params
-	 * @param string $controller Contrôleur
-	 * @param string $action action
-	 * @param mixed $params paramètres passés ) $action
-	 * @param boolean $initialize si vrai, la méthode initialize du contrôleur est appelée avant $action
-	 * @param boolean $finalize si vrai, la méthode finalize du contrôleur est appelée après $action
+	 * Loads the controller $controller and calls its $action method by passing the parameters $params
+	 * @param string $controller The Controller
+	 * @param string $action The action to call
+	 * @param mixed $params Parameters passed to the $action method
+	 * @param boolean $initialize If true, the controller's initialize method is called before $action
+	 * @param boolean $finalize If true, the controller's finalize method is called after $action
 	 * @throws Exception
 	 */
-	public function forward($controller,$action="index",$params=array(),$initialize=false,$finalize=false){
-		$u=array($controller,$action);
-		if(\is_array($params)){
-			$u=\array_merge($u,$params);
-		}else{
-			$u=\array_merge($u,[$params]);
+	public function forward($controller, $action="index", $params=array(), $initialize=false, $finalize=false) {
+		$u=array ($controller,$action );
+		if (\is_array($params)) {
+			$u=\array_merge($u, $params);
+		} else {
+			$u=\array_merge($u, [ $params ]);
 		}
-		return Startup::runAction($u,$initialize,$finalize);
+		return Startup::runAction($u, $initialize, $finalize);
 	}
 }

@@ -12,11 +12,11 @@ class ModelParser {
 	protected $manyToManyMembers;
 	protected $joinColumnMembers;
 	protected $joinTableMembers;
-	protected $nullableMembers=[];
-	protected $notSerializableMembers=[];
+	protected $nullableMembers=[ ];
+	protected $notSerializableMembers=[ ];
 	protected $fieldNames;
 
-	public function parse($modelClass){
+	public function parse($modelClass) {
 		$instance=new $modelClass();
 		$this->primaryKeys=Reflexion::getKeyFields($instance);
 		$this->oneToManyMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@oneToMany");
@@ -25,41 +25,41 @@ class ModelParser {
 		$this->joinColumnMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@joinColumn");
 		$this->joinTableMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@joinTable");
 		$properties=Reflexion::getProperties($instance);
-		foreach ($properties as $property){
+		foreach ( $properties as $property ) {
 			$propName=$property->getName();
 			$this->fieldNames[$propName]=Reflexion::getFieldName($modelClass, $propName);
 			$nullable=Reflexion::isNullable($modelClass, $propName);
 			$serializable=Reflexion::isSerializable($modelClass, $propName);
-			if($nullable)
+			if ($nullable)
 				$this->nullableMembers[]=$propName;
-			if(!$serializable)
+			if (!$serializable)
 				$this->notSerializableMembers[]=$propName;
 		}
 		$this->global["#tableName"]=Reflexion::getTableName($modelClass);
 	}
 
-	public function __toString(){
+	public function __toString() {
 		$result=$this->global;
 		$result["#primaryKeys"]=$this->primaryKeys;
 		$result["#manyToOne"]=$this->manytoOneMembers;
 		$result["#fieldNames"]=$this->fieldNames;
 		$result["#nullable"]=$this->nullableMembers;
 		$result["#notSerializable"]=$this->notSerializableMembers;
-		foreach ($this->oneToManyMembers as $member=>$annotation){
+		foreach ( $this->oneToManyMembers as $member => $annotation ) {
 			$result["#oneToMany"][$member]=$annotation->getPropertiesAndValues();
 		}
-		foreach ($this->manyToManyMembers as $member=>$annotation){
+		foreach ( $this->manyToManyMembers as $member => $annotation ) {
 			$result["#manyToMany"][$member]=$annotation->getPropertiesAndValues();
 		}
 
-		foreach ($this->joinTableMembers as $member=>$annotation){
+		foreach ( $this->joinTableMembers as $member => $annotation ) {
 			$result["#joinTable"][$member]=$annotation->getPropertiesAndValues();
 		}
 
-		foreach ($this->joinColumnMembers as $member=>$annotation){
+		foreach ( $this->joinColumnMembers as $member => $annotation ) {
 			$result["#joinColumn"][$member]=$annotation->getPropertiesAndValues();
-			$result["#invertedJoinColumn"][$annotation->name]=["member"=>$member,"className"=>$annotation->className];
+			$result["#invertedJoinColumn"][$annotation->name]=[ "member" => $member,"className" => $annotation->className ];
 		}
-		return "return ".JArray::asPhpArray($result,"array").";";
+		return "return " . JArray::asPhpArray($result, "array") . ";";
 	}
 }
