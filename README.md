@@ -15,4 +15,4 @@ php MVC Ubiquity framework, One of the fastest frameworks, with the main feature
   
 # Installation
 
-The easiest way to install **Ubiquity** is to use [devtools](https://github.com/phpMv/micro-devtools)
+The easiest way to install **Ubiquity** is to use [devtools](https://github.com/phpMv/ubiquity-devtools)
