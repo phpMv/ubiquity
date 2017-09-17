@@ -28,6 +28,9 @@ class Router {
 		return false;
 	}
 
+	public static function getRouteByName($name) {
+	}
+
 	public static function getRouteUrlParts($routeArray, $params, $cached=false, $duration=NULL) {
 		$params=\array_slice($params, 1);
 		$result=[ $routeArray["details"]["controller"],$routeArray["details"]["action"] ];

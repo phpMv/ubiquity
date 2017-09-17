@@ -53,11 +53,14 @@ class ControllerParser {
 				}
 			}
 		}
-
 		foreach ( $this->routesMethods as $method => $arrayAnnotsMethod ) {
 			$routeAnnotations=$arrayAnnotsMethod["annotations"];
+
 			foreach ( $routeAnnotations as $routeAnnotation ) {
-				self::parseRouteArray($result, $this->controllerClass, [ "path" => $routeAnnotation->path,"methods" => $routeAnnotation->methods,"name" => $routeAnnotation->name,"cache" => $routeAnnotation->cache,"duration" => $routeAnnotation->duration ], $arrayAnnotsMethod["method"], $method, $prefix, $httpMethods);
+				$params=[ "path" => $routeAnnotation->path,"methods" => $routeAnnotation->methods,"name" => $routeAnnotation->name,"cache" => $routeAnnotation->cache,"duration" => $routeAnnotation->duration ];
+				self::parseRouteArray($result, $this->controllerClass,
+						$params,
+						$arrayAnnotsMethod["method"], $method, $prefix, $httpMethods);
 			}
 		}
 		return $result;
