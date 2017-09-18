@@ -6,6 +6,11 @@ use micro\cache\CacheManager;
 use micro\utils\RequestUtils;
 use micro\cache\ControllerParser;
 
+/**
+ * Router
+ * @author jc
+ * @version 1.0.0.2
+ */
 class Router {
 	private static $routes;
 
@@ -28,7 +33,20 @@ class Router {
 		return false;
 	}
 
-	public static function getRouteByName($name) {
+	/**
+	 * Retourne le chemin d'une route par son nom
+	 * @param string $name nom de la route
+	 */
+	public static function getRouteByName($name,$absolute=true) {
+		foreach ( self::$routes as $routePath => $routeDetails ) {
+			if($routeDetails["name"]==$name){
+				if($absolute)
+					return RequestUtils::getUrl($routePath);
+				else
+					return $routePath;
+			}
+		}
+		return false;
 	}
 
 	public static function getRouteUrlParts($routeArray, $params, $cached=false, $duration=NULL) {
@@ -44,6 +62,15 @@ class Router {
 		return $result;
 	}
 
+	/**
+	 * @param string $path
+	 * @param string $controller
+	 * @param string $action
+	 * @param array|null $methods
+	 * @param string $name
+	 * @param string $cache
+	 * @param int $duration
+	 */
 	public static function addRoute($path, $controller, $action="index", $methods=null, $name="", $cache=false, $duration=null) {
 		self::addRouteToRoutes(self::$routes, $path, $controller, $action, $methods, $name, $cache, $duration);
 	}

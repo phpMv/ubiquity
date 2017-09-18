@@ -38,8 +38,10 @@ class CacheManager {
 	public static function getRouteCache($routePath, $duration) {
 		$key=self::getRouteKey($routePath);
 
-		if (self::$cache->exists("controllers/" . $key) && self::$cache->expired("controllers/" . $key, $duration) != false)
-			return self::$cache->fetch("controllers/" . $key);
+		if (self::$cache->exists("controllers/" . $key) && self::$cache->expired("controllers/" . $key, $duration) === false){
+			$response=self::$cache->file_get_contents("controllers/" . $key);
+			return $response;
+		}
 		else {
 			$response=Startup::runAsString($routePath);
 			return self::storeRouteResponse($key, $response);

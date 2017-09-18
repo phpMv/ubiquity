@@ -60,7 +60,7 @@ class ArrayCache {
 	public function expired($key, $duration) {
 		if ($this->exists($key)) {
 			if (\is_int($duration)) {
-				return \time() - $this->getTimestamp($key) <= $duration;
+				return \time() - $this->getTimestamp($key) > $duration;
 			} else {
 				return false;
 			}
@@ -96,6 +96,15 @@ class ArrayCache {
 	 */
 	public function fetch($key) {
 		return include ($this->_getPath($key));
+	}
+
+	/**
+	 * return data stored for the given key.
+	 * @param string $key cache key
+	 * @return mixed the cached data
+	 */
+	public function file_get_contents($key) {
+		return \file_get_contents($this->_getPath($key));
 	}
 
 	/**
