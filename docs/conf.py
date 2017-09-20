@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'micro-framework'
+project = 'Ubiquity framework'
 copyright = '2017, phpmv'
 author = 'phpmv'
 
