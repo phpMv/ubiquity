@@ -37,10 +37,10 @@ class Router {
 	 * Retourne le chemin d'une route par son nom
 	 * @param string $name nom de la route
 	 */
-	public static function getRouteByName($name,$absolute=true) {
+	public static function getRouteByName($name, $absolute=true) {
 		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if($routeDetails["name"]==$name){
-				if($absolute)
+			if ($routeDetails["name"] == $name) {
+				if ($absolute)
 					return RequestUtils::getUrl($routePath);
 				else
 					return $routePath;
@@ -63,6 +63,16 @@ class Router {
 	}
 
 	/**
+	 * Déclare une route comme étant expirée ou non
+	 * @param string $routePath
+	 * @param boolean $expired
+	 */
+	public static function setExpired($routePath, $expired=true) {
+		CacheManager::setExpired($routePath, $expired);
+	}
+
+	/**
+	 *
 	 * @param string $path
 	 * @param string $controller
 	 * @param string $action

@@ -14,6 +14,7 @@ class CacheManager {
 	public static $cache;
 	private static $routes=[ ];
 	private static $cacheDirectory;
+	private static $expiredRoutes=[ ];
 
 	public static function start(&$config) {
 		self::$cacheDirectory=self::initialGetCacheDirectory($config);
@@ -38,13 +39,29 @@ class CacheManager {
 	public static function getRouteCache($routePath, $duration) {
 		$key=self::getRouteKey($routePath);
 
-		if (self::$cache->exists("controllers/" . $key) && self::$cache->expired("controllers/" . $key, $duration) === false){
+		if (self::$cache->exists("controllers/" . $key) && !self::expired($key, $duration)) {
 			$response=self::$cache->file_get_contents("controllers/" . $key);
 			return $response;
-		}
-		else {
+		} else {
 			$response=Startup::runAsString($routePath);
 			return self::storeRouteResponse($key, $response);
+		}
+	}
+
+	public static function expired($key, $duration) {
+		return self::$cache->expired("controllers/" . $key, $duration) === true || \array_key_exists($key, self::$expiredRoutes);
+	}
+
+	public static function setExpired($routePath, $expired=true) {
+		$key=self::getRouteKey($routePath);
+		self::setKeyExpired($key, $expired);
+	}
+
+	private static function setKeyExpired($key, $expired=true) {
+		if ($expired) {
+			self::$expiredRoutes[$key]=true;
+		} else {
+			unset(self::$expiredRoutes[$key]);
 		}
 	}
 
@@ -55,6 +72,7 @@ class CacheManager {
 	}
 
 	private static function storeRouteResponse($key, $response) {
+		self::setKeyExpired($key, false);
 		self::$cache->store("controllers/" . $key, $response, false);
 		return $response;
 	}
