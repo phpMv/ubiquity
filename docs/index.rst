@@ -17,6 +17,10 @@ Installation
   * :doc:`createproject`
   * :doc:`confproject`
 
+Controller
+----------
+  * :doc:`uri`
+
 
 Indices and tables
 ==================

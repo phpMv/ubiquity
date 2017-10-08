@@ -3,6 +3,7 @@
 namespace micro\orm\parser;
 
 use micro\utils\JArray;
+use micro\cache\ClassUtils;
 
 class ModelParser {
 	protected $global;
@@ -58,7 +59,7 @@ class ModelParser {
 
 		foreach ( $this->joinColumnMembers as $member => $annotation ) {
 			$result["#joinColumn"][$member]=$annotation->getPropertiesAndValues();
-			$result["#invertedJoinColumn"][$annotation->name]=[ "member" => $member,"className" => $annotation->className ];
+			$result["#invertedJoinColumn"][$annotation->name]=[ "member" => $member,"className" => ClassUtils::cleanClassname($annotation->className) ];
 		}
 		return "return " . JArray::asPhpArray($result, "array") . ";";
 	}
