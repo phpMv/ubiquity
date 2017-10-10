@@ -5,6 +5,7 @@ namespace micro\annotations;
 use mindplay\annotations\Annotations;
 use micro\utils\JArray;
 use mindplay\annotations\Annotation;
+use micro\cache\ClassUtils;
 
 /**
  * @usage('property'=>true, 'inherited'=>true)
@@ -25,6 +26,7 @@ class BaseAnnotation extends Annotation {
 			$prop->setAccessible(true);
 			$v=$prop->getValue($this);
 			if ($v !== null && $v !== "" && isset($v)) {
+				$v=ClassUtils::cleanClassname($v);
 				$ret[$prop->getName()]=$v;
 			}
 		}
