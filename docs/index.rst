@@ -19,8 +19,8 @@ Installation
 
 Controller
 ----------
-  * :doc:`uri`
-
+  * :doc:`controller/uri`
+  * :doc:`controller/router`
 
 Indices and tables
 ==================
