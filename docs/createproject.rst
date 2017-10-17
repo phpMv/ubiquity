@@ -31,7 +31,7 @@ Arguments usage
 
 short names
 ^^^^^^^^^^^
-Example of creation of the blog project, connected to the bogDb database, with generation of all models
+Example of creation of the blog project, connected to the blogDb database, with generation of all models
 ::
     Micro new blog -b=blogDb -m=true 
 
