@@ -25,7 +25,7 @@ class Router {
 				if (!isset($routeDetails["controller"])) {
 					$method=RequestUtils::getMethod();
 					if (isset($routeDetails[$method]))
-						return self::getRouteUrlParts([ "path" => $routePath,"details" => $routeDetails[$method] ], $matches, $routeDetails["cache"], $routeDetails["duration"]);
+						return self::getRouteUrlParts([ "path" => $routePath,"details" => $routeDetails[$method] ], $matches, $routeDetails[$method]["cache"], $routeDetails[$method]["duration"]);
 				} else
 					return self::getRouteUrlParts([ "path" => $routePath,"details" => $routeDetails ], $matches, $routeDetails["cache"], $routeDetails["duration"]);
 			}
