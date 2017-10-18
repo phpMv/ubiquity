@@ -46,7 +46,7 @@ public
 The second segment of the URI determines which public method in the controller gets called. |br| 
 The “index” method is always loaded by default if the second segment of the URI is empty.
 
-.. code-block:: php5
+.. code-block:: php
    :linenos:
    :caption: app/controllers/First.php
    
