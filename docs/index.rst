@@ -21,6 +21,14 @@ Controller
 ----------
   * :doc:`controller/uri`
   * :doc:`controller/router`
+  * :doc:`controller/controllers`
+
+Models and ORM
+--------------
+
+Views
+-----
+
 
 Indices and tables
 ==================
