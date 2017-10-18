@@ -38,11 +38,10 @@ class CacheManager {
 	public static function getRouteCache($routePath, $duration) {
 		$key=self::getRouteKey($routePath);
 
-		if (self::$cache->exists("controllers/" . $key) && self::$cache->expired("controllers/" . $key, $duration) === false){
+		if (self::$cache->exists("controllers/" . $key) && self::$cache->expired("controllers/" . $key, $duration) === false) {
 			$response=self::$cache->file_get_contents("controllers/" . $key);
 			return $response;
-		}
-		else {
+		} else {
 			$response=Startup::runAsString($routePath);
 			return self::storeRouteResponse($key, $response);
 		}
@@ -160,11 +159,6 @@ class CacheManager {
 		}
 	}
 
-	private static function getClassNameFromFile($file, $namespace="") {
-		$fileName=pathinfo($file, PATHINFO_FILENAME);
-		return $namespace . ucfirst($fileName);
-	}
-
 	private static function initControllersCache(&$config) {
 		$controllersNS=$config["mvcNS"]["controllers"];
 		$controllersDir=ROOT . DS . str_replace("\\", DS, $controllersNS);
@@ -181,10 +175,10 @@ class CacheManager {
 		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray(self::$routes, "array") . ";");
 	}
 
-	private static function glob_recursive($pattern, $flags = 0){
-		$files = glob($pattern, $flags);
-		foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir){
-			$files = array_merge($files, self::glob_recursive($dir.'/'.basename($pattern), $flags));
+	private static function glob_recursive($pattern, $flags=0) {
+		$files=glob($pattern, $flags);
+		foreach ( glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir ) {
+			$files=array_merge($files, self::glob_recursive($dir . '/' . basename($pattern), $flags));
 		}
 		return $files;
 	}
