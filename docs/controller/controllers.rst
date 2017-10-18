@@ -12,20 +12,26 @@ The easiest way to create a controller is to do it from the devtools.
 
 From the command prompt, go to the project folder. |br| 
 To create the Products controller, use the command:
-::
-    Micro controller Products
+
+.. code-block:: bash
+   
+   Micro controller Products
 
 The Products.php controller is created in the ``app/controllers`` folder of the project.
-::
-    namespace controllers;
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Products.php
+   
+   namespace controllers;
     /**
     * Controller Products
     **/
-    class Products extends ControllerBase{
-    
-    	public function index(){}
-    
-    }
+   class Products extends ControllerBase{
+   
+   	public function index(){}
+   
+   }
 
 It is now possible to access URLs (the ``index`` method is solicited by default):
 ::
