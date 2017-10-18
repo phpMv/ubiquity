@@ -41,15 +41,16 @@ Methods
 public
 ^^^^^^
 The second segment of the URI determines which public method in the controller gets called. |br| The “index” method is always loaded by default if the second segment of the URI is empty.
-.. code-block:: python
+.. code-block:: php
    :linenos:
-    class First extends ControllerBase{
-    
-    	public function hello(){
-    		echo "Hello world!";
-    	}
-    
-    }
+   
+   class First extends ControllerBase{
+   
+   	public function hello(){
+   		echo "Hello world!";
+   	}
+   
+   }
 
 The ``hello`` method of the ``First`` controller makes the following URL available:
 ::
