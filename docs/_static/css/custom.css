@@ -4,3 +4,6 @@
 .wy-side-nav-search{
 	background-color: #EC7A76!important;
 }
+.wy-side-nav-search input[type=text]{
+	border-color:#EC7A76!important;
+}
