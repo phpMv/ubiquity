@@ -16,6 +16,7 @@ Installation
   * :doc:`install`
   * :doc:`createproject`
   * :doc:`confproject`
+  * :doc:`devtools`
 
 Controller
 ----------
