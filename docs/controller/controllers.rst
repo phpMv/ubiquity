@@ -1,5 +1,8 @@
 Ubiquity Controllers
 ====================
+.. |br| raw:: html
+
+   <br />
 A controller is a PHP class inheriting from ``micro\controllers\Controller``, providing an entry point in the application. |br| 
 Controllers and their methods define accessible URLs.
 
@@ -43,7 +46,7 @@ public
 The second segment of the URI determines which public method in the controller gets called.
 The “index” method is always loaded by default if the second segment of the URI is empty.
 
-.. code-block:: PHP
+.. code-block:: php
    :linenos:
    
    class First extends ControllerBase{
