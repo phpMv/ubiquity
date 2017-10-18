@@ -2,7 +2,6 @@ Ubiquity URLs
 =================
 like many other frameworks, if you are using router with it's default behavior, there is a one-to-one relationship between a URL string and its corresponding controller class/method.
 The segments in a URI normally follow this pattern:
-
 ::
     example.com/controller/method/param
     example.com/controller/method/param1/param2
@@ -15,6 +14,7 @@ When the URL is composed of a single part, corresponding to the name of a contro
 **URL :**
 ::
     example.com/Products
+    example.com/Products/index
 
 **Controller :**
 ::
@@ -44,7 +44,8 @@ If the requested method requires parameters, they must be passed in the URL:
 
 Optional parameters
 -------------------
-The called method can accept optional parameters.\\
+The called method can accept optional parameters.
+
 If a parameter is not present in the URL, the default value of the parameter is used.
 
 **Controller :**
@@ -55,10 +56,11 @@ If a parameter is not present in the URL, the default value of the parameter is 
 
 **Valid Urls :**
 ::
-    example.com/Products/sort/name
+    example.com/Products/sort/name (uses "ASC" for the second parameter)
     example.com/Products/sort/name/DESC
+    example.com/Products/sort/name/ASC
 
-case sensitivity
+Case sensitivity
 ----------------
 On Unix systems, the name of the controllers is case-sensitive.
 
@@ -71,9 +73,9 @@ On Unix systems, the name of the controllers is case-sensitive.
 **Urls :**
 ::
     example.com/Products/caseInsensitive (valid)
-    example.com/Products/caseinsensitive (valid)
+    example.com/Products/caseinsensitive (valid because the method names are case insensitive)
     example.com/products/caseInsensitive (invalid since the products controller does not exist)
 
-routing customization
+Routing customization
 ---------------------
 The :doc:`controller/router` and annotations of the controller classes allow you to customize URLs.
