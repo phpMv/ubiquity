@@ -69,13 +69,37 @@ The ``hello`` method of the ``First`` controller makes the following URL availab
 
 method arguments
 ^^^^^^^^^^^^^^^^
+the arguments of a method must be passed in the url, except if they are optional.
 
+.. code-block:: php
+   :caption: app/controllers/First.php
+   
+   namespace controllers;
+   class First extends ControllerBase{
+   
+   	public function says($what,$who="world"){
+   		echo $what." ".$who;
+   	}
+   
+   }
+The ``hello`` method of the ``First`` controller makes the following URLs available:
+::
+    example.com/First/says/hello (says hello world)
+    example.com/First/says/Hi/everyone (says Hi everyone)
 private
 ^^^^^^^
+Private or protected methods are not accessible from the URL.
 
 Default controller
 ------------------
+The default controller can be set with the Router, in the ``services.php`` file
+.. code-block:: php
+   :caption: app/config/services.php
+   
+   Router::start();
+   Router::addRoute("_default", "controllers\says\hello");
 
+In this case, access to the ``example.com/`` URL calls the controller **First**, calls the **say** method and passes **hello** as parameter.
 views loading
 -------------
 loading
