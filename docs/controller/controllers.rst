@@ -99,14 +99,47 @@ The default controller can be set with the Router, in the ``services.php`` file
    :caption: app/config/services.php
    
    Router::start();
-   Router::addRoute("_default", "controllers\says\hello");
+   Router::addRoute("_default", "controllers\First");
 
-In this case, access to the ``example.com/`` URL calls the controller **First**, calls the **say** method and passes **hello** as parameter.
+In this case, access to the ``example.com/`` URL loads the controller **First** and calls the default **index** method.
 
 views loading
 -------------
 loading
 ^^^^^^^
+Views are stored in the ``app/views`` folder. They are loaded from controller methods. |br| 
+By default, it is possible to create views in php, or with twig. |br|
+`Twig <https://twig.symfony.com>` is the default template engine for html files.
+
+php view loading
+~~~~~~~~~~~~~~~~
+If the file extension is not specified, the **loadview** method loads a php file.
+
+.. code-block:: php
+   :caption: app/controllers/First.php
+   
+   namespace controllers;
+   class First extends ControllerBase{
+   	public function displayPHP(){
+   		//loads the view app/views/index.php
+   		$this->loadview("index");
+   	}
+   }
+
+twig view loading
+~~~~~~~~~~~~~~~~
+If the file extension is html, the **loadview** method loads an html twig file.
+
+.. code-block:: php
+   :caption: app/controllers/First.php
+   
+   namespace controllers;
+   class First extends ControllerBase{
+   	public function displayTwig(){
+   		//loads the view app/views/index.html
+   		$this->loadview("index.html");
+   	}
+   }
 
 view parameters
 ^^^^^^^^^^^^^^^
