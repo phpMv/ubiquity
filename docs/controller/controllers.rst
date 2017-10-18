@@ -48,7 +48,6 @@ The “index” method is always loaded by default if the second segment of the 
 
 .. code-block:: php5
    :linenos:
-   :startinline: true
    :caption: app/controllers/First.php
    
    namespace controllers;

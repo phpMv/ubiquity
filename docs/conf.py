@@ -156,3 +156,10 @@ texinfo_documents = [
 def setup(app):
     app.add_stylesheet('css/custom.css')
 
+# load PhpLexer
+from sphinx.highlighting import lexers
+from pygments.lexers.web import PhpLexer
+
+# enable highlighting for PHP code not between <?php ... ?> by default
+lexers['php'] = PhpLexer(startinline=True)
+lexers['php-annotations'] = PhpLexer(startinline=True)
