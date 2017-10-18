@@ -17,7 +17,7 @@ To create the Products controller, use the command:
    
    Micro controller Products
 
-The Products.php controller is created in the ``app/controllers`` folder of the project.
+The ``Products.php`` controller is created in the ``app/controllers`` folder of the project.
 
 .. code-block:: php
    :linenos:
@@ -109,7 +109,7 @@ loading
 ^^^^^^^
 Views are stored in the ``app/views`` folder. They are loaded from controller methods. |br| 
 By default, it is possible to create views in php, or with twig. |br|
-`Twig <https://twig.symfony.com>` is the default template engine for html files.
+Twig <https://twig.symfony.com> is the default template engine for html files.
 
 php view loading
 ~~~~~~~~~~~~~~~~
@@ -143,12 +143,40 @@ If the file extension is html, the **loadview** method loads an html twig file.
 
 view parameters
 ^^^^^^^^^^^^^^^
+One of the missions of the controller is to pass variables to the view. |br| 
+This can be done at the loading of the view, with an associative array:
+
+.. code-block:: php
+   :caption: app/controllers/First.php
+   
+   class First extends ControllerBase{
+   	public function displayTwigWithVar($name){
+   		$message="hello";
+   		//loads the view app/views/index.html
+   		$this->loadview("index.html",["recipient"=>$name,"message"=>$message]);
+   	}
+   }
+
+The keys of the associative array create variables of the same name in the view. |br| 
+Using of this variables in Twig:
+
+.. code-block:: html
+   :caption: app/views/index.html
+   
+   <h1>{{message}} {{recipient}}</h1>
+
 
 view result as string
 ^^^^^^^^^^^^^^^^^^^^^
 
+
+multiple views loading
+^^^^^^^^^^^^^^^^^^^^^^
+
+
 view engine
 ^^^^^^^^^^^
+
 
 initialize and finalize
 -----------------------
