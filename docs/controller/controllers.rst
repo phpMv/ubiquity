@@ -63,6 +63,7 @@ The “index” method is always loaded by default if the second segment of the 
    	}
    
    }
+
 The ``hello`` method of the ``First`` controller makes the following URL available:
 ::
     example.com/First/hello
@@ -93,6 +94,7 @@ Private or protected methods are not accessible from the URL.
 Default controller
 ------------------
 The default controller can be set with the Router, in the ``services.php`` file
+
 .. code-block:: php
    :caption: app/config/services.php
    
@@ -100,6 +102,7 @@ The default controller can be set with the Router, in the ``services.php`` file
    Router::addRoute("_default", "controllers\says\hello");
 
 In this case, access to the ``example.com/`` URL calls the controller **First**, calls the **say** method and passes **hello** as parameter.
+
 views loading
 -------------
 loading
