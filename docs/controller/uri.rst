@@ -78,4 +78,4 @@ On Unix systems, the name of the controllers is case-sensitive.
 
 Routing customization
 ---------------------
-The :doc:`controller/router` and annotations of the controller classes allow you to customize URLs.
+The :doc:`router` and annotations of the controller classes allow you to customize URLs.
