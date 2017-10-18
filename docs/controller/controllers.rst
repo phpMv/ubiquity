@@ -1,14 +1,14 @@
 Ubiquity Controllers
 ====================
-|A controller is a PHP class inheriting from ``micro\\controllers\\Controller``, providing an entry point in the application.
-|Controllers and their methods define accessible URLs.
+|  A controller is a PHP class inheriting from ``micro\controllers\Controller``, providing an entry point in the application.
+|  Controllers and their methods define accessible URLs.
 
 Controller creation
 -------------------
 The easiest way to create a controller is to do it from the devtools.
 
-|From the command prompt, go to the project folder.
-|To create the Products controller, use the command:
+|  From the command prompt, go to the project folder.
+|  To create the Products controller, use the command:
 ::
     Micro controller Products
 
@@ -40,9 +40,10 @@ Methods
 -------
 public
 ^^^^^^
-The second segment of the URI determines which public method in the controller gets called.\n
-The “index” method is always loaded by default if the second segment of the URI is empty.
-::
+|  The second segment of the URI determines which public method in the controller gets called.
+|  The “index” method is always loaded by default if the second segment of the URI is empty.
+.. code-block:: php
+   :linenos:
     class First extends ControllerBase{
     
     	public function hello(){
