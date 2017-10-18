@@ -20,7 +20,12 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	font-weight: bolder;
 	font-size: small;
 }
+/*
 .highlight-php, .highlight-bash{
-	background: #202020;
-	color: #d0d0d0;
+	background: #202020!important;
+	color: #d0d0d0!important;
 }
+
+.highlight-bash pre{
+	color: #fff!important;
+}*/
