@@ -17,13 +17,16 @@ When the URL is composed of a single part, corresponding to the name of a contro
     example.com/Products/index
 
 **Controller :**
-::
-    class Products extends ControllerBase{
-        public function index(){
-            //Default action
-        } 
-    }
 
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Products.php
+   
+   class Products extends ControllerBase{
+       public function index(){
+           //Default action
+       } 
+   }
 
 Required parameters
 -------------------
@@ -31,10 +34,14 @@ Required parameters
 If the requested method requires parameters, they must be passed in the URL:
 
 **Controller :**
-::
-    class Products extends ControllerBase{
-        public function display($id){} 
-    }
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Products.php
+   
+   class Products extends ControllerBase{
+       public function display($id){} 
+   }
 
 **Valid Urls :**
 ::
@@ -49,10 +56,13 @@ The called method can accept optional parameters.
 If a parameter is not present in the URL, the default value of the parameter is used.
 
 **Controller :**
-::
-    class Products extends ControllerBase{
-        public function sort($field,$order="ASC"){} 
-    }
+
+.. code-block:: php
+   :caption: app/controllers/Products.php
+   
+   class Products extends ControllerBase{
+       public function sort($field,$order="ASC"){} 
+   }
 
 **Valid Urls :**
 ::
@@ -65,10 +75,13 @@ Case sensitivity
 On Unix systems, the name of the controllers is case-sensitive.
 
 **Controller :**
-::
-    class Products extends ControllerBase{
-        public function caseInsensitive(){} 
-    }
+
+.. code-block:: php
+   :caption: app/controllers/Products.php
+   
+   class Products extends ControllerBase{
+       public function caseInsensitive(){} 
+   }
 
 **Urls :**
 ::
