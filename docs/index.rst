@@ -26,10 +26,17 @@ Controller
 
 Models and ORM
 --------------
-
+  * :doc:`model/models`
+  * :doc:`model/orm`
+  
 Views
 -----
+  * :doc:`view/index`
 
+Extras
+------
+  * :doc:`extra/libraries`
+  * :doc:`extra/caching`
 
 Indices and tables
 ==================

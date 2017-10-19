@@ -212,15 +212,14 @@ To load the ``index.html`` view, stored in ``app/views/First``:
    
    $this->loadview("First/index.html");
 
-view engine
-^^^^^^^^^^^
-
-
 initialize and finalize
 -----------------------
 
 Access control
 --------------
+
+Forwarding
+----------
 
 Dependency injection
 --------------------
