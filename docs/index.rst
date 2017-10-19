@@ -11,34 +11,42 @@ Ubiquity framework User guide
    :caption: Contents:
 
 
-Installation
-------------
-  * :doc:`install`
-  * :doc:`createproject`
-  * :doc:`confproject`
-  * :doc:`devtools`
-
 .. toctree::
    :maxdepth: 2
    :caption: Controllers
+   
+   install
+   createproject
+   confproject
+   devtools
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Controller
    
    controller/uri
    controller/router
    controller/controllers
 
-Models and ORM
---------------
-  * :doc:`model/models`
-  * :doc:`model/orm`
+.. toctree::
+   :maxdepth: 2
+   :caption: Models and ORM
+   
+   model/models
+   model/orm
   
-Views
------
-  * :doc:`view/index`
+.. toctree::
+   :maxdepth: 2
+   :caption: Views
+   
+   view/index
 
-Extras
-------
-  * :doc:`extra/libraries`
-  * :doc:`extra/caching`
+.. toctree::
+   :maxdepth: 2
+   :caption: Extras
+   
+   extra/libraries
+   extra/caching
 
 Indices and tables
 ==================
