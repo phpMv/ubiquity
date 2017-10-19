@@ -41,7 +41,7 @@ It is now possible to access URLs (the ``index`` method is solicited by default)
           
           * The class must be in the **app/controllers** folder
           * The name of the class must match the name of the php file
-          * It must inherit from **ControllerBase** and be defined in the namespace **controllers**
+          * The class must inherit from **ControllerBase** and be defined in the namespace **controllers**
           * It must override the abstract **index** method
 
 Methods
@@ -178,11 +178,30 @@ Variables can also be passed before the view is loaded:
 
 view result as string
 ^^^^^^^^^^^^^^^^^^^^^
+It is possible to load a view, and to return the result in a string, assigning true to the 3rd parameter of the loadview method :
 
+.. code-block:: php
+   
+   $viewResult=$this->loadview("First/index.html",[],true);
+   echo $viewResult;
 
 multiple views loading
 ^^^^^^^^^^^^^^^^^^^^^^
+A controller can load multiple views:
 
+.. code-block:: php
+   :caption: app/controllers/Products.php
+   
+   namespace controllers;
+   class Products extends ControllerBase{
+   	public function all(){
+   		$this->loadview("Main/header.html",["title"=>"Products"]);
+   		$this->loadview("Products/index.html",["products"=>$this->products]);
+   		$this->loadview("Main/footer.html");
+   	}
+   }
+
+.. important:: A view is often partial. It is therefore important not to systematically integrate the **html** and **body** tags defining a complete html page.
 
 views organization
 ^^^^^^^^^^^^^^^^^^
