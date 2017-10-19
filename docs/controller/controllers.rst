@@ -165,6 +165,16 @@ Using of this variables in Twig:
    
    <h1>{{message}} {{recipient}}</h1>
 
+Variables can also be passed before the view is loaded:
+
+.. code-block:: php
+   
+   //passing one variable
+   $this->view->setVar("title"=>"Message");
+   //passing an array of 2 variables
+   $this->view->setVars(["message"=>$message,"recipient"=>$name]);
+   //loading the view that now contains 3 variables
+   $this->loadview("First/index.html");
 
 view result as string
 ^^^^^^^^^^^^^^^^^^^^^
@@ -173,6 +183,15 @@ view result as string
 multiple views loading
 ^^^^^^^^^^^^^^^^^^^^^^
 
+
+views organization
+^^^^^^^^^^^^^^^^^^
+It is advisable to organize the views into folders. The most recommended method is to create a folder per controller, and store the associated views there. |br| 
+To load the ``index.html`` view, stored in ``app/views/First``:
+
+.. code-block:: php
+   
+   $this->loadview("First/index.html");
 
 view engine
 ^^^^^^^^^^^

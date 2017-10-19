@@ -32,6 +32,6 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	color: #fff!important;
 }
 
-.highlight-default pre{
+.highlight-default .highlight .n{
 	color: #202020!important;
 }
