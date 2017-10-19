@@ -7,7 +7,7 @@ Ubiquity framework User guide
 ===========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Installation & configuration
    
    install
@@ -16,7 +16,7 @@ Ubiquity framework User guide
    devtools
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Controller
    
    controller/uri
@@ -24,20 +24,20 @@ Ubiquity framework User guide
    controller/controllers
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Models and ORM
    
    model/models
    model/orm
   
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Views
    
    view/index
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Extras
    
    extra/libraries
