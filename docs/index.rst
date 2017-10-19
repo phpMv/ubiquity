@@ -18,11 +18,13 @@ Installation
   * :doc:`confproject`
   * :doc:`devtools`
 
-Controller
-----------
-  * :doc:`controller/uri`
-  * :doc:`controller/router`
-  * :doc:`controller/controllers`
+.. toctree::
+   :maxdepth: 2
+   :caption: Controllers
+   
+   controller/uri
+   controller/router
+   controller/controllers
 
 Models and ORM
 --------------
