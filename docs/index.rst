@@ -7,13 +7,8 @@ Ubiquity framework User guide
 ===========================================
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents:
-
-
-.. toctree::
    :maxdepth: 2
-   :caption: Controllers
+   :caption: Installation & configuration
    
    install
    createproject
