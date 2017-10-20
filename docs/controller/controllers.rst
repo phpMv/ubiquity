@@ -109,7 +109,7 @@ loading
 ^^^^^^^
 Views are stored in the ``app/views`` folder. They are loaded from controller methods. |br| 
 By default, it is possible to create views in php, or with twig. |br|
-Twig <https://twig.symfony.com> is the default template engine for html files.
+`Twig <https://twig.symfony.com>`_ is the default template engine for html files.
 
 php view loading
 ~~~~~~~~~~~~~~~~
