@@ -1,15 +1,15 @@
-micro-devtools installation
+Ubiquity-devtools installation
 ===========================
 
 Install Composer
 ----------------
-**micro** utilizes Composer to manage its dependencies. So, before using, you will need to make sure you have `Composer <http://getcomposer.org/>`_ installed on your machine.
+**ubiquity** utilizes Composer to manage its dependencies. So, before using, you will need to make sure you have `Composer <http://getcomposer.org/>`_ installed on your machine.
 
-Install micro-devtools
+Install Ubiquity-devtools
 ----------------------
-Download the Micro-devtools installer using Composer.
+Download the Ubiquity-devtools installer using Composer.
 ::
-    composer global require "phpmv/micro-devtools=dev-master"
+    composer global require "phpmv/ubiquity-devtools=dev-master"
 
 Make sure to place the ``~/.composer/vendor/bin`` directory in your PATH so the **Micro** executable can be located by your system.
 

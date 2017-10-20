@@ -2,8 +2,10 @@ Project creation
 =================
 After installing :doc:`install`, 
 in a bash console, call the new command in the root folder of your web server : 
-::
-    Micro new projectName
+
+.. code-block:: bash
+   
+   Micro new projectName
 
 Installer arguments
 -------------------
@@ -32,14 +34,18 @@ Arguments usage
 short names
 ^^^^^^^^^^^
 Example of creation of the blog project, connected to the blogDb database, with generation of all models
-::
-    Micro new blog -b=blogDb -m=true 
+
+.. code-block:: bash
+   
+   Micro new blog -b=blogDb -m=true 
 
 long names
 ^^^^^^^^^^^
 Example of creation of the blog project, connected to the bogDb database, with generation of all models and integration of phpMv-toolkit
-::
-    Micro new blog --dbName=blogDb --all-models=true --phpmv=semantic 
+
+.. code-block:: bash
+   
+   Micro new blog --dbName=blogDb --all-models=true --phpmv=semantic 
 
 .. note:: Markdown doesn't support a lot of the features of Sphinx,
           like inline markup and directives. However, it works for
