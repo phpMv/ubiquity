@@ -51,7 +51,8 @@ class Router {
 
 	public static function getRouteUrlParts($routeArray, $params, $cached=false, $duration=NULL) {
 		$params=\array_slice($params, 1);
-		$result=[ $routeArray["details"]["controller"],$routeArray["details"]["action"] ];
+		$ctrl=str_replace("\\\\", "\\", $routeArray["details"]["controller"]);
+		$result=[ $ctrl,$routeArray["details"]["action"] ];
 		$paramsOrder=$routeArray["details"]["parameters"];
 		foreach ( $paramsOrder as $order ) {
 			$result[]=$params[$order];
@@ -78,7 +79,7 @@ class Router {
 	 * @param string $action
 	 * @param array|null $methods
 	 * @param string $name
-	 * @param string $cache
+	 * @param boolean $cache
 	 * @param int $duration
 	 */
 	public static function addRoute($path, $controller, $action="index", $methods=null, $name="", $cache=false, $duration=null) {

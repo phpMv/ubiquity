@@ -42,6 +42,7 @@ Ubiquity framework User guide
    
    extra/libraries
    extra/caching
+   extra/dependencies
 
 Indices and tables
 ==================

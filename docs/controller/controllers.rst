@@ -42,7 +42,7 @@ It is now possible to access URLs (the ``index`` method is solicited by default)
           * The class must be in the **app/controllers** folder
           * The name of the class must match the name of the php file
           * The class must inherit from **ControllerBase** and be defined in the namespace **controllers**
-          * It must override the abstract **index** method
+          * and must override the abstract **index** method
 
 Methods
 -------
