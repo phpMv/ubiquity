@@ -6,6 +6,8 @@ filter:
         - project-files/
         - micro/addendum/
         - micro/annotations/
+        - micro/js/Jquery.php
+        - docs/
 checks:
     php:
         code_rating: true
