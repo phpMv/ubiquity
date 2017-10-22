@@ -5,6 +5,7 @@ global_exclude_dirs:
 exclude_patterns:
     - micro/log/chromePhp.php
     - micro/controllers/Autoloader.php
+    - micro/controllers/admin/UbiquityMyAdminBaseController.php
 
 rules:
     doctrine.database_query_contains_string_and_variable_concatenation:

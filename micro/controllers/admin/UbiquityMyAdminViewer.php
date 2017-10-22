@@ -29,11 +29,12 @@ class UbiquityMyAdminViewer {
 	}
 
 	/**
+	 * @param string $identifier
 	 * @param object $instance
 	 * @return DataForm
 	 */
-	public function getForm($instance){
-		$form=$this->jquery->semantic()->dataForm("frmEdit", $instance);
+	public function getForm($identifier,$instance){
+		$form=$this->jquery->semantic()->dataForm($identifier, $instance);
 		$className=\get_class($instance);
 		$form->setFields($this->controller->getAdminData()->getFormFieldNames($className));
 		$form->setSubmitParams("Admin/update", "#table-details");
@@ -51,27 +52,30 @@ class UbiquityMyAdminViewer {
 		$relations = OrmUtils::getFieldsInRelations($className);
 		foreach ($relations as $member){
 			if(OrmUtils::getAnnotationInfoMember($className, "#manyToOne",$member)!==false){
-				$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
-				if($joinColumn){
-					$fkObject=Reflexion::getMemberValue($instance, $member);
-					$fkClass=$joinColumn["className"];
-					$fkId=OrmUtils::getFirstKey($fkClass);
-					$fkIdGetter="get".\ucfirst($fkId);
-					if(\method_exists($fkObject, "__toString") && \method_exists($fkObject, $fkIdGetter)){
-						$fkField=$joinColumn["name"];
-
-						$fkValue=OrmUtils::getFirstKeyValue($fkObject);
-						if(!Reflexion::setMemberValue($instance, $fkField, $fkValue)){
-							$instance->$fkField=OrmUtils::getFirstKeyValue($fkObject);
-							$form->addField($fkField);
-						}
-						$form->fieldAsDropDown($fkField,JArray::modelArray(DAO::getAll($fkClass),$fkIdGetter,"__toString"));
-						$form->setCaption($fkField, \ucfirst($member));
-					}
-				}
+				$this->manyToOneField($form, $member, $className, $instance);
 			}
 		}
 
 		return $form;
+	}
+
+	protected function manyToOneField(DataForm $form,$member,$className,$instance){
+		$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
+		if($joinColumn){
+			$fkObject=Reflexion::getMemberValue($instance, $member);
+			$fkClass=$joinColumn["className"];
+			$fkId=OrmUtils::getFirstKey($fkClass);
+			$fkIdGetter="get".\ucfirst($fkId);
+			if(\method_exists($fkObject, "__toString") && \method_exists($fkObject, $fkIdGetter)){
+				$fkField=$joinColumn["name"];
+				$fkValue=OrmUtils::getFirstKeyValue($fkObject);
+				if(!Reflexion::setMemberValue($instance, $fkField, $fkValue)){
+					$instance->{$fkField}=OrmUtils::getFirstKeyValue($fkObject);
+					$form->addField($fkField);
+				}
+				$form->fieldAsDropDown($fkField,JArray::modelArray(DAO::getAll($fkClass),$fkIdGetter,"__toString"));
+				$form->setCaption($fkField, \ucfirst($member));
+			}
+		}
 	}
 }

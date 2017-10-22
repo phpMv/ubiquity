@@ -66,7 +66,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 
 	public function edit($ids){
 		$instance=$this->getModelInstance($ids);
-		$this->getAdminViewer()->getForm($instance);
+		$this->getAdminViewer()->getForm("frmEdit",$instance);
 		$this->jquery->click("#bt-okay","$('#frmEdit').form('submit');");
 		$this->jquery->click("#bt-cancel","$('#form-container').transition('drop');");
 		$this->jquery->compile($this->view);

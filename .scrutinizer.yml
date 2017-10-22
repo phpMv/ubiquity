@@ -2,6 +2,7 @@ filter:
     excluded_paths:
         - micro/log/
         - micro/controllers/Autoloader.php
+        - micro/controllers/admin/UbiquityMyAdminBaseController.php
         - tools/
         - project-files/
         - micro/addendum/
