@@ -7,6 +7,7 @@ use micro\db\Database;
 use micro\log\Logger;
 use micro\orm\parser\ManyToManyParser;
 use micro\orm\parser\Reflexion;
+use micro\utils\JArray;
 
 /**
  * Classe passerelle entre base de données et modèle objet
@@ -17,9 +18,15 @@ use micro\orm\parser\Reflexion;
 class DAO {
 	public static $db;
 
-	private static function getCondition($keyValues) {
+	private static function getCondition($keyValues,$classname=NULL) {
 		$retArray=array ();
 		if (is_array($keyValues)) {
+			if(!JArray::isAssociative($keyValues)){
+				if(isset($classname)){
+					$keys=OrmUtils::getKeyFields($classname);
+					$keyValues=\array_combine($keys, $keyValues);
+				}
+			}
 			foreach ( $keyValues as $key => $value ) {
 				$retArray[]="`" . $key . "` = '" . $value . "'";
 			}
@@ -244,7 +251,7 @@ class DAO {
 			} elseif ($keyValues == "")
 				$keyValues="";
 		}
-		$condition=self::getCondition($keyValues);
+		$condition=self::getCondition($keyValues,$className);
 		$retour=self::getAll($className, $condition, $loadManyToOne, $loadOneToMany, $useCache);
 		if (sizeof($retour) < 1)
 			return null;

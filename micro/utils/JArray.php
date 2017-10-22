@@ -42,6 +42,24 @@ class JArray {
 		return $prefix . $extsStr;
 	}
 
+	public static function remove($array,$search){
+		if(\is_array($search)){
+			foreach ($search as $val){
+				$array=self::removeOne($array, $val);
+			}
+		}else{
+			$array=self::removeOne($array, $search);
+		}
+		return array_values($array);
+	}
+
+	public static function removeOne($array,$search){
+		if (($key = array_search($search, $array)) !== false) {
+			unset($array[$key]);
+		}
+		return $array;
+	}
+
 	private static function parseValue($v, $prefix="") {
 		if (\is_bool($v) === true) {
 			$result=StrUtils::getBooleanStr($v);

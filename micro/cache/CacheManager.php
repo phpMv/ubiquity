@@ -203,7 +203,19 @@ class CacheManager {
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
-		$annotationManager->registry=array_merge($annotationManager->registry, [ 'id' => 'micro\annotations\IdAnnotation','manyToOne' => 'micro\annotations\ManyToOneAnnotation','oneToMany' => 'micro\annotations\OneToManyAnnotation','manyToMany' => 'micro\annotations\ManyToManyAnnotation','joinColumn' => 'micro\annotations\JoinColumnAnnotation','table' => 'micro\annotations\TableAnnotation','transient' => 'micro\annotations\TransientAnnotation','column' => 'micro\annotations\ColumnAnnotation','joinTable' => 'micro\annotations\JoinTableAnnotation','route' => 'micro\annotations\router\RouteAnnotation' ]);
+		$annotationManager->registry=array_merge($annotationManager->registry, [
+				'id' => 'micro\annotations\IdAnnotation',
+				'manyToOne' => 'micro\annotations\ManyToOneAnnotation',
+				'oneToMany' => 'micro\annotations\OneToManyAnnotation',
+				'manyToMany' => 'micro\annotations\ManyToManyAnnotation',
+				'joinColumn' => 'micro\annotations\JoinColumnAnnotation',
+				'table' => 'micro\annotations\TableAnnotation',
+				'transient' => 'micro\annotations\TransientAnnotation',
+				'column' => 'micro\annotations\ColumnAnnotation',
+				'joinTable' => 'micro\annotations\JoinTableAnnotation',
+				'route' => 'micro\annotations\router\RouteAnnotation',
+				'var' => 'mindplay\annotations\standard\VarAnnotation'
+		]);
 	}
 
 	public static function addAdminRoutes() {

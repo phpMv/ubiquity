@@ -5,6 +5,7 @@ namespace micro\orm;
 use micro\orm\parser\Reflexion;
 use micro\cache\CacheManager;
 use micro\utils\StrUtils;
+use micro\utils\JArray;
 
 /**
  * Utilitaires de mappage Objet/relationnel
@@ -56,13 +57,23 @@ class OrmUtils {
 	}
 
 	public static function getKeyFields($instance) {
-		return self::getAnnotationInfo(get_class($instance), "#primaryKeys");
+		if(!\is_string($instance)){
+			$instance=\get_class($instance);
+		}
+		return self::getAnnotationInfo($instance, "#primaryKeys");
 	}
 
-	public function getMembers($className) {
+	public static function getMembers($className) {
 		$fieldNames=self::getAnnotationInfo($className, "#fieldNames");
 		if ($fieldNames !== false)
 			return \array_keys($fieldNames);
+		return [ ];
+	}
+
+	public static function getFieldTypes($className) {
+		$fieldTypes=self::getAnnotationInfo($className, "#fieldTypes");
+		if ($fieldTypes !== false)
+			return $fieldTypes;
 		return [ ];
 	}
 
@@ -170,8 +181,14 @@ class OrmUtils {
 	public static function getAnnotationInfoMember($class, $keyAnnotation, $member) {
 		$info=self::getAnnotationInfo($class, $keyAnnotation);
 		if ($info !== false) {
-			if (isset($info[$member])) {
-				return $info[$member];
+			if(JArray::isAssociative($info)){
+				if (isset($info[$member])) {
+					return $info[$member];
+				}
+			}else{
+				if(\array_search($member, $info)!==false){
+					return $member;
+				}
 			}
 		}
 		return false;
@@ -190,6 +207,9 @@ class OrmUtils {
 		}
 		if ($oneToMany=self::getAnnotationInfo($class, "#oneToMany")) {
 			$result=\array_merge($result, \array_keys($oneToMany));
+		}
+		if ($manyToMany=self::getAnnotationInfo($class, "#manyToMany")) {
+			$result=\array_merge($result, \array_keys($manyToMany));
 		}
 		return $result;
 	}

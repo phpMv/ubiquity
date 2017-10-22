@@ -38,9 +38,21 @@ class Reflexion {
 		return $prop->getValue($instance);
 	}
 
+	public static function setMemberValue($instance, $member,$value) {
+		$prop=self::getProperty($instance, $member);
+		if($prop){
+			$prop->setAccessible(true);
+			$prop->setValue($instance,$value);
+			return true;
+		}
+		return false;
+	}
+
 	public static function getProperty($instance, $member) {
 		$reflect=new \ReflectionClass($instance);
-		$prop=$reflect->getProperty($member);
+		$prop=false;
+		if($reflect->hasProperty($member))
+			$prop=$reflect->getProperty($member);
 		return $prop;
 	}
 
