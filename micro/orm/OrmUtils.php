@@ -214,6 +214,17 @@ class OrmUtils {
 		return $result;
 	}
 
+	public static function getManyToOneFields($class) {
+		return self::getAnnotationInfo($class, "#manyToOne");
+	}
+
+	public static function getManyToManyFields($class) {
+		$result=self::getAnnotationInfo($class, "#manyToMany");
+		if($result!==false)
+			return \array_keys($result);
+		return [];
+	}
+
 	public static function getDefaultFk($classname) {
 		return "id" . \ucfirst(self::getTableName($classname));
 	}

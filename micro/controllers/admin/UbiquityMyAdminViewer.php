@@ -33,11 +33,11 @@ class UbiquityMyAdminViewer {
 	 * @param object $instance
 	 * @return DataForm
 	 */
-	public function getForm($identifier,$instance){
+	public function getForm($identifier,$instance,$modal=false){
 		$form=$this->jquery->semantic()->dataForm($identifier, $instance);
 		$className=\get_class($instance);
 		$form->setFields($this->controller->getAdminData()->getFormFieldNames($className));
-		$form->setSubmitParams("Admin/update", "#table-details");
+
 		$fieldTypes=OrmUtils::getFieldTypes($className);
 		foreach ($fieldTypes as $property=>$type){
 			switch ($type){
@@ -51,11 +51,15 @@ class UbiquityMyAdminViewer {
 		}
 		$relations = OrmUtils::getFieldsInRelations($className);
 		foreach ($relations as $member){
-			if(OrmUtils::getAnnotationInfoMember($className, "#manyToOne",$member)!==false){
+			if($this->controller->getAdminData()->getUpdateManyToOneInForm() && OrmUtils::getAnnotationInfoMember($className, "#manyToOne",$member)!==false){
 				$this->manyToOneField($form, $member, $className, $instance);
+			}elseif($this->controller->getAdminData()->getUpdateOneToManyInForm() && ($annot=OrmUtils::getAnnotationInfoMember($className, "#oneToMany",$member))!==false){
+				$this->oneToManyField($form, $member, $className, $instance,$annot);
+			}elseif($this->controller->getAdminData()->getUpdateManyToManyInForm() && ($annot=OrmUtils::getAnnotationInfoMember($className, "#manyToMany",$member))!==false){
+				$this->manyToManyField($form, $member, $className, $instance,$annot);
 			}
 		}
-
+		$form->setSubmitParams("Admin/update", "#table-details");
 		return $form;
 	}
 
@@ -64,6 +68,9 @@ class UbiquityMyAdminViewer {
 		if($joinColumn){
 			$fkObject=Reflexion::getMemberValue($instance, $member);
 			$fkClass=$joinColumn["className"];
+			if($fkObject==null){
+				$fkObject=new $fkClass();
+			}
 			$fkId=OrmUtils::getFirstKey($fkClass);
 			$fkIdGetter="get".\ucfirst($fkId);
 			if(\method_exists($fkObject, "__toString") && \method_exists($fkObject, $fkIdGetter)){
@@ -77,5 +84,30 @@ class UbiquityMyAdminViewer {
 				$form->setCaption($fkField, \ucfirst($member));
 			}
 		}
+	}
+	protected function oneToManyField(DataForm $form,$member,$className,$instance,$annot){
+		$newField=$member."Ids";
+		$fkClass=$annot["className"];
+		$fkId=OrmUtils::getFirstKey($fkClass);
+		$fkIdGetter="get".\ucfirst($fkId);
+		$fkInstances=DAO::getOneToMany($instance, $member);
+		$form->addField($newField);
+		$ids=\array_map(function($elm) use($fkIdGetter){return $elm->{$fkIdGetter}();},$fkInstances);
+		$instance->{$newField}=\implode(",", $ids);
+		$form->fieldAsDropDown($newField,JArray::modelArray(DAO::getAll($fkClass),$fkIdGetter,"__toString"),true);
+		$form->setCaption($newField, \ucfirst($member));
+	}
+
+	protected function manyToManyField(DataForm $form,$member,$className,$instance,$annot){
+		$newField=$member."Ids";
+		$fkClass=$annot["targetEntity"];
+		$fkId=OrmUtils::getFirstKey($fkClass);
+		$fkIdGetter="get".\ucfirst($fkId);
+		$fkInstances=DAO::getManyToMany($instance, $member);
+		$form->addField($newField);
+		$ids=\array_map(function($elm) use($fkIdGetter){return $elm->{$fkIdGetter}();},$fkInstances);
+		$instance->{$newField}=\implode(",", $ids);
+		$form->fieldAsDropDown($newField,JArray::modelArray($this->controller->getAdminData()->getManyToManyDatas($fkClass, $instance, $member),$fkIdGetter,"__toString"),true,["jsCallback"=>function($elm){$elm->getField()->asSearch();}]);
+		$form->setCaption($newField, \ucfirst($member));
 	}
 }

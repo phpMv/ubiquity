@@ -10,6 +10,7 @@ use micro\controllers\Startup;
 use micro\controllers\Autoloader;
 use micro\controllers\admin\UbiquityMyAdminData;
 use controllers\ControllerBase;
+use micro\utils\RequestUtils;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	private $adminData;
@@ -38,11 +39,25 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	}
 
 	public function showTable($table){
+		$this->_showTable($table);
+		$model=$this->getModelsNS()."\\".ucfirst($table);
+		$this->jquery->compile($this->view);
+		$this->loadView("admin\showTable.html",["classname"=>$model]);
+	}
+
+	public function refreshTable(){
+		$table=$_SESSION["table"];
+		echo $this->_showTable($table);
+		echo $this->jquery->compile($this->view);
+	}
+
+	protected function _showTable($table){
 		$_SESSION["table"]= $table;
 		$semantic=$this->jquery->semantic();
 		$model=$this->getModelsNS()."\\".ucfirst($table);
 
 		$datas=DAO::getAll($model);
+		$modal=(\count($datas)>20?"modal":"no");
 		$lv=$semantic->dataTable("lv", $model, $datas);
 		$attributes=$this->getFieldNames($model);
 
@@ -54,27 +69,106 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 
 		$lv->setIdentifierFunction($this->getIdentifierFunction($model));
 		$lv->getOnRow("click", "Admin/showDetail","#table-details",["attr"=>"data-ajax"]);
-		$lv->setUrls(["delete"=>"Admin/delete","edit"=>"Admin/edit"]);
+		$lv->setUrls(["delete"=>"Admin/delete","edit"=>"Admin/edit/".$modal]);
 		$lv->setTargetSelector(["delete"=>"#table-messages","edit"=>"#table-details"]);
 		$lv->addClass("small very compact");
 		$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"]);
 		$lv->setActiveRowSelector("error");
-
-		$this->jquery->compile($this->view);
-		$this->loadView("admin\showTable.html",["classname"=>$model]);
+		$this->jquery->getOnClick("#btAddNew", "Admin/new/".$modal,"#table-details");
+		return $lv;
 	}
 
-	public function edit($ids){
+	protected function _edit($instance,$modal="no"){
+		$_SESSION["instance"]=$instance;
+		$modal=($modal=="modal");
+		$form=$this->getAdminViewer()->getForm("frmEdit",$instance,$modal);
+		$this->jquery->click("#action-modal-frmEdit","$('#frmEdit').form('submit');",false);
+		if(!$modal){
+			$this->jquery->click("#bt-cancel","$('#form-container').transition('drop');");
+			$this->jquery->compile($this->view);
+			$this->loadView("admin/editTable.html",["modal"=>$modal]);
+		}else{
+			$this->jquery->exec("$('#modal-frmEdit').modal('show');",true);
+			$form=$form->asModal(\get_class($instance));
+			$form->setActions(["Okay","Cancel"]);
+			$btOkay=$form->getAction(0);
+			$btOkay->addClass("green")->setValue("Validate modifications");
+			$form->onHidden("$('#modal-frmEdit').remove();");
+			echo $form->compile($this->jquery,$this->view);
+			echo $this->jquery->compile($this->view);
+		}
+	}
+
+	public function edit($modal="no",$ids=""){
 		$instance=$this->getModelInstance($ids);
-		$this->getAdminViewer()->getForm("frmEdit",$instance);
-		$this->jquery->click("#bt-okay","$('#frmEdit').form('submit');");
-		$this->jquery->click("#bt-cancel","$('#form-container').transition('drop');");
-		$this->jquery->compile($this->view);
-		$this->loadView("admin/editTable.html");
+		$instance->_new=false;
+		$this->_edit($instance,$modal);
+	}
+
+	public function new($modal="no"){
+		$model=$this->getModelsNS()."\\".ucfirst($_SESSION["table"]);
+		$instance=new $model();
+		$instance->_new=true;
+		$this->_edit($instance,$modal);
 	}
 
 	public function update(){
-		\var_dump($_POST);
+		$message=$this->jquery->semantic()->htmlMessage("msgUpdate","The changes have been correctly saved","info");
+		$instance=@$_SESSION["instance"];
+		$className=\get_class($instance);
+		$relations = OrmUtils::getManyToOneFields($className);
+		$fieldTypes=OrmUtils::getFieldTypes($className);
+		foreach ($fieldTypes as $property=>$type){
+			if($type=="boolean"){
+				if(isset($_POST[$property])){
+					$_POST[$property]=1;
+				}else{
+					$_POST[$property]=0;
+				}
+			}
+		}
+		RequestUtils::setValuesToObject($instance,$_POST);
+		foreach ($relations as $member){
+			if($this->getAdminData()->getUpdateManyToOneInForm()){
+				$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
+				if($joinColumn){
+					$fkClass=$joinColumn["className"];
+					$fkField=$joinColumn["name"];
+					if(isset($_POST[$fkField])){
+						$fkObject=DAO::getOne($fkClass, $_POST["$fkField"]);
+						Reflexion::setMemberValue($instance, $member, $fkObject);
+					}
+				}
+			}
+		}
+		if(isset($instance)){
+			if($instance->_new){
+				$update=DAO::insert($instance);
+			}else{
+				$update=DAO::update($instance);
+			}
+			if($update){
+				if($this->getAdminData()->getUpdateManyToManyInForm()){
+					$relations = OrmUtils::getManyToManyFields($className);
+					foreach ($relations as $member){
+						if(($annot=OrmUtils::getAnnotationInfoMember($className, "#manyToMany",$member))!==false){
+							$newField=$member."Ids";
+							$fkClass=$annot["targetEntity"];
+							$fkObjects=DAO::getAll($fkClass,$this->getMultiWhere($_POST[$newField], $className));
+							if(Reflexion::setMemberValue($instance, $member, $fkObjects)){
+								DAO::insertOrUpdateManyToMany($instance, $member);
+							}
+						}
+					}
+				}
+				$message->setStyle("success")->setIcon("checkmark");
+				$this->jquery->get("Admin/refreshTable","#lv","{}","",false,"replaceWith");
+			}else{
+				$message->setContent("An error has occurred. Can not save changes.")->setStyle("error")->setIcon("warning circle");
+			}
+			echo $message;
+			echo $this->jquery->compile($this->view);
+		}
 	}
 
 	private function getIdentifierFunction($model){
@@ -96,13 +190,27 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		return OrmUtils::getKeyFields($instance);
 	}
 
+	private function getMultiWhere($ids,$class){
+		$pk=OrmUtils::getFirstKey($class);
+		$ids=explode(",", $ids);
+		if(sizeof($ids)<1)
+			return "";
+		$strs=[];
+		$idCount=\sizeof($ids);
+		for($i=0;$i<$idCount;$i++){
+			$strs[]=$pk."='".$ids[$i]."'";
+		}
+		return implode(" OR ", $strs);
+	}
+
 	private function getOneWhere($ids,$table){
 		$ids=explode("_", $ids);
 		if(sizeof($ids)<1)
 			return "";
 		$pks=$this->getPks(ucfirst($table));
 		$strs=[];
-		for($i=0;$i<sizeof($ids);$i++){
+		$idCount=\sizeof($ids);
+		for($i=0;$i<$idCount;$i++){
 			$strs[]=$pks[$i]."='".$ids[$i]."'";
 		}
 		return implode(" AND ", $strs);
@@ -196,7 +304,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 				$memberFK=$member;
 
 				$header=new HtmlHeader("",4,$memberFK,"content");
-				if(is_array($objectFK) || $objectFK instanceof Traversable){
+				if(is_array($objectFK) || $objectFK instanceof \Traversable){
 					$element=$semantic->htmlList("");
 					$element->addClass("animated divided celled");
 					$header->addIcon("folder");
