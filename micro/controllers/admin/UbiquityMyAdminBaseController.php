@@ -13,8 +13,20 @@ use controllers\ControllerBase;
 use micro\utils\RequestUtils;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
+	/**
+	 * @var UbiquityMyAdminData
+	 */
 	private $adminData;
+
+	/**
+	 * @var UbiquityMyAdminViewer
+	 */
 	private $adminViewer;
+
+	/**
+	 * @var UbiquityMyAdminFiles
+	 */
+	private $adminFiles;
 
 	public function index(){
 		$semantic=$this->jquery->semantic();
@@ -32,17 +44,17 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 				$item->setProperty("data-ajax", $table);
 			}
 		}
-		$menu->getOnClick("Admin/showTable","#divTable",["attr"=>"data-ajax"]);
+		$menu->getOnClick($this->getAdminFiles()->getAdminBaseRoute()."/showTable","#divTable",["attr"=>"data-ajax"]);
 		$menu->onClick("$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');");
 		$this->jquery->compile($this->view);
-		$this->loadView("Admin/index.html");
+		$this->loadView($this->getAdminFiles()->getViewIndex());
 	}
 
 	public function showTable($table){
 		$this->_showTable($table);
 		$model=$this->getModelsNS()."\\".ucfirst($table);
 		$this->jquery->compile($this->view);
-		$this->loadView("admin\showTable.html",["classname"=>$model]);
+		$this->loadView($this->getAdminFiles()->getViewShowTable(),["classname"=>$model]);
 	}
 
 	public function refreshTable(){
@@ -51,13 +63,26 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		echo $this->jquery->compile($this->view);
 	}
 
+	public function showTableClick($tableAndId){
+		$array=\explode(".", $tableAndId);
+		if(\is_array($array)){
+			$table=$array[0];
+			$id=$array[1];
+			$this->jquery->exec("$('.active').removeClass('active');$('.ui.label.left.pointing.teal').removeClass('left pointing teal active');$(\"[data-ajax='".$table."']\").addClass('active');$(\"[data-ajax='".$table."']\").find('.ui.label').addClass('left pointing teal');",true);
+			$this->showTable($table);
+			$this->jquery->exec("$(\"tr[data-ajax='".$id."']\").click();",true);
+			echo $this->jquery->compile();
+		}
+	}
+
 	protected function _showTable($table){
+		$adminRoute=$this->getAdminFiles()->getAdminBaseRoute();
 		$_SESSION["table"]= $table;
 		$semantic=$this->jquery->semantic();
 		$model=$this->getModelsNS()."\\".ucfirst($table);
 
 		$datas=DAO::getAll($model);
-		$modal=(\count($datas)>20?"modal":"no");
+		$modal=($this->getAdminViewer()->isModal($datas, $model)?"modal":"no");
 		$lv=$semantic->dataTable("lv", $model, $datas);
 		$attributes=$this->getFieldNames($model);
 
@@ -68,13 +93,13 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		});
 
 		$lv->setIdentifierFunction($this->getIdentifierFunction($model));
-		$lv->getOnRow("click", "Admin/showDetail","#table-details",["attr"=>"data-ajax"]);
-		$lv->setUrls(["delete"=>"Admin/delete","edit"=>"Admin/edit/".$modal]);
+		$lv->getOnRow("click", $adminRoute."/showDetail","#table-details",["attr"=>"data-ajax"]);
+		$lv->setUrls(["delete"=>$adminRoute."/delete","edit"=>$adminRoute."/edit/".$modal]);
 		$lv->setTargetSelector(["delete"=>"#table-messages","edit"=>"#table-details"]);
 		$lv->addClass("small very compact");
 		$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"]);
 		$lv->setActiveRowSelector("error");
-		$this->jquery->getOnClick("#btAddNew", "Admin/new/".$modal,"#table-details");
+		$this->jquery->getOnClick("#btAddNew", $adminRoute."/new/".$modal,"#table-details");
 		return $lv;
 	}
 
@@ -86,7 +111,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		if(!$modal){
 			$this->jquery->click("#bt-cancel","$('#form-container').transition('drop');");
 			$this->jquery->compile($this->view);
-			$this->loadView("admin/editTable.html",["modal"=>$modal]);
+			$this->loadView($this->getAdminFiles()->getViewEditTable(),["modal"=>$modal]);
 		}else{
 			$this->jquery->exec("$('#modal-frmEdit').modal('show');",true);
 			$form=$form->asModal(\get_class($instance));
@@ -162,7 +187,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 					}
 				}
 				$message->setStyle("success")->setIcon("checkmark");
-				$this->jquery->get("Admin/refreshTable","#lv","{}","",false,"replaceWith");
+				$this->jquery->get($this->getAdminFiles()->getAdminBaseRoute()."/refreshTable","#lv","{}","",false,"replaceWith");
 			}else{
 				$message->setContent("An error has occurred. Can not save changes.")->setStyle("error")->setIcon("warning circle");
 			}
@@ -237,7 +262,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 				$message=$this->showSimpleMessage("Impossible de supprimer `".$instanceString."`", "warning","warning");
 			}
 		}else{
-			$message=$this->showConfMessage("Confirmez la suppression de `".$instanceString."`?", "", "Admin/delete/{$ids}", "#table-messages", $ids);
+			$message=$this->showConfMessage("Confirmez la suppression de `".$instanceString."`?", "", $this->getAdminFiles()->getAdminBaseRoute()."/delete/{$ids}", "#table-messages", $ids);
 		}
 		echo $message;
 		echo $this->jquery->compile($this->view);
@@ -294,13 +319,18 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		if($wide<4)
 			$wide=4;
 			foreach ($relations as $member){
-				if(OrmUtils::getAnnotationInfoMember($model, "#oneToMany",$member)!==false){
+				if(($annot=OrmUtils::getAnnotationInfoMember($model, "#oneToMany",$member))!==false){
 					$objectFK=DAO::getOneToMany($instance, $member);
-				}if(OrmUtils::getAnnotationInfoMember($model, "#manyToMany",$member)!==false){
+					$fkClass=$annot["className"];
+				}elseif(($annot=OrmUtils::getAnnotationInfoMember($model, "#manyToMany",$member))!==false){
 					$objectFK=DAO::getManyToMany($instance, $member);
+					$fkClass=$annot["targetEntity"];
 				}else{
 					$objectFK=Reflexion::getMemberValue($instance, $member);
+					if(isset($objectFK))
+						$fkClass=\get_class($objectFK);
 				}
+				$fkTable=OrmUtils::getTableName($fkClass);
 				$memberFK=$member;
 
 				$header=new HtmlHeader("",4,$memberFK,"content");
@@ -310,13 +340,18 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 					$header->addIcon("folder");
 					foreach ($objectFK as $item){
 						if(method_exists($item, "__toString")){
-							$element->addItem($item."");
+							$id=($this->getIdentifierFunction($fkClass))(0,$item);
+							$item=$element->addItem($item."");
+							$item->setProperty("data-ajax", $fkTable.".".$id);
+							$item->addClass("showTable");
 							$hasElements=true;
 						}
 					}
 				}else{
 					if(method_exists($objectFK, "__toString")){
+						$id=($this->getIdentifierFunction($fkClass))(0,$objectFK);
 						$element=$semantic->htmlLabel("",$objectFK."");
+						$element->setProperty("data-ajax", $fkTable.".".$id)->addClass("showTable");
 						$header->addIcon("file outline");
 					}
 				}
@@ -327,6 +362,8 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			}
 			if($hasElements)
 				echo $grid;
+			$this->jquery->getOnClick(".showTable", $this->getAdminFiles()->getAdminBaseRoute()."/showTableClick","#divTable",["attr"=>"data-ajax","ajaxTransition"=>"random"]);
+			echo $this->jquery->compile($this->view);
 		}
 	}
 
@@ -340,6 +377,10 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 
 	protected function getUbiquityMyAdminViewer(){
 		return new UbiquityMyAdminViewer($this);
+	}
+
+	protected function getUbiquityMyAdminFiles(){
+		return new UbiquityMyAdminFiles();
 	}
 
 	private function getSingleton($value,$method){
@@ -361,6 +402,13 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	 */
 	public function getAdminViewer(){
 		return $this->getSingleton($this->adminViewer, "getUbiquityMyAdminViewer");
+	}
+
+	/**
+	 * @return UbiquityMyAdminFiles
+	 */
+	public function getAdminFiles(){
+		return $this->getSingleton($this->adminFiles, "getUbiquityMyAdminFiles");
 	}
 
 	protected function getTableNames(){

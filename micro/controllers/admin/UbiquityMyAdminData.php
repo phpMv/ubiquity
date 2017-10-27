@@ -3,21 +3,24 @@ namespace micro\controllers\admin;
 use micro\orm\DAO;
 use micro\orm\OrmUtils;
 
+/**
+ * The base class for displaying datas in UbiquityMyAdminController
+ * @author jc
+ *
+ */
 class UbiquityMyAdminData {
-	protected $updateOneToManyInForm;
-	protected $updateManyToManyInForm;
-	protected $updateManyToOneInForm;
 
-	public function __construct(){
-		$this->updateOneToManyInForm=false;
-		$this->updateManyToManyInForm=true;
-		$this->updateManyToOneInForm=true;
-	}
-
+	/**
+	 * Returns the table names to display in the left menu
+	 */
 	public function getTableNames(){
 		return DAO::$db->getTablesName();
 	}
 
+	/**
+	 * Returns the fields to display in the showTable action for $model
+	 * @param string $model
+	 */
 	public function getFieldNames($model){
 		return OrmUtils::getSerializableFields($model);
 	}
@@ -31,32 +34,14 @@ class UbiquityMyAdminData {
 	}
 
 	public function getUpdateOneToManyInForm() {
-		return $this->updateOneToManyInForm;
-	}
-
-	public function setUpdateOneToManyInForm($updateOneToManyInForm) {
-		$this->updateOneToManyInForm=$updateOneToManyInForm;
-		return $this;
+		return false;
 	}
 
 	public function getUpdateManyToManyInForm() {
-		return $this->updateManyToManyInForm;
-	}
-
-	public function setUpdateManyToManyInForm($updateManyToManyInForm) {
-		$this->updateManyToManyInForm=$updateManyToManyInForm;
-		return $this;
+		return true;
 	}
 
 	public function getUpdateManyToOneInForm() {
-		return $this->updateManyToOneInForm;
+		return true;
 	}
-
-	public function setUpdateManyToOneInForm($updateManyToOneInForm) {
-		$this->updateManyToOneInForm=$updateManyToOneInForm;
-		return $this;
-	}
-
-
-
 }
