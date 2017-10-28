@@ -31,6 +31,7 @@ class UbiquityMyAdminViewer {
 	/**
 	 * @param string $identifier
 	 * @param object $instance
+	 * @param boolean $modal
 	 * @return DataForm
 	 */
 	public function getForm($identifier,$instance,$modal=false){
@@ -60,9 +61,9 @@ class UbiquityMyAdminViewer {
 			if($this->controller->getAdminData()->getUpdateManyToOneInForm() && OrmUtils::getAnnotationInfoMember($className, "#manyToOne",$member)!==false){
 				$this->manyToOneFormField($form, $member, $className, $instance);
 			}elseif($this->controller->getAdminData()->getUpdateOneToManyInForm() && ($annot=OrmUtils::getAnnotationInfoMember($className, "#oneToMany",$member))!==false){
-				$this->oneToManyFormField($form, $member, $className, $instance,$annot);
+				$this->oneToManyFormField($form, $member, $instance,$annot);
 			}elseif($this->controller->getAdminData()->getUpdateManyToManyInForm() && ($annot=OrmUtils::getAnnotationInfoMember($className, "#manyToMany",$member))!==false){
-				$this->manyToManyFormField($form, $member, $className, $instance,$annot);
+				$this->manyToManyFormField($form, $member, $instance,$annot);
 			}
 		}
 		$form->setSubmitParams("Admin/update", "#table-details");
@@ -78,7 +79,7 @@ class UbiquityMyAdminViewer {
 		if($joinColumn){
 			$fkObject=Reflexion::getMemberValue($instance, $member);
 			$fkClass=$joinColumn["className"];
-			if($fkObject==null){
+			if($fkObject===null){
 				$fkObject=new $fkClass();
 			}
 			$fkId=OrmUtils::getFirstKey($fkClass);
@@ -95,7 +96,7 @@ class UbiquityMyAdminViewer {
 			}
 		}
 	}
-	protected function oneToManyFormField(DataForm $form,$member,$className,$instance,$annot){
+	protected function oneToManyFormField(DataForm $form,$member,$instance,$annot){
 		$newField=$member."Ids";
 		$fkClass=$annot["className"];
 		$fkId=OrmUtils::getFirstKey($fkClass);
@@ -108,7 +109,7 @@ class UbiquityMyAdminViewer {
 		$form->setCaption($newField, \ucfirst($member));
 	}
 
-	protected function manyToManyFormField(DataForm $form,$member,$className,$instance,$annot){
+	protected function manyToManyFormField(DataForm $form,$member,$instance,$annot){
 		$newField=$member."Ids";
 		$fkClass=$annot["targetEntity"];
 		$fkId=OrmUtils::getFirstKey($fkClass);
