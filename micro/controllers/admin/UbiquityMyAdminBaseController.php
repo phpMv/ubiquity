@@ -106,7 +106,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	protected function _edit($instance,$modal="no"){
 		$_SESSION["instance"]=$instance;
 		$modal=($modal=="modal");
-		$form=$this->getAdminViewer()->getForm("frmEdit",$instance,$modal);
+		$form=$this->getAdminViewer()->getForm("frmEdit",$instance);
 		$this->jquery->click("#action-modal-frmEdit","$('#frmEdit').form('submit');",false);
 		if(!$modal){
 			$this->jquery->click("#bt-cancel","$('#form-container').transition('drop');");

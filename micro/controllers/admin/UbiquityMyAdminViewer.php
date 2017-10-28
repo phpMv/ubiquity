@@ -31,10 +31,9 @@ class UbiquityMyAdminViewer {
 	/**
 	 * @param string $identifier
 	 * @param object $instance
-	 * @param boolean $modal
 	 * @return DataForm
 	 */
-	public function getForm($identifier,$instance,$modal=false){
+	public function getForm($identifier,$instance){
 		$form=$this->jquery->semantic()->dataForm($identifier, $instance);
 		$className=\get_class($instance);
 		$form->setFields($this->controller->getAdminData()->getFormFieldNames($className));
@@ -47,12 +46,6 @@ class UbiquityMyAdminViewer {
 					break;
 				case "int":
 					$form->fieldAsInput($property,["inputType"=>"number"]);
-					break;
-				case "password":
-					$form->fieldAs($property, ["inputType"=>"password"]);
-					break;
-				case "email":
-					$form->fieldAsInput($property,["inputType"=>"email","rules"=>["email"]]);
 					break;
 			}
 		}
