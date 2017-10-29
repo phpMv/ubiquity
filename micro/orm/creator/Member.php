@@ -114,4 +114,8 @@ class Member {
 		$result.="\t}\n";
 		return $result;
 	}
+
+	public function hasAnnotations(){
+		return \count($this->annotations)>0;
+	}
 }

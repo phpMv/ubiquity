@@ -60,6 +60,7 @@ class Model {
 			$result.=$member->getGetter();
 			$result.=$member->getSetter();
 		}
+		$result.=$this->getToString();
 		$result.="\n}";
 		return $result;
 	}
@@ -105,6 +106,28 @@ class Model {
 				$result[]=$member;
 			}
 		}
+		return $result;
+	}
+
+	private function getToStringField(){
+		$result=null;
+		foreach ( $this->members as $member ) {
+			if ($member->hasAnnotations()===false) {
+				$result=$member->getName();
+			}
+		}
+		return $result;
+	}
+
+	public function getToString(){
+		$field=$this->getToStringField();
+		if(isset($field))
+			$corps='$this->' . $field;
+		else
+			$corps='\"'.$this->name.'@\"'.'.\spl_object_hash($this)';
+		$result="\n\t public function __toString(){\n";
+		$result.="\t\t" . 'return '.$corps. ";\n";
+		$result.="\t}\n";
 		return $result;
 	}
 }
