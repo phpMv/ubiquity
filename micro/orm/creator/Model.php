@@ -122,9 +122,9 @@ class Model {
 	public function getToString() {
 		$field=$this->getToStringField();
 		if (isset($field))
-			$corps='(isset($this->' . $field . '))?$this->' . $field . ':' . '\"' . $this->name . '@\"' . '.\spl_object_hash($this)';
+			$corps='(isset($this->' . $field . '))?$this->' . $field . ':' . "\"" . $this->name . "@\"" . '.\spl_object_hash($this)';
 		else
-			$corps='\"' . $this->name . '@\"' . '.\spl_object_hash($this)';
+			$corps="\"" . $this->name . "@\"" . '.\spl_object_hash($this)';
 		$result="\n\t public function __toString(){\n";
 		$result.="\t\t" . 'return ' . $corps . ";\n";
 		$result.="\t}\n";
