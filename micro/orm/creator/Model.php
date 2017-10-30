@@ -109,24 +109,24 @@ class Model {
 		return $result;
 	}
 
-	private function getToStringField(){
+	private function getToStringField() {
 		$result=null;
 		foreach ( $this->members as $member ) {
-			if ($member->hasAnnotations()===false) {
+			if ($member->hasAnnotations() === false) {
 				$result=$member->getName();
 			}
 		}
 		return $result;
 	}
 
-	public function getToString(){
+	public function getToString() {
 		$field=$this->getToStringField();
-		if(isset($field))
-			$corps='$this->' . $field;
+		if (isset($field))
+			$corps='(isset($this->' . $field . '))?$this->' . $field . ':' . '\"' . $this->name . '@\"' . '.\spl_object_hash($this)';
 		else
-			$corps='\"'.$this->name.'@\"'.'.\spl_object_hash($this)';
+			$corps='\"' . $this->name . '@\"' . '.\spl_object_hash($this)';
 		$result="\n\t public function __toString(){\n";
-		$result.="\t\t" . 'return '.$corps. ";\n";
+		$result.="\t\t" . 'return ' . $corps . ";\n";
 		$result.="\t}\n";
 		return $result;
 	}
