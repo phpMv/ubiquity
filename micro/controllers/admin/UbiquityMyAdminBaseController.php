@@ -86,7 +86,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$lv=$semantic->dataTable("lv", $model, $datas);
 		$attributes=$this->getFieldNames($model);
 
-		$lv->setCaptions(array_map("ucfirst", $attributes));
+		$lv->setCaptions($this->getAdminViewer()->getCaptions($attributes, $model));
 		$lv->setFields($attributes);
 		$lv->onPreCompile(function() use ($attributes,&$lv){
 			$lv->getHtmlComponent()->colRight(\count($attributes));
@@ -307,6 +307,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	}
 
 	public function showDetail($ids){
+		$viewer=$this->getAdminViewer();
 		$hasElements=false;
 		$instance=$this->getModelInstance($ids);
 		$table=$_SESSION['table'];
@@ -335,9 +336,8 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 
 				$header=new HtmlHeader("",4,$memberFK,"content");
 				if(is_array($objectFK) || $objectFK instanceof \Traversable){
-					$element=$semantic->htmlList("");
-					$element->addClass("animated divided celled");
-					$header->addIcon("folder");
+					$header=$viewer->getFkHeaderList($memberFK, $fkClass, $objectFK);
+					$element=$viewer->getFkList($memberFK, $fkClass, $objectFK);
 					foreach ($objectFK as $item){
 						if(method_exists($item, "__toString")){
 							$id=($this->getIdentifierFunction($fkClass))(0,$item);
@@ -345,14 +345,15 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 							$item->setProperty("data-ajax", $fkTable.".".$id);
 							$item->addClass("showTable");
 							$hasElements=true;
+							$this->getAdminViewer()->displayFkElementList($item, $memberFK, $fkClass, $item);
 						}
 					}
 				}else{
 					if(method_exists($objectFK, "__toString")){
+						$header=$viewer->getFkHeaderElement($memberFK, $fkClass, $objectFK);
 						$id=($this->getIdentifierFunction($fkClass))(0,$objectFK);
-						$element=$semantic->htmlLabel("",$objectFK."");
+						$element=$viewer->getFkElement($memberFK, $fkClass, $objectFK);
 						$element->setProperty("data-ajax", $fkTable.".".$id)->addClass("showTable");
-						$header->addIcon("file outline");
 					}
 				}
 				if(isset($element)){
