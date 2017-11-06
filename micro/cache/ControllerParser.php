@@ -13,7 +13,7 @@ class ControllerParser {
 	public function parse($controllerClass) {
 		$this->controllerClass=$controllerClass;
 		$reflect=new \ReflectionClass($controllerClass);
-		if (!$reflect->isAbstract()) {
+		if (!$reflect->isAbstract() && $reflect->isSubclassOf("micro\controllers\Controller")) {
 			$instance=new $controllerClass();
 			$annotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
 			if (\sizeof($annotsClass) > 0)

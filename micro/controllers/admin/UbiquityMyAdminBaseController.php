@@ -11,6 +11,14 @@ use micro\controllers\Autoloader;
 use micro\controllers\admin\UbiquityMyAdminData;
 use controllers\ControllerBase;
 use micro\utils\RequestUtils;
+use Ajax\semantic\html\content\view\HtmlItem;
+use micro\cache\CacheManager;
+use micro\controllers\admin\popo\Route;
+use micro\controllers\Router;
+use micro\utils\StrUtils;
+use micro\controllers\admin\popo\CacheFile;
+use Ajax\semantic\html\collections\form\HtmlFormFields;
+use micro\controllers\admin\popo\ControllerAction;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	/**
@@ -28,33 +36,233 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	 */
 	private $adminFiles;
 
+	private $globalMessage;
+
+
+	public function initialize(){
+		parent::initialize();
+		if(RequestUtils::isAjax()===false){
+			$semantic=$this->jquery->semantic();
+			$elements=["UbiquityMyAdmin","Models","Routes","Controllers","Cache","Config"];
+			$mn=$semantic->htmlMenu("mainMenu",$elements);
+			$mn->getItem(0)->addClass("header")->addIcon("home big link");
+			$mn->setPropertyValues("data-ajax", ["index","models","routes","controllers","cache","config"]);
+			$mn->setActiveItem(0);
+			$mn->setSecondary();
+			$mn->getOnClick("Admin","#main-content",["attr"=>"data-ajax"]);
+			$this->jquery->compile($this->view);
+			$this->loadView($this->_getAdminFiles()->getViewHeader());
+		}
+	}
+
 	public function index(){
 		$semantic=$this->jquery->semantic();
-		$dbs=$this->getTableNames();
-		$menu=$semantic->htmlMenu("menuDbs");
-		$menu->setVertical()->setInverted();
-		foreach ($dbs as $table){
-			$model=$this->getModelsNS()."\\".ucfirst($table);
-			$file=\str_replace("\\", DS, ROOT . DS.$model).".php";
-			$find=Autoloader::tryToRequire($file);
-			if ($find){
-				$count=DAO::count($model);
-				$item=$menu->addItem(ucfirst($table));
-				$item->addLabel($count);
-				$item->setProperty("data-ajax", $table);
-			}
-		}
-		$menu->getOnClick($this->getAdminFiles()->getAdminBaseRoute()."/showTable","#divTable",["attr"=>"data-ajax"]);
-		$menu->onClick("$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');");
+		$items=$semantic->htmlItems("items");
+
+		$items->fromDatabaseObjects($this->_getAdminViewer()->getMainMenuElements(), function($e){
+			$item=new HtmlItem("");
+			$item->addIcon($e[1]." bordered circular")->setSize("big");
+			$item->addItemHeaderContent($e[0],[],$e[2]);
+			$item->setProperty("data-ajax", \strtolower($e[0]));
+			return $item;
+		});
+		$items->addClass("divided relaxed link");
+		$items->getOnClick("Admin","#main-content",["attr"=>"data-ajax"]);
 		$this->jquery->compile($this->view);
-		$this->loadView($this->getAdminFiles()->getViewIndex());
+		$this->loadView($this->_getAdminFiles()->getViewIndex());
+	}
+	public function models(){
+		$config=Startup::getConfig();
+		$semantic=$this->jquery->semantic();
+		$this->getHeader("models");
+		$modelsNS=$config["mvcNS"]["models"];
+		$modelsDir=ROOT . str_replace("\\", DS, $modelsNS);
+		$this->showSimpleMessage("Models directory is <b>".$modelsDir."</b>", "info","info circle",null,"msgModels");
+		try {
+			$dbs=$this->getTableNames();
+			$menu=$semantic->htmlMenu("menuDbs");
+			$menu->setVertical()->setInverted();
+			foreach ($dbs as $table){
+				$model=$this->getModelsNS()."\\".ucfirst($table);
+				$file=\str_replace("\\", DS, ROOT . DS.$model).".php";
+				$find=Autoloader::tryToRequire($file);
+				if ($find){
+					$count=DAO::count($model);
+					$item=$menu->addItem(ucfirst($table));
+					$item->addLabel($count);
+					$item->setProperty("data-ajax", $table);
+				}
+			}
+			$menu->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/showTable","#divTable",["attr"=>"data-ajax"]);
+			$menu->onClick("$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');");
+
+		} catch (\Exception $e) {
+			$bt=new HtmlButton("btInitCache","(Re-)init models cache");
+			$bt->setNegative()->addIcon("refresh");
+			$bt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_initModelsCache","#main-content");
+			$this->showSimpleMessage(["Models cache is not created!&nbsp;",$bt], "error","warning circle",null,"errorMsg");
+		}
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewDataIndex());
+	}
+
+	public function controllers(){
+		$config=Startup::getConfig();
+		$this->getHeader("controllers");
+		$controllersNS=$config["mvcNS"]["controllers"];
+		$controllersDir=ROOT . str_replace("\\", DS, $controllersNS);
+		$this->showSimpleMessage("Controllers directory is <b>".$controllersDir."</b>", "info","info circle",null,"msgControllers");
+		$frm=$this->jquery->semantic()->htmlForm("frmCtrl");
+		$frm->setValidationParams(["on"=>"blur","inline"=>true]);
+		$input=$frm->addInput("name",null,"text","","Controller name")->addRules(["empty","regExp[/^[A-Za-z]\w*$/]"])->setWidth(6);
+		$input->addAction("Create controller",true,"plus",true)->addClass("teal")->asSubmit();
+		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/createController","#main-content");
+		$this->_getAdminViewer()->getControllersDataTable(ControllerAction::init());
+		$this->jquery->postOnClick("._route[data-ajax]", $this->_getAdminFiles()->getAdminBaseRoute()."/routes","{filter:$(this).attr('data-ajax')}","#main-content");
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewControllersIndex());
+	}
+
+	public function routes(){
+		$config=Startup::getConfig();
+		$this->getHeader("routes");
+		$controllersNS=$config["mvcNS"]["controllers"];
+		$controllersDir=ROOT . $config["cacheDirectory"].str_replace("\\", DS, $controllersNS);
+		$this->showSimpleMessage("Router cache file is <b>".$controllersDir."\\routes.cache.php</b>", "info","info circle",null,"msgRoutes");
+		$routes=CacheManager::getRoutes();
+		$this->_getAdminViewer()->getRoutesDataTable(Route::init($routes));
+		$this->jquery->getOnClick("#bt-init-cache", $this->_getAdminFiles()->getAdminBaseRoute()."/initCacheRouter","#divRoutes");
+		$this->jquery->postOnClick("#bt-filter-routes", $this->_getAdminFiles()->getAdminBaseRoute()."/filterRoutes","{filter:$('#filter-routes').val()}","#divRoutes",["ajaxTransition"=>"random"]);
+		if(isset($_POST["filter"]))
+			$this->jquery->exec("$(\"tr:contains('".$_POST["filter"]."')\").addClass('warning');",true);
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewRoutesIndex(),["url"=>Startup::getConfig()["siteUrl"]]);
+	}
+
+	public function initCacheRouter(){
+		$config=Startup::getConfig();
+		\ob_start();
+		CacheManager::initCache($config,"controllers");
+		$message=\ob_get_clean();
+		echo $this->showSimpleMessage(\nl2br($message), "info","info",4000);
+		$routes=CacheManager::getRoutes();
+		echo $this->_getAdminViewer()->getRoutesDataTable(Route::init($routes));
+		echo $this->jquery->compile($this->view);
+
+	}
+
+	public function filterRoutes(){
+		$filter=$_POST["filter"];
+		$ctrls=[];
+		if(StrUtils::isNotNull($filter)){
+			$filter=\trim($_POST["filter"]);
+			$ctrls=ControllerAction::initWithPath($filter);
+			$routes=Router::filterRoutes($filter);
+		}
+		else $routes=CacheManager::getRoutes();
+		echo $this->_getAdminViewer()->getRoutesDataTable(Route::init($routes));
+		if(\sizeof($ctrls)>0)
+			echo $this->_getAdminViewer()->getControllersDataTable($ctrls);
+		echo $this->jquery->compile($this->view);
+	}
+
+	public function cache(){
+		$config=Startup::getConfig();
+		$this->getHeader("cache");
+		$this->showSimpleMessage("Cache directory is <b>".ROOT.$config["cacheDirectory"]."</b>", "info","info circle",null,"msgCache");
+		$cacheFiles=CacheFile::init(ROOT . DS .$config["cacheDirectory"]."controllers", "Controllers");
+		$cacheFiles=\array_merge($cacheFiles,CacheFile::init(ROOT . DS .$config["cacheDirectory"]."models", "Models"));
+		$form=$this->jquery->semantic()->htmlForm("frmCache");
+		$radios=HtmlFormFields::checkeds("cacheTypes[]",["controllers"=>"Controllers","models"=>"Models","views"=>"Views","queries"=>"Queries","annotations"=>"Annotations"],"Display cache types: ",["controllers","models"]);
+		$radios->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/setCacheTypes","frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith"]);
+		$form->addField($radios)->setInline();
+		$this->_getAdminViewer()->getCacheDataTable($cacheFiles);
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewCacheIndex());
+	}
+
+	public function setCacheTypes(){
+		$config=Startup::getConfig();
+		if(isset($_POST["cacheTypes"]))
+			$caches=$_POST["cacheTypes"];
+		else
+			$caches=[];
+		$cacheFiles=[];
+		foreach ($caches as $cache){
+			$cacheFiles=\array_merge($cacheFiles,CacheFile::init(ROOT . DS .$config["cacheDirectory"].$cache, \ucfirst($cache)));
+		}
+		$dt=$this->_getAdminViewer()->getCacheDataTable($cacheFiles);
+		echo $dt->refresh();
+		echo $this->jquery->compile($this->view);
+	}
+
+	public function deleteCacheFile(){
+		if(isset($_POST["toDelete"])){
+			$toDelete=$_POST["toDelete"];
+			if(\file_exists($toDelete))
+				\unlink($toDelete);
+		}
+		$this->setCacheTypes();
+	}
+
+	public function deleteAllCacheFiles(){
+		if(isset($_POST["type"])){
+			\session_destroy();
+			$config=Startup::getConfig();
+			$toDelete=$_POST["type"];
+			CacheFile::delete(ROOT . DS .$config["cacheDirectory"].\strtolower($toDelete));
+		}
+		$this->setCacheTypes();
+	}
+
+	public function initCacheType(){
+		if(isset($_POST["type"])){
+			$type=$_POST["type"];
+			$config=Startup::getConfig();
+			switch ($type){
+				case "Models":
+					CacheManager::initCache($config,"models");
+					break;
+				case "Controllers":
+					CacheManager::initCache($config,"controllers");
+					break;
+			}
+
+		}
+		$this->setCacheTypes();
+	}
+
+	public function _initModelsCache(){
+		$config=Startup::getConfig();
+		\ob_start();
+		CacheManager::initCache($config,"models");
+		\ob_end_clean();
+		$this->models();
+	}
+
+	public function config(){
+		global $config;
+		$this->getHeader("config");
+		$this->_getAdminViewer()->getConfigDataElement($config);
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewConfigIndex());
+	}
+
+	protected function getHeader($key){
+		$semantic=$this->jquery->semantic();
+		$header=$semantic->htmlHeader("header",3);
+		$e=$this->_getAdminViewer()->getMainMenuElements()[$key];
+		$header->asTitle($e[0],$e[2]);
+		$header->addIcon($e[1]);
+		$header->setBlock()->setInverted();
+		return $header;
 	}
 
 	public function showTable($table){
 		$this->_showTable($table);
 		$model=$this->getModelsNS()."\\".ucfirst($table);
 		$this->jquery->compile($this->view);
-		$this->loadView($this->getAdminFiles()->getViewShowTable(),["classname"=>$model]);
+		$this->loadView($this->_getAdminFiles()->getViewShowTable(),["classname"=>$model]);
 	}
 
 	public function refreshTable(){
@@ -75,18 +283,48 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		}
 	}
 
+	public function createController($force=null){
+		if(RequestUtils::isPost()){
+			if(isset($_POST["name"]) && $_POST["name"]!==""){
+				$config=Startup::getConfig();
+				$controllersNS=$config["mvcNS"]["controllers"];
+				$controllersDir=ROOT . DS . str_replace("\\", DS, $controllersNS);
+				$controllerName=\ucfirst($_POST["name"]);
+				$filename=$controllersDir.DS.$controllerName.".php";
+				if(\file_exists($filename)===false){
+					if(isset($config["mvcNS"]["controllers"]) && $config["mvcNS"]["controllers"]!=="")
+						$namespace="namespace ".$config["mvcNS"]["controllers"].";";
+					$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>"","%namespace%"=>$namespace]);
+					$this->showSimpleMessage("The <b>".$controllerName."</b> controller has been created in <b>".$filename."</b>.", "success","checkmark circle",10000,"msgGlobal");
+				}else{
+					$this->showSimpleMessage("The file <b>".$filename."</b> already exists.<br>Can not create the <b>".$controllerName."</b> controller!", "warning","warning circle",10000,"msgGlobal");
+				}
+			}
+		}
+		$this->controllers();
+	}
+
+	private function openReplaceWrite($source,$destination,$keyAndValues){
+		if(file_exists($source)){
+			$str=file_get_contents($source);
+			array_walk($keyAndValues, function(&$item){if(is_array($item)) $item=implode("\n", $item);});
+			$str=str_replace(array_keys($keyAndValues), array_values($keyAndValues), $str);
+			return file_put_contents($destination,$str);
+		}
+	}
+
 	protected function _showTable($table){
-		$adminRoute=$this->getAdminFiles()->getAdminBaseRoute();
+		$adminRoute=$this->_getAdminFiles()->getAdminBaseRoute();
 		$_SESSION["table"]= $table;
 		$semantic=$this->jquery->semantic();
 		$model=$this->getModelsNS()."\\".ucfirst($table);
 
 		$datas=DAO::getAll($model);
-		$modal=($this->getAdminViewer()->isModal($datas, $model)?"modal":"no");
+		$modal=($this->_getAdminViewer()->isModal($datas, $model)?"modal":"no");
 		$lv=$semantic->dataTable("lv", $model, $datas);
 		$attributes=$this->getFieldNames($model);
 
-		$lv->setCaptions($this->getAdminViewer()->getCaptions($attributes, $model));
+		$lv->setCaptions($this->_getAdminViewer()->getCaptions($attributes, $model));
 		$lv->setFields($attributes);
 		$lv->onPreCompile(function() use ($attributes,&$lv){
 			$lv->getHtmlComponent()->colRight(\count($attributes));
@@ -106,12 +344,12 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	protected function _edit($instance,$modal="no"){
 		$_SESSION["instance"]=$instance;
 		$modal=($modal=="modal");
-		$form=$this->getAdminViewer()->getForm("frmEdit",$instance);
+		$form=$this->_getAdminViewer()->getForm("frmEdit",$instance);
 		$this->jquery->click("#action-modal-frmEdit","$('#frmEdit').form('submit');",false);
 		if(!$modal){
 			$this->jquery->click("#bt-cancel","$('#form-container').transition('drop');");
 			$this->jquery->compile($this->view);
-			$this->loadView($this->getAdminFiles()->getViewEditTable(),["modal"=>$modal]);
+			$this->loadView($this->_getAdminFiles()->getViewEditTable(),["modal"=>$modal]);
 		}else{
 			$this->jquery->exec("$('#modal-frmEdit').modal('show');",true);
 			$form=$form->asModal(\get_class($instance));
@@ -138,7 +376,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	}
 
 	public function update(){
-		$message=$this->jquery->semantic()->htmlMessage("msgUpdate","The changes have been correctly saved","info");
+		$message=$this->jquery->semantic()->htmlMessage("msgUpdate","Modifications were successfully saved","info");
 		$instance=@$_SESSION["instance"];
 		$className=\get_class($instance);
 		$relations = OrmUtils::getManyToOneFields($className);
@@ -154,7 +392,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		}
 		RequestUtils::setValuesToObject($instance,$_POST);
 		foreach ($relations as $member){
-			if($this->getAdminData()->getUpdateManyToOneInForm()){
+			if($this->_getAdminData()->getUpdateManyToOneInForm()){
 				$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
 				if($joinColumn){
 					$fkClass=$joinColumn["className"];
@@ -173,7 +411,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 				$update=DAO::update($instance);
 			}
 			if($update){
-				if($this->getAdminData()->getUpdateManyToManyInForm()){
+				if($this->_getAdminData()->getUpdateManyToManyInForm()){
 					$relations = OrmUtils::getManyToManyFields($className);
 					foreach ($relations as $member){
 						if(($annot=OrmUtils::getAnnotationInfoMember($className, "#manyToMany",$member))!==false){
@@ -187,7 +425,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 					}
 				}
 				$message->setStyle("success")->setIcon("checkmark");
-				$this->jquery->get($this->getAdminFiles()->getAdminBaseRoute()."/refreshTable","#lv","{}","",false,"replaceWith");
+				$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute()."/refreshTable","#lv","{}","",false,"replaceWith");
 			}else{
 				$message->setContent("An error has occurred. Can not save changes.")->setStyle("error")->setIcon("warning circle");
 			}
@@ -262,7 +500,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 				$message=$this->showSimpleMessage("Impossible de supprimer `".$instanceString."`", "warning","warning");
 			}
 		}else{
-			$message=$this->showConfMessage("Confirmez la suppression de `".$instanceString."`?", "", $this->getAdminFiles()->getAdminBaseRoute()."/delete/{$ids}", "#table-messages", $ids);
+			$message=$this->showConfMessage("Confirmez la suppression de `".$instanceString."`?", "", $this->_getAdminFiles()->getAdminBaseRoute()."/delete/{$ids}", "#table-messages", $ids);
 		}
 		echo $message;
 		echo $this->jquery->compile($this->view);
@@ -283,9 +521,11 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		return $result;
 	}
 
-	private function showSimpleMessage($content,$type,$icon="info",$timeout=NULL){
+	private function showSimpleMessage($content,$type,$icon="info",$timeout=NULL,$staticName=null){
 		$semantic=$this->jquery->semantic();
-		$message=$semantic->htmlMessage("msg-".rand(0,50),$content,$type);
+		if(!isset($staticName))
+			$staticName="msg-".rand(0,50);
+		$message=$semantic->htmlMessage($staticName,$content,$type);
 		$message->setIcon($icon." circle");
 		$message->setDismissable();
 		if(isset($timeout))
@@ -307,7 +547,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	}
 
 	public function showDetail($ids){
-		$viewer=$this->getAdminViewer();
+		$viewer=$this->_getAdminViewer();
 		$hasElements=false;
 		$instance=$this->getModelInstance($ids);
 		$table=$_SESSION['table'];
@@ -345,7 +585,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 							$item->setProperty("data-ajax", $fkTable.".".$id);
 							$item->addClass("showTable");
 							$hasElements=true;
-							$this->getAdminViewer()->displayFkElementList($item, $memberFK, $fkClass, $item);
+							$this->_getAdminViewer()->displayFkElementList($item, $memberFK, $fkClass, $item);
 						}
 					}
 				}else{
@@ -363,7 +603,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			}
 			if($hasElements)
 				echo $grid;
-			$this->jquery->getOnClick(".showTable", $this->getAdminFiles()->getAdminBaseRoute()."/showTableClick","#divTable",["attr"=>"data-ajax","ajaxTransition"=>"random"]);
+			$this->jquery->getOnClick(".showTable", $this->_getAdminFiles()->getAdminBaseRoute()."/showTableClick","#divTable",["attr"=>"data-ajax","ajaxTransition"=>"random"]);
 			echo $this->jquery->compile($this->view);
 		}
 	}
@@ -394,30 +634,30 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	/**
 	 * @return UbiquityMyAdminData
 	 */
-	public function getAdminData(){
+	public function _getAdminData(){
 		return $this->getSingleton($this->adminData, "getUbiquityMyAdminData");
 	}
 
 	/**
 	 * @return UbiquityMyAdminViewer
 	 */
-	public function getAdminViewer(){
+	public function _getAdminViewer(){
 		return $this->getSingleton($this->adminViewer, "getUbiquityMyAdminViewer");
 	}
 
 	/**
 	 * @return UbiquityMyAdminFiles
 	 */
-	public function getAdminFiles(){
+	public function _getAdminFiles(){
 		return $this->getSingleton($this->adminFiles, "getUbiquityMyAdminFiles");
 	}
 
 	protected function getTableNames(){
-		return $this->getAdminData()->getTableNames();
+		return $this->_getAdminData()->getTableNames();
 	}
 
 	protected function getFieldNames($model){
-		return $this->getAdminData()->getFieldNames($model);
+		return $this->_getAdminData()->getFieldNames($model);
 	}
 }
 

@@ -10,6 +10,8 @@ class Twig extends TemplateEngine {
 
 	public function __construct($options=array()) {
 		$loader=new \Twig_Loader_Filesystem(ROOT . DS . "views/");
+		if(isset($options["cache"]) && $options["cache"]===true)
+			$options["cache"]=ROOT.DS.Startup::getConfig()["cacheDirectory"].DS."views/";
 		$this->twig=new \Twig_Environment($loader, $options);
 
 		$function=new \Twig_SimpleFunction('getRouteByName', function ($name) {
