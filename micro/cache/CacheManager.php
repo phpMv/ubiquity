@@ -52,6 +52,14 @@ class CacheManager {
 		return self::$cache->expired("controllers/" . $key, $duration) === true || \array_key_exists($key, self::$expiredRoutes);
 	}
 
+	public static function isExpired($path,$duration){
+		$route=Router::getRoute($path,false);
+		if($route!==false && \is_array($route)){
+			return self::expired(self::getRouteKey($route), $duration);
+		}
+		return true;
+	}
+
 	public static function setExpired($routePath, $expired=true) {
 		$key=self::getRouteKey($routePath);
 		self::setKeyExpired($key, $expired);
@@ -178,11 +186,16 @@ class CacheManager {
 		}
 	}
 
-	private static function initControllersCache(&$config) {
+	public static function getControllerFiles(&$config,$silent=false){
 		$controllersNS=$config["mvcNS"]["controllers"];
 		$controllersDir=ROOT . DS . str_replace("\\", DS, $controllersNS);
-		echo "Controllers directory is " . ROOT . $controllersNS . "\n";
-		$files=self::glob_recursive($controllersDir . DS . '*');
+		if(!$silent)
+			echo "Controllers directory is " . ROOT . $controllersNS . "\n";
+		return self::glob_recursive($controllersDir . DS . '*');
+	}
+
+	private static function initControllersCache(&$config) {
+		$files=self::getControllerFiles($config);
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				$controller=ClassUtils::getClassFullNameFromFile($file);
@@ -194,7 +207,7 @@ class CacheManager {
 		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray(self::$routes, "array") . ";");
 	}
 
-	private static function glob_recursive($pattern, $flags=0) {
+	public static function glob_recursive($pattern, $flags=0) {
 		$files=glob($pattern, $flags);
 		foreach ( glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir ) {
 			$files=array_merge($files, self::glob_recursive($dir . '/' . basename($pattern), $flags));
