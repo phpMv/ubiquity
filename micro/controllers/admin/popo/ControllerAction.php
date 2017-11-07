@@ -135,4 +135,9 @@ class ControllerAction {
 		$this->annots=$annots;
 		return $this;
 	}
+
+	public function getPath(){
+		$reflect=new \ReflectionClass($this->controller);
+		return $reflect->getShortName()."/".$this->action;
+	}
 }

@@ -19,6 +19,7 @@ use micro\utils\StrUtils;
 use micro\controllers\admin\popo\CacheFile;
 use Ajax\semantic\html\collections\form\HtmlFormFields;
 use micro\controllers\admin\popo\ControllerAction;
+use Ajax\semantic\html\collections\form\HtmlForm;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	/**
@@ -119,6 +120,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/createController","#main-content");
 		$this->_getAdminViewer()->getControllersDataTable(ControllerAction::init());
 		$this->jquery->postOnClick("._route[data-ajax]", $this->_getAdminFiles()->getAdminBaseRoute()."/routes","{filter:$(this).attr('data-ajax')}","#main-content");
+		$this->addNavigationTesting();
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewControllersIndex());
 	}
@@ -135,8 +137,14 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->jquery->postOnClick("#bt-filter-routes", $this->_getAdminFiles()->getAdminBaseRoute()."/filterRoutes","{filter:$('#filter-routes').val()}","#divRoutes",["ajaxTransition"=>"random"]);
 		if(isset($_POST["filter"]))
 			$this->jquery->exec("$(\"tr:contains('".$_POST["filter"]."')\").addClass('warning');",true);
+		$this->addNavigationTesting();
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewRoutesIndex(),["url"=>Startup::getConfig()["siteUrl"]]);
+	}
+
+	private function addNavigationTesting(){
+		$this->jquery->postOnClick("._get", $this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","{method:'get',url:$(this).attr('data-url')}","#modal");
+		$this->jquery->postOnClick("._post", $this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","{method:'post',url:$(this).attr('data-url')}","#modal");
 	}
 
 	public function initCacheRouter(){
@@ -261,6 +269,8 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	public function showTable($table){
 		$this->_showTable($table);
 		$model=$this->getModelsNS()."\\".ucfirst($table);
+		$this->_getAdminViewer()->getModelsStructureDataTable(OrmUtils::getModelMetadata($model));
+		$this->jquery->exec('$("#models-tab .item").tab();',true);
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewShowTable(),["classname"=>$model]);
 	}
@@ -276,7 +286,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		if(\is_array($array)){
 			$table=$array[0];
 			$id=$array[1];
-			$this->jquery->exec("$('.active').removeClass('active');$('.ui.label.left.pointing.teal').removeClass('left pointing teal active');$(\"[data-ajax='".$table."']\").addClass('active');$(\"[data-ajax='".$table."']\").find('.ui.label').addClass('left pointing teal');",true);
+			$this->jquery->exec("$('#menuDbs .active').removeClass('active');$('.ui.label.left.pointing.teal').removeClass('left pointing teal active');$(\"[data-ajax='".$table."']\").addClass('active');$(\"[data-ajax='".$table."']\").find('.ui.label').addClass('left pointing teal');",true);
 			$this->showTable($table);
 			$this->jquery->exec("$(\"tr[data-ajax='".$id."']\").click();",true);
 			echo $this->jquery->compile();
@@ -302,6 +312,89 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			}
 		}
 		$this->controllers();
+	}
+
+	public function _showFileContent(){
+		if(RequestUtils::isPost()){
+			$type=$_POST["type"];$filename=$_POST["filename"];
+			if(\file_exists($filename)){
+				$modal=$this->jquery->semantic()->htmlModal("file",$type." : ".\basename($filename));
+				$frm=new HtmlForm("");
+				$frm->addTextarea("file-content", null,\file_get_contents($filename),"",10);
+				$modal->setContent($frm);
+				$modal->addAction("Close");
+				$this->jquery->exec("$('#file').modal('show');",true);
+				echo $modal;
+				echo $this->jquery->compile($this->view);
+			}
+		}
+	}
+
+	public function _runAction(){
+		if(RequestUtils::isPost()){
+			$url=$_POST["url"];unset($_POST["url"]);
+			$method=$_POST["method"];unset($_POST["method"]);
+			$newParams=null;
+			if(\sizeof($_POST)>0){
+				$newParams=$_POST;
+			}
+			$modal=$this->jquery->semantic()->htmlModal("response",\strtoupper($method).":".$url);
+			$params=$this->getRequiredRouteParameters($url,$newParams);
+			if(\sizeof($params)>0){
+				$frm=$this->jquery->semantic()->htmlForm("frmParams");
+				$frm->addMessage("msg", "You must complete the following parameters before continuing navigation testing","Required parameters","info circle");
+				foreach ($params as $p){
+					$frm->addInput($p,\ucfirst($p))->addRule("empty");
+				}
+				$frm->setValidationParams(["on"=>"blur","inline"=>true]);
+				$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","#modal",["params"=>"{method:'".$method."',url:'".$url."'}"]);
+				$modal->setContent($frm);
+				$modal->addAction("Validate");
+				$this->jquery->click("#action-response-0","$('#frmParams').form('submit');");
+			}else{
+				$this->jquery->ajax($method,$url,'#content-response.content');
+			}
+			$modal->addAction("Close");
+			$this->jquery->exec("$('#response').modal('show');",true);
+			echo $modal;
+			echo $this->jquery->compile($this->view);
+		}
+	}
+
+	private function getRequiredRouteParameters(&$url,$newParams=null){
+		$route=Router::getRouteInfo($url);
+		if($route===false){
+			$ns=Startup::getNS();
+			$u=\explode("/", $url);
+			$controller=$ns.$u[0];
+			if(\sizeof($u)>1)
+				$action=$u[1];
+			else
+				$action="index";
+				if(isset($newParams) && \sizeof($newParams)>0){
+					$url=$u[0]."/".$action."/".\implode("/", \array_values($newParams));
+					return [];
+				}
+		}else{
+			if(isset($newParams) && \sizeof($newParams)>0){
+				foreach ($newParams as $param){
+					$pos = strpos($url, "(.+?)");
+					if ($pos !== false) {
+						$url = substr_replace($url, $param, $pos, strlen("(.+?)"));
+					}
+				}
+				return [];
+			}
+			$controller=$route["controller"];
+			$action=$route["action"];
+		}
+		if(\class_exists($controller)){
+			if(\method_exists($controller, $action)){
+				$method=new \ReflectionMethod($controller,$action);
+				return \array_map(function($e){return $e->name;},\array_slice($method->getParameters(),0,$method->getNumberOfRequiredParameters()));
+			}
+		}
+		return [];
 	}
 
 	private function openReplaceWrite($source,$destination,$keyAndValues){

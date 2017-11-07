@@ -19,6 +19,7 @@ use Ajax\semantic\html\elements\HtmlLabel;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\semantic\widgets\dataelement\DataElement;
 use Ajax\semantic\html\elements\HtmlButton;
+use Ajax\semantic\html\elements\html5\HtmlLink;
 
 /**
  * @author jc
@@ -55,12 +56,12 @@ class UbiquityMyAdminViewer {
 		$fieldTypes=OrmUtils::getFieldTypes($className);
 		foreach ($fieldTypes as $property=>$type){
 			switch ($type){
-				case "boolean": case "bool":
-					$form->fieldAsCheckbox($property);
-					break;
-				case "int": case "integer":
-					$form->fieldAsInput($property,["inputType"=>"number"]);
-					break;
+			case "boolean": case "bool":
+				$form->fieldAsCheckbox($property);
+				break;
+			case "int": case "integer":
+				$form->fieldAsInput($property,["inputType"=>"number"]);
+				break;
 			}
 		}
 		$this->relationMembersInForm($form, $instance, $className);
@@ -142,7 +143,7 @@ class UbiquityMyAdminViewer {
 	public function getRoutesDataTable($routes){
 		$dt=$this->jquery->semantic()->dataTable("dtRoutes", "micro\controllers\admin\popo\Route", $routes);
 		$dt->setFields(["path","methods","controller","action","parameters","cache","duration","name","expired"]);
-		$dt->setCaptions(["Path","Methods","Controller","Action","Parameters","Cache","Duration","Name","Expired"]);
+		$dt->setCaptions(["Path","Methods","Controller","Action","Parameters","Cache","Duration","Name","Expired",""]);
 		$dt->fieldAsLabel("path","car");
 		$dt->fieldAsCheckbox("cache",["disabled"=>"disabled"]);
 		$dt->setValueFunction("methods", function($v){return (\is_array($v))?"[".\implode(", ", $v)."]":$v;});
@@ -168,6 +169,8 @@ class UbiquityMyAdminViewer {
 			$dTable->setColAlignment(6, TextAlignment::RIGHT);
 			$dTable->setColAlignment(8, TextAlignment::CENTER);
 		});
+		$dt->addFieldButton("Get",true,function(&$bt,$instance){$bt->addClass("_get")->setProperty("data-url",$instance->getPath());});
+		$dt->insertInFieldButton(9,"Post",true,function(&$bt,$instance){$bt->addClass("_post")->setProperty("data-url",$instance->getPath());});
 		$dt->setActiveRowSelector("warning");
 		return $dt;
 	}
@@ -176,7 +179,7 @@ class UbiquityMyAdminViewer {
 		$dt=$this->jquery->semantic()->dataTable("dtControllers", "micro\controllers\admin\popo\ControllerAction", $controllers);
 		$dt->setFields(["controller","action","dValues"]);
 		$dt->setIdentifierFunction(function($i,$instance){return \urlencode($instance->getController());});
-		$dt->setCaptions(["Controller","Action [routes]","Default values"]);
+		$dt->setCaptions(["Controller","Action [routes]","Default values",""]);
 		$dt->setValueFunction("controller", function($v,$instance,$index){
 			$bt=new HtmlButton("bt-".\urlencode($v),$v);
 			$bt->setSize("large");
@@ -207,6 +210,8 @@ class UbiquityMyAdminViewer {
 		});
 		$dt->setEdition(true);
 		$dt->addClass("compact");
+		$dt->addFieldButton("Get",true,function(&$bt,$instance){$bt->addClass("_get")->setProperty("data-url",$instance->getPath());});
+		$dt->insertInFieldButton(3,"Post",true,function(&$bt,$instance){$bt->addClass("_post")->setProperty("data-url",$instance->getPath());});
 		return $dt;
 	}
 
@@ -237,13 +242,39 @@ class UbiquityMyAdminViewer {
 			if($v!=="")
 			return self::formatBytes($v);
 		});
+		$dt->setValueFunction("name", function($name,$instance,$i){
+			$link=new HtmlLink("lnl-".$i);
+			$link->setContent($name);
+			$link->addIcon("edit");
+			$link->addClass("_lnk");
+			$link->setProperty("data-type", $instance->getType());
+			$link->setProperty("data-ajax", $instance->getFile());
+			return $link;
+		});
 		$dt->onPreCompile(function($dt){
 			$dt->getHtmlComponent()->mergeIdentiqualValues(0);
 		});
+		$this->jquery->postOnClick("._lnk", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/_showFileContent","{type:$(this).attr('data-type'),filename:$(this).attr('data-ajax')}","#modal");
 		$this->jquery->postFormOnClick("._delete", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/deleteCacheFile", "frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith","params"=>"{toDelete:$(this).attr('data-ajax')}"]);
 		$this->jquery->postFormOnClick("._delete-all", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/deleteAllCacheFiles", "frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith","params"=>"{type:$(this).attr('data-ajax')}"]);
 		$this->jquery->postFormOnClick("._init", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/initCacheType", "frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith","params"=>"{type:$(this).attr('data-ajax')}"]);
 		return $dt;
+	}
+
+	public function getModelsStructureDataTable($datas){
+		$de=$this->jquery->semantic()->dataElement("dtStructure", $datas);
+		$fields=\array_keys($datas);
+		$de->setFields($fields);
+		$de->setCaptions($fields);
+		foreach ($fields as $key){
+			$de->setValueFunction($key, function($value) use ($key){
+				if($value instanceof  \stdClass){
+					$value=(array) $value;
+				}
+				return \print_r($value,true);
+			});
+		}
+		return $de;
 	}
 
 	public function getConfigDataElement($config){

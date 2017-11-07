@@ -18,7 +18,6 @@ class Startup {
 		session_start();
 
 		$u=self::parseUrl($url);
-
 		if (($ru=Router::getRoute($url)) !== false) {
 			if (\is_array($ru))
 				self::runAction($ru);
@@ -35,12 +34,17 @@ class Startup {
 		}
 	}
 
-	private static function setCtrlNS($config) {
-		$ns=$config["mvcNS"]["controllers"];
+	public static function getNS($part="controllers"){
+		$config=self::$config;
+		$ns=$config["mvcNS"][$part];
 		if ($ns !== "" && $ns !== null) {
 			$ns.="\\";
 		}
-		self::$ctrlNS=$ns;
+		return $ns;
+	}
+
+	private static function setCtrlNS($config) {
+		self::$ctrlNS=self::getNS();
 	}
 
 	private static function parseUrl(&$url) {
@@ -131,6 +135,14 @@ class Startup {
 
 	public static function getConfig() {
 		return self::$config;
+	}
+
+	public static function getModelsDir() {
+		return self::$config["mvcNS"]["models"];
+	}
+
+	public static function getRealModelsDir() {
+		return \realpath(self::$config["siteUrl"]."/".self::$config["mvcNS"]["models"]);
 	}
 
 	public static function errorHandler($severity, $message, $filename, $lineno) {
