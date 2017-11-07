@@ -319,7 +319,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			$type=$_POST["type"];$filename=$_POST["filename"];
 			if(\file_exists($filename)){
 				$modal=$this->jquery->semantic()->htmlModal("file",$type." : ".\basename($filename));
-				$frm=new HtmlForm("");
+				$frm=new HtmlForm("frmShowFileContent");
 				$frm->addTextarea("file-content", null,\file_get_contents($filename),"",10);
 				$modal->setContent($frm);
 				$modal->addAction("Close");
