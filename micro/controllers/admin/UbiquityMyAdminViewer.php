@@ -20,6 +20,7 @@ use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\semantic\widgets\dataelement\DataElement;
 use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\html5\HtmlLink;
+use Ajax\semantic\html\elements\HtmlButtonGroups;
 
 /**
  * @author jc
@@ -180,6 +181,14 @@ class UbiquityMyAdminViewer {
 		$dt->setFields(["controller","action","dValues"]);
 		$dt->setIdentifierFunction(function($i,$instance){return \urlencode($instance->getController());});
 		$dt->setCaptions(["Controller","Action [routes]","Default values",""]);
+		$dt->addFieldButtons(["GET","POST"],true,function(HtmlButtonGroups $bts,$instance,$index){
+			$path=$instance->getPath();
+			$bts->setIdentifier("bts-".$instance->getPath()."-".$index);
+			$bts->getItem(0)->addClass("_get")->setProperty("data-url",$path);
+			$bts->getItem(1)->addClass("_post")->setProperty("data-url",$path);
+			$item=$bts->addDropdown(["Post with parameters..."])->getItem(0);
+			$item->addClass("_postWithParams")->setProperty("data-url",$path);
+		});
 		$dt->setValueFunction("controller", function($v,$instance,$index){
 			$bt=new HtmlButton("bt-".\urlencode($v),$v);
 			$bt->setSize("large");
@@ -210,8 +219,6 @@ class UbiquityMyAdminViewer {
 		});
 		$dt->setEdition(true);
 		$dt->addClass("compact");
-		$dt->addFieldButton("Get",true,function(&$bt,$instance){$bt->addClass("_get")->setProperty("data-url",$instance->getPath());});
-		$dt->insertInFieldButton(3,"Post",true,function(&$bt,$instance){$bt->addClass("_post")->setProperty("data-url",$instance->getPath());});
 		return $dt;
 	}
 

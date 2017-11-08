@@ -145,6 +145,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	private function addNavigationTesting(){
 		$this->jquery->postOnClick("._get", $this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","{method:'get',url:$(this).attr('data-url')}","#modal");
 		$this->jquery->postOnClick("._post", $this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","{method:'post',url:$(this).attr('data-url')}","#modal");
+		$this->jquery->postOnClick("._postWithParams", $this->_getAdminFiles()->getAdminBaseRoute()."/_runPostWithParams","{url:$(this).attr('data-url')}","#modal");
 	}
 
 	public function initCacheRouter(){
@@ -330,13 +331,75 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		}
 	}
 
+	public function _runPostWithParams(){
+		if(RequestUtils::isPost()){
+			$url=$_POST["url"];
+			$modal=$this->jquery->semantic()->htmlModal("response-with-params","Parameters for the POST:".$url);
+
+			$frm=$this->jquery->semantic()->htmlForm("frmParams");
+			$frm->addMessage("msg", "Enter your parameters.","Post parameters","info circle");
+			$fields=$frm->addFields();
+			$fields->addInput("name[]","Parameter name")->getDataField()->setIdentifier("name-1");
+			$fields->addInput("value[]","Parameter value")->getDataField()->setIdentifier("value-1");
+			$frm->addButton("clone", "Add parameter","yellow")->setTagName("div");
+			if(isset($_COOKIE["post"]) && \sizeof($_COOKIE["post"])>0){
+				$frm->addDropdownButton("btMem", "Memory",$_COOKIE["post"])->getDropdown()->setPropertyValues("data-mem", \array_map("addslashes",$_COOKIE["post"]));
+				$this->jquery->click("[data-mem]","
+						var objects=JSON.parse($(this).text());
+						$.each(objects, function(name, value) {
+							$('#clone').click();
+							var inputs=$('.fields').last().find('input');
+							inputs.first().val(name);
+							inputs.last().val(value);
+						});
+						$('.fields').each(function(){
+							var inputs=$(this).find('input');
+							if(inputs.last().val()=='' && inputs.last().val()=='')
+								$(this).remove();
+						});
+						");
+			}
+			$this->jquery->click("#clone","
+					var cp=$('.fields').last().clone();
+					var num = parseInt( cp.prop('id').match(/\d+/g), 10 ) +1;
+					cp.find( '[id]' ).each( function() {
+						var num = $(this).attr('id').replace( /\d+$/, function( strId ) { return parseInt( strId ) + 1; } );
+						$(this).attr( 'id', num );
+					});
+					cp.insertBefore('#clone');");
+			$frm->setValidationParams(["on"=>"blur","inline"=>true]);
+			$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","#modal",["params"=>"{method:'POST',url:'".$url."'}"]);
+			$modal->setContent($frm);
+			$modal->addAction("Validate");
+			$this->jquery->click("#action-response-with-params-0","$('#frmParams').form('submit');");
+
+			$modal->addAction("Close");
+			$this->jquery->exec("$('.dimmer.modals.page').html('');$('#response-with-params').modal('show');",true);
+			echo $modal;
+			echo $this->jquery->compile($this->view);
+		}
+	}
+
 	public function _runAction(){
 		if(RequestUtils::isPost()){
 			$url=$_POST["url"];unset($_POST["url"]);
 			$method=$_POST["method"];unset($_POST["method"]);
 			$newParams=null;
+			$postParams="{}";
 			if(\sizeof($_POST)>0){
-				$newParams=$_POST;
+				if(\strtoupper($method)==="POST"){
+					$postParams=[];
+					$keys=$_POST["name"];
+					$values=$_POST["value"];
+					for($i=0;$i<\sizeof($values);$i++){
+						$postParams[$keys[$i]]=$values[$i];
+					}
+					$postParams=\json_encode($postParams);
+					setcookie("post[".\sizeof(@$_COOKIE["post"])."]", $postParams,\time()+36000,"/","127.0.0.1");
+				}else{
+					$newParams=$_POST;
+					setcookie("get[".\sizeof(@$_COOKIE["get"])."]", $newParams,\time()+36000,"/","127.0.0.1");
+				}
 			}
 			$modal=$this->jquery->semantic()->htmlModal("response",\strtoupper($method).":".$url);
 			$params=$this->getRequiredRouteParameters($url,$newParams);
@@ -352,10 +415,10 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 				$modal->addAction("Validate");
 				$this->jquery->click("#action-response-0","$('#frmParams').form('submit');");
 			}else{
-				$this->jquery->ajax($method,$url,'#content-response.content');
+				$this->jquery->ajax($method,$url,'#content-response.content',$postParams);
 			}
 			$modal->addAction("Close");
-			$this->jquery->exec("$('#response').modal('show');",true);
+			$this->jquery->exec("$('.dimmer.modals.page').html('');$('#response').modal('show');",true);
 			echo $modal;
 			echo $this->jquery->compile($this->view);
 		}
@@ -430,7 +493,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$lv->addClass("small very compact");
 		$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"]);
 		$lv->setActiveRowSelector("error");
-		$this->jquery->getOnClick("#btAddNew", $adminRoute."/new/".$modal,"#table-details");
+		$this->jquery->getOnClick("#btAddNew", $adminRoute."/newModel/".$modal,"#table-details");
 		return $lv;
 	}
 
@@ -461,7 +524,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->_edit($instance,$modal);
 	}
 
-	public function new($modal="no"){
+	public function newModel($modal="no"){
 		$model=$this->getModelsNS()."\\".ucfirst($_SESSION["table"]);
 		$instance=new $model();
 		$instance->_new=true;
