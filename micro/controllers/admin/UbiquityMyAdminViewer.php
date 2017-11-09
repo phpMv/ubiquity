@@ -22,7 +22,6 @@ use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\html5\HtmlLink;
 use Ajax\semantic\html\elements\HtmlButtonGroups;
 use Ajax\semantic\widgets\datatable\DataTable;
-use micro\utils\StrUtils;
 use Ajax\service\JString;
 
 /**
@@ -257,13 +256,15 @@ class UbiquityMyAdminViewer {
 			return self::formatBytes($v);
 		});
 		$dt->setValueFunction("name", function($name,$instance,$i){
-			$link=new HtmlLink("lnl-".$i);
-			$link->setContent($name);
-			$link->addIcon("edit");
-			$link->addClass("_lnk");
-			$link->setProperty("data-type", $instance->getType());
-			$link->setProperty("data-ajax", $instance->getFile());
-			return $link;
+			if(JString::isNotNull($name)){
+				$link=new HtmlLink("lnl-".$i);
+				$link->setContent($name);
+				$link->addIcon("edit");
+				$link->addClass("_lnk");
+				$link->setProperty("data-type", $instance->getType());
+				$link->setProperty("data-ajax", $instance->getFile());
+				return $link;
+			}
 		});
 		$dt->onPreCompile(function($dt){
 			$dt->getHtmlComponent()->mergeIdentiqualValues(0);
