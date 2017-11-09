@@ -425,7 +425,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			$url=$_POST["url"];unset($_POST["url"]);
 			$method=$_POST["method"];unset($_POST["method"]);
 			$newParams=null;
-			$postParams="{}";
+			$postParams=$_POST;
 			if(\sizeof($_POST)>0){
 				if(\strtoupper($method)==="POST" && $frm!=="frmGetParams"){
 					$postParams=[];
@@ -436,8 +436,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 							$postParams[$keys[$i]]=$values[$i];
 					}
 					if(\sizeof($postParams)>0){
-						$postParams=\json_encode($postParams);
-						$this->_setPostCookie($postParams);
+						$this->_setPostCookie(\json_encode($postParams));
 					}
 				}else{
 					$newParams=$_POST;
@@ -447,6 +446,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			$modal=$this->jquery->semantic()->htmlModal("response",\strtoupper($method).":".$url);
 			$params=$this->getRequiredRouteParameters($url,$newParams);
 			if(\sizeof($params)>0){
+				$toPost=\array_merge($postParams,["method"=>$method,"url"=>$url]);
 				$frm=$this->jquery->semantic()->htmlForm("frmGetParams");
 				$frm->addMessage("msg", "You must complete the following parameters before continuing navigation testing","Required URL parameters","info circle");
 				$paramsValues=$this->_getParametersFromCookie($url, $params);
@@ -454,12 +454,12 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 					$frm->addInput($param,\ucfirst($param))->addRule("empty")->setValue($value);
 				}
 				$frm->setValidationParams(["on"=>"blur","inline"=>true]);
-				$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","#modal",["params"=>"{method:'".$method."',url:'".$url."'}"]);
+				$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","#modal",["params"=>\json_encode($toPost)]);
 				$modal->setContent($frm);
 				$modal->addAction("Validate");
 				$this->jquery->click("#action-response-0","$('#frmGetParams').form('submit');");
 			}else{
-				$this->jquery->ajax($method,$url,'#content-response.content',$postParams);
+				$this->jquery->ajax($method,$url,'#content-response.content',\json_encode($postParams));
 			}
 			$modal->addAction("Close");
 			$this->jquery->exec("$('.dimmer.modals.page').html('');$('#response').modal('show');",true);
