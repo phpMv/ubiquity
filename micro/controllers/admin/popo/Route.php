@@ -11,6 +11,7 @@ class Route {
 	private $duration;
 	private $name;
 	private $methods;
+	private $id;
 
 	public function __construct($path="",$array=[]){
 		$this->path=$path;
@@ -20,6 +21,7 @@ class Route {
 			$this->methods=\array_keys($array);
 			$this->fromArray(\reset($array));
 		}
+		$this->id=\uniqid();
 	}
 
 	private function fromArray($array){
@@ -107,4 +109,9 @@ class Route {
 		}
 		return $result;
 	}
+
+	public function getId() {
+		return $this->id;
+	}
+
 }

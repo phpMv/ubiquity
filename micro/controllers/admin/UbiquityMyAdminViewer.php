@@ -21,6 +21,9 @@ use Ajax\semantic\widgets\dataelement\DataElement;
 use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\html5\HtmlLink;
 use Ajax\semantic\html\elements\HtmlButtonGroups;
+use Ajax\semantic\widgets\datatable\DataTable;
+use micro\utils\StrUtils;
+use Ajax\service\JString;
 
 /**
  * @author jc
@@ -143,6 +146,7 @@ class UbiquityMyAdminViewer {
 
 	public function getRoutesDataTable($routes){
 		$dt=$this->jquery->semantic()->dataTable("dtRoutes", "micro\controllers\admin\popo\Route", $routes);
+		$dt->setIdentifierFunction(function($i,$instance){return $instance->getId();});
 		$dt->setFields(["path","methods","controller","action","parameters","cache","duration","name","expired"]);
 		$dt->setCaptions(["Path","Methods","Controller","Action","Parameters","Cache","Duration","Name","Expired",""]);
 		$dt->fieldAsLabel("path","car");
@@ -170,8 +174,7 @@ class UbiquityMyAdminViewer {
 			$dTable->setColAlignment(6, TextAlignment::RIGHT);
 			$dTable->setColAlignment(8, TextAlignment::CENTER);
 		});
-		$dt->addFieldButton("Get",true,function(&$bt,$instance){$bt->addClass("_get")->setProperty("data-url",$instance->getPath());});
-		$dt->insertInFieldButton(9,"Post",true,function(&$bt,$instance){$bt->addClass("_post")->setProperty("data-url",$instance->getPath());});
+		$this->addGetPostButtons($dt);
 		$dt->setActiveRowSelector("warning");
 		return $dt;
 	}
@@ -181,14 +184,7 @@ class UbiquityMyAdminViewer {
 		$dt->setFields(["controller","action","dValues"]);
 		$dt->setIdentifierFunction(function($i,$instance){return \urlencode($instance->getController());});
 		$dt->setCaptions(["Controller","Action [routes]","Default values",""]);
-		$dt->addFieldButtons(["GET","POST"],true,function(HtmlButtonGroups $bts,$instance,$index){
-			$path=$instance->getPath();
-			$bts->setIdentifier("bts-".$instance->getPath()."-".$index);
-			$bts->getItem(0)->addClass("_get")->setProperty("data-url",$path);
-			$bts->getItem(1)->addClass("_post")->setProperty("data-url",$path);
-			$item=$bts->addDropdown(["Post with parameters..."])->getItem(0);
-			$item->addClass("_postWithParams")->setProperty("data-url",$path);
-		});
+		$this->addGetPostButtons($dt);
 		$dt->setValueFunction("controller", function($v,$instance,$index){
 			$bt=new HtmlButton("bt-".\urlencode($v),$v);
 			$bt->setSize("large");
@@ -220,6 +216,17 @@ class UbiquityMyAdminViewer {
 		$dt->setEdition(true);
 		$dt->addClass("compact");
 		return $dt;
+	}
+
+	protected function addGetPostButtons(DataTable $dt){
+		$dt->addFieldButtons(["GET","POST"],true,function(HtmlButtonGroups $bts,$instance,$index){
+			$path=$instance->getPath();
+			$bts->setIdentifier("bts-".$instance->getId()."-".$index);
+			$bts->getItem(0)->addClass("_get")->setProperty("data-url",$path);
+			$bts->getItem(1)->addClass("_post")->setProperty("data-url",$path);
+			$item=$bts->addDropdown(["Post with parameters..."])->getItem(0);
+			$item->addClass("_postWithParams")->setProperty("data-url",$path);
+		});
 	}
 
 	public function getCacheDataTable($cacheFiles){

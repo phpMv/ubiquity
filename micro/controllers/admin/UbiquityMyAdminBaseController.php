@@ -170,8 +170,10 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		}
 		else $routes=CacheManager::getRoutes();
 		echo $this->_getAdminViewer()->getRoutesDataTable(Route::init($routes));
-		if(\sizeof($ctrls)>0)
+		if(\sizeof($ctrls)>0){
 			echo $this->_getAdminViewer()->getControllersDataTable($ctrls);
+		}
+		$this->addNavigationTesting();
 		echo $this->jquery->compile($this->view);
 	}
 
@@ -340,10 +342,21 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			$frm->addMessage("msg", "Enter your parameters.","Post parameters","info circle");
 			$fields=$frm->addFields();
 			$fields->addInput("name[]","Parameter name")->getDataField()->setIdentifier("name-1");
-			$fields->addInput("value[]","Parameter value")->getDataField()->setIdentifier("value-1");
+			$input=$fields->addInput("value[]","Parameter value");
+			$input->getDataField()->setIdentifier("value-1");
+			$input->addAction("",true,"remove")->addClass("icon basic _deleteParameter");
 			$frm->addButton("clone", "Add parameter","yellow")->setTagName("div");
 			if(isset($_COOKIE["post"]) && \sizeof($_COOKIE["post"])>0){
-				$frm->addDropdownButton("btMem", "Memory",$_COOKIE["post"])->getDropdown()->setPropertyValues("data-mem", \array_map("addslashes",$_COOKIE["post"]));
+				$dd=$frm->addDropdownButton("btMem", "Memorized parameters",$_COOKIE["post"])->getDropdown()->setPropertyValues("data-mem", \array_map("addslashes",$_COOKIE["post"]));
+				$cookiesIndex=\array_keys($_COOKIE["post"]);
+				$dd->each(function($i,$item) use($cookiesIndex){
+					$bt=new HtmlButton("bt-".$item->getIdentifier());
+					$bt->asIcon("remove")->addClass("basic _deleteParam");
+					$bt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_deleteCookie",null,["attr"=>"data-value"]);
+					$bt->setProperty("data-value", $cookiesIndex[$i]);
+					$bt->onClick("$(this).parents('.item').remove();");
+					$item->addContent($bt,true);
+				});
 				$this->jquery->click("[data-mem]","
 						var objects=JSON.parse($(this).text());
 						$.each(objects, function(name, value) {
@@ -355,12 +368,17 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 						$('.fields').each(function(){
 							var inputs=$(this).find('input');
 							if(inputs.last().val()=='' && inputs.last().val()=='')
-								$(this).remove();
+								if($('.fields').length>1)
+									$(this).remove();
 						});
 						");
 			}
+			$this->jquery->click("._deleteParameter","
+								if($('.fields').length>1)
+									$(this).parents('.fields').remove();
+					",true,true,true);
 			$this->jquery->click("#clone","
-					var cp=$('.fields').last().clone();
+					var cp=$('.fields').last().clone(true);
 					var num = parseInt( cp.prop('id').match(/\d+/g), 10 ) +1;
 					cp.find( '[id]' ).each( function() {
 						var num = $(this).attr('id').replace( /\d+$/, function( strId ) { return parseInt( strId ) + 1; } );
@@ -371,7 +389,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","#modal",["params"=>"{method:'POST',url:'".$url."'}"]);
 			$modal->setContent($frm);
 			$modal->addAction("Validate");
-			$this->jquery->click("#action-response-with-params-0","$('#frmParams').form('submit');");
+			$this->jquery->click("#action-response-with-params-0","$('#frmParams').form('submit');",true,true,true);
 
 			$modal->addAction("Close");
 			$this->jquery->exec("$('.dimmer.modals.page').html('');$('#response-with-params').modal('show');",true);
@@ -380,14 +398,36 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		}
 	}
 
-	public function _runAction(){
+	public function _deleteCookie($index,$type="post"){
+		$name=$type."[".$index."]";
+		if(isset($_COOKIE[$type][$index])){
+			\setcookie($name,"",\time()-3600,"/","127.0.0.1");
+		}
+	}
+
+	private function _setPostCookie($content){
+		if(isset($_COOKIE["post"])){
+			$cookieValues=\array_values($_COOKIE["post"]);
+			if((\array_search($content, $cookieValues))===false){
+				setcookie("post[".\sizeof($_COOKIE["post"])."]", $content,\time()+36000,"/","127.0.0.1");
+			}
+		}else{
+			setcookie("post[0]", $content,\time()+36000,"/","127.0.0.1");
+		}
+	}
+
+	private function _setGetCookie($index,$content){
+		setcookie("get[".$index."]", $content,\time()+36000,"/","127.0.0.1");
+	}
+
+	public function _runAction($frm=null){
 		if(RequestUtils::isPost()){
 			$url=$_POST["url"];unset($_POST["url"]);
 			$method=$_POST["method"];unset($_POST["method"]);
 			$newParams=null;
 			$postParams="{}";
 			if(\sizeof($_POST)>0){
-				if(\strtoupper($method)==="POST"){
+				if(\strtoupper($method)==="POST" && $frm!=="frmGetParams"){
 					$postParams=[];
 					$keys=$_POST["name"];
 					$values=$_POST["value"];
@@ -395,25 +435,26 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 						$postParams[$keys[$i]]=$values[$i];
 					}
 					$postParams=\json_encode($postParams);
-					setcookie("post[".\sizeof(@$_COOKIE["post"])."]", $postParams,\time()+36000,"/","127.0.0.1");
+					$this->_setPostCookie($postParams);
 				}else{
 					$newParams=$_POST;
-					setcookie("get[".\sizeof(@$_COOKIE["get"])."]", $newParams,\time()+36000,"/","127.0.0.1");
+					$this->_setGetCookie($url, \json_encode($newParams));
 				}
 			}
 			$modal=$this->jquery->semantic()->htmlModal("response",\strtoupper($method).":".$url);
 			$params=$this->getRequiredRouteParameters($url,$newParams);
 			if(\sizeof($params)>0){
-				$frm=$this->jquery->semantic()->htmlForm("frmParams");
-				$frm->addMessage("msg", "You must complete the following parameters before continuing navigation testing","Required parameters","info circle");
-				foreach ($params as $p){
-					$frm->addInput($p,\ucfirst($p))->addRule("empty");
+				$frm=$this->jquery->semantic()->htmlForm("frmGetParams");
+				$frm->addMessage("msg", "You must complete the following parameters before continuing navigation testing","Required URL parameters","info circle");
+				$paramsValues=$this->_getParametersFromCookie($url, $params);
+				foreach ($paramsValues as $param=>$value){
+					$frm->addInput($param,\ucfirst($param))->addRule("empty")->setValue($value);
 				}
 				$frm->setValidationParams(["on"=>"blur","inline"=>true]);
 				$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/_runAction","#modal",["params"=>"{method:'".$method."',url:'".$url."'}"]);
 				$modal->setContent($frm);
 				$modal->addAction("Validate");
-				$this->jquery->click("#action-response-0","$('#frmParams').form('submit');");
+				$this->jquery->click("#action-response-0","$('#frmGetParams').form('submit');");
 			}else{
 				$this->jquery->ajax($method,$url,'#content-response.content',$postParams);
 			}
@@ -422,6 +463,19 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			echo $modal;
 			echo $this->jquery->compile($this->view);
 		}
+	}
+
+	private function _getParametersFromCookie($url,$params){
+		$result=\array_fill_keys($params, "");
+		if(isset($_COOKIE["get"])){
+			if(isset($_COOKIE["get"][$url])){
+				$values=\json_decode($_COOKIE["get"][$url],true);
+				foreach ($params as $p){
+					$result[$p]=@$values[$p];
+				}
+			}
+		}
+		return $result;
 	}
 
 	private function getRequiredRouteParameters(&$url,$newParams=null){
@@ -434,10 +488,10 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 				$action=$u[1];
 			else
 				$action="index";
-				if(isset($newParams) && \sizeof($newParams)>0){
-					$url=$u[0]."/".$action."/".\implode("/", \array_values($newParams));
-					return [];
-				}
+			if(isset($newParams) && \sizeof($newParams)>0){
+				$url=$u[0]."/".$action."/".\implode("/", \array_values($newParams));
+				return [];
+			}
 		}else{
 			if(isset($newParams) && \sizeof($newParams)>0){
 				foreach ($newParams as $param){

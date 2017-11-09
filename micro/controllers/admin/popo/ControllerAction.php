@@ -140,4 +140,8 @@ class ControllerAction {
 		$reflect=new \ReflectionClass($this->controller);
 		return $reflect->getShortName()."/".$this->action;
 	}
+
+	public function getId(){
+		return $this->getPath();
+	}
 }
