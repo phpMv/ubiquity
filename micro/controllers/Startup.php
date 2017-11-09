@@ -24,7 +24,7 @@ class Startup {
 			else
 				echo $ru;
 		} else {
-			self::setCtrlNS($config);
+			self::setCtrlNS();
 			$u[0]=self::$ctrlNS . $u[0];
 			if (\class_exists($u[0])) {
 				self::runAction($u);
@@ -34,7 +34,7 @@ class Startup {
 		}
 	}
 
-	public static function getNS($part="controllers"){
+	public static function getNS($part="controllers") {
 		$config=self::$config;
 		$ns=$config["mvcNS"][$part];
 		if ($ns !== "" && $ns !== null) {
@@ -43,7 +43,7 @@ class Startup {
 		return $ns;
 	}
 
-	private static function setCtrlNS($config) {
+	private static function setCtrlNS() {
 		self::$ctrlNS=self::getNS();
 	}
 
@@ -142,7 +142,7 @@ class Startup {
 	}
 
 	public static function getRealModelsDir() {
-		return \realpath(self::$config["siteUrl"]."/".self::$config["mvcNS"]["models"]);
+		return \realpath(self::$config["siteUrl"] . "/" . self::$config["mvcNS"]["models"]);
 	}
 
 	public static function errorHandler($severity, $message, $filename, $lineno) {
