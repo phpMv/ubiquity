@@ -432,10 +432,13 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 					$keys=$_POST["name"];
 					$values=$_POST["value"];
 					for($i=0;$i<\sizeof($values);$i++){
-						$postParams[$keys[$i]]=$values[$i];
+						if(JString::isNotNull($keys[$i]))
+							$postParams[$keys[$i]]=$values[$i];
 					}
-					$postParams=\json_encode($postParams);
-					$this->_setPostCookie($postParams);
+					if(\sizeof($postParams)>0){
+						$postParams=\json_encode($postParams);
+						$this->_setPostCookie($postParams);
+					}
 				}else{
 					$newParams=$_POST;
 					$this->_setGetCookie($url, \json_encode($newParams));
