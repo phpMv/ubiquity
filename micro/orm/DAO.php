@@ -379,14 +379,15 @@ class DAO {
 
 	/**
 	 * Réalise la connexion à la base de données en utilisant les paramètres passés
+	 * @param string $dbType
 	 * @param string $dbName
 	 * @param string $serverName
 	 * @param string $port
 	 * @param string $user
 	 * @param string $password
 	 */
-	public static function connect($dbName, $serverName="127.0.0.1", $port="3306", $user="root", $password="", $cache=false) {
-		self::$db=new Database($dbName, $serverName, $port, $user, $password, $cache);
+	public static function connect($dbType,$dbName, $serverName="127.0.0.1", $port="3306", $user="root", $password="", $cache=false) {
+		self::$db=new Database($dbType,$dbName, $serverName, $port, $user, $password, $cache);
 		self::$db->connect();
 	}
 }
