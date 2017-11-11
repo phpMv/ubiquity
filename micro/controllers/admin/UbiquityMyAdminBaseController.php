@@ -120,7 +120,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/createController","#main-content");
 		$this->_getAdminViewer()->getControllersDataTable(ControllerAction::init());
 		$this->jquery->postOnClick("._route[data-ajax]", $this->_getAdminFiles()->getAdminBaseRoute()."/routes","{filter:$(this).attr('data-ajax')}","#main-content");
-		$this->jquery->exec("$('tr .ui.button').click();",true);
+		$this->jquery->execAtLast("$('#bt-controllers5CAdmin._clickFirst').click();");
 		$this->addNavigationTesting();
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewControllersIndex());
@@ -503,10 +503,10 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			    $i=0;
 			    foreach ($newParams as $v){
 			        if(isset($routeParameters[$i]))
-			         $result[(int)$routeParameters[$i++]]=$v;    
+			         $result[(int)$routeParameters[$i++]]=$v;
 			    }
 			    ksort($result);
-			    
+
 			    $url=vsprintf(str_replace('(.+?)', '%s', $url), $result);
 				/*foreach ($newParams as $param){
 					$pos = strpos($url, "(.+?)");
@@ -569,7 +569,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$_SESSION["instance"]=$instance;
 		$modal=($modal=="modal");
 		$form=$this->_getAdminViewer()->getForm("frmEdit",$instance);
-		$this->jquery->click("#action-modal-frmEdit","$('#frmEdit').form('submit');",false);
+		$this->jquery->click("#action-modal-frmEdit-0","$('#frmEdit').form('submit');",false);
 		if(!$modal){
 			$this->jquery->click("#bt-cancel","$('#form-container').transition('drop');");
 			$this->jquery->compile($this->view);

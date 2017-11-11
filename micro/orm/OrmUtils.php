@@ -47,6 +47,11 @@ class OrmUtils {
 		return $ret;
 	}
 
+	public static function getFieldNames($model){
+		$ret=\array_flip(self::getAnnotationInfo($model, "#fieldNames"));
+		return \array_unique($ret);
+	}
+
 	public static function getTableName($class) {
 		return self::getModelMetadata($class)["#tableName"];
 	}

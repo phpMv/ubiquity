@@ -200,17 +200,20 @@ class DAO {
 			$condition=" WHERE " . $condition;
 		$query=self::$db->prepareAndExecute($tableName, $condition, $useCache);
 		Logger::log("getAll", "SELECT * FROM " . $tableName . $condition);
+
+		$members=OrmUtils::getAnnotationInfo($className, "#fieldNames");
 		foreach ( $query as $row ) {
-			$o=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $useCache);
+			$o=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $useCache);
 			$objects[]=$o;
 		}
 		return $objects;
 	}
 
-	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $useCache=NULL) {
+	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $members,$useCache=NULL) {
 		$o=new $className();
 		foreach ( $row as $k => $v ) {
-			$accesseur="set" . ucfirst($k);
+			$field=\array_search($k, $members);
+			$accesseur="set" . ucfirst($field);
 			if (method_exists($o, $accesseur)) {
 				$o->$accesseur($v);
 			}
