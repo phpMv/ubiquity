@@ -59,7 +59,7 @@ class UbiquityMyAdminViewer {
 		$fieldTypes=OrmUtils::getFieldTypes($className);
 		foreach ($fieldTypes as $property=>$type){
 			switch ($type){
-			case "boolean": case "bool":
+			case "tinyint(1)":
 				$form->fieldAsCheckbox($property);
 				break;
 			case "int": case "integer":
@@ -186,7 +186,7 @@ class UbiquityMyAdminViewer {
 		$this->addGetPostButtons($dt);
 		$dt->setValueFunction("controller", function($v,$instance,$index){
 			$bt=new HtmlButton("bt-".\urlencode($v),$v);
-			$bt->setSize("large");
+			$bt->addClass("large _clickFirst");
 			$bt->addIcon("heartbeat",true,true);
 			$bt->setToggle();
 			$bt->onClick("$(\"tr[data-ajax='".\urlencode($instance->getController())."'] td:not([rowspan])\").toggle(!$(this).hasClass('active'));");
@@ -299,8 +299,8 @@ class UbiquityMyAdminViewer {
 		$de->setCaptions($fields);
 		$de->setValueFunction("database", function($v,$instance,$index){
 			$dbDe=new DataElement("",$v);
-			$dbDe->setFields(["dbName","serverName","port","user","password","cache"]);
-			$dbDe->setCaptions(["dbName","serverName","port","user","password","cache"]);
+			$dbDe->setFields(["type","dbName","serverName","port","user","password","cache"]);
+			$dbDe->setCaptions(["Type","dbName","serverName","port","user","password","cache"]);
 			return $dbDe;
 		});
 		$de->setValueFunction("templateEngineOptions", function($v,$instance,$index){

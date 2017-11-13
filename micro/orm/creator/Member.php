@@ -8,6 +8,7 @@ use micro\annotations\OneToManyAnnotation;
 use micro\annotations\ManyToManyAnnotation;
 use micro\annotations\JoinTableAnnotation;
 use micro\annotations\JoinColumnAnnotation;
+use micro\annotations\ColumnAnnotation;
 
 class Member {
 	private $name;
@@ -33,7 +34,7 @@ class Member {
 			if (\sizeof($annotations) > 1) {
 				$annotationsStr.="\n\t * " . implode("\n\t * ", $annotations);
 			} else {
-				$annotationsStr.="\n\t * " . $annotations[0];
+				$annotationsStr.="\n\t * " . \end($annotations);
 			}
 			$annotationsStr.="\n\t*/";
 		}
@@ -45,6 +46,14 @@ class Member {
 			$this->annotations[]=new IdAnnotation();
 			$this->primary=true;
 		}
+	}
+
+	public function setDbType($infos){
+		$annot=new ColumnAnnotation();
+		$annot->name=$this->name;
+		$annot->dbType=$infos["Type"];
+		$annot->nullable=(\strtolower($infos["Nullable"])==="yes");
+		$this->annotations["column"]=$annot;
 	}
 
 	public function addManyToOne($name, $className, $nullable=false) {
@@ -116,6 +125,18 @@ class Member {
 	}
 
 	public function hasAnnotations(){
-		return \count($this->annotations)>0;
+		return \count($this->annotations)>1;
+	}
+
+	public function isNullable(){
+		if(isset($this->annotations["column"]))
+			return $this->annotations["column"]->nullable;
+		return false;
+	}
+
+	public function getDbType(){
+		if(isset($this->annotations["column"]))
+			return $this->annotations["column"]->dbType;
+		return "mixed";
 	}
 }

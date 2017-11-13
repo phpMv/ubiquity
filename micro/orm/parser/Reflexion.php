@@ -134,6 +134,14 @@ class Reflexion {
 			return $ret->nullable;
 	}
 
+	public static function getDbType($class, $member) {
+		$ret=self::getAnnotationMember($class, $member, "@column");
+		if (!$ret)
+			return false;
+		else
+			return $ret->dbType;
+	}
+
 	public static function isSerializable($class, $member) {
 		if (self::getAnnotationMember($class, $member, "@transient") !== false || self::getAnnotationMember($class, $member, "@manyToOne") !== false || self::getAnnotationMember($class, $member, "@manyToMany") !== false || self::getAnnotationMember($class, $member, "@oneToMany") !== false)
 			return false;
@@ -143,7 +151,7 @@ class Reflexion {
 
 	public static function getFieldName($class, $member) {
 		$ret=self::getAnnotationMember($class, $member, "@column");
-		if ($ret === false)
+		if ($ret === false || !isset($ret->name))
 			$ret=$member;
 		else
 			$ret=$ret->name;

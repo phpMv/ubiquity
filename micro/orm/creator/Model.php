@@ -95,6 +95,13 @@ class Model {
 		return null;
 	}
 
+	public function getPkName(){
+		$pk=$this->getPrimaryKey();
+		if(isset($pk))
+			return $pk->getName();
+		return null;
+	}
+
 	public function getDefaultFk() {
 		return "id" . $this->name;
 	}
@@ -109,24 +116,28 @@ class Model {
 		return $result;
 	}
 
-	private function getToStringField() {
+	private function getToStringField(){
 		$result=null;
 		foreach ( $this->members as $member ) {
-			if ($member->hasAnnotations() === false) {
+			if ($member->getDbType()!=="mixed" && $member->isNullable()!==true && !$member->isPrimary()) {
 				$result=$member->getName();
 			}
 		}
 		return $result;
 	}
 
-	public function getToString() {
+	public function getToString(){
 		$field=$this->getToStringField();
-		if (isset($field))
-			$corps='(isset($this->' . $field . '))?$this->' . $field . ':' . "\"" . $this->name . "@\"" . '.\spl_object_hash($this)';
-		else
-			$corps="\"" . $this->name . "@\"" . '.\spl_object_hash($this)';
+		if(isset($field)){
+			$corps='$this->' . $field;
+		}
+		elseif(($pkName=$this->getPkName())!==null){
+			$corps='$this->' . $pkName;
+		}else{
+			$corps='"'.$this->name.'@"'.'.\spl_object_hash($this)';
+		}
 		$result="\n\t public function __toString(){\n";
-		$result.="\t\t" . 'return ' . $corps . ";\n";
+		$result.="\t\t" . 'return '.$corps. ";\n";
 		$result.="\t}\n";
 		return $result;
 	}

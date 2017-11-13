@@ -13,7 +13,8 @@ class ClassUtils {
 	 * @return string
 	 */
 	public static function getClassFullNameFromFile($filePathName) {
-		return self::getClassNamespaceFromFile($filePathName) . '\\' . self::getClassNameFromFile($filePathName);
+		$phpCode=file_get_contents($filePathName);
+		return self::getClassNamespaceFromPhpCode($phpCode) . '\\' . self::getClassNameFromPhpCode($phpCode);
 	}
 
 	public static function cleanClassname($classname) {
@@ -40,10 +41,13 @@ class ClassUtils {
 	 *
 	 * @return null|string
 	 */
-	protected static function getClassNamespaceFromFile($filePathName) {
-		$src=file_get_contents($filePathName);
+	public static function getClassNamespaceFromFile($filePathName) {
+		$phpCode=file_get_contents($filePathName);
+		return self::getClassNamespaceFromPhpCode($phpCode);
+	}
 
-		$tokens=token_get_all($src);
+	private static function getClassNamespaceFromPhpCode($phpCode) {
+		$tokens=token_get_all($phpCode);
 		$count=count($tokens);
 		$i=0;
 		$namespace='';
@@ -78,11 +82,14 @@ class ClassUtils {
 	 *
 	 * @return mixed
 	 */
-	protected static function getClassNameFromFile($filePathName) {
-		$php_code=file_get_contents($filePathName);
+	public static function getClassNameFromFile($filePathName) {
+		$phpCode=file_get_contents($filePathName);
+		return self::getClassNameFromPhpCode($phpCode);
+	}
 
+	private static function getClassNameFromPhpCode($phpCode){
 		$classes=array ();
-		$tokens=token_get_all($php_code);
+		$tokens=token_get_all($phpCode);
 		$count=count($tokens);
 		for($i=2; $i < $count; $i++) {
 			if ($tokens[$i - 2][0] == T_CLASS && $tokens[$i - 1][0] == T_WHITESPACE && $tokens[$i][0] == T_STRING) {

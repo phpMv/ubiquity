@@ -48,8 +48,14 @@ class OrmUtils {
 	}
 
 	public static function getFieldNames($model){
-		$ret=\array_flip(self::getAnnotationInfo($model, "#fieldNames"));
-		return \array_unique($ret);
+		$fields=self::getAnnotationInfo($model, "#fieldNames");
+		$result=[];
+		$serializables=self::getSerializableFields($model);
+		foreach ($fields as $member=>$field){
+			if(\array_search($member, $serializables)!==false)
+				$result[$field]=$member;
+		}
+		return $result;
 	}
 
 	public static function getTableName($class) {

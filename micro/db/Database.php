@@ -46,13 +46,9 @@ class Database {
 	 * Réalise la connexion à la base de données
 	 */
 	public function connect() {
-		try {
-			$this->pdoObject=new \PDO($this->dbType.':host=' . $this->serverName . ';dbname=' . $this->dbName . ';port:' . $this->port, $this->user, $this->password);
-			$this->pdoObject->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-			$this->pdoObject->exec("SET CHARACTER SET utf8");
-		} catch ( \PDOException $e ) {
-			print "Error!: " . $e->getMessage() . "<br/>";
-		}
+		$this->pdoObject=new \PDO($this->dbType.':host=' . $this->serverName . ';dbname=' . $this->dbName . ';port:' . $this->port, $this->user, $this->password);
+		$this->pdoObject->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+		$this->pdoObject->exec("SET CHARACTER SET utf8");
 	}
 
 	/**
@@ -138,5 +134,9 @@ class Database {
 		$sql='SHOW TABLES';
 		$query=$this->pdoObject->query($sql);
 		return $query->fetchAll(\PDO::FETCH_COLUMN);
+	}
+
+	public function isConnected(){
+		return ($this->pdoObject!==null && $this->pdoObject instanceof \PDO);
 	}
 }

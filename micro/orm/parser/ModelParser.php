@@ -36,12 +36,9 @@ class ModelParser {
 				$this->nullableMembers[]=$propName;
 			if (!$serializable)
 				$this->notSerializableMembers[]=$propName;
-			$type=Reflexion::getAnnotationMember($modelClass, $propName, "@var");
-			if($type===false){
-				$type="string";
-			}else{
-				$type=$type->type;
-			}
+			$type=Reflexion::getDbType($modelClass, $propName);
+			if($type===false)
+				$type="mixed";
 			$this->fieldTypes[$propName]=$type;
 		}
 		$this->global["#tableName"]=Reflexion::getTableName($modelClass);

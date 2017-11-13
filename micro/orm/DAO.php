@@ -391,6 +391,14 @@ class DAO {
 	 */
 	public static function connect($dbType,$dbName, $serverName="127.0.0.1", $port="3306", $user="root", $password="", $cache=false) {
 		self::$db=new Database($dbType,$dbName, $serverName, $port, $user, $password, $cache);
-		self::$db->connect();
+		try {
+			self::$db->connect();
+		} catch (\Exception $e) {
+			Logger::error("DAO", $e->getMessage());
+		}
+	}
+
+	public static function isConnected(){
+		return self::$db!==null && (self::$db instanceof Database) && self::$db->isConnected();
 	}
 }

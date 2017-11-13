@@ -20,8 +20,12 @@ use micro\controllers\admin\popo\CacheFile;
 use Ajax\semantic\html\collections\form\HtmlFormFields;
 use micro\controllers\admin\popo\ControllerAction;
 use Ajax\semantic\html\collections\form\HtmlForm;
+use micro\orm\creator\ModelsCreator;
+use micro\controllers\admin\traits\ModelsConfigTrait;
+use micro\utils\FsUtils;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
+	use ModelsConfigTrait;
 	/**
 	 * @var UbiquityMyAdminData
 	 */
@@ -72,39 +76,57 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewIndex());
 	}
-	public function models(){
-		$config=Startup::getConfig();
+	public function models($hasHeader=true){
 		$semantic=$this->jquery->semantic();
-		$this->getHeader("models");
-		$modelsNS=$config["mvcNS"]["models"];
-		$modelsDir=ROOT . str_replace("\\", DS, $modelsNS);
-		$this->showSimpleMessage("Models directory is <b>".$modelsDir."</b>", "info","info circle",null,"msgModels");
-		try {
-			$dbs=$this->getTableNames();
-			$menu=$semantic->htmlMenu("menuDbs");
-			$menu->setVertical()->setInverted();
-			foreach ($dbs as $table){
-				$model=$this->getModelsNS()."\\".ucfirst($table);
-				$file=\str_replace("\\", DS, ROOT . DS.$model).".php";
-				$find=Autoloader::tryToRequire($file);
-				if ($find){
-					$count=DAO::count($model);
-					$item=$menu->addItem(ucfirst($table));
-					$item->addLabel($count);
-					$item->setProperty("data-ajax", $table);
-				}
-			}
-			$menu->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/showTable","#divTable",["attr"=>"data-ajax"]);
-			$menu->onClick("$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');");
-
-		} catch (\Exception $e) {
-			$bt=new HtmlButton("btInitCache","(Re-)init models cache");
-			$bt->setNegative()->addIcon("refresh");
-			$bt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_initModelsCache","#main-content");
-			$this->showSimpleMessage(["Models cache is not created!&nbsp;",$bt], "error","warning circle",null,"errorMsg");
+		$header="";
+		if($hasHeader===true){
+			$header=$this->getHeader("models");
+			$stepper=$this->_getModelsStepper();
 		}
-		$this->jquery->compile($this->view);
-		$this->loadView($this->_getAdminFiles()->getViewDataIndex());
+		if($this->_isModelsCompleted() || $hasHeader!==true){
+			try {
+				$dbs=$this->getTableNames();
+				$menu=$semantic->htmlMenu("menuDbs");
+				$menu->setVertical()->setInverted();
+				foreach ($dbs as $table){
+					$model=$this->getModelsNS()."\\".ucfirst($table);
+					$file=\str_replace("\\", DS, ROOT . DS.$model).".php";
+					$find=Autoloader::tryToRequire($file);
+					if ($find){
+						$count=DAO::count($model);
+						$item=$menu->addItem(ucfirst($table));
+						$item->addLabel($count);
+						$item->setProperty("data-ajax", $table);
+					}
+				}
+				$menu->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/showTable","#divTable",["attr"=>"data-ajax"]);
+				$menu->onClick("$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');");
+
+			} catch (\Exception $e) {
+				$this->showSimpleMessage("Models cache is not created!&nbsp;", "error","warning circle",null,"errorMsg");
+			}
+			$this->jquery->compile($this->view);
+			$this->loadView($this->_getAdminFiles()->getViewDataIndex());
+		}else{
+			echo $header;
+			echo $stepper;
+			echo "<div id='models-main'>";
+			$this->_loadModelStep();
+			echo "</div>";
+			echo $this->jquery->compile($this->view);
+		}
+	}
+
+	public function createModels($singleTable=null){
+		$config=Startup::getConfig();
+		\ob_start();
+		ModelsCreator::create($config,false,$singleTable);
+		$result=\ob_get_clean();
+		$message=$this->showSimpleMessage("", "success","check mark",null,"msg-create-models");
+		$message->addHeader("Models creation");
+		$message->addList(\explode("\n", \str_replace("\n\n","\n", \trim($result))));
+		$this->models(true);
+		echo $message;
 	}
 
 	public function controllers(){
@@ -112,7 +134,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->getHeader("controllers");
 		$controllersNS=$config["mvcNS"]["controllers"];
 		$controllersDir=ROOT . str_replace("\\", DS, $controllersNS);
-		$this->showSimpleMessage("Controllers directory is <b>".$controllersDir."</b>", "info","info circle",null,"msgControllers");
+		$this->showSimpleMessage("Controllers directory is <b>".FsUtils::cleanPathname($controllersDir)."</b>", "info","info circle",null,"msgControllers");
 		$frm=$this->jquery->semantic()->htmlForm("frmCtrl");
 		$frm->setValidationParams(["on"=>"blur","inline"=>true]);
 		$input=$frm->addInput("name",null,"text","","Controller name")->addRules(["empty","regExp[/^[A-Za-z]\w*$/]"])->setWidth(6);
@@ -130,8 +152,8 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$config=Startup::getConfig();
 		$this->getHeader("routes");
 		$controllersNS=$config["mvcNS"]["controllers"];
-		$controllersDir=ROOT . $config["cacheDirectory"].str_replace("\\", DS, $controllersNS);
-		$this->showSimpleMessage("Router cache file is <b>".$controllersDir."\\routes.cache.php</b>", "info","info circle",null,"msgRoutes");
+		$routerCacheDir=ROOT . $config["cacheDirectory"].str_replace("\\", DS, $controllersNS);
+		$this->showSimpleMessage("Router cache file is <b>".FsUtils::cleanPathname($routerCacheDir)."routes.cache.php</b>", "info","info circle",null,"msgRoutes");
 		$routes=CacheManager::getRoutes();
 		$this->_getAdminViewer()->getRoutesDataTable(Route::init($routes));
 		$this->jquery->getOnClick("#bt-init-cache", $this->_getAdminFiles()->getAdminBaseRoute()."/initCacheRouter","#divRoutes");
@@ -181,7 +203,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	public function cache(){
 		$config=Startup::getConfig();
 		$this->getHeader("cache");
-		$this->showSimpleMessage("Cache directory is <b>".ROOT.$config["cacheDirectory"]."</b>", "info","info circle",null,"msgCache");
+		$this->showSimpleMessage("Cache directory is <b>".FsUtils::cleanPathname(ROOT.DS.$config["cacheDirectory"])."</b>", "info","info circle",null,"msgCache");
 		$cacheFiles=CacheFile::init(ROOT . DS .$config["cacheDirectory"]."controllers", "Controllers");
 		$cacheFiles=\array_merge($cacheFiles,CacheFile::init(ROOT . DS .$config["cacheDirectory"]."models", "Models"));
 		$form=$this->jquery->semantic()->htmlForm("frmCache");
@@ -252,9 +274,10 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->models();
 	}
 
-	public function config(){
+	public function config($hasHeader=true){
 		global $config;
-		$this->getHeader("config");
+		if($hasHeader===true)
+			$this->getHeader("config");
 		$this->_getAdminViewer()->getConfigDataElement($config);
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewConfigIndex());
@@ -606,7 +629,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$relations = OrmUtils::getManyToOneFields($className);
 		$fieldTypes=OrmUtils::getFieldTypes($className);
 		foreach ($fieldTypes as $property=>$type){
-			if($type=="boolean"){
+			if($type=="tinyint(1)"){
 				if(isset($_POST[$property])){
 					$_POST[$property]=1;
 				}else{

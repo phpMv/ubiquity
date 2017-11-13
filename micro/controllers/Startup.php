@@ -11,7 +11,6 @@ class Startup {
 	private static $ctrlNS;
 
 	public static function run(array &$config, $url) {
-		@\set_exception_handler(array ('Startup','errorHandler' ));
 		self::$config=$config;
 		self::startTemplateEngine($config);
 
@@ -137,15 +136,47 @@ class Startup {
 		return self::$config;
 	}
 
+
+	private static function needsKeyInConfigArray(&$result,$array,$needs){
+		foreach ($needs as $need){
+			if(!isset($array[$need]) || StrUtils::isNull($array[$need])){
+				$result[]=$need;
+			}
+		}
+	}
+
+	public static function checkDbConfig(){
+		$config=self::$config;
+		$result=[];
+		$needs=["type","dbName","serverName"];
+		if(!isset($config["database"])){
+			$result[]="database";
+		}else{
+			self::needsKeyInConfigArray($result, $config["database"], $needs);
+		}
+		return $result;
+	}
+
+	public static function checkModelsConfig(){
+		$config=self::$config;
+		$result=[];
+		if(!isset($config["mvcNS"])){
+			$result[]="mvcNS";
+		}else{
+			self::needsKeyInConfigArray($result, $config["mvcNS"], ["models"]);
+		}
+		return $result;
+	}
+
 	public static function getModelsDir() {
 		return self::$config["mvcNS"]["models"];
 	}
 
-	public static function getRealModelsDir() {
-		return \realpath(self::$config["siteUrl"] . "/" . self::$config["mvcNS"]["models"]);
+	public static function getModelsCompletePath() {
+		return ROOT.DS.self::getModelsDir();
 	}
 
-	public static function errorHandler($severity, $message, $filename, $lineno) {
+	public static function errorHandler($message = "",$code = 0,$severity = 1 ,$filename =null, int $lineno = 0,$previous = NULL) {
 		if (\error_reporting() == 0) {
 			return;
 		}

@@ -2,7 +2,7 @@
 
 namespace micro\controllers\admin\popo;
 
-use micro\cache\CacheManager;
+use micro\utils\FsUtils;
 
 class CacheFile {
 	private $type;
@@ -20,7 +20,7 @@ class CacheFile {
 	}
 
 	public static function init($folder,$type){
-		$files=CacheManager::glob_recursive($folder . DS . '*');
+		$files=FsUtils::glob_recursive($folder . DS . '*');
 		$result=[];
 		foreach ($files as $file){
 			if (is_file($file)) {
@@ -33,7 +33,7 @@ class CacheFile {
 	}
 
 	public static function delete($folder){
-		$files=CacheManager::glob_recursive($folder . DS . '*');
+		$files=FsUtils::glob_recursive($folder . DS . '*');
 		foreach ($files as $file){
 			if (is_file($file)) {
 				\unlink($file);
