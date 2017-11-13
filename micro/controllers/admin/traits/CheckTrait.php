@@ -11,6 +11,7 @@ use micro\db\Database;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\JsUtils;
 use Ajax\semantic\html\elements\HtmlIcon;
+use micro\utils\FsUtils;
 
 /**
  * @author jc
@@ -89,7 +90,7 @@ trait CheckTrait{
 		if($this->missingKeyInConfigMessage("Models namespace is not well configured in <b>app/config/config.php</b>", Startup::checkModelsConfig())===false){
 			$modelsNS=@$config["mvcNS"]["models"];
 			$this->_addInfoMessage($infoIcon, "Models namespace <b>".$modelsNS."</b> is ok.");
-			$dir=ROOT.DS.$modelsNS;
+			$dir=FsUtils::cleanPathname(ROOT.DS.$modelsNS);
 			if(\file_exists($dir)===false){
 				$this->_addErrorMessage("warning", "The directory <b>".$dir."</b> does not exists.");
 			}else{
@@ -118,13 +119,13 @@ trait CheckTrait{
 		if(!isset($config["cacheDirectory"]) || StrUtils::isNull($config["cacheDirectory"])){
 			self::missingKeyInConfigMessage("Cache directory is not well configured in <b>app/config/config.php</b>", ["cacheDirectory"]);
 		}else{
-			$cacheDir=ROOT.DS.$config["cacheDirectory"];
+			$cacheDir=FsUtils::cleanPathname(ROOT.DS.$config["cacheDirectory"]);
 			$this->_addInfoMessage($infoIcon, "Models cache directory is well configured in config file.");
 			$cacheDirs=CacheManager::getCacheDirectories($config,true);
 			if(\file_exists($cacheDir)===false){
 				$this->_addErrorMessage("warning", "The cache directory <b>".$cacheDir."</b> does not exists.");
 			}else{
-				$modelsCacheDir=$cacheDirs["models"];
+				$modelsCacheDir=FsUtils::cleanPathname($cacheDirs["models"]);
 				$this->_addInfoMessage($infoIcon, "Cache directory <b>".$cacheDir."</b> exists.");
 				if(\file_exists($modelsCacheDir)===false){
 					$this->_addErrorMessage("warning", "The models cache directory <b>".$modelsCacheDir."</b> does not exists.");
