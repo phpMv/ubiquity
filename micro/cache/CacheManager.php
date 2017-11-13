@@ -147,7 +147,7 @@ class CacheManager {
 	public static function getCacheDirectories(&$config,$silent=false){
 		$cacheDirectory=self::initialGetCacheDirectory($config);
 		if(!$silent){
-			echo "cache directory is " . ROOT . DS . $cacheDirectory . "\n";
+			echo "cache directory is " . FsUtils::cleanPathname(ROOT . DS . $cacheDirectory) . "\n";
 		}
 		$modelsDir=str_replace("\\", DS, $config["mvcNS"]["models"]);
 		$controllersDir=str_replace("\\", DS, $config["mvcNS"]["controllers"]);
