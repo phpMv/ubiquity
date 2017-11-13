@@ -136,6 +136,10 @@ class Startup {
 		return self::$config;
 	}
 
+	public static function setConfig($config){
+		self::$config=$config;
+	}
+
 
 	private static function needsKeyInConfigArray(&$result,$array,$needs){
 		foreach ($needs as $need){
