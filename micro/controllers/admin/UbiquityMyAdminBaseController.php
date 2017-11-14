@@ -23,6 +23,9 @@ use Ajax\semantic\html\collections\form\HtmlForm;
 use micro\orm\creator\ModelsCreator;
 use micro\controllers\admin\traits\ModelsConfigTrait;
 use micro\utils\FsUtils;
+use micro\utils\yuml\ClassParser;
+use micro\utils\yuml\Yuml;
+use micro\utils\yuml\ClassesParser;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	use ModelsConfigTrait;
@@ -297,9 +300,38 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->_showTable($table);
 		$model=$this->getModelsNS()."\\".ucfirst($table);
 		$this->_getAdminViewer()->getModelsStructureDataTable(OrmUtils::getModelMetadata($model));
+		$bt=$this->jquery->semantic()->htmlButton("btYuml","Class diagram");
+		$bt->postOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_showDiagram/","{model:'".\str_replace("\\", "|", $model)."'}","#modal",["attr"=>""]);
 		$this->jquery->exec('$("#models-tab .item").tab();',true);
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewShowTable(),["classname"=>$model]);
+	}
+
+	public function _showDiagram($type="plain"){
+		if(RequestUtils::isPost()){
+			if(isset($_POST["model"])){
+				$model=$_POST["model"];
+				$model=\str_replace("|", "\\", $model);
+				$modal=$this->jquery->semantic()->htmlModal("diagram","Class diagram : ".$model);
+				$yuml=new ClassParser($model);
+				$yuml->init(true, true);
+				$modal->setContent($this->_getYumlImage($type, $yuml.""));
+				$modal->addAction("Close");
+				$this->jquery->exec("$('#diagram').modal('show');",true);
+				echo $modal;
+				echo $this->jquery->compile($this->view);
+			}
+		}
+	}
+
+	public function _showAllClassesDiagram($type="plain"){
+		$yumlContent=new ClassesParser();
+		echo $this->_getYumlImage($type, $yumlContent);
+	}
+
+	protected function _getYumlImage($type,$yumlContent){
+		//return $yumlContent;
+		return "<img src='http://yuml.me/diagram/".$type."/class/".$yumlContent."'>";
 	}
 
 	public function refreshTable(){

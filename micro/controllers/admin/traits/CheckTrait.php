@@ -176,6 +176,7 @@ trait CheckTrait{
 			case "Models":
 				if($this->engineering==="forward")
 					$buttons->addItem("(Re-)Create models")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/createModels","#main-content",["attr"=>""])->addIcon("sticky note");
+					$buttons->addItem("Classes diagram")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_showAllClassesDiagram","#action-response",["attr"=>""])->addIcon("sticky note outline");
 			break;
 			case "Cache":
 				$buttons->addItem("(Re-)Init models cache")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_initModelsCache","#main-content")->addIcon("lightning");
