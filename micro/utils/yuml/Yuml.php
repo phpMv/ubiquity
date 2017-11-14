@@ -9,11 +9,12 @@ class Yuml {
 	public static $parameterSeparator='‚';
 	public static $parameterTypeSeparator=':';
 	public static $groupeSeparator=",";
-	public static $propertyMask='{access}{name}{type}';
+	public static $propertyMask='{access}{primary}{name}{type}';
 	public static $methodMask='{access}{name}({parameters}){type}';
 	public static $public='+';
 	public static $protected='#';
 	public static $private='-';
+	public static $primary='«pk» ';
 
 	public static function parseMask($element,$variable,$value) {
 		$result=preg_replace('/(\{)'.$variable.'(\})/sim', $value, $element);
