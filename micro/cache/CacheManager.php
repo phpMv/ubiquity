@@ -239,7 +239,8 @@ class CacheManager {
 				'column' => 'micro\annotations\ColumnAnnotation',
 				'joinTable' => 'micro\annotations\JoinTableAnnotation',
 				'route' => 'micro\annotations\router\RouteAnnotation',
-				'var' => 'mindplay\annotations\standard\VarAnnotation'
+				'var' => 'mindplay\annotations\standard\VarAnnotation',
+				'yuml' => 'micro\annotations\YumlAnnotation'
 		]);
 	}
 

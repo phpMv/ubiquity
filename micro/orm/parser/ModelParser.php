@@ -17,6 +17,7 @@ class ModelParser {
 	protected $notSerializableMembers=[ ];
 	protected $fieldNames;
 	protected $fieldTypes=[];
+	protected $yuml;
 
 	public function parse($modelClass) {
 		$instance=new $modelClass();
@@ -26,6 +27,9 @@ class ModelParser {
 		$this->manyToManyMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@manyToMany");
 		$this->joinColumnMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@joinColumn");
 		$this->joinTableMembers=Reflexion::getMembersAnnotationWithAnnotation($modelClass, "@joinTable");
+		$yuml=Reflexion::getAnnotationClass($modelClass, "@yuml");
+		if(\sizeof($yuml)>0)
+			$this->yuml=$yuml[0];
 		$properties=Reflexion::getProperties($instance);
 		foreach ( $properties as $property ) {
 			$propName=$property->getName();
@@ -52,6 +56,8 @@ class ModelParser {
 		$result["#fieldTypes"]=$this->fieldTypes;
 		$result["#nullable"]=$this->nullableMembers;
 		$result["#notSerializable"]=$this->notSerializableMembers;
+		if(isset($this->yuml))
+			$result["#yuml"]=$this->yuml->getPropertiesAndValues();
 		foreach ( $this->oneToManyMembers as $member => $annotation ) {
 			$result["#oneToMany"][$member]=$annotation->getPropertiesAndValues();
 		}

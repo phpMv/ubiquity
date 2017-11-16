@@ -23,9 +23,14 @@ use Ajax\semantic\html\collections\form\HtmlForm;
 use micro\orm\creator\ModelsCreator;
 use micro\controllers\admin\traits\ModelsConfigTrait;
 use micro\utils\FsUtils;
-use micro\utils\yuml\ClassParser;
+use micro\utils\yuml\ClassToYuml;
 use micro\utils\yuml\Yuml;
-use micro\utils\yuml\ClassesParser;
+use micro\utils\yuml\ClassesToYuml;
+use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
+use Ajax\semantic\html\elements\HtmlList;
+use Ajax\semantic\html\modules\HtmlDropdown;
+use Ajax\semantic\html\collections\menus\HtmlMenu;
+use Ajax\JsUtils;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	use ModelsConfigTrait;
@@ -307,31 +312,138 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->loadView($this->_getAdminFiles()->getViewShowTable(),["classname"=>$model]);
 	}
 
-	public function _showDiagram($type="plain"){
+	public function _showDiagram(){
 		if(RequestUtils::isPost()){
 			if(isset($_POST["model"])){
 				$model=$_POST["model"];
 				$model=\str_replace("|", "\\", $model);
 				$modal=$this->jquery->semantic()->htmlModal("diagram","Class diagram : ".$model);
-				$yuml=new ClassParser($model);
-				$yuml->init(true, true);
-				$modal->setContent($this->_getYumlImage($type, $yuml.""));
+				$yuml=$this->_getClassToYuml($model, $_POST);
+				$menu=$this->_diagramMenu("/_updateDiagram","{model:'".$_POST["model"]."',refresh:'true'}","#diag-class");
+				$modal->setContent([$menu,"<div id='diag-class' class='ui center aligned grid' style='margin:10px;'>",$this->_getYumlImage("plain", $yuml.""),"</div>"]);
 				$modal->addAction("Close");
 				$this->jquery->exec("$('#diagram').modal('show');",true);
+				$modal->onHidden("$('#diagram').remove();");
 				echo $modal;
 				echo $this->jquery->compile($this->view);
 			}
 		}
 	}
 
-	public function _showAllClassesDiagram($type="plain"){
-		$yumlContent=new ClassesParser();
-		echo $this->_getYumlImage($type, $yumlContent);
+	private function _getClassToYuml($model,$post){
+		if(isset($post["properties"])){
+			$props=\array_flip($post["properties"]);
+			$yuml=new ClassToYuml($model,
+					isset($props["displayProperties"]),isset($props["displayAssociations"]),
+					isset($props["displayMethods"]),isset($props["displayMethodsParams"]),
+					isset($props["displayPropertiesTypes"]),isset($props["displayAssociationClassProperties"]));
+			if(isset($props["displayAssociations"])){
+				$yuml->init(true, true);
+			}
+		}else{
+			$yuml=new ClassToYuml($model,!isset($_POST["refresh"]));
+			$yuml->init(true, true);
+		}
+		return $yuml;
 	}
 
-	protected function _getYumlImage($type,$yumlContent){
-		//return $yumlContent;
-		return "<img src='http://yuml.me/diagram/".$type."/class/".$yumlContent."'>";
+	private function _getClassesToYuml($post){
+		if(isset($post["properties"])){
+			$props=\array_flip($post["properties"]);
+			$yuml=new ClassesToYuml(isset($props["displayProperties"]),isset($props["displayAssociations"]),
+					isset($props["displayMethods"]),isset($props["displayMethodsParams"]),
+					isset($props["displayPropertiesTypes"]));
+		}else{
+			$yuml=new ClassesToYuml(!isset($_POST["refresh"]),!isset($_POST["refresh"]));
+		}
+		return $yuml;
+	}
+
+	public function _updateDiagram(){
+		if(RequestUtils::isPost()){
+			if(isset($_POST["model"])){
+				$model=$_POST["model"];
+				$model=\str_replace("|", "\\", $model);
+				$type=$_POST["type"];
+				$size=$_POST["size"];
+				$yuml= $this->_getClassToYuml($model, $_POST);
+				echo $this->_getYumlImage($type.$size, $yuml."");
+				echo $this->jquery->compile($this->view);
+			}
+		}
+	}
+
+	/**
+	 * @param string $url
+	 * @param string $params
+	 * @param string $responseElement
+	 * @param string $type
+	 * @return HtmlMenu
+	 */
+	private function _diagramMenu($url="/_updateDiagram",$params="{}",$responseElement="#diag-class",$type="plain",$size=";scale:100"){
+		$params=JsUtils::_implodeParams(["$('#frmProperties').serialize()",$params]);
+		$menu=new HtmlMenu("menu-diagram");
+		$popup=$menu->addPopupAsItem("Display","Parameters");
+		$list=new HtmlList("lst-checked");
+		$list->addCheckedList(["displayPropertiesTypes"=>"Types"],["Properties","displayProperties"],["displayPropertiesTypes"],true,"properties[]");
+		$list->addCheckedList(["displayMethodsParams"=>"Parameters"],["Methods","displayMethods"],[],true,"properties[]");
+		$list->addCheckedList(["displayAssociationClassProperties"=>"Associated class members"],["Associations","displayAssociations"],["displayAssociations"],true,"properties[]");
+		$btApply=new HtmlButton("bt-apply","Apply","green fluid");
+		$btApply->postOnClick($this->_getAdminFiles()->getAdminBaseRoute().$url,$params,$responseElement,["ajaxTransition"=>"random","params"=>$params,"attr"=>"","jsCallback"=>"$('#Parameters').popup('hide');"]);
+		$list->addItem($btApply);
+		$popup->setContent($list);
+		$ddScruffy=new HtmlDropdown("ddScruffy",$type,["nofunky"=>"Boring","plain"=>"Plain","scruffy"=>"Scruffy"],true);
+		$ddScruffy->setValue("plain")->asSelect("type");
+		$this->jquery->postOn("change","#type",$this->_getAdminFiles()->getAdminBaseRoute().$url,$params,$responseElement,["ajaxTransition"=>"random","attr"=>""]);
+		$menu->addItem($ddScruffy);
+		$ddSize=new HtmlDropdown("ddSize",$size,[";scale:180"=>"Huge",";scale:120"=>"Big",";scale:100"=>"Normal",";scale:80"=>"Small",";scale:60"=>"Tiny"],true);
+		$ddSize->asSelect("size");
+		$this->jquery->postOn("change","#size",$this->_getAdminFiles()->getAdminBaseRoute().$url,$params,$responseElement,["ajaxTransition"=>"random","attr"=>""]);
+		$menu->wrap("<form id='frmProperties' name='frmProperties'>","</form>");
+		$menu->addItem($ddSize);
+		return $menu;
+	}
+
+	private function _getCks($array){
+		$result=[];
+		foreach ($array as $dataAjax=>$caption){
+			$result[]=$this->_getCk($caption, $dataAjax);
+		}
+		return $result;
+	}
+	private function _getCk($caption,$dataAjax){
+		$ck=new HtmlCheckbox("ck-".$dataAjax,$caption,"1");
+		$ck->setProperty("name", "ck[]");
+		$ck->setProperty("data-ajax", $dataAjax);
+		return $ck;
+	}
+
+	public function _showAllClassesDiagram(){
+		$yumlContent=new ClassesToYuml();
+		$menu=$this->_diagramMenu("/_updateAllClassesDiagram","{refresh:'true'}","#diag-class");
+		$this->jquery->exec('$("#modelsMessages-success").hide()',true);
+		$menu->compile($this->jquery,$this->view);
+		$form=$this->jquery->semantic()->htmlForm("frm-yuml-code");
+		$form->addTextarea("yuml-code", "Yuml code",$yumlContent."");
+		$diagram=$this->_getYumlImage("plain", $yumlContent);
+		$this->jquery->execAtLast('$("#all-classes-diagram-tab .item").tab();');
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewClassesDagram(),["diagram"=>$diagram]);
+	}
+
+	public function _updateAllClassesDiagram(){
+		if(RequestUtils::isPost()){
+			$type=$_POST["type"];
+			$size=$_POST["size"];
+			$yumlContent=$this->_getClassesToYuml($_POST);
+			$this->jquery->exec('$("#yuml-code").html("'.\htmlentities($yumlContent."").'")',true);
+			echo $this->_getYumlImage($type.$size, $yumlContent);
+			echo $this->jquery->compile();
+		}
+	}
+
+	protected function _getYumlImage($sizeType,$yumlContent){
+		return "<img src='http://yuml.me/diagram/".$sizeType."/class/".$yumlContent."'>";
 	}
 
 	public function refreshTable(){

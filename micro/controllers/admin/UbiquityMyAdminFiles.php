@@ -43,4 +43,8 @@ class UbiquityMyAdminFiles {
 	public function getViewHeader(){
 		return "Admin/main/vHeader.html";
 	}
+
+	public function getViewClassesDagram(){
+		return "Admin/data/diagClasses.html";
+	}
 }
