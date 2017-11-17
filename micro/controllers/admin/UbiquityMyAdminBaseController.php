@@ -31,6 +31,7 @@ use Ajax\semantic\html\elements\HtmlList;
 use Ajax\semantic\html\modules\HtmlDropdown;
 use Ajax\semantic\html\collections\menus\HtmlMenu;
 use Ajax\JsUtils;
+use Ajax\semantic\html\base\constants\Direction;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	use ModelsConfigTrait;
@@ -145,7 +146,8 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->showSimpleMessage("Controllers directory is <b>".FsUtils::cleanPathname($controllersDir)."</b>", "info","info circle",null,"msgControllers");
 		$frm=$this->jquery->semantic()->htmlForm("frmCtrl");
 		$frm->setValidationParams(["on"=>"blur","inline"=>true]);
-		$input=$frm->addInput("name",null,"text","","Controller name")->addRules(["empty","regExp[/^[A-Za-z]\w*$/]"])->setWidth(6);
+		$input=$frm->addInput("name",null,"text","","Controller name")->addRules([["empty","Controller name must have a value"],"regExp[/^[A-Za-z]\w*$/]"])->setWidth(8);
+		$input->labeledCheckbox(Direction::LEFT,"View","v","slider");
 		$input->addAction("Create controller",true,"plus",true)->addClass("teal")->asSubmit();
 		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/createController","#main-content");
 		$this->_getAdminViewer()->getControllersDataTable(ControllerAction::init());
@@ -475,10 +477,19 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 				if(\file_exists($filename)===false){
 					if(isset($config["mvcNS"]["controllers"]) && $config["mvcNS"]["controllers"]!=="")
 						$namespace="namespace ".$config["mvcNS"]["controllers"].";";
-					$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>"","%namespace%"=>$namespace]);
-					$this->showSimpleMessage("The <b>".$controllerName."</b> controller has been created in <b>".$filename."</b>.", "success","checkmark circle",10000,"msgGlobal");
+					$msgView="";$indexContent="";
+					if(isset($_POST["lbl-ck-div-name"])){
+						$viewDir=ROOT.DS."views".DS.$controllerName.DS;
+						FsUtils::safeMkdir($viewDir);
+						$viewName=$viewDir.DS."index.html";
+						$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/view.tpl", $viewName, ["%controllerName%"=>$controllerName]);
+						$msgView="<br>The default view associated has been created in <b>".FsUtils::cleanPathname(ROOT.DS.$viewDir)."</b>";
+						$indexContent="\$this->loadview(\"".$controllerName."/index.html\");";
+					}
+					$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent,"%namespace%"=>$namespace]);
+					$this->showSimpleMessage("The <b>".$controllerName."</b> controller has been created in <b>".FsUtils::cleanPathname($filename)."</b>.".$msgView, "success","checkmark circle",30000,"msgGlobal");
 				}else{
-					$this->showSimpleMessage("The file <b>".$filename."</b> already exists.<br>Can not create the <b>".$controllerName."</b> controller!", "warning","warning circle",10000,"msgGlobal");
+					$this->showSimpleMessage("The file <b>".$filename."</b> already exists.<br>Can not create the <b>".$controllerName."</b> controller!", "warning","warning circle",30000,"msgGlobal");
 				}
 			}
 		}
@@ -726,7 +737,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$lv->setUrls(["delete"=>$adminRoute."/delete","edit"=>$adminRoute."/edit/".$modal]);
 		$lv->setTargetSelector(["delete"=>"#table-messages","edit"=>"#table-details"]);
 		$lv->addClass("small very compact");
-		$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"]);
+		$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"],function($bt){$bt->addClass("circular");},function($bt){$bt->addClass("circular");});
 		$lv->setActiveRowSelector("error");
 		$this->jquery->getOnClick("#btAddNew", $adminRoute."/newModel/".$modal,"#table-details");
 		return $lv;
