@@ -973,34 +973,36 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 					if(isset($objectFK))
 						$fkClass=\get_class($objectFK);
 				}
-				$fkTable=OrmUtils::getTableName($fkClass);
-				$memberFK=$member;
+				if(isset($fkClass)){
+					$fkTable=OrmUtils::getTableName($fkClass);
+					$memberFK=$member;
 
-				$header=new HtmlHeader("",4,$memberFK,"content");
-				if(is_array($objectFK) || $objectFK instanceof \Traversable){
-					$header=$viewer->getFkHeaderList($memberFK, $fkClass, $objectFK);
-					$element=$viewer->getFkList($memberFK, $fkClass, $objectFK);
-					foreach ($objectFK as $item){
-						if(method_exists($item, "__toString")){
-							$id=($this->getIdentifierFunction($fkClass))(0,$item);
-							$item=$element->addItem($item."");
-							$item->setProperty("data-ajax", $fkTable.".".$id);
-							$item->addClass("showTable");
-							$hasElements=true;
-							$this->_getAdminViewer()->displayFkElementList($item, $memberFK, $fkClass, $item);
+					$header=new HtmlHeader("",4,$memberFK,"content");
+					if(is_array($objectFK) || $objectFK instanceof \Traversable){
+						$header=$viewer->getFkHeaderList($memberFK, $fkClass, $objectFK);
+						$element=$viewer->getFkList($memberFK, $fkClass, $objectFK);
+						foreach ($objectFK as $item){
+							if(method_exists($item, "__toString")){
+								$id=($this->getIdentifierFunction($fkClass))(0,$item);
+								$item=$element->addItem($item."");
+								$item->setProperty("data-ajax", $fkTable.".".$id);
+								$item->addClass("showTable");
+								$hasElements=true;
+								$this->_getAdminViewer()->displayFkElementList($item, $memberFK, $fkClass, $item);
+							}
+						}
+					}else{
+						if(method_exists($objectFK, "__toString")){
+							$header=$viewer->getFkHeaderElement($memberFK, $fkClass, $objectFK);
+							$id=($this->getIdentifierFunction($fkClass))(0,$objectFK);
+							$element=$viewer->getFkElement($memberFK, $fkClass, $objectFK);
+							$element->setProperty("data-ajax", $fkTable.".".$id)->addClass("showTable");
 						}
 					}
-				}else{
-					if(method_exists($objectFK, "__toString")){
-						$header=$viewer->getFkHeaderElement($memberFK, $fkClass, $objectFK);
-						$id=($this->getIdentifierFunction($fkClass))(0,$objectFK);
-						$element=$viewer->getFkElement($memberFK, $fkClass, $objectFK);
-						$element->setProperty("data-ajax", $fkTable.".".$id)->addClass("showTable");
+					if(isset($element)){
+						$grid->addCol($wide)->setContent($header.$element);
+						$hasElements=true;
 					}
-				}
-				if(isset($element)){
-					$grid->addCol($wide)->setContent($header.$element);
-					$hasElements=true;
 				}
 			}
 			if($hasElements)
