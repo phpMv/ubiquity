@@ -29,8 +29,8 @@ class RequestUtils {
 	}
 
 	/**
-	 * Appel d'une fonction de nettoyage sur le post
-	 * @param string $function
+	 * Call a cleaning function on the post
+	 * @param string $function the cleaning function, default htmlentities
 	 * @return array
 	 */
 	public static function getPost($function="htmlentities") {
@@ -38,7 +38,34 @@ class RequestUtils {
 	}
 
 	/**
-	 * Retourne vrai si la requête est une requête Ajax
+	 * Returns the query data, for PUT, DELETE PATCH methods
+	 */
+	public static function getInput(){
+		$put = array();
+		\parse_str(\file_get_contents('php://input'), $put);
+		return $put;
+	}
+
+	/**
+	 * Returns the query data, regardless of the method
+	 * @return array
+	 */
+	public static function getDatas(){
+		$method=\strtolower($_SERVER['REQUEST_METHOD']);
+		switch ($method) {
+			case 'post':
+				return $_POST;
+			break;
+			case 'get':
+				return $_GET;
+			default:
+				return self::getInput();
+			break;
+		}
+	}
+
+	/**
+	 * Returns true if the request is an Ajax request
 	 * @return boolean
 	 */
 	public static function isAjax() {
@@ -46,7 +73,7 @@ class RequestUtils {
 	}
 
 	/**
-	 * Retourne vrai si la requête est envoyée par la méthode POST
+	 * Returns true if the request is sent by the POST method
 	 * @return boolean
 	 */
 	public static function isPost() {
@@ -79,6 +106,10 @@ class RequestUtils {
 			$url="/" . $url;
 		}
 		return $config["siteUrl"] . $url;
+	}
+
+	public static function getUrlParts(){
+		return \explode("/", $_GET["c"]);
 	}
 
 	public static function getMethod() {

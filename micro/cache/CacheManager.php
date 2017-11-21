@@ -10,6 +10,8 @@ use micro\utils\JArray;
 use micro\controllers\Router;
 use micro\controllers\Startup;
 use micro\utils\FsUtils;
+use micro\cache\parser\ControllerParser;
+use micro\cache\parser\RestControllerParser;
 
 class CacheManager {
 	public static $cache;
@@ -34,6 +36,12 @@ class CacheManager {
 	public static function getControllerCache() {
 		if (self::$cache->exists("controllers/routes"))
 			return self::$cache->fetch("controllers/routes");
+		return [ ];
+	}
+
+	public static function getRestCache() {
+		if (self::$cache->exists("controllers/rest"))
+			return self::$cache->fetch("controllers/rest");
 		return [ ];
 	}
 
@@ -184,6 +192,8 @@ class CacheManager {
 			self::initModelsCache($config);
 		if ($type === "all" || $type === "controllers")
 			self::initControllersCache($config);
+		if ($type === "all" || $type === "rest")
+			self::initRestCache($config);
 	}
 
 	public static function initModelsCache(&$config,$forChecking=false,$silent=false) {
@@ -227,6 +237,21 @@ class CacheManager {
 		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray(self::$routes, "array") . ";");
 	}
 
+	private static function initRestCache(&$config) {
+		$restCache=[];
+		$files=self::getControllersFiles($config);
+		foreach ( $files as $file ) {
+			if (is_file($file)) {
+				$controller=ClassUtils::getClassFullNameFromFile($file);
+				$parser=new RestControllerParser();
+				$parser->parse($controller,$config);
+				if($parser->isRest())
+					$restCache=\array_merge($restCache,$parser->asArray());
+			}
+		}
+		self::$cache->store("controllers/rest", "return " . JArray::asPhpArray($restCache, "array") . ";");
+	}
+
 	private static function register(AnnotationManager $annotationManager) {
 		$annotationManager->registry=array_merge($annotationManager->registry, [
 				'id' => 'micro\annotations\IdAnnotation',
@@ -240,7 +265,9 @@ class CacheManager {
 				'joinTable' => 'micro\annotations\JoinTableAnnotation',
 				'route' => 'micro\annotations\router\RouteAnnotation',
 				'var' => 'mindplay\annotations\standard\VarAnnotation',
-				'yuml' => 'micro\annotations\YumlAnnotation'
+				'yuml' => 'micro\annotations\YumlAnnotation',
+				'rest' => 'micro\annotations\rest\RestAnnotation',
+				'authorization' => 'micro\annotations\rest\AuthorizationAnnotation'
 		]);
 	}
 
@@ -252,6 +279,23 @@ class CacheManager {
 		$result=self::getControllerCache();
 		return $result;
 	}
+
+	public static function getRestResource($controllerClass){
+		$cache=self::getRestCache();
+		if(isset($cache[$controllerClass])){
+			return $cache[$controllerClass]["resource"];
+		}
+		return null;
+	}
+
+	public static function getRestCacheController($controllerClass){
+		$cache=self::getRestCache();
+		if(isset($cache[$controllerClass])){
+			return $cache[$controllerClass];
+		}
+		return null;
+	}
+
 
 	public static function addRoute($path, $controller, $action="index", $methods=null, $name="") {
 		$controllerCache=self::getControllerCache();

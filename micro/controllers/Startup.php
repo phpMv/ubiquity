@@ -9,6 +9,8 @@ class Startup {
 	public static $urlParts;
 	private static $config;
 	private static $ctrlNS;
+	private static $controller;
+	private static $action;
 
 	public static function run(array &$config, $url) {
 		self::$config=$config;
@@ -78,6 +80,11 @@ class Startup {
 	public static function runAction($u, $initialize=true, $finalize=true) {
 		$config=self::getConfig();
 		$ctrl=$u[0];
+		self::$controller=$ctrl;
+		self::$action="index";
+		if(\sizeof($u)>1)
+			self::$action=$u[1];
+
 		$controller=new $ctrl();
 		if (!$controller instanceof Controller) {
 			print "`{$u[0]}` n'est pas une instance de contrôleur.`<br/>";
@@ -108,27 +115,23 @@ class Startup {
 
 	private static function callController(Controller $controller, $u) {
 		$urlSize=sizeof($u);
-		try {
-			switch($urlSize) {
-				case 1:
-					$controller->index();
-					break;
-				case 2:
-					$action=$u[1];
-					// Appel de la méthode (2ème élément du tableau)
-					if (\method_exists($controller, $action)) {
-						$controller->$action();
-					} else {
-						print "La méthode `{$action}` n'existe pas sur le contrôleur `" . $u[0] . "`<br/>";
-					}
-					break;
-				default:
-					// Appel de la méthode en lui passant en paramètre le reste du tableau
-					\call_user_func_array(array ($controller,$u[1] ), array_slice($u, 2));
-					break;
-			}
-		} catch ( \Exception $e ) {
-			print "Error!: " . $e->getMessage() . "<br/>";
+		switch($urlSize) {
+			case 1:
+				$controller->index();
+				break;
+			case 2:
+				$action=$u[1];
+				// Appel de la méthode (2ème élément du tableau)
+				if (\method_exists($controller, $action)) {
+					$controller->$action();
+				} else {
+					print "La méthode `{$action}` n'existe pas sur le contrôleur `" . $u[0] . "`<br/>";
+				}
+				break;
+			default:
+				// Appel de la méthode en lui passant en paramètre le reste du tableau
+				\call_user_func_array(array ($controller,$u[1] ), array_slice($u, 2));
+				break;
 		}
 	}
 
@@ -185,7 +188,16 @@ class Startup {
 			return;
 		}
 		if (\error_reporting() & $severity) {
-			throw new \ErrorException($message, 0, $severity, $filename, $lineno);
+			throw new \ErrorException($message, 0, $severity, $filename, $lineno,$previous);
 		}
 	}
+
+	public static function getController() {
+		return self::$controller;
+	}
+
+	public static function getAction() {
+		return self::$action;
+	}
+
 }

@@ -5,6 +5,8 @@
  **/
 class %controllerName% extends ControllerBase{
 
-	public function index(){%indexContent%}
+	public function index(){
+		%indexContent%
+	}
 
 }

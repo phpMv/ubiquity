@@ -4,7 +4,7 @@ namespace micro\controllers;
 
 use micro\cache\CacheManager;
 use micro\utils\RequestUtils;
-use micro\cache\ControllerParser;
+use micro\cache\parser\ControllerParser;
 use micro\utils\StrUtils;
 
 /**
@@ -15,9 +15,11 @@ use micro\utils\StrUtils;
 class Router {
 	private static $routes;
 
-	private static function slashPath($path){
+	public static function slashPath($path){
 		if(StrUtils::startswith($path,"/")===false)
 			$path="/" . $path;
+		if(!StrUtils::endswith($path, "/"))
+			$path=$path."/";
 		return $path;
 	}
 
@@ -97,13 +99,34 @@ class Router {
 		$ctrl=str_replace("\\\\", "\\", $routeArray["details"]["controller"]);
 		$result=[ $ctrl,$routeArray["details"]["action"] ];
 		$paramsOrder=$routeArray["details"]["parameters"];
+		$index=0;
 		foreach ( $paramsOrder as $order ) {
-			$result[]=$params[$order];
+			if($order==="*"){
+				if(isset($params[$index]))
+					$result=\array_merge($result,\array_diff(\explode("/", $params[$index]),[""]));
+				break;
+			}
+			if(\substr($order, 0,1)==="~"){
+				$order=\intval(\substr($order,1,1));
+				if(isset($params[$order])){
+					$result=\array_merge($result,\array_diff(\explode("/", $params[$order]),[""]));
+					break;
+				}
+			}
+			$result[]=self::cleanParam($params[$order]);
+			unset($params[$order]);
+			$index++;
 		}
 		if ($cached === true && $cachedResponse===true) {
 			return CacheManager::getRouteCache($result, $duration);
 		}
 		return $result;
+	}
+
+	private static function cleanParam($param){
+		if(StrUtils::endswith($param, "/"))
+			return \substr($param, 0,-1);
+		return $param;
 	}
 
 	/**

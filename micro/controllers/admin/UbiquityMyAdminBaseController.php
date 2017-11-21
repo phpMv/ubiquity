@@ -57,10 +57,16 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		parent::initialize();
 		if(RequestUtils::isAjax()===false){
 			$semantic=$this->jquery->semantic();
-			$elements=["UbiquityMyAdmin","Models","Routes","Controllers","Cache","Config"];
+			$mainMenuElements=$this->_getAdminViewer()->getMainMenuElements();
+			$elements=["UbiquityMyAdmin"];
+			$dataAjax=["index"];
+			foreach ($mainMenuElements as $elm=>$values){
+				$elements[]=$elm;
+				$dataAjax[]=$values[0];
+			}
 			$mn=$semantic->htmlMenu("mainMenu",$elements);
 			$mn->getItem(0)->addClass("header")->addIcon("home big link");
-			$mn->setPropertyValues("data-ajax", ["index","models","routes","controllers","cache","config"]);
+			$mn->setPropertyValues("data-ajax", $dataAjax);
 			$mn->setActiveItem(0);
 			$mn->setSecondary();
 			$mn->getOnClick("Admin","#main-content",["attr"=>"data-ajax"]);
@@ -740,6 +746,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"],function($bt){$bt->addClass("circular");},function($bt){$bt->addClass("circular");});
 		$lv->setActiveRowSelector("error");
 		$this->jquery->getOnClick("#btAddNew", $adminRoute."/newModel/".$modal,"#table-details");
+		$this->jquery->click("_.edit","console.log($(this).closest('.ui.button'));");
 		return $lv;
 	}
 
@@ -1064,4 +1071,3 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		return $this->_getAdminData()->getFieldNames($model);
 	}
 }
-

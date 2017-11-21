@@ -220,6 +220,8 @@ class UbiquityMyAdminViewer {
 	protected function addGetPostButtons(DataTable $dt){
 		$dt->addFieldButtons(["GET","POST"],true,function(HtmlButtonGroups $bts,$instance,$index){
 			$path=$instance->getPath();
+			$path=\str_replace("(.*?)", "", $path);
+			$path=\str_replace("(index/)?", "", $path);
 			$bts->setIdentifier("bts-".$instance->getId()."-".$index);
 			$bts->getItem(0)->addClass("_get")->setProperty("data-url",$path);
 			$bts->getItem(1)->addClass("_post")->setProperty("data-url",$path);

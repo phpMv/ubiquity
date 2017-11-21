@@ -33,10 +33,26 @@ class Route {
 		if(\sizeof($array["parameters"])>0){
 			$method=new \ReflectionMethod($this->controller,$this->action);
 			$params=$method->getParameters();
-			foreach ($array["parameters"] as $param){
-				$this->parameters[]=$params[$param]->getName();
+			foreach ($array["parameters"] as $paramIndex){
+				if($paramIndex==="*"){
+					$pName=$this->getVariadicParam($params);
+					if($pName!==false){
+						$this->parameters[]="...".$pName;
+					}
+				}else{
+					if(isset($params[$paramIndex]))
+						$this->parameters[]=$params[$paramIndex]->getName();
+				}
 			}
 		}
+	}
+	private function getVariadicParam($parameters){
+		foreach ($parameters as $param){
+			if($param->isVariadic()){
+				return $param->getName();
+			}
+		}
+		return false;
 	}
 
 	public function getPath() {

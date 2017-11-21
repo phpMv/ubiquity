@@ -54,6 +54,7 @@ class DAO {
 			$accesseur="set" . ucfirst($member);
 			if (method_exists($instance, $accesseur)) {
 				$instance->$accesseur($obj);
+				$instance->_rest[$member]=$obj->_rest;
 				return;
 			}
 		}
@@ -105,6 +106,7 @@ class DAO {
 		if (method_exists($instance, $accessor)) {
 			Logger::log($part, "Affectation de " . $member . " pour l'objet " . $class);
 			$instance->$accessor($value);
+			$instance->_rest[$member]=$value;
 		} else {
 			Logger::warn($part, "L'accesseur " . $accessor . " est manquant pour " . $class);
 		}
@@ -216,6 +218,7 @@ class DAO {
 			$accesseur="set" . ucfirst($field);
 			if (method_exists($o, $accesseur)) {
 				$o->$accesseur($v);
+				$o->_rest[$field]=$v;
 			}
 			if (isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
 				self::getOneManyToOne($o, $v, $invertedJoinColumns[$k], $useCache);
@@ -395,6 +398,7 @@ class DAO {
 			self::$db->connect();
 		} catch (\Exception $e) {
 			Logger::error("DAO", $e->getMessage());
+			throw $e;
 		}
 	}
 
