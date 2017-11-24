@@ -40,8 +40,13 @@ class Route {
 						$this->parameters[]="...".$pName;
 					}
 				}else{
-					if(isset($params[$paramIndex]))
-						$this->parameters[]=$params[$paramIndex]->getName();
+					$index=\intval(\str_replace("~", "", $paramIndex));
+					if(isset($params[$index])){
+						if(\substr($paramIndex,0,1)==="~")
+							$this->parameters[]=$params[$index]->getName();
+						else
+							$this->parameters[]=$params[$index]->getName()."*";
+					}
 				}
 			}
 		}

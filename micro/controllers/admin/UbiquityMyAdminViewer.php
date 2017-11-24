@@ -23,6 +23,9 @@ use Ajax\semantic\html\elements\html5\HtmlLink;
 use Ajax\semantic\html\elements\HtmlButtonGroups;
 use Ajax\semantic\widgets\datatable\DataTable;
 use Ajax\service\JString;
+use Ajax\semantic\html\elements\HtmlList;
+use micro\controllers\admin\popo\Route;
+use micro\utils\StrUtils;
 
 /**
  * @author jc
@@ -139,12 +142,13 @@ class UbiquityMyAdminViewer {
 				"routes"=>["Routes","car","Displays defined routes with annotations"],
 				"controllers"=>["Controllers","heartbeat","Displays controllers and actions"],
 				"cache"=>["Cache","lightning","Annotations, models, router and controller cache"],
+				"rest"=>["Rest","server","Restfull web service"],
 				"config"=>["Config","settings","Configuration variables"]
 		];
 	}
 
-	public function getRoutesDataTable($routes){
-		$dt=$this->jquery->semantic()->dataTable("dtRoutes", "micro\controllers\admin\popo\Route", $routes);
+	public function getRoutesDataTable($routes,$dtName="dtRoutes"){
+		$dt=$this->jquery->semantic()->dataTable($dtName, "micro\controllers\admin\popo\Route", $routes);
 		$dt->setIdentifierFunction(function($i,$instance){return $instance->getId();});
 		$dt->setFields(["path","methods","controller","action","parameters","cache","duration","name","expired"]);
 		$dt->setCaptions(["Path","Methods","Controller","Action","Parameters","Cache","Duration","Name","Expired",""]);
@@ -292,6 +296,52 @@ class UbiquityMyAdminViewer {
 			});
 		}
 		return $de;
+	}
+
+	public function getRestRoutesTab($datas){
+		$tabs=$this->jquery->semantic()->htmlTab("tabsRest");
+		foreach ($datas as $controller=>$restAttributes){
+			$list=new HtmlList("attributes",[
+					["heartbeat","Controller",$controller],
+					["car","Route",$restAttributes["restAttributes"]["route"]]
+			]);
+			$list->setHorizontal();
+			$routes=Route::init($restAttributes["routes"]);
+			$tabs->addTab($restAttributes["restAttributes"]["resource"], [$list,$this->_getRestRoutesDataTable($routes, "dtRest")]);
+		}
+		return $tabs;
+	}
+
+	protected function _getRestRoutesDataTable($routes,$dtName){
+		$dt=$this->jquery->semantic()->dataTable($dtName, "micro\controllers\admin\popo\Route", $routes);
+		$dt->setIdentifierFunction(function($i,$instance){return $instance->getPath();});
+		$dt->setFields(["path","methods","action","parameters","cache","duration","expired"]);
+		$dt->setCaptions(["Path","Methods","Action","Parameters","Cache","Duration","Expired",""]);
+		$dt->fieldAsLabel("path","car");
+		$dt->fieldAsCheckbox("cache",["disabled"=>"disabled"]);
+		$dt->setValueFunction("methods", function($v){return (\is_array($v))?"[".\implode(", ", $v)."]":$v;});
+		$dt->setValueFunction("parameters", function($v){return (\is_array($v))?"[".\implode(", ", $v)."]":$v;});
+		$dt->setValueFunction("expired", function($v,$instance,$index){
+			$icon=null;$expired=null;
+			if($instance->getCache()){
+				if(\sizeof($instance->getParameters())===0 || $instance->getParameters()===null)
+					$expired=CacheManager::isExpired($instance->getPath(),$instance->getDuration());
+					if($expired===false){
+						$icon=new HtmlIcon("", "toggle on");
+					}elseif($expired===true){
+						$icon=new HtmlIcon("", "toggle off");
+					}else{
+						$icon=new HtmlIcon("", "help");
+					}
+			}
+
+			return $icon;
+		});
+		$dt->addFieldButton("Test",true,function($bt){
+			$bt->addClass("toggle _toTest basic circular");
+		});
+		$dt->setEdition()->addClass("compact");
+		return $dt;
 	}
 
 	public function getConfigDataElement($config){

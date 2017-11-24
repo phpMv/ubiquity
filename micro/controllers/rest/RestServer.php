@@ -11,6 +11,7 @@ class RestServer {
 	protected $config;
 	protected $headers;
 	protected $tokensFolder;
+	protected $tokensCacheKey="_apiTokens";
 	/**
 	 * @var ApiTokens
 	 */
@@ -92,7 +93,7 @@ class RestServer {
 	 * @return ApiTokens
 	 */
 	public function _getApiTokens(){
-		return ApiTokens::getFromCache(ROOT.$this->config["cacheDirectory"].DS);
+		return ApiTokens::getFromCache(ROOT.$this->config["cacheDirectory"].DS,$this->tokensCacheKey);
 	}
 
 	/**

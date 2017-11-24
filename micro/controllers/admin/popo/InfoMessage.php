@@ -28,5 +28,4 @@ class InfoMessage {
 		$this->content=$content;
 		return $this;
 	}
-
 }

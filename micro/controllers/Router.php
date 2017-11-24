@@ -27,6 +27,10 @@ class Router {
 		self::$routes=CacheManager::getControllerCache();
 	}
 
+	public static function startRest() {
+		self::$routes=CacheManager::getControllerCache(true);
+	}
+
 	public static function getRoute($path,$cachedResponse=true) {
 		$path=self::slashPath($path);
 		foreach ( self::$routes as $routePath => $routeDetails ) {

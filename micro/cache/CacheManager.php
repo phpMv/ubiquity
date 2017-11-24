@@ -33,9 +33,10 @@ class CacheManager {
 		self::$cache=new ArrayCache($cacheDirectory, ".cache");
 	}
 
-	public static function getControllerCache() {
-		if (self::$cache->exists("controllers/routes"))
-			return self::$cache->fetch("controllers/routes");
+	public static function getControllerCache($isRest=false) {
+		$key=($isRest)?"rest":"default";
+		if (self::$cache->exists("controllers/routes.".$key))
+			return self::$cache->fetch("controllers/routes.".$key);
 		return [ ];
 	}
 
@@ -138,10 +139,11 @@ class CacheManager {
 		$parser=new ControllerParser();
 		try {
 			$parser->parse($classname);
-			self::$routes=\array_merge($parser->asArray(), self::$routes);
+			return $parser->asArray();
 		} catch ( \Exception $e ) {
 			// Nothing to do
 		}
+		return [];
 	}
 
 	public static function checkCache(&$config,$silent=false) {
@@ -191,7 +193,7 @@ class CacheManager {
 		if ($type === "all" || $type === "models")
 			self::initModelsCache($config);
 		if ($type === "all" || $type === "controllers")
-			self::initControllersCache($config);
+			self::initRouterCache($config);
 		if ($type === "all" || $type === "rest")
 			self::initRestCache($config);
 	}
@@ -224,17 +226,26 @@ class CacheManager {
 		return FsUtils::glob_recursive($typeDir . DS . '*');
 	}
 
-	private static function initControllersCache(&$config) {
+	private static function initRouterCache(&$config) {
+		$routes=["rest"=>[],"default"=>[]];
 		$files=self::getControllersFiles($config);
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				$controller=ClassUtils::getClassFullNameFromFile($file);
-				self::addControllerCache($controller);
+				$parser=new ControllerParser();
+				try {
+					$parser->parse($controller);
+					$ret= $parser->asArray();
+					$key=($parser->isRest())?"rest":"default";
+					$routes[$key]=\array_merge($routes[$key], $ret);
+				} catch ( \Exception $e ) {
+					// Nothing to do
+				}
+
 			}
 		}
-		if ($config["debug"])
-			self::addAdminRoutes();
-		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray(self::$routes, "array") . ";");
+		self::$cache->store("controllers/routes.default", "return " . JArray::asPhpArray($routes["default"], "array") . ";");
+		self::$cache->store("controllers/routes.rest", "return " . JArray::asPhpArray($routes["rest"], "array") . ";");
 	}
 
 	private static function initRestCache(&$config) {
@@ -277,6 +288,37 @@ class CacheManager {
 
 	public static function getRoutes() {
 		$result=self::getControllerCache();
+		return $result;
+	}
+
+	public static function getRestRoutes() {
+		$result=[];
+		$restCache=self::getRestCache();
+		foreach ($restCache as $controllerClass=>$restAttributes){
+			if(isset($restCache[$controllerClass])){
+				$result[$controllerClass]=["restAttributes"=>$restAttributes,"routes"=>self::getControllerRoutes($controllerClass,true)];
+			}
+		}
+		return $result;
+	}
+
+	public static function getControllerRoutes($controllerClass,$isRest=false){
+		$result=[];
+		$ctrlCache=self::getControllerCache($isRest);
+		foreach ($ctrlCache as $path=>$routeAttributes){
+			if(isset($routeAttributes["controller"])){
+				if($routeAttributes["controller"]===$controllerClass){
+					$result[$path]=$routeAttributes;
+				}
+			}else{
+				$firstValue=reset($routeAttributes);
+				if(isset($firstValue)&&isset($firstValue["controller"])){
+					if($firstValue["controller"]===$controllerClass){
+						$result[$path]=$routeAttributes;
+					}
+				}
+			}
+		}
 		return $result;
 	}
 

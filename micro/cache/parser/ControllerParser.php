@@ -11,6 +11,7 @@ class ControllerParser {
 	private $controllerClass;
 	private $mainRouteClass;
 	private $routesMethods=[ ];
+	private $rest=false;
 
 	private static $excludeds=["__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward"];
 
@@ -22,15 +23,21 @@ class ControllerParser {
 			$instance=new $controllerClass();
 			$annotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
 			$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
+			$this->rest=\sizeof($restAnnotsClass)>0;
 			if (\sizeof($annotsClass) > 0)
 				$this->mainRouteClass=$annotsClass[0];
 			$methods=Reflexion::getMethods($instance, \ReflectionMethod::IS_PUBLIC);
 			foreach ( $methods as $method ) {
 				$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
 				if ($annots !== false){
+					foreach ($annots as $annot){
+						if(StrUtils::isNull($annot->path)){
+							$annot->path="/".$method->getName();
+						}
+					}
 					$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
 				}else{
-					if(\sizeof($restAnnotsClass)>0 && isset($this->mainRouteClass)){
+					if($this->rest && isset($this->mainRouteClass)){
 						if($method->class!=='micro\\controllers\\Controller' && \array_search($method->name, self::$excludeds)===false && !StrUtils::startswith($method->name, "_"))
 							$this->routesMethods[$method->name]=[ "annotations" => $this->generateRouteAnnotationFromMethod($method),"method" => $method ];
 					}
@@ -167,5 +174,9 @@ class ControllerParser {
 		foreach ( $httpMethods as $httpMethod ) {
 			$result[$path][$httpMethod]=[ "controller" => $controllerClass,"action" => $method,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration ];
 		}
+	}
+
+	public function isRest(){
+		return $this->rest;
 	}
 }

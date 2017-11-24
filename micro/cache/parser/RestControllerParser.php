@@ -8,6 +8,7 @@ use micro\cache\ClassUtils;
 class RestControllerParser {
 	private $controllerClass;
 	private $resource;
+	private $route;
 	private $rest;
 	private $authorizationMethods;
 
@@ -21,6 +22,10 @@ class RestControllerParser {
 		if (!$reflect->isAbstract() && $reflect->isSubclassOf("micro\\controllers\\rest\\RestController")) {
 			$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
 			if (\sizeof($restAnnotsClass) > 0){
+				$routeAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
+				if(\sizeof($routeAnnotsClass)>0){
+					$this->route=$routeAnnotsClass[0]->path;
+				}
 				$modelsNS=$config["mvcNS"]["models"];
 				$this->resource=$modelsNS."\\".$restAnnotsClass[0]->resource;
 				$this->rest=true;
@@ -36,7 +41,7 @@ class RestControllerParser {
 	}
 
 	public function asArray() {
-		return [ClassUtils::cleanClassname($this->controllerClass)=>["resource"=>ClassUtils::cleanClassname($this->resource),"authorizations"=>$this->authorizationMethods]];
+		return [ClassUtils::cleanClassname($this->controllerClass)=>["resource"=>ClassUtils::cleanClassname($this->resource),"authorizations"=>$this->authorizationMethods,"route"=>$this->route]];
 	}
 
 	public function isRest() {

@@ -16,6 +16,14 @@ class UbiquityMyAdminFiles {
 		return "Admin/routes/index.html";
 	}
 
+	public function getViewRestIndex(){
+		return "Admin/rest/index.html";
+	}
+
+	public function getViewRestFormTester(){
+		return "Admin/rest/formTester.html";
+	}
+
 	public function getViewCacheIndex(){
 		return "Admin/cache/index.html";
 	}

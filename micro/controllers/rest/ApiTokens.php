@@ -11,7 +11,7 @@ class ApiTokens {
 	private $duration;
 	private static $cache;
 
-	public function __construct($length=78,$duration=3600,$tokens=[]){
+	public function __construct($length=10,$duration=3600,$tokens=[]){
 		$this->length=$length;
 		$this->duration=$duration;
 		$this->tokens=$tokens;
@@ -83,7 +83,7 @@ class ApiTokens {
 	 * @param number $duration
 	 * @return ApiTokens
 	 */
-	public static function getFromCache($folder,$key="_apiTokens",$length=78,$duration=3600){
+	public static function getFromCache($folder,$key="_apiTokens",$length=10,$duration=3600){
 		if(!isset(self::$cache)){
 			self::$cache=new ArrayCache($folder."rest/tokens",".rest");
 		}

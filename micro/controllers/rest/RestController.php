@@ -30,8 +30,8 @@ abstract class RestController extends Controller {
 	protected $server;
 
 	public function __construct(){
-		@\set_exception_handler(array ($this,'_errorHandler' ));
 		if(!\headers_sent()){
+			@\set_exception_handler(array ($this,'_errorHandler' ));
 			$this->config=Startup::getConfig();
 			$this->server=new RestServer($this->config);
 			$this->server->cors();
@@ -50,6 +50,10 @@ abstract class RestController extends Controller {
 			}
 		}
 		return true;
+	}
+
+	public function onInvalidControl(){
+		throw new \Exception('HTTP/1.1 401 Unauthorized, you need an access token for this request',401);
 	}
 
 	public function connect(){
@@ -75,7 +79,10 @@ abstract class RestController extends Controller {
 
 
 	public function _errorHandler($e){
-		$this->_setResponseCode(500);
+		$code=500;
+		if($e->getCode()!==0)
+			$code=$e->getCode();
+		$this->_setResponseCode($code);
 		echo $this->responseFormatter->formatException($e);
 	}
 
@@ -187,7 +194,7 @@ abstract class RestController extends Controller {
 
 	/**
 	 * Update an instance of $model selected by the primary key $keyValues
-	 * @param $keyValues
+	 * @param array $keyValues
 	 * @authorization
 	 */
 	public function update(...$keyValues){
