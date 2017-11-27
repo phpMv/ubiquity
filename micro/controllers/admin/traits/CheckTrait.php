@@ -10,8 +10,8 @@ use micro\controllers\admin\popo\InfoMessage;
 use micro\db\Database;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\JsUtils;
-use Ajax\semantic\html\elements\HtmlIcon;
 use micro\utils\FsUtils;
+use micro\orm\creator\ModelsCreator;
 
 /**
  * @author jc
@@ -26,11 +26,24 @@ trait CheckTrait{
 	abstract protected function getActiveModelStep();
 	abstract protected function getNextModelStep();
 	abstract protected function displayModelsMessages($type,$messagesToDisplay);
+	abstract protected function showSimpleMessage($content,$type,$icon="info",$timeout=NULL,$staticName=null);
 	abstract public function _isModelsCompleted();
 	/**
 	 * @return UbiquityMyAdminFiles
 	 */
 	abstract public function _getAdminFiles();
+
+	public function createModels($singleTable=null){
+		$config=Startup::getConfig();
+		\ob_start();
+		ModelsCreator::create($config,false,$singleTable);
+		$result=\ob_get_clean();
+		$message=$this->showSimpleMessage("", "success","check mark",null,"msg-create-models");
+		$message->addHeader("Models creation");
+		$message->addList(\explode("\n", \str_replace("\n\n","\n", \trim($result))));
+		$this->models(true);
+		echo $message;
+	}
 
 	protected function _checkStep($niveau=null){
 		$nbChecked=1;

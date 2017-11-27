@@ -158,10 +158,12 @@ class Router {
 
 	public static function addRouteToRoutes(&$routesArray, $path, $controller, $action="index", $methods=null, $name="", $cache=false, $duration=null) {
 		$result=[ ];
-		$method=new \ReflectionMethod($controller, $action);
-		ControllerParser::parseRouteArray($result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration ], $method, $action);
-		foreach ( $result as $k => $v ) {
-			$routesArray[$k]=$v;
+		if(\class_exists($controller)){
+			$method=new \ReflectionMethod($controller, $action);
+			ControllerParser::parseRouteArray($result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration ], $method, $action);
+			foreach ( $result as $k => $v ) {
+				$routesArray[$k]=$v;
+			}
 		}
 	}
 }

@@ -26,8 +26,7 @@ class RestControllerParser {
 				if(\sizeof($routeAnnotsClass)>0){
 					$this->route=$routeAnnotsClass[0]->path;
 				}
-				$modelsNS=$config["mvcNS"]["models"];
-				$this->resource=$modelsNS."\\".$restAnnotsClass[0]->resource;
+				$this->resource=$this->_getResourceName($config,$restAnnotsClass[0]->resource);
 				$this->rest=true;
 				$methods=Reflexion::getMethods($controllerClass, \ReflectionMethod::IS_PUBLIC);
 				foreach ( $methods as $method ) {
@@ -38,6 +37,14 @@ class RestControllerParser {
 				}
 			}
 		}
+	}
+
+	private function _getResourceName($config,$name){
+		$modelsNS=$config["mvcNS"]["models"];
+		if(\strpos($name, "\\")===false){
+			$name=$modelsNS."\\".$name;
+		}
+		return $name;
 	}
 
 	public function asArray() {

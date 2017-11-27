@@ -22,6 +22,23 @@ class ClassUtils {
 	}
 
 	/**
+	 * Returns a cleanly namespace
+	 * @param array|string $parts
+	 * @return string
+	 */
+	public static function getNamespaceFromParts($parts){
+		$resultArray=[];
+		if(!\is_array($parts)){
+			$parts=[$parts];
+		}
+		foreach ($parts as $part){
+			$resultArray=\array_merge($resultArray,\explode("\\", $part));
+		}
+		$resultArray=\array_diff($resultArray, [""]);
+		return \implode("\\", $resultArray);
+	}
+
+	/**
 	 * build and return an object of a class from its file path
 	 *
 	 * @param $filePathName

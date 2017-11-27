@@ -1,5 +1,8 @@
 <?php
 namespace micro\controllers\rest;
+use micro\controllers\Startup;
+use micro\cache\ClassUtils;
+
 /**
  * @author jc
  *
@@ -136,5 +139,15 @@ class RestServer {
 			}
 			exit(0);
 		}
+	}
+
+	public static function getRestNamespace(){
+		$config=Startup::getConfig();
+		$controllerNS=$config["mvcNS"]["controllers"];
+		$restNS="";
+		if(isset($config["mvcNS"]["rest"])){
+			$restNS=$config["mvcNS"]["rest"];
+		}
+		return ClassUtils::getNamespaceFromParts([$controllerNS,$restNS]);
 	}
 }

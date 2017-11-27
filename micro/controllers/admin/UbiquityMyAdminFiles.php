@@ -20,6 +20,10 @@ class UbiquityMyAdminFiles {
 		return "Admin/rest/index.html";
 	}
 
+	public function getViewLogsIndex(){
+		return "Admin/logs/index.html";
+	}
+
 	public function getViewRestFormTester(){
 		return "Admin/rest/formTester.html";
 	}

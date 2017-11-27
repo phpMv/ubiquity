@@ -12,8 +12,10 @@ class Route {
 	private $name;
 	private $methods;
 	private $id;
+	private $messages;
 
 	public function __construct($path="",$array=[]){
+		$this->messages=[];
 		$this->path=$path;
 		if(isset($array["controller"])){
 			$this->fromArray($array);
@@ -31,23 +33,31 @@ class Route {
 		$this->cache=$array["cache"];
 		$this->duration=$array["duration"];
 		if(\sizeof($array["parameters"])>0){
-			$method=new \ReflectionMethod($this->controller,$this->action);
-			$params=$method->getParameters();
-			foreach ($array["parameters"] as $paramIndex){
-				if($paramIndex==="*"){
-					$pName=$this->getVariadicParam($params);
-					if($pName!==false){
-						$this->parameters[]="...".$pName;
+			if(\class_exists($this->controller)){
+				if(\method_exists($this->controller, $this->action)){
+					$method=new \ReflectionMethod($this->controller,$this->action);
+					$params=$method->getParameters();
+					foreach ($array["parameters"] as $paramIndex){
+						if($paramIndex==="*"){
+							$pName=$this->getVariadicParam($params);
+							if($pName!==false){
+								$this->parameters[]="...".$pName;
+							}
+						}else{
+							$index=\intval(\str_replace("~", "", $paramIndex));
+							if(isset($params[$index])){
+								if(\substr($paramIndex,0,1)==="~")
+									$this->parameters[]=$params[$index]->getName();
+								else
+									$this->parameters[]=$params[$index]->getName()."*";
+							}
+						}
 					}
 				}else{
-					$index=\intval(\str_replace("~", "", $paramIndex));
-					if(isset($params[$index])){
-						if(\substr($paramIndex,0,1)==="~")
-							$this->parameters[]=$params[$index]->getName();
-						else
-							$this->parameters[]=$params[$index]->getName()."*";
-					}
+					$this->messages[]="The method <b>".$this->action."</b> does not exists in the class <b>".$this->controller."</b>.\n";
 				}
+			}else{
+				$this->messages[$this->controller]="The class <b>".$this->controller."</b> does not exist.\n";
 			}
 		}
 	}
@@ -134,5 +144,10 @@ class Route {
 	public function getId() {
 		return $this->id;
 	}
+
+	public function getMessages() {
+		return $this->messages;
+	}
+
 
 }

@@ -187,19 +187,19 @@ class CacheManager {
 			FsUtils::deleteAllFilesFromFolder($cacheDirectories[$typeRef]);
 	}
 
-	public static function initCache(&$config, $type="all") {
-		self::checkCache($config,$type);
+	public static function initCache(&$config, $type="all",$silent=false) {
+		self::checkCache($config,$silent);
 		self::start($config);
 		if ($type === "all" || $type === "models")
-			self::initModelsCache($config);
+			self::initModelsCache($config,false,$silent);
 		if ($type === "all" || $type === "controllers")
-			self::initRouterCache($config);
+			self::initRouterCache($config,$silent);
 		if ($type === "all" || $type === "rest")
-			self::initRestCache($config);
+			self::initRestCache($config,$silent);
 	}
 
 	public static function initModelsCache(&$config,$forChecking=false,$silent=false) {
-		$files=self::getModelsFiles($config, "models",$silent);
+		$files=self::getModelsFiles($config,$silent);
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				$model=ClassUtils::getClassFullNameFromFile($file);
@@ -208,10 +208,22 @@ class CacheManager {
 				}
 			}
 		}
+		if(!$silent){
+			echo "Models cache reset\n";
+		}
 	}
 
 	public static function getModelsFiles(&$config,$silent=false){
 		return self::_getFiles($config, "models",$silent);
+	}
+
+	public static function getModels(&$config,$silent=false){
+		$result=[];
+		$files=self::getModelsFiles($config,$silent);
+		foreach ($files as $file){
+			$result[]=ClassUtils::getClassFullNameFromFile($file);
+		}
+		return $result;
 	}
 
 	public static function getControllersFiles(&$config,$silent=false){
@@ -226,7 +238,7 @@ class CacheManager {
 		return FsUtils::glob_recursive($typeDir . DS . '*');
 	}
 
-	private static function initRouterCache(&$config) {
+	private static function initRouterCache(&$config,$silent=false) {
 		$routes=["rest"=>[],"default"=>[]];
 		$files=self::getControllersFiles($config);
 		foreach ( $files as $file ) {
@@ -246,9 +258,12 @@ class CacheManager {
 		}
 		self::$cache->store("controllers/routes.default", "return " . JArray::asPhpArray($routes["default"], "array") . ";");
 		self::$cache->store("controllers/routes.rest", "return " . JArray::asPhpArray($routes["rest"], "array") . ";");
+		if(!$silent){
+			echo "Router cache reset\n";
+		}
 	}
 
-	private static function initRestCache(&$config) {
+	private static function initRestCache(&$config,$silent=false) {
 		$restCache=[];
 		$files=self::getControllersFiles($config);
 		foreach ( $files as $file ) {
@@ -261,6 +276,9 @@ class CacheManager {
 			}
 		}
 		self::$cache->store("controllers/rest", "return " . JArray::asPhpArray($restCache, "array") . ";");
+		if(!$silent){
+			echo "Rest cache reset\n";
+		}
 	}
 
 	private static function register(AnnotationManager $annotationManager) {

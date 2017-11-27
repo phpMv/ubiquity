@@ -30,6 +30,7 @@ class Startup {
 			if (\class_exists($u[0])) {
 				self::runAction($u);
 			} else {
+				\header('HTTP/1.0 404 Not Found', true, 404);
 				print "Le contrôleur `" . $u[0] . "` n'existe pas <br/>";
 			}
 		}

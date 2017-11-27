@@ -32,7 +32,8 @@ class ControllerParser {
 				if ($annots !== false){
 					foreach ($annots as $annot){
 						if(StrUtils::isNull($annot->path)){
-							$annot->path="/".$method->getName();
+							$newAnnot=$this->generateRouteAnnotationFromMethod($method);
+							$annot->path=$newAnnot[0]->path;
 						}
 					}
 					$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
