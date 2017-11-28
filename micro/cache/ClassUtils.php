@@ -118,4 +118,11 @@ class ClassUtils {
 
 		return $classes[0];
 	}
+
+	public static function getClassNameWithNS($defaultNS,$name){
+		if(\strpos($name, "\\")===false){
+			$name=$defaultNS."\\".$name;
+		}
+		return $name;
+	}
 }

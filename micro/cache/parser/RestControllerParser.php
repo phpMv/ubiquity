@@ -41,10 +41,7 @@ class RestControllerParser {
 
 	private function _getResourceName($config,$name){
 		$modelsNS=$config["mvcNS"]["models"];
-		if(\strpos($name, "\\")===false){
-			$name=$modelsNS."\\".$name;
-		}
-		return $name;
+		return ClassUtils::getClassNameWithNS($modelsNS, $name);
 	}
 
 	public function asArray() {

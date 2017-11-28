@@ -9,6 +9,7 @@ class DocParser {
 	private $originalContent;
 	private $lines;
 	private $description;
+
 	public function __construct($content){
 		$this->originalContent=$content;
 		$this->description=[];
@@ -32,6 +33,10 @@ class DocParser {
 		}
 		$this->description=\array_diff($this->description, ["","/"]);
 		return $this;
+	}
+
+	public function isEmpty(){
+		return \sizeof($this->lines)==0;
 	}
 
 	private function addInArray(&$array,$key,$value){
@@ -58,10 +63,59 @@ class DocParser {
 		return null;
 	}
 
-	public function getPartAsHtml($partKey,$separator="<br>",$second=null){
-		$part=$this->getPart($partKey);
-		if(isset($part))
-			return \implode($separator, $part);
+	public function getMethodParams(){
+		$result=[];
+		if(isset($this->lines["param"])){
+			$params=$this->lines["param"];
+			foreach ($params as $param){
+				$param.="   ";
+				list($type, $name,$description) = explode(' ', $param, 3);
+				$result[]=[$type,$name,$description];
+			}
+		}
+		return $result;
+	}
+
+	public function getMethodParamsAsHtml($separator="<br>",$inlineSeparator="&nbsp;",...$functions){
+		return self::getElementsAsHtml($this->getMethodParams(), $separator,$inlineSeparator,...$functions);
+	}
+
+	public function getMyMethodParamsAsHtml(){
+		return self::getElementsAsHtml($this->getMethodParams(), null,"&nbsp;",function($p){return $p;},function($p){return $p;},function($p){return $p;});
+	}
+
+	public function getMyMethodResultAsHtml(){
+		return self::getElementsAsHtml($this->getMethodReturn(), "<br>","&nbsp;",function($p){return $p;},function($p){return $p;});
+	}
+
+	public function getMethodReturn(){
+		$result=[];
+		if(isset($this->lines["return"])){
+			$returns=$this->lines["return"];
+			foreach ($returns as $return){
+				$return.="  ";
+				list($type,$description) = explode(' ', $return, 2);
+				$result[]=[$type,$description];
+			}
+		}
+		return $result;
+	}
+
+	public static function getElementsAsHtml($elements,$separator="<br>",$inlineSeparator="&nbsp;",...$functions){
+		$result=[];
+		$count=\sizeof($functions);
+		foreach ($elements as $element){
+			$part=[];
+			for ($i=0;$i<$count;$i++){
+				if(isset($element[$i])){
+					$part[]=$functions[$i]($element[$i]);
+				}
+			}
+			$result[]=\implode($inlineSeparator, $part);
+		}
+		if(isset($separator))
+			return \implode($separator, $result);
+		return $result;
 	}
 
 	public static function docClassParser($classname){
@@ -74,7 +128,7 @@ class DocParser {
 	public static function docMethodParser($classname,$method){
 		if(\class_exists($classname)){
 			if(\method_exists($classname, $method)){
-				$reflect=new \ReflectionMethod($classname);
+				$reflect=new \ReflectionMethod($classname,$method);
 				return (new DocParser($reflect->getDocComment()))->parse();
 			}
 		}

@@ -34,6 +34,8 @@ use micro\controllers\admin\traits\ControllersTrait;
 use micro\controllers\admin\traits\ModelsTrait;
 use micro\controllers\admin\traits\RoutesTrait;
 use micro\utils\StrUtils;
+use micro\cache\ClassUtils;
+use micro\utils\UbiquityUtils;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait;
@@ -414,8 +416,9 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			$url=$_POST["url"];
 			if(isset($_POST["method"]))
 				$method=$_POST["method"];
-			if(isset($_POST["model"]))
+			if(isset($_POST["model"])){
 				$model=$_POST["model"];
+			}
 
 			if($origine==="routes"){
 				$responseElement="#modal";
@@ -444,6 +447,8 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			$fieldsButton->addClass("_notToClone");
 			$fieldsButton->addButton("clone", "Add ".$type,"yellow")->setTagName("div");
 			if(isset($model)){
+				//\var_dump($model);
+				$model=UbiquityUtils::getModelsName(Startup::getConfig(), $model);
 				$modelFields=OrmUtils::getSerializableFields($model);
 				if(\sizeof($modelFields)>0){
 					$modelFields=\array_combine($modelFields, $modelFields);

@@ -133,6 +133,10 @@ class Route {
 		return $this;
 	}
 
+	public function getCompiledParams(){
+		return " (".((\is_array($this->parameters))?\implode(", ", $this->parameters):$this->parameters).")";
+	}
+
 	public static function init($array){
 		$result=[];
 		foreach ($array as $k=>$v){

@@ -12,6 +12,8 @@ use micro\utils\RequestUtils;
 use micro\utils\FsUtils;
 use micro\controllers\rest\RestServer;
 use micro\views\View;
+use micro\annotations\parser\DocParser;
+use micro\cache\ClassUtils;
 
 /**
 * @property View $view
@@ -41,6 +43,10 @@ trait RestTrait{
 	}
 	public function _displayRestFormTester(){
 		$path=@$_POST["path"];
+		$resource=@$_POST["resource"];
+		$controller=@$_POST["controller"];
+		$controller=\urldecode($controller);
+		$action=@$_POST["action"];
 		$frm=$this->jquery->semantic()->htmlForm("frmTester-".$path);
 		$pathId=JString::cleanIdentifier($path);
 		$containerId="div-tester-".$pathId;
@@ -62,13 +68,32 @@ trait RestTrait{
 				$this->_getAdminFiles()->getAdminBaseRoute()."/_runRestMethod",
 				"{pathId: '".$path."',path: $('#".$pathField->getIdentifier()."').val(),method: $('#".$methodField->getIdentifier()."').val(),headers:$('#".$frmHeaders->getIdentifier()."').serialize(),params:$('#".$frmParameters->getIdentifier()."').serialize()}","#".$containerId." ._runRestMethod",[]);
 		$this->jquery->postOnClick("#".$containerId." ._requestWithParams", $this->_getAdminFiles()->getAdminBaseRoute()."/_runPostWithParams/_/parameter/rest",
-				"{actualParams:$('#".$frmParameters->getIdentifier()."').serialize(),model: $('#menutabsRest .item.active').text(),toUpdate:'".$frmParameters->getIdentifier()."',method:$('#".$containerId." ._method').val(),url:$('#".$containerId." ._path').val()}",
+				"{actualParams:$('#".$frmParameters->getIdentifier()."').serialize(),model: '".$resource."',toUpdate:'".$frmParameters->getIdentifier()."',method:$('#".$containerId." ._method').val(),url:$('#".$containerId." ._path').val()}",
 				"#modal",["attr"=>"","hasLoader"=>false]);
 		$this->jquery->postOnClick("#".$containerId." ._requestWithHeaders", $this->_getAdminFiles()->getAdminBaseRoute()."/_runPostWithParams/_/header/rest",
-				"{actualParams: $('#".$frmHeaders->getIdentifier()."').serialize(),model: $('#menutabsRest .item.active').text(),toUpdate:'".$frmHeaders->getIdentifier()."',method:$('#".$containerId." ._method').val(),url:$('#".$containerId." ._path').val()}",
+				"{actualParams: $('#".$frmHeaders->getIdentifier()."').serialize(),model: '".$resource."',toUpdate:'".$frmHeaders->getIdentifier()."',method:$('#".$containerId." ._method').val(),url:$('#".$containerId." ._path').val()}",
 				"#modal",["attr"=>"","hasLoader"=>false]);
+		$this->jquery->post($this->_getAdminFiles()->getAdminBaseRoute()."/_actionHasDoc","{action: '".$action."',controller: '".\urlencode($controller)."'}","#".JString::cleanIdentifier("help-".$action.$controller),["hasLoader"=>false,"immediatly"=>true]);
 		$this->jquery->compile($this->view);
-		$this->loadView($this->_getAdminFiles()->getViewRestFormTester(),["frmHeaders"=>$frmHeaders,"frmParameters"=>$frmParameters,"frmTester"=>$frm,"pathId"=>$pathId]);
+		$this->loadView($this->_getAdminFiles()->getViewRestFormTester(),["frmHeaders"=>$frmHeaders,"frmParameters"=>$frmParameters,"frmTester"=>$frm,"pathId"=>$pathId,"docTesterId"=>JString::cleanIdentifier("doc-".$action.$controller)]);
+	}
+
+	public function _actionHasDoc(){
+		$help="";
+		$action=$_POST["action"];
+		$controller=$_POST["controller"];
+		$controller=\urldecode($controller);
+		$doc=DocParser::docMethodParser($controller, $action)->parse();
+		if(!$doc->isEmpty()){
+			$help=$this->jquery->semantic()->htmlIcon("icon-help-".$controller.$action, "help circle blue");
+		}
+		$help->postOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_displayActionDoc","{action: '".$action."',controller: '".\urlencode($controller)."'}","#".JString::cleanIdentifier("doc-".$action.$controller),["hasLoader"=>false,"ajaxTransition"=>"random"]);
+		echo $help;
+		echo $this->jquery->compile($this->view);
+	}
+
+	public function _displayActionDoc(){
+		echo \urldecode($_POST["controller"]);
 	}
 
 	public function _frmNewResource(){
@@ -134,7 +159,7 @@ trait RestTrait{
 					}",
 				false,false,true);
 		$this->jquery->postOnClick("._toTest", $this->_getAdminFiles()->getAdminBaseRoute()."/_displayRestFormTester",
-				"{path:$(this).closest('tr').attr('data-ajax')}","'#sub-td'+$(self).closest('tr').attr('id')",
+				"{resource:$(this).attr('data-resource'),controller:$(this).attr('data-controller'),action:$(this).attr('data-action'),path:$(this).closest('tr').attr('data-ajax')}","'#sub-td'+$(self).closest('tr').attr('id')",
 				["ajaxTransition"=>"random","stopPropagation"=>true,"jsCondition"=>"!$(self).hasClass('active')"]);
 		$this->jquery->exec("addToken=function(jqXHR){
 			if(jqXHR.getResponseHeader('authorization')!=null && jqXHR.getResponseHeader('authorization').trim().startsWith('Bearer')){
