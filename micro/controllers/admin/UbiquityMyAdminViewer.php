@@ -461,7 +461,7 @@ class UbiquityMyAdminViewer {
 				$diDe->setValueFunction($key, function($value) use ($config,$key){
 					$r =$config['di'][$key];
 					if(\is_callable($r))
-						return \nl2br(self::closure_dump($r));
+						return \nl2br(\htmlentities(self::closure_dump($r)));
 					return $value;
 				});
 			}
@@ -470,7 +470,7 @@ class UbiquityMyAdminViewer {
 		$de->setValueFunction("isRest", function($v) use($config){
 			$r =$config["isRest"];
 			if(\is_callable($r))
-				return \nl2br(self::closure_dump($r));
+				return \nl2br(\htmlentities(self::closure_dump($r)));
 			return $v;
 		});
 		$de->fieldAsCheckbox("test",["class"=>"ui checkbox slider"]);
