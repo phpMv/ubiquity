@@ -21,7 +21,7 @@ use micro\orm\creator\ModelsCreator;
  * @property JsUtils $jquery
  */
 trait CheckTrait{
-	private $messages=["error"=>[],"info"=>[]];
+	protected $messages=["error"=>[],"info"=>[]];
 	abstract protected function getModelSteps();
 	abstract protected function getActiveModelStep();
 	abstract protected function getNextModelStep();

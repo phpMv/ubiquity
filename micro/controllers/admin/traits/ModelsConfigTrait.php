@@ -47,7 +47,7 @@ trait ModelsConfigTrait{
 			$step=$steps[$index];
 			$step=$stepper->addStep($step);
 			if($index===0){
-				$step->addClass("_noStep")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_changeEngineering/".$this->engineering."/".$completed,"#stepper",["jqueryDone"=>"replaceWith"]);
+				$step->addClass("_noStep")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_changeEngineering/".$this->engineering."/".$completed,"#stepper",["jqueryDone"=>"replaceWith","hasLoader"=>false]);
 			}else{
 				$step->setProperty("data-ajax", $index);
 			}

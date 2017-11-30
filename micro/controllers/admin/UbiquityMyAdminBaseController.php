@@ -36,6 +36,7 @@ use micro\controllers\admin\traits\RoutesTrait;
 use micro\utils\StrUtils;
 use micro\cache\ClassUtils;
 use micro\utils\UbiquityUtils;
+use micro\exceptions\RestException;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait;
@@ -199,11 +200,12 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->getHeader("rest");
 		$controllersNS=$config["mvcNS"]["controllers"];
 		$routerCacheDir=ROOT . $config["cacheDirectory"].str_replace("\\", DS, $controllersNS);
-		$this->showSimpleMessage("Router cache file is <b>".FsUtils::cleanPathname($routerCacheDir)."routes.rest.cache.php</b>", "info","info circle",null,"msgRest");
-		$restRoutes=CacheManager::getRestRoutes();
-		$this->_getAdminViewer()->getRestRoutesTab($restRoutes);
+		$routerCacheFile=FsUtils::cleanPathname($routerCacheDir)."routes.rest.cache.php";
+		if(\file_exists($routerCacheFile)){
+			$this->showSimpleMessage("Router cache file is <b>".$routerCacheFile."</b>", "info","info circle",null,"msgRest");
+		}
+		$this->_refreshRest();
 		$this->jquery->getOnClick("#bt-init-rest-cache", $this->_getAdminFiles()->getAdminBaseRoute()."/initRestCache","#divRest",["attr"=>"","dataType"=>"html"]);
-		$this->_addRestDataTableBehavior();
 		$this->jquery->postOn("change", "#access-token", $this->_getAdminFiles()->getAdminBaseRoute()."/_saveToken","{_token:$(this).val()}");
 		$token="";
 		if(isset($_SESSION["_token"])){
@@ -447,7 +449,6 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			$fieldsButton->addClass("_notToClone");
 			$fieldsButton->addButton("clone", "Add ".$type,"yellow")->setTagName("div");
 			if(isset($model)){
-				//\var_dump($model);
 				$model=UbiquityUtils::getModelsName(Startup::getConfig(), $model);
 				$modelFields=OrmUtils::getSerializableFields($model);
 				if(\sizeof($modelFields)>0){

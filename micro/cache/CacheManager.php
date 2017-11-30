@@ -12,6 +12,9 @@ use micro\controllers\Startup;
 use micro\utils\FsUtils;
 use micro\cache\parser\ControllerParser;
 use micro\cache\parser\RestControllerParser;
+use Twig\Error\Error;
+use micro\exceptions\RestException;
+use micro\exceptions\RouterException;
 
 class CacheManager {
 	public static $cache;
@@ -37,13 +40,13 @@ class CacheManager {
 		$key=($isRest)?"rest":"default";
 		if (self::$cache->exists("controllers/routes.".$key))
 			return self::$cache->fetch("controllers/routes.".$key);
-		return [ ];
+		throw new RouterException( $key." cache does not exist : the file `".FsUtils::cleanPathname(ROOT.DS.self::getCacheDirectory()."controllers/routes.").$key.".cache.php` is missing.\nTry to Re-init cache.");
 	}
 
 	public static function getRestCache() {
 		if (self::$cache->exists("controllers/rest"))
 			return self::$cache->fetch("controllers/rest");
-		return [ ];
+		throw new RestException("Rest cache does not exist : the file `".FsUtils::cleanPathname(ROOT.DS.self::getCacheDirectory()."controllers/")."rest.cache.php` is missing.\nTry to Re-init Rest cache.");
 	}
 
 	public static function getRouteCache($routePath, $duration) {

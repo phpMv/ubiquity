@@ -30,6 +30,8 @@ use Ajax\semantic\html\elements\HtmlIconGroups;
 use Ajax\semantic\html\collections\HtmlMessage;
 use micro\annotations\parser\DocParser;
 use micro\cache\ClassUtils;
+use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
+use Ajax\semantic\html\elements\HtmlLabelGroups;
 
 /**
  * @author jc
@@ -169,45 +171,22 @@ class UbiquityMyAdminViewer {
 		}
 		$dt=$this->jquery->semantic()->dataTable($dtName, "micro\controllers\admin\popo\Route", $routes);
 		$dt->setIdentifierFunction(function($i,$instance){return $instance->getId();});
-		$dt->setFields(["path","methods","controller","action","cache","duration","name","expired"]);
-		$dt->setCaptions(["Path","Methods","Controller","Action & parameters","Cache","Duration","Name","Expired",""]);
+		$dt->setFields(["path","methods","controller","action","cache","expired","name"]);
+		$dt->setCaptions(["Path","Methods","Controller","Action & parameters","Cache","Expired","Name",""]);
 		$dt->fieldAsLabel("path","car");
-		$dt->fieldAsCheckbox("cache",["disabled"=>"disabled"]);
-		$dt->setValueFunction("methods", function($v){return (\is_array($v))?"[".\implode(", ", $v)."]":$v;});
-		$dt->setValueFunction("action", function($v,$instance){
-			$result="<span style=\"font-weight: bold;color: #3B83C0;\">".$v."</span>";
-			$result.=$instance->getCompiledParams();
-			if(!\method_exists($instance->getController(), $v)){
-				$errorLbl=new HtmlIcon("error-".$v, "warning sign red");
-				$errorLbl->addPopup("","Missing method!");
-				return [$result,$errorLbl];
-			}
-			return $result;
-		});
-		$dt->setValueFunction("expired", function($v,$instance,$index){
-			$icon=null;$expired=null;
-			if($instance->getCache()){
-				if(\sizeof($instance->getParameters())===0 || $instance->getParameters()===null)
-					$expired=CacheManager::isExpired($instance->getPath(),$instance->getDuration());
-					if($expired===false){
-						$icon=new HtmlIcon("", "toggle on");
-					}elseif($expired===true){
-						$icon=new HtmlIcon("", "toggle off");
-					}else{
-						$icon=new HtmlIcon("", "help");
-					}
-			}
-
-			return $icon;
-		});
+		$this->_dtCache($dt);
+		$this->_dtMethods($dt);
+		$this->_dtAction($dt);
+		$this->_dtExpired($dt);
 		$dt->onRowClick('$("#filter-routes").val($(this).find(".ui.label").text());');
 		$dt->onPreCompile(function($dTable){
-			$dTable->setColAlignment(5, TextAlignment::RIGHT);
-			$dTable->setColAlignment(7, TextAlignment::CENTER);
+			$dTable->setColAlignment(7, TextAlignment::RIGHT);
+			$dTable->setColAlignment(5, TextAlignment::CENTER);
 		});
 		$this->addGetPostButtons($dt);
 		$dt->setActiveRowSelector("warning");
 		$dt->wrap($messages);
+		$dt->setEdition()->addClass("compact");
 		return $dt;
 	}
 
@@ -243,6 +222,7 @@ class UbiquityMyAdminViewer {
 			return $v;
 		});
 		$dt->onPreCompile(function($dt){
+			$dt->setColAlignment(3, TextAlignment::RIGHT);
 			$dt->getHtmlComponent()->mergeIdentiqualValues(0);
 		});
 		$dt->setEdition(true);
@@ -352,7 +332,7 @@ class UbiquityMyAdminViewer {
 				$errors=\array_merge($errors,$route->getMessages());
 			}
 			$resource=$restAttributes["restAttributes"]["resource"];
-			$tab=$tabs->addTab($resource, [$doc,$list,$this->_getRestRoutesDataTable($routes, "dtRest",$resource)]);
+			$tab=$tabs->addTab($resource, [$doc,$list,$this->_getRestRoutesDataTable($routes, "dtRest",$resource,$restAttributes["restAttributes"]["authorizations"])]);
 			if(\sizeof($errors)>0){
 				$tab->menuTab->addLabel("error")->setColor("red")->addIcon("warning sign");
 				$tab->addContent($this->controller->showSimpleMessage(\array_values($errors),"error","warning"),true);
@@ -364,44 +344,90 @@ class UbiquityMyAdminViewer {
 		return $tabs;
 	}
 
-	protected function _getRestRoutesDataTable($routes,$dtName,$resource){
+	protected function _getRestRoutesDataTable($routes,$dtName,$resource,$authorizations){
 		$dt=$this->jquery->semantic()->dataTable($dtName, "micro\controllers\admin\popo\Route", $routes);
 		$dt->setIdentifierFunction(function($i,$instance){return $instance->getPath();});
-		$dt->setFields(["path","methods","action","cache","duration","expired"]);
-		$dt->setCaptions(["Path","Methods","Action & Parameters","Cache","Duration","Expired",""]);
+		$dt->setFields(["path","methods","action","cache","expired"]);
+		$dt->setCaptions(["Path","Methods","Action & Parameters","Cache","Exp?",""]);
 		$dt->fieldAsLabel("path","car");
-		$dt->fieldAsCheckbox("cache",["disabled"=>"disabled"]);
-		$dt->setValueFunction("methods", function($v){return (\is_array($v))?"[".\implode(", ", $v)."]":$v;});
-		$dt->setValueFunction("action", function($v,$instance){
-			$result="<span style=\"color: #3B83C0;\">".$v."</span>";
-			$result.=$instance->getCompiledParams()."<span id='".JString::cleanIdentifier("help-".$instance->getAction().$instance->getController())."'></span>";
+		$this->_dtCache($dt);
+		$this->_dtMethods($dt);
+		$dt->setValueFunction("action", function($v,$instance) use ($authorizations){
+			$auth="";
+			if(\array_search($v, $authorizations)!==false){
+				$auth=new HtmlIcon("lock-".$instance->getController().$v, "lock alternate");
+				$auth->addPopup("Authorization","This route require a valid access token");
+			}
+			$result=["<span style=\"color: #3B83C0;\">".$v."</span>".$instance->getCompiledParams().
+					"<i class='ui icon help circle blue hidden transition _showMsgHelp' id='".
+					JString::cleanIdentifier("help-".$instance->getAction().$instance->getController())."' data-show='".JString::cleanIdentifier("msg-help-".$instance->getAction().$instance->getController())."'></i>",$auth];
 			return $result;
 		});
+		$this->_dtExpired($dt);
+		$dt->addFieldButton("Test",true,function($bt,$instance) use ($resource){
+			$bt->addClass("toggle _toTest basic circular")->setProperty("data-resource",ClassUtils::cleanClassname($resource));
+			$bt->setProperty("data-action",$instance->getAction())->setProperty("data-controller",\urlencode($instance->getController()));
+		});
+			$dt->onPreCompile(function($dTable){
+				$dTable->setColAlignment(5, TextAlignment::RIGHT);
+				$dTable->setColAlignment(4, TextAlignment::CENTER);
+			});
+		$dt->setEdition()->addClass("compact");
+		return $dt;
+	}
+
+	protected function _dtMethods(DataTable $dt){
+		$dt->setValueFunction("methods", function($v){
+			$result="";
+			if(StrUtils::isNotNull($v)){
+				if(!\is_array($v)){
+					$v=[$v];
+				}
+				$result=new HtmlLabelGroups("lbls-method",$v,["color"=>"grey"]);
+			}
+			return $result;
+		});
+	}
+
+	protected function _dtCache(DataTable $dt){
+		$dt->setValueFunction("cache",function($v,$instance){
+			$ck=new HtmlFormCheckbox("ck-".$instance->getPath(),$instance->getDuration()."");
+			$ck->setChecked(StrUtils::isBooleanTrue($v));
+			$ck->setDisabled();
+			return $ck;
+		});
+	}
+
+	protected function _dtExpired(DataTable $dt){
 		$dt->setValueFunction("expired", function($v,$instance,$index){
 			$icon=null;$expired=null;
 			if($instance->getCache()){
 				if(\sizeof($instance->getParameters())===0 || $instance->getParameters()===null)
 					$expired=CacheManager::isExpired($instance->getPath(),$instance->getDuration());
 					if($expired===false){
-						$icon=new HtmlIcon("", "toggle on");
+						$icon="hourglass full";
 					}elseif($expired===true){
-						$icon=new HtmlIcon("", "toggle off");
+						$icon="hourglass empty orange";
 					}else{
-						$icon=new HtmlIcon("", "help");
+						$icon="help";
 					}
 			}
-
-			return $icon;
+			return new HtmlIcon("", $icon);
 		});
-		$dt->addFieldButton("Test",true,function($bt,$instance) use ($resource){
-			$bt->addClass("toggle _toTest basic circular")->setProperty("data-resource",ClassUtils::cleanClassname($resource));
-			$bt->setProperty("data-action",$instance->getAction())->setProperty("data-controller",\urlencode($instance->getController()));
-		});
-		$dt->setEdition()->addClass("compact");
-		return $dt;
 	}
 
-
+	protected function _dtAction(DataTable $dt){
+		$dt->setValueFunction("action", function($v,$instance){
+			$result="<span style=\"font-weight: bold;color: #3B83C0;\">".$v."</span>";
+			$result.=$instance->getCompiledParams();
+			if(!\method_exists($instance->getController(), $v)){
+				$errorLbl=new HtmlIcon("error-".$v, "warning sign red");
+				$errorLbl->addPopup("","Missing method!");
+				return [$result,$errorLbl];
+			}
+			return $result;
+		});
+	}
 
 	public function getConfigDataElement($config){
 		$de=$this->jquery->semantic()->dataElement("deConfig", $config);
@@ -423,8 +449,8 @@ class UbiquityMyAdminViewer {
 		});
 		$de->setValueFunction("mvcNS", function($v,$instance,$index){
 			$mvcDe=new DataElement("",$v);
-			$mvcDe->setFields(["models","controllers"]);
-			$mvcDe->setCaptions(["Models","Controllers"]);
+			$mvcDe->setFields(["models","controllers","rest"]);
+			$mvcDe->setCaptions(["Models","Controllers","Rest"]);
 			return $mvcDe;
 		});
 		$de->setValueFunction("di", function($v,$instance,$index) use($config){
@@ -434,11 +460,18 @@ class UbiquityMyAdminViewer {
 			foreach ($keys as $key){
 				$diDe->setValueFunction($key, function($value) use ($config,$key){
 					$r =$config['di'][$key];
-					return \nl2br(self::closure_dump($r));
-
+					if(\is_callable($r))
+						return \nl2br(self::closure_dump($r));
+					return $value;
 				});
 			}
 			return $diDe;
+		});
+		$de->setValueFunction("isRest", function($v) use($config){
+			$r =$config["isRest"];
+			if(\is_callable($r))
+				return \nl2br(self::closure_dump($r));
+			return $v;
 		});
 		$de->fieldAsCheckbox("test",["class"=>"ui checkbox slider"]);
 		$de->fieldAsCheckbox("debug",["class"=>"ui checkbox slider"]);

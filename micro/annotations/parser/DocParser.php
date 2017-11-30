@@ -9,22 +9,27 @@ class DocParser {
 	private $originalContent;
 	private $lines;
 	private $description;
+	/**
+	 * @var DocFormater
+	 */
+	private $formater;
 
-	public function __construct($content){
+	public function __construct($content,DocFormater $formater=null){
 		$this->originalContent=$content;
 		$this->description=[];
 		$this->lines=[];
+		$this->formater=$formater;
 	}
 	public function parse(){
-		$this->lines=\explode("\r\n", $this->originalContent);
+		$this->lines=\explode("\n", $this->originalContent);
 		foreach ($this->lines as $line){
 			$line=\trim($line);
-			$line=\preg_replace("@^(\*\*\/)|(\/\*\*)|(\*)@i", "", $line);
+			$line=\preg_replace("@^(\*\*\/)|(\/\*\*)|(\*)|(\/)@i", "", $line);
 			if(StrUtils::isNotNull($line)){
 				$line=\trim($line);
 				if(StrUtils::startswith($line, "@")){
 					if(\preg_match("@^\@(.*?)\ @i", $line,$matches)){
-						$this->addInArray($this->lines, $matches[1], \preg_replace("@^\@(.*?)\ @i", "", $line));
+						$this->addInArray($this->lines, $matches[1], \preg_replace("@^\@".$matches[1]."(.*?)\ @i", "$1", $line));
 					}
 				}else{
 					$this->description[]=$line;
@@ -53,65 +58,52 @@ class DocParser {
 	public function getPart($partKey){
 		if(isset($this->lines[$partKey]))
 			return $this->lines[$partKey];
-		return null;
+		return [];
 	}
 
 	public function getDescriptionAsHtml($separator="<br>"){
-		$desc=$this->getDescription();
-		if(\sizeof($desc)>0)
-			return \implode($separator, $desc);
+		$descs=$this->getDescription();
+		if(\sizeof($descs)>0){
+			$descs=self::getElementsAsHtml($descs,null);
+			if(isset($separator)){
+				return \implode($separator, $descs);
+			}
+			return $descs;
+		}
 		return null;
 	}
 
 	public function getMethodParams(){
-		$result=[];
-		if(isset($this->lines["param"])){
-			$params=$this->lines["param"];
-			foreach ($params as $param){
-				$param.="   ";
-				list($type, $name,$description) = explode(' ', $param, 3);
-				$result[]=[$type,$name,$description];
-			}
-		}
-		return $result;
+		return $this->getPart("param");
 	}
 
-	public function getMethodParamsAsHtml($separator="<br>",$inlineSeparator="&nbsp;",...$functions){
-		return self::getElementsAsHtml($this->getMethodParams(), $separator,$inlineSeparator,...$functions);
-	}
-
-	public function getMyMethodParamsAsHtml(){
-		return self::getElementsAsHtml($this->getMethodParams(), null,"&nbsp;",function($p){return $p;},function($p){return $p;},function($p){return $p;});
-	}
-
-	public function getMyMethodResultAsHtml(){
-		return self::getElementsAsHtml($this->getMethodReturn(), "<br>","&nbsp;",function($p){return $p;},function($p){return $p;});
+	public function getMethodParamsReturn(){
+		return \array_merge($this->getPart("param"),$this->getPart("return"));
 	}
 
 	public function getMethodReturn(){
-		$result=[];
-		if(isset($this->lines["return"])){
-			$returns=$this->lines["return"];
-			foreach ($returns as $return){
-				$return.="  ";
-				list($type,$description) = explode(' ', $return, 2);
-				$result[]=[$type,$description];
-			}
-		}
-		return $result;
+		return $this->getPart("return");
 	}
 
-	public static function getElementsAsHtml($elements,$separator="<br>",$inlineSeparator="&nbsp;",...$functions){
+	public function getMethodParamsAsHtml($separator=NULL){
+		return self::getElementsAsHtml($this->getMethodParams(), $separator);
+	}
+
+	public function getMethodParamsReturnAsHtml($separator=NULL){
+		return self::getElementsAsHtml($this->getMethodParamsReturn(), $separator);
+	}
+
+
+
+	public function getMethodReturnAsHtml($separator="<br>"){
+		return self::getElementsAsHtml($this->getMethodReturn(), $separator);
+	}
+
+
+	public function getElementsAsHtml($elements,$separator="<br>"){
 		$result=[];
-		$count=\sizeof($functions);
 		foreach ($elements as $element){
-			$part=[];
-			for ($i=0;$i<$count;$i++){
-				if(isset($element[$i])){
-					$part[]=$functions[$i]($element[$i]);
-				}
-			}
-			$result[]=\implode($inlineSeparator, $part);
+			$result[]=$this->formater->replaceAll($element);
 		}
 		if(isset($separator))
 			return \implode($separator, $result);
@@ -121,7 +113,7 @@ class DocParser {
 	public static function docClassParser($classname){
 		if(\class_exists($classname)){
 			$reflect=new \ReflectionClass($classname);
-			return (new DocParser($reflect->getDocComment()))->parse();
+			return (new DocParser($reflect->getDocComment(),new DocFormater()))->parse();
 		}
 	}
 
@@ -129,7 +121,7 @@ class DocParser {
 		if(\class_exists($classname)){
 			if(\method_exists($classname, $method)){
 				$reflect=new \ReflectionMethod($classname,$method);
-				return (new DocParser($reflect->getDocComment()))->parse();
+				return (new DocParser($reflect->getDocComment(),new DocFormater()))->parse();
 			}
 		}
 	}

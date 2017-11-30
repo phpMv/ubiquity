@@ -56,6 +56,10 @@ abstract class RestController extends Controller {
 		throw new \Exception('HTTP/1.1 401 Unauthorized, you need an access token for this request',401);
 	}
 
+	/**
+	 * Realise the connection to the server
+	 * To override in derived classes to define your own authentication
+	 */
 	public function connect(){
 		$this->server->connect($this);
 	}
@@ -107,6 +111,10 @@ abstract class RestController extends Controller {
 		RequestUtils::setValuesToObject($instance,$values);
 	}
 
+	/**
+	 * Returns all objects for the resource $model
+	 * @route("methods"=>["get"],"cache"=>true,"duration"=>1000)
+	 */
 	public function index() {
 			$datas=DAO::getAll($this->model);
 			$datas=\array_map(function($o){return $o->_rest;}, $datas);
@@ -114,7 +122,8 @@ abstract class RestController extends Controller {
 	}
 
 	/**
-	 * @param string $condition
+	 * Returns a list of objects from the server
+	 * @param string $condition the sql Where part
 	 * @param boolean $loadManyToOne
 	 * @param boolean $loadOneToMany
 	 * @param boolean $useCache
@@ -135,10 +144,11 @@ abstract class RestController extends Controller {
 	}
 
 	/**
-	 * @param string $keyValues
-	 * @param boolean $loadManyToOne
-	 * @param boolean $loadOneToMany
-	 * @param boolean $useCache
+	 * Get the first object corresponding to the $keyValues
+	 * @param string $keyValues primary key(s) value(s) or condition
+	 * @param boolean $loadManyToOne if true then manyToOne members are loaded.
+	 * @param boolean $loadOneToMany if true then oneToMany members are loaded.
+	 * @param boolean $useCache if true then response is cached
 	 */
 	public function getOne($keyValues,$loadManyToOne=false,$loadOneToMany=false,$useCache=false){
 		$keyValues=\urldecode($keyValues);
@@ -194,6 +204,7 @@ abstract class RestController extends Controller {
 
 	/**
 	 * Update an instance of $model selected by the primary key $keyValues
+	 * Require members values in $_POST array
 	 * @param array $keyValues
 	 * @authorization
 	 */
@@ -206,6 +217,50 @@ abstract class RestController extends Controller {
 				echo $this->responseFormatter->format(["status"=>"updated","data"=>$instance->_rest]);
 			}else{
 				throw new \Exception("Unable to update the instance");
+			}
+		}else{
+			$this->_setResponseCode(404);
+			echo $this->responseFormatter->format(["message"=>"No result found","keyValues"=>$keyValues]);
+		}
+	}
+
+	/**
+	 * Insert a new instance of $model
+	 * Require members values in $_POST array
+	 * @authorization
+	 */
+	public function add(){
+		$model=$this->model;
+		$instance=new $model();
+		if(isset($instance)){
+			$this->_setValuesToObject($instance,RequestUtils::getInput());
+			$result=DAO::insert($instance);
+			if($result){
+				echo $this->responseFormatter->format(["status"=>"inserted","data"=>$instance->_rest]);
+			}else{
+				throw new \Exception("Unable to insert the instance");
+			}
+		}else{
+			$this->_setResponseCode(500);
+			echo $this->responseFormatter->format(["message"=>"Unable to create ".$model." instance"]);
+		}
+	}
+
+	/**
+	 * Delete the instance of $model selected by the primary key $keyValues
+	 * Requires an authorization with access token
+	 * @param array $keyValues
+	 * @route("methods"=>["delete"])
+	 * @authorization
+	 */
+	public function delete(...$keyValues){
+		$instance=DAO::getOne($this->model, $keyValues);
+		if(isset($instance)){
+			$result=DAO::remove($instance);
+			if($result){
+				echo $this->responseFormatter->format(["status"=>"deleted","data"=>$instance->_rest]);
+			}else{
+				throw new \Exception("Unable to delete the instance");
 			}
 		}else{
 			$this->_setResponseCode(404);

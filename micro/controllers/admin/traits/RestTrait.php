@@ -13,7 +13,8 @@ use micro\utils\FsUtils;
 use micro\controllers\rest\RestServer;
 use micro\views\View;
 use micro\annotations\parser\DocParser;
-use micro\cache\ClassUtils;
+use Ajax\semantic\html\collections\HtmlMessage;
+use micro\exceptions\UbiquityException;
 
 /**
 * @property View $view
@@ -22,6 +23,14 @@ use micro\cache\ClassUtils;
 trait RestTrait{
 	abstract public function _getAdminFiles();
 	abstract public function _getAdminViewer();
+	/**
+	 * @param string $content
+	 * @param string $type
+	 * @param string $icon
+	 * @param int $timeout
+	 * @param string $staticName
+	 * @return HtmlMessage
+	 */
 	abstract protected function showSimpleMessage($content,$type,$icon="info",$timeout=NULL,$staticName=null);
 
 	public function initRestCache($refresh=true){
@@ -32,21 +41,35 @@ trait RestTrait{
 		$message=\ob_get_clean();
 		echo $this->showSimpleMessage(\nl2br($message), "info","info",4000);
 		if($refresh===true)
-			$this->_refreshRest();
+			$this->_refreshRest(true);
 		echo $this->jquery->compile($this->view);
 	}
 
-	protected function _refreshRest(){
-		$restRoutes=CacheManager::getRestRoutes();
-		echo $this->_getAdminViewer()->getRestRoutesTab($restRoutes);
+	protected function _refreshRest($refresh=false){
+		$result="";
+		try{
+			$restRoutes=CacheManager::getRestRoutes();
+			if(\sizeof($restRoutes)>0){
+				$result=$this->_getAdminViewer()->getRestRoutesTab($restRoutes);
+			}else{
+				$result=$this->showSimpleMessage("No resource Rest found. You can add a new resource.", "","warning circle",null,"tabsRest");
+			}
+		}catch (UbiquityException $e){
+			$result.=$this->showSimpleMessage(\nl2br($e->getMessage()),"error","warning circle",null,"tabsRest");
+		}
 		$this->_addRestDataTableBehavior();
+		if($refresh){
+			echo $result;
+		}
 	}
+
 	public function _displayRestFormTester(){
 		$path=@$_POST["path"];
 		$resource=@$_POST["resource"];
 		$controller=@$_POST["controller"];
 		$controller=\urldecode($controller);
 		$action=@$_POST["action"];
+		$msgHelp=$this->_displayActionDoc($controller, $action);
 		$frm=$this->jquery->semantic()->htmlForm("frmTester-".$path);
 		$pathId=JString::cleanIdentifier($path);
 		$containerId="div-tester-".$pathId;
@@ -73,27 +96,21 @@ trait RestTrait{
 		$this->jquery->postOnClick("#".$containerId." ._requestWithHeaders", $this->_getAdminFiles()->getAdminBaseRoute()."/_runPostWithParams/_/header/rest",
 				"{actualParams: $('#".$frmHeaders->getIdentifier()."').serialize(),model: '".$resource."',toUpdate:'".$frmHeaders->getIdentifier()."',method:$('#".$containerId." ._method').val(),url:$('#".$containerId." ._path').val()}",
 				"#modal",["attr"=>"","hasLoader"=>false]);
-		$this->jquery->post($this->_getAdminFiles()->getAdminBaseRoute()."/_actionHasDoc","{action: '".$action."',controller: '".\urlencode($controller)."'}","#".JString::cleanIdentifier("help-".$action.$controller),["hasLoader"=>false,"immediatly"=>true]);
-		$this->jquery->compile($this->view);
-		$this->loadView($this->_getAdminFiles()->getViewRestFormTester(),["frmHeaders"=>$frmHeaders,"frmParameters"=>$frmParameters,"frmTester"=>$frm,"pathId"=>$pathId,"docTesterId"=>JString::cleanIdentifier("doc-".$action.$controller)]);
-	}
-
-	public function _actionHasDoc(){
-		$help="";
-		$action=$_POST["action"];
-		$controller=$_POST["controller"];
-		$controller=\urldecode($controller);
-		$doc=DocParser::docMethodParser($controller, $action)->parse();
-		if(!$doc->isEmpty()){
-			$help=$this->jquery->semantic()->htmlIcon("icon-help-".$controller.$action, "help circle blue");
+		if(!$msgHelp->_empty){
+			$this->jquery->exec('$("#'.JString::cleanIdentifier("help-".$action.$controller).'").transition("show");',true);
 		}
-		$help->postOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_displayActionDoc","{action: '".$action."',controller: '".\urlencode($controller)."'}","#".JString::cleanIdentifier("doc-".$action.$controller),["hasLoader"=>false,"ajaxTransition"=>"random"]);
-		echo $help;
-		echo $this->jquery->compile($this->view);
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewRestFormTester(),["frmHeaders"=>$frmHeaders,"frmParameters"=>$frmParameters,"frmTester"=>$frm,"pathId"=>$pathId,"msgHelp"=>$msgHelp]);
 	}
 
-	public function _displayActionDoc(){
-		echo \urldecode($_POST["controller"]);
+	protected function _displayActionDoc($controller,$action){
+		$docParser=DocParser::docMethodParser($controller, $action);
+		$msg=$this->showSimpleMessage($docParser->getDescriptionAsHtml(), "","help circle blue",null,"msg-help-".$action.$controller);
+		$msg->addHeader("Method ".$action);
+		$msg->addList($docParser->getMethodParamsReturnAsHtml());
+		$msg->addClass("hidden transition");
+		$msg->_empty=$docParser->isEmpty();
+		return $msg;
 	}
 
 	public function _frmNewResource(){
@@ -129,6 +146,7 @@ trait RestTrait{
 				$resource=$_POST["resource"];$route=$_POST["route"];
 				$restControllerNS=RestServer::getRestNamespace();
 				$restControllersDir=ROOT . DS . str_replace("\\", DS, $restControllerNS);
+				FsUtils::safeMkdir($restControllersDir);
 				$controllerName=\ucfirst($_POST["ctrlName"]);
 				$filename=$restControllersDir.DS.$controllerName.".php";
 				if(!\file_exists($filename)){
@@ -142,7 +160,7 @@ trait RestTrait{
 				}else{
 					echo $this->showSimpleMessage("The file <b>".$filename."</b> already exists.<br>Can not create the <b>".$controllerName."</b> Rest controller!", "warning","warning circle",30000,"msgGlobal");
 				}
-				$this->_refreshRest();
+				$this->_refreshRest(true);
 			}
 			$this->jquery->exec("$('#div-new-resource').hide();$('#divRest').show();",true);
 			echo $this->jquery->compile($this->view);
@@ -155,9 +173,11 @@ trait RestTrait{
 					\$(this).closest('tr').after('<tr class=\"active\"><td id=\"sub-td'+$(this).closest('tr').attr('id')+'\" colspan=\"'+$(this).closest('tr').children('td').length+'\">test</td></tr>');
 					$(this).addClass('active').removeClass('visibleover');}else{
 						$(this).removeClass('active').addClass('visibleover');
+						$(this).closest('tr').find('.ui.icon.help').transition('hide');
 						$('#sub-td'+$(this).closest('tr').attr('id')).remove();
 					}",
 				false,false,true);
+		$this->jquery->click("._showMsgHelp",'$("#"+$(this).attr("data-show")).transition();');
 		$this->jquery->postOnClick("._toTest", $this->_getAdminFiles()->getAdminBaseRoute()."/_displayRestFormTester",
 				"{resource:$(this).attr('data-resource'),controller:$(this).attr('data-controller'),action:$(this).attr('data-action'),path:$(this).closest('tr').attr('data-ajax')}","'#sub-td'+$(self).closest('tr').attr('id')",
 				["ajaxTransition"=>"random","stopPropagation"=>true,"jsCondition"=>"!$(self).hasClass('active')"]);
