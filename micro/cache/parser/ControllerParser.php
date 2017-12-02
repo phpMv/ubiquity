@@ -135,7 +135,7 @@ class ControllerParser {
 
 	public static function addParamsPath($path, \ReflectionMethod $method) {
 		$parameters=[ ];
-		$hasOptionnal=false;
+		$hasOptional=false;
 		preg_match_all('@\{(\.\.\.|\~)?(.+?)\}@s', $path, $matches);
 		if (isset($matches[2]) && \sizeof($matches[2]) > 0) {
 			$path=\preg_quote($path);
@@ -144,31 +144,35 @@ class ControllerParser {
 			foreach ( $matches[2] as $paramMatch ) {
 				$find=\array_search($paramMatch, $params);
 				if ($find !== false) {
-					if(isset($matches[1][$index])){
-						if($matches[1][$index]==="..."){
-							$parameters[]="*";
-							$path=\str_replace("\{\.\.\." . $paramMatch . "\}", "(.*?)", $path);
-						}elseif($matches[1][$index]==="~"){
-							$parameters[]="~".$find;
-							$path=\str_replace("\{~" . $paramMatch . "\}", "", $path);
-							$hasOptionnal=true;
-						}else{
-							$parameters[]=$find;
-							$path=\str_replace("\{" . $paramMatch . "\}", "(.+?)", $path);
-						}
-					}else{
-						$parameters[]=$find;
-						$path=\str_replace("\{" . $paramMatch . "\}", "(.+?)", $path);
-					}
+					self::scanParam($parameters, $hasOptional, $matches, $index, $paramMatch, $find, $path);
 				} else {
 					throw new \Exception("{$paramMatch} is not a parameter of the method " . $method->name);
 				}
 				$index++;
 			}
 		}
-		if($hasOptionnal)
+		if($hasOptional)
 			$path.="/(.*?)";
 		return [ "path" => $path,"parameters" => $parameters ];
+	}
+
+	private static function scanParam(&$parameters,&$hasOptional,$matches,$index,$paramMatch,$find,&$path){
+		if(isset($matches[1][$index])){
+			if($matches[1][$index]==="..."){
+				$parameters[]="*";
+				$path=\str_replace("\{\.\.\." . $paramMatch . "\}", "(.*?)", $path);
+			}elseif($matches[1][$index]==="~"){
+				$parameters[]="~".$find;
+				$path=\str_replace("\{~" . $paramMatch . "\}", "", $path);
+				$hasOptional=true;
+			}else{
+				$parameters[]=$find;
+				$path=\str_replace("\{" . $paramMatch . "\}", "(.+?)", $path);
+			}
+		}else{
+			$parameters[]=$find;
+			$path=\str_replace("\{" . $paramMatch . "\}", "(.+?)", $path);
+		}
 	}
 
 	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration) {

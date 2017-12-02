@@ -21,12 +21,8 @@ class ClassesToYuml {
 		$this->displayMethodsParams=$displayMethodsParams;
 		$this->displayPropertiesTypes=$displayPropertiesTypes;
 	}
+
 	/**
-	 * @param boolean $displayProperties
-	 * @param boolean $displayAssociations
-	 * @param boolean $displayMethods
-	 * @param boolean $displayMethodsParams
-	 * @param boolean $displayPropertiesTypes
 	 * @return ClassParser[]|string[]
 	 */
 	public function parse(){

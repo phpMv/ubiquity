@@ -153,5 +153,12 @@ class Route {
 		return $this->messages;
 	}
 
+	public function getMethods() {
+		return $this->methods;
+	}
 
+	public function setMethods($methods) {
+		$this->methods=$methods;
+		return $this;
+	}
 }

@@ -9,6 +9,7 @@ use micro\cache\ClassUtils;
  * @static array $cache
  */
 trait ModelsCacheTrait{
+	abstract protected static function _getFiles(&$config,$type,$silent=false);
 
 	public static function createOrmModelCache($classname) {
 		$key=self::getModelCacheKey($classname);

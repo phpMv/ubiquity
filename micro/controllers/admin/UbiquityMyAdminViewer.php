@@ -297,7 +297,7 @@ class UbiquityMyAdminViewer {
 		$de->setFields($fields);
 		$de->setCaptions($fields);
 		foreach ($fields as $key){
-			$de->setValueFunction($key, function($value) use ($key){
+			$de->setValueFunction($key, function($value){
 				if($value instanceof  \stdClass){
 					$value=(array) $value;
 				}

@@ -13,7 +13,7 @@ use micro\utils\JArray;
  *
  */
 trait RouterCacheTrait{
-
+	abstract protected static function _getFiles(&$config,$type,$silent=false);
 	private static $expiredRoutes=[ ];
 
 	private static function addControllerCache($classname) {

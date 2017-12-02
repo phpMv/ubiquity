@@ -107,7 +107,7 @@ class CacheManager {
 			self::initRestCache($config,$silent);
 	}
 
-	private static function _getFiles(&$config,$type,$silent=false){
+	protected static function _getFiles(&$config,$type,$silent=false){
 		$typeNS=$config["mvcNS"][$type];
 		$typeDir=ROOT . DS . str_replace("\\", DS, $typeNS);
 		if(!$silent)
