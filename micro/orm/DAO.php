@@ -191,8 +191,8 @@ class DAO {
 		$objects=array ();
 		$invertedJoinColumns=null;
 		$oneToManyFields=null;
-		$tableName=OrmUtils::getTableName($className);
 		$metaDatas=OrmUtils::getModelMetadata($className);
+		$tableName=$metaDatas["#tableName"];
 		if ($loadManyToOne && isset($metaDatas["#invertedJoinColumn"]))
 			$invertedJoinColumns=$metaDatas["#invertedJoinColumn"];
 		if ($loadOneToMany && isset($metaDatas["#oneToMany"])) {
@@ -203,10 +203,9 @@ class DAO {
 		$query=self::$db->prepareAndExecute($tableName, $condition, $useCache);
 		Logger::log("getAll", "SELECT * FROM " . $tableName . $condition);
 
-		$members=OrmUtils::getAnnotationInfo($className, "#fieldNames");
+		$members=$metaDatas["#fieldNames"];
 		foreach ( $query as $row ) {
-			$o=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $useCache);
-			$objects[]=$o;
+			$objects[]=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $useCache);
 		}
 		return $objects;
 	}

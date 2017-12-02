@@ -17,7 +17,7 @@ class OrmUtils {
 
 	public static function getModelMetadata($className) {
 		if (!isset(self::$modelsMetadatas[$className])) {
-			self::$modelsMetadatas[$className]=CacheManager::createOrmModelCache($className);
+			self::$modelsMetadatas[$className]=CacheManager::getOrmModelCache($className);
 		}
 		return self::$modelsMetadatas[$className];
 	}
@@ -59,6 +59,7 @@ class OrmUtils {
 	}
 
 	public static function getTableName($class) {
+		if(isset(self::getModelMetadata($class)["#tableName"]))
 		return self::getModelMetadata($class)["#tableName"];
 	}
 

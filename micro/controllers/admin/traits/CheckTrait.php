@@ -129,34 +129,38 @@ trait CheckTrait{
 	}
 
 	protected function checkModelsCache($config,$infoIcon="lightning"){
-		if(!isset($config["cacheDirectory"]) || StrUtils::isNull($config["cacheDirectory"])){
-			self::missingKeyInConfigMessage("Cache directory is not well configured in <b>app/config/config.php</b>", ["cacheDirectory"]);
+		if(!isset($config["cache"]) || StrUtils::isNull($config["cache"])){
+			self::missingKeyInConfigMessage("Cache directory is not well configured in <b>app/config/config.php</b>", ["cache"]);
 		}else{
-			$cacheDir=FsUtils::cleanPathname(ROOT.DS.$config["cacheDirectory"]);
-			$this->_addInfoMessage($infoIcon, "Models cache directory is well configured in config file.");
-			$cacheDirs=CacheManager::getCacheDirectories($config,true);
-			if(\file_exists($cacheDir)===false){
-				$this->_addErrorMessage("warning", "The cache directory <b>".$cacheDir."</b> does not exists.");
+			if(!isset($config["cache"]["directory"]) || StrUtils::isNull($config["cache"]["directory"])){
+				self::missingKeyInConfigMessage("Cache directory is not well configured in <b>app/config/config.php</b>", ["directory"]);
 			}else{
-				$modelsCacheDir=FsUtils::cleanPathname($cacheDirs["models"]);
-				$this->_addInfoMessage($infoIcon, "Cache directory <b>".$cacheDir."</b> exists.");
-				if(\file_exists($modelsCacheDir)===false){
-					$this->_addErrorMessage("warning", "The models cache directory <b>".$modelsCacheDir."</b> does not exists.");
+				$cacheDir=FsUtils::cleanPathname(ROOT.DS.$config["cache"]["directory"]);
+				$this->_addInfoMessage($infoIcon, "Models cache directory is well configured in config file.");
+				$cacheDirs=CacheManager::getCacheDirectories($config,true);
+				if(\file_exists($cacheDir)===false){
+					$this->_addErrorMessage("warning", "The cache directory <b>".$cacheDir."</b> does not exists.");
 				}else{
-					$this->_addInfoMessage($infoIcon, "Models cache directory <b>".$modelsCacheDir."</b> exists.");
-					CacheManager::startProd($config);
-					$files=CacheManager::getModelsFiles($config,true);
-					foreach ($files as $file){
-						$classname=ClassUtils::getClassFullNameFromFile($file);
-						if(!CacheManager::modelCacheExists($classname)){
-							$this->_addErrorMessage("warning", "The models cache file does not exists for the class <b>".$classname."</b>.");
-						}else{
-							$this->_addInfoMessage($infoIcon, "The models cache file for <b>".$classname."</b> exists.");
+					$modelsCacheDir=FsUtils::cleanPathname($cacheDirs["models"]);
+					$this->_addInfoMessage($infoIcon, "Cache directory <b>".$cacheDir."</b> exists.");
+					if(\file_exists($modelsCacheDir)===false){
+						$this->_addErrorMessage("warning", "The models cache directory <b>".$modelsCacheDir."</b> does not exists.");
+					}else{
+						$this->_addInfoMessage($infoIcon, "Models cache directory <b>".$modelsCacheDir."</b> exists.");
+						CacheManager::startProd($config);
+						$files=CacheManager::getModelsFiles($config,true);
+						foreach ($files as $file){
+							$classname=ClassUtils::getClassFullNameFromFile($file);
+							if(!CacheManager::modelCacheExists($classname)){
+								$this->_addErrorMessage("warning", "The models cache file does not exists for the class <b>".$classname."</b>.");
+							}else{
+								$this->_addInfoMessage($infoIcon, "The models cache file for <b>".$classname."</b> exists.");
+							}
 						}
 					}
 				}
-			}
 
+			}
 		}
 	}
 	protected function displayAllMessages($newStep=null){

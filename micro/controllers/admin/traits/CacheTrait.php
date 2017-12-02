@@ -23,7 +23,7 @@ trait CacheTrait{
 			$caches=[];
 		$cacheFiles=[];
 		foreach ($caches as $cache){
-			$cacheFiles=\array_merge($cacheFiles,CacheFile::init(ROOT . DS .$config["cacheDirectory"].$cache, \ucfirst($cache)));
+			$cacheFiles=\array_merge($cacheFiles,CacheFile::init(ROOT . DS .CacheManager::getCacheDirectory().$cache, \ucfirst($cache)));
 		}
 		$dt=$this->_getAdminViewer()->getCacheDataTable($cacheFiles);
 		echo $dt->refresh();
@@ -44,7 +44,7 @@ trait CacheTrait{
 			\session_destroy();
 			$config=Startup::getConfig();
 			$toDelete=$_POST["type"];
-			CacheFile::delete(ROOT . DS .$config["cacheDirectory"].\strtolower($toDelete));
+			CacheFile::delete(ROOT . DS .CacheManager::getCacheDirectory().\strtolower($toDelete));
 		}
 		$this->setCacheTypes();
 	}

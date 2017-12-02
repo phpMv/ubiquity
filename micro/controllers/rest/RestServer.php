@@ -2,6 +2,7 @@
 namespace micro\controllers\rest;
 use micro\controllers\Startup;
 use micro\cache\ClassUtils;
+use micro\cache\CacheManager;
 
 /**
  * @author jc
@@ -96,7 +97,7 @@ class RestServer {
 	 * @return ApiTokens
 	 */
 	public function _getApiTokens(){
-		return ApiTokens::getFromCache(ROOT.$this->config["cacheDirectory"].DS,$this->tokensCacheKey);
+		return ApiTokens::getFromCache(ROOT.CacheManager::getCacheDirectory().DS,$this->tokensCacheKey);
 	}
 
 	/**

@@ -78,7 +78,8 @@ class ApiTokens {
 	}
 
 	/**
-	 * @param string $name
+	 * @param $folder
+	 * @param string $key
 	 * @param number $length
 	 * @param number $duration
 	 * @return ApiTokens

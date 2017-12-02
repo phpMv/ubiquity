@@ -1,18 +1,14 @@
 <?php
-
 namespace micro\controllers;
-
-use micro\orm\OrmUtils;
 
 /**
  * Classe Autoloader
  * @author jc
- * @version 1.0.0.2
+ * @version 1.0.0.3
  * @package controllers
  */
 class Autoloader {
 	private static $config;
-	private static $directories;
 	private static $namespaces;
 
 	public static function register($config) {
@@ -31,20 +27,16 @@ class Autoloader {
 	}
 
 	public static function autoload($class) {
-		$classname=\str_replace("\\", DS, $class);
-		$find=self::tryToRequire(ROOT . DS . $classname . '.php');
-		$posSlash=\strrpos($class, '\\');
-		$namespace=\substr($class, 0, $posSlash);
-
-		if ($find === false && \is_array(self::$namespaces)) {
-			$classname=\substr($class, $posSlash + 1);
+		if (self::tryToRequire(ROOT . DS . \str_replace("\\", DS, $class) . '.php'))
+			return;
+		if (\is_array(self::$namespaces)) {
+			$posSlash=\strrpos($class, '\\');
+			$namespace=\substr($class, 0, $posSlash);
 			if (isset(self::$namespaces[$namespace])) {
+				$classname=\substr($class, $posSlash + 1);
 				$classnameToDir=\str_replace("\\", DS, $namespace);
-				$find=self::tryToRequire(self::$namespaces[$namespace] . $classnameToDir . $classname . ".php");
+				self::tryToRequire(self::$namespaces[$namespace] . $classnameToDir . $classname . ".php");
 			}
-		}
-		if (substr($namespace, 0, \strlen(self::$config["mvcNS"]["models"])) === self::$config["mvcNS"]["models"]) {
-			OrmUtils::getModelMetadata($class);
 		}
 	}
 }

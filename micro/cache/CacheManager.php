@@ -12,13 +12,11 @@ use micro\controllers\Startup;
 use micro\utils\FsUtils;
 use micro\cache\parser\ControllerParser;
 use micro\cache\parser\RestControllerParser;
-use Twig\Error\Error;
 use micro\exceptions\RestException;
 use micro\exceptions\RouterException;
 
 class CacheManager {
 	public static $cache;
-	private static $routes=[ ];
 	private static $cacheDirectory;
 	private static $expiredRoutes=[ ];
 
@@ -27,20 +25,33 @@ class CacheManager {
 		$cacheDirectory=ROOT . DS . self::$cacheDirectory;
 		Annotations::$config['cache']=new AnnotationCache($cacheDirectory . '/annotations');
 		self::register(Annotations::getManager());
-		self::$cache=new ArrayCache($cacheDirectory, ".cache");
+		self::getCacheInstance($config, $cacheDirectory, ".cache");
+		//self::$cache=new ArrayCache($cacheDirectory, ".cache");
 	}
 
 	public static function startProd(&$config) {
 		self::$cacheDirectory=self::initialGetCacheDirectory($config);
 		$cacheDirectory=ROOT . DS . self::$cacheDirectory;
-		self::$cache=new ArrayCache($cacheDirectory, ".cache");
+		self::getCacheInstance($config,$cacheDirectory, ".cache");
+	}
+
+	protected static function getCacheInstance(&$config,$cacheDirectory,$postfix){
+		$cacheSystem='micro\cache\ArrayCache';
+		if(!isset(self::$cache)){
+			if(isset($config["cache"]["system"])){
+				$cacheSystem=$config["cache"]["system"];
+			}
+			self::$cache=new $cacheSystem($cacheDirectory,$postfix);
+		}
+		return self::$cache;
 	}
 
 	public static function getControllerCache($isRest=false) {
 		$key=($isRest)?"rest":"default";
 		if (self::$cache->exists("controllers/routes.".$key))
 			return self::$cache->fetch("controllers/routes.".$key);
-		throw new RouterException( $key." cache does not exist : the file `".FsUtils::cleanPathname(ROOT.DS.self::getCacheDirectory()."controllers/routes.").$key.".cache.php` is missing.\nTry to Re-init cache.");
+		return [];
+		//throw new RouterException( $key." cache does not exist : the file `".FsUtils::cleanPathname(ROOT.DS.self::getCacheDirectory()."controllers/routes.").$key.".cache.php` is missing.\nTry to Re-init cache.");
 	}
 
 	public static function getRestCache() {
@@ -103,10 +114,10 @@ class CacheManager {
 	}
 
 	private static function initialGetCacheDirectory(&$config) {
-		$cacheDirectory=@$config["cacheDirectory"];
+		$cacheDirectory=@$config["cache"]["directory"];
 		if (!isset($cacheDirectory)) {
-			$config["cacheDirectory"]="cache/";
-			$cacheDirectory=$config["cacheDirectory"];
+			$config["cache"]["directory"]="cache/";
+			$cacheDirectory=$config["cache"]["directory"];
 		}
 		return $cacheDirectory;
 	}
@@ -125,6 +136,10 @@ class CacheManager {
 			}
 			return self::$cache->fetch($key);
 		}
+	}
+
+	public static function getOrmModelCache($classname) {
+		return self::$cache->fetch(self::getModelCacheKey($classname));
 	}
 
 	public static function getModelCacheKey($classname){
@@ -207,7 +222,7 @@ class CacheManager {
 			if (is_file($file)) {
 				$model=ClassUtils::getClassFullNameFromFile($file);
 				if(!$forChecking){
-					new $model();
+					self::createOrmModelCache($model);
 				}
 			}
 		}
@@ -344,10 +359,9 @@ class CacheManager {
 	}
 
 	public static function getRestResource($controllerClass){
-		$cache=self::getRestCache();
-		if(isset($cache[$controllerClass])){
-			return $cache[$controllerClass]["resource"];
-		}
+		$cacheControllerClass=self::getRestCacheController($controllerClass);
+		if(isset($cacheControllerClass))
+			return $cacheControllerClass["resource"];
 		return null;
 	}
 
