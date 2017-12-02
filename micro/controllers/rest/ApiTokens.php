@@ -2,7 +2,7 @@
 
 namespace micro\controllers\rest;
 
-use micro\cache\ArrayCache;
+use micro\cache\system\ArrayCache;
 use micro\utils\JArray;
 
 class ApiTokens {

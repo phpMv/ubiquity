@@ -1,5 +1,5 @@
 <?php
-namespace micro\cache;
+namespace micro\cache\system;
 
 /**
  * This class is responsible for storing Arrays in PHP files.
@@ -15,7 +15,7 @@ class ApcuCache extends AbstractDataCache{
 	/**
 	 * Check if annotation-data for the key has been stored.
 	 * @param string $key cache key
-	 * @return bool true if data with the given key has been stored; otherwise false
+	 * @return boolean true if data with the given key has been stored; otherwise false
 	 */
 	public function exists($key) {
 		return \apcu_exists($this->getRealKey($key));
@@ -28,8 +28,7 @@ class ApcuCache extends AbstractDataCache{
 	/**
 	 * Caches the given data with the given key.
 	 * @param string $key cache key
-	 * @param string $code the source-code to be cached
-	 * @throws AnnotationException if file could not be written
+	 * @param string $content the source-code to be cached
 	 */
 	protected function storeContent($key,$content) {
 		\apcu_store($this->getRealKey($key), $content);
@@ -77,7 +76,7 @@ class ApcuCache extends AbstractDataCache{
 				$creationTime = $entry['creation_time'];
 				return $creationTime;
 			}
-			return false;
+			return \time();
 	}
 
 	public function remove($key) {

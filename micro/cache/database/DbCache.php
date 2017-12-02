@@ -2,7 +2,7 @@
 
 namespace micro\cache\database;
 
-use micro\cache\ArrayCache;
+use micro\cache\system\ArrayCache;
 use micro\cache\CacheManager;
 
 abstract class DbCache {

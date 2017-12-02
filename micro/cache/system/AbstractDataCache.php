@@ -3,7 +3,7 @@
  * Inspired by (c) Rasmus Schultz <rasmus@mindplay.dk>
  * <https://github.com/mindplay-dk/php-annotations>
  */
-namespace micro\cache;
+namespace micro\cache\system;
 
 /**
  * This class is responsible for storing Arrays in PHP files.
@@ -27,7 +27,7 @@ abstract class AbstractDataCache {
 	/**
 	 * Check if annotation-data for the key has been stored.
 	 * @param string $key cache key
-	 * @return bool true if data with the given key has been stored; otherwise false
+	 * @return boolean true if data with the given key has been stored; otherwise false
 	 */
 	abstract public function exists($key);
 
