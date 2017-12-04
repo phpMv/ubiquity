@@ -36,8 +36,8 @@ trait RestTrait{
 	public function initRestCache($refresh=true){
 		$config=Startup::getConfig();
 		\ob_start();
-		CacheManager::initCache($config,"controllers");
 		CacheManager::initCache($config,"rest");
+		CacheManager::initCache($config,"controllers");
 		$message=\ob_get_clean();
 		echo $this->showSimpleMessage(\nl2br($message), "info","info",4000);
 		if($refresh===true)

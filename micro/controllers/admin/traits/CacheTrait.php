@@ -5,6 +5,8 @@ use Ajax\JsUtils;
 use micro\cache\CacheManager;
 use micro\controllers\Startup;
 use micro\controllers\admin\popo\CacheFile;
+use micro\utils\RequestUtils;
+use Ajax\semantic\html\collections\form\HtmlForm;
 
 /**
  * @author jc
@@ -16,14 +18,17 @@ trait CacheTrait{
 	abstract public function _getAdminFiles();
 
 	public function setCacheTypes(){
-		$config=Startup::getConfig();
 		if(isset($_POST["cacheTypes"]))
 			$caches=$_POST["cacheTypes"];
 		else
 			$caches=[];
 		$cacheFiles=[];
 		foreach ($caches as $cache){
-			$cacheFiles=\array_merge($cacheFiles,CacheFile::init(ROOT . DS .CacheManager::getCacheDirectory().$cache, \ucfirst($cache)));
+			if($cache=='models' || $cache=='controllers'){
+				$cacheFiles=\array_merge($cacheFiles,CacheManager::$cache->getCacheFiles($cache));
+			}else{
+				$cacheFiles=\array_merge($cacheFiles,CacheFile::initFromFiles(ROOT . DS .CacheManager::getCacheDirectory().$cache, \ucfirst($cache)));
+			}
 		}
 		$dt=$this->_getAdminViewer()->getCacheDataTable($cacheFiles);
 		echo $dt->refresh();
@@ -33,8 +38,13 @@ trait CacheTrait{
 	public function deleteCacheFile(){
 		if(isset($_POST["toDelete"])){
 			$toDelete=$_POST["toDelete"];
-			if(\file_exists($toDelete))
-				\unlink($toDelete);
+			$type=\strtolower($_POST["type"]);
+			if($type=='models' || $type=='controllers'){
+				CacheManager::$cache->remove($toDelete);
+			}else{
+				if(\file_exists($toDelete))
+					\unlink($toDelete);
+			}
 		}
 		$this->setCacheTypes();
 	}
@@ -42,11 +52,35 @@ trait CacheTrait{
 	public function deleteAllCacheFiles(){
 		if(isset($_POST["type"])){
 			\session_destroy();
-			$config=Startup::getConfig();
-			$toDelete=$_POST["type"];
-			CacheFile::delete(ROOT . DS .CacheManager::getCacheDirectory().\strtolower($toDelete));
+			$toDelete=\strtolower($_POST["type"]);
+			if($toDelete=='models' || $toDelete=='controllers'){
+				CacheManager::$cache->clearCache($toDelete);
+			}else{
+				CacheFile::delete(ROOT . DS .CacheManager::getCacheDirectory().\strtolower($toDelete));
+			}
 		}
 		$this->setCacheTypes();
+	}
+
+	public function _showFileContent(){
+		if(RequestUtils::isPost()){
+			$type=\strtolower($_POST["type"]);$filename=$_POST["filename"];$key=$_POST["key"];
+			if($type=='models' || $type=='controllers'){
+				$content=CacheManager::$cache->file_get_contents($key);
+			}else{
+				if(\file_exists($filename)){
+					$content=\file_get_contents($filename);
+				}
+			}
+			$modal=$this->jquery->semantic()->htmlModal("file",$type." : ".\basename($filename));
+			$frm=new HtmlForm("frmShowFileContent");
+			$frm->addTextarea("file-content", null,$content,"",10);
+			$modal->setContent($frm);
+			$modal->addAction("Close");
+			$this->jquery->exec("$('#file').modal('show');",true);
+			echo $modal;
+			echo $this->jquery->compile($this->view);
+		}
 	}
 
 	public function initCacheType(){

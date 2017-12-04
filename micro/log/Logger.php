@@ -2,27 +2,39 @@
 
 namespace micro\log;
 
-require_once ROOT . DS . 'micro/log/chromePhp.php';
-class Logger {
-	public static $test;
+abstract class Logger {
+	/**
+	 * @var Logger
+	 */
+	private static $instance;
+	private static $test;
 
-	public static function init() {
-		Logger::$test=$GLOBALS["config"]["debug"];
-		\ChromePhp::getInstance()->addSetting(\ChromePhp::BACKTRACE_LEVEL, 2);
+	private static function createLogger(&$config){
+		self::$instance=null;
 	}
 
-	public static function log($id, $message) {
-		if (Logger::$test)
-			\ChromePhp::log($id . ":" . $message);
+	public static function init(&$config) {
+		if(self::$test=isset($config["logger"]) && $config["logger"]){
+			self::createLogger($config);
+		}
 	}
 
-	public static function warn($id, $message) {
-		if (Logger::$test)
-			\ChromePhp::warn($id . ":" . $message);
+	public static function log($id, $message,$code=0) {
+		if (self::$test)
+			self::$instance->_log($id, $message, $code) ;
 	}
 
-	public static function error($id, $message) {
-		if (Logger::$test)
-			\ChromePhp::error($id . ":" . $message);
+	public function warn($id, $message,$code=0) {
+		if (self::$test)
+			self::$instance->_warn($id, $message, $code) ;
 	}
+
+	public function error($id, $message,$code=0) {
+		if (self::$test)
+			self::$instance->_error($id, $message, $code) ;
+	}
+
+	abstract public function _log($id,$message,$code);
+	abstract public function _warn($id,$message,$code);
+	abstract public function _error($id,$message,$code);
 }

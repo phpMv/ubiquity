@@ -260,7 +260,17 @@ class UbiquityMyAdminViewer {
 			$item->asButton()->addIcon("folder",true,true);
 			return $item;
 		});
-		$dt->addDeleteButton(true,[],function($o,$instance){if($instance->getFile()=="")$o->setDisabled();});
+		$dt->addDeleteButton(true,[],function($o,$instance){
+			if($instance->getFile()=="")$o->setDisabled();
+			$type=$instance->getType();
+			$o->setProperty("data-type", $type);
+			$type=\strtolower($type);
+			if($type=='models' || $type=='controllers'){
+				$o->setProperty("data-key", $instance->getName());
+			}else{
+				$o->setProperty("data-key", $instance->getFile());
+			}
+		});
 		$dt->setIdentifierFunction("getFile");
 		$dt->setValueFunction("timestamp", function($v){
 			if($v!=="")
@@ -278,14 +288,15 @@ class UbiquityMyAdminViewer {
 				$link->addClass("_lnk");
 				$link->setProperty("data-type", $instance->getType());
 				$link->setProperty("data-ajax", $instance->getFile());
+				$link->setProperty("data-key", $instance->getName());
 				return $link;
 			}
 		});
 		$dt->onPreCompile(function($dt){
 			$dt->getHtmlComponent()->mergeIdentiqualValues(0);
 		});
-		$this->jquery->postOnClick("._lnk", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/_showFileContent","{type:$(this).attr('data-type'),filename:$(this).attr('data-ajax')}","#modal");
-		$this->jquery->postFormOnClick("._delete", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/deleteCacheFile", "frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith","params"=>"{toDelete:$(this).attr('data-ajax')}"]);
+		$this->jquery->postOnClick("._lnk", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/_showFileContent","{key:$(this).attr('data-key'),type:$(this).attr('data-type'),filename:$(this).attr('data-ajax')}","#modal",["hasLoader"=>false]);
+		$this->jquery->postFormOnClick("._delete", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/deleteCacheFile", "frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith","params"=>"{type:$(this).attr('data-type'),toDelete:$(this).attr('data-key')}"]);
 		$this->jquery->postFormOnClick("._delete-all", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/deleteAllCacheFiles", "frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith","params"=>"{type:$(this).attr('data-ajax')}"]);
 		$this->jquery->postFormOnClick("._init", $this->controller->_getAdminFiles()->getAdminBaseRoute()."/initCacheType", "frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith","params"=>"{type:$(this).attr('data-ajax')}"]);
 		return $dt;

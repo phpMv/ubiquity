@@ -47,21 +47,23 @@ abstract class AbstractDataCache {
 	 * Caches the given data with the given key.
 	 * @param string $key cache key
 	 * @param string $code the source-code to be cached
+	 * @param string tag the item tag
+	 * @param boolean $php
 	 * @throws AnnotationException if file could not be written
 	 */
-	public function store($key, $code, $php=true) {
+	public function store($key, $code,$tag=null, $php=true) {
 		$content="";
 		if ($php)
 			$content=self::PHP_TAG;
 		$content.=$code . "\n";
-		$this->storeContent($key, $content);
+		$this->storeContent($key, $content,$tag);
 	}
 
 	public function getRoot() {
 		return $this->_root;
 	}
 
-	abstract protected function storeContent($key,$content);
+	abstract protected function storeContent($key,$content,$tag);
 
 	/**
 	 * Fetches data stored for the given key.
@@ -88,5 +90,13 @@ abstract class AbstractDataCache {
 	abstract public function remove($key);
 
 	abstract public function clear();
+
+	abstract public function getCacheFiles($type);
+
+	abstract public function clearCache($type);
+
+	public function getCacheInfo(){
+		return "Cache system is an instance of <b>".\get_class($this)."</b>.";
+	}
 
 }

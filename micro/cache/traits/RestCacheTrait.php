@@ -26,7 +26,7 @@ trait RestCacheTrait{
 					$restCache=\array_merge($restCache,$parser->asArray());
 			}
 		}
-		self::$cache->store("controllers/rest", "return " . JArray::asPhpArray($restCache, "array") . ";");
+		self::$cache->store("controllers/rest", "return " . JArray::asPhpArray($restCache, "array") . ";",'controllers');
 		if(!$silent){
 			echo "Rest cache reset\n";
 		}

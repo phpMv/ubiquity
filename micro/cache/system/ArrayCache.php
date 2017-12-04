@@ -1,6 +1,9 @@
 <?php
 namespace micro\cache\system;
 
+use micro\controllers\admin\popo\CacheFile;
+use micro\cache\CacheManager;
+
 /**
  * This class is responsible for storing Arrays in PHP files.
  */
@@ -39,7 +42,7 @@ class ArrayCache extends AbstractDataCache{
 	 * @param string $content the source-code to be cached
 	 * @throws AnnotationException if file could not be written
 	 */
-	protected function storeContent($key,$content) {
+	protected function storeContent($key,$content,$tag) {
 		$path=$this->_getPath($key);
 		if (@\file_put_contents($path, $content, LOCK_EX) === false) {
 			throw new \Exception("Unable to write cache file: {$path}");
@@ -99,5 +102,19 @@ class ArrayCache extends AbstractDataCache{
 			if (\is_file($file))
 				\unlink($file);
 		}
+	}
+
+	public function getCacheFiles($type){
+		return CacheFile::initFromFiles(ROOT . DS .CacheManager::getCacheDirectory().$type, \ucfirst($type),function($file) use($type){$file=\basename($file);return $type."/".substr($file, 0, strpos($file, $this->postfix.'.php'));});
+	}
+
+	public function clearCache($type){
+		CacheFile::delete(ROOT . DS .CacheManager::getCacheDirectory().\strtolower($type));
+	}
+
+	public function getCacheInfo(){
+		$result=parent::getCacheInfo();
+		$result.="<br>Root cache directory is <b>".$this->_root."</b>.";
+		return $result;
 	}
 }

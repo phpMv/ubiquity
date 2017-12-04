@@ -1,18 +1,28 @@
 <?php
 namespace micro\cache\system;
 
-use micro\utils\StrUtils;
 use micro\controllers\admin\popo\CacheFile;
+use phpFastCache\CacheManager;
+use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 
 /**
- * This class is responsible for storing values in apcu cache.
+ * This class is responsible for storing values with PhpFastCache.
  */
-class ApcuCache extends AbstractDataCache{
+class PhpFastCacheDriver extends AbstractDataCache{
 	/**
-	 * Initializes the apcu cache-provider
+	 * @var ExtendedCacheItemPoolInterface
 	 */
-	public function __construct($root,$postfix="") {
+	private $cacheInstance;
+	/**
+	 * Initializes the cache-provider
+	 */
+	public function __construct($root,$postfix="",$cacheType="Mongodb") {
 		parent::__construct($root,$postfix);
+		$this->cacheInstance = CacheManager::getInstance($cacheType,["itemDetailedDate"=>true,'host' => '127.0.0.1',
+  'port' => '27017',
+  'username' => '',
+  'password' => '',
+  'timeout' => '1']);
 	}
 
 	/**
@@ -21,10 +31,10 @@ class ApcuCache extends AbstractDataCache{
 	 * @return boolean true if data with the given key has been stored; otherwise false
 	 */
 	public function exists($key) {
-		return \apcu_exists($this->getRealKey($key));
+		return $this->cacheInstance->hasItem($this->getRealKey($key));
 	}
 
-	public function store($key, $code, $tag,$php=true) {
+	public function store($key, $code,$tag=null, $php=true) {
 		$this->storeContent($key, $code,$tag);
 	}
 
@@ -32,14 +42,19 @@ class ApcuCache extends AbstractDataCache{
 	 * Caches the given data with the given key.
 	 * @param string $key cache key
 	 * @param string $content the source-code to be cached
-	 * @param string $tag not used
+	 * @param string $tag
 	 */
 	protected function storeContent($key,$content,$tag) {
-		\apcu_store($this->getRealKey($key), $content);
+		$key=$this->getRealKey($key);
+		$item=$this->cacheInstance->getItem($key);
+		$item->set($content);
+		$item->addTag($tag);
+		$this->cacheInstance->save($item);
 	}
 
 	protected function getRealKey($key){
-		return $key;
+		$key=\str_replace("/", "-", $key);
+		return \str_replace("\\", "-", $key);
 	}
 
 	/**
@@ -48,7 +63,7 @@ class ApcuCache extends AbstractDataCache{
 	 * @return mixed the cached data
 	 */
 	public function fetch($key) {
-		$result=\apcu_fetch($this->getRealKey($key));
+		$result=$this->cacheInstance->getItem($this->getRealKey($key))->get();
 		return eval($result);
 	}
 
@@ -58,7 +73,7 @@ class ApcuCache extends AbstractDataCache{
 	 * @return mixed the cached data
 	 */
 	public function file_get_contents($key) {
-		return \apcu_fetch($this->getRealKey($key));
+		return $this->cacheInstance->getItem($this->getRealKey($key))->get();
 	}
 
 	/**
@@ -68,51 +83,30 @@ class ApcuCache extends AbstractDataCache{
 	 * @return int unix timestamp
 	 */
 	public function getTimestamp($key) {
-			$key=$this->getRealKey($key);
-			$cache = \apcu_cache_info();
-			if (empty($cache['cache_list'])) {
-				return false;
-			}
-			foreach ($cache['cache_list'] as $entry) {
-				if ($entry['info'] != $key) {
-					continue;
-				}
-				$creationTime = $entry['creation_time'];
-				return $creationTime;
-			}
-			return \time();
+		$key=$this->getRealKey($key);
+		return $this->cacheInstance->getItem($key)->getCreationDate()->getTimestamp();
 	}
 
 	public function remove($key) {
-		\apcu_delete($this->getRealKey($key));
+		$key=$this->getRealKey($key);
+		$this->cacheInstance->deleteItem($this->getRealKey($key));
 	}
 
 	public function clear() {
-		\apcu_clear_cache();
+		$this->cacheInstance->clear();
 	}
 
 	protected function getCacheEntries($type){
-		$entries=$this->getAllEntries();
-		return \array_filter($entries,function($v) use ($type){return StrUtils::startswith($v['info'], $type);});
-	}
-
-	protected function getAllEntries(){
-		$entries=[];
-		$cache = \apcu_cache_info();
-		if (!empty($cache['cache_list'])) {
-			$entries=$cache['cache_list'];
-		}
-		return $entries;
+		return $this->cacheInstance->getItemsByTag($type);
 	}
 
 	public function getCacheFiles($type){
 		$result=[];
 		$entries=$this->getCacheEntries($type);
+
 		foreach ($entries as $entry) {
-			$key=$entry['info'];
-			if(StrUtils::startswith($key, $type)){
-				$result[]=new CacheFile(\ucfirst($type),$key,$entry['creation_time'],$entry['mem_size'],$key);
-			}
+			$key=$entry->getKey();
+			$result[]=new CacheFile(\ucfirst($type),$key,$entry->getCreationDate()->getTimestamp(),"",$key);
 		}
 		if(\sizeof($result)===0)
 			$result[]=new CacheFile(\ucfirst($type),"","","");
@@ -120,9 +114,6 @@ class ApcuCache extends AbstractDataCache{
 	}
 
 	public function clearCache($type){
-		$entries=$this->getCacheEntries($type);
-		foreach ($entries as $entry){
-			$this->remove($entry['info']);
-		}
+		$this->cacheInstance->deleteItemsByTag($type);
 	}
 }

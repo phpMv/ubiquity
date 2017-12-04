@@ -45,8 +45,8 @@ trait RouterCacheTrait{
 
 			}
 		}
-		self::$cache->store("controllers/routes.default", "return " . JArray::asPhpArray($routes["default"], "array") . ";");
-		self::$cache->store("controllers/routes.rest", "return " . JArray::asPhpArray($routes["rest"], "array") . ";");
+		self::$cache->store("controllers/routes.default", "return " . JArray::asPhpArray($routes["default"], "array") . ";",'controllers');
+		self::$cache->store("controllers/routes.rest", "return " . JArray::asPhpArray($routes["rest"], "array") . ";",'controllers');
 		if(!$silent){
 			echo "Router cache reset\n";
 		}
@@ -54,7 +54,7 @@ trait RouterCacheTrait{
 
 	private static function storeRouteResponse($key, $response) {
 		self::setKeyExpired($key, false);
-		self::$cache->store("controllers/" . $key, $response, false);
+		self::$cache->store("controllers/" . $key, $response, 'controllers',false);
 		return $response;
 	}
 
@@ -144,7 +144,7 @@ trait RouterCacheTrait{
 	public static function addRoute($path, $controller, $action="index", $methods=null, $name="") {
 		$controllerCache=self::getControllerCache();
 		Router::addRouteToRoutes($controllerCache, $path, $controller, $action, $methods, $name);
-		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray($controllerCache, "array") . ";");
+		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray($controllerCache, "array") . ";",'controllers');
 	}
 
 	public static function getControllersFiles(&$config,$silent=false){

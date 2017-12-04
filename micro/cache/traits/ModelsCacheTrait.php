@@ -17,7 +17,7 @@ trait ModelsCacheTrait{
 			if (!self::$cache->exists($key)) {
 				$p=new ModelParser();
 				$p->parse($classname);
-				self::$cache->store($key, $p->__toString());
+				self::$cache->store($key, $p->__toString(),'models');
 			}
 			return self::$cache->fetch($key);
 		}

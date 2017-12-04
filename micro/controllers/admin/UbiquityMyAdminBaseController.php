@@ -182,12 +182,11 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	}
 
 	public function cache(){
-		$cacheDirectory=CacheManager::getCacheDirectory();
-		$config=Startup::getConfig();
 		$this->getHeader("cache");
-		$this->showSimpleMessage("Cache directory is <b>".FsUtils::cleanPathname(ROOT.DS.$cacheDirectory)."</b>", "info","info circle",null,"msgCache");
-		$cacheFiles=CacheFile::init(ROOT . DS .$cacheDirectory."controllers", "Controllers");
-		$cacheFiles=\array_merge($cacheFiles,CacheFile::init(ROOT . DS .$cacheDirectory."models", "Models"));
+		$this->showSimpleMessage(CacheManager::$cache->getCacheInfo(), "info","info circle",null,"msgCache");
+
+		$cacheFiles=CacheManager::$cache->getCacheFiles('controllers');
+		$cacheFiles=\array_merge($cacheFiles,CacheManager::$cache->getCacheFiles('models'));
 		$form=$this->jquery->semantic()->htmlForm("frmCache");
 		$radios=HtmlFormFields::checkeds("cacheTypes[]",["controllers"=>"Controllers","models"=>"Models","views"=>"Views","queries"=>"Queries","annotations"=>"Annotations"],"Display cache types: ",["controllers","models"]);
 		$radios->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/setCacheTypes","frmCache","#dtCacheFiles tbody",["jqueryDone"=>"replaceWith"]);
@@ -394,22 +393,6 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			}
 		}
 		$this->controllers();
-	}
-
-	public function _showFileContent(){
-		if(RequestUtils::isPost()){
-			$type=$_POST["type"];$filename=$_POST["filename"];
-			if(\file_exists($filename)){
-				$modal=$this->jquery->semantic()->htmlModal("file",$type." : ".\basename($filename));
-				$frm=new HtmlForm("frmShowFileContent");
-				$frm->addTextarea("file-content", null,\file_get_contents($filename),"",10);
-				$modal->setContent($frm);
-				$modal->addAction("Close");
-				$this->jquery->exec("$('#file').modal('show');",true);
-				echo $modal;
-				echo $this->jquery->compile($this->view);
-			}
-		}
 	}
 
 	public function _runPostWithParams($method="post",$type="parameter",$origine="routes"){
