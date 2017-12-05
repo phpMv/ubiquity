@@ -125,4 +125,8 @@ class ApcuCache extends AbstractDataCache{
 			$this->remove($entry['info']);
 		}
 	}
+
+	public function getEntryKey($key){
+		return $this->getRealKey($key);
+	}
 }

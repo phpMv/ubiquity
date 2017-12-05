@@ -12,6 +12,7 @@ use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\JsUtils;
 use micro\utils\FsUtils;
 use micro\orm\creator\ModelsCreator;
+use micro\cache\system\ArrayCache;
 
 /**
  * @author jc
@@ -129,6 +130,20 @@ trait CheckTrait{
 	}
 
 	protected function checkModelsCache($config,$infoIcon="lightning"){
+		$instanceCache=CacheManager::$cache;
+		if($instanceCache==null){
+			$this->_addErrorMessage("warning", "Cache instance is not created.");
+		}else{
+			$this->_addInfoMessage($infoIcon, $instanceCache->getCacheInfo());
+			if(CacheManager::$cache instanceof ArrayCache){
+				$this->checkArrayCache($config,$infoIcon);
+			}else{
+				$this->checkModelsCacheFiles($config,$infoIcon);
+			}
+		}
+	}
+
+	protected function checkArrayCache($config,$infoIcon="lightning"){
 		if(!isset($config["cache"]) || StrUtils::isNull($config["cache"])){
 			self::missingKeyInConfigMessage("Cache directory is not well configured in <b>app/config/config.php</b>", ["cache"]);
 		}else{
@@ -147,22 +162,26 @@ trait CheckTrait{
 						$this->_addErrorMessage("warning", "The models cache directory <b>".$modelsCacheDir."</b> does not exists.");
 					}else{
 						$this->_addInfoMessage($infoIcon, "Models cache directory <b>".$modelsCacheDir."</b> exists.");
-						CacheManager::startProd($config);
-						$files=CacheManager::getModelsFiles($config,true);
-						foreach ($files as $file){
-							$classname=ClassUtils::getClassFullNameFromFile($file);
-							if(!CacheManager::modelCacheExists($classname)){
-								$this->_addErrorMessage("warning", "The models cache file does not exists for the class <b>".$classname."</b>.");
-							}else{
-								$this->_addInfoMessage($infoIcon, "The models cache file for <b>".$classname."</b> exists.");
-							}
-						}
+						$this->checkModelsCacheFiles($config,$infoIcon);
 					}
 				}
-
 			}
 		}
 	}
+
+	protected function checkModelsCacheFiles($config,$infoIcon="lightning"){
+		CacheManager::startProd($config);
+		$files=CacheManager::getModelsFiles($config,true);
+		foreach ($files as $file){
+			$classname=ClassUtils::getClassFullNameFromFile($file);
+			if(!CacheManager::modelCacheExists($classname)){
+				$this->_addErrorMessage("warning", "The models cache entry does not exists for the class <b>".$classname."</b>.");
+			}else{
+				$this->_addInfoMessage($infoIcon, "The models cache entry for <b>".$classname."</b> exists.");
+			}
+		}
+	}
+
 	protected function displayAllMessages($newStep=null){
 		if($this->hasNoError()){
 			$this->_addInfoMessage("checkmark", "everything is fine here");

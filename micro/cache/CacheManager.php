@@ -10,10 +10,14 @@ use micro\utils\FsUtils;
 use micro\cache\traits\RouterCacheTrait;
 use micro\cache\traits\ModelsCacheTrait;
 use micro\cache\traits\RestCacheTrait;
+use micro\cache\system\AbstractDataCache;
 
 class CacheManager {
 	use RouterCacheTrait,ModelsCacheTrait,RestCacheTrait;
 
+	/**
+	 * @var AbstractDataCache
+	 */
 	public static $cache;
 	private static $cacheDirectory;
 

@@ -5,7 +5,6 @@ use micro\cache\ClassUtils;
 use micro\cache\parser\RestControllerParser;
 use micro\utils\JArray;
 use micro\exceptions\RestException;
-use micro\utils\FsUtils;
 
 /**
  * @author jc
@@ -46,7 +45,7 @@ trait RestCacheTrait{
 	public static function getRestCache() {
 		if (self::$cache->exists("controllers/rest"))
 			return self::$cache->fetch("controllers/rest");
-			throw new RestException("Rest cache does not exist : the file `".FsUtils::cleanPathname(ROOT.DS.self::getCacheDirectory()."controllers/")."rest.cache.php` is missing.\nTry to Re-init Rest cache.");
+			throw new RestException("Rest cache entry `".self::$cache->getEntryKey("controllers/rest")."` is missing.\nTry to Re-init Rest cache.");
 	}
 
 	public static function getRestResource($controllerClass){

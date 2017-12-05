@@ -159,11 +159,8 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	}
 
 	public function routes(){
-		$config=Startup::getConfig();
 		$this->getHeader("routes");
-		$controllersNS=$config["mvcNS"]["controllers"];
-		$routerCacheDir=ROOT . CacheManager::getCacheDirectory().str_replace("\\", DS, $controllersNS);
-		$this->showSimpleMessage("Router cache file is <b>".FsUtils::cleanPathname($routerCacheDir)."routes.default.cache.php</b>", "info","info circle",null,"msgRoutes");
+		$this->showSimpleMessage("Router cache entry is <b>".CacheManager::$cache->getEntryKey("controllers\\routes.default")."</b>", "info","info circle",null,"msgRoutes");
 		$routes=CacheManager::getRoutes();
 		$this->_getAdminViewer()->getRoutesDataTable(Route::init($routes));
 		$this->jquery->getOnClick("#bt-init-cache", $this->_getAdminFiles()->getAdminBaseRoute()."/initCacheRouter","#divRoutes",["dataType"=>"html","attr"=>""]);
@@ -197,14 +194,8 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 	}
 
 	public function rest(){
-		$config=Startup::getConfig();
 		$this->getHeader("rest");
-		$controllersNS=$config["mvcNS"]["controllers"];
-		$routerCacheDir=ROOT . CacheManager::getCacheDirectory().str_replace("\\", DS, $controllersNS);
-		$routerCacheFile=FsUtils::cleanPathname($routerCacheDir)."routes.rest.cache.php";
-		if(\file_exists($routerCacheFile)){
-			$this->showSimpleMessage("Router cache file is <b>".$routerCacheFile."</b>", "info","info circle",null,"msgRest");
-		}
+		$this->showSimpleMessage("Router Rest cache entry is <b>".CacheManager::$cache->getEntryKey("controllers\\routes.rest")."</b>", "info","info circle",null,"msgRest");
 		$this->_refreshRest();
 		$this->jquery->getOnClick("#bt-init-rest-cache", $this->_getAdminFiles()->getAdminBaseRoute()."/initRestCache","#divRest",["attr"=>"","dataType"=>"html"]);
 		$this->jquery->postOn("change", "#access-token", $this->_getAdminFiles()->getAdminBaseRoute()."/_saveToken","{_token:$(this).val()}");

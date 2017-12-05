@@ -117,4 +117,8 @@ class ArrayCache extends AbstractDataCache{
 		$result.="<br>Root cache directory is <b>".$this->_root."</b>.";
 		return $result;
 	}
+
+	public function getEntryKey($key){
+		return $this->_getPath($key);
+	}
 }

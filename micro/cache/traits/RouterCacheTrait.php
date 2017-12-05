@@ -74,7 +74,7 @@ trait RouterCacheTrait{
 		$key=($isRest)?"rest":"default";
 		if (self::$cache->exists("controllers/routes.".$key))
 			return self::$cache->fetch("controllers/routes.".$key);
-			return [];
+		return [];
 	}
 
 	public static function getRouteCache($routePath, $duration) {

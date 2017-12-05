@@ -98,5 +98,6 @@ abstract class AbstractDataCache {
 	public function getCacheInfo(){
 		return "Cache system is an instance of <b>".\get_class($this)."</b>.";
 	}
+	abstract public function getEntryKey($key);
 
 }

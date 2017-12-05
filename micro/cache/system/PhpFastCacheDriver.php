@@ -18,11 +18,7 @@ class PhpFastCacheDriver extends AbstractDataCache{
 	 */
 	public function __construct($root,$postfix="",$cacheType="Mongodb") {
 		parent::__construct($root,$postfix);
-		$this->cacheInstance = CacheManager::getInstance($cacheType,["itemDetailedDate"=>true,'host' => '127.0.0.1',
-  'port' => '27017',
-  'username' => '',
-  'password' => '',
-  'timeout' => '1']);
+		$this->cacheInstance = CacheManager::getInstance($cacheType,['defaultTtl'=>86400,'itemDetailedDate'=>true,'host' => '127.0.0.1','port' => '27017','username' => '','password' => '','timeout' => '1']);
 	}
 
 	/**
@@ -84,7 +80,7 @@ class PhpFastCacheDriver extends AbstractDataCache{
 	 */
 	public function getTimestamp($key) {
 		$key=$this->getRealKey($key);
-		return $this->cacheInstance->getItem($key)->getCreationDate()->getTimestamp();
+		return $this->cacheInstance->getItem($key)->getModificationDate()->getTimestamp();
 	}
 
 	public function remove($key) {
@@ -115,5 +111,13 @@ class PhpFastCacheDriver extends AbstractDataCache{
 
 	public function clearCache($type){
 		$this->cacheInstance->deleteItemsByTag($type);
+	}
+
+	public function getCacheInfo(){
+		return parent::getCacheInfo()."<br>Driver name : <b>".$this->cacheInstance->getDriverName()."</b>";
+	}
+
+	public function getEntryKey($key){
+		return $this->cacheInstance->getItem($this->getRealKey($key))->getKey();
 	}
 }

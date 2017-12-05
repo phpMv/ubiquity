@@ -59,7 +59,12 @@ class ControllerAction {
 		$config=Startup::getConfig();
 
 		$files=CacheManager::getControllersFiles($config,true);
-		$restCtrls=CacheManager::getRestCache();
+		try {
+			$restCtrls=CacheManager::getRestCache();
+		} catch (\Exception $e) {
+			$restCtrls=[];
+		}
+
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
