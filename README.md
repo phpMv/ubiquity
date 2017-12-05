@@ -13,6 +13,8 @@ php MVC Ubiquity framework, One of the fastest frameworks, with the main feature
   - Router based on annotations
   - ORM implementing Data Mapper
   - Multi-level cache
+  - Rest Server
+  - Admin interface
   
 # Installation
 
