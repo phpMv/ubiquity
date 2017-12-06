@@ -16,9 +16,12 @@ class PhpFastCacheDriver extends AbstractDataCache{
 	/**
 	 * Initializes the cache-provider
 	 */
-	public function __construct($root,$postfix="",$cacheType="Mongodb") {
+	public function __construct($root,$postfix="",$cacheParams=[]) {
 		parent::__construct($root,$postfix);
-		$this->cacheInstance = CacheManager::getInstance($cacheType,['defaultTtl'=>86400,'itemDetailedDate'=>true,'host' => '127.0.0.1','port' => '27017','username' => '','password' => '','timeout' => '1']);
+		$cacheType=$cacheParams['type'];
+		$defaultParams=['defaultTtl'=>86400,'itemDetailedDate'=>true];
+		$cacheParams=\array_merge($cacheParams,$defaultParams);
+		$this->cacheInstance = CacheManager::getInstance($cacheType,$cacheParams);
 	}
 
 	/**

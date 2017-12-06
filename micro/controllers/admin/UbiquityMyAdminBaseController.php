@@ -152,6 +152,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/createController","#main-content");
 		$this->_getAdminViewer()->getControllersDataTable(ControllerAction::init());
 		$this->jquery->postOnClick("._route[data-ajax]", $this->_getAdminFiles()->getAdminBaseRoute()."/routes","{filter:$(this).attr('data-ajax')}","#main-content");
+		$this->jquery->postOnClick("._create-view", $this->_getAdminFiles()->getAdminBaseRoute()."/_createView","{view:$(this).attr('data-ajax')}",'self',['jqueryDone'=>'replaceWith','hasLoader'=>false]);
 		$this->jquery->execAtLast("$('#bt-controllers5CAdmin._clickFirst').click();");
 		$this->addNavigationTesting();
 		$this->jquery->compile($this->view);

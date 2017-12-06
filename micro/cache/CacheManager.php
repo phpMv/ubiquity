@@ -36,12 +36,15 @@ class CacheManager {
 	}
 
 	protected static function getCacheInstance(&$config,$cacheDirectory,$postfix){
-		$cacheSystem='micro\cache\system\ArrayCache';
+		$cacheSystem='micro\cache\system\ArrayCache';$cacheParams=[];
 		if(!isset(self::$cache)){
 			if(isset($config["cache"]["system"])){
 				$cacheSystem=$config["cache"]["system"];
 			}
-			self::$cache=new $cacheSystem($cacheDirectory,$postfix);
+			if(isset($config["cache"]["params"])){
+				$cacheParams=$config["cache"]["params"];
+			}
+			self::$cache=new $cacheSystem($cacheDirectory,$postfix,$cacheParams);
 		}
 		return self::$cache;
 	}

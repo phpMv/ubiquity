@@ -32,6 +32,7 @@ use micro\annotations\parser\DocParser;
 use micro\cache\ClassUtils;
 use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
 use Ajax\semantic\html\elements\HtmlLabelGroups;
+use micro\utils\FsUtils;
 
 /**
  * @author jc
@@ -205,6 +206,8 @@ class UbiquityMyAdminViewer {
 			return $bt;
 		});
 		$dt->setValueFunction("action", function($v,$instance,$index){
+			$action=$v;
+			$controller=ClassUtils::getClassSimpleName($instance->getController());
 			$params=$instance->getParameters();
 			\array_walk($params, function(&$item){ $item= $item->name;});
 			$params= " (".\implode(" , ", $params).")";
@@ -218,6 +221,17 @@ class UbiquityMyAdminViewer {
 				$lbl->setProperty("data-ajax", \htmlspecialchars(($path)));
 				$lbl->addClass("_route");
 				$v.="&nbsp;".$lbl;
+			}
+			$viewname=$controller."/".$action.".html";
+			if(\file_exists(ROOT . DS . "views/".$viewname)){
+				$lbl=new HtmlLabel("",$action.".html","browser");
+				$lbl->addClass("violet");
+				$v.="&nbsp;".$lbl;
+			}else{
+				$bt=new HtmlButton("bt-create-view-".$instance->getPath(),"Create view ".$viewname);
+				$bt->setProperty("data-ajax", $viewname);
+				$bt->addClass("_create-view visibleover basic violet mini")->setProperty("style", "visibility: hidden;")->addIcon("plus");
+				$v=[$v,$bt];
 			}
 			return $v;
 		});
@@ -512,7 +526,8 @@ class UbiquityMyAdminViewer {
 		$str .= \implode(', ', $params);
 		$str .= '){' . PHP_EOL;
 		$lines = file($r->getFileName());
-		for($l = $r->getStartLine(); $l < $r->getEndLine(); $l++) {
+		$sLine=$r->getStartLine();$eLine=$r->getEndLine();
+		for($l = $sLine; $l < $eLine; $l++) {
 			$str .= $lines[$l];
 		}
 		return $str;

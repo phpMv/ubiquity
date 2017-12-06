@@ -53,7 +53,7 @@ trait CheckTrait{
 			$niveauMax=$this->activeStep-1;
 			$steps=$this->getModelSteps();
 			while ($nbChecked<=$niveauMax && $this->hasNoError()){
-				$this->_modelCheckOneNiveau($steps[$nbChecked][1], $nbChecked);
+				$this->_modelCheckOneNiveau($steps[$nbChecked][1]);
 				$nbChecked++;
 			}
 			if($this->hasError() && !isset($niveau)){
@@ -62,7 +62,7 @@ trait CheckTrait{
 			}
 	}
 
-	protected function _modelCheckOneNiveau($name,$stepNum){
+	protected function _modelCheckOneNiveau($name){
 		$config=Startup::getConfig();
 		switch ($name){
 			case "Conf":
@@ -131,7 +131,7 @@ trait CheckTrait{
 
 	protected function checkModelsCache($config,$infoIcon="lightning"){
 		$instanceCache=CacheManager::$cache;
-		if($instanceCache==null){
+		if($instanceCache===null){
 			$this->_addErrorMessage("warning", "Cache instance is not created.");
 		}else{
 			$this->_addInfoMessage($infoIcon, $instanceCache->getCacheInfo());
@@ -194,10 +194,10 @@ trait CheckTrait{
 			$messagesElmError=$this->displayModelsMessages("error", $this->messages["error"]);
 			echo $messagesElmError;
 		}
-		$this->showActions($newStep);
+		$this->showActions();
 	}
 
-	protected function showActions($newStep=null){
+	protected function showActions(){
 		$buttons=$this->jquery->semantic()->htmlButtonGroups("step-actions");
 		$step=$this->getActiveModelStep();
 		switch ($step[1]) {
