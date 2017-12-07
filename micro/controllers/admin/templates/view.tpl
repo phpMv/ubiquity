@@ -1,1 +1,1 @@
-<!--View associated to %controllerName% controller -->
+<!--View associated to %actionName% action of %controllerName% controller -->

@@ -13,7 +13,7 @@ class ClassUtils {
 	 * @return string
 	 */
 	public static function getClassFullNameFromFile($filePathName) {
-		$phpCode=file_get_contents($filePathName);
+		$phpCode=\file_get_contents($filePathName);
 		return self::getClassNamespaceFromPhpCode($phpCode) . '\\' . self::getClassNameFromPhpCode($phpCode);
 	}
 
@@ -59,27 +59,27 @@ class ClassUtils {
 	 * @return null|string
 	 */
 	public static function getClassNamespaceFromFile($filePathName) {
-		$phpCode=file_get_contents($filePathName);
+		$phpCode=\file_get_contents($filePathName);
 		return self::getClassNamespaceFromPhpCode($phpCode);
 	}
 
 	private static function getClassNamespaceFromPhpCode($phpCode) {
 		$tokens=token_get_all($phpCode);
-		$count=count($tokens);
+		$count=\count($tokens);
 		$i=0;
 		$namespace='';
 		$namespace_ok=false;
 		while ( $i < $count ) {
 			$token=$tokens[$i];
-			if (is_array($token) && $token[0] === T_NAMESPACE) {
+			if (\is_array($token) && $token[0] === T_NAMESPACE) {
 				// Found namespace declaration
 				while ( ++$i < $count ) {
 					if ($tokens[$i] === ';') {
 						$namespace_ok=true;
-						$namespace=trim($namespace);
+						$namespace=\trim($namespace);
 						break;
 					}
-					$namespace.=is_array($tokens[$i]) ? $tokens[$i][1] : $tokens[$i];
+					$namespace.=\is_array($tokens[$i]) ? $tokens[$i][1] : $tokens[$i];
 				}
 				break;
 			}
@@ -100,13 +100,13 @@ class ClassUtils {
 	 * @return mixed
 	 */
 	public static function getClassNameFromFile($filePathName) {
-		$phpCode=file_get_contents($filePathName);
+		$phpCode=\file_get_contents($filePathName);
 		return self::getClassNameFromPhpCode($phpCode);
 	}
 
 	private static function getClassNameFromPhpCode($phpCode){
 		$classes=array ();
-		$tokens=token_get_all($phpCode);
+		$tokens=\token_get_all($phpCode);
 		$count=count($tokens);
 		for($i=2; $i < $count; $i++) {
 			if ($tokens[$i - 2][0] == T_CLASS && $tokens[$i - 1][0] == T_WHITESPACE && $tokens[$i][0] == T_STRING) {

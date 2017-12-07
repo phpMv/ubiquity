@@ -208,6 +208,8 @@ class UbiquityMyAdminViewer {
 		$dt->setValueFunction("action", function($v,$instance,$index){
 			$action=$v;
 			$controller=ClassUtils::getClassSimpleName($instance->getController());
+			$r = new \ReflectionMethod($instance->getController(),$action);
+			$lines = file($r->getFileName());
 			$params=$instance->getParameters();
 			\array_walk($params, function(&$item){ $item= $item->name;});
 			$params= " (".\implode(" , ", $params).")";
@@ -222,17 +224,8 @@ class UbiquityMyAdminViewer {
 				$lbl->addClass("_route");
 				$v.="&nbsp;".$lbl;
 			}
-			$viewname=$controller."/".$action.".html";
-			if(\file_exists(ROOT . DS . "views/".$viewname)){
-				$lbl=new HtmlLabel("",$action.".html","browser");
-				$lbl->addClass("violet");
-				$v.="&nbsp;".$lbl;
-			}else{
-				$bt=new HtmlButton("bt-create-view-".$instance->getPath(),"Create view ".$viewname);
-				$bt->setProperty("data-ajax", $viewname);
-				$bt->addClass("_create-view visibleover basic violet mini")->setProperty("style", "visibility: hidden;")->addIcon("plus");
-				$v=[$v,$bt];
-			}
+			$v=\array_merge([$v,"<span class='_views-container'>"],$this->getActionViews($instance->getController(),$controller, $action, $r, $lines));
+			$v[]="</span>";
 			return $v;
 		});
 		$dt->onPreCompile(function($dt){
@@ -242,6 +235,37 @@ class UbiquityMyAdminViewer {
 		$dt->setEdition(true);
 		$dt->addClass("compact");
 		return $dt;
+	}
+
+	public function getActionViews($controllerFullname,$controller,$action,\ReflectionMethod $r,$lines){
+		$result=[];
+		$loadedViews=$this->getLoadedViews($r, $lines);
+		foreach ($loadedViews as $view){
+			if(\file_exists(ROOT . DS . "views".DS.$view)){
+				$lbl=new HtmlLabel("lbl-view-".$controller.$action.$view,$view,"browser","span");
+				$lbl->addClass("violet");
+				$lbl->addPopupHtml("<i class='icon info circle green'></i>&nbsp;<b>".$view."</b> is ok.");
+			}else{
+				$lbl=new HtmlLabel("lbl-view-".$controller.$action.$view,$view,"warning","span");
+				$lbl->addClass("orange");
+				$lbl->addPopupHtml("<i class='icon warning circle'></i>&nbsp;<b>".$view."</b> file is missing.");
+			}
+			$result[]=$lbl;
+		}
+		$viewname=$controller."/".$action.".html";
+		if(!\file_exists(ROOT . DS . "views".DS.$viewname)){
+			$bt=new HtmlButton("","Create view ".$viewname);
+			$bt->setProperty("data-action", $action);
+			$bt->setProperty("data-controller", $controller);
+			$bt->setProperty("data-controllerFullname", $controllerFullname);
+			$bt->addClass("_create-view visibleover basic violet mini")->setProperty("style", "visibility: hidden;")->addIcon("plus");
+			$result[]=$bt;
+		}elseif(\array_search($viewname, $loadedViews)===false){
+			$lbl=new HtmlLabel("lbl-view-".$controller.$action.$viewname,$viewname,"browser","span");
+			$lbl->addPopupHtml("<i class='icon warning circle'></i>&nbsp;<b>".$viewname."</b> exists but is never loaded in action <b>".$action."</b>.");
+			$result[]=$lbl;
+		}
+		return $result;
 	}
 
 	protected function addGetPostButtons(DataTable $dt){
@@ -501,6 +525,25 @@ class UbiquityMyAdminViewer {
 		$de->fieldAsCheckbox("test",["class"=>"ui checkbox slider"]);
 		$de->fieldAsCheckbox("debug",["class"=>"ui checkbox slider"]);
 		return $de;
+	}
+
+	protected function getMethodCode(\ReflectionMethod $r,$lines){
+		$str="";
+		$sLine=$r->getStartLine();$eLine=$r->getEndLine();
+		for($l = $sLine; $l < $eLine; $l++) {
+			$str .= $lines[$l];
+		}
+		return $str;
+	}
+
+	protected function getLoadedViews(\ReflectionMethod $r,$lines){
+		$matches=[];
+		$code=$this->getMethodCode($r,$lines);
+		\preg_match_all('@(?:.*?)\$this->loadView\([\'\"](.+?)[\'\"]\)(?:.*?)@m', $code,$matches);
+		if (isset($matches[1])) {
+			return $matches[1];
+		}
+		return [];
 	}
 
 	private static function closure_dump(\Closure $c) {

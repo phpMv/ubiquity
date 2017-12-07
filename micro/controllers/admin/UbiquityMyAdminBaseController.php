@@ -152,7 +152,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/createController","#main-content");
 		$this->_getAdminViewer()->getControllersDataTable(ControllerAction::init());
 		$this->jquery->postOnClick("._route[data-ajax]", $this->_getAdminFiles()->getAdminBaseRoute()."/routes","{filter:$(this).attr('data-ajax')}","#main-content");
-		$this->jquery->postOnClick("._create-view", $this->_getAdminFiles()->getAdminBaseRoute()."/_createView","{view:$(this).attr('data-ajax')}",'self',['jqueryDone'=>'replaceWith','hasLoader'=>false]);
+		$this->jquery->postOnClick("._create-view", $this->_getAdminFiles()->getAdminBaseRoute()."/_createView","{action:$(this).attr('data-action'),controller:$(this).attr('data-controller'),controllerFullname:$(this).attr('data-controllerFullname')}",'$(self).closest("._views-container")',['hasLoader'=>false]);
 		$this->jquery->execAtLast("$('#bt-controllers5CAdmin._clickFirst').click();");
 		$this->addNavigationTesting();
 		$this->jquery->compile($this->view);
@@ -353,38 +353,6 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 
 	protected function _getYumlImage($sizeType,$yumlContent){
 		return "<img src='http://yuml.me/diagram/".$sizeType."/class/".$yumlContent."'>";
-	}
-
-
-
-	public function createController($force=null){
-		if(RequestUtils::isPost()){
-			if(isset($_POST["name"]) && $_POST["name"]!==""){
-				$config=Startup::getConfig();
-				$controllersNS=$config["mvcNS"]["controllers"];
-				$controllersDir=ROOT . DS . str_replace("\\", DS, $controllersNS);
-				$controllerName=\ucfirst($_POST["name"]);
-				$filename=$controllersDir.DS.$controllerName.".php";
-				if(\file_exists($filename)===false){
-					if(isset($config["mvcNS"]["controllers"]) && $config["mvcNS"]["controllers"]!=="")
-						$namespace="namespace ".$config["mvcNS"]["controllers"].";";
-					$msgView="";$indexContent="";
-					if(isset($_POST["lbl-ck-div-name"])){
-						$viewDir=ROOT.DS."views".DS.$controllerName.DS;
-						FsUtils::safeMkdir($viewDir);
-						$viewName=$viewDir.DS."index.html";
-						$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/view.tpl", $viewName, ["%controllerName%"=>$controllerName]);
-						$msgView="<br>The default view associated has been created in <b>".FsUtils::cleanPathname(ROOT.DS.$viewDir)."</b>";
-						$indexContent="\$this->loadview(\"".$controllerName."/index.html\");";
-					}
-					$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent,"%namespace%"=>$namespace]);
-					$this->showSimpleMessage("The <b>".$controllerName."</b> controller has been created in <b>".FsUtils::cleanPathname($filename)."</b>.".$msgView, "success","checkmark circle",30000,"msgGlobal");
-				}else{
-					$this->showSimpleMessage("The file <b>".$filename."</b> already exists.<br>Can not create the <b>".$controllerName."</b> controller!", "warning","warning circle",30000,"msgGlobal");
-				}
-			}
-		}
-		$this->controllers();
 	}
 
 	public function _runPostWithParams($method="post",$type="parameter",$origine="routes"){
@@ -664,7 +632,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		return [];
 	}
 
-	private function openReplaceWrite($source,$destination,$keyAndValues){
+	protected function openReplaceWrite($source,$destination,$keyAndValues){
 		if(file_exists($source)){
 			$str=file_get_contents($source);
 			array_walk($keyAndValues, function(&$item){if(is_array($item)) $item=implode("\n", $item);});
