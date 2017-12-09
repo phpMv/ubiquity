@@ -2,11 +2,16 @@
 namespace micro\controllers\admin\traits;
 
 use Ajax\JsUtils;
-use Ajax\semantic\html\elements\HtmlLabel;
 use micro\views\View;
 use micro\utils\FsUtils;
 use micro\utils\RequestUtils;
 use micro\controllers\Startup;
+use micro\cache\CacheManager;
+use micro\cache\ClassUtils;
+use micro\utils\Introspection;
+use micro\controllers\admin\utils\CodeUtils;
+use micro\controllers\admin\utils\Constants;
+use Ajax\semantic\components\validation\Rule;
 
 /**
  * @author jc
@@ -18,7 +23,7 @@ trait ControllersTrait{
 	abstract public function _getAdminViewer();
 	abstract public function _getAdminFiles();
 	abstract public function controllers();
-	abstract protected function openReplaceWrite($source,$destination,$keyAndValues);
+	abstract public function showSimpleMessage($content,$type,$icon="info",$timeout=NULL,$staticName=null);
 
 	public function createController($force=null){
 		if(RequestUtils::isPost()){
@@ -36,11 +41,11 @@ trait ControllersTrait{
 							$viewDir=ROOT.DS."views".DS.$controllerName.DS;
 							FsUtils::safeMkdir($viewDir);
 							$viewName=$viewDir.DS."index.html";
-							$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/view.tpl", $viewName, ["%controllerName%"=>$controllerName,"%actionName%"=>"index"]);
+							FsUtils::openReplaceWriteFromTemplateFile(ROOT.DS."micro/controllers/admin/templates/view.tpl", $viewName, ["%controllerName%"=>$controllerName,"%actionName%"=>"index"]);
 							$msgView="<br>The default view associated has been created in <b>".FsUtils::cleanPathname(ROOT.DS.$viewDir)."</b>";
 							$indexContent="\$this->loadview(\"".$controllerName."/index.html\");";
 						}
-						$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent,"%namespace%"=>$namespace]);
+						FsUtils::openReplaceWriteFromTemplateFile(ROOT.DS."micro/controllers/admin/templates/controller.tpl", $filename, ["%controllerName%"=>$controllerName,"%indexContent%"=>$indexContent,"%namespace%"=>$namespace]);
 						$this->showSimpleMessage("The <b>".$controllerName."</b> controller has been created in <b>".FsUtils::cleanPathname($filename)."</b>.".$msgView, "success","checkmark circle",30000,"msgGlobal");
 				}else{
 					$this->showSimpleMessage("The file <b>".$filename."</b> already exists.<br>Can not create the <b>".$controllerName."</b> controller!", "warning","warning circle",30000,"msgGlobal");
@@ -55,8 +60,7 @@ trait ControllersTrait{
 			$controller=$_POST["controller"];
 			$controllerFullname=$_POST["controllerFullname"];
 			$viewName=$controller."/".$action.".html";
-			FsUtils::safeMkdir(ROOT.DS."views".DS.$controller);
-			$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/view.tpl", ROOT.DS."views".DS.$viewName, ["%controllerName%"=>$controller,"%actionName%"=>$action]);
+			$this->_createViewOp($controller,$action);
 			if(\file_exists(ROOT.DS."views".DS.$viewName)){
 				$this->jquery->exec('$("#msgControllers").transition("show");$("#msgControllers .content").transition("show").append("<br><b>'.$viewName.'</b> created !");',true);
 			}
@@ -69,5 +73,150 @@ trait ControllersTrait{
 			}
 			echo $this->jquery->compile($this->view);
 		}
+	}
+
+	private function _createViewOp($controller,$action){
+		$viewName=$controller."/".$action.".html";
+		FsUtils::safeMkdir(ROOT.DS."views".DS.$controller);
+		FsUtils::openReplaceWriteFromTemplateFile(ROOT.DS."micro/controllers/admin/templates/view.tpl", ROOT.DS."views".DS.$viewName, ["%controllerName%"=>$controller,"%actionName%"=>$action]);
+		return $viewName;
+	}
+
+	public function _newActionFrm(){
+		if(RequestUtils::isPost()){
+			$controllers=CacheManager::getControllers();
+			$controller=$_POST["controller"];
+			$modal=$this->jquery->semantic()->htmlModal("modalNewAction","Creating a new action in controller");
+			$modal->setInverted();
+			$frm=$this->jquery->semantic()->htmlForm("frmNewAction");
+			$dd=$frm->addDropdown('controller',\array_combine($controllers, $controllers),"Controller",$controller);
+			$dd->getField()->setShowOnFocus(false);
+			$fields=$frm->addFields(["action","parameters"],"Action & parameters");
+			$fields->getItem(0)->addRules(["empty",["checkAction","Action {value} already exists!"]]);
+			$frm->addTextarea("content", "Implementation")->addRule(["checkContent","Errors parsing action content!"]);;
+			$ck=$frm->addCheckbox("ck-view","Create associated view");
+			$ck->setChecked(true);
+			$frm->addCheckbox("ck-add-route","Add route...");
+			$frm->addElement("div-new-route", "", "");
+			$frm->addElement("ajax-requests", "", "");
+			$frm->setValidationParams(["on"=>"blur","inline"=>true]);
+			$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/_newAction","#messages");
+			$modal->setContent($frm);
+			$modal->addAction("Validate");
+			$this->jquery->click("#action-modalNewAction-0","$('#frmNewAction').form('submit');",false,false);
+			$modal->addAction("Close");
+			$this->jquery->exec("$('.dimmer.modals.page').html('');$('#modalNewAction').modal('show');",true);
+			$this->jquery->postFormOn("change","#ck-add-route",$this->_getAdminFiles()->getAdminBaseRoute()."/_addRouteWithNewAction", "frmNewAction","#div-new-route",["hasLoader"=>false,"jsCondition"=>"$(this).is(':checked')"]);
+			$this->jquery->exec(Rule::ajax($this->jquery, "checkAction", $this->_getAdminFiles()->getAdminBaseRoute()."/_methodExists", "{}", "result=data.result;","postForm",["form"=>"frmNewAction"]),true);
+			$this->jquery->exec(Rule::ajax($this->jquery, "checkContent", $this->_getAdminFiles()->getAdminBaseRoute()."/_checkContent", "{}", "result=data.result;","postForm",["form"=>"frmNewAction"]),true);
+			$this->jquery->change("#ck-add-route","$('#div-new-route').toggle($(this).is(':checked'));");
+			echo $modal;
+			echo $this->jquery->compile($this->view);
+		}
+	}
+
+	public function _methodExists(){
+		if(RequestUtils::isPost()){
+			$result=[];
+			header('Content-type: application/json');
+			$controller=$_POST["controller"];
+			$action=$_POST["action"];
+			if(\method_exists($controller, $action)){
+				$result["result"]=false;
+			}else{
+				$result["result"]=true;
+			}
+			echo json_encode($result);
+		}
+	}
+
+	public function _checkContent(){
+		if(RequestUtils::isPost()){
+			$result=[];
+			header('Content-type: application/json');
+			$content=$_POST["content"];
+			$result["result"]=CodeUtils::isValidCode('<?php '.$content);
+			echo json_encode($result);
+		}
+	}
+
+	public function _addRouteWithNewAction(){
+		if(RequestUtils::isPost()){
+			$controller=$_POST["controller"];
+			$action=$_POST["action"];
+			$parameters=$_POST["parameters"];
+			$parameters=CodeUtils::getParametersForRoute($parameters);
+			$controller=ClassUtils::getClassSimpleName($controller);
+			$frm=$this->jquery->semantic()->htmlForm("frmNewRouteAction");
+			$frm->addDivider();
+			$frm->setTagName("div");
+			$fields=$frm->addFields();
+			$urlParts=\array_diff(\array_merge([$controller,$action],$parameters),["","{}"]);
+			$fields->addInput("path",null,"text",\implode('/', $urlParts));
+			$fields->addDropdown("methods",Constants::REQUEST_METHODS,null,"",true);
+			$duration=$fields->addInput("duration","","number");
+			$ck=$duration->labeledCheckbox("left",null);
+			$ck->getField()->setProperty("name","ck-Cache");
+			echo $frm;
+			echo $this->jquery->compile($this->view);
+		}
+	}
+
+	public function _newAction(){
+		if(RequestUtils::isPost()){
+			$msgContent="";
+			$controller=$_POST["controller"];
+			$r=new \ReflectionClass($controller);
+			$ctrlFilename=$r->getFileName();
+			$action=$_POST["action"];
+			$parameters=$_POST["parameters"];
+			$content=$_POST["content"];
+			$content=CodeUtils::indent($content,2);
+			$createView=isset($_POST["ck-view"]);
+			$createRoute=isset($_POST["ck-add-route"]);
+			$fileContent=\implode("", Introspection::getClassCode($controller));
+			$fileContent=\trim($fileContent);
+			$posLast=\strrpos($fileContent, "}");
+			if($posLast!==false){
+				if($createView){
+					$viewname=$this->_createViewOp(ClassUtils::getClassSimpleName($controller), $action);
+					$content.="\n\t\t\$this->loadView('".$viewname."');\n";
+					$msgContent.="<br>Created view : <b>".$viewname."</b>";
+				}
+				$routeAnnotation="";
+				if($createRoute){
+					$name="route";
+					$path=$_POST["path"];
+					$routeProperties=['"'.$path.'"'];
+					if(isset($_POST["ck-Cache"])){
+						$routeProperties[]='"cache"=>true';
+						if(isset($_POST["duration"])){
+							$duration=$_POST["duration"];
+							if(\is_int($duration)){
+								$routeProperties[]='"duration"=>'.$duration;
+							}
+						}
+						$routeProperties=\implode(",", $routeProperties);
+					}
+					$routeAnnotation=FsUtils::openReplaceInTemplateFile(ROOT.DS."micro/controllers/admin/templates/annotation.tpl", ["%name%"=>$name,"%properties%"=>$routeProperties]);
+					$msgContent.="<br>Created route : <b>".$path."</b>";
+				}
+				$parameters=CodeUtils::cleanParameters($parameters);
+				$actionContent=FsUtils::openReplaceInTemplateFile(ROOT.DS."micro/controllers/admin/templates/action.tpl", ["%route%"=>"\n".$routeAnnotation,"%actionName%"=>$action,"%parameters%"=>$parameters,"%content%"=>$content]);
+				$fileContent=\substr_replace($fileContent, "\n%content%", $posLast-1, 0);
+				if (!CodeUtils::isValidCode('<?php '.$content)){
+					echo $this->showSimpleMessage("Errors parsing action content!", "warning","warning circle",null,"msgControllers");
+					echo $this->jquery->compile($this->view);
+					return;
+				}else{
+					if(FsUtils::replaceWriteFromContent($fileContent."\n", $ctrlFilename, ['%content%'=>$actionContent])){
+						$msgContent="The action <b>{$action}</b> is created in controller <b>{$controller}</b>".$msgContent;
+						echo $this->showSimpleMessage($msgContent, "info","info circle",null,"msgControllers");
+					}
+				}
+			}
+		}
+		$this->jquery->get("Admin/_refreshControllers/refresh","#dtControllers",["jqueryDone"=>"replaceWith","hasLoader"=>false]);
+		echo $this->jquery->compile($this->view);
 	}
 }

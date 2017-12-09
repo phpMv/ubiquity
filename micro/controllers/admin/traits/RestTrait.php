@@ -15,6 +15,7 @@ use micro\views\View;
 use micro\annotations\parser\DocParser;
 use Ajax\semantic\html\collections\HtmlMessage;
 use micro\exceptions\UbiquityException;
+use micro\controllers\admin\utils\Constants;
 
 /**
 * @property View $view
@@ -75,7 +76,7 @@ trait RestTrait{
 		$containerId="div-tester-".$pathId;
 		$input=$frm->addInput("path",null,"text",$path);
 		$pathField=$input->getDataField()->setIdentifier("path-".$path)->addClass("_path");
-		$dd=$input->addDropdown("GET",["get"=>"GET","post"=>"POST","put"=>"PUT","patch"=>"PATCH","delete"=>"DELETE","head"=>"HEAD"]);
+		$dd=$input->addDropdown("GET",Constants::REQUEST_METHODS);
 		$methodField=$dd->setIdentifier("dd-method-".$path)->getDataField()->setProperty("name","method");
 		$methodField->setIdentifier("method-".$path)->addClass("_method");
 		$input->addAction("Headers...","right","barcode")->addClass("basic _requestWithHeaders")->setTagName("div");
@@ -152,7 +153,7 @@ trait RestTrait{
 				if(!\file_exists($filename)){
 					if($restControllerNS!=="")
 						$namespace="namespace ".$restControllerNS.";";
-					$this->openReplaceWrite(ROOT.DS."micro/controllers/admin/templates/restController.tpl", $filename, ["%resource%"=>$resource,"%route%"=>$route,"%controllerName%"=>$controllerName,"%namespace%"=>$namespace]);
+					FsUtils::openReplaceWriteFromTemplateFile(ROOT.DS."micro/controllers/admin/templates/restController.tpl", $filename, ["%resource%"=>$resource,"%route%"=>$route,"%controllerName%"=>$controllerName,"%namespace%"=>$namespace]);
 					echo $this->showSimpleMessage("The <b>".$controllerName."</b> Rest controller has been created in <b>".FsUtils::cleanPathname($filename)."</b>.", "success","checkmark circle",30000,"msgGlobal");
 					if(isset($_POST["re-init"])){
 						$this->initRestCache(false);

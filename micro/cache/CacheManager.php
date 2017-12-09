@@ -11,6 +11,7 @@ use micro\cache\traits\RouterCacheTrait;
 use micro\cache\traits\ModelsCacheTrait;
 use micro\cache\traits\RestCacheTrait;
 use micro\cache\system\AbstractDataCache;
+use micro\controllers\Startup;
 
 class CacheManager {
 	use RouterCacheTrait,ModelsCacheTrait,RestCacheTrait;

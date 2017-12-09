@@ -14,7 +14,6 @@ use Ajax\semantic\html\content\view\HtmlItem;
 use micro\cache\CacheManager;
 use micro\controllers\admin\popo\Route;
 use micro\controllers\Router;
-use micro\controllers\admin\popo\CacheFile;
 use Ajax\semantic\html\collections\form\HtmlFormFields;
 use micro\controllers\admin\popo\ControllerAction;
 use Ajax\semantic\html\collections\form\HtmlForm;
@@ -34,9 +33,7 @@ use micro\controllers\admin\traits\ControllersTrait;
 use micro\controllers\admin\traits\ModelsTrait;
 use micro\controllers\admin\traits\RoutesTrait;
 use micro\utils\StrUtils;
-use micro\cache\ClassUtils;
 use micro\utils\UbiquityUtils;
-use micro\exceptions\RestException;
 
 class UbiquityMyAdminBaseController extends ControllerBase{
 	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait;
@@ -96,6 +93,7 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewIndex());
 	}
+
 	public function models($hasHeader=true){
 		$semantic=$this->jquery->semantic();
 		$header="";
@@ -150,13 +148,22 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 		$input->labeledCheckbox(Direction::LEFT,"View","v","slider");
 		$input->addAction("Create controller",true,"plus",true)->addClass("teal")->asSubmit();
 		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/createController","#main-content");
-		$this->_getAdminViewer()->getControllersDataTable(ControllerAction::init());
-		$this->jquery->postOnClick("._route[data-ajax]", $this->_getAdminFiles()->getAdminBaseRoute()."/routes","{filter:$(this).attr('data-ajax')}","#main-content");
-		$this->jquery->postOnClick("._create-view", $this->_getAdminFiles()->getAdminBaseRoute()."/_createView","{action:$(this).attr('data-action'),controller:$(this).attr('data-controller'),controllerFullname:$(this).attr('data-controllerFullname')}",'$(self).closest("._views-container")',['hasLoader'=>false]);
-		$this->jquery->execAtLast("$('#bt-controllers5CAdmin._clickFirst').click();");
-		$this->addNavigationTesting();
+		$this->_refreshControllers();
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewControllersIndex());
+	}
+
+	public function _refreshControllers($refresh=false){
+		$dt=$this->_getAdminViewer()->getControllersDataTable(ControllerAction::init());
+		$this->jquery->postOnClick("._route[data-ajax]", $this->_getAdminFiles()->getAdminBaseRoute()."/routes","{filter:$(this).attr('data-ajax')}","#main-content");
+		$this->jquery->postOnClick("._create-view", $this->_getAdminFiles()->getAdminBaseRoute()."/_createView","{action:$(this).attr('data-action'),controller:$(this).attr('data-controller'),controllerFullname:$(this).attr('data-controllerFullname')}",'$(self).closest("._views-container")',['hasLoader'=>false]);
+		$this->jquery->execAtLast("$('#bt-0-controllersAdmin._clickFirst').click();");
+		$this->jquery->postOnClick("._add-new-action", $this->_getAdminFiles()->getAdminBaseRoute()."/_newActionFrm","{controller:$(this).attr('data-controller')}","#modal",["hasLoader"=>false]);
+		$this->addNavigationTesting();
+		if($refresh==="refresh"){
+			echo $dt;
+			echo $this->jquery->compile($this->view);
+		}
 	}
 
 	public function routes(){
@@ -630,15 +637,6 @@ class UbiquityMyAdminBaseController extends ControllerBase{
 			}
 		}
 		return [];
-	}
-
-	protected function openReplaceWrite($source,$destination,$keyAndValues){
-		if(file_exists($source)){
-			$str=file_get_contents($source);
-			array_walk($keyAndValues, function(&$item){if(is_array($item)) $item=implode("\n", $item);});
-			$str=str_replace(array_keys($keyAndValues), array_values($keyAndValues), $str);
-			return file_put_contents($destination,$str);
-		}
 	}
 
 	private function getIdentifierFunction($model){

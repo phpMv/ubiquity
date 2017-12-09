@@ -6,6 +6,7 @@ use micro\controllers\Router;
 use micro\cache\parser\ControllerParser;
 use micro\cache\ClassUtils;
 use micro\utils\JArray;
+use micro\cache\CacheManager;
 
 /**
  * @author jc
@@ -149,6 +150,26 @@ trait RouterCacheTrait{
 
 	public static function getControllersFiles(&$config,$silent=false){
 		return self::_getFiles($config, "controllers",$silent);
+	}
+
+	public static function getControllers(){
+		$result=[];
+		$config=Startup::getConfig();
+		$files=self::getControllersFiles($config,true);
+		try {
+			$restCtrls=CacheManager::getRestCache();
+		} catch (\Exception $e) {
+			$restCtrls=[];
+		}
+		foreach ( $files as $file ) {
+			if (is_file($file)) {
+				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
+				if(isset($restCtrls[$controllerClass])===false){
+					$result[]=$controllerClass;
+				}
+			}
+		}
+		return $result;
 	}
 
 }

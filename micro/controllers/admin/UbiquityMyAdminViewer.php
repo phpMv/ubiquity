@@ -33,6 +33,7 @@ use micro\cache\ClassUtils;
 use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
 use Ajax\semantic\html\elements\HtmlLabelGroups;
 use micro\utils\FsUtils;
+use micro\utils\Introspection;
 
 /**
  * @author jc
@@ -198,12 +199,18 @@ class UbiquityMyAdminViewer {
 		$dt->setCaptions(["Controller","Action [routes]","Default values",""]);
 		$this->addGetPostButtons($dt);
 		$dt->setValueFunction("controller", function($v,$instance,$index){
-			$bt=new HtmlButton("bt-".\urlencode($v),$v);
-			$bt->addClass("large _clickFirst");
+			$bts=new HtmlButtonGroups("bt-".\urlencode($v),[$v]);
+			$bts->addClass("basic");
+			$bt=$bts->getItem(0);
+			$bt->addClass("_clickFirst")->setIdentifier("bt-0-".$v);
 			$bt->addIcon("heartbeat",true,true);
 			$bt->setToggle();
+			$dd=$bts->addDropdown(["Add new action in <b>{$v}</b>..."]);
+			$dd->setIcon("plus");
+			$item=$dd->getItem(0);
+			$item->addClass("_add-new-action")->setProperty("data-controller",$instance->getController());
 			$bt->onClick("$(\"tr[data-ajax='".\urlencode($instance->getController())."'] td:not([rowspan])\").toggle(!$(this).hasClass('active'));");
-			return $bt;
+			return $bts;
 		});
 		$dt->setValueFunction("action", function($v,$instance,$index){
 			$action=$v;
@@ -239,7 +246,7 @@ class UbiquityMyAdminViewer {
 
 	public function getActionViews($controllerFullname,$controller,$action,\ReflectionMethod $r,$lines){
 		$result=[];
-		$loadedViews=$this->getLoadedViews($r, $lines);
+		$loadedViews=Introspection::getLoadedViews($r, $lines);
 		foreach ($loadedViews as $view){
 			if(\file_exists(ROOT . DS . "views".DS.$view)){
 				$lbl=new HtmlLabel("lbl-view-".$controller.$action.$view,$view,"browser","span");
@@ -510,7 +517,7 @@ class UbiquityMyAdminViewer {
 				$diDe->setValueFunction($key, function($value) use ($config,$key){
 					$r =$config['di'][$key];
 					if(\is_callable($r))
-						return \nl2br(\htmlentities(self::closure_dump($r)));
+						return \nl2br(\htmlentities(Introspection::closure_dump($r)));
 					return $value;
 				});
 			}
@@ -519,61 +526,12 @@ class UbiquityMyAdminViewer {
 		$de->setValueFunction("isRest", function($v) use($config){
 			$r =$config["isRest"];
 			if(\is_callable($r))
-				return \nl2br(\htmlentities(self::closure_dump($r)));
+				return \nl2br(\htmlentities(Introspection::closure_dump($r)));
 			return $v;
 		});
 		$de->fieldAsCheckbox("test",["class"=>"ui checkbox slider"]);
 		$de->fieldAsCheckbox("debug",["class"=>"ui checkbox slider"]);
 		return $de;
-	}
-
-	protected function getMethodCode(\ReflectionMethod $r,$lines){
-		$str="";
-		$sLine=$r->getStartLine();$eLine=$r->getEndLine();
-		for($l = $sLine; $l < $eLine; $l++) {
-			$str .= $lines[$l];
-		}
-		return $str;
-	}
-
-	protected function getLoadedViews(\ReflectionMethod $r,$lines){
-		$matches=[];
-		$code=$this->getMethodCode($r,$lines);
-		\preg_match_all('@(?:.*?)\$this->loadView\([\'\"](.+?)[\'\"]\)(?:.*?)@m', $code,$matches);
-		if (isset($matches[1])) {
-			return $matches[1];
-		}
-		return [];
-	}
-
-	private static function closure_dump(\Closure $c) {
-		$str = 'function (';
-		$r = new \ReflectionFunction($c);
-		$params = array();
-		foreach($r->getParameters() as $p) {
-			$s = '';
-			if($p->isArray()) {
-				$s .= 'array ';
-			} else if($p->getClass()) {
-				$s .= $p->getClass()->name . ' ';
-			}
-			if($p->isPassedByReference()){
-				$s .= '&';
-			}
-			$s .= '$' . $p->name;
-			if($p->isOptional()) {
-				$s .= ' = ' . \var_export($p->getDefaultValue(), TRUE);
-			}
-			$params []= $s;
-		}
-		$str .= \implode(', ', $params);
-		$str .= '){' . PHP_EOL;
-		$lines = file($r->getFileName());
-		$sLine=$r->getStartLine();$eLine=$r->getEndLine();
-		for($l = $sLine; $l < $eLine; $l++) {
-			$str .= $lines[$l];
-		}
-		return $str;
 	}
 
 	private static function formatBytes($size, $precision = 2){
