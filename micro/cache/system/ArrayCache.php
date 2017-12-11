@@ -18,13 +18,13 @@ class ArrayCache extends AbstractDataCache{
 	 * Initializes the file cache-provider
 	 * @param string $root absolute path to the root-folder where cache-files will be stored
 	 * @param string Termination of file names
-	 * @param int $fileMode file creation mode; defaults to 0777
+	 * @param array $cacheParams defaults to ["fileMode"=>"0777"]
 	 */
-	public function __construct($root, $postfix="", $fileMode=0777) {
+	public function __construct($root, $postfix="", $cacheParams=[]) {
 		parent::__construct($root,$postfix);
-		$this->_fileMode=$fileMode;
+		$this->_fileMode=(isset($cacheParams["fileMode"]))?$cacheParams["fileMode"]:'0777';
 		if (!is_dir($root))
-			\mkdir($root, $fileMode, true);
+			\mkdir($root, $this->_fileMode, true);
 	}
 
 	/**
