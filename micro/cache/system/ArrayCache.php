@@ -22,7 +22,7 @@ class ArrayCache extends AbstractDataCache{
 	 */
 	public function __construct($root, $postfix="", $cacheParams=[]) {
 		parent::__construct($root,$postfix);
-		$this->_fileMode=(isset($cacheParams["fileMode"]))?$cacheParams["fileMode"]:'0777';
+		$this->_fileMode=(isset($cacheParams["fileMode"]))?$cacheParams["fileMode"]:0777;
 		if (!is_dir($root))
 			\mkdir($root, $this->_fileMode, true);
 	}
