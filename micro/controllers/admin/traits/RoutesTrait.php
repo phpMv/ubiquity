@@ -29,7 +29,6 @@ trait RoutesTrait{
 		$routes=CacheManager::getRoutes();
 		echo $this->_getAdminViewer()->getRoutesDataTable(Route::init($routes));
 		echo $this->jquery->compile($this->view);
-
 	}
 
 	public function filterRoutes(){

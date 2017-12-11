@@ -12,6 +12,9 @@ use micro\utils\Introspection;
 use micro\controllers\admin\utils\CodeUtils;
 use micro\controllers\admin\utils\Constants;
 use Ajax\semantic\components\validation\Rule;
+use micro\controllers\Router;
+use micro\utils\StrUtils;
+use Ajax\semantic\html\elements\HtmlButton;
 
 /**
  * @author jc
@@ -94,11 +97,19 @@ trait ControllersTrait{
 			$fields=$frm->addFields(["action","parameters"],"Action & parameters");
 			$fields->getItem(0)->addRules(["empty",["checkAction","Action {value} already exists!"]]);
 			$frm->addTextarea("content", "Implementation")->addRule(["checkContent","Errors parsing action content!"]);;
-			$ck=$frm->addCheckbox("ck-view","Create associated view");
-			$ck->setChecked(true);
+			$frm->addCheckbox("ck-view","Create associated view");
 			$frm->addCheckbox("ck-add-route","Add route...");
-			$frm->addElement("div-new-route", "", "");
-			$frm->addElement("ajax-requests", "", "");
+
+			$frm->addContent("<div id='div-new-route' style='display: none;'>");
+			$frm->addDivider();
+			$fields=$frm->addFields();
+			$fields->addInput("path","","text","")->addRule(["checkRoute","Route {value} already exists!"]);
+			$fields->addDropdown("methods",Constants::REQUEST_METHODS,null,"",true);
+			$duration=$fields->addInput("duration","","number");
+			$ck=$duration->labeledCheckbox("left",null);
+			$ck->getField()->setProperty("name","ck-Cache");
+			$frm->addContent("</div>");
+
 			$frm->setValidationParams(["on"=>"blur","inline"=>true]);
 			$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/_newAction","#messages");
 			$modal->setContent($frm);
@@ -106,9 +117,10 @@ trait ControllersTrait{
 			$this->jquery->click("#action-modalNewAction-0","$('#frmNewAction').form('submit');",false,false);
 			$modal->addAction("Close");
 			$this->jquery->exec("$('.dimmer.modals.page').html('');$('#modalNewAction').modal('show');",true);
-			$this->jquery->postFormOn("change","#ck-add-route",$this->_getAdminFiles()->getAdminBaseRoute()."/_addRouteWithNewAction", "frmNewAction","#div-new-route",["hasLoader"=>false,"jsCondition"=>"$(this).is(':checked')"]);
+			$this->jquery->jsonOn("change", "#ck-add-route",$this->_getAdminFiles()->getAdminBaseRoute()."/_addRouteWithNewAction","post",["context"=>"$('#frmNewAction')","params"=>"$('#frmNewAction').serialize()","jsCondition"=>"$('#ck-add-route').is(':checked')"]);
 			$this->jquery->exec(Rule::ajax($this->jquery, "checkAction", $this->_getAdminFiles()->getAdminBaseRoute()."/_methodExists", "{}", "result=data.result;","postForm",["form"=>"frmNewAction"]),true);
 			$this->jquery->exec(Rule::ajax($this->jquery, "checkContent", $this->_getAdminFiles()->getAdminBaseRoute()."/_checkContent", "{}", "result=data.result;","postForm",["form"=>"frmNewAction"]),true);
+			$this->jquery->exec(Rule::ajax($this->jquery, "checkRoute", $this->_getAdminFiles()->getAdminBaseRoute()."/_checkRoute", "{}", "result=data.result;","postForm",["form"=>"frmNewAction"]),true);
 			$this->jquery->change("#ck-add-route","$('#div-new-route').toggle($(this).is(':checked'));");
 			echo $modal;
 			echo $this->jquery->compile($this->view);
@@ -140,25 +152,31 @@ trait ControllersTrait{
 		}
 	}
 
+	public function _checkRoute(){
+		if(RequestUtils::isPost()){
+			$result=[];
+			header('Content-type: application/json');
+			$path=$_POST["path"];
+			$routes=CacheManager::getRoutes();
+			$result["result"]=!(isset($routes[$path]) || Router::getRouteInfo($path)!==false);
+			echo json_encode($result);
+		}
+	}
+
 	public function _addRouteWithNewAction(){
 		if(RequestUtils::isPost()){
+			$result=[];
+			header('Content-type: application/json');
+
 			$controller=$_POST["controller"];
 			$action=$_POST["action"];
 			$parameters=$_POST["parameters"];
 			$parameters=CodeUtils::getParametersForRoute($parameters);
 			$controller=ClassUtils::getClassSimpleName($controller);
-			$frm=$this->jquery->semantic()->htmlForm("frmNewRouteAction");
-			$frm->addDivider();
-			$frm->setTagName("div");
-			$fields=$frm->addFields();
+
 			$urlParts=\array_diff(\array_merge([$controller,$action],$parameters),["","{}"]);
-			$fields->addInput("path",null,"text",\implode('/', $urlParts));
-			$fields->addDropdown("methods",Constants::REQUEST_METHODS,null,"",true);
-			$duration=$fields->addInput("duration","","number");
-			$ck=$duration->labeledCheckbox("left",null);
-			$ck->getField()->setProperty("name","ck-Cache");
-			echo $frm;
-			echo $this->jquery->compile($this->view);
+			$result["path"]=\implode('/', $urlParts);
+			echo json_encode($result);
 		}
 	}
 
@@ -188,18 +206,28 @@ trait ControllersTrait{
 					$name="route";
 					$path=$_POST["path"];
 					$routeProperties=['"'.$path.'"'];
+					$methods=$_POST["methods"];
+					if(StrUtils::isNotNull($methods)){
+						$routeProperties[]='"methods"=>'.$this->getMethods($methods);
+					}
 					if(isset($_POST["ck-Cache"])){
 						$routeProperties[]='"cache"=>true';
 						if(isset($_POST["duration"])){
 							$duration=$_POST["duration"];
-							if(\is_int($duration)){
+							if(\ctype_digit($duration)){
 								$routeProperties[]='"duration"=>'.$duration;
 							}
 						}
-						$routeProperties=\implode(",", $routeProperties);
 					}
+					$routeProperties=\implode(",", $routeProperties);
 					$routeAnnotation=FsUtils::openReplaceInTemplateFile(ROOT.DS."micro/controllers/admin/templates/annotation.tpl", ["%name%"=>$name,"%properties%"=>$routeProperties]);
+
 					$msgContent.="<br>Created route : <b>".$path."</b>";
+					$msgContent.="<br>You need to re-init Router cache to apply this update:";
+					$btReinitCache=new HtmlButton("bt-init-cache","(Re-)Init router cache","orange");
+					$btReinitCache->addIcon("refresh");
+					$msgContent.="&nbsp;".$btReinitCache;
+					$this->jquery->getOnClick("#bt-init-cache", $this->_getAdminFiles()->getAdminBaseRoute()."/_refreshCacheControllers","#messages",["attr"=>"","hasLoader"=>false,"dataType"=>"html"]);
 				}
 				$parameters=CodeUtils::cleanParameters($parameters);
 				$actionContent=FsUtils::openReplaceInTemplateFile(ROOT.DS."micro/controllers/admin/templates/action.tpl", ["%route%"=>"\n".$routeAnnotation,"%actionName%"=>$action,"%parameters%"=>$parameters,"%content%"=>$content]);
@@ -216,7 +244,26 @@ trait ControllersTrait{
 				}
 			}
 		}
-		$this->jquery->get("Admin/_refreshControllers/refresh","#dtControllers",["jqueryDone"=>"replaceWith","hasLoader"=>false]);
+		$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute()."/_refreshControllers/refresh","#dtControllers",["jqueryDone"=>"replaceWith","hasLoader"=>false,"dataType"=>"html"]);
 		echo $this->jquery->compile($this->view);
+	}
+
+	public function _refreshCacheControllers(){
+		$config=Startup::getConfig();
+		\ob_start();
+		CacheManager::initCache($config,"controllers");
+		$message=\ob_get_clean();
+		echo $this->showSimpleMessage(\nl2br($message), "info","info",4000);
+		$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute()."/_refreshControllers/refresh","#dtControllers",["jqueryDone"=>"replaceWith","hasLoader"=>false,"dataType"=>"html"]);
+		echo $this->jquery->compile($this->view);
+	}
+
+	private function getMethods($strMethods){
+		$methods=\explode(",", $strMethods);
+		$result=[];
+		foreach ($methods as $method){
+			$result[]='"'.$method.'"';
+		}
+		return "[".\implode(",", $result)."]";
 	}
 }
