@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of micro framework
+ * This file is part of Ubiquity framework
  *
  */
 namespace Ubiquity\controllers;

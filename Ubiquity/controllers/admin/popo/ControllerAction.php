@@ -15,11 +15,9 @@ class ControllerAction {
 	private $parameters;
 	private $dValues;
 	private $annots;
+	private static $excludeds=[ "__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward" ];
 
-	private static $excludeds=["__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward"];
-
-
-	public function __construct($controller="",$action="",$parameters=[],$dValues=[],$annots=[]){
+	public function __construct($controller="", $action="", $parameters=[], $dValues=[], $annots=[]) {
 		$this->controller=$controller;
 		$this->action=$action;
 		$this->parameters=$parameters;
@@ -27,8 +25,8 @@ class ControllerAction {
 		$this->annots=$annots;
 	}
 
-	public static function initWithPath($url){
-		$result=[];
+	public static function initWithPath($url) {
+		$result=[ ];
 		$config=Startup::getConfig();
 		$ns=$config["mvcNS"]["controllers"];
 		if ($ns !== "" && $ns !== null) {
@@ -41,40 +39,41 @@ class ControllerAction {
 			$url=\substr($url, 0, strlen($url) - 1);
 		$u=\explode("/", $url);
 		$u[0]=$ns . $u[0];
-		if(\class_exists($u[0])){
+		if (\class_exists($u[0])) {
 			$controllerClass=$u[0];
-			if(\count($u)<2)
+			if (\count($u) < 2)
 				$u[]="index";
-			if(\method_exists($controllerClass, $u[1])){
-				$method=new \ReflectionMethod($u[0],$u[1]);
+			if (\method_exists($controllerClass, $u[1])) {
+				$method=new \ReflectionMethod($u[0], $u[1]);
 				$r=self::scanMethod($controllerClass, $method);
-				if(isset($r))
+				if (isset($r))
 					$result[]=$r;
 			}
 		}
 		return $result;
 	}
-	public static function init(){
-		$result=[];
+
+	public static function init() {
+		$result=[ ];
 		$config=Startup::getConfig();
 
-		$files=CacheManager::getControllersFiles($config,true);
+		$files=CacheManager::getControllersFiles($config, true);
 		try {
 			$restCtrls=CacheManager::getRestCache();
-		} catch (\Exception $e) {
-			$restCtrls=[];
+		} catch ( \Exception $e ) {
+			$restCtrls=[ ];
 		}
 
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
-				if(isset($restCtrls[$controllerClass])===false){
+				if (isset($restCtrls[$controllerClass]) === false) {
 					$reflect=new \ReflectionClass($controllerClass);
-					if (!$reflect->isAbstract() && $reflect->isSubclassOf("micro\controllers\Controller")) {
+					if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\controllers\Controller")) {
 						$methods=$reflect->getMethods(\ReflectionMethod::IS_PUBLIC);
 						foreach ( $methods as $method ) {
 							$r=self::scanMethod($controllerClass, $method);
-							if(isset($r))
+							if (isset($r))
 								$result[]=$r;
 						}
 					}
@@ -84,18 +83,18 @@ class ControllerAction {
 		return $result;
 	}
 
-	private static function scanMethod($controllerClass,\ReflectionMethod $method){
+	private static function scanMethod($controllerClass, \ReflectionMethod $method) {
 		$result=null;
-		if(\array_search($method->name, self::$excludeds)===false && !StrUtils::startswith($method->name, "_")){
+		if (\array_search($method->name, self::$excludeds) === false && !StrUtils::startswith($method->name, "_")) {
 			$annots=Router::getAnnotations($controllerClass, $method->name);
 			$parameters=$method->getParameters();
-			$defaults=[];
-			foreach ($parameters as $param){
-				if($param->isOptional() && !$param->isVariadic()){
+			$defaults=[ ];
+			foreach ( $parameters as $param ) {
+				if ($param->isOptional() && !$param->isVariadic()) {
 					$defaults[$param->name]=$param->getDefaultValue();
 				}
 			}
-			$result=new ControllerAction($controllerClass,$method->name,$parameters,$defaults,$annots);
+			$result=new ControllerAction($controllerClass, $method->name, $parameters, $defaults, $annots);
 		}
 		return $result;
 	}
@@ -145,12 +144,12 @@ class ControllerAction {
 		return $this;
 	}
 
-	public function getPath(){
+	public function getPath() {
 		$reflect=new \ReflectionClass($this->controller);
-		return $reflect->getShortName()."/".$this->action;
+		return $reflect->getShortName() . "/" . $this->action;
 	}
 
-	public function getId(){
+	public function getId() {
 		return $this->getPath();
 	}
 }

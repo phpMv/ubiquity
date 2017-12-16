@@ -26,7 +26,7 @@ class Jquery {
 
 	private static function _prep_value($value) {
 		if (is_array($value)) {
-			$array=array_map("micro\js\self::_prep_value", $value);
+			$array=array_map("Ubiquity\js\self::_prep_value", $value);
 			$value=implode(",", $array);
 		} else if (strrpos($value, 'this') === false && strrpos($value, 'event') === false && is_numeric($value) === false) {
 			$value='"' . $value . '"';

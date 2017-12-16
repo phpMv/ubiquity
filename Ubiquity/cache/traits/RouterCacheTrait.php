@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\cache\traits;
 
 use Ubiquity\controllers\Startup;
@@ -9,12 +10,14 @@ use Ubiquity\utils\JArray;
 use Ubiquity\cache\CacheManager;
 
 /**
+ *
  * @author jc
  * @staticvar array $cache
  *
  */
 trait RouterCacheTrait{
-	abstract protected static function _getFiles(&$config,$type,$silent=false);
+
+	abstract protected static function _getFiles(&$config, $type, $silent=false);
 	private static $expiredRoutes=[ ];
 
 	private static function addControllerCache($classname) {
@@ -25,11 +28,11 @@ trait RouterCacheTrait{
 		} catch ( \Exception $e ) {
 			// Nothing to do
 		}
-		return [];
+		return [ ];
 	}
 
-	private static function initRouterCache(&$config,$silent=false) {
-		$routes=["rest"=>[],"default"=>[]];
+	private static function initRouterCache(&$config, $silent=false) {
+		$routes=[ "rest" => [ ],"default" => [ ] ];
 		$files=self::getControllersFiles($config);
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
@@ -37,25 +40,24 @@ trait RouterCacheTrait{
 				$parser=new ControllerParser();
 				try {
 					$parser->parse($controller);
-					$ret= $parser->asArray();
-					$key=($parser->isRest())?"rest":"default";
+					$ret=$parser->asArray();
+					$key=($parser->isRest()) ? "rest" : "default";
 					$routes[$key]=\array_merge($routes[$key], $ret);
 				} catch ( \Exception $e ) {
 					// Nothing to do
 				}
-
 			}
 		}
-		self::$cache->store("controllers/routes.default", "return " . JArray::asPhpArray($routes["default"], "array") . ";",'controllers');
-		self::$cache->store("controllers/routes.rest", "return " . JArray::asPhpArray($routes["rest"], "array") . ";",'controllers');
-		if(!$silent){
+		self::$cache->store("controllers/routes.default", "return " . JArray::asPhpArray($routes["default"], "array") . ";", 'controllers');
+		self::$cache->store("controllers/routes.rest", "return " . JArray::asPhpArray($routes["rest"], "array") . ";", 'controllers');
+		if (!$silent) {
 			echo "Router cache reset\n";
 		}
 	}
 
 	private static function storeRouteResponse($key, $response) {
 		self::setKeyExpired($key, false);
-		self::$cache->store("controllers/" . $key, $response, 'controllers',false);
+		self::$cache->store("controllers/" . $key, $response, 'controllers', false);
 		return $response;
 	}
 
@@ -72,10 +74,10 @@ trait RouterCacheTrait{
 	}
 
 	public static function getControllerCache($isRest=false) {
-		$key=($isRest)?"rest":"default";
-		if (self::$cache->exists("controllers/routes.".$key))
-			return self::$cache->fetch("controllers/routes.".$key);
-		return [];
+		$key=($isRest) ? "rest" : "default";
+		if (self::$cache->exists("controllers/routes." . $key))
+			return self::$cache->fetch("controllers/routes." . $key);
+		return [ ];
 	}
 
 	public static function getRouteCache($routePath, $duration) {
@@ -94,9 +96,9 @@ trait RouterCacheTrait{
 		return self::$cache->expired("controllers/" . $key, $duration) === true || \array_key_exists($key, self::$expiredRoutes);
 	}
 
-	public static function isExpired($path,$duration){
-		$route=Router::getRoute($path,false);
-		if($route!==false && \is_array($route)){
+	public static function isExpired($path, $duration) {
+		$route=Router::getRoute($path, false);
+		if ($route !== false && \is_array($route)) {
 			return self::expired(self::getRouteKey($route), $duration);
 		}
 		return true;
@@ -114,7 +116,7 @@ trait RouterCacheTrait{
 	}
 
 	public static function addAdminRoutes() {
-		self::addControllerCache("micro\controllers\Admin");
+		self::addControllerCache("Ubiquity\controllers\Admin");
 	}
 
 	public static function getRoutes() {
@@ -122,18 +124,18 @@ trait RouterCacheTrait{
 		return $result;
 	}
 
-	public static function getControllerRoutes($controllerClass,$isRest=false){
-		$result=[];
+	public static function getControllerRoutes($controllerClass, $isRest=false) {
+		$result=[ ];
 		$ctrlCache=self::getControllerCache($isRest);
-		foreach ($ctrlCache as $path=>$routeAttributes){
-			if(isset($routeAttributes["controller"])){
-				if($routeAttributes["controller"]===$controllerClass){
+		foreach ( $ctrlCache as $path => $routeAttributes ) {
+			if (isset($routeAttributes["controller"])) {
+				if ($routeAttributes["controller"] === $controllerClass) {
 					$result[$path]=$routeAttributes;
 				}
-			}else{
+			} else {
 				$firstValue=reset($routeAttributes);
-				if(isset($firstValue)&&isset($firstValue["controller"])){
-					if($firstValue["controller"]===$controllerClass){
+				if (isset($firstValue) && isset($firstValue["controller"])) {
+					if ($firstValue["controller"] === $controllerClass) {
 						$result[$path]=$routeAttributes;
 					}
 				}
@@ -145,31 +147,30 @@ trait RouterCacheTrait{
 	public static function addRoute($path, $controller, $action="index", $methods=null, $name="") {
 		$controllerCache=self::getControllerCache();
 		Router::addRouteToRoutes($controllerCache, $path, $controller, $action, $methods, $name);
-		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray($controllerCache, "array") . ";",'controllers');
+		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
 	}
 
-	public static function getControllersFiles(&$config,$silent=false){
-		return self::_getFiles($config, "controllers",$silent);
+	public static function getControllersFiles(&$config, $silent=false) {
+		return self::_getFiles($config, "controllers", $silent);
 	}
 
-	public static function getControllers(){
-		$result=[];
+	public static function getControllers() {
+		$result=[ ];
 		$config=Startup::getConfig();
-		$files=self::getControllersFiles($config,true);
+		$files=self::getControllersFiles($config, true);
 		try {
 			$restCtrls=CacheManager::getRestCache();
-		} catch (\Exception $e) {
-			$restCtrls=[];
+		} catch ( \Exception $e ) {
+			$restCtrls=[ ];
 		}
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
-				if(isset($restCtrls[$controllerClass])===false){
+				if (isset($restCtrls[$controllerClass]) === false) {
 					$result[]=$controllerClass;
 				}
 			}
 		}
 		return $result;
 	}
-
 }

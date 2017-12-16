@@ -12,34 +12,32 @@ class ControllerParser {
 	private $mainRouteClass;
 	private $routesMethods=[ ];
 	private $rest=false;
-
-	private static $excludeds=["__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward"];
-
+	private static $excludeds=[ "__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward" ];
 
 	public function parse($controllerClass) {
 		$this->controllerClass=$controllerClass;
 		$reflect=new \ReflectionClass($controllerClass);
-		if (!$reflect->isAbstract() && $reflect->isSubclassOf("micro\controllers\Controller")) {
+		if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\controllers\Controller")) {
 			$instance=new $controllerClass();
 			$annotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
 			$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
-			$this->rest=\sizeof($restAnnotsClass)>0;
+			$this->rest=\sizeof($restAnnotsClass) > 0;
 			if (\sizeof($annotsClass) > 0)
 				$this->mainRouteClass=$annotsClass[0];
 			$methods=Reflexion::getMethods($instance, \ReflectionMethod::IS_PUBLIC);
 			foreach ( $methods as $method ) {
 				$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
-				if ($annots !== false){
-					foreach ($annots as $annot){
-						if(StrUtils::isNull($annot->path)){
+				if ($annots !== false) {
+					foreach ( $annots as $annot ) {
+						if (StrUtils::isNull($annot->path)) {
 							$newAnnot=$this->generateRouteAnnotationFromMethod($method);
 							$annot->path=$newAnnot[0]->path;
 						}
 					}
 					$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
-				}else{
-					if($this->rest && isset($this->mainRouteClass)){
-						if($method->class!=='micro\\controllers\\Controller' && \array_search($method->name, self::$excludeds)===false && !StrUtils::startswith($method->name, "_"))
+				} else {
+					if ($this->rest && isset($this->mainRouteClass)) {
+						if ($method->class !== 'Ubiquity\\controllers\\Controller' && \array_search($method->name, self::$excludeds) === false && !StrUtils::startswith($method->name, "_"))
 							$this->routesMethods[$method->name]=[ "annotations" => $this->generateRouteAnnotationFromMethod($method),"method" => $method ];
 					}
 				}
@@ -47,32 +45,32 @@ class ControllerParser {
 		}
 	}
 
-	private function generateRouteAnnotationFromMethod(\ReflectionMethod $method){
+	private function generateRouteAnnotationFromMethod(\ReflectionMethod $method) {
 		$annot=new RouteAnnotation();
 		$annot->path=self::getPathFromMethod($method);
-		return [$annot];
+		return [ $annot ];
 	}
 
-	private static function getPathFromMethod(\ReflectionMethod $method){
+	private static function getPathFromMethod(\ReflectionMethod $method) {
 		$methodName=$method->getName();
-		if($methodName==="index"){
-			$pathParts=["(index/)?"];
-		}else{
-			$pathParts=[$methodName];
+		if ($methodName === "index") {
+			$pathParts=[ "(index/)?" ];
+		} else {
+			$pathParts=[ $methodName ];
 		}
 		$parameters=$method->getParameters();
-		foreach ($parameters as $parameter){
-			if($parameter->isVariadic()){
-				$pathParts[]='{...'.$parameter->getName().'}';
-				return "/".\implode("/", $pathParts);
+		foreach ( $parameters as $parameter ) {
+			if ($parameter->isVariadic()) {
+				$pathParts[]='{...' . $parameter->getName() . '}';
+				return "/" . \implode("/", $pathParts);
 			}
-			if(!$parameter->isOptional()){
-				$pathParts[]='{'.$parameter->getName().'}';
-			}else{
-				$pathParts[\sizeof($pathParts)-1].='{~'.$parameter->getName().'}';
+			if (!$parameter->isOptional()) {
+				$pathParts[]='{' . $parameter->getName() . '}';
+			} else {
+				$pathParts[\sizeof($pathParts) - 1].='{~' . $parameter->getName() . '}';
 			}
 		}
-		return "/".\implode("/", $pathParts);
+		return "/" . \implode("/", $pathParts);
 	}
 
 	private static function cleanpath($prefix, $path="") {
@@ -82,7 +80,7 @@ class ControllerParser {
 			$path=\substr($path, 1);
 		$path=$prefix . $path;
 		if (!StrUtils::endswith($path, "/") && !StrUtils::endswith($path, '(.*?)') && !StrUtils::endswith($path, "(index/)?"))
-			$path=$path."/";
+			$path=$path . "/";
 		return $path;
 	}
 
@@ -106,7 +104,7 @@ class ControllerParser {
 
 			foreach ( $routeAnnotations as $routeAnnotation ) {
 				$params=[ "path" => $routeAnnotation->path,"methods" => $routeAnnotation->methods,"name" => $routeAnnotation->name,"cache" => $routeAnnotation->cache,"duration" => $routeAnnotation->duration ];
-				self::parseRouteArray($result, $this->controllerClass,$params,$arrayAnnotsMethod["method"], $method, $prefix, $httpMethods);
+				self::parseRouteArray($result, $this->controllerClass, $params, $arrayAnnotsMethod["method"], $method, $prefix, $httpMethods);
 			}
 		}
 		return $result;
@@ -151,25 +149,25 @@ class ControllerParser {
 				$index++;
 			}
 		}
-		if($hasOptional)
+		if ($hasOptional)
 			$path.="/(.*?)";
 		return [ "path" => $path,"parameters" => $parameters ];
 	}
 
-	private static function scanParam(&$parameters,&$hasOptional,$matches,$index,$paramMatch,$find,&$path){
-		if(isset($matches[1][$index])){
-			if($matches[1][$index]==="..."){
+	private static function scanParam(&$parameters, &$hasOptional, $matches, $index, $paramMatch, $find, &$path) {
+		if (isset($matches[1][$index])) {
+			if ($matches[1][$index] === "...") {
 				$parameters[]="*";
 				$path=\str_replace("\{\.\.\." . $paramMatch . "\}", "(.*?)", $path);
-			}elseif($matches[1][$index]==="~"){
-				$parameters[]="~".$find;
+			} elseif ($matches[1][$index] === "~") {
+				$parameters[]="~" . $find;
 				$path=\str_replace("\{~" . $paramMatch . "\}", "", $path);
 				$hasOptional=true;
-			}else{
+			} else {
 				$parameters[]=$find;
 				$path=\str_replace("\{" . $paramMatch . "\}", "(.+?)", $path);
 			}
-		}else{
+		} else {
 			$parameters[]=$find;
 			$path=\str_replace("\{" . $paramMatch . "\}", "(.+?)", $path);
 		}
@@ -181,7 +179,7 @@ class ControllerParser {
 		}
 	}
 
-	public function isRest(){
+	public function isRest() {
 		return $this->rest;
 	}
 }

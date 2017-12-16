@@ -83,7 +83,7 @@ class Startup {
 		$ctrl=$u[0];
 		self::$controller=$ctrl;
 		self::$action="index";
-		if(\sizeof($u)>1)
+		if (\sizeof($u) > 1)
 			self::$action=$u[1];
 
 		$controller=new $ctrl();
@@ -140,38 +140,37 @@ class Startup {
 		return self::$config;
 	}
 
-	public static function setConfig($config){
+	public static function setConfig($config) {
 		self::$config=$config;
 	}
 
-
-	private static function needsKeyInConfigArray(&$result,$array,$needs){
-		foreach ($needs as $need){
-			if(!isset($array[$need]) || StrUtils::isNull($array[$need])){
+	private static function needsKeyInConfigArray(&$result, $array, $needs) {
+		foreach ( $needs as $need ) {
+			if (!isset($array[$need]) || StrUtils::isNull($array[$need])) {
 				$result[]=$need;
 			}
 		}
 	}
 
-	public static function checkDbConfig(){
+	public static function checkDbConfig() {
 		$config=self::$config;
-		$result=[];
-		$needs=["type","dbName","serverName"];
-		if(!isset($config["database"])){
+		$result=[ ];
+		$needs=[ "type","dbName","serverName" ];
+		if (!isset($config["database"])) {
 			$result[]="database";
-		}else{
+		} else {
 			self::needsKeyInConfigArray($result, $config["database"], $needs);
 		}
 		return $result;
 	}
 
-	public static function checkModelsConfig(){
+	public static function checkModelsConfig() {
 		$config=self::$config;
-		$result=[];
-		if(!isset($config["mvcNS"])){
+		$result=[ ];
+		if (!isset($config["mvcNS"])) {
 			$result[]="mvcNS";
-		}else{
-			self::needsKeyInConfigArray($result, $config["mvcNS"], ["models"]);
+		} else {
+			self::needsKeyInConfigArray($result, $config["mvcNS"], [ "models" ]);
 		}
 		return $result;
 	}
@@ -181,15 +180,15 @@ class Startup {
 	}
 
 	public static function getModelsCompletePath() {
-		return ROOT.DS.self::getModelsDir();
+		return ROOT . DS . self::getModelsDir();
 	}
 
-	public static function errorHandler($message = "",$code = 0,$severity = 1 ,$filename =null, int $lineno = 0,$previous = NULL) {
+	public static function errorHandler($message="", $code=0, $severity=1, $filename=null, int $lineno=0, $previous=NULL) {
 		if (\error_reporting() == 0) {
 			return;
 		}
 		if (\error_reporting() & $severity) {
-			throw new \ErrorException($message, 0, $severity, $filename, $lineno,$previous);
+			throw new \ErrorException($message, 0, $severity, $filename, $lineno, $previous);
 		}
 	}
 
@@ -201,4 +200,7 @@ class Startup {
 		return self::$action;
 	}
 
+	public static function getFrameworkDir() {
+		return \dirname(__FILE__);
+	}
 }

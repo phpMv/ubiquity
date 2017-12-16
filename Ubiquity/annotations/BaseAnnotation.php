@@ -41,7 +41,7 @@ class BaseAnnotation extends Annotation {
 	public function __toString() {
 		$extsStr=$this->asPhpArray();
 		$className=get_class($this);
-		$annotName=\substr($className, \strlen("micro\annotations\\"));
+		$annotName=\substr($className, \strlen("Ubiquity\annotations\\"));
 		$annotName=\substr($annotName, 0, \strlen($annotName) - \strlen("Annotation"));
 		return "@" . \lcfirst($annotName) . $extsStr;
 	}
