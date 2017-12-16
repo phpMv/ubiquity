@@ -39,9 +39,9 @@ Services loaded on startup are configured in the ``app/conf/services.php`` file.
    :linenos:
    :caption: app/conf/services.php
    
-   use micro\cache\CacheManager;
-   use micro\controllers\Router;
-   use micro\orm\DAO;
+   use Ubiquity\cache\CacheManager;
+   use Ubiquity\controllers\Router;
+   use Ubiquity\orm\DAO;
    
    /*if($config["test"]){
    \micro\log\Logger::init();

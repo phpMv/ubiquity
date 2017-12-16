@@ -1,0 +1,30 @@
+{
+	"name": "phpmv/ubiquity",
+	"description": "Ubiquity-framework",
+	"type": "framework",
+	"keywords": [
+		"php",
+		"framework",
+		"mvc",
+		"orm"
+	],
+	"require": {
+		"php": ">7.0"
+	},
+	"license": "Apache-2.0",
+	"authors": [
+		{
+			"name": "Jean-Christophe HERON",
+			"email": "myaddressmail@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"autoload": {
+		"psr-4": { "Ubiquity\\": "Ubiquity/" }
+	},
+     "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}
