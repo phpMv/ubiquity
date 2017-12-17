@@ -3,6 +3,7 @@
 namespace Ubiquity\db;
 
 use Ubiquity\cache\database\DbCache;
+use Ubiquity\exceptions\CacheException;
 
 /**
  * Classe d'accès aux Bases de données encapsulant un objet PDO
@@ -42,7 +43,15 @@ class Database {
 		$this->password=$password;
 		$this->options=$options;
 		if ($cache !== false) {
-			$this->cache=new $cache();
+			if(\is_callable($cache)){
+				$this->cache=$cache();
+			}else{
+				if(\class_exists($cache)){
+					$this->cache=new $cache();
+				}else{
+					throw new CacheException($cache." is not a valid value for database cache");
+				}
+			}
 		}
 	}
 
@@ -64,7 +73,7 @@ class Database {
 		return $this->pdoObject->query($sql);
 	}
 
-	public function prepareAndExecute($tableName, $condition, $useCache=NULL) {
+	public function prepareAndExecute($tableName, $condition,$useCache=NULL) {
 		$cache=(DbCache::$active && $useCache !== false) || (!DbCache::$active && $useCache === true);
 		$result=false;
 		if ($cache) {
@@ -80,6 +89,17 @@ class Database {
 			}
 		}
 		return $result;
+	}
+
+	protected function getFieldList($fields){
+		if(!\is_array($fields)){
+			return $fields;
+		}
+		$result=[];
+		foreach ($fields as $field) {
+			$result[]= "`{$field}`";
+		}
+		return \implode(",", $result);
 	}
 
 	private function getStatement($sql) {
@@ -116,7 +136,7 @@ class Database {
 	}
 
 	/**
-	 * Affecte la valeur $value au paramétre $parameter
+	 * Sets $value to $parameter
 	 * @param PDOStatement $statement
 	 * @param String $parameter
 	 * @param mixed $value
@@ -127,7 +147,7 @@ class Database {
 	}
 
 	/**
-	 * retourne le dernier auto-increment généré
+	 * Returns the last insert id
 	 * @return integer
 	 */
 	public function lastInserId() {

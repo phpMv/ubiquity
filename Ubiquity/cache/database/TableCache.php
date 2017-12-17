@@ -36,4 +36,14 @@ class TableCache extends DbCache {
 		}
 		return false;
 	}
+
+	public function delete($tableName, $condition){
+		if ($cache=$this->getArrayCache($tableName)) {
+			$key=$this->getKey($condition);
+			if (isset($cache[$key])){
+				unset($cache[$key]);
+				$this->cache->store($tableName, "return " . JArray::asPhpArray($cache, "array") . ";");
+			}
+		}
+	}
 }

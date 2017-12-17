@@ -17,4 +17,11 @@ class QueryCache extends DbCache {
 	public function store($tableName, $condition, $result) {
 		$this->cache->store($tableName . "." . $this->getKey($condition), "return " . JArray::asPhpArray($result, "array") . ";");
 	}
+
+	public function delete($tableName, $condition){
+		$key=$tableName . "." . $this->getKey($condition);
+		if ($this->cache->exists($key))
+			return $this->cache->remove($key);
+		return false;
+	}
 }

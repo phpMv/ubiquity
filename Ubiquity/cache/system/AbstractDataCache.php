@@ -33,7 +33,7 @@ abstract class AbstractDataCache {
 
 	public function expired($key, $duration) {
 		if ($this->exists($key)) {
-			if (\is_int($duration)) {
+			if (\is_int($duration) && $duration!==0) {
 				return \time() - $this->getTimestamp($key) > $duration;
 			} else {
 				return false;
@@ -87,8 +87,14 @@ abstract class AbstractDataCache {
 	 */
 	abstract public function getTimestamp($key);
 
+	/**
+	 * @param string $key
+	 */
 	abstract public function remove($key);
 
+	/**
+	 * Clears all cache entries
+	 */
 	abstract public function clear();
 
 	abstract public function getCacheFiles($type);

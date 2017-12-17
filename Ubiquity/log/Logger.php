@@ -24,12 +24,12 @@ abstract class Logger {
 			self::$instance->_log($id, $message, $code) ;
 	}
 
-	public function warn($id, $message,$code=0) {
+	public static function warn($id, $message,$code=0) {
 		if (self::$test)
 			self::$instance->_warn($id, $message, $code) ;
 	}
 
-	public function error($id, $message,$code=0) {
+	public static function error($id, $message,$code=0) {
 		if (self::$test)
 			self::$instance->_error($id, $message, $code) ;
 	}

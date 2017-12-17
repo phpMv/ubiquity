@@ -97,7 +97,7 @@ abstract class RestController extends Controller {
 	protected function connectDb($config){
 		$db=$config["database"];
 		if($db["dbName"]!==""){
-			DAO::connect($db["type"],$db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"],@$db["cache"]);
+			DAO::connect($db["type"],$db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"],@$db["options"],@$db["cache"]);
 		}
 	}
 

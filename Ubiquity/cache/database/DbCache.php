@@ -17,19 +17,38 @@ abstract class DbCache {
 	public function __construct() {
 		$cacheDirectory=ROOT . DS . CacheManager::getCacheDirectory() . DS . "queries";
 		$this->cache=new ArrayCache($cacheDirectory, ".query");
-		self::$active=true;
 	}
 
+	/**
+	 * Caches the given data with the given key (tableName+md5(condition)).
+	 * @param string $tableName
+	 * @param string $condition
+	 * @param array $result the datas to store
+	 */
 	abstract public function store($tableName, $condition, $result);
 
+	/**
+	 * Fetches data stored for the given condition in table.
+	 * @param string $tableName
+	 * @param string $condition
+	 * @return mixed the cached datas
+	 */
 	abstract public function fetch($tableName, $condition);
 
-	public function clear() {
-		$this->cache->clear();
+	/**
+	 * Deletes the entry corresponding to $condition apply to $table
+	 * @param string $tableName
+	 * @param string $condition
+	 * @return boolean true if the entry is deleted
+	 */
+	abstract public function delete($tableName, $condition);
+
+	public function clear($matches="") {
+		$this->cache->clear($matches);
 	}
 
-	public function remove($element) {
-		$this->cache->remove($element);
+	public function remove($key) {
+		$this->cache->remove($key);
 	}
 
 	public function setActive($value=true) {

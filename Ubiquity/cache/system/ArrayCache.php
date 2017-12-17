@@ -90,34 +90,59 @@ class ArrayCache extends AbstractDataCache{
 		return $this->_root . DIRECTORY_SEPARATOR . $key . $this->postfix . '.php';
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\cache\system\AbstractDataCache::remove()
+	 */
 	public function remove($key) {
 		$file=$this->_getPath($key);
 		if (\file_exists($file))
-			\unlink($file);
+			return \unlink($file);
+		return false;
 	}
 
-	public function clear() {
-		$files=glob($this->_root . '/*');
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\cache\system\AbstractDataCache::clear()
+	 */
+	public function clear($matches="") {
+		$files=glob($this->_root . '/'.$matches.'*');
 		foreach ( $files as $file ) {
 			if (\is_file($file))
 				\unlink($file);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\cache\system\AbstractDataCache::getCacheFiles()
+	 */
 	public function getCacheFiles($type){
 		return CacheFile::initFromFiles(ROOT . DS .CacheManager::getCacheDirectory().$type, \ucfirst($type),function($file) use($type){$file=\basename($file);return $type."/".substr($file, 0, strpos($file, $this->postfix.'.php'));});
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\cache\system\AbstractDataCache::clearCache()
+	 */
 	public function clearCache($type){
 		CacheFile::delete(ROOT . DS .CacheManager::getCacheDirectory().\strtolower($type));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\cache\system\AbstractDataCache::getCacheInfo()
+	 */
 	public function getCacheInfo(){
 		$result=parent::getCacheInfo();
 		$result.="<br>Root cache directory is <b>".$this->_root."</b>.";
 		return $result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\cache\system\AbstractDataCache::getEntryKey()
+	 */
 	public function getEntryKey($key){
 		return $this->_getPath($key);
 	}

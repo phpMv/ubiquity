@@ -198,12 +198,13 @@ class DAO {
 		if ($loadOneToMany && isset($metaDatas["#oneToMany"])) {
 			$oneToManyFields=$metaDatas["#oneToMany"];
 		}
-		if ($condition != '')
+		if ($condition != ''){
 			$condition=" WHERE " . $condition;
-		$query=self::$db->prepareAndExecute($tableName, $condition, $useCache);
+		}
+		$members=\array_diff($metaDatas["#fieldNames"],$metaDatas["#notSerializable"]);
+		$query=self::$db->prepareAndExecute($tableName, $condition,$useCache);
 		Logger::log("getAll", "SELECT * FROM " . $tableName . $condition);
 
-		$members=$metaDatas["#fieldNames"];
 		foreach ( $query as $row ) {
 			$objects[]=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $useCache);
 		}
@@ -213,11 +214,12 @@ class DAO {
 	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $members,$useCache=NULL) {
 		$o=new $className();
 		foreach ( $row as $k => $v ) {
-			$field=\array_search($k, $members);
-			$accesseur="set" . ucfirst($field);
-			if (method_exists($o, $accesseur)) {
-				$o->$accesseur($v);
-				$o->_rest[$field]=$v;
+			if(($field=\array_search($k, $members))!==false){
+				$accesseur="set" . ucfirst($field);
+				if (method_exists($o, $accesseur)) {
+					$o->$accesseur($v);
+					$o->_rest[$field]=$v;
+				}
 			}
 			if (isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
 				self::getOneManyToOne($o, $v, $invertedJoinColumns[$k], $useCache);
