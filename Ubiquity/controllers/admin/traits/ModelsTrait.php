@@ -10,6 +10,7 @@ use Ajax\service\JString;
 use Ajax\semantic\html\elements\HtmlHeader;
 use Ubiquity\controllers\Startup;
 use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
+use Ubiquity\cache\database\DbCache;
 
 /**
  * @author jc
@@ -147,6 +148,9 @@ trait ModelsTrait{
 				$update=DAO::insert($instance);
 			}else{
 				$update=DAO::update($instance);
+				if(DbCache::$active){
+					//TODO update dbCache
+				}
 			}
 			if($update){
 				if($this->_getAdminData()->getUpdateManyToManyInForm()){

@@ -73,14 +73,15 @@ class Database {
 		return $this->pdoObject->query($sql);
 	}
 
-	public function prepareAndExecute($tableName, $condition,$useCache=NULL) {
+	public function prepareAndExecute($tableName, $condition,$fields,$useCache=NULL) {
 		$cache=(DbCache::$active && $useCache !== false) || (!DbCache::$active && $useCache === true);
 		$result=false;
 		if ($cache) {
 			$result=$this->cache->fetch($tableName, $condition);
 		}
 		if ($result === false) {
-			$statement=$this->getStatement("SELECT * FROM " . $tableName . $condition);
+			$fields=$this->getFieldList($fields);
+			$statement=$this->getStatement("SELECT {$fields} FROM " . $tableName . $condition);
 			$statement->execute();
 			$result=$statement->fetchAll();
 			$statement->closeCursor();

@@ -202,7 +202,7 @@ class DAO {
 			$condition=" WHERE " . $condition;
 		}
 		$members=\array_diff($metaDatas["#fieldNames"],$metaDatas["#notSerializable"]);
-		$query=self::$db->prepareAndExecute($tableName, $condition,$useCache);
+		$query=self::$db->prepareAndExecute($tableName, $condition,$members,$useCache);
 		Logger::log("getAll", "SELECT * FROM " . $tableName . $condition);
 
 		foreach ( $query as $row ) {
@@ -259,7 +259,7 @@ class DAO {
 				$keyValues="";
 		}
 		$condition=self::getCondition($keyValues,$className);
-		$retour=self::getAll($className, $condition, $loadManyToOne, $loadOneToMany, $useCache);
+		$retour=self::getAll($className, $condition." limit 1", $loadManyToOne, $loadOneToMany, $useCache);
 		if (sizeof($retour) < 1)
 			return null;
 		else
