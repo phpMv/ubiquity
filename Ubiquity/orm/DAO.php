@@ -60,37 +60,8 @@ class DAO {
 		}
 	}
 
-	/**
-	 * Affecte/charge les enregistrements fils dans le membre $member de $instance.
-	 * Si $array est null, les fils sont chargés depuis la base de données
-	 * @param object $instance
-	 * @param string $member Membre sur lequel doit être présent une annotation OneToMany
-	 * @param array $array paramètre facultatif contenant la liste des fils possibles
-	 * @param boolean $useCache
-	 * @param array $annot used internally
-	 */
-	public static function getOneToMany($instance, $member, $array=null, $useCache=NULL, $annot=null) {
-		$ret=array ();
-		$class=get_class($instance);
-		if (!isset($annot))
-			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
-		if ($annot !== false) {
-			$fkAnnot=OrmUtils::getAnnotationInfoMember($annot["className"], "#joinColumn", $annot["mappedBy"]);
-			if ($fkAnnot !== false) {
-				$fkv=OrmUtils::getFirstKeyValue($instance);
-				if (is_null($array)) {
-					$ret=self::getAll($annot["className"], $fkAnnot["name"] . "='" . $fkv . "'", true, false, $useCache);
-				} else {
-					self::getOneToManyFromArray($ret, $array, $fkv, $annot);
-				}
-				self::setToMember($member, $instance, $ret, $class, "getOneToMany");
-			}
-		}
-		return $ret;
-	}
-
-	private static function getOneToManyFromArray(&$ret, $array, $fkv, $annot) {
-		$elementAccessor="get" . ucfirst($annot["mappedBy"]);
+	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $mappedBy) {
+		$elementAccessor="get" . ucfirst($mappedBy);
 		foreach ( $array as $element ) {
 			$elementRef=$element->$elementAccessor();
 			if (!is_null($elementRef)) {
@@ -99,6 +70,45 @@ class DAO {
 					$ret[]=$element;
 			}
 		}
+	}
+
+	/**
+	 * Affecte/charge les enregistrements fils dans le membre $member de $instance.
+	 * Si $array est null, les fils sont chargés depuis la base de données
+	 * @param object $instance
+	 * @param string $member Membre sur lequel doit être présent une annotation OneToMany
+	 * @param boolean $useCache
+	 * @param array $annot used internally
+	 */
+	public static function getOneToMany($instance, $member, $useCache=NULL, $annot=null) {
+		$ret=array ();
+		$class=get_class($instance);
+		if (!isset($annot))
+			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
+			if ($annot !== false) {
+				$fkAnnot=OrmUtils::getAnnotationInfoMember($annot["className"], "#joinColumn", $annot["mappedBy"]);
+				if ($fkAnnot !== false) {
+					$fkv=OrmUtils::getFirstKeyValue($instance);
+					$ret=self::getAll($annot["className"], $fkAnnot["name"] . "='" . $fkv . "'", true, false, $useCache);
+					self::setToMember($member, $instance, $ret, $class, "getOneToMany");
+				}
+			}
+			return $ret;
+	}
+
+	public static function affectsOneToManyFromArray($instance, $member, $array=null, $mappedBy=null) {
+		$ret=array ();
+		$class=get_class($instance);
+		if (!isset($mappedBy)){
+			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
+			$mappedBy=$annot["mappedBy"];
+		}
+		if ($mappedBy !== false) {
+				$fkv=OrmUtils::getFirstKeyValue($instance);
+				self::_getOneToManyFromArray($ret, $array, $fkv, $mappedBy);
+				self::setToMember($member, $instance, $ret, $class, "getOneToMany");
+		}
+		return $ret;
 	}
 
 	private static function setToMember($member, $instance, $value, $class, $part) {
@@ -204,14 +214,48 @@ class DAO {
 		$members=\array_diff($metaDatas["#fieldNames"],$metaDatas["#notSerializable"]);
 		$query=self::$db->prepareAndExecute($tableName, $condition,$members,$useCache);
 		Logger::log("getAll", "SELECT * FROM " . $tableName . $condition);
+		$oneToManyQueries=[];
+		$manyToOneQueries=[];
 
 		foreach ( $query as $row ) {
-			$objects[]=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $useCache);
+			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $oneToManyQueries,$manyToOneQueries,$useCache);
+			$key=OrmUtils::getFirstKeyValue($object);
+			$objects[$key]=$object;
+		}
+
+		if($loadManyToOne && \sizeof($manyToOneQueries)>0){
+			foreach ($manyToOneQueries as $key=>$conditions){
+				list($fkClass,$member,$fkField)=\explode("|", $key);
+				$condition=\implode(" OR ", $conditions);
+				$manyToOneObjects=self::getAll($fkClass,$condition,true,false,$useCache);
+				foreach ($objects as $object){
+					self::affectsManyToOneFromArray($object,$member,$manyToOneObjects,$fkField);
+				}
+			}
+		}
+
+		if($loadOneToMany && \sizeof($oneToManyQueries)>0){
+			foreach ($oneToManyQueries as $key=>$conditions){
+				list($class,$member,$mappedBy)=\explode("|", $key);
+				$condition=\implode(" OR ", $conditions);
+				$manyObjects=self::getAll($class,$condition,true,false,$useCache);
+				foreach ($objects as $object){
+					self::affectsOneToManyFromArray($object, $member,$manyObjects,$mappedBy);
+				}
+			}
 		}
 		return $objects;
 	}
 
-	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $members,$useCache=NULL) {
+	private static function affectsManyToOneFromArray($object,$member,$manyToOneObjects,$fkField){
+		$class=\get_class($object);
+		if(isset($object->$fkField)){
+			$value=$manyToOneObjects[$object->$fkField];
+			self::setToMember($member, $object, $value, $class, "getManyToOne");
+		}
+	}
+
+	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $members,&$oneToManyQueries,&$manyToOneQueries,$useCache=NULL) {
 		$o=new $className();
 		foreach ( $row as $k => $v ) {
 			if(($field=\array_search($k, $members))!==false){
@@ -222,15 +266,60 @@ class DAO {
 				}
 			}
 			if (isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
-				self::getOneManyToOne($o, $v, $invertedJoinColumns[$k], $useCache);
+				$fk="_".$k;
+				$o->$fk=$v;
+				self::prepareManyToOne($manyToOneQueries,$v, $fk,$invertedJoinColumns[$k]);
 			}
 		}
 		if (isset($oneToManyFields)) {
 			foreach ( $oneToManyFields as $k => $annot ) {
-				self::getOneToMany($o, $k, null, $useCache, $annot);
+				self::prepareOneToMany($oneToManyQueries,$o, $k, $annot);
 			}
 		}
 		return $o;
+	}
+
+
+	/**
+	 * Prépare les enregistrements fils dans le membre $member de $instance.
+	 * Si $array est null, les fils sont chargés depuis la base de données
+	 * @param $ret array of sql
+	 * @param object $instance
+	 * @param string $member Membre sur lequel doit être présent une annotation OneToMany
+	 * @param array $annot used internally
+	 */
+	private static function prepareOneToMany(&$ret,$instance, $member, $annot=null) {
+		$class=get_class($instance);
+		if (!isset($annot))
+			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
+			if ($annot !== false) {
+				$fkAnnot=OrmUtils::getAnnotationInfoMember($annot["className"], "#joinColumn", $annot["mappedBy"]);
+				if ($fkAnnot !== false) {
+					$fkv=OrmUtils::getFirstKeyValue($instance);
+					$key=$annot["className"]."|".$member."|".$annot["mappedBy"];
+					if(!isset($ret[$key])){
+						$ret[$key]=[];
+					}
+					$ret[$key][$fkv]=$fkAnnot["name"] . "='" . $fkv . "'";
+				}
+			}
+	}
+
+	/**
+	 * Prépare les membres associés à $instance par une relation de type ManyToOne
+	 * @param $ret array of sql
+	 * @param mixed $value
+	 * @param string $fkField
+	 * @param array $annotationArray
+	 */
+	private static function prepareManyToOne(&$ret, $value, $fkField,$annotationArray) {
+		$member=$annotationArray["member"];
+		$fk=OrmUtils::getFirstKey($annotationArray["className"]);
+		$key=$annotationArray["className"]."|".$member."|".$fkField;
+		if(!isset($ret[$key])){
+			$ret[$key]=[];
+		}
+		$ret[$key][$value]=$fk . "='" . $value . "'";
 	}
 
 	/**
@@ -263,7 +352,7 @@ class DAO {
 		if (sizeof($retour) < 1)
 			return null;
 		else
-			return $retour[0];
+			return \reset($retour);
 	}
 
 	/**
