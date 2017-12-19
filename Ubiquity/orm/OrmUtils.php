@@ -240,4 +240,16 @@ class OrmUtils {
 	public static function getDefaultFk($classname) {
 		return "id" . \ucfirst(self::getTableName($classname));
 	}
+
+	public static function getMemberJoinColumns($instance,$member){
+		$class=get_class($instance);
+		$metaDatas=self::getModelMetadata($class);
+		$invertedJoinColumns=$metaDatas["#invertedJoinColumn"];
+		foreach ($invertedJoinColumns as $field=>$invertedJoinColumn){
+			if($invertedJoinColumn["member"]===$member){
+				return [$field,$invertedJoinColumn];
+			}
+		}
+		return null;
+	}
 }

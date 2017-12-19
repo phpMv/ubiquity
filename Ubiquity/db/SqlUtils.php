@@ -2,10 +2,13 @@
 
 namespace Ubiquity\db;
 
+use Ubiquity\utils\JArray;
+use Ubiquity\orm\OrmUtils;
+
 /**
  * Utilitaires SQL
  * @author jc
- * @version 1.0.0.2
+ * @version 1.0.0.3
  */
 class SqlUtils {
 
@@ -55,5 +58,23 @@ class SqlUtils {
 			$ret[]=$quote . $key . $quote . "= :" . $key;
 		}
 		return implode(",", $ret);
+	}
+
+	public static function getCondition($keyValues,$classname=NULL,$separator=" AND ") {
+		$retArray=array ();
+		if (is_array($keyValues)) {
+			if(!JArray::isAssociative($keyValues)){
+				if(isset($classname)){
+					$keys=OrmUtils::getKeyFields($classname);
+					$keyValues=\array_combine($keys, $keyValues);
+				}
+			}
+			foreach ( $keyValues as $key => $value ) {
+				$retArray[]="`" . $key . "` = '" . $value . "'";
+			}
+			$condition=implode($separator, $retArray);
+		} else
+			$condition=$keyValues;
+		return $condition;
 	}
 }

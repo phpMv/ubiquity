@@ -59,9 +59,8 @@ class Database {
 	 * Réalise la connexion à la base de données
 	 */
 	public function connect() {
-		$this->pdoObject=new \PDO($this->dbType.':host=' . $this->serverName . ';dbname=' . $this->dbName . ';port:' . $this->port, $this->user, $this->password,$this->options);
+		$this->pdoObject=new \PDO($this->dbType.':host=' . $this->serverName . ';dbname=' . $this->dbName . ';charset=UTF8;port:' . $this->port, $this->user, $this->password,$this->options);
 		$this->pdoObject->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-		$this->pdoObject->exec("SET CHARACTER SET utf8");
 	}
 
 	/**
