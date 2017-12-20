@@ -182,7 +182,7 @@ trait CheckTrait{
 		}
 	}
 
-	protected function displayAllMessages($newStep=null){
+	protected function displayAllMessages(){
 		if($this->hasNoError()){
 			$this->_addInfoMessage("checkmark", "everything is fine here");
 		}

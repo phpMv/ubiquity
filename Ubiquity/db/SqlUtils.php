@@ -60,6 +60,14 @@ class SqlUtils {
 		return implode(",", $ret);
 	}
 
+	public static function checkWhere($condition){
+		$c=\strtolower($condition);
+		if ($condition != '' && \strstr($c, " join ")===false){
+			$condition=" WHERE " . $condition;
+		}
+		return $condition;
+	}
+
 	public static function getCondition($keyValues,$classname=NULL,$separator=" AND ") {
 		$retArray=array ();
 		if (is_array($keyValues)) {

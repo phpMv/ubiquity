@@ -18,7 +18,7 @@ class ApcuCache extends AbstractDataCache{
 	/**
 	 * Check if annotation-data for the key has been stored.
 	 * @param string $key cache key
-	 * @return boolean true if data with the given key has been stored; otherwise false
+	 * @return string[]|boolean true if data with the given key has been stored; otherwise false
 	 */
 	public function exists($key) {
 		return \apcu_exists($this->getRealKey($key));

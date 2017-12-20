@@ -116,44 +116,38 @@ class DAO {
 	}
 
 	/**
-	 *
+	 * Assigns / loads the child records in the $member member of $instance.
+	 * If $ array is null, the records are loaded from the database
 	 * @param object $instance
-	 * @param ManyToManyParser $parser
-	 * @return PDOStatement
-	 */
-	private static function getSQLForJoinTable($instance, ManyToManyParser $parser) {
-		$accessor="get" . ucfirst($parser->getPk());
-		$sql="SELECT * FROM `" . $parser->getJoinTable() . "` WHERE `" . $parser->getMyFkField() . "`='" . $instance->$accessor() . "'";
-		Logger::log("ManyToMany", "Exécution de " . $sql);
-		return self::$db->query($sql);
-	}
-
-	/**
-	 * Affecte/charge les enregistrements fils dans le membre $member de $instance.
-	 * Si $array est null, les fils sont chargés depuis la base de données
-	 * @param object $instance
-	 * @param string $member Membre sur lequel doit être présent une annotation ManyToMany
-	 * @param array $array paramètre facultatif contenant la liste des fils possibles
+	 * @param string $member Member on which a ManyToMany annotation must be present
+	 * @param array $array optional parameter containing the list of possible child records
 	 * @param boolean $useCache
 	 */
-	public static function getManyToMany($instance, $member, $array=null, $useCache=NULL) {
+	public static function getManyToMany($instance, $member,$array=null,$useCache=NULL){
 		$ret=array ();
 		$class=get_class($instance);
 		$parser=new ManyToManyParser($instance, $member);
 		if ($parser->init()) {
 			if (is_null($array)) {
-				$joinTableCursor=self::getSQLForJoinTable($instance, $parser);
-				foreach ( $joinTableCursor as $row ) {
-					$fkv=$row[$parser->getFkField()];
-					$tmp=self::getOne($parser->getTargetEntity(), "`" . $parser->getPk() . "`='" . $fkv . "'", false, false, $useCache);
-					array_push($ret, $tmp);
-				}
-			} else {
+				$accessor="get" . ucfirst($parser->getMyPk());
+				$condition=" INNER JOIN `" . $parser->getJoinTable() . "` on `".$parser->getJoinTable()."`.`".$parser->getFkField()."`=`".$parser->getTargetEntityTable()."`.`".$parser->getPk()."` WHERE `" . $parser->getMyFkField() . "`='" . $instance->$accessor() . "'";
+				$ret=self::getAll($parser->getTargetEntityClass(),$condition,true,false,$useCache);
+			}else{
 				self::getManyToManyFromArray($ret, $instance, $array, $class, $parser);
 			}
 			self::setToMember($member, $instance, $ret, $class, "getManyToMany");
 		}
 		return $ret;
+	}
+
+	public static function affectsManyToManys($instance,$array=NULL,$useCache=NULL){
+		$metaDatas=OrmUtils::getModelMetadata(\get_class($instance));
+		$manyToManyFields=$metaDatas["#manyToMany"];
+		if(\sizeof($manyToManyFields)>0){
+			foreach ($manyToManyFields as $member){
+				self::getManyToMany($instance, $member,null,$useCache);
+			}
+		}
 	}
 
 	private static function getManyToManyFromArray(&$ret, $instance, $array, $class, $parser) {
@@ -190,7 +184,7 @@ class DAO {
 	 * @param boolean $useCache use the active cache if true
 	 * @return array
 	 */
-	public static function getAll($className, $condition='', $loadManyToOne=true, $loadOneToMany=false, $useCache=NULL) {
+	public static function getAll($className, $condition='', $loadManyToOne=true, $loadOneToMany=false,$useCache=NULL) {
 		$objects=array ();
 		$invertedJoinColumns=null;
 		$oneToManyFields=null;
@@ -201,9 +195,7 @@ class DAO {
 		if ($loadOneToMany && isset($metaDatas["#oneToMany"])) {
 			$oneToManyFields=$metaDatas["#oneToMany"];
 		}
-		if ($condition != ''){
-			$condition=" WHERE " . $condition;
-		}
+		$condition=SqlUtils::checkWhere($condition);
 		$members=\array_diff($metaDatas["#fieldNames"],$metaDatas["#notSerializable"]);
 		$query=self::$db->prepareAndExecute($tableName, $condition,$members,$useCache);
 		Logger::log("getAll", "SELECT * FROM " . $tableName . $condition);
@@ -211,7 +203,7 @@ class DAO {
 		$manyToOneQueries=[];
 
 		foreach ( $query as $row ) {
-			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $oneToManyQueries,$manyToOneQueries,$useCache);
+			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $oneToManyQueries,$manyToOneQueries);
 			$key=OrmUtils::getFirstKeyValue($object);
 			$objects[$key]=$object;
 		}
@@ -260,7 +252,7 @@ class DAO {
 	 * @param boolean $useCache
 	 * @return object
 	 */
-	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $members,&$oneToManyQueries,&$manyToOneQueries,$useCache=NULL) {
+	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $members,&$oneToManyQueries,&$manyToOneQueries) {
 		$o=new $className();
 		foreach ( $row as $k => $v ) {
 			if(($field=\array_search($k, $members))!==false){
@@ -355,7 +347,7 @@ class DAO {
 			}
 		}
 		$condition=SqlUtils::getCondition($keyValues,$className);
-		$retour=self::getAll($className, $condition." limit 1", $loadManyToOne, $loadOneToMany, $useCache);
+		$retour=self::getAll($className, $condition." limit 1", $loadManyToOne, $loadOneToMany,$useCache);
 		if (sizeof($retour) < 1){
 			return null;
 		}

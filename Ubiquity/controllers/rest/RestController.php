@@ -178,7 +178,7 @@ abstract class RestController extends Controller {
 	public function getOneToMany($member,$useCache=false){
 		if(isset($_SESSION["_restInstance"])){
 			$useCache=StrUtils::isBooleanTrue($useCache);
-			$datas=DAO::getOneToMany($_SESSION["_restInstance"], $member,null,$useCache);
+			$datas=DAO::getOneToMany($_SESSION["_restInstance"], $member,$useCache);
 			$datas=\array_map(function($o){return $o->_rest;}, $datas);
 			echo $this->responseFormatter->get($datas);
 		}else{

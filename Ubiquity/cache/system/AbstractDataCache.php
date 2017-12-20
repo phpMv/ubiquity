@@ -27,7 +27,7 @@ abstract class AbstractDataCache {
 	/**
 	 * Check if annotation-data for the key has been stored.
 	 * @param string $key cache key
-	 * @return boolean true if data with the given key has been stored; otherwise false
+	 * @return string[]|boolean true if data with the given key has been stored; otherwise false
 	 */
 	abstract public function exists($key);
 
@@ -83,7 +83,7 @@ abstract class AbstractDataCache {
 	 * Returns the timestamp of the last cache update for the given key.
 	 *
 	 * @param string $key cache key
-	 * @return int unix timestamp
+	 * @return boolean|int unix timestamp
 	 */
 	abstract public function getTimestamp($key);
 

@@ -3,6 +3,7 @@ namespace Ubiquity\controllers\rest;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\cache\CacheManager;
+use Ubiquity\exceptions\RestException;
 
 /**
  * @author jc
@@ -65,10 +66,10 @@ class RestServer {
 			if (\strcasecmp($type, "Bearer") == 0) {
 				return $data;
 			} else {
-				throw new \Exception("Bearer is required in authorization header.");
+				throw new RestException("Bearer is required in authorization header.");
 			}
 		} else {
-			throw new \Exception("The header Authorization is required in http headers.");
+			throw new RestException("The header Authorization is required in http headers.");
 		}
 	}
 
@@ -138,7 +139,7 @@ class RestServer {
 			}else {
 				$this->_header('Access-Control-Allow-Headers','*');
 			}
-			exit(0);
+			throw new RestException("cors exit normally");
 		}
 	}
 

@@ -107,7 +107,7 @@ trait ModelsConfigTrait{
 			$_SESSION["step"]=$newStep;
 		}
 
-		$this->displayAllMessages($newStep);
+		$this->displayAllMessages();
 
 		echo $this->jquery->compile($this->view);
 	}
