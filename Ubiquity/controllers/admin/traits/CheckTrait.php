@@ -89,7 +89,7 @@ trait CheckTrait{
 			try{
 				if($db["dbName"]!==""){
 					$this->_addInfoMessage($infoIcon, "Attempt to connect to the database <b>".$db["dbName"]."</b> ...");
-					$db=new Database($db["type"],$db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"],@$db["cache"]);
+					$db=new Database($db["type"],$db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"],@$db["options"],@$db["cache"]);
 					$db->connect();
 				}
 			}catch(\Exception $e){

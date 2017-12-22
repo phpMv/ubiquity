@@ -65,7 +65,7 @@ class ApcuCache extends AbstractDataCache{
 	 * Returns the timestamp of the last cache update for the given key.
 	 *
 	 * @param string $key cache key
-	 * @return int unix timestamp
+	 * @return boolean|int unix timestamp
 	 */
 	public function getTimestamp($key) {
 			$key=$this->getRealKey($key);

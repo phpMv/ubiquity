@@ -89,6 +89,13 @@ class OrmUtils {
 		return [ ];
 	}
 
+	public static function getFieldType($className,$field){
+		$types= self::getFieldTypes($className);
+		if(isset($types[$field]))
+			return $types[$field];
+		return "int";
+	}
+
 	public static function getMembersAndValues($instance, $members=NULL) {
 		$ret=array ();
 		$className=get_class($instance);
@@ -241,9 +248,11 @@ class OrmUtils {
 		return "id" . \ucfirst(self::getTableName($classname));
 	}
 
-	public static function getMemberJoinColumns($instance,$member){
-		$class=get_class($instance);
-		$metaDatas=self::getModelMetadata($class);
+	public static function getMemberJoinColumns($instance,$member,$metaDatas=NULL){
+		if(!isset($metaDatas)){
+			$class=get_class($instance);
+			$metaDatas=self::getModelMetadata($class);
+		}
 		$invertedJoinColumns=$metaDatas["#invertedJoinColumn"];
 		foreach ($invertedJoinColumns as $field=>$invertedJoinColumn){
 			if($invertedJoinColumn["member"]===$member){

@@ -140,12 +140,17 @@ class DAO {
 		return $ret;
 	}
 
+	/**
+	 * @param object $instance
+	 * @param array $array
+	 * @param boolean $useCache
+	 */
 	public static function affectsManyToManys($instance,$array=NULL,$useCache=NULL){
 		$metaDatas=OrmUtils::getModelMetadata(\get_class($instance));
 		$manyToManyFields=$metaDatas["#manyToMany"];
 		if(\sizeof($manyToManyFields)>0){
 			foreach ($manyToManyFields as $member){
-				self::getManyToMany($instance, $member,null,$useCache);
+				self::getManyToMany($instance, $member,$array,$useCache);
 			}
 		}
 	}
@@ -249,7 +254,6 @@ class DAO {
 	 * @param array $members
 	 * @param array $oneToManyQueries
 	 * @param array $manyToOneQueries
-	 * @param boolean $useCache
 	 * @return object
 	 */
 	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $members,&$oneToManyQueries,&$manyToOneQueries) {
