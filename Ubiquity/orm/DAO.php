@@ -22,8 +22,7 @@ class DAO {
 	/**
 	 * Loads member associated with $instance by a ManyToOne type relationship
 	 * @param object $instance
-	 * @param mixed $value
-	 * @param array $annotationArray
+	 * @param string $member
 	 * @param boolean $useCache
 	 */
 	public static function getManyToOne($instance, $member, $useCache=NULL) {

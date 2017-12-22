@@ -190,7 +190,6 @@ class DbGenerator {
 			$fieldTypes[$fieldName]=$type;
 			$memberName=\lcfirst($shortClassName);
 			$manyToOnes[]=$memberName;
-			//$fields[]=$memberName;
 			$invertedJoinColumns[$fieldName]=["member"=>$memberName,"className"=>$targetEntity];
 		}
 		$metas=["#tableName"=>$joinTable,"#primaryKeys"=>$fields,"#nullable"=>[],

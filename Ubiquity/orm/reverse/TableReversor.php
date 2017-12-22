@@ -34,7 +34,7 @@ class TableReversor {
 		$manyToManys=[];
 		if(isset($this->metas["#manyToMany"]))
 			$manyToManys=$this->metas["#manyToMany"];
-		$this->scanManyToManys($generator, $manyToManys,$table);
+		$this->scanManyToManys($generator, $manyToManys);
 		$this->generatePks($generator, $primaryKeys, $table, $fieldTypes,$nullables);
 		$this->generateForeignKeys($generator, $manyToOnes, $table);
 		$serializables=\array_unique(\array_merge($serializables,$this->fkFieldsToAdd));
