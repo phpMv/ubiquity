@@ -13,11 +13,15 @@ class RouteAnnotation extends BaseAnnotation {
 	public $name;
 	public $cache;
 	public $duration;
+	public $inherited;
+	public $automated;
 
 	/**
 	 * Initialize the annotation.
 	 */
 	public function initAnnotation(array $properties) {
+		$this->inherited=false;
+		$this->automated=false;
 		if (isset($properties[0])) {
 			$this->path=$properties[0];
 			unset($properties[0]);

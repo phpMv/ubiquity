@@ -11,8 +11,8 @@ use Ubiquity\db\Database;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\JsUtils;
 use Ubiquity\utils\FsUtils;
-use Ubiquity\orm\creator\ModelsCreator;
 use Ubiquity\cache\system\ArrayCache;
+use Ubiquity\orm\creator\database\DbModelsCreator;
 
 /**
  * @author jc
@@ -37,7 +37,7 @@ trait CheckTrait{
 	public function createModels($singleTable=null){
 		$config=Startup::getConfig();
 		\ob_start();
-		ModelsCreator::create($config,false,$singleTable);
+		(new DbModelsCreator())->create($config,false,$singleTable);
 		$result=\ob_get_clean();
 		$message=$this->showSimpleMessage("", "success","check mark",null,"msg-create-models");
 		$message->addHeader("Models creation");
@@ -52,7 +52,7 @@ trait CheckTrait{
 		if(!isset($niveau))
 			$niveauMax=$this->activeStep-1;
 			$steps=$this->getModelSteps();
-			while ($nbChecked<=$niveauMax && $this->hasNoError()){
+			while ($nbChecked<=$niveauMax && $this->hasNoError() && isset($steps[$nbChecked])){
 				$this->_modelCheckOneNiveau($steps[$nbChecked][1]);
 				$nbChecked++;
 			}
@@ -207,15 +207,18 @@ trait CheckTrait{
 			break;
 			case "Connexion": case "Database":
 				if($this->engineering==="reverse")
-					$buttons->addItem("(Re-)Create database")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/createDb","#action-response")->addIcon("database");
+					$buttons->addItem("(Re-)Create database")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/showDatabaseCreation","#main-content")->addIcon("database");
 			break;
 			case "Models":
 				if($this->engineering==="forward")
 					$buttons->addItem("(Re-)Create models")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/createModels","#main-content",["attr"=>""])->addIcon("sticky note");
-					$bt=$buttons->addItem("Classes diagram")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_showAllClassesDiagram","#action-response",["attr"=>"","ajaxTransition"=>"random"]);
-					$bt->addIcon("sticky note outline");
-					if($this->hasError())
-						$bt->addClass("disabled");
+				else{
+					$buttons->addItem("Import from Yuml")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_importFromYuml","#models-main",["attr"=>""])->addIcon("sticky note");
+				}
+				$bt=$buttons->addItem("Classes diagram")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_showAllClassesDiagram","#action-response",["attr"=>"","ajaxTransition"=>"random"]);
+				$bt->addIcon("sticky note outline");
+				if($this->hasError())
+					$bt->addClass("disabled");
 			break;
 			case "Cache":
 				$buttons->addItem("(Re-)Init models cache")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_initModelsCache","#main-content")->addIcon("lightning");

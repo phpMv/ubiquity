@@ -85,4 +85,15 @@ class SqlUtils {
 			$condition=$keyValues;
 		return $condition;
 	}
+
+	public static function getFieldList($fields){
+		if(!\is_array($fields)){
+			return $fields;
+		}
+		$result=[];
+		foreach ($fields as $field) {
+			$result[]= "`{$field}`";
+		}
+		return \implode(",", $result);
+	}
 }

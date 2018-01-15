@@ -4,7 +4,7 @@
 use Ubiquity\controllers\rest\RestController;
 
 /**
- * @route("%route%")
+ * @route("%route%","inherited"=>true,"automated"=>true)
  * @rest("resource"=>"%resource%")
  */
 class %controllerName% extends RestController {

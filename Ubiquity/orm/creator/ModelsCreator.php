@@ -9,44 +9,26 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\utils\FsUtils;
 
 
-class ModelsCreator {
-	private static $config;
-	private static $pdoObject;
-	private static $tables=array();
-	private static $classes=array();
+abstract class ModelsCreator {
+	protected $config;
+	protected $tables=array();
+	protected $classes=array();
 
-	private static function init($config){
-		self::$config=$config["database"];
-		self::connect($config["database"]);
-	}
-	/**
-	 * Réalise la connexion à la base de données
-	 */
-	private static function connect($config) {
-		try {
-			self::$pdoObject = new \PDO(
-					$config["type"].':host=' . $config["serverName"] . ';dbname='
-					. $config["dbName"] . ';port:' . $config["port"],
-					$config["user"], $config["password"]);
-			self::$pdoObject->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-			self::$pdoObject->exec("SET CHARACTER SET utf8");
-
-		} catch (\PDOException $e) {
-			print "Error!: " . $e->getMessage() . "<br/>";
-		}
+	protected function init($config){
+		$this->config=$config["database"];
 	}
 
-	public static function create($config,$initCache=true,$singleTable=null){
-		self::init($config);
+	public function create($config,$initCache=true,$singleTable=null){
+		$this->init($config);
 		$modelsDir=Startup::getModelsCompletePath();
 		if(FsUtils::safeMkdir($modelsDir)){
-			self::$tables=self::getTablesName();
+			$this->tables=$this->getTablesName();
 			CacheManager::checkCache($config);
 
-			foreach (self::$tables as $table){
+			foreach ($this->tables as $table){
 				$class=new Model($table,$config["mvcNS"]["models"]);
-				$fieldsInfos=self::getFieldsInfos($table);
-				$keys=self::getPrimaryKeys($table);
+				$fieldsInfos=$this->getFieldsInfos($table);
+				$keys=$this->getPrimaryKeys($table);
 				foreach ($fieldsInfos as $field=>$info){
 					$member=new Member($field);
 					if(in_array($field, $keys)){
@@ -55,16 +37,16 @@ class ModelsCreator {
 					$member->setDbType($info);
 					$class->addMember($member);
 				}
-				self::$classes[$table]=$class;
+				$this->classes[$table]=$class;
 			}
-			self::createRelations();
+			$this->createRelations();
 			if(isset($singleTable)){
-				self::createOneClass($singleTable,$modelsDir);
+				$this->createOneClass($singleTable,$modelsDir);
 			}else{
-				foreach (self::$classes as $table=>$class){
+				foreach ($this->classes as $table=>$class){
 					$name=$class->getSimpleName();
 					echo "Creating the {$name} class\n";
-					self::writeFile($modelsDir.DS.$name.".php", $class);
+					$this->writeFile($modelsDir.DS.$name.".php", $class);
 				}
 			}
 			if($initCache===true){
@@ -73,57 +55,64 @@ class ModelsCreator {
 		}
 	}
 
-	private static function createOneClass($singleTable,$modelsDir){
-		if(isset(self::$classes[$singleTable])){
-			$class=self::$classes[$singleTable];
+	protected function createOneClass($singleTable,$modelsDir){
+		if(isset($this->classes[$singleTable])){
+			$class=$this->classes[$singleTable];
 			echo "Creating the {$class->getName()} class\n";
-			self::writeFile($modelsDir.DS.$singleTable.".php", $class);
+			$this->writeFile($modelsDir.DS.$singleTable.".php", $class);
 		}else{
 			echo "The {$singleTable} table does not exist in the database\n";
 		}
 	}
 
-	private static function createRelations(){
-		foreach (self::$classes as $table=>$class){
-			$keys=self::getPrimaryKeys($table);
+	protected function createRelations(){
+		foreach ($this->classes as $table=>$class){
+			$keys=$this->getPrimaryKeys($table);
 			foreach ($keys as $key){
-				$fks=self::getForeignKeys($table, $key);
+				$fks=$this->getForeignKeys($table, $key);
 				foreach ($fks as $fk){
 					$field=strtolower($table);
 					$fkTable=$fk["TABLE_NAME"];
-					self::$classes[$table]->addOneToMany($fkTable."s",$table, self::$classes[$fkTable]->getName());
-					self::$classes[$fkTable]->addManyToOne($field, $fk["COLUMN_NAME"], $class->getName());
+					$this->classes[$table]->addOneToMany($fkTable."s",$table, $this->classes[$fkTable]->getName());
+					$this->classes[$fkTable]->addManyToOne($field, $fk["COLUMN_NAME"], $class->getName());
 				}
 			}
 		}
-		self::createManyToMany();
+		$this->createManyToMany();
 	}
 
-	private static function getTableName($classname){
+	protected function getTableName($classname){
+		foreach ($this->classes as $table=>$class){
+			if($class->getName()===$classname)
+				return $table;
+		}
 		$posSlash=strrpos($classname, '\\');
 		$tablename=substr($classname,  $posSlash+ 1);
 		return lcfirst($tablename);
 	}
 
-	private static function createManyToMany(){
-		foreach (self::$classes as $table=>$class){
+	protected function createManyToMany(){
+		foreach ($this->classes as $table=>$class){
 			if($class->isAssociation()===true){
 				$members=$class->getManyToOneMembers();
 				if(sizeof($members)==2){
 					$manyToOne1=$members[0]->getManyToOne();
 					$manyToOne2=$members[1]->getManyToOne();
-					$table1=self::getTableName($manyToOne1->className);
-					$table2=self::getTableName($manyToOne2->className);
-					$class1=self::$classes[$table1];
-					$class2=self::$classes[$table2];
-					$joinTable1=self::getJoinTableArray($class1, $manyToOne1);
-					$joinTable2=self::getJoinTableArray($class2, $manyToOne2);
-					$class1->addManyToMany($table2."s", $manyToOne2->className, $table1."s", $table,$joinTable1,$joinTable2);
-					$class1->removeMember($table."s");
+					$table1=$this->getTableName($manyToOne1->className);
+					$table2=$this->getTableName($manyToOne2->className);
+					$class1=$this->classes[$table1];
+					$class2=$this->classes[$table2];
+					$tableMember=\lcfirst($table)."s";
+					$table1Member=\lcfirst($table1)."s";
+					$table2Member=\lcfirst($table2)."s";
+					$joinTable1=$this->getJoinTableArray($class1, $manyToOne1);
+					$joinTable2=$this->getJoinTableArray($class2, $manyToOne2);
+					$class1->addManyToMany($table2Member, $manyToOne2->className, $table1Member, $table,$joinTable1,$joinTable2);
+					$class1->removeMember($tableMember);
 
-					$class2->addManyToMany($table1."s", $manyToOne1->className, $table2."s", $table,$joinTable2,$joinTable1);
-					$class2->removeMember($table."s");
-					unset(self::$classes[$table]);
+					$class2->addManyToMany($table1Member, $manyToOne1->className, $table2Member, $table,$joinTable2,$joinTable1);
+					$class2->removeMember($tableMember);
+					unset($this->classes[$table]);
 				}else{
 					return;
 				}
@@ -131,7 +120,7 @@ class ModelsCreator {
 		}
 	}
 
-	private static function getJoinTableArray(Model $class,JoinColumnAnnotation $joinColumn){
+	protected function getJoinTableArray(Model $class,JoinColumnAnnotation $joinColumn){
 		$pk=$class->getPrimaryKey();
 		$fk=$joinColumn->name;
 		$dFk=$class->getDefaultFk();
@@ -142,44 +131,13 @@ class ModelsCreator {
 		return [];
 	}
 
-	private static function getTablesName(){
-		$sql = 'SHOW TABLES';
-			$query = self::$pdoObject->query($sql);
-			return $query->fetchAll(\PDO::FETCH_COLUMN);
-	}
+	abstract protected function getTablesName();
 
-	private static function getFieldsInfos($tableName) {
-		$fieldsInos=array();
-		$recordset = self::$pdoObject->query("SHOW COLUMNS FROM `{$tableName}`");
-		$fields = $recordset->fetchAll(\PDO::FETCH_ASSOC);
-		foreach ($fields as $field) {
-			$fieldsInos[$field['Field']] = ["Type"=>$field['Type'],"Nullable"=>$field["Null"]];
-		}
-		return $fieldsInos;
-	}
+	abstract protected function getFieldsInfos($tableName);
 
-	private static function getPrimaryKeys($tableName){
-		$fieldkeys=array();
-		$recordset = self::$pdoObject->query("SHOW KEYS FROM `{$tableName}` WHERE Key_name = 'PRIMARY'");
-		$keys = $recordset->fetchAll(\PDO::FETCH_ASSOC);
-		foreach ($keys as $key) {
-			$fieldkeys[] = $key['Column_name'];
-		}
-		return $fieldkeys;
-	}
+	abstract protected function getPrimaryKeys($tableName);
 
-	private static function getForeignKeys($tableName,$pkName){
-		$recordset = self::$pdoObject->query("SELECT *
-												FROM
-												 information_schema.KEY_COLUMN_USAGE
-												WHERE
-												 REFERENCED_TABLE_NAME = '".$tableName."'
-												 AND REFERENCED_COLUMN_NAME = '".$pkName."'
-												 AND TABLE_SCHEMA = '".self::$config["dbName"]."';");
-		return $recordset->fetchAll(\PDO::FETCH_ASSOC);
-	}
-
-	private static function writeFile($filename,$data){
+	protected function writeFile($filename,$data){
 		return file_put_contents($filename,$data);
 	}
 }

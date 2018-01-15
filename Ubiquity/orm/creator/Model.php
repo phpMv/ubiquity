@@ -27,7 +27,7 @@ class Model {
 	}
 
 	public function removeMember($memberName) {
-		if ($this->members[$memberName]->isPrimary() === false)
+		if (isset($this->members[$memberName]) && $this->members[$memberName]->isPrimary() === false)
 			unset($this->members[$memberName]);
 	}
 

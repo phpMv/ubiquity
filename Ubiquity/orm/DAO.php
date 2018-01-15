@@ -262,9 +262,9 @@ class DAO {
 				$accesseur="set" . ucfirst($field);
 				if (method_exists($o, $accesseur)) {
 					$o->$accesseur($v);
-					$o->_rest[$field]=$v;
 				}
 			}
+			$o->_rest[$k]=$v;
 			if (isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
 				$fk="_".$k;
 				$o->$fk=$v;

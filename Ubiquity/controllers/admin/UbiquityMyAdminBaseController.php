@@ -35,9 +35,11 @@ use Ubiquity\controllers\admin\traits\ModelsTrait;
 use Ubiquity\controllers\admin\traits\RoutesTrait;
 use Ubiquity\utils\StrUtils;
 use Ubiquity\utils\UbiquityUtils;
+use Ubiquity\controllers\admin\traits\DatabaseTrait;
+use Ajax\semantic\html\collections\form\HtmlFormInput;
 
 class UbiquityMyAdminBaseController extends ControllerBase {
-	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait;
+	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait;
 	/**
 	 *
 	 * @var UbiquityMyAdminData
@@ -77,6 +79,33 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 			$this->jquery->compile($this->view);
 			$this->loadView($this->_getAdminFiles()->getViewHeader());
 		}
+	}
+
+	public function finalize(){
+		if(!RequestUtils::isAjax()){
+			$this->loadView("Admin/main/vFooter.html",["js"=>$this->initializeJs()]);
+		}
+	}
+
+	protected function initializeJs(){
+		$js='var setAceEditor=function(elementId,readOnly,mode,maxLines){
+			mode=mode || "sql";readOnly=readOnly || false;maxLines=maxLines || 100;
+			var editor = ace.edit(elementId);
+			editor.setTheme("ace/theme/solarized_dark");
+			editor.getSession().setMode({path:"ace/mode/"+mode, inline:true});
+			editor.setOptions({
+				maxLines: maxLines,
+				minLines: 2,
+				showInvisibles: true,
+				showGutter: !readOnly,
+				showPrintMargin: false,
+				readOnly: readOnly,
+				showLineNumbers: !readOnly,
+				highlightActiveLine: !readOnly,
+				highlightGutterLine: !readOnly
+				});
+		};';
+		return $this->jquery->inline($js);
 	}
 
 	public function index() {
@@ -337,11 +366,12 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$this->jquery->exec('$("#modelsMessages-success").hide()', true);
 		$menu->compile($this->jquery, $this->view);
 		$form=$this->jquery->semantic()->htmlForm("frm-yuml-code");
-		$form->addTextarea("yuml-code", "Yuml code", $yumlContent . "");
+		$textarea=$form->addTextarea("yuml-code", "Yuml code", \str_replace(",", ",\n", $yumlContent.""));
+		$textarea->getField()->setProperty("rows",20);
 		$diagram=$this->_getYumlImage("plain", $yumlContent);
 		$this->jquery->execAtLast('$("#all-classes-diagram-tab .item").tab();');
 		$this->jquery->compile($this->view);
-		$this->loadView($this->_getAdminFiles()->getViewClassesDagram(), [ "diagram" => $diagram ]);
+		$this->loadView($this->_getAdminFiles()->getViewClassesDiagram(), [ "diagram" => $diagram ]);
 	}
 
 	public function _updateAllClassesDiagram() {
@@ -357,6 +387,31 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 
 	protected function _getYumlImage($sizeType, $yumlContent) {
 		return "<img src='http://yuml.me/diagram/" . $sizeType . "/class/" . $yumlContent . "'>";
+	}
+
+	public function showDatabaseCreation(){
+		$config=Startup::getConfig();
+		$models=$this->getModels();
+		$segment=$this->jquery->semantic()->htmlSegment("menu");
+		$segment->setTagName("form");
+		$header=new HtmlHeader("",5,"Database creation");
+		$header->addIcon("plus");
+		$segment->addContent($header);
+		$input=new HtmlFormInput("dbName");
+		$input->setValue($config["database"]["dbName"]);
+		$input->getField()->setFluid();
+		$segment->addContent($input);
+		$list=new HtmlList("lst-checked");
+		$list->addCheckedList([ "dbCreation" => "Creation","dbUse"=>"Use" ], [ "Database","db" ], [ "use","creation" ], false, "dbProperties[]");
+		$list->addCheckedList($models, [ "Models [tables]","modTables" ], \array_keys($models), false, "tables[]");
+		$list->addCheckedList([ "manyToOne" => "ManyToOne","oneToMany"=>"oneToMany" ], [ "Associations","displayAssociations" ], [ "displayAssociations" ], false, "associations[]");
+		$btApply=new HtmlButton("bt-apply", "Create SQL script", "green fluid");
+		$btApply->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/createSQLScript", "menu","#div-create", [ "ajaxTransition" => "random","attr" => ""]);
+		$list->addItem($btApply);
+
+		$segment->addContent($list);
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewDatabaseIndex());
 	}
 
 	public function _runPostWithParams($method="post", $type="parameter", $origine="routes") {

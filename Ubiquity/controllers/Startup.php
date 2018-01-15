@@ -15,15 +15,17 @@ class Startup {
 	public static function run(array &$config, $url) {
 		self::$config=$config;
 		self::startTemplateEngine($config);
-
 		session_start();
+		self::forward($url);
+	}
 
+	public static function forward($url){
 		$u=self::parseUrl($url);
 		if (($ru=Router::getRoute($url)) !== false) {
 			if (\is_array($ru))
 				self::runAction($ru);
-			else
-				echo $ru;
+				else
+					echo $ru;
 		} else {
 			self::setCtrlNS();
 			$u[0]=self::$ctrlNS . $u[0];

@@ -4,6 +4,13 @@ namespace Ubiquity\controllers\admin\traits;
 use Ajax\JsUtils;
 use Ubiquity\views\View;
 use Ubiquity\db\Database;
+use Ubiquity\utils\RequestUtils;
+use Ajax\semantic\html\collections\menus\HtmlMenu;
+use Ajax\semantic\html\elements\HtmlButton;
+use Ajax\semantic\html\modules\HtmlDropdown;
+use Ubiquity\orm\creator\yuml\YumlModelsCreator;
+use Ubiquity\controllers\Startup;
+use Ubiquity\controllers\Router;
 
 /**
  * @author jc
@@ -80,7 +87,9 @@ trait ModelsConfigTrait{
 	}
 
 	protected function getActiveModelStep(){
-		return $this->getModelSteps()[$this->activeStep];
+		if(isset($this->getModelSteps()[$this->activeStep]))
+			return $this->getModelSteps()[$this->activeStep];
+		return end($this->steps);
 	}
 
 	protected function getNextModelStep(){
@@ -110,6 +119,59 @@ trait ModelsConfigTrait{
 		$this->displayAllMessages();
 
 		echo $this->jquery->compile($this->view);
+	}
+
+	public function _importFromYuml(){
+		$yumlContent="[User|«pk» id:int(11);name:varchar(11)],[Groupe|«pk» id:int(11);name:varchar(11)],[User]0..*-0..*[Groupe]";
+		$bt=$this->jquery->semantic()->htmlButton("bt-gen","Generate models","green fluid");
+		$bt->postOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/_generateFromYuml","{code:$('#yuml-code').val()}","#stepper",["attr"=>"","jqueryDone"=>"replaceWith"]);
+		$menu=$this->_yumlMenu("/_updateYumlDiagram", "{refresh:'true',code:$('#yuml-code').val()}", "#diag-class");
+		$this->jquery->exec('$("#modelsMessages-success").hide()', true);
+		$menu->compile($this->jquery, $this->view);
+		$form=$this->jquery->semantic()->htmlForm("frm-yuml-code");
+		$textarea=$form->addTextarea("yuml-code", "Yuml code", \str_replace(",", ",\n", $yumlContent.""));
+		$textarea->getField()->setProperty("rows",20);
+		$diagram=$this->_getYumlImage("plain", $yumlContent);
+		$this->jquery->execAtLast('$("#yuml-tab .item").tab();');
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewYumlReverse(), [ "diagram" => $diagram ]);
+	}
+
+	public function _generateFromYuml(){
+		if (RequestUtils::isPost()) {
+			$config=Startup::getConfig();
+			$yumlGen=new YumlModelsCreator();
+			$yumlGen->initYuml($_POST["code"]);
+			\ob_start();
+			$yumlGen->create($config);
+			\ob_get_clean();
+			Startup::forward($this->_getAdminFiles()->getAdminBaseRoute()."/_changeEngineering/completed");
+		}
+	}
+
+	public function _updateYumlDiagram() {
+		if (RequestUtils::isPost()) {
+			$type=$_POST["type"];
+			$size=$_POST["size"];
+			$yumlContent=$_POST["code"];
+			echo $this->_getYumlImage($type . $size, $yumlContent);
+			echo $this->jquery->compile();
+		}
+	}
+
+	private function _yumlMenu($url="/_updateDiagram", $params="{}", $responseElement="#diag-class", $type="plain", $size=";scale:100") {
+		$params=JsUtils::_implodeParams([ "$('#frmProperties').serialize()",$params ]);
+		$menu=new HtmlMenu("menu-diagram");
+		$ddScruffy=new HtmlDropdown("ddScruffy", $type, [ "nofunky" => "Boring","plain" => "Plain","scruffy" => "Scruffy" ], true);
+		$ddScruffy->setValue("plain")->asSelect("type");
+		$this->jquery->postOn("change", "#type", $this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
+		$menu->addItem($ddScruffy);
+		$ddSize=new HtmlDropdown("ddSize", $size, [ ";scale:180" => "Huge",";scale:120" => "Big",";scale:100" => "Normal",";scale:80" => "Small",";scale:60" => "Tiny" ], true);
+		$ddSize->asSelect("size");
+		$this->jquery->postOn("change", "#size", $this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
+		$menu->wrap("<form id='frmProperties' name='frmProperties'>", "</form>");
+		$menu->addItem($ddSize);
+		return $menu;
 	}
 
 	protected function displayModelsMessages($type,$messagesToDisplay){

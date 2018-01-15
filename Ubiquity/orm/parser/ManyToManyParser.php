@@ -7,7 +7,7 @@ use Ubiquity\orm\OrmUtils;
 /**
  * ManyToManyParser
  * @author jc
- * @version 1.0.0.3
+ * @version 1.0.0.4
  */
 class ManyToManyParser {
 	private $member;
@@ -29,8 +29,9 @@ class ManyToManyParser {
 
 	public function init() {
 		$member=$this->member;
-		$instance=$this->instance;
-		$class=get_class($instance);
+		$class=$this->instance;
+		if(\is_string($class)===false)
+			$class=get_class($class);
 		$annot=OrmUtils::getAnnotationInfoMember($class, "#manyToMany", $member);
 		if ($annot !== false) {
 			$this->targetEntity=$annot["targetEntity"];

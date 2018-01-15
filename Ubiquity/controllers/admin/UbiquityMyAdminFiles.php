@@ -56,7 +56,23 @@ class UbiquityMyAdminFiles {
 		return "Admin/main/vHeader.html";
 	}
 
-	public function getViewClassesDagram(){
+	public function getViewClassesDiagram(){
 		return "Admin/data/diagClasses.html";
+	}
+
+	public function getViewYumlReverse(){
+		return "Admin/data/yumlReverse.html";
+	}
+
+	public function getViewDatabaseIndex(){
+		return "Admin/database/index.html";
+	}
+
+	public function getViewDatabaseCreate(){
+		return "Admin/database/create.html";
+	}
+
+	public function getViewDatasExport(){
+		return "Admin/database/export.html";
 	}
 }

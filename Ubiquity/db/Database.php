@@ -79,7 +79,7 @@ class Database {
 			$result=$this->cache->fetch($tableName, $condition);
 		}
 		if ($result === false) {
-			$fields=$this->getFieldList($fields);
+			$fields=SqlUtils::getFieldList($fields);
 			$statement=$this->getStatement("SELECT {$fields} FROM " . $tableName . $condition);
 			$statement->execute();
 			$result=$statement->fetchAll();
@@ -89,17 +89,6 @@ class Database {
 			}
 		}
 		return $result;
-	}
-
-	protected function getFieldList($fields){
-		if(!\is_array($fields)){
-			return $fields;
-		}
-		$result=[];
-		foreach ($fields as $field) {
-			$result[]= "`{$field}`";
-		}
-		return \implode(",", $result);
 	}
 
 	private function getStatement($sql) {
@@ -163,4 +152,26 @@ class Database {
 	public function isConnected(){
 		return ($this->pdoObject!==null && $this->pdoObject instanceof \PDO);
 	}
+
+	public function setDbType($dbType) {
+		$this->dbType=$dbType;
+		return $this;
+	}
+
+	public function getPort() {
+		return $this->port;
+	}
+
+	public function getDbName() {
+		return $this->dbName;
+	}
+
+	public function getUser() {
+		return $this->user;
+	}
+
+	public function getPdoObject() {
+		return $this->pdoObject;
+	}
+
 }
