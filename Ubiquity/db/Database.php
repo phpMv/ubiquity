@@ -149,6 +149,17 @@ class Database {
 		return $query->fetchAll(\PDO::FETCH_COLUMN);
 	}
 
+	/**
+	 * Retourne le nombre d'enregistrements de $tableName respectant la condition éventuellement passée en paramètre
+	 * @param string $tableName
+	 * @param string $condition Partie suivant le WHERE d'une instruction SQL
+	 */
+	public function count($tableName, $condition='') {
+		if ($condition != '')
+			$condition=" WHERE " . $condition;
+			return $this->query("SELECT COUNT(*) FROM " . $tableName . $condition)->fetchColumn();
+	}
+
 	public function isConnected(){
 		return ($this->pdoObject!==null && $this->pdoObject instanceof \PDO);
 	}

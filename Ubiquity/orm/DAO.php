@@ -345,12 +345,15 @@ class DAO {
 	 */
 	public static function getOne($className, $keyValues, $loadManyToOne=true, $loadOneToMany=false, $useCache=NULL) {
 		if (!is_array($keyValues)) {
-			if (strrpos($keyValues, "=") === false) {
+			if (strrpos($keyValues, "=") === false && strrpos($keyValues, ">") === false && strrpos($keyValues, "<") === false) {
 				$keyValues="`" . OrmUtils::getFirstKey($className) . "`='" . $keyValues . "'";
 			}
 		}
 		$condition=SqlUtils::getCondition($keyValues,$className);
-		$retour=self::getAll($className, $condition." limit 1", $loadManyToOne, $loadOneToMany,$useCache);
+		$limit="";
+		if(\stripos($condition, " limit ")===false)
+			$limit=" limit 1";
+		$retour=self::getAll($className, $condition.$limit, $loadManyToOne, $loadOneToMany,$useCache);
 		if (sizeof($retour) < 1){
 			return null;
 		}
