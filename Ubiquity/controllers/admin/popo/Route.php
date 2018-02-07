@@ -32,7 +32,7 @@ class Route {
 		$this->name=$array["name"];
 		$this->cache=$array["cache"];
 		$this->duration=$array["duration"];
-		if(\sizeof($array["parameters"])>0){
+		if(isset($array["parameters"]) && \sizeof($array["parameters"])>0){
 			if(\class_exists($this->controller)){
 				if(\method_exists($this->controller, $this->action)){
 					$method=new \ReflectionMethod($this->controller,$this->action);
