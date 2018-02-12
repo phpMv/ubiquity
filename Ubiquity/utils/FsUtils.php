@@ -3,31 +3,31 @@
 namespace Ubiquity\utils;
 
 /**
- *
+ * File system utilities
  * @author jc
  * @version 1.0.0.1
  */
 class FsUtils {
 
 	public static function glob_recursive($pattern, $flags=0) {
-		$files=glob($pattern, $flags);
-		foreach ( glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir ) {
-			$files=array_merge($files, self::glob_recursive($dir . '/' . basename($pattern), $flags));
+		$files=\glob($pattern, $flags);
+		foreach ( \glob(\dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir ) {
+			$files=\array_merge($files, self::glob_recursive($dir . '/' . \basename($pattern), $flags));
 		}
 		return $files;
 	}
 
 	public static function deleteAllFilesFromFolder($folder) {
-		$files=glob($folder . '/*');
+		$files=\glob($folder . '/*');
 		foreach ( $files as $file ) {
-			if (is_file($file))
-				unlink($file);
+			if (\is_file($file))
+				\unlink($file);
 		}
 	}
 
 	public static function safeMkdir($dir) {
-		if (!is_dir($dir))
-			return mkdir($dir, 0777, true);
+		if (!\is_dir($dir))
+			return \mkdir($dir, 0777, true);
 		return true;
 	}
 
@@ -46,8 +46,8 @@ class FsUtils {
 	}
 
 	public static function openReplaceInTemplateFile($source, $keyAndValues) {
-		if (file_exists($source)) {
-			$str=file_get_contents($source);
+		if (\file_exists($source)) {
+			$str=\file_get_contents($source);
 			return self::replaceFromTemplate($str, $keyAndValues);
 		}
 		return false;
@@ -55,22 +55,22 @@ class FsUtils {
 
 	public static function openReplaceWriteFromTemplateFile($source, $destination, $keyAndValues) {
 		if (($str=self::openReplaceInTemplateFile($source, $keyAndValues))) {
-			return file_put_contents($destination, $str, LOCK_EX);
+			return \file_put_contents($destination, $str, LOCK_EX);
 		}
 		return false;
 	}
 
 	public static function replaceFromTemplate($content, $keyAndValues) {
 		array_walk($keyAndValues, function (&$item) {
-			if (is_array($item))
-				$item=implode("\n", $item);
+			if (\is_array($item))
+				$item=\implode("\n", $item);
 		});
-		$str=str_replace(array_keys($keyAndValues), array_values($keyAndValues), $content);
+		$str=\str_replace(array_keys($keyAndValues), array_values($keyAndValues), $content);
 		return $str;
 	}
 
 	public static function replaceWriteFromContent($content, $destination, $keyAndValues) {
-		return file_put_contents($destination, self::replaceFromTemplate($content, $keyAndValues), LOCK_EX);
+		return \file_put_contents($destination, self::replaceFromTemplate($content, $keyAndValues), LOCK_EX);
 	}
 
 	public static function tryToRequire($file) {

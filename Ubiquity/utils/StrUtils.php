@@ -3,18 +3,18 @@
 namespace Ubiquity\utils;
 
 /**
- * Utilitaires liés aux chaînes
+ * String utilities
  * @author jc
  * @version 1.0.0.1
  */
 class StrUtils {
 
 	public static function startswith($hay, $needle) {
-		return substr($hay, 0, strlen($needle)) === $needle;
+		return \substr($hay, 0, strlen($needle)) === $needle;
 	}
 
 	public static function endswith($hay, $needle) {
-		return substr($hay, -strlen($needle)) === $needle;
+		return \substr($hay, -strlen($needle)) === $needle;
 	}
 
 	public static function getBooleanStr($value) {
@@ -70,7 +70,7 @@ class StrUtils {
 		$newstring=$haystack;
 		$pos=strpos($haystack, $needle);
 		if ($pos !== false) {
-			$newstring=substr_replace($haystack, $replace, $pos, strlen($needle));
+			$newstring=\substr_replace($haystack, $replace, $pos, strlen($needle));
 		}
 		return $newstring;
 	}

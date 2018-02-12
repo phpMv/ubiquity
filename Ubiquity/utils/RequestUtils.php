@@ -5,15 +5,15 @@ namespace Ubiquity\utils;
 use Ubiquity\controllers\Startup;
 
 /**
- * Utilitaires liés à la requête $_POST ou $_GET
+ * Request utilities
  * @author jc
  * @version 1.0.0.1
  */
 class RequestUtils {
 
 	/**
-	 * Affecte membre à membre les valeurs du tableau associatif $values aux membres de l'objet $object
-	 * Utilisé par exemple pour récupérer les variables postées et les affecter aux membres d'un objet
+	 * Affects member to member the values of the associative array $values to the members of the object $object
+	 * Used for example to retrieve the variables posted and assign them to the members of an object
 	 * @param object $object
 	 * @param associative array $values
 	 */
@@ -101,23 +101,23 @@ class RequestUtils {
 	}
 
 	/**
-	 * Retourne la valeur de la variable $key passée par la méthode get ou $default si la variable $key n'existe pas
+	 * Returns the value of the $key variable passed by the get method or $default if the $key variable does not exist
 	 * @param string $key
-	 * @param string $default valeur retournée par défaut
+	 * @param string $default return value by default
 	 * @return string
 	 */
 	public static function get($key, $default=NULL) {
-		return array_key_exists($key, $_GET) ? $_GET[$key] : $default;
+		return isset($_GET[$key]) ? $_GET[$key] : $default;
 	}
 
 	/**
-	 * Retourne la valeur de la variable $key passée par la méthode post ou $default si la variable $key n'existe pas
+	 * Returns the value of the $key variable passed by the post method or $default if the $key variable does not exist
 	 * @param string $key
-	 * @param string $default valeur retournée par défaut
+	 * @param string $default return value by default
 	 * @return string
 	 */
 	public static function post($key, $default=NULL) {
-		return array_key_exists($key, $_POST) ? $_POST[$key] : $default;
+		return isset($_POST[$key]) ? $_POST[$key] : $default;
 	}
 
 	public static function getUrl($url) {
@@ -132,6 +132,10 @@ class RequestUtils {
 		return \explode("/", $_GET["c"]);
 	}
 
+	/**
+	 * Returns the http method
+	 * @return string
+	 */
 	public static function getMethod() {
 		return \strtolower($_SERVER['REQUEST_METHOD']);
 	}
