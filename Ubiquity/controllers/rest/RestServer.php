@@ -119,7 +119,7 @@ class RestServer {
 	 * @param string $contentType default application/json
 	 * @param string $charset default utf8
 	 */
-	public function _setContentType($contentType,$charset="utf-8"){
+	public function _setContentType($contentType,$charset=null){
 		$value=$contentType;
 		if(isset($charset))
 			$value.="; charset=".$charset;
@@ -139,7 +139,8 @@ class RestServer {
 			}else {
 				$this->_header('Access-Control-Allow-Headers','*');
 			}
-			throw new RestException("cors exit normally");
+			exit(0);
+			//throw new RestException("cors exit normally");
 		}
 	}
 

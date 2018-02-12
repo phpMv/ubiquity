@@ -64,6 +64,18 @@ class RequestUtils {
 	}
 
 	/**
+	 * Returns the request content-type header
+	 * @return string
+	 */
+	public static function getContentType(){
+		$headers=getallheaders();
+		if(isset($headers["content-type"])){
+			return $headers["content-type"];
+		}
+		return null;
+	}
+
+	/**
 	 * Returns true if the request is an Ajax request
 	 * @return boolean
 	 */
@@ -77,6 +89,15 @@ class RequestUtils {
 	 */
 	public static function isPost() {
 		return $_SERVER['REQUEST_METHOD'] === 'POST';
+	}
+
+	/**
+	 * Returns true if request contentType is set to json
+	 * @return boolean
+	 */
+	public static function isJSON(){
+		$contentType=self::getContentType();
+		return \stripos($contentType, "json")!==false;
 	}
 
 	/**

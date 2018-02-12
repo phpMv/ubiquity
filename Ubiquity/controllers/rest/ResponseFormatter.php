@@ -11,11 +11,31 @@ class ResponseFormatter {
 	 * @return array
 	 */
 	public function get($datas){
+		$datas=\array_map(function($o){
+			return $this->cleanRestObject($o);
+		}, $datas);
+		$datas=\array_values($datas);
 		return $this->format(["datas"=>$datas,"count"=>\sizeof($datas)]);
 	}
 
+	public function cleanRestObject($o){
+		$o=$o->_rest;
+		foreach ($o as $k=>$v){
+			if(isset($v->_rest))
+				$o[$k]=$v->_rest;
+				if(\is_array($v)){
+					foreach ($v as $index=>$values){
+						if(isset($values->_rest))
+							$v[$index]=$this->cleanRestObject($values);
+					}
+					$o[$k]=$v;
+				}
+		}
+		return $o;
+	}
+
 	public function getOne($datas){
-		return $this->format(["data"=>$datas]);
+		return $this->format(["data"=>$this->cleanRestObject($datas)]);
 	}
 
 	/**

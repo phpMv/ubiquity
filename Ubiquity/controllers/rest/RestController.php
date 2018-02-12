@@ -108,17 +108,27 @@ abstract class RestController extends Controller {
 	 * @param array|null $values
 	 */
 	protected function _setValuesToObject($instance,$values=null){
+		if(RequestUtils::isJSON()){
+			$values=\json_decode($values,true);
+		}
 		RequestUtils::setValuesToObject($instance,$values);
 	}
 
 	/**
 	 * Returns all objects for the resource $model
-	 * @route("methods"=>["get"],"cache"=>true,"duration"=>1000)
+	 * @route("cache"=>false)
 	 */
 	public function index() {
 			$datas=DAO::getAll($this->model);
-			$datas=\array_map(function($o){return $o->_rest;}, $datas);
 			echo $this->responseFormatter->get($datas);
+	}
+
+	/**
+	 * Default route for requiring a single object
+	 * @route("{id}","methods"=>["get","options"])
+	 */
+	public function getById($id){
+		return $this->getOne($id,true,true);
 	}
 
 	/**
@@ -135,7 +145,6 @@ abstract class RestController extends Controller {
 			$loadOneToMany=StrUtils::isBooleanTrue($loadOneToMany);
 			$useCache=StrUtils::isBooleanTrue($useCache);
 			$datas=DAO::getAll($this->model,$condition,$loadManyToOne,$loadOneToMany,$useCache);
-			$datas=\array_map(function($o){return $o->_rest;}, $datas);
 			echo $this->responseFormatter->get($datas);
 		}catch (\Exception $e){
 			$this->_setResponseCode(500);
@@ -158,7 +167,7 @@ abstract class RestController extends Controller {
 		$data=DAO::getOne($this->model, $keyValues,$loadManyToOne,$loadOneToMany,$useCache);
 		if(isset($data)){
 			$_SESSION["_restInstance"]=$data;
-			echo $this->responseFormatter->getOne($data->_rest);
+			echo $this->responseFormatter->getOne($data);
 		}
 		else{
 			$this->_setResponseCode(404);
@@ -179,7 +188,6 @@ abstract class RestController extends Controller {
 		if(isset($_SESSION["_restInstance"])){
 			$useCache=StrUtils::isBooleanTrue($useCache);
 			$datas=DAO::getOneToMany($_SESSION["_restInstance"], $member,$useCache);
-			$datas=\array_map(function($o){return $o->_rest;}, $datas);
 			echo $this->responseFormatter->get($datas);
 		}else{
 			throw new \Exception("You have to call getOne before calling getOneToMany.");
@@ -195,7 +203,6 @@ abstract class RestController extends Controller {
 		if(isset($_SESSION["_restInstance"])){
 			$useCache=StrUtils::isBooleanTrue($useCache);
 			$datas=DAO::getManyToMany($_SESSION["_restInstance"], $member,null,$useCache);
-			$datas=\array_map(function($o){return $o->_rest;}, $datas);
 			echo $this->responseFormatter->get($datas);
 		}else{
 			throw new \Exception("You have to call getOne before calling getManyToMany.");
@@ -214,7 +221,7 @@ abstract class RestController extends Controller {
 			$this->_setValuesToObject($instance,RequestUtils::getInput());
 			$result=DAO::update($instance);
 			if($result){
-				echo $this->responseFormatter->format(["status"=>"updated","data"=>$instance->_rest]);
+				echo $this->responseFormatter->format(["status"=>"updated","data"=>$this->responseFormatter->cleanRestObject($instance)]);
 			}else{
 				throw new \Exception("Unable to update the instance");
 			}
@@ -236,7 +243,7 @@ abstract class RestController extends Controller {
 			$this->_setValuesToObject($instance,RequestUtils::getInput());
 			$result=DAO::insert($instance);
 			if($result){
-				echo $this->responseFormatter->format(["status"=>"inserted","data"=>$instance->_rest]);
+				echo $this->responseFormatter->format(["status"=>"inserted","data"=>$this->responseFormatter->cleanRestObject($instance)]);
 			}else{
 				throw new \Exception("Unable to insert the instance");
 			}
@@ -258,7 +265,7 @@ abstract class RestController extends Controller {
 		if(isset($instance)){
 			$result=DAO::remove($instance);
 			if($result){
-				echo $this->responseFormatter->format(["status"=>"deleted","data"=>$instance->_rest]);
+				echo $this->responseFormatter->format(["status"=>"deleted","data"=>$this->responseFormatter->cleanRestObject($instance)]);
 			}else{
 				throw new \Exception("Unable to delete the instance");
 			}
