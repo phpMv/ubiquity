@@ -6,8 +6,8 @@ use Ubiquity\cache\database\DbCache;
 use Ubiquity\exceptions\CacheException;
 
 /**
- * Classe d'accès aux Bases de données encapsulant un objet PDO
- * @author heron
+ * PDO Database class
+ * @author jc
  * @version 1.0.0.3
  * @package db
  *
@@ -25,7 +25,7 @@ class Database {
 	private $options;
 
 	/**
-	 * Constructeur
+	 * Constructor
 	 * @param string $dbName
 	 * @param string $serverName
 	 * @param string $port
@@ -56,7 +56,7 @@ class Database {
 	}
 
 	/**
-	 * Réalise la connexion à la base de données
+	 * Creates the PDO instance
 	 */
 	public function connect() {
 		$this->pdoObject=new \PDO($this->dbType.':host=' . $this->serverName . ';dbname=' . $this->dbName . ';charset=UTF8;port:' . $this->port, $this->user, $this->password,$this->options);
@@ -64,14 +64,21 @@ class Database {
 	}
 
 	/**
-	 * Exécute l'instruction SQL passée en paramètre et retourne un statement
+	 * Executes an SQL statement, returning a result set as a PDOStatement object
 	 * @param string $sql
-	 * @return PDOStatement
+	 * @return \PDOStatement
 	 */
 	public function query($sql) {
 		return $this->pdoObject->query($sql);
 	}
 
+	/**
+	 * @param string $tableName
+	 * @param string $condition
+	 * @param array|string $fields
+	 * @param boolean|null $useCache
+	 * @return boolean|array
+	 */
 	public function prepareAndExecute($tableName, $condition,$fields,$useCache=NULL) {
 		$cache=(DbCache::$active && $useCache !== false) || (!DbCache::$active && $useCache === true);
 		$result=false;
@@ -91,6 +98,10 @@ class Database {
 		return $result;
 	}
 
+	/**
+	 * @param string $sql
+	 * @return \PDOStatement
+	 */
 	private function getStatement($sql) {
 		if (!isset($this->statements[$sql])) {
 			$this->statements[$sql]=$this->pdoObject->prepare($sql);
@@ -100,8 +111,9 @@ class Database {
 	}
 
 	/**
-	 * Exécute l'instruction sql $sql de mise à jour (INSERT, UPDATE ou DELETE)
-	 * @return le nombre d'enregistrements affectés
+	 * Execute an SQL statement and return the number of affected rows (INSERT, UPDATE or DELETE)
+	 * @param string $sql
+	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
 	public function execute($sql) {
 		return $this->pdoObject->exec($sql);
@@ -116,9 +128,9 @@ class Database {
 	}
 
 	/**
-	 * Prépare l'instruction $sql pour son exécution
+	 * Prepares a statement for execution and returns a statement object
 	 * @param String $sql
-	 * @return PDOStatement
+	 * @return \PDOStatement
 	 */
 	public function prepareStatement($sql) {
 		return $this->pdoObject->prepare($sql);
@@ -126,7 +138,7 @@ class Database {
 
 	/**
 	 * Sets $value to $parameter
-	 * @param PDOStatement $statement
+	 * @param \PDOStatement $statement
 	 * @param String $parameter
 	 * @param mixed $value
 	 * @return boolean
@@ -150,7 +162,7 @@ class Database {
 	}
 
 	/**
-	 * Retourne le nombre d'enregistrements de $tableName respectant la condition éventuellement passée en paramètre
+	 * Returns the number of records in $tableName that respects the condition passed as a parameter
 	 * @param string $tableName
 	 * @param string $condition Partie suivant le WHERE d'une instruction SQL
 	 */

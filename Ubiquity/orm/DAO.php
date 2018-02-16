@@ -17,6 +17,9 @@ use Ubiquity\orm\traits\DAOUpdatesTrait;
  */
 class DAO {
 	use DAOUpdatesTrait;
+	/**
+	 * @var Database
+	 */
 	public static $db;
 
 	/**

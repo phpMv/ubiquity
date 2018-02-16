@@ -10,30 +10,68 @@ use Ubiquity\orm\parser\ManyToManyParser;
 /**
  * Trait for DAO Updates (Create, Update, Delete)
  * @author jc
- *
+ * @static Database $db
  */
 trait DAOUpdatesTrait{
 
+
 	/**
-	 * Supprime $instance dans la base de données
-	 * @param Classe $instance instance à supprimer
+	 * Deletes the object $instance from the database
+	 * @param object $instance instance à supprimer
 	 */
 	public static function remove($instance) {
 		$tableName=OrmUtils::getTableName(get_class($instance));
 		$keyAndValues=OrmUtils::getKeyFieldsAndValues($instance);
+		return self::removeByKey_($tableName, $keyAndValues);
+	}
+
+	/**
+	 * @param string $tableName
+	 * @param string $keyAndValues
+	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
+	 */
+	private static function removeByKey_($tableName,$keyAndValues){
 		$sql="DELETE FROM " . $tableName . " WHERE " . SqlUtils::getWhere($keyAndValues);
 		Logger::log("delete", $sql);
 		$statement=self::$db->prepareStatement($sql);
 		foreach ( $keyAndValues as $key => $value ) {
 			self::$db->bindValueFromStatement($statement, $key, $value);
 		}
+
 		return $statement->execute();
 	}
 
 	/**
+	 * @param string $tableName
+	 * @param string $where
+	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
+	 */
+	private static function remove_($tableName,$where){
+		$sql="DELETE FROM " . $tableName . " WHERE " . SqlUtils::checkWhere($where);
+		Logger::log("delete", $sql);
+		$statement=self::$db->prepareStatement($sql);
+		return $statement->execute();
+	}
+
+	/**
+	 * @param string $modelName
+	 * @param array|int $ids
+	 * @return int
+	 */
+	public static function delete($modelName,$ids){
+		$tableName=OrmUtils::getTableName($modelName);
+		$pk=OrmUtils::getFirstKey($modelName);
+		if(!\is_array($ids)){
+			$ids=[$ids];
+		}
+		$where=SqlUtils::getMultiWhere($ids, $pk);
+		return self::remove_($tableName, $where);
+	}
+
+	/**
 	 * Inserts a new instance $ instance into the database
-	 * @param object the instance to insert
-	 * @param $insertMany if true, save instances related to $instance by a ManyToMany association
+	 * @param object $instance the instance to insert
+	 * @param boolean $insertMany if true, save instances related to $instance by a ManyToMany association
 	 */
 	public static function insert($instance, $insertMany=false) {
 		$tableName=OrmUtils::getTableName(get_class($instance));
@@ -111,8 +149,8 @@ trait DAOUpdatesTrait{
 	/**
 	 * Updates an existing $instance in the database.
 	 * Be careful not to modify the primary key
-	 * @param Classe $instance instance to modify
-	 * @param $updateMany Adds or updates ManyToMany members
+	 * @param object $instance instance to modify
+	 * @param boolean $updateMany Adds or updates ManyToMany members
 	 */
 	public static function update($instance, $updateMany=false) {
 		$tableName=OrmUtils::getTableName(get_class($instance));
@@ -130,5 +168,17 @@ trait DAOUpdatesTrait{
 		if ($result && $updateMany)
 			self::insertOrUpdateAllManyToMany($instance);
 			return $result;
+	}
+
+	/**
+	 * @param object $instance
+	 * @param boolean $updateMany
+	 * @return int
+	 */
+	public static function save($instance, $updateMany=false) {
+		if(isset($instance->_rest)){
+			return self::update($instance,$updateMany);
+		}
+		return self::insert($instance,$updateMany);
 	}
 }
