@@ -57,7 +57,7 @@ abstract class Controller {
 	 * @param mixed $pData Variable or associative array to pass to the view <br> If a variable is passed, it will have the name <b> $ data </ b> in the view, <br>
 	 * If an associative array is passed, the view retrieves variables from the table's key names
 	 * @param boolean $asString If true, the view is not displayed but returned as a string (usable in a variable)
-	 * @throws Exception
+	 * @throws \Exception
 	 * @return string
 	 */
 	public function loadView($viewName, $pData=NULL, $asString=false) {
@@ -90,7 +90,7 @@ abstract class Controller {
 	 * @param mixed $params Parameters passed to the $action method
 	 * @param boolean $initialize If true, the controller's initialize method is called before $action
 	 * @param boolean $finalize If true, the controller's finalize method is called after $action
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function forward($controller, $action="index", $params=array(), $initialize=false, $finalize=false) {
 		$u=array ($controller,$action );

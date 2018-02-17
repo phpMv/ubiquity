@@ -55,7 +55,7 @@ trait ControllersTrait{
 						$viewName=$viewDir . DS . "index.html";
 						FsUtils::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/view.tpl", $viewName, [ "%controllerName%" => $controllerName,"%actionName%" => "index" ]);
 						$msgView="<br>The default view associated has been created in <b>" . FsUtils::cleanPathname(ROOT . DS . $viewDir) . "</b>";
-						$indexContent="\$this->loadview(\"" . $controllerName . "/index.html\");";
+						$indexContent="\$this->loadView(\"" . $controllerName . "/index.html\");";
 					}
 					FsUtils::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/controller.tpl", $filename, [ "%controllerName%" => $controllerName,"%indexContent%" => $indexContent,"%namespace%" => $namespace ]);
 					$this->showSimpleMessage("The <b>" . $controllerName . "</b> controller has been created in <b>" . FsUtils::cleanPathname($filename) . "</b>." . $msgView, "success", "checkmark circle", 30000, "msgGlobal");

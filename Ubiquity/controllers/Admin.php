@@ -3,7 +3,6 @@
 namespace Ubiquity\controllers;
 
 use Ubiquity\cache\CacheManager;
-use controllers\ControllerBase;
 use Ubiquity\utils\JArray;
 
 /**
@@ -28,3 +27,4 @@ class Admin extends ControllerBase {
 		\opcache_reset();
 	}
 }
+

@@ -22,7 +22,7 @@ The main configuration of a project is localised in the ``app/conf/config.php`` 
    				"password"=>"%password%"
    		],
    		"namespaces"=>[],
-   		"templateEngine"=>'micro\views\engine\Twig',
+   		"templateEngine"=>'Ubiquity\views\engine\Twig',
    		"templateEngineOptions"=>array("cache"=>false),
    		"test"=>false,
    		"debug"=>false,
@@ -44,7 +44,7 @@ Services loaded on startup are configured in the ``app/conf/services.php`` file.
    use Ubiquity\orm\DAO;
    
    /*if($config["test"]){
-   \micro\log\Logger::init();
+   \Ubiquity\log\Logger::init();
    $config["siteUrl"]="http://127.0.0.1:8090/";
    }*/
    

@@ -3,7 +3,7 @@ Ubiquity Controllers
 .. |br| raw:: html
 
    <br />
-A controller is a PHP class inheriting from ``micro\controllers\Controller``, providing an entry point in the application. |br| 
+A controller is a PHP class inheriting from ``Ubiquity\controllers\Controller``, providing an entry point in the application. |br| 
 Controllers and their methods define accessible URLs.
 
 Controller creation
@@ -113,7 +113,7 @@ By default, it is possible to create views in php, or with twig. |br|
 
 php view loading
 ~~~~~~~~~~~~~~~~
-If the file extension is not specified, the **loadview** method loads a php file.
+If the file extension is not specified, the **loadView** method loads a php file.
 
 .. code-block:: php
    :caption: app/controllers/First.php
@@ -122,13 +122,13 @@ If the file extension is not specified, the **loadview** method loads a php file
    class First extends ControllerBase{
    	public function displayPHP(){
    		//loads the view app/views/index.php
-   		$this->loadview("index");
+   		$this->loadView("index");
    	}
    }
 
 twig view loading
 ~~~~~~~~~~~~~~~~
-If the file extension is html, the **loadview** method loads an html twig file.
+If the file extension is html, the **loadView** method loads an html twig file.
 
 .. code-block:: php
    :caption: app/controllers/First.php
@@ -137,7 +137,7 @@ If the file extension is html, the **loadview** method loads an html twig file.
    class First extends ControllerBase{
    	public function displayTwig(){
    		//loads the view app/views/index.html
-   		$this->loadview("index.html");
+   		$this->loadView("index.html");
    	}
    }
 
@@ -153,7 +153,7 @@ This can be done at the loading of the view, with an associative array:
    	public function displayTwigWithVar($name){
    		$message="hello";
    		//loads the view app/views/index.html
-   		$this->loadview("index.html",["recipient"=>$name,"message"=>$message]);
+   		$this->loadView("index.html",["recipient"=>$name,"message"=>$message]);
    	}
    }
 
@@ -174,7 +174,7 @@ Variables can also be passed before the view is loaded:
    //passing an array of 2 variables
    $this->view->setVars(["message"=>$message,"recipient"=>$name]);
    //loading the view that now contains 3 variables
-   $this->loadview("First/index.html");
+   $this->loadView("First/index.html");
 
 view result as string
 ^^^^^^^^^^^^^^^^^^^^^
@@ -182,7 +182,7 @@ It is possible to load a view, and to return the result in a string, assigning t
 
 .. code-block:: php
    
-   $viewResult=$this->loadview("First/index.html",[],true);
+   $viewResult=$this->loadView("First/index.html",[],true);
    echo $viewResult;
 
 multiple views loading
@@ -195,9 +195,9 @@ A controller can load multiple views:
    namespace controllers;
    class Products extends ControllerBase{
    	public function all(){
-   		$this->loadview("Main/header.html",["title"=>"Products"]);
-   		$this->loadview("Products/index.html",["products"=>$this->products]);
-   		$this->loadview("Main/footer.html");
+   		$this->loadView("Main/header.html",["title"=>"Products"]);
+   		$this->loadView("Products/index.html",["products"=>$this->products]);
+   		$this->loadView("Main/footer.html");
    	}
    }
 
@@ -210,7 +210,7 @@ To load the ``index.html`` view, stored in ``app/views/First``:
 
 .. code-block:: php
    
-   $this->loadview("First/index.html");
+   $this->loadView("First/index.html");
 
 initialize and finalize
 -----------------------
