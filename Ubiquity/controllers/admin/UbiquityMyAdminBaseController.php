@@ -9,6 +9,7 @@ use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\admin\UbiquityMyAdminData;
+use controllers\ControllerBase;
 use Ubiquity\utils\RequestUtils;
 use Ajax\semantic\html\content\view\HtmlItem;
 use Ubiquity\cache\CacheManager;
@@ -36,7 +37,6 @@ use Ubiquity\utils\StrUtils;
 use Ubiquity\utils\UbiquityUtils;
 use Ubiquity\controllers\admin\traits\DatabaseTrait;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
-use Ubiquity\controllers\ControllerBase;
 
 class UbiquityMyAdminBaseController extends ControllerBase {
 	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait;
@@ -81,13 +81,13 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		}
 	}
 
-	public function finalize() {
-		if (!RequestUtils::isAjax()) {
-			$this->loadView("Admin/main/vFooter.html", [ "js" => $this->initializeJs() ]);
+	public function finalize(){
+		if(!RequestUtils::isAjax()){
+			$this->loadView("Admin/main/vFooter.html",["js"=>$this->initializeJs()]);
 		}
 	}
 
-	protected function initializeJs() {
+	protected function initializeJs(){
 		$js='var setAceEditor=function(elementId,readOnly,mode,maxLines){
 			mode=mode || "sql";readOnly=readOnly || false;maxLines=maxLines || 100;
 			var editor = ace.edit(elementId);
@@ -145,7 +145,8 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 						$count=DAO::count($model);
 						$item=$menu->addItem(ucfirst($table));
 						$item->addLabel($count);
-						$item->setProperty("data-ajax", $table);
+						$tbl=OrmUtils::getTableName($model);
+						$item->setProperty("data-ajax", $tbl);
 					}
 				}
 				$menu->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/showTable", "#divTable", [ "attr" => "data-ajax" ]);
@@ -366,8 +367,8 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$this->jquery->exec('$("#modelsMessages-success").hide()', true);
 		$menu->compile($this->jquery, $this->view);
 		$form=$this->jquery->semantic()->htmlForm("frm-yuml-code");
-		$textarea=$form->addTextarea("yuml-code", "Yuml code", \str_replace(",", ",\n", $yumlContent . ""));
-		$textarea->getField()->setProperty("rows", 20);
+		$textarea=$form->addTextarea("yuml-code", "Yuml code", \str_replace(",", ",\n", $yumlContent.""));
+		$textarea->getField()->setProperty("rows",20);
 		$diagram=$this->_getYumlImage("plain", $yumlContent);
 		$this->jquery->execAtLast('$("#all-classes-diagram-tab .item").tab();');
 		$this->jquery->compile($this->view);
@@ -389,12 +390,12 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		return "<img src='http://yuml.me/diagram/" . $sizeType . "/class/" . $yumlContent . "'>";
 	}
 
-	public function showDatabaseCreation() {
+	public function showDatabaseCreation(){
 		$config=Startup::getConfig();
 		$models=$this->getModels();
 		$segment=$this->jquery->semantic()->htmlSegment("menu");
 		$segment->setTagName("form");
-		$header=new HtmlHeader("", 5, "Database creation");
+		$header=new HtmlHeader("",5,"Database creation");
 		$header->addIcon("plus");
 		$segment->addContent($header);
 		$input=new HtmlFormInput("dbName");
@@ -402,11 +403,11 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$input->getField()->setFluid();
 		$segment->addContent($input);
 		$list=new HtmlList("lst-checked");
-		$list->addCheckedList([ "dbCreation" => "Creation","dbUse" => "Use" ], [ "Database","db" ], [ "use","creation" ], false, "dbProperties[]");
+		$list->addCheckedList([ "dbCreation" => "Creation","dbUse"=>"Use" ], [ "Database","db" ], [ "use","creation" ], false, "dbProperties[]");
 		$list->addCheckedList($models, [ "Models [tables]","modTables" ], \array_keys($models), false, "tables[]");
-		$list->addCheckedList([ "manyToOne" => "ManyToOne","oneToMany" => "oneToMany" ], [ "Associations","displayAssociations" ], [ "displayAssociations" ], false, "associations[]");
+		$list->addCheckedList([ "manyToOne" => "ManyToOne","oneToMany"=>"oneToMany" ], [ "Associations","displayAssociations" ], [ "displayAssociations" ], false, "associations[]");
 		$btApply=new HtmlButton("bt-apply", "Create SQL script", "green fluid");
-		$btApply->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/createSQLScript", "menu", "#div-create", [ "ajaxTransition" => "random","attr" => "" ]);
+		$btApply->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/createSQLScript", "menu","#div-create", [ "ajaxTransition" => "random","attr" => ""]);
 		$list->addItem($btApply);
 
 		$segment->addContent($list);

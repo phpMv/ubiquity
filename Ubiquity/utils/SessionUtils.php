@@ -63,10 +63,19 @@ class SessionUtils {
 		return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
 	}
 
+	/**
+	 * Adds or sets a value to the Session at position $key
+	 * @param string $key
+	 * @param mixed $value
+	 */
 	public static function set($key, $value) {
 		$_SESSION[$key]=$value;
 	}
 
+	/**
+	 * Deletes the key in Session
+	 * @param string $key
+	 */
 	public static function delete($key) {
 		unset($_SESSION[$key]);
 	}
@@ -78,6 +87,15 @@ class SessionUtils {
 
 	public static function isStarted(){
 		return isset($_SESSION);
+	}
+
+	/**
+	 * Returns true if the key exists in Session
+	 * @param string $key
+	 * @return boolean
+	 */
+	public static function exists($key){
+		return isset($_SESSION[$key]);
 	}
 
 	public static function terminate(){
