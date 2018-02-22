@@ -92,6 +92,14 @@ class RequestUtils {
 	}
 
 	/**
+	 * Returns true if the request is cross site
+	 * @return boolean
+	 */
+	public static function isCrossSite(){
+		return stripos($_SERVER['HTTP_REFERER'],$_SERVER['SERVER_NAME'])===FALSE;
+	}
+
+	/**
 	 * Returns true if request contentType is set to json
 	 * @return boolean
 	 */
