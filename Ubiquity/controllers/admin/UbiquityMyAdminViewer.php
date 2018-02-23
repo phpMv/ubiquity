@@ -92,6 +92,13 @@ class UbiquityMyAdminViewer {
 		return $form;
 	}
 
+	/**
+	 * Returns the dataTable responsible for displaying instances of the model
+	 * @param string $identifier dataTable HTML identifier
+	 * @param array $instances objects to display
+	 * @param string $model model class name (long name)
+	 * @return DataTable
+	 */
 	public function getModelDataTable($identifier,$instances,$model){
 		$adminRoute=$this->controller->_getAdminFiles()->getAdminBaseRoute();
 		$semantic=$this->jquery->semantic();
