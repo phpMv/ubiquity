@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
 body{
 	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif!important;
+	background: #FCFCFC !important;
 }
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif!important;
@@ -8,10 +10,18 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	max-width: none!important;
 }
 .wy-side-nav-search{
-	background-color: #EC7A76!important;
+	background: #4DA0B0!important;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #D39D38, #4DA0B0)!important;  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #D39D38, #4DA0B0)!important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */}
+.wy-side-nav-search a{
+		font-family: 'Righteous', cursive;
+}
+
+.wy-side-nav-search .version{
+	font-family: 'Poiret One', cursive;
 }
 .wy-side-nav-search input[type=text]{
-	border-color:#EC7A76!important;
+	border-color:#4DA0B0!important;
 }
 .wy-alert.wy-alert-info, .rst-content .note, .rst-content .wy-alert-info.attention, .rst-content .wy-alert-info.caution, .rst-content .wy-alert-info.danger, .rst-content .wy-alert-info.error, .rst-content .wy-alert-info.hint, .rst-content .wy-alert-info.important, .rst-content .wy-alert-info.tip, .rst-content .wy-alert-info.warning, .rst-content .seealso, .rst-content .wy-alert-info.admonition-todo{
 	border-radius: 6px;

@@ -1,0 +1,25 @@
+var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait =
+[
+    [ "_edit", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a35d37f23b5935befaf63966aee282ccc", null ],
+    [ "_getAdminData", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a1728d8b515816623b042eeb85e48f77f", null ],
+    [ "_getAdminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a2f32225e4026bee7bb54926d2b33ebf1", null ],
+    [ "_getAdminViewer", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a8ea5b67955e5d461bbd70274d6ae7b98", null ],
+    [ "_getCk", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a9a3276f0a1dfbff3c116614ae551268b", null ],
+    [ "_getCks", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a63472268430bcfed973ec6f52cf77fe3", null ],
+    [ "_showTable", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a40e7925da0aa5ddfa9e60186daa6b8ab", null ],
+    [ "delete", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a2d7f897ac0256b7a90c46716cf939281", null ],
+    [ "edit", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a649f51672eea883602ee239e5d3a5997", null ],
+    [ "getFKMethods", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a85c6ec9a247a2af03734b0c24cda6a1b", null ],
+    [ "getModelInstance", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a50add1041c8caad54c79af5994a71349", null ],
+    [ "getModelsNS", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aabf70fcf5a14ea59a785ad7b447be9cd", null ],
+    [ "getMultiWhere", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a052a035dd5df6946ca664622964b35c4", null ],
+    [ "getOneWhere", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#afd9b7cea150d4be3f12a8a4afbd6a1af", null ],
+    [ "getPks", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a501cda8594eefcf33d0998ee712505de", null ],
+    [ "newModel", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aecdbe3615973e0882335d16af111760c", null ],
+    [ "refreshTable", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a428477eede239039142772d8c8f1d590", null ],
+    [ "showDetail", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aaf28d5ac1cb666403b89871949c97a67", null ],
+    [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a07ade9a4634c1596937c59db69031dc4", null ],
+    [ "showTable", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#af69b5bfd5befbd93bcb34057dc0bdcc9", null ],
+    [ "showTableClick", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a2a1bdaec03b99d438eac9bb219da1cff", null ],
+    [ "update", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a842e4774e3b3601a005b995c02f7e883", null ]
+];
