@@ -52,32 +52,11 @@ trait ModelsTrait{
 	}
 
 	protected function _showTable($table){
-		$adminRoute=$this->_getAdminFiles()->getAdminBaseRoute();
 		$_SESSION["table"]= $table;
-		$semantic=$this->jquery->semantic();
 		$model=$this->getModelsNS()."\\".ucfirst($table);
-
 		$datas=DAO::getAll($model);
-		$modal=($this->_getAdminViewer()->isModal($datas, $model)?"modal":"no");
-		$lv=$semantic->dataTable("lv", $model, $datas);
-		$attributes=$this->getFieldNames($model);
-
-		$lv->setCaptions($this->_getAdminViewer()->getCaptions($attributes, $model));
-		$lv->setFields($attributes);
-		$lv->onPreCompile(function() use ($attributes,&$lv){
-			$lv->getHtmlComponent()->colRight(\count($attributes));
-		});
-
-			$lv->setIdentifierFunction($this->getIdentifierFunction($model));
-			$lv->getOnRow("click", $adminRoute."/showDetail","#table-details",["attr"=>"data-ajax"]);
-			$lv->setUrls(["delete"=>$adminRoute."/delete","edit"=>$adminRoute."/edit/".$modal]);
-			$lv->setTargetSelector(["delete"=>"#table-messages","edit"=>"#table-details"]);
-			$lv->addClass("small very compact");
-			$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"],function($bt){$bt->addClass("circular");},function($bt){$bt->addClass("circular");});
-			$lv->setActiveRowSelector("error");
-			$this->jquery->getOnClick("#btAddNew", $adminRoute."/newModel/".$modal,"#table-details");
-			$this->jquery->click("_.edit","console.log($(this).closest('.ui.button'));");
-			return $lv;
+		return $this->_getAdminViewer()->getModelDataTable("lv",$datas,$model);
+		return $lv;
 	}
 
 	protected function _edit($instance,$modal="no"){

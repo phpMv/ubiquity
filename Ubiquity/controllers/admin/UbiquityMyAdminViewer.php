@@ -14,7 +14,6 @@ use Ajax\common\html\BaseHtml;
 use Ubiquity\cache\CacheManager;
 use Ajax\semantic\html\elements\HtmlIcon;
 use Ajax\semantic\html\base\constants\TextAlignment;
-use Ubiquity\controllers\admin\popo\ControllerAction;
 use Ajax\semantic\html\elements\HtmlLabel;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\semantic\widgets\dataelement\DataElement;
@@ -32,7 +31,6 @@ use Ubiquity\annotations\parser\DocParser;
 use Ubiquity\cache\ClassUtils;
 use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
 use Ajax\semantic\html\elements\HtmlLabelGroups;
-use Ubiquity\utils\FsUtils;
 use Ubiquity\utils\Introspection;
 
 /**
@@ -92,6 +90,32 @@ class UbiquityMyAdminViewer {
 		$form->setCaption("_message", $message["message"]);
 		$form->setSubmitParams($this->controller->_getAdminFiles()->getAdminBaseRoute() . "/update", "#table-details");
 		return $form;
+	}
+
+	public function getModelDataTable($identifier,$instances,$model){
+		$adminRoute=$this->controller->_getAdminFiles()->getAdminBaseRoute();
+		$semantic=$this->jquery->semantic();
+
+		$modal=($this->isModal($instances, $model)?"modal":"no");
+		$lv=$semantic->dataTable($identifier, $model, $instances);
+		$attributes=$this->controller->getFieldNames($model);
+
+		$lv->setCaptions($this->getCaptions($attributes, $model));
+		$lv->setFields($attributes);
+		$lv->onPreCompile(function() use ($attributes,&$lv){
+			$lv->getHtmlComponent()->colRight(\count($attributes));
+		});
+
+			$lv->setIdentifierFunction($this->controller->getIdentifierFunction($model));
+		$lv->getOnRow("click", $adminRoute."/showDetail","#table-details",["attr"=>"data-ajax"]);
+		$lv->setUrls(["delete"=>$adminRoute."/delete","edit"=>$adminRoute."/edit/".$modal]);
+		$lv->setTargetSelector(["delete"=>"#table-messages","edit"=>"#table-details"]);
+		$lv->addClass("small very compact");
+		$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"],function($bt){$bt->addClass("circular");},function($bt){$bt->addClass("circular");});
+		$lv->setActiveRowSelector("error");
+		$this->jquery->getOnClick("#btAddNew", $adminRoute."/newModel/".$modal,"#table-details");
+		$this->jquery->click("_.edit","console.log($(this).closest('.ui.button'));");
+		return $lv;
 	}
 
 	/**

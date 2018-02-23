@@ -698,7 +698,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		return [ ];
 	}
 
-	private function getIdentifierFunction($model) {
+	public function getIdentifierFunction($model) {
 		$pks=$this->getPks($model);
 		return function ($index, $instance) use ($pks) {
 			$values=[ ];
@@ -784,7 +784,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		return $this->_getAdminData()->getTableNames();
 	}
 
-	protected function getFieldNames($model) {
+	public function getFieldNames($model) {
 		return $this->_getAdminData()->getFieldNames($model);
 	}
 }
