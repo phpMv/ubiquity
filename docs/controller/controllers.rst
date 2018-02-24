@@ -15,7 +15,7 @@ To create the Products controller, use the command:
 
 .. code-block:: bash
    
-   Micro controller Products
+   Ubiquity controller Products
 
 The ``Products.php`` controller is created in the ``app/controllers`` folder of the project.
 

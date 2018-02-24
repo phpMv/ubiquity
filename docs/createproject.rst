@@ -5,7 +5,7 @@ in a bash console, call the new command in the root folder of your web server :
 
 .. code-block:: bash
    
-   Micro new projectName
+   Ubiquity new projectName
 
 Installer arguments
 -------------------
@@ -37,7 +37,7 @@ Example of creation of the blog project, connected to the blogDb database, with 
 
 .. code-block:: bash
    
-   Micro new blog -b=blogDb -m=true 
+   Ubiquity new blog -b=blogDb -m=true 
 
 long names
 ^^^^^^^^^^^
@@ -45,7 +45,7 @@ Example of creation of the blog project, connected to the bogDb database, with g
 
 .. code-block:: bash
    
-   Micro new blog --dbName=blogDb --all-models=true --phpmv=semantic 
+   Ubiquity new blog --dbName=blogDb --all-models=true --phpmv=semantic 
 
 .. note:: Markdown doesn't support a lot of the features of Sphinx,
           like inline markup and directives. However, it works for

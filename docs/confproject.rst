@@ -60,7 +60,7 @@ Pretty URLs
 -----------
 Apache
 ^^^^^^
-The framework ships with an **.htaccess** file that is used to allow URLs without index.php. If you use Apache to serve your Micro application, be sure to enable the **mod_rewrite** module.
+The framework ships with an **.htaccess** file that is used to allow URLs without index.php. If you use Apache to serve your Ubiquity application, be sure to enable the **mod_rewrite** module.
 
 .. code-block:: bash
    :caption: .htaccess
