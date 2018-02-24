@@ -55,8 +55,7 @@ trait ModelsTrait{
 		$_SESSION["table"]= $table;
 		$model=$this->getModelsNS()."\\".ucfirst($table);
 		$datas=DAO::getAll($model);
-		return $this->_getAdminViewer()->getModelDataTable("lv",$datas,$model);
-		return $lv;
+		return $this->_getAdminViewer()->getModelDataTable($datas,$model);
 	}
 
 	protected function _edit($instance,$modal="no"){

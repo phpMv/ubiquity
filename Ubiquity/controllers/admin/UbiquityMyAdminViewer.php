@@ -94,17 +94,16 @@ class UbiquityMyAdminViewer {
 
 	/**
 	 * Returns the dataTable responsible for displaying instances of the model
-	 * @param string $identifier dataTable HTML identifier
 	 * @param array $instances objects to display
 	 * @param string $model model class name (long name)
 	 * @return DataTable
 	 */
-	public function getModelDataTable($identifier,$instances,$model){
+	public function getModelDataTable($instances,$model){
 		$adminRoute=$this->controller->_getAdminFiles()->getAdminBaseRoute();
 		$semantic=$this->jquery->semantic();
 
 		$modal=($this->isModal($instances, $model)?"modal":"no");
-		$lv=$semantic->dataTable($identifier, $model, $instances);
+		$lv=$semantic->dataTable("lv", $model, $instances);
 		$attributes=$this->controller->getFieldNames($model);
 
 		$lv->setCaptions($this->getCaptions($attributes, $model));
