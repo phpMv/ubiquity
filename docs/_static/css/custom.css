@@ -60,3 +60,7 @@ div[class^='highlight'] pre{
 .codeblock, pre.literal-block, .rst-content .literal-block, .rst-content pre.literal-block, div[class^='highlight']{
 	border-radius: .3em;
 }
+
+.rst-content .highlight>pre {
+	line-height: 18px;
+}
