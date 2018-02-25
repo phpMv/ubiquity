@@ -30,7 +30,6 @@ The main configuration of a project is localised in the ``app/conf/config.php`` 
    		"cacheDirectory"=>"cache/",
    		"mvcNS"=>["models"=>"models","controllers"=>"controllers"]
    );
-
 Services configuration
 ----------------------
 Services loaded on startup are configured in the ``app/conf/services.php`` file.
@@ -55,7 +54,6 @@ Services loaded on startup are configured in the ``app/conf/services.php`` file.
    CacheManager::startProd($config);
    Router::start();
    Router::addRoute("_default", "controllers\Main");
-
 Pretty URLs
 -----------
 Apache

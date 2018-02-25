@@ -53,6 +53,9 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 .highlight-default .highlight .n{
 	color: #202020!important;
 }
+div[class^='highlight'] pre{
+	color: #fff!important;
+}
 
 .codeblock, pre.literal-block, .rst-content .literal-block, .rst-content pre.literal-block, div[class^='highlight']{
 	border-radius: .3em;
