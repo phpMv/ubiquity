@@ -42,7 +42,7 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 
 .highlight .hll, .highlight-php, .highlight-bash{
 	font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace!important;
-	background: hsl(0, 8%, 25%)!important;
+	background: #1d1f21!important;
 	color: #d0d0d0!important;
 }
 
