@@ -13,8 +13,8 @@ Models definition
 A basic model
 ^^^^^^^^^^^^
 - A model must define its primary key using the **@id** annotation on the members concerned
-- Each serialized member must have getter and setter
-- Without any other annotation, a class corresponds to a table of the same name in the database, each member corresponds to a field of this table
+- Serialized members must have getters and setters
+- Without any other annotation, a class corresponds to a table with the same name in the database, each member corresponds to a field of this table
 
 .. code-block:: php
    :linenos:
