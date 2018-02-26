@@ -90,16 +90,11 @@ class Router {
 	 */
 	public static function getRouteByName($name, $parameters=[],$absolute=true) {
 		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if(!isset($routeDetails["name"])){
-				foreach ($routeDetails as $methodRouteDetail){
-
-				}
-			}
 			if (self::checkRouteName($routeDetails, $name)) {
 				if(\sizeof($parameters)>0)
 					$routePath=self::_getURL($routePath, $parameters);
-				if ($absolute)
-					return RequestUtils::getUrl($routePath);
+				if (!$absolute)
+					return \ltrim($routePath,'/');
 				else
 					return $routePath;
 			}
@@ -107,13 +102,27 @@ class Router {
 		return false;
 	}
 
-	public static function path($name,$parameters=[]){
-		return self::getRouteByName($name,$parameters,false);
+	/**
+	 * Returns the generated path from a route
+	 * @param string $name the route name
+	 * @param array $parameters default: []
+	 * @param boolean $absolute true if the path is absolute (/ at first)
+	 * @return boolean|string|array|mixed the generated path (/path/to/route)
+	 */
+	public static function path($name,$parameters=[],$absolute=false){
+		return self::getRouteByName($name,$parameters,$absolute);
 	}
 
+	/**
+	 * Returns the generated url from a route
+	 * @param string $name the route name
+	 * @param array $parameters default: []
+	 * @return string the generated url (http://myApp/path/to/route)
+	 */
 	public static function url($name,$parameters=[]){
-		return self::getRouteByName($name,$parameters,true);
+		return RequestUtils::getUrl(self::getRouteByName($name,$parameters,false));
 	}
+
 	protected static function _getURL($routePath,$params){
 		return \preg_replace_callback('~\((.*?)\)~', function($matches) use (&$params) {
 			return array_shift($params);

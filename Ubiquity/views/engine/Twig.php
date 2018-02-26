@@ -15,8 +15,8 @@ class Twig extends TemplateEngine {
 			$options["cache"]=ROOT.DS.CacheManager::getCacheDirectory().DS."views/";
 		$this->twig=new \Twig_Environment($loader, $options);
 
-		$function=new \Twig_SimpleFunction('path', function ($name,$params) {
-			return Router::path($name,$params);
+		$function=new \Twig_SimpleFunction('path', function ($name,$params=[],$absolute=false) {
+			return Router::path($name,$params,$absolute);
 		});
 		$this->twig->addFunction($function);
 		$function=new \Twig_SimpleFunction('url', function ($name,$params) {
