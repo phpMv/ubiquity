@@ -45,6 +45,9 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	background: #343131!important;
 	color: #d0d0d0!important;
 }
+.highlight .hll{
+	background-color: #323e41 !important;
+}
 
 .highlight-bash pre{
 	color: #fff!important;

@@ -30,6 +30,42 @@ Creation
 
 The method ``Products::index()`` will be accessible via the url ``/products``.
 
+Route parameters
+^^^^^^^^^^^^^^^
+A route can define parameters:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Products.php
+   :emphasize-lines: 7-9
+   
+   namespace controllers;
+    /**
+    * Controller Products
+    **/
+   class Products extends ControllerBase{
+   
+   	/**
+    	* @route("products")
+    	*/
+   	public function index(){}
+   
+       /**
+     * Matches products/*
+     *
+     * @Route("products/{value}")
+     */
+    	public function search($value){
+    		// $value will equal the dynamic part of the URL
+    		// e.g. at /products/brocolis, then $value='brocolis'
+    		// ...
+    	}
+   }
+Route optional parameters
+^^^^^^^^^^^^^^^^^^^^^^^
+A route can define optional parameters, if the associated method has optional arguments:
+
+
 Route name
 ^^^^^^^^^^
 It is possible to specify the **name** of a route, this name then facilitates access to the associated url. |br|
@@ -53,3 +89,17 @@ If the **name** attribute is not specified, each route has a default name, based
    
    }
 
+URL or path generation
+^^^^^^^^^^^^^^^^^^^^
+Route names can be used to generate URLs or paths.
+
+Linking to Pages in Twig
+.. code-block:: html
+   :linenos:
+   :caption: app/views/Products/index.html
+   
+   {% for article in articles %}
+    	<a href="{{ path('article_show', [article.id]) }}">
+    	{{ article.title }}
+    	</a>
+    {% endfor %}
