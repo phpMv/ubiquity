@@ -4,7 +4,7 @@ Ubiquity Router
 
    <br />
 Routing can be used in addition to the default mechanism that associates *controller/action/{parameters}* with an url. |br|
-Routing works by using the *@route* annotation on controller methods.
+Routing works by using the **@route** annotation on controller methods.
 
 Routes definition
 -------------------
@@ -21,9 +21,9 @@ Creation
     **/
    class Products extends ControllerBase{
    
-   /**
-    * @route("products")
-    */
+   	/**
+    	* @route("products")
+    	*/
    	public function index(){}
    
    }
