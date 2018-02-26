@@ -124,9 +124,13 @@ class Router {
 	}
 
 	protected static function _getURL($routePath,$params){
-		return \preg_replace_callback('~\((.*?)\)~', function($matches) use (&$params) {
+		$result= \preg_replace_callback('~\((.*?)\)~', function($matches) use (&$params) {
 			return array_shift($params);
 		}, $routePath);
+		if(\sizeof($params)>0){
+			$result=\rtrim($result,'/').'/'.\implode('/', $params);
+		}
+		return $result;
 	}
 
 	protected static function checkRouteName($routeDetails,$name){
