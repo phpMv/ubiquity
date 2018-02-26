@@ -1,7 +1,7 @@
 Project creation
 =================
 After installing :doc:`install`, 
-in a bash console, call the new command in the root folder of your web server : 
+in a bash console, call the *new* command in the root folder of your web server : 
 
 .. code-block:: bash
    
