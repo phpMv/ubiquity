@@ -130,10 +130,11 @@ class RequestUtils {
 
 	public static function getUrl($url) {
 		$config=Startup::getConfig();
+		$siteUrl=\rtrim($config["siteUrl"],'/');
 		if (StrUtils::startswith($url, "/") === false) {
 			$url="/" . $url;
 		}
-		return $config["siteUrl"] . $url;
+		return $siteUrl . $url;
 	}
 
 	public static function getUrlParts(){

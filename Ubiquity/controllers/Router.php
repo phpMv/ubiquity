@@ -83,12 +83,21 @@ class Router {
 	}
 
 	/**
-	 * Retourne le chemin d'une route par son nom
-	 * @param string $name nom de la route
+	 * Returns the generated path from a route
+	 * @param string $name name of the route
+	 * @param array $parameters array of the route parameters. default : []
+	 * @param boolean $absolute
 	 */
-	public static function getRouteByName($name, $absolute=true) {
+	public static function getRouteByName($name, $parameters=[],$absolute=true) {
 		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if ($routeDetails["name"] == $name) {
+			if(!isset($routeDetails["name"])){
+				foreach ($routeDetails as $methodRouteDetail){
+
+				}
+			}
+			if (self::checkRouteName($routeDetails, $name)) {
+				if(\sizeof($parameters)>0)
+					$routePath=self::_getURL($routePath, $parameters);
 				if ($absolute)
 					return RequestUtils::getUrl($routePath);
 				else
@@ -96,6 +105,29 @@ class Router {
 			}
 		}
 		return false;
+	}
+
+	public static function path($name,$parameters=[]){
+		return self::getRouteByName($name,$parameters,false);
+	}
+
+	public static function url($name,$parameters=[]){
+		return self::getRouteByName($name,$parameters,true);
+	}
+	protected static function _getURL($routePath,$params){
+		return \preg_replace_callback('~\((.*?)\)~', function($matches) use (&$params) {
+			return array_shift($params);
+		}, $routePath);
+	}
+
+	protected static function checkRouteName($routeDetails,$name){
+		if(!isset($routeDetails["name"])){
+			foreach ($routeDetails as $methodRouteDetail){
+				if(isset($methodRouteDetail["name"]) && $methodRouteDetail==$name)
+					return true;
+			}
+		}
+		return isset($routeDetails["name"]) && $routeDetails["name"] == $name;
 	}
 
 	public static function getRouteUrlParts($routeArray, $params, $cached=false, $duration=NULL,$cachedResponse=true) {

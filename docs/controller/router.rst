@@ -32,7 +32,7 @@ The method ``Products::index()`` will be accessible via the url ``/products``.
 
 Route name
 ^^^^^^^^^^
-It is possible to specify the **name** of a road, this name then facilitates access to the associated url. |br|
+It is possible to specify the **name** of a route, this name then facilitates access to the associated url. |br|
 If the **name** attribute is not specified, each route has a default name, based on the pattern **controllerName_methodName**.
 
 .. code-block:: php
