@@ -42,7 +42,7 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 
 .highlight .hll, .highlight-php, .highlight-bash{
 	font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace!important;
-	background: #343131!important;
+	background: #1b2426!important;
 	color: #d0d0d0!important;
 }
 .highlight .hll{
@@ -58,8 +58,11 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 }
 div[class^='highlight'] pre{
 	color: #999999!important;
+	margin: 2px 0;
 }
-
+.linenodiv pre{
+	border-right: 3px solid #435a5f !important;
+}
 .codeblock, pre.literal-block, .rst-content .literal-block, .rst-content pre.literal-block, div[class^='highlight']{
 	border-radius: .3em;
 }
