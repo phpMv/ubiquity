@@ -24,14 +24,14 @@ class ControllerParser {
 			$annotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
 			$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
 			$this->rest=\sizeof($restAnnotsClass) > 0;
-			if (\sizeof($annotsClass) > 0){
+			if (\sizeof($annotsClass) > 0) {
 				$this->mainRouteClass=$annotsClass[0];
 				$inherited=$this->mainRouteClass->inherited;
 				$automated=$this->mainRouteClass->automated;
 			}
 			$methods=Reflexion::getMethods($instance, \ReflectionMethod::IS_PUBLIC);
 			foreach ( $methods as $method ) {
-				if($method->getDeclaringClass()->getName()===$controllerClass || $inherited){
+				if ($method->getDeclaringClass()->getName() === $controllerClass || $inherited) {
 					$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
 					if ($annots !== false) {
 						foreach ( $annots as $annot ) {
@@ -123,6 +123,9 @@ class ControllerParser {
 		}
 		$pathParameters=self::addParamsPath($routeArray["path"], $method);
 		$name=$routeArray["name"];
+		if (!isset($name)) {
+			$name=StrUtils::cleanAttribute(ClassUtils::getClassSimpleName($controllerClass) . "_" . $methodName);
+		}
 		$cache=$routeArray["cache"];
 		$duration=$routeArray["duration"];
 		$path=$pathParameters["path"];
