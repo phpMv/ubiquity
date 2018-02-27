@@ -40,7 +40,7 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 /*.highlight .hll { background-color: #404040!important; }
 .highlight  { background: #202020!important; color: #d0d0d0!important; }*/
 
-.highlight .hll, .highlight-php, .highlight-bash{
+.highlight .hll, [class^='highlight-']{
 	font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace!important;
 	background: #1b2426!important;
 	color: #d0d0d0!important;

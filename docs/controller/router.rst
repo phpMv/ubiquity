@@ -111,12 +111,6 @@ Route names can be used to generate URLs or paths.
 Linking to Pages in Twig
 
 .. code-block:: html+twig
-   :linenos:
-   :caption: app/views/Products/index.html
    
    <a href="{{ path('products_index') }}">Products</a>
-   {% for article in articles %}
-    	<a href="{{ path('article_show', [article.id]) }}">
-    		{{ article.title }}
-    	</a>
-    {% endfor %}
+

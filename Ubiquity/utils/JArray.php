@@ -60,6 +60,13 @@ class JArray {
 		return $array;
 	}
 
+	public static function update(&$array,$search,$newValue){
+		if (($key = array_search($search, $array)) !== false) {
+			$array[$key]=$newValue;
+		}
+		return $array;
+	}
+
 	private static function parseValue($v, $prefix="") {
 		if (\is_bool($v) === true) {
 			$result=StrUtils::getBooleanStr($v);
