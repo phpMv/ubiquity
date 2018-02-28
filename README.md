@@ -1,4 +1,4 @@
-![php-mv-UI](http://static.kobject.net/img/ubiquity/logo-ubiquity.png "Ubiquity")
+![php-mv-UI](http://static-phpmv-ui.kobject.net/img/ubiquity/logo-ubiquity.png "Ubiquity")
 
 php MVC Ubiquity framework, One of the fastest frameworks, with the main features of the bests
 
