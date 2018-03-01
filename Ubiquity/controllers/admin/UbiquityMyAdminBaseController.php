@@ -675,15 +675,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 				}
 				ksort($result);
 
-				$url=vsprintf(str_replace('(.+?)', '%s', $url), $result);
-				/*
-				 * foreach ($newParams as $param){
-				 * $pos = strpos($url, "(.+?)");
-				 * if ($pos !== false) {
-				 * $url = substr_replace($url, $param, $pos, strlen("(.+?)"));
-				 * }
-				 * }
-				 */
+				$url=vsprintf(\preg_replace('#\([^\)]+\)#', '%s', $url), $result);
 				return [ ];
 			}
 			$controller=$route["controller"];

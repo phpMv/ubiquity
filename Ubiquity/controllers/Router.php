@@ -60,7 +60,7 @@ class Router {
 	public static function getRouteInfo($path){
 		$path=self::slashPath($path);
 		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if (preg_match("@^" . $routePath . "$@s", $path, $matches)) {
+			if (preg_match("@^" . $routePath . "$@s", $path, $matches)|| \stripslashes($routePath)==$path) {
 				if (!isset($routeDetails["controller"])) {
 						return \reset($routeDetails);
 				} else
@@ -196,16 +196,17 @@ class Router {
 	 * @param string $name
 	 * @param boolean $cache
 	 * @param int $duration
+	 * @param array $requirements
 	 */
-	public static function addRoute($path, $controller, $action="index", $methods=null, $name="", $cache=false, $duration=null) {
-		self::addRouteToRoutes(self::$routes, $path, $controller, $action, $methods, $name, $cache, $duration);
+	public static function addRoute($path, $controller, $action="index", $methods=null, $name="", $cache=false, $duration=null,$requirements=[]) {
+		self::addRouteToRoutes(self::$routes, $path, $controller, $action, $methods, $name, $cache, $duration,$requirements);
 	}
 
-	public static function addRouteToRoutes(&$routesArray, $path, $controller, $action="index", $methods=null, $name="", $cache=false, $duration=null) {
+	public static function addRouteToRoutes(&$routesArray, $path, $controller, $action="index", $methods=null, $name="", $cache=false, $duration=null,$requirements=[]) {
 		$result=[ ];
 		if(\class_exists($controller)){
 			$method=new \ReflectionMethod($controller, $action);
-			ControllerParser::parseRouteArray($result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration ], $method, $action);
+			ControllerParser::parseRouteArray($result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration,"requirements"=>$requirements ], $method, $action);
 			foreach ( $result as $k => $v ) {
 				$routesArray[$k]=$v;
 			}

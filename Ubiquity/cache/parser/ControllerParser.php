@@ -128,6 +128,7 @@ class ControllerParser {
 		}
 		$cache=$routeArray["cache"];
 		$duration=$routeArray["duration"];
+		$requirements=$routeArray["requirements"];
 		$path=$pathParameters["path"];
 		$parameters=$pathParameters["parameters"];
 		$path=self::cleanpath($prefix, $path);
@@ -137,7 +138,7 @@ class ControllerParser {
 		} elseif (\is_array($httpMethods)) {
 			self::createRouteMethod($result, $controllerClass, $path, $httpMethods, $methodName, $parameters, $name, $cache, $duration);
 		} else {
-			$result[$path]=[ "controller" => $controllerClass,"action" => $methodName,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration ];
+			$result[$path]=[ "controller" => $controllerClass,"action" => $methodName,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration];
 		}
 	}
 
@@ -153,8 +154,8 @@ class ControllerParser {
 				$find=\array_search($paramMatch, $params);
 				if ($find !== false) {
 					$requirement='.+?';
-					if (isset($requirements[$find])) {
-						$requirement=$requirements[$find];
+					if (isset($requirements[$paramMatch])) {
+						$requirement=$requirements[$paramMatch];
 					}
 					self::scanParam($parameters, $hasOptional, $matches, $index, $paramMatch, $find, $path, $requirement);
 				} else {
