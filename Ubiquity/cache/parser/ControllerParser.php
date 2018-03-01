@@ -12,7 +12,7 @@ class ControllerParser {
 	private $mainRouteClass;
 	private $routesMethods=[ ];
 	private $rest=false;
-	private static $excludeds=[ "__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward" ];
+	private static $excludeds=[ "__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward","redirectToRoute" ];
 
 	public function parse($controllerClass) {
 		$automated=false;

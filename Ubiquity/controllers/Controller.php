@@ -7,6 +7,7 @@
 namespace Ubiquity\controllers;
 
 use Ubiquity\views\View;
+use Ubiquity\exceptions\RouterException;
 
 /**
  * Base class for controllers
@@ -100,5 +101,27 @@ abstract class Controller {
 			$u=\array_merge($u, [ $params ]);
 		}
 		return Startup::runAction($u, $initialize, $finalize);
+	}
+
+	/**
+	 * Redirect to a route by its name
+	 * @param string $routeName
+	 * @param array $parameters
+	 * @param boolean $initialize
+	 * @param boolean $finalize
+	 * @throws RouterException
+	 */
+	public function redirectToRoute($routeName,$parameters=[],$initialize=false,$finalize=false){
+		$path=Router::getRouteByName($routeName,$parameters);
+		if($path!==false){
+			$route=Router::getRoute($path,false);
+			if($route!==false){
+				return $this->forward($route[0],$route[1],\array_slice($route, 2),$initialize,$finalize);
+			}else{
+				throw new RouterException("Route {$routeName} not found",404);
+			}
+		}else{
+			throw new RouterException("Route {$routeName} not found",404);
+		}
 	}
 }
