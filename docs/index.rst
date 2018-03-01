@@ -32,6 +32,15 @@ Ubiquity framework User guide
   
 .. toctree::
    :maxdepth: 1
+   :caption: Http
+   
+   http/request
+   http/response
+   http/session
+   http/cookies
+   
+.. toctree::
+   :maxdepth: 1
    :caption: Views
    
    view/index
