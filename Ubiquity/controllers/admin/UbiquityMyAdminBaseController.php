@@ -37,6 +37,8 @@ use Ubiquity\utils\StrUtils;
 use Ubiquity\utils\UbiquityUtils;
 use Ubiquity\controllers\admin\traits\DatabaseTrait;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
+use Ajax\semantic\html\elements\HtmlDivider;
+use Ajax\semantic\html\base\HtmlSemDoubleElement;
 
 class UbiquityMyAdminBaseController extends ControllerBase {
 	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait;
