@@ -110,7 +110,7 @@ class ControllerParser {
 			$routeAnnotations=$arrayAnnotsMethod["annotations"];
 
 			foreach ( $routeAnnotations as $routeAnnotation ) {
-				$params=[ "path" => $routeAnnotation->path,"methods" => $routeAnnotation->methods,"name" => $routeAnnotation->name,"cache" => $routeAnnotation->cache,"duration" => $routeAnnotation->duration ];
+				$params=[ "path" => $routeAnnotation->path,"methods" => $routeAnnotation->methods,"name" => $routeAnnotation->name,"cache" => $routeAnnotation->cache,"duration" => $routeAnnotation->duration,"requirements" => $routeAnnotation->requirements ];
 				self::parseRouteArray($result, $this->controllerClass, $params, $arrayAnnotsMethod["method"], $method, $prefix, $httpMethods);
 			}
 		}
@@ -121,7 +121,7 @@ class ControllerParser {
 		if (!isset($routeArray["path"])) {
 			$routeArray["path"]=self::getPathFromMethod($method);
 		}
-		$pathParameters=self::addParamsPath($routeArray["path"], $method);
+		$pathParameters=self::addParamsPath($routeArray["path"], $method, $routeArray["requirements"]);
 		$name=$routeArray["name"];
 		if (!isset($name)) {
 			$name=StrUtils::cleanAttribute(ClassUtils::getClassSimpleName($controllerClass) . "_" . $methodName);
@@ -141,7 +141,7 @@ class ControllerParser {
 		}
 	}
 
-	public static function addParamsPath($path, \ReflectionMethod $method) {
+	public static function addParamsPath($path, \ReflectionMethod $method, $requirements) {
 		$parameters=[ ];
 		$hasOptional=false;
 		preg_match_all('@\{(\.\.\.|\~)?(.+?)\}@s', $path, $matches);
@@ -152,7 +152,11 @@ class ControllerParser {
 			foreach ( $matches[2] as $paramMatch ) {
 				$find=\array_search($paramMatch, $params);
 				if ($find !== false) {
-					self::scanParam($parameters, $hasOptional, $matches, $index, $paramMatch, $find, $path);
+					$requirement='.+?';
+					if (isset($requirements[$find])) {
+						$requirement=$requirements[$find];
+					}
+					self::scanParam($parameters, $hasOptional, $matches, $index, $paramMatch, $find, $path, $requirement);
 				} else {
 					throw new \Exception("{$paramMatch} is not a parameter of the method " . $method->name);
 				}
@@ -164,7 +168,7 @@ class ControllerParser {
 		return [ "path" => $path,"parameters" => $parameters ];
 	}
 
-	private static function scanParam(&$parameters, &$hasOptional, $matches, $index, $paramMatch, $find, &$path) {
+	private static function scanParam(&$parameters, &$hasOptional, $matches, $index, $paramMatch, $find, &$path, $requirement) {
 		if (isset($matches[1][$index])) {
 			if ($matches[1][$index] === "...") {
 				$parameters[]="*";
@@ -175,11 +179,11 @@ class ControllerParser {
 				$hasOptional=true;
 			} else {
 				$parameters[]=$find;
-				$path=\str_replace("\{" . $paramMatch . "\}", "(.+?)", $path);
+				$path=\str_replace("\{" . $paramMatch . "\}", "({$requirement})", $path);
 			}
 		} else {
 			$parameters[]=$find;
-			$path=\str_replace("\{" . $paramMatch . "\}", "(.+?)", $path);
+			$path=\str_replace("\{" . $paramMatch . "\}", "({$requirement})", $path);
 		}
 	}
 

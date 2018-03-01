@@ -15,6 +15,7 @@ class RouteAnnotation extends BaseAnnotation {
 	public $duration;
 	public $inherited;
 	public $automated;
+	public $requirements;
 
 	/**
 	 * Initialize the annotation.
