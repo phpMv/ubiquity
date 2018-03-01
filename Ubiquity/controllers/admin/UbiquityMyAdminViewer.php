@@ -83,6 +83,9 @@ class UbiquityMyAdminViewer {
 				case "integer":
 					$form->fieldAsInput($property, [ "inputType" => "number" ]);
 					break;
+				case "date":
+					$form->fieldAsInput($property, [ "inputType" => "date" ]);
+					break;
 			}
 		}
 		$this->relationMembersInForm($form, $instance, $className);
@@ -98,29 +101,33 @@ class UbiquityMyAdminViewer {
 	 * @param string $model model class name (long name)
 	 * @return DataTable
 	 */
-	public function getModelDataTable($instances,$model){
+	public function getModelDataTable($instances, $model) {
 		$adminRoute=$this->controller->_getAdminFiles()->getAdminBaseRoute();
 		$semantic=$this->jquery->semantic();
 
-		$modal=($this->isModal($instances, $model)?"modal":"no");
+		$modal=($this->isModal($instances, $model) ? "modal" : "no");
 		$lv=$semantic->dataTable("lv", $model, $instances);
 		$attributes=$this->controller->getFieldNames($model);
 
 		$lv->setCaptions($this->getCaptions($attributes, $model));
 		$lv->setFields($attributes);
-		$lv->onPreCompile(function() use ($attributes,&$lv){
+		$lv->onPreCompile(function () use ($attributes, &$lv) {
 			$lv->getHtmlComponent()->colRight(\count($attributes));
 		});
 
-			$lv->setIdentifierFunction($this->controller->getIdentifierFunction($model));
-		$lv->getOnRow("click", $adminRoute."/showDetail","#table-details",["attr"=>"data-ajax"]);
-		$lv->setUrls(["delete"=>$adminRoute."/delete","edit"=>$adminRoute."/edit/".$modal]);
-		$lv->setTargetSelector(["delete"=>"#table-messages","edit"=>"#table-details"]);
+		$lv->setIdentifierFunction($this->controller->getIdentifierFunction($model));
+		$lv->getOnRow("click", $adminRoute . "/showDetail", "#table-details", [ "attr" => "data-ajax" ]);
+		$lv->setUrls([ "delete" => $adminRoute . "/delete","edit" => $adminRoute . "/edit/" . $modal ]);
+		$lv->setTargetSelector([ "delete" => "#table-messages","edit" => "#table-details" ]);
 		$lv->addClass("small very compact");
-		$lv->addEditDeleteButtons(false,["ajaxTransition"=>"random"],function($bt){$bt->addClass("circular");},function($bt){$bt->addClass("circular");});
+		$lv->addEditDeleteButtons(false, [ "ajaxTransition" => "random" ], function ($bt) {
+			$bt->addClass("circular");
+		}, function ($bt) {
+			$bt->addClass("circular");
+		});
 		$lv->setActiveRowSelector("error");
-		$this->jquery->getOnClick("#btAddNew", $adminRoute."/newModel/".$modal,"#table-details");
-		$this->jquery->click("_.edit","console.log($(this).closest('.ui.button'));");
+		$this->jquery->getOnClick("#btAddNew", $adminRoute . "/newModel/" . $modal, "#table-details");
+		$this->jquery->click("_.edit", "console.log($(this).closest('.ui.button'));");
 		return $lv;
 	}
 
