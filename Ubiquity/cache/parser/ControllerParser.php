@@ -128,7 +128,6 @@ class ControllerParser {
 		}
 		$cache=$routeArray["cache"];
 		$duration=$routeArray["duration"];
-		$requirements=$routeArray["requirements"];
 		$path=$pathParameters["path"];
 		$parameters=$pathParameters["parameters"];
 		$path=self::cleanpath($prefix, $path);
