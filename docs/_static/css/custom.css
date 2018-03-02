@@ -70,3 +70,7 @@ div[class^='highlight'] pre{
 .rst-content .highlight>pre {
 	line-height: 18px;
 }
+.btn{
+	border-radius: 5px;
+	box-shadow: none;
+}

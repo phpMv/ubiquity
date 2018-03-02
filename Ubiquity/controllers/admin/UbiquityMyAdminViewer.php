@@ -91,7 +91,7 @@ class UbiquityMyAdminViewer {
 		$this->relationMembersInForm($form, $instance, $className);
 		$form->setCaptions($this->getFormCaptions($form->getInstanceViewer()->getVisibleProperties(), $className, $instance));
 		$form->setCaption("_message", $message["message"]);
-		$form->setSubmitParams($this->controller->_getAdminFiles()->getAdminBaseRoute() . "/update", "#table-details");
+		$form->setSubmitParams($this->controller->_getAdminFiles()->getAdminBaseRoute() . "/update", "#frm-add-update");
 		return $form;
 	}
 
@@ -118,7 +118,7 @@ class UbiquityMyAdminViewer {
 		$lv->setIdentifierFunction($this->controller->getIdentifierFunction($model));
 		$lv->getOnRow("click", $adminRoute . "/showDetail", "#table-details", [ "attr" => "data-ajax" ]);
 		$lv->setUrls([ "delete" => $adminRoute . "/delete","edit" => $adminRoute . "/edit/" . $modal ]);
-		$lv->setTargetSelector([ "delete" => "#table-messages","edit" => "#table-details" ]);
+		$lv->setTargetSelector([ "delete" => "#table-messages","edit" => "#frm-add-update" ]);
 		$lv->addClass("small very compact");
 		$lv->addEditDeleteButtons(false, [ "ajaxTransition" => "random" ], function ($bt) {
 			$bt->addClass("circular");
@@ -126,7 +126,7 @@ class UbiquityMyAdminViewer {
 			$bt->addClass("circular");
 		});
 		$lv->setActiveRowSelector("error");
-		$this->jquery->getOnClick("#btAddNew", $adminRoute . "/newModel/" . $modal, "#table-details");
+		$this->jquery->getOnClick("#btAddNew", $adminRoute . "/newModel/" . $modal, "#frm-add-update");
 		$this->jquery->click("_.edit", "console.log($(this).closest('.ui.button'));");
 		return $lv;
 	}
@@ -138,7 +138,7 @@ class UbiquityMyAdminViewer {
 	 * @return boolean
 	 */
 	public function isModal($objects, $model) {
-		return \count($objects) > 20;
+		return \count($objects) > 5;
 	}
 
 	/**
