@@ -1,6 +1,6 @@
 <?php
 
-namespace core\postinstall;
+namespace Ubiquity\core\postinstall;
 
 use Ubiquity\core\Framework;
 
