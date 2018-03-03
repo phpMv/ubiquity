@@ -20,9 +20,9 @@ class SessionUtils {
 		if (isset($_SESSION[$arrayKey])) {
 			$array=$_SESSION[$arrayKey];
 			if (!is_array($array))
-				$array=[];
+				$array=[ ];
 		} else
-			$array=[];
+			$array=[ ];
 		return $array;
 	}
 
@@ -73,7 +73,7 @@ class SessionUtils {
 	 * @param mixed $value the value to set
 	 * @return boolean
 	 */
-	public static function setBoolean($key,$value) {
+	public static function setBoolean($key, $value) {
 		$_SESSION[$key]=StrUtils::isBooleanTrue($value);
 		return $_SESSION[$key];
 	}
@@ -125,7 +125,7 @@ class SessionUtils {
 
 	/**
 	 * Deletes the key in Session
-	 * @param string $key  the key to delete
+	 * @param string $key the key to delete
 	 */
 	public static function delete($key) {
 		self::start();
@@ -136,12 +136,12 @@ class SessionUtils {
 	 * Start new or resume existing session
 	 * @param string|null $name the name of the session
 	 */
-	public static function start($name=null){
+	public static function start($name=null) {
 		if (!isset($_SESSION)) {
-			if(isset($name)){
+			if (isset($name) && $name !== "") {
 				self::$name=$name;
 			}
-			if(isset(self::$name)){
+			if (isset(self::$name)) {
 				\session_name(self::$name);
 			}
 			\session_start();
@@ -152,7 +152,7 @@ class SessionUtils {
 	 * Returns true if the session is started
 	 * @return boolean
 	 */
-	public static function isStarted(){
+	public static function isStarted() {
 		return isset($_SESSION);
 	}
 
@@ -161,7 +161,7 @@ class SessionUtils {
 	 * @param string $key the key to test
 	 * @return boolean
 	 */
-	public static function exists($key){
+	public static function exists($key) {
 		self::start();
 		return isset($_SESSION[$key]);
 	}
@@ -169,18 +169,15 @@ class SessionUtils {
 	/**
 	 * Terminates the active session
 	 */
-	public static function terminate(){
-		if(!self::isStarted())
+	public static function terminate() {
+		if (!self::isStarted())
 			return;
 		self::start();
-		$_SESSION = array();
+		$_SESSION=array ();
 
 		if (\ini_get("session.use_cookies")) {
-			$params = \session_get_cookie_params();
-			\setcookie(\session_name(), '', \time() - 42000,
-					$params["path"], $params["domain"],
-					$params["secure"], $params["httponly"]
-					);
+			$params=\session_get_cookie_params();
+			\setcookie(\session_name(), '', \time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
 		}
 		\session_destroy();
 	}
