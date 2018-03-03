@@ -723,7 +723,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$btOkay=new HtmlButton("bt-okay", "Confirm", "negative");
 		$btOkay->addIcon("check circle");
 		$btOkay->postOnClick($url, "{data:'" . $data . "'}", $responseElement, $attributes);
-		$btCancel=new HtmlButton("bt-cancel-".StrUtils::cleanAttribute($url), "Cancel");
+		$btCancel=new HtmlButton("bt-cancel-" . StrUtils::cleanAttribute($url), "Cancel");
 		$btCancel->addIcon("remove circle outline");
 		$btCancel->onClick($messageDlg->jsHide());
 		$messageDlg->addContent([ new HtmlDivider(""),new HtmlSemDoubleElement("", "div", "", [ $btOkay->floatRight(),$btCancel->floatRight() ]) ]);

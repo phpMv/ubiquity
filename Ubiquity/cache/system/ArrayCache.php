@@ -1,13 +1,15 @@
 <?php
+
 namespace Ubiquity\cache\system;
 
 use Ubiquity\controllers\admin\popo\CacheFile;
 use Ubiquity\cache\CacheManager;
+use Ubiquity\utils\FsUtils;
 
 /**
  * This class is responsible for storing Arrays in PHP files.
  */
-class ArrayCache extends AbstractDataCache{
+class ArrayCache extends AbstractDataCache {
 	/**
 	 *
 	 * @var int The file mode used when creating new cache files
@@ -21,8 +23,8 @@ class ArrayCache extends AbstractDataCache{
 	 * @param array $cacheParams defaults to ["fileMode"=>"0777"]
 	 */
 	public function __construct($root, $postfix="", $cacheParams=[]) {
-		parent::__construct($root,$postfix);
-		$this->_fileMode=(isset($cacheParams["fileMode"]))?$cacheParams["fileMode"]:0777;
+		parent::__construct($root, $postfix);
+		$this->_fileMode=(isset($cacheParams["fileMode"])) ? $cacheParams["fileMode"] : 0777;
 		if (!is_dir($root))
 			\mkdir($root, $this->_fileMode, true);
 	}
@@ -42,7 +44,7 @@ class ArrayCache extends AbstractDataCache{
 	 * @param string $content the source-code to be cached
 	 * @throws AnnotationException if file could not be written
 	 */
-	protected function storeContent($key,$content,$tag) {
+	protected function storeContent($key, $content, $tag) {
 		$path=$this->_getPath($key);
 		if (@\file_put_contents($path, $content, LOCK_EX) === false) {
 			throw new \Exception("Unable to write cache file: {$path}");
@@ -91,7 +93,8 @@ class ArrayCache extends AbstractDataCache{
 	}
 
 	/**
-	 * {@inheritDoc}
+	 *
+	 * {@inheritdoc}
 	 * @see \Ubiquity\cache\system\AbstractDataCache::remove()
 	 */
 	public function remove($key) {
@@ -102,11 +105,12 @@ class ArrayCache extends AbstractDataCache{
 	}
 
 	/**
-	 * {@inheritDoc}
+	 *
+	 * {@inheritdoc}
 	 * @see \Ubiquity\cache\system\AbstractDataCache::clear()
 	 */
 	public function clear($matches="") {
-		$files=glob($this->_root . '/'.$matches.'*');
+		$files=glob($this->_root . '/' . $matches . '*');
 		foreach ( $files as $file ) {
 			if (\is_file($file))
 				\unlink($file);
@@ -114,36 +118,43 @@ class ArrayCache extends AbstractDataCache{
 	}
 
 	/**
-	 * {@inheritDoc}
+	 *
+	 * {@inheritdoc}
 	 * @see \Ubiquity\cache\system\AbstractDataCache::getCacheFiles()
 	 */
-	public function getCacheFiles($type){
-		return CacheFile::initFromFiles(ROOT . DS .CacheManager::getCacheDirectory().$type, \ucfirst($type),function($file) use($type){$file=\basename($file);return $type."/".substr($file, 0, strpos($file, $this->postfix.'.php'));});
+	public function getCacheFiles($type) {
+		return CacheFile::initFromFiles(ROOT . DS . CacheManager::getCacheDirectory() . $type, \ucfirst($type), function ($file) use ($type) {
+			$file=\basename($file);
+			return $type . "/" . substr($file, 0, strpos($file, $this->postfix . '.php'));
+		});
 	}
 
 	/**
-	 * {@inheritDoc}
+	 *
+	 * {@inheritdoc}
 	 * @see \Ubiquity\cache\system\AbstractDataCache::clearCache()
 	 */
-	public function clearCache($type){
-		CacheFile::delete(ROOT . DS .CacheManager::getCacheDirectory().\strtolower($type));
+	public function clearCache($type) {
+		CacheFile::delete(ROOT . DS . CacheManager::getCacheDirectory() . \strtolower($type));
 	}
 
 	/**
-	 * {@inheritDoc}
+	 *
+	 * {@inheritdoc}
 	 * @see \Ubiquity\cache\system\AbstractDataCache::getCacheInfo()
 	 */
-	public function getCacheInfo(){
+	public function getCacheInfo() {
 		$result=parent::getCacheInfo();
-		$result.="<br>Root cache directory is <b>".$this->_root."</b>.";
+		$result.="<br>Root cache directory is <b>" . FsUtils::cleanPathname($this->_root) . "</b>.";
 		return $result;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 *
+	 * {@inheritdoc}
 	 * @see \Ubiquity\cache\system\AbstractDataCache::getEntryKey()
 	 */
-	public function getEntryKey($key){
-		return $this->_getPath($key);
+	public function getEntryKey($key) {
+		return FsUtils::cleanPathname($this->_getPath($key));
 	}
 }
