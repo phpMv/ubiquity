@@ -4,6 +4,7 @@ namespace Ubiquity\controllers;
 
 use Ubiquity\utils\StrUtils;
 use Ubiquity\views\engine\TemplateEngine;
+use Ubiquity\utils\SessionUtils;
 
 class Startup {
 	public static $urlParts;
@@ -15,7 +16,8 @@ class Startup {
 	public static function run(array &$config, $url) {
 		self::$config=$config;
 		self::startTemplateEngine($config);
-		session_start();
+		if(isset($config["session_name"]))
+			SessionUtils::start($config["session_name"]);
 		self::forward($url);
 	}
 

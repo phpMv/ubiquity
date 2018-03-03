@@ -5,6 +5,7 @@ namespace Ubiquity\views\engine;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\Router;
 use Ubiquity\cache\CacheManager;
+use Ubiquity\core\Framework;
 
 class Twig extends TemplateEngine {
 	private $twig;
@@ -23,6 +24,7 @@ class Twig extends TemplateEngine {
 			return Router::url($name,$params);
 		});
 		$this->twig->addFunction($function);
+		$this->twig->addGlobal("app", new Framework());
 	}
 
 	/*
