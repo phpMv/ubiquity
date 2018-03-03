@@ -16,18 +16,18 @@ class Startup {
 	public static function run(array &$config, $url) {
 		self::$config=$config;
 		self::startTemplateEngine($config);
-		if(isset($config["session_name"]))
-			SessionUtils::start($config["session_name"]);
+		if (isset($config["sessionName"]))
+			SessionUtils::start($config["sessionName"]);
 		self::forward($url);
 	}
 
-	public static function forward($url){
+	public static function forward($url) {
 		$u=self::parseUrl($url);
 		if (($ru=Router::getRoute($url)) !== false) {
 			if (\is_array($ru))
 				self::runAction($ru);
-				else
-					echo $ru;
+			else
+				echo $ru;
 		} else {
 			self::setCtrlNS();
 			$u[0]=self::$ctrlNS . $u[0];
