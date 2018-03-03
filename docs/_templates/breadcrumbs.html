@@ -35,9 +35,11 @@
       <li>{{ title }}</li>
     {% endblock %}
     {% block breadcrumbs_aside %}
+       <li class="wy-breadcrumbs-aside">
+           <a class="fa fa-external-link-square-alt" href="https://ubiquity.kobject.net">Ubiquity website</a>
+       </li>
       <li class="wy-breadcrumbs-aside">
         {% if hasdoc(pagename) %}
-            <li><a href="https://ubiquity.kobject.net">Ubiquity website</a></li>
             {% if display_github %}
             {% if check_meta and 'github_url' in meta %}
               <!-- User defined GitHub URL -->
