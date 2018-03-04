@@ -80,4 +80,8 @@ class UFileSystem {
 		}
 		return false;
 	}
+
+	public static function lastModified($filename) {
+		return \filemtime($filename);
+	}
 }

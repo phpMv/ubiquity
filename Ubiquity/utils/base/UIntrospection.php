@@ -10,6 +10,11 @@ class UIntrospection {
 		return $lines;
 	}
 
+	public static function getFileName($classname) {
+		$r=new \ReflectionClass($classname);
+		return $r->getFileName();
+	}
+
 	public static function getLoadedViews(\ReflectionMethod $r, $lines) {
 		$matches=[ ];
 		$code=self::getMethodCode($r, $lines);

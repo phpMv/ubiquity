@@ -265,6 +265,13 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$this->loadView($this->_getAdminFiles()->getViewLogsIndex());
 	}
 
+	public function seo() {
+		$this->getHeader("seo");
+		$this->jquery->compile($this->view);
+
+		$this->loadView($this->_getAdminFiles()->getViewSeoIndex());
+	}
+
 	protected function getHeader($key) {
 		$semantic=$this->jquery->semantic();
 		$header=$semantic->htmlHeader("header", 3);
