@@ -6,6 +6,8 @@ filter:
         - Ubiquity/annotations/
         - Ubiquity/js/Jquery.php
         - docs/
+        - api/
+        - documentation/
 checks:
     php:
         code_rating: true

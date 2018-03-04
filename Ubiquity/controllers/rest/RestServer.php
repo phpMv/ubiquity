@@ -1,16 +1,20 @@
 <?php
+
 namespace Ubiquity\controllers\rest;
+
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\exceptions\RestException;
 
 /**
+ *
  * @author jc
  *
  */
 class RestServer {
 	/**
+	 *
 	 * @var array
 	 */
 	protected $config;
@@ -18,51 +22,44 @@ class RestServer {
 	protected $tokensFolder;
 	protected $tokensCacheKey="_apiTokens";
 	/**
+	 *
 	 * @var ApiTokens
 	 */
 	protected $apiTokens;
 
-	public function __construct($config){
+	public function __construct($config) {
 		$this->config=$config;
-		$this->headers=['Access-Control-Allow-Origin'=>'http://127.0.0.1:4200',
-						'Access-Control-Allow-Credentials'=>'true',
-						'Access-Control-Max-Age'=>'86400',
-						'Access-Control-Allow-Methods'=>'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD'
-		];
+		$this->headers=[ 'Access-Control-Allow-Origin' => 'http://127.0.0.1:4200','Access-Control-Allow-Credentials' => 'true','Access-Control-Max-Age' => '86400','Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD' ];
 	}
 
-	public function connect(RestController $controller){
-		if(!isset($this->apiTokens)){
+	public function connect(RestController $controller) {
+		if (!isset($this->apiTokens)) {
 			$this->apiTokens=$this->_getApiTokens();
 		}
 		$token=$this->apiTokens->addToken();
 		$this->_addHeaderToken($token);
-		echo $controller->_format([
-				"access_token"=>$token,
-				"token_type"=>"Bearer",
-				"expires_in"=>$this->apiTokens->getDuration()
-		]);
+		echo $controller->_format([ "access_token" => $token,"token_type" => "Bearer","expires_in" => $this->apiTokens->getDuration() ]);
 	}
 
 	/**
 	 * Check if token is valid
 	 * @return boolean
 	 */
-	public function isValid(){
+	public function isValid() {
 		$this->apiTokens=$this->_getApiTokens();
 		$key=$this->_getHeaderToken();
-		if ($this->apiTokens->isExpired($key)){
+		if ($this->apiTokens->isExpired($key)) {
 			return false;
-		}else{
+		} else {
 			$this->_addHeaderToken($key);
 			return true;
 		}
 	}
 
-	public function _getHeaderToken(){
+	public function _getHeaderToken() {
 		$authHeader=$this->_getHeader("Authorization");
-		if ($authHeader!==false) {
-			list($type, $data) = explode(" ", $authHeader, 2);
+		if ($authHeader !== false) {
+			list ( $type, $data )=explode(" ", $authHeader, 2);
 			if (\strcasecmp($type, "Bearer") == 0) {
 				return $data;
 			} else {
@@ -73,57 +70,59 @@ class RestServer {
 		}
 	}
 
-	public function finalizeTokens(){
-		if(isset($this->apiTokens)){
+	public function finalizeTokens() {
+		if (isset($this->apiTokens)) {
 			$this->apiTokens->removeExpireds();
 			$this->apiTokens->storeToCache();
 		}
 	}
 
-	public function _getHeader($header){
+	public function _getHeader($header) {
 		$headers=getallheaders();
-		if(isset($headers[$header])){
+		if (isset($headers[$header])) {
 			return $headers[$header];
 		}
 		return false;
-
 	}
 
-	public function _addHeaderToken($token){
-		$this->_header("Authorization", "Bearer ".$token);
+	public function _addHeaderToken($token) {
+		$this->_header("Authorization", "Bearer " . $token);
 	}
 
 	/**
 	 * To override for defining another ApiToken type
 	 * @return ApiTokens
 	 */
-	public function _getApiTokens(){
-		return ApiTokens::getFromCache(ROOT.CacheManager::getCacheDirectory().DS,$this->tokensCacheKey);
+	public function _getApiTokens() {
+		return ApiTokens::getFromCache(ROOT . CacheManager::getCacheDirectory() . DS, $this->tokensCacheKey);
 	}
 
 	/**
+	 *
 	 * @param string $headerField
 	 * @param string $value
 	 * @param boolean $replace
 	 */
-	public function _header($headerField,$value=null,$replace=null){
-		if(!isset($value)){
-			if(isset($this->headers[$headerField])){
+	public function _header($headerField, $value=null, $replace=null) {
+		if (!isset($value)) {
+			if (isset($this->headers[$headerField])) {
 				$value=$this->headers[$headerField];
-			}else
+			} else
 				return;
 		}
-		\header(trim($headerField).": ".trim($value),$replace);
+		\header(trim($headerField) . ": " . trim($value), $replace);
 	}
+
 	/**
+	 *
 	 * @param string $contentType default application/json
 	 * @param string $charset default utf8
 	 */
-	public function _setContentType($contentType,$charset=null){
+	public function _setContentType($contentType, $charset=null) {
 		$value=$contentType;
-		if(isset($charset))
-			$value.="; charset=".$charset;
-			$this->_header("Content-type", $value);
+		if (isset($charset))
+			$value.="; charset=" . $charset;
+		$this->_header("Content-type", $value);
 	}
 
 	public function cors() {
@@ -134,23 +133,22 @@ class RestServer {
 			if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
 				$this->_header('Access-Control-Allow-Methods');
 
-			if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])){
-				$this->_header('Access-Control-Allow-Headers',$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']);
-			}else {
-				$this->_header('Access-Control-Allow-Headers','*');
+			if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+				$this->_header('Access-Control-Allow-Headers', $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']);
+			} else {
+				$this->_header('Access-Control-Allow-Headers', '*');
 			}
-			exit(0);
-			//throw new RestException("cors exit normally");
+			throw new RestException("cors exit normally");
 		}
 	}
 
-	public static function getRestNamespace(){
+	public static function getRestNamespace() {
 		$config=Startup::getConfig();
 		$controllerNS=$config["mvcNS"]["controllers"];
 		$restNS="";
-		if(isset($config["mvcNS"]["rest"])){
+		if (isset($config["mvcNS"]["rest"])) {
 			$restNS=$config["mvcNS"]["rest"];
 		}
-		return ClassUtils::getNamespaceFromParts([$controllerNS,$restNS]);
+		return ClassUtils::getNamespaceFromParts([ $controllerNS,$restNS ]);
 	}
 }

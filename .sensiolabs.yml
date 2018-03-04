@@ -1,6 +1,8 @@
 global_exclude_dirs:
     - Ubiquity/annotations
     - docs
+    - api
+    - documentation
 
 exclude_patterns:
     - Ubiquity/log/chromePhp.php
