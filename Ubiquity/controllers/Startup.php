@@ -4,7 +4,7 @@ namespace Ubiquity\controllers;
 
 use Ubiquity\utils\base\UString;
 use Ubiquity\views\engine\TemplateEngine;
-use Ubiquity\utils\SessionUtils;
+use Ubiquity\utils\http\Session;
 
 class Startup {
 	public static $urlParts;
@@ -17,7 +17,7 @@ class Startup {
 		self::$config=$config;
 		self::startTemplateEngine($config);
 		if (isset($config["sessionName"]))
-			SessionUtils::start($config["sessionName"]);
+			Session::start($config["sessionName"]);
 		self::forward($url);
 	}
 
