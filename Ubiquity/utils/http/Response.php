@@ -113,6 +113,14 @@ class Response {
 	}
 
 	/**
+	 * Set the Authorization header field
+	 * @param string $authorization
+	 */
+	public static function setAuthorization($authorization) {
+		self::header('Authorization', $authorization);
+	}
+
+	/**
 	 * Sets the response code
 	 * @param int $value
 	 */

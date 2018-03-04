@@ -123,6 +123,7 @@ class Session {
 	 */
 	public static function set($key, $value) {
 		$_SESSION[$key]=$value;
+		return $value;
 	}
 
 	/**
@@ -132,6 +133,26 @@ class Session {
 	public static function delete($key) {
 		self::start();
 		unset($_SESSION[$key]);
+	}
+
+	/**
+	 * Increment the value at the key index in session
+	 * @param string $key
+	 * @param number $inc
+	 * @return number
+	 */
+	public static function inc($key, $inc=1) {
+		return self::set($key, self::get($key, 0) + $inc);
+	}
+
+	/**
+	 * Decrement the value at the key index in session
+	 * @param string $key
+	 * @param number $dec
+	 * @return number
+	 */
+	public static function dec($key, $dec=1) {
+		return self::set($key, self::get($key, 0) - $dec);
 	}
 
 	/**
