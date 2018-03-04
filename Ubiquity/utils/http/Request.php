@@ -6,7 +6,7 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UString;
 
 /**
- * Request utilities
+ * Http Request utilities
  * @author jc
  * @version 1.0.0.2
  */

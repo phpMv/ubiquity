@@ -5,7 +5,7 @@ namespace Ubiquity\utils\http;
 use Ubiquity\utils\base\UString;
 
 /**
- * Session utilities
+ * Http Session utilities
  * @author jc
  * @version 1.0.0.4
  */

@@ -3,7 +3,7 @@
 namespace Ubiquity\utils\http;
 
 /**
- * Cookies utilities
+ * Http Cookies utilities
  * @author jc
  * @version 1.0.0.2
  */
