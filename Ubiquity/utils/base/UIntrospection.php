@@ -27,7 +27,8 @@ class UIntrospection {
 		$eLine=$r->getEndLine();
 		if ($sLine == $eLine)
 			return $lines[$sLine];
-		for($l=$sLine; $l < min($eLine, $count); $l++) {
+		$min=\min($eLine, $count);
+		for($l=$sLine; $l < $min; $l++) {
 			$str.=$lines[$l];
 		}
 		return $str;
