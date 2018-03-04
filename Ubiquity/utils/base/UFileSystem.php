@@ -32,13 +32,13 @@ class UFileSystem {
 	}
 
 	public static function cleanPathname($path) {
-		if (String::isNotNull($path)) {
+		if (UString::isNotNull($path)) {
 			if (DS === "/")
 				$path=\str_replace("\\", DS, $path);
 			else
 				$path=\str_replace("/", DS, $path);
 			$path=\str_replace(DS . DS, DS, $path);
-			if (!String::endswith($path, DS)) {
+			if (!UString::endswith($path, DS)) {
 				$path=$path . DS;
 			}
 		}
