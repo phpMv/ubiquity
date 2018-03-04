@@ -5,7 +5,7 @@ namespace Ubiquity\utils\yuml;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\ClassUtils;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 
 class ClassesToYuml {
 	private $displayProperties;
@@ -39,7 +39,7 @@ class ClassesToYuml {
 				$count=\sizeof($files);
 				for($i=0;$i<$count;$i++){
 					$result=$yumlResult[$i]->oneToManyTostring();
-					if(StrUtils::isNotNull($result))
+					if(UString::isNotNull($result))
 						$yumlResult[]=$result;
 				}
 			}

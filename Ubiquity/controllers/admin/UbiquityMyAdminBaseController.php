@@ -10,7 +10,7 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\admin\UbiquityMyAdminData;
 use controllers\ControllerBase;
-use Ubiquity\utils\RequestUtils;
+use Ubiquity\utils\http\Request;
 use Ajax\semantic\html\content\view\HtmlItem;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\admin\popo\Route;
@@ -19,7 +19,7 @@ use Ajax\semantic\html\collections\form\HtmlFormFields;
 use Ubiquity\controllers\admin\popo\ControllerAction;
 use Ajax\semantic\html\collections\form\HtmlForm;
 use Ubiquity\controllers\admin\traits\ModelsConfigTrait;
-use Ubiquity\utils\FsUtils;
+use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\yuml\ClassToYuml;
 use Ubiquity\utils\yuml\Yuml;
 use Ubiquity\utils\yuml\ClassesToYuml;
@@ -33,7 +33,7 @@ use Ubiquity\controllers\admin\traits\CacheTrait;
 use Ubiquity\controllers\admin\traits\ControllersTrait;
 use Ubiquity\controllers\admin\traits\ModelsTrait;
 use Ubiquity\controllers\admin\traits\RoutesTrait;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ubiquity\utils\UbiquityUtils;
 use Ubiquity\controllers\admin\traits\DatabaseTrait;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
@@ -63,7 +63,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 
 	public function initialize() {
 		parent::initialize();
-		if (RequestUtils::isAjax() === false) {
+		if (Request::isAjax() === false) {
 			$semantic=$this->jquery->semantic();
 			$mainMenuElements=$this->_getAdminViewer()->getMainMenuElements();
 			$elements=[ "UbiquityMyAdmin" ];
@@ -84,7 +84,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function finalize() {
-		if (!RequestUtils::isAjax()) {
+		if (!Request::isAjax()) {
 			$this->loadView("Admin/main/vFooter.html", [ "js" => $this->initializeJs() ]);
 		}
 	}
@@ -142,7 +142,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 				foreach ( $dbs as $table ) {
 					$model=$this->getModelsNS() . "\\" . ucfirst($table);
 					$file=\str_replace("\\", DS, ROOT . DS . $model) . ".php";
-					$find=FsUtils::tryToRequire($file);
+					$find=UFileSystem::tryToRequire($file);
 					if ($find) {
 						$count=DAO::count($model);
 						$item=$menu->addItem(ucfirst($table));
@@ -174,7 +174,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$this->getHeader("controllers");
 		$controllersNS=$config["mvcNS"]["controllers"];
 		$controllersDir=ROOT . str_replace("\\", DS, $controllersNS);
-		$this->showSimpleMessage("Controllers directory is <b>" . FsUtils::cleanPathname($controllersDir) . "</b>", "info", "info circle", null, "msgControllers");
+		$this->showSimpleMessage("Controllers directory is <b>" . UFileSystem::cleanPathname($controllersDir) . "</b>", "info", "info circle", null, "msgControllers");
 		$frm=$this->jquery->semantic()->htmlForm("frmCtrl");
 		$frm->setValidationParams([ "on" => "blur","inline" => true ]);
 		$input=$frm->addInput("name", null, "text", "", "Controller name")->addRules([ [ "empty","Controller name must have a value" ],"regExp[/^[A-Za-z]\w*$/]" ])->setWidth(8);
@@ -276,7 +276,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _showDiagram() {
-		if (RequestUtils::isPost()) {
+		if (Request::isPost()) {
 			if (isset($_POST["model"])) {
 				$model=$_POST["model"];
 				$model=\str_replace("|", "\\", $model);
@@ -318,7 +318,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _updateDiagram() {
-		if (RequestUtils::isPost()) {
+		if (Request::isPost()) {
 			if (isset($_POST["model"])) {
 				$model=$_POST["model"];
 				$model=\str_replace("|", "\\", $model);
@@ -378,7 +378,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _updateAllClassesDiagram() {
-		if (RequestUtils::isPost()) {
+		if (Request::isPost()) {
 			$type=$_POST["type"];
 			$size=$_POST["size"];
 			$yumlContent=$this->_getClassesToYuml($_POST);
@@ -418,7 +418,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _runPostWithParams($method="post", $type="parameter", $origine="routes") {
-		if (RequestUtils::isPost()) {
+		if (Request::isPost()) {
 			$model=null;
 			$actualParams=[ ];
 			$url=$_POST["url"];
@@ -544,7 +544,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 			$count=\sizeof($names);
 			for($i=0; $i < $count; $i++) {
 				$name=$names[$i];
-				if (StrUtils::isNotNull($name)) {
+				if (UString::isNotNull($name)) {
 					if (isset($values[$i]))
 						$result[$name]=$values[$i];
 				}
@@ -588,7 +588,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _runAction($frm=null) {
-		if (RequestUtils::isPost()) {
+		if (Request::isPost()) {
 			$url=$_POST["url"];
 			unset($_POST["url"]);
 			$method=$_POST["method"];
@@ -723,7 +723,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$btOkay=new HtmlButton("bt-okay", "Confirm", "negative");
 		$btOkay->addIcon("check circle");
 		$btOkay->postOnClick($url, "{data:'" . $data . "'}", $responseElement, $attributes);
-		$btCancel=new HtmlButton("bt-cancel-" . StrUtils::cleanAttribute($url), "Cancel");
+		$btCancel=new HtmlButton("bt-cancel-" . UString::cleanAttribute($url), "Cancel");
 		$btCancel->addIcon("remove circle outline");
 		$btCancel->onClick($messageDlg->jsHide());
 		$messageDlg->addContent([ new HtmlDivider(""),new HtmlSemDoubleElement("", "div", "", [ $btOkay->floatRight(),$btCancel->floatRight() ]) ]);

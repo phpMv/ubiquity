@@ -5,7 +5,7 @@ var searchData=
   ['filterroutes',['filterRoutes',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait.html#a066681141b81838af780b8226338ae2c',1,'Ubiquity\controllers\admin\traits\RoutesTrait\filterRoutes()'],['../class_ubiquity_1_1controllers_1_1_router.html#a43c2e8b692245c1b8d5712cb7eaaf9d2',1,'Ubiquity\controllers\Router\filterRoutes()']]],
   ['finalize',['finalize',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a9caaa1f5ea6177e55f13ebe7dec2bd60',1,'Ubiquity\controllers\admin\UbiquityMyAdminBaseController\finalize()'],['../class_ubiquity_1_1controllers_1_1_controller.html#a9caaa1f5ea6177e55f13ebe7dec2bd60',1,'Ubiquity\controllers\Controller\finalize()'],['../class_ubiquity_1_1controllers_1_1_controller_base.html#a9caaa1f5ea6177e55f13ebe7dec2bd60',1,'Ubiquity\controllers\ControllerBase\finalize()'],['../class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#a9caaa1f5ea6177e55f13ebe7dec2bd60',1,'Ubiquity\controllers\rest\RestController\finalize()']]],
   ['finalizetokens',['finalizeTokens',['../class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#accd77242ede69b631796507e265c6ede',1,'Ubiquity::controllers::rest::RestServer']]],
-  ['firstreplace',['firstReplace',['../class_ubiquity_1_1utils_1_1_str_utils.html#af33e36f0039621c50a3efad91d7703cd',1,'Ubiquity::utils::StrUtils']]],
+  ['firstreplace',['firstReplace',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#af33e36f0039621c50a3efad91d7703cd',1,'Ubiquity::utils::base::UString']]],
   ['flash_5fbag_5fkey',['FLASH_BAG_KEY',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#aabc4d1e1ba6fce60f6294ea4276a04ad',1,'Ubiquity::utils::flash::FlashBag']]],
   ['flashbag',['FlashBag',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html',1,'Ubiquity::utils::flash']]],
   ['flashbag_2ephp',['FlashBag.php',['../_flash_bag_8php.html',1,'']]],
@@ -15,7 +15,7 @@ var searchData=
   ['formatbytes',['formatBytes',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a598de0ead09f737371825c4c84bc0672',1,'Ubiquity::controllers::admin::UbiquityMyAdminViewer']]],
   ['formatexception',['formatException',['../class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html#a364131ac2b799f55f3f1f4ec24ad9ba7',1,'Ubiquity::controllers::rest::ResponseFormatter']]],
   ['forward',['forward',['../class_ubiquity_1_1controllers_1_1_controller.html#a41dc0210a4e99cb5d50bd89b800c7b51',1,'Ubiquity\controllers\Controller\forward()'],['../class_ubiquity_1_1controllers_1_1_startup.html#aa36bf21c33f40d9090abc42273d367ef',1,'Ubiquity\controllers\Startup\forward()']]],
-  ['fromarray',['fromArray',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a66a6c502659b138934bf1b3aa629a3ca',1,'Ubiquity::controllers::admin::popo::Route']]],
-  ['fsutils',['FsUtils',['../class_ubiquity_1_1utils_1_1_fs_utils.html',1,'Ubiquity::utils']]],
-  ['fsutils_2ephp',['FsUtils.php',['../_fs_utils_8php.html',1,'']]]
+  ['framework',['Framework',['../class_ubiquity_1_1core_1_1_framework.html',1,'Ubiquity::core']]],
+  ['framework_2ephp',['Framework.php',['../_framework_8php.html',1,'']]],
+  ['fromarray',['fromArray',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a66a6c502659b138934bf1b3aa629a3ca',1,'Ubiquity::controllers::admin::popo::Route']]]
 ];

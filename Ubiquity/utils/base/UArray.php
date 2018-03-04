@@ -1,8 +1,8 @@
 <?php
 
-namespace Ubiquity\utils;
+namespace Ubiquity\utils\base;
 
-class JArray {
+class UArray {
 
 	public static function isAssociative($array) {
 		return (array_keys($array) !== range(0, count($array) - 1));
@@ -42,26 +42,26 @@ class JArray {
 		return $prefix . $extsStr;
 	}
 
-	public static function remove($array,$search){
-		if(\is_array($search)){
-			foreach ($search as $val){
+	public static function remove($array, $search) {
+		if (\is_array($search)) {
+			foreach ( $search as $val ) {
 				$array=self::removeOne($array, $val);
 			}
-		}else{
+		} else {
 			$array=self::removeOne($array, $search);
 		}
 		return array_values($array);
 	}
 
-	public static function removeOne($array,$search){
-		if (($key = array_search($search, $array)) !== false) {
+	public static function removeOne($array, $search) {
+		if (($key=array_search($search, $array)) !== false) {
 			unset($array[$key]);
 		}
 		return $array;
 	}
 
-	public static function update(&$array,$search,$newValue){
-		if (($key = array_search($search, $array)) !== false) {
+	public static function update(&$array, $search, $newValue) {
+		if (($key=array_search($search, $array)) !== false) {
 			$array[$key]=$newValue;
 		}
 		return $array;
@@ -69,7 +69,7 @@ class JArray {
 
 	private static function parseValue($v, $prefix="") {
 		if (\is_bool($v) === true) {
-			$result=StrUtils::getBooleanStr($v);
+			$result=UString::getBooleanStr($v);
 		} elseif (\is_numeric($v)) {
 			$result=$v;
 		} elseif (\is_array($v)) {

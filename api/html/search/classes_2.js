@@ -16,6 +16,6 @@ var searchData=
   ['controllerbase',['ControllerBase',['../class_ubiquity_1_1controllers_1_1_controller_base.html',1,'Ubiquity::controllers']]],
   ['controllerparser',['ControllerParser',['../class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html',1,'Ubiquity::cache::parser']]],
   ['controllerstrait',['ControllersTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html',1,'Ubiquity::controllers::admin::traits']]],
-  ['cookieutils',['CookieUtils',['../class_ubiquity_1_1utils_1_1_cookie_utils.html',1,'Ubiquity::utils']]],
+  ['cookie',['Cookie',['../class_ubiquity_1_1utils_1_1http_1_1_cookie.html',1,'Ubiquity::utils::http']]],
   ['crudcontroller',['CRUDController',['../class_ubiquity_1_1controllers_1_1_c_r_u_d_controller.html',1,'Ubiquity::controllers']]]
 ];

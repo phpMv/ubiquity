@@ -1,6 +1,6 @@
 <?php
 namespace Ubiquity\controllers\admin\utils;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 
 class CodeUtils {
 	public static function cleanParameters($parameters){
@@ -43,20 +43,20 @@ class CodeUtils {
 	}
 
 	public static function checkVar($var,$prefix='$'){
-		if(StrUtils::isNull($var))
+		if(UString::isNull($var))
 			return "";
 		$var=\trim($var);
-		if(!StrUtils::startswith($var, $prefix)){
+		if(!UString::startswith($var, $prefix)){
 			$var=$prefix.$var;
 		}
 		return $var;
 	}
 
 	public static function unCheckVar($var,$prefix='$'){
-		if(StrUtils::isNull($var))
+		if(UString::isNull($var))
 			return "";
 			$var=\trim($var);
-			if(StrUtils::startswith($var, $prefix)){
+			if(UString::startswith($var, $prefix)){
 				$var=\substr($var, \sizeof($prefix));
 			}
 			return $var;

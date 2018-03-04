@@ -5,9 +5,9 @@ namespace Ubiquity\controllers\rest;
 use Ubiquity\controllers\Controller;
 use Ubiquity\orm\DAO;
 use Ubiquity\controllers\Startup;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\RequestUtils;
+use Ubiquity\utils\http\Request;
 
 /**
  * @author jc
@@ -108,10 +108,10 @@ abstract class RestController extends Controller {
 	 * @param array|null $values
 	 */
 	protected function _setValuesToObject($instance,$values=null){
-		if(RequestUtils::isJSON()){
+		if(Request::isJSON()){
 			$values=\json_decode($values,true);
 		}
-		RequestUtils::setValuesToObject($instance,$values);
+		Request::setValuesToObject($instance,$values);
 	}
 
 	/**
@@ -141,9 +141,9 @@ abstract class RestController extends Controller {
 	public function get($condition="1=1",$loadManyToOne=false,$loadOneToMany=false,$useCache=false){
 		try{
 			$condition=\urldecode($condition);
-			$loadManyToOne=StrUtils::isBooleanTrue($loadManyToOne);
-			$loadOneToMany=StrUtils::isBooleanTrue($loadOneToMany);
-			$useCache=StrUtils::isBooleanTrue($useCache);
+			$loadManyToOne=UString::isBooleanTrue($loadManyToOne);
+			$loadOneToMany=UString::isBooleanTrue($loadOneToMany);
+			$useCache=UString::isBooleanTrue($useCache);
 			$datas=DAO::getAll($this->model,$condition,$loadManyToOne,$loadOneToMany,$useCache);
 			echo $this->responseFormatter->get($datas);
 		}catch (\Exception $e){
@@ -161,9 +161,9 @@ abstract class RestController extends Controller {
 	 */
 	public function getOne($keyValues,$loadManyToOne=false,$loadOneToMany=false,$useCache=false){
 		$keyValues=\urldecode($keyValues);
-		$loadManyToOne=StrUtils::isBooleanTrue($loadManyToOne);
-		$loadOneToMany=StrUtils::isBooleanTrue($loadOneToMany);
-		$useCache=StrUtils::isBooleanTrue($useCache);
+		$loadManyToOne=UString::isBooleanTrue($loadManyToOne);
+		$loadOneToMany=UString::isBooleanTrue($loadOneToMany);
+		$useCache=UString::isBooleanTrue($useCache);
 		$data=DAO::getOne($this->model, $keyValues,$loadManyToOne,$loadOneToMany,$useCache);
 		if(isset($data)){
 			$_SESSION["_restInstance"]=$data;
@@ -186,7 +186,7 @@ abstract class RestController extends Controller {
 	 */
 	public function getOneToMany($member,$useCache=false){
 		if(isset($_SESSION["_restInstance"])){
-			$useCache=StrUtils::isBooleanTrue($useCache);
+			$useCache=UString::isBooleanTrue($useCache);
 			$datas=DAO::getOneToMany($_SESSION["_restInstance"], $member,$useCache);
 			echo $this->responseFormatter->get($datas);
 		}else{
@@ -201,7 +201,7 @@ abstract class RestController extends Controller {
 	 */
 	public function getManyToMany($member,$useCache=false){
 		if(isset($_SESSION["_restInstance"])){
-			$useCache=StrUtils::isBooleanTrue($useCache);
+			$useCache=UString::isBooleanTrue($useCache);
 			$datas=DAO::getManyToMany($_SESSION["_restInstance"], $member,null,$useCache);
 			echo $this->responseFormatter->get($datas);
 		}else{
@@ -218,7 +218,7 @@ abstract class RestController extends Controller {
 	public function update(...$keyValues){
 		$instance=DAO::getOne($this->model, $keyValues);
 		if(isset($instance)){
-			$this->_setValuesToObject($instance,RequestUtils::getInput());
+			$this->_setValuesToObject($instance,Request::getInput());
 			$result=DAO::update($instance);
 			if($result){
 				echo $this->responseFormatter->format(["status"=>"updated","data"=>$this->responseFormatter->cleanRestObject($instance)]);
@@ -240,7 +240,7 @@ abstract class RestController extends Controller {
 		$model=$this->model;
 		$instance=new $model();
 		if(isset($instance)){
-			$this->_setValuesToObject($instance,RequestUtils::getInput());
+			$this->_setValuesToObject($instance,Request::getInput());
 			$result=DAO::insert($instance);
 			if($result){
 				echo $this->responseFormatter->format(["status"=>"inserted","data"=>$this->responseFormatter->cleanRestObject($instance)]);

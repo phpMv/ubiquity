@@ -5,7 +5,7 @@ namespace Ubiquity\controllers\admin\traits;
 use Ajax\JsUtils;
 use Ubiquity\views\View;
 use Ubiquity\db\Database;
-use Ubiquity\utils\RequestUtils;
+use Ubiquity\utils\http\Request;
 use Ajax\semantic\html\collections\menus\HtmlMenu;
 use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\modules\HtmlDropdown;
@@ -130,7 +130,7 @@ trait ModelsConfigTrait{
 	}
 
 	public function _generateFromYuml() {
-		if (RequestUtils::isPost()) {
+		if (Request::isPost()) {
 			$config=Startup::getConfig();
 			$yumlGen=new YumlModelsCreator();
 			$yumlGen->initYuml($_POST["code"]);
@@ -142,7 +142,7 @@ trait ModelsConfigTrait{
 	}
 
 	public function _updateYumlDiagram() {
-		if (RequestUtils::isPost()) {
+		if (Request::isPost()) {
 			$type=$_POST["type"];
 			$size=$_POST["size"];
 			$yumlContent=$_POST["code"];

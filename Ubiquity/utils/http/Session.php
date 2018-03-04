@@ -1,13 +1,15 @@
 <?php
 
-namespace Ubiquity\utils;
+namespace Ubiquity\utils\http;
+
+use Ubiquity\utils\base\UString;
 
 /**
  * Session utilities
  * @author jc
- * @version 1.0.0.3
+ * @version 1.0.0.4
  */
-class SessionUtils {
+class Session {
 	private static $name;
 
 	/**
@@ -74,7 +76,7 @@ class SessionUtils {
 	 * @return boolean
 	 */
 	public static function setBoolean($key, $value) {
-		$_SESSION[$key]=StrUtils::isBooleanTrue($value);
+		$_SESSION[$key]=UString::isBooleanTrue($value);
 		return $_SESSION[$key];
 	}
 
@@ -87,7 +89,7 @@ class SessionUtils {
 		self::start();
 		$ret=false;
 		if (isset($_SESSION[$key])) {
-			$ret=StrUtils::isBooleanTrue($_SESSION[$key]);
+			$ret=UString::isBooleanTrue($_SESSION[$key]);
 		}
 		return $ret;
 	}

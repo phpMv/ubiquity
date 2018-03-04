@@ -4,7 +4,7 @@ namespace Ubiquity\utils\yuml;
 
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\Reflexion;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 
 /**
  * @author jc

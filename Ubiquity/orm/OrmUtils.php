@@ -4,8 +4,8 @@ namespace Ubiquity\orm;
 
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\StrUtils;
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\base\UArray;
 
 /**
  * Utilitaires de mappage Objet/relationnel
@@ -114,7 +114,7 @@ class OrmUtils {
 	}
 
 	public static function isNotNullOrNullAccepted($v, $className, $member) {
-		$notNull=StrUtils::isNotNull($v);
+		$notNull=UString::isNotNull($v);
 		return ($notNull) || (!$notNull && OrmUtils::isNullable($className, $member));
 	}
 
@@ -200,7 +200,7 @@ class OrmUtils {
 	public static function getAnnotationInfoMember($class, $keyAnnotation, $member) {
 		$info=self::getAnnotationInfo($class, $keyAnnotation);
 		if ($info !== false) {
-			if(JArray::isAssociative($info)){
+			if(UArray::isAssociative($info)){
 				if (isset($info[$member])) {
 					return $info[$member];
 				}

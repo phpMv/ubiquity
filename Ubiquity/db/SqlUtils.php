@@ -2,7 +2,7 @@
 
 namespace Ubiquity\db;
 
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 use Ubiquity\orm\OrmUtils;
 
 /**
@@ -71,7 +71,7 @@ class SqlUtils {
 	public static function getCondition($keyValues,$classname=NULL,$separator=" AND ") {
 		$retArray=array ();
 		if (is_array($keyValues)) {
-			if(!JArray::isAssociative($keyValues)){
+			if(!UArray::isAssociative($keyValues)){
 				if(isset($classname)){
 					$keys=OrmUtils::getKeyFields($classname);
 					$keyValues=\array_combine($keys, $keyValues);

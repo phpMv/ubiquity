@@ -2,8 +2,8 @@
 
 namespace Ubiquity\js;
 
-use Ubiquity\utils\StrUtils;
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\base\UArray;
 use Ubiquity\controllers\Startup;
 
 /**
@@ -52,9 +52,9 @@ class Jquery {
 		$url=self::_correctAjaxUrl($url);
 		$retour="url='" . $url . "';\n";
 		$slash="/";
-		if (StrUtils::endsWith($url, "/"))
+		if (UString::endsWith($url, "/"))
 			$slash="";
-		if (StrUtils::isNotNull($attr)) {
+		if (UString::isNotNull($attr)) {
 			if ($attr == "value")
 				$retour.="url=url+'" . $slash . "'+$(this).val();\n";
 			else if ($attr !== null && $attr !== "")
@@ -71,7 +71,7 @@ class Jquery {
 	}
 
 	protected static function _correctAjaxUrl($url) {
-		if (StrUtils::endsWith($url, "/"))
+		if (UString::endsWith($url, "/"))
 			$url=substr($url, 0, strlen($url) - 1);
 		if (strncmp($url, 'http://', 7) != 0 && strncmp($url, 'https://', 8) != 0) {
 			$url=Startup::getConfig()["siteUrl"] . $url;
@@ -90,8 +90,8 @@ class Jquery {
 	 * Associe du code javascript à exécuter sur l'évènement $event d'un élément DOM $element
 	 */
 	public static function bindToElement($element, $event, $jsCode, $parameters=array()) {
-		$preventDefault=JArray::getDefaultValue($parameters, "preventDefault", true);
-		$stopPropagation=JArray::getDefaultValue($parameters, "stopPropagation", true);
+		$preventDefault=UArray::getDefaultValue($parameters, "preventDefault", true);
+		$stopPropagation=UArray::getDefaultValue($parameters, "stopPropagation", true);
 		$function="function(event){";
 		if ($preventDefault) {
 			$function.="event.preventDefault();";
@@ -140,9 +140,9 @@ class Jquery {
 	 * @param array $parameters default : array("jsCallback"=>NULL,"attr"=>"id","params"=>"{}")
 	 */
 	protected static function _ajax($url, $responseElement="", $method="get", $parameters=array()) {
-		$jsCallback=JArray::getDefaultValue($parameters, "jsCallback", null);
-		$attr=JArray::getDefaultValue($parameters, "attr", "id");
-		$params=JArray::getDefaultValue($parameters, "params", "{}");
+		$jsCallback=UArray::getDefaultValue($parameters, "jsCallback", null);
+		$attr=UArray::getDefaultValue($parameters, "attr", "id");
+		$params=UArray::getDefaultValue($parameters, "params", "{}");
 
 		$retour=self::_getAjaxUrl($url, $attr);
 
@@ -202,9 +202,9 @@ class Jquery {
 	 * @param array $parameters default : array("jsCallback"=>NULL,"attr"=>"id","validation"=>false)
 	 */
 	public static function _postForm($url, $form, $responseElement, $parameters=array()) {
-		$jsCallback=JArray::getDefaultValue($parameters, "jsCallback", null);
-		$attr=JArray::getDefaultValue($parameters, "attr", "id");
-		$validation=JArray::getDefaultValue($parameters, "validation", false);
+		$jsCallback=UArray::getDefaultValue($parameters, "jsCallback", null);
+		$attr=UArray::getDefaultValue($parameters, "attr", "id");
+		$validation=UArray::getDefaultValue($parameters, "validation", false);
 
 		$retour="url='" . $url . "';\n";
 		if ($attr == "value")
@@ -353,7 +353,7 @@ class Jquery {
 	 * @return mixed
 	 */
 	public static function setOn($event, $element, $elementToModify, $value="", $parameters=array("preventDefault"=>false,"stopPropagation"=>false)) {
-		$jsCallback=JArray::getDefaultValue($parameters, "jsCallback", null);
+		$jsCallback=UArray::getDefaultValue($parameters, "jsCallback", null);
 		return self::bindToElement($element, $event, self::_setVal($elementToModify, $value, $jsCallback), $parameters);
 	}
 
@@ -389,7 +389,7 @@ class Jquery {
 				$retour.="$('#" . $elementPrefix . $value . "').attr('checked', true);\n";
 			}
 		} else
-			$retour="$('#" . $elementPrefix . "').attr('checked', " . StrUtils::getBooleanStr($values) . ");\n";
+			$retour="$('#" . $elementPrefix . "').attr('checked', " . UString::getBooleanStr($values) . ");\n";
 		return self::addToCodes($retour);
 	}
 

@@ -3,7 +3,7 @@
 namespace Ubiquity\controllers\rest;
 
 use Ubiquity\cache\system\ArrayCache;
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 
 class ApiTokens {
 	private $tokens;
@@ -74,7 +74,7 @@ class ApiTokens {
 
 	public function storeToCache($key="_apiTokens"){
 		$fileContent=["duration"=>$this->duration,"length"=>$this->length,"tokens"=>$this->tokens];
-		self::$cache->store($key, "return " . JArray::asPhpArray($fileContent,"array").";");
+		self::$cache->store($key, "return " . UArray::asPhpArray($fileContent,"array").";");
 	}
 
 	/**

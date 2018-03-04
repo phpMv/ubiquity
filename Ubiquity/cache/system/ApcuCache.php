@@ -1,7 +1,7 @@
 <?php
 namespace Ubiquity\cache\system;
 
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\admin\popo\CacheFile;
 
 /**
@@ -93,7 +93,7 @@ class ApcuCache extends AbstractDataCache{
 
 	protected function getCacheEntries($type){
 		$entries=$this->getAllEntries();
-		return \array_filter($entries,function($v) use ($type){return StrUtils::startswith($v['info'], $type);});
+		return \array_filter($entries,function($v) use ($type){return UString::startswith($v['info'], $type);});
 	}
 
 	protected function getAllEntries(){
@@ -110,7 +110,7 @@ class ApcuCache extends AbstractDataCache{
 		$entries=$this->getCacheEntries($type);
 		foreach ($entries as $entry) {
 			$key=$entry['info'];
-			if(StrUtils::startswith($key, $type)){
+			if(UString::startswith($key, $type)){
 				$result[]=new CacheFile(\ucfirst($type),$key,$entry['creation_time'],$entry['mem_size'],$key);
 			}
 		}

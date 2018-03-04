@@ -2,7 +2,7 @@ var searchData=
 [
   ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
   ['reflexion_2ephp',['Reflexion.php',['../_reflexion_8php.html',1,'']]],
-  ['requestutils_2ephp',['RequestUtils.php',['../_request_utils_8php.html',1,'']]],
+  ['request_2ephp',['Request.php',['../_request_8php.html',1,'']]],
   ['responseformatter_2ephp',['ResponseFormatter.php',['../_response_formatter_8php.html',1,'']]],
   ['restannotation_2ephp',['RestAnnotation.php',['../_rest_annotation_8php.html',1,'']]],
   ['restcachetrait_2ephp',['RestCacheTrait.php',['../_rest_cache_trait_8php.html',1,'']]],

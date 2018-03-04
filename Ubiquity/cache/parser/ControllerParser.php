@@ -3,7 +3,7 @@
 namespace Ubiquity\cache\parser;
 
 use Ubiquity\orm\parser\Reflexion;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ubiquity\annotations\router\RouteAnnotation;
 use Ubiquity\cache\ClassUtils;
 
@@ -35,7 +35,7 @@ class ControllerParser {
 					$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
 					if ($annots !== false) {
 						foreach ( $annots as $annot ) {
-							if (StrUtils::isNull($annot->path)) {
+							if (UString::isNull($annot->path)) {
 								$newAnnot=$this->generateRouteAnnotationFromMethod($method);
 								$annot->path=$newAnnot[0]->path;
 							}
@@ -43,7 +43,7 @@ class ControllerParser {
 						$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
 					} else {
 						if ($automated) {
-							if ($method->class !== 'Ubiquity\\controllers\\Controller' && \array_search($method->name, self::$excludeds) === false && !StrUtils::startswith($method->name, "_"))
+							if ($method->class !== 'Ubiquity\\controllers\\Controller' && \array_search($method->name, self::$excludeds) === false && !UString::startswith($method->name, "_"))
 								$this->routesMethods[$method->name]=[ "annotations" => $this->generateRouteAnnotationFromMethod($method),"method" => $method ];
 						}
 					}
@@ -81,12 +81,12 @@ class ControllerParser {
 	}
 
 	private static function cleanpath($prefix, $path="") {
-		if (!StrUtils::endswith($prefix, "/"))
+		if (!UString::endswith($prefix, "/"))
 			$prefix=$prefix . "/";
-		if ($path !== "" && StrUtils::startswith($path, "/"))
+		if ($path !== "" && UString::startswith($path, "/"))
 			$path=\substr($path, 1);
 		$path=$prefix . $path;
-		if (!StrUtils::endswith($path, "/") && !StrUtils::endswith($path, '(.*?)') && !StrUtils::endswith($path, "(index/)?"))
+		if (!UString::endswith($path, "/") && !UString::endswith($path, '(.*?)') && !UString::endswith($path, "(index/)?"))
 			$path=$path . "/";
 		return $path;
 	}
@@ -124,7 +124,7 @@ class ControllerParser {
 		$pathParameters=self::addParamsPath($routeArray["path"], $method, $routeArray["requirements"]);
 		$name=$routeArray["name"];
 		if (!isset($name)) {
-			$name=StrUtils::cleanAttribute(ClassUtils::getClassSimpleName($controllerClass) . "_" . $methodName);
+			$name=UString::cleanAttribute(ClassUtils::getClassSimpleName($controllerClass) . "_" . $methodName);
 		}
 		$cache=$routeArray["cache"];
 		$duration=$routeArray["duration"];

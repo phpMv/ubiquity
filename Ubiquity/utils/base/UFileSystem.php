@@ -1,13 +1,13 @@
 <?php
 
-namespace Ubiquity\utils;
+namespace Ubiquity\utils\base;
 
 /**
  * File system utilities
  * @author jc
- * @version 1.0.0.1
+ * @version 1.0.0.2
  */
-class FsUtils {
+class UFileSystem {
 
 	public static function glob_recursive($pattern, $flags=0) {
 		$files=\glob($pattern, $flags);
@@ -32,13 +32,13 @@ class FsUtils {
 	}
 
 	public static function cleanPathname($path) {
-		if (StrUtils::isNotNull($path)) {
+		if (String::isNotNull($path)) {
 			if (DS === "/")
 				$path=\str_replace("\\", DS, $path);
 			else
 				$path=\str_replace("/", DS, $path);
 			$path=\str_replace(DS . DS, DS, $path);
-			if (!StrUtils::endswith($path, DS)) {
+			if (!String::endswith($path, DS)) {
 				$path=$path . DS;
 			}
 		}

@@ -6,7 +6,7 @@ use mindplay\annotations\Annotations;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 use Ubiquity\controllers\Router;
-use Ubiquity\utils\FsUtils;
+use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\cache\traits\RouterCacheTrait;
 use Ubiquity\cache\traits\ModelsCacheTrait;
 use Ubiquity\cache\traits\RestCacheTrait;
@@ -75,7 +75,7 @@ class CacheManager {
 	public static function getCacheDirectories(&$config, $silent=false) {
 		$cacheDirectory=self::initialGetCacheDirectory($config);
 		if (!$silent) {
-			echo "cache directory is " . FsUtils::cleanPathname(ROOT . DS . $cacheDirectory) . "\n";
+			echo "cache directory is " . UFileSystem::cleanPathname(ROOT . DS . $cacheDirectory) . "\n";
 		}
 		$modelsDir=str_replace("\\", DS, $config["mvcNS"]["models"]);
 		$controllersDir=str_replace("\\", DS, $config["mvcNS"]["controllers"]);
@@ -102,7 +102,7 @@ class CacheManager {
 
 	private static function _clearCache($cacheDirectories, $type, $typeRef) {
 		if ($type === "all" || $type === $typeRef)
-			FsUtils::deleteAllFilesFromFolder($cacheDirectories[$typeRef]);
+			UFileSystem::deleteAllFilesFromFolder($cacheDirectories[$typeRef]);
 	}
 
 	public static function initCache(&$config, $type="all", $silent=false) {
@@ -121,7 +121,7 @@ class CacheManager {
 		$typeDir=ROOT . DS . str_replace("\\", DS, $typeNS);
 		if (!$silent)
 			echo \ucfirst($type) . " directory is " . ROOT . $typeNS . "\n";
-		return FsUtils::glob_recursive($typeDir . DS . '*');
+		return UFileSystem::glob_recursive($typeDir . DS . '*');
 	}
 
 	private static function register(AnnotationManager $annotationManager) {

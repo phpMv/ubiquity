@@ -10,6 +10,7 @@ var searchData=
   ['dbexport',['DbExport',['../class_ubiquity_1_1db_1_1export_1_1_db_export.html',1,'Ubiquity::db::export']]],
   ['dbgenerator',['DbGenerator',['../class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html',1,'Ubiquity::db::reverse']]],
   ['dbmodelscreator',['DbModelsCreator',['../class_ubiquity_1_1orm_1_1creator_1_1database_1_1_db_models_creator.html',1,'Ubiquity::orm::creator::database']]],
+  ['display',['Display',['../class_ubiquity_1_1core_1_1postinstall_1_1_display.html',1,'Ubiquity::core::postinstall']]],
   ['docformater',['DocFormater',['../class_ubiquity_1_1annotations_1_1parser_1_1_doc_formater.html',1,'Ubiquity::annotations::parser']]],
   ['docparser',['DocParser',['../class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html',1,'Ubiquity::annotations::parser']]]
 ];

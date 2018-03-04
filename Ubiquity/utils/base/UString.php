@@ -1,13 +1,13 @@
 <?php
 
-namespace Ubiquity\utils;
+namespace Ubiquity\utils\base;
 
 /**
  * String utilities
  * @author jc
- * @version 1.0.0.1
+ * @version 1.0.0.2
  */
-class StrUtils {
+class UString {
 
 	public static function startswith($hay, $needle) {
 		return \substr($hay, 0, strlen($needle)) === $needle;

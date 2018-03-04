@@ -2,7 +2,7 @@
 
 namespace Ubiquity\controllers\admin\popo;
 
-use Ubiquity\utils\FsUtils;
+use Ubiquity\utils\base\UFileSystem;
 
 class CacheFile {
 	private $type;
@@ -11,7 +11,7 @@ class CacheFile {
 	private $size;
 	private $file;
 
-	public function __construct($type="",$name="",$timestamp=0,$size=0,$fileKey=""){
+	public function __construct($type="", $name="", $timestamp=0, $size=0, $fileKey="") {
 		$this->type=$type;
 		$this->name=$name;
 		$this->timestamp=$timestamp;
@@ -19,25 +19,27 @@ class CacheFile {
 		$this->file=$fileKey;
 	}
 
-	public static function initFromFiles($folder,$type,$keyFunction=null){
-		$files=FsUtils::glob_recursive($folder . DS . '*');
-		$result=[];
-		if(!isset($keyFunction)){
-			$keyFunction=function($file){return \basename($file);};
+	public static function initFromFiles($folder, $type, $keyFunction=null) {
+		$files=UFileSystem::glob_recursive($folder . DS . '*');
+		$result=[ ];
+		if (!isset($keyFunction)) {
+			$keyFunction=function ($file) {
+				return \basename($file);
+			};
 		}
-		foreach ($files as $file){
+		foreach ( $files as $file ) {
 			if (is_file($file)) {
-				$result[]=new CacheFile($type,$keyFunction($file),\filectime($file),\filesize($file),$file);
+				$result[]=new CacheFile($type, $keyFunction($file), \filectime($file), \filesize($file), $file);
 			}
 		}
-		if(\sizeof($result)==0)
-			$result[]=new CacheFile($type,"","","","");
+		if (\sizeof($result) == 0)
+			$result[]=new CacheFile($type, "", "", "", "");
 		return $result;
 	}
 
-	public static function delete($folder){
-		$files=FsUtils::glob_recursive($folder . DS . '*');
-		foreach ($files as $file){
+	public static function delete($folder) {
+		$files=UFileSystem::glob_recursive($folder . DS . '*');
+		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				\unlink($file);
 			}
@@ -88,6 +90,4 @@ class CacheFile {
 		$this->file=$file;
 		return $this;
 	}
-
-
 }

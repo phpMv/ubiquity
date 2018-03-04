@@ -3,9 +3,9 @@
 namespace Ubiquity\controllers;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\RequestUtils;
+use Ubiquity\utils\http\Request;
 use Ubiquity\cache\parser\ControllerParser;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 
 /**
  * Router
@@ -16,9 +16,9 @@ class Router {
 	private static $routes;
 
 	public static function slashPath($path){
-		if(StrUtils::startswith($path,"/")===false)
+		if(UString::startswith($path,"/")===false)
 			$path="/" . $path;
-		if(!StrUtils::endswith($path, "/"))
+		if(!UString::endswith($path, "/"))
 			$path=$path."/";
 		return $path;
 	}
@@ -36,7 +36,7 @@ class Router {
 		foreach ( self::$routes as $routePath => $routeDetails ) {
 			if (preg_match("@^" . $routePath . "$@s", $path, $matches)) {
 				if (!isset($routeDetails["controller"])) {
-					$method=RequestUtils::getMethod();
+					$method=Request::getMethod();
 					if (isset($routeDetails[$method]))
 						return self::getRouteUrlParts([ "path" => $routePath,"details" => $routeDetails[$method] ], $matches, $routeDetails[$method]["cache"], $routeDetails[$method]["duration"],$cachedResponse);
 				} else
@@ -120,7 +120,7 @@ class Router {
 	 * @return string the generated url (http://myApp/path/to/route)
 	 */
 	public static function url($name,$parameters=[]){
-		return RequestUtils::getUrl(self::getRouteByName($name,$parameters,false));
+		return Request::getUrl(self::getRouteByName($name,$parameters,false));
 	}
 
 	protected static function _getURL($routePath,$params){
@@ -173,7 +173,7 @@ class Router {
 	}
 
 	private static function cleanParam($param){
-		if(StrUtils::endswith($param, "/"))
+		if(UString::endswith($param, "/"))
 			return \substr($param, 0,-1);
 		return $param;
 	}

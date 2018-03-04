@@ -13,7 +13,7 @@ var searchData=
   ['templateparser',['TemplateParser',['../class_ubiquity_1_1views_1_1engine_1_1micro_1_1_template_parser.html',1,'Ubiquity::views::engine::micro']]],
   ['templateparser_2ephp',['TemplateParser.php',['../_template_parser_8php.html',1,'']]],
   ['templates_5fpath',['templates_path',['../namespaceconf.html#af5fc85fd05db5329f792629094fdd12c',1,'conf']]],
-  ['terminate',['terminate',['../class_ubiquity_1_1utils_1_1_session_utils.html#a191e26bc789af7f3dc38b138fb7bef12',1,'Ubiquity::utils::SessionUtils']]],
+  ['terminate',['terminate',['../class_ubiquity_1_1utils_1_1http_1_1_session.html#a191e26bc789af7f3dc38b138fb7bef12',1,'Ubiquity::utils::http::Session']]],
   ['texinfo_5fdocuments',['texinfo_documents',['../namespaceconf.html#a122461edc71af89e490ec6c7c71b8a0f',1,'conf']]],
   ['todo_5finclude_5ftodos',['todo_include_todos',['../namespaceconf.html#a9c7a99d15e14d10286285d3e49eeb704',1,'conf']]],
   ['tojson',['toJson',['../class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html#a2b39955dcd2181fe19869fdbede5a754',1,'Ubiquity::controllers::rest::ResponseFormatter']]],
@@ -22,7 +22,7 @@ var searchData=
   ['traits_2ephp',['traits.php',['../traits_8php.html',1,'']]],
   ['transientannotation',['TransientAnnotation',['../class_ubiquity_1_1annotations_1_1_transient_annotation.html',1,'Ubiquity::annotations']]],
   ['transientannotation_2ephp',['TransientAnnotation.php',['../_transient_annotation_8php.html',1,'']]],
-  ['trytorequire',['tryToRequire',['../class_ubiquity_1_1utils_1_1_fs_utils.html#a2367e98e8644fe50f4e72391ad136829',1,'Ubiquity::utils::FsUtils']]],
+  ['trytorequire',['tryToRequire',['../class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a2367e98e8644fe50f4e72391ad136829',1,'Ubiquity::utils::base::UFileSystem']]],
   ['twig',['Twig',['../class_ubiquity_1_1views_1_1engine_1_1_twig.html',1,'Ubiquity::views::engine']]],
   ['twig_2ephp',['Twig.php',['../_twig_8php.html',1,'']]]
 ];

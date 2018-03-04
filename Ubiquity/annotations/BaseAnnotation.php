@@ -3,7 +3,7 @@
 namespace Ubiquity\annotations;
 
 use mindplay\annotations\Annotations;
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 use mindplay\annotations\Annotation;
 use Ubiquity\cache\ClassUtils;
 
@@ -35,7 +35,7 @@ class BaseAnnotation extends Annotation {
 
 	public function asPhpArray() {
 		$fields=$this->getPropertiesAndValues();
-		return JArray::asPhpArray($fields);
+		return UArray::asPhpArray($fields);
 	}
 
 	public function __toString() {

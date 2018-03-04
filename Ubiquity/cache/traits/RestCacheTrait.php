@@ -3,7 +3,7 @@ namespace Ubiquity\cache\traits;
 
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\cache\parser\RestControllerParser;
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 use Ubiquity\exceptions\RestException;
 
 /**
@@ -25,7 +25,7 @@ trait RestCacheTrait{
 					$restCache=\array_merge($restCache,$parser->asArray());
 			}
 		}
-		self::$cache->store("controllers/rest", "return " . JArray::asPhpArray($restCache, "array") . ";",'controllers');
+		self::$cache->store("controllers/rest", "return " . UArray::asPhpArray($restCache, "array") . ";",'controllers');
 		if(!$silent){
 			echo "Rest cache reset\n";
 		}

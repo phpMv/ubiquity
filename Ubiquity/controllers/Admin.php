@@ -3,7 +3,7 @@
 namespace Ubiquity\controllers;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 
 /**
  * @route("/admin")
@@ -16,7 +16,7 @@ class Admin extends ControllerBase {
 	public function index() {
 		$routes=CacheManager::getRoutes();
 		foreach ( $routes as $path => $infosroute ) {
-			echo $path . "=>" . JArray::asPhpArray($infosroute);
+			echo $path . "=>" . UArray::asPhpArray($infosroute);
 		}
 	}
 

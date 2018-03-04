@@ -2,7 +2,7 @@
 
 namespace Ubiquity\orm\parser;
 
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 use Ubiquity\cache\ClassUtils;
 
 class ModelParser {
@@ -73,6 +73,6 @@ class ModelParser {
 			$result["#joinColumn"][$member]=$annotation->getPropertiesAndValues();
 			$result["#invertedJoinColumn"][$annotation->name]=[ "member" => $member,"className" => ClassUtils::cleanClassname($annotation->className) ];
 		}
-		return "return " . JArray::asPhpArray($result, "array") . ";";
+		return "return " . UArray::asPhpArray($result, "array") . ";";
 	}
 }

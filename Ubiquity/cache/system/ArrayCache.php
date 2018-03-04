@@ -4,7 +4,7 @@ namespace Ubiquity\cache\system;
 
 use Ubiquity\controllers\admin\popo\CacheFile;
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\FsUtils;
+use Ubiquity\utils\base\UFileSystem;
 
 /**
  * This class is responsible for storing Arrays in PHP files.
@@ -145,7 +145,7 @@ class ArrayCache extends AbstractDataCache {
 	 */
 	public function getCacheInfo() {
 		$result=parent::getCacheInfo();
-		$result.="<br>Root cache directory is <b>" . FsUtils::cleanPathname($this->_root) . "</b>.";
+		$result.="<br>Root cache directory is <b>" . UFileSystem::cleanPathname($this->_root) . "</b>.";
 		return $result;
 	}
 
@@ -155,6 +155,6 @@ class ArrayCache extends AbstractDataCache {
 	 * @see \Ubiquity\cache\system\AbstractDataCache::getEntryKey()
 	 */
 	public function getEntryKey($key) {
-		return FsUtils::cleanPathname($this->_getPath($key));
+		return UFileSystem::cleanPathname($this->_getPath($key));
 	}
 }

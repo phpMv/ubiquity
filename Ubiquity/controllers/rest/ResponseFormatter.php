@@ -2,7 +2,7 @@
 
 namespace Ubiquity\controllers\rest;
 
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 
 class ResponseFormatter {
 
@@ -50,7 +50,7 @@ class ResponseFormatter {
 	public function getModel($controllerName){
 		$array=\explode("\\", $controllerName);
 		$result= \ucfirst(end($array));
-		if(StrUtils::endswith($result, "s")){
+		if(UString::endswith($result, "s")){
 			$result=\substr($result, 0,-1);
 		}
 		return $result;

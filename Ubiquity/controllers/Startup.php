@@ -2,7 +2,7 @@
 
 namespace Ubiquity\controllers;
 
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\utils\SessionUtils;
 
@@ -57,7 +57,7 @@ class Startup {
 		if (!$url) {
 			$url="_default";
 		}
-		if (StrUtils::endswith($url, "/"))
+		if (UString::endswith($url, "/"))
 			$url=\substr($url, 0, strlen($url) - 1);
 		self::$urlParts=\explode("/", $url);
 
@@ -150,7 +150,7 @@ class Startup {
 
 	private static function needsKeyInConfigArray(&$result, $array, $needs) {
 		foreach ( $needs as $need ) {
-			if (!isset($array[$need]) || StrUtils::isNull($array[$need])) {
+			if (!isset($array[$need]) || UString::isNull($array[$need])) {
 				$result[]=$need;
 			}
 		}

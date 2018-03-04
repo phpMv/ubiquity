@@ -1,7 +1,7 @@
 var searchData=
 [
   ['reflexion',['Reflexion',['../class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html',1,'Ubiquity::orm::parser']]],
-  ['requestutils',['RequestUtils',['../class_ubiquity_1_1utils_1_1_request_utils.html',1,'Ubiquity::utils']]],
+  ['request',['Request',['../class_ubiquity_1_1utils_1_1http_1_1_request.html',1,'Ubiquity::utils::http']]],
   ['responseformatter',['ResponseFormatter',['../class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html',1,'Ubiquity::controllers::rest']]],
   ['restannotation',['RestAnnotation',['../class_ubiquity_1_1annotations_1_1rest_1_1_rest_annotation.html',1,'Ubiquity::annotations::rest']]],
   ['restcachetrait',['RestCacheTrait',['../class_ubiquity_1_1cache_1_1traits_1_1_rest_cache_trait.html',1,'Ubiquity::cache::traits']]],

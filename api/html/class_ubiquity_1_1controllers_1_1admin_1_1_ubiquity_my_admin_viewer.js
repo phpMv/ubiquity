@@ -21,6 +21,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer =
     [ "getForm", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ad5052b35b0d2366d7cb1ded99c776860", null ],
     [ "getFormCaptions", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a88496922366d4aff09feb81d21363564", null ],
     [ "getMainMenuElements", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a70545813a28824d49f7a5d51e7640b64", null ],
+    [ "getModelDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ae257292d8d8657f267abc301c42b1efd", null ],
     [ "getModelsStructureDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#afc093fc0354b58c974ba4e5057adf8c5", null ],
     [ "getRestRoutesTab", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a9310d2296530fe831c9fa439a37b8566", null ],
     [ "getRoutesDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a625ebb75b30465bc6feff4d9794879aa", null ],

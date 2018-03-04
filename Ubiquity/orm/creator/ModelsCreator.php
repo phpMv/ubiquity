@@ -6,7 +6,7 @@ use Ubiquity\orm\creator\Member;
 use Ubiquity\annotations\JoinColumnAnnotation;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
-use Ubiquity\utils\FsUtils;
+use Ubiquity\utils\base\UFileSystem;
 
 
 abstract class ModelsCreator {
@@ -21,7 +21,7 @@ abstract class ModelsCreator {
 	public function create($config,$initCache=true,$singleTable=null){
 		$this->init($config);
 		$modelsDir=Startup::getModelsCompletePath();
-		if(FsUtils::safeMkdir($modelsDir)){
+		if(UFileSystem::safeMkdir($modelsDir)){
 			$this->tables=$this->getTablesName();
 			CacheManager::checkCache($config);
 

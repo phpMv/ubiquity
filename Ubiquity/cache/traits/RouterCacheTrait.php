@@ -6,7 +6,7 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\Router;
 use Ubiquity\cache\parser\ControllerParser;
 use Ubiquity\cache\ClassUtils;
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 use Ubiquity\cache\CacheManager;
 
 /**
@@ -48,8 +48,8 @@ trait RouterCacheTrait{
 				}
 			}
 		}
-		self::$cache->store("controllers/routes.default", "return " . JArray::asPhpArray($routes["default"], "array") . ";", 'controllers');
-		self::$cache->store("controllers/routes.rest", "return " . JArray::asPhpArray($routes["rest"], "array") . ";", 'controllers');
+		self::$cache->store("controllers/routes.default", "return " . UArray::asPhpArray($routes["default"], "array") . ";", 'controllers');
+		self::$cache->store("controllers/routes.rest", "return " . UArray::asPhpArray($routes["rest"], "array") . ";", 'controllers');
 		if (!$silent) {
 			echo "Router cache reset\n";
 		}
@@ -147,7 +147,7 @@ trait RouterCacheTrait{
 	public static function addRoute($path, $controller, $action="index", $methods=null, $name="") {
 		$controllerCache=self::getControllerCache();
 		Router::addRouteToRoutes($controllerCache, $path, $controller, $action, $methods, $name);
-		self::$cache->store("controllers/routes", "return " . JArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
+		self::$cache->store("controllers/routes", "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
 	}
 
 	public static function getControllersFiles(&$config, $silent=false) {

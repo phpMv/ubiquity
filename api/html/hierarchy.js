@@ -33,7 +33,7 @@ var hierarchy =
     [ "ControllersTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html", [
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],
-    [ "CookieUtils", "class_ubiquity_1_1utils_1_1_cookie_utils.html", null ],
+    [ "Cookie", "class_ubiquity_1_1utils_1_1http_1_1_cookie.html", null ],
     [ "DAOUpdatesTrait", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html", [
       [ "DAO", "class_ubiquity_1_1orm_1_1_d_a_o.html", null ]
     ] ],
@@ -52,6 +52,7 @@ var hierarchy =
     ] ],
     [ "DbExport", "class_ubiquity_1_1db_1_1export_1_1_db_export.html", null ],
     [ "DbGenerator", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html", null ],
+    [ "Display", "class_ubiquity_1_1core_1_1postinstall_1_1_display.html", null ],
     [ "DocFormater", "class_ubiquity_1_1annotations_1_1parser_1_1_doc_formater.html", null ],
     [ "DocParser", "class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html", null ],
     [ "Exception", null, [
@@ -62,14 +63,12 @@ var hierarchy =
       ] ]
     ] ],
     [ "FlashMessage", "class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html", null ],
-    [ "FsUtils", "class_ubiquity_1_1utils_1_1_fs_utils.html", null ],
+    [ "Framework", "class_ubiquity_1_1core_1_1_framework.html", null ],
     [ "Gui", "class_ubiquity_1_1views_1_1_gui.html", null ],
     [ "InfoMessage", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_info_message.html", null ],
-    [ "Introspection", "class_ubiquity_1_1utils_1_1_introspection.html", null ],
     [ "Iterator", null, [
       [ "FlashBag", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html", null ]
     ] ],
-    [ "JArray", "class_ubiquity_1_1utils_1_1_j_array.html", null ],
     [ "Jquery", "class_ubiquity_1_1js_1_1_jquery.html", null ],
     [ "JsCode", "class_ubiquity_1_1js_1_1_js_code.html", null ],
     [ "Logger", "class_ubiquity_1_1log_1_1_logger.html", null ],
@@ -89,7 +88,7 @@ var hierarchy =
     ] ],
     [ "OrmUtils", "class_ubiquity_1_1orm_1_1_orm_utils.html", null ],
     [ "Reflexion", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html", null ],
-    [ "RequestUtils", "class_ubiquity_1_1utils_1_1_request_utils.html", null ],
+    [ "Request", "class_ubiquity_1_1utils_1_1http_1_1_request.html", null ],
     [ "ResponseFormatter", "class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html", null ],
     [ "RestCacheTrait", "class_ubiquity_1_1cache_1_1traits_1_1_rest_cache_trait.html", [
       [ "CacheManager", "class_ubiquity_1_1cache_1_1_cache_manager.html", null ]
@@ -107,20 +106,23 @@ var hierarchy =
     [ "RoutesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait.html", [
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],
-    [ "SessionUtils", "class_ubiquity_1_1utils_1_1_session_utils.html", null ],
+    [ "Session", "class_ubiquity_1_1utils_1_1http_1_1_session.html", null ],
     [ "SqlUtils", "class_ubiquity_1_1db_1_1_sql_utils.html", null ],
     [ "Startup", "class_ubiquity_1_1controllers_1_1_startup.html", null ],
-    [ "StrUtils", "class_ubiquity_1_1utils_1_1_str_utils.html", null ],
     [ "TableReversor", "class_ubiquity_1_1orm_1_1reverse_1_1_table_reversor.html", null ],
     [ "TemplateEngine", "class_ubiquity_1_1views_1_1engine_1_1_template_engine.html", [
       [ "MicroTemplateEngine", "class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html", null ],
       [ "Twig", "class_ubiquity_1_1views_1_1engine_1_1_twig.html", null ]
     ] ],
     [ "TemplateParser", "class_ubiquity_1_1views_1_1engine_1_1micro_1_1_template_parser.html", null ],
+    [ "UArray", "class_ubiquity_1_1utils_1_1base_1_1_u_array.html", null ],
     [ "UbiquityMyAdminData", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html", null ],
     [ "UbiquityMyAdminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html", null ],
     [ "UbiquityMyAdminViewer", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html", null ],
     [ "UbiquityUtils", "class_ubiquity_1_1utils_1_1_ubiquity_utils.html", null ],
+    [ "UFileSystem", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html", null ],
+    [ "UIntrospection", "class_ubiquity_1_1utils_1_1base_1_1_u_introspection.html", null ],
+    [ "UString", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html", null ],
     [ "View", "class_ubiquity_1_1views_1_1_view.html", null ],
     [ "Yuml", "class_ubiquity_1_1utils_1_1yuml_1_1_yuml.html", null ],
     [ "YumlParser", "class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_parser.html", null ],

@@ -59,6 +59,7 @@ var searchData=
   ['_5fgetresourcename',['_getResourceName',['../class_ubiquity_1_1cache_1_1parser_1_1_rest_controller_parser.html#a4e2dcf726a03633c1c74d0fe03755c46',1,'Ubiquity::cache::parser::RestControllerParser']]],
   ['_5fgetresponseelement',['_getResponseElement',['../class_ubiquity_1_1js_1_1_jquery.html#a80aaf48d022b979afbafa84f8ad241f7',1,'Ubiquity::js::Jquery']]],
   ['_5fgetrestroutesdatatable',['_getRestRoutesDataTable',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a95b52ce4862d40a5d450718dc4a542f4',1,'Ubiquity::controllers::admin::UbiquityMyAdminViewer']]],
+  ['_5fgeturl',['_getURL',['../class_ubiquity_1_1controllers_1_1_router.html#a212ed5ead9041c60e628e613657ea8dc',1,'Ubiquity::controllers::Router']]],
   ['_5fgetyumlimage',['_getYumlImage',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#af3ff5a9583f7841bd4e1d282f84cd7f9',1,'Ubiquity::controllers::admin::UbiquityMyAdminBaseController']]],
   ['_5fgetyumlmanytoone',['_getYumlManyToOne',['../class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a4428bf2ab8340534ffb6bb631d87d044',1,'Ubiquity::utils::yuml::ClassToYuml']]],
   ['_5fgetyumlonetomany',['_getYumlOneToMany',['../class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#adf48e85c1591afd47d7e9a97ed43cb93',1,'Ubiquity::utils::yuml::ClassToYuml']]],

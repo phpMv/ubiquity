@@ -3,7 +3,7 @@
 namespace Ubiquity\annotations\parser;
 
 
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 
 class DocParser {
 	private $originalContent;
@@ -25,9 +25,9 @@ class DocParser {
 		foreach ($this->lines as $line){
 			$line=\trim($line);
 			$line=\preg_replace("@^(\*\*\/)|(\/\*\*)|(\*)|(\/)@i", "", $line);
-			if(StrUtils::isNotNull($line)){
+			if(UString::isNotNull($line)){
 				$line=\trim($line);
-				if(StrUtils::startswith($line, "@")){
+				if(UString::startswith($line, "@")){
 					if(\preg_match("@^\@(.*?)\ @i", $line,$matches)){
 						$this->addInArray($this->lines, $matches[1], \preg_replace("@^\@".$matches[1]."(.*?)\ @i", "$1", $line));
 					}

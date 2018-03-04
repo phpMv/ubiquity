@@ -8,5 +8,6 @@ var class_ubiquity_1_1controllers_1_1_controller =
     [ "isValid", "class_ubiquity_1_1controllers_1_1_controller.html#a7b37efab7473a1effc29f8be2421f6e3", null ],
     [ "loadView", "class_ubiquity_1_1controllers_1_1_controller.html#a80a71e60aa536de9b98b7b773fb54bec", null ],
     [ "onInvalidControl", "class_ubiquity_1_1controllers_1_1_controller.html#ac2051a426b1e66a8f0124acc49d0d059", null ],
+    [ "redirectToRoute", "class_ubiquity_1_1controllers_1_1_controller.html#a56d853e2fffd3410fe0eb721e5277f19", null ],
     [ "$view", "class_ubiquity_1_1controllers_1_1_controller.html#acccf2eac8663e0cebe8101e90fbab089", null ]
 ];

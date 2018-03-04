@@ -5,7 +5,7 @@ namespace Ubiquity\controllers\admin;
 use Ajax\JsUtils;
 use Ajax\semantic\widgets\dataform\DataForm;
 use Ubiquity\orm\OrmUtils;
-use Ajax\service\JArray;
+use Ajax\service\UArray;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\parser\Reflexion;
 use Ajax\semantic\html\elements\HtmlHeader;
@@ -24,14 +24,14 @@ use Ajax\semantic\widgets\datatable\DataTable;
 use Ajax\service\JString;
 use Ajax\semantic\html\elements\HtmlList;
 use Ubiquity\controllers\admin\popo\Route;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\elements\HtmlIconGroups;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\annotations\parser\DocParser;
 use Ubiquity\cache\ClassUtils;
 use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
 use Ajax\semantic\html\elements\HtmlLabelGroups;
-use Ubiquity\utils\Introspection;
+use Ubiquity\utils\base\UIntrospection;
 
 /**
  *
@@ -287,7 +287,7 @@ class UbiquityMyAdminViewer {
 
 	public function getActionViews($controllerFullname, $controller, $action, \ReflectionMethod $r, $lines) {
 		$result=[ ];
-		$loadedViews=Introspection::getLoadedViews($r, $lines);
+		$loadedViews=UIntrospection::getLoadedViews($r, $lines);
 		foreach ( $loadedViews as $view ) {
 			if (\file_exists(ROOT . DS . "views" . DS . $view)) {
 				$lbl=new HtmlLabel("lbl-view-" . $controller . $action . $view, $view, "browser", "span");
@@ -473,7 +473,7 @@ class UbiquityMyAdminViewer {
 	protected function _dtMethods(DataTable $dt) {
 		$dt->setValueFunction("methods", function ($v) {
 			$result="";
-			if (StrUtils::isNotNull($v)) {
+			if (UString::isNotNull($v)) {
 				if (!\is_array($v)) {
 					$v=[ $v ];
 				}
@@ -486,7 +486,7 @@ class UbiquityMyAdminViewer {
 	protected function _dtCache(DataTable $dt) {
 		$dt->setValueFunction("cache", function ($v, $instance) {
 			$ck=new HtmlFormCheckbox("ck-" . $instance->getPath(), $instance->getDuration() . "");
-			$ck->setChecked(StrUtils::isBooleanTrue($v));
+			$ck->setChecked(UString::isBooleanTrue($v));
 			$ck->setDisabled();
 			return $ck;
 		});
@@ -556,7 +556,7 @@ class UbiquityMyAdminViewer {
 				$diDe->setValueFunction($key, function ($value) use ($config, $key) {
 					$r=$config['di'][$key];
 					if (\is_callable($r))
-						return \nl2br(\htmlentities(Introspection::closure_dump($r)));
+						return \nl2br(\htmlentities(UIntrospection::closure_dump($r)));
 					return $value;
 				});
 			}
@@ -565,7 +565,7 @@ class UbiquityMyAdminViewer {
 		$de->setValueFunction("isRest", function ($v) use ($config) {
 			$r=$config["isRest"];
 			if (\is_callable($r))
-				return \nl2br(\htmlentities(Introspection::closure_dump($r)));
+				return \nl2br(\htmlentities(UIntrospection::closure_dump($r)));
 			return $v;
 		});
 		$de->fieldAsCheckbox("test", [ "class" => "ui checkbox slider" ]);
@@ -609,7 +609,7 @@ class UbiquityMyAdminViewer {
 					$instance->{$fkField}=OrmUtils::getFirstKeyValue($fkObject);
 					$form->addField($fkField);
 				}
-				$form->fieldAsDropDown($fkField, JArray::modelArray(DAO::getAll($fkClass), $fkIdGetter, "__toString"));
+				$form->fieldAsDropDown($fkField, UArray::modelArray(DAO::getAll($fkClass), $fkIdGetter, "__toString"));
 				$form->setCaption($fkField, \ucfirst($member));
 			}
 		}
@@ -626,7 +626,7 @@ class UbiquityMyAdminViewer {
 			return $elm->{$fkIdGetter}();
 		}, $fkInstances);
 		$instance->{$newField}=\implode(",", $ids);
-		$form->fieldAsDropDown($newField, JArray::modelArray(DAO::getAll($fkClass), $fkIdGetter, "__toString"), true);
+		$form->fieldAsDropDown($newField, UArray::modelArray(DAO::getAll($fkClass), $fkIdGetter, "__toString"), true);
 		$form->setCaption($newField, \ucfirst($member));
 	}
 
@@ -641,7 +641,7 @@ class UbiquityMyAdminViewer {
 			return $elm->{$fkIdGetter}();
 		}, $fkInstances);
 		$instance->{$newField}=\implode(",", $ids);
-		$form->fieldAsDropDown($newField, JArray::modelArray($this->controller->_getAdminData()->getManyToManyDatas($fkClass, $instance, $member), $fkIdGetter, "__toString"), true, [ "jsCallback" => function ($elm) {
+		$form->fieldAsDropDown($newField, UArray::modelArray($this->controller->_getAdminData()->getManyToManyDatas($fkClass, $instance, $member), $fkIdGetter, "__toString"), true, [ "jsCallback" => function ($elm) {
 			$elm->getField()->asSearch();
 		} ]);
 		$form->setCaption($newField, \ucfirst($member));

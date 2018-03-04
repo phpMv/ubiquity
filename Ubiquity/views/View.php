@@ -2,7 +2,7 @@
 
 namespace Ubiquity\views;
 
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\controllers\Startup;
 
@@ -59,7 +59,7 @@ class View {
 		$fileName=ROOT . DS . "views/" . $viewName;
 		if (\file_exists($fileName)) {
 			$data=$this->vars;
-			if (!StrUtils::endswith($fileName, ".php") && @$config["templateEngine"] instanceof TemplateEngine) {
+			if (!UString::endswith($fileName, ".php") && @$config["templateEngine"] instanceof TemplateEngine) {
 				return $config["templateEngine"]->render($viewName, $data, $asString);
 			}
 

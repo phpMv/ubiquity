@@ -2,7 +2,7 @@
 namespace Ubiquity\controllers\admin\traits;
 
 use Ajax\JsUtils;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\admin\popo\ControllerAction;
 use Ubiquity\controllers\Router;
 use Ubiquity\cache\CacheManager;
@@ -34,7 +34,7 @@ trait RoutesTrait{
 	public function filterRoutes(){
 		$filter=$_POST["filter"];
 		$ctrls=[];
-		if(StrUtils::isNotNull($filter)){
+		if(UString::isNotNull($filter)){
 			$filter=\trim($_POST["filter"]);
 			$ctrls=ControllerAction::initWithPath($filter);
 			$routes=Router::filterRoutes($filter);

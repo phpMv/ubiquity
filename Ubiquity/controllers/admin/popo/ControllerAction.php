@@ -6,7 +6,7 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\controllers\Router;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ubiquity\orm\parser\Reflexion;
 
 class ControllerAction {
@@ -35,7 +35,7 @@ class ControllerAction {
 		if (!$url) {
 			$url="_default";
 		}
-		if (StrUtils::endswith($url, "/"))
+		if (UString::endswith($url, "/"))
 			$url=\substr($url, 0, strlen($url) - 1);
 		$u=\explode("/", $url);
 		$u[0]=$ns . $u[0];
@@ -85,7 +85,7 @@ class ControllerAction {
 
 	private static function scanMethod($controllerClass, \ReflectionMethod $method) {
 		$result=null;
-		if (\array_search($method->name, self::$excludeds) === false && !StrUtils::startswith($method->name, "_")) {
+		if (\array_search($method->name, self::$excludeds) === false && !UString::startswith($method->name, "_")) {
 			$annots=Router::getAnnotations($controllerClass, $method->name);
 			$parameters=$method->getParameters();
 			$defaults=[ ];

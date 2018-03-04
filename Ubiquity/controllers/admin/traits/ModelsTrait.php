@@ -4,7 +4,7 @@ namespace Ubiquity\controllers\admin\traits;
 
 use Ajax\JsUtils;
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\utils\RequestUtils;
+use Ubiquity\utils\http\Request;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\DAO;
 use Ajax\service\JString;
@@ -113,7 +113,7 @@ trait ModelsTrait{
 				}
 			}
 		}
-		RequestUtils::setValuesToObject($instance, $_POST);
+		Request::setValuesToObject($instance, $_POST);
 		foreach ( $relations as $member ) {
 			if ($this->_getAdminData()->getUpdateManyToOneInForm()) {
 				$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);

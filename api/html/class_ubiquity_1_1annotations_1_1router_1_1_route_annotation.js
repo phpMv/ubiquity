@@ -7,5 +7,6 @@ var class_ubiquity_1_1annotations_1_1router_1_1_route_annotation =
     [ "$inherited", "class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html#a943fb255b4b12747347f2b3aae6f72ce", null ],
     [ "$methods", "class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html#a802753499268a04da139bd6e6ef89b35", null ],
     [ "$name", "class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html#ab2fc40d43824ea3e1ce5d86dee0d763b", null ],
-    [ "$path", "class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html#a0a4baf0b22973c07685c3981f0d17fc4", null ]
+    [ "$path", "class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html#a0a4baf0b22973c07685c3981f0d17fc4", null ],
+    [ "$requirements", "class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html#a244d94e62cffe97e11aa1633b809dfa1", null ]
 ];

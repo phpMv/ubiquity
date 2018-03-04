@@ -3,7 +3,7 @@
 namespace Ubiquity\cache\database;
 
 use Ubiquity\cache\database\DbCache;
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 
 class QueryCache extends DbCache {
 
@@ -15,7 +15,7 @@ class QueryCache extends DbCache {
 	}
 
 	public function store($tableName, $condition, $result) {
-		$this->cache->store($tableName . "." . $this->getKey($condition), "return " . JArray::asPhpArray($result, "array") . ";");
+		$this->cache->store($tableName . "." . $this->getKey($condition), "return " . UArray::asPhpArray($result, "array") . ";");
 	}
 
 	public function delete($tableName, $condition){

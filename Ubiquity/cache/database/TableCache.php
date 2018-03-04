@@ -2,7 +2,7 @@
 
 namespace Ubiquity\cache\database;
 
-use Ubiquity\utils\JArray;
+use Ubiquity\utils\base\UArray;
 
 class TableCache extends DbCache {
 	protected $arrayCache;
@@ -10,7 +10,7 @@ class TableCache extends DbCache {
 	public function store($tableName, $condition, $result) {
 		$exists=$this->getCache($tableName);
 		$exists[$this->getKey($condition)]=$result;
-		$this->cache->store($tableName, "return " . JArray::asPhpArray($exists, "array") . ";");
+		$this->cache->store($tableName, "return " . UArray::asPhpArray($exists, "array") . ";");
 	}
 
 	public function getCache($tableName) {
@@ -42,7 +42,7 @@ class TableCache extends DbCache {
 			$key=$this->getKey($condition);
 			if (isset($cache[$key])){
 				unset($cache[$key]);
-				$this->cache->store($tableName, "return " . JArray::asPhpArray($cache, "array") . ";");
+				$this->cache->store($tableName, "return " . UArray::asPhpArray($cache, "array") . ";");
 			}
 		}
 	}

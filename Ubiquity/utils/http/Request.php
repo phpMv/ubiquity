@@ -1,15 +1,16 @@
 <?php
 
-namespace Ubiquity\utils;
+namespace Ubiquity\utils\http;
 
 use Ubiquity\controllers\Startup;
+use Ubiquity\utils\base\UString;
 
 /**
  * Request utilities
  * @author jc
- * @version 1.0.0.1
+ * @version 1.0.0.2
  */
-class RequestUtils {
+class Request {
 
 	/**
 	 * Affects member to member the values of the associative array $values to the members of the object $object
@@ -41,8 +42,8 @@ class RequestUtils {
 	/**
 	 * Returns the query data, for PUT, DELETE PATCH methods
 	 */
-	public static function getInput(){
-		$put = array();
+	public static function getInput() {
+		$put=array ();
 		\parse_str(\file_get_contents('php://input'), $put);
 		return $put;
 	}
@@ -51,9 +52,9 @@ class RequestUtils {
 	 * Returns the query data, regardless of the method
 	 * @return array
 	 */
-	public static function getDatas(){
+	public static function getDatas() {
 		$method=\strtolower($_SERVER['REQUEST_METHOD']);
-		switch ($method) {
+		switch($method) {
 			case 'post':
 				return $_POST;
 			case 'get':
@@ -67,9 +68,9 @@ class RequestUtils {
 	 * Returns the request content-type header
 	 * @return string
 	 */
-	public static function getContentType(){
+	public static function getContentType() {
 		$headers=getallheaders();
-		if(isset($headers["content-type"])){
+		if (isset($headers["content-type"])) {
 			return $headers["content-type"];
 		}
 		return null;
@@ -95,17 +96,17 @@ class RequestUtils {
 	 * Returns true if the request is cross site
 	 * @return boolean
 	 */
-	public static function isCrossSite(){
-		return stripos($_SERVER['HTTP_REFERER'],$_SERVER['SERVER_NAME'])===FALSE;
+	public static function isCrossSite() {
+		return stripos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']) === FALSE;
 	}
 
 	/**
 	 * Returns true if request contentType is set to json
 	 * @return boolean
 	 */
-	public static function isJSON(){
+	public static function isJSON() {
 		$contentType=self::getContentType();
-		return \stripos($contentType, "json")!==false;
+		return \stripos($contentType, "json") !== false;
 	}
 
 	/**
@@ -130,14 +131,14 @@ class RequestUtils {
 
 	public static function getUrl($url) {
 		$config=Startup::getConfig();
-		$siteUrl=\rtrim($config["siteUrl"],'/');
-		if (StrUtils::startswith($url, "/") === false) {
+		$siteUrl=\rtrim($config["siteUrl"], '/');
+		if (UString::startswith($url, "/") === false) {
 			$url="/" . $url;
 		}
 		return $siteUrl . $url;
 	}
 
-	public static function getUrlParts(){
+	public static function getUrlParts() {
 		return \explode("/", $_GET["c"]);
 	}
 

@@ -17,6 +17,6 @@ var searchData=
   ['controllerbase_2ephp',['ControllerBase.php',['../_controller_base_8php.html',1,'']]],
   ['controllerparser_2ephp',['ControllerParser.php',['../_controller_parser_8php.html',1,'']]],
   ['controllerstrait_2ephp',['ControllersTrait.php',['../_controllers_trait_8php.html',1,'']]],
-  ['cookieutils_2ephp',['CookieUtils.php',['../_cookie_utils_8php.html',1,'']]],
+  ['cookie_2ephp',['Cookie.php',['../_cookie_8php.html',1,'']]],
   ['crudcontroller_2ephp',['CRUDController.php',['../_c_r_u_d_controller_8php.html',1,'']]]
 ];

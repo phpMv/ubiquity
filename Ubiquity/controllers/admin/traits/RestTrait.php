@@ -5,13 +5,13 @@ namespace Ubiquity\controllers\admin\traits;
 use Ajax\service\JString;
 use Ajax\semantic\html\collections\form\HtmlForm;
 use Ajax\semantic\html\elements\HtmlLabel;
-use Ubiquity\utils\StrUtils;
+use Ubiquity\utils\base\UString;
 use Ajax\JsUtils;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ajax\semantic\html\elements\HtmlIconGroups;
-use Ubiquity\utils\RequestUtils;
-use Ubiquity\utils\FsUtils;
+use Ubiquity\utils\http\Request;
+use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\controllers\rest\RestServer;
 use Ubiquity\views\View;
 use Ubiquity\annotations\parser\DocParser;
@@ -143,22 +143,22 @@ trait RestTrait{
 	}
 
 	public function _createNewResource() {
-		if (RequestUtils::isPost()) {
+		if (Request::isPost()) {
 			if (isset($_POST["ctrlName"]) && $_POST["ctrlName"] !== "") {
 				$namespace="";
 				$resource=$_POST["resource"];
 				$route=$_POST["route"];
 				$restControllerNS=RestServer::getRestNamespace();
 				$restControllersDir=ROOT . DS . str_replace("\\", DS, $restControllerNS);
-				FsUtils::safeMkdir($restControllersDir);
+				UFileSystem::safeMkdir($restControllersDir);
 				$controllerName=\ucfirst($_POST["ctrlName"]);
 				$filename=$restControllersDir . DS . $controllerName . ".php";
 				if (!\file_exists($filename)) {
 					$frameworkDir=Startup::getFrameworkDir();
 					if ($restControllerNS !== "")
 						$namespace="namespace " . $restControllerNS . ";";
-					FsUtils::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/restController.tpl", $filename, [ "%resource%" => $resource,"%route%" => $route,"%controllerName%" => $controllerName,"%namespace%" => $namespace ]);
-					echo $this->showSimpleMessage("The <b>" . $controllerName . "</b> Rest controller has been created in <b>" . FsUtils::cleanPathname($filename) . "</b>.", "success", "checkmark circle", 30000, "msgGlobal");
+					UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/restController.tpl", $filename, [ "%resource%" => $resource,"%route%" => $route,"%controllerName%" => $controllerName,"%namespace%" => $namespace ]);
+					echo $this->showSimpleMessage("The <b>" . $controllerName . "</b> Rest controller has been created in <b>" . UFileSystem::cleanPathname($filename) . "</b>.", "success", "checkmark circle", 30000, "msgGlobal");
 					if (isset($_POST["re-init"])) {
 						$this->initRestCache(false);
 					}
@@ -247,7 +247,7 @@ trait RestTrait{
 			$count=\sizeof($names);
 			for($i=0; $i < $count; $i++) {
 				$name=$names[$i];
-				if (StrUtils::isNotNull($name)) {
+				if (UString::isNotNull($name)) {
 					if (isset($values[$i]))
 						$result[]='"' . $name . '": "' . \addslashes($values[$i]) . '"';
 				}
