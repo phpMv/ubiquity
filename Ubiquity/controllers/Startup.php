@@ -4,7 +4,7 @@ namespace Ubiquity\controllers;
 
 use Ubiquity\utils\base\UString;
 use Ubiquity\views\engine\TemplateEngine;
-use Ubiquity\utils\http\Session;
+use Ubiquity\utils\http\USession;
 
 class Startup {
 	public static $urlParts;
@@ -17,7 +17,7 @@ class Startup {
 		self::$config=$config;
 		self::startTemplateEngine($config);
 		if (isset($config["sessionName"]))
-			Session::start($config["sessionName"]);
+			USession::start($config["sessionName"]);
 		self::forward($url);
 	}
 
@@ -208,7 +208,7 @@ class Startup {
 		return \dirname(__FILE__);
 	}
 
-	public static function getApplicationDir(){
+	public static function getApplicationDir() {
 		return ROOT;
 	}
 }

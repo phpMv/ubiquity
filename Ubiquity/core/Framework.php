@@ -10,9 +10,9 @@ namespace Ubiquity\core;
 
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\Router;
-use Ubiquity\utils\http\Request;
-use Ubiquity\utils\http\Session;
-use Ubiquity\utils\http\Cookie;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\USession;
+use Ubiquity\utils\http\UCookie;
 
 class Framework {
 	public const version='2.0.0-beta.1';
@@ -34,15 +34,15 @@ class Framework {
 	}
 
 	public static function getRequest() {
-		return new Request();
+		return new URequest();
 	}
 
 	public static function getSession() {
-		return new Session();
+		return new USession();
 	}
 
 	public static function getCookies() {
-		return new Cookie();
+		return new UCookie();
 	}
 
 	public static function hasAdmin() {

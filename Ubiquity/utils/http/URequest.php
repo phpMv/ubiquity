@@ -10,7 +10,7 @@ use Ubiquity\utils\base\UString;
  * @author jc
  * @version 1.0.0.2
  */
-class Request {
+class URequest {
 
 	/**
 	 * Affects member to member the values of the associative array $values to the members of the object $object

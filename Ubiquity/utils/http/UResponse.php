@@ -8,7 +8,7 @@ namespace Ubiquity\utils\http;
  * @version 1.0.0.0
  *
  */
-class Response {
+class UResponse {
 
 	/**
 	 * Send a raw HTTP header

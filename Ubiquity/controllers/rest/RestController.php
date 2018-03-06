@@ -7,7 +7,7 @@ use Ubiquity\orm\DAO;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UString;
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\http\Request;
+use Ubiquity\utils\http\URequest;
 
 /**
  * @author jc
@@ -108,10 +108,10 @@ abstract class RestController extends Controller {
 	 * @param array|null $values
 	 */
 	protected function _setValuesToObject($instance,$values=null){
-		if(Request::isJSON()){
+		if(URequest::isJSON()){
 			$values=\json_decode($values,true);
 		}
-		Request::setValuesToObject($instance,$values);
+		URequest::setValuesToObject($instance,$values);
 	}
 
 	/**
@@ -218,7 +218,7 @@ abstract class RestController extends Controller {
 	public function update(...$keyValues){
 		$instance=DAO::getOne($this->model, $keyValues);
 		if(isset($instance)){
-			$this->_setValuesToObject($instance,Request::getInput());
+			$this->_setValuesToObject($instance,URequest::getInput());
 			$result=DAO::update($instance);
 			if($result){
 				echo $this->responseFormatter->format(["status"=>"updated","data"=>$this->responseFormatter->cleanRestObject($instance)]);
@@ -240,7 +240,7 @@ abstract class RestController extends Controller {
 		$model=$this->model;
 		$instance=new $model();
 		if(isset($instance)){
-			$this->_setValuesToObject($instance,Request::getInput());
+			$this->_setValuesToObject($instance,URequest::getInput());
 			$result=DAO::insert($instance);
 			if($result){
 				echo $this->responseFormatter->format(["status"=>"inserted","data"=>$this->responseFormatter->cleanRestObject($instance)]);

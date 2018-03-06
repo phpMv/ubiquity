@@ -2,7 +2,7 @@
 
 namespace Ubiquity\utils\flash;
 
-use Ubiquity\utils\http\Session;
+use Ubiquity\utils\http\USession;
 
 /**
  * Bag for Session Flash messages
@@ -15,8 +15,8 @@ class FlashBag implements \Iterator {
 	private $position;
 
 	public function __construct() {
-		Session::start();
-		$this->array=Session::get(self::FLASH_BAG_KEY, [ ]);
+		USession::start();
+		$this->array=USession::get(self::FLASH_BAG_KEY, [ ]);
 	}
 
 	public function addMessage($type, $content, $icon=NULL) {
@@ -37,7 +37,7 @@ class FlashBag implements \Iterator {
 	}
 
 	public function clear() {
-		Session::delete(self::FLASH_BAG_KEY);
+		USession::delete(self::FLASH_BAG_KEY);
 	}
 
 	public function rewind() {
@@ -61,7 +61,7 @@ class FlashBag implements \Iterator {
 	}
 
 	public function save() {
-		$this->array=Session::set(self::FLASH_BAG_KEY, $this->array);
+		$this->array=USession::set(self::FLASH_BAG_KEY, $this->array);
 	}
 }
 

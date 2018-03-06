@@ -7,7 +7,7 @@ namespace Ubiquity\utils\http;
  * @author jc
  * @version 1.0.0.2
  */
-class Cookie {
+class UCookie {
 
 	/**
 	 * Sends a cookie

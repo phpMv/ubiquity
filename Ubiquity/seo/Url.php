@@ -2,7 +2,7 @@
 
 namespace Ubiquity\seo;
 
-use Ubiquity\utils\http\Request;
+use Ubiquity\utils\http\URequest;
 
 /**
  * Url for Seo module, use for sitemap generation
@@ -106,7 +106,7 @@ class Url {
 	public static function fromArray($array,$existing=true){
 		$array["existing"]=$existing;
 		$object=new Url();
-		Request::setValuesToObject($object,$array);
+		URequest::setValuesToObject($object,$array);
 		return $object;
 	}
 	/**

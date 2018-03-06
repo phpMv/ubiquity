@@ -5,7 +5,7 @@ use Ajax\JsUtils;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\admin\popo\CacheFile;
-use Ubiquity\utils\http\Request;
+use Ubiquity\utils\http\URequest;
 use Ajax\semantic\html\collections\form\HtmlForm;
 
 /**
@@ -63,7 +63,7 @@ trait CacheTrait{
 	}
 
 	public function _showFileContent(){
-		if(Request::isPost()){
+		if(URequest::isPost()){
 			$type=\strtolower($_POST["type"]);$filename=$_POST["filename"];$key=$_POST["key"];
 			if($type=='models' || $type=='controllers'){
 				$content=CacheManager::$cache->file_get_contents($key);

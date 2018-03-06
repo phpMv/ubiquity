@@ -10,7 +10,7 @@ use Ajax\JsUtils;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ajax\semantic\html\elements\HtmlIconGroups;
-use Ubiquity\utils\http\Request;
+use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\controllers\rest\RestServer;
 use Ubiquity\views\View;
@@ -143,7 +143,7 @@ trait RestTrait{
 	}
 
 	public function _createNewResource() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			if (isset($_POST["ctrlName"]) && $_POST["ctrlName"] !== "") {
 				$namespace="";
 				$resource=$_POST["resource"];

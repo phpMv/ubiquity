@@ -9,7 +9,7 @@ use Ubiquity\utils\base\UString;
  * @author jc
  * @version 1.0.0.4
  */
-class Session {
+class USession {
 	private static $name;
 
 	/**

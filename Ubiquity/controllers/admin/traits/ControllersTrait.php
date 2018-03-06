@@ -5,7 +5,7 @@ namespace Ubiquity\controllers\admin\traits;
 use Ajax\JsUtils;
 use Ubiquity\views\View;
 use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\utils\http\Request;
+use Ubiquity\utils\http\URequest;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\cache\ClassUtils;
@@ -40,14 +40,14 @@ trait ControllersTrait{
 	abstract public function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null);
 
 	public function createController($force=null) {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$this->_createController($_POST["name"],[],'controller.tpl',isset($_POST["lbl-ck-div-name"]));
 		}
 		$this->controllers();
 	}
 
 	public function _createView() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$action=$_POST["action"];
 			$controller=$_POST["controller"];
 			$controllerFullname=$_POST["controllerFullname"];
@@ -76,7 +76,7 @@ trait ControllersTrait{
 	}
 
 	public function _newActionFrm() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$controllers=CacheManager::getControllers();
 			$controller=$_POST["controller"];
 			$modal=$this->jquery->semantic()->htmlModal("modalNewAction", "Creating a new action in controller");
@@ -119,7 +119,7 @@ trait ControllersTrait{
 	}
 
 	public function _methodExists() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$result=[ ];
 			header('Content-type: application/json');
 			$controller=$_POST["controller"];
@@ -134,7 +134,7 @@ trait ControllersTrait{
 	}
 
 	public function _checkContent() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$result=[ ];
 			header('Content-type: application/json');
 			$content=$_POST["content"];
@@ -144,7 +144,7 @@ trait ControllersTrait{
 	}
 
 	public function _checkRoute() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$result=[ ];
 			header('Content-type: application/json');
 			$path=$_POST["path"];
@@ -155,7 +155,7 @@ trait ControllersTrait{
 	}
 
 	public function _addRouteWithNewAction() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$result=[ ];
 			header('Content-type: application/json');
 
@@ -172,7 +172,7 @@ trait ControllersTrait{
 	}
 
 	public function _newAction() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$frameworkDir=Startup::getFrameworkDir();
 			$msgContent="";
 			$controller=$_POST["controller"];

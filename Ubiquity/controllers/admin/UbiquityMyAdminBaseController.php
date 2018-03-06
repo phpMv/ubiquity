@@ -10,7 +10,7 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\admin\UbiquityMyAdminData;
 use controllers\ControllerBase;
-use Ubiquity\utils\http\Request;
+use Ubiquity\utils\http\URequest;
 use Ajax\semantic\html\content\view\HtmlItem;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\admin\popo\Route;
@@ -69,7 +69,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 
 	public function initialize() {
 		parent::initialize();
-		if (Request::isAjax() === false) {
+		if (URequest::isAjax() === false) {
 			$semantic=$this->jquery->semantic();
 			$mainMenuElements=$this->_getAdminViewer()->getMainMenuElements();
 			$elements=[ "UbiquityMyAdmin" ];
@@ -90,7 +90,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function finalize() {
-		if (!Request::isAjax()) {
+		if (!URequest::isAjax()) {
 			$this->loadView("Admin/main/vFooter.html", [ "js" => $this->initializeJs() ]);
 		}
 	}
@@ -293,7 +293,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _showDiagram() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			if (isset($_POST["model"])) {
 				$model=$_POST["model"];
 				$model=\str_replace("|", "\\", $model);
@@ -335,7 +335,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _updateDiagram() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			if (isset($_POST["model"])) {
 				$model=$_POST["model"];
 				$model=\str_replace("|", "\\", $model);
@@ -395,7 +395,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _updateAllClassesDiagram() {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$type=$_POST["type"];
 			$size=$_POST["size"];
 			$yumlContent=$this->_getClassesToYuml($_POST);
@@ -435,7 +435,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _runPostWithParams($method="post", $type="parameter", $origine="routes") {
-		if (Request::isPost()) {
+		if (URequest::isPost()) {
 			$model=null;
 			$actualParams=[ ];
 			$url=$_POST["url"];
@@ -605,8 +605,8 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function _runAction($frm=null) {
-		if (Request::isPost()) {
-			$url=Request::cleanUrl($_POST["url"]);
+		if (URequest::isPost()) {
+			$url=URequest::cleanUrl($_POST["url"]);
 			unset($_POST["url"]);
 			$method=$_POST["method"];
 			unset($_POST["method"]);

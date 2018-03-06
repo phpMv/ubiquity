@@ -3,7 +3,7 @@
 namespace Ubiquity\controllers;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\http\Request;
+use Ubiquity\utils\http\URequest;
 use Ubiquity\cache\parser\ControllerParser;
 use Ubiquity\utils\base\UString;
 
@@ -36,7 +36,7 @@ class Router {
 		foreach ( self::$routes as $routePath => $routeDetails ) {
 			if (preg_match("@^" . $routePath . "$@s", $path, $matches)) {
 				if (!isset($routeDetails["controller"])) {
-					$method=Request::getMethod();
+					$method=URequest::getMethod();
 					if (isset($routeDetails[$method]))
 						return self::getRouteUrlParts([ "path" => $routePath,"details" => $routeDetails[$method] ], $matches, $routeDetails[$method]["cache"], $routeDetails[$method]["duration"],$cachedResponse);
 				} else
@@ -133,7 +133,7 @@ class Router {
 	 * @return string the generated url (http://myApp/path/to/route)
 	 */
 	public static function url($name,$parameters=[]){
-		return Request::getUrl(self::getRouteByName($name,$parameters,false));
+		return URequest::getUrl(self::getRouteByName($name,$parameters,false));
 	}
 
 	protected static function _getURL($routePath,$params){
