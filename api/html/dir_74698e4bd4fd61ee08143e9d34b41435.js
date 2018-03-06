@@ -9,6 +9,7 @@ var dir_74698e4bd4fd61ee08143e9d34b41435 =
     [ "js", "dir_0eadbfb1f6b4ad5dcf85a333352e4943.html", "dir_0eadbfb1f6b4ad5dcf85a333352e4943" ],
     [ "log", "dir_d4deebaa62191257bacae789e5db61ee.html", "dir_d4deebaa62191257bacae789e5db61ee" ],
     [ "orm", "dir_71a6f2e9879e4f592bdac5cf441cf689.html", "dir_71a6f2e9879e4f592bdac5cf441cf689" ],
+    [ "seo", "dir_21c7660d601847e21766c2d9e754d6be.html", "dir_21c7660d601847e21766c2d9e754d6be" ],
     [ "utils", "dir_9d068a322132abc4bb48db34f08ad2e6.html", "dir_9d068a322132abc4bb48db34f08ad2e6" ],
     [ "views", "dir_715bda5eec3f2669288a6de26a22727f.html", "dir_715bda5eec3f2669288a6de26a22727f" ]
 ];

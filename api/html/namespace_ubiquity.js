@@ -9,6 +9,7 @@ var namespace_ubiquity =
     [ "js", "namespace_ubiquity_1_1js.html", "namespace_ubiquity_1_1js" ],
     [ "log", "namespace_ubiquity_1_1log.html", "namespace_ubiquity_1_1log" ],
     [ "orm", "namespace_ubiquity_1_1orm.html", "namespace_ubiquity_1_1orm" ],
+    [ "seo", "namespace_ubiquity_1_1seo.html", "namespace_ubiquity_1_1seo" ],
     [ "utils", "namespace_ubiquity_1_1utils.html", "namespace_ubiquity_1_1utils" ],
     [ "views", "namespace_ubiquity_1_1views.html", "namespace_ubiquity_1_1views" ]
 ];

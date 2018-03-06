@@ -1,6 +1,7 @@
 var namespace_ubiquity_1_1utils_1_1http =
 [
-    [ "Cookie", "class_ubiquity_1_1utils_1_1http_1_1_cookie.html", "class_ubiquity_1_1utils_1_1http_1_1_cookie" ],
-    [ "Request", "class_ubiquity_1_1utils_1_1http_1_1_request.html", "class_ubiquity_1_1utils_1_1http_1_1_request" ],
-    [ "Session", "class_ubiquity_1_1utils_1_1http_1_1_session.html", "class_ubiquity_1_1utils_1_1http_1_1_session" ]
+    [ "UCookie", "class_ubiquity_1_1utils_1_1http_1_1_u_cookie.html", "class_ubiquity_1_1utils_1_1http_1_1_u_cookie" ],
+    [ "URequest", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html", "class_ubiquity_1_1utils_1_1http_1_1_u_request" ],
+    [ "UResponse", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html", "class_ubiquity_1_1utils_1_1http_1_1_u_response" ],
+    [ "USession", "class_ubiquity_1_1utils_1_1http_1_1_u_session.html", "class_ubiquity_1_1utils_1_1http_1_1_u_session" ]
 ];

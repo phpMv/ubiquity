@@ -6,6 +6,7 @@ var class_ubiquity_1_1controllers_1_1_startup =
     [ "errorHandler", "class_ubiquity_1_1controllers_1_1_startup.html#a42a5590067959bc0b2736a4a9b46c34b", null ],
     [ "forward", "class_ubiquity_1_1controllers_1_1_startup.html#aa36bf21c33f40d9090abc42273d367ef", null ],
     [ "getAction", "class_ubiquity_1_1controllers_1_1_startup.html#af8b331d3ac442a1071aa9f7db3b60637", null ],
+    [ "getApplicationDir", "class_ubiquity_1_1controllers_1_1_startup.html#ac84bdec7d359bb13678e13addf9f66b0", null ],
     [ "getConfig", "class_ubiquity_1_1controllers_1_1_startup.html#ab402833ec5328f4157f81902000af368", null ],
     [ "getController", "class_ubiquity_1_1controllers_1_1_startup.html#a0c5216068060ca9253dbad31e5895a2b", null ],
     [ "getFrameworkDir", "class_ubiquity_1_1controllers_1_1_startup.html#aed04b12fd6e0cccdf365d9030e470218", null ],

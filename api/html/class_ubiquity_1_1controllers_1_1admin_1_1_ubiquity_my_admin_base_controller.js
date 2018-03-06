@@ -1,6 +1,8 @@
 var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller =
 [
+    [ "_addMessageForRouteCreation", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a5ac5199a58e3bf01dab88aa4d0818b2d", null ],
     [ "_addNameValueParamFields", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a2a3ffb109e1b25440316dff202b5779e", null ],
+    [ "_createController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a2ae3c9b2249e925ad72f28080916602a", null ],
     [ "_deleteCookie", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ae5383f6059d9957bd146f4d5292cdeb7", null ],
     [ "_diagramMenu", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a9861be50b730dde4c82e81f040a23182", null ],
     [ "_getActualParamsAsArray", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a79d647132709f0e17d33c61854a4a0bc", null ],
@@ -41,6 +43,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller
     [ "models", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#aaede950e31c49610ddbc5686563590d7", null ],
     [ "rest", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a11343040fb55468085525906f60fa228", null ],
     [ "routes", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a57102936c05e571c397f794a752795a5", null ],
+    [ "seo", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#abb091e327dd2c55004991402aed401c9", null ],
     [ "showConfMessage", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a7892f1a47481ae18dc66f1d263b5cc8a", null ],
     [ "showDatabaseCreation", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a2c741cd21bb185ce076b2ad4e4c384bc", null ],
     [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a07ade9a4634c1596937c59db69031dc4", null ],

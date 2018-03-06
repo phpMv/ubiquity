@@ -112,6 +112,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a8b52401963f4b7e090b0be8da9b7739e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2367e98e8644fe50f4e72391ad136829"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a2367e98e8644fe50f4e72391ad136829">tryToRequire</a> ($file)</td></tr>
 <tr class="separator:a2367e98e8644fe50f4e72391ad136829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accc909e8f11a92a5cb72f3595ab9d5a8"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#accc909e8f11a92a5cb72f3595ab9d5a8">lastModified</a> ($filename)</td></tr>
+<tr class="separator:accc909e8f11a92a5cb72f3595ab9d5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a276901c86c421cd1f52662cb0f0b7a14"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a276901c86c421cd1f52662cb0f0b7a14">load</a> ($filename)</td></tr>
+<tr class="separator:a276901c86c421cd1f52662cb0f0b7a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab393b03d2852296b16521feb4c323127"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#ab393b03d2852296b16521feb4c323127">save</a> ($filename, $content, $flags=LOCK_EX)</td></tr>
+<tr class="separator:ab393b03d2852296b16521feb4c323127"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File system utilities. </p>
@@ -211,6 +217,62 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_u_file_system_8php_source.html#l00012">12</a> of file <a class="el" href="_u_file_system_8php_source.html">UFileSystem.php</a>.</p>
+
+</div>
+</div>
+<a id="accc909e8f11a92a5cb72f3595ab9d5a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accc909e8f11a92a5cb72f3595ab9d5a8">&#9670;&nbsp;</a></span>lastModified()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static lastModified </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_u_file_system_8php_source.html#l00084">84</a> of file <a class="el" href="_u_file_system_8php_source.html">UFileSystem.php</a>.</p>
+
+</div>
+</div>
+<a id="a276901c86c421cd1f52662cb0f0b7a14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a276901c86c421cd1f52662cb0f0b7a14">&#9670;&nbsp;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static load </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_u_file_system_8php_source.html#l00088">88</a> of file <a class="el" href="_u_file_system_8php_source.html">UFileSystem.php</a>.</p>
 
 </div>
 </div>
@@ -406,6 +468,50 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ab393b03d2852296b16521feb4c323127"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab393b03d2852296b16521feb4c323127">&#9670;&nbsp;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static save </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$content</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$flags</em> = <code>LOCK_EX</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_u_file_system_8php_source.html#l00095">95</a> of file <a class="el" href="_u_file_system_8php_source.html">UFileSystem.php</a>.</p>
+
+</div>
+</div>
 <a id="a2367e98e8644fe50f4e72391ad136829"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2367e98e8644fe50f4e72391ad136829">&#9670;&nbsp;</a></span>tryToRequire()</h2>
 
@@ -444,7 +550,7 @@ Static Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1utils.html">utils</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1utils_1_1base.html">base</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html">UFileSystem</a></li>
-    <li class="footer"><small>Generated on Sun Mar 4 2018 14:21:46 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Tue Mar 6 2018 04:43:31 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

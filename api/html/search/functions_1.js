@@ -15,7 +15,7 @@ var searchData=
   ['addmessage',['addMessage',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#a64b97a7ab6c421a13a4a5b951b755ab5',1,'Ubiquity::utils::flash::FlashBag']]],
   ['addnavigationtesting',['addNavigationTesting',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait.html#ae4b6adec4234db44a2a460069fa2fc78',1,'Ubiquity\controllers\admin\traits\RoutesTrait\addNavigationTesting()'],['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ae4b6adec4234db44a2a460069fa2fc78',1,'Ubiquity\controllers\admin\UbiquityMyAdminBaseController\addNavigationTesting()']]],
   ['addonetomany',['addOneToMany',['../class_ubiquity_1_1orm_1_1creator_1_1_member.html#a6af1f38f0ddec7e2a91b579a0bdb6d68',1,'Ubiquity\orm\creator\Member\addOneToMany()'],['../class_ubiquity_1_1orm_1_1creator_1_1_model.html#ac5aa941fc4bf3e17f9e49b9b34cfef39',1,'Ubiquity\orm\creator\Model\addOneToMany()']]],
-  ['addorremovevaluefromarray',['addOrRemoveValueFromArray',['../class_ubiquity_1_1utils_1_1http_1_1_session.html#a7497a86be20655eedf1be301c560523e',1,'Ubiquity::utils::http::Session']]],
+  ['addorremovevaluefromarray',['addOrRemoveValueFromArray',['../class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a7497a86be20655eedf1be301c560523e',1,'Ubiquity::utils::http::USession']]],
   ['addparam',['addParam',['../class_ubiquity_1_1js_1_1_jquery.html#a5561d81b6cd230973dd5e0a37056681f',1,'Ubiquity::js::Jquery']]],
   ['addparamspath',['addParamsPath',['../class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ab89ce25c75ab3936d61655037016b84a',1,'Ubiquity::cache::parser::ControllerParser']]],
   ['addroute',['addRoute',['../class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#add52b672dacee8822f085cbe9b65d7d6',1,'Ubiquity\cache\traits\RouterCacheTrait\addRoute()'],['../class_ubiquity_1_1controllers_1_1_router.html#ac96535fecece764ca9447209840e7f57',1,'Ubiquity\controllers\Router\addRoute()']]],
@@ -23,10 +23,14 @@ var searchData=
   ['addscript',['addScript',['../class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a5818237a5366d01d9e23b3ea64a1c99f',1,'Ubiquity\db\reverse\DbGenerator\addScript()'],['../class_ubiquity_1_1js_1_1_jquery.html#ad0cb3aa69b527ca37e91e095ced19030',1,'Ubiquity\js\Jquery\addScript()'],['../class_ubiquity_1_1js_1_1_js_code.html#ad0cb3aa69b527ca37e91e095ced19030',1,'Ubiquity\js\JsCode\addScript()']]],
   ['addtocodes',['addToCodes',['../class_ubiquity_1_1js_1_1_jquery.html#ae8527c9c8e8a01161bd8fc02907a8460',1,'Ubiquity::js::Jquery']]],
   ['addtoken',['addToken',['../class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a721c28d09d52f1dcdf3b4b3cfc6dc282',1,'Ubiquity::controllers::rest::ApiTokens']]],
-  ['addvaluetoarray',['addValueToArray',['../class_ubiquity_1_1utils_1_1http_1_1_session.html#a8fe40f858592b2f2ac526988a6c06f2d',1,'Ubiquity::utils::http::Session']]],
+  ['addvaluetoarray',['addValueToArray',['../class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a8fe40f858592b2f2ac526988a6c06f2d',1,'Ubiquity::utils::http::USession']]],
   ['affectsmanytomanys',['affectsManyToManys',['../class_ubiquity_1_1orm_1_1_d_a_o.html#a264632fa509d595d6e92ebf19d33a82c',1,'Ubiquity::orm::DAO']]],
   ['affectsmanytoonefromarray',['affectsManyToOneFromArray',['../class_ubiquity_1_1orm_1_1_d_a_o.html#a60fc7dd96a66b8456921dc48c9a1b14b',1,'Ubiquity::orm::DAO']]],
   ['affectsonetomanyfromarray',['affectsOneToManyFromArray',['../class_ubiquity_1_1orm_1_1_d_a_o.html#a1444819062418af478dc97434224131b',1,'Ubiquity::orm::DAO']]],
   ['asarray',['asArray',['../class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979',1,'Ubiquity\cache\parser\ControllerParser\asArray()'],['../class_ubiquity_1_1cache_1_1parser_1_1_rest_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979',1,'Ubiquity\cache\parser\RestControllerParser\asArray()']]],
-  ['asphparray',['asPhpArray',['../class_ubiquity_1_1annotations_1_1_base_annotation.html#af9fd0237c27cd114088e4dcf76ef5616',1,'Ubiquity\annotations\BaseAnnotation\asPhpArray()'],['../class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a8f14b169603344869c8ef3ef0065cb7f',1,'Ubiquity\utils\base\UArray\asPhpArray()']]]
+  ['ashtml',['asHtml',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a054d8193e22284350bb547c383b9a2a1',1,'Ubiquity::utils::http::UResponse']]],
+  ['asjson',['asJSON',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#ae0d871a40774726593981d86ac419e28',1,'Ubiquity::utils::http::UResponse']]],
+  ['asphparray',['asPhpArray',['../class_ubiquity_1_1annotations_1_1_base_annotation.html#af9fd0237c27cd114088e4dcf76ef5616',1,'Ubiquity\annotations\BaseAnnotation\asPhpArray()'],['../class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a8f14b169603344869c8ef3ef0065cb7f',1,'Ubiquity\utils\base\UArray\asPhpArray()']]],
+  ['astext',['asText',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a5f1344e06b0eb07bc93e6f291616e12c',1,'Ubiquity::utils::http::UResponse']]],
+  ['asxml',['asXml',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#ab93ec40575cba783fd80b2ed5dcf41c0',1,'Ubiquity::utils::http::UResponse']]]
 ];

@@ -32,13 +32,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_data_cache_8php.html",
-"class_ubiquity_1_1annotations_1_1parser_1_1_doc_formater.html#a095c5d389db211932136b53f25f39685",
-"class_ubiquity_1_1controllers_1_1_router.html#a2c50bb1b56ba15dfffdb87fc89be7313",
-"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a2ad1fdbcdee21c9ecbe6ba9beaa335d2",
-"class_ubiquity_1_1db_1_1export_1_1_data_export.html#a2aefd0437ea66849228e28b03c39827e",
-"class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_parser.html#a135f01f849d668c9bb2a282b3b1e1b6d",
-"class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a94fd1dcedc1bbef06b8a9fd0086526b3",
-"namespace_ubiquity_1_1db_1_1export.html"
+"class_ubiquity_1_1annotations_1_1_one_to_many_annotation.html#a1c4bf934691a992fa08cdcb67ed7a945",
+"class_ubiquity_1_1controllers_1_1_controller.html#ac2051a426b1e66a8f0124acc49d0d059",
+"class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a7347b0b89cca1d7604e93f5b5e896fc4",
+"class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html#a342fff5beb5457544d836cbcf610c1e1",
+"class_ubiquity_1_1orm_1_1creator_1_1_member.html#a7e5a0b92744719402922084ce88d2708",
+"class_ubiquity_1_1utils_1_1base_1_1_u_introspection.html#afd9c47e87332671db7efa56c6931ceb8",
+"dir_be4ad2143747d803f3928d8f09f9ea50.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

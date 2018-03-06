@@ -17,5 +17,5 @@ var searchData=
   ['forward',['forward',['../class_ubiquity_1_1controllers_1_1_controller.html#a41dc0210a4e99cb5d50bd89b800c7b51',1,'Ubiquity\controllers\Controller\forward()'],['../class_ubiquity_1_1controllers_1_1_startup.html#aa36bf21c33f40d9090abc42273d367ef',1,'Ubiquity\controllers\Startup\forward()']]],
   ['framework',['Framework',['../class_ubiquity_1_1core_1_1_framework.html',1,'Ubiquity::core']]],
   ['framework_2ephp',['Framework.php',['../_framework_8php.html',1,'']]],
-  ['fromarray',['fromArray',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a66a6c502659b138934bf1b3aa629a3ca',1,'Ubiquity::controllers::admin::popo::Route']]]
+  ['fromarray',['fromArray',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a66a6c502659b138934bf1b3aa629a3ca',1,'Ubiquity\controllers\admin\popo\Route\fromArray()'],['../class_ubiquity_1_1seo_1_1_url.html#a0c5d91946fd0cf263e30b551de02f16a',1,'Ubiquity\seo\Url\fromArray()']]]
 ];

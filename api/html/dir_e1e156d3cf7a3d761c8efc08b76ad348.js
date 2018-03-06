@@ -2,6 +2,7 @@ var dir_e1e156d3cf7a3d761c8efc08b76ad348 =
 [
     [ "admin", "dir_9aa6275fb2a0f902b195ef2a6c0bce26.html", "dir_9aa6275fb2a0f902b195ef2a6c0bce26" ],
     [ "rest", "dir_2e6811dc5692c14708c967bda3dcf5a4.html", "dir_2e6811dc5692c14708c967bda3dcf5a4" ],
+    [ "seo", "dir_ad8c2962f5bec861c22b6ea3a9603717.html", "dir_ad8c2962f5bec861c22b6ea3a9603717" ],
     [ "Admin.php", "_admin_8php.html", [
       [ "Admin", "class_ubiquity_1_1controllers_1_1_admin.html", "class_ubiquity_1_1controllers_1_1_admin" ]
     ] ],

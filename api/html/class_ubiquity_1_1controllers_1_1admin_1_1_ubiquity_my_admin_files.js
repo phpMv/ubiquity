@@ -16,6 +16,8 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files =
     [ "getViewRestFormTester", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a33a2dd35b1c01fc76e954d1541fcb106", null ],
     [ "getViewRestIndex", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a2c0efebcb28913f65aa7355f735a9cc3", null ],
     [ "getViewRoutesIndex", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#af70c9e319fb6946bad43c327af78e2cc", null ],
+    [ "getViewSeoDetails", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#aaf2c7aa6a30a9ba9a6841a15f589cc86", null ],
+    [ "getViewSeoIndex", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#aefdd149a8e24fa73457ec3020819585f", null ],
     [ "getViewShowTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a14b65a22ff6e36c1bd16ebb089db691f", null ],
     [ "getViewYumlReverse", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a6834b84d0e8557b129b8aebc7b47a03f", null ]
 ];

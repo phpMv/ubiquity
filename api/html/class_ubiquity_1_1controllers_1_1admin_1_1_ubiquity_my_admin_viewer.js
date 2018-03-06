@@ -20,6 +20,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer =
     [ "getFkList", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a9dc04916a0e41b4228428c615b7d1cd5", null ],
     [ "getForm", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ad5052b35b0d2366d7cb1ded99c776860", null ],
     [ "getFormCaptions", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a88496922366d4aff09feb81d21363564", null ],
+    [ "getMainIndexItems", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aa09034603f665d7a6f656118f592edef", null ],
     [ "getMainMenuElements", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a70545813a28824d49f7a5d51e7640b64", null ],
     [ "getModelDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ae257292d8d8657f267abc301c42b1efd", null ],
     [ "getModelsStructureDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#afc093fc0354b58c974ba4e5057adf8c5", null ],

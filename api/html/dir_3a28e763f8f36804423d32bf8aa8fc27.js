@@ -23,5 +23,8 @@ var dir_3a28e763f8f36804423d32bf8aa8fc27 =
     ] ],
     [ "RoutesTrait.php", "_routes_trait_8php.html", [
       [ "RoutesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait" ]
+    ] ],
+    [ "SeoTrait.php", "_seo_trait_8php.html", [
+      [ "SeoTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait" ]
     ] ]
 ];

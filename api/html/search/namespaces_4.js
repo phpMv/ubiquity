@@ -24,6 +24,7 @@ var searchData=
   ['rest',['rest',['../namespace_ubiquity_1_1annotations_1_1rest.html',1,'Ubiquity\annotations\rest'],['../namespace_ubiquity_1_1controllers_1_1rest.html',1,'Ubiquity\controllers\rest']]],
   ['reverse',['reverse',['../namespace_ubiquity_1_1db_1_1reverse.html',1,'Ubiquity\db\reverse'],['../namespace_ubiquity_1_1orm_1_1reverse.html',1,'Ubiquity\orm\reverse']]],
   ['router',['router',['../namespace_ubiquity_1_1annotations_1_1router.html',1,'Ubiquity::annotations']]],
+  ['seo',['seo',['../namespace_ubiquity_1_1controllers_1_1seo.html',1,'Ubiquity\controllers\seo'],['../namespace_ubiquity_1_1seo.html',1,'Ubiquity\seo']]],
   ['system',['system',['../namespace_ubiquity_1_1cache_1_1system.html',1,'Ubiquity::cache']]],
   ['traits',['traits',['../namespace_ubiquity_1_1cache_1_1traits.html',1,'Ubiquity\cache\traits'],['../namespace_ubiquity_1_1controllers_1_1admin_1_1traits.html',1,'Ubiquity\controllers\admin\traits'],['../namespace_ubiquity_1_1orm_1_1traits.html',1,'Ubiquity\orm\traits']]],
   ['ubiquity',['Ubiquity',['../namespace_ubiquity.html',1,'']]],

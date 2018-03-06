@@ -26,14 +26,15 @@ var hierarchy =
         [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ],
         [ "CRUDController", "class_ubiquity_1_1controllers_1_1_c_r_u_d_controller.html", null ]
       ] ],
-      [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", null ]
+      [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", null ],
+      [ "SeoController", "class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html", null ]
     ] ],
     [ "ControllerAction", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html", null ],
     [ "ControllerParser", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html", null ],
+    [ "ControllerSeo", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html", null ],
     [ "ControllersTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html", [
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],
-    [ "Cookie", "class_ubiquity_1_1utils_1_1http_1_1_cookie.html", null ],
     [ "DAOUpdatesTrait", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html", [
       [ "DAO", "class_ubiquity_1_1orm_1_1_d_a_o.html", null ]
     ] ],
@@ -88,7 +89,6 @@ var hierarchy =
     ] ],
     [ "OrmUtils", "class_ubiquity_1_1orm_1_1_orm_utils.html", null ],
     [ "Reflexion", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html", null ],
-    [ "Request", "class_ubiquity_1_1utils_1_1http_1_1_request.html", null ],
     [ "ResponseFormatter", "class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html", null ],
     [ "RestCacheTrait", "class_ubiquity_1_1cache_1_1traits_1_1_rest_cache_trait.html", [
       [ "CacheManager", "class_ubiquity_1_1cache_1_1_cache_manager.html", null ]
@@ -106,7 +106,9 @@ var hierarchy =
     [ "RoutesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait.html", [
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],
-    [ "Session", "class_ubiquity_1_1utils_1_1http_1_1_session.html", null ],
+    [ "SeoTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html", [
+      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
+    ] ],
     [ "SqlUtils", "class_ubiquity_1_1db_1_1_sql_utils.html", null ],
     [ "Startup", "class_ubiquity_1_1controllers_1_1_startup.html", null ],
     [ "TableReversor", "class_ubiquity_1_1orm_1_1reverse_1_1_table_reversor.html", null ],
@@ -120,8 +122,14 @@ var hierarchy =
     [ "UbiquityMyAdminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html", null ],
     [ "UbiquityMyAdminViewer", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html", null ],
     [ "UbiquityUtils", "class_ubiquity_1_1utils_1_1_ubiquity_utils.html", null ],
+    [ "UCookie", "class_ubiquity_1_1utils_1_1http_1_1_u_cookie.html", null ],
     [ "UFileSystem", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html", null ],
     [ "UIntrospection", "class_ubiquity_1_1utils_1_1base_1_1_u_introspection.html", null ],
+    [ "URequest", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html", null ],
+    [ "UResponse", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html", null ],
+    [ "Url", "class_ubiquity_1_1seo_1_1_url.html", null ],
+    [ "UrlParser", "class_ubiquity_1_1seo_1_1_url_parser.html", null ],
+    [ "USession", "class_ubiquity_1_1utils_1_1http_1_1_u_session.html", null ],
     [ "UString", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html", null ],
     [ "View", "class_ubiquity_1_1views_1_1_view.html", null ],
     [ "Yuml", "class_ubiquity_1_1utils_1_1yuml_1_1_yuml.html", null ],

@@ -10,6 +10,7 @@ var class_ubiquity_1_1controllers_1_1_router =
     [ "getRoute", "class_ubiquity_1_1controllers_1_1_router.html#ae76a7d38673a1f6f4c1c00f3b112e822", null ],
     [ "getRouteByName", "class_ubiquity_1_1controllers_1_1_router.html#a97a6be67a3be78d02bbc1f47fdc1ee39", null ],
     [ "getRouteInfo", "class_ubiquity_1_1controllers_1_1_router.html#ad9f97b954a1d803aac975febd5b6381a", null ],
+    [ "getRouteInfoByControllerAction", "class_ubiquity_1_1controllers_1_1_router.html#a5a634cd6a032e99fcd8d2be536648a2f", null ],
     [ "getRouteUrlParts", "class_ubiquity_1_1controllers_1_1_router.html#ad239727e844c3a4f2f1d5cb102b91dd6", null ],
     [ "path", "class_ubiquity_1_1controllers_1_1_router.html#a5e67f063c95cd06fdf6d461cb602f14e", null ],
     [ "setExpired", "class_ubiquity_1_1controllers_1_1_router.html#aa4209f435cd8c41a6cd5c16e9289f48d", null ],

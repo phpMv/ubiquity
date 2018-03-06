@@ -10,5 +10,5 @@ var searchData=
   ['formatbytes',['formatBytes',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a598de0ead09f737371825c4c84bc0672',1,'Ubiquity::controllers::admin::UbiquityMyAdminViewer']]],
   ['formatexception',['formatException',['../class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html#a364131ac2b799f55f3f1f4ec24ad9ba7',1,'Ubiquity::controllers::rest::ResponseFormatter']]],
   ['forward',['forward',['../class_ubiquity_1_1controllers_1_1_controller.html#a41dc0210a4e99cb5d50bd89b800c7b51',1,'Ubiquity\controllers\Controller\forward()'],['../class_ubiquity_1_1controllers_1_1_startup.html#aa36bf21c33f40d9090abc42273d367ef',1,'Ubiquity\controllers\Startup\forward()']]],
-  ['fromarray',['fromArray',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a66a6c502659b138934bf1b3aa629a3ca',1,'Ubiquity::controllers::admin::popo::Route']]]
+  ['fromarray',['fromArray',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a66a6c502659b138934bf1b3aa629a3ca',1,'Ubiquity\controllers\admin\popo\Route\fromArray()'],['../class_ubiquity_1_1seo_1_1_url.html#a0c5d91946fd0cf263e30b551de02f16a',1,'Ubiquity\seo\Url\fromArray()']]]
 ];

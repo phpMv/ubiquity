@@ -84,7 +84,8 @@ class CacheManager {
 		$queriesCacheDir=ROOT . DS . $cacheDirectory . DS . "queries";
 		$controllersCacheDir=ROOT . DS . $cacheDirectory . DS . $controllersDir;
 		$viewsCacheDir=ROOT . DS . $cacheDirectory . DS . "views";
-		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir ];
+		$seoCacheDir=ROOT . DS . $cacheDirectory . DS . "seo";
+		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo"=>$seoCacheDir ];
 	}
 
 	private static function safeMkdir($dir) {
