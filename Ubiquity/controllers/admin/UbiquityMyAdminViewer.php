@@ -5,7 +5,7 @@ namespace Ubiquity\controllers\admin;
 use Ajax\JsUtils;
 use Ajax\semantic\widgets\dataform\DataForm;
 use Ubiquity\orm\OrmUtils;
-use Ajax\service\UArray;
+use Ajax\service\JArray;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\parser\Reflexion;
 use Ajax\semantic\html\elements\HtmlHeader;
@@ -32,6 +32,8 @@ use Ubiquity\cache\ClassUtils;
 use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
 use Ajax\semantic\html\elements\HtmlLabelGroups;
 use Ubiquity\utils\base\UIntrospection;
+use Ajax\semantic\html\content\view\HtmlItem;
+use Ajax\semantic\html\views\HtmlItems;
 
 /**
  *
@@ -609,7 +611,7 @@ class UbiquityMyAdminViewer {
 					$instance->{$fkField}=OrmUtils::getFirstKeyValue($fkObject);
 					$form->addField($fkField);
 				}
-				$form->fieldAsDropDown($fkField, UArray::modelArray(DAO::getAll($fkClass), $fkIdGetter, "__toString"));
+				$form->fieldAsDropDown($fkField, JArray::modelArray(DAO::getAll($fkClass), $fkIdGetter, "__toString"));
 				$form->setCaption($fkField, \ucfirst($member));
 			}
 		}
@@ -626,7 +628,7 @@ class UbiquityMyAdminViewer {
 			return $elm->{$fkIdGetter}();
 		}, $fkInstances);
 		$instance->{$newField}=\implode(",", $ids);
-		$form->fieldAsDropDown($newField, UArray::modelArray(DAO::getAll($fkClass), $fkIdGetter, "__toString"), true);
+		$form->fieldAsDropDown($newField, JArray::modelArray(DAO::getAll($fkClass), $fkIdGetter, "__toString"), true);
 		$form->setCaption($newField, \ucfirst($member));
 	}
 
@@ -641,9 +643,23 @@ class UbiquityMyAdminViewer {
 			return $elm->{$fkIdGetter}();
 		}, $fkInstances);
 		$instance->{$newField}=\implode(",", $ids);
-		$form->fieldAsDropDown($newField, UArray::modelArray($this->controller->_getAdminData()->getManyToManyDatas($fkClass, $instance, $member), $fkIdGetter, "__toString"), true, [ "jsCallback" => function ($elm) {
+		$form->fieldAsDropDown($newField, JArray::modelArray($this->controller->_getAdminData()->getManyToManyDatas($fkClass, $instance, $member), $fkIdGetter, "__toString"), true, [ "jsCallback" => function ($elm) {
 			$elm->getField()->asSearch();
 		} ]);
 		$form->setCaption($newField, \ucfirst($member));
+	}
+
+	public function getMainIndexItems($identifier,$array):HtmlItems{
+		$items=$this->jquery->semantic()->htmlItems($identifier);
+
+		$items->fromDatabaseObjects($array, function ($e) {
+			$item=new HtmlItem("");
+			$item->addIcon($e[1] . " bordered circular")->setSize("big");
+			$item->addItemHeaderContent($e[0], [ ], $e[2]);
+			$item->setProperty("data-ajax", \strtolower($e[0]));
+			return $item;
+		});
+			$items->getOnClick($this->controller->_getAdminFiles()->getAdminBaseRoute(), "#main-content", [ "attr" => "data-ajax" ]);
+		return $items->addClass("divided relaxed link");
 	}
 }

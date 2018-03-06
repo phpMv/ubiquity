@@ -19,7 +19,7 @@ class ArrayCache extends AbstractDataCache {
 	/**
 	 * Initializes the file cache-provider
 	 * @param string $root absolute path to the root-folder where cache-files will be stored
-	 * @param string Termination of file names
+	 * @param string $postfix Termination of file names
 	 * @param array $cacheParams defaults to ["fileMode"=>"0777"]
 	 */
 	public function __construct($root, $postfix="", $cacheParams=[]) {

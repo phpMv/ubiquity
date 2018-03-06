@@ -84,4 +84,15 @@ class UFileSystem {
 	public static function lastModified($filename) {
 		return \filemtime($filename);
 	}
+
+	public static function load($filename){
+		if (\file_exists($filename)) {
+			return \file_get_contents($filename);
+		}
+		return false;
+	}
+
+	public static function save($filename,$content,$flags=LOCK_EX){
+		return \file_put_contents($filename, $content, $flags);
+	}
 }

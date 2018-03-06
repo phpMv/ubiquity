@@ -207,4 +207,8 @@ class Startup {
 	public static function getFrameworkDir() {
 		return \dirname(__FILE__);
 	}
+
+	public static function getApplicationDir(){
+		return ROOT;
+	}
 }

@@ -2,6 +2,8 @@
 
 namespace Ubiquity\seo;
 
+use Ubiquity\utils\http\Request;
+
 /**
  * Url for Seo module, use for sitemap generation
  * @author jc
@@ -12,12 +14,16 @@ class Url {
 	private $lastModified;
 	private $changeFrequency;
 	private $priority;
+	private $existing;
+	private $valid;
 
-	public function __construct($location, $lastModified=null, $changeFrequency="daily", $priority="0.5") {
+	public function __construct($location="", $lastModified=null, $changeFrequency="daily", $priority="0.5") {
 		$this->location=$location;
 		$this->lastModified=$lastModified;
 		$this->changeFrequency=$changeFrequency;
 		$this->priority=$priority;
+		$this->existing=false;
+		$this->valid=true;
 	}
 
 	/**
@@ -83,5 +89,40 @@ class Url {
 	public function setPriority($priority) {
 		$this->priority=$priority;
 	}
+	/**
+	 * @return mixed
+	 */
+	public function getExisting() {
+		return $this->existing;
+	}
+
+	/**
+	 * @param mixed $existing
+	 */
+	public function setExisting($existing) {
+		$this->existing = $existing;
+	}
+
+	public static function fromArray($array,$existing=true){
+		$array["existing"]=$existing;
+		$object=new Url();
+		Request::setValuesToObject($object,$array);
+		return $object;
+	}
+	/**
+	 * @return boolean
+	 */
+	public function getValid() {
+		return $this->valid;
+	}
+
+	/**
+	 * @param boolean $valid
+	 */
+	public function setValid($valid) {
+		$this->valid = $valid;
+	}
+
+
 }
 

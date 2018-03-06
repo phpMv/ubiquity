@@ -33,36 +33,15 @@ trait ControllersTrait{
 
 	abstract public function controllers();
 
+	abstract protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false);
+
+	abstract protected function _addMessageForRouteCreation($path);
+
 	abstract public function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null);
 
 	public function createController($force=null) {
-		$frameworkDir=Startup::getFrameworkDir();
 		if (Request::isPost()) {
-			if (isset($_POST["name"]) && $_POST["name"] !== "") {
-				$config=Startup::getConfig();
-				$controllersNS=$config["mvcNS"]["controllers"];
-				$controllersDir=ROOT . DS . str_replace("\\", DS, $controllersNS);
-				$controllerName=\ucfirst($_POST["name"]);
-				$filename=$controllersDir . DS . $controllerName . ".php";
-				if (\file_exists($filename) === false) {
-					if (isset($config["mvcNS"]["controllers"]) && $config["mvcNS"]["controllers"] !== "")
-						$namespace="namespace " . $config["mvcNS"]["controllers"] . ";";
-					$msgView="";
-					$indexContent="";
-					if (isset($_POST["lbl-ck-div-name"])) {
-						$viewDir=ROOT . DS . "views" . DS . $controllerName . DS;
-						UFileSystem::safeMkdir($viewDir);
-						$viewName=$viewDir . DS . "index.html";
-						UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/view.tpl", $viewName, [ "%controllerName%" => $controllerName,"%actionName%" => "index" ]);
-						$msgView="<br>The default view associated has been created in <b>" . UFileSystem::cleanPathname(ROOT . DS . $viewDir) . "</b>";
-						$indexContent="\$this->loadView(\"" . $controllerName . "/index.html\");";
-					}
-					UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/controller.tpl", $filename, [ "%controllerName%" => $controllerName,"%indexContent%" => $indexContent,"%namespace%" => $namespace ]);
-					$this->showSimpleMessage("The <b>" . $controllerName . "</b> controller has been created in <b>" . UFileSystem::cleanPathname($filename) . "</b>." . $msgView, "success", "checkmark circle", 30000, "msgGlobal");
-				} else {
-					$this->showSimpleMessage("The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning", "warning circle", 30000, "msgGlobal");
-				}
-			}
+			$this->_createController($_POST["name"],[],'controller.tpl',isset($_POST["lbl-ck-div-name"]));
 		}
 		$this->controllers();
 	}
@@ -235,12 +214,7 @@ trait ControllersTrait{
 					$routeProperties=\implode(",", $routeProperties);
 					$routeAnnotation=UFileSystem::openReplaceInTemplateFile($frameworkDir . "/admin/templates/annotation.tpl", [ "%name%" => $name,"%properties%" => $routeProperties ]);
 
-					$msgContent.="<br>Created route : <b>" . $path . "</b>";
-					$msgContent.="<br>You need to re-init Router cache to apply this update:";
-					$btReinitCache=new HtmlButton("bt-init-cache", "(Re-)Init router cache", "orange");
-					$btReinitCache->addIcon("refresh");
-					$msgContent.="&nbsp;" . $btReinitCache;
-					$this->jquery->getOnClick("#bt-init-cache", $this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshCacheControllers", "#messages", [ "attr" => "","hasLoader" => false,"dataType" => "html" ]);
+					$msgContent.=$this->_addMessageForRouteCreation($path);
 				}
 				$parameters=CodeUtils::cleanParameters($parameters);
 				$actionContent=UFileSystem::openReplaceInTemplateFile($frameworkDir . "/admin/templates/action.tpl", [ "%route%" => "\n" . $routeAnnotation,"%actionName%" => $action,"%parameters%" => $parameters,"%content%" => $content ]);

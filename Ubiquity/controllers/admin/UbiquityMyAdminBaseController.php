@@ -39,9 +39,15 @@ use Ubiquity\controllers\admin\traits\DatabaseTrait;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
 use Ajax\semantic\html\elements\HtmlDivider;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
+use Ubiquity\seo\UrlParser;
+use Ajax\semantic\html\elements\HtmlInput;
+use Ubiquity\utils\base\UIntrospection;
+use Ubiquity\controllers\admin\popo\ControllerSeo;
+use controllers\Soe;
+use Ubiquity\controllers\admin\traits\SeoTrait;
 
 class UbiquityMyAdminBaseController extends ControllerBase {
-	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait;
+	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait;
 	/**
 	 *
 	 * @var UbiquityMyAdminData
@@ -112,17 +118,9 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 
 	public function index() {
 		$semantic=$this->jquery->semantic();
-		$items=$semantic->htmlItems("items");
-
-		$items->fromDatabaseObjects($this->_getAdminViewer()->getMainMenuElements(), function ($e) {
-			$item=new HtmlItem("");
-			$item->addIcon($e[1] . " bordered circular")->setSize("big");
-			$item->addItemHeaderContent($e[0], [ ], $e[2]);
-			$item->setProperty("data-ajax", \strtolower($e[0]));
-			return $item;
-		});
-		$items->addClass("divided relaxed link");
-		$items->getOnClick("Admin", "#main-content", [ "attr" => "data-ajax" ]);
+		$array=$this->_getAdminViewer()->getMainMenuElements();
+		$this->_getAdminViewer()->getMainIndexItems("part1", \array_slice($array, 0,4));
+		$this->_getAdminViewer()->getMainIndexItems("part2", \array_slice($array, 4,4));
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewIndex());
 	}
@@ -170,9 +168,8 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 
 	public function controllers() {
-		$config=Startup::getConfig();
 		$this->getHeader("controllers");
-		$controllersNS=$config["mvcNS"]["controllers"];
+		$controllersNS=Startup::getNS('controllers');
 		$controllersDir=ROOT . str_replace("\\", DS, $controllersNS);
 		$this->showSimpleMessage("Controllers directory is <b>" . UFileSystem::cleanPathname($controllersDir) . "</b>", "info", "info circle", null, "msgControllers");
 		$frm=$this->jquery->semantic()->htmlForm("frmCtrl");
@@ -267,6 +264,19 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 
 	public function seo() {
 		$this->getHeader("seo");
+		$ctrls=ControllerSeo::init();
+		$dtCtrl=$this->jquery->semantic()->dataTable("seoCtrls", "Ubiquity\controllers\admin\popo\ControllerSeo", $ctrls);
+		$dtCtrl->setFields(['name','urlsFile','siteMapTemplate','route']);
+		$dtCtrl->setIdentifierFunction('getName');
+		$dtCtrl->setCaptions(['Controller name','Urls file','SiteMap template','Route']);
+		$dtCtrl->fieldAsLabel('route','car');
+		$dtCtrl->addDeleteButton(false,[],function($bt){$bt->setProperty('class','ui circular red right floated icon button');});
+		$dtCtrl->getOnRow('click', $this->_getAdminFiles()->getAdminBaseRoute().'/displaySiteMap','#seo-details',['attr'=>'data-ajax','hasLoader'=>false]);
+		$dtCtrl->setHasCheckboxes(true);
+		$dtCtrl->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute().'/generateRobots', "#messages",['attr'=>'','ajaxTransition'=>'random']);
+		$dtCtrl->setActiveRowSelector();
+		$this->jquery->execOn('click', '#generateRobots', '$("#frm-seoCtrls").form("submit");');
+		$this->jquery->getOnClick('#addNewSeo', $this->_getAdminFiles()->getAdminBaseRoute().'/_newSeoController','#seo-details');
 		$this->jquery->compile($this->view);
 
 		$this->loadView($this->_getAdminFiles()->getViewSeoIndex());
@@ -596,7 +606,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 
 	public function _runAction($frm=null) {
 		if (Request::isPost()) {
-			$url=$_POST["url"];
+			$url=Request::cleanUrl($_POST["url"]);
 			unset($_POST["url"]);
 			$method=$_POST["method"];
 			unset($_POST["method"]);
@@ -711,6 +721,48 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 			}
 			return implode("_", $values);
 		};
+	}
+
+	protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false){
+		$frameworkDir=Startup::getFrameworkDir();
+		$controllersNS=\rtrim(Startup::getNS("controllers"),"\\");
+		$controllersDir=ROOT . DS . str_replace("\\", DS, $controllersNS);
+		$controllerName=\ucfirst($controllerName);
+		$filename=$controllersDir . DS . $controllerName . ".php";
+		if (\file_exists($filename) === false) {
+			if ($controllersNS !== ""){
+				$namespace="namespace " . $controllersNS . ";";
+			}
+			$msgView="";
+			$indexContent="";
+			if ($hasView) {
+				$viewDir=ROOT . DS . "views" . DS . $controllerName . DS;
+				UFileSystem::safeMkdir($viewDir);
+				$viewName=$viewDir . DS . "index.html";
+				UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/view.tpl", $viewName, [ "%controllerName%" => $controllerName,"%actionName%" => "index" ]);
+				$msgView="<br>The default view associated has been created in <b>" . UFileSystem::cleanPathname(ROOT . DS . $viewDir) . "</b>";
+				$indexContent="\$this->loadView(\"" . $controllerName . "/index.html\");";
+			}
+			$variables=\array_merge($variables,[ "%controllerName%" => $controllerName,"%indexContent%" => $indexContent,"%namespace%" => $namespace ]);
+			UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/".$ctrlTemplate, $filename, $variables);
+			$msgContent="The <b>" . $controllerName . "</b> controller has been created in <b>" . UFileSystem::cleanPathname($filename) . "</b>." . $msgView;
+			if(isset($variables["%path%"])){
+				$msgContent.=$this->_addMessageForRouteCreation($variables["%path%"]);
+			}
+			$this->showSimpleMessage($msgContent, "success", "checkmark circle", 30000, "msgGlobal");
+		} else {
+			$this->showSimpleMessage("The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning", "warning circle", 100000, "msgGlobal");
+		}
+	}
+
+	protected function _addMessageForRouteCreation($path){
+		$msgContent="<br>Created route : <b>" . $path . "</b>";
+		$msgContent.="<br>You need to re-init Router cache to apply this update:";
+		$btReinitCache=new HtmlButton("bt-init-cache", "(Re-)Init router cache", "orange");
+		$btReinitCache->addIcon("refresh");
+		$msgContent.="&nbsp;" . $btReinitCache;
+		$this->jquery->getOnClick("#bt-init-cache", $this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshCacheControllers", "#messages", [ "attr" => "","hasLoader" => false,"dataType" => "html" ]);
+		return $msgContent;
 	}
 
 	public function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null) {

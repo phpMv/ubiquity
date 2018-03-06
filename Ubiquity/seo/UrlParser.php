@@ -9,23 +9,28 @@ use Ubiquity\controllers\Startup;
 
 class UrlParser {
 	public static $frequencies=[ 'always','hourly','daily','weekly','monthly','yearly','never' ];
-	private $routes;
+	private $urls;
 	private $config;
 
 	public function __construct() {
-		$this->routes=CacheManager::getRoutes();
+		$this->urls=[];
 		$this->config=Startup::getConfig();
 	}
 
 	public function parse() {
-		$urls=[ ];
-		foreach ( $this->routes as $path => $route ) {
+		$routes=CacheManager::getRoutes();
+		foreach ( $routes as $path => $route ) {
 			$url=$this->parseUrl($path, $route);
 			if (isset($url)) {
-				$urls[]=$url;
+				$this->urls[]=$url;
 			}
 		}
-		return $urls;
+	}
+
+	public function parseArray($array,$existing=true){
+		foreach ($array as $url){
+			$this->urls[]=Url::fromArray($url,$existing);
+		}
 	}
 
 	protected function parseUrl($path, $route) {
@@ -33,27 +38,35 @@ class UrlParser {
 			$controller=$route["controller"];
 			$action=$route["action"];
 		} elseif (isset($route["get"])) {
-			return $this->parse($route["get"]);
+			return $this->parseUrl($path,$route["get"]);
 		} else {
 			return;
 		}
-		$url=new Url($path, $this->getLastModified($controller, $action));
+		$url=new Url($path, self::getLastModified($controller, $action));
 		return $url;
 	}
 
-	protected function getLastModified($controller, $action) {
+	public static function getLastModified($controller, $action) {
 		$classCode=UIntrospection::getClassCode($controller);
 		$lastModified=UFileSystem::lastModified(UIntrospection::getFileName($controller));
-		$reflexAction=new \ReflectionMethod([ $controller,$action ]);
-		$actionCode=UIntrospection::getMethodCode($reflexAction, $classCode);
-		$views=UIntrospection::getLoadedViews($reflexAction, $actionCode);
-		foreach ( $views as $view ) {
-			$file=ROOT . DS . "views" . DS . $view;
-			$viewDate=UFileSystem::lastModified($file);
-			if ($viewDate > $lastModified)
-				$lastModified=$viewDate;
+		if(\is_array($classCode)){
+			$reflexAction=new \ReflectionMethod($controller.'::'.$action);
+			$views=UIntrospection::getLoadedViews($reflexAction, $classCode);
+			foreach ( $views as $view ) {
+				$file=ROOT . DS . "views" . DS . $view;
+				$viewDate=UFileSystem::lastModified($file);
+				if ($viewDate > $lastModified)
+					$lastModified=$viewDate;
+			}
 		}
 		return $lastModified;
 	}
+	/**
+	 * @return multitype:
+	 */
+	public function getUrls() {
+		return $this->urls;
+	}
+
 }
 

@@ -149,4 +149,9 @@ class Request {
 	public static function getMethod() {
 		return \strtolower($_SERVER['REQUEST_METHOD']);
 	}
+
+	public static function cleanUrl($url){
+		$url=\str_replace("\\", "/", $url);
+		return \str_replace("//", "/", $url);
+	}
 }

@@ -69,4 +69,16 @@ class UIntrospection {
 		}
 		return $str;
 	}
+
+	public static function getChildClasses($baseClass){
+		$children  = [];
+		foreach(\get_declared_classes() as $class){
+			echo $class."<br>";
+			$rClass=new \ReflectionClass($class);
+			if($rClass->isSubclassOf($baseClass)){
+				$children[] = $class;
+			}
+		}
+		return $children;
+	}
 }

@@ -46,6 +46,19 @@ class Router {
 		return false;
 	}
 
+	public static function getRouteInfoByControllerAction($controller,$action) {
+		foreach ( self::$routes as $routePath => $routeDetails ) {
+				if (!isset($routeDetails["controller"])) {
+					$routeDetails=\reset($routeDetails);
+				}
+				if($controller===$routeDetails["controller"] && $action===$routeDetails["action"]){
+					$routeDetails["path"]=$routePath;
+					return $routeDetails;
+				}
+			}
+		return false;
+	}
+
 	public static function filterRoutes($path) {
 		$path=self::slashPath($path);
 		$result=[];

@@ -114,8 +114,9 @@ class ClassUtils {
 				$classes[]=$class_name;
 			}
 		}
-
-		return $classes[0];
+		if(isset($classes[0]))
+			return $classes[0];
+		return null;
 	}
 
 	public static function getClassNameWithNS($defaultNS,$name){

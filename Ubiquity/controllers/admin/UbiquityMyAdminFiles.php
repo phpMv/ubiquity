@@ -79,4 +79,8 @@ class UbiquityMyAdminFiles {
 	public function getViewDatasExport() {
 		return "Admin/database/export.html";
 	}
+
+	public function getViewSeoDetails() {
+		return "Admin/seo/seoDetails.html";
+	}
 }

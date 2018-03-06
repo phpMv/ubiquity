@@ -72,6 +72,14 @@ class Response {
 	}
 
 	/**
+	 * Sets the response content-type to application/xml
+	 * @param string $encoding default: utf-8
+	 */
+	public static function asXml($encoding='utf-8') {
+		self::setContentType('application/xml', $encoding);
+	}
+
+	/**
 	 * Sets the response content-type to plain/text
 	 * @param string $encoding default: utf-8
 	 */
