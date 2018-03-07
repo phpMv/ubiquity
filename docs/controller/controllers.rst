@@ -1,5 +1,5 @@
-Ubiquity Controllers
-====================
+Controllers
+==========
 .. |br| raw:: html
 
    <br />

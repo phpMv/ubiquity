@@ -1,5 +1,5 @@
-Ubiquity Models
-===============
+Models
+=======
 .. |br| raw:: html
 
    <br />

@@ -14,6 +14,7 @@ Retrieving data
 From the get method
 ^^^^^^^^^^^^^^^^^^^
 The **get** method returns the `null` value if the key **name** does not exist in the get variables.
+
 .. code-block:: php
    
    use Ubiquity\utils\http\URequest;
@@ -21,6 +22,7 @@ The **get** method returns the `null` value if the key **name** does not exist i
    $name=URequest::get("name");
 
 The **get** method can be called with the optional second parameter returning a value if the key does not exist in the get variables.
+
 .. code-block:: php
    
    $name=URequest::get("page",1);
@@ -28,6 +30,7 @@ The **get** method can be called with the optional second parameter returning a 
 From the post method
 ^^^^^^^^^^^^^^^^^^^
 The **post** method returns the `null` value if the key **name** does not exist in the post variables.
+
 .. code-block:: php
    
    use Ubiquity\utils\http\URequest;
@@ -35,11 +38,13 @@ The **post** method returns the `null` value if the key **name** does not exist 
    $name=URequest::post("name");
 
 The **post** method can be called with the optional second parameter returning a value if the key does not exist in the post variables.
+
 .. code-block:: php
    
    $name=URequest::post("page",1);
 
 The **getPost** method applies a callback to the elements of the $_POST array and return them (default callback : **htmlEntities**) :
+
 .. code-block:: php
    
    $protectedValues=URequest::getPost();
@@ -52,6 +57,7 @@ This is the case for example when validating an object modification form.
 The **setValuesToObject** method performs this operation :
 
 Consider a **User** class:
+
 .. code-block:: php
    
    class User {

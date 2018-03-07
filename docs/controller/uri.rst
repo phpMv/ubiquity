@@ -1,5 +1,5 @@
-Ubiquity URLs
-=================
+URLs
+====
 like many other frameworks, if you are using router with it's default behavior, there is a one-to-one relationship between a URL string and its corresponding controller class/method.
 The segments in a URI normally follow this pattern:
 ::

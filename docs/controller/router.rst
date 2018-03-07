@@ -1,5 +1,5 @@
-Ubiquity Router
-=================
+Router
+======
 .. |br| raw:: html
 
    <br />
