@@ -223,7 +223,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$cacheFiles=CacheManager::$cache->getCacheFiles('controllers');
 		$cacheFiles=\array_merge($cacheFiles, CacheManager::$cache->getCacheFiles('models'));
 		$form=$this->jquery->semantic()->htmlForm("frmCache");
-		$radios=HtmlFormFields::checkeds("cacheTypes[]", [ "controllers" => "Controllers","models" => "Models","views" => "Views","queries" => "Queries","annotations" => "Annotations" ], "Display cache types: ", [ "controllers","models" ]);
+		$radios=HtmlFormFields::checkeds("cacheTypes[]", [ "controllers" => "Controllers","models" => "Models","views" => "Views","queries" => "Queries","annotations" => "Annotations","seo"=>"SEO" ], "Display cache types: ", [ "controllers","models" ]);
 		$radios->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/setCacheTypes", "frmCache", "#dtCacheFiles tbody", [ "jqueryDone" => "replaceWith" ]);
 		$form->addField($radios)->setInline();
 		$this->_getAdminViewer()->getCacheDataTable($cacheFiles);
@@ -264,22 +264,32 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 
 	public function seo() {
 		$this->getHeader("seo");
+		$this->_seo();
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewSeoIndex());
+	}
+
+	protected function _seo(){
 		$ctrls=ControllerSeo::init();
 		$dtCtrl=$this->jquery->semantic()->dataTable("seoCtrls", "Ubiquity\controllers\admin\popo\ControllerSeo", $ctrls);
-		$dtCtrl->setFields(['name','urlsFile','siteMapTemplate','route']);
+		$dtCtrl->setFields(['name','urlsFile','siteMapTemplate','route','inRobots','see']);
 		$dtCtrl->setIdentifierFunction('getName');
-		$dtCtrl->setCaptions(['Controller name','Urls file','SiteMap template','Route']);
+		$dtCtrl->setCaptions(['Controller name','Urls file','SiteMap template','Route','In robots?','']);
 		$dtCtrl->fieldAsLabel('route','car');
-		$dtCtrl->addDeleteButton(false,[],function($bt){$bt->setProperty('class','ui circular red right floated icon button');});
+		$dtCtrl->fieldAsCheckbox('inRobots',['type'=>'toggle','disabled'=>true]);
+		$dtCtrl->setValueFunction('see',function($value,$instance,$index){$bt=new HtmlButton('see-'.$index,'','_see circular basic right floated');$bt->setProperty("data-ajax", $instance->getName());$bt->asIcon('eye'); return $bt;});
+
+		$dtCtrl->addDeleteButton(false,[],function($bt){$bt->setProperty('class','ui circular basic red right floated icon button _delete');});
+		$dtCtrl->setTargetSelector(["delete"=>"#messages"]);
+		$dtCtrl->setUrls(["delete"=>$this->_getAdminFiles()->getAdminBaseRoute()."/deleteSeoController"]);
 		$dtCtrl->getOnRow('click', $this->_getAdminFiles()->getAdminBaseRoute().'/displaySiteMap','#seo-details',['attr'=>'data-ajax','hasLoader'=>false]);
 		$dtCtrl->setHasCheckboxes(true);
 		$dtCtrl->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute().'/generateRobots', "#messages",['attr'=>'','ajaxTransition'=>'random']);
-		$dtCtrl->setActiveRowSelector();
+		$dtCtrl->setActiveRowSelector('error');
+		$this->jquery->getOnClick("._see", $this->_getAdminFiles()->getAdminBaseRoute()."/seeSeoUrl","#messages",["attr"=>"data-ajax"]);
 		$this->jquery->execOn('click', '#generateRobots', '$("#frm-seoCtrls").form("submit");');
 		$this->jquery->getOnClick('#addNewSeo', $this->_getAdminFiles()->getAdminBaseRoute().'/_newSeoController','#seo-details');
-		$this->jquery->compile($this->view);
-
-		$this->loadView($this->_getAdminFiles()->getViewSeoIndex());
+		return $dtCtrl;
 	}
 
 	protected function getHeader($key) {
@@ -723,7 +733,8 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		};
 	}
 
-	protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false){
+	protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false,$jsCallback=""){
+		$message="";
 		$frameworkDir=Startup::getFrameworkDir();
 		$controllersNS=\rtrim(Startup::getNS("controllers"),"\\");
 		$controllersDir=ROOT . DS . str_replace("\\", DS, $controllersNS);
@@ -746,22 +757,23 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 			$variables=\array_merge($variables,[ "%controllerName%" => $controllerName,"%indexContent%" => $indexContent,"%namespace%" => $namespace ]);
 			UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/".$ctrlTemplate, $filename, $variables);
 			$msgContent="The <b>" . $controllerName . "</b> controller has been created in <b>" . UFileSystem::cleanPathname($filename) . "</b>." . $msgView;
-			if(isset($variables["%path%"])){
-				$msgContent.=$this->_addMessageForRouteCreation($variables["%path%"]);
+			if(isset($variables["%path%"]) && $variables["%path%"]!==""){
+				$msgContent.=$this->_addMessageForRouteCreation($variables["%path%"],$jsCallback);
 			}
-			$this->showSimpleMessage($msgContent, "success", "checkmark circle", 30000, "msgGlobal");
+			$message=$this->showSimpleMessage($msgContent, "success", "checkmark circle", NULL, "msgGlobal");
 		} else {
-			$this->showSimpleMessage("The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning", "warning circle", 100000, "msgGlobal");
+			$message=$this->showSimpleMessage("The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning", "warning circle", 100000, "msgGlobal");
 		}
+		return $message;
 	}
 
-	protected function _addMessageForRouteCreation($path){
+	protected function _addMessageForRouteCreation($path,$jsCallback=""){
 		$msgContent="<br>Created route : <b>" . $path . "</b>";
 		$msgContent.="<br>You need to re-init Router cache to apply this update:";
 		$btReinitCache=new HtmlButton("bt-init-cache", "(Re-)Init router cache", "orange");
 		$btReinitCache->addIcon("refresh");
 		$msgContent.="&nbsp;" . $btReinitCache;
-		$this->jquery->getOnClick("#bt-init-cache", $this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshCacheControllers", "#messages", [ "attr" => "","hasLoader" => false,"dataType" => "html" ]);
+		$this->jquery->getOnClick("#bt-init-cache", $this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshCacheControllers", "#messages", [ "attr" => "","hasLoader" => false,"dataType" => "html","jsCallback"=>$jsCallback ]);
 		return $msgContent;
 	}
 

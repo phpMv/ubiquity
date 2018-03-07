@@ -68,7 +68,7 @@ class ControllerAction {
 				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
 				if (isset($restCtrls[$controllerClass]) === false) {
 					$reflect=new \ReflectionClass($controllerClass);
-					if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\controllers\Controller")) {
+					if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\controllers\Controller") && ! $reflect->isSubclassOf("Ubiquity\controllers\seo\SeoController")) {
 						$methods=$reflect->getMethods(\ReflectionMethod::IS_PUBLIC);
 						foreach ( $methods as $method ) {
 							$r=self::scanMethod($controllerClass, $method);

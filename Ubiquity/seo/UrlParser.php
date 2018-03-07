@@ -22,14 +22,15 @@ class UrlParser {
 		foreach ( $routes as $path => $route ) {
 			$url=$this->parseUrl($path, $route);
 			if (isset($url)) {
-				$this->urls[]=$url;
+				if(!isset($this->urls[$path]))
+					$this->urls[$path]=$url;
 			}
 		}
 	}
 
 	public function parseArray($array,$existing=true){
 		foreach ($array as $url){
-			$this->urls[]=Url::fromArray($url,$existing);
+			$this->urls[$url['location']]=Url::fromArray($url,$existing);
 		}
 	}
 
@@ -42,24 +43,31 @@ class UrlParser {
 		} else {
 			return;
 		}
-		$url=new Url($path, self::getLastModified($controller, $action));
-		return $url;
+		$lastModified=self::getLastModified($controller, $action);
+		if($lastModified!==false){
+			$url=new Url($path, $lastModified);
+			return $url;
+		}
+		return;
 	}
 
 	public static function getLastModified($controller, $action) {
-		$classCode=UIntrospection::getClassCode($controller);
-		$lastModified=UFileSystem::lastModified(UIntrospection::getFileName($controller));
-		if(\is_array($classCode)){
-			$reflexAction=new \ReflectionMethod($controller.'::'.$action);
-			$views=UIntrospection::getLoadedViews($reflexAction, $classCode);
-			foreach ( $views as $view ) {
-				$file=ROOT . DS . "views" . DS . $view;
-				$viewDate=UFileSystem::lastModified($file);
-				if ($viewDate > $lastModified)
-					$lastModified=$viewDate;
+		if(\class_exists($controller)){
+			$classCode=UIntrospection::getClassCode($controller);
+			$lastModified=UFileSystem::lastModified(UIntrospection::getFileName($controller));
+			if(\is_array($classCode)){
+				$reflexAction=new \ReflectionMethod($controller.'::'.$action);
+				$views=UIntrospection::getLoadedViews($reflexAction, $classCode);
+				foreach ( $views as $view ) {
+					$file=ROOT . DS . "views" . DS . $view;
+					$viewDate=UFileSystem::lastModified($file);
+					if ($viewDate > $lastModified)
+						$lastModified=$viewDate;
+				}
 			}
+			return $lastModified;
 		}
-		return $lastModified;
+		return false;
 	}
 	/**
 	 * @return multitype:

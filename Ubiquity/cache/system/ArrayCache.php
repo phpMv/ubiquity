@@ -5,6 +5,7 @@ namespace Ubiquity\cache\system;
 use Ubiquity\controllers\admin\popo\CacheFile;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\exceptions\CacheException;
 
 /**
  * This class is responsible for storing Arrays in PHP files.
@@ -42,15 +43,15 @@ class ArrayCache extends AbstractDataCache {
 	 * Caches the given data with the given key.
 	 * @param string $key cache key
 	 * @param string $content the source-code to be cached
-	 * @throws AnnotationException if file could not be written
+	 * @throws CacheException if file could not be written
 	 */
 	protected function storeContent($key, $content, $tag) {
 		$path=$this->_getPath($key);
 		if (@\file_put_contents($path, $content, LOCK_EX) === false) {
-			throw new \Exception("Unable to write cache file: {$path}");
+			throw new CacheException("Unable to write cache file: {$path}");
 		}
 		if (@\chmod($path, $this->_fileMode) === false) {
-			throw new \Exception("Unable to set permissions of cache file: {$path}");
+			throw new CacheException("Unable to set permissions of cache file: {$path}");
 		}
 	}
 

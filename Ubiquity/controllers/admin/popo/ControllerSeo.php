@@ -4,12 +4,15 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\controllers\Router;
+use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\utils\base\UString;
 
 class ControllerSeo{
 	private $name;
 	private $urlsFile;
 	private $siteMapTemplate;
 	private $route;
+	private $inRobots;
 
 	public function __construct($className=null){
 		if(isset($className) && \class_exists($className)){
@@ -79,10 +82,22 @@ class ControllerSeo{
 		$this->route = $route;
 	}
 
+	public function getPath(){
+		if(UString::isNotNull($this->route))
+			return $this->route;
+		$parts=\explode("\\", $this->name);
+		return end($parts);
+	}
+
 	public static function init(){
 		$result=[ ];
 		$config=Startup::getConfig();
 
+		$robotsContent="";
+		$robotsFile=Startup::getApplicationDir() . DS . 'robots.txt';
+		if(\file_exists($robotsFile)){
+			$robotsContent=UFileSystem::load($robotsFile);
+		}
 		$files=CacheManager::getControllersFiles($config, true);
 		try {
 			$restCtrls=CacheManager::getRestCache();
@@ -94,14 +109,33 @@ class ControllerSeo{
 			if (is_file($file)) {
 				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
 				if (isset($restCtrls[$controllerClass]) === false) {
-					$reflect=new \ReflectionClass($controllerClass);
-					if (!$reflect->isAbstract() && $reflect->isSubclassOf('Ubiquity\controllers\seo\SeoController')) {
-						$result[]=new ControllerSeo($controllerClass);
+					if(\class_exists($controllerClass)){
+						$reflect=new \ReflectionClass($controllerClass);
+						if (!$reflect->isAbstract() && $reflect->isSubclassOf('Ubiquity\controllers\seo\SeoController')) {
+							$ctrlSeo=new ControllerSeo($controllerClass);
+							$path=$ctrlSeo->getPath();
+							$ctrlSeo->setInRobots(\strpos($robotsContent, $path)!==false);
+							$result[]=$ctrlSeo;
+						}
 					}
 				}
 			}
 		}
 		return $result;
 	}
+	/**
+	 * @return mixed
+	 */
+	public function getInRobots() {
+		return $this->inRobots;
+	}
+
+	/**
+	 * @param mixed $inRobots
+	 */
+	public function setInRobots($inRobots) {
+		$this->inRobots = $inRobots;
+	}
+
 
 }

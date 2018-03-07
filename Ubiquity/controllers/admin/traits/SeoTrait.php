@@ -2,7 +2,6 @@
 
 namespace Ubiquity\controllers\admin\traits;
 
-use Ajax\JsUtils;
 use Ajax\semantic\html\elements\HtmlInput;
 use Ubiquity\seo\UrlParser;
 use Ubiquity\controllers\Startup;
@@ -12,12 +11,15 @@ use Ajax\semantic\components\validation\Rule;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\http\USession;
 use Ubiquity\controllers\seo\SeoController;
-use Ubiquity\utils\base\UIntrospection;
+use Ubiquity\controllers\admin\popo\ControllerSeo;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\http\UResponse;
 
 /**
  *
  * @author jc
- * @property JsUtils $jquery
+ * @property \Ajax\JsUtils $jquery
+ * @property \Ubiquity\views\View $view
  */
 trait SeoTrait{
 
@@ -31,58 +33,66 @@ trait SeoTrait{
 
 	abstract public function seo();
 
+	abstract protected function _seo();
+
+	abstract protected function showConfMessage($content, $type, $url, $responseElement, $data, $attributes=NULL);
+
 	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null);
 
-	abstract protected function _createController($controllerName, $variables=[], $ctrlTemplate='controller.tpl', $hasView=false);
+	abstract protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false,$jsCallback="");
 
 	public function displaySiteMap(...$params) {
 		$controllerClass=\implode("\\", $params);
-		$controllerSeo=new $controllerClass();
-		USession::set("seo-sitemap", $controllerSeo);
-		$array=$controllerSeo->_getArrayUrls();
-		$parser=new UrlParser();
-		$parser->parseArray($array, true);
-		$parser->parse();
-		$urls=$parser->getUrls();
-		$dt=$this->jquery->semantic()->dataTable("dtSiteMap", 'Ubiquity\seo\Url', $urls);
-		$dt->setFields([ 'location','lastModified','changeFrequency','priority','delete' ]);
-		$dt->setCaptions([ 'Location','Last Modified','Change Frequency','Priority','' ]);
-		$dt->fieldAsInput("location");
-		$dt->setValueFunction("lastModified", function ($v, $o, $i) {
-			$d=date('Y-m-d\TH:i', $v);
-			$input=new HtmlInput("date-" . $i, 'datetime-local', $d);
-			$input->setName("lastModified[]");
-			return $input;
-		});
-		$freq=UrlParser::$frequencies;
-		$dt->fieldAsDropDown('changeFrequency', \array_combine($freq, $freq));
-		$dt->setValueFunction("priority", function ($v, $o, $i) {
-			$input=new HtmlInput("priority-" . $i, 'number', $v);
-			$f=$input->getDataField();
-			$f->setProperty('name', 'priority[]');
-			$f->setProperty('max', '1')->setProperty('min', '0')->setProperty('step', '0.1');
-			return $input;
-		});
-		$dt->onNewRow(function ($row, $instance) {
-			if ($instance->getExisting()) {
-				$row->addClass('positive');
-			} else {
-				$row->setProperty('style', 'display: none;')->addClass('toToggle');
-			}
-		});
+		if(\class_exists($controllerClass)){
+			$controllerSeo=new $controllerClass();
+			USession::set("seo-sitemap", $controllerSeo);
+			$array=$controllerSeo->_getArrayUrls();
+			$parser=new UrlParser();
+			$parser->parseArray($array, true);
+			$parser->parse();
+			$urls=$parser->getUrls();
+			$dt=$this->jquery->semantic()->dataTable("dtSiteMap", 'Ubiquity\seo\Url', $urls);
+			$dt->setFields([ 'location','lastModified','changeFrequency','priority']);
+			$dt->setCaptions([ 'Location','Last Modified','Change Frequency','Priority']);
+			$dt->fieldAsInput("location");
+			$dt->setValueFunction("lastModified", function ($v, $o, $i) {
+				$d=date('Y-m-d\TH:i', $v);
+				$input=new HtmlInput("date-" . $i, 'datetime-local', $d);
+				$input->setName("lastModified[]");
+				return $input;
+			});
+			$freq=UrlParser::$frequencies;
+			$dt->fieldAsDropDown('changeFrequency', \array_combine($freq, $freq));
+			$dt->setValueFunction("priority", function ($v, $o, $i) {
+				$input=new HtmlInput("priority-" . $i, 'number', $v);
+				$f=$input->getDataField();
+				$f->setProperty('name', 'priority[]');
+				$f->setProperty('max', '1')->setProperty('min', '0')->setProperty('step', '0.1');
+				return $input;
+			});
+			$dt->onNewRow(function ($row, $instance) {
+				if ($instance->getExisting()) {
+					$row->addClass('positive');
+				} else {
+					$row->setProperty('style', 'display: none;')->addClass('toToggle');
+				}
+			});
+			$dt->setHasCheckboxes(true);
+			$dt->setCheckedCallback(function ($object) {
+				return $object->getExisting();
+			});
+			$dt->asForm();
+			$dt->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute() . "/saveUrls", "#seo-details", [ 'attr' => '' ]);
+			$this->jquery->execOn("click", "#saveUrls", '$("#frm-dtSiteMap").form("submit");');
 
-		$dt->setHasCheckboxes(true);
-		$dt->setCheckedCallback(function ($object) {
-			return $object->getExisting();
-		});
-		$dt->asForm();
-		$dt->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute() . "/saveUrls", "#seo-details", [ 'attr' => '' ]);
-		$this->jquery->execOn("click", "#saveUrls", '$("#frm-dtSiteMap").form("submit");');
+			$this->jquery->click('#displayAllRoutes', '$(".toToggle").toggle();$(this).toggleClass("active");');
+			$this->jquery->compile($this->view);
 
-		$this->jquery->click('#displayAllRoutes', '$(".toToggle").toggle();$(this).toggleClass("active");');
-		$this->jquery->compile($this->view);
-
-		$this->loadView($this->_getAdminFiles()->getViewSeoDetails(), [ "controllerClass" => $controllerClass,"urlsFile" => $controllerSeo->_getUrlsFilename() ]);
+			$this->loadView($this->_getAdminFiles()->getViewSeoDetails(), [ "controllerClass" => $controllerClass,"urlsFile" => $controllerSeo->_getUrlsFilename() ]);
+		}else{
+			echo $this->showSimpleMessage("The controller <b>`{$controllerClass}`</b> does not exists!", "warning","warning circle");
+			echo $this->jquery->compile($this->view);
+		}
 	}
 
 	public function generateRobots() {
@@ -92,21 +102,30 @@ trait SeoTrait{
 		$content=[ ];
 		if (URequest::isPost()) {
 			$template=UFileSystem::load($frameworkDir . "/admin/templates/robots.tpl");
-			$urls=URequest::post('selection', [ ]);
-			foreach ( $urls as $url ) {
-				$content[]=\str_replace("%url%", URequest::cleanUrl($siteUrl . $url), $template);
+			$seoCtrls=URequest::post('selection', [ ]);
+			foreach ( $seoCtrls as $ctrl ) {
+				if(\class_exists($ctrl)){
+					$controllerSeo=new ControllerSeo($ctrl);
+					$content[]=\str_replace("%url%", URequest::cleanUrl($siteUrl . $controllerSeo->getPath()), $template);
+				}
 			}
 			if (\sizeof($content) > 0) {
-				$appDir=Startup::getApplicationDir() . './../';
+				$appDir=Startup::getApplicationDir();
 				$content=\implode("\n", $content);
 				UFileSystem::save($appDir . DS . 'robots.txt', $content);
 				$msg=$this->showSimpleMessage("The file <b>robots.txt</b> has been generated in " . $appDir, "success", "info circle");
+				$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() ."/seoRefresh","#seoCtrls",['hasLoader'=>false,'jqueryDone'=>'replaceWith']);
 			} else {
 				$msg=$this->showSimpleMessage("Can not generate <b>robots.txt</b> if no SEO controller is selected.", "warning", "warning circle");
 			}
 			echo $msg;
 			echo $this->jquery->compile($this->view);
 		}
+	}
+
+	public function seoRefresh(){
+		echo $this->_seo();
+		echo $this->jquery->compile($this->view);
 	}
 
 	public function _newSeoController() {
@@ -127,7 +146,7 @@ trait SeoTrait{
 		$frm->addContent("</div>");
 
 		$frm->setValidationParams([ "on" => "blur","inline" => true ]);
-		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute() . "/createSeoController", "#main-content");
+		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute() . "/createSeoController", "#messages",["hasLoader"=>false]);
 		$modal->setContent($frm);
 		$modal->addAction("Validate");
 		$this->jquery->click("#action-modalNewSeo-0", "$('#frmNewSeo').form('submit');", false, false);
@@ -153,9 +172,11 @@ trait SeoTrait{
 			$variables["%urlsFile%"]=URequest::post("urlsFile", "urls");
 			$variables["%sitemapTemplate%"]=URequest::post("sitemapTemplate", "Seo/sitemap.xml.html");
 
-			$this->_createController($_POST["controllerName"], $variables, 'seoController.tpl');
+			echo $this->_createController($_POST["controllerName"], $variables, 'seoController.tpl',false,
+					$this->jquery->getDeferred($this->_getAdminFiles()->getAdminBaseRoute() ."/seoRefresh","#seoCtrls",['hasLoader'=>false,'jqueryDone'=>'replaceWith','jsCallback'=>'$("#seo-details").html("");']));
 		}
-		$this->seo();
+		$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() ."/seoRefresh","#seoCtrls",['hasLoader'=>false,'jqueryDone'=>'replaceWith','jsCallback'=>'$("#seo-details").html("");']);
+		echo $this->jquery->compile($this->view);
 	}
 
 	public function _checkController() {
@@ -183,9 +204,59 @@ trait SeoTrait{
 		}
 		$seoController=USession::get("seo-sitemap");
 		if (isset($seoController) && $seoController instanceof SeoController) {
-			$seoController->_save($result);
-			$r=new \ReflectionClass($seoController);
-			$this->displaySiteMap($r->getNamespaceName(), $r->getShortName());
+			try{
+				$seoController->_save($result);
+				$r=new \ReflectionClass($seoController);
+				$this->displaySiteMap($r->getNamespaceName(), $r->getShortName());
+				$filename=$seoController->_getUrlsFilename();
+				$message=$this->showSimpleMessage(UString::pluralize(\sizeof($selections), '<b>`'.$filename.'`</b> saved with no url.','<b>`'.$filename.'`</b> saved with {count} url.','<b>`'.$filename.'`</b> saved with {count} urls.'), "success", "info circle");
+			}catch(\Ubiquity\exceptions\CacheException $e){
+				$message=$this->showSimpleMessage("Unable to write urls file `" . $filename . "`", "warning", "warning");
+			}
+			$this->jquery->html("#messages",$message,true);
+			echo $this->jquery->compile($this->view);
 		}
+	}
+
+	public function deleteSeoController(...$params){
+		$controllerName=\implode("\\", $params);
+				if (sizeof($_POST) > 0) {
+					$controllerName=\urldecode($_POST["data"]);
+					if ($this->_deleteController($controllerName)) {
+						$message=$this->showSimpleMessage("Deletion of SEO controller `<b>" . $controllerName . "</b>`", "info", "info", 4000);
+						$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() ."/seoRefresh","#seoCtrls",['hasLoader'=>false,'jqueryDone'=>'replaceWith','jsCallback'=>'$("#seo-details").html("");']);
+					} else {
+						$message=$this->showSimpleMessage("Can not delete SEO controller `" . $controllerName . "`", "warning", "warning");
+					}
+				} else {
+					$message=$this->showConfMessage("Do you confirm the deletion of SEO controller `<b>" . $controllerName . "</b>`?", "error", $this->_getAdminFiles()->getAdminBaseRoute() . "/deleteSeoController/{$params[0]}/{$params[1]}", "#messages", \urlencode($controllerName));
+				}
+				echo $message;
+				echo $this->jquery->compile($this->view);
+	}
+
+	protected function _deleteController($controllerName){
+		$controllerName=\urldecode($controllerName);
+		if(\class_exists($controllerName)){
+			$rClass=new \ReflectionClass($controllerName);
+			return UFileSystem::deleteFile($rClass->getFileName());
+		}
+		return false;
+	}
+
+	public function seeSeoUrl(...$params){
+		$controllerName=\implode("\\", $params);
+		$ctrl=new $controllerName();
+		\ob_start();
+		$ctrl->index();
+		$content=\ob_get_clean();
+		UResponse::asHtml();
+		$modal=$this->jquery->semantic()->htmlModal("seeSeo", "sitemap file for {$ctrl->getPath()} url");
+		$modal->setInverted();
+		$modal->setContent("<pre><code>".\htmlentities($content)."</pre></code>");
+		$modal->addAction("Close");
+		$this->jquery->exec("$('.dimmer.modals.page').html('');$('#seeSeo').modal('show');", true);
+		echo $modal;
+		echo $this->jquery->compile($this->view);
 	}
 }

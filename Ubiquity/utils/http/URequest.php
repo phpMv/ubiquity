@@ -31,6 +31,24 @@ class URequest {
 	}
 
 	/**
+	 * Affects member to member the values of $_GET to the members of the object $object
+	 * $object must have accessors to each members
+	 * @param object $object
+	 */
+	public static function setGetValuesToObject($object) {
+		self::setValuesToObject($object,$_GET);
+	}
+
+	/**
+	 * Affects member to member the values of $_POST to the members of the object $object
+	 * $object must have accessors to each members
+	 * @param object $object
+	 */
+	public static function setPostValuesToObject($object) {
+		self::setValuesToObject($object,$_POST);
+	}
+
+	/**
 	 * Call a cleaning function on the post
 	 * @param string $function the cleaning function, default htmlentities
 	 * @return array

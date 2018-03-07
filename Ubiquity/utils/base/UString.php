@@ -44,26 +44,24 @@ class UString {
 		return \is_bool($value);
 	}
 
-	public static function pluralize($count, $caption, $plural=NULL) {
-		if ($plural == NULL) {
-			$pluralChar="s";
-			if (self::endswith($caption, "au")) {
-				$pluralChar="x";
-			}
-			$plural=$caption . $pluralChar;
+	/**
+	 * Pluralize an expression
+	 * @param int $count the count of elements
+	 * @param string $zero value to return if count==0, can contains {count} mask
+	 * @param string $one value to return if count==1, can contains {count} mask
+	 * @param string $other value to return if count>1, can contains {count} mask
+	 * @return string the pluralized expression
+	 */
+	public static function pluralize($count, $zero, $one,$other) {
+		$result="";
+		if($count===0){
+			$result=$zero;
+		}elseif($count===1){
+			$result=$one;
+		}else{
+			$result=$other;
 		}
-		switch($count) {
-			case 0:
-				$result="aucun " . $caption;
-				break;
-			case 1:
-				$result=$count . " " . $caption;
-				break;
-			default:
-				$result=$count . " " . $plural;
-				break;
-		}
-		return $result;
+		return \str_replace('{count}', $count, $result);
 	}
 
 	public static function firstReplace($haystack, $needle, $replace) {

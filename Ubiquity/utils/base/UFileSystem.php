@@ -25,6 +25,12 @@ class UFileSystem {
 		}
 	}
 
+	public static function deleteFile($filename){
+		if (\file_exists($filename))
+			return \unlink($filename);
+		return false;
+	}
+
 	public static function safeMkdir($dir) {
 		if (!\is_dir($dir))
 			return \mkdir($dir, 0777, true);

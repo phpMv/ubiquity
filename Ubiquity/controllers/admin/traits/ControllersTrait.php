@@ -15,7 +15,6 @@ use Ubiquity\controllers\admin\utils\Constants;
 use Ajax\semantic\components\validation\Rule;
 use Ubiquity\controllers\Router;
 use Ubiquity\utils\base\UString;
-use Ajax\semantic\html\elements\HtmlButton;
 
 /**
  *
@@ -33,7 +32,7 @@ trait ControllersTrait{
 
 	abstract public function controllers();
 
-	abstract protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false);
+	abstract protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false,$jsCallback="");
 
 	abstract protected function _addMessageForRouteCreation($path);
 

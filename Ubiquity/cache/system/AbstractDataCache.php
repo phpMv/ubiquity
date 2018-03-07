@@ -5,6 +5,8 @@
  */
 namespace Ubiquity\cache\system;
 
+use Ubiquity\exceptions\CacheException;
+
 /**
  * This class is responsible for storing Arrays in PHP files.
  */
@@ -49,7 +51,7 @@ abstract class AbstractDataCache {
 	 * @param string $code the source-code to be cached
 	 * @param string tag the item tag
 	 * @param boolean $php
-	 * @throws AnnotationException if file could not be written
+	 * @throws CacheException if file could not be written
 	 */
 	public function store($key, $code,$tag=null, $php=true) {
 		$content="";

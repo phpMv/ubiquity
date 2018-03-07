@@ -8,6 +8,7 @@ use Ubiquity\utils\http\UResponse;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UArray;
+use Ubiquity\controllers\admin\popo\ControllerSeo;
 
 class SeoController extends Controller {
 	const SEO_PREFIX="seo";
@@ -28,6 +29,11 @@ class SeoController extends Controller {
 	}
 
 	public function _refresh() {
+	}
+
+	public function getPath(){
+		$seo=new ControllerSeo(\get_class($this));
+		return $seo->getPath();
 	}
 
 	public function _save($array) {

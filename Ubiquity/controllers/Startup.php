@@ -209,6 +209,6 @@ class Startup {
 	}
 
 	public static function getApplicationDir() {
-		return ROOT;
+		return \dirname(ROOT);
 	}
 }
