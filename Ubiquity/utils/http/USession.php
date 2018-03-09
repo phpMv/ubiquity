@@ -156,6 +156,16 @@ class USession {
 	}
 
 	/**
+	 * Adds a string at the end of the value at the key index in session
+	 * @param string $key
+	 * @param string $str
+	 * @return string
+	 */
+	public static function concat($key, $str, $default=NULL) {
+		return self::set($key, self::get($key, $default) . $str);
+	}
+
+	/**
 	 * Start new or resume existing session
 	 * @param string|null $name the name of the session
 	 */
