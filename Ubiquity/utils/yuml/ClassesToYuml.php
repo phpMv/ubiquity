@@ -14,40 +14,41 @@ class ClassesToYuml {
 	private $displayMethodsParams;
 	private $displayPropertiesTypes;
 
-	public function __construct($displayProperties=true,$displayAssociations=true,$displayMethods=false,$displayMethodsParams=false,$displayPropertiesTypes=false){
-		$this->displayProperties=$displayProperties;
-		$this->displayAssociations=$displayAssociations;
-		$this->displayMethods=$displayMethods;
-		$this->displayMethodsParams=$displayMethodsParams;
-		$this->displayPropertiesTypes=$displayPropertiesTypes;
+	public function __construct($displayProperties = true, $displayAssociations = true, $displayMethods = false, $displayMethodsParams = false, $displayPropertiesTypes = false) {
+		$this->displayProperties = $displayProperties;
+		$this->displayAssociations = $displayAssociations;
+		$this->displayMethods = $displayMethods;
+		$this->displayMethodsParams = $displayMethodsParams;
+		$this->displayPropertiesTypes = $displayPropertiesTypes;
 	}
 
 	/**
-	 * @return ClassParser[]|string[]
+	 *
+	 * @return ClassToYuml[]|string[]
 	 */
-	public function parse(){
-		$yumlResult=[];
-		$config=Startup::getConfig();
-		$files=CacheManager::getModelsFiles($config,true);
-		if(\sizeof($files)!==0){
-			foreach ($files as $file){
-				$completeName=ClassUtils::getClassFullNameFromFile($file);
-				$yumlR=new ClassToYuml($completeName,$this->displayProperties,false,$this->displayMethods,$this->displayMethodsParams,$this->displayPropertiesTypes,false);
-				$yumlResult[]=$yumlR;
+	public function parse() {
+		$yumlResult = [ ];
+		$config = Startup::getConfig ();
+		$files = CacheManager::getModelsFiles ( $config, true );
+		if (\sizeof ( $files ) !== 0) {
+			foreach ( $files as $file ) {
+				$completeName = ClassUtils::getClassFullNameFromFile ( $file );
+				$yumlR = new ClassToYuml ( $completeName, $this->displayProperties, false, $this->displayMethods, $this->displayMethodsParams, $this->displayPropertiesTypes, false );
+				$yumlResult [] = $yumlR;
 			}
-			if($this->displayAssociations){
-				$count=\sizeof($files);
-				for($i=0;$i<$count;$i++){
-					$result=$yumlResult[$i]->oneToManyTostring();
-					if(UString::isNotNull($result))
-						$yumlResult[]=$result;
+			if ($this->displayAssociations) {
+				$count = \sizeof ( $files );
+				for($i = 0; $i < $count; $i ++) {
+					$result = $yumlResult [$i]->oneToManyTostring ();
+					if (UString::isNotNull ( $result ))
+						$yumlResult [] = $result;
 				}
 			}
 		}
 		return $yumlResult;
 	}
 
-	public function __toString(){
-		return \implode(Yuml::$groupeSeparator,$this->parse());
+	public function __toString() {
+		return \implode ( Yuml::$groupeSeparator, $this->parse () );
 	}
 }
