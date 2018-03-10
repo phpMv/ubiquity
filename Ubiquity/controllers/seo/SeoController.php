@@ -53,7 +53,11 @@ class SeoController extends Controller {
 	 * @return string
 	 */
 	public function _getUrlsFilename() {
-		return self::SEO_PREFIX . DS . $this->urlsKey;
+		return self::getUrlsFileName($this->urlsKey);
+	}
+	
+	public static function getUrlsFileName($urlsKey){
+		return self::SEO_PREFIX.DS.$urlsKey;
 	}
 
 	/**

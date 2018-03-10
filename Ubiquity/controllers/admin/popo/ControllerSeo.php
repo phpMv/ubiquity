@@ -6,6 +6,7 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\controllers\Router;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UString;
+use Ubiquity\controllers\seo\SeoController;
 
 class ControllerSeo{
 	private $name;
@@ -87,6 +88,10 @@ class ControllerSeo{
 			return $this->route;
 		$parts=\explode("\\", $this->name);
 		return end($parts);
+	}
+	
+	public function urlExists(){
+		return CacheManager::$cache->exists($this->urlsFile);
 	}
 
 	public static function init(){

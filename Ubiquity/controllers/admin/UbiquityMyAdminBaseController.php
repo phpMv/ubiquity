@@ -275,10 +275,25 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$dtCtrl->setFields(['name','urlsFile','siteMapTemplate','route','inRobots','see']);
 		$dtCtrl->setIdentifierFunction('getName');
 		$dtCtrl->setCaptions(['Controller name','Urls file','SiteMap template','Route','In robots?','']);
-		$dtCtrl->fieldAsLabel('route','car');
+		$dtCtrl->fieldAsLabel('route','car',['jsCallback'=>function($lbl,$instance,$i,$index){if($instance->getRoute()==""){$lbl->setProperty('style','display:none;');}}]);
 		$dtCtrl->fieldAsCheckbox('inRobots',['type'=>'toggle','disabled'=>true]);
-		$dtCtrl->setValueFunction('see',function($value,$instance,$index){$bt=new HtmlButton('see-'.$index,'','_see circular basic right floated');$bt->setProperty("data-ajax", $instance->getName());$bt->asIcon('eye'); return $bt;});
-
+		$dtCtrl->setValueFunction('see',function($value,$instance,$index){
+			if($instance->urlExists()){
+				$bt=new HtmlButton('see-'.$index,'','_see circular basic right floated');
+				$bt->setProperty("data-ajax", $instance->getName());
+				$bt->asIcon('eye'); 
+				return $bt;
+			}
+		});
+		$dtCtrl->setValueFunction('urlsFile', function($value,$instance,$index){
+			if(!$instance->urlExists()){
+				$elm=new HtmlSemDoubleElement('urls-'.$index,'span','',$value);
+				$elm->addIcon("warning circle red");
+				$elm->addPopup("Missing",$value.' is missing!');
+				return $elm;
+			}
+			return $value;
+		});
 		$dtCtrl->addDeleteButton(false,[],function($bt){$bt->setProperty('class','ui circular basic red right floated icon button _delete');});
 		$dtCtrl->setTargetSelector(["delete"=>"#messages"]);
 		$dtCtrl->setUrls(["delete"=>$this->_getAdminFiles()->getAdminBaseRoute()."/deleteSeoController"]);

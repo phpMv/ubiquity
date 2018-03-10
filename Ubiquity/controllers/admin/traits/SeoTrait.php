@@ -85,7 +85,9 @@ trait SeoTrait{
 			$dt->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute() . "/saveUrls", "#seo-details", [ 'attr' => '' ]);
 			$this->jquery->execOn("click", "#saveUrls", '$("#frm-dtSiteMap").form("submit");');
 			$this->jquery->exec('$("#displayAllRoutes").checkbox();',true);
-			$this->jquery->click('#displayAllRoutes', '$(".toToggle").toggle();');
+			$this->jquery->execOn('change', 'input[name="selection[]"]', '$(this).parents("tr").toggleClass("_checked",$(this).prop("checked"));');
+			$this->jquery->click('#displayAllRoutes', '$(".toToggle:not(._checked)").toggle();');
+			$this->jquery->execAtLast($this->jquery->execOn('change', '#frm-dtSiteMap input', '$("#saveUrls").show();',["immediatly"=>false]));
 			$this->jquery->compile($this->view);
 
 			$this->loadView($this->_getAdminFiles()->getViewSeoDetails(), [ "controllerClass" => $controllerClass,"urlsFile" => $controllerSeo->_getUrlsFilename() ]);
