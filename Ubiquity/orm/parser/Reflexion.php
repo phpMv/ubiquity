@@ -2,7 +2,6 @@
 
 namespace Ubiquity\orm\parser;
 
-use mindplay\annotations\Annotation;
 use mindplay\annotations\Annotations;
 use Ubiquity\orm\OrmUtils;
 

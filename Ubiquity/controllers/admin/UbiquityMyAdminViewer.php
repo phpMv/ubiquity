@@ -88,6 +88,9 @@ class UbiquityMyAdminViewer {
 				case "date":
 					$form->fieldAsInput($property, [ "inputType" => "date" ]);
 					break;
+				case "datetime":
+					$form->fieldAsInput($property, [ "inputType" => "datetime-local" ]);
+					break;
 			}
 		}
 		$this->relationMembersInForm($form, $instance, $className);

@@ -8,20 +8,17 @@ use Ajax\semantic\html\elements\HtmlButton;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\controllers\Startup;
-use Ubiquity\controllers\admin\UbiquityMyAdminData;
 use controllers\ControllerBase;
 use Ubiquity\utils\http\URequest;
-use Ajax\semantic\html\content\view\HtmlItem;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\admin\popo\Route;
 use Ubiquity\controllers\Router;
 use Ajax\semantic\html\collections\form\HtmlFormFields;
 use Ubiquity\controllers\admin\popo\ControllerAction;
-use Ajax\semantic\html\collections\form\HtmlForm;
 use Ubiquity\controllers\admin\traits\ModelsConfigTrait;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\yuml\ClassToYuml;
-use Ubiquity\utils\yuml\Yuml;
+
 use Ubiquity\utils\yuml\ClassesToYuml;
 use Ajax\semantic\html\elements\HtmlList;
 use Ajax\semantic\html\modules\HtmlDropdown;
@@ -39,11 +36,8 @@ use Ubiquity\controllers\admin\traits\DatabaseTrait;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
 use Ajax\semantic\html\elements\HtmlDivider;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
-use Ubiquity\seo\UrlParser;
-use Ajax\semantic\html\elements\HtmlInput;
-use Ubiquity\utils\base\UIntrospection;
+
 use Ubiquity\controllers\admin\popo\ControllerSeo;
-use controllers\Soe;
 use Ubiquity\controllers\admin\traits\SeoTrait;
 
 class UbiquityMyAdminBaseController extends ControllerBase {

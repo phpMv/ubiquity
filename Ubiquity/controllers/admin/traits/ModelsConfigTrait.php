@@ -3,15 +3,12 @@
 namespace Ubiquity\controllers\admin\traits;
 
 use Ajax\JsUtils;
-use Ubiquity\views\View;
-use Ubiquity\db\Database;
 use Ubiquity\utils\http\URequest;
 use Ajax\semantic\html\collections\menus\HtmlMenu;
-use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\modules\HtmlDropdown;
 use Ubiquity\orm\creator\yuml\YumlModelsCreator;
 use Ubiquity\controllers\Startup;
-use Ubiquity\controllers\Router;
+use Ubiquity\controllers\admin\UbiquityMyAdminFiles;
 
 /**
  *

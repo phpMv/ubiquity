@@ -132,7 +132,7 @@ class DAO {
 		if ($parser->init()) {
 			if (is_null($array)) {
 				$accessor="get" . ucfirst($parser->getMyPk());
-				$condition=" INNER JOIN `" . $parser->getJoinTable() . "` on `".$parser->getJoinTable()."`.`".$parser->getFkField()."`=`".$parser->getTargetEntityTable()."`.`".$parser->getPk()."` WHERE `" . $parser->getMyFkField() . "`='" . $instance->$accessor() . "'";
+				$condition=" INNER JOIN `" . $parser->getJoinTable() . "` on `".$parser->getJoinTable()."`.`".$parser->getFkField()."`=`".$parser->getTargetEntityTable()."`.`".$parser->getPk()."` WHERE `".$parser->getJoinTable()."`.`". $parser->getMyFkField() . "`='" . $instance->$accessor() . "'";
 				$ret=self::getAll($parser->getTargetEntityClass(),$condition,true,false,$useCache);
 			}else{
 				self::getManyToManyFromArray($ret, $instance, $array, $class, $parser);
@@ -341,8 +341,8 @@ class DAO {
 	 * Returns an instance of $className from the database, from $keyvalues values of the primary key
 	 * @param String $className complete classname of the model to load
 	 * @param Array|string $keyValues primary key values or condition
-	 * @param $loadManyToOne if true, charges associate members with manyToOne association
-	 * @param $loadOneToMany if true, charges associate members with oneToMany association
+	 * @param boolean $loadManyToOne if true, charges associate members with manyToOne association
+	 * @param boolean $loadOneToMany if true, charges associate members with oneToMany association
 	 * @param boolean $useCache use cache if true
 	 * @return object the instance loaded or null if not found
 	 */

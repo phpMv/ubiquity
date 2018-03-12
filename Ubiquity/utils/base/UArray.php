@@ -29,11 +29,11 @@ class UArray {
 		$extsStr="";
 		if (self::isAssociative($array)) {
 			foreach ( $array as $k => $v ) {
-				$exts[]="\"" . $k . "\"=>" . self::parseValue($v, $prefix);
+				$exts[]="\"" . $k . "\"=>" . self::parseValue($v, 'array');
 			}
 		} else {
 			foreach ( $array as $v ) {
-				$exts[]=self::parseValue($v, $prefix);
+				$exts[]=self::parseValue($v, 'array');
 			}
 		}
 		if (\sizeof($exts) > 0 || $prefix !== "") {

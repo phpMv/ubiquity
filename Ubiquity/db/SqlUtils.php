@@ -8,9 +8,11 @@ use Ubiquity\orm\OrmUtils;
 /**
  * Utilitaires SQL
  * @author jc
- * @version 1.0.0.3
+ * @version 1.0.0.4
  */
 class SqlUtils {
+	
+	public static $quote='`';
 
 	private static function getParameters($keyAndValues) {
 		$ret=array ();
@@ -20,26 +22,26 @@ class SqlUtils {
 		return $ret;
 	}
 
-	private static function getQuotedKeys($keyAndValues, $quote="`") {
+	private static function getQuotedKeys($keyAndValues) {
 		$ret=array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret[]=$quote . $key . $quote;
+			$ret[]=self::$quote . $key . self::$quote;
 		}
 		return $ret;
 	}
 
-	public static function getWhere($keyAndValues, $quote="`") {
+	public static function getWhere($keyAndValues) {
 		$ret=array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret[]=$quote . $key . $quote . "= :" . $key;
+			$ret[]=self::$quote . $key . self::$quote . "= :" . $key;
 		}
 		return implode(" AND ", $ret);
 	}
 
-	public static function getMultiWhere($values, $field, $quote="`") {
+	public static function getMultiWhere($values, $field) {
 		$ret=array ();
 		foreach ( $values as $value ) {
-			$ret[]=$quote . $field . $quote . "='" . $value . "'";
+			$ret[]=self::$quote . $field . self::$quote . "='" . $value . "'";
 		}
 		return implode(" OR ", $ret);
 	}
@@ -52,10 +54,10 @@ class SqlUtils {
 		return implode(",", self::getParameters($keyAndValues));
 	}
 
-	public static function getUpdateFieldsKeyAndValues($keyAndValues, $quote="`") {
+	public static function getUpdateFieldsKeyAndValues($keyAndValues) {
 		$ret=array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret[]=$quote . $key . $quote . "= :" . $key;
+			$ret[]=self::$quote . $key . self::$quote . "= :" . $key;
 		}
 		return implode(",", $ret);
 	}
@@ -78,7 +80,7 @@ class SqlUtils {
 				}
 			}
 			foreach ( $keyValues as $key => $value ) {
-				$retArray[]="`" . $key . "` = '" . $value . "'";
+				$retArray[]=self::$quote . $key . self::$quote . " = '" . $value . "'";
 			}
 			$condition=implode($separator, $retArray);
 		} else
@@ -86,13 +88,16 @@ class SqlUtils {
 		return $condition;
 	}
 
-	public static function getFieldList($fields){
+	public static function getFieldList($fields,$tableName=false){
 		if(!\is_array($fields)){
 			return $fields;
 		}
 		$result=[];
+		$prefix="";
+		if($tableName)
+			$prefix=self::$quote.$tableName.self::$quote.".";
 		foreach ($fields as $field) {
-			$result[]= "`{$field}`";
+			$result[]= $prefix.self::$quote.$field.self::$quote;
 		}
 		return \implode(",", $result);
 	}

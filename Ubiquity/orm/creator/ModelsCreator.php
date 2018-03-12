@@ -1,8 +1,6 @@
 <?php
 namespace Ubiquity\orm\creator;
 
-use Ubiquity\orm\creator\Model;
-use Ubiquity\orm\creator\Member;
 use Ubiquity\annotations\JoinColumnAnnotation;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
@@ -125,8 +123,8 @@ abstract class ModelsCreator {
 		$fk=$joinColumn->name;
 		$dFk=$class->getDefaultFk();
 		if($fk!==$dFk){
-			if($pk!==null && $fk!==null && $pk!==null)
-				return ["name"=>$fk, "referencedColumnName"=>$pk];
+			if($pk!==null && $fk!==null)
+				return ["name"=>$fk, "referencedColumnName"=>$pk->getName()];
 		}
 		return [];
 	}

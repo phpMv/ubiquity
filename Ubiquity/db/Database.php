@@ -41,6 +41,8 @@ class Database {
 		$this->port=$port;
 		$this->user=$user;
 		$this->password=$password;
+		if(isset($options["quote"]))
+			SqlUtils::$quote=$options["quote"];
 		$this->options=$options;
 		if ($cache !== false) {
 			if(\is_callable($cache)){
@@ -86,7 +88,7 @@ class Database {
 			$result=$this->cache->fetch($tableName, $condition);
 		}
 		if ($result === false) {
-			$fields=SqlUtils::getFieldList($fields);
+			$fields=SqlUtils::getFieldList($fields,$tableName);
 			$statement=$this->getStatement("SELECT {$fields} FROM " . $tableName . $condition);
 			$statement->execute();
 			$result=$statement->fetchAll();

@@ -47,7 +47,7 @@ class View {
 	 * affiche la vue $viewName
 	 * @param string $viewName nom de la vue à charger
 	 * @param boolean $asString Si vrai, la vue n'est pas affichée mais retournée sous forme de chaîne (utilisable dans une variable)
-	 * @throws Exception
+	 * @throws \Exception
 	 * @return string
 	 */
 	public function render($viewName, $asString=false) {
