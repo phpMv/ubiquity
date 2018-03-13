@@ -15,38 +15,38 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\UCookie;
 
 class Framework {
-	public const version='2.0.0-beta.1';
+	public const version = '2.0.2';
 
 	public static function getController() {
-		return Startup::getController();
+		return Startup::getController ();
 	}
 
 	public static function getAction() {
-		return Startup::getAction();
+		return Startup::getAction ();
 	}
 
 	public static function getUrl() {
-		return \implode("/", Startup::$urlParts);
+		return \implode ( "/", Startup::$urlParts );
 	}
 
 	public static function getRouter() {
-		return new Router();
+		return new Router ();
 	}
 
 	public static function getRequest() {
-		return new URequest();
+		return new URequest ();
 	}
 
 	public static function getSession() {
-		return new USession();
+		return new USession ();
 	}
 
 	public static function getCookies() {
-		return new UCookie();
+		return new UCookie ();
 	}
 
 	public static function hasAdmin() {
-		return \class_exists("controllers\Admin");
+		return \class_exists ( "controllers\Admin" );
 	}
 }
 
