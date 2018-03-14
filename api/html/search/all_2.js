@@ -36,6 +36,7 @@ var searchData=
   ['apcucache_2ephp',['ApcuCache.php',['../_apcu_cache_8php.html',1,'']]],
   ['apitokens',['ApiTokens',['../class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html',1,'Ubiquity::controllers::rest']]],
   ['apitokens_2ephp',['ApiTokens.php',['../_api_tokens_8php.html',1,'']]],
+  ['apply',['apply',['../class_ubiquity_1_1utils_1_1http_1_1_u_session.html#ad1b8e50b5302a6440f4e6880e163dfd4',1,'Ubiquity::utils::http::USession']]],
   ['arraycache',['ArrayCache',['../class_ubiquity_1_1cache_1_1system_1_1_array_cache.html',1,'Ubiquity::cache::system']]],
   ['arraycache_2ephp',['ArrayCache.php',['../_array_cache_8php.html',1,'']]],
   ['asarray',['asArray',['../class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979',1,'Ubiquity\cache\parser\ControllerParser\asArray()'],['../class_ubiquity_1_1cache_1_1parser_1_1_rest_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979',1,'Ubiquity\cache\parser\RestControllerParser\asArray()']]],

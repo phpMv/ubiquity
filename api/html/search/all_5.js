@@ -27,6 +27,8 @@ var searchData=
   ['deleteallcachefiles',['deleteAllCacheFiles',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_cache_trait.html#a3e7defccf516f8c3f75ff859606d8aae',1,'Ubiquity::controllers::admin::traits::CacheTrait']]],
   ['deleteallfilesfromfolder',['deleteAllFilesFromFolder',['../class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a8fbff132c828a8fea79e2accd0b2aa61',1,'Ubiquity::utils::base::UFileSystem']]],
   ['deletecachefile',['deleteCacheFile',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_cache_trait.html#a9179d26aa5ee63869d3d992f009c38ee',1,'Ubiquity::controllers::admin::traits::CacheTrait']]],
+  ['deletefile',['deleteFile',['../class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a93d95b82fdc9bf17ab4d2200e1f138eb',1,'Ubiquity::utils::base::UFileSystem']]],
+  ['deleteseocontroller',['deleteSeoController',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#a751f4f3adc3530a2d5e521c63c2736eb',1,'Ubiquity::controllers::admin::traits::SeoTrait']]],
   ['display',['Display',['../class_ubiquity_1_1core_1_1postinstall_1_1_display.html',1,'Ubiquity::core::postinstall']]],
   ['display_2ephp',['Display.php',['../_display_8php.html',1,'']]],
   ['displayallmessages',['displayAllMessages',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a1f5c20ba0aa40377ca524ec1b3bf7ee8',1,'Ubiquity::controllers::admin::traits::CheckTrait']]],

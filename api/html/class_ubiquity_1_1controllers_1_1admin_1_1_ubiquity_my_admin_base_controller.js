@@ -1,8 +1,8 @@
 var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller =
 [
-    [ "_addMessageForRouteCreation", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a5ac5199a58e3bf01dab88aa4d0818b2d", null ],
+    [ "_addMessageForRouteCreation", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a57439dde2ed96ea560cd0dd516bfcc6e", null ],
     [ "_addNameValueParamFields", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a2a3ffb109e1b25440316dff202b5779e", null ],
-    [ "_createController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a2ae3c9b2249e925ad72f28080916602a", null ],
+    [ "_createController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a0c171f3547c08ae5bb78fa1e649d5f35", null ],
     [ "_deleteCookie", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ae5383f6059d9957bd146f4d5292cdeb7", null ],
     [ "_diagramMenu", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a9861be50b730dde4c82e81f040a23182", null ],
     [ "_getActualParamsAsArray", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a79d647132709f0e17d33c61854a4a0bc", null ],
@@ -16,6 +16,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller
     [ "_refreshControllers", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#acb783f7b1765f17fd1ebc6c033116fa7", null ],
     [ "_runAction", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a937a3595ced2a5eec7b472124ddbf139", null ],
     [ "_runPostWithParams", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ae40e390634732904c84e70d73c778dcd", null ],
+    [ "_seo", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a1315ad4a8500eb1514c36b7ae8e5c531", null ],
     [ "_setGetCookie", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a84d3f3b48a9ddb772a7c5095fbe1e6ff", null ],
     [ "_setPostCookie", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a9ddaf154ea73713b5fa6825a2ecefb01", null ],
     [ "_showAllClassesDiagram", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ac1822e2b74a701503b641f5dc62d7e42", null ],

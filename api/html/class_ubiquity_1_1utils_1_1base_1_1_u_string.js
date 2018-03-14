@@ -9,7 +9,7 @@ var class_ubiquity_1_1utils_1_1base_1_1_u_string =
     [ "isBooleanTrue", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a853ebbe24f3849e46fbaef45831a2dda", null ],
     [ "isNotNull", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a869a811132ab25fc1154c6898dc4ff49", null ],
     [ "isNull", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#add570fc728a427d79bfe307a9fe68eb1", null ],
-    [ "pluralize", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a5f48eb6d0dc5092e075181d2c0cf5614", null ],
+    [ "pluralize", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ae9b7fa40c4125034cf9cad403cea42f2", null ],
     [ "replaceArray", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a5b3a1db938c9e204e11e583e904baf1d", null ],
     [ "startswith", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a341f878795fe17896d77e1e4277a3f50", null ]
 ];

@@ -17,7 +17,7 @@ var searchData=
   ['php_5ftag',['PHP_TAG',['../class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#aaa05fcdb15becd9b40f2d841e0c0e6b1',1,'Ubiquity::cache::system::AbstractDataCache']]],
   ['phpfastcachedriver',['PhpFastCacheDriver',['../class_ubiquity_1_1cache_1_1system_1_1_php_fast_cache_driver.html',1,'Ubiquity::cache::system']]],
   ['phpfastcachedriver_2ephp',['PhpFastCacheDriver.php',['../_php_fast_cache_driver_8php.html',1,'']]],
-  ['pluralize',['pluralize',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a5f48eb6d0dc5092e075181d2c0cf5614',1,'Ubiquity::utils::base::UString']]],
+  ['pluralize',['pluralize',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ae9b7fa40c4125034cf9cad403cea42f2',1,'Ubiquity::utils::base::UString']]],
   ['pluriel',['pluriel',['../class_ubiquity_1_1views_1_1_gui.html#afaa37ba935e8dab3706f8228cd5a1e8d',1,'Ubiquity::views::Gui']]],
   ['post',['post',['../class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_constants.html#a95a9f1b30ae3a839e6cd5b78f9be3b13',1,'Ubiquity\controllers\admin\utils\Constants\post()'],['../class_ubiquity_1_1js_1_1_jquery.html#a32a205951b0543ffa7f2e32722a0dfcb',1,'Ubiquity\js\Jquery\post()'],['../class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a9b79df46c695b9a1418515618a8e5de9',1,'Ubiquity\utils\http\URequest\post()']]],
   ['postform',['postForm',['../class_ubiquity_1_1js_1_1_jquery.html#a8c1cb8ea81247259cc6dcceae02e8529',1,'Ubiquity::js::Jquery']]],

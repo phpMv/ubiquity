@@ -61,8 +61,16 @@ Consider a **User** class:
 .. code-block:: php
    
    class User {
+    private $id;
    	private $firstname;
    	private $lastname;
+   	
+   	public function setId($id){
+   		$this->id=$id;
+   	}
+   	public function getId(){
+   		return $this->id;
+   	}
    	
    	public function setFirstname($firstname){
    		$this->firstname=$firstname;
@@ -82,11 +90,74 @@ Consider a form to modify a user:
 
 .. code-block:: html
    
-   <form method="post" action="User/update">
+   <form method="post" action="Users/update">
+    <input type="hidden" name="id" value="{{user.id}}">
    	<label for="firstname">Firstname:</label>
    	<input type="text" id="firstname" name="firstname" value="{{user.firstname}}">
    	<label for="lastname">Lastname:</label>
    	<input type="text" id="lastname" name="lastname" value="{{user.lastname}}">
    	<input type="submit" value="validate modifications">
    </form>
+
+The **update** action of the **Users** controller must update the user instance from POST values. |br|
+Using the **setPostValuesToObject** method avoids the assignment of variables posted one by one to the members of the object. |br|
+It is also possible to use **setGetValuesToObject** for the **get** method, or **setValuesToObject** to assign the values of any associative array to an object.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 10
+      
+    namespace controllers;
+    
+    use Ubiquity\orm\DAO;
+    use Uniquity\utils\http\URequest;
+    
+    class Users extends BaseController{
+    	...
+    	public function update(){
+    		$user=DAO::getOne("models\User",URequest::post("id"));
+    		$user->setPostValuesToObject($user);
+    		DAO::update($user);
+    	}
+    }
+    
+
+.. note:: SetValuesToObject methods use setters to modify the members of an object. 
+          The class concerned must therefore implement setters for all modifiable members.
+
+Testing the request
+-------------------
+
+isPost
+^^^^^^
+The **isPost** method returns `true` if the request was submitted via the POST method: |br|
+In the case below, the `initialize` method only loads the `vHeader.html` view if the request is not an Ajax request.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 9
+      
+    ...
+	public function initialize(){
+		if(!URequest::isAjax()){
+			$this->loadView("main/vHeader.html");
+		}
+	}
+	...
+
+isAjax
+^^^^^^
+The ** isAjax ** method returns `true` if the query is an Ajax query:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 9
+      
+      
+isCrossSite
+^^^^^^^^^^^
+The **isCrossSite** method verifies that the query is not cross-site.
 

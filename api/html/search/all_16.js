@@ -58,6 +58,7 @@ var searchData=
   ['uresponse_2ephp',['UResponse.php',['../_u_response_8php.html',1,'']]],
   ['url',['Url',['../class_ubiquity_1_1seo_1_1_url.html',1,'Url'],['../class_ubiquity_1_1controllers_1_1_router.html#ac73e4a016facd771344cb62df08cdca4',1,'Ubiquity\controllers\Router\url()']]],
   ['url_2ephp',['Url.php',['../_url_8php.html',1,'']]],
+  ['urlexists',['urlExists',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html#a94ee47f5b962d64fa0a8708a1d9507d3',1,'Ubiquity::controllers::admin::popo::ControllerSeo']]],
   ['urlparser',['UrlParser',['../class_ubiquity_1_1seo_1_1_url_parser.html',1,'Ubiquity::seo']]],
   ['urlparser_2ephp',['UrlParser.php',['../_url_parser_8php.html',1,'']]],
   ['usession',['USession',['../class_ubiquity_1_1utils_1_1http_1_1_u_session.html',1,'Ubiquity::utils::http']]],

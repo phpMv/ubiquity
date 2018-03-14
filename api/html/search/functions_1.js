@@ -27,6 +27,7 @@ var searchData=
   ['affectsmanytomanys',['affectsManyToManys',['../class_ubiquity_1_1orm_1_1_d_a_o.html#a264632fa509d595d6e92ebf19d33a82c',1,'Ubiquity::orm::DAO']]],
   ['affectsmanytoonefromarray',['affectsManyToOneFromArray',['../class_ubiquity_1_1orm_1_1_d_a_o.html#a60fc7dd96a66b8456921dc48c9a1b14b',1,'Ubiquity::orm::DAO']]],
   ['affectsonetomanyfromarray',['affectsOneToManyFromArray',['../class_ubiquity_1_1orm_1_1_d_a_o.html#a1444819062418af478dc97434224131b',1,'Ubiquity::orm::DAO']]],
+  ['apply',['apply',['../class_ubiquity_1_1utils_1_1http_1_1_u_session.html#ad1b8e50b5302a6440f4e6880e163dfd4',1,'Ubiquity::utils::http::USession']]],
   ['asarray',['asArray',['../class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979',1,'Ubiquity\cache\parser\ControllerParser\asArray()'],['../class_ubiquity_1_1cache_1_1parser_1_1_rest_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979',1,'Ubiquity\cache\parser\RestControllerParser\asArray()']]],
   ['ashtml',['asHtml',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a054d8193e22284350bb547c383b9a2a1',1,'Ubiquity::utils::http::UResponse']]],
   ['asjson',['asJSON',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#ae0d871a40774726593981d86ac419e28',1,'Ubiquity::utils::http::UResponse']]],

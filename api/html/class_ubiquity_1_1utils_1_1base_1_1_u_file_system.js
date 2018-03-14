@@ -2,6 +2,7 @@ var class_ubiquity_1_1utils_1_1base_1_1_u_file_system =
 [
     [ "cleanPathname", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#ace3263eb544009ada1dcd982b48876e6", null ],
     [ "deleteAllFilesFromFolder", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a8fbff132c828a8fea79e2accd0b2aa61", null ],
+    [ "deleteFile", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a93d95b82fdc9bf17ab4d2200e1f138eb", null ],
     [ "glob_recursive", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a4bd012f319eac6be8d053119a60cc21e", null ],
     [ "lastModified", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#accc909e8f11a92a5cb72f3595ab9d5a8", null ],
     [ "load", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a276901c86c421cd1f52662cb0f0b7a14", null ],

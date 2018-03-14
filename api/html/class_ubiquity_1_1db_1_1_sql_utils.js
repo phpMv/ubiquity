@@ -2,12 +2,13 @@ var class_ubiquity_1_1db_1_1_sql_utils =
 [
     [ "checkWhere", "class_ubiquity_1_1db_1_1_sql_utils.html#a81c8a99f0113862179cbacf1fdfbc960", null ],
     [ "getCondition", "class_ubiquity_1_1db_1_1_sql_utils.html#a5e8cc576000f48901449ddd14ffefd7c", null ],
-    [ "getFieldList", "class_ubiquity_1_1db_1_1_sql_utils.html#a0a4c1be65b3465c3ab8c4fda53c11580", null ],
+    [ "getFieldList", "class_ubiquity_1_1db_1_1_sql_utils.html#a47df02a704b6e1e3af37c819c1cb9ade", null ],
     [ "getInsertFields", "class_ubiquity_1_1db_1_1_sql_utils.html#a0e3e3c54d5ac1b671dffe02004d771df", null ],
     [ "getInsertFieldsValues", "class_ubiquity_1_1db_1_1_sql_utils.html#aef7785e6beb7e212db5ed4362643cba9", null ],
-    [ "getMultiWhere", "class_ubiquity_1_1db_1_1_sql_utils.html#a85eb0eec25f9b8963e6d5c7e9cc41101", null ],
+    [ "getMultiWhere", "class_ubiquity_1_1db_1_1_sql_utils.html#acbaea9d0323ce344acfb689f5a1e1830", null ],
     [ "getParameters", "class_ubiquity_1_1db_1_1_sql_utils.html#a26c13ba869361f1889d1d9f71535fb73", null ],
-    [ "getQuotedKeys", "class_ubiquity_1_1db_1_1_sql_utils.html#ab227842d11b0b394786a34b1a76de080", null ],
-    [ "getUpdateFieldsKeyAndValues", "class_ubiquity_1_1db_1_1_sql_utils.html#a115ea0e9527e1303ed46970c4a8d1639", null ],
-    [ "getWhere", "class_ubiquity_1_1db_1_1_sql_utils.html#a108e5644617513ef112c01816abe85b3", null ]
+    [ "getQuotedKeys", "class_ubiquity_1_1db_1_1_sql_utils.html#a8b4337fa57aecc2f470fc9e52082c1cc", null ],
+    [ "getUpdateFieldsKeyAndValues", "class_ubiquity_1_1db_1_1_sql_utils.html#a2f0f89dae30eacf143829f5575a60c2d", null ],
+    [ "getWhere", "class_ubiquity_1_1db_1_1_sql_utils.html#ac739f951006fdf543eabc99db854fb40", null ],
+    [ "$quote", "class_ubiquity_1_1db_1_1_sql_utils.html#a0a8636649359826ae83b0876b814add2", null ]
 ];

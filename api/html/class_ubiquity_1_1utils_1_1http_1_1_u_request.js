@@ -14,5 +14,7 @@ var class_ubiquity_1_1utils_1_1http_1_1_u_request =
     [ "isJSON", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a00f299982df69fd390bb7d0bd1969d5e", null ],
     [ "isPost", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a07cd2448cc915ae5f8b34f3089bbb3a8", null ],
     [ "post", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a9b79df46c695b9a1418515618a8e5de9", null ],
+    [ "setGetValuesToObject", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a9f77f6c4d715211ab0e942c55523b5c4", null ],
+    [ "setPostValuesToObject", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a556a0931d5527e43f436102aa6d7d3fc", null ],
     [ "setValuesToObject", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a3484ab1ca1afd5cb73bb3268a921c3a7", null ]
 ];

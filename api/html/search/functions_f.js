@@ -14,7 +14,7 @@ var searchData=
   ['parseurl',['parseUrl',['../class_ubiquity_1_1controllers_1_1_startup.html#a58b3479266333c083ac380b82cb42064',1,'Ubiquity\controllers\Startup\parseUrl()'],['../class_ubiquity_1_1seo_1_1_url_parser.html#aed2ceba3bad3f10ce5f80a08edcb44d2',1,'Ubiquity\seo\UrlParser\parseUrl()']]],
   ['parsevalue',['parseValue',['../class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a4ab193537465a4e2a0d51310037f5872',1,'Ubiquity::utils::base::UArray']]],
   ['path',['path',['../class_ubiquity_1_1controllers_1_1_router.html#a5e67f063c95cd06fdf6d461cb602f14e',1,'Ubiquity::controllers::Router']]],
-  ['pluralize',['pluralize',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a5f48eb6d0dc5092e075181d2c0cf5614',1,'Ubiquity::utils::base::UString']]],
+  ['pluralize',['pluralize',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ae9b7fa40c4125034cf9cad403cea42f2',1,'Ubiquity::utils::base::UString']]],
   ['pluriel',['pluriel',['../class_ubiquity_1_1views_1_1_gui.html#afaa37ba935e8dab3706f8228cd5a1e8d',1,'Ubiquity::views::Gui']]],
   ['post',['post',['../class_ubiquity_1_1js_1_1_jquery.html#a32a205951b0543ffa7f2e32722a0dfcb',1,'Ubiquity\js\Jquery\post()'],['../class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a9b79df46c695b9a1418515618a8e5de9',1,'Ubiquity\utils\http\URequest\post()']]],
   ['postform',['postForm',['../class_ubiquity_1_1js_1_1_jquery.html#a8c1cb8ea81247259cc6dcceae02e8529',1,'Ubiquity::js::Jquery']]],

@@ -4,7 +4,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait =
     [ "_addRouteWithNewAction", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a2f3a32d594b88fe0b2f2e20abc7258c5", null ],
     [ "_checkContent", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#aef2dcf5c12a265cb9c50e3da4281d357", null ],
     [ "_checkRoute", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a35007cb425bd9cecfbdf5b3f192cc200", null ],
-    [ "_createController", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a2ae3c9b2249e925ad72f28080916602a", null ],
+    [ "_createController", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a0c171f3547c08ae5bb78fa1e649d5f35", null ],
     [ "_createView", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a3149cc366b235e391497f5bfb4f5ecd5", null ],
     [ "_createViewOp", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a5ad67ae42c8ba8e2aaf3d8e421ffd2b8", null ],
     [ "_getAdminData", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a1728d8b515816623b042eeb85e48f77f", null ],
