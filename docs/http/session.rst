@@ -41,8 +41,8 @@ Creating or editing a session variable
    
    use Ubiquity\utils\http\USession;
    
-   URequest::set("name","SMITH");
-   URequest::set("activeUser",$user);
+   USession::set("name","SMITH");
+   USession::set("activeUser",$user);
    
 Retrieving data
 --------------------

@@ -138,6 +138,32 @@ In the case below, the `initialize` method only loads the `vHeader.html` view if
 .. code-block:: php
    :linenos:
    :caption: app/controllers/Users.php
+   :emphasize-lines: 9
+      
+    namespace controllers;
+    
+    use Ubiquity\orm\DAO;
+    use Uniquity\utils\http\URequest;
+    
+    class Users extends BaseController{
+    	...
+    	public function update(){
+    		if(URequest::isPost()){
+    			$user=DAO::getOne("models\User",URequest::post("id"));
+    			URequest::setPostValuesToObject($user);
+    			DAO::update($user);
+    		}
+    	}
+    }
+
+
+isAjax
+^^^^^^
+The **isAjax** method returns `true` if the query is an Ajax query:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
    :emphasize-lines: 3
       
     ...
@@ -147,16 +173,6 @@ In the case below, the `initialize` method only loads the `vHeader.html` view if
 		}
 	}
 	...
-
-
-isAjax
-^^^^^^
-The ** isAjax ** method returns `true` if the query is an Ajax query:
-
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/Users.php
-   :emphasize-lines: 9
       
       
 isCrossSite
