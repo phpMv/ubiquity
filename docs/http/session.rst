@@ -12,6 +12,7 @@ The **USession** class provides additional functionality to more easily manipula
 Starting the session
 --------------------
 The Http session is started automatically if the **sessionName** key is populated in the **app/config.php** configuration file:
+
 .. code-block:: php
    
    <?php
@@ -30,8 +31,7 @@ If the sessionName key is not populated, it is necessary to start the session ex
     USession::start("key-for-app");
     
 
-..note::
-    The **name** parameter is optional but recommended to avoid conflicting variables.
+.. note:: The **name** parameter is optional but recommended to avoid conflicting variables.
 
 
 Creating or editing a session variable
@@ -60,8 +60,7 @@ The **get** method can be called with the optional second parameter returning a 
    
    $name=USession::get("page",1);
 
-..note::
-    The **session** method is an alias of the **get** method.
+.. note:: The **session** method is an alias of the **get** method.
     
 The **getAll** method returns all session vars:
 

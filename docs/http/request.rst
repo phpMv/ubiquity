@@ -117,7 +117,7 @@ It is also possible to use **setGetValuesToObject** for the **get** method, or *
     	...
     	public function update(){
     		$user=DAO::getOne("models\User",URequest::post("id"));
-    		$user->setPostValuesToObject($user);
+    		URequest::setPostValuesToObject($user);
     		DAO::update($user);
     	}
     }
@@ -131,13 +131,14 @@ Testing the request
 
 isPost
 ^^^^^^
+
 The **isPost** method returns `true` if the request was submitted via the POST method: |br|
 In the case below, the `initialize` method only loads the `vHeader.html` view if the request is not an Ajax request.
 
 .. code-block:: php
    :linenos:
    :caption: app/controllers/Users.php
-   :emphasize-lines: 9
+   :emphasize-lines: 3
       
     ...
 	public function initialize(){
@@ -146,6 +147,7 @@ In the case below, the `initialize` method only loads the `vHeader.html` view if
 		}
 	}
 	...
+
 
 isAjax
 ^^^^^^
