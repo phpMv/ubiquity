@@ -123,7 +123,7 @@ It is also possible to use **setGetValuesToObject** for the **get** method, or *
     }
     
 
-.. note:: SetValuesToObject methods use setters to modify the members of an object. 
+.. note:: **SetValuesToObject** methods use setters to modify the members of an object. 
           The class concerned must therefore implement setters for all modifiable members.
 
 Testing the request

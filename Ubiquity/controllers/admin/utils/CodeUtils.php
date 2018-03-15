@@ -69,16 +69,68 @@ class CodeUtils {
 	}
 
 	public static function isValidCode($code){
+		$output=[];
+		$result=1;
 		$temp_file = tempnam(sys_get_temp_dir(), 'Tux');
 		$fp = fopen($temp_file, "w");
 		fwrite($fp, $code);
 		fclose($fp);
-		$errors=exec('php -l '.$temp_file);
-		\unlink($temp_file);
-		if(strpos($errors, 'No syntax errors detected') === false){
-			return false;
+		if(file_exists($temp_file)){
+			$phpExe=self::getPHPExecutable();
+			if(isset($phpExe)){
+				exec($phpExe.' -l '.$temp_file,$output,$result);
+				$output=implode("",$output);
+			}
+			\unlink($temp_file);
+			if(strpos($output, 'No syntax errors detected') === false && $result!==1){
+				return false;
+			}
 		}
 		return true;
+	}
+	
+	/**
+	 * @see https://stackoverflow.com/questions/2372624/get-current-php-executable-from-within-script
+	 * @return string
+	 */
+	public static function getPHPExecutable() {
+		if (defined('PHP_BINARY') && PHP_BINARY && in_array(PHP_SAPI, array('cli', 'cli-server')) && is_file(PHP_BINARY)) {
+			return PHP_BINARY;
+		} else if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			$paths = explode(PATH_SEPARATOR, getenv('PATH'));
+			foreach ($paths as $path) {
+				if (substr($path, strlen($path)-1)==DIRECTORY_SEPARATOR) {
+					$path=substr($path, 0, strlen($path)-1);
+				}
+				if ( substr($path, strlen($path) - strlen('php')) == 'php' ) {
+					$response=$path.DIRECTORY_SEPARATOR.'php.exe';
+					if (is_file($response)) {
+						return $response;
+					}
+				} else if ( substr($path, strlen($path) - strlen('php.exe')) == 'php.exe' ) {
+					if (is_file($response)) {
+						return $response;
+					}
+				}
+			}
+		} else {
+			$paths = explode(PATH_SEPARATOR, getenv('PATH'));
+			foreach ($paths as $path) {
+				if (substr($path, strlen($path)-1)==DIRECTORY_SEPARATOR) {
+					$path=substr($path, strlen($path)-1);
+				}
+				if ( substr($path, strlen($path) - strlen('php')) == 'php' ) {
+					if (is_file($path)) {
+						return $path;
+					}
+					$response=$path.DIRECTORY_SEPARATOR.'php';
+					if (is_file($response)) {
+						return $response;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 }
