@@ -39,6 +39,7 @@ use Ajax\semantic\html\base\HtmlSemDoubleElement;
 
 use Ubiquity\controllers\admin\popo\ControllerSeo;
 use Ubiquity\controllers\admin\traits\SeoTrait;
+use Ajax\semantic\html\collections\HtmlMessage;
 
 class UbiquityMyAdminBaseController extends ControllerBase {
 	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait;
@@ -63,6 +64,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 
 	public function initialize() {
 		parent::initialize();
+		ob_start(array(__class__,'_error_handler'));
 		if (URequest::isAjax() === false) {
 			$semantic=$this->jquery->semantic();
 			$mainMenuElements=$this->_getAdminViewer()->getMainMenuElements();
@@ -82,11 +84,34 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 			$this->loadView($this->_getAdminFiles()->getViewHeader());
 		}
 	}
-
+	
+	public static function _error_handler($buffer) {
+		$e = error_get_last();
+		if ($e) {
+			if($e['file']!='xdebug://debug-eval'){
+				$staticName="msg-" . rand(0, 50);
+				$message=new HtmlMessage($staticName);
+				$message->addClass("error");
+				$message->addHeader("Error");
+				$message->addList(["<b>Message :</b> ".$e['message'],"<b>File :</b> ".$e['file'],"<b>Line :</b> ".$e['line']]);
+				$message->setIcon("bug");
+				switch ($e['type']){
+					case E_ERROR: case E_PARSE:
+						return $message;
+					default:
+						return str_replace($e['message'], "", $buffer).$message;
+				}
+				
+			}
+		}
+		return $buffer;
+	}
+	
 	public function finalize() {
 		if (!URequest::isAjax()) {
 			$this->loadView("Admin/main/vFooter.html", [ "js" => $this->initializeJs() ]);
 		}
+		ob_end_flush();
 	}
 
 	protected function initializeJs() {
