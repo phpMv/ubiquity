@@ -4,7 +4,7 @@ Views
 
    <br />
 
-Ubiquity uses Twig as the default template engine (see Link Twig documentation <https://twig.symfony.com/doc/2.x/>). |br|
+Ubiquity uses Twig as the default template engine (see `Twig documentation <https://twig.symfony.com/doc/2.x/>`_). |br|
 The views are located in the **app/views** folder. They must have the **.html** extension for being interpreted by Twig.
 
 Loading
