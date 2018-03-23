@@ -40,24 +40,44 @@ Variables are passed to the view with an associative array. Each key creates a v
     class Users extends BaseController{
     	...
     	public function display($message,$type){
-    			$this->loadView("users/display.html",["msg"=>$message,"type"=>$type]);
+    			$this->loadView("users/display.html",["message"=>$message,"type"=>$type]);
     		}
     	}
     }
     
+In this case, it is usefull to call Compact for creating an array containing variables and their values :
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 6
+      
+    namespace controllers;
+    
+    class Users extends BaseController{
+    	...
+    	public function display($message,$type){
+    			$this->loadView("users/display.html",compact("message","type"));
+    		}
+    	}
+    }
+   
+Displaying in view
+------------------
+
 The view can then display the variables:
 
 .. code-block:: html
    :caption: users/display.html
       
     <h2>{{type}}</h2>
-    <div>{{msg}}</div>
+    <div>{{message}}</div>
     
-Variables may have attributes or elements you can access, too. The visual representation of a variable depends heavily on the application providing it.
+Variables may have attributes or elements you can access, too.
 
 You can use a dot (.) to access attributes of a variable (methods or properties of a PHP object, or items of a PHP array), or the so-called "subscript" syntax ([]):
 
-.. code-block:: html
+.. code-block:: smarty
       
     {{ foo.bar }}
     {{ foo['bar'] }}
