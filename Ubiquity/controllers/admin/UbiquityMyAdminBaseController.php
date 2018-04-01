@@ -40,9 +40,12 @@ use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ubiquity\controllers\admin\popo\ControllerSeo;
 use Ubiquity\controllers\admin\traits\SeoTrait;
 use Ajax\semantic\html\collections\HtmlMessage;
+use Ubiquity\controllers\admin\traits\GitTrait;
+use Ubiquity\controllers\admin\popo\RepositoryGit;
+use Ajax\semantic\html\elements\HtmlLabel;
 
 class UbiquityMyAdminBaseController extends ControllerBase {
-	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait;
+	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
 	/**
 	 *
 	 * @var UbiquityMyAdminData
@@ -324,6 +327,47 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		$this->jquery->execOn('click', '#generateRobots', '$("#frm-seoCtrls").form("submit");');
 		$this->jquery->getOnClick('#addNewSeo', $this->_getAdminFiles()->getAdminBaseRoute().'/_newSeoController','#seo-details');
 		return $dtCtrl;
+	}
+	
+	public function git($hasMessage=true){
+		$this->getHeader("git");
+		$gitRepo=$this->_getRepo();
+		$initializeBt="";$pushPullBts="";$gitIgnoreBt="";$btRefresh="";
+		if(!$gitRepo->getInitialized()){
+			$initializeBt=$this->jquery->semantic()->htmlButton("initialize-bt","Initialize repository","orange");
+			$initializeBt->addIcon("magic");
+			$initializeBt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/gitInit","#main-content",["attr"=>""]);
+			if($hasMessage)
+				$this->showSimpleMessage("<b>{$gitRepo->getName()}</b> respository is not initialized!", "warning","warning circle",null,"init-message");
+		}else{
+			if($hasMessage){
+				$this->showSimpleMessage("<b>{$gitRepo->getName()}</b> repository is correctly initialized.", "info","info circle",null,"init-message");
+			}
+			$pushPullBts=$this->jquery->semantic()->htmlButtonGroups("push-pull-bts",["3-Push","1-Pull"]);
+			$pushPullBts->addIcons(["upload","download"]);
+			$pushPullBts->setPropertyValues("data-ajax", ["gitPush","gitPull"]);
+			$pushPullBts->addPropertyValues("class", ["blue","black"]);
+			$pushPullBts->getOnClick($this->_getAdminFiles()->getAdminBaseRoute(),"#messages",["attr"=>"data-ajax"]);
+			$pushPullBts->setPropertyValues("style", "width: 260px;");
+			$gitIgnoreBt=$this->jquery->semantic()->htmlButton("gitIgnore-bt",".gitignore");
+			$gitIgnoreBt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/gitIgnoreEdit","#frm",["attr"=>""]);
+			$btRefresh=$this->jquery->semantic()->htmlButton("refresh-bt","Refresh files","green");
+			$btRefresh->addIcon("sync alternate");
+			$btRefresh->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/refreshFiles","#dtGitFiles",["attr"=>"","jqueryDone"=>"replaceWith","hasLoader"=>false]);
+		}
+
+		$this->jquery->exec('$.fn.form.settings.rules.checkeds=function(value){var fields = $("[name=\'files-to-commit[]\']:checked");console.log(fields.length);return fields.length && fields.length>0;};',true);
+
+		
+		$this->_getAdminViewer()->getGitFilesDataTable($gitRepo->getFiles());
+		$this->_getAdminViewer()->getGitCommitsDataTable($gitRepo->getCommits());
+		
+		$this->jquery->getOnClick("#settings-btn", $this->_getAdminFiles()->getAdminBaseRoute()."/frmSettings","#frm");
+		$this->jquery->exec('$("#commit-frm").form({"fields":{"summary":{"rules":[{"type":"empty"}]},"files-to-commit[]":{"rules":[{"type":"checkeds","prompt":"You must select at least 1 file!"}]}},"on":"blur","onSuccess":function(event,fields){'.$this->jquery->postFormDeferred($this->_getAdminFiles()->getAdminBaseRoute()."/commit","commit-frm","#messages",["preventDefault"=>true,"stopPropagation"=>true]).';return false;}});',true);
+		$this->jquery->execOn("click","#commit-btn",'$("#commit-frm").form("submit")');
+		$this->jquery->exec('$("#git-tabs .item").tab();',true);
+		$this->jquery->compile($this->view);
+		$this->loadView($this->_getAdminFiles()->getViewGitIndex(),["repo"=>$gitRepo,"initializeBt"=>$initializeBt,"gitIgnoreBt"=>$gitIgnoreBt,"pushPullBts"=>$pushPullBts,"btRefresh"=>$btRefresh]);
 	}
 
 	protected function getHeader($key) {
@@ -811,12 +855,12 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 		return $msgContent;
 	}
 
-	public function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null) {
+	public function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage {
 		$semantic=$this->jquery->semantic();
 		if (!isset($staticName))
 			$staticName="msg-" . rand(0, 50);
 		$message=$semantic->htmlMessage($staticName, $content, $type);
-		$message->setIcon($icon . " circle");
+		$message->setIcon($icon);
 		$message->setDismissable();
 		if (isset($timeout))
 			$message->setTimeout(3000);

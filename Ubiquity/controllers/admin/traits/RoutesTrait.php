@@ -8,6 +8,7 @@ use Ubiquity\controllers\Router;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\admin\popo\Route;
 use Ubiquity\controllers\Startup;
+use Ajax\semantic\html\collections\HtmlMessage;
 
 /**
  * @author jc
@@ -18,7 +19,7 @@ trait RoutesTrait{
 	abstract public function _getAdminViewer();
 	abstract public function _getAdminFiles();
 	abstract protected function addNavigationTesting();
-	abstract protected function showSimpleMessage($content,$type,$icon="info",$timeout=NULL,$staticName=null);
+	abstract protected function showSimpleMessage($content,$type,$icon="info",$timeout=NULL,$staticName=null):HtmlMessage;
 
 	public function initCacheRouter(){
 		$config=Startup::getConfig();

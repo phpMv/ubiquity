@@ -42,20 +42,25 @@ class ManyToManyParser {
 
 			$annotJoinTable=OrmUtils::getAnnotationInfoMember($class, "#joinTable", $member);
 			$this->joinTable=$annotJoinTable["name"];
-			$joinColumnsAnnot=@$annotJoinTable["joinColumns"];
+			
 			$this->myFkField=OrmUtils::getDefaultFk($class);
 			$this->myPk=OrmUtils::getFirstKey($class);
-			if (!is_null($joinColumnsAnnot)) {
-				$this->myFkField=$joinColumnsAnnot["name"];
-				$this->myPk=$joinColumnsAnnot["referencedColumnName"];
+			if(isset($annotJoinTable["joinColumns"])){
+				$joinColumnsAnnot=$annotJoinTable["joinColumns"];
+				if (!is_null($joinColumnsAnnot)) {
+					$this->myFkField=$joinColumnsAnnot["name"];
+					$this->myPk=$joinColumnsAnnot["referencedColumnName"];
+				}
 			}
 			$this->targetEntityTable=OrmUtils::getTableName($this->targetEntity);
 			$this->fkField=OrmUtils::getDefaultFk($this->targetEntityClass);
 			$this->pk=OrmUtils::getFirstKey($this->targetEntityClass);
-			$inverseJoinColumnsAnnot=@$annotJoinTable["inverseJoinColumns"];
-			if (!is_null($inverseJoinColumnsAnnot)) {
-				$this->fkField=$inverseJoinColumnsAnnot["name"];
-				$this->pk=$inverseJoinColumnsAnnot["referencedColumnName"];
+			if(isset($annotJoinTable["inverseJoinColumns"])){
+				$inverseJoinColumnsAnnot=$annotJoinTable["inverseJoinColumns"];
+				if (!is_null($inverseJoinColumnsAnnot)) {
+					$this->fkField=$inverseJoinColumnsAnnot["name"];
+					$this->pk=$inverseJoinColumnsAnnot["referencedColumnName"];
+				}
 			}
 			return true;
 		}

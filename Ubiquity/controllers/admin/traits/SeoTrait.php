@@ -14,6 +14,7 @@ use Ubiquity\controllers\seo\SeoController;
 use Ubiquity\controllers\admin\popo\ControllerSeo;
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\http\UResponse;
+use Ajax\semantic\html\collections\HtmlMessage;
 
 /**
  *
@@ -37,7 +38,7 @@ trait SeoTrait{
 
 	abstract protected function showConfMessage($content, $type, $url, $responseElement, $data, $attributes=NULL);
 
-	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null);
+	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	abstract protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false,$jsCallback="");
 

@@ -211,4 +211,8 @@ class Startup {
 	public static function getApplicationDir() {
 		return \dirname ( ROOT );
 	}
+	
+	public static function getApplicationName() {
+		return basename(\dirname ( ROOT ));
+	}
 }

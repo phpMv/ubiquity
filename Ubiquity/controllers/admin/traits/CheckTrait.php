@@ -15,6 +15,7 @@ use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\cache\system\ArrayCache;
 use Ubiquity\orm\creator\database\DbModelsCreator;
 use Ubiquity\controllers\admin\UbiquityMyAdminFiles;
+use Ajax\semantic\html\collections\HtmlMessage;
 
 /**
  *
@@ -35,7 +36,7 @@ trait CheckTrait{
 
 	abstract protected function displayModelsMessages($type, $messagesToDisplay);
 
-	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null);
+	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	abstract public function _isModelsCompleted();
 

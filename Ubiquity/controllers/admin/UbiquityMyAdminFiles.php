@@ -83,4 +83,16 @@ class UbiquityMyAdminFiles {
 	public function getViewSeoDetails() {
 		return "Admin/seo/seoDetails.html";
 	}
+	
+	public function getViewGitIndex() {
+		return "Admin/git/index.html";
+	}
+	
+	public function getViewGitSettings() {
+		return "Admin/git/formSettings.html";
+	}
+	
+	public function getViewGitIgnore() {
+		return "Admin/git/formGitIgnore.html";
+	}
 }

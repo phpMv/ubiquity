@@ -14,7 +14,7 @@ class ControllerAction {
 	private $parameters;
 	private $dValues;
 	private $annots;
-	private static $excludeds=[ "__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward","redirectToRoute" ];
+	private static $excludeds=[ "__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward","redirectToRoute","getView" ];
 
 	public function __construct($controller="", $action="", $parameters=[], $dValues=[], $annots=[]) {
 		$this->controller=$controller;

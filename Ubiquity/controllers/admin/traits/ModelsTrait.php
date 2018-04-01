@@ -12,6 +12,7 @@ use Ajax\semantic\html\elements\HtmlHeader;
 use Ubiquity\controllers\Startup;
 use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
 use Ubiquity\cache\database\DbCache;
+use Ajax\semantic\html\collections\HtmlMessage;
 
 /**
  *
@@ -26,7 +27,7 @@ trait ModelsTrait{
 
 	abstract public function _getAdminFiles();
 
-	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null);
+	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	public function showTable($table) {
 		$this->_showTable($table);

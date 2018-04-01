@@ -15,6 +15,7 @@ use Ubiquity\controllers\admin\utils\Constants;
 use Ajax\semantic\components\validation\Rule;
 use Ubiquity\controllers\Router;
 use Ubiquity\utils\base\UString;
+use Ajax\semantic\html\collections\HtmlMessage;
 
 /**
  *
@@ -36,7 +37,7 @@ trait ControllersTrait{
 
 	abstract protected function _addMessageForRouteCreation($path);
 
-	abstract public function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null);
+	abstract public function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	public function createController($force=null) {
 		if (URequest::isPost()) {

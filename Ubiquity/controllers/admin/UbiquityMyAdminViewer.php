@@ -34,6 +34,10 @@ use Ajax\semantic\html\elements\HtmlLabelGroups;
 use Ubiquity\utils\base\UIntrospection;
 use Ajax\semantic\html\content\view\HtmlItem;
 use Ajax\semantic\html\views\HtmlItems;
+use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
+use Ubiquity\controllers\admin\popo\RepositoryGit;
+use Ubiquity\utils\git\GitFile;
+use Ubiquity\utils\git\GitFileStatus;
 
 /**
  *
@@ -199,7 +203,7 @@ class UbiquityMyAdminViewer {
 	}
 
 	public function getMainMenuElements() {
-		return [ "models" => [ "Models","sticky note","Used to perform CRUD operations on data." ],"routes" => [ "Routes","car","Displays defined routes with annotations" ],"controllers" => [ "Controllers","heartbeat","Displays controllers and actions" ],"cache" => [ "Cache","lightning","Annotations, models, router and controller cache" ],"rest" => [ "Rest","server","Restfull web service" ],"config" => [ "Config","settings","Configuration variables" ],"seo" => [ "Seo","google","Search Engine Optimization" ],"logs" => [ "Logs","bug","Log files" ] ];
+		return [ "models" => [ "Models","sticky note","Used to perform CRUD operations on data." ],"routes" => [ "Routes","car","Displays defined routes with annotations" ],"controllers" => [ "Controllers","heartbeat","Displays controllers and actions" ],"cache" => [ "Cache","lightning","Annotations, models, router and controller cache" ],"rest" => [ "Rest","server","Restfull web service" ],"config" => [ "Config","settings","Configuration variables" ],"git" => [ "Git","github","Git versioning" ],"seo" => [ "Seo","google","Search Engine Optimization" ],"logs" => [ "Logs","bug","Log files" ] ];
 	}
 
 	public function getRoutesDataTable($routes, $dtName="dtRoutes") {
@@ -664,5 +668,56 @@ class UbiquityMyAdminViewer {
 		});
 			$items->getOnClick($this->controller->_getAdminFiles()->getAdminBaseRoute(), "#main-content", [ "attr" => "data-ajax" ]);
 		return $items->addClass("divided relaxed link");
+	}
+	
+	public function getGitFilesDataTable($files){
+		$list=$this->jquery->semantic()->htmlList("dtGitFiles");
+		$elements=array_map(function($element){
+			return "<i class='".GitFileStatus::getIcon($element->getStatus())." icon'></i>&nbsp;".$element->getName();
+		},$files);
+		$ssList=$list->addCheckedList($elements,"<i class='file icon'></i>&nbsp;Files",array_keys($elements),false,"files-to-commit[]");
+		$this->jquery->getOnClick("#dtGitFiles label[data-value]",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/changesInfiles","#changesInFiles-div",["attr"=>"data-value","preventDefault"=>false,"stopPropagation"=>true]);
+		return $list;
+	}
+	
+	public function getGitCommitsDataTable($commits){
+		$notPushed=false;
+		$dt=$this->jquery->semantic()->dataTable("dtCommits", "Ubiquity\utils\git\GitCommit", $commits);
+		foreach ($commits as $commit){
+			if(!$commit->getPushed()){
+				$notPushed=true;break;
+			}
+		}
+		$dt->setColor("green");
+		$dt->setIdentifierFunction("getLHash");
+		$dt->setFields(["cHash","author","cDate","summary"]);
+		$dt->setCaptions(["Hash","Author","Date","Summary"]);
+		$dt->setActiveRowSelector();
+		$dt->onRowClick($this->jquery->getDeferred($this->controller->_getAdminFiles()->getAdminBaseRoute()."/changesInCommit","#changesInCommit-div",["attr"=>"data-ajax"]));
+		$dt->setValueFunction(0, function($value,$instance){
+			if($instance->getPushed()){
+				return "<i class='ui green check square icon'></i>".$value;
+			}
+			return "<i class='ui external square alternate icon'></i>".$value;
+		});
+		$dt->onNewRow(function($row,$object){
+			if($object->getPushed())
+				$row->addClass("positive");
+		});
+		$this->jquery->exec('$("#htmlbuttongroups-push-pull-bts-0").prop("disabled",'.($notPushed?"false":"true").');',true);
+		return $dt;
+	}
+	
+	public function gitFrmSettings(RepositoryGit $gitRepo){
+		$frm=$this->jquery->semantic()->dataForm("frmGitSettings",$gitRepo);
+		$frm->setFields(["name\n","name","remoteUrl","user","password"]);
+		$frm->setCaptions(["&nbsp;Git repository settings", "Repository name","Remote URL","User name","password"]);
+		$frm->fieldAsMessage(0,["icon"=>HtmlIconGroups::corner("git", "settings")]);
+		$frm->setSubmitParams($this->controller->_getAdminFiles()->getAdminBaseRoute()."/updateGitParams","#main-content");
+		$frm->fieldAsInput(1);
+		$frm->fieldAsInput(3,["rules"=>["empty"]]);
+		$frm->fieldAsInput(4,["inputType"=>"password"]);
+		$frm->addDividerBefore("user", "gitHub");
+		return $frm;
 	}
 }
