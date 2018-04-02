@@ -77,7 +77,6 @@ trait GitTrait{
 		} elseif ($activeRemoteUrl != $newRemoteUrl) {
 			$gitRepo->getRepository ()->setRemoteUrl ( "origin", $newRemoteUrl );
 		}
-		$gitRepo->getRepository ()->setUpstream();
 		CacheManager::$cache->store ( RepositoryGit::$GIT_SETTINGS, "return " . UArray::asPhpArray ( $_POST, "array" ) . ";", true );
 		$this->git ();
 	}
@@ -151,6 +150,7 @@ trait GitTrait{
 				$msg = $this->showSimpleMessage ( "Check your github settings before pushing! (user name, password or remote url)", "negative", "upload", null, "init-message" );
 			}
 		} catch ( GitException $ge ) {
+			echo $ge->getMessage();
 			$msg = $this->showSimpleMessage ( "Invalid github settings! (Check your user name, password or remote url)", "negative", "upload", null, "init-message" );
 		}
 		echo $msg;

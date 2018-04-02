@@ -4,6 +4,7 @@ namespace Ubiquity\utils\git;
 
 use Cz\Git\GitRepository;
 use Cz\Git\GitException;
+use Ubiquity\utils\base\UString;
 
 class UGitRepository extends GitRepository {
 
@@ -141,13 +142,18 @@ class UGitRepository extends GitRepository {
 	}
 
 	public function getCommits() {
+		$remoteBranchsSize=sizeof($this->getRemoteBranchs());
 		$nonPushed = $this->getNonPushedCommitHash ();
 		try {
-			return $this->extractFromCommand ( 'git log --pretty=format:"%h___%an___%ar___%s___%H"', function ($str) use ($nonPushed) {
+			return $this->extractFromCommand ( 'git log --pretty=format:"%h___%an___%ar___%s___%H"', function ($str) use ($nonPushed,$remoteBranchsSize) {
 				$array = explode ( "___", $str );
 				$pushed = true;
-				if (is_array ( $nonPushed ))
-					$pushed = ! in_array ( $array [0], $nonPushed );
+				if($remoteBranchsSize==0){
+					$pushed=false;
+				}else{
+					if (is_array ( $nonPushed ))
+						$pushed = ! in_array ( $array [0], $nonPushed );
+				}
 				return new GitCommit ( $array [0], $array [1], $array [2], $array [3], $array [4], $pushed );
 			} );
 		} catch ( \Cz\Git\GitException $e ) {
@@ -169,5 +175,21 @@ class UGitRepository extends GitRepository {
 		$this->begin ();
 		$this->run ( 'git branch -u origin/'.$branch);
 		return $this->end ();
+	}
+	
+	public function getRemoteBranchs(){
+		$url=$this->getRemoteUrl();
+		if(UString::isNotNull($url)){
+			try{
+				$result= $this->extractFromCommand('git ls-remote --heads '.$url);
+				if(!is_array($result)){
+					$result=[];
+				}
+				return $result;
+			} catch ( \Cz\Git\GitException $e ) {
+				return [ ];
+			}
+		}
+		return [];
 	}
 }
