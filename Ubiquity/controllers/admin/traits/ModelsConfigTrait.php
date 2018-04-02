@@ -121,7 +121,13 @@ trait ModelsConfigTrait{
 		$textarea=$form->addTextarea("yuml-code", "Yuml code", \str_replace(",", ",\n", $yumlContent . ""));
 		$textarea->getField()->setProperty("rows", 20);
 		$diagram=$this->_getYumlImage("plain", $yumlContent);
-		$this->jquery->execAtLast('$("#yuml-tab .item").tab();');
+		$this->jquery->execOn("keypress","#yuml-code",'$("#yuml-code").prop("_changed",true);');
+		$this->jquery->execAtLast('$("#yuml-tab .item").tab({onVisible:function(tab){
+				if(tab=="diagram" && $("#yuml-code").prop("_changed")==true){
+					'.$this->_yumlRefresh("/_updateYumlDiagram", "{refresh:'true',code:$('#yuml-code').val()}", "#diag-class").'
+				}	
+			}
+		});');
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewYumlReverse(), [ "diagram" => $diagram ]);
 	}
@@ -143,9 +149,15 @@ trait ModelsConfigTrait{
 			$type=$_POST["type"];
 			$size=$_POST["size"];
 			$yumlContent=$_POST["code"];
+			$this->jquery->exec('$("#yuml-code").prop("_changed",false);',true);
 			echo $this->_getYumlImage($type . $size, $yumlContent);
 			echo $this->jquery->compile();
 		}
+	}
+	
+	private function _yumlRefresh($url="/_updateDiagram", $params="{}", $responseElement="#diag-class"){
+		$params=JsUtils::_implodeParams([ "$('#frmProperties').serialize()",$params ]);
+		return $this->jquery->postDeferred($this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
 	}
 
 	private function _yumlMenu($url="/_updateDiagram", $params="{}", $responseElement="#diag-class", $type="plain", $size=";scale:100") {
@@ -153,11 +165,11 @@ trait ModelsConfigTrait{
 		$menu=new HtmlMenu("menu-diagram");
 		$ddScruffy=new HtmlDropdown("ddScruffy", $type, [ "nofunky" => "Boring","plain" => "Plain","scruffy" => "Scruffy" ], true);
 		$ddScruffy->setValue("plain")->asSelect("type");
-		$this->jquery->postOn("change", "#type", $this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
+		$this->jquery->postOn("change", "[name='type']", $this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
 		$menu->addItem($ddScruffy);
 		$ddSize=new HtmlDropdown("ddSize", $size, [ ";scale:180" => "Huge",";scale:120" => "Big",";scale:100" => "Normal",";scale:80" => "Small",";scale:60" => "Tiny" ], true);
 		$ddSize->asSelect("size");
-		$this->jquery->postOn("change", "#size", $this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
+		$this->jquery->postOn("change", "[name='size']", $this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
 		$menu->wrap("<form id='frmProperties' name='frmProperties'>", "</form>");
 		$menu->addItem($ddSize);
 		return $menu;
