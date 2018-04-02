@@ -128,7 +128,7 @@ trait GitTrait{
 			$msg->addList($messages);
 			$this->_refreshParts();
 		}else{
-			$this->showSimpleMessage("Nothing to commit!", "","warning circle",null,"init-message");
+			$msg=$this->showSimpleMessage("Nothing to commit!", "","warning circle",null,"init-message");
 		}
 		echo $msg;
 		echo $this->jquery->compile($this->view);

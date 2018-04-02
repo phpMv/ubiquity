@@ -330,6 +330,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 	}
 	
 	public function git($hasMessage=true){
+		$loader='<div class="ui active inline centered indeterminate text loader">Waiting for git operation...</div>';
 		$this->getHeader("git");
 		$gitRepo=$this->_getRepo();
 		$initializeBt="";$pushPullBts="";$gitIgnoreBt="";$btRefresh="";
@@ -347,7 +348,7 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 			$pushPullBts->addIcons(["upload","download"]);
 			$pushPullBts->setPropertyValues("data-ajax", ["gitPush","gitPull"]);
 			$pushPullBts->addPropertyValues("class", ["blue","black"]);
-			$pushPullBts->getOnClick($this->_getAdminFiles()->getAdminBaseRoute(),"#messages",["attr"=>"data-ajax"]);
+			$pushPullBts->getOnClick($this->_getAdminFiles()->getAdminBaseRoute(),"#messages",["attr"=>"data-ajax","ajaxLoader"=>$loader]);
 			$pushPullBts->setPropertyValues("style", "width: 260px;");
 			$gitIgnoreBt=$this->jquery->semantic()->htmlButton("gitIgnore-bt",".gitignore");
 			$gitIgnoreBt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/gitIgnoreEdit","#frm",["attr"=>""]);
@@ -356,15 +357,14 @@ class UbiquityMyAdminBaseController extends ControllerBase {
 			$btRefresh->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/refreshFiles","#dtGitFiles",["attr"=>"","jqueryDone"=>"replaceWith","hasLoader"=>false]);
 		}
 
-		$this->jquery->exec('$.fn.form.settings.rules.checkeds=function(value){var fields = $("[name=\'files-to-commit[]\']:checked");console.log(fields.length);return fields.length && fields.length>0;};',true);
+		$this->jquery->exec('$.fn.form.settings.rules.checkeds=function(value){var fields = $("[name=\'files-to-commit[]\']:checked");return fields.length>0;};',true);
 
 		
 		$this->_getAdminViewer()->getGitFilesDataTable($gitRepo->getFiles());
 		$this->_getAdminViewer()->getGitCommitsDataTable($gitRepo->getCommits());
 		
 		$this->jquery->getOnClick("#settings-btn", $this->_getAdminFiles()->getAdminBaseRoute()."/frmSettings","#frm");
-		$this->jquery->exec('$("#commit-frm").form({"fields":{"summary":{"rules":[{"type":"empty"}]},"files-to-commit[]":{"rules":[{"type":"checkeds","prompt":"You must select at least 1 file!"}]}},"on":"blur","onSuccess":function(event,fields){'.$this->jquery->postFormDeferred($this->_getAdminFiles()->getAdminBaseRoute()."/commit","commit-frm","#messages",["preventDefault"=>true,"stopPropagation"=>true]).';return false;}});',true);
-		$this->jquery->execOn("click","#commit-btn",'$("#commit-frm").form("submit")');
+		$this->jquery->exec('$("#commit-frm").form({"fields":{"summary":{"rules":[{"type":"empty"}]},"files-to-commit[]":{"rules":[{"type":"checkeds","prompt":"You must select at least 1 file!"}]}},"on":"blur","onSuccess":function(event,fields){'.$this->jquery->postFormDeferred($this->_getAdminFiles()->getAdminBaseRoute()."/commit","commit-frm","#messages",["preventDefault"=>true,"stopPropagation"=>true,"ajaxLoader"=>$loader]).';return false;}});',true);
 		$this->jquery->exec('$("#git-tabs .item").tab();',true);
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewGitIndex(),["repo"=>$gitRepo,"initializeBt"=>$initializeBt,"gitIgnoreBt"=>$gitIgnoreBt,"pushPullBts"=>$pushPullBts,"btRefresh"=>$btRefresh]);
