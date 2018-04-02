@@ -16,7 +16,6 @@ class Maker {
 	}
 
 	public static function createAction($controller, $action, $parameters = "", $content = "", $createView = false, $route = []) {
-		$frameworkDir = Startup::getFrameworkDir ();
 		$msgContent = [ ];
 		$hasErrors = false;
 		$r = new \ReflectionClass ( $controller );
@@ -38,7 +37,7 @@ class Maker {
 				$routeProperties = [ '"' . $path . '"' ];
 				$methods = $route ["methods"];
 				if (UString::isNotNull ( $methods )) {
-					$routeProperties [] = '"methods"=>' . $this->getMethods ( $methods );
+					$routeProperties [] = '"methods"=>' . self::getMethods ( $methods );
 				}
 				if ($route ["cache"]) {
 					$routeProperties [] = '"cache"=>true';
@@ -72,5 +71,14 @@ class Maker {
 		UFileSystem::safeMkdir ( ROOT . DS . "views" . DS . $controller );
 		UFileSystem::openReplaceWriteFromTemplateFile ( self::$baseDir . "/admin/templates/view.tpl", ROOT . DS . "views" . DS . $viewName, [ "%controllerName%" => $controller,"%actionName%" => $action ] );
 		return $viewName;
+	}
+
+	private static function getMethods($strMethods) {
+		$methods = \explode ( ",", $strMethods );
+		$result = [ ];
+		foreach ( $methods as $method ) {
+			$result [] = '"' . $method . '"';
+		}
+		return "[" . \implode ( ",", $result ) . "]";
 	}
 }

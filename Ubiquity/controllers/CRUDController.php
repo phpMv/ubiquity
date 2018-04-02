@@ -8,7 +8,7 @@ abstract class CRUDController extends ControllerBase {
 	protected $model;
 	protected $gui;
 
-	abstract function getGui();
+	abstract protected function getGui();
 
 	/**
 	 * Default page : list all objects

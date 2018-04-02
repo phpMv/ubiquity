@@ -8,73 +8,82 @@ use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\controllers\Startup;
 
 class UrlParser {
-	public static $frequencies=[ 'always','hourly','daily','weekly','monthly','yearly','never' ];
+	public static $frequencies = [ 'always','hourly','daily','weekly','monthly','yearly','never' ];
 	private $urls;
 	private $config;
 
+	/**
+	 *
+	 * @return mixed
+	 */
+	public function getConfig() {
+		return $this->config;
+	}
+
 	public function __construct() {
-		$this->urls=[];
-		$this->config=Startup::getConfig();
+		$this->urls = [ ];
+		$this->config = Startup::getConfig ();
 	}
 
 	public function parse() {
-		$routes=CacheManager::getRoutes();
+		$routes = CacheManager::getRoutes ();
 		foreach ( $routes as $path => $route ) {
-			$url=$this->parseUrl($path, $route);
-			if (isset($url)) {
-				if(!isset($this->urls[$path]))
-					$this->urls[$path]=$url;
+			$url = $this->parseUrl ( $path, $route );
+			if (isset ( $url )) {
+				if (! isset ( $this->urls [$path] ))
+					$this->urls [$path] = $url;
 			}
 		}
 	}
 
-	public function parseArray($array,$existing=true){
-		foreach ($array as $url){
-			$this->urls[$url['location']]=Url::fromArray($url,$existing);
+	public function parseArray($array, $existing = true) {
+		foreach ( $array as $url ) {
+			$this->urls [$url ['location']] = Url::fromArray ( $url, $existing );
 		}
 	}
 
 	protected function parseUrl($path, $route) {
-		if (isset($route["controller"])) {
-			$controller=$route["controller"];
-			$action=$route["action"];
-		} elseif (isset($route["get"])) {
-			return $this->parseUrl($path,$route["get"]);
+		if (isset ( $route ["controller"] )) {
+			$controller = $route ["controller"];
+			$action = $route ["action"];
+		} elseif (isset ( $route ["get"] )) {
+			return $this->parseUrl ( $path, $route ["get"] );
 		} else {
 			return;
 		}
-		$lastModified=self::getLastModified($controller, $action);
-		if($lastModified!==false){
-			$url=new Url($path, $lastModified);
+		$lastModified = self::getLastModified ( $controller, $action );
+		if ($lastModified !== false) {
+			$url = new Url ( $path, $lastModified );
 			return $url;
 		}
 		return;
 	}
 
 	public static function getLastModified($controller, $action) {
-		if(\class_exists($controller)){
-			$classCode=UIntrospection::getClassCode($controller);
-			$lastModified=UFileSystem::lastModified(UIntrospection::getFileName($controller));
-			if(\is_array($classCode)){
-				$reflexAction=new \ReflectionMethod($controller.'::'.$action);
-				$views=UIntrospection::getLoadedViews($reflexAction, $classCode);
+		if (\class_exists ( $controller )) {
+			$classCode = UIntrospection::getClassCode ( $controller );
+			$lastModified = UFileSystem::lastModified ( UIntrospection::getFileName ( $controller ) );
+			if (\is_array ( $classCode )) {
+				$reflexAction = new \ReflectionMethod ( $controller . '::' . $action );
+				$views = UIntrospection::getLoadedViews ( $reflexAction, $classCode );
 				foreach ( $views as $view ) {
-					$file=ROOT . DS . "views" . DS . $view;
-					$viewDate=UFileSystem::lastModified($file);
+					$file = ROOT . DS . "views" . DS . $view;
+					$viewDate = UFileSystem::lastModified ( $file );
 					if ($viewDate > $lastModified)
-						$lastModified=$viewDate;
+						$lastModified = $viewDate;
 				}
 			}
 			return $lastModified;
 		}
 		return false;
 	}
+
 	/**
+	 *
 	 * @return multitype:
 	 */
 	public function getUrls() {
 		return $this->urls;
 	}
-
 }
 
