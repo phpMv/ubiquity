@@ -51,7 +51,12 @@ trait GitTrait{
 
 	public function gitInit() {
 		$this->_getRepo ();
+		$appDir=Startup::getApplicationDir ();
 		GitRepository::init ( Startup::getApplicationDir () );
+		$gitignoreFile=$appDir. DS . ".gitignore";
+		if(!file_exists($gitignoreFile)){
+			UFileSystem::openReplaceWriteFromTemplateFile(Startup::getFrameworkDir() . "/admin/templates/gitignore.tpl", $gitignoreFile, []);
+		}
 		$this->git ();
 	}
 
@@ -72,6 +77,7 @@ trait GitTrait{
 		} elseif ($activeRemoteUrl != $newRemoteUrl) {
 			$gitRepo->getRepository ()->setRemoteUrl ( "origin", $newRemoteUrl );
 		}
+		$gitRepo->getRepository ()->setUpstream();
 		CacheManager::$cache->store ( RepositoryGit::$GIT_SETTINGS, "return " . UArray::asPhpArray ( $_POST, "array" ) . ";", true );
 		$this->git ();
 	}

@@ -156,12 +156,18 @@ class UGitRepository extends GitRepository {
 		return [ ];
 	}
 
-	public function getNonPushedCommitHash() {
+	public function getNonPushedCommitHash($branch="master") {
 		try {
-			return $this->extractFromCommand ( 'git log origin/master..master --pretty=format:"%h"' );
+			return $this->extractFromCommand ( 'git log origin/'.$branch.'..'.$branch.' --pretty=format:"%h"' );
 		} catch ( \Cz\Git\GitException $e ) {
 			return [ ];
 		}
 		return [ ];
+	}
+	
+	public function setUpstream($branch="master"){
+		$this->begin ();
+		$this->run ( 'git branch -u origin/'.$branch);
+		return $this->end ();
 	}
 }
