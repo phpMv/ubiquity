@@ -89,14 +89,8 @@ class CacheManager {
 		$controllersCacheDir = ROOT . DS . $cacheDirectory . DS . $controllersDir;
 		$viewsCacheDir = ROOT . DS . $cacheDirectory . DS . "views";
 		$seoCacheDir = ROOT . DS . $cacheDirectory . DS . "seo";
-		return [
-				"annotations" => $annotationCacheDir,
-				"models" => $modelsCacheDir,
-				"controllers" => $controllersCacheDir,
-				"queries" => $queriesCacheDir,
-				"views" => $viewsCacheDir,
-				"seo" => $seoCacheDir
-		];
+		$gitCacheDir = ROOT . DS . $cacheDirectory . DS . "git";
+		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir ];
 	}
 
 	private static function safeMkdir($dir) {
@@ -106,13 +100,7 @@ class CacheManager {
 
 	public static function clearCache(&$config, $type = "all") {
 		$cacheDirectories = self::checkCache ( $config );
-		$cacheDirs = [
-				"annotations",
-				"controllers",
-				"models",
-				"queries",
-				"views"
-		];
+		$cacheDirs = [ "annotations","controllers","models","queries","views" ];
 		foreach ( $cacheDirs as $typeRef ) {
 			self::_clearCache ( $cacheDirectories, $type, $typeRef );
 		}
@@ -143,21 +131,9 @@ class CacheManager {
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
-		$annotationManager->registry = array_merge ( $annotationManager->registry, [
-				'id' => 'Ubiquity\annotations\IdAnnotation',
-				'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
-				'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
-				'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
-				'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
-				'table' => 'Ubiquity\annotations\TableAnnotation',
-				'transient' => 'Ubiquity\annotations\TransientAnnotation',
-				'column' => 'Ubiquity\annotations\ColumnAnnotation',
-				'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
-				'route' => 'Ubiquity\annotations\router\RouteAnnotation',
-				'var' => 'mindplay\annotations\standard\VarAnnotation',
-				'yuml' => 'Ubiquity\annotations\YumlAnnotation',
-				'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
-				'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation'
-		] );
+		$annotationManager->registry = array_merge ( $annotationManager->registry, [ 'id' => 'Ubiquity\annotations\IdAnnotation','manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation','oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
+				'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation','joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation','table' => 'Ubiquity\annotations\TableAnnotation','transient' => 'Ubiquity\annotations\TransientAnnotation','column' => 'Ubiquity\annotations\ColumnAnnotation',
+				'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation','route' => 'Ubiquity\annotations\router\RouteAnnotation','var' => 'mindplay\annotations\standard\VarAnnotation','yuml' => 'Ubiquity\annotations\YumlAnnotation','rest' => 'Ubiquity\annotations\rest\RestAnnotation',
+				'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation' ] );
 	}
 }
