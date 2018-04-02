@@ -5,6 +5,7 @@ filter:
         - Ubiquity/controllers/admin/
         - Ubiquity/annotations/
         - Ubiquity/js/Jquery.php
+        - Ubiquity/utils/git/UGitRepository.php
         - docs/
         - api/
         - documentation/
