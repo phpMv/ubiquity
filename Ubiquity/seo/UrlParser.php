@@ -80,7 +80,7 @@ class UrlParser {
 
 	/**
 	 *
-	 * @return multitype:
+	 * @return array
 	 */
 	public function getUrls() {
 		return $this->urls;
