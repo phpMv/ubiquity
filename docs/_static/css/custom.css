@@ -67,8 +67,8 @@ div[class^='highlight'] pre{
 	border-radius: .3em;
 }
 
-.rst-content .highlight>pre {
-	line-height: 18px;
+.rst-content .highlight>pre, .rst-content .linenodiv>pre {
+	line-height: 18px!important;
 }
 .btn{
 	border-radius: 5px;
