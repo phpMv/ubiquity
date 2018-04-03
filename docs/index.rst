@@ -28,7 +28,7 @@ Ubiquity framework User guide
    :caption: Models and ORM
    
    model/models
-   model/orm
+   model/dao
   
 .. toctree::
    :maxdepth: 1
