@@ -1,12 +1,13 @@
-Models & ORM
-============
+ORM
+===
+
 .. |br| raw:: html
 
    <br />
 
 A model class is just a plain old php object without inheritance. |br|
-Models are located by default in the **app\models** folder. |br|
-Object relational mapping relies on member annotations in the model class.
+Models are located by default in the **app\\models** folder. |br|
+Object Relational Mapping (ORM) relies on member annotations in the model class.
 
 Models definition
 -----------------

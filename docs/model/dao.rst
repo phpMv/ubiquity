@@ -6,13 +6,14 @@ DAO
    <br />
 
 
-The DAO class is responsible for loading and persistence operations on models :
+The **DAO** class is responsible for loading and persistence operations on models :
 
 Loading data
 ============
 Loading an instance
 -------------------
-Loading an instance of the `models\User` class with id `5`
+Loading an instance of the `models\\User` class with id `5`
+
 .. code-block:: php
     
     use Ubiquity\orm\DAO;
