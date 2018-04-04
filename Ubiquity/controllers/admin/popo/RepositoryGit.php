@@ -61,7 +61,7 @@ class RepositoryGit{
 			$activeRemoteUrl =$this->repository->getRemoteUrl();
 			if (UString::isNull ( $activeRemoteUrl )) {
 				$this->repository->addRemote ( "origin", $url );
-			} elseif ($activeRemoteUrl != $newRemoteUrl) {
+			} else {
 				$this->repository->setRemoteUrl ( "origin", $url );
 			}
 		}
