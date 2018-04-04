@@ -12,7 +12,13 @@ class CodeUtils {
 		$params = \explode ( ",", $parameters );
 		foreach ( $params as $param ) {
 			$param = \trim ( $param );
-			@list ( $var, $value ) = \explode ( "=", $param );
+			$list = \explode ( "=", $param );
+			if(isset($list[0])){
+				$var=$list[0];
+			}
+			if(isset($list[1])){
+				$value=$list[1];
+			}
 			if (isset ( $var ) && isset ( $value )) {
 				$value = \trim ( $value );
 				$var = self::checkVar ( $var );
