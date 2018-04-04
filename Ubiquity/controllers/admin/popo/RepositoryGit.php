@@ -58,7 +58,12 @@ class RepositoryGit{
 	
 	public function setRepoRemoteUrl(){
 		if($url=$this->getAuthRemoteUrl()){
-			$this->repository->setRemoteUrl('origin', $url);
+			$activeRemoteUrl =$this->repository->getRemoteUrl();
+			if (UString::isNull ( $activeRemoteUrl )) {
+				$this->repository->addRemote ( "origin", $url );
+			} elseif ($activeRemoteUrl != $newRemoteUrl) {
+				$this->repository->setRemoteUrl ( "origin", $url );
+			}
 		}
 		return $url;
 	}
