@@ -36,7 +36,6 @@ use Ajax\semantic\html\content\view\HtmlItem;
 use Ajax\semantic\html\views\HtmlItems;
 use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
 use Ubiquity\controllers\admin\popo\RepositoryGit;
-use Ubiquity\utils\git\GitFile;
 use Ubiquity\utils\git\GitFileStatus;
 
 /**
