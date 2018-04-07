@@ -14,7 +14,7 @@ class UGitRepository extends GitRepository {
 	 * @param
 	 *        	string|array
 	 * @return self
-	 * @throws Cz\Git\GitException
+	 * @throws \Cz\Git\GitException
 	 */
 	protected function run($cmd/*, $options = NULL*/){
 		$args = func_get_args ();
@@ -129,7 +129,7 @@ class UGitRepository extends GitRepository {
 	 * `git update-index --assume-unchanged <file>`
 	 *
 	 * @param $files string|string[]
-	 * @throws Cz\Git\GitException
+	 * @throws \Cz\Git\GitException
 	 * @return self
 	 */
 	public function ignoreFiles($files) {

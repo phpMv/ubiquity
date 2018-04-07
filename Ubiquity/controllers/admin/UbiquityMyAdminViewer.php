@@ -37,6 +37,9 @@ use Ajax\semantic\html\views\HtmlItems;
 use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
 use Ubiquity\controllers\admin\popo\RepositoryGit;
 use Ubiquity\utils\git\GitFileStatus;
+use Ubiquity\utils\http\USession;
+use Ubiquity\utils\base\UArray;
+use Ubiquity\controllers\admin\popo\ControllerAction;
 
 /**
  *
@@ -248,6 +251,10 @@ class UbiquityMyAdminViewer {
 	}
 
 	public function getControllersDataTable($controllers) {
+		$filteredCtrls=USession::init("filtered-controllers", UArray::remove(ControllerAction::$controllers,"controllers\Admin"));
+		$controllers=array_filter($controllers,function($item) use ($filteredCtrls){
+			return array_search($item->getController(), $filteredCtrls)!==false;
+		});
 		$dt = $this->jquery->semantic ()->dataTable ( "dtControllers", "Ubiquity\controllers\admin\popo\ControllerAction", $controllers );
 		$dt->setFields ( [ "controller","action","dValues" ] );
 		$dt->setIdentifierFunction ( function ($i, $instance) {
@@ -301,6 +308,13 @@ class UbiquityMyAdminViewer {
 		$dt->setEdition ( true );
 		$dt->addClass ( "compact" );
 		return $dt;
+	}
+	
+	public function getFilterControllers($controllers){
+		$selecteds=USession::init("filtered-controllers", UArray::remove($controllers,"controllers\Admin"));
+		$list = $this->jquery->semantic ()->htmlList ( "lst-filter" );
+		$list->addCheckedList ( array_combine($controllers,$controllers), "<i class='heartbeat icon'></i>&nbsp;Controllers", $selecteds, false, "filtered-controllers[]" );
+		return $list;
 	}
 
 	public function getActionViews($controllerFullname, $controller, $action, \ReflectionMethod $r, $lines) {

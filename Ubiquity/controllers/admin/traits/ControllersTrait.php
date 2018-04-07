@@ -16,6 +16,7 @@ use Ajax\semantic\components\validation\Rule;
 use Ubiquity\controllers\Router;
 use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\HtmlMessage;
+use Ubiquity\utils\http\USession;
 
 /**
  *
@@ -32,6 +33,8 @@ trait ControllersTrait{
 	abstract public function _getAdminFiles();
 
 	abstract public function controllers();
+	
+	abstract public function _refreshControllers($refresh = false);
 
 	abstract protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false,$jsCallback="");
 
@@ -252,5 +255,18 @@ trait ControllersTrait{
 			$result[]='"' . $method . '"';
 		}
 		return "[" . \implode(",", $result) . "]";
+	}
+	
+	public function frmFilterControllers(){
+		$controllers=CacheManager::getControllers();
+		$this->_getAdminViewer()->getFilterControllers($controllers);
+		$this->jquery->postFormOn("click", "#validate-btn", $this->_getAdminFiles()->getAdminBaseRoute()."/filterControllers", "filtering-frm","#dtControllers",["jqueryDone" => "replaceWith","hasLoader" => false,"jsCallback"=>'$("#frm").html("");']);
+		$this->jquery->execOn("click", "#cancel-btn", '$("#frm").html("");');
+		$this->jquery->renderView("Admin/controllers/FormFiltering.html");
+	}
+	
+	public function filterControllers(){
+		USession::set("filtered-controllers", URequest::post("filtered-controllers",[]));
+		$this->_refreshControllers("refresh");
 	}
 }

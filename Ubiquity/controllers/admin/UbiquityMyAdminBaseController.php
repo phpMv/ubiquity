@@ -38,7 +38,6 @@ use Ubiquity\controllers\admin\popo\ControllerSeo;
 use Ubiquity\controllers\admin\traits\SeoTrait;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\controllers\admin\traits\GitTrait;
-use Ajax\semantic\html\elements\HtmlLabel;
 use Ubiquity\controllers\Controller;
 
 class UbiquityMyAdminBaseController extends Controller {
@@ -192,10 +191,14 @@ class UbiquityMyAdminBaseController extends Controller {
 		$this->showSimpleMessage ( "Controllers directory is <b>" . UFileSystem::cleanPathname ( $controllersDir ) . "</b>", "info", "info circle", null, "msgControllers" );
 		$frm = $this->jquery->semantic ()->htmlForm ( "frmCtrl" );
 		$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
-		$input = $frm->addInput ( "name", null, "text", "", "Controller name" )->addRules ( [ [ "empty","Controller name must have a value" ],"regExp[/^[A-Za-z]\w*$/]" ] )->setWidth ( 8 );
+		$fields=$frm->addFields();
+		$input = $fields->addInput ( "name", null, "text", "", "Controller name" )->addRules ( [ [ "empty","Controller name must have a value" ],"regExp[/^[A-Za-z]\w*$/]" ] )->setWidth ( 8 );
 		$input->labeledCheckbox ( Direction::LEFT, "View", "v", "slider" );
 		$input->addAction ( "Create controller", true, "plus", true )->addClass ( "teal" )->asSubmit ();
 		$frm->setSubmitParams ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/createController", "#main-content" );
+		$bt=$fields->addButton("filter-bt", "Filter controllers");
+		$bt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/frmFilterControllers","#frm",["attr"=>""]);
+		$bt->addIcon("filter");
 		$this->_refreshControllers ();
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getAdminFiles ()->getViewControllersIndex () );
@@ -364,9 +367,11 @@ class UbiquityMyAdminBaseController extends Controller {
 		}
 
 		$this->jquery->exec ( '$.fn.form.settings.rules.checkeds=function(value){var fields = $("[name=\'files-to-commit[]\']:checked");return fields.length>0;};', true );
-
-		$this->_getAdminViewer ()->getGitFilesDataTable ( $gitRepo->getFiles () );
+		$files=$gitRepo->getFiles ();
+		$this->_getAdminViewer ()->getGitFilesDataTable ( $files );
 		$this->_getAdminViewer ()->getGitCommitsDataTable ( $gitRepo->getCommits () );
+		
+		$this->jquery->exec('$("#lbl-changed").toggle('.((sizeof($files)>0)?"true":"false").');',true);
 
 		$this->jquery->getOnClick ( "#settings-btn", $this->_getAdminFiles ()->getAdminBaseRoute () . "/frmSettings", "#frm" );
 		$this->jquery->exec ( '$("#commit-frm").form({"fields":{"summary":{"rules":[{"type":"empty"}]},"files-to-commit[]":{"rules":[{"type":"checkeds","prompt":"You must select at least 1 file!"}]}},"on":"blur","onSuccess":function(event,fields){' . $this->jquery->postFormDeferred ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/commit", "commit-frm", "#messages", [

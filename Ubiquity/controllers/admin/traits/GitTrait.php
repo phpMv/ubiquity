@@ -193,10 +193,12 @@ trait GitTrait{
 
 	public function refreshFiles() {
 		$gitRepo = $this->_getRepo ();
-		echo $this->_getAdminViewer ()->getGitFilesDataTable ( $gitRepo->getFiles () );
+		$files=$gitRepo->getFiles ();
+		echo $this->_getAdminViewer ()->getGitFilesDataTable ( $files );
+		$this->jquery->exec('$("#lbl-changed").toggle('.((sizeof($files)>0)?"true":"false").');',true);
 		echo $this->jquery->compile ( $this->view );
 	}
-
+	
 	public function refreshCommits() {
 		$gitRepo = $this->_getRepo ( false );
 		echo $this->_getAdminViewer ()->getGitCommitsDataTable ( $gitRepo->getCommits () );

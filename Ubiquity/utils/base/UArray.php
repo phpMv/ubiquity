@@ -2,10 +2,36 @@
 
 namespace Ubiquity\utils\base;
 
+/**
+ * Array utilities
+ * @author jc
+ *
+ */
 class UArray {
 
+	/**
+	 * Tests if array is associative
+	 * @param array $array
+	 * @return boolean
+	 */
 	public static function isAssociative($array) {
 		return (array_keys($array) !== range(0, count($array) - 1));
+	}
+	
+	/**
+	 * Returns a new array with the keys $keys
+	 * @param array $array an associative array
+	 * @param array $keys some keys
+	 * @return array
+	 */
+	public static function extractKeys($array,$keys){
+		$result=[];
+		foreach ($keys as $key){
+			if(isset($array[$key])){
+				$result[$key]=$array[$key];
+			}
+		}
+		return $result;
 	}
 
 	public static function getValue($array, $key, $pos) {
@@ -51,6 +77,19 @@ class UArray {
 			$array=self::removeOne($array, $search);
 		}
 		return array_values($array);
+	}
+	
+	/**
+	 * Removes from array by key
+	 * @param array $array
+	 * @param int|string $key
+	 * @return array
+	 */
+	public static function removeByKey($array,$key){
+		if(isset($array[$key])){
+			unset($array[$key]);
+		}
+		return $array;
 	}
 
 	public static function removeOne($array, $search) {

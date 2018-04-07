@@ -288,6 +288,19 @@ class USession {
 		self::start ();
 		return isset ( $_SESSION [$key] );
 	}
+	
+	/**
+	 * Initialize the key in Session if key does not exists
+	 * @param string $key
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	public static function init($key,$value){
+		if(!isset($_SESSION[$key])){
+			$_SESSION[$key]=$value;
+		}
+		return $_SESSION[$key];
+	}
 
 	/**
 	 * Terminates the active session

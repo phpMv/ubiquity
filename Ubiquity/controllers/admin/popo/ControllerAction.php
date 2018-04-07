@@ -15,7 +15,8 @@ class ControllerAction {
 	private $dValues;
 	private $annots;
 	private static $excludeds=[ "__construct","isValid","initialize","finalize","onInvalidControl","loadView","forward","redirectToRoute","getView" ];
-
+	public static $controllers=[];
+	
 	public function __construct($controller="", $action="", $parameters=[], $dValues=[], $annots=[]) {
 		$this->controller=$controller;
 		$this->action=$action;
@@ -67,6 +68,7 @@ class ControllerAction {
 			if (is_file($file)) {
 				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
 				if (isset($restCtrls[$controllerClass]) === false) {
+					self::$controllers[]=$controllerClass;
 					$reflect=new \ReflectionClass($controllerClass);
 					if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\controllers\Controller") && ! $reflect->isSubclassOf("Ubiquity\controllers\seo\SeoController")) {
 						$methods=$reflect->getMethods(\ReflectionMethod::IS_PUBLIC);
