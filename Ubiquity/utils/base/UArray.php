@@ -50,20 +50,27 @@ class UArray {
 			return $default;
 	}
 
-	public static function asPhpArray($array, $prefix="") {
+	public static function asPhpArray($array, $prefix="",$depth=1,$format=false) {
 		$exts=array ();
-		$extsStr="";
+		$extsStr="";$tab="";$nl="";
+		if($format){
+			$tab=str_repeat("\t",$depth);
+			$nl=PHP_EOL;
+		}
 		if (self::isAssociative($array)) {
 			foreach ( $array as $k => $v ) {
-				$exts[]="\"" . $k . "\"=>" . self::parseValue($v, 'array');
+				$exts[]="\"" . $k . "\"=>" . self::parseValue($v, 'array',$depth+1,$format);
 			}
 		} else {
 			foreach ( $array as $v ) {
-				$exts[]=self::parseValue($v, 'array');
+				$exts[]=self::parseValue($v, 'array',$depth+1,$format);
 			}
 		}
 		if (\sizeof($exts) > 0 || $prefix !== "") {
-			$extsStr="(" . \implode(",", $exts) . ")";
+			$extsStr="(" . \implode(",".$nl.$tab, $exts).")";
+			if(\sizeof($exts)>0){
+				$extsStr="(" .$nl.$tab. \implode(",".$nl.$tab, $exts).$nl.$tab.")";
+			}
 		}
 		return $prefix . $extsStr;
 	}
@@ -106,13 +113,15 @@ class UArray {
 		return $array;
 	}
 
-	private static function parseValue($v, $prefix="") {
-		if (\is_bool($v) === true) {
+	private static function parseValue($v, $prefix="",$depth=1,$format=false) {
+		if (UString::isBooleanStr($v)) {
 			$result=UString::getBooleanStr($v);
 		} elseif (\is_numeric($v)) {
 			$result=$v;
 		} elseif (\is_array($v)) {
-			$result=self::asPhpArray($v, $prefix);
+			$result=self::asPhpArray($v, $prefix,$depth+1,$format);
+		}elseif(UString::startswith(trim($v), "function")){
+			$result=$v;
 		} else {
 			$result="\"" . \str_replace('$', '\$', $v) . "\"";
 		}

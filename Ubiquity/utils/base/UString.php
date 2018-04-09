@@ -33,7 +33,7 @@ class UString {
 	}
 
 	public static function isBooleanTrue($s) {
-		return $s === true || $s === "true" || $s === 1 || $s === "1";
+		return filter_var($s, FILTER_VALIDATE_BOOLEAN)===true;
 	}
 
 	public static function isBooleanFalse($s) {
@@ -42,6 +42,10 @@ class UString {
 
 	public static function isBoolean($value) {
 		return \is_bool($value);
+	}
+	
+	public static function isBooleanStr($value) {
+		return \is_bool($value) || $value===0 || $value===1 || $value==="on";
 	}
 
 	/**

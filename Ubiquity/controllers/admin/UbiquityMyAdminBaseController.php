@@ -39,9 +39,10 @@ use Ubiquity\controllers\admin\traits\SeoTrait;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\controllers\admin\traits\GitTrait;
 use Ubiquity\controllers\Controller;
+use Ubiquity\controllers\admin\traits\ConfigTrait;
 
 class UbiquityMyAdminBaseController extends Controller {
-	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
+	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
 	/**
 	 *
 	 * @var UbiquityMyAdminData

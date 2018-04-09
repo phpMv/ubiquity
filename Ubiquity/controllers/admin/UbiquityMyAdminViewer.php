@@ -34,12 +34,14 @@ use Ajax\semantic\html\elements\HtmlLabelGroups;
 use Ubiquity\utils\base\UIntrospection;
 use Ajax\semantic\html\content\view\HtmlItem;
 use Ajax\semantic\html\views\HtmlItems;
-use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
 use Ubiquity\controllers\admin\popo\RepositoryGit;
 use Ubiquity\utils\git\GitFileStatus;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\controllers\admin\popo\ControllerAction;
+use Ajax\semantic\html\collections\form\HtmlFormInput;
+use Ubiquity\db\Database;
+use Ajax\semantic\html\collections\form\HtmlFormTextarea;
 
 /**
  *
@@ -565,10 +567,16 @@ class UbiquityMyAdminViewer {
 		$de->setCaptions ( $fields );
 		$de->setValueFunction ( "database", function ($v, $instance, $index) {
 			$dbDe = new DataElement ( "", $v );
-			$dbDe->setFields ( [ "type","dbName","serverName","port","user","password","cache" ] );
-			$dbDe->setCaptions ( [ "Type","dbName","serverName","port","user","password","cache" ] );
+			$dbDe->setFields ( [ "type","dbName","serverName","port","user","password","options","cache" ] );
+			$dbDe->setCaptions ( [ "Type","dbName","serverName","port","user","password","options","cache" ] );
 			return $dbDe;
 		} );
+			$de->setValueFunction("cache", function ($v, $instance, $index) {
+				$dbDe = new DataElement ( "", $v );
+				$dbDe->setFields ( [ "directory","system","params" ] );
+				$dbDe->setCaptions ( [ "directory","system","params" ] );
+				return $dbDe;
+			});
 		$de->setValueFunction ( "templateEngineOptions", function ($v, $instance, $index) {
 			$teoDe = new DataElement ( "", $v );
 			$teoDe->setFields ( [ "cache" ] );
@@ -605,6 +613,134 @@ class UbiquityMyAdminViewer {
 		$de->fieldAsCheckbox ( "test", [ "class" => "ui checkbox slider" ] );
 		$de->fieldAsCheckbox ( "debug", [ "class" => "ui checkbox slider" ] );
 		return $de;
+	}
+	
+	private function getCaptionToggleButton($id,$caption,$active=""){
+		$bt=(new HtmlButton($id,$caption))->setToggle($active)->setTagName("a");
+		$bt->addIcon("caret square down",false,true);
+		return $bt;
+	}
+	
+	public function getConfigDataForm($config) {
+		$de = $this->jquery->semantic ()->dataElement ( "frmDeConfig", $config );
+		$keys=array_keys($config);
+		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/submitConfig","#action-response");
+		$de->getToolbar()->setSecondary()->wrap('<div class="ui inverted top attached segment">','</div>');
+		$de->setAttached();
+		$de->setDefaultValueFunction(function($name,$value){return new HtmlFormInput($name,null,"text",$value);});
+		$fields = \array_keys ( $config );
+		$de->setFields ( $fields );
+		$de->setCaptions ( $fields );
+		$de->setCaptionCallback(function(&$captions,$instance) use($keys){
+			$captions[array_search("database", $keys)]=$this->getCaptionToggleButton("database-bt", "Database...");
+			$captions[array_search("cache", $keys)]=$this->getCaptionToggleButton("cache-bt", "Cache...");
+			$captions[array_search("mvcNS", $keys)]=$this->getCaptionToggleButton("ns-bt", "MVC namespaces...");
+			$captions[array_search("di", $keys)]=$this->getCaptionToggleButton("di-bt", "Dependency injection","active");
+			$captions[array_search("isRest", $keys)]=$this->getCaptionToggleButton("isrest-bt", "Rest","active");
+			
+		});
+		$de->setValueFunction ( "database", function ($v, $instance, $index) {
+			$drivers=Database::getAvailableDrivers();
+			$dbDe = new DataElement ( "de-database", $v );
+			$dbDe->setDefaultValueFunction(function($name,$value){return new HtmlFormInput("database-".$name,null,"text",$value);});
+			$dbDe->setFields ( [ "type","dbName","serverName","port","user","password","options","cache" ] );
+			$dbDe->setCaptions ( [ "Type","dbName","serverName","port","user","password","options","cache" ] );
+			$dbDe->fieldAsInput("password",["inputType"=>"password","name"=>"database-password"]);
+			$dbDe->fieldAsInput("port",["name"=>"database-port","inputType"=>"number","jsCallback"=>function($elm){$elm->getDataField()->setProperty("min",0);$elm->getDataField()->setProperty("max",3306);}]);
+			$dbDe->fieldAsDropDown("type",array_combine($drivers, $drivers),false,["name"=>"database-type"]);
+			$dbDe->fieldAsCheckbox("cache",["name"=>"database-cache","value"=>"1"]);
+			$dbDe->setEdition();
+			$dbDe->setStyle("display: none;");
+			return $dbDe;
+		} );
+		$de->setValueFunction("cache", function ($v, $instance, $index) {
+			$dbDe = new DataElement ( "de-cache", $v );
+			$dbDe->setDefaultValueFunction(function($name,$value){return new HtmlFormInput("cache-".$name,null,"text",$value);});
+			$dbDe->setFields ( [ "directory","system","params" ] );
+			$dbDe->setCaptions ( [ "directory","system","params" ] );
+			$dbDe->setStyle("display: none;");
+			
+			return $dbDe;
+		});
+		$de->setValueFunction ( "templateEngineOptions", function ($v, $instance, $index) {
+			$teoDe = new DataElement ( "de-template-engine", $v );
+			$teoDe->setFields ( [ "cache" ] );
+			$teoDe->setCaptions ( [ "cache" ] );
+			$teoDe->fieldAsCheckbox ( "cache", [ "class" => "ui checkbox slider","name"=>"templateEngineOptions-cache" ] );
+			return $teoDe;
+		} );
+		$de->setValueFunction ( "mvcNS", function ($v, $instance, $index) {
+			$mvcDe = new DataElement ( "deMvcNS", $v );
+			$mvcDe->setDefaultValueFunction(function($name,$value){return new HtmlFormInput("mvcNS-".$name,null,"text",$value);});
+			$mvcDe->setFields ( [ "models","controllers","rest" ] );
+			$mvcDe->setCaptions ( [ "Models","Controllers","Rest" ] );
+			$mvcDe->setStyle("display: none;");
+			
+			return $mvcDe;
+		} );
+		$de->setValueFunction ( "di", function ($v, $instance, $index) use ($config) {
+			$diDe = new DataElement ( "di", $v );
+			$diDe->setDefaultValueFunction(function($name,$value){return new HtmlFormInput("di-".$name,null,"text",$value);});
+			$keys = \array_keys ( $config ["di"] );
+			$diDe->setFields ( $keys );
+			foreach ( $keys as $key ) {
+				$diDe->setValueFunction ( $key, function ($value) use ($config, $key) {
+					$input=new HtmlFormTextarea("di-".$key);
+					$input->setStyle("width: 100%");
+					$input->getDataField()->setProperty("data-editor","true");
+					$r = $config ['di'] [$key];
+					if (\is_callable ( $r )){
+						$value= \htmlentities ( UIntrospection::closure_dump ( $r ) );
+					}
+					$input->setValue($value);
+					return $input;
+				} );
+			}
+			$diDe->onPreCompile ( function () use (&$diDe) {
+				$diDe->getHtmlComponent ()->setColWidth(0, 1);
+			} );
+			return $diDe;
+		} );
+		$de->setValueFunction ( "isRest", function ($v) use ($config) {
+			$r = $config ["isRest"];
+			$input=new HtmlFormTextarea("isRest");
+			$input->setStyle("width: 100%");
+			$input->getDataField()->setProperty("data-editor","true");
+			if (\is_callable ( $r )){
+				$value= \htmlentities ( UIntrospection::closure_dump ( $r ) );
+			}
+			$input->setValue($value);
+			return $input;
+		} );
+		$de->fieldAsCheckbox ( "test", [ "class" => "ui checkbox slider" ] );
+		$de->fieldAsCheckbox ( "debug", [ "class" => "ui checkbox slider" ] );
+		$js='
+		$(function() {
+		  $("textarea[data-editor]").each(function() {
+		    var textarea = $(this);
+		    var mode = textarea.data("editor");
+		    var editDiv = $("<div>", {
+		      position: "absolute",
+		      width: textarea.width(),
+		      height: textarea.height(),
+		      "class": textarea.attr("class")
+		    }).insertBefore(textarea);
+		    textarea.css("display", "none");
+		    var editor = ace.edit(editDiv[0]);
+		    editor.renderer.setShowGutter(textarea.data("gutter"));
+		    editor.getSession().setValue(textarea.val());
+		    editor.getSession().setMode({path:"ace/mode/php", inline:true});
+		    editor.setTheme("ace/theme/solarized_dark");
+			editor.$blockScrolling = Infinity ;	
+		    // copy back to textarea on form submit...
+		    $("#frm-frmDeConfig").on("ajaxSubmit",function() {
+		      textarea.val(editor.getSession().getValue());
+		    })
+		  });
+		});
+		';
+		$this->jquery->exec($js,true);
+		return $de->asForm();
 	}
 
 	private static function formatBytes($size, $precision = 2) {

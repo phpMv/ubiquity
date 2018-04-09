@@ -209,4 +209,8 @@ class Database {
 	public function getPdoObject() {
 		return $this->pdoObject;
 	}
+	
+	public static function getAvailableDrivers(){
+		return \PDO::getAvailableDrivers();
+	}
 }

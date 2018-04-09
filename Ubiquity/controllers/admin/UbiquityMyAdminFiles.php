@@ -43,6 +43,10 @@ class UbiquityMyAdminFiles {
 	public function getViewConfigIndex() {
 		return "Admin/config/index.html";
 	}
+	
+	public function getViewConfigForm(){
+		return "Admin/config/form.html";
+	}
 
 	public function getViewIndex() {
 		return "Admin/index.html";
