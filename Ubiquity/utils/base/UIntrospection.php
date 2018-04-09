@@ -60,12 +60,18 @@ class UIntrospection {
 			$params[]=$s;
 		}
 		$str.=\implode(', ', $params);
-		$str.='){' . PHP_EOL;
+		$str.=')';
 		$lines=file($r->getFileName());
 		$sLine=$r->getStartLine();
 		$eLine=$r->getEndLine();
-		for($l=$sLine; $l < $eLine; $l++) {
-			$str.=$lines[$l];
+		if($eLine===$sLine){
+			$str.=strstr(strstr($lines[$sLine-1],"{"),"}",true)."}";
+		}else{
+			$str.=strstr($lines[$sLine-1],"{");
+			for($l=$sLine; $l < $eLine-1; $l++) {
+				$str.=$lines[$l];
+			}
+			$str.=strstr($lines[$eLine-1],"}",true)."}";
 		}
 		return $str;
 	}
