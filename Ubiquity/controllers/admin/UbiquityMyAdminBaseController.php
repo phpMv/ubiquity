@@ -108,7 +108,7 @@ class UbiquityMyAdminBaseController extends Controller {
 
 	public function finalize() {
 		if (! URequest::isAjax ()) {
-			$this->loadView ( "Admin/main/vFooter.html", [ "js" => $this->initializeJs () ] );
+			$this->loadView ( "@framework/Admin/main/vFooter.html", [ "js" => $this->initializeJs () ] );
 		}
 		ob_end_flush ();
 	}

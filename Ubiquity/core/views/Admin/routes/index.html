@@ -1,0 +1,21 @@
+{{ q["header"] | raw }}
+{{ q["msgRoutes"] | raw }}
+<button id="bt-init-cache" class="ui button orange">
+  <i class="icon refresh"></i>
+  (Re-)Init router cache
+</button>
+<div class="ui labeled action input">
+  <div class="ui label">
+    {{url}}
+  </div>
+  <input id="filter-routes" type="text" placeholder="Filtering...">
+  <button id="bt-filter-routes" class="ui icon button">
+    <i class="search icon"></i>
+  </button>
+</div>
+<p></p>
+<div id="divRoutes">
+{{ q["dtRoutes"] | raw }}
+</div>
+<div id="zzz"></div>
+{{ script_foot | raw }}

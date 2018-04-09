@@ -40,14 +40,15 @@ trait ConfigTrait{
 		$this->loadView ( $this->_getAdminFiles ()->getViewConfigForm () );
 	}
 	
-	public function submitConfig(){
+	public function submitConfig($partial=true){
 		$result=Startup::getConfig();
 		$postValues=$_POST;
-		$postValues["database-cache"]=isset($postValues["database-cache"]);
-		$postValues["debug"]=isset($postValues["debug"]);
-		$postValues["test"]=isset($postValues["test"]);
-		$postValues["templateEngineOptions-cache"]=isset($postValues["templateEngineOptions-cache"]);
-		
+		if($partial!==true){
+			$postValues["database-cache"]=isset($postValues["database-cache"]);
+			$postValues["debug"]=isset($postValues["debug"]);
+			$postValues["test"]=isset($postValues["test"]);
+			$postValues["templateEngineOptions-cache"]=isset($postValues["templateEngineOptions-cache"]);
+		}
 		foreach ($postValues as $key=>$value){
 			if(strpos($key, "-")===false){
 				$result[$key]=$value;

@@ -13,7 +13,7 @@ use Ubiquity\controllers\admin\popo\ControllerSeo;
 class SeoController extends Controller {
 	const SEO_PREFIX="seo";
 	protected $urlsKey="urls";
-	protected $seoTemplateFilename="Seo/sitemap.xml.html";
+	protected $seoTemplateFilename="@framework/Seo/sitemap.xml.html";
 
 	public function index() {
 		$config=Startup::getConfig();

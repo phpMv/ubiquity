@@ -1,0 +1,23 @@
+<br>
+<div class="ui container">
+	<div class="ui segment">
+		{{q["header"] |raw }}
+		{{q["btTest"] |raw }}
+		<div class="ui icon positive message">
+			<i class="ui info circle icon"></i>
+			<div class="content">
+				<div class="header" id="test">It works !</div>
+				<p>Page informations</p>
+				<ul class="list">
+					<li>Controller : <b>{{app.getController()}}</b></li>
+					<li>Action : <b>{{app.getAction()}}</b></li>
+					<li>Route : <b>{{app.getUrl()}}</b></li>
+					<li>Path : <b>{{path('')}}</b></li>
+					<li>Template : <b>{{_self.getTemplateName()}}</b></li>
+				</ul>
+			</div>
+		</div>
+		{{q["menu"] |raw }}
+	</div>
+</div>
+{{ script_foot |raw }}

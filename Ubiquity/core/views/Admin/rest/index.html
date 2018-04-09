@@ -1,0 +1,23 @@
+{{ q["header"] | raw }}
+{{ q["msgRest"] | raw }}
+<button id="bt-init-rest-cache" class="ui button brown">
+  <i class="icon refresh"></i>
+  (Re-)Init Rest cache
+</button>
+<button id="bt-new-resource" class="ui labeled icon teal button">
+  <i class="icon plus"></i>
+  Add a new resource
+</button>
+<div class="ui labeled right icon input">
+  <a class="ui label">
+    Access token
+  </a>
+  <i class="tags icon"></i>
+  <input id="access-token" type="text" placeholder="access token" value="{{token}}">
+</div>
+<p></p>
+<div id="div-new-resource"></div>
+<div id="divRest" class="ui container">
+{{ q["tabsRest"] | raw }}
+</div>
+{{ script_foot | raw }}

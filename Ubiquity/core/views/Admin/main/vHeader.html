@@ -1,0 +1,15 @@
+{% extends "@framework/main/vHeader.html" %}
+{% block header %}
+	<base href="{{config["siteUrl"]}}/Admin">
+	<meta charset="UTF-8">
+	<title>Administration</title>
+{% endblock %}
+{% block css %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/diff2html/2.3.3/diff2html.min.css">
+{% endblock %}
+{% block body %}
+	{{ parent() }}
+	{{q["mainMenu"] | raw}}
+	<div id="modal"></div>
+{% endblock %}

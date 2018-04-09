@@ -1,0 +1,17 @@
+{{ q["header"] | raw }}
+<a id='addNewSeo' class="ui teal button">
+	<i class="ui sitemap icon"></i>
+	Add new SEO controller...
+</a>
+<a id='generateRobots' class="ui button">
+	<i class="ui android icon"></i>
+	Generate Robots.txt
+</a>
+<div style="padding: 10px 0px;" id="messages">
+{% if q["msgGlobal"] is defined %}
+	{{ q["msgGlobal"] | raw }}
+{% endif %}
+</div>
+{{ q["seoCtrls"] | raw }}
+<div id='seo-details' style="padding: 20px 0px;"></div>
+{{ script_foot | raw }}

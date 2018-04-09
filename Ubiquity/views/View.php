@@ -52,27 +52,26 @@ class View {
 	 */
 	public function render($viewName, $asString=false) {
 		$config=Startup::getConfig();
-		$fileName=ROOT . DS . "views/" . $viewName;
-		$ext=\pathinfo($fileName, PATHINFO_EXTENSION);
+		$ext=\pathinfo($viewName, PATHINFO_EXTENSION);
 		if ($ext === null)
 			$viewName=$viewName . ".php";
-		$fileName=ROOT . DS . "views/" . $viewName;
-		if (\file_exists($fileName)) {
-			$data=$this->vars;
-			if (!UString::endswith($fileName, ".php") && @$config["templateEngine"] instanceof TemplateEngine) {
-				return $config["templateEngine"]->render($viewName, $data, $asString);
-			}
+		$data=$this->vars;
+		if (!UString::endswith($viewName, ".php") && @$config["templateEngine"] instanceof TemplateEngine) {
+			return $config["templateEngine"]->render($viewName, $data, $asString);
+		}
 
-			if (is_array($data)) {
-				extract($data);
-			}
+		if (is_array($data)) {
+			extract($data);
+		}
+		$fileName=ROOT . DS . "views/" . $viewName;
+		if(file_exists($fileName)){
 			if ($asString) {
 				return $this->includeFileAsString($fileName);
 			} else {
 				include ($fileName);
 			}
-		} else {
-			throw new \Exception("Vue inexistante : " . $viewName);
+		}else{
+			throw new \Exception("View {$viewName} not found!");
 		}
 	}
 }

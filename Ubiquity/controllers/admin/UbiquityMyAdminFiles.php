@@ -3,100 +3,102 @@
 namespace Ubiquity\controllers\admin;
 
 class UbiquityMyAdminFiles {
+	
+	private $viewBase="@framework/Admin";
 
 	public function getAdminBaseRoute() {
 		return "Admin";
 	}
 
 	public function getViewDataIndex() {
-		return "Admin/data/index.html";
+		return $this->viewBase."/data/index.html";
 	}
 
 	public function getViewRoutesIndex() {
-		return "Admin/routes/index.html";
+		return $this->viewBase."/routes/index.html";
 	}
 
 	public function getViewRestIndex() {
-		return "Admin/rest/index.html";
+		return $this->viewBase."/rest/index.html";
 	}
 
 	public function getViewLogsIndex() {
-		return "Admin/logs/index.html";
+		return $this->viewBase."/logs/index.html";
 	}
 
 	public function getViewSeoIndex() {
-		return "Admin/seo/index.html";
+		return $this->viewBase."/seo/index.html";
 	}
 
 	public function getViewRestFormTester() {
-		return "Admin/rest/formTester.html";
+		return $this->viewBase."/rest/formTester.html";
 	}
 
 	public function getViewCacheIndex() {
-		return "Admin/cache/index.html";
+		return $this->viewBase."/cache/index.html";
 	}
 
 	public function getViewControllersIndex() {
-		return "Admin/controllers/index.html";
+		return $this->viewBase."/controllers/index.html";
 	}
 
 	public function getViewConfigIndex() {
-		return "Admin/config/index.html";
+		return $this->viewBase."/config/index.html";
 	}
 	
 	public function getViewConfigForm(){
-		return "Admin/config/form.html";
+		return $this->viewBase."/config/form.html";
 	}
 
 	public function getViewIndex() {
-		return "Admin/index.html";
+		return $this->viewBase."/index.html";
 	}
 
 	public function getViewShowTable() {
-		return "Admin/data/showTable.html";
+		return $this->viewBase."/data/showTable.html";
 	}
 
 	public function getViewEditTable() {
-		return "Admin/data/editTable.html";
+		return $this->viewBase."/data/editTable.html";
 	}
 
 	public function getViewHeader() {
-		return "Admin/main/vHeader.html";
+		return $this->viewBase."/main/vHeader.html";
 	}
 
 	public function getViewClassesDiagram() {
-		return "Admin/data/diagClasses.html";
+		return $this->viewBase."/data/diagClasses.html";
 	}
 
 	public function getViewYumlReverse() {
-		return "Admin/data/yumlReverse.html";
+		return $this->viewBase."/data/yumlReverse.html";
 	}
 
 	public function getViewDatabaseIndex() {
-		return "Admin/database/index.html";
+		return $this->viewBase."/database/index.html";
 	}
 
 	public function getViewDatabaseCreate() {
-		return "Admin/database/create.html";
+		return $this->viewBase."/database/create.html";
 	}
 
 	public function getViewDatasExport() {
-		return "Admin/database/export.html";
+		return $this->viewBase."/database/export.html";
 	}
 
 	public function getViewSeoDetails() {
-		return "Admin/seo/seoDetails.html";
+		return $this->viewBase."/seo/seoDetails.html";
 	}
 	
 	public function getViewGitIndex() {
-		return "Admin/git/index.html";
+		return $this->viewBase."/git/index.html";
 	}
 	
 	public function getViewGitSettings() {
-		return "Admin/git/formSettings.html";
+		return $this->viewBase."/git/formSettings.html";
 	}
 	
 	public function getViewGitIgnore() {
-		return "Admin/git/formGitIgnore.html";
+		return $this->viewBase."/git/formGitIgnore.html";
 	}
 }

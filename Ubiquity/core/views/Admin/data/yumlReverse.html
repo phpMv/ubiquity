@@ -1,0 +1,15 @@
+<div id="yuml-tab" class="ui top attached tabular menu">
+  <a class="item active" data-tab="yuml">Yuml</a>
+  <a class="item" data-tab="diagram">Classes diagram</a>
+</div>
+<div class="ui bottom attached tab segment active" data-tab="yuml">
+	{{ q["frm-yuml-code"] | raw }}
+</div>
+<div class="ui bottom attached tab segment" data-tab="diagram">
+	{{ q["menu-diagram"] | raw }}
+	<div id='diag-class' class='ui center aligned grid' style='margin:10px;'>
+		{{ diagram | raw }}
+	</div>
+</div>
+{{ q["bt-gen"]|raw }}
+{{ script_foot | raw }}
