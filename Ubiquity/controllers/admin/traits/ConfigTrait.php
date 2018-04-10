@@ -40,6 +40,12 @@ trait ConfigTrait{
 		$this->loadView ( $this->_getAdminFiles ()->getViewConfigForm () );
 	}
 	
+	public function _config(){
+		global $config;
+		echo $this->_getAdminViewer ()->getConfigDataElement ( $config );
+		echo $this->jquery->compile($this->view);
+	}
+	
 	public function submitConfig($partial=true){
 		$result=Startup::getConfig();
 		$postValues=$_POST;
@@ -64,13 +70,14 @@ trait ConfigTrait{
 		if(CodeUtils::isValidCode($content)){
 			$fileName=Startup::getApplicationDir()."/app/config/config2.php";
 			if(UFileSystem::save($fileName,$content)){
-				$this->showSimpleMessage("The configuration file has been successfully modified!", "positive","check square",null,"msgConfig");
+				$msg=$this->showSimpleMessage("The configuration file has been successfully modified!", "positive","check square",null,"msgConfig");
 			}else{
-				$this->showSimpleMessage("Impossible to write the configuration file <b>{$fileName}</b>.", "negative","warning circle",null,"msgConfig");
+				$msg=$this->showSimpleMessage("Impossible to write the configuration file <b>{$fileName}</b>.", "negative","warning circle",null,"msgConfig");
 			}
 		}else{
-			$this->showSimpleMessage("Your configuration contains errors.<br>The configuration file has not been saved.", "negative","warning circle",null,"msgConfig");
+			$msg=$this->showSimpleMessage("Your configuration contains errors.<br>The configuration file has not been saved.", "negative","warning circle",null,"msgConfig");
 		}
-		$this->config(false);
+		echo $msg;
+		$this->_config();
 	}
 }

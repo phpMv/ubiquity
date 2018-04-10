@@ -621,13 +621,27 @@ class UbiquityMyAdminViewer {
 		return $bt;
 	}
 	
+	private function labeledInput($input,$value){
+		$lbl="[empty]";
+		if(UString::isNotNull($value))
+			$lbl=$value;
+		$input->getField()->labeled($lbl);
+		return $input;
+	}
+	
 	public function getConfigDataForm($config) {
 		$de = $this->jquery->semantic ()->dataElement ( "frmDeConfig", $config );
 		$keys=array_keys($config);
 		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/submitConfig","#action-response");
+		$de->addButtonInToolbar("Cancel edition")->onClick('$("#deConfig").show();$("#action-response").html("");');
 		$de->getToolbar()->setSecondary()->wrap('<div class="ui inverted top attached segment">','</div>');
 		$de->setAttached();
-		$de->setDefaultValueFunction(function($name,$value){return new HtmlFormInput($name,null,"text",$value);});
+		$de->setDefaultValueFunction(function($name,$value){
+			if(is_array($value))
+				$value=UArray::asPhpArray($value,"array");
+			$input= new HtmlFormInput($name,null,"text",$value);
+			return $this->labeledInput($input, $value);
+		});
 		$fields = \array_keys ( $config );
 		$de->setFields ( $fields );
 		$de->setCaptions ( $fields );
@@ -642,7 +656,12 @@ class UbiquityMyAdminViewer {
 		$de->setValueFunction ( "database", function ($v, $instance, $index) {
 			$drivers=Database::getAvailableDrivers();
 			$dbDe = new DataElement ( "de-database", $v );
-			$dbDe->setDefaultValueFunction(function($name,$value){return new HtmlFormInput("database-".$name,null,"text",$value);});
+			$dbDe->setDefaultValueFunction(function($name,$value){
+				if(is_array($value))
+					$value=UArray::asPhpArray($value,"array");
+				$input= new HtmlFormInput("database-".$name,null,"text",$value);
+				return $this->labeledInput($input, $value);
+			});
 			$dbDe->setFields ( [ "type","dbName","serverName","port","user","password","options","cache" ] );
 			$dbDe->setCaptions ( [ "Type","dbName","serverName","port","user","password","options","cache" ] );
 			$dbDe->fieldAsInput("password",["inputType"=>"password","name"=>"database-password"]);

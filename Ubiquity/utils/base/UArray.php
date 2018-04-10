@@ -120,7 +120,7 @@ class UArray {
 			$result=$v;
 		} elseif (\is_array($v)) {
 			$result=self::asPhpArray($v, $prefix,$depth+1,$format);
-		}elseif(UString::startswith(trim($v), "function")){
+		}elseif(UString::startswith(trim($v), "function") || UString::startswith(trim($v), "array(")){
 			$result=$v;
 		} else {
 			$result="\"" . \str_replace('$', '\$', $v) . "\"";

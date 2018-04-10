@@ -262,7 +262,7 @@ trait ControllersTrait{
 		$this->_getAdminViewer()->getFilterControllers($controllers);
 		$this->jquery->postFormOn("click", "#validate-btn", $this->_getAdminFiles()->getAdminBaseRoute()."/filterControllers", "filtering-frm","#dtControllers",["jqueryDone" => "replaceWith","hasLoader" => false,"jsCallback"=>'$("#frm").html("");']);
 		$this->jquery->execOn("click", "#cancel-btn", '$("#frm").html("");');
-		$this->jquery->renderView("Admin/controllers/FormFiltering.html");
+		$this->jquery->renderView($this->_getAdminFiles()->getViewControllersFiltering());
 	}
 	
 	public function filterControllers(){
