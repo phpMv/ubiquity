@@ -46,7 +46,7 @@ class RestControllerParser {
 	}
 
 	public function asArray() {
-		return [ ClassUtils::cleanClassname($this->controllerClass) => [ "resource" => ClassUtils::cleanClassname($this->resource),"authorizations" => $this->authorizationMethods,"route" => $this->route ] ];
+		return [ $this->controllerClass => [ "resource" => $this->resource,"authorizations" => $this->authorizationMethods,"route" => $this->route ] ];
 	}
 
 	public function isRest() {

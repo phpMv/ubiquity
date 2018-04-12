@@ -10,6 +10,8 @@ namespace Ubiquity\utils\http;
  *
  */
 class UResponse {
+	
+	public static $headers=[];
 
 	/**
 	 * Send a raw HTTP header
@@ -24,6 +26,7 @@ class UResponse {
 	 *        	Forces the HTTP response code to the specified value
 	 */
 	public static function header($headerField, $value, $replace = null, $responseCode = null) {
+		self::$headers[trim ( $headerField )]=trim($value);
 		\header ( trim ( $headerField ) . ": " . trim ( $value ), $replace, $responseCode );
 	}
 
@@ -68,6 +71,10 @@ class UResponse {
 	 */
 	public static function asJSON() {
 		self::header ( 'Content-Type', 'application/json' );
+	}
+	
+	public static function isJSON(){
+		return isset(self::$headers["Content-Type"]) && self::$headers["Content-Type"]==='application/json';
 	}
 
 	/**

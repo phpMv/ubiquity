@@ -84,6 +84,12 @@ class UString {
 		}
 		return $result;
 	}
+	
+	public static function doubleBackSlashes($value){
+		if(is_string($value))
+			return str_replace("\\", "\\\\", $value);
+		return $value;
+	}
 
 	public static function cleanAttribute($attr, $replacement="_") {
 		$result=preg_replace('/[^a-zA-Z0-9\-]/s', $replacement, $attr);

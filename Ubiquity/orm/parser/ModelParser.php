@@ -71,7 +71,7 @@ class ModelParser {
 
 		foreach ( $this->joinColumnMembers as $member => $annotation ) {
 			$result["#joinColumn"][$member]=$annotation->getPropertiesAndValues();
-			$result["#invertedJoinColumn"][$annotation->name]=[ "member" => $member,"className" => ClassUtils::cleanClassname($annotation->className) ];
+			$result["#invertedJoinColumn"][$annotation->name]=[ "member" => $member,"className" =>$annotation->className ];
 		}
 		return "return " . UArray::asPhpArray($result, "array") . ";";
 	}

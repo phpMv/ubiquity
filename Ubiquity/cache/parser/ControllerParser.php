@@ -131,7 +131,6 @@ class ControllerParser {
 		$path=$pathParameters["path"];
 		$parameters=$pathParameters["parameters"];
 		$path=self::cleanpath($prefix, $path);
-		$controllerClass=ClassUtils::cleanClassname($controllerClass);
 		if (isset($routeArray["methods"]) && \is_array($routeArray["methods"])) {
 			self::createRouteMethod($result, $controllerClass, $path, $routeArray["methods"], $methodName, $parameters, $name, $cache, $duration);
 		} elseif (\is_array($httpMethods)) {

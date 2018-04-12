@@ -42,6 +42,7 @@ use Ubiquity\controllers\admin\popo\ControllerAction;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
 use Ubiquity\db\Database;
 use Ajax\semantic\html\collections\form\HtmlFormTextarea;
+use Ajax\semantic\components\validation\Rule;
 
 /**
  *
@@ -632,10 +633,7 @@ class UbiquityMyAdminViewer {
 	public function getConfigDataForm($config) {
 		$de = $this->jquery->semantic ()->dataElement ( "frmDeConfig", $config );
 		$keys=array_keys($config);
-		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/submitConfig","#action-response");
-		$de->addButtonInToolbar("Cancel edition")->onClick('$("#deConfig").show();$("#action-response").html("");');
-		$de->getToolbar()->setSecondary()->wrap('<div class="ui inverted top attached segment">','</div>');
-		$de->setAttached();
+
 		$de->setDefaultValueFunction(function($name,$value){
 			if(is_array($value))
 				$value=UArray::asPhpArray($value,"array");
@@ -678,7 +676,6 @@ class UbiquityMyAdminViewer {
 			$dbDe->setFields ( [ "directory","system","params" ] );
 			$dbDe->setCaptions ( [ "directory","system","params" ] );
 			$dbDe->setStyle("display: none;");
-			
 			return $dbDe;
 		});
 		$de->setValueFunction ( "templateEngineOptions", function ($v, $instance, $index) {
@@ -746,19 +743,34 @@ class UbiquityMyAdminViewer {
 		    }).insertBefore(textarea);
 		    textarea.css("display", "none");
 		    var editor = ace.edit(editDiv[0]);
+			editor.$blockScrolling = Infinity ;
 		    editor.renderer.setShowGutter(textarea.data("gutter"));
 		    editor.getSession().setValue(textarea.val());
 		    editor.getSession().setMode({path:"ace/mode/php", inline:true});
 		    editor.setTheme("ace/theme/solarized_dark");
-			editor.$blockScrolling = Infinity ;	
 		    // copy back to textarea on form submit...
 		    $("#frm-frmDeConfig").on("ajaxSubmit",function() {
 		      textarea.val(editor.getSession().getValue());
-		    })
+		    });
 		  });
 		});
 		';
 		$this->jquery->exec($js,true);
+		$form=$de->getForm();
+		$form->setValidationParams(["inline"=>true,"on"=>"blur"]);
+		
+		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/submitConfig","#action-response");
+		$de->addButtonInToolbar("Cancel edition")->onClick('$("#deConfig").show();$("#action-response").html("");');
+		$de->getToolbar()->setSecondary()->wrap('<div class="ui inverted top attached segment">','</div>');
+		$de->setAttached();
+		
+		$form->addExtraFieldRule("siteUrl", "empty");
+		$form->addExtraFieldRule("database-dbName", "empty");
+		$form->addExtraFieldRule("database-options", "regExp","Expression must be an array","/^array\(.*?\)$/");
+		$form->addExtraFieldRule("database-options", "checkArray","Expression is not a valid php array");
+		
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkArray", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkArray", "{_value:value}", "result=data.result;", "post"), true);
+		
 		return $de->asForm();
 	}
 

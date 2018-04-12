@@ -40,6 +40,7 @@ use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\controllers\admin\traits\GitTrait;
 use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\admin\traits\ConfigTrait;
+use Ubiquity\utils\http\UResponse;
 
 class UbiquityMyAdminBaseController extends Controller {
 	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
@@ -87,7 +88,7 @@ class UbiquityMyAdminBaseController extends Controller {
 	public static function _error_handler($buffer) {
 		$e = error_get_last ();
 		if ($e) {
-			if ($e ['file'] != 'xdebug://debug-eval') {
+			if ($e ['file'] != 'xdebug://debug-eval' && !UResponse::isJSON()) {
 				$staticName = "msg-" . rand ( 0, 50 );
 				$message = new HtmlMessage ( $staticName );
 				$message->addClass ( "error" );
@@ -101,6 +102,8 @@ class UbiquityMyAdminBaseController extends Controller {
 					default :
 						return str_replace ( $e ['message'], "", $buffer ) . $message;
 				}
+			}else{
+				return str_replace ( $e ['message'], "", $buffer );
 			}
 		}
 		return $buffer;

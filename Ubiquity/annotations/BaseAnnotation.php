@@ -26,7 +26,6 @@ class BaseAnnotation extends Annotation {
 			$prop->setAccessible(true);
 			$v=$prop->getValue($this);
 			if ($v !== null && $v !== "" && isset($v)) {
-				$v=ClassUtils::cleanClassname($v);
 				$ret[$prop->getName()]=$v;
 			}
 		}

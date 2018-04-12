@@ -59,7 +59,7 @@ class UArray {
 		}
 		if (self::isAssociative($array)) {
 			foreach ( $array as $k => $v ) {
-				$exts[]="\"" . $k . "\"=>" . self::parseValue($v, 'array',$depth+1,$format);
+				$exts[]="\"" . UString::doubleBackSlashes($k) . "\"=>" . self::parseValue($v, 'array',$depth+1,$format);
 			}
 		} else {
 			foreach ( $array as $v ) {
@@ -112,6 +112,10 @@ class UArray {
 		}
 		return $array;
 	}
+	
+	public static function doubleBackSlashes(&$array){
+		return array_walk($array, function($value){$value=UString::doubleBackSlashes($value);});
+	}
 
 	private static function parseValue($v, $prefix="",$depth=1,$format=false) {
 		if (UString::isBooleanStr($v)) {
@@ -124,6 +128,7 @@ class UArray {
 			$result=$v;
 		} else {
 			$result="\"" . \str_replace('$', '\$', $v) . "\"";
+			$result=UString::doubleBackSlashes($result);
 		}
 		return $result;
 	}

@@ -7,6 +7,8 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\controllers\admin\utils\CodeUtils;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\UResponse;
 
 /**
  *
@@ -68,8 +70,7 @@ trait ConfigTrait{
 		}
 		$content="<?php\nreturn ".UArray::asPhpArray($result,"array",1,true).";";
 		if(CodeUtils::isValidCode($content)){
-			$fileName=Startup::getApplicationDir()."/app/config/config2.php";
-			if(UFileSystem::save($fileName,$content)){
+			if(Startup::saveConfig($content)){
 				$msg=$this->showSimpleMessage("The configuration file has been successfully modified!", "positive","check square",null,"msgConfig");
 			}else{
 				$msg=$this->showSimpleMessage("Impossible to write the configuration file <b>{$fileName}</b>.", "negative","warning circle",null,"msgConfig");
@@ -79,5 +80,20 @@ trait ConfigTrait{
 		}
 		echo $msg;
 		$this->_config();
+	}
+	
+	public function _checkArray() {
+		if (URequest::isPost()) {
+			$result=[ ];
+			UResponse::asJSON();
+			$value=$_POST["_value"];
+			try{
+				$array=eval("return ".$value.";");
+				$result["result"]=is_array($array);
+			}catch(\ParseError $e){
+				$result["result"]=false;
+			}
+			echo json_encode($result);
+		}
 	}
 }

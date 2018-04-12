@@ -5,6 +5,7 @@ namespace Ubiquity\controllers;
 use Ubiquity\utils\base\UString;
 use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\utils\http\USession;
+use Ubiquity\utils\base\UFileSystem;
 
 class Startup {
 	public static $urlParts;
@@ -214,5 +215,15 @@ class Startup {
 	
 	public static function getApplicationName() {
 		return basename(\dirname ( ROOT ));
+	}
+	
+	public static function saveConfig($content){
+		$appDir=\dirname ( ROOT );
+		$filename=$appDir."/app/config/config.php";
+		$oldFilename=$appDir."/app/config/config.old.php";
+		if (!file_exists($filename) || copy($filename, $oldFilename)) {
+			return UFileSystem::save($filename,$content);
+		}
+		return false;
 	}
 }
