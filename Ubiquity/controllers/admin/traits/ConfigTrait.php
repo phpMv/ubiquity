@@ -5,7 +5,6 @@ namespace Ubiquity\controllers\admin\traits;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UArray;
-use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\controllers\admin\utils\CodeUtils;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
@@ -43,7 +42,7 @@ trait ConfigTrait{
 	}
 	
 	public function _config(){
-		global $config;
+		$config=Startup::getConfig();
 		echo $this->_getAdminViewer ()->getConfigDataElement ( $config );
 		echo $this->jquery->compile($this->view);
 	}
@@ -78,22 +77,46 @@ trait ConfigTrait{
 		}else{
 			$msg=$this->showSimpleMessage("Your configuration contains errors.<br>The configuration file has not been saved.", "negative","warning circle",null,"msgConfig");
 		}
-		echo $msg;
-		$this->_config();
+		$this->config(false);
 	}
 	
-	public function _checkArray() {
+	protected function _checkCondition($callback){
 		if (URequest::isPost()) {
 			$result=[ ];
 			UResponse::asJSON();
 			$value=$_POST["_value"];
-			try{
-				$array=eval("return ".$value.";");
-				$result["result"]=is_array($array);
-			}catch(\ParseError $e){
-				$result["result"]=false;
-			}
+			$result["result"]=$callback($value);
 			echo json_encode($result);
 		}
+	}
+	
+	public function _checkArray() {
+		$this->_checkCondition(function($value){
+			try{
+				$array=eval("return ".$value.";");
+				return is_array($array);
+			}catch(\ParseError $e){
+				return false;
+			}
+		});
+	}
+	
+	public function _checkDirectory(){
+		$this->_checkCondition(function($value){
+			$base=Startup::getApplicationDir();
+			return file_exists($base.DS."app".DS.$value);
+		});
+	}
+	
+	public function _checkClass(){
+		$parent=URequest::post("_ruleValue");
+		$this->_checkCondition(function($value) use($parent){
+			try{
+				$class=new \ReflectionClass($value);
+				return $class->isSubclassOf($parent);
+			}catch(\ReflectionException $e){
+				return false;
+			}
+		});
 	}
 }

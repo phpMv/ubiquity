@@ -273,11 +273,11 @@ class UbiquityMyAdminBaseController extends Controller {
 	}
 
 	public function config($hasHeader = true) {
-		global $config;
+		$config=Startup::getConfig();
 		if ($hasHeader === true)
 			$this->getHeader ( "config" );
 		$this->_getAdminViewer ()->getConfigDataElement ( $config );
-		$this->jquery->getOnClick("#edit-config-btn", $this->_getAdminFiles()->getAdminBaseRoute() . "/formConfig","#action-response",["jsCallback"=>'$("#deConfig").hide();']);
+		$this->jquery->getOnClick("#edit-config-btn", $this->_getAdminFiles()->getAdminBaseRoute() . "/formConfig","#action-response",["jsCallback"=>'$("#config-div").hide();']);
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getAdminFiles ()->getViewConfigIndex () );
 	}

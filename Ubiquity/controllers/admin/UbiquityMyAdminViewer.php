@@ -702,8 +702,9 @@ class UbiquityMyAdminViewer {
 			foreach ( $keys as $key ) {
 				$diDe->setValueFunction ( $key, function ($value) use ($config, $key) {
 					$input=new HtmlFormTextarea("di-".$key);
-					$input->setStyle("width: 100%");
-					$input->getDataField()->setProperty("data-editor","true");
+					$df=$input->getDataField();
+					$df->setProperty("rows","5");
+					$df->setProperty("data-editor","true");
 					$r = $config ['di'] [$key];
 					if (\is_callable ( $r )){
 						$value= \htmlentities ( UIntrospection::closure_dump ( $r ) );
@@ -720,8 +721,9 @@ class UbiquityMyAdminViewer {
 		$de->setValueFunction ( "isRest", function ($v) use ($config) {
 			$r = $config ["isRest"];
 			$input=new HtmlFormTextarea("isRest");
-			$input->setStyle("width: 100%");
-			$input->getDataField()->setProperty("data-editor","true");
+			$df=$input->getDataField();
+			$df->setProperty("rows","3");
+			$df->setProperty("data-editor","true");
 			if (\is_callable ( $r )){
 				$value= \htmlentities ( UIntrospection::closure_dump ( $r ) );
 			}
@@ -737,18 +739,18 @@ class UbiquityMyAdminViewer {
 		    var mode = textarea.data("editor");
 		    var editDiv = $("<div>", {
 		      position: "absolute",
-		      width: textarea.width(),
+		      width: "100%",
 		      height: textarea.height(),
 		      "class": textarea.attr("class")
 		    }).insertBefore(textarea);
 		    textarea.css("display", "none");
 		    var editor = ace.edit(editDiv[0]);
+			editDiv.css("border-radius","4px");
 			editor.$blockScrolling = Infinity ;
 		    editor.renderer.setShowGutter(textarea.data("gutter"));
 		    editor.getSession().setValue(textarea.val());
 		    editor.getSession().setMode({path:"ace/mode/php", inline:true});
 		    editor.setTheme("ace/theme/solarized_dark");
-		    // copy back to textarea on form submit...
 		    $("#frm-frmDeConfig").on("ajaxSubmit",function() {
 		      textarea.val(editor.getSession().getValue());
 		    });
@@ -760,16 +762,22 @@ class UbiquityMyAdminViewer {
 		$form->setValidationParams(["inline"=>true,"on"=>"blur"]);
 		
 		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/submitConfig","#action-response");
-		$de->addButtonInToolbar("Cancel edition")->onClick('$("#deConfig").show();$("#action-response").html("");');
+		$de->addButtonInToolbar("Cancel edition")->onClick('$("#config-div").show();$("#action-response").html("");');
 		$de->getToolbar()->setSecondary()->wrap('<div class="ui inverted top attached segment">','</div>');
 		$de->setAttached();
 		
-		$form->addExtraFieldRule("siteUrl", "empty");
+		$form->addExtraFieldRules("siteUrl", ["empty","url"]);
 		$form->addExtraFieldRule("database-dbName", "empty");
 		$form->addExtraFieldRule("database-options", "regExp","Expression must be an array","/^array\(.*?\)$/");
 		$form->addExtraFieldRule("database-options", "checkArray","Expression is not a valid php array");
+		$form->addExtraFieldRule("cache-directory", "checkDirectory","{value} directory does not exists");
+		$form->addExtraFieldRule("templateEngine", "checkClass[Ubiquity\\views\\engine\\TemplateEngine]","Class {value} does not exists or is not a subclass of {ruleValue}");
+		$form->addExtraFieldRule("cache-system", "checkClass[Ubiquity\\cache\\system\\AbstractDataCache]","Class {value} does not exists or is not a subclass of {ruleValue}");
+		
 		
 		$this->jquery->exec(Rule::ajax($this->jquery, "checkArray", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkArray", "{_value:value}", "result=data.result;", "post"), true);
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkDirectory", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkDirectory", "{_value:value}", "result=data.result;", "post"), true);
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkClass", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkClass", "{_value:value,_ruleValue:ruleValue}", "result=data.result;", "post"), true);
 		
 		return $de->asForm();
 	}
