@@ -70,12 +70,12 @@ trait ConfigTrait{
 		$content="<?php\nreturn ".UArray::asPhpArray($result,"array",1,true).";";
 		if(CodeUtils::isValidCode($content)){
 			if(Startup::saveConfig($content)){
-				$msg=$this->showSimpleMessage("The configuration file has been successfully modified!", "positive","check square",null,"msgConfig");
+				$this->showSimpleMessage("The configuration file has been successfully modified!", "positive","check square",null,"msgConfig");
 			}else{
-				$msg=$this->showSimpleMessage("Impossible to write the configuration file <b>{$fileName}</b>.", "negative","warning circle",null,"msgConfig");
+				$this->showSimpleMessage("Impossible to write the configuration file <b>{$fileName}</b>.", "negative","warning circle",null,"msgConfig");
 			}
 		}else{
-			$msg=$this->showSimpleMessage("Your configuration contains errors.<br>The configuration file has not been saved.", "negative","warning circle",null,"msgConfig");
+			$this->showSimpleMessage("Your configuration contains errors.<br>The configuration file has not been saved.", "negative","warning circle",null,"msgConfig");
 		}
 		$this->config(false);
 	}
