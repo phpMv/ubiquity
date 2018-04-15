@@ -631,6 +631,17 @@ class UbiquityMyAdminViewer {
 		return $input;
 	}
 	
+	private function _cleanStdClassValue($value){
+		if($value instanceof \stdClass){
+			$value=(array) $value;
+		}
+		if(is_array($value)){
+			$value=UArray::asPhpArray($value,"array");
+		}
+		$value=str_replace('"', "'", $value);
+		return $value;
+	}
+	
 	public function getConfigDataForm($config) {
 		$de = $this->jquery->semantic ()->dataElement ( "frmDeConfig", $config );
 		$keys=array_keys($config);
@@ -661,8 +672,7 @@ class UbiquityMyAdminViewer {
 			$drivers=Database::getAvailableDrivers();
 			$dbDe = new DataElement ( "de-database", $v );
 			$dbDe->setDefaultValueFunction(function($name,$value){
-				if(is_array($value))
-					$value=UArray::asPhpArray($value,"array");
+				$value=$this->_cleanStdClassValue($value);
 				$input= new HtmlFormInput("database-".$name,null,"text",$value);
 				return $this->labeledInput($input, $value);
 			});
@@ -693,10 +703,9 @@ class UbiquityMyAdminViewer {
 		$de->setValueFunction("cache", function ($v, $instance, $index) {
 			$dbDe = new DataElement ( "de-cache", $v );
 			$dbDe->setDefaultValueFunction(function($name,$value){
-				if(is_array($value))
-					$value=UArray::asPhpArray($value,"array");
-					$input= new HtmlFormInput("cache-".$name,null,"text",$value);
-					return $this->labeledInput($input, $value);
+				$value=$this->_cleanStdClassValue($value);
+				$input= new HtmlFormInput("cache-".$name,null,"text",$value);
+				return $this->labeledInput($input, $value);
 			});
 			$dbDe->setFields ( [ "directory","system","params" ] );
 			$dbDe->setCaptions ( [ "directory","system","params" ] );
