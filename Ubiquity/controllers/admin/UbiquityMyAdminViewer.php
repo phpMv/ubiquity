@@ -674,7 +674,7 @@ class UbiquityMyAdminViewer {
 			$dbDe->fieldAsInput("cache",["name"=>"database-cache","jsCallback"=>function($elm,$object){
 				$ck=$elm->labeledCheckbox();
 				$ck->on("click",'$("[name=database-cache]").prop("disabled",$(this).checkbox("is unchecked"));');
-				if($object->cache!=false){
+				if($object->cache!==false){
 					$ck->setChecked(true);
 				}
 			}]);
