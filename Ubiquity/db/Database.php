@@ -63,8 +63,13 @@ class Database {
 	 * Creates the PDO instance
 	 */
 	public function connect() {
-		$this->options[\PDO::ATTR_ERRMODE]=\PDO::ERRMODE_EXCEPTION;
-		$this->pdoObject = new \PDO ( $this->getDSN(), $this->user, $this->password, $this->options );
+		try{
+			$this->options[\PDO::ATTR_ERRMODE]=\PDO::ERRMODE_EXCEPTION;
+			$this->pdoObject = new \PDO ( $this->getDSN(), $this->user, $this->password, $this->options );
+			return true;
+		}catch (\PDOException $e){
+			return false;
+		}
 	}
 	
 	public function getDSN(){
