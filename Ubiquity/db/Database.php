@@ -60,16 +60,21 @@ class Database {
 	}
 
 	/**
-	 * Creates the PDO instance
+	 * Creates the PDO instance and realize a safe connection
+	 * @return boolean true if connection is established
 	 */
 	public function connect() {
 		try{
-			$this->options[\PDO::ATTR_ERRMODE]=\PDO::ERRMODE_EXCEPTION;
-			$this->pdoObject = new \PDO ( $this->getDSN(), $this->user, $this->password, $this->options );
+			$this->_connect();
 			return true;
 		}catch (\PDOException $e){
 			return false;
 		}
+	}
+	
+	public function _connect(){
+		$this->options[\PDO::ATTR_ERRMODE]=\PDO::ERRMODE_EXCEPTION;
+		$this->pdoObject = new \PDO ( $this->getDSN(), $this->user, $this->password, $this->options );
 	}
 	
 	public function getDSN(){

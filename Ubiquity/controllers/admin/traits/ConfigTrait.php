@@ -150,9 +150,9 @@ trait ConfigTrait{
 		$connected=false;
 		$db=new Database($postValues["database-type"], $postValues["database-dbName"],$postValues["database-serverName"],$postValues["database-port"],$postValues["database-user"],$postValues["database-password"]);
 		try{
-			$db->connect();
+			$db->_connect();
 			$connected=$db->isConnected();
-		}catch(\PDOException $e){
+		}catch(\Exception $e){
 			$errorMsg=$e->getMessage();
 			$msg=((mb_detect_encoding($errorMsg, "UTF-8, ISO-8859-1, ISO-8859-15","CP1252")) !== "UTF-8") ? utf8_encode($this->convert_smart_quotes($errorMsg)) : ($errorMsg);
 			$connected=false;
