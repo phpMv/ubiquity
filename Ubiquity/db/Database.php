@@ -63,8 +63,12 @@ class Database {
 	 * Creates the PDO instance
 	 */
 	public function connect() {
-		$this->pdoObject = new \PDO ( $this->dbType . ':host=' . $this->serverName . ';dbname=' . $this->dbName . ';charset=UTF8;port:' . $this->port, $this->user, $this->password, $this->options );
-		$this->pdoObject->setAttribute ( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
+		$this->options[\PDO::ATTR_ERRMODE]=\PDO::ERRMODE_EXCEPTION;
+		$this->pdoObject = new \PDO ( $this->getDSN(), $this->user, $this->password, $this->options );
+	}
+	
+	public function getDSN(){
+		return $this->dbType . ':dbname=' . $this->dbName . ';host=' . $this->serverName . ';charset=UTF8;port=' . $this->port;
 	}
 
 	/**
@@ -186,12 +190,16 @@ class Database {
 	}
 
 	public function isConnected() {
-		return ($this->pdoObject !== null && $this->pdoObject instanceof \PDO);
+		return ($this->pdoObject !== null && $this->pdoObject instanceof \PDO && $this->ping());
 	}
 
 	public function setDbType($dbType) {
 		$this->dbType = $dbType;
 		return $this;
+	}
+	
+	public function ping() {
+		return (1 === intval($this->pdoObject->query('SELECT 1')->fetchColumn(0)));
 	}
 
 	public function getPort() {

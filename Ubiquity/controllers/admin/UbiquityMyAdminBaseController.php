@@ -41,6 +41,7 @@ use Ubiquity\controllers\admin\traits\GitTrait;
 use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\admin\traits\ConfigTrait;
 use Ubiquity\utils\http\UResponse;
+use Ubiquity\utils\http\USession;
 
 class UbiquityMyAdminBaseController extends Controller {
 	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
@@ -854,6 +855,7 @@ class UbiquityMyAdminBaseController extends Controller {
 			if (isset ( $variables ["%path%"] ) && $variables ["%path%"] !== "") {
 				$msgContent .= $this->_addMessageForRouteCreation ( $variables ["%path%"], $jsCallback );
 			}
+			USession::addOrRemoveValueFromArray("filtered-controllers",$controllersNS."\\".$controllerName);
 			$message = $this->showSimpleMessage ( $msgContent, "success", "checkmark circle", NULL, "msgGlobal" );
 		} else {
 			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning", "warning circle", 100000, "msgGlobal" );

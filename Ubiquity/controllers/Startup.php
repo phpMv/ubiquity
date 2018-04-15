@@ -217,6 +217,14 @@ class Startup {
 		return basename(\dirname ( ROOT ));
 	}
 	
+	public static function reloadConfig(){
+		$appDir=\dirname ( ROOT );
+		$filename=$appDir."/app/config/config.php";
+		self::$config=include($filename);
+		self::startTemplateEngine(self::$config);
+		return self::$config;
+	}
+	
 	public static function saveConfig($content){
 		$appDir=\dirname ( ROOT );
 		$filename=$appDir."/app/config/config.php";

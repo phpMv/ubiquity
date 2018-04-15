@@ -43,6 +43,7 @@ use Ajax\semantic\html\collections\form\HtmlFormInput;
 use Ubiquity\db\Database;
 use Ajax\semantic\html\collections\form\HtmlFormTextarea;
 use Ajax\semantic\components\validation\Rule;
+use Ubiquity\controllers\Startup;
 
 /**
  *
@@ -644,7 +645,12 @@ class UbiquityMyAdminViewer {
 		$de->setFields ( $fields );
 		$de->setCaptions ( $fields );
 		$de->setCaptionCallback(function(&$captions,$instance) use($keys){
-			$captions[array_search("database", $keys)]=$this->getCaptionToggleButton("database-bt", "Database...");
+			$dbBt=$this->getCaptionToggleButton("database-bt", "Database...");
+			$dbBt->on("toggled",'if(!event.active) {
+													var text=$("[name=database-type]").val()+"://"+$("[name=database-user]").val()+":"+$("[name=database-password]").val()+"@"+$("[name=database-serverName]").val()+":"+$("[name=database-port]").val()+"/"+$("[name=database-dbName]").val();
+													event.caption.html(text);
+													}');
+			$captions[array_search("database", $keys)]=$dbBt;
 			$captions[array_search("cache", $keys)]=$this->getCaptionToggleButton("cache-bt", "Cache...");
 			$captions[array_search("mvcNS", $keys)]=$this->getCaptionToggleButton("ns-bt", "MVC namespaces...");
 			$captions[array_search("di", $keys)]=$this->getCaptionToggleButton("di-bt", "Dependency injection","active");
@@ -665,14 +671,33 @@ class UbiquityMyAdminViewer {
 			$dbDe->fieldAsInput("password",["inputType"=>"password","name"=>"database-password"]);
 			$dbDe->fieldAsInput("port",["name"=>"database-port","inputType"=>"number","jsCallback"=>function($elm){$elm->getDataField()->setProperty("min",0);$elm->getDataField()->setProperty("max",3306);}]);
 			$dbDe->fieldAsDropDown("type",array_combine($drivers, $drivers),false,["name"=>"database-type"]);
-			$dbDe->fieldAsCheckbox("cache",["name"=>"database-cache","value"=>"1"]);
+			$dbDe->fieldAsInput("cache",["name"=>"database-cache","jsCallback"=>function($elm,$object){
+				$ck=$elm->labeledCheckbox();
+				$ck->on("click",'$("[name=database-cache]").prop("disabled",$(this).checkbox("is unchecked"));');
+				if($object->cache!=false){
+					$ck->setChecked(true);
+				}
+			}]);
+			$dbDe->setValueFunction("dbName", function($value){
+				$input= new HtmlFormInput("database-dbName",null,"text",$value);
+				$bt=$input->addAction("Test");
+				$bt->addClass("black");
+				$bt->postFormOnClick($this->controller->_getAdminFiles()->getAdminBaseRoute() ."/_checkDbStatus","frm-frmDeConfig","#db-status",["jqueryDone"=>"replaceWith","hasLoader"=>"internal"]);
+				return $this->labeledInput($input, '<i id="db-status" class="ui question icon"></i>&nbsp;'.$value);
+			});
 			$dbDe->setEdition();
 			$dbDe->setStyle("display: none;");
-			return $dbDe;
+			$caption="<div class='toggle-caption'>".$v->type."://".$v->user.":".$v->password."@".$v->serverName.":".$v->port."/".$v->dbName."</div>";
+			return [$dbDe,$caption];
 		} );
 		$de->setValueFunction("cache", function ($v, $instance, $index) {
 			$dbDe = new DataElement ( "de-cache", $v );
-			$dbDe->setDefaultValueFunction(function($name,$value){return new HtmlFormInput("cache-".$name,null,"text",$value);});
+			$dbDe->setDefaultValueFunction(function($name,$value){
+				if(is_array($value))
+					$value=UArray::asPhpArray($value,"array");
+					$input= new HtmlFormInput("cache-".$name,null,"text",$value);
+					return $this->labeledInput($input, $value);
+			});
 			$dbDe->setFields ( [ "directory","system","params" ] );
 			$dbDe->setCaptions ( [ "directory","system","params" ] );
 			$dbDe->setStyle("display: none;");
@@ -770,13 +795,22 @@ class UbiquityMyAdminViewer {
 		$form->addExtraFieldRule("database-dbName", "empty");
 		$form->addExtraFieldRule("database-options", "regExp","Expression must be an array","/^array\(.*?\)$/");
 		$form->addExtraFieldRule("database-options", "checkArray","Expression is not a valid php array");
-		$form->addExtraFieldRule("cache-directory", "checkDirectory","{value} directory does not exists");
+		$form->addExtraFieldRule("database-cache", "checkClass[Ubiquity\\cache\\database\\DbCache]","Class {value} does not exists or is not a subclass of {ruleValue}");
+		$form->setOptional("database-cache");
+		
+		$form->addExtraFieldRule("cache-directory", "checkDirectory[app]","{value} directory does not exists");
 		$form->addExtraFieldRule("templateEngine", "checkClass[Ubiquity\\views\\engine\\TemplateEngine]","Class {value} does not exists or is not a subclass of {ruleValue}");
 		$form->addExtraFieldRule("cache-system", "checkClass[Ubiquity\\cache\\system\\AbstractDataCache]","Class {value} does not exists or is not a subclass of {ruleValue}");
+		$form->addExtraFieldRule("cache-params", "checkArray","Expression is not a valid php array");
+		
+		$form->addExtraFieldRule("mvcNS-models", "checkDirectory[app]","{value} directory does not exists");
+		$form->addExtraFieldRule("mvcNS-controllers", "checkDirectory[app]","{value} directory does not exists");
+		$controllersNS=Startup::getNS();
+		$form->addExtraFieldRule("mvcNS-rest", "checkDirectory[app/".$controllersNS."]", Startup::getNS()."{value} directory does not exists");
 		
 		
 		$this->jquery->exec(Rule::ajax($this->jquery, "checkArray", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkArray", "{_value:value}", "result=data.result;", "post"), true);
-		$this->jquery->exec(Rule::ajax($this->jquery, "checkDirectory", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkDirectory", "{_value:value}", "result=data.result;", "post"), true);
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkDirectory", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkDirectory", "{_value:value,_ruleValue:ruleValue}", "result=data.result;", "post"), true);
 		$this->jquery->exec(Rule::ajax($this->jquery, "checkClass", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkClass", "{_value:value,_ruleValue:ruleValue}", "result=data.result;", "post"), true);
 		
 		return $de->asForm();

@@ -8,6 +8,8 @@ use Ubiquity\utils\base\UArray;
 use Ubiquity\controllers\admin\utils\CodeUtils;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
+use Ubiquity\utils\base\UString;
+use Ubiquity\db\Database;
 
 /**
  *
@@ -51,7 +53,14 @@ trait ConfigTrait{
 		$result=Startup::getConfig();
 		$postValues=$_POST;
 		if($partial!==true){
-			$postValues["database-cache"]=isset($postValues["database-cache"]);
+			if(isset($postValues["lbl-ck-div-de-database-input-cache"])){
+				unset($postValues["lbl-ck-div-de-database-input-cache"]);
+				if(!(isset($postValues["database-cache"]) && UString::isNotNull($postValues["database-cache"]))){
+					$postValues["database-cache"]=false;
+				}
+			}else{
+				$postValues["database-cache"]=false;
+			}
 			$postValues["debug"]=isset($postValues["debug"]);
 			$postValues["test"]=isset($postValues["test"]);
 			$postValues["templateEngineOptions-cache"]=isset($postValues["templateEngineOptions-cache"]);
@@ -72,11 +81,12 @@ trait ConfigTrait{
 			if(Startup::saveConfig($content)){
 				$this->showSimpleMessage("The configuration file has been successfully modified!", "positive","check square",null,"msgConfig");
 			}else{
-				$this->showSimpleMessage("Impossible to write the configuration file <b>{$fileName}</b>.", "negative","warning circle",null,"msgConfig");
+				$this->showSimpleMessage("Impossible to write the configuration file.", "negative","warning circle",null,"msgConfig");
 			}
 		}else{
 			$this->showSimpleMessage("Your configuration contains errors.<br>The configuration file has not been saved.", "negative","warning circle",null,"msgConfig");
 		}
+		Startup::reloadConfig();
 		$this->config(false);
 	}
 	
@@ -102,9 +112,10 @@ trait ConfigTrait{
 	}
 	
 	public function _checkDirectory(){
-		$this->_checkCondition(function($value){
+		$folder=URequest::post("_ruleValue");
+		$this->_checkCondition(function($value) use($folder){
 			$base=Startup::getApplicationDir();
-			return file_exists($base.DS."app".DS.$value);
+			return file_exists($base.DS.$folder.DS.$value);
 		});
 	}
 	
@@ -118,5 +129,46 @@ trait ConfigTrait{
 				return false;
 			}
 		});
+	}
+	private function convert_smart_quotes($string){
+		$search = array(chr(145),
+				chr(146),
+				chr(147),
+				chr(148),
+				chr(151));
+		
+		$replace = array("'",
+				"'",
+				'"',
+				'"',
+				'-');
+		
+		return str_replace($search, $replace, $string);
+	} 
+	public function _checkDbStatus(){
+		$postValues=$_POST;
+		$connected=false;
+		$db=new Database($postValues["database-type"], $postValues["database-dbName"],$postValues["database-serverName"],$postValues["database-port"],$postValues["database-user"],$postValues["database-password"]);
+		try{
+			$db->connect();
+			$connected=$db->isConnected();
+		}catch(\PDOException $e){
+			$errorMsg=$e->getMessage();
+			$msg=((mb_detect_encoding($errorMsg, "UTF-8, ISO-8859-1, ISO-8859-15","CP1252")) !== "UTF-8") ? utf8_encode($this->convert_smart_quotes($errorMsg)) : ($errorMsg);
+			$connected=false;
+		}
+		$icon="exclamation triangle red";
+		if($connected){
+			$icon="check square green";
+		}
+		$icon=$this->jquery->semantic()->htmlIcon("db-status", $icon);
+		if(isset($msg)){
+			$icon->addPopup("Error",$msg);
+		}else{
+			$icon->addPopup("Success","Connexion is ok!");
+		}
+		$this->jquery->execAtLast('$("#db-status").popup("show");');
+		echo $icon;
+		echo $this->jquery->compile($this->view);
 	}
 }
