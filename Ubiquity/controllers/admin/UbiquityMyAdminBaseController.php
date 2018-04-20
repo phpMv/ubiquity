@@ -80,7 +80,7 @@ class UbiquityMyAdminBaseController extends Controller {
 			$mn->setPropertyValues ( "data-ajax", $dataAjax );
 			$mn->setActiveItem ( 0 );
 			$mn->setSecondary ();
-			$mn->getOnClick ( "Admin", "#main-content", [ "attr" => "data-ajax" ] );
+			$mn->getOnClick ( "Admin", "#main-content", [ "attr" => "data-ajax","historize"=>true ] );
 			$this->jquery->compile ( $this->view );
 			$this->loadView ( $this->_getAdminFiles ()->getViewHeader () );
 		}
@@ -171,7 +171,7 @@ class UbiquityMyAdminBaseController extends Controller {
 						$item->setProperty ( "data-ajax", $tbl );
 					}
 				}
-				$menu->getOnClick ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/showTable", "#divTable", [ "attr" => "data-ajax" ] );
+				$menu->getOnClick ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/showTable", "#divTable", [ "attr" => "data-ajax" ,"historize"=>true] );
 				$menu->onClick ( "$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');" );
 			} catch ( \Exception $e ) {
 				throw $e;

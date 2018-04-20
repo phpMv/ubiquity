@@ -795,7 +795,7 @@ class UbiquityMyAdminViewer {
 		$form=$de->getForm();
 		$form->setValidationParams(["inline"=>true,"on"=>"blur"]);
 		
-		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/submitConfig","#action-response");
+		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/submitConfig/all","#action-response");
 		$de->addButtonInToolbar("Cancel edition")->onClick('$("#config-div").show();$("#action-response").html("");');
 		$de->getToolbar()->setSecondary()->wrap('<div class="ui inverted top attached segment">','</div>');
 		$de->setAttached();
@@ -909,7 +909,7 @@ class UbiquityMyAdminViewer {
 			$item->setProperty ( "data-ajax", \strtolower ( $e [0] ) );
 			return $item;
 		} );
-		$items->getOnClick ( $this->controller->_getAdminFiles ()->getAdminBaseRoute (), "#main-content", [ "attr" => "data-ajax" ] );
+		$items->getOnClick ( $this->controller->_getAdminFiles ()->getAdminBaseRoute (), "#main-content", [ "attr" => "data-ajax","historize"=>true ] );
 		return $items->addClass ( "divided relaxed link" );
 	}
 
