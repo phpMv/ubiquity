@@ -278,7 +278,7 @@ class UbiquityMyAdminBaseController extends Controller {
 		if ($hasHeader === true)
 			$this->getHeader ( "config" );
 		$this->_getAdminViewer ()->getConfigDataElement ( $config );
-		$this->jquery->getOnClick("#edit-config-btn", $this->_getAdminFiles()->getAdminBaseRoute() . "/formConfig","#action-response",["jsCallback"=>'$("#config-div").hide();']);
+		$this->jquery->getOnClick("#edit-config-btn", $this->_getAdminFiles()->getAdminBaseRoute() . "/formConfig/ajax","#action-response",["jsCallback"=>'$("#config-div").hide();']);
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getAdminFiles ()->getViewConfigIndex () );
 	}

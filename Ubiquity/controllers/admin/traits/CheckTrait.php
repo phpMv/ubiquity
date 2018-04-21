@@ -216,7 +216,7 @@ trait CheckTrait{
 		switch($step[1]) {
 			case "Conf":
 				$buttons->addItem("Show config file")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_config", "#action-response")->addIcon("settings");
-				$buttons->addItem("Edit config file")->addClass("orange")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/formConfig", "#action-response")->addIcon("edit");
+				$buttons->addItem("Edit config file")->addClass("orange")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/formConfig/ajax", "#action-response")->addIcon("edit");
 				break;
 			case "Connexion":
 			case "Database":
