@@ -801,6 +801,7 @@ class UbiquityMyAdminViewer {
 		$de->setAttached();
 		
 		$form->addExtraFieldRules("siteUrl", ["empty","url"]);
+		$form->addExtraFieldRule("siteUrl", "regExp","siteUrl must ends with /","/^.*?\/$/");
 		$form->addExtraFieldRule("database-dbName", "empty");
 		$form->addExtraFieldRule("database-options", "regExp","Expression must be an array","/^array\(.*?\)$/");
 		$form->addExtraFieldRule("database-options", "checkArray","Expression is not a valid php array");
@@ -906,7 +907,7 @@ class UbiquityMyAdminViewer {
 			$item = new HtmlItem ( "" );
 			$item->addIcon ( $e [1] . " bordered circular" )->setSize ( "big" );
 			$item->addItemHeaderContent ( $e [0], [ ], $e [2] );
-			$item->setProperty ( "data-ajax", \strtolower ( $e [0] ) );
+			$item->setProperty ( "data-ajax", $e [0] );
 			return $item;
 		} );
 		$items->getOnClick ( $this->controller->_getAdminFiles ()->getAdminBaseRoute (), "#main-content", [ "attr" => "data-ajax","historize"=>true ] );

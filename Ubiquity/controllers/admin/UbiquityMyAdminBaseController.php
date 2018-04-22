@@ -71,13 +71,16 @@ class UbiquityMyAdminBaseController extends Controller {
 			$mainMenuElements = $this->_getAdminViewer ()->getMainMenuElements ();
 			$elements = [ "UbiquityMyAdmin" ];
 			$dataAjax = [ "index" ];
+			$hrefs=[$this->_getAdminFiles()->getAdminBaseRoute()."/index"];
 			foreach ( $mainMenuElements as $elm => $values ) {
 				$elements [] = $elm;
 				$dataAjax [] = $values [0];
+				$hrefs[]= $this->_getAdminFiles()->getAdminBaseRoute()."/".$values [0];
 			}
 			$mn = $semantic->htmlMenu ( "mainMenu", $elements );
 			$mn->getItem ( 0 )->addClass ( "header" )->addIcon ( "home big link" );
 			$mn->setPropertyValues ( "data-ajax", $dataAjax );
+			$mn->setPropertyValues ( "href", $hrefs );
 			$mn->setActiveItem ( 0 );
 			$mn->setSecondary ();
 			$mn->getOnClick ( "Admin", "#main-content", [ "attr" => "data-ajax","historize"=>true ] );
