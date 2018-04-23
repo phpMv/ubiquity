@@ -9,7 +9,7 @@ use Ajax\semantic\html\elements\HtmlIconGroups;
 use Ajax\semantic\widgets\dataform\DataForm;
 use Ubiquity\orm\OrmUtils;
 use Ajax\semantic\widgets\datatable\DataTable;
-use Ubiquity\controllers\admin\interfaces\HasModelViewer;
+use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ajax\JsUtils;
 use Ajax\service\JArray;
 use Ubiquity\orm\parser\Reflexion;
@@ -23,12 +23,13 @@ class ModelViewer {
 	 * @var JsUtils
 	 */
 	private $jquery;
+	
 	/**
-	 * @var HasModelViewer
+	 * @var HasModelViewerInterface
 	 */
 	protected $controller;
 	
-	public function __construct(HasModelViewer $controller){
+	public function __construct(HasModelViewerInterface $controller){
 		$this->jquery = $controller->jquery;
 		$this->controller=$controller;
 	}
@@ -210,7 +211,6 @@ class ModelViewer {
 					$item=$element->addItem($oItem . "");
 					$item->setProperty("data-ajax", $fkTable . "." . $id);
 					$item->addClass("showTable");
-					$hasElements=true;
 					$this->displayFkElementList($item, $memberFK, $fkClass, $oItem);
 				}
 			}

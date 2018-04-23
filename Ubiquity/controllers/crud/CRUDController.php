@@ -4,12 +4,12 @@ namespace Ubiquity\controllers\crud;
 
 use Ubiquity\orm\DAO;
 use Ubiquity\controllers\ControllerBase;
-use Ubiquity\controllers\admin\interfaces\HasModelViewer;
+use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\admin\UbiquityMyAdminData;
 use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ubiquity\controllers\semantic\MessagesTrait;
 
-abstract class CRUDController extends ControllerBase implements HasModelViewer{
+abstract class CRUDController extends ControllerBase implements HasModelViewerInterface{
 	use MessagesTrait;
 	protected $model;
 	protected $modelViewer;
@@ -86,11 +86,15 @@ abstract class CRUDController extends ControllerBase implements HasModelViewer{
 		else
 			$instanceString=get_class($instance);
 		if (sizeof($_POST) > 0) {
-			if (DAO::remove($instance)) {
-				$message=$this->showSimpleMessage("Deletion of `<b>" . $instanceString . "</b>`", "info", "info", 4000);
-				$this->jquery->exec("$('tr[data-ajax={$ids}]').remove();", true);
-			} else {
-				$message=$this->showSimpleMessage("Can not delete `" . $instanceString . "`", "warning", "warning");
+			try{
+				if (DAO::remove($instance)) {
+					$message=$this->showSimpleMessage("Deletion of `<b>" . $instanceString . "</b>`", "info", "info", 4000);
+					$this->jquery->exec("$('tr[data-ajax={$ids}]').remove();", true);
+				} else {
+					$message=$this->showSimpleMessage("Can not delete `" . $instanceString . "`", "warning", "warning");
+				}
+			}catch (\Exception $e){
+				$message=$this->showSimpleMessage("Exception : can not delete `" . $instanceString . "`", "warning", "warning");
 			}
 		} else {
 			$message=$this->showConfMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "error", $this->_getBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);

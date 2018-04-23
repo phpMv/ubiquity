@@ -43,11 +43,11 @@ use Ubiquity\controllers\admin\traits\ConfigTrait;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\http\USession;
 use Ubiquity\controllers\admin\viewers\ModelViewer;
-use Ubiquity\controllers\admin\interfaces\HasModelViewer;
+use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\semantic\MessagesTrait;
 
 
-class UbiquityMyAdminBaseController extends Controller implements HasModelViewer{
+class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface{
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
 	/**
 	 *
