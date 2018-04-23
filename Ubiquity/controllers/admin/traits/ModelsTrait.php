@@ -4,15 +4,12 @@ namespace Ubiquity\controllers\admin\traits;
 
 use Ajax\JsUtils;
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\utils\http\URequest;
-use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\DAO;
 use Ajax\service\JString;
-use Ajax\semantic\html\elements\HtmlHeader;
 use Ubiquity\controllers\Startup;
 use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
-use Ubiquity\cache\database\DbCache;
 use Ajax\semantic\html\collections\HtmlMessage;
+use Ubiquity\controllers\crud\CRUDHelper;
 
 /**
  *
@@ -20,29 +17,35 @@ use Ajax\semantic\html\collections\HtmlMessage;
  * @property JsUtils $jquery
  */
 trait ModelsTrait{
+	
+	protected $formModal="no";
 
 	abstract public function _getAdminData();
 
 	abstract public function _getAdminViewer();
+	
+	abstract public function _getAdminModelViewer();
 
 	abstract public function _getAdminFiles();
 
 	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	public function showTable($table) {
-		$this->_showTable($table);
 		$model=$this->getModelsNS() . "\\" . ucfirst($table);
+		$adminRoute=$this->_getAdminFiles()->getAdminBaseRoute();
+		$this->_showModel($model);
 		$this->_getAdminViewer()->getModelsStructureDataTable(OrmUtils::getModelMetadata($model));
 		$bt=$this->jquery->semantic()->htmlButton("btYuml", "Class diagram");
-		$bt->postOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_showDiagram/", "{model:'" . \str_replace("\\", "|", $model) . "'}", "#modal", [ "attr" => "" ]);
+		$bt->postOnClick($adminRoute. "/_showDiagram/", "{model:'" . \str_replace("\\", "|", $model) . "'}", "#modal", [ "attr" => "" ]);
 		$this->jquery->exec('$("#models-tab .item").tab();', true);
+		$this->jquery->getOnClick ( "#btAddNew", $adminRoute . "/newModel/" . $this->formModal, "#frm-add-update",["hasLoader"=>"internal"] );
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getAdminFiles()->getViewShowTable(), [ "classname" => $model ]);
 	}
 
 	public function refreshTable() {
-		$table=$_SESSION["table"];
-		echo $this->_showTable($table);
+		$model=$_SESSION["model"];
+		echo $this->_showModel($model);
 		echo $this->jquery->compile($this->view);
 	}
 
@@ -58,17 +61,17 @@ trait ModelsTrait{
 		}
 	}
 
-	protected function _showTable($table) {
-		$_SESSION["table"]=$table;
-		$model=$this->getModelsNS() . "\\" . ucfirst($table);
+	protected function _showModel($model) {
+		$_SESSION["model"]=$model;
 		$datas=DAO::getAll($model);
-		return $this->_getAdminViewer()->getModelDataTable($datas, $model);
+		$this->formModal=($this->_getAdminModelViewer()->isModal($datas,$model))? "modal" : "no";
+		return $this->_getAdminModelViewer()->getModelDataTable($datas, $model);
 	}
 
 	protected function _edit($instance, $modal="no") {
 		$_SESSION["instance"]=$instance;
 		$modal=($modal == "modal");
-		$form=$this->_getAdminViewer()->getForm("frmEdit", $instance);
+		$form=$this->_getAdminModelViewer()->getForm("frmEdit", $instance);
 		$this->jquery->click("#action-modal-frmEdit-0", "$('#frmEdit').form('submit');", false);
 		if (!$modal) {
 			$this->jquery->click("#bt-cancel", "$('#form-container').transition('drop');");
@@ -93,7 +96,7 @@ trait ModelsTrait{
 	}
 
 	public function newModel($modal="no") {
-		$model=$this->getModelsNS() . "\\" . ucfirst($_SESSION["table"]);
+		$model=$_SESSION["model"];
 		$instance=new $model();
 		$instance->_new=true;
 		$this->_edit($instance, $modal);
@@ -102,101 +105,27 @@ trait ModelsTrait{
 	public function update() {
 		$message=$this->jquery->semantic()->htmlMessage("msgUpdate", "Modifications were successfully saved", "info");
 		$instance=@$_SESSION["instance"];
-		$className=\get_class($instance);
-		$relations=OrmUtils::getManyToOneFields($className);
-		$fieldTypes=OrmUtils::getFieldTypes($className);
-		foreach ( $fieldTypes as $property => $type ) {
-			if ($type == "tinyint(1)") {
-				if (isset($_POST[$property])) {
-					$_POST[$property]=1;
-				} else {
-					$_POST[$property]=0;
-				}
-			}
+		$updated=CRUDHelper::update($instance, $_POST,$this->_getAdminData()->getUpdateManyToOneInForm(),$this->_getAdminData()->getUpdateManyToManyInForm());
+		if($updated){
+			$message->setStyle("success")->setIcon("checkmark");
+			$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/refreshTable", "#lv", [ "jqueryDone" => "replaceWith" ]);
+		} else {
+			$message->setContent("An error has occurred. Can not save changes.")->setStyle("error")->setIcon("warning circle");
 		}
-		URequest::setValuesToObject($instance, $_POST);
-		foreach ( $relations as $member ) {
-			if ($this->_getAdminData()->getUpdateManyToOneInForm()) {
-				$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
-				if ($joinColumn) {
-					$fkClass=$joinColumn["className"];
-					$fkField=$joinColumn["name"];
-					if (isset($_POST[$fkField])) {
-						$fkObject=DAO::getOne($fkClass, $_POST["$fkField"]);
-						Reflexion::setMemberValue($instance, $member, $fkObject);
-					}
-				}
-			}
-		}
-		if (isset($instance)) {
-			if ($instance->_new) {
-				$update=DAO::insert($instance);
-			} else {
-				$update=DAO::update($instance);
-				if (DbCache::$active) {
-					// TODO update dbCache
-				}
-			}
-			if ($update) {
-				if ($this->_getAdminData()->getUpdateManyToManyInForm()) {
-					$relations=OrmUtils::getManyToManyFields($className);
-					foreach ( $relations as $member ) {
-						if (($annot=OrmUtils::getAnnotationInfoMember($className, "#manyToMany", $member)) !== false) {
-							$newField=$member . "Ids";
-							$fkClass=$annot["targetEntity"];
-							$fkObjects=DAO::getAll($fkClass, $this->getMultiWhere($_POST[$newField], $className));
-							if (Reflexion::setMemberValue($instance, $member, $fkObjects)) {
-								DAO::insertOrUpdateManyToMany($instance, $member);
-							}
-						}
-					}
-				}
-				$message->setStyle("success")->setIcon("checkmark");
-				$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/refreshTable", "#lv", [ "jqueryDone" => "replaceWith" ]);
-			} else {
-				$message->setContent("An error has occurred. Can not save changes.")->setStyle("error")->setIcon("warning circle");
-			}
-			echo $message;
-			echo $this->jquery->compile($this->view);
-		}
-	}
-
-	private function getPks($model) {
-		$instance=new $model();
-		return OrmUtils::getKeyFields($instance);
-	}
-
-	private function getMultiWhere($ids, $class) {
-		$pk=OrmUtils::getFirstKey($class);
-		$ids=explode(",", $ids);
-		if (sizeof($ids) < 1)
-			return "";
-		$strs=[ ];
-		$idCount=\sizeof($ids);
-		for($i=0; $i < $idCount; $i++) {
-			$strs[]=$pk . "='" . $ids[$i] . "'";
-		}
-		return implode(" OR ", $strs);
-	}
-
-	private function getOneWhere($ids, $table) {
-		$ids=explode("_", $ids);
-		if (sizeof($ids) < 1)
-			return "";
-		$pks=$this->getPks(ucfirst($table));
-		$strs=[ ];
-		$idCount=\sizeof($ids);
-		for($i=0; $i < $idCount; $i++) {
-			$strs[]=$pks[$i] . "='" . $ids[$i] . "'";
-		}
-		return implode(" AND ", $strs);
+		echo $message;
+		echo $this->jquery->compile($this->view);
 	}
 
 	private function getModelInstance($ids) {
-		$table=$_SESSION['table'];
-		$model=$this->getModelsNS() . "\\" . ucfirst($table);
+		$model=$_SESSION['model'];
 		$ids=\explode("_", $ids);
-		return DAO::getOne($model, $ids);
+		$instance=DAO::getOne($model, $ids);
+		if(isset($instance)){
+			return $instance;
+		}
+		echo $this->showSimpleMessage("This object does not exist!", "warning","warning circle");
+		echo $this->jquery->compile($this->view);
+		exit(1);
 	}
 
 	public function delete($ids) {
@@ -235,60 +164,22 @@ trait ModelsTrait{
 	}
 
 	public function showDetail($ids) {
-		$viewer=$this->_getAdminViewer();
-		$hasElements=false;
 		$instance=$this->getModelInstance($ids);
-		$table=$_SESSION['table'];
-		$model=$this->getModelsNS() . "\\" . ucfirst($table);
-		$relations=OrmUtils::getFieldsInRelations($model);
+		$viewer=$this->_getAdminModelViewer();
+		$hasElements=false;
+		$model=$_SESSION['model'];
+		$fkInstances=CRUDHelper::getFKIntances($instance, $model);	
 		$semantic=$this->jquery->semantic();
 		$grid=$semantic->htmlGrid("detail");
-		if (sizeof($relations) > 0) {
-			$wide=intval(16 / sizeof($relations));
+		if (sizeof($fkInstances) > 0) {
+			$wide=intval(16 / sizeof($fkInstances));
 			if ($wide < 4)
 				$wide=4;
-			foreach ( $relations as $member ) {
-				if (($annot=OrmUtils::getAnnotationInfoMember($model, "#oneToMany", $member)) !== false) {
-					$objectFK=DAO::getOneToMany($instance, $member);
-					$fkClass=$annot["className"];
-				} elseif (($annot=OrmUtils::getAnnotationInfoMember($model, "#manyToMany", $member)) !== false) {
-					$objectFK=DAO::getManyToMany($instance, $member);
-					$fkClass=$annot["targetEntity"];
-				} else {
-					$objectFK=Reflexion::getMemberValue($instance, $member);
-					if (isset($objectFK))
-						$fkClass=\get_class($objectFK);
-				}
-				if (isset($fkClass)) {
-					$fkTable=OrmUtils::getTableName($fkClass);
-					$memberFK=$member;
-
-					$header=new HtmlHeader("", 4, $memberFK, "content");
-					if (is_array($objectFK) || $objectFK instanceof \Traversable) {
-						$header=$viewer->getFkHeaderList($memberFK, $fkClass, $objectFK);
-						$element=$viewer->getFkList($memberFK, $fkClass, $objectFK);
-						foreach ( $objectFK as $item ) {
-							if (method_exists($item, "__toString")) {
-								$id=($this->getIdentifierFunction($fkClass))(0, $item);
-								$item=$element->addItem($item . "");
-								$item->setProperty("data-ajax", $fkTable . "." . $id);
-								$item->addClass("showTable");
-								$hasElements=true;
-								$this->_getAdminViewer()->displayFkElementList($item, $memberFK, $fkClass, $item);
-							}
-						}
-					} else {
-						if (method_exists($objectFK, "__toString")) {
-							$header=$viewer->getFkHeaderElement($memberFK, $fkClass, $objectFK);
-							$id=($this->getIdentifierFunction($fkClass))(0, $objectFK);
-							$element=$viewer->getFkElement($memberFK, $fkClass, $objectFK);
-							$element->setProperty("data-ajax", $fkTable . "." . $id)->addClass("showTable");
-						}
-					}
-					if (isset($element)) {
-						$grid->addCol($wide)->setContent($header . $element);
-						$hasElements=true;
-					}
+			foreach ( $fkInstances as $member=>$fkInstanceArray ) {
+				$element=$viewer->getFkMemberElement($member,$fkInstanceArray["objectFK"],$fkInstanceArray["fkClass"],$fkInstanceArray["fkTable"]);
+				if (isset($element)) {
+					$grid->addCol($wide)->setContent($element);
+					$hasElements=true;
 				}
 			}
 			if ($hasElements)
@@ -296,6 +187,7 @@ trait ModelsTrait{
 			$this->jquery->getOnClick(".showTable", $this->_getAdminFiles()->getAdminBaseRoute() . "/showTableClick", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ]);
 			echo $this->jquery->compile($this->view);
 		}
+
 	}
 
 	protected function getModelsNS() {

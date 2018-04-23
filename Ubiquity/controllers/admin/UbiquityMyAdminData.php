@@ -18,7 +18,7 @@ class UbiquityMyAdminData {
 	}
 
 	/**
-	 * Returns the fields to display in the showTable action for $model
+	 * Returns the fields to display in the showModel action for $model
 	 * @param string $model
 	 */
 	public function getFieldNames($model){

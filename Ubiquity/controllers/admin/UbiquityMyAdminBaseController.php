@@ -42,9 +42,13 @@ use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\admin\traits\ConfigTrait;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\http\USession;
+use Ubiquity\controllers\admin\viewers\ModelViewer;
+use Ubiquity\controllers\admin\interfaces\HasModelViewer;
+use Ubiquity\controllers\semantic\MessagesTrait;
 
-class UbiquityMyAdminBaseController extends Controller {
-	use ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
+
+class UbiquityMyAdminBaseController extends Controller implements HasModelViewer{
+	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
 	/**
 	 *
 	 * @var UbiquityMyAdminData
@@ -62,6 +66,12 @@ class UbiquityMyAdminBaseController extends Controller {
 	 * @var UbiquityMyAdminFiles
 	 */
 	private $adminFiles;
+
+	/**
+     * @var ModelViewer
+     */
+	private $adminModelViewer;
+	
 	private $globalMessage;
 
 	public function initialize() {
@@ -817,20 +827,6 @@ class UbiquityMyAdminBaseController extends Controller {
 		return [ ];
 	}
 
-	public function getIdentifierFunction($model) {
-		$pks = $this->getPks ( $model );
-		return function ($index, $instance) use ($pks) {
-			$values = [ ];
-			foreach ( $pks as $pk ) {
-				$getter = "get" . ucfirst ( $pk );
-				if (method_exists ( $instance, $getter )) {
-					$values [] = $instance->{$getter} ();
-				}
-			}
-			return implode ( "_", $values );
-		};
-	}
-
 	protected function _createController($controllerName, $variables = [], $ctrlTemplate = 'controller.tpl', $hasView = false, $jsCallback = "") {
 		$message = "";
 		$frameworkDir = Startup::getFrameworkDir ();
@@ -876,36 +872,16 @@ class UbiquityMyAdminBaseController extends Controller {
 		return $msgContent;
 	}
 
-	public function showSimpleMessage($content, $type, $icon = "info", $timeout = NULL, $staticName = null): HtmlMessage {
-		$semantic = $this->jquery->semantic ();
-		if (! isset ( $staticName ))
-			$staticName = "msg-" . rand ( 0, 50 );
-		$message = $semantic->htmlMessage ( $staticName, $content, $type );
-		$message->setIcon ( $icon );
-		$message->setDismissable ();
-		if (isset ( $timeout ))
-			$message->setTimeout ( 3000 );
-		return $message;
-	}
-
-	protected function showConfMessage($content, $type, $url, $responseElement, $data, $attributes = NULL) {
-		$messageDlg = $this->showSimpleMessage ( $content, $type, "help circle" );
-		$btOkay = new HtmlButton ( "bt-okay", "Confirm", "negative" );
-		$btOkay->addIcon ( "check circle" );
-		$btOkay->postOnClick ( $url, "{data:'" . $data . "'}", $responseElement, $attributes );
-		$btCancel = new HtmlButton ( "bt-cancel-" . UString::cleanAttribute ( $url ), "Cancel" );
-		$btCancel->addIcon ( "remove circle outline" );
-		$btCancel->onClick ( $messageDlg->jsHide () );
-		$messageDlg->addContent ( [ new HtmlDivider ( "" ),new HtmlSemDoubleElement ( "", "div", "", [ $btOkay->floatRight (),$btCancel->floatRight () ] ) ] );
-		return $messageDlg;
-	}
-
 	protected function getUbiquityMyAdminData() {
 		return new UbiquityMyAdminData ();
 	}
 
 	protected function getUbiquityMyAdminViewer() {
 		return new UbiquityMyAdminViewer ( $this );
+	}
+	
+	protected function getUbiquityMyAdminModelViewer() {
+		return new ModelViewer( $this );
 	}
 
 	protected function getUbiquityMyAdminFiles() {
@@ -923,8 +899,15 @@ class UbiquityMyAdminBaseController extends Controller {
 	 *
 	 * @return UbiquityMyAdminData
 	 */
-	public function _getAdminData() {
+	public function _getAdminData():UbiquityMyAdminData {
 		return $this->getSingleton ( $this->adminData, "getUbiquityMyAdminData" );
+	}
+	
+	/**
+	 * @return ModelViewer
+	 */
+	public function _getAdminModelViewer(){
+		return $this->getSingleton($this->adminModelViewer, "getUbiquityMyAdminModelViewer");
 	}
 
 	/**
@@ -946,8 +929,8 @@ class UbiquityMyAdminBaseController extends Controller {
 	protected function getTableNames() {
 		return $this->_getAdminData ()->getTableNames ();
 	}
-
-	public function getFieldNames($model) {
-		return $this->_getAdminData ()->getFieldNames ( $model );
+	
+	public function _getBaseRoute(){
+		return $this->_getAdminFiles ()->getAdminBaseRoute ();
 	}
 }
