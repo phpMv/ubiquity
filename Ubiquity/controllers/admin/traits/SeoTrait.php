@@ -138,7 +138,7 @@ trait SeoTrait{
 		$fc = $frm->addField ( 'controllerName' )->addRule ( [ "checkController","Controller {value} already exists!" ] );
 		$fc->labeled ( Startup::getNS () );
 		$fields = $frm->addFields ( [ "urlsFile","sitemapTemplate" ], "Urls file & sitemap twig template" );
-		$fields->setFieldsPropertyValues ( "value", [ "urls","Seo/sitemap.xml.html" ] );
+		$fields->setFieldsPropertyValues ( "value", [ "urls","@framework/Seo/sitemap.xml.html" ] );
 		$fields->getItem ( 0 )->addRules ( [ "empty" ] );
 
 		$frm->addCheckbox ( "ck-add-route", "Add route..." );
@@ -173,7 +173,7 @@ trait SeoTrait{
 				$variables ["%route%"] = '@route("' . $path . '")';
 			}
 			$variables ["%urlsFile%"] = URequest::post ( "urlsFile", "urls" );
-			$variables ["%sitemapTemplate%"] = URequest::post ( "sitemapTemplate", "Seo/sitemap.xml.html" );
+			$variables ["%sitemapTemplate%"] = URequest::post ( "sitemapTemplate", "@framework/Seo/sitemap.xml.html" );
 
 			echo $this->_createController ( $_POST ["controllerName"], $variables, 'seoController.tpl', false, $this->jquery->getDeferred ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/seoRefresh", "#seoCtrls", [ 'hasLoader' => false,'jqueryDone' => 'replaceWith',
 					'jsCallback' => '$("#seo-details").html("");' ] ) );
