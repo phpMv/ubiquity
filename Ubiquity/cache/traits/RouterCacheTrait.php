@@ -167,7 +167,10 @@ trait RouterCacheTrait{
 			if (is_file($file)) {
 				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
 				if (isset($restCtrls[$controllerClass]) === false) {
-					$result[]=$controllerClass;
+					$r=new \ReflectionClass($controllerClass);
+					if($r->isSubclassOf("Ubiquity\\controllers\Controller") && !$r->isAbstract()){
+						$result[]=$controllerClass;
+					}
 				}
 			}
 		}

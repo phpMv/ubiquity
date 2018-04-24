@@ -3,7 +3,7 @@
  /**
  * Controller %controllerName%
  **/
-class %controllerName% extends \Ubiquity\controllers\ControllerBase{
+class %controllerName% extends ControllerBase{
 
 	public function index(){
 		%indexContent%

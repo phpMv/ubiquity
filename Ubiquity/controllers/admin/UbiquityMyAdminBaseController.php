@@ -32,7 +32,6 @@ use Ubiquity\utils\base\UString;
 use Ubiquity\utils\UbiquityUtils;
 use Ubiquity\controllers\admin\traits\DatabaseTrait;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
-use Ajax\semantic\html\elements\HtmlDivider;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ubiquity\controllers\admin\popo\ControllerSeo;
 use Ubiquity\controllers\admin\traits\SeoTrait;
