@@ -2,8 +2,6 @@
 
 namespace Ubiquity\controllers\admin\traits;
 
-use Ajax\JsUtils;
-use Ubiquity\views\View;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\controllers\Startup;
@@ -21,8 +19,8 @@ use Ubiquity\utils\http\USession;
 /**
  *
  * @author jc
- * @property JsUtils $jquery
- * @property View $view
+ * @property \Ajax\JsUtils $jquery
+ * @property \Ubiquity\views\View $view
  */
 trait ControllersTrait{
 
@@ -37,14 +35,14 @@ trait ControllersTrait{
 	abstract public function _refreshControllers($refresh = false);
 
 	abstract protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false,$jsCallback="");
-
+	
 	abstract protected function _addMessageForRouteCreation($path);
 
 	abstract public function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	public function createController($force=null) {
 		if (URequest::isPost()) {
-			$this->_createController($_POST["name"],[],'controller.tpl',isset($_POST["lbl-ck-div-name"]));
+			$this->_createController($_POST["name"],["%baseClass%"=>"ControllerBase"],'controller.tpl',isset($_POST["lbl-ck-div-name"]));
 		}
 		$this->controllers();
 	}
@@ -118,6 +116,17 @@ trait ControllersTrait{
 			$this->jquery->change("#ck-add-route", "$('#div-new-route').toggle($(this).is(':checked'));");
 			echo $modal;
 			echo $this->jquery->compile($this->view);
+		}
+	}
+	
+	public function _controllerExists($fieldname) {
+		if (URequest::isPost()) {
+			$result=[ ];
+			header('Content-type: application/json');
+			$controller=ucfirst($_POST[$fieldname]);
+			$controllerNS=Startup::getNS("controllers");
+			$result["result"]=!class_exists($controllerNS.$controller);
+			echo json_encode($result);
 		}
 	}
 
@@ -263,6 +272,31 @@ trait ControllersTrait{
 		$this->jquery->postFormOn("click", "#validate-btn", $this->_getAdminFiles()->getAdminBaseRoute()."/filterControllers", "filtering-frm","#dtControllers",["jqueryDone" => "replaceWith","hasLoader" => false,"jsCallback"=>'$("#frm").html("");']);
 		$this->jquery->execOn("click", "#cancel-btn", '$("#frm").html("");');
 		$this->jquery->renderView($this->_getAdminFiles()->getViewControllersFiltering());
+	}
+	
+	protected function _createClass($template,$classname,$namespace,$uses,$extendsOrImplements,$classContent){
+		$namespaceVar="";
+		if(UString::isNotNull($namespace)){
+			$namespaceVar="namespace {$namespace};";
+		}
+		$variables=["%classname%"=>$classname,"%namespace%"=>$namespaceVar,"%uses%"=>$uses,"%extendsOrImplements%"=>$extendsOrImplements,"%classContent%"=>$classContent];
+		$frameworkDir = Startup::getFrameworkDir ();
+		$directory=UFileSystem::getDirFromNamespace($namespace);
+		UFileSystem::safeMkdir($directory);
+		$filename=UFileSystem::cleanFilePathname($directory.DS.lcfirst($classname).".php");
+		if(!file_exists($filename)){
+			UFileSystem::openReplaceWriteFromTemplateFile ( $frameworkDir . "/admin/templates/" . $template, $filename, $variables );
+			$message = $this->showSimpleMessage ( "The <b>" . $classname . "</b> class has been created in <b>" . $filename . "</b>.", "success", "checkmark circle");
+		}else{
+			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $classname . "</b> class!", "warning", "warning circle");
+		}
+		return $message;
+	}
+	
+	protected function _createMethod($access,$name,$parameters="",$return="",$content="",$comment=""){
+		$frameworkDir = Startup::getFrameworkDir ();
+		$keyAndValues=["%access%"=>$access,"%name%"=>$name,"%parameters%"=>$parameters,"%content%"=>$content,"%comment%"=>$comment,"%return%"=>$return];
+		return UFileSystem::openReplaceInTemplateFile($frameworkDir . "/admin/templates/method.tpl" , $keyAndValues);
 	}
 	
 	public function filterControllers(){

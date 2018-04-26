@@ -1,7 +1,6 @@
 <?php
 namespace Ubiquity\controllers\admin\traits;
 
-use Ajax\JsUtils;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\orm\OrmUtils;
@@ -15,7 +14,7 @@ use Ajax\semantic\html\collections\HtmlMessage;
 
 /**
  * @author jc
- * @property JsUtils $jquery
+ * @property \Ajax\JsUtils $jquery
  */
 trait DatabaseTrait{
 	abstract public function _getAdminData();

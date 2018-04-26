@@ -1,0 +1,47 @@
+<form class="ui form" id="crud-controller-frm" novalidate>
+	<div class="ui top attached secondary segment">Adding a CRUD controller</div>
+	<div class="ui attached segment">
+			<div class="two fields">
+			<div class="field">
+				<label for="crud-name">Name</label>
+				<div class="ui labeled input">
+					<div class="ui label">
+					    {{controllerNS}}
+					</div>
+					<input id="crud-name" name="crud-name">
+				</div>
+			</div>
+			<div class="field">
+				<label for="crud-model">Model</label>
+				{{q ["resources-list"] | raw }}
+			</div>
+		</div>
+		<div class="two fields">
+			<div class="field">
+				<div class="ui slider checkbox" id="crud-viewer-ck">
+				  <input type="checkbox" name="crud-viewer" id="crud-viewer">
+				  <label for="crud-viewer">Create override ModelViewer class</label>
+				</div>
+			</div>
+			<div class="field">
+				<div class="ui slider checkbox" id="crud-files-ck">
+				  <input type="checkbox" name="crud-files" id="crud-files">
+				  <label for="crud-files">Create override CRUDFiles class</label>
+				</div><p></p>
+				{{ q["view-list"] | raw }}
+			</div>
+		</div>
+	</div>
+</form>
+<div class="ui segment">
+  <button id="validate-btn" class="ui button positive">
+  	<i id="icon-bt-okay" class="icon check circle"></i>
+  	 Validate
+  </button>
+  &nbsp;
+  <button id="cancel-btn" class="ui button">
+  	<i id="icon-bt-cancel" class="icon remove circle outline"></i>
+  	 Cancel
+  </button>
+</div>
+{{ script_foot | raw }}

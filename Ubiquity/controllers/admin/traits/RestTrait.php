@@ -6,14 +6,12 @@ use Ajax\service\JString;
 use Ajax\semantic\html\collections\form\HtmlForm;
 use Ajax\semantic\html\elements\HtmlLabel;
 use Ubiquity\utils\base\UString;
-use Ajax\JsUtils;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ajax\semantic\html\elements\HtmlIconGroups;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\controllers\rest\RestServer;
-use Ubiquity\views\View;
 use Ubiquity\annotations\parser\DocParser;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\exceptions\UbiquityException;
@@ -21,8 +19,8 @@ use Ubiquity\controllers\admin\utils\Constants;
 
 /**
  *
- * @property View $view
- * @property JsUtils $jquery
+ * @property \Ubiquity\views\View $view
+ * @property \Ajax\JsUtils $jquery
  *
  */
 trait RestTrait{

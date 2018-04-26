@@ -44,10 +44,11 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\semantic\MessagesTrait;
-
+use Ubiquity\controllers\admin\traits\CRUDTrait;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface{
-	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait;
+	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
+	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CRUDTrait;
 	/**
 	 *
 	 * @var UbiquityMyAdminData
@@ -202,6 +203,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function controllers() {
+		$baseRoute=$this->_getAdminFiles()->getAdminBaseRoute();
 		$this->getHeader ( "controllers" );
 		$controllersNS = Startup::getNS ( 'controllers' );
 		$controllersDir = ROOT . str_replace ( "\\", DS, $controllersNS );
@@ -212,9 +214,12 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$input = $fields->addInput ( "name", null, "text", "", "Controller name" )->addRules ( [ [ "empty","Controller name must have a value" ],"regExp[/^[A-Za-z]\w*$/]" ] )->setWidth ( 8 );
 		$input->labeledCheckbox ( Direction::LEFT, "View", "v", "slider" );
 		$input->addAction ( "Create controller", true, "plus", true )->addClass ( "teal" )->asSubmit ();
-		$frm->setSubmitParams ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/createController", "#main-content" );
+		$frm->setSubmitParams ( $baseRoute. "/createController", "#main-content");
+		$bt=$fields->addButton("crud-bt", "Create CRUD controller");
+		$bt->addIcon("plus");
+		$bt->getOnClick($baseRoute."/frmAddCrudController","#frm",[]);
 		$bt=$fields->addButton("filter-bt", "Filter controllers");
-		$bt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/frmFilterControllers","#frm",["attr"=>""]);
+		$bt->getOnClick($baseRoute."/frmFilterControllers","#frm",["attr"=>""]);
 		$bt->addIcon("filter");
 		$this->_refreshControllers ();
 		$this->jquery->compile ( $this->view );
@@ -849,7 +854,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			}
 			$variables = \array_merge ( $variables, [ "%controllerName%" => $controllerName,"%indexContent%" => $indexContent,"%namespace%" => $namespace ] );
 			UFileSystem::openReplaceWriteFromTemplateFile ( $frameworkDir . "/admin/templates/" . $ctrlTemplate, $filename, $variables );
-			$msgContent = "The <b>" . $controllerName . "</b> controller has been created in <b>" . UFileSystem::cleanPathname ( $filename ) . "</b>." . $msgView;
+			$msgContent = "The <b>" . $controllerName . "</b> controller has been created in <b>" . UFileSystem::cleanFilePathname( $filename ) . "</b>." . $msgView;
 			if (isset ( $variables ["%path%"] ) && $variables ["%path%"] !== "") {
 				$msgContent .= $this->_addMessageForRouteCreation ( $variables ["%path%"], $jsCallback );
 			}
@@ -860,7 +865,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		}
 		return $message;
 	}
-
+	
 	protected function _addMessageForRouteCreation($path, $jsCallback = "") {
 		$msgContent = "<br>Created route : <b>" . $path . "</b>";
 		$msgContent .= "<br>You need to re-init Router cache to apply this update:";

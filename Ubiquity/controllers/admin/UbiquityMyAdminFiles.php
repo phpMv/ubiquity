@@ -45,6 +45,10 @@ class UbiquityMyAdminFiles {
 	public function getViewControllersFiltering(){
 		return $this->viewBase."/controllers/FormFiltering.html";
 	}
+	
+	public function getViewAddCrudController(){
+		return $this->viewBase."/controllers/FormCrudController.html";
+	}
 
 	public function getViewConfigIndex() {
 		return $this->viewBase."/config/index.html";

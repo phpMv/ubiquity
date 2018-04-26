@@ -2,7 +2,6 @@
 
 namespace Ubiquity\controllers\admin\traits;
 
-use Ajax\JsUtils;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\DAO;
 use Ajax\service\JString;
@@ -14,7 +13,7 @@ use Ubiquity\controllers\crud\CRUDHelper;
 /**
  *
  * @author jc
- * @property JsUtils $jquery
+ * @property \Ajax\JsUtils $jquery
  */
 trait ModelsTrait{
 	

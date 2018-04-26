@@ -7,7 +7,7 @@ use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\controllers\Startup;
 
 /**
- * Représente une vue
+ * Represents a view
  * @author jc
  * @version 1.0.2
  */
@@ -73,5 +73,10 @@ class View {
 		}else{
 			throw new \Exception("View {$viewName} not found!");
 		}
+	}
+	
+	public function getBlockNames($templateName){
+		$config=Startup::getConfig();
+		return $config["templateEngine"]->getBlockNames($templateName);
 	}
 }

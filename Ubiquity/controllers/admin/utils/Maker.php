@@ -6,7 +6,6 @@ use Ubiquity\utils\base\UIntrospection;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\controllers\Startup;
 
 class Maker {
 	private static $baseDir;

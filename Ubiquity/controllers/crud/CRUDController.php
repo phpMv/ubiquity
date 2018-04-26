@@ -24,7 +24,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$this->_getModelViewer()->getModelDataTable($objects, $this->model);
 		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute() . "/newModel/" . $modal, "#frm-add-update",["hasLoader"=>"internal"] );
 		$this->jquery->compile($this->view);
-		$this->loadView($this->_getFiles()->getViewShowTable(), [ "classname" => $this->model ]);
+		$this->loadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ]);
 	}
 	
 	/**
@@ -56,7 +56,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if (!$modal) {
 			$this->jquery->click("#bt-cancel", "$('#form-container').transition('drop');");
 			$this->jquery->compile($this->view);
-			$this->loadView($this->_getFiles()->getViewEditTable(), [ "modal" => $modal ]);
+			$this->loadView($this->_getFiles()->getViewForm(), [ "modal" => $modal ]);
 		} else {
 			$this->jquery->exec("$('#modal-frmEdit').modal('show');", true);
 			$form=$form->asModal(\get_class($instance));

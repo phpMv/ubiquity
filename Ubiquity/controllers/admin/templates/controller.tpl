@@ -3,7 +3,7 @@
  /**
  * Controller %controllerName%
  **/
-class %controllerName% extends ControllerBase{
+class %controllerName% extends %baseClass%{
 
 	public function index(){
 		%indexContent%

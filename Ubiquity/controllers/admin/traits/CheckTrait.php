@@ -10,7 +10,6 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\controllers\admin\popo\InfoMessage;
 use Ubiquity\db\Database;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
-use Ajax\JsUtils;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\cache\system\ArrayCache;
 use Ubiquity\orm\creator\database\DbModelsCreator;
@@ -23,7 +22,7 @@ use Ajax\semantic\html\collections\HtmlMessage;
  * @property array $steps
  * @property int $activeStep
  * @property string $engineering
- * @property JsUtils $jquery
+ * @property \Ajax\JsUtils $jquery
  */
 trait CheckTrait{
 	protected $messages=[ "error" => [ ],"info" => [ ] ];

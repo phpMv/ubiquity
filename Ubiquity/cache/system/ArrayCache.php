@@ -156,6 +156,6 @@ class ArrayCache extends AbstractDataCache {
 	 * @see \Ubiquity\cache\system\AbstractDataCache::getEntryKey()
 	 */
 	public function getEntryKey($key) {
-		return UFileSystem::cleanPathname($this->_getPath($key));
+		return UFileSystem::cleanFilePathname($this->_getPath($key));
 	}
 }

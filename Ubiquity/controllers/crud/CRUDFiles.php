@@ -3,18 +3,18 @@
 namespace Ubiquity\controllers\crud;
 
 class CRUDFiles {
-	private $viewBase="@framework/crud";
+	protected $viewBase;
 	
-	public function getViewDataIndex() {
+	public function __construct(){
+		$this->viewBase="@framework/crud";
+	}
+	
+	public function getViewIndex() {
 		return $this->viewBase."/index.html";
 	}
 	
-	public function getViewShowTable() {
-		return $this->viewBase."/showTable.html";
-	}
-	
-	public function getViewEditTable() {
-		return $this->viewBase."/editTable.html";
+	public function getViewForm() {
+		return $this->viewBase."/form.html";
 	}
 }
 

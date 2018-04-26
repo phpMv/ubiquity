@@ -2,7 +2,6 @@
 
 namespace Ubiquity\controllers\admin\traits;
 
-use Ajax\JsUtils;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\admin\popo\CacheFile;
@@ -12,7 +11,7 @@ use Ajax\semantic\html\collections\form\HtmlForm;
 /**
  *
  * @author jc
- * @property JsUtils $jquery
+ * @property \Ajax\JsUtils\JsUtils $jquery
  */
 trait CacheTrait{
 

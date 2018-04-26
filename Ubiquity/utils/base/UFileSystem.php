@@ -50,6 +50,17 @@ class UFileSystem {
 		}
 		return $path;
 	}
+	
+	public static function cleanFilePathname($path) {
+		if (UString::isNotNull($path)) {
+			if (DS === "/")
+				$path=\str_replace("\\", DS, $path);
+			else
+				$path=\str_replace("/", DS, $path);
+			$path=\str_replace(DS . DS, DS, $path);
+		}
+		return $path;
+	}
 
 	public static function openReplaceInTemplateFile($source, $keyAndValues) {
 		if (\file_exists($source)) {
@@ -100,5 +111,9 @@ class UFileSystem {
 
 	public static function save($filename,$content,$flags=LOCK_EX){
 		return \file_put_contents($filename, $content, $flags);
+	}
+	
+	public static function getDirFromNamespace($ns){
+		return ROOT . DS . str_replace ( "\\", DS, $ns );
 	}
 }

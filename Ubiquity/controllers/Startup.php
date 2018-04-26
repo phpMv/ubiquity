@@ -200,6 +200,14 @@ class Startup {
 	public static function getController() {
 		return self::$controller;
 	}
+	
+	public static function getControllerSimpleName() {
+		return (new \ReflectionClass(self::$controller))->getShortName();
+	}
+	
+	public static function getViewNameFileExtension(){
+		return "html";
+	}
 
 	public static function getAction() {
 		return self::$action;

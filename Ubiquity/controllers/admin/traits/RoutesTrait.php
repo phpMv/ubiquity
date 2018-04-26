@@ -1,7 +1,6 @@
 <?php
 namespace Ubiquity\controllers\admin\traits;
 
-use Ajax\JsUtils;
 use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\admin\popo\ControllerAction;
 use Ubiquity\controllers\Router;
@@ -12,7 +11,7 @@ use Ajax\semantic\html\collections\HtmlMessage;
 
 /**
  * @author jc
- * @property JsUtils $jquery
+ * @property \Ajax\JsUtils $jquery
  */
 trait RoutesTrait{
 	abstract public function _getAdminData();

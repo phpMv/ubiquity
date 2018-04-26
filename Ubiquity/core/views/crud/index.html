@@ -1,10 +1,21 @@
 <div class="ui segment">
+{% block btAddNew %}
 	<a id="btAddNew" class="ui button orange">
 	 <i class="icon plus"></i>
 	Add a new {{classname}}...
 	</a>
+{% endblock %}
+{% block frm %}
 	<div id='frm-add-update' style="padding-top: 10px"></div>
+{% endblock %}
+{% block dataTable %}
 	{{ q["lv"] | raw }}
+{% endblock %}
+{% block messages %}
 	<div id='table-messages'></div>
+{% endblock %}
+{% block details %}
 	<div id='table-details'></div>
+{% endblock %}
 </div>
+{{script_foot | raw}}

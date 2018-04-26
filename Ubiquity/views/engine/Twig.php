@@ -40,4 +40,9 @@ class Twig extends TemplateEngine {
 		} else
 			echo $render;
 	}
+
+	public function getBlockNames($templateName) {
+		return $this->twig->load($templateName)->getBlockNames();
+	}
+
 }

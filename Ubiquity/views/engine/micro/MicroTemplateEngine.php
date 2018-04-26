@@ -29,4 +29,8 @@ class MicroTemplateEngine extends TemplateEngine {
 		else
 			echo $content;
 	}
+	public function getBlockNames($templateName) {
+		return [];
+	}
+
 }
