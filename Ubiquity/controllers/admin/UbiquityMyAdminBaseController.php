@@ -45,13 +45,15 @@ use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\semantic\MessagesTrait;
 use Ubiquity\controllers\admin\traits\CRUDTrait;
+use Ubiquity\controllers\crud\CRUDDatas;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface{
+	
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
 	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CRUDTrait;
 	/**
 	 *
-	 * @var UbiquityMyAdminData
+	 * @var CRUDDatas
 	 */
 	private $adminData;
 
@@ -188,7 +190,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 				$menu->onClick ( "$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');" );
 			} catch ( \Exception $e ) {
 				throw $e;
-				$this->showSimpleMessage ( "Models cache is not created!&nbsp;", "error", "warning circle", null, "errorMsg" );
+				$this->showSimpleMessage ( "Models cache is not created!&nbsp;", "error","Exception", "warning circle", null, "errorMsg" );
 			}
 			$this->jquery->compile ( $this->view );
 			$this->loadView ( $this->_getAdminFiles ()->getViewDataIndex () );
@@ -207,7 +209,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$this->getHeader ( "controllers" );
 		$controllersNS = Startup::getNS ( 'controllers' );
 		$controllersDir = ROOT . str_replace ( "\\", DS, $controllersNS );
-		$this->showSimpleMessage ( "Controllers directory is <b>" . UFileSystem::cleanPathname ( $controllersDir ) . "</b>", "info", "info circle", null, "msgControllers" );
+		$this->showSimpleMessage ( "Controllers directory is <b>" . UFileSystem::cleanPathname ( $controllersDir ) . "</b>", "info",null, "info circle", null, "msgControllers" );
 		$frm = $this->jquery->semantic ()->htmlForm ( "frmCtrl" );
 		$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
 		$fields=$frm->addFields();
@@ -242,7 +244,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function routes() {
 		$this->getHeader ( "routes" );
-		$this->showSimpleMessage ( "Router cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.default" ) . "</b>", "info", "info circle", null, "msgRoutes" );
+		$this->showSimpleMessage ( "Router cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.default" ) . "</b>", "info",null, "info circle", null, "msgRoutes" );
 		$routes = CacheManager::getRoutes ();
 		$this->_getAdminViewer ()->getRoutesDataTable ( Route::init ( $routes ) );
 		$this->jquery->getOnClick ( "#bt-init-cache", $this->_getAdminFiles ()->getAdminBaseRoute () . "/initCacheRouter", "#divRoutes", [ "dataType" => "html","attr" => "" ] );
@@ -262,7 +264,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function cache() {
 		$this->getHeader ( "cache" );
-		$this->showSimpleMessage ( CacheManager::$cache->getCacheInfo (), "info", "info circle", null, "msgCache" );
+		$this->showSimpleMessage ( CacheManager::$cache->getCacheInfo (), "info",null, "info circle", null, "msgCache" );
 
 		$cacheFiles = CacheManager::$cache->getCacheFiles ( 'controllers' );
 		$cacheFiles = \array_merge ( $cacheFiles, CacheManager::$cache->getCacheFiles ( 'models' ) );
@@ -371,10 +373,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$initializeBt->addIcon ( "magic" );
 			$initializeBt->getOnClick ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/gitInit", "#main-content", [ "attr" => "" ] );
 			if ($hasMessage)
-				$this->showSimpleMessage ( "<b>{$gitRepo->getName()}</b> respository is not initialized!", "warning", "warning circle", null, "init-message" );
+				$this->showSimpleMessage ( "<b>{$gitRepo->getName()}</b> respository is not initialized!", "warning",null, "warning circle", null, "init-message" );
 		} else {
 			if ($hasMessage) {
-				$this->showSimpleMessage ( "<b>{$gitRepo->getName()}</b> repository is correctly initialized.", "info", "info circle", null, "init-message" );
+				$this->showSimpleMessage ( "<b>{$gitRepo->getName()}</b> repository is correctly initialized.", "info",null, "info circle", null, "init-message" );
 			}
 			$pushPullBts = $this->jquery->semantic ()->htmlButtonGroups ( "push-pull-bts", [ "3-Push","1-Pull" ] );
 			$pushPullBts->addIcons ( [ "upload","download" ] );
@@ -859,9 +861,9 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 				$msgContent .= $this->_addMessageForRouteCreation ( $variables ["%path%"], $jsCallback );
 			}
 			USession::addOrRemoveValueFromArray("filtered-controllers",$controllersNS."\\".$controllerName);
-			$message = $this->showSimpleMessage ( $msgContent, "success", "checkmark circle", NULL, "msgGlobal" );
+			$message = $this->showSimpleMessage ( $msgContent, "success", null,"checkmark circle", NULL, "msgGlobal" );
 		} else {
-			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning", "warning circle", 100000, "msgGlobal" );
+			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning",null, "warning circle", 100000, "msgGlobal" );
 		}
 		return $message;
 	}
@@ -876,8 +878,8 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		return $msgContent;
 	}
 
-	protected function getUbiquityMyAdminData() {
-		return new UbiquityMyAdminData ();
+	protected function getAdminData() {
+		return new CRUDDatas();
 	}
 
 	protected function getUbiquityMyAdminViewer() {
@@ -901,16 +903,16 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	/**
 	 *
-	 * @return UbiquityMyAdminData
+	 * @return CRUDDatas
 	 */
-	public function _getAdminData():UbiquityMyAdminData {
-		return $this->getSingleton ( $this->adminData, "getUbiquityMyAdminData" );
+	public function _getAdminData():CRUDDatas {
+		return $this->getSingleton ( $this->adminData, "getAdminData" );
 	}
 	
 	/**
 	 * @return ModelViewer
 	 */
-	public function _getAdminModelViewer(){
+	public function _getModelViewer(){
 		return $this->getSingleton($this->adminModelViewer, "getUbiquityMyAdminModelViewer");
 	}
 

@@ -45,6 +45,14 @@ class SqlUtils {
 		}
 		return implode(" OR ", $ret);
 	}
+	
+	public static function getSearchWhere($fields, $value,$jokerBefore="%",$jokerAfter="%") {
+		$ret=array ();
+		foreach ( $fields as $field ) {
+			$ret[]=self::$quote . $field . self::$quote . " LIKE '".$jokerBefore . $value . $jokerAfter."'";
+		}
+		return implode(" OR ", $ret);
+	}
 
 	public static function getInsertFields($keyAndValues) {
 		return implode(",", self::getQuotedKeys($keyAndValues));

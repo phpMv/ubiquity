@@ -198,7 +198,11 @@ class Database {
 			$condition = " WHERE " . $condition;
 		return $this->query ( "SELECT COUNT(*) FROM " . $tableName . $condition )->fetchColumn ();
 	}
-
+	
+	public function queryColumn($query){
+		return $this->query ( $query )->fetchColumn ();
+	}
+	
 	public function isConnected() {
 		return ($this->pdoObject !== null && $this->pdoObject instanceof \PDO && $this->ping());
 	}

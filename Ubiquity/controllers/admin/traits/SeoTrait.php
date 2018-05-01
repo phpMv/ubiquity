@@ -36,9 +36,9 @@ trait SeoTrait{
 
 	abstract protected function _seo();
 
-	abstract protected function showConfMessage($content, $type, $url, $responseElement, $data, $attributes = NULL);
+	abstract protected function showConfMessage($content, $type,$title, $url, $responseElement, $data, $attributes = NULL): HtmlMessage;
 
-	abstract protected function showSimpleMessage($content, $type, $icon = "info", $timeout = NULL, $staticName = null): HtmlMessage;
+	abstract protected function showSimpleMessage($content, $type, $title=null,$icon = "info", $timeout = NULL, $staticName = null): HtmlMessage;
 
 	abstract protected function _createController($controllerName, $variables = [], $ctrlTemplate = 'controller.tpl', $hasView = false, $jsCallback = "");
 

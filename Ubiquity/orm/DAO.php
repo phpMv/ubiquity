@@ -228,6 +228,21 @@ class DAO {
 		}
 		return $objects;
 	}
+	
+	public static function paginate($className,$page=1,$rowsPerPage=20,$condition=null){
+		if(!isset($condition)){
+			$condition="1=1";
+		}
+		return self::getAll($className,$condition." LIMIT ".$rowsPerPage." OFFSET ".(($page-1)*$rowsPerPage));
+	}
+	
+	public static function getRownum($className,$ids){
+		$tableName=OrmUtils::getTableName($className);
+		self::parseKey($ids,$className);
+		$condition=SqlUtils::getCondition($ids,$className);
+		$keys=implode(",", OrmUtils::getKeyFields($className));
+		return self::$db->queryColumn("SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$tableName}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE ".$condition);
+	}
 
 	private static function _affectsObjectsFromArray($queries,$objects,$affectsCallback,$useCache=NULL){
 		foreach ($queries as $key=>$conditions){
@@ -347,11 +362,7 @@ class DAO {
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getOne($className, $keyValues, $loadManyToOne=true, $loadOneToMany=false, $useCache=NULL) {
-		if (!is_array($keyValues)) {
-			if (strrpos($keyValues, "=") === false && strrpos($keyValues, ">") === false && strrpos($keyValues, "<") === false) {
-				$keyValues="`" . OrmUtils::getFirstKey($className) . "`='" . $keyValues . "'";
-			}
-		}
+		self::parseKey($keyValues,$className);
 		$condition=SqlUtils::getCondition($keyValues,$className);
 		$limit="";
 		if(\stripos($condition, " limit ")===false)
@@ -361,6 +372,14 @@ class DAO {
 			return null;
 		}
 		return \reset($retour);
+	}
+	
+	private static function parseKey(&$keyValues,$className){
+		if (!is_array($keyValues)) {
+			if (strrpos($keyValues, "=") === false && strrpos($keyValues, ">") === false && strrpos($keyValues, "<") === false) {
+				$keyValues="`" . OrmUtils::getFirstKey($className) . "`='" . $keyValues . "'";
+			}
+		}
 	}
 
 	/**

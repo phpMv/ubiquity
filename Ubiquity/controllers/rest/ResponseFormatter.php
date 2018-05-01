@@ -11,11 +11,19 @@ class ResponseFormatter {
 	 * @return array
 	 */
 	public function get($datas){
+		$datas=$this->getDatas($datas);
+		return $this->format(["datas"=>$datas,"count"=>\sizeof($datas)]);
+	}
+	
+	public function getDatas($datas){
 		$datas=\array_map(function($o){
 			return $this->cleanRestObject($o);
 		}, $datas);
-		$datas=\array_values($datas);
-		return $this->format(["datas"=>$datas,"count"=>\sizeof($datas)]);
+		return \array_values($datas);
+	}
+	
+	public function getJSONDatas($datas){
+		return $this->toJson($this->getDatas($datas));
 	}
 
 	public function cleanRestObject($o){

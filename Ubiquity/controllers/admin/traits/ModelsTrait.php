@@ -9,6 +9,12 @@ use Ubiquity\controllers\Startup;
 use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\controllers\crud\CRUDHelper;
+use Ubiquity\controllers\crud\CRUDMessage;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\UResponse;
+use Ubiquity\controllers\rest\ResponseFormatter;
+use Ajax\semantic\widgets\datatable\Pagination;
+use Ajax\semantic\html\elements\HtmlLabel;
 
 /**
  *
@@ -17,22 +23,24 @@ use Ubiquity\controllers\crud\CRUDHelper;
  */
 trait ModelsTrait{
 	
+	protected $activePage;
+	
 	protected $formModal="no";
 
 	abstract public function _getAdminData();
 
 	abstract public function _getAdminViewer();
 	
-	abstract public function _getAdminModelViewer();
+	abstract public function _getModelViewer();
 
 	abstract public function _getAdminFiles();
 
-	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
+	abstract protected function showSimpleMessage($content, $type, $title=null,$icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
-	public function showTable($table) {
+	public function showTable($table,$id=null) {
 		$model=$this->getModelsNS() . "\\" . ucfirst($table);
 		$adminRoute=$this->_getAdminFiles()->getAdminBaseRoute();
-		$this->_showModel($model);
+		$this->_showModel($model,$id);
 		$this->_getAdminViewer()->getModelsStructureDataTable(OrmUtils::getModelMetadata($model));
 		$bt=$this->jquery->semantic()->htmlButton("btYuml", "Class diagram");
 		$bt->postOnClick($adminRoute. "/_showDiagram/", "{model:'" . \str_replace("\\", "|", $model) . "'}", "#modal", [ "attr" => "" ]);
@@ -54,23 +62,61 @@ trait ModelsTrait{
 			$table=$array[0];
 			$id=$array[1];
 			$this->jquery->exec("$('#menuDbs .active').removeClass('active');$('.ui.label.left.pointing.teal').removeClass('left pointing teal active');$(\"[data-ajax='" . $table . "']\").addClass('active');$(\"[data-ajax='" . $table . "']\").find('.ui.label').addClass('left pointing teal');", true);
-			$this->showTable($table);
+			$this->showTable($table,$id);
 			$this->jquery->exec("$(\"tr[data-ajax='" . $id . "']\").click();", true);
 			echo $this->jquery->compile();
 		}
 	}
 
-	protected function _showModel($model) {
+	protected function _showModel($model,$id=null) {
 		$_SESSION["model"]=$model;
-		$datas=DAO::getAll($model);
-		$this->formModal=($this->_getAdminModelViewer()->isModal($datas,$model))? "modal" : "no";
-		return $this->_getAdminModelViewer()->getModelDataTable($datas, $model);
+		$datas=$this->getInstances($model,1,$id);
+		$this->formModal=($this->_getModelViewer()->isModal($datas,$model))? "modal" : "no";
+		return $this->_getModelViewer()->getModelDataTable($datas, $model,$this->activePage);
+	}
+	
+	protected function getInstances($model,$page=1,$id=null){
+		$this->activePage=$page;
+		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model));
+		if(is_numeric($recordsPerPage)){
+			if(isset($id)){
+				$rownum=DAO::getRownum($model, $id);
+				$this->activePage=Pagination::getPageOfRow($rownum,$recordsPerPage);
+			}
+			return DAO::paginate($model,$this->activePage,$recordsPerPage);
+		}
+		return DAO::getAll($model);
+	}
+	
+	protected function search($model,$search){
+		$fields=$this->_getAdminData()->getSearchFieldNames($model);
+		return CRUDHelper::search($model, $search, $fields);
+	}
+	
+	public function _refresh(){
+		$model=$_SESSION["model"];
+		if(isset($_POST["s"])){
+			$instances=$this->search($model, $_POST["s"]);
+		}else{
+			$instances=$this->getInstances($model,URequest::post("p",1));
+		}
+		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model));
+		if(isset($recordsPerPage)){
+			UResponse::asJSON();
+			$responseFormatter=new ResponseFormatter();
+			print_r($responseFormatter->getJSONDatas($instances));
+		}else{
+			$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
+			$compo= $this->_getModelViewer()->getModelDataTable($instances, $model)->refresh(["tbody"]);
+			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");');
+			$this->jquery->renderView("@framework/Admin/main/component.html",["compo"=>$compo]);
+		}
 	}
 
 	protected function _edit($instance, $modal="no") {
 		$_SESSION["instance"]=$instance;
 		$modal=($modal == "modal");
-		$form=$this->_getAdminModelViewer()->getForm("frmEdit", $instance);
+		$form=$this->_getModelViewer()->getForm("frmEdit", $instance);
 		$this->jquery->click("#action-modal-frmEdit-0", "$('#frmEdit').form('submit');", false);
 		if (!$modal) {
 			$this->jquery->click("#bt-cancel", "$('#form-container').transition('drop');");
@@ -102,16 +148,16 @@ trait ModelsTrait{
 	}
 
 	public function update() {
-		$message=$this->jquery->semantic()->htmlMessage("msgUpdate", "Modifications were successfully saved", "info");
+		$message=new CRUDMessage("Modifications were successfully saved", "Updating");
 		$instance=@$_SESSION["instance"];
 		$updated=CRUDHelper::update($instance, $_POST,$this->_getAdminData()->getUpdateManyToOneInForm(),$this->_getAdminData()->getUpdateManyToManyInForm());
 		if($updated){
-			$message->setStyle("success")->setIcon("checkmark");
+			$message->setType("success")->setIcon("check circle outline");
 			$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/refreshTable", "#lv", [ "jqueryDone" => "replaceWith" ]);
 		} else {
-			$message->setContent("An error has occurred. Can not save changes.")->setStyle("error")->setIcon("warning circle");
+			$message->setMessage("An error has occurred. Can not save changes.")->setType("error")->setIcon("warning circle");
 		}
-		echo $message;
+		echo $this->_showSimpleMessage($message,"updateMsg");
 		echo $this->jquery->compile($this->view);
 	}
 
@@ -141,7 +187,7 @@ trait ModelsTrait{
 				$message=$this->showSimpleMessage("Can not delete `" . $instanceString . "`", "warning", "warning");
 			}
 		} else {
-			$message=$this->showConfMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "error", $this->_getAdminFiles()->getAdminBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
+			$message=$this->showConfMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "error","Remove confirmation", $this->_getAdminFiles()->getAdminBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
 		}
 		echo $message;
 		echo $this->jquery->compile($this->view);
@@ -164,7 +210,7 @@ trait ModelsTrait{
 
 	public function showDetail($ids) {
 		$instance=$this->getModelInstance($ids);
-		$viewer=$this->_getAdminModelViewer();
+		$viewer=$this->_getModelViewer();
 		$hasElements=false;
 		$model=$_SESSION['model'];
 		$fkInstances=CRUDHelper::getFKIntances($instance, $model);	
@@ -175,7 +221,7 @@ trait ModelsTrait{
 			if ($wide < 4)
 				$wide=4;
 			foreach ( $fkInstances as $member=>$fkInstanceArray ) {
-				$element=$viewer->getFkMemberElement($member,$fkInstanceArray["objectFK"],$fkInstanceArray["fkClass"],$fkInstanceArray["fkTable"]);
+				$element=$viewer->getFkMemberElementDetails($member,$fkInstanceArray["objectFK"],$fkInstanceArray["fkClass"],$fkInstanceArray["fkTable"]);
 				if (isset($element)) {
 					$grid->addCol($wide)->setContent($element);
 					$hasElements=true;

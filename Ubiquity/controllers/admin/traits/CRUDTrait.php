@@ -34,8 +34,9 @@ trait CRUDTrait{
 		$resources=\array_combine($resources, $resources);
 		$resourcesList=$this->jquery->semantic()->htmlDropdown("resources-list","",$resources);
 		$resourcesList->asSelect("crud-model");
-		$viewList=$this->jquery->semantic()->htmlDropDown("view-list","",$this->views);
+		$viewList=$this->jquery->semantic()->htmlDropdown("view-list","",$this->views);
 		$viewList->asSelect("crud-views",true);
+		$viewList->setDefaultText("Select views");
 		$viewList->setProperty("style", "display: none;");
 		$frm=$this->jquery->semantic()->htmlForm("crud-controller-frm");
 		$frm->addExtraFieldRule("crud-model", "exactCount[1]");
@@ -61,14 +62,14 @@ trait CRUDTrait{
 			$resource=UString::doubleBackSlashes($_POST["crud-model"]);
 			$this->_createMethod("public", "__construct","","","\n\t\tparent::__construct();\n\$this->model=\"{$resource}\";");
 			if(isset($_POST["crud-viewer"])){
-				$uses[]="use controllers\\viewers\\{$crudControllerName}Viewer;";
+				$uses[]="use controllers\\crud\\viewers\\{$crudControllerName}Viewer;";
 				$uses[]="use Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
 				
 				$classContent.=$this->_createMethod("protected", "getModelViewer","",": ModelViewer","\n\t\treturn new {$crudControllerName}Viewer(\$this);");
 				$messages[]=$this->createModelViewerClass($crudControllerName);
 			}
 			if(isset($_POST["crud-files"])){
-				$uses[]="use controllers\\files\\{$crudControllerName}Files;";
+				$uses[]="use controllers\\crud\\files\\{$crudControllerName}Files;";
 				$uses[]="use Ubiquity\\controllers\\crud\\CRUDFiles;";
 				$classContent.=$this->_createMethod("protected", "getFiles","",": CRUDFiles","\n\t\treturn new {$crudControllerName}Files(\$this);");
 				$crudFiles=$_POST["crud-views"];
@@ -92,13 +93,13 @@ trait CRUDTrait{
 	}
 	
 	protected function createModelViewerClass($crudControllerName){
-		$ns=Startup::getNS("controllers")."viewers";
+		$ns=Startup::getNS("controllers")."crud\\viewers";
 		$uses="\nuse Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
 		return $this->_createClass("class.tpl", $crudControllerName."Viewer", $ns, $uses, "extends ModelViewer", "\t//use override/implement Methods");
 	}
 	
 	protected function createCRUDFilesClass($crudControllerName,$classContent=""){
-		$ns=Startup::getNS("controllers")."files";
+		$ns=Startup::getNS("controllers")."crud\\files";
 		$uses="\nuse Ubiquity\\controllers\\crud\\CRUDFiles;";
 		return $this->_createClass("class.tpl", $crudControllerName."Files", $ns, $uses, "extends CRUDFiles", $classContent);
 	}

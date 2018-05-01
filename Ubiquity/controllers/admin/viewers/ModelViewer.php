@@ -16,6 +16,9 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\DAO;
 use Ubiquity\controllers\crud\CRUDHelper;
 use Ajax\common\html\HtmlDoubleElement;
+use Ajax\semantic\html\elements\HtmlButton;
+use Ajax\semantic\widgets\datatable\PositionInTable;
+use Ajax\semantic\html\elements\HtmlLabel;
 
 class ModelViewer {
 	
@@ -53,6 +56,20 @@ class ModelViewer {
 		$form->fieldAsMessage ( "_message", [ "icon" => $message ["icon"] ] );
 		$instance->_message = $className;
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
+		$this->setFormFieldsComponent($form, $fieldTypes);
+		$this->relationMembersInForm ( $form, $instance, $className );
+		$form->setCaptions ( $this->getFormCaptions ( $form->getInstanceViewer ()->getVisibleProperties (), $className, $instance ) );
+		$form->setCaption ( "_message", $message ["message"] );
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/update", "#frm-add-update" );
+		return $form;
+	}
+	
+	/**
+	 * Sets the components for each field
+	 * @param DataForm $form
+	 * @param array $fieldTypes associative array of field names (keys) and types (values)
+	 */
+	public function setFormFieldsComponent(DataForm $form,$fieldTypes){
 		foreach ( $fieldTypes as $property => $type ) {
 			switch ($type) {
 				case "tinyint(1)" :
@@ -70,11 +87,27 @@ class ModelViewer {
 					break;
 			}
 		}
-		$this->relationMembersInForm ( $form, $instance, $className );
-		$form->setCaptions ( $this->getFormCaptions ( $form->getInstanceViewer ()->getVisibleProperties (), $className, $instance ) );
-		$form->setCaption ( "_message", $message ["message"] );
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/update", "#frm-add-update" );
-		return $form;
+	}
+	
+	public function getModelDataElement($instance,$model,$modal){
+		$adminRoute = $this->controller->_getBaseRoute ();
+		$semantic = $this->jquery->semantic ();
+		$fields = $this->controller->_getAdminData ()->getElementFieldNames( $model );
+		
+		$dataElement = $semantic->dataElement( "de", $instance );
+		$dataElement->setFields($fields);
+		$dataElement->setCaptions($this->getElementCaptions($fields, $model, $instance));
+		$dataElement->addButtonInToolbar("Close","_close basic");
+		$dataElement->getToolbar()->setSecondary();
+		$fkInstances=CRUDHelper::getFKIntances($instance, $model);
+		foreach ( $fkInstances as $member=>$fkInstanceArray ) {
+			if(array_search($member, $fields)!==false){
+				$dataElement->setValueFunction($member, function() use($fkInstanceArray,$member){
+					return $this->getFkMemberElement($member,$fkInstanceArray["objectFK"],$fkInstanceArray["fkClass"],$fkInstanceArray["fkTable"]);
+				});
+			}	
+		}
+		return $dataElement;
 	}
 	
 	/**
@@ -86,35 +119,85 @@ class ModelViewer {
 	 *        	model class name (long name)
 	 * @return DataTable
 	 */
-	public function getModelDataTable($instances, $model) {
+	public function getModelDataTable($instances, $model,$page=1) {
 		$adminRoute = $this->controller->_getBaseRoute ();
 		$semantic = $this->jquery->semantic ();
 		
 		$modal = ($this->isModal ( $instances, $model ) ? "modal" : "no");
-		$lv = $semantic->dataTable ( "lv", $model, $instances );
+		$dataTable = $this->getDataTableInstance( $instances,$model,$page );
 		$attributes = $this->controller->_getAdminData()->getFieldNames ( $model );
 		
-		$lv->setCaptions ( $this->getCaptions ( $attributes, $model ) );
-		$lv->setFields ( $attributes );
-		$lv->onPreCompile ( function () use ($attributes, &$lv) {
-			$lv->getHtmlComponent ()->colRight ( \count ( $attributes ) );
-		} );
-			
-		$lv->setIdentifierFunction ( CRUDHelper::getIdentifierFunction ( $model ) );
+		$dataTable->setCaptions ( $this->getCaptions ( $attributes, $model ) );
+		$dataTable->setButtons($this->getDataTableRowButtons());
+		$dataTable->setFields ( $attributes );
+
+		$dataTable->setIdentifierFunction ( CRUDHelper::getIdentifierFunction ( $model ) );
 		if($this->showDetailsOnDataTableClick()){
-			$lv->getOnRow ( "click", $adminRoute . "/showDetail", "#table-details", [ "attr" => "data-ajax" ] );
-			$lv->setActiveRowSelector ( "error" );
+			$dataTable->getOnRow ( "click", $adminRoute . "/showDetail", "#table-details", [ "attr" => "data-ajax" ] );
+			$dataTable->setActiveRowSelector ( "error" );
 		}
-		$lv->setUrls ( [ "delete" => $adminRoute . "/delete","edit" => $adminRoute . "/edit/" . $modal ] );
-		$lv->setTargetSelector ( [ "delete" => "#table-messages","edit" => "#frm-add-update" ] );
-		$lv->addClass ( "small very compact" );
-		$lv->addEditDeleteButtons ( false, [ "ajaxTransition" => "random" ], function ($bt) {
+		$dataTable->setUrls ( [ "refresh"=>$adminRoute . "/_refresh","delete" => $adminRoute . "/delete","edit" => $adminRoute . "/edit/" . $modal ,"display"=> $adminRoute."/display/".$modal] );
+		$dataTable->setTargetSelector ( [ "delete" => "#table-messages","edit" => "#frm-add-update" ,"display"=>"#table-details" ] );
+		$dataTable->addClass ( "small very compact" );
+		$lbl=new HtmlLabel("search-query","<span id='search-query-content'></span>");
+		$icon=$lbl->addIcon("delete",false);
+		$lbl->wrap("<span>","</span>");
+		$icon->getOnClick($adminRoute."/refreshTable","#lv",["jqueryDone"=>"replaceWith","hasLoader"=>"internal"]);
+		
+		$dataTable->addItemInToolbar($lbl);
+		$dataTable->addSearchInToolbar();
+		$dataTable->setToolbarPosition(PositionInTable::FOOTER);
+		$dataTable->getToolbar()->setSecondary();
+		$this->addAllButtons($dataTable, $attributes);
+		return $dataTable;
+	}
+	
+	public function recordsPerPage($model,$totalCount=0){
+		if($totalCount>6)
+			return 6;
+		return ;
+	}
+	
+	protected function getDataTableInstance($instances,$model,$page=1):DataTable{
+		$totalCount=DAO::count($model);
+		$semantic = $this->jquery->semantic ();
+		$recordsPerPage=$this->recordsPerPage($model,$totalCount);
+		if(is_numeric($recordsPerPage)){
+			$dataTable = $semantic->jsonDataTable( "lv", $model, $instances );
+			$dataTable->paginate($page,$totalCount,$recordsPerPage,5);
+			$dataTable->onPageChange('$("#table-details").html("");');
+			$dataTable->onSearchTerminate('$("#search-query-content").html(data);$("#table-details").html("");');
+		}else{
+			$dataTable = $semantic->dataTable( "lv", $model, $instances );
+		}
+		return $dataTable;
+	}
+	
+	/**
+	 * Returns an array of buttons ["display","edit","delete"] to display for each row in dataTable
+	 * @return string[]
+	 */
+	protected function getDataTableRowButtons(){
+		return ["edit","delete"];
+	}
+	
+	public function addAllButtons(DataTable $dataTable,$attributes){
+		$dataTable->onPreCompile ( function () use ($attributes, &$dataTable) {
+			$dataTable->getHtmlComponent ()->colRight ( \count ( $attributes ) );
+		} );
+		$dataTable->addAllButtons( false, [ "ajaxTransition" => "random" ], function ($bt) {
 			$bt->addClass ( "circular" );
 		}, function ($bt) {
 			$bt->addClass ( "circular" );
-		} );
-		return $lv;
+		}, function ($bt) {
+			$bt->addClass ( "circular" );
+		});		
 	}
+	
+	public function confirmButtons(HtmlButton $confirmBtn,HtmlButton $cancelBtn){
+		
+	}
+	
 	
 	/**
 	 * Condition to determine if the edit or add form is modal for $model objects
@@ -148,52 +231,110 @@ class ModelViewer {
 	}
 	
 	/**
-	 * Returns the header for a single foreign object (element is an instance, issue from ManyToOne)
+	 * Returns the captions for DataElement fields
+	 *
+	 * @param array $captions
+	 * @param string $className
+	 */
+	public function getElementCaptions($captions, $className, $instance) {
+		return array_map ( "ucfirst", $captions );
+	}
+	
+	/**
+	 * Returns the header for a single foreign object (element is an instance, issue from ManyToOne), (from DataTable)
 	 * @param string $member
 	 * @param string $className
 	 * @param object $object
 	 * @return HtmlHeader
 	 */
-	public function getFkHeaderElement($member, $className, $object) {
+	public function getFkHeaderElementDetails($member, $className, $object) {
 		return new HtmlHeader( "", 4, $member, "content" );
 	}
 	
 	/**
-	 * Returns the header for a list of foreign objects (issue from oneToMany or ManyToMany) 
+	 * Returns the header for a list of foreign objects (issue from oneToMany or ManyToMany), (from DataTable)
 	 * @param string $member
 	 * @param string $className
 	 * @param array $list
 	 * @return HtmlHeader
 	 */
-	public function getFkHeaderList($member, $className, $list) {
+	public function getFkHeaderListDetails($member, $className, $list) {
 		return new HtmlHeader( "", 4, $member . " (" . \count ( $list ) . ")", "content" );
 	}
 	
 	/**
-	 * Returns a component for displaying a single foreign object (manyToOne relation)
+	 * Returns a component for displaying a single foreign object (manyToOne relation), (from DataTable)
 	 * @param string $member
 	 * @param string $className
 	 * @param object $object
 	 * @return BaseHtml
 	 */
-	public function getFkElement($member, $className, $object) {
+	public function getFkElementDetails($member, $className, $object) {
 		return $this->jquery->semantic ()->htmlLabel ( "element-" . $className . "." . $member, $object . "" );
 	}
 	
 	/**
-	 * Returns a list component for displaying a collection of foreign objects (*ToMany relations)
+	 * Returns a list component for displaying a collection of foreign objects (*ToMany relations), (from DataTable)
 	 * @param string $member
 	 * @param string $className
 	 * @param array|\Traversable $list
 	 * @return HtmlCollection
 	 */
-	public function getFkList($member, $className, $list) {
+	public function getFkListDetails($member, $className, $list) {
 		$element = $this->jquery->semantic ()->htmlList ( "list-" . $className . "." . $member );
+		$element->setMaxVisible(15);
+		
 		return $element->addClass ( "animated divided celled" );
 	}
 	
 	/**
-	 * Returns a component for displaying a foreign object
+	 * Returns a component for displaying a foreign object (from DataTable)
+	 * @param string $memberFK
+	 * @param mixed $objectFK
+	 * @param string $fkClass
+	 * @param string $fkTable
+	 * @return string|NULL
+	 */
+	public function getFkMemberElementDetails($memberFK,$objectFK,$fkClass,$fkTable){
+		$header=new HtmlHeader("", 4, $memberFK, "content");
+		if (is_array($objectFK) || $objectFK instanceof \Traversable) {
+			$header=$this->getFkHeaderListDetails($memberFK, $fkClass, $objectFK);
+			$element=$this->getFkListDetails($memberFK, $fkClass, $objectFK);
+			foreach ( $objectFK as $oItem ) {
+				if (method_exists($oItem, "__toString")) {
+					$id=(CRUDHelper::getIdentifierFunction($fkClass))(0, $oItem);
+					$item=$element->addItem($oItem . "");
+					$item->setProperty("data-ajax", $fkTable . "." . $id);
+					$item->addClass("showTable");
+					$this->displayFkElementListDetails($item, $memberFK, $fkClass, $oItem);
+				}
+			}
+		} else {
+			if (method_exists($objectFK, "__toString")) {
+				$header=$this->getFkHeaderElementDetails($memberFK, $fkClass, $objectFK);
+				$id=(CRUDHelper::getIdentifierFunction($fkClass))(0, $objectFK);
+				$element=$this->getFkElementDetails($memberFK, $fkClass, $objectFK);
+				$element->setProperty("data-ajax", $fkTable . "." . $id)->addClass("showTable");
+			}
+		}
+		if(isset($element)){
+			return [$header,$element];
+		}
+		return null;
+	}
+	
+	/**
+	 * To modify for displaying an element in a list component of foreign objects (from DataTable)
+	 * @param HtmlDoubleElement $element
+	 * @param string $member
+	 * @param string $className
+	 * @param object $object
+	 */
+	public function displayFkElementListDetails($element, $member, $className, $object) {
+	}
+	
+	/**
+	 * Returns a component for displaying a foreign object (from DataElement)
 	 * @param string $memberFK
 	 * @param mixed $objectFK
 	 * @param string $fkClass
@@ -201,10 +342,9 @@ class ModelViewer {
 	 * @return string|NULL
 	 */
 	public function getFkMemberElement($memberFK,$objectFK,$fkClass,$fkTable){
-		$header=new HtmlHeader("", 4, $memberFK, "content");
+		$element="";
 		if (is_array($objectFK) || $objectFK instanceof \Traversable) {
-			$header=$this->getFkHeaderList($memberFK, $fkClass, $objectFK);
-			$element=$this->getFkList($memberFK, $fkClass, $objectFK);
+			$element=$this->getFkList($memberFK,$objectFK);
 			foreach ( $objectFK as $oItem ) {
 				if (method_exists($oItem, "__toString")) {
 					$id=(CRUDHelper::getIdentifierFunction($fkClass))(0, $oItem);
@@ -216,20 +356,29 @@ class ModelViewer {
 			}
 		} else {
 			if (method_exists($objectFK, "__toString")) {
-				$header=$this->getFkHeaderElement($memberFK, $fkClass, $objectFK);
 				$id=(CRUDHelper::getIdentifierFunction($fkClass))(0, $objectFK);
 				$element=$this->getFkElement($memberFK, $fkClass, $objectFK);
 				$element->setProperty("data-ajax", $fkTable . "." . $id)->addClass("showTable");
 			}
 		}
-		if(isset($element)){
-			return $header.$element;
-		}
-		return null;
+		return $element;
 	}
 	
 	/**
-	 * To modify for displaying an element in a list component of foreign objects
+	 * Returns a list component for displaying a collection of foreign objects (*ToMany relations), (from DataElement) 
+	 * @param string $member
+	 * @param string $className
+	 * @param array|\Traversable $list
+	 * @return HtmlCollection
+	 */
+	public function getFkList($member, $list) {
+		$element = $this->jquery->semantic ()->htmlList ( "list-". $member );
+		$element->setMaxVisible(10);
+		return $element->addClass ( "animated ordered" );
+	}
+	
+	/**
+	 * To modify for displaying an element in a list component of foreign objects, (from DataElement)
 	 * @param HtmlDoubleElement $element
 	 * @param string $member
 	 * @param string $className
@@ -238,6 +387,21 @@ class ModelViewer {
 	public function displayFkElementList($element, $member, $className, $object) {
 	}
 	
+	/**
+	 * Returns a component for displaying a single foreign object (manyToOne relation), (from DataElement)
+	 * @param string $member
+	 * @param string $className
+	 * @param object $object
+	 * @return BaseHtml
+	 */
+	public function getFkElement($member, $className, $object) {
+		return $this->jquery->semantic ()->htmlLabel ( "element-" . $className . "." . $member, $object . "" );
+	}
+	
+	/**
+	 * To override to make sure that the detail of a clicked object is displayed or not
+	 * @return boolean Return true if you want to see details
+	 */
 	public function showDetailsOnDataTableClick(){
 		return true;
 	}

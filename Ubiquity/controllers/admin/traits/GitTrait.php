@@ -32,9 +32,9 @@ trait GitTrait{
 
 	abstract public function git();
 
-	abstract protected function showConfMessage($content, $type, $url, $responseElement, $data, $attributes = NULL);
+	abstract protected function showConfMessage($content, $type, $itle,$url, $responseElement, $data, $attributes = NULL): HtmlMessage;
 
-	abstract protected function showSimpleMessage($content, $type, $icon = "info", $timeout = NULL, $staticName = null): HtmlMessage;
+	abstract protected function showSimpleMessage($content, $type, $title=null,$icon = "info", $timeout = NULL, $staticName = null): HtmlMessage;
 
 	public function gitRefresh() {
 		echo $this->_git ();

@@ -7,6 +7,8 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\database\DbCache;
+use Ubiquity\db\SqlUtils;
+use Ubiquity\utils\base\UString;
 
 class CRUDHelper {
 	public static function getIdentifierFunction($model) {
@@ -23,7 +25,22 @@ class CRUDHelper {
 		};
 	}
 	
+	public static function search($model,$search,$fields){
+		$words=preg_split("@(\s*?(\(|\)|\|\||\&\&)\s*?)@", $search);
+		$words=array_filter($words,'strlen');
+		$condition=$search;
+		foreach ($words as $word){
+			$word=trim($word);
+			$condition=UString::replaceFirstOccurrence($word, "(".SqlUtils::getSearchWhere($fields,$word).")", $condition);
+		}
+		
+		$condition=str_replace("||", " OR ", $condition);
+		$condition=str_replace("&&", " AND ", $condition);
+		return DAO::getAll($model,$condition);
+	}
+	
 	public static function update($instance,$values,$updateManyToOneInForm=true,$updateManyToManyInForm=false) {
+		$update=false;
 		$className=\get_class($instance);
 		$relations=OrmUtils::getManyToOneFields($className);
 		$fieldTypes=OrmUtils::getFieldTypes($className);

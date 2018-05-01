@@ -76,6 +76,11 @@ class UString {
 		}
 		return $newstring;
 	}
+	
+	public static function replaceFirstOccurrence($pattern, $replacement, $subject){
+		$pattern = '/'.preg_quote($pattern, '/').'/';
+		return preg_replace($pattern, $replacement, $subject, 1);
+	}
 
 	public static function replaceArray($haystack, $needle, $replaceArray) {
 		$result=$haystack;
