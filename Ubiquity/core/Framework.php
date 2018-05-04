@@ -13,6 +13,7 @@ use Ubiquity\controllers\Router;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\UCookie;
+use Ubiquity\orm\OrmUtils;
 
 class Framework {
 	public const version = '2.0.3';
@@ -31,6 +32,10 @@ class Framework {
 
 	public static function getRouter() {
 		return new Router ();
+	}
+	
+	public static function getORM() {
+		return new OrmUtils();
 	}
 
 	public static function getRequest() {

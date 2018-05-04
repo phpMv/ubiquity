@@ -38,7 +38,7 @@ trait RestTrait{
 	 * @param string $staticName
 	 * @return HtmlMessage
 	 */
-	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
+	abstract protected function showSimpleMessage($content, $type, $title=null,$icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	public function initRestCache($refresh=true) {
 		$config=Startup::getConfig();
@@ -46,7 +46,7 @@ trait RestTrait{
 		CacheManager::initCache($config, "rest");
 		CacheManager::initCache($config, "controllers");
 		$message=\ob_get_clean();
-		echo $this->showSimpleMessage(\nl2br($message), "info", "info", 4000);
+		echo $this->showSimpleMessage(\nl2br($message), "info","Rest", "info", 4000);
 		if ($refresh === true)
 			$this->_refreshRest(true);
 		echo $this->jquery->compile($this->view);
@@ -59,10 +59,10 @@ trait RestTrait{
 			if (\sizeof($restRoutes) > 0) {
 				$result=$this->_getAdminViewer()->getRestRoutesTab($restRoutes);
 			} else {
-				$result=$this->showSimpleMessage("No resource Rest found. You can add a new resource.", "", "warning circle", null, "tabsRest");
+				$result=$this->showSimpleMessage("No resource Rest found. You can add a new resource.", "","Rest", "warning circle", null, "tabsRest");
 			}
 		} catch ( UbiquityException $e ) {
-			$result.=$this->showSimpleMessage(\nl2br($e->getMessage()), "error", "warning circle", null, "tabsRest");
+			$result.=$this->showSimpleMessage(\nl2br($e->getMessage()), "error","Rest error", "warning circle", null, "tabsRest");
 		}
 		$this->_addRestDataTableBehavior();
 		if ($refresh) {
@@ -106,7 +106,7 @@ trait RestTrait{
 
 	protected function _displayActionDoc($controller, $action) {
 		$docParser=DocParser::docMethodParser($controller, $action);
-		$msg=$this->showSimpleMessage($docParser->getDescriptionAsHtml(), "", "help circle blue", null, "msg-help-" . $action . $controller);
+		$msg=$this->showSimpleMessage($docParser->getDescriptionAsHtml(), "", "","help circle blue", null, "msg-help-" . $action . $controller);
 		$msg->addHeader("Method " . $action);
 		$msg->addList($docParser->getMethodParamsReturnAsHtml());
 		$msg->addClass("hidden transition");
@@ -156,12 +156,12 @@ trait RestTrait{
 					if ($restControllerNS !== "")
 						$namespace="namespace " . $restControllerNS . ";";
 					UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/restController.tpl", $filename, [ "%resource%" => $resource,"%route%" => $route,"%controllerName%" => $controllerName,"%namespace%" => $namespace ]);
-					echo $this->showSimpleMessage("The <b>" . $controllerName . "</b> Rest controller has been created in <b>" . UFileSystem::cleanPathname($filename) . "</b>.", "success", "checkmark circle", 30000, "msgGlobal");
+					echo $this->showSimpleMessage("The <b>" . $controllerName . "</b> Rest controller has been created in <b>" . UFileSystem::cleanPathname($filename) . "</b>.", "success","Rest creation" ,"checkmark circle", 30000, "msgGlobal");
 					if (isset($_POST["re-init"])) {
 						$this->initRestCache(false);
 					}
 				} else {
-					echo $this->showSimpleMessage("The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> Rest controller!", "warning", "warning circle", 30000, "msgGlobal");
+					echo $this->showSimpleMessage("The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> Rest controller!", "warning","Rest error", "warning circle", 30000, "msgGlobal");
 				}
 				$this->_refreshRest(true);
 			}

@@ -279,7 +279,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function rest() {
 		$this->getHeader ( "rest" );
-		$this->showSimpleMessage ( "Router Rest cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.rest" ) . "</b>", "info", "info circle", null, "msgRest" );
+		$this->showSimpleMessage ( "Router Rest cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.rest" ) . "</b>", "info","Rest service", "info circle", null, "msgRest" );
 		$this->_refreshRest ();
 		$this->jquery->getOnClick ( "#bt-init-rest-cache", $this->_getAdminFiles ()->getAdminBaseRoute () . "/initRestCache", "#divRest", [ "attr" => "","dataType" => "html" ] );
 		$this->jquery->postOn ( "change", "#access-token", $this->_getAdminFiles ()->getAdminBaseRoute () . "/_saveToken", "{_token:$(this).val()}" );

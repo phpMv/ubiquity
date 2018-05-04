@@ -80,4 +80,12 @@ class CRUDDatas {
 	public function getUpdateManyToOneInForm() {
 		return true;
 	}
+	
+	/**
+	 * Defines whether the refresh is partial or complete after an instance update
+	 * @return boolean
+	 */
+	public function refreshPartialInstance(){
+		return true;
+	}
 }

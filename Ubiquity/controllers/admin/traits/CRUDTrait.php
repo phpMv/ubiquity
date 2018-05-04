@@ -17,7 +17,7 @@ use Ubiquity\utils\base\UFileSystem;
  */
 trait CRUDTrait{
 	
-	private $views=["index"=>"@framework/crud/index.html","form"=>"@framework/crud/form.html"];
+	private $views=["index"=>"@framework/crud/index.html","form"=>"@framework/crud/form.html","display"=>"@framework/crud/display.html"];
 	
 	abstract protected function _createMethod($access,$name,$parameters="",$return="",$content="",$comment="");
 	

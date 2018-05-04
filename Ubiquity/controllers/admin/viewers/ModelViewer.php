@@ -95,10 +95,11 @@ class ModelViewer {
 		$fields = $this->controller->_getAdminData ()->getElementFieldNames( $model );
 		
 		$dataElement = $semantic->dataElement( "de", $instance );
+		$pk=OrmUtils::getFirstKeyValue($instance);
+		$dataElement->getInstanceViewer()->setIdentifierFunction(function() use($pk){return $pk;});
 		$dataElement->setFields($fields);
 		$dataElement->setCaptions($this->getElementCaptions($fields, $model, $instance));
-		$dataElement->addButtonInToolbar("Close","_close basic");
-		$dataElement->getToolbar()->setSecondary();
+
 		$fkInstances=CRUDHelper::getFKIntances($instance, $model);
 		foreach ( $fkInstances as $member=>$fkInstanceArray ) {
 			if(array_search($member, $fields)!==false){
@@ -142,6 +143,7 @@ class ModelViewer {
 		$lbl=new HtmlLabel("search-query","<span id='search-query-content'></span>");
 		$icon=$lbl->addIcon("delete",false);
 		$lbl->wrap("<span>","</span>");
+		$lbl->setProperty("style", "display: none;");
 		$icon->getOnClick($adminRoute."/refreshTable","#lv",["jqueryDone"=>"replaceWith","hasLoader"=>"internal"]);
 		
 		$dataTable->addItemInToolbar($lbl);
@@ -165,8 +167,8 @@ class ModelViewer {
 		if(is_numeric($recordsPerPage)){
 			$dataTable = $semantic->jsonDataTable( "lv", $model, $instances );
 			$dataTable->paginate($page,$totalCount,$recordsPerPage,5);
-			$dataTable->onPageChange('$("#table-details").html("");');
-			$dataTable->onSearchTerminate('$("#search-query-content").html(data);$("#table-details").html("");');
+			$dataTable->onActiveRowChange('$("#table-details").html("");');
+			$dataTable->onSearchTerminate('$("#search-query-content").html(data);$("#search-query").show();$("#table-details").html("");');
 		}else{
 			$dataTable = $semantic->dataTable( "lv", $model, $instances );
 		}
@@ -374,7 +376,7 @@ class ModelViewer {
 	public function getFkList($member, $list) {
 		$element = $this->jquery->semantic ()->htmlList ( "list-". $member );
 		$element->setMaxVisible(10);
-		return $element->addClass ( "animated ordered" );
+		return $element->addClass ( "animated" );
 	}
 	
 	/**

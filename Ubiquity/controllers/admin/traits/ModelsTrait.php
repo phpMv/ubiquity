@@ -14,7 +14,6 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\controllers\rest\ResponseFormatter;
 use Ajax\semantic\widgets\datatable\Pagination;
-use Ajax\semantic\html\elements\HtmlLabel;
 
 /**
  *
@@ -52,8 +51,9 @@ trait ModelsTrait{
 
 	public function refreshTable() {
 		$model=$_SESSION["model"];
-		echo $this->_showModel($model);
-		echo $this->jquery->compile($this->view);
+		$compo= $this->_showModel($model);
+		$this->jquery->execAtLast('$("#table-details").html("");');
+		$this->jquery->renderView("@framework/Admin/main/component.html",["compo"=>$compo]);
 	}
 
 	public function showTableClick($tableAndId) {
@@ -108,7 +108,7 @@ trait ModelsTrait{
 		}else{
 			$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
 			$compo= $this->_getModelViewer()->getModelDataTable($instances, $model)->refresh(["tbody"]);
-			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");');
+			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");$("#search-query").show();$("#table-details").html("");');
 			$this->jquery->renderView("@framework/Admin/main/component.html",["compo"=>$compo]);
 		}
 	}
@@ -153,7 +153,8 @@ trait ModelsTrait{
 		$updated=CRUDHelper::update($instance, $_POST,$this->_getAdminData()->getUpdateManyToOneInForm(),$this->_getAdminData()->getUpdateManyToManyInForm());
 		if($updated){
 			$message->setType("success")->setIcon("check circle outline");
-			$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/refreshTable", "#lv", [ "jqueryDone" => "replaceWith" ]);
+			//$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/refreshTable", "#lv", [ "jqueryDone" => "replaceWith" ]);
+			$this->jquery->setJsonToElement(OrmUtils::objectAsJSON($instance));
 		} else {
 			$message->setMessage("An error has occurred. Can not save changes.")->setType("error")->setIcon("warning circle");
 		}

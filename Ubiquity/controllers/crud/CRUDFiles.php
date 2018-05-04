@@ -16,5 +16,9 @@ class CRUDFiles {
 	public function getViewForm() {
 		return $this->viewBase."/form.html";
 	}
+	
+	public function getViewDisplay() {
+		return $this->viewBase."/display.html";
+	}
 }
 

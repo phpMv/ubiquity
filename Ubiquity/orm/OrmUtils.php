@@ -6,6 +6,7 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\base\UArray;
+use Ubiquity\controllers\rest\ResponseFormatter;
 
 /**
  * Utilitaires de mappage Objet/relationnel
@@ -260,5 +261,11 @@ class OrmUtils {
 			}
 		}
 		return null;
+	}
+	
+	public static function objectAsJSON($instance){
+		$formatter=new ResponseFormatter();
+		$datas=$formatter->cleanRestObject($instance);
+		return $formatter->format(["pk"=>self::getFirstKeyValue($instance),"object"=>$datas]);
 	}
 }

@@ -11,6 +11,7 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\controllers\rest\ResponseFormatter;
 use Ajax\semantic\widgets\datatable\Pagination;
+use Ubiquity\orm\OrmUtils;
 
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface{
 	use MessagesTrait;
@@ -66,7 +67,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		}else{
 			$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
 			$compo= $this->_getModelViewer()->getModelDataTable($instances, $model)->refresh(["tbody"]);
-			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");');
+			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");$("#search-query").show();$("#table-details").html("");');
 			$this->jquery->renderView("@framework/main/component.html",["compo"=>$compo]);
 		}
 	}
@@ -94,9 +95,13 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	
 	public function display($modal="no",$ids=""){
 		$instance=$this->getModelInstance($ids);
+		$key=OrmUtils::getFirstKeyValue($instance);
 		$this->jquery->execOn("click","._close",'$("#table-details").html("");$("#dataTable").show();');
-		echo $this->_getModelViewer()->getModelDataElement($instance, $this->model,$modal);
-		echo $this->jquery->compile($this->view);
+		$this->jquery->getOnClick("._edit", $this->_getBaseRoute()."/edit/".$modal."/".$key,"#frm-add-update");
+		$this->jquery->getOnClick("._delete", $this->_getBaseRoute()."/delete/".$key,"#table-messages");
+		
+		$this->_getModelViewer()->getModelDataElement($instance, $this->model,$modal);
+		$this->jquery->renderView($this->_getFiles()->getViewDisplay(), [ "classname" => $this->model,"instance"=>$instance,"pk"=>$key ]);
 	}
 	
 	protected function _edit($instance, $modal="no") {
@@ -142,7 +147,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				if (DAO::remove($instance)) {
 					$message=new CRUDMessage("Deletion of `<b>" . $instanceString . "</b>`","Deletion","info","info circle",4000);
 					$message=$this->onSuccessDeleteMessage($message);
-					$this->jquery->exec("$('tr[data-ajax={$ids}]').remove();", true);
+					$this->jquery->exec("$('._element[data-ajax={$ids}]').remove();", true);
 				} else {
 					$message=new CRUDMessage("Can not delete `" . $instanceString . "`","Deletion","warning","warning circle");
 					$message=$this->onErrorDeleteMessage($message);
@@ -186,8 +191,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	}
 	
 	public function refreshTable() {
-		echo $this->_showModel();
-		echo $this->jquery->compile($this->view);
+		$compo= $this->_showModel();
+		$this->jquery->execAtLast('$("#table-details").html("");');
+		$this->jquery->renderView("@framework/main/component.html",["compo"=>$compo]);	
 	}
 	
 	/**
@@ -200,13 +206,21 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if($updated){
 			$message->setType("success")->setIcon("check circle outline");
 			$message=$this->onSuccessUpdateMessage($message);
-			$this->jquery->get($this->_getBaseRoute() . "/refreshTable", "#lv", [ "jqueryDone" => "replaceWith" ]);
+			$this->refreshInstance($instance);
 		} else {
 			$message->setMessage("An error has occurred. Can not save changes.")->setType("error")->setIcon("warning circle");
 			$message=$this->onErrorUpdateMessage($message);
 		}
 		echo $this->_showSimpleMessage($message,"updateMsg");
 		echo $this->jquery->compile($this->view);
+	}
+	
+	protected function refreshInstance($instance){
+		if($this->_getAdminData()->refreshPartialInstance()){
+			$this->jquery->setJsonToElement(OrmUtils::objectAsJSON($instance));
+		}else{
+			$this->jquery->get($this->_getBaseRoute() . "/refreshTable", "#lv", [ "jqueryDone" => "replaceWith" ]);
+		}
 	}
 	
 	/**
@@ -273,7 +287,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		return new ModelViewer($this);
 	}
 	
-	private function _getModelViewer():modelViewer{
+	private function _getModelViewer():ModelViewer{
 		return $this->getSingleton($this->modelViewer,"getModelViewer");
 	}
 	
