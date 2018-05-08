@@ -232,13 +232,13 @@ trait ControllersTrait{
 				$actionContent=UFileSystem::openReplaceInTemplateFile($frameworkDir . "/admin/templates/action.tpl", [ "%route%" => "\n" . $routeAnnotation,"%actionName%" => $action,"%parameters%" => $parameters,"%content%" => $content ]);
 				$fileContent=\substr_replace($fileContent, "\n%content%", $posLast - 1, 0);
 				if (!CodeUtils::isValidCode('<?php ' . $content)) {
-					echo $this->showSimpleMessage("Errors parsing action content!", "warning", "warning circle", null, "msgControllers");
+					echo $this->showSimpleMessage("Errors parsing action content!", "warning","Creation", "warning circle", null, "msgControllers");
 					echo $this->jquery->compile($this->view);
 					return;
 				} else {
 					if (UFileSystem::replaceWriteFromContent($fileContent . "\n", $ctrlFilename, [ '%content%' => $actionContent ])) {
 						$msgContent="The action <b>{$action}</b> is created in controller <b>{$controller}</b>" . $msgContent;
-						echo $this->showSimpleMessage($msgContent, "info", "info circle", null, "msgControllers");
+						echo $this->showSimpleMessage($msgContent, "info","Creation", "info circle", null, "msgControllers");
 					}
 				}
 			}
@@ -286,9 +286,9 @@ trait ControllersTrait{
 		$filename=UFileSystem::cleanFilePathname($directory.DS.lcfirst($classname).".php");
 		if(!file_exists($filename)){
 			UFileSystem::openReplaceWriteFromTemplateFile ( $frameworkDir . "/admin/templates/" . $template, $filename, $variables );
-			$message = $this->showSimpleMessage ( "The <b>" . $classname . "</b> class has been created in <b>" . $filename . "</b>.", "success", "checkmark circle");
+			$message = $this->showSimpleMessage ( "The <b>" . $classname . "</b> class has been created in <b>" . $filename . "</b>.", "success","Creation", "checkmark circle");
 		}else{
-			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $classname . "</b> class!", "warning", "warning circle");
+			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $classname . "</b> class!", "warning","Creation", "warning circle");
 		}
 		return $message;
 	}

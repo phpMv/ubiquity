@@ -48,6 +48,8 @@ trait CRUDTrait{
 		$this->jquery->click("#validate-btn",'$("#crud-controller-frm").form("submit");');
 		$this->jquery->execOn("click", "#cancel-btn", '$("#frm").html("");');
 		$this->jquery->exec("$('#crud-viewer-ck').checkbox();",true);
+		$this->jquery->exec("$('#crud-events-ck').checkbox();",true);
+		
 		$this->jquery->exec('$("#crud-files-ck").checkbox({onChange:function(){ $("#view-list").toggle($("#crud-files-ck").checkbox("is checked"));}});',true);
 		$this->jquery->renderView($this->_getAdminFiles()->getViewAddCrudController(),["controllerNS"=>Startup::getNS ( "controllers" )]);
 	}
@@ -68,10 +70,18 @@ trait CRUDTrait{
 				$classContent.=$this->_createMethod("protected", "getModelViewer","",": ModelViewer","\n\t\treturn new {$crudControllerName}Viewer(\$this);");
 				$messages[]=$this->createModelViewerClass($crudControllerName);
 			}
+			if(isset($_POST["crud-events"])){
+				$uses[]="use controllers\\crud\\events\\{$crudControllerName}Events;";
+				$uses[]="use Ubiquity\\controllers\\crud\\CRUDEvents;";
+				
+				$classContent.=$this->_createMethod("protected", "getEvents","",": CRUDEvents","\n\t\treturn new {$crudControllerName}Events();");
+				$messages[]=$this->createEventsClass($crudControllerName);
+			}
+			
 			if(isset($_POST["crud-files"])){
 				$uses[]="use controllers\\crud\\files\\{$crudControllerName}Files;";
 				$uses[]="use Ubiquity\\controllers\\crud\\CRUDFiles;";
-				$classContent.=$this->_createMethod("protected", "getFiles","",": CRUDFiles","\n\t\treturn new {$crudControllerName}Files(\$this);");
+				$classContent.=$this->_createMethod("protected", "getFiles","",": CRUDFiles","\n\t\treturn new {$crudControllerName}Files();");
 				$crudFiles=$_POST["crud-views"];
 				$crudFiles=explode(",", $crudFiles);
 				$classFilesContent=[];
@@ -96,6 +106,12 @@ trait CRUDTrait{
 		$ns=Startup::getNS("controllers")."crud\\viewers";
 		$uses="\nuse Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
 		return $this->_createClass("class.tpl", $crudControllerName."Viewer", $ns, $uses, "extends ModelViewer", "\t//use override/implement Methods");
+	}
+	
+	protected function createEventsClass($crudControllerName){
+		$ns=Startup::getNS("controllers")."crud\\events";
+		$uses="\nuse Ubiquity\\controllers\\crud\\CRUDEvents;";
+		return $this->_createClass("class.tpl", $crudControllerName."Events", $ns, $uses, "extends CRUDEvents", "\t//use override/implement Methods");
 	}
 	
 	protected function createCRUDFilesClass($crudControllerName,$classContent=""){

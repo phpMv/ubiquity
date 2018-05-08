@@ -49,9 +49,9 @@ trait ModelsTrait{
 		$this->loadView($this->_getAdminFiles()->getViewShowTable(), [ "classname" => $model ]);
 	}
 
-	public function refreshTable() {
+	public function refreshTable($id=null) {
 		$model=$_SESSION["model"];
-		$compo= $this->_showModel($model);
+		$compo= $this->_showModel($model,$id);
 		$this->jquery->execAtLast('$("#table-details").html("");');
 		$this->jquery->renderView("@framework/Admin/main/component.html",["compo"=>$compo]);
 	}
@@ -63,7 +63,7 @@ trait ModelsTrait{
 			$id=$array[1];
 			$this->jquery->exec("$('#menuDbs .active').removeClass('active');$('.ui.label.left.pointing.teal').removeClass('left pointing teal active');$(\"[data-ajax='" . $table . "']\").addClass('active');$(\"[data-ajax='" . $table . "']\").find('.ui.label').addClass('left pointing teal');", true);
 			$this->showTable($table,$id);
-			$this->jquery->exec("$(\"tr[data-ajax='" . $id . "']\").click();", true);
+			$this->jquery->execAtLast("$(\"tr[data-ajax='" . $id . "']\").click();");
 			echo $this->jquery->compile();
 		}
 	}
@@ -93,8 +93,8 @@ trait ModelsTrait{
 		return CRUDHelper::search($model, $search, $fields);
 	}
 	
-	public function _refresh(){
-		$model=$_SESSION["model"];
+	public function refresh_(){
+		$model=$_POST["_model"];
 		if(isset($_POST["s"])){
 			$instances=$this->search($model, $_POST["s"]);
 		}else{
@@ -150,11 +150,16 @@ trait ModelsTrait{
 	public function update() {
 		$message=new CRUDMessage("Modifications were successfully saved", "Updating");
 		$instance=@$_SESSION["instance"];
+		$isNew=$instance->_new;
 		$updated=CRUDHelper::update($instance, $_POST,$this->_getAdminData()->getUpdateManyToOneInForm(),$this->_getAdminData()->getUpdateManyToManyInForm());
 		if($updated){
+			$pk=OrmUtils::getFirstKeyValue($instance);
 			$message->setType("success")->setIcon("check circle outline");
-			//$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/refreshTable", "#lv", [ "jqueryDone" => "replaceWith" ]);
-			$this->jquery->setJsonToElement(OrmUtils::objectAsJSON($instance));
+			if($isNew){
+				$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/refreshTable/".$pk, "#lv", [ "jqueryDone" => "replaceWith" ]);
+			}else{
+				$this->jquery->setJsonToElement(OrmUtils::objectAsJSON($instance));
+			}
 		} else {
 			$message->setMessage("An error has occurred. Can not save changes.")->setType("error")->setIcon("warning circle");
 		}
@@ -169,7 +174,7 @@ trait ModelsTrait{
 		if(isset($instance)){
 			return $instance;
 		}
-		echo $this->showSimpleMessage("This object does not exist!", "warning","warning circle");
+		echo $this->showSimpleMessage("This object does not exist!", "warning","Get object","warning circle");
 		echo $this->jquery->compile($this->view);
 		exit(1);
 	}
@@ -182,10 +187,10 @@ trait ModelsTrait{
 			$instanceString=get_class($instance);
 		if (sizeof($_POST) > 0) {
 			if (DAO::remove($instance)) {
-				$message=$this->showSimpleMessage("Deletion of `<b>" . $instanceString . "</b>`", "info", "info", 4000);
+				$message=$this->showSimpleMessage("Deletion of `<b>" . $instanceString . "</b>`", "info","Deletion", "info", 4000);
 				$this->jquery->exec("$('tr[data-ajax={$ids}]').remove();", true);
 			} else {
-				$message=$this->showSimpleMessage("Can not delete `" . $instanceString . "`", "warning", "warning");
+				$message=$this->showSimpleMessage("Can not delete `" . $instanceString . "`", "warning","Error", "warning");
 			}
 		} else {
 			$message=$this->showConfMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "error","Remove confirmation", $this->_getAdminFiles()->getAdminBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);

@@ -137,7 +137,7 @@ class ModelViewer {
 			$dataTable->getOnRow ( "click", $adminRoute . "/showDetail", "#table-details", [ "attr" => "data-ajax" ] );
 			$dataTable->setActiveRowSelector ( "error" );
 		}
-		$dataTable->setUrls ( [ "refresh"=>$adminRoute . "/_refresh","delete" => $adminRoute . "/delete","edit" => $adminRoute . "/edit/" . $modal ,"display"=> $adminRoute."/display/".$modal] );
+		$dataTable->setUrls ( [ "refresh"=>$adminRoute . "/refresh_","delete" => $adminRoute . "/delete","edit" => $adminRoute . "/edit/" . $modal ,"display"=> $adminRoute."/display/".$modal] );
 		$dataTable->setTargetSelector ( [ "delete" => "#table-messages","edit" => "#frm-add-update" ,"display"=>"#table-details" ] );
 		$dataTable->addClass ( "small very compact" );
 		$lbl=new HtmlLabel("search-query","<span id='search-query-content'></span>");
@@ -193,7 +193,8 @@ class ModelViewer {
 			$bt->addClass ( "circular" );
 		}, function ($bt) {
 			$bt->addClass ( "circular" );
-		});		
+		});
+		$dataTable->setDisplayBehavior(["jsCallback"=>'$("#dataTable").hide();',"ajaxTransition"=>"random"]);
 	}
 	
 	public function confirmButtons(HtmlButton $confirmBtn,HtmlButton $cancelBtn){
