@@ -25,7 +25,7 @@ class CRUDHelper {
 		};
 	}
 	
-	public static function search($model,$search,$fields){
+	public static function search($model,$search,$fields,$initialCondition="1=1"){
 		$words=preg_split("@(\s*?(\(|\)|\|\||\&\&)\s*?)@", $search);
 		$words=array_filter($words,'strlen');
 		$condition=$search;
@@ -36,6 +36,7 @@ class CRUDHelper {
 		
 		$condition=str_replace("||", " OR ", $condition);
 		$condition=str_replace("&&", " AND ", $condition);
+		$condition='('.$condition.') AND ('.$initialCondition.')';
 		return DAO::getAll($model,$condition);
 	}
 	

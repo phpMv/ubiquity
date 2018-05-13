@@ -38,7 +38,8 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	protected function getInstances($page=1,$id=null){
 		$this->activePage=$page;
 		$model=$this->model;
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model));
+		$condition=$this->_getInstancesFilter($model);
+		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model,$condition));
 		if(is_numeric($recordsPerPage)){
 			if(isset($id)){
 				$rownum=DAO::getRownum($model, $id);
@@ -46,12 +47,17 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			}
 			return DAO::paginate($model,$this->activePage,$recordsPerPage);
 		}
-		return DAO::getAll($model);
+		return DAO::getAll($model,$condition);
+	}
+	
+	public function _getInstancesFilter($model){
+		return "1=1";
 	}
 	
 	protected function search($model,$search){
 		$fields=$this->_getAdminData()->getSearchFieldNames($model);
-		return CRUDHelper::search($model, $search, $fields);
+		$condition=$this->_getInstancesFilter($model);
+		return CRUDHelper::search($model, $search, $fields,$condition);
 	}
 	
 	public function refresh_(){
@@ -61,7 +67,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		}else{
 			$instances=$this->getInstances(URequest::post("p",1));
 		}
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model));
+		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model,$this->_getInstancesFilter($model)));
 		if(isset($recordsPerPage)){
 			UResponse::asJSON();
 			$responseFormatter=new ResponseFormatter();

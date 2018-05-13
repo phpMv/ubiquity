@@ -161,7 +161,7 @@ class ModelViewer {
 	}
 	
 	protected function getDataTableInstance($instances,$model,$page=1):DataTable{
-		$totalCount=DAO::count($model);
+		$totalCount=DAO::count($model,$this->controller->_getInstancesFilter($model));
 		$semantic = $this->jquery->semantic ();
 		$recordsPerPage=$this->recordsPerPage($model,$totalCount);
 		if(is_numeric($recordsPerPage)){

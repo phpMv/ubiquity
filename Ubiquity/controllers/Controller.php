@@ -33,9 +33,9 @@ abstract class Controller {
 	 * Automatically invokes the isValid () method to check if access is allowed
 	 */
 	public function __construct() {
+		$this->view = new View ();
 		if (! $this->isValid ())
 			$this->onInvalidControl ();
-		$this->view = new View ();
 	}
 
 	/**

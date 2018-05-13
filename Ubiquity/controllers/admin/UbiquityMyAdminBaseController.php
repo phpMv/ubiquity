@@ -939,4 +939,8 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	public function _getBaseRoute(){
 		return $this->_getAdminFiles ()->getAdminBaseRoute ();
 	}
+	public function _getInstancesFilter($model) {
+		return "1=1";
+	}
+
 }
