@@ -3,7 +3,7 @@
 %uses%
 
  /**
- * CRUD Controller %controllerName%
+ * CRUD Controller %controllerName%%route%
  **/
 class %controllerName% extends %baseClass%{
 
@@ -13,7 +13,7 @@ class %controllerName% extends %baseClass%{
 	}
 
 	public function _getBaseRoute() {
-		return '%controllerName%';
+		return '%routeName%';
 	}
 	
 %content%

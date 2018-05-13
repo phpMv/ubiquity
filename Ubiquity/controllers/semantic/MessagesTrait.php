@@ -26,7 +26,7 @@ trait MessagesTrait {
 		return $this->showSimpleMessage($message->getMessage(), $message->getType(),$message->getTitle(),$message->getIcon(),$message->getTimeout(),$staticName);
 	}
 	
-	protected function showSimpleMessage($content, $type, $title=null,$icon = "info", $timeout = NULL, $staticName = null): HtmlMessage {
+	public function showSimpleMessage($content, $type, $title=null,$icon = "info", $timeout = NULL, $staticName = null): HtmlMessage {
 		$semantic = $this->jquery->semantic ();
 		if (! isset ( $staticName ))
 			$staticName = "msg-" . rand ( 0, 50 );
@@ -45,7 +45,7 @@ trait MessagesTrait {
 		return $this->showConfMessage($message->getMessage(), $message->getType(), $message->getTitle(), $url, $responseElement, $data,$attributes);
 	}
 	
-	protected function showConfMessage($content, $type, $title,$url, $responseElement, $data, $attributes = NULL):HtmlMessage {
+	public function showConfMessage($content, $type, $title,$url, $responseElement, $data, $attributes = NULL):HtmlMessage {
 		$messageDlg = $this->showSimpleMessage ( $content, $type,$title, "help circle" );
 		$btOkay = new HtmlButton( "bt-okay", "Confirm", "negative" );
 		$btOkay->addIcon ( "check circle" );

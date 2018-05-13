@@ -73,7 +73,7 @@ class UbiquityMyAdminViewer {
 			$errors = \array_merge ( $errors, $route->getMessages () );
 		}
 		if (\sizeof ( $errors ) > 0) {
-			$messages = $this->controller->showSimpleMessage ( $errors, "error",null, "warning" );
+			$messages = $this->controller->showSimpleMessage ( $errors, "error","Error", "warning" );
 		}
 		$dt = $this->jquery->semantic ()->dataTable ( $dtName, "Ubiquity\controllers\admin\popo\Route", $routes );
 		$dt->setIdentifierFunction ( function ($i, $instance) {

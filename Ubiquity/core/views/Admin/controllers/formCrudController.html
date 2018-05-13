@@ -37,6 +37,21 @@
 				{{ q["view-list"] | raw }}
 			</div>
 		</div>
+		<div class="field">
+				<div class="ui checkbox">
+				  <input type="checkbox" name="ck-add-route" id="ck-add-route">
+				  <label for="ck-add-route">Add route...</label>
+				</div>
+		</div>
+		<div id="div-new-route" style="display: none;">
+			<div class="ui divider"></div>
+			<div class="three fields">
+				<div class="field">
+					<label for="route-path">Path</label>
+					<input id="route-path" name="route-path" value="">
+				</div>
+			</div>
+		</div>
 	</div>
 </form>
 <div class="ui segment">
