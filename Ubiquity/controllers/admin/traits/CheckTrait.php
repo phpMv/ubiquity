@@ -35,7 +35,7 @@ trait CheckTrait{
 
 	abstract protected function displayModelsMessages($type, $messagesToDisplay);
 
-	abstract protected function showSimpleMessage($content, $type, $icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
+	abstract protected function showSimpleMessage($content, $type, $title=null,$icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	abstract public function _isModelsCompleted();
 
