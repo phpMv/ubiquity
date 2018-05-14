@@ -21,7 +21,7 @@ trait DatabaseTrait{
 	abstract public function _getAdminViewer();
 	abstract public function _getAdminFiles();
 	abstract public function loadView($viewName, $pData=NULL, $asString=false);
-	abstract protected function showSimpleMessage($content,$type,$icon="info",$timeout=NULL,$staticName=null):HtmlMessage;
+	abstract protected function showSimpleMessage($content, $type, $title=null,$icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	protected function getModels(){
 		$config=Startup::getConfig();
