@@ -1,0 +1,29 @@
+<p></p>
+{% block form %}
+<form id="frm-login" class="ui form" name="frm-login" method="post" action="Auth/connect">
+<h4 class="ui header dividing">Connection</h4> 
+{% block fields %}
+<div class="two fields">
+	<div class="field required">
+	<label for="email">Email</label> 
+	<div class="ui input">
+		{% block login %}
+		<input id="email" name="email" type="text" placeholder="Email">
+		{% endblock %}
+	</div>
+	</div>
+	<div class="field required">
+		<label for="password">Password</label>
+		<div class="ui input">
+			{% block password %}
+			<input id="password" name="password" type="password" placeholder="Password">
+			{% endblock %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block buttons %}
+<button class="ui button green basic">Connection</button>
+{% endblock %}
+</form>
+{% endblock %}

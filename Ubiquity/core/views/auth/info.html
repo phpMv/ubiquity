@@ -1,0 +1,5 @@
+{%if connected is not null %}
+	{{ connected | raw }} <a href="Auth/terminate" class="ui button" data-target="#body">Déconnexion</a>
+{% else %}
+<a href="Auth" data-target="#body" class="ui button"><i class="icon sign in"></i> Connexion</a>
+{% endif %}

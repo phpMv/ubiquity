@@ -19,8 +19,8 @@ class FlashBag implements \Iterator {
 		$this->array=USession::get(self::FLASH_BAG_KEY, [ ]);
 	}
 
-	public function addMessage($type, $content, $icon=NULL) {
-		$this->array[]=new FlashMessage($type, $content, $icon);
+	public function addMessage($content,$title=NULL,$type="info",$icon=null) {
+		$this->array[]=new FlashMessage($content,$title,$type,$icon);
 	}
 
 	public function getMessages($type) {

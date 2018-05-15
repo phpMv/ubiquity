@@ -3,11 +3,12 @@
 namespace Ubiquity\utils\flash;
 
 class FlashMessage {
+	protected $title;
 	protected $content;
 	protected $type;
 	protected $icon;
 
-	public function __construct($type,$content,$icon=null){
+	public function __construct($content,$title=NULL,$type="info",$icon=null){
 		$this->type=$type;
 		$this->content=$content;
 		$this->icon=$icon;
@@ -53,6 +54,20 @@ class FlashMessage {
 	public function setIcon($icon) {
 		$this->icon = $icon;
 	}
+	/**
+	 * @return mixed
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+
+	/**
+	 * @param mixed $title
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
+	}
+
 
 }
 
