@@ -44,13 +44,13 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\semantic\MessagesTrait;
-use Ubiquity\controllers\admin\traits\CRUDTrait;
 use Ubiquity\controllers\crud\CRUDDatas;
+use Ubiquity\controllers\admin\traits\CreateControllersTrait;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface{
 	
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
-	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CRUDTrait;
+	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait;
 	/**
 	 *
 	 * @var CRUDDatas
@@ -217,9 +217,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$input->labeledCheckbox ( Direction::LEFT, "View", "v", "slider" );
 		$input->addAction ( "Create controller", true, "plus", true )->addClass ( "teal" )->asSubmit ();
 		$frm->setSubmitParams ( $baseRoute. "/createController", "#main-content");
-		$bt=$fields->addButton("crud-bt", "Create CRUD controller");
+		$bt=$fields->addDropdown("crud-bt", ["frmAddCrudController"=>"CRUD controller","frmAddAuthController"=>"Auth controller"],"Create special controller");
+		$bt->asButton();
 		$bt->addIcon("plus");
-		$bt->getOnClick($baseRoute."/frmAddCrudController","#frm",[]);
+		$this->jquery->getOnClick("#dropdown-crud-bt [data-value]",$baseRoute,"#frm",["attr"=>"data-value"]);
 		$bt=$fields->addButton("filter-bt", "Filter controllers");
 		$bt->getOnClick($baseRoute."/frmFilterControllers","#frm",["attr"=>""]);
 		$bt->addIcon("filter");

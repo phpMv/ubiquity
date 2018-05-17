@@ -49,6 +49,10 @@ class UbiquityMyAdminFiles {
 	public function getViewAddCrudController(){
 		return $this->viewBase."/controllers/FormCrudController.html";
 	}
+	
+	public function getViewAddAuthController(){
+		return $this->viewBase."/controllers/FormAuthController.html";
+	}
 
 	public function getViewConfigIndex() {
 		return $this->viewBase."/config/index.html";

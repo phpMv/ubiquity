@@ -1,7 +1,7 @@
 <p></p>
-{% block message %}
-{{ message | raw }}
+{% block _message %}
+{{ _message | raw }}
 {% endblock %}
-{% block buttons %}
-<a href="Auth" data-target="#body" class="ui button"><i class="icon sign in"></i> Connexion</a>
+{% block _buttons %}
+<a href="{{authURL}}" data-target="#body" class="ui button"><i class="icon sign in"></i> Log in</a>
 {% endblock %}
