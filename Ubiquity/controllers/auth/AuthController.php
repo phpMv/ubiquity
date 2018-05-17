@@ -141,9 +141,11 @@ abstract class AuthController extends ControllerBase{
 	
 	/**
 	 * Action displaying the logged user information 
+	 * if _displayInfoAsString returns true, use _infoUser var in views to display user info
+	 * @return string|null
 	 */
 	public function info(){
-		$this->authLoadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->_getBaseRoute()]);
+		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->_getBaseRoute()],$this->_displayInfoAsString());
 	}
 	
 	protected function fMessage(FlashMessage $fMessage){
@@ -166,6 +168,8 @@ abstract class AuthController extends ControllerBase{
 		return "activeUser";
 	}
 	
+	
+	
 	/**
 	 * 
 	 */
@@ -177,6 +181,14 @@ abstract class AuthController extends ControllerBase{
 	 */
 	protected function getFiles ():AuthFiles{
 		return new AuthFiles();
+	}
+	
+	/**
+	 * Override to define if info is displayed as string
+	 * if set to true, use _infoUser var in views to display user info
+	 */
+	public function _displayInfoAsString(){
+		return true;
 	}
 	
 	private function _getFiles():AuthFiles{

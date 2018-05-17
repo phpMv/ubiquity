@@ -16,9 +16,20 @@ trait WithAuthTrait{
 	
 	public function initialize(){
 		parent::initialize();
-		if(!URequest::isAjax()){
+		if(!URequest::isAjax() && !$this->_getAuthController()->_displayInfoAsString()){
 			$this->_getAuthController()->info();
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\controllers\Controller::loadView()
+	 */
+	public function loadView($viewName, $pData = NULL, $asString = false) {
+		if(!URequest::isAjax() && $this->_getAuthController()->_displayInfoAsString()){
+			$this->view->setVar("_userInfo",$this->_getAuthController()->info());
+		}
+		return parent::loadView ($viewName,$pData,$asString);
 	}
 
 	/**
