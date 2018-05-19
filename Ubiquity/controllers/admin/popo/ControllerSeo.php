@@ -6,7 +6,6 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\controllers\Router;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UString;
-use Ubiquity\controllers\seo\SeoController;
 
 class ControllerSeo{
 	private $name;

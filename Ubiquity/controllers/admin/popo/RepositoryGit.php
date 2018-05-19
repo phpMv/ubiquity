@@ -3,9 +3,7 @@ namespace Ubiquity\controllers\admin\popo;
 
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\http\URequest;
-use Cz\Git\GitRepository;
 use Ubiquity\utils\git\UGitRepository;
 use Ubiquity\utils\git\GitFile;
 use Ubiquity\utils\git\GitFileStatus;

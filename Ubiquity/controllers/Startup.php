@@ -36,7 +36,7 @@ class Startup {
 				self::runAction ( $u );
 			} else {
 				\header ( 'HTTP/1.0 404 Not Found', true, 404 );
-				print "Le contrôleur `" . $u [0] . "` n'existe pas <br/>";
+				print "The controller `" . $u [0] . "` doesn't exists! <br/>";
 			}
 		}
 	}
@@ -93,10 +93,20 @@ class Startup {
 
 		$controller = new $ctrl ();
 		if (! $controller instanceof Controller) {
-			print "`{$u[0]}` n'est pas une instance de contrôleur.`<br/>";
+			print "`{$u[0]}` isn't a controller instance.`<br/>";
 			return;
 		}
 		// Dependency injection
+		self::injectDependences($controller, $config);
+
+		if ($initialize)
+			$controller->initialize ();
+		self::callController ( $controller, $u );
+		if ($finalize)
+			$controller->finalize ();
+	}
+	
+	public static function injectDependences($controller,$config){
 		if (\array_key_exists ( "di", $config )) {
 			$di = $config ["di"];
 			if (\is_array ( $di )) {
@@ -105,12 +115,6 @@ class Startup {
 				}
 			}
 		}
-
-		if ($initialize)
-			$controller->initialize ();
-		self::callController ( $controller, $u );
-		if ($finalize)
-			$controller->finalize ();
 	}
 
 	public static function runAsString($u, $initialize = true, $finalize = true) {
@@ -131,7 +135,7 @@ class Startup {
 				if (\method_exists ( $controller, $action )) {
 					$controller->$action ();
 				} else {
-					print "La méthode `{$action}` n'existe pas sur le contrôleur `" . $u [0] . "`<br/>";
+					print "The method `{$action}` doesn't exists on controller `" . $u [0] . "`<br/>";
 				}
 				break;
 			default :

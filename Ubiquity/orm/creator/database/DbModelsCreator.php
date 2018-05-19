@@ -18,7 +18,7 @@ class DbModelsCreator extends ModelsCreator{
 		try {
 			$this->pdoObject = new \PDO(
 					$config["type"].':host=' . $config["serverName"] . ';dbname='
-					. $config["dbName"] . ';port:' . $config["port"],
+					. $config["dbName"] . ';port=' . $config["port"],
 					$config["user"], $config["password"]);
 			$this->pdoObject->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			$this->pdoObject->exec("SET CHARACTER SET utf8");

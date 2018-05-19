@@ -13,6 +13,7 @@ use Ubiquity\utils\base\UFileSystem;
 use Cz\Git\GitException;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UArray;
+use Ubiquity\utils\git\UGitRepository;
 
 /**
  *
@@ -52,12 +53,17 @@ trait GitTrait{
 	public function gitInit() {
 		$this->_getRepo ();
 		$appDir=Startup::getApplicationDir ();
-		GitRepository::init ( Startup::getApplicationDir () );
-		$gitignoreFile=$appDir. DS . ".gitignore";
-		if(!file_exists($gitignoreFile)){
-			UFileSystem::openReplaceWriteFromTemplateFile(Startup::getFrameworkDir() . "/admin/templates/gitignore.tpl", $gitignoreFile, []);
+		try{
+			UGitRepository::init ( Startup::getApplicationDir () );
+			$gitignoreFile=$appDir. DS . ".gitignore";
+			if(!file_exists($gitignoreFile)){
+				UFileSystem::openReplaceWriteFromTemplateFile(Startup::getFrameworkDir() . "/admin/templates/gitignore.tpl", $gitignoreFile, []);
+			}
+			$this->git ();
+		}catch(GitException $ge){
+			echo $this->showSimpleMessage ( $ge->getMessage(), "negative", "Push","upload", null, "init-message" );
+			echo $this->jquery->compile ( $this->view );
 		}
-		$this->git ();
 	}
 
 	public function frmSettings() {
@@ -122,11 +128,11 @@ trait GitTrait{
 			if (UString::isNotNull ( URequest::post ( "description", "" ) ))
 				$message = [ $message,URequest::post ( "description" ) ];
 			$repo->commit ( $message );
-			$msg = $this->showSimpleMessage ( "Commit successfully completed!", "positive", "check square", null, "init-message" );
+			$msg = $this->showSimpleMessage ( "Commit successfully completed!", "positive","Commit", "check square", null, "init-message" );
 			$msg->addList ( $messages );
 			$this->_refreshParts ();
 		} else {
-			$msg = $this->showSimpleMessage ( "Nothing to commit!", "", "warning circle", null, "init-message" );
+			$msg = $this->showSimpleMessage ( "Nothing to commit!", "", "Commit","warning circle", null, "init-message" );
 		}
 		echo $msg;
 		echo $this->jquery->compile ( $this->view );
@@ -144,14 +150,13 @@ trait GitTrait{
 			if ($gitRepo->setRepoRemoteUrl ()) {
 				$repo = $gitRepo->getRepository ();
 				$repo->push ( "origin master", [ "--set-upstream" ] );
-				$msg = $this->showSimpleMessage ( "Push successfully completed!", "positive", "upload", null, "init-message" );
+				$msg = $this->showSimpleMessage ( "Push successfully completed!", "positive", "Push","upload", null, "init-message" );
 				$this->_refreshParts ();
 			} else {
-				$msg = $this->showSimpleMessage ( "Check your github settings before pushing! (user name, password or remote url)", "negative", "upload", null, "init-message" );
+				$msg = $this->showSimpleMessage ( "Check your github settings before pushing! (user name, password or remote url)", "negative","Push", "upload", null, "init-message" );
 			}
 		} catch ( GitException $ge ) {
-			echo $ge->getMessage();
-			$msg = $this->showSimpleMessage ( "Invalid github settings! (Check your user name, password or remote url)", "negative", "upload", null, "init-message" );
+			$msg = $this->showSimpleMessage ( $ge->getMessage(), "negative", "Push","upload", null, "init-message" );
 		}
 		echo $msg;
 		echo $this->jquery->compile ( $this->view );
@@ -161,7 +166,7 @@ trait GitTrait{
 		$gitRepo = $this->_getRepo ( false );
 		$repo = $gitRepo->getRepository ();
 		$repo->pull ();
-		$msg = $this->showSimpleMessage ( "Pull successfully completed!", "positive", "download", null, "init-message" );
+		$msg = $this->showSimpleMessage ( "Pull successfully completed!", "positive","Pull", "download", null, "init-message" );
 		$this->_refreshParts ();
 		echo $msg;
 		echo $this->jquery->compile ( $this->view );
@@ -182,9 +187,9 @@ trait GitTrait{
 			$content = URequest::post ( "content" );
 			if (UFileSystem::save ( Startup::getApplicationDir () . DS . ".gitignore", $content )) {
 				$this->jquery->get ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/refreshFiles", "#dtGitFiles", [ "attr" => "","jqueryDone" => "replaceWith","hasLoader" => false ] );
-				$message = $this->showSimpleMessage ( "<b>.gitignore</b> file saved !", "positive", "git" );
+				$message = $this->showSimpleMessage ( "<b>.gitignore</b> file saved !", "positive", "gitignore","git" );
 			} else {
-				$message = $this->showSimpleMessage ( "<b>.gitignore</b> file not saved !", "warning", "git" );
+				$message = $this->showSimpleMessage ( "<b>.gitignore</b> file not saved !", "warning", "gitignore","git" );
 			}
 		}
 		echo $message;

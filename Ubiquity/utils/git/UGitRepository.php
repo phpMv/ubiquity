@@ -22,10 +22,43 @@ class UGitRepository extends GitRepository {
 		exec ( $cmd . ' 2>&1', $output, $ret );
 
 		if ($ret !== 0) {
-			throw new GitException ( "Command '$cmd' failed (exit-code $ret).", $ret );
+			throw new GitException ( implode("<br>",$output), $ret );
 		}
 
 		return $this;
+	}
+	
+	/**
+	 * Init repo in directory
+	 * @param  string
+	 * @param  array|NULL
+	 * @return self
+	 * @throws GitException
+	 */
+	public static function init($directory, array $params = NULL){
+		if(is_dir("$directory/.git")){
+			throw new GitException("Repo already exists in $directory.");
+		}
+		
+		if(!is_dir($directory) && !@mkdir($directory, 0777, TRUE)){
+			throw new GitException("Unable to create directory '$directory'.");
+		}
+		
+		$cwd = getcwd();
+		chdir($directory);
+		exec(self::processCommand(array(
+				'git init',
+				$params,
+				$directory,
+		)), $output, $returnCode);
+		
+		if($returnCode !== 0){
+			throw new GitException(implode("<br>", $output));
+		}
+		
+		$repo = getcwd();
+		chdir($cwd);
+		return new static($repo);
 	}
 
 	protected function _processCommand(array $args) {
