@@ -2,7 +2,6 @@
 
 namespace Ubiquity\controllers\admin\traits;
 
-use Cz\Git\GitRepository;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\admin\popo\RepositoryGit;
 use Ubiquity\utils\http\URequest;

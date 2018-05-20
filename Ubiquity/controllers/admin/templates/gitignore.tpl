@@ -2,4 +2,5 @@
 vendor/
 app/cache/
 .settings/
-.*
+.project
+.buildpath

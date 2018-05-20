@@ -20,8 +20,8 @@ class %controllerName% extends %baseClass%{
 
 	protected function _connect() {
 		if(URequest::isPost()){
-			$email=URequest::post("email");
-			$password=URequest::post("password");
+			$email=URequest::post($this->_getLoginInputName());
+			$password=URequest::post($this->_getPasswordInputName());
 			//TODO
 			//Loading from the database the user corresponding to the parameters
 			//Checking user creditentials

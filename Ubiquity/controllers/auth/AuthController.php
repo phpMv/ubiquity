@@ -19,7 +19,10 @@ abstract class AuthController extends ControllerBase{
 	protected $authFiles;
 	
 	public function index(){
-		$this->authLoadView($this->_getFiles()->getViewIndex(),["action"=>$this->_getBaseRoute()."/connect"]);
+		$this->authLoadView($this->_getFiles()->getViewIndex(),["action"=>$this->_getBaseRoute()."/connect",
+				"loginInputName"=>$this->_getLoginInputName(),"loginLabel"=>$this->loginLabel(),
+				"passwordInputName"=>$this->_getPasswordInputName(),"passwordLabel"=>$this->passwordLabel()
+		]);
 	}
 	
 	/**
@@ -197,5 +200,20 @@ abstract class AuthController extends ControllerBase{
 		}
 		return $this->authFiles;
 	}
+	
+	public function _getLoginInputName(){
+		return "email";
+	}
 
+	protected function loginLabel(){
+		return ucfirst($this->_getLoginInputName());
+	}
+	
+	public function _getPasswordInputName(){
+		return "password";
+	}
+	
+	protected function passwordLabel(){
+		return ucfirst($this->_getPasswordInputName());
+	}
 }

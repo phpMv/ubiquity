@@ -6,20 +6,20 @@
 <div class="two fields">
 	{% block _fieldLogin %}
 	<div class="field required">
-	<label for="email">Email</label> 
+	<label for="{{loginInputName}}">{{loginLabel}}</label> 
 	<div class="ui input">
 		{% block _login %}
-		<input id="email" name="email" type="text" placeholder="Email">
+		<input id="{{loginInputName}}" name="{{loginInputName}}" type="text" placeholder="{{loginLabel}}">
 		{% endblock %}
 	</div>
 	</div>
 	{% endblock %}
 	{% block _fieldPassword %}
 	<div class="field required">
-		<label for="password">Password</label>
+		<label for="{{passwordInputName}}">{{passwordLabel}}</label>
 		<div class="ui input">
 			{% block _password %}
-			<input id="password" name="password" type="password" placeholder="Password">
+			<input id="{{passwordInputName}}" name="{{passwordInputName}}" type="password">
 			{% endblock %}
 		</div>
 	</div>
