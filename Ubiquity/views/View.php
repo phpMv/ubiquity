@@ -79,4 +79,9 @@ class View {
 		$config=Startup::getConfig();
 		return $config["templateEngine"]->getBlockNames($templateName);
 	}
+	
+	public function getCode($templateName){
+		$config=Startup::getConfig();
+		return $config["templateEngine"]->getCode($templateName);
+	}
 }

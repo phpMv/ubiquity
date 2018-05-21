@@ -4,6 +4,7 @@ namespace Ubiquity\views\engine\micro;
 
 use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\controllers\Startup;
+use Ubiquity\utils\base\UFileSystem;
 
 class MicroTemplateEngine extends TemplateEngine {
 	private $viewsFolder;
@@ -31,6 +32,11 @@ class MicroTemplateEngine extends TemplateEngine {
 	}
 	public function getBlockNames($templateName) {
 		return [];
+	}
+	
+	public function getCode($templateName){
+		$fileName=$this->viewsFolder . $templateName;
+		return UFileSystem::load($fileName);
 	}
 
 }

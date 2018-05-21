@@ -48,7 +48,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewMessage() {
-		return "@framework/main/message.html";
+		return $this->viewBase."/message.html";
 	}
 	
 	/**

@@ -6,6 +6,7 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\Router;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\core\Framework;
+use Ubiquity\utils\base\UFileSystem;
 
 class Twig extends TemplateEngine {
 	private $twig;
@@ -43,6 +44,10 @@ class Twig extends TemplateEngine {
 
 	public function getBlockNames($templateName) {
 		return $this->twig->load($templateName)->getBlockNames();
+	}
+	
+	public function getCode($templateName){
+		return UFileSystem::load($this->twig->load($templateName)->getSourceContext()->getPath());
 	}
 
 }

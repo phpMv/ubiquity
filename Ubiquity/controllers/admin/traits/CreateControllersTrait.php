@@ -227,10 +227,18 @@ trait CreateControllersTrait{
 	protected function createCrudView($frameworkName,$controllerName,$newName){
 		$folder=ROOT . DS . "views" . DS .$controllerName;
 		UFileSystem::safeMkdir($folder);
-		$blocks=$this->view->getBlockNames($frameworkName);
-		$content=["{% extends \"".$frameworkName."\" %}\n"];
-		foreach ($blocks as $blockname){
-			$content[]="{% block ".$blockname." %}\n\t{{ parent() }}\n{% endblock %}\n";
+		try{
+			$blocks=$this->view->getBlockNames($frameworkName);
+			if(sizeof($blocks)>0){
+				$content=["{% extends \"".$frameworkName."\" %}\n"];
+				foreach ($blocks as $blockname){
+					$content[]="{% block ".$blockname." %}\n\t{{ parent() }}\n{% endblock %}\n";
+				}
+			}else{
+				$content=[$this->view->getCode($frameworkName)];
+			}
+		}catch(\Exception $e){
+			$content=[$this->view->getCode($frameworkName)];
 		}
 		return UFileSystem::save($folder. DS .$newName.".html", implode("", $content));
 	}
