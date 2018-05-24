@@ -1,0 +1,19 @@
+<div id="disconnected-modal" class="ui modal">
+  <div class="header">{{_title}}</div>
+  <div class="content">
+  {% block _message %}
+    {{ _message | raw }}
+  {% endblock %}
+  </div>
+  {% block actions %}
+  <div class="actions">
+    <div id="signin" class="ui labeled cancel icon button">
+      <i class="sign in icon"></i>
+      {% block _buttonCaption %}
+      {{_buttonCaption}}
+      {% endblock %}
+    </div>
+  </div>
+  {% endblock %}
+</div>
+{{ script_foot | raw }}

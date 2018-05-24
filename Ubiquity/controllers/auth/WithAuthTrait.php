@@ -6,6 +6,7 @@ use Ubiquity\controllers\Startup;
 
 /**
  * ControllerBase
+ * @property \Ajax\php\ubiquity\JsUtils $jquery
  **/
 trait WithAuthTrait{
 	
@@ -16,8 +17,15 @@ trait WithAuthTrait{
 	
 	public function initialize(){
 		parent::initialize();
-		if(!URequest::isAjax() && !$this->_getAuthController()->_displayInfoAsString()){
-			$this->_getAuthController()->info();
+		$authController=$this->_getAuthController();
+		if(!URequest::isAjax() && !$authController->_displayInfoAsString()){
+			$authController->info();
+			if($this->isValid()){
+				$this->checkConnection($authController);
+			}else{
+				if($authController->_checkConnectionTimeout()!=null)
+					$this->jquery->clearInterval("_checkConnection");
+			}
 		}
 	}
 	
@@ -46,9 +54,15 @@ trait WithAuthTrait{
 	 */
 	public function onInvalidControl() {
 		$auth=$this->_getAuthController();
-		$auth->initialize();
-		$auth->noAccess(Startup::$urlParts);
-		$auth->finalize();
+		if(URequest::isAjax()){
+			Startup::injectDependences($this, Startup::getConfig());
+			$this->jquery->get($auth->_getBaseRoute()."/noAccess/".implode(".", Startup::$urlParts),$auth->_getBodySelector(),["historize"=>false]);	
+			echo $this->jquery->compile($this->view);
+		}else{
+			$auth->initialize();
+			$auth->noAccess(Startup::$urlParts);
+			$auth->finalize();
+		}
 		exit();
 	}
 	
@@ -64,5 +78,14 @@ trait WithAuthTrait{
 	}
 	
 	protected abstract function getAuthController():AuthController;
+	
+	
+	protected function checkConnection($authController){
+		if($authController->_checkConnectionTimeout()!=null){
+			$authController->_disconnected();
+			$this->jquery->ajaxInterval("get",$authController->_getBaseRoute()."/_checkConnection",$authController->_checkConnectionTimeout(),"_checkConnection","",["jsCallback"=>"data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"]);
+		}
+			
+	}
 
 }

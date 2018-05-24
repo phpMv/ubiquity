@@ -3,5 +3,5 @@
 {{ _message | raw }}
 {% endblock %}
 {% block _buttons %}
-<a href="{{authURL}}" data-target="#body" class="ui button"><i class="icon sign in"></i> Log in</a>
+<a href="{{authURL}}" data-target="{{bodySelector}}" class="ui button ajax"><i class="icon sign in"></i> Log in</a>
 {% endblock %}

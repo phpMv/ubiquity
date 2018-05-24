@@ -7,6 +7,8 @@ use Ubiquity\utils\flash\FlashMessage;
 use Ubiquity\controllers\ControllerBase;
 use Ubiquity\controllers\Auth\AuthFiles;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\utils\http\UResponse;
+use Ubiquity\utils\base\UString;
 
  /**
  * Controller Auth
@@ -43,14 +45,17 @@ abstract class AuthController extends ControllerBase{
 	
 	/**
 	 * Action called when the user does not have access rights to a requested resource
-	 * @param array $urlParts
+	 * @param array|string $urlParts
 	 */
 	public function noAccess($urlParts){
+		if(!is_array($urlParts)){
+			$urlParts=explode(".", $urlParts);
+		}
 		USession::set("urlParts", $urlParts);
 		$fMessage=new FlashMessage("You are not authorized to access the page <b>".implode("/",$urlParts)."</b> !","Forbidden access","error","warning circle");
 		$this->noAccessMessage($fMessage);
 		$message=$this->fMessage($fMessage);		
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute()]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()]);
 	}
 	
 	/**
@@ -99,7 +104,7 @@ abstract class AuthController extends ControllerBase{
 		$fMessage=new FlashMessage("Invalid creditentials!","Connection problem","warning","warning circle");
 		$this->badLoginMessage($fMessage);
 		$message=$this->fMessage($fMessage);
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute()]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()]);
 	}
 	
 	/**
@@ -131,7 +136,15 @@ abstract class AuthController extends ControllerBase{
 		$fMessage=new FlashMessage("You have been properly disconnected!","Logout","success","checkmark");
 		$this->terminateMessage($fMessage);
 		$message=$this->fMessage($fMessage);
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute()]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()]);
+	}
+	
+	public function _disConnected(){
+		$fMessage=new FlashMessage("You have been disconnected from the application!","Logout","","sign out");
+		$this->disconnectedMessage($fMessage);
+		$message=$this->fMessage($fMessage);
+		$this->jquery->getOnClick("#signin", $this->_getBaseRoute(),$this->_getBodySelector(),["stopPropagation"=>false,"preventDefault"=>false]);
+		$this->jquery->renderView($this->_getFiles()->getViewDisconnected(),["_title"=>"Session ended","_message"=>$message,"_buttonCaption"=>"Back to authentication"]);
 	}
 	
 	/**
@@ -143,12 +156,20 @@ abstract class AuthController extends ControllerBase{
 	}
 	
 	/**
+	 * To override for modifying the disconnect message
+	 * @param FlashMessage $fMessage
+	 */
+	protected function disconnectedMessage(FlashMessage $fMessage){
+		
+	}
+	
+	/**
 	 * Action displaying the logged user information 
 	 * if _displayInfoAsString returns true, use _infoUser var in views to display user info
 	 * @return string|null
 	 */
 	public function info(){
-		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->_getBaseRoute()],$this->_displayInfoAsString());
+		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()],$this->_displayInfoAsString());
 	}
 	
 	protected function fMessage(FlashMessage $fMessage){
@@ -171,10 +192,13 @@ abstract class AuthController extends ControllerBase{
 		return "activeUser";
 	}
 	
-	
+	public function _checkConnection(){
+		UResponse::asJSON();
+		echo "{\"valid\":".UString::getBooleanStr($this->_isValidUser())."}";
+	}
 	
 	/**
-	 * 
+	 * return boolean true if activeUser is valid
 	 */
 	abstract public function _isValidUser();
 	
@@ -192,6 +216,10 @@ abstract class AuthController extends ControllerBase{
 	 */
 	public function _displayInfoAsString(){
 		return true;
+	}
+	
+	public function _checkConnectionTimeout(){
+		return;
 	}
 	
 	private function _getFiles():AuthFiles{
@@ -215,5 +243,9 @@ abstract class AuthController extends ControllerBase{
 	
 	protected function passwordLabel(){
 		return ucfirst($this->_getPasswordInputName());
+	}
+	
+	public function _getBodySelector(){
+		return "body";
 	}
 }

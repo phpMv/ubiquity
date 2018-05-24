@@ -44,6 +44,14 @@ class AuthFiles {
 	}
 	
 	/**
+	 * To override
+	 * @return string
+	 */
+	public function getViewDisconnected() {
+		return $this->viewBase."/disconnected.html";
+	}
+	
+	/**
 	 * 
 	 * @return string
 	 */

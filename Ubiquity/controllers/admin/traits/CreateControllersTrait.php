@@ -20,7 +20,7 @@ use Ubiquity\utils\http\UResponse;
 trait CreateControllersTrait{
 	
 	private $views=["CRUD"=>["index"=>"@framework/crud/index.html","form"=>"@framework/crud/form.html","display"=>"@framework/crud/display.html"],
-			"auth"=>["index"=>"@framework/auth/index.html","info"=>"@framework/auth/info.html","noAccess"=>"@framework/auth/noAccess.html","message"=>"@framework/auth/message.html","baseTemplate"=>"@framework/auth/baseTemplate.html"]
+			"auth"=>["index"=>"@framework/auth/index.html","info"=>"@framework/auth/info.html","noAccess"=>"@framework/auth/noAccess.html","disconnected"=>"@framework/auth/disconnected.html","message"=>"@framework/auth/message.html","baseTemplate"=>"@framework/auth/baseTemplate.html"]
 	];
 	
 	abstract protected function _createMethod($access,$name,$parameters="",$return="",$content="",$comment="");

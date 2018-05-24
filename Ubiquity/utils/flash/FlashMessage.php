@@ -12,6 +12,7 @@ class FlashMessage {
 		$this->type=$type;
 		$this->content=$content;
 		$this->icon=$icon;
+		$this->title=$title;
 	}
 	/**
 	 * @return mixed
