@@ -20,7 +20,7 @@ trait WithAuthTrait{
 		$authController=$this->_getAuthController();
 		if(!URequest::isAjax() && !$authController->_displayInfoAsString()){
 			$authController->info();
-			if($this->isValid()){
+			if($this->isValid(Startup::getAction())){
 				$this->checkConnection($authController);
 			}else{
 				if($authController->_checkConnectionTimeout()!=null)
@@ -44,7 +44,7 @@ trait WithAuthTrait{
 	 * {@inheritDoc}
 	 * @see \Ubiquity\controllers\Controller::isValid()
 	 */
-	public function isValid() {
+	public function isValid($action) {
 		return $this->_getAuthController()->_isValidUser();
 	}
 
@@ -55,7 +55,6 @@ trait WithAuthTrait{
 	public function onInvalidControl() {
 		$auth=$this->_getAuthController();
 		if(URequest::isAjax()){
-			Startup::injectDependences($this, Startup::getConfig());
 			$this->jquery->get($auth->_getBaseRoute()."/noAccess/".implode(".", Startup::$urlParts),$auth->_getBodySelector(),["historize"=>false]);	
 			echo $this->jquery->compile($this->view);
 		}else{

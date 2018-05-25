@@ -29,13 +29,11 @@ abstract class Controller {
 	abstract public function index();
 
 	/**
-	 * Constructor<br>
-	 * Automatically invokes the isValid () method to check if access is allowed
+	 * Constructor
+	 * initialize $view variable
 	 */
 	public function __construct() {
 		$this->view = new View ();
-		if (! $this->isValid ())
-			$this->onInvalidControl ();
 	}
 
 	/**
@@ -97,9 +95,10 @@ abstract class Controller {
 	 * Returns True if access to the controller is allowed
 	 * To be override in sub classes
 	 *
+	 * @param string $action
 	 * @return boolean
 	 */
-	public function isValid() {
+	public function isValid($action) {
 		return true;
 	}
 

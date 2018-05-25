@@ -39,7 +39,7 @@ abstract class AuthController extends ControllerBase{
 	 * {@inheritDoc}
 	 * @see \controllers\ControllerBase::isValid()
 	 */
-	public final function isValid() {
+	public final function isValid($action) {
 		return true;
 	}
 	
@@ -143,8 +143,9 @@ abstract class AuthController extends ControllerBase{
 		$fMessage=new FlashMessage("You have been disconnected from the application!","Logout","","sign out");
 		$this->disconnectedMessage($fMessage);
 		$message=$this->fMessage($fMessage);
-		$this->jquery->getOnClick("#signin", $this->_getBaseRoute(),$this->_getBodySelector(),["stopPropagation"=>false,"preventDefault"=>false]);
-		$this->jquery->renderView($this->_getFiles()->getViewDisconnected(),["_title"=>"Session ended","_message"=>$message,"_buttonCaption"=>"Back to authentication"]);
+		$this->jquery->getOnClick("._signin", $this->_getBaseRoute(),$this->_getBodySelector(),["stopPropagation"=>false,"preventDefault"=>false]);
+		$this->jquery->execOn("click", "._close", "window.open(window.location,'_self').close();");
+		$this->jquery->renderView($this->_getFiles()->getViewDisconnected(),["_title"=>"Session ended","_message"=>$message]);
 	}
 	
 	/**

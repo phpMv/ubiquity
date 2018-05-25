@@ -40,12 +40,13 @@ abstract class RestController extends Controller {
 			$this->server->_setContentType($this->contentType);
 			$this->restCache=CacheManager::getRestCacheController(\get_class($this));
 		}
-		parent::__construct();
+		if (! $this->isValid (Startup::getAction()))
+			$this->onInvalidControl ();
 	}
 
-	public function isValid(){
+	public function isValid($action){
 		if(isset($this->restCache["authorizations"])){
-			if(\array_search(Startup::getAction(), $this->restCache["authorizations"])!==false){
+			if(\array_search($action, $this->restCache["authorizations"])!==false){
 				return $this->server->isValid();
 			}
 		}

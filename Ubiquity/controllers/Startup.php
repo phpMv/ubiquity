@@ -98,12 +98,15 @@ class Startup {
 		}
 		// Dependency injection
 		self::injectDependences($controller, $config);
-
-		if ($initialize)
-			$controller->initialize ();
-		self::callController ( $controller, $u );
-		if ($finalize)
-			$controller->finalize ();
+		if(!$controller->isValid(self::$action)){
+			$controller->onInvalidControl();
+		}else{
+			if ($initialize)
+				$controller->initialize ();
+			self::callController ( $controller, $u );
+			if ($finalize)
+				$controller->finalize ();
+		}
 	}
 	
 	public static function injectDependences($controller,$config){

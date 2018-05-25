@@ -7,12 +7,28 @@
   </div>
   {% block actions %}
   <div class="actions">
-    <div id="signin" class="ui labeled cancel icon button">
+  	{% block _closeButton %}
+  		<div class="ui cancel _close button">
+  		{% block _closeCaption %}
+  		Close window
+  		{% endblock %}
+  		</div>
+  	{% endblock %}
+  	{% block _stayButton %}
+  		<div class="ui cancel _stay button">
+  		{% block _stayCaption %}
+  		Stay on this page
+  		{% endblock %}
+  		</div>
+  	{% endblock %}
+  	{% block _signinButton %}
+    <div id="signin" class="ui _signin labeled cancel icon button">
       <i class="sign in icon"></i>
-      {% block _buttonCaption %}
-      {{_buttonCaption}}
+      {% block _signinCaption %}
+      Back to authentication
       {% endblock %}
     </div>
+   {% endblock %} 
   </div>
   {% endblock %}
 </div>
