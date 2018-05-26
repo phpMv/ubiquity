@@ -141,6 +141,12 @@ trait CreateControllersTrait{
 		$viewList->asSelect("auth-views",true);
 		$viewList->setDefaultText("Select views");
 		$viewList->setProperty("style", "display: none;");
+		$authControllers=CacheManager::getControllers("Ubiquity\\controllers\\auth\\AuthController",false,true);
+		$authControllers=array_combine($authControllers, $authControllers);
+		$ctrlList=$this->jquery->semantic()->htmlDropdown("ctrl-list","Ubiquity\\controllers\\auth\\AuthController",$authControllers);
+		$ctrlList->asSelect("baseClass");
+		$ctrlList->setDefaultText("Select base class");
+		
 		$frm=$this->jquery->semantic()->htmlForm("auth-controller-frm");
 		$frm->addExtraFieldRules("auth-name", ["empty",["checkController","Controller {value} already exists!"]]);
 		$this->jquery->exec(Rule::ajax($this->jquery, "checkController", $this->_getAdminFiles()->getAdminBaseRoute() . "/_controllerExists/auth-name", "{}", "result=data.result;", "postForm", [ "form" => "auth-controller-frm" ]), true);
@@ -158,11 +164,21 @@ trait CreateControllersTrait{
 	}
 	
 	public function addAuthController(){
-		$classContent="";
-		$route="";$routeName="";
-		$uses=["use Ubiquity\\controllers\\Startup;","use Ubiquity\\utils\\http\\USession;","use Ubiquity\\utils\\http\\URequest;"];
-		$controllerNS=Startup::getNS("controllers");
+
 		if(URequest::isPost()){
+			$classContent="";
+			$route="";$routeName="";
+			$baseClass="\\".$_POST["baseClass"];
+			
+			if($baseClass=="\\Ubiquity\\controllers\\auth\\AuthController"){
+				$controllerTemplate="authController.tpl";
+				$uses=["use Ubiquity\\controllers\\Startup;","use Ubiquity\\utils\\http\\USession;","use Ubiquity\\utils\\http\\URequest;"];
+			}else{
+				$controllerTemplate="authController_.tpl";
+				$uses=[];
+			}
+			$controllerNS=Startup::getNS("controllers");
+			
 			$messages=[];
 			$authControllerName=ucfirst($_POST["auth-name"]);
 			$routeName=$authControllerName;
@@ -193,7 +209,7 @@ trait CreateControllersTrait{
 				}
 			}
 			$uses=implode("\n", $uses);
-			$messages[]=$this->_createController($authControllerName,["%routeName%"=>$routeName,"%route%"=>$route,"%uses%"=>$uses,"%namespace%"=>$controllerNS,"%baseClass%"=>"\\Ubiquity\\controllers\\auth\\AuthController","%content%"=>$classContent],"authController.tpl");
+			$messages[]=$this->_createController($authControllerName,["%routeName%"=>$routeName,"%route%"=>$route,"%uses%"=>$uses,"%namespace%"=>$controllerNS,"%baseClass%"=>$baseClass,"%content%"=>$classContent],$controllerTemplate);
 			echo implode("", $messages);
 			$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
 			echo $this->jquery->compile($this->view);

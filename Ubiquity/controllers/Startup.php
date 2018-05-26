@@ -13,6 +13,7 @@ class Startup {
 	private static $ctrlNS;
 	private static $controller;
 	private static $action;
+	private static $actionParams;
 
 	public static function run(array &$config, $url) {
 		self::$config = $config;
@@ -90,6 +91,8 @@ class Startup {
 		self::$action = "index";
 		if (\sizeof ( $u ) > 1)
 			self::$action = $u [1];
+		if (\sizeof ( $u ) > 2)
+			self::$actionParams=array_slice ( $u, 2 );
 
 		$controller = new $ctrl ();
 		if (! $controller instanceof Controller) {
@@ -143,7 +146,7 @@ class Startup {
 				break;
 			default :
 				// Appel de la méthode en lui passant en paramètre le reste du tableau
-				\call_user_func_array ( array ($controller,$u [1] ), array_slice ( $u, 2 ) );
+				\call_user_func_array ( array ($controller,$u [1] ), self::$actionParams );
 				break;
 		}
 	}
@@ -218,6 +221,10 @@ class Startup {
 
 	public static function getAction() {
 		return self::$action;
+	}
+	
+	public static function getActionParams() {
+		return self::$actionParams;
 	}
 
 	public static function getFrameworkDir() {

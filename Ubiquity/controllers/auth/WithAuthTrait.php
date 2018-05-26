@@ -45,7 +45,7 @@ trait WithAuthTrait{
 	 * @see \Ubiquity\controllers\Controller::isValid()
 	 */
 	public function isValid($action) {
-		return $this->_getAuthController()->_isValidUser();
+		return $this->_getAuthController()->_isValidUser($action);
 	}
 
 	/**
@@ -82,7 +82,7 @@ trait WithAuthTrait{
 	protected function checkConnection($authController){
 		if($authController->_checkConnectionTimeout()!=null){
 			$authController->_disconnected();
-			$this->jquery->ajaxInterval("get",$authController->_getBaseRoute()."/_checkConnection",$authController->_checkConnectionTimeout(),"_checkConnection","",["jsCallback"=>"data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"]);
+			$this->jquery->ajaxInterval("get",$authController->_getBaseRoute()."/_checkConnection/",$authController->_checkConnectionTimeout(),"_checkConnection","",["jsCallback"=>"data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"]);
 		}
 			
 	}

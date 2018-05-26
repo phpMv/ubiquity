@@ -1,3 +1,6 @@
+{% block _before %}
+{% endblock %}
+{% block _message %}
 <div class="ui {{type}} icon message">
   <i class="{{icon}} icon"></i>
   <div class="content">
@@ -7,3 +10,6 @@
     {{ body | raw }}
   </div>
 </div>
+{% endblock %}
+{% block _after %}
+{% endblock %}

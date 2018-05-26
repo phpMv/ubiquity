@@ -154,8 +154,11 @@ trait RouterCacheTrait{
 		return self::_getFiles($config, "controllers", $silent);
 	}
 
-	public static function getControllers() {
+	public static function getControllers($subClass="\\Ubiquity\\controllers\\Controller",$backslash=false,$includeSubclass=false) {
 		$result=[ ];
+		if($includeSubclass){
+			$result[]=$subClass;
+		}
 		$config=Startup::getConfig();
 		$files=self::getControllersFiles($config, true);
 		try {
@@ -165,10 +168,10 @@ trait RouterCacheTrait{
 		}
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
-				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
+				$controllerClass=ClassUtils::getClassFullNameFromFile($file,$backslash);
 				if (isset($restCtrls[$controllerClass]) === false) {
 					$r=new \ReflectionClass($controllerClass);
-					if($r->isSubclassOf("Ubiquity\\controllers\Controller") && !$r->isAbstract()){
+					if($r->isSubclassOf($subClass) && !$r->isAbstract()){
 						$result[]=$controllerClass;
 					}
 				}

@@ -9,6 +9,7 @@ use Ubiquity\controllers\Auth\AuthFiles;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\base\UString;
+use Ubiquity\controllers\Startup;
 
  /**
  * Controller Auth
@@ -19,6 +20,20 @@ abstract class AuthController extends ControllerBase{
 	 * @var AuthFiles
 	 */
 	protected $authFiles;
+	protected $_controller;
+	protected $_action;
+	protected $_actionParams;
+	protected $_noAccessMsg;
+	protected $_loginCaption;
+	
+	public function __construct(){
+		parent::__construct();
+		$this->_controller=Startup::getController();
+		$this->_action=Startup::getAction();
+		$this->_actionParams=Startup::getActionParams();
+		$this->_noAccessMsg=new FlashMessage("You are not authorized to access the page <b>{url}</b> !","Forbidden access","error","warning circle");
+		$this->_loginCaption="Log in";
+	}
 	
 	public function index(){
 		$this->authLoadView($this->_getFiles()->getViewIndex(),["action"=>$this->_getBaseRoute()."/connect",
@@ -52,10 +67,10 @@ abstract class AuthController extends ControllerBase{
 			$urlParts=explode(".", $urlParts);
 		}
 		USession::set("urlParts", $urlParts);
-		$fMessage=new FlashMessage("You are not authorized to access the page <b>".implode("/",$urlParts)."</b> !","Forbidden access","error","warning circle");
+		$fMessage=$this->_noAccessMsg->parseContent(["url"=>implode("/",$urlParts)]);
 		$this->noAccessMessage($fMessage);
 		$message=$this->fMessage($fMessage);		
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
 	/**
@@ -104,7 +119,7 @@ abstract class AuthController extends ControllerBase{
 		$fMessage=new FlashMessage("Invalid creditentials!","Connection problem","warning","warning circle");
 		$this->badLoginMessage($fMessage);
 		$message=$this->fMessage($fMessage);
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
 	/**
@@ -136,7 +151,7 @@ abstract class AuthController extends ControllerBase{
 		$fMessage=new FlashMessage("You have been properly disconnected!","Logout","success","checkmark");
 		$this->terminateMessage($fMessage);
 		$message=$this->fMessage($fMessage);
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
 	public function _disConnected(){
@@ -216,7 +231,7 @@ abstract class AuthController extends ControllerBase{
 	 * if set to true, use _infoUser var in views to display user info
 	 */
 	public function _displayInfoAsString(){
-		return true;
+		return false;
 	}
 	
 	public function _checkConnectionTimeout(){
@@ -249,4 +264,24 @@ abstract class AuthController extends ControllerBase{
 	public function _getBodySelector(){
 		return "body";
 	}
+	
+	/**
+	 * Sets the default noAccess message
+	 * Default : "You are not authorized to access the page <b>{url}</b> !"
+	 * @param string $content
+	 * @param string $title
+	 * @param string $type
+	 * @param string $icon
+	 */
+	public function _setNoAccessMsg($content,$title=NULL,$type=NULL,$icon=null) {
+		$this->_noAccessMsg->setValues($content,$title,$type,$icon);
+	}
+	/**
+	 * @param string $_loginCaption
+	 */
+	public function _setLoginCaption($_loginCaption) {
+		$this->_loginCaption = $_loginCaption;
+	}
+
+
 }

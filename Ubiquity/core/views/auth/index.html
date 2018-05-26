@@ -1,7 +1,11 @@
+{% block _before %}
 <p></p>
+{% endblock %}
 {% block _form %}
 <form id="frm-login" class="ui form" name="frm-login" method="post" action="{{action}}">
+{% block _header %}
 <h4 class="ui header dividing">Connection</h4> 
+{% endblock %}
 {% block _fields %}
 <div class="two fields">
 	{% block _fieldLogin %}
@@ -30,4 +34,6 @@
 <button class="ui button green basic ajax">Connection</button>
 {% endblock %}
 </form>
+{% endblock %}
+{% block _after %}
 {% endblock %}

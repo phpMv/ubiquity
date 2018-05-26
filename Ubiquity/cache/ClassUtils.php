@@ -2,6 +2,8 @@
 
 namespace Ubiquity\cache;
 
+use Ubiquity\utils\base\UString;
+
 class ClassUtils {
 
 	/**
@@ -12,9 +14,13 @@ class ClassUtils {
 	 *
 	 * @return string
 	 */
-	public static function getClassFullNameFromFile($filePathName) {
+	public static function getClassFullNameFromFile($filePathName,$backSlash=false) {
 		$phpCode=\file_get_contents($filePathName);
-		return self::getClassNamespaceFromPhpCode($phpCode) . '\\' . self::getClassNameFromPhpCode($phpCode);
+		$ns=self::getClassNamespaceFromPhpCode($phpCode);
+		if($backSlash && UString::isNotNull($ns)){
+			$ns="\\".$ns;
+		}
+		return $ns. '\\' . self::getClassNameFromPhpCode($phpCode);
 	}
 
 	public static function cleanClassname($classname) {
