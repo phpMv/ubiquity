@@ -54,6 +54,8 @@ trait CreateControllersTrait{
 		
 		$this->jquery->click("#validate-btn",'$("#crud-controller-frm").form("submit");');
 		$this->jquery->execOn("click", "#cancel-btn", '$("#frm").html("");');
+		$this->jquery->exec("$('#crud-datas-ck').checkbox();",true);
+		
 		$this->jquery->exec("$('#crud-viewer-ck').checkbox();",true);
 		$this->jquery->exec("$('#crud-events-ck').checkbox();",true);
 		$this->jquery->exec("$('#ck-add-route').checkbox();",true);
@@ -86,6 +88,15 @@ trait CreateControllersTrait{
 			$routeName=$crudControllerName;
 			$resource=UString::doubleBackSlashes($_POST["crud-model"]);
 			$this->_createMethod("public", "__construct","","","\n\t\tparent::__construct();\n\$this->model=\"{$resource}\";");
+			
+			if(isset($_POST["crud-datas"])){
+				$uses[]="use controllers\\crud\\datas\\{$crudControllerName}Datas;";
+				$uses[]="use Ubiquity\\controllers\\crud\\CRUDDatas;";
+				
+				$classContent.=$this->_createMethod("protected", "getAdminData","",": CRUDDatas","\n\t\treturn new {$crudControllerName}Datas(\$this);");
+				$messages[]=$this->createCRUDDatasClass($crudControllerName);
+			}
+			
 			if(isset($_POST["crud-viewer"])){
 				$uses[]="use controllers\\crud\\viewers\\{$crudControllerName}Viewer;";
 				$uses[]="use Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
@@ -214,6 +225,12 @@ trait CreateControllersTrait{
 			$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
 			echo $this->jquery->compile($this->view);
 		}
+	}
+	
+	protected function createCRUDDatasClass($crudControllerName){
+		$ns=Startup::getNS("controllers")."crud\\datas";
+		$uses="\nuse Ubiquity\\controllers\\crud\\CRUDDatas;";
+		return $this->_createClass("class.tpl", $crudControllerName."Datas", $ns, $uses, "extends CRUDDatas", "\t//use override/implement Methods");
 	}
 	
 	protected function createModelViewerClass($crudControllerName){
