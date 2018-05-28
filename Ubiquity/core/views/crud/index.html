@@ -1,8 +1,12 @@
+{% block _before %}
 <div class="ui segment">
+{% endblock %}
 {% block btAddNew %}
 	<a id="btAddNew" class="ui button orange">
 	 <i class="icon plus"></i>
+	 {% block _addNewCaption %}
 	Add a new {{classname}}...
+	{% endblock %}
 	</a>
 {% endblock %}
 {% block frm %}
@@ -19,5 +23,11 @@
 {% block details %}
 	<div id='table-details'></div>
 {% endblock %}
+{% block _after %}
 </div>
-{{script_foot | raw}}
+{% endblock %}
+{% block script %}
+	{% if hasScript %}
+	{{script_foot | raw}}
+	{% endif %}
+{% endblock %}

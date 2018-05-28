@@ -3,6 +3,7 @@
 namespace Ubiquity\utils\http;
 
 use Ubiquity\utils\base\UString;
+use Ubiquity\utils\http\session\SessionObject;
 
 /**
  * Http Session utilities
@@ -150,6 +151,47 @@ class USession {
 	public static function set($key, $value) {
 		$_SESSION [$key] = $value;
 		return $value;
+	}
+	
+	public static function setTmp($key,$value,$duration){
+		if(isset($_SESSION[$key])){
+			$object=$_SESSION[$key];
+			if($object instanceof SessionObject){
+				return $object->setValue($value);
+			}
+		}
+		$object=new SessionObject($value, $duration);
+		return $_SESSION[$key]=$object;
+	}
+	
+	public static function getTmp($key,$default=null){
+		if(isset($_SESSION[$key])){
+			$object=$_SESSION[$key];
+			if($object instanceof SessionObject){
+				$value=$object->getValue();
+				if(isset($value))
+					return $object->getValue();
+				else{
+					self::delete($key);	
+				}
+			}
+		}
+		return $default;
+	}
+	
+	public static function getTimeout($key){
+		if(isset($_SESSION[$key])){
+			$object=$_SESSION[$key];
+			if($object instanceof SessionObject){
+				$value=$object->getTimeout();
+				if($value<0){
+					return 0;
+				}else{
+					return $value;
+				}
+			}
+		}
+		return;
 	}
 
 	/**

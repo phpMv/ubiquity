@@ -18,8 +18,10 @@ trait WithAuthTrait{
 	public function initialize(){
 		parent::initialize();
 		$authController=$this->_getAuthController();
-		if(!URequest::isAjax() && !$authController->_displayInfoAsString()){
+		if(!URequest::isAjax()){
+			if(!$authController->_displayInfoAsString()){
 			$authController->info();
+			}
 			if($this->isValid(Startup::getAction())){
 				$this->checkConnection($authController);
 			}else{

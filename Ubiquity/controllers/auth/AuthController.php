@@ -25,6 +25,7 @@ abstract class AuthController extends ControllerBase{
 	protected $_actionParams;
 	protected $_noAccessMsg;
 	protected $_loginCaption;
+	protected $_attemptsSessionKey="_attempts";
 	
 	public function __construct(){
 		parent::__construct();
@@ -36,6 +37,13 @@ abstract class AuthController extends ControllerBase{
 	}
 	
 	public function index(){
+		if(($nbAttempsMax=$this->attemptsNumber())!=null){
+			$nb=USession::getTmp($this->_attemptsSessionKey,$nbAttempsMax);
+			if($nb<=0){
+				$this->badLogin();
+				return;
+			}
+		}
 		$this->authLoadView($this->_getFiles()->getViewIndex(),["action"=>$this->_getBaseRoute()."/connect",
 				"loginInputName"=>$this->_getLoginInputName(),"loginLabel"=>$this->loginLabel(),
 				"passwordInputName"=>$this->_getPasswordInputName(),"passwordLabel"=>$this->passwordLabel()
@@ -67,9 +75,9 @@ abstract class AuthController extends ControllerBase{
 			$urlParts=explode(".", $urlParts);
 		}
 		USession::set("urlParts", $urlParts);
-		$fMessage=$this->_noAccessMsg->parseContent(["url"=>implode("/",$urlParts)]);
+		$fMessage=$this->_noAccessMsg;
 		$this->noAccessMessage($fMessage);
-		$message=$this->fMessage($fMessage);		
+		$message=$this->fMessage($fMessage->parseContent(["url"=>implode("/",$urlParts)]));		
 		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
@@ -82,11 +90,24 @@ abstract class AuthController extends ControllerBase{
 	}
 	
 	/**
+	 * Override for modifying attempts message
+	 * You can use {_timer} and {_attemptsCount} variables in message content
+	 * @param FlashMessage $fMessage
+	 * @param int $attempsCount
+	 */
+	protected function attemptsNumberMessage(FlashMessage $fMessage,$attempsCount){
+		
+	}
+	
+	/**
 	 * Override to implement the complete connection procedure 
 	 */
 	public function connect(){
 		if(URequest::isPost()){
 			if($connected=$this->_connect()){
+				if(USession::exists($this->_attemptsSessionKey)){
+					USession::delete($this->_attemptsSessionKey);
+				}
 				$this->onConnect($connected);
 			}else{
 				$this->onBadCreditentials();
@@ -118,8 +139,46 @@ abstract class AuthController extends ControllerBase{
 	public function badLogin(){
 		$fMessage=new FlashMessage("Invalid creditentials!","Connection problem","warning","warning circle");
 		$this->badLoginMessage($fMessage);
-		$message=$this->fMessage($fMessage);
+		$attemptsMessage="";
+		if(($nbAttempsMax=$this->attemptsNumber())!=null){
+			$nb=USession::getTmp($this->_attemptsSessionKey,$nbAttempsMax);
+			$nb--;
+			if($nb<0) $nb=0;
+			if($nb==0){
+				$fAttemptsNumberMessage=$this->noAttempts();
+			}else{
+				$fAttemptsNumberMessage=new FlashMessage("<i class='ui warning icon'></i> You still have {_attemptsCount} attempts to log in.",null,"bottom attached warning","");
+			}
+			USession::setTmp($this->_attemptsSessionKey, $nb,$this->attemptsTimeout());
+			$this->attemptsNumberMessage($fAttemptsNumberMessage,$nb);
+			$fAttemptsNumberMessage->parseContent(["_attemptsCount"=>$nb,"_timer"=>"<span id='timer'></span>"]);
+			$attemptsMessage=$this->fMessage($fAttemptsNumberMessage,"timeout-message");
+			$fMessage->addType("attached");
+		}
+		$message=$this->fMessage($fMessage,"bad-login").$attemptsMessage;
 		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
+	}
+	
+	protected function noAttempts(){
+		$timeout=$this->attemptsTimeout();
+		$plus="";
+		if(is_numeric($timeout)){
+			$this->jquery->exec("$('._login').addClass('disabled');",true);
+			$plus=" You can try again {_timer}";
+			$this->jquery->exec("var startTimer=function(duration, display) {var timer = duration, minutes, seconds;
+    										var interval=setInterval(function () {
+        										minutes = parseInt(timer / 60, 10);seconds = parseInt(timer % 60, 10);
+										        minutes = minutes < 10 ? '0' + minutes : minutes;
+        										seconds = seconds < 10 ? '0' + seconds : seconds;
+										        display.html('in ' +minutes + ':' + seconds);
+										        if (--timer < 0) {clearInterval(interval);$('#timeout-message').hide();$('#bad-login').removeClass('attached');$('._login').removeClass('disabled');}
+    										}, 1000);
+										}",true);
+			$timeToLeft=USession::getTimeout($this->_attemptsSessionKey);
+			$this->jquery->exec("startTimer({$timeToLeft},$('#timer'));",true);
+			$this->jquery->compile($this->view);
+		}
+		return new FlashMessage("<i class='ui warning icon'></i> You have no more attempt of connection !".$plus,null,"bottom attached error","");
 	}
 	
 	/**
@@ -188,11 +247,11 @@ abstract class AuthController extends ControllerBase{
 		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()],$this->_displayInfoAsString());
 	}
 	
-	protected function fMessage(FlashMessage $fMessage){
-		return $this->message($fMessage->getType(), $fMessage->getTitle(), $fMessage->getContent(),$fMessage->getIcon());
+	protected function fMessage(FlashMessage $fMessage,$id=null){
+		return $this->message($fMessage->getType(), $fMessage->getTitle(), $fMessage->getContent(),$fMessage->getIcon(),$id);
 	}
 	
-	public function message($type,$header,$body,$icon="info"){
+	public function message($type,$header,$body,$icon="info",$id=null){
 		return $this->loadView($this->_getFiles()->getViewMessage(),get_defined_vars(),true);
 	}
 	
@@ -206,6 +265,24 @@ abstract class AuthController extends ControllerBase{
 	 */
 	public function _getUserSessionKey(){
 		return "activeUser";
+	}
+	
+	/**
+	 * To override
+	 * Returns the maximum number of allowed login attempts
+	 */
+	protected function attemptsNumber(){
+		return;
+	}
+	
+	/**
+	 * To override
+	 * Returns the time before trying to connect again
+	 * Effective only if attemptsNumber return a number
+	 * @return number
+	 */
+	protected function attemptsTimeout(){
+		return 3*60;
 	}
 	
 	public function _checkConnection(){
@@ -282,6 +359,8 @@ abstract class AuthController extends ControllerBase{
 	public function _setLoginCaption($_loginCaption) {
 		$this->_loginCaption = $_loginCaption;
 	}
+	
+	
 
 
 }

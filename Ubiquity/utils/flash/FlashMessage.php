@@ -55,6 +55,10 @@ class FlashMessage {
 	public function setType($type) {
 		$this->type = $type;
 	}
+	
+	public function addType($type){
+		$this->type.=" ".$type;
+	}
 
 	/**
 	 * @param mixed $icon

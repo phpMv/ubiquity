@@ -31,8 +31,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$modal=($this->_getModelViewer()->isModal($objects,$this->model))?"modal":"no";
 		$this->_getModelViewer()->getModelDataTable($objects, $this->model);
 		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute() . "/newModel/" . $modal, "#frm-add-update",["hasLoader"=>"internal"] );
-		$this->jquery->compile($this->view);
-		$this->loadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ]);		
+		$this->crudLoadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ]);		
 	}
 	
 	protected function getInstances($page=1,$id=null){
@@ -329,5 +328,23 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$value = $this->$method ();
 		}
 		return $value;
+	}
+	
+	private function crudLoadView($viewName,$vars=[]){
+		if(!URequest::isAjax()){
+			$files=$this->_getFiles();
+			$mainTemplate=$files->getBaseTemplate();
+			if(isset($mainTemplate)){
+				$vars["_viewname"]=$viewName;
+				$vars["_base"]=$mainTemplate;
+				$this->jquery->renderView($files->getViewBaseTemplate(),$vars);
+			}else{
+				$vars["hasScript"]=true;
+				$this->jquery->renderView($viewName,$vars);
+			}
+		}else{
+			$vars["hasScript"]=true;
+			$this->jquery->renderView($viewName,$vars);
+		}
 	}
 }

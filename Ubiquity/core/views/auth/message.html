@@ -1,8 +1,10 @@
 {% block _before %}
 {% endblock %}
 {% block _message %}
-<div class="ui {{type}} icon message">
+<div id="{{id}}" class="ui {{type}} {{ icon ? 'icon':''}} message">
+  {%if icon %}
   <i class="{{icon}} icon"></i>
+  {% endif %}
   <div class="content">
     <div class="header">
       {{ header | raw }}
