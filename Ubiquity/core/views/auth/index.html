@@ -29,6 +29,18 @@
 	</div>
 	{% endblock %}
 </div>
+{% block _extraFields %}
+	<div class="two fields">
+	{% block _fieldRemember %}
+		<div class="field">
+			<div class="ui checkbox">
+				<input id="ck-remember" name="ck-remember" value="1" type="checkbox" placeholder="Remember" tabindex="0" class="hidden"> 
+				<label for="ck-remember">{{rememberCaption}}</label>
+			</div>
+		</div>
+	{% endblock %}
+	</div>
+{% endblock %}
 {% endblock %}
 {% block _buttons %}
 <button class="ui button green basic ajax">Connection</button>

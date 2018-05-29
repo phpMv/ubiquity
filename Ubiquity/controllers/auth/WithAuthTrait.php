@@ -47,7 +47,13 @@ trait WithAuthTrait{
 	 * @see \Ubiquity\controllers\Controller::isValid()
 	 */
 	public function isValid($action) {
-		return $this->_getAuthController()->_isValidUser($action);
+		$authCtrl=$this->_getAuthController();
+		$isValid=$authCtrl->_isValidUser($action);
+		if(!$isValid){
+			$authCtrl->_autoConnect();
+			return $authCtrl->_isValidUser($action);
+		}
+		return $isValid;
 	}
 
 	/**

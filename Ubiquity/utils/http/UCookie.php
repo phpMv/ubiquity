@@ -36,6 +36,9 @@ class UCookie {
 	 * @param $path
 	 */
 	public static function delete($name, $path="/") {
+		if(isset($_COOKIE[$name])){
+			unset($_COOKIE[$name]);
+		}
 		\setcookie($name, "", \time() - 3600, $path);
 	}
 
