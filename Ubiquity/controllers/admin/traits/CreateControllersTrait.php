@@ -108,7 +108,7 @@ trait CreateControllersTrait{
 				$uses[]="use controllers\\crud\\events\\{$crudControllerName}Events;";
 				$uses[]="use Ubiquity\\controllers\\crud\\CRUDEvents;";
 				
-				$classContent.=$this->_createMethod("protected", "getEvents","",": CRUDEvents","\n\t\treturn new {$crudControllerName}Events();");
+				$classContent.=$this->_createMethod("protected", "getEvents","",": CRUDEvents","\n\t\treturn new {$crudControllerName}Events(\$this);");
 				$messages[]=$this->createEventsClass($crudControllerName);
 			}
 			

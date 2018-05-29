@@ -1,3 +1,5 @@
+{% block _before %}
+{% endblock %}
 <div class="ui segment">
 	<a id="btAddNew" class="ui button orange">
 	 <i class="icon plus"></i>
@@ -8,4 +10,8 @@
 	<div id='table-messages'></div>
 	<div id='table-details'></div>
 </div>
+{% block _after %}
+{% endblock %}
+{% block _script_foot %}
 {{script_foot | raw}}
+{% endblock %}

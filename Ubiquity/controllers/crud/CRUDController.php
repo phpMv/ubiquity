@@ -85,19 +85,29 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * @param string $ids the primary value(s)
 	 */
 	public function edit($modal="no", $ids="") {
-		$instance=$this->getModelInstance($ids);
-		$instance->_new=false;
-		$this->_edit($instance, $modal);
+		if(URequest::isAjax()){
+			$instance=$this->getModelInstance($ids);
+			$instance->_new=false;
+			$this->_edit($instance, $modal);
+		}else{
+			$this->jquery->execAtLast("$('._edit[data-ajax={$ids}]').trigger('click');");
+			$this->index();
+		}
 	}
 	/**
 	 * Adds a new instance and edits it
 	 * @param string $modal Accept "no" or "modal" for a modal dialog
 	 */
 	public function newModel($modal="no") {
-		$model=$this->model;
-		$instance=new $model();
-		$instance->_new=true;
-		$this->_edit($instance, $modal);
+		if(URequest::isAjax()){
+			$model=$this->model;
+			$instance=new $model();
+			$instance->_new=true;
+			$this->_edit($instance, $modal);
+		}else{
+			$this->jquery->execAtLast("$('.ui.button._new').trigger('click');");
+			$this->index();
+		}
 	}
 	
 	/**
@@ -106,14 +116,19 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * @param string $ids
 	 */
 	public function display($modal="no",$ids=""){
-		$instance=$this->getModelInstance($ids);
-		$key=OrmUtils::getFirstKeyValue($instance);
-		$this->jquery->execOn("click","._close",'$("#table-details").html("");$("#dataTable").show();');
-		$this->jquery->getOnClick("._edit", $this->_getBaseRoute()."/edit/".$modal."/".$key,"#frm-add-update");
-		$this->jquery->getOnClick("._delete", $this->_getBaseRoute()."/delete/".$key,"#table-messages");
-		
-		$this->_getModelViewer()->getModelDataElement($instance, $this->model,$modal);
-		$this->jquery->renderView($this->_getFiles()->getViewDisplay(), [ "classname" => $this->model,"instance"=>$instance,"pk"=>$key ]);
+		if(URequest::isAjax()){
+			$instance=$this->getModelInstance($ids);
+			$key=OrmUtils::getFirstKeyValue($instance);
+			$this->jquery->execOn("click","._close",'$("#table-details").html("");$("#dataTable").show();');
+			$this->jquery->getOnClick("._edit", $this->_getBaseRoute()."/edit/".$modal."/".$key,"#frm-add-update");
+			$this->jquery->getOnClick("._delete", $this->_getBaseRoute()."/delete/".$key,"#table-messages");
+			
+			$this->_getModelViewer()->getModelDataElement($instance, $this->model,$modal);
+			$this->jquery->renderView($this->_getFiles()->getViewDisplay(), [ "classname" => $this->model,"instance"=>$instance,"pk"=>$key ]);
+		}else{
+			$this->jquery->execAtLast("$('._display[data-ajax={$ids}]').trigger('click');");
+			$this->index();
+		}
 	}
 	
 	protected function _edit($instance, $modal="no") {
@@ -149,33 +164,38 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * @param mixed $ids
 	 */
 	public function delete($ids) {
-		$instance=$this->getModelInstance($ids);
-		if (method_exists($instance, "__toString"))
-			$instanceString=$instance . "";
-		else
-			$instanceString=get_class($instance);
-		if (sizeof($_POST) > 0) {
-			try{
-				if (DAO::remove($instance)) {
-					$message=new CRUDMessage("Deletion of `<b>" . $instanceString . "</b>`","Deletion","info","info circle",4000);
-					$message=$this->_getEvents()->onSuccessDeleteMessage($message);
-					$this->jquery->exec("$('._element[data-ajax={$ids}]').remove();", true);
-				} else {
-					$message=new CRUDMessage("Can not delete `" . $instanceString . "`","Deletion","warning","warning circle");
+		if(URequest::isAjax()){
+			$instance=$this->getModelInstance($ids);
+			if (method_exists($instance, "__toString"))
+				$instanceString=$instance . "";
+			else
+				$instanceString=get_class($instance);
+			if (sizeof($_POST) > 0) {
+				try{
+					if (DAO::remove($instance)) {
+						$message=new CRUDMessage("Deletion of `<b>" . $instanceString . "</b>`","Deletion","info","info circle",4000);
+						$message=$this->_getEvents()->onSuccessDeleteMessage($message);
+						$this->jquery->exec("$('._element[data-ajax={$ids}]').remove();", true);
+					} else {
+						$message=new CRUDMessage("Can not delete `" . $instanceString . "`","Deletion","warning","warning circle");
+						$message=$this->_getEvents()->onErrorDeleteMessage($message);
+					}
+				}catch (\Exception $e){
+					$message=new CRUDMessage("Exception : can not delete `" . $instanceString . "`","Exception", "warning", "warning");
 					$message=$this->_getEvents()->onErrorDeleteMessage($message);
 				}
-			}catch (\Exception $e){
-				$message=new CRUDMessage("Exception : can not delete `" . $instanceString . "`","Exception", "warning", "warning");
-				$message=$this->_getEvents()->onErrorDeleteMessage($message);
+				$message=$this->_showSimpleMessage($message);
+			} else {
+				$message=new CRUDMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "Remove confirmation","error");
+				$this->_getEvents()->onConfDeleteMessage($message);
+				$message=$this->_showConfMessage($message, $this->_getBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
 			}
-			$message=$this->_showSimpleMessage($message);
-		} else {
-			$message=new CRUDMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "Remove confirmation","error");
-			$this->_getEvents()->onConfDeleteMessage($message);
-			$message=$this->_showConfMessage($message, $this->_getBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
+			echo $message;
+			echo $this->jquery->compile($this->view);
+		}else{
+			$this->jquery->execAtLast("$('._delete[data-ajax={$ids}]').trigger('click');");
+			$this->index();
 		}
-		echo $message;
-		echo $this->jquery->compile($this->view);
 	}
 	
 
@@ -229,31 +249,36 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * @param mixed $ids
 	 */
 	public function showDetail($ids) {
-		$instance=$this->getModelInstance($ids);
-		$viewer=$this->_getModelViewer();
-		$hasElements=false;
-		$model=$this->model;
-		$fkInstances=CRUDHelper::getFKIntances($instance, $model);
-		$semantic=$this->jquery->semantic();
-		$grid=$semantic->htmlGrid("detail");
-		if (sizeof($fkInstances) > 0) {
-			$wide=intval(16 / sizeof($fkInstances));
-			if ($wide < 4)
-				$wide=4;
-				foreach ( $fkInstances as $member=>$fkInstanceArray ) {
-					$element=$viewer->getFkMemberElementDetails($member,$fkInstanceArray["objectFK"],$fkInstanceArray["fkClass"],$fkInstanceArray["fkTable"]);
-					if (isset($element)) {
-						$grid->addCol($wide)->setContent($element);
-						$hasElements=true;
+		if(URequest::isAjax()){
+			$instance=$this->getModelInstance($ids);
+			$viewer=$this->_getModelViewer();
+			$hasElements=false;
+			$model=$this->model;
+			$fkInstances=CRUDHelper::getFKIntances($instance, $model);
+			$semantic=$this->jquery->semantic();
+			$grid=$semantic->htmlGrid("detail");
+			if (sizeof($fkInstances) > 0) {
+				$wide=intval(16 / sizeof($fkInstances));
+				if ($wide < 4)
+					$wide=4;
+					foreach ( $fkInstances as $member=>$fkInstanceArray ) {
+						$element=$viewer->getFkMemberElementDetails($member,$fkInstanceArray["objectFK"],$fkInstanceArray["fkClass"],$fkInstanceArray["fkTable"]);
+						if (isset($element)) {
+							$grid->addCol($wide)->setContent($element);
+							$hasElements=true;
+						}
 					}
-				}
-				if ($hasElements)
-					echo $grid;
-					$url=$this->_getEvents()->onDetailClickURL($this->model);
-				if(UString::isNotNull($url)){
-					$this->detailClick($url);
-				}
-				echo $this->jquery->compile($this->view);
+					if ($hasElements)
+						echo $grid;
+						$url=$this->_getEvents()->onDetailClickURL($this->model);
+					if(UString::isNotNull($url)){
+						$this->detailClick($url);
+					}
+					echo $this->jquery->compile($this->view);
+			}
+		}else{
+			$this->jquery->execAtLast("$('tr[data-ajax={$ids}]').trigger('click');");
+			$this->index();
 		}
 
 	}
@@ -331,6 +356,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	}
 	
 	private function crudLoadView($viewName,$vars=[]){
+		$this->_getEvents()->beforeLoadView($viewName,$vars);
 		if(!URequest::isAjax()){
 			$files=$this->_getFiles();
 			$mainTemplate=$files->getBaseTemplate();
@@ -347,4 +373,5 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->jquery->renderView($viewName,$vars);
 		}
 	}
+
 }

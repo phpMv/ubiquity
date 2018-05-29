@@ -268,6 +268,14 @@ abstract class AuthController extends ControllerBase{
 	}
 	
 	/**
+	 * To override for getting active user, default : USession::get("activeUser")
+	 * @return string
+	 */
+	public function _getActiveUser(){
+		return USession::get($this->_getUserSessionKey());
+	}
+	
+	/**
 	 * To override
 	 * Returns the maximum number of allowed login attempts
 	 */

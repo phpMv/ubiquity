@@ -4,6 +4,12 @@ namespace Ubiquity\controllers\crud;
 
 class CRUDEvents {
 	
+	protected $controller;
+	
+	public function __construct($controller){
+		$this->controller=$controller;
+	}
+	
 	public function onDetailClickURL($model){
 		return "";
 	}
@@ -30,6 +36,10 @@ class CRUDEvents {
 	
 	public function onNotFoundMessage(CRUDMessage $message):CRUDMessage{
 		return $message;
+	}
+	
+	public function beforeLoadView($viewName,&$vars){
+		
 	}
 }
 

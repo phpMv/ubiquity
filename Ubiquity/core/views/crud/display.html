@@ -1,3 +1,5 @@
+{% block _before %}
+{% endblock %}
 {% block buttons %}
 	<div id="buttons" style="padding: 10px 0px 10px;">
 	{% block btClose %}
@@ -16,6 +18,8 @@
 	{{ q["de"] | raw }}
 	</div>
 {% endblock %}
-{% block script_foot %}
+{% block _after %}
+{% endblock %}
+{% block _script_foot %}
 	{{script_foot | raw}}
 {% endblock %}
