@@ -386,7 +386,7 @@ abstract class AuthController extends ControllerBase{
 	 * @param object $connected
 	 */
 	protected function rememberMe($connected){
-		$id= $this->getPhpCookieTransformer($connected);
+		$id= $this->toCookie($connected);
 		if(isset($id)){
 			UCookie::set($this->_getUserSessionKey(),$id);
 		}
@@ -401,10 +401,10 @@ abstract class AuthController extends ControllerBase{
 	}
 	
 	/**
-	 * Returns the value from connected user to save in the cookie for auto connection
+	 * Returns the value from connected user to save it in the cookie for auto connection
 	 * @param object $connected
 	 */
-	protected function getPhpCookieTransformer($connected){
+	protected function toCookie($connected){
 		return;
 	}
 	
@@ -412,7 +412,7 @@ abstract class AuthController extends ControllerBase{
 	 * Loads the user from database using the cookie value
 	 * @param string $cookie
 	 */
-	protected function getDbUserFromCookie($cookie){
+	protected function fromCookie($cookie){
 		return;
 	}
 	
@@ -422,7 +422,7 @@ abstract class AuthController extends ControllerBase{
 	public function _autoConnect() {
 		$cookie=$this->getCookieUser();
 		if(isset($cookie)){
-			$user=$this->getDbUserFromCookie($cookie);
+			$user=$this->fromCookie($cookie);
 			if(isset($user)){
 				USession::set($this->_getUserSessionKey(), $user);
 			}

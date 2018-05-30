@@ -17,5 +17,4 @@ class %controllerName% extends %baseClass%{
 	}
 	
 %content%
-
 }

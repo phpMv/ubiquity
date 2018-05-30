@@ -93,7 +93,7 @@ trait CreateControllersTrait{
 				$uses[]="use controllers\\crud\\datas\\{$crudControllerName}Datas;";
 				$uses[]="use Ubiquity\\controllers\\crud\\CRUDDatas;";
 				
-				$classContent.=$this->_createMethod("protected", "getAdminData","",": CRUDDatas","\n\t\treturn new {$crudControllerName}Datas(\$this);");
+				$classContent.=$this->_createMethod("protected", "getAdminData","",": CRUDDatas","\t\treturn new {$crudControllerName}Datas(\$this);");
 				$messages[]=$this->createCRUDDatasClass($crudControllerName);
 			}
 			
@@ -101,21 +101,21 @@ trait CreateControllersTrait{
 				$uses[]="use controllers\\crud\\viewers\\{$crudControllerName}Viewer;";
 				$uses[]="use Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
 				
-				$classContent.=$this->_createMethod("protected", "getModelViewer","",": ModelViewer","\n\t\treturn new {$crudControllerName}Viewer(\$this);");
+				$classContent.=$this->_createMethod("protected", "getModelViewer","",": ModelViewer","\t\treturn new {$crudControllerName}Viewer(\$this);");
 				$messages[]=$this->createModelViewerClass($crudControllerName);
 			}
 			if(isset($_POST["crud-events"])){
 				$uses[]="use controllers\\crud\\events\\{$crudControllerName}Events;";
 				$uses[]="use Ubiquity\\controllers\\crud\\CRUDEvents;";
 				
-				$classContent.=$this->_createMethod("protected", "getEvents","",": CRUDEvents","\n\t\treturn new {$crudControllerName}Events(\$this);");
+				$classContent.=$this->_createMethod("protected", "getEvents","",": CRUDEvents","\t\treturn new {$crudControllerName}Events(\$this);");
 				$messages[]=$this->createEventsClass($crudControllerName);
 			}
 			
 			if(isset($_POST["crud-files"])){
 				$uses[]="use controllers\\crud\\files\\{$crudControllerName}Files;";
 				$uses[]="use Ubiquity\\controllers\\crud\\CRUDFiles;";
-				$classContent.=$this->_createMethod("protected", "getFiles","",": CRUDFiles","\n\t\treturn new {$crudControllerName}Files();");
+				$classContent.=$this->_createMethod("protected", "getFiles","",": CRUDFiles","\t\treturn new {$crudControllerName}Files();");
 				$crudFiles=$_POST["crud-views"];
 				$crudFiles=explode(",", $crudFiles);
 				$classFilesContent=[];
@@ -123,7 +123,7 @@ trait CreateControllersTrait{
 					if(isset($this->views["CRUD"][$file])){
 						$frameworkViewname=$this->views["CRUD"][$file];
 						$this->createCrudView($frameworkViewname,$crudControllerName, $file);
-						$classFilesContent[]=$this->_createMethod("public", "getView".ucfirst($file),"","","\n\t\treturn \"".$crudControllerName."/".$file.".html\";");
+						$classFilesContent[]=$this->_createMethod("public", "getView".ucfirst($file),"","","\t\treturn \"".$crudControllerName."/".$file.".html\";");
 					}
 				}
 				$messages[]=$this->createCRUDFilesClass($crudControllerName,implode("",$classFilesContent));
@@ -196,7 +196,7 @@ trait CreateControllersTrait{
 			if(isset($_POST["auth-files"])){
 				$uses[]="use controllers\\auth\\files\\{$authControllerName}Files;";
 				$uses[]="use Ubiquity\\controllers\\auth\\AuthFiles;";
-				$classContent.=$this->_createMethod("protected", "getFiles","",": AuthFiles","\n\t\treturn new {$authControllerName}Files();");
+				$classContent.=$this->_createMethod("protected", "getFiles","",": AuthFiles","\t\treturn new {$authControllerName}Files();");
 				$authFiles=$_POST["auth-views"];
 				$authFiles=explode(",", $authFiles);
 				$classFilesContent=[];
@@ -204,7 +204,7 @@ trait CreateControllersTrait{
 					if(isset($this->views["auth"][$file])){
 						$frameworkViewname=$this->views["auth"][$file];
 						$this->createCrudView($frameworkViewname,$authControllerName, $file);
-						$classFilesContent[]=$this->_createMethod("public", "getView".ucfirst($file),"","","\n\t\treturn \"".$authControllerName."/".$file.".html\";");
+						$classFilesContent[]=$this->_createMethod("public", "getView".ucfirst($file),"","","\t\treturn \"".$authControllerName."/".$file.".html\";");
 					}
 				}
 				$messages[]=$this->createAuthFilesClass($authControllerName,implode("",$classFilesContent));
