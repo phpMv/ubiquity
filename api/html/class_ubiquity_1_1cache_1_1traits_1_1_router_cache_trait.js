@@ -7,7 +7,7 @@ var class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait =
     [ "expired", "class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a2c1127a01a222557ddc0c0225fd7c5c1", null ],
     [ "getControllerCache", "class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a1b76cf2460c5596848726839850ec375", null ],
     [ "getControllerRoutes", "class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a6fad84358d8ca93d34cda1f29dd56a40", null ],
-    [ "getControllers", "class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#af91595b2fdb4297bfb468368de301735", null ],
+    [ "getControllers", "class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#aa689a629aa9fbab5fad04f77ee5108c4", null ],
     [ "getControllersFiles", "class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a353a7d4f94388ecb60d535fcb38ce7c2", null ],
     [ "getRouteCache", "class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a64a9014e5f5c777b6fa394d8cc8319d4", null ],
     [ "getRouteKey", "class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#af93ed880557422282a08cc744e6c1dbc", null ],

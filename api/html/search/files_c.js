@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['querycache_2ephp',['QueryCache.php',['../_query_cache_8php.html',1,'']]]
+  ['phpfastcachedriver_2ephp',['PhpFastCacheDriver.php',['../_php_fast_cache_driver_8php.html',1,'']]]
 ];

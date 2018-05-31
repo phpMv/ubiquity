@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.2</span>
+   &#160;<span id="projectnumber">2.0.3</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -120,6 +120,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:afc900e07051d67d9b28de98d337810d5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#afc900e07051d67d9b28de98d337810d5">getAll</a> ($className, $condition='', $loadManyToOne=true, $loadOneToMany=false, $useCache=NULL)</td></tr>
 <tr class="memdesc:afc900e07051d67d9b28de98d337810d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an array of $className objects from the database.  <a href="#afc900e07051d67d9b28de98d337810d5">More...</a><br /></td></tr>
 <tr class="separator:afc900e07051d67d9b28de98d337810d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a4e71e4296bbb6ee2027397e1ca23e0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a7a4e71e4296bbb6ee2027397e1ca23e0">paginate</a> ($className, $page=1, $rowsPerPage=20, $condition=null)</td></tr>
+<tr class="separator:a7a4e71e4296bbb6ee2027397e1ca23e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0fa7351394a79677854651452dfa31f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#ac0fa7351394a79677854651452dfa31f">getRownum</a> ($className, $ids)</td></tr>
+<tr class="separator:ac0fa7351394a79677854651452dfa31f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39ef8a159eb9aae4e9d65206367e14d3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a39ef8a159eb9aae4e9d65206367e14d3">count</a> ($className, $condition='')</td></tr>
 <tr class="memdesc:a39ef8a159eb9aae4e9d65206367e14d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of objects of $className from the database respecting the condition possibly passed as parameter.  <a href="#a39ef8a159eb9aae4e9d65206367e14d3">More...</a><br /></td></tr>
 <tr class="separator:a39ef8a159eb9aae4e9d65206367e14d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,6 +182,8 @@ Static Private Member Functions</h2></td></tr>
 <tr class="memitem:a7a16aa772dec3c369639097a406ccc8a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a7a16aa772dec3c369639097a406ccc8a">prepareManyToOne</a> (&amp;$ret, $value, $fkField, $annotationArray)</td></tr>
 <tr class="memdesc:a7a16aa772dec3c369639097a406ccc8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares members associated with $instance with a manyToOne type relationship.  <a href="#a7a16aa772dec3c369639097a406ccc8a">More...</a><br /></td></tr>
 <tr class="separator:a7a16aa772dec3c369639097a406ccc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bac3fc93366ffb953c227d0d4078e26"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a3bac3fc93366ffb953c227d0d4078e26">parseKey</a> (&amp;$keyValues, $className)</td></tr>
+<tr class="separator:a3bac3fc93366ffb953c227d0d4078e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -229,7 +235,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00231">231</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00246">246</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -381,7 +387,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00242">242</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00257">257</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -529,7 +535,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00376">376</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00395">395</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -577,7 +583,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int count of objects </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00332">332</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00347">347</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -886,7 +892,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object the instance loaded or null if not found </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00348">348</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00363">363</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -951,6 +957,44 @@ Static Private Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac0fa7351394a79677854651452dfa31f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0fa7351394a79677854651452dfa31f">&#9670;&nbsp;</a></span>getRownum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getRownum </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$className</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$ids</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00238">238</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
 <a id="ae7f9fc68bf9bcc98ec93bfd1017b1818"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7f9fc68bf9bcc98ec93bfd1017b1818">&#9670;&nbsp;</a></span>isConnected()</h2>
 
@@ -977,7 +1021,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Returns true if the connection to the database is estabished. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00390">390</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00409">409</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1058,7 +1102,95 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00260">260</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00275">275</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="a7a4e71e4296bbb6ee2027397e1ca23e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a4e71e4296bbb6ee2027397e1ca23e0">&#9670;&nbsp;</a></span>paginate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static paginate </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$className</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$page</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$rowsPerPage</em> = <code>20</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$condition</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00231">231</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="a3bac3fc93366ffb953c227d0d4078e26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bac3fc93366ffb953c227d0d4078e26">&#9670;&nbsp;</a></span>parseKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static parseKey </td>
+          <td>(</td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$keyValues</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$className</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00376">376</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1119,7 +1251,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00316">316</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00331">331</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1180,7 +1312,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00292">292</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00307">307</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1275,7 +1407,7 @@ Static Private Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm.html">orm</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html">DAO</a></li>
-    <li class="footer"><small>Generated on Tue Mar 13 2018 03:05:20 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu May 31 2018 02:05:27 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

@@ -1,0 +1,26 @@
+var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait =
+[
+    [ "_getAdminData", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a1728d8b515816623b042eeb85e48f77f", null ],
+    [ "_getAdminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a2f32225e4026bee7bb54926d2b33ebf1", null ],
+    [ "_getAdminViewer", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a8ea5b67955e5d461bbd70274d6ae7b98", null ],
+    [ "_getRepo", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#ad966df4759c6efc302fb5dea07c4c411", null ],
+    [ "_git", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a30723835043eb23057ea2dad80bd29d0", null ],
+    [ "_refreshParts", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#ace0c46e6c50f2997c4977d2ce3d95a89", null ],
+    [ "changesInCommit", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#aba821f32e5e43b1419c6651b24435c1c", null ],
+    [ "changesInfiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#afb383af42c6b4e53d47bf276cc31fe41", null ],
+    [ "commit", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#af5674c27d4a92f6228565010eacbb9cb", null ],
+    [ "frmSettings", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a66363b5e076d7767acd36cbdecaae230", null ],
+    [ "git", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#ae924bbaed751a6f26ffb27d5b6878ff3", null ],
+    [ "gitIgnoreEdit", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a2a86b1c1752952a68f12501310e0eea9", null ],
+    [ "gitIgnoreValidate", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a79435fb22e97710888b9f0bb783b2c52", null ],
+    [ "gitInit", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#af6d7fded6d70be5ff66f305142dc8112", null ],
+    [ "gitPull", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#ab8d7fbe63d794ce83c866a31b4885792", null ],
+    [ "gitPush", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a8fa9e1c3a0a7abe0e543c3af22a58a03", null ],
+    [ "gitRefresh", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a1f49c77ab3af317ba6695da48fddcc0f", null ],
+    [ "loadView", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a80a71e60aa536de9b98b7b773fb54bec", null ],
+    [ "refreshCommits", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#afeec671257c202d504deef2d7e2e0505", null ],
+    [ "refreshFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#aa3893229298e4b453b0649b4765f262f", null ],
+    [ "showConfMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a3130711ef7cb1af29d075ec8e72c5969", null ],
+    [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a4f264bde41669e90f8df8627b7444788", null ],
+    [ "updateGitParams", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a600a3e17afcb6ceb940d878934db9ff0", null ]
+];

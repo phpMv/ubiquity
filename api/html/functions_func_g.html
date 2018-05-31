@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.2</span>
+   &#160;<span id="projectnumber">2.0.3</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -145,6 +145,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 , <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#af8b331d3ac442a1071aa9f7db3b60637">Startup</a>
 , <a class="el" href="class_ubiquity_1_1core_1_1_framework.html#af8b331d3ac442a1071aa9f7db3b60637">Framework</a>
 </li>
+<li>getActionParams()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#ae2f6d0174208b3b5a52e4de816773c01">Startup</a>
+</li>
 <li>getActionViews()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a619678ad71a09789e0fe8687333d98ce">UbiquityMyAdminViewer</a>
 </li>
@@ -154,6 +157,10 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 </li>
 <li>getAdminBaseRoute()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a0a2021eb345af5198d4ee310a5ad531a">UbiquityMyAdminFiles</a>
+</li>
+<li>getAdminData()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a378f38cff59451fa95efc4ae3e7fcf08">UbiquityMyAdminBaseController</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a378f38cff59451fa95efc4ae3e7fcf08">CRUDController</a>
 </li>
 <li>getAll()
 : <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#afc900e07051d67d9b28de98d337810d5">DAO</a>
@@ -187,11 +194,36 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getApplicationDir()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#ac84bdec7d359bb13678e13addf9f66b0">Startup</a>
 </li>
+<li>getApplicationName()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#ab62e7f52cb3527b3b268fb11f217f891">Startup</a>
+</li>
 <li>getArray()
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a5cefdd7868c3b60bd1109d1200ca97ac">USession</a>
 </li>
 <li>getArrayCache()
 : <a class="el" href="class_ubiquity_1_1cache_1_1database_1_1_table_cache.html#ad9017692c512df60df27edc1163fe361">TableCache</a>
+</li>
+<li>getAuthController()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_with_auth_trait.html#ae9f2464758e3b657c192e92980754ad4">WithAuthTrait</a>
+</li>
+<li>getAuthor()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_commit.html#a5286e30390ae3e1b274940286493dd24">GitCommit</a>
+</li>
+<li>getAuthRemoteUrl()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#a609805f44f1d3e9d37de1893c451ca3c">RepositoryGit</a>
+</li>
+<li>getAvailableDrivers()
+: <a class="el" href="class_ubiquity_1_1db_1_1_database.html#ad9bdac1c5dfa2d96210795e7711b8b93">Database</a>
+</li>
+<li>getBaseTemplate()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_auth_1_1_auth_files.html#a9d0f8bcb4ee2f59067fff8b14779bdd5">AuthFiles</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html#a9d0f8bcb4ee2f59067fff8b14779bdd5">CRUDFiles</a>
+</li>
+<li>getBlockNames()
+: <a class="el" href="class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html#aa92fe90859ac040f55e668f6be8afad0">MicroTemplateEngine</a>
+, <a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_template_engine.html#aa92fe90859ac040f55e668f6be8afad0">TemplateEngine</a>
+, <a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_twig.html#aa92fe90859ac040f55e668f6be8afad0">Twig</a>
+, <a class="el" href="class_ubiquity_1_1views_1_1_view.html#aa92fe90859ac040f55e668f6be8afad0">View</a>
 </li>
 <li>getBoolean()
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a0bf9dd0f7aa34bbebde52536c44b888c">USession</a>
@@ -234,10 +266,25 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1cache_1_1_cache_manager.html#a1a411f748de9a16c88c965e799be9b58">CacheManager</a>
 </li>
 <li>getCaptions()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aa5515c327cc8a3062402f10d46f7ea77">UbiquityMyAdminViewer</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#aa5515c327cc8a3062402f10d46f7ea77">ModelViewer</a>
+</li>
+<li>getCaptionToggleButton()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a5ad398ec6cd6f85a1747c0e2ddec1897">UbiquityMyAdminViewer</a>
+</li>
+<li>getCDate()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_commit.html#a47ae703f2b0381837cac8be7944bb973">GitCommit</a>
 </li>
 <li>getChangeFrequency()
 : <a class="el" href="class_ubiquity_1_1seo_1_1_url.html#a1a6a17ce6edf82ed09a5930da098e47c">Url</a>
+</li>
+<li>getChangesInCommit()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#a80e932a88aa458ce9af30ec9776178a4">UGitRepository</a>
+</li>
+<li>getChangesInFile()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#a47d4b97ae3a6fd9f95980850dcc73020">UGitRepository</a>
+</li>
+<li>getCHash()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_commit.html#a8f73f0396486f55d1a6da2e3f7bb31b9">GitCommit</a>
 </li>
 <li>getChildClasses()
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_introspection.html#aaa6da77fc6e9b14fa2864641313eab69">UIntrospection</a>
@@ -246,7 +293,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_introspection.html#ada8a24f0289cc380f90efee7462c35f8">UIntrospection</a>
 </li>
 <li>getClassFullNameFromFile()
-: <a class="el" href="class_ubiquity_1_1cache_1_1_class_utils.html#af5d411a9a172e9be59b6b4a911515da3">ClassUtils</a>
+: <a class="el" href="class_ubiquity_1_1cache_1_1_class_utils.html#a0e5b697a34c023387a4e7b4650f2033d">ClassUtils</a>
 </li>
 <li>getClassNameFromFile()
 : <a class="el" href="class_ubiquity_1_1cache_1_1_class_utils.html#abe13a9399cf1580717b179c9538b9434">ClassUtils</a>
@@ -271,6 +318,14 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 </li>
 <li>getCode()
 : <a class="el" href="class_ubiquity_1_1js_1_1_js_code.html#ab5e24da53b4a0d0848b18c1e832f47ff">JsCode</a>
+, <a class="el" href="class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html#ae00bb089543ff18ca275c5d44cfa1ec7">MicroTemplateEngine</a>
+, <a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_template_engine.html#ae00bb089543ff18ca275c5d44cfa1ec7">TemplateEngine</a>
+, <a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_twig.html#ae00bb089543ff18ca275c5d44cfa1ec7">Twig</a>
+, <a class="el" href="class_ubiquity_1_1views_1_1_view.html#ae00bb089543ff18ca275c5d44cfa1ec7">View</a>
+</li>
+<li>getCommits()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#ab9b3f19de10ebf737338e25b03b174b6">RepositoryGit</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#ab9b3f19de10ebf737338e25b03b174b6">UGitRepository</a>
 </li>
 <li>getCompiledParams()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a90418b0113e9826554e5268057c6ff8d">Route</a>
@@ -280,9 +335,13 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 </li>
 <li>getConfig()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#ab402833ec5328f4157f81902000af368">Startup</a>
+, <a class="el" href="class_ubiquity_1_1seo_1_1_url_parser.html#a628300eb8464467d9344c7c59cc8770b">UrlParser</a>
 </li>
 <li>getConfigDataElement()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a685714c24ec41aea540d1236db0bacf2">UbiquityMyAdminViewer</a>
+</li>
+<li>getConfigDataForm()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a9e05d67dd7f33db8215cda3a4adac122">UbiquityMyAdminViewer</a>
 </li>
 <li>getContent()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_info_message.html#a58e43f09a06ce4e29b192c4e17ce7915">InfoMessage</a>
@@ -307,7 +366,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a6fad84358d8ca93d34cda1f29dd56a40">RouterCacheTrait</a>
 </li>
 <li>getControllers()
-: <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#af91595b2fdb4297bfb468368de301735">RouterCacheTrait</a>
+: <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#aa689a629aa9fbab5fad04f77ee5108c4">RouterCacheTrait</a>
 </li>
 <li>getControllersDataTable()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a3f7d75e45a82cd789e853924841de262">UbiquityMyAdminViewer</a>
@@ -315,11 +374,27 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getControllersFiles()
 : <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a353a7d4f94388ecb60d535fcb38ce7c2">RouterCacheTrait</a>
 </li>
+<li>getControllerSimpleName()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#a22e067a1ccc62011b6262a6945d474d0">Startup</a>
+</li>
 <li>getCookies()
 : <a class="el" href="class_ubiquity_1_1core_1_1_framework.html#a345946b5a3226effb36c8857104d16c5">Framework</a>
 </li>
+<li>getCookieUser()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a31f9f6a422b1ba7dfaf8807a4ac31d83">AuthController</a>
+</li>
+<li>getCreationTime()
+: <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1session_1_1_session_object.html#a8af92ba90a86c8c4abaf02cc314440f1">SessionObject</a>
+</li>
 <li>getDatas()
-: <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a6e25bc29c1307ebb0b91e9d65eb22ec2">URequest</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html#a8ddb071922723ee8a1a720e055cdb971">ResponseFormatter</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a6e25bc29c1307ebb0b91e9d65eb22ec2">URequest</a>
+</li>
+<li>getDataTableInstance()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#aa9729decb664812267b6a884edbb6a10">ModelViewer</a>
+</li>
+<li>getDataTableRowButtons()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a68a0e5a21216b0cec433be76faedfc75">ModelViewer</a>
 </li>
 <li>getDbName()
 : <a class="el" href="class_ubiquity_1_1db_1_1_database.html#a4949c3e4d80c0d275c80e0c1c3b5b280">Database</a>
@@ -335,18 +410,34 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getDefaultValue()
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_array.html#aabc14c3dce3e17bb7931eb3e6b0d37ed">UArray</a>
 </li>
+<li>getDefaultViewName()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#ad34399cc699bb199e879731543fe1e69">Controller</a>
+</li>
 <li>getDescription()
 : <a class="el" href="class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#a2e7bb35c71bf1824456ceb944cb7a845">DocParser</a>
 </li>
 <li>getDescriptionAsHtml()
 : <a class="el" href="class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#a0a9f56e2ad528ed72681ada1befbbb55">DocParser</a>
 </li>
+<li>getDirFromNamespace()
+: <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a535544939fad8fe6cf73033f6e6f36f9">UFileSystem</a>
+</li>
+<li>getDSN()
+: <a class="el" href="class_ubiquity_1_1db_1_1_database.html#a4b0f5b2832fc601c313b66d858e866e4">Database</a>
+</li>
 <li>getDuration()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#ab46fe3d2750728c84bd71ae1bfd08ee8">Route</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#ab46fe3d2750728c84bd71ae1bfd08ee8">ApiTokens</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1session_1_1_session_object.html#ab46fe3d2750728c84bd71ae1bfd08ee8">SessionObject</a>
 </li>
 <li>getDValues()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a5a4dbe9d1982316c0ad5151aeca7afb4">ControllerAction</a>
+</li>
+<li>getElementCaptions()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a9f091c63dec88e6fbd62745992f410f6">ModelViewer</a>
+</li>
+<li>getElementFieldNames()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#a48fd857d848a25e729b13c7bed9ce69f">CRUDDatas</a>
 </li>
 <li>getElementsAsHtml()
 : <a class="el" href="class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#ad22eba9c04bfa2dd177bd7bec1d41609">DocParser</a>
@@ -356,6 +447,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_apcu_cache.html#ac97e94d37deeb951293028c85dbfb0db">ApcuCache</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#ac97e94d37deeb951293028c85dbfb0db">ArrayCache</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_php_fast_cache_driver.html#ac97e94d37deeb951293028c85dbfb0db">PhpFastCacheDriver</a>
+</li>
+<li>getEvents()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a54ecee00f83d387598096653b07f10c5">CRUDController</a>
 </li>
 <li>getExisting()
 : <a class="el" href="class_ubiquity_1_1seo_1_1_url.html#a8cbd20596ab2dc87e82e9aefdae42540">Url</a>
@@ -371,8 +465,8 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 , <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a95699659593fb841414238574bf4c822">Reflexion</a>
 </li>
 <li>getFieldNames()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#aad7dfd1ff04fe04ad477157f9fe9073a">UbiquityMyAdminBaseController</a>
-, <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html#aad7dfd1ff04fe04ad477157f9fe9073a">UbiquityMyAdminData</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html#aad7dfd1ff04fe04ad477157f9fe9073a">UbiquityMyAdminData</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#aad7dfd1ff04fe04ad477157f9fe9073a">CRUDDatas</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#adabd22757181702a431265191bf9de4a">OrmUtils</a>
 </li>
 <li>getFields()
@@ -399,6 +493,14 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getFileName()
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_introspection.html#afd9c47e87332671db7efa56c6931ceb8">UIntrospection</a>
 </li>
+<li>getFiles()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#a7010e197d8dce475dfdd443c11dd7ee9">RepositoryGit</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a7010e197d8dce475dfdd443c11dd7ee9">AuthController</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a7010e197d8dce475dfdd443c11dd7ee9">CRUDController</a>
+</li>
+<li>getFilterControllers()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aad9b1660664fb8ecf9cf004e8b2f87fa">UbiquityMyAdminViewer</a>
+</li>
 <li>getFirstKey()
 : <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_parser.html#affdfd8d653c614945afef5c99ea1b025">YumlParser</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a728f4a680fd043a082587597f3c3871a">OrmUtils</a>
@@ -407,19 +509,37 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#abe7d2d10143c646730df0782a264f3e1">OrmUtils</a>
 </li>
 <li>getFkElement()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ac44cd40a8278edfc9e11212ef3963aee">UbiquityMyAdminViewer</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#ac44cd40a8278edfc9e11212ef3963aee">ModelViewer</a>
+</li>
+<li>getFkElementDetails()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#ad29d150dadaaf544c6fdc0b240cea5ef">ModelViewer</a>
 </li>
 <li>getFkField()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a8a989d6bbd201abbc9a7fb990a9a9ddf">ManyToManyParser</a>
 </li>
-<li>getFkHeaderElement()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aa2de8e5cac47d46ab82beba5b7c29d70">UbiquityMyAdminViewer</a>
+<li>getFkHeaderElementDetails()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a35c7daaf00c78c7e8d8a58b9e2d80529">ModelViewer</a>
 </li>
-<li>getFkHeaderList()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ab9417944ca8a5b16f1d9a22797115920">UbiquityMyAdminViewer</a>
+<li>getFkHeaderListDetails()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#ab7dc81ffb96d6c0fcee0d52672bfcb49">ModelViewer</a>
+</li>
+<li>getFkIntance()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a2af720ba4086f1fd7b6b909e7546a0f2">CRUDHelper</a>
+</li>
+<li>getFKIntances()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#ac54b5f4605377e6d56cd4c6f1c6813e2">CRUDHelper</a>
 </li>
 <li>getFkList()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a9dc04916a0e41b4228428c615b7d1cd5">UbiquityMyAdminViewer</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a6280121b21c54f0a139c18e364955015">ModelViewer</a>
+</li>
+<li>getFkListDetails()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a2bc0b838b774be06b55b4b6d3039f382">ModelViewer</a>
+</li>
+<li>getFkMemberElement()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a11e9cddcad71de2bdd8effcb59685d10">ModelViewer</a>
+</li>
+<li>getFkMemberElementDetails()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#acdc2460cc8c7d6e55a1d5a2001765e42">ModelViewer</a>
 </li>
 <li>getFKMethods()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a85c6ec9a247a2af03734b0c24cda6a1b">ModelsTrait</a>
@@ -433,13 +553,14 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 , <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_parser.html#a714dcd73d8d7081faab001d7905e8362">YumlParser</a>
 </li>
 <li>getForm()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ad5052b35b0d2366d7cb1ded99c776860">UbiquityMyAdminViewer</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#ad5052b35b0d2366d7cb1ded99c776860">ModelViewer</a>
 </li>
 <li>getFormCaptions()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a88496922366d4aff09feb81d21363564">UbiquityMyAdminViewer</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a88496922366d4aff09feb81d21363564">ModelViewer</a>
 </li>
 <li>getFormFieldNames()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html#afe07a0ce9f486d3186ebadd9462623bc">UbiquityMyAdminData</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#afe07a0ce9f486d3186ebadd9462623bc">CRUDDatas</a>
 </li>
 <li>getFrameworkDir()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#aed04b12fd6e0cccdf365d9030e470218">Startup</a>
@@ -450,18 +571,32 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getGetter()
 : <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1_member.html#ad8b0113c0d18c9b4ccb81529b5aa1acb">Member</a>
 </li>
+<li>getGitCommitsDataTable()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a8026c2a05da757ef82b636ad90b0db6f">UbiquityMyAdminViewer</a>
+</li>
+<li>getGitFilesDataTable()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#afbee7381f9f577d626f223618c16a268">UbiquityMyAdminViewer</a>
+</li>
+<li>getGui()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_c_r_u_d_controller.html#ad867e1f132f3750445bc3e03680b307b">CRUDController</a>
+</li>
 <li>getHeader()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#aa1f2a2f92a2561c725c77e9aef934553">UbiquityMyAdminBaseController</a>
 </li>
 <li>getIcon()
-: <a class="el" href="class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html#a278a55b3129c24c2077ea6093cf06f6e">FlashMessage</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a278a55b3129c24c2077ea6093cf06f6e">CRUDMessage</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html#a278a55b3129c24c2077ea6093cf06f6e">FlashMessage</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_file_status.html#aecf37bcabcc981d221446482dd0d1a32">GitFileStatus</a>
 </li>
 <li>getId()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a12251d0c022e9e21c137a105ff683f13">ControllerAction</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a12251d0c022e9e21c137a105ff683f13">Route</a>
 </li>
 <li>getIdentifierFunction()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#adb6a9f3444fc08d7967126d43f7dfba4">UbiquityMyAdminBaseController</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a8c1e781903cb0736825ba5c5db9068e6">CRUDHelper</a>
+</li>
+<li>getInitialized()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#acf4a4149d867942294ba901182c08b06">RepositoryGit</a>
 </li>
 <li>getInput()
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a9d9fdcf7c2d3532391ec3927bbeb64db">URequest</a>
@@ -478,6 +613,10 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getInstance()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#afba86dd08ac8528cc6cfe07a44c91fbe">ManyToManyParser</a>
 </li>
+<li>getInstances()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#ae3926920286a9caad6a588af01047247">ModelsTrait</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a5d301a67dd6065dfcfa1cf2298313ae1">CRUDController</a>
+</li>
 <li>getInversedBy()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#afbe8539444cb24beb2166e99abf230ed">ManyToManyParser</a>
 </li>
@@ -489,6 +628,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 </li>
 <li>getJoinTableArray()
 : <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#a14974d7aa233a3cc954b9050531e1fc7">ModelsCreator</a>
+</li>
+<li>getJSONDatas()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html#ad66704b5828f8b52071fa6cbc623d8cd">ResponseFormatter</a>
 </li>
 <li>getKey()
 : <a class="el" href="class_ubiquity_1_1cache_1_1database_1_1_db_cache.html#af57f633b4b3c69494ff532304eac76a3">DbCache</a>
@@ -503,6 +645,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getLastModified()
 : <a class="el" href="class_ubiquity_1_1seo_1_1_url.html#aa388e2fda4fe702e8953c1a731868f18">Url</a>
 , <a class="el" href="class_ubiquity_1_1seo_1_1_url_parser.html#ac6bf51e5b49fb094b593140fb590ddcc">UrlParser</a>
+</li>
+<li>getLHash()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_commit.html#aa105314a5f04950c590e7e6c215edad8">GitCommit</a>
 </li>
 <li>getLoadedViews()
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_introspection.html#a31ba02f3b30bccdedaa113311c1b40ac">UIntrospection</a>
@@ -522,6 +667,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 </li>
 <li>getManyToManyDatas()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html#a5e067feff4abdabedf5a57038a2f0b4f">UbiquityMyAdminData</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#a5e067feff4abdabedf5a57038a2f0b4f">CRUDDatas</a>
 </li>
 <li>getManyToManyFields()
 : <a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a6cf9f35aab70b2ec2fe13ed9975ef5ac">OrmUtils</a>
@@ -567,6 +713,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getMemberValue()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a8fbcbe93cb5cc7aed12b9e2a99234de8">Reflexion</a>
 </li>
+<li>getMessage()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a0b0e611236742aac18ba1936d03ba89a">CRUDMessage</a>
+</li>
 <li>getMessages()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a7347b0b89cca1d7604e93f5b5e896fc4">Route</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#af69c94004450a89a499632b8c710237d">FlashBag</a>
@@ -602,6 +751,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getMethods()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#ab8fcebfba8c498f2190941f7ebf62da8">Route</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a7bd5929d2a37809236b84654bed41e8d">ControllersTrait</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_maker.html#a2af680fc4693a62afe58a5e700bca06a">Maker</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a9385d2df01752200421e07d76813c90d">Reflexion</a>
 </li>
 <li>getModel()
@@ -610,11 +760,15 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getModelCacheKey()
 : <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_models_cache_trait.html#a11bb9d4cc6953ffdb3372daab0aa089f">ModelsCacheTrait</a>
 </li>
+<li>getModelDataElement()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#ad49e9beeb11bccbbcb2fde4e11591ded">ModelViewer</a>
+</li>
 <li>getModelDataTable()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ae257292d8d8657f267abc301c42b1efd">UbiquityMyAdminViewer</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a12e73abfd89b780d940bbe2beae38c60">ModelViewer</a>
 </li>
 <li>getModelInstance()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a50add1041c8caad54c79af5994a71349">ModelsTrait</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a50add1041c8caad54c79af5994a71349">CRUDController</a>
 </li>
 <li>getModelMetadata()
 : <a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#abed50222ca942aa8a1adefa4010f4ab6">OrmUtils</a>
@@ -645,8 +799,14 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a0f292265c6b7d78dec732d3b3e7153e6">CheckTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a0f292265c6b7d78dec732d3b3e7153e6">ModelsConfigTrait</a>
 </li>
+<li>getModelViewer()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a585deaa86f8c550f1c2826c6d4820ae6">CRUDController</a>
+</li>
+<li>getModifiedFiles()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#a99e4d79e76de62212b0802e29a4e5481">UGitRepository</a>
+</li>
 <li>getMultiWhere()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a052a035dd5df6946ca664622964b35c4">ModelsTrait</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a0a81e242161ba5e5a954fd93f324e184">CRUDHelper</a>
 , <a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#acbaea9d0323ce344acfb689f5a1e1830">SqlUtils</a>
 </li>
 <li>getMyFkField()
@@ -658,9 +818,11 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getName()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_cache_file.html#a3d0963e68bb313b163a73f2803c64600">CacheFile</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html#a3d0963e68bb313b163a73f2803c64600">ControllerSeo</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#a3d0963e68bb313b163a73f2803c64600">RepositoryGit</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a3d0963e68bb313b163a73f2803c64600">Route</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1_member.html#a3d0963e68bb313b163a73f2803c64600">Member</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1_model.html#a3d0963e68bb313b163a73f2803c64600">Model</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a3d0963e68bb313b163a73f2803c64600">GitFile</a>
 </li>
 <li>getNamesInMask()
 : <a class="el" href="class_ubiquity_1_1utils_1_1yuml_1_1_yuml.html#a372bb793db641d6d2f191fa336c6258b">Yuml</a>
@@ -671,6 +833,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getNextModelStep()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a64fa6faa07cbf5e4c267e5ae82d2d2cc">CheckTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a64fa6faa07cbf5e4c267e5ae82d2d2cc">ModelsConfigTrait</a>
+</li>
+<li>getNonPushedCommitHash()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#a1525885d37f9e9d044f4056765ca5758">UGitRepository</a>
 </li>
 <li>getNS()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#afe037f0c1e42e5ac505260cdd29e5c69">Startup</a>
@@ -688,8 +853,11 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#affc4d8903b8fab901442590b1ff96982">RestController</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a5e2be697b4769538b5f06d22592b1709">DAO</a>
 </li>
-<li>getOneWhere()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#afd9b7cea150d4be3f12a8a4afbd6a1af">ModelsTrait</a>
+<li>getOriginalURL()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a0ac57dfbf35eec8ffba0be74815ffc55">AuthController</a>
+</li>
+<li>getORM()
+: <a class="el" href="class_ubiquity_1_1core_1_1_framework.html#add772ecf36dc5bc42a0f5bb85a545b72">Framework</a>
 </li>
 <li>getOrmModelCache()
 : <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_models_cache_trait.html#af65b7dffb9f0b623ee5314edd88e7d8b">ModelsCacheTrait</a>
@@ -708,6 +876,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getParts()
 : <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_parser.html#ab449d43ad919a6167a711c76301efcd2">YumlParser</a>
 </li>
+<li>getPassword()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#a04e0957baeb7acde9c0c86556da2d43f">RepositoryGit</a>
+</li>
 <li>getPath()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a30c5c67b2bf8e2e2ccc7e361faa20afe">ControllerAction</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html#a30c5c67b2bf8e2e2ccc7e361faa20afe">ControllerSeo</a>
@@ -720,6 +891,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getPdoObject()
 : <a class="el" href="class_ubiquity_1_1db_1_1_database.html#a8aa8154ae685caaa8ced9e09d50718b0">Database</a>
 </li>
+<li>getPHPExecutable()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_code_utils.html#a96189733ea6f59fcaa88bcddc247fe1c">CodeUtils</a>
+</li>
 <li>getPk()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#aee5a28b8bfb2ba81b1d463770a059896">ManyToManyParser</a>
 </li>
@@ -727,7 +901,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1_model.html#a0abe972064d47a43060fca486b5052db">Model</a>
 </li>
 <li>getPks()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a501cda8594eefcf33d0998ee712505de">ModelsTrait</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a74ff45c462e10a0bbef36d47c3427030">CRUDHelper</a>
 </li>
 <li>getPort()
 : <a class="el" href="class_ubiquity_1_1db_1_1_database.html#afd4db46d3c12f47f0bee19cd2101be64">Database</a>
@@ -758,6 +932,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getProperty()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#aa06487af5f948c77ce255d965debcc19">Reflexion</a>
 </li>
+<li>getPushed()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_commit.html#af84907ebf16821cdcdf0dea6c6630c6f">GitCommit</a>
+</li>
 <li>getQuotedKeys()
 : <a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#a8b4337fa57aecc2f470fc9e52082c1cc">SqlUtils</a>
 </li>
@@ -765,8 +942,18 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_apcu_cache.html#a68ea5fc5b5b6c1052442726fe76c8cf8">ApcuCache</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_php_fast_cache_driver.html#a68ea5fc5b5b6c1052442726fe76c8cf8">PhpFastCacheDriver</a>
 </li>
+<li>getRemoteBranchs()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#a565827df0ffbfc0aefd6d53eddb4dcb1">UGitRepository</a>
+</li>
+<li>getRemoteUrl()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#afab75b71db5f98e222f2389d81555170">RepositoryGit</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#afab75b71db5f98e222f2389d81555170">UGitRepository</a>
+</li>
 <li>getReplacement()
 : <a class="el" href="class_ubiquity_1_1annotations_1_1parser_1_1_doc_formater.html#a05da72a1497f723a891d69a4f09ce5d3">DocFormater</a>
+</li>
+<li>getRepository()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#a179fe9e45e9f741f57b60884957eb2d3">RepositoryGit</a>
 </li>
 <li>getRequest()
 : <a class="el" href="class_ubiquity_1_1core_1_1_framework.html#a8bc323d82e5265f16d9cd356d0a02dba">Framework</a>
@@ -835,6 +1022,15 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getRouteUrlParts()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1_router.html#ad239727e844c3a4f2f1d5cb102b91dd6">Router</a>
 </li>
+<li>getRownum()
+: <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#ac0fa7351394a79677854651452dfa31f">DAO</a>
+</li>
+<li>getSearchFieldNames()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#ab1128f618b1a83ed10075107e76cd1c4">CRUDDatas</a>
+</li>
+<li>getSearchWhere()
+: <a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#ac8a9ee62a09d8252f97b5bba6d178aaa">SqlUtils</a>
+</li>
 <li>getSerializableFields()
 : <a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a2551143ef0f5438c68f2b64f6d82335f">OrmUtils</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1reverse_1_1_table_reversor.html#a5881ff5e15019edeb5039caebdab6ecd">TableReversor</a>
@@ -856,6 +1052,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 </li>
 <li>getSingleton()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ad7975cac6ad37f5b551d0db0c71e1d97">UbiquityMyAdminBaseController</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ad7975cac6ad37f5b551d0db0c71e1d97">CRUDController</a>
 </li>
 <li>getSiteMapTemplate()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html#aca687ade7e6b2852da24396041c4fcab">ControllerSeo</a>
@@ -869,6 +1066,12 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getStatement()
 : <a class="el" href="class_ubiquity_1_1db_1_1_database.html#a774f7234370bd21f8c5d1b7405feabc5">Database</a>
 </li>
+<li>getStatus()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a9d21636071f529e2154051d3ea6e5921">GitFile</a>
+</li>
+<li>getSummary()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_git_commit.html#aa70e0b18c67bbedbc87d3d835bd5dc57">GitCommit</a>
+</li>
 <li>getTableName()
 : <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#aeced989fa76f83304f8e41c8bea8ba03">ModelsCreator</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a2bee06da346de815972e178d0f643ee4">OrmUtils</a>
@@ -877,6 +1080,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getTableNames()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a31fd028456fa69d0f2abe63ffd4054a9">UbiquityMyAdminBaseController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html#a31fd028456fa69d0f2abe63ffd4054a9">UbiquityMyAdminData</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#a31fd028456fa69d0f2abe63ffd4054a9">CRUDDatas</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_parser.html#a31fd028456fa69d0f2abe63ffd4054a9">YumlParser</a>
 </li>
 <li>getTables()
@@ -897,12 +1101,24 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getTargetEntityTable()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#ae13e303dee95743c00affc034f868c6a">ManyToManyParser</a>
 </li>
+<li>getTimeout()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#abac5019c5daf3a27d739aa3a249fdb31">CRUDMessage</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1session_1_1_session_object.html#abac5019c5daf3a27d739aa3a249fdb31">SessionObject</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a0579cc6f9496fb1dc4d70d9c042f2352">USession</a>
+</li>
 <li>getTimestamp()
 : <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#aff0cbcd61bb5f05632e20fd0baf65714">AbstractDataCache</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_apcu_cache.html#aff0cbcd61bb5f05632e20fd0baf65714">ApcuCache</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#aff0cbcd61bb5f05632e20fd0baf65714">ArrayCache</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_php_fast_cache_driver.html#aff0cbcd61bb5f05632e20fd0baf65714">PhpFastCacheDriver</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_cache_file.html#a92aa1d82129ec8cd803d64c28efcb30f">CacheFile</a>
+</li>
+<li>getTitle()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a95e859a4588a39a1824b717378a84c29">CRUDMessage</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html#a95e859a4588a39a1824b717378a84c29">FlashMessage</a>
+</li>
+<li>getTmp()
+: <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#ad7fe55d7821ff6fffe1a6f489fbc9d03">USession</a>
 </li>
 <li>getToken()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#ad6b0b338ca3d95eb90baed61d51ddbcb">ApiTokens</a>
@@ -919,31 +1135,38 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getType()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_cache_file.html#a830b5c75df72b32396701bc563fbe3c7">CacheFile</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_info_message.html#a830b5c75df72b32396701bc563fbe3c7">InfoMessage</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a830b5c75df72b32396701bc563fbe3c7">CRUDMessage</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html#a830b5c75df72b32396701bc563fbe3c7">FlashMessage</a>
 </li>
 <li>getTypesRegex()
 : <a class="el" href="class_ubiquity_1_1annotations_1_1parser_1_1_doc_formater.html#abb2b0e4498d3ea07df8aab05baeda4da">DocFormater</a>
 </li>
-<li>getUbiquityMyAdminData()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a804526f99fd53177fbd49411114167ab">UbiquityMyAdminBaseController</a>
-</li>
 <li>getUbiquityMyAdminFiles()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a588ced2976a8282b6a02427c7e2d29dc">UbiquityMyAdminBaseController</a>
 </li>
+<li>getUbiquityMyAdminModelViewer()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a9413c4b740d487ffe92276c581518943">UbiquityMyAdminBaseController</a>
+</li>
 <li>getUbiquityMyAdminViewer()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ac6ce70a1efd4bd5e4391e5d258e3fe22">UbiquityMyAdminBaseController</a>
+</li>
+<li>getUntrackedFiles()
+: <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#a9c30d3e0254b39fd145246067fef3dff">UGitRepository</a>
 </li>
 <li>getUpdateFieldsKeyAndValues()
 : <a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#a2f0f89dae30eacf143829f5575a60c2d">SqlUtils</a>
 </li>
 <li>getUpdateManyToManyInForm()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html#a404c7762f28bc1f350f5782d381822c8">UbiquityMyAdminData</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#a404c7762f28bc1f350f5782d381822c8">CRUDDatas</a>
 </li>
 <li>getUpdateManyToOneInForm()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html#a433f98ec0d5088d33585edafbd63e615">UbiquityMyAdminData</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#a433f98ec0d5088d33585edafbd63e615">CRUDDatas</a>
 </li>
 <li>getUpdateOneToManyInForm()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html#a75c77feef89350a7338ae8cbdd33c919">UbiquityMyAdminData</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#a75c77feef89350a7338ae8cbdd33c919">CRUDDatas</a>
 </li>
 <li>getUrl()
 : <a class="el" href="class_ubiquity_1_1core_1_1_framework.html#a5f7f80ef441454f68712b8f289a86cd9">Framework</a>
@@ -962,13 +1185,15 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 : <a class="el" href="class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html#a45c5c383d4962030736ab33ee1e37084">SeoController</a>
 </li>
 <li>getUser()
-: <a class="el" href="class_ubiquity_1_1db_1_1_database.html#ae81b7186fb97a7c6457edcc68c9aa2ef">Database</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#ae81b7186fb97a7c6457edcc68c9aa2ef">RepositoryGit</a>
+, <a class="el" href="class_ubiquity_1_1db_1_1_database.html#ae81b7186fb97a7c6457edcc68c9aa2ef">Database</a>
 </li>
 <li>getValid()
 : <a class="el" href="class_ubiquity_1_1seo_1_1_url.html#a404514e9c819b52ed9c5feaab6cd74e5">Url</a>
 </li>
 <li>getValue()
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a2a03356e9a951e6c2d2f5931be977de3">UArray</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1session_1_1_session_object.html#ac0bc18784b182c89fcfd276625aef435">SessionObject</a>
 </li>
 <li>getVar()
 : <a class="el" href="class_ubiquity_1_1views_1_1_view.html#a36aed435d67902b918966ba0c2cb5049">View</a>
@@ -979,14 +1204,33 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getVariadicParam()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#ab5d503b2393ed85fbe963cef614e4044">Route</a>
 </li>
+<li>getView()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a50677812ea3f0258f7d03bbac5265413">Controller</a>
+</li>
+<li>getViewAddAuthController()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a44e64ffacbc1cea7a429d5a84e97b3d4">UbiquityMyAdminFiles</a>
+</li>
+<li>getViewAddCrudController()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#afb51346ba555a5100008c30f486c88d7">UbiquityMyAdminFiles</a>
+</li>
+<li>getViewBaseTemplate()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_auth_1_1_auth_files.html#a727b9d7af9d6d9220c2466307237dba5">AuthFiles</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html#a727b9d7af9d6d9220c2466307237dba5">CRUDFiles</a>
+</li>
 <li>getViewCacheIndex()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a3c4561d6ecfdf860860f3b93430b2964">UbiquityMyAdminFiles</a>
 </li>
 <li>getViewClassesDiagram()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a6ef84839e36a75d1fc03dc88b192e909">UbiquityMyAdminFiles</a>
 </li>
+<li>getViewConfigForm()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a57c238fcf673c22d956af57ad9468c11">UbiquityMyAdminFiles</a>
+</li>
 <li>getViewConfigIndex()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a1b4389fddb52fb01945b60c47ee0904f">UbiquityMyAdminFiles</a>
+</li>
+<li>getViewControllersFiltering()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a516dbe37404a83abd5bb05400ac084c7">UbiquityMyAdminFiles</a>
 </li>
 <li>getViewControllersIndex()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#aa836b345a161b1e9f8b754df135d1d47">UbiquityMyAdminFiles</a>
@@ -1003,17 +1247,49 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getViewDatasExport()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#ae7fa9840edf6980a26b47e4348f161b1">UbiquityMyAdminFiles</a>
 </li>
+<li>getViewDisconnected()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_auth_1_1_auth_files.html#a99bfbe68ed3720ed82547e9e9f9a6fa5">AuthFiles</a>
+</li>
+<li>getViewDisplay()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html#a444f092f88860a58afeb270791ff1d32">CRUDFiles</a>
+</li>
 <li>getViewEditTable()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#aebb343fa32e9b53e6e2c1837c4406501">UbiquityMyAdminFiles</a>
+</li>
+<li>getViewForm()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html#a6352f1344ca2d261467db4dfe71bb767">CRUDFiles</a>
+</li>
+<li>getViewGitIgnore()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#ad5b5dbf94580b66cee30bdc480be39e1">UbiquityMyAdminFiles</a>
+</li>
+<li>getViewGitIndex()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#ac5f9527891b33bed0cc3f5350e6c0365">UbiquityMyAdminFiles</a>
+</li>
+<li>getViewGitSettings()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a84920a83975430c902d7c7ce6c9162f8">UbiquityMyAdminFiles</a>
 </li>
 <li>getViewHeader()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#abd3b5184b9efa5c5f933a34ba4197cde">UbiquityMyAdminFiles</a>
 </li>
 <li>getViewIndex()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a0c4b4aaf46d1e264775d02f4ef0be1ba">UbiquityMyAdminFiles</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1_auth_1_1_auth_files.html#a0c4b4aaf46d1e264775d02f4ef0be1ba">AuthFiles</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html#a0c4b4aaf46d1e264775d02f4ef0be1ba">CRUDFiles</a>
+</li>
+<li>getViewInfo()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_auth_1_1_auth_files.html#a1ef33a0ebba2b7b1a7105d8a3f5a56b4">AuthFiles</a>
 </li>
 <li>getViewLogsIndex()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a0bdcd298373b6b95ccc3dcdfef62e8c5">UbiquityMyAdminFiles</a>
+</li>
+<li>getViewMessage()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_auth_1_1_auth_files.html#a7320cd0d0eef42f0eef28e5a40a90a8d">AuthFiles</a>
+</li>
+<li>getViewNameFileExtension()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_startup.html#ae22575f9314792333e004322ab516566">Startup</a>
+</li>
+<li>getViewNoAccess()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1_auth_1_1_auth_files.html#a4e16a9a5c4b00f7b8ef176841f2a94e2">AuthFiles</a>
 </li>
 <li>getViewRestFormTester()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a33a2dd35b1c01fc76e954d1541fcb106">UbiquityMyAdminFiles</a>
@@ -1033,11 +1309,39 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>getViewShowTable()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a14b65a22ff6e36c1bd16ebb089db691f">UbiquityMyAdminFiles</a>
 </li>
+<li>getViewVars()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a60edbf37626659886f779c2a3073138d">AuthController</a>
+</li>
 <li>getViewYumlReverse()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a6834b84d0e8557b129b8aebc7b47a03f">UbiquityMyAdminFiles</a>
 </li>
 <li>getWhere()
 : <a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#ac739f951006fdf543eabc99db854fb40">SqlUtils</a>
+</li>
+<li>git()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#ae924bbaed751a6f26ffb27d5b6878ff3">GitTrait</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a6622273759ffb427ae41499cfc932b72">UbiquityMyAdminBaseController</a>
+</li>
+<li>gitFrmSettings()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a30f95e83e35f6acc3db56c78f7a032ac">UbiquityMyAdminViewer</a>
+</li>
+<li>gitIgnoreEdit()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a2a86b1c1752952a68f12501310e0eea9">GitTrait</a>
+</li>
+<li>gitIgnoreValidate()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a79435fb22e97710888b9f0bb783b2c52">GitTrait</a>
+</li>
+<li>gitInit()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#af6d7fded6d70be5ff66f305142dc8112">GitTrait</a>
+</li>
+<li>gitPull()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#ab8d7fbe63d794ce83c866a31b4885792">GitTrait</a>
+</li>
+<li>gitPush()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a8fa9e1c3a0a7abe0e543c3af22a58a03">GitTrait</a>
+</li>
+<li>gitRefresh()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a1f49c77ab3af317ba6695da48fddcc0f">GitTrait</a>
 </li>
 <li>glob_recursive()
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a4bd012f319eac6be8d053119a60cc21e">UFileSystem</a>
@@ -1049,7 +1353,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Tue Mar 13 2018 03:05:24 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu May 31 2018 02:05:30 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

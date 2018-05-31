@@ -17,7 +17,7 @@ var class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller =
     [ "getOneToMany", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#affc4d8903b8fab901442590b1ff96982", null ],
     [ "index", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#a149eb92716c1084a935e04a8d95f7347", null ],
     [ "initialize", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#a91098fa7d1917ce4833f284bbef12627", null ],
-    [ "isValid", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#a7b37efab7473a1effc29f8be2421f6e3", null ],
+    [ "isValid", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#ad1d410c5fc522dc8cc9ddbd5752b00ad", null ],
     [ "onInvalidControl", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#ac2051a426b1e66a8f0124acc49d0d059", null ],
     [ "update", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#a238ea6f191b8c6e33dfc5b77dfd6f5ce", null ],
     [ "$config", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#a49c7011be9c979d9174c52a8b83e5d8e", null ],

@@ -7,6 +7,7 @@ var class_ubiquity_1_1utils_1_1http_1_1_u_response =
     [ "asXml", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#ab93ec40575cba783fd80b2ed5dcf41c0", null ],
     [ "getResponseCode", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a758dc824e039c375aceb42c30e69fc81", null ],
     [ "header", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#aa6aa9621d5c6597cf808b8bbf97057c8", null ],
+    [ "isJSON", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a00f299982df69fd390bb7d0bd1969d5e", null ],
     [ "isSent", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a2f473dd8647862ede3e72aac082776d6", null ],
     [ "noCache", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#acc985c9913ba5e6a2341aa49ba486293", null ],
     [ "setAccept", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a896e7ef89d482aa5a65f705596125f42", null ],
@@ -15,5 +16,6 @@ var class_ubiquity_1_1utils_1_1http_1_1_u_response =
     [ "setAccessControlOrigin", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#add1304b1b5d197f1f54cde3fc6388b45", null ],
     [ "setAuthorization", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#abb0fd41fe106996cf0ca3d5f4cbc6b47", null ],
     [ "setContentType", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#acb866a1773066402777e37c857439be0", null ],
-    [ "setResponseCode", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#adedb051814f9fa86a824604fda2279bf", null ]
+    [ "setResponseCode", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#adedb051814f9fa86a824604fda2279bf", null ],
+    [ "$headers", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a52500036ee807241b8b4b7e2367c49ef", null ]
 ];

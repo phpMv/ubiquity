@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['tableannotation',['TableAnnotation',['../class_ubiquity_1_1annotations_1_1_table_annotation.html',1,'Ubiquity::annotations']]],
-  ['tablecache',['TableCache',['../class_ubiquity_1_1cache_1_1database_1_1_table_cache.html',1,'Ubiquity::cache::database']]],
-  ['tableexport',['TableExport',['../class_ubiquity_1_1db_1_1export_1_1_table_export.html',1,'Ubiquity::db::export']]],
-  ['tablereversor',['TableReversor',['../class_ubiquity_1_1orm_1_1reverse_1_1_table_reversor.html',1,'Ubiquity::orm::reverse']]],
-  ['templateengine',['TemplateEngine',['../class_ubiquity_1_1views_1_1engine_1_1_template_engine.html',1,'Ubiquity::views::engine']]],
-  ['templateparser',['TemplateParser',['../class_ubiquity_1_1views_1_1engine_1_1micro_1_1_template_parser.html',1,'Ubiquity::views::engine::micro']]],
-  ['transientannotation',['TransientAnnotation',['../class_ubiquity_1_1annotations_1_1_transient_annotation.html',1,'Ubiquity::annotations']]],
-  ['twig',['Twig',['../class_ubiquity_1_1views_1_1engine_1_1_twig.html',1,'Ubiquity::views::engine']]]
+  ['seocontroller',['SeoController',['../class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html',1,'Ubiquity::controllers::seo']]],
+  ['seotrait',['SeoTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html',1,'Ubiquity::controllers::admin::traits']]],
+  ['sessionobject',['SessionObject',['../class_ubiquity_1_1utils_1_1http_1_1session_1_1_session_object.html',1,'Ubiquity::utils::http::session']]],
+  ['sqlexport',['SqlExport',['../class_ubiquity_1_1db_1_1export_1_1_sql_export.html',1,'Ubiquity::db::export']]],
+  ['sqlutils',['SqlUtils',['../class_ubiquity_1_1db_1_1_sql_utils.html',1,'Ubiquity::db']]],
+  ['startup',['Startup',['../class_ubiquity_1_1controllers_1_1_startup.html',1,'Ubiquity::controllers']]]
 ];

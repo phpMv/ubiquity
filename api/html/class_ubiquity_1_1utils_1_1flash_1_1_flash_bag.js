@@ -1,7 +1,7 @@
 var class_ubiquity_1_1utils_1_1flash_1_1_flash_bag =
 [
     [ "__construct", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#a095c5d389db211932136b53f25f39685", null ],
-    [ "addMessage", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#a64b97a7ab6c421a13a4a5b951b755ab5", null ],
+    [ "addMessage", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#abec69b32479ac7f988d0a6da27d69d39", null ],
     [ "clear", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#aa821bec12eaa7e0f649397c9675ff505", null ],
     [ "current", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#af343507d1926e6ecf964625d41db528c", null ],
     [ "getAll", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#aba0d5b303383fb5b1fabb5fd01cd3800", null ],

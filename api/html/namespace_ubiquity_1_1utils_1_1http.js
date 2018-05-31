@@ -1,5 +1,6 @@
 var namespace_ubiquity_1_1utils_1_1http =
 [
+    [ "session", "namespace_ubiquity_1_1utils_1_1http_1_1session.html", "namespace_ubiquity_1_1utils_1_1http_1_1session" ],
     [ "UCookie", "class_ubiquity_1_1utils_1_1http_1_1_u_cookie.html", "class_ubiquity_1_1utils_1_1http_1_1_u_cookie" ],
     [ "URequest", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html", "class_ubiquity_1_1utils_1_1http_1_1_u_request" ],
     [ "UResponse", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html", "class_ubiquity_1_1utils_1_1http_1_1_u_response" ],

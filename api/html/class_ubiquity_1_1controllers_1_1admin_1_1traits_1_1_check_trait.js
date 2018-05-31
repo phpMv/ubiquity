@@ -24,7 +24,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait =
     [ "hasNoError", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a4177cb9bd23de15935fb61f07b777b9f", null ],
     [ "missingKeyInConfigMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a8418763dee37247e87d45e792b324a76", null ],
     [ "showActions", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a36a46ae623d0639f33f903c5e248bde0", null ],
-    [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a07ade9a4634c1596937c59db69031dc4", null ],
+    [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a4f264bde41669e90f8df8627b7444788", null ],
     [ "$messages", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a21a183f927a6d243fe6b4ba3a6c4d4c8", null ],
     [ "info", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a7b16a542aaeea764362f9dc2249ae63c", null ]
 ];

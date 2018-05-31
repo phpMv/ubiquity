@@ -1,7 +1,7 @@
 var class_ubiquity_1_1cache_1_1_class_utils =
 [
     [ "cleanClassname", "class_ubiquity_1_1cache_1_1_class_utils.html#a932f3c34a92dc68b927a306ae72df50c", null ],
-    [ "getClassFullNameFromFile", "class_ubiquity_1_1cache_1_1_class_utils.html#af5d411a9a172e9be59b6b4a911515da3", null ],
+    [ "getClassFullNameFromFile", "class_ubiquity_1_1cache_1_1_class_utils.html#a0e5b697a34c023387a4e7b4650f2033d", null ],
     [ "getClassNameFromFile", "class_ubiquity_1_1cache_1_1_class_utils.html#abe13a9399cf1580717b179c9538b9434", null ],
     [ "getClassNameFromPhpCode", "class_ubiquity_1_1cache_1_1_class_utils.html#a2f932059767026267a7226b965b5f4c3", null ],
     [ "getClassNamespaceFromFile", "class_ubiquity_1_1cache_1_1_class_utils.html#a50b3affaa992351b838a310e590f29e7", null ],

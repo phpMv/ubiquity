@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['idannotation',['IdAnnotation',['../class_ubiquity_1_1annotations_1_1_id_annotation.html',1,'Ubiquity::annotations']]],
-  ['infomessage',['InfoMessage',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_info_message.html',1,'Ubiquity::controllers::admin::popo']]]
+  ['hasmodelviewer',['HasModelViewer',['../interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer.html',1,'Ubiquity::controllers::admin::interfaces']]],
+  ['hasmodelviewerinterface',['HasModelViewerInterface',['../interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html',1,'Ubiquity::controllers::admin::interfaces']]]
 ];

@@ -11,6 +11,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait =
     [ "_loadModelStep", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a2f1699c223987efe87e1b018f6c910f5", null ],
     [ "_updateYumlDiagram", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a0cd933585875a6bbe3416fb6104c9a5c", null ],
     [ "_yumlMenu", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a0cce259e071ccacdbe8f14589f4dd946", null ],
+    [ "_yumlRefresh", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#afc9aa009c9816bf08ff021fc9e24cdaf", null ],
     [ "displayModelsMessages", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a398068ad40c3b390cc0d6d9e572f3397", null ],
     [ "getActiveModelStep", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a7314417b0f765a7db1aeb17691b6a387", null ],
     [ "getModelSteps", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a0f292265c6b7d78dec732d3b3e7153e6", null ],

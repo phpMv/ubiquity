@@ -27,5 +27,6 @@ var class_ubiquity_1_1orm_1_1_orm_utils =
     [ "isNotNullOrNullAccepted", "class_ubiquity_1_1orm_1_1_orm_utils.html#a62392d8d3c6d77b9ab062d94e4851dc4", null ],
     [ "isNullable", "class_ubiquity_1_1orm_1_1_orm_utils.html#ace35022879b6011e5c6fce4e0f7b1d26", null ],
     [ "isSerializable", "class_ubiquity_1_1orm_1_1_orm_utils.html#a226f09d5c5d64cf36340328f5c4edc3a", null ],
+    [ "objectAsJSON", "class_ubiquity_1_1orm_1_1_orm_utils.html#a779a8d46e4609b2decb968b7283173f0", null ],
     [ "$modelsMetadatas", "class_ubiquity_1_1orm_1_1_orm_utils.html#a19b4acf9370ab8e40851fd942761234f", null ]
 ];

@@ -19,6 +19,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action =
     [ "$action", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#aa698a3e72116e8e778be0e95d908ee30", null ],
     [ "$annots", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#aa537e13e3036228e1389c11f08422666", null ],
     [ "$controller", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a388ef7b1db5e6f728e63cee704ce6e23", null ],
+    [ "$controllers", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a08663f6ed9bbc9798229d7f4546cc9c8", null ],
     [ "$dValues", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a621a19a15a45a073e3606307514c5674", null ],
     [ "$excludeds", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a8f4725709bb81392d58f6f0a35f24f6c", null ],
     [ "$parameters", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#ab79d246480c4ac3a0db6bbceca92ad32", null ]

@@ -1,6 +1,7 @@
 var class_ubiquity_1_1seo_1_1_url_parser =
 [
     [ "__construct", "class_ubiquity_1_1seo_1_1_url_parser.html#a095c5d389db211932136b53f25f39685", null ],
+    [ "getConfig", "class_ubiquity_1_1seo_1_1_url_parser.html#a628300eb8464467d9344c7c59cc8770b", null ],
     [ "getLastModified", "class_ubiquity_1_1seo_1_1_url_parser.html#ac6bf51e5b49fb094b593140fb590ddcc", null ],
     [ "getUrls", "class_ubiquity_1_1seo_1_1_url_parser.html#ac88253fd61f53a52bd76637724cf9cdf", null ],
     [ "parse", "class_ubiquity_1_1seo_1_1_url_parser.html#a38d99acc70a1d8fd8f94455743b2d237", null ],

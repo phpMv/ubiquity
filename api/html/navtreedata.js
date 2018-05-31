@@ -32,13 +32,16 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_data_cache_8php.html",
-"class_ubiquity_1_1annotations_1_1_one_to_many_annotation.html#a1c4bf934691a992fa08cdcb67ed7a945",
-"class_ubiquity_1_1controllers_1_1_controller.html#ac2051a426b1e66a8f0124acc49d0d059",
-"class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a30c5c67b2bf8e2e2ccc7e361faa20afe",
-"class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a6275573a5647b8deb92eedeeee07e2d1",
-"class_ubiquity_1_1orm_1_1_orm_utils.html#ae71153538aa4c3c7ee50a222cdbc3cb6",
-"class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a4fa6b94ace3b7140a362baa20312a27a",
-"dir_3a5f36a60972f1a31a19674cfd7a16a5.html"
+"_ubiquity_my_admin_data_8php.html",
+"class_ubiquity_1_1cache_1_1traits_1_1_models_cache_trait.html#a11bb9d4cc6953ffdb3372daab0aa089f",
+"class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a70545813a28824d49f7a5d51e7640b64",
+"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a094f0e6b743ad95ce14666752c8ddc86",
+"class_ubiquity_1_1controllers_1_1auth_1_1_with_auth_trait.html#a91098fa7d1917ce4833f284bbef12627",
+"class_ubiquity_1_1db_1_1export_1_1_data_export.html#a722017cb634497fe2b92c39cd38a7c56",
+"class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_models_creator.html#af707f11c06d47e5cffa2696425c0015c",
+"class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html#af2481e2c79b9beb6a79145cae4842c28",
+"conf_8py.html#abff8d0724bf3d78779f98fa828f1e1fe",
+"traits_8php.html#a33522f9e38f97add84cf6a3c7e5d39ab"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

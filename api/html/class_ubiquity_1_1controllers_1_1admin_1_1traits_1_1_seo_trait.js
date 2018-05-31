@@ -17,6 +17,6 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait =
     [ "seeSeoUrl", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#ae893d74f4d997f3fdc9364ce47ec64c9", null ],
     [ "seo", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#abb091e327dd2c55004991402aed401c9", null ],
     [ "seoRefresh", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#a8839a534fbd8857319bac8f228ccd939", null ],
-    [ "showConfMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#a7892f1a47481ae18dc66f1d263b5cc8a", null ],
-    [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#a07ade9a4634c1596937c59db69031dc4", null ]
+    [ "showConfMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#ad808d545ba09d4ddad7c6b3746bb8b2f", null ],
+    [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#a4f264bde41669e90f8df8627b7444788", null ]
 ];

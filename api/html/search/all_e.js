@@ -1,18 +1,23 @@
 var searchData=
 [
+  ['maker',['Maker',['../class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_maker.html',1,'Ubiquity::controllers::admin::utils']]],
+  ['maker_2ephp',['Maker.php',['../_maker_8php.html',1,'']]],
   ['man_5fpages',['man_pages',['../namespaceconf.html#a09bebc3ead6c7c1acf6823c7a5609155',1,'conf']]],
   ['manytomanyannotation',['ManyToManyAnnotation',['../class_ubiquity_1_1annotations_1_1_many_to_many_annotation.html',1,'Ubiquity::annotations']]],
   ['manytomanyannotation_2ephp',['ManyToManyAnnotation.php',['../_many_to_many_annotation_8php.html',1,'']]],
-  ['manytomanyformfield',['manyToManyFormField',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aa5596da2b634c3c1511590e534eb5d33',1,'Ubiquity::controllers::admin::UbiquityMyAdminViewer']]],
+  ['manytomanyformfield',['manyToManyFormField',['../class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#aa5596da2b634c3c1511590e534eb5d33',1,'Ubiquity::controllers::admin::viewers::ModelViewer']]],
   ['manytomanyparser',['ManyToManyParser',['../class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html',1,'Ubiquity::orm::parser']]],
   ['manytomanyparser_2ephp',['ManyToManyParser.php',['../_many_to_many_parser_8php.html',1,'']]],
   ['manytooneannotation',['ManyToOneAnnotation',['../class_ubiquity_1_1annotations_1_1_many_to_one_annotation.html',1,'Ubiquity::annotations']]],
   ['manytooneannotation_2ephp',['ManyToOneAnnotation.php',['../_many_to_one_annotation_8php.html',1,'']]],
-  ['manytooneformfield',['manyToOneFormField',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a100ec3dea2fc0abbc05f38d46fcaeab6',1,'Ubiquity::controllers::admin::UbiquityMyAdminViewer']]],
+  ['manytooneformfield',['manyToOneFormField',['../class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a100ec3dea2fc0abbc05f38d46fcaeab6',1,'Ubiquity::controllers::admin::viewers::ModelViewer']]],
   ['manytoonetostring',['manyToOneTostring',['../class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#abcd38f076be66d582226d87f13c7f43c',1,'Ubiquity::utils::yuml::ClassToYuml']]],
   ['master_5fdoc',['master_doc',['../namespaceconf.html#a87edce364655e617d4eea122c1c5db0a',1,'conf']]],
   ['member',['Member',['../class_ubiquity_1_1orm_1_1creator_1_1_member.html',1,'Ubiquity::orm::creator']]],
   ['member_2ephp',['Member.php',['../_member_8php.html',1,'']]],
+  ['message',['message',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a0d5395c75e330f52a914cb9a37a9af80',1,'Ubiquity\controllers\auth\AuthController\message()'],['../class_ubiquity_1_1controllers_1_1_auth_controller.html#a1e5e38759bd7171319212aa5b4cf9320',1,'Ubiquity\controllers\AuthController\message()']]],
+  ['messagestrait',['MessagesTrait',['../class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html',1,'Ubiquity::controllers::semantic']]],
+  ['messagestrait_2ephp',['MessagesTrait.php',['../_messages_trait_8php.html',1,'']]],
   ['microtemplateengine',['MicroTemplateEngine',['../class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html',1,'Ubiquity::views::engine::micro']]],
   ['microtemplateengine_2ephp',['MicroTemplateEngine.php',['../_micro_template_engine_8php.html',1,'']]],
   ['missingkeyinconfigmessage',['missingKeyInConfigMessage',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a8418763dee37247e87d45e792b324a76',1,'Ubiquity::controllers::admin::traits::CheckTrait']]],
@@ -29,5 +34,7 @@ var searchData=
   ['modelscreator',['ModelsCreator',['../class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html',1,'Ubiquity::orm::creator']]],
   ['modelscreator_2ephp',['ModelsCreator.php',['../_models_creator_8php.html',1,'']]],
   ['modelstrait',['ModelsTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html',1,'Ubiquity::controllers::admin::traits']]],
-  ['modelstrait_2ephp',['ModelsTrait.php',['../_models_trait_8php.html',1,'']]]
+  ['modelstrait_2ephp',['ModelsTrait.php',['../_models_trait_8php.html',1,'']]],
+  ['modelviewer',['ModelViewer',['../class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html',1,'Ubiquity::controllers::admin::viewers']]],
+  ['modelviewer_2ephp',['ModelViewer.php',['../_model_viewer_8php.html',1,'']]]
 ];

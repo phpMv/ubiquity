@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.2</span>
+   &#160;<span id="projectnumber">2.0.3</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -107,9 +107,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a095c5d389db211932136b53f25f39685"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d4bce0fb20cf02560c827af8644b84f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html#a4d4bce0fb20cf02560c827af8644b84f">render</a> ($viewName, $pData, $asString)</td></tr>
 <tr class="separator:a4d4bce0fb20cf02560c827af8644b84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa92fe90859ac040f55e668f6be8afad0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html#aa92fe90859ac040f55e668f6be8afad0">getBlockNames</a> ($templateName)</td></tr>
+<tr class="separator:aa92fe90859ac040f55e668f6be8afad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00bb089543ff18ca275c5d44cfa1ec7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html#ae00bb089543ff18ca275c5d44cfa1ec7">getCode</a> ($templateName)</td></tr>
+<tr class="separator:ae00bb089543ff18ca275c5d44cfa1ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_ubiquity_1_1views_1_1engine_1_1_template_engine"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_ubiquity_1_1views_1_1engine_1_1_template_engine')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_template_engine.html">TemplateEngine</a></td></tr>
 <tr class="memitem:a1788bed08f032d78d2e05f64c37fb5eb inherit pub_methods_class_ubiquity_1_1views_1_1engine_1_1_template_engine"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_template_engine.html#a1788bed08f032d78d2e05f64c37fb5eb">render</a> ($fileName, $pData, $asString)</td></tr>
 <tr class="separator:a1788bed08f032d78d2e05f64c37fb5eb inherit pub_methods_class_ubiquity_1_1views_1_1engine_1_1_template_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa92fe90859ac040f55e668f6be8afad0 inherit pub_methods_class_ubiquity_1_1views_1_1engine_1_1_template_engine"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_template_engine.html#aa92fe90859ac040f55e668f6be8afad0">getBlockNames</a> ($templateName)</td></tr>
+<tr class="separator:aa92fe90859ac040f55e668f6be8afad0 inherit pub_methods_class_ubiquity_1_1views_1_1engine_1_1_template_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00bb089543ff18ca275c5d44cfa1ec7 inherit pub_methods_class_ubiquity_1_1views_1_1engine_1_1_template_engine"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_template_engine.html#ae00bb089543ff18ca275c5d44cfa1ec7">getCode</a> ($templateName)</td></tr>
+<tr class="separator:ae00bb089543ff18ca275c5d44cfa1ec7 inherit pub_methods_class_ubiquity_1_1views_1_1engine_1_1_template_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -118,7 +126,7 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00008">8</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00009">9</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a095c5d389db211932136b53f25f39685"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a095c5d389db211932136b53f25f39685">&#9670;&nbsp;</a></span>__construct()</h2>
@@ -135,11 +143,51 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00011">11</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00012">12</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa92fe90859ac040f55e668f6be8afad0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa92fe90859ac040f55e668f6be8afad0">&#9670;&nbsp;</a></span>getBlockNames()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getBlockNames </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$templateName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00033">33</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
+
+</div>
+</div>
+<a id="ae00bb089543ff18ca275c5d44cfa1ec7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae00bb089543ff18ca275c5d44cfa1ec7">&#9670;&nbsp;</a></span>getCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getCode </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$templateName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00037">37</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
+
+</div>
+</div>
 <a id="a4d4bce0fb20cf02560c827af8644b84f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4d4bce0fb20cf02560c827af8644b84f">&#9670;&nbsp;</a></span>render()</h2>
 
@@ -172,7 +220,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00019">19</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00020">20</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
 
 </div>
 </div>
@@ -197,7 +245,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00009">9</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_micro_template_engine_8php_source.html#l00010">10</a> of file <a class="el" href="_micro_template_engine_8php_source.html">MicroTemplateEngine.php</a>.</p>
 
 </div>
 </div>
@@ -211,7 +259,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1views.html">views</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1views_1_1engine.html">engine</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1views_1_1engine_1_1micro.html">micro</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html">MicroTemplateEngine</a></li>
-    <li class="footer"><small>Generated on Tue Mar 13 2018 03:05:21 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu May 31 2018 02:05:28 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

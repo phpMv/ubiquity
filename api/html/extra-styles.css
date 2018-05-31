@@ -80,3 +80,6 @@ body, table, div, p, dl {
 .SelectItem{
 	font: 8pt Roboto,sans-serif;
 }
+.image{
+	text-align: left !important;
+}

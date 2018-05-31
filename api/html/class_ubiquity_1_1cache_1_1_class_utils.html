@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.2</span>
+   &#160;<span id="projectnumber">2.0.3</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -92,9 +92,9 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1cache_1_1_class_util
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af5d411a9a172e9be59b6b4a911515da3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1_class_utils.html#af5d411a9a172e9be59b6b4a911515da3">getClassFullNameFromFile</a> ($filePathName)</td></tr>
-<tr class="memdesc:af5d411a9a172e9be59b6b4a911515da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the full name (name \ namespace) of a class from its file path result example: (string) "I\Am\The\Namespace\Of\This\Class"  <a href="#af5d411a9a172e9be59b6b4a911515da3">More...</a><br /></td></tr>
-<tr class="separator:af5d411a9a172e9be59b6b4a911515da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e5b697a34c023387a4e7b4650f2033d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1_class_utils.html#a0e5b697a34c023387a4e7b4650f2033d">getClassFullNameFromFile</a> ($filePathName, $backSlash=false)</td></tr>
+<tr class="memdesc:a0e5b697a34c023387a4e7b4650f2033d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the full name (name \ namespace) of a class from its file path result example: (string) "I\Am\The\Namespace\Of\This\Class"  <a href="#a0e5b697a34c023387a4e7b4650f2033d">More...</a><br /></td></tr>
+<tr class="separator:a0e5b697a34c023387a4e7b4650f2033d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a932f3c34a92dc68b927a306ae72df50c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1_class_utils.html#a932f3c34a92dc68b927a306ae72df50c">cleanClassname</a> ($classname)</td></tr>
 <tr class="separator:a932f3c34a92dc68b927a306ae72df50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab60b7fb8f306ce371532369115cbeda6"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1_class_utils.html#ab60b7fb8f306ce371532369115cbeda6">getNamespaceFromParts</a> ($parts)</td></tr>
@@ -123,7 +123,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00005">5</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00007">7</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a932f3c34a92dc68b927a306ae72df50c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a932f3c34a92dc68b927a306ae72df50c">&#9670;&nbsp;</a></span>cleanClassname()</h2>
@@ -149,12 +149,12 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00020">20</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00026">26</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
-<a id="af5d411a9a172e9be59b6b4a911515da3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5d411a9a172e9be59b6b4a911515da3">&#9670;&nbsp;</a></span>getClassFullNameFromFile()</h2>
+<a id="a0e5b697a34c023387a4e7b4650f2033d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e5b697a34c023387a4e7b4650f2033d">&#9670;&nbsp;</a></span>getClassFullNameFromFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,8 +166,18 @@ Static Private Member Functions</h2></td></tr>
           <td class="memname">static getClassFullNameFromFile </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$filePathName</em></td><td>)</td>
+          <td class="paramname"><em>$filePathName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$backSlash</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -186,7 +196,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00015">15</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00017">17</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -223,7 +233,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mixed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00102">102</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00108">108</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -251,7 +261,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00107">107</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00113">113</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -288,7 +298,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>null|string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00061">61</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00067">67</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -316,7 +326,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00066">66</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00072">72</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -354,7 +364,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00122">122</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00128">128</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -391,7 +401,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mixed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00048">48</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00054">54</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -419,7 +429,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00129">129</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00135">135</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -456,7 +466,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00029">29</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_class_utils_8php_source.html#l00035">35</a> of file <a class="el" href="_class_utils_8php_source.html">ClassUtils.php</a>.</p>
 
 </div>
 </div>
@@ -470,7 +480,7 @@ Static Private Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1cache.html">cache</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1cache_1_1_class_utils.html">ClassUtils</a></li>
-    <li class="footer"><small>Generated on Tue Mar 13 2018 03:05:18 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu May 31 2018 02:05:24 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

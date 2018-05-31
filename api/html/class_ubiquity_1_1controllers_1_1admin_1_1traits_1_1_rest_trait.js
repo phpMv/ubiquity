@@ -15,5 +15,5 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait =
     [ "getRestRequestHeaders", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html#aad92de345400007a24f397fd619d04c1", null ],
     [ "getRestRequestParams", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html#a7656fe4675efc9b1519831119a9ffe3f", null ],
     [ "initRestCache", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html#a18334470dee3cb89eb8e8c00a5fc4577", null ],
-    [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html#a07ade9a4634c1596937c59db69031dc4", null ]
+    [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html#a4f264bde41669e90f8df8627b7444788", null ]
 ];

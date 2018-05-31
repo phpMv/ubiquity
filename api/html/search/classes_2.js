@@ -10,6 +10,7 @@ var searchData=
   ['classutils',['ClassUtils',['../class_ubiquity_1_1cache_1_1_class_utils.html',1,'Ubiquity::cache']]],
   ['codeutils',['CodeUtils',['../class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_code_utils.html',1,'Ubiquity::controllers::admin::utils']]],
   ['columnannotation',['ColumnAnnotation',['../class_ubiquity_1_1annotations_1_1_column_annotation.html',1,'Ubiquity::annotations']]],
+  ['configtrait',['ConfigTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html',1,'Ubiquity::controllers::admin::traits']]],
   ['constants',['Constants',['../class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_constants.html',1,'Ubiquity::controllers::admin::utils']]],
   ['controller',['Controller',['../class_ubiquity_1_1controllers_1_1_controller.html',1,'Ubiquity::controllers']]],
   ['controlleraction',['ControllerAction',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html',1,'Ubiquity::controllers::admin::popo']]],
@@ -17,5 +18,12 @@ var searchData=
   ['controllerparser',['ControllerParser',['../class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html',1,'Ubiquity::cache::parser']]],
   ['controllerseo',['ControllerSeo',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html',1,'Ubiquity::controllers::admin::popo']]],
   ['controllerstrait',['ControllersTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html',1,'Ubiquity::controllers::admin::traits']]],
-  ['crudcontroller',['CRUDController',['../class_ubiquity_1_1controllers_1_1_c_r_u_d_controller.html',1,'Ubiquity::controllers']]]
+  ['createcontrollerstrait',['CreateControllersTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html',1,'Ubiquity::controllers::admin::traits']]],
+  ['crudcontroller',['CRUDController',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html',1,'CRUDController'],['../class_ubiquity_1_1controllers_1_1_c_r_u_d_controller.html',1,'CRUDController']]],
+  ['cruddatas',['CRUDDatas',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html',1,'Ubiquity::controllers::crud']]],
+  ['crudevents',['CRUDEvents',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_events.html',1,'Ubiquity::controllers::crud']]],
+  ['crudfiles',['CRUDFiles',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html',1,'Ubiquity::controllers::crud']]],
+  ['crudhelper',['CRUDHelper',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html',1,'Ubiquity::controllers::crud']]],
+  ['crudmessage',['CRUDMessage',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html',1,'Ubiquity::controllers::crud']]],
+  ['crudtrait',['CRUDTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_c_r_u_d_trait.html',1,'Ubiquity::controllers::admin::traits']]]
 ];

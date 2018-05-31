@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.2</span>
+   &#160;<span id="projectnumber">2.0.3</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -100,6 +100,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:ac739f951006fdf543eabc99db854fb40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbaea9d0323ce344acfb689f5a1e1830"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#acbaea9d0323ce344acfb689f5a1e1830">getMultiWhere</a> ($values, $field)</td></tr>
 <tr class="separator:acbaea9d0323ce344acfb689f5a1e1830"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8a9ee62a09d8252f97b5bba6d178aaa"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#ac8a9ee62a09d8252f97b5bba6d178aaa">getSearchWhere</a> ($fields, $value, $jokerBefore=&quot;%&quot;, $jokerAfter=&quot;%&quot;)</td></tr>
+<tr class="separator:ac8a9ee62a09d8252f97b5bba6d178aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e3e3c54d5ac1b671dffe02004d771df"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#a0e3e3c54d5ac1b671dffe02004d771df">getInsertFields</a> ($keyAndValues)</td></tr>
 <tr class="separator:a0e3e3c54d5ac1b671dffe02004d771df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef7785e6beb7e212db5ed4362643cba9"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html#aef7785e6beb7e212db5ed4362643cba9">getInsertFieldsValues</a> ($keyAndValues)</td></tr>
@@ -156,7 +158,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00065">65</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00073">73</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
 
 </div>
 </div>
@@ -200,7 +202,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00073">73</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00081">81</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
 
 </div>
 </div>
@@ -238,7 +240,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00091">91</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00099">99</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
 
 </div>
 </div>
@@ -266,7 +268,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00049">49</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00057">57</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
 
 </div>
 </div>
@@ -294,7 +296,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00053">53</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00061">61</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
 
 </div>
 </div>
@@ -392,6 +394,56 @@ Static Private Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac8a9ee62a09d8252f97b5bba6d178aaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8a9ee62a09d8252f97b5bba6d178aaa">&#9670;&nbsp;</a></span>getSearchWhere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getSearchWhere </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$fields</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$jokerBefore</em> = <code>&quot;%&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$jokerAfter</em> = <code>&quot;%&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00049">49</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
+
+</div>
+</div>
 <a id="a2f0f89dae30eacf143829f5575a60c2d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2f0f89dae30eacf143829f5575a60c2d">&#9670;&nbsp;</a></span>getUpdateFieldsKeyAndValues()</h2>
 
@@ -416,7 +468,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00057">57</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_sql_utils_8php_source.html#l00065">65</a> of file <a class="el" href="_sql_utils_8php_source.html">SqlUtils.php</a>.</p>
 
 </div>
 </div>
@@ -483,7 +535,7 @@ Static Private Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1db.html">db</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1db_1_1_sql_utils.html">SqlUtils</a></li>
-    <li class="footer"><small>Generated on Tue Mar 13 2018 03:05:19 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu May 31 2018 02:05:26 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>
