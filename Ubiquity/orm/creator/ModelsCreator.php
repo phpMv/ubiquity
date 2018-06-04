@@ -57,7 +57,7 @@ abstract class ModelsCreator {
 		if(isset($this->classes[$singleTable])){
 			$class=$this->classes[$singleTable];
 			echo "Creating the {$class->getName()} class\n";
-			$this->writeFile($modelsDir.DS.$singleTable.".php", $class);
+			$this->writeFile($modelsDir.DS.$class->getSimpleName().".php", $class);
 		}else{
 			echo "The {$singleTable} table does not exist in the database\n";
 		}

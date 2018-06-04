@@ -78,7 +78,7 @@ trait ModelsConfigTrait{
 	protected function getActiveModelStep() {
 		if (isset($this->getModelSteps()[$this->activeStep]))
 			return $this->getModelSteps()[$this->activeStep];
-		return end($this->steps);
+			return end($this->steps[$this->engineering]);
 	}
 
 	protected function getNextModelStep() {

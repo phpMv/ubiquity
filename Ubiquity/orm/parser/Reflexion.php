@@ -177,4 +177,21 @@ class Reflexion {
 		}
 		return $result;
 	}
+	
+	public static function getJoinTables($class){
+		$result=[];
+		$annots=self::getMembersAnnotationWithAnnotation($class, "@joinTable");
+		foreach ($annots as $annot){
+			$result[]=$annot->name;
+		}
+		return $result;
+	}
+	
+	public static function getAllJoinTables($models){
+		$result=[];
+		foreach ($models as $model){
+			$result=array_merge($result,self::getJoinTables($model));
+		}
+		return $result;
+	}
 }

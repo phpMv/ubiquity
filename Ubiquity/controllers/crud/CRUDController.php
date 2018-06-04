@@ -341,7 +341,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * @return CRUDEvents
 	 */
 	protected function getEvents ():CRUDEvents{
-		return new CRUDEvents();
+		return new CRUDEvents($this);
 	}
 	
 	private function _getEvents():CRUDEvents{

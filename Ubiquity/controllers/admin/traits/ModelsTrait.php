@@ -36,8 +36,8 @@ trait ModelsTrait{
 
 	abstract protected function showSimpleMessage($content, $type, $title=null,$icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
-	public function showTable($table,$id=null) {
-		$model=$this->getModelsNS() . "\\" . ucfirst($table);
+	public function showModel($model,$id=null) {
+		$model=str_replace(".", "\\", $model);
 		$adminRoute=$this->_getAdminFiles()->getAdminBaseRoute();
 		$this->_showModel($model,$id);
 		$this->_getAdminViewer()->getModelsStructureDataTable(OrmUtils::getModelMetadata($model));
@@ -56,13 +56,13 @@ trait ModelsTrait{
 		$this->jquery->renderView("@framework/Admin/main/component.html",["compo"=>$compo]);
 	}
 
-	public function showTableClick($tableAndId) {
-		$array=\explode(".", $tableAndId);
+	public function showModelClick($modelAndId) {
+		$array=\explode(":", $modelAndId);
 		if (\is_array($array)) {
 			$table=$array[0];
 			$id=$array[1];
-			$this->jquery->exec("$('#menuDbs .active').removeClass('active');$('.ui.label.left.pointing.teal').removeClass('left pointing teal active');$(\"[data-ajax='" . $table . "']\").addClass('active');$(\"[data-ajax='" . $table . "']\").find('.ui.label').addClass('left pointing teal');", true);
-			$this->showTable($table,$id);
+			$this->jquery->exec("$('#menuDbs .active').removeClass('active');$('.ui.label.left.pointing.teal').removeClass('left pointing teal active');$(\"[data-model='" . $table . "']\").addClass('active');$(\"[data-model='" . $table . "']\").find('.ui.label').addClass('left pointing teal');", true);
+			$this->showModel($table,$id);
 			$this->jquery->execAtLast("$(\"tr[data-ajax='" . $id . "']\").click();");
 			echo $this->jquery->compile();
 		}
@@ -235,7 +235,7 @@ trait ModelsTrait{
 			}
 			if ($hasElements)
 				echo $grid;
-			$this->jquery->getOnClick(".showTable", $this->_getAdminFiles()->getAdminBaseRoute() . "/showTableClick", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ]);
+			$this->jquery->getOnClick(".showTable", $this->_getAdminFiles()->getAdminBaseRoute() . "/showModelClick", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ]);
 			echo $this->jquery->compile($this->view);
 		}
 

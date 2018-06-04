@@ -136,4 +136,26 @@ class UArray {
 		}
 		return $result;
 	}
+	
+	public static function iSearch($needle,$haystack,$strict=null){
+		return array_search(strtolower($needle), array_map('strtolower', $haystack),$strict);
+	}
+	
+	public static function iRemove($array, $search) {
+		if (\is_array($search)) {
+			foreach ( $search as $val ) {
+				$array=self::iRemoveOne($array, $val);
+			}
+		} else {
+			$array=self::iRemoveOne($array, $search);
+		}
+		return array_values($array);
+	}
+	
+	public static function iRemoveOne($array, $search) {
+		if (($key=self::iSearch($search, $array)) !== false) {
+			unset($array[$key]);
+		}
+		return $array;
+	}
 }

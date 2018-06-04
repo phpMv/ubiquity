@@ -63,6 +63,26 @@ class OrmUtils {
 		if(isset(self::getModelMetadata($class)["#tableName"]))
 		return self::getModelMetadata($class)["#tableName"];
 	}
+	
+	public static function getJoinTables($class){
+		$result=[];
+		
+		if(isset(self::getModelMetadata($class)["#joinTable"])){
+			$jts=self::getModelMetadata($class)["#joinTable"];
+			foreach ($jts as $jt){
+				$result[]=$jt["name"];
+			}
+		}
+		return $result;
+	}
+	
+	public static function getAllJoinTables($models){
+		$result=[];
+		foreach ($models as $model){
+			$result=array_merge($result,self::getJoinTables($model));
+		}
+		return $result;
+	}
 
 	public static function getKeyFieldsAndValues($instance) {
 		$kf=self::getAnnotationInfo(get_class($instance), "#primaryKeys");

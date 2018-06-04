@@ -46,6 +46,7 @@ use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\semantic\MessagesTrait;
 use Ubiquity\controllers\crud\CRUDDatas;
 use Ubiquity\controllers\admin\traits\CreateControllersTrait;
+use Ubiquity\cache\ClassUtils;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface{
 	
@@ -170,23 +171,20 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$stepper = $this->_getModelsStepper ();
 		}
 		if ($this->_isModelsCompleted () || $hasHeader !== true) {
+			$config=Startup::getConfig();
 			try {
-				$dbs = $this->getTableNames ();
+				$models = CacheManager::getModels($config,true);
 				$menu = $semantic->htmlMenu ( "menuDbs" );
 				$menu->setVertical ()->setInverted ();
-				foreach ( $dbs as $table ) {
-					$model = $this->getModelsNS () . "\\" . ucfirst ( $table );
-					$file = \str_replace ( "\\", DS, ROOT . DS . $model ) . ".php";
-					$find = UFileSystem::tryToRequire ( $file );
-					if ($find) {
-						$count = DAO::count ( $model );
-						$item = $menu->addItem ( ucfirst ( $table ) );
-						$item->addLabel ( $count );
-						$tbl = OrmUtils::getTableName ( $model );
-						$item->setProperty ( "data-ajax", $tbl );
-					}
+				foreach ( $models as $model ) {
+					$count = DAO::count ( $model );
+					$item = $menu->addItem ( ClassUtils::getClassSimpleName($model) );
+					$item->addLabel ( $count );
+					$tbl = OrmUtils::getTableName ( $model );
+					$item->setProperty ( "data-ajax", $tbl );
+					$item->setProperty ( "data-model", str_replace("\\", ".", $model));
 				}
-				$menu->getOnClick ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/showTable", "#divTable", [ "attr" => "data-ajax" ,"historize"=>true] );
+				$menu->getOnClick ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/showModel", "#divTable", [ "attr" => "data-model" ,"historize"=>true] );
 				$menu->onClick ( "$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');" );
 			} catch ( \Exception $e ) {
 				throw $e;

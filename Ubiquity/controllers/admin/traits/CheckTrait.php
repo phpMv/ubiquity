@@ -15,6 +15,10 @@ use Ubiquity\cache\system\ArrayCache;
 use Ubiquity\orm\creator\database\DbModelsCreator;
 use Ubiquity\controllers\admin\UbiquityMyAdminFiles;
 use Ajax\semantic\html\collections\HtmlMessage;
+use Ubiquity\orm\OrmUtils;
+use Ubiquity\utils\base\UArray;
+use Ajax\semantic\html\modules\HtmlDropdown;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
  *
@@ -50,8 +54,7 @@ trait CheckTrait{
 		\ob_start();
 		(new DbModelsCreator())->create($config, false, $singleTable);
 		$result=\ob_get_clean();
-		$message=$this->showSimpleMessage("", "success", "check mark", null, "msg-create-models");
-		$message->addHeader("Models creation");
+		$message=$this->showSimpleMessage("", "success", "Models creation","check mark", null, "msg-create-models");
 		$message->addList(\explode("\n", \str_replace("\n\n", "\n", \trim($result))));
 		$this->models(true);
 		echo $message;
@@ -86,7 +89,17 @@ trait CheckTrait{
 				$this->checkDatabase($config, "database");
 				break;
 			case "Models":
+				CacheManager::start($config);
 				$this->checkModels($config);
+				if($this->engineering==="forward"){
+					$modelsWithoutFiles=$this->getModelsWithoutTable($config);
+					if(sizeof($modelsWithoutFiles)>0){
+						foreach ($modelsWithoutFiles as $model){
+							$table=Reflexion::getTableName($model);
+							$this->_addErrorMessage("warning", "The table <b>" . $table . "</b> does not exists for the model <b>" . $model . "</b>.");
+						}
+					}
+				}
 				break;
 			case "Cache":
 				$this->checkModelsCache($config);
@@ -139,6 +152,40 @@ trait CheckTrait{
 				}
 			}
 		}
+	}
+	
+	protected function getTablesWithoutModel($config){
+		$models=CacheManager::getModels($config, true);
+		$tables=DAO::$db->getTablesName();
+		$allJoinTables=Reflexion::getAllJoinTables($models);
+		$tables=array_diff($tables, $allJoinTables);
+		foreach ($models as $model){
+			try{
+				$table=Reflexion::getTableName($model);
+				$tables=UArray::iRemove($tables, $table);
+			}catch (\Exception $e){
+				
+			}
+		}
+		return $tables;
+	}
+	
+	protected function getModelsWithoutTable($config){
+		$models=CacheManager::getModels($config, true);
+		$result=$models;
+		$tables=DAO::$db->getTablesName();
+		$allJoinTables=Reflexion::getAllJoinTables($models);
+		foreach ($models as $model){
+			try{
+				$table=Reflexion::getTableName($model);
+				if(($key=UArray::iSearch($table, $tables,false))!==false){
+					$result=UArray::iRemoveOne($result, $model);
+				}
+			}catch (\Exception $e){
+				
+			}
+		}
+		return $result;
 	}
 
 	protected function checkModelsCache($config, $infoIcon="lightning") {
@@ -223,9 +270,15 @@ trait CheckTrait{
 					$buttons->addItem("(Re-)Create database")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/showDatabaseCreation", "#main-content")->addIcon("database");
 				break;
 			case "Models":
-				if ($this->engineering === "forward")
-					$buttons->addItem("(Re-)Create models")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/createModels", "#main-content", [ "attr" => "" ])->addIcon("sticky note");
-				else {
+				if ($this->engineering === "forward"){
+					if(sizeof($tables=$this->getTablesWithoutModel(Startup::getConfig()))){
+						$ddBtn=new HtmlDropdown("ddTables", "Create models for new tables",array_combine($tables,$tables));
+						$ddBtn->asButton();
+						$ddBtn->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/createModels", "#main-content", [ "attr" => "data-value" ]);
+						$buttons->addItem($ddBtn);
+					}
+					$buttons->addItem("(Re-)Create all models")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/createModels", "#main-content", [ "attr" => "" ])->addIcon("sticky note");
+				}else {
 					$buttons->addItem("Import from Yuml")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_importFromYuml", "#models-main", [ "attr" => "" ])->addIcon("sticky note");
 				}
 				$bt=$buttons->addItem("Classes diagram")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_showAllClassesDiagram", "#action-response", [ "attr" => "","ajaxTransition" => "random" ]);
@@ -234,7 +287,7 @@ trait CheckTrait{
 					$bt->addClass("disabled");
 				break;
 			case "Cache":
-				$buttons->addItem("(Re-)Init models cache")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_initModelsCache", "#main-content")->addIcon("lightning");
+				$buttons->addItem("(Re-)Init all models cache")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_initModelsCache", "#main-content")->addIcon("lightning");
 				break;
 		}
 		$nextStep=$this->getNextModelStep();

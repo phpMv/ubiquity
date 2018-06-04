@@ -299,6 +299,7 @@ class ModelViewer {
 	 * @return string|NULL
 	 */
 	public function getFkMemberElementDetails($memberFK,$objectFK,$fkClass,$fkTable){
+		$_fkClass=str_replace("\\", ".",$fkClass);
 		$header=new HtmlHeader("", 4, $memberFK, "content");
 		if (is_array($objectFK) || $objectFK instanceof \Traversable) {
 			$header=$this->getFkHeaderListDetails($memberFK, $fkClass, $objectFK);
@@ -307,7 +308,7 @@ class ModelViewer {
 				if (method_exists($oItem, "__toString")) {
 					$id=(CRUDHelper::getIdentifierFunction($fkClass))(0, $oItem);
 					$item=$element->addItem($oItem . "");
-					$item->setProperty("data-ajax", $fkTable . "." . $id);
+					$item->setProperty("data-ajax", $_fkClass . ":" . $id);
 					$item->addClass("showTable");
 					$this->displayFkElementListDetails($item, $memberFK, $fkClass, $oItem);
 				}
@@ -317,7 +318,7 @@ class ModelViewer {
 				$header=$this->getFkHeaderElementDetails($memberFK, $fkClass, $objectFK);
 				$id=(CRUDHelper::getIdentifierFunction($fkClass))(0, $objectFK);
 				$element=$this->getFkElementDetails($memberFK, $fkClass, $objectFK);
-				$element->setProperty("data-ajax", $fkTable . "." . $id)->addClass("showTable");
+				$element->setProperty("data-ajax", $_fkClass . ":" . $id)->addClass("showTable");
 			}
 		}
 		if(isset($element)){
@@ -346,13 +347,14 @@ class ModelViewer {
 	 */
 	public function getFkMemberElement($memberFK,$objectFK,$fkClass,$fkTable){
 		$element="";
+		$_fkClass=str_replace("\\", ".",$fkClass);
 		if (is_array($objectFK) || $objectFK instanceof \Traversable) {
 			$element=$this->getFkList($memberFK,$objectFK);
 			foreach ( $objectFK as $oItem ) {
 				if (method_exists($oItem, "__toString")) {
 					$id=(CRUDHelper::getIdentifierFunction($fkClass))(0, $oItem);
 					$item=$element->addItem($oItem . "");
-					$item->setProperty("data-ajax", $fkTable . "." . $id);
+					$item->setProperty("data-ajax", $_fkClass . ":" . $id);
 					$item->addClass("showTable");
 					$this->displayFkElementList($item, $memberFK, $fkClass, $oItem);
 				}
@@ -361,7 +363,7 @@ class ModelViewer {
 			if (method_exists($objectFK, "__toString")) {
 				$id=(CRUDHelper::getIdentifierFunction($fkClass))(0, $objectFK);
 				$element=$this->getFkElement($memberFK, $fkClass, $objectFK);
-				$element->setProperty("data-ajax", $fkTable . "." . $id)->addClass("showTable");
+				$element->setProperty("data-ajax", $_fkClass . ":" . $id)->addClass("showTable");
 			}
 		}
 		return $element;
