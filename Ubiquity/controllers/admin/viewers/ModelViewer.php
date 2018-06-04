@@ -185,7 +185,7 @@ class ModelViewer {
 	
 	public function addAllButtons(DataTable $dataTable,$attributes){
 		$dataTable->onPreCompile ( function () use ($attributes, &$dataTable) {
-			$dataTable->getHtmlComponent ()->colRight ( \count ( $attributes ) );
+			$dataTable->getHtmlComponent ()->colRightFromRight ( 0 );
 		} );
 		$dataTable->addAllButtons( false, [ "ajaxTransition" => "random" ], function ($bt) {
 			$bt->addClass ( "circular" );
