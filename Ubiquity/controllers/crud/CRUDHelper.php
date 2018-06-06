@@ -36,7 +36,7 @@ class CRUDHelper {
 		
 		$condition=str_replace("||", " OR ", $condition);
 		$condition=str_replace("&&", " AND ", $condition);
-		$condition='('.$condition.') AND ('.$initialCondition.')';
+		$condition='('.$condition.') AND '.$initialCondition.'';
 		return DAO::getAll($model,$condition);
 	}
 	

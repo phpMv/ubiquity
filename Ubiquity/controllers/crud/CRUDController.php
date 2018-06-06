@@ -44,7 +44,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				$rownum=DAO::getRownum($model, $id);
 				$this->activePage=Pagination::getPageOfRow($rownum,$recordsPerPage);
 			}
-			return DAO::paginate($model,$this->activePage,$recordsPerPage);
+			return DAO::paginate($model,$this->activePage,$recordsPerPage,$condition);
 		}
 		return DAO::getAll($model,$condition);
 	}

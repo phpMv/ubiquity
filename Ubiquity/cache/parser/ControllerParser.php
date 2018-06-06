@@ -21,8 +21,12 @@ class ControllerParser {
 		$reflect=new \ReflectionClass($controllerClass);
 		if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\controllers\Controller")) {
 			$instance=new $controllerClass();
+			try{
 			$annotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
 			$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
+			}catch (\Exception $e){
+				
+			}
 			$this->rest=\sizeof($restAnnotsClass) > 0;
 			if (\sizeof($annotsClass) > 0) {
 				$this->mainRouteClass=$annotsClass[0];
@@ -32,21 +36,23 @@ class ControllerParser {
 			$methods=Reflexion::getMethods($instance, \ReflectionMethod::IS_PUBLIC);
 			foreach ( $methods as $method ) {
 				if ($method->getDeclaringClass()->getName() === $controllerClass || $inherited) {
-					$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
-					if ($annots !== false) {
-						foreach ( $annots as $annot ) {
-							if (UString::isNull($annot->path)) {
-								$newAnnot=$this->generateRouteAnnotationFromMethod($method);
-								$annot->path=$newAnnot[0]->path;
+					try{
+						$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
+						if ($annots !== false) {
+							foreach ( $annots as $annot ) {
+								if (UString::isNull($annot->path)) {
+									$newAnnot=$this->generateRouteAnnotationFromMethod($method);
+									$annot->path=$newAnnot[0]->path;
+								}
+							}
+							$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
+						} else {
+							if ($automated) {
+								if ($method->class !== 'Ubiquity\\controllers\\Controller' && \array_search($method->name, self::$excludeds) === false && !UString::startswith($method->name, "_"))
+									$this->routesMethods[$method->name]=[ "annotations" => $this->generateRouteAnnotationFromMethod($method),"method" => $method ];
 							}
 						}
-						$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
-					} else {
-						if ($automated) {
-							if ($method->class !== 'Ubiquity\\controllers\\Controller' && \array_search($method->name, self::$excludeds) === false && !UString::startswith($method->name, "_"))
-								$this->routesMethods[$method->name]=[ "annotations" => $this->generateRouteAnnotationFromMethod($method),"method" => $method ];
-						}
-					}
+					}catch(\Exception $e){}
 				}
 			}
 		}
