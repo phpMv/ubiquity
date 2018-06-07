@@ -13,6 +13,7 @@ use Ubiquity\controllers\rest\ResponseFormatter;
 use Ajax\semantic\widgets\datatable\Pagination;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\utils\base\UString;
+use Ajax\semantic\html\collections\HtmlMessage;
 
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface{
 	use MessagesTrait;
@@ -31,7 +32,8 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$modal=($this->_getModelViewer()->isModal($objects,$this->model))?"modal":"no";
 		$this->_getModelViewer()->getModelDataTable($objects, $this->model);
 		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute() . "/newModel/" . $modal, "#frm-add-update",["hasLoader"=>"internal"] );
-		$this->crudLoadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ]);		
+		$this->_getEvents()->onDisplayElements();
+		$this->crudLoadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ,"messages"=>$this->jquery->semantic()->matchHtmlComponents(function($compo){return $compo instanceof HtmlMessage;})]);		
 	}
 	
 	protected function getInstances($page=1,$id=null){
@@ -64,19 +66,30 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if(isset($_POST["s"])){
 			$instances=$this->search($model, $_POST["s"]);
 		}else{
-			$instances=$this->getInstances(URequest::post("p",1));
+			$page=URequest::post("p",1);
+			$instances=$this->getInstances($page);
 		}
 		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model,$this->_getInstancesFilter($model)));
+		$grpByFields=$this->_getModelViewer()->getGroupByFields();
 		if(isset($recordsPerPage)){
-			UResponse::asJSON();
-			$responseFormatter=new ResponseFormatter();
-			print_r($responseFormatter->getJSONDatas($instances));
+			if(!is_array($grpByFields)){
+				UResponse::asJSON();
+				$responseFormatter=new ResponseFormatter();
+				print_r($responseFormatter->getJSONDatas($instances));
+			}else{
+				$this->_renderDataTableForRefresh($instances, $model);
+			}
 		}else{
-			$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
-			$compo= $this->_getModelViewer()->getModelDataTable($instances, $model)->refresh(["tbody"]);
 			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");$("#search-query").show();$("#table-details").html("");');
-			$this->jquery->renderView("@framework/main/component.html",["compo"=>$compo]);
+			$this->_renderDataTableForRefresh($instances, $model);
 		}
+	}
+	
+	private function _renderDataTableForRefresh($instances,$model){
+		$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
+		$compo= $this->_getModelViewer()->getModelDataTable($instances, $model)->refresh(["tbody"]);
+		$this->_getEvents()->onDisplayElements();
+		$this->jquery->renderView("@framework/main/component.html",["compo"=>$compo]);
 	}
 	
 	/**
@@ -195,6 +208,35 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		}else{
 			$this->jquery->execAtLast("$('._delete[data-ajax={$ids}]').trigger('click');");
 			$this->index();
+		}
+	}
+	
+	/**
+	 * Helper to delete multiple objects
+	 * @param mixed $data
+	 * @param string $action
+	 * @param string $target the css selector for refreshing
+	 * @param callable|string $condition the callback for generating the SQL where (for deletion) with the parameter data, or a simple string
+	 */
+	protected function _deleteMultiple($data,$action,$target,$condition){
+		if(URequest::isPost()){
+			if(is_callable($condition)){
+				$condition=$condition($data);
+			}
+			$rep=DAO::deleteAll($this->model, $condition);
+			if($rep){
+				$message=new CRUDMessage("Deleting {count} objects","Deletion","info","info circle",4000);
+				$message=$this->_getEvents()->onSuccessDeleteMultipleMessage($message);
+				$message->parseContent(["count"=>$rep]);
+			}
+			$this->_showSimpleMessage($message,"delete-all");
+			$this->index();
+		}else{
+			$message=new CRUDMessage("Do you confirm the deletion of this objects?", "Remove confirmation","error");
+			$this->_getEvents()->onConfDeleteMultipleMessage($message,$data);
+			$message=$this->_showConfMessage($message, $this->_getBaseRoute() . "/{$action}/{$data}",$target, $data,["jqueryDone"=>"replaceWith"]);
+			echo $message;
+			echo $this->jquery->compile($this->view);
 		}
 	}
 	

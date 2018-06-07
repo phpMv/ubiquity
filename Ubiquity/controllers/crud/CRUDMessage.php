@@ -51,7 +51,8 @@ class CRUDMessage {
 	 * @param string $message
 	 */
 	public function setMessage($message) {
-		$this->message = $message;
+		$this->_message = $message;
+		$this->message=$message;
 	}
 
 	/**
@@ -103,6 +104,15 @@ class CRUDMessage {
 	 */
 	public function parse($value){
 		$this->_message=str_replace("{value}", $value, $this->message);
+		return $this;
+	}
+	
+	public function parseContent($keyValues){
+		$msg=$this->_message;
+		foreach ($keyValues as $key=>$value){
+			$msg=str_replace("{".$key."}", $value, $msg);
+		}
+		$this->_message=$msg;
 		return $this;
 	}
 

@@ -26,6 +26,12 @@ class Twig extends TemplateEngine {
 			return Router::url($name,$params);
 		});
 		$this->twig->addFunction($function);
+		
+		$test=new \Twig_SimpleTest('instanceOf', function($var,$class){ 
+			return  $var instanceof $class;
+		});
+		$this->twig->addTest($test);
+		
 		$this->twig->addGlobal("app", new Framework());
 	}
 

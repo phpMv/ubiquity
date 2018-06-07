@@ -18,11 +18,23 @@ class CRUDEvents {
 		return $message;
 	}
 	
+	public function onSuccessDeleteMultipleMessage(CRUDMessage $message):CRUDMessage{
+		return $message;
+	}
+	
 	public function onErrorDeleteMessage(CRUDMessage $message):CRUDMessage{
 		return $message;
 	}
 	
+	public function onErrorDeleteMultipleMessage(CRUDMessage $message):CRUDMessage{
+		return $message;
+	}
+	
 	public function onConfDeleteMessage(CRUDMessage $message):CRUDMessage{
+		return $message;
+	}
+	
+	public function onConfDeleteMultipleMessage(CRUDMessage $message,$data):CRUDMessage{
 		return $message;
 	}
 	
@@ -39,6 +51,10 @@ class CRUDEvents {
 	}
 	
 	public function beforeLoadView($viewName,&$vars){
+		
+	}
+	
+	public function onDisplayElements(){
 		
 	}
 }

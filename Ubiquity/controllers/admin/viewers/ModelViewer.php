@@ -160,12 +160,22 @@ class ModelViewer {
 		return ;
 	}
 	
+	public function getGroupByFields(){
+		return;
+	}
+	
 	protected function getDataTableInstance($instances,$model,$page=1):DataTable{
 		$totalCount=DAO::count($model,$this->controller->_getInstancesFilter($model));
 		$semantic = $this->jquery->semantic ();
 		$recordsPerPage=$this->recordsPerPage($model,$totalCount);
 		if(is_numeric($recordsPerPage)){
-			$dataTable = $semantic->jsonDataTable( "lv", $model, $instances );
+			$grpByFields=$this->getGroupByFields();
+			if(is_array($grpByFields)){
+				$dataTable = $semantic->dataTable( "lv", $model, $instances );
+				$dataTable->setGroupByFields($grpByFields);
+			}else{
+				$dataTable = $semantic->jsonDataTable( "lv", $model, $instances );
+			}
 			$dataTable->paginate($page,$totalCount,$recordsPerPage,5);
 			$dataTable->onActiveRowChange('$("#table-details").html("");');
 			$dataTable->onSearchTerminate('$("#search-query-content").html(data);$("#search-query").show();$("#table-details").html("");');

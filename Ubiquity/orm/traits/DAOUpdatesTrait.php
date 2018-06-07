@@ -52,14 +52,28 @@ trait DAOUpdatesTrait{
 	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
 	private static function remove_($tableName, $where) {
-		$sql = "DELETE FROM " . $tableName . " WHERE " . SqlUtils::checkWhere ( $where );
+		$sql = "DELETE FROM " . $tableName . " " . SqlUtils::checkWhere ( $where );
 		Logger::log ( "delete", $sql );
 		$statement = self::$db->prepareStatement ( $sql );
-		return $statement->execute ();
+		if($statement->execute ()){
+			return $statement->rowCount();
+		}
+		return false;
+	}
+	
+	/**
+	 * Deletes all instances from $modelName matching the condition $where
+	 * @param string $modelName
+	 * @param string $where
+	 * @return number
+	 */
+	public static function deleteAll($modelName,$where){
+		$tableName = OrmUtils::getTableName ( $modelName );
+		return self::remove_($tableName, $where);
 	}
 
 	/**
-	 *
+	 * Deletes all instances from $modelName corresponding to $ids
 	 * @param string $modelName
 	 * @param array|int $ids
 	 * @return int
