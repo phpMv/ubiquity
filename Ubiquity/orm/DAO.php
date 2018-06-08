@@ -211,7 +211,7 @@ class DAO {
 
 		foreach ( $query as $row ) {
 			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$members, $oneToManyQueries,$manyToOneQueries);
-			$key=OrmUtils::getFirstKeyValue($object);
+			$key=OrmUtils::getKeyValues($object);
 			$objects[$key]=$object;
 		}
 

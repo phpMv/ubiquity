@@ -116,4 +116,33 @@ class UFileSystem {
 	public static function getDirFromNamespace($ns){
 		return ROOT . DS . str_replace ( "\\", DS, $ns );
 	}
+	
+	public static function xcopy($source, $dest, $permissions = 0755){
+		if (is_link($source)) {
+			return symlink(readlink($source), $dest);
+		}
+		if (is_file($source)) {
+			return copy($source, $dest);
+		}
+		if (!is_dir($dest)) {
+			mkdir($dest, $permissions,true);
+		}
+		$dir = dir($source);
+		while (false !== $entry = $dir->read()) {
+			if ($entry == '.' || $entry == '..') {
+				continue;
+			}
+			self::xcopy("$source/$entry", "$dest/$entry", $permissions);
+		}
+		$dir->close();
+		return true;
+	}
+	
+	public static function delTree($dir) {
+		$files = array_diff(scandir($dir), array('.','..'));
+		foreach ($files as $file) {
+			(is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
+		}
+		return rmdir($dir);
+	}
 }

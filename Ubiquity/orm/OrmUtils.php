@@ -148,6 +148,11 @@ class OrmUtils {
 		$fkv=self::getKeyFieldsAndValues($instance);
 		return \reset($fkv);
 	}
+	
+	public static function getKeyValues($instance) {
+		$fkv=self::getKeyFieldsAndValues($instance);
+		return implode("_",$fkv);
+	}
 
 	/**
 	 *
