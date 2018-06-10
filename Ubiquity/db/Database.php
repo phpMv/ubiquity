@@ -203,6 +203,10 @@ class Database {
 		return $this->query ( $query )->fetchColumn ();
 	}
 	
+	public function fetchAll($query){
+		return $this->query ( $query )->fetchAll ( \PDO::FETCH_COLUMN );
+	}
+	
 	public function isConnected() {
 		return ($this->pdoObject !== null && $this->pdoObject instanceof \PDO && $this->ping());
 	}

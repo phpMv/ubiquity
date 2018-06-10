@@ -135,17 +135,15 @@ abstract class RestController extends Controller {
 	/**
 	 * Returns a list of objects from the server
 	 * @param string $condition the sql Where part
-	 * @param boolean $loadManyToOne
-	 * @param boolean $loadOneToMany
+	 * @param boolean $included
 	 * @param boolean $useCache
 	 */
-	public function get($condition="1=1",$loadManyToOne=false,$loadOneToMany=false,$useCache=false){
+	public function get($condition="1=1",$included=false,$useCache=false){
 		try{
 			$condition=\urldecode($condition);
-			$loadManyToOne=UString::isBooleanTrue($loadManyToOne);
-			$loadOneToMany=UString::isBooleanTrue($loadOneToMany);
+			$included=UString::isBooleanTrue($included);
 			$useCache=UString::isBooleanTrue($useCache);
-			$datas=DAO::getAll($this->model,$condition,$loadManyToOne,$loadOneToMany,$useCache);
+			$datas=DAO::getAll($this->model,$condition,$included,$useCache);
 			echo $this->responseFormatter->get($datas);
 		}catch (\Exception $e){
 			$this->_setResponseCode(500);
@@ -156,16 +154,14 @@ abstract class RestController extends Controller {
 	/**
 	 * Get the first object corresponding to the $keyValues
 	 * @param string $keyValues primary key(s) value(s) or condition
-	 * @param boolean $loadManyToOne if true then manyToOne members are loaded.
-	 * @param boolean $loadOneToMany if true then oneToMany members are loaded.
+	 * @param boolean $included if true then load associated members.
 	 * @param boolean $useCache if true then response is cached
 	 */
-	public function getOne($keyValues,$loadManyToOne=false,$loadOneToMany=false,$useCache=false){
+	public function getOne($keyValues,$included=false,$useCache=false){
 		$keyValues=\urldecode($keyValues);
-		$loadManyToOne=UString::isBooleanTrue($loadManyToOne);
-		$loadOneToMany=UString::isBooleanTrue($loadOneToMany);
+		$included=UString::isBooleanTrue($included);
 		$useCache=UString::isBooleanTrue($useCache);
-		$data=DAO::getOne($this->model, $keyValues,$loadManyToOne,$loadOneToMany,$useCache);
+		$data=DAO::getOne($this->model, $keyValues,$included,$useCache);
 		if(isset($data)){
 			$_SESSION["_restInstance"]=$data;
 			echo $this->responseFormatter->getOne($data);
