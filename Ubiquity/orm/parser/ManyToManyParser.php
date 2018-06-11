@@ -190,7 +190,8 @@ class ManyToManyParser {
 	private function generateWhereValues(){
 		$mask=$this->getWhereMask();
 		$res=[];
-		foreach ($this->whereValues as $value){
+		$values=array_keys($this->whereValues);
+		foreach ($values as $value){
 			$res[]=str_replace("{value}", $value, $mask);
 		}
 		return implode(" OR ", $res);
@@ -203,6 +204,6 @@ class ManyToManyParser {
 	}
 	
 	public function addValue($value){
-		$this->whereValues[]=$value;
+		$this->whereValues[$value]=true;
 	}
 }

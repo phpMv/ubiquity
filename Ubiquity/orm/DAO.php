@@ -220,13 +220,13 @@ class DAO {
 			}
 			if(is_array($included)){
 				if(isset($invertedJoinColumns)){
-					$invertedJoinColumns=self::getInvertedJoinColumns($included, $invertedJoinColumns);
+					self::getInvertedJoinColumns($included, $invertedJoinColumns);
 				}
 				if(isset($oneToManyFields)){
-					$oneToManyFields=self::getToManyFields($included, $oneToManyFields);
+					self::getToManyFields($included, $oneToManyFields);
 				}
 				if(isset($manyToManyFields)){
-					$manyToManyFields=self::getToManyFields($included, $manyToManyFields);
+					self::getToManyFields($included, $manyToManyFields);
 				}
 			}
 		}

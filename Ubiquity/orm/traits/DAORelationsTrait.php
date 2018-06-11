@@ -38,7 +38,7 @@ trait DAORelationsTrait {
 		foreach ($queries as $key=>$conditions){
 			list($class,$member,$fkField)=\explode("|", $key);
 			if(is_array($included)){
-				$includedNext=(isset($included[$member]))?(is_bool($included[$member])?$included[$member]:[$included[$member]]):false;
+				$includedNext=self::_getIncludedNext($included, $member);
 			}
 			$condition=\implode(" OR ", $conditions);
 			$relationObjects=self::getAll($class,$condition,$includedNext,$useCache);
@@ -53,7 +53,7 @@ trait DAORelationsTrait {
 		foreach ($parsers as $key=>$parser){
 			list($class,$member,$inversedBy)=\explode("|", $key);
 			if(is_array($included)){
-				$includedNext=(isset($included[$member]))?(is_bool($included[$member])?$included[$member]:[$included[$member]]):false;
+				$includedNext=self::_getIncludedNext($included, $member);
 			}
 			$condition=$parser->generate();
 			$relationObjects=self::getAll($class,$condition,$includedNext,$useCache);
@@ -62,6 +62,10 @@ trait DAORelationsTrait {
 				self::setToMember($member, $object, $ret, $class, "getManyToMany");
 			}
 		}
+	}
+	
+	private static function _getIncludedNext($included,$member){
+		return (isset($included[$member]))?(is_bool($included[$member])?$included[$member]:[$included[$member]]):false;
 	}
 	
 	
@@ -195,24 +199,20 @@ trait DAORelationsTrait {
 		}
 	}
 	
-	private static function getInvertedJoinColumns($included,$invertedJoinColumns){
-		$ret=[];
-		foreach ($invertedJoinColumns as $column=>$annot){
+	private static function getInvertedJoinColumns($included,&$invertedJoinColumns){
+		foreach ($invertedJoinColumns as $column=>&$annot){
 			$member=$annot["member"];
-			if(isset($included[$member])){
-				$ret[$column]=$annot;
+			if(isset($included[$member])===false){
+				unset($invertedJoinColumns[$column]);
 			}
 		}
-		return $ret;
 	}
 	
-	private static function getToManyFields($included,$toManyFields){
-		$ret=[];
-		foreach ($toManyFields as $member=>$annot){
-			if(isset($included[$member])){
-				$ret[$member]=$annot;
+	private static function getToManyFields($included,&$toManyFields){
+		foreach ($toManyFields as $member=>&$annot){
+			if(isset($included[$member])===false){
+				unset($toManyFields[$member]);
 			}
 		}
-		return $ret;
 	}
 }
