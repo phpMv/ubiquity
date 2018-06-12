@@ -4,6 +4,7 @@ namespace Ubiquity\db;
 
 use Ubiquity\cache\database\DbCache;
 use Ubiquity\exceptions\CacheException;
+use Ubiquity\log\Logger;
 
 /**
  * PDO Database class
@@ -107,7 +108,8 @@ class Database {
 		}
 		if ($result === false) {
 			$fields = SqlUtils::getFieldList ( $fields, $tableName );
-			$statement = $this->getStatement ( "SELECT {$fields} FROM " . $tableName . $condition );
+			$statement = $this->getStatement ( $sql="SELECT {$fields} FROM " . $tableName . $condition );
+			Logger::info("Database", $sql,"prepareAndExecute");
 			$statement->execute ();
 			$result = $statement->fetchAll ();
 			$statement->closeCursor ();

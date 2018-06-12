@@ -3,7 +3,6 @@
 namespace Ubiquity\orm\parser;
 
 use Ubiquity\utils\base\UArray;
-use Ubiquity\cache\ClassUtils;
 
 class ModelParser {
 	protected $global;

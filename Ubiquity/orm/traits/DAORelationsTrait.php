@@ -215,4 +215,27 @@ trait DAORelationsTrait {
 			}
 		}
 	}
+	
+	private static function _initRelationFields($included,$metaDatas,&$invertedJoinColumns,&$oneToManyFields,&$manyToManyFields){
+		if (isset($metaDatas["#invertedJoinColumn"])){
+			$invertedJoinColumns=$metaDatas["#invertedJoinColumn"];
+		}
+		if (isset($metaDatas["#oneToMany"])) {
+			$oneToManyFields=$metaDatas["#oneToMany"];
+		}
+		if (isset($metaDatas["#manyToMany"])) {
+			$manyToManyFields=$metaDatas["#manyToMany"];
+		}
+		if(is_array($included)){
+			if(isset($invertedJoinColumns)){
+				self::getInvertedJoinColumns($included, $invertedJoinColumns);
+			}
+			if(isset($oneToManyFields)){
+				self::getToManyFields($included, $oneToManyFields);
+			}
+			if(isset($manyToManyFields)){
+				self::getToManyFields($included, $manyToManyFields);
+			}
+		}
+	}
 }

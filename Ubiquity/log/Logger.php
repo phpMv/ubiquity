@@ -10,31 +10,63 @@ abstract class Logger {
 	private static $test;
 
 	private static function createLogger(&$config){
-		self::$instance=null;
+		if(is_callable($logger=$config["logger"])){
+			$instance=$logger();
+		}else{
+			$instance=$config["logger"];
+		}
+		if($instance instanceof Logger){
+			self::$instance=$instance;
+		}
 	}
 
 	public static function init(&$config) {
-		if(self::$test=isset($config["logger"]) && $config["logger"]){
+		if(self::$test=isset($config["logger"]) && $config["debug"]===true){
 			self::createLogger($config);
 		}
 	}
 
-	public static function log($id, $message,$code=0) {
+	public static function log($level,$context, $message,$part=null) {
 		if (self::$test)
-			self::$instance->_log($id, $message, $code) ;
+			return self::$instance->_log($level,$context, $message,$part) ;
+	}
+	
+	public static function info($context, $message,$part=null) {
+		if (self::$test)
+			return self::$instance->_info($context, $message,$part) ;
 	}
 
-	public static function warn($id, $message,$code=0) {
+	public static function warn($context, $message,$part=null) {
 		if (self::$test)
-			self::$instance->_warn($id, $message, $code) ;
+			return self::$instance->_warn($context, $message,$part) ;
 	}
 
-	public static function error($id, $message,$code=0) {
+	public static function error($context, $message,$part=null) {
 		if (self::$test)
-			self::$instance->_error($id, $message, $code) ;
+			return self::$instance->_error($context, $message,$part) ;
+	}
+	
+	public static function critical($context, $message,$part=null) {
+		if (self::$test)
+			return self::$instance->_critical($context, $message,$part) ;
+	}
+	
+	public static function alert($context, $message,$part=null) {
+		if (self::$test)
+			return self::$instance->_alert($context, $message,$part) ;
 	}
 
-	abstract public function _log($id,$message,$code);
-	abstract public function _warn($id,$message,$code);
-	abstract public function _error($id,$message,$code);
+	public static function asObjects(){
+		if (self::$test)
+			return self::$instance->_asObjects();
+		return [];
+	}
+	
+	abstract public function _log($level,$context, $message,$part);
+	abstract public function _info($context, $message,$part);
+	abstract public function _warn($context, $message,$part);
+	abstract public function _error($context, $message,$part);
+	abstract public function _critical($context, $message,$part);
+	abstract public function _alert($context, $message,$part);
+	abstract  public function _asObjects();
 }

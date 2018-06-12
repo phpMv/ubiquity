@@ -41,7 +41,7 @@ class DAO {
 			$kv=array ($key => $value );
 			$obj=self::getOne($annotationArray["className"], $kv, false, $useCache);
 			if ($obj !== null) {
-				Logger::log("getManyToOne", "Chargement de " . $member . " pour l'objet " . \get_class($instance));
+				Logger::info("DAO", "Chargement de " . $member . " pour l'objet " . \get_class($instance),"getManyToOne");
 				$accesseur="set" . ucfirst($member);
 				if (method_exists($instance, $accesseur)) {
 					$instance->$accesseur($obj);
@@ -114,11 +114,11 @@ class DAO {
 	private static function setToMember($member, $instance, $value, $class, $part) {
 		$accessor="set" . ucfirst($member);
 		if (method_exists($instance, $accessor)) {
-			Logger::log($part, "Affectation de " . $member . " pour l'objet " . $class);
+			Logger::info("DAO", "Affectation de " . $member . " pour l'objet " . $class,$part);
 			$instance->$accessor($value);
 			$instance->_rest[$member]=$value;
 		} else {
-			Logger::warn($part, "L'accesseur " . $accessor . " est manquant pour " . $class);
+			Logger::warn("DAO", "L'accesseur " . $accessor . " est manquant pour " . $class,$part);
 		}
 	}
 
@@ -169,7 +169,7 @@ class DAO {
 		$myPkAccessor="get" . ucfirst($parser->getMyPk());
 
 		if (!method_exists($instance, $myPkAccessor)) {
-			Logger::warn("ManyToMany", "L'accesseur au membre clé primaire " . $myPkAccessor . " est manquant pour " . $class);
+			Logger::warn("DAO", "L'accesseur au membre clé primaire " . $myPkAccessor . " est manquant pour " . $class,"ManyToMany");
 		}
 		if (count($array) > 0){
 			$continue=method_exists(reset($array), $accessorToMember);
@@ -185,7 +185,7 @@ class DAO {
 				}
 			}
 		} else {
-			Logger::warn("ManyToMany", "L'accesseur au membre " . $parser->getInversedBy() . " est manquant pour " . $parser->getTargetEntity());
+			Logger::warn("DAO", "L'accesseur au membre " . $parser->getInversedBy() . " est manquant pour " . $parser->getTargetEntity(),"ManyToMany");
 		}
 		return $ret;
 	}
@@ -194,8 +194,7 @@ class DAO {
 	 * Returns an array of $className objects from the database
 	 * @param string $className class name of the model to load
 	 * @param string $condition Part following the WHERE of an SQL statement
-	 * @param boolean $loadManyToOne if true, charges associate members with manyToOne association
-	 * @param boolean $loadOneToMany if true, charges associate members with oneToMany association
+	 * @param boolean|array $included if true, charges associate members with associations, if array, example : ["client.*","commands"]
 	 * @param boolean $useCache use the active cache if true
 	 * @return array
 	 */
@@ -210,30 +209,12 @@ class DAO {
 		$tableName=$metaDatas["#tableName"];
 		$hasIncluded=$included || (is_array($included) && sizeof($included)>0);
 		if($hasIncluded){
-			if (isset($metaDatas["#invertedJoinColumn"]))
-				$invertedJoinColumns=$metaDatas["#invertedJoinColumn"];
-			if (isset($metaDatas["#oneToMany"])) {
-				$oneToManyFields=$metaDatas["#oneToMany"];
-			}
-			if (isset($metaDatas["#manyToMany"])) {
-				$manyToManyFields=$metaDatas["#manyToMany"];
-			}
-			if(is_array($included)){
-				if(isset($invertedJoinColumns)){
-					self::getInvertedJoinColumns($included, $invertedJoinColumns);
-				}
-				if(isset($oneToManyFields)){
-					self::getToManyFields($included, $oneToManyFields);
-				}
-				if(isset($manyToManyFields)){
-					self::getToManyFields($included, $manyToManyFields);
-				}
-			}
+			self::_initRelationFields($included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields);
 		}
 		$condition=SqlUtils::checkWhere($condition);
 		$members=\array_diff($metaDatas["#fieldNames"],$metaDatas["#notSerializable"]);
 		$query=self::$db->prepareAndExecute($tableName, $condition,$members,$useCache);
-		Logger::log("getAll", "SELECT * FROM " . $tableName . $condition);
+		//Logger::info("DAO", "SELECT * FROM " . $tableName . $condition,"getAll");
 		$oneToManyQueries=[];
 		$manyToOneQueries=[];
 		$manyToManyParsers=[];
@@ -249,11 +230,11 @@ class DAO {
 		return $objects;
 	}
 	
-	public static function paginate($className,$page=1,$rowsPerPage=20,$condition=null){
+	public static function paginate($className,$page=1,$rowsPerPage=20,$condition=null,$included=true){
 		if(!isset($condition)){
 			$condition="1=1";
 		}
-		return self::getAll($className,$condition." LIMIT ".$rowsPerPage." OFFSET ".(($page-1)*$rowsPerPage));
+		return self::getAll($className,$condition." LIMIT ".$rowsPerPage." OFFSET ".(($page-1)*$rowsPerPage),$included);
 	}
 	
 	public static function getRownum($className,$ids){
@@ -272,6 +253,7 @@ class DAO {
 	 * @param array $members
 	 * @param array $oneToManyQueries
 	 * @param array $manyToOneQueries
+	 * @param array $manyToManyParsers
 	 * @return object
 	 */
 	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields,$members,&$oneToManyQueries,&$manyToOneQueries,&$manyToManyParsers) {
@@ -322,7 +304,7 @@ class DAO {
 	 * Returns an instance of $className from the database, from $keyvalues values of the primary key
 	 * @param String $className complete classname of the model to load
 	 * @param Array|string $keyValues primary key values or condition
-	 * @param boolean $included if true, charges associate members with association
+	 * @param boolean|array $included if true, charges associate members with association
 	 * @param boolean $useCache use cache if true
 	 * @return object the instance loaded or null if not found
 	 */

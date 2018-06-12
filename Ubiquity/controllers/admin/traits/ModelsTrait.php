@@ -83,9 +83,9 @@ trait ModelsTrait{
 				$rownum=DAO::getRownum($model, $id);
 				$this->activePage=Pagination::getPageOfRow($rownum,$recordsPerPage);
 			}
-			return DAO::paginate($model,$this->activePage,$recordsPerPage);
+			return DAO::paginate($model,$this->activePage,$recordsPerPage,null,false);
 		}
-		return DAO::getAll($model);
+		return DAO::getAll($model,"",false);
 	}
 	
 	protected function search($model,$search){
