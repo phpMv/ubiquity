@@ -47,17 +47,17 @@ use Ubiquity\controllers\semantic\MessagesTrait;
 use Ubiquity\controllers\crud\CRUDDatas;
 use Ubiquity\controllers\admin\traits\CreateControllersTrait;
 use Ubiquity\cache\ClassUtils;
-use Ubiquity\log\Logger;
-use Ubiquity\log\LogMessage;
-use Ajax\semantic\html\elements\HtmlLabel;
-use Ubiquity\utils\base\UDateTime;
-use Ubiquity\log\HtmlLogFormatter;
-use Ajax\semantic\html\elements\HtmlIcon;
+use Ubiquity\controllers\admin\traits\LogsTrait;
+use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
+use Ajax\semantic\html\elements\HtmlInput;
+use Ubiquity\log\LoggerParams;
+use Ajax\semantic\html\elements\HtmlButtonGroups;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface{
 	
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
-	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait;
+	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait,
+	LogsTrait;
 	/**
 	 *
 	 * @var CRUDDatas
@@ -309,35 +309,25 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function logs() {
 		$this->getHeader ( "logs" );
-		$dt=$this->jquery->semantic()->dataTable("dt-logs",LogMessage::class ,Logger::asObjects());
+		$menu=$this->jquery->semantic()->htmlMenu("menu-logs");
+		$ck=$menu->addItem(HtmlCheckbox::toggle("ck-reverse"));
+		$ck->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/logsRefresh", "frm-logs","#logs-div");
+		$menu->addItem(new HtmlInput("maxLines","number",50));
+		$dd=new HtmlDropdown("groupBy","1,2",["1"=>"Date","2"=>"Context","3"=>"Part"]);
+		$dd->setDefaultText("Group by...");
+		$dd->asSelect("group-by",true);
+		$menu->addItem($dd);
+		$dd=new HtmlDropdown("dd-contexts","",array_combine(LoggerParams::$contexts,LoggerParams::$contexts));
+		$dd->setDefaultText("Select contexts...");
+		$dd->asSelect("contexts",true);
+		$menu->addItem($dd);
+		$item=$menu->addItem($bts=new HtmlButtonGroups("bt-apply",["Clear all","Apply"]));
+		$item->addClass("right aligned");
+		$bts->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/", "frm-logs","#logs-div",["attr"=>"data-url"]);
+		$bts->addPropertyValues("class", ["red","black"]);
+		$bts->setPropertyValues("data-url", ["deleteAllLogs","logsRefresh"]);
 		
-		$dt->setFields(["level","datetime","context","part","message","",""]);
-		$dt->setValueFunction(1, function($value,$instance){
-			$lbl=new HtmlLabel(uniqid("datetime-"),UDateTime::elapsed($value),"clock");
-			$lbl->addPopup("",UDateTime::longDatetime($value,"fr"));
-			return $lbl;
-		});
-		$dt->setValueFunction(0, function($value,$instance){
-			return new HtmlIcon("", HtmlLogFormatter::getIcon($instance));	
-		});
-		$dt->setValueFunction(3, function($value,$instance){
-			if(($count=$instance->getCount())>1){
-				$lbl=new HtmlLabel(uniqid("count-"),"x".$count);
-				$lbl->addClass("circular");
-				return $value."&nbsp;".$lbl;
-			}else{
-				return $value;
-			}
-		});
-		$dt->onNewRow(function($row,$instance){
-			$row->addClass(HtmlLogFormatter::getFormat($instance));
-		});
-		$dt->setHasCheckboxes(true);
-		$dt->onPreCompile ( function () use (&$dt) {
-			$dt->getHtmlComponent()->getBody()->addPropertyCol(3,"style","max-width: 500px;word-break:break-all;");
-		} );
-		$dt->setGroupByFields([1,2]);
-		$dt->setCompact(true)->setSelectable();
+		$this->_getAdminViewer()->getLogsDataTable(50);
 		$this->jquery->compile ( $this->view );
 		
 		$this->loadView ( $this->_getAdminFiles ()->getViewLogsIndex () );

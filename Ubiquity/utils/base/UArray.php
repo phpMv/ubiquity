@@ -102,6 +102,14 @@ class UArray {
 		}
 		return $array;
 	}
+	
+	public static function removeByKeys($array,$keys){
+		$assocKeys = [];
+		foreach($keys as $key) {
+			$assocKeys[$key] = true;
+		}
+		return array_diff_key($array, $assocKeys);
+	}
 
 	public static function removeOne($array, $search) {
 		if (($key=array_search($search, $array)) !== false) {

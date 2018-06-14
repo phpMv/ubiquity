@@ -6,12 +6,13 @@ use Ubiquity\log\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\JsonFormatter;
 use Ubiquity\log\LogMessage;
+use Ubiquity\utils\base\UFileSystem;
 
 class UMonolog extends Logger{
 	
 	private $loggerInstance;
 	private $handler;
-	public function __construct($name,$path='logs/app.log',$level=\Monolog\Logger::INFO){
+	public function __construct($name,$level=\Monolog\Logger::INFO,$path='logs/app.log'){
 		$this->loggerInstance = new \Monolog\Logger($name);
 		$this->handler=new StreamHandler(ROOT.DS.$path,$level);
 		$this->handler->setFormatter(new JsonFormatter());
@@ -41,24 +42,22 @@ class UMonolog extends Logger{
 		return $this->loggerInstance->critical($message,[$context,$part]);
 	}
 	
-	public function _asObjects($reverse=true){
+	public function _asObjects($reverse=true,$maxlines=10,$contexts=null){
 		$objects=[];
-		if(file_exists($file=$this->handler->getUrl())){
-			$handle = fopen($file, "r");
-			if ($handle) {
-				while (($line = fgets($handle)) !== false) {
-					$jso=json_decode($line);
+		$objects=UFileSystem::getLines($this->handler->getUrl(),$reverse,$maxlines,function(&$objects,$line) use($contexts){
+			$jso=json_decode($line);
+			if($jso!==null){
+				if(self::inContext($contexts, $jso->context[0])){
 					LogMessage::addMessage($objects, new LogMessage($jso->message,$jso->context[0],$jso->context[1],$jso->level,$jso->datetime->date));
 				}
-				fclose($handle);
-			} else {
-				// error opening the file.
 			}
-		}
-		if($reverse){
-			return array_reverse($objects);
-		}
+		});
 		return $objects;
+	}
+	
+	public function _clearAll(){
+		$this->handler->close();
+		UFileSystem::deleteFile($this->handler->getUrl());
 	}
 
 

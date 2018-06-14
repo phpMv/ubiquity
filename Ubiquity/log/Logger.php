@@ -19,6 +19,13 @@ abstract class Logger {
 			self::$instance=$instance;
 		}
 	}
+	
+	public static function inContext($contexts,$context){
+		if($contexts===null){
+			return true;
+		}
+		return array_search($context, $contexts)!==false;
+	}
 
 	public static function init(&$config) {
 		if(self::$test=isset($config["logger"]) && $config["debug"]===true){
@@ -56,10 +63,16 @@ abstract class Logger {
 			return self::$instance->_alert($context, $message,$part) ;
 	}
 
-	public static function asObjects(){
+	public static function asObjects($reverse=true,$maxlines=10,$contexts=null){
 		if (self::$test)
-			return self::$instance->_asObjects();
+			return self::$instance->_asObjects($reverse,$maxlines,$contexts);
 		return [];
+	}
+	
+	public static function clearAll(){
+		if (self::$test){
+			self::$instance->_clearAll();
+		}
 	}
 	
 	abstract public function _log($level,$context, $message,$part);
@@ -68,5 +81,6 @@ abstract class Logger {
 	abstract public function _error($context, $message,$part);
 	abstract public function _critical($context, $message,$part);
 	abstract public function _alert($context, $message,$part);
-	abstract  public function _asObjects();
+	abstract  public function _asObjects($reverse=true,$maxlines=10,$contexts=null);
+	abstract public function _clearAll();
 }

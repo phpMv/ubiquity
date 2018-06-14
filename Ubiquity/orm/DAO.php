@@ -214,7 +214,6 @@ class DAO {
 		$condition=SqlUtils::checkWhere($condition);
 		$members=\array_diff($metaDatas["#fieldNames"],$metaDatas["#notSerializable"]);
 		$query=self::$db->prepareAndExecute($tableName, $condition,$members,$useCache);
-		//Logger::info("DAO", "SELECT * FROM " . $tableName . $condition,"getAll");
 		$oneToManyQueries=[];
 		$manyToOneQueries=[];
 		$manyToManyParsers=[];

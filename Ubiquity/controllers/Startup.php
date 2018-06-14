@@ -6,6 +6,7 @@ use Ubiquity\utils\base\UString;
 use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\log\Logger;
 
 class Startup {
 	public static $urlParts;
@@ -37,7 +38,7 @@ class Startup {
 				self::runAction ( $u );
 			} else {
 				\header ( 'HTTP/1.0 404 Not Found', true, 404 );
-				print "The controller `" . $u [0] . "` doesn't exists! <br/>";
+				Logger::warn("Startup", "The controller `" . $u [0] . "` doesn't exists! <br/>","forward");
 			}
 		}
 	}
@@ -141,7 +142,7 @@ class Startup {
 				if (\method_exists ( $controller, $action )) {
 					$controller->$action ();
 				} else {
-					print "The method `{$action}` doesn't exists on controller `" . $u [0] . "`<br/>";
+					Logger::warn("Startup","The method `{$action}` doesn't exists on controller `" . $u [0] . "`","callController");
 				}
 				break;
 			default :

@@ -36,6 +36,10 @@ use Ubiquity\db\Database;
 use Ajax\semantic\html\collections\form\HtmlFormTextarea;
 use Ajax\semantic\components\validation\Rule;
 use Ubiquity\controllers\Startup;
+use Ubiquity\log\LogMessage;
+use Ubiquity\log\Logger;
+use Ubiquity\utils\base\UDateTime;
+use Ubiquity\log\HtmlLogFormatter;
 
 /**
  *
@@ -740,5 +744,44 @@ class UbiquityMyAdminViewer {
 		$frm->fieldAsInput ( 4, [ "inputType" => "password" ] );
 		$frm->addDividerBefore ( "user", "gitHub" );
 		return $frm;
+	}
+	
+	public function getLogsDataTable($maxLines=null,$reverse=true,$groupBy=[1,2],$contexts=null){
+		$dt=$this->jquery->semantic()->dataTable("dt-logs",LogMessage::class ,Logger::asObjects($reverse,$maxLines,$contexts));
+		$gbSize=0;
+		if(is_array($groupBy)){
+			$gbSize=sizeof($groupBy);
+		}
+		$dt->setFields(["level","datetime","context","part","message"]);
+		$dt->setCaptions(["Level","When?","Context","Part","Message"]);
+		$dt->setValueFunction(1, function($value,$instance){
+			$lbl=new HtmlLabel(uniqid("datetime-"),UDateTime::elapsed($value),"clock");
+			$lbl->addPopup("",UDateTime::longDatetime($value,"fr"));
+			return $lbl;
+		});
+		$dt->setValueFunction(0, function($value,$instance){
+			return new HtmlIcon("", HtmlLogFormatter::getIcon($instance));
+		});
+		$dt->setValueFunction(3, function($value,$instance){
+			if(($count=$instance->getCount())>1){
+				$lbl=new HtmlLabel(uniqid("count-"),"x".$count);
+				$lbl->addClass("circular");
+				return $value."&nbsp;".$lbl;
+			}else{
+				return $value;
+			}
+		});
+		$dt->onNewRow(function($row,$instance){
+			$row->addClass(HtmlLogFormatter::getFormat($instance));
+		});
+		$dt->setHasCheckboxes(true);
+		$dt->onPreCompile ( function () use (&$dt,$gbSize) {
+			$dt->getHtmlComponent()->getBody()->addPropertyCol(5-$gbSize,"style","max-width: 500px;word-break:break-all;");
+		} );
+		if(is_array($groupBy)){
+			$dt->setGroupByFields($groupBy);
+		}
+		$dt->setCompact(true)->setSelectable();
+		return $dt;
 	}
 }

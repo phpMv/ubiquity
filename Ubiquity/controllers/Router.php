@@ -6,6 +6,7 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\cache\parser\ControllerParser;
 use Ubiquity\utils\base\UString;
+use Ubiquity\log\Logger;
 
 /**
  * Router
@@ -44,6 +45,7 @@ class Router {
 					return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails ], $matches, $routeDetails ["cache"], $routeDetails ["duration"], $cachedResponse );
 			}
 		}
+		Logger::warn("Router", "No route found for {$path}","getRoute");
 		return false;
 	}
 
@@ -191,8 +193,10 @@ class Router {
 			$index ++;
 		}
 		if ($cached === true && $cachedResponse === true) {
+			Logger::info("Router", "Route found for {$routeArray["path"]} (from cache) : ".implode("/", $result),"getRouteUrlParts");
 			return CacheManager::getRouteCache ( $result, $duration );
 		}
+		Logger::info("Router", "Route found for {$routeArray["path"]} : ".implode("/", $result),"getRouteUrlParts");
 		return $result;
 	}
 

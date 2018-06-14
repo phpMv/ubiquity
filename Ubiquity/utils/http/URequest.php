@@ -136,6 +136,21 @@ class URequest {
 	public static function get($key, $default=NULL) {
 		return isset($_GET[$key]) ? $_GET[$key] : $default;
 	}
+	
+	/**
+	 * Returns a boolean at the key position in request
+	 *
+	 * @param string $key
+	 *        	the key to add or set
+	 * @return boolean
+	 */
+	public static function getBoolean($key) {
+		$ret = false;
+		if (isset ( $_REQUEST[$key] )) {
+			$ret = UString::isBooleanTrue ( $_REQUEST[$key] );
+		}
+		return $ret;
+	}
 
 	/**
 	 * Returns the value of the $key variable passed by the post method or $default if the $key variable does not exist
