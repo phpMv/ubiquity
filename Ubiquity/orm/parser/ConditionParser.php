@@ -7,12 +7,14 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\db\SqlUtils;
 
 class ConditionParser {
+	private $firstPart;
 	private $condition;
 	private $parts=[];
 	private $params;
 	
-	public function __construct($condition=null){
+	public function __construct($condition=null,$firstPart=null){
 		$this->condition=$condition;
+		$this->firstPart=$firstPart;
 	}
 	
 	public function addKeyValues($keyValues,$classname,$separator=" AND ") {
@@ -56,7 +58,13 @@ class ConditionParser {
 	 * @return string
 	 */
 	public function getCondition() {
-		return $this->condition;
+		if(!isset($this->firstPart))
+			return $this->condition;
+		$ret=$this->firstPart;
+		if(isset($this->condition)){
+			$ret.=" WHERE ".$this->condition;
+		}
+		return $ret;
 	}
 
 	/**

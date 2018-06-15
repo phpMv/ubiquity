@@ -203,7 +203,14 @@ class DAO {
 		return self::_getAll($className, new ConditionParser($condition),$included,$useCache);
 	}
 	
-	private static function _getAll($className, ConditionParser $conditionParser, $included=true,$useCache=NULL) {
+	/**
+	 * @param string $className
+	 * @param ConditionParser $conditionParser
+	 * @param boolean|array $included
+	 * @param boolean $useCache
+	 * @return array
+	 */
+	protected static function _getAll($className, ConditionParser $conditionParser, $included=true,$useCache=NULL) {
 		$included=self::getIncludedForStep($included);
 		$objects=array ();
 		$invertedJoinColumns=null;

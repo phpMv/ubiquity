@@ -109,15 +109,22 @@ class Database {
 		}
 		if ($result === false) {
 			$fields = SqlUtils::getFieldList ( $fields, $tableName );
-			$statement = $this->getStatement ( $sql="SELECT {$fields} FROM " . $tableName . $condition );
-			Logger::info("Database", $sql,"prepareAndExecute");
-			if($statement->execute ($parameters))
-				$result = $statement->fetchAll ();
-			$statement->closeCursor ();
+			$result=$this->prepareAndFetchAll("SELECT {$fields} FROM " . $tableName . $condition,$parameters);
 			if ($cache) {
 				$this->cache->store ( $tableName, $condition, $result );
 			}
 		}
+		return $result;
+	}
+	
+	public function prepareAndFetchAll($sql,$parameters=null){
+		$result=false;
+		$statement=$this->getStatement($sql);
+		if($statement->execute ($parameters)){
+			Logger::info("Database", $sql,"prepareAndFetchAll");
+			$result = $statement->fetchAll ();
+		}
+		$statement->closeCursor ();
 		return $result;
 	}
 

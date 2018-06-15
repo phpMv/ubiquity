@@ -179,16 +179,16 @@ class ManyToManyParser {
 		return " INNER JOIN `" . $this->getJoinTable() . "` on `".$this->getJoinTable()."`.`".$this->getFkField()."`=`".$this->getTargetEntityTable()."`.`".$this->getPk()."`";
 	}
 	
-	public function getJoinSQL($value){
-		return "SELECT `".$this->fkField."`  FROM `".$this->joinTable."` WHERE `".$this->myFkField . "`='{$value}'";
+	public function getJoinSQL($value=" ?"){
+		return "SELECT `".$this->fkField."`  FROM `".$this->joinTable."` WHERE `".$this->myFkField . "`=".$value;
 	}
 	
-	private function getWhereMask(){
-		return "`".$this->getJoinTable()."`.`". $this->getMyFkField() . "`='{value}'";
+	private function getWhereMask($mask="'{value}'"){
+		return "`".$this->getJoinTable()."`.`". $this->getMyFkField() . "`=".$mask;
 	}
 	
 	private function generateWhereValues(){
-		$mask=$this->getWhereMask();
+		$mask=$this->getWhereMask("");
 		$res=[];
 		$values=array_keys($this->whereValues);
 		foreach ($values as $value){
@@ -196,11 +196,32 @@ class ManyToManyParser {
 		}
 		return implode(" OR ", $res);
 	}
+	
+	private function generateParserWhereValues(ConditionParser $cParser){
+		$mask=$this->getWhereMask(" ?");
+		$res=[];
+		$values=array_keys($this->whereValues);
+		foreach ($values as $value){
+			$cParser->addPart($mask, $value);
+		}
+	}
+	
 	public function generate(){
 		if(sizeof($this->whereValues)>0){
 			return $this->getSQL()." WHERE ".$this->generateWhereValues();
 		}
 		return;
+	}
+	
+	/**
+	 * @return \Ubiquity\orm\parser\ConditionParser
+	 */
+	public function generateConditionParser(){
+		$cParser=new ConditionParser($this->getSQL());
+		if(sizeof($this->whereValues)>0){
+			$this->generateParserWhereValues($cParser);
+		}
+		return $cParser;
 	}
 	
 	public function addValue($value){

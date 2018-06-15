@@ -7,6 +7,7 @@ use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\ConditionParser;
 
 trait DAORelationsTrait {
+	abstract protected static function _getAll($className, ConditionParser $conditionParser, $included=true,$useCache=NULL);
 	
 	private static function _affectsRelationObjects($manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache){
 		if(\sizeof($manyToOneQueries)>0){
@@ -36,13 +37,13 @@ trait DAORelationsTrait {
 	
 	private static function _affectsObjectsFromArray($queries,$objects,$included,$affectsCallback,$useCache=NULL){
 		$includedNext=false;
-		foreach ($queries as $key=>$dbQuery){
+		foreach ($queries as $key=>$cParser){
 			list($class,$member,$fkField)=\explode("|", $key);
 			if(is_array($included)){
 				$includedNext=self::_getIncludedNext($included, $member);
 			}
-			$dbQuery->compileParts();
-			$relationObjects=self::_getAll($class,$dbQuery,$includedNext,$useCache);
+			$cParser->compileParts();
+			$relationObjects=self::_getAll($class,$cParser,$includedNext,$useCache);
 			foreach ($objects as $object){
 				$affectsCallback($object, $member,$relationObjects,$fkField);
 			}
@@ -56,8 +57,8 @@ trait DAORelationsTrait {
 			if(is_array($included)){
 				$includedNext=self::_getIncludedNext($included, $member);
 			}
-			$condition=$parser->generate();
-			$relationObjects=self::getAll($class,$condition,$includedNext,$useCache);
+			$cParser=$parser->generateConditionParser();
+			$relationObjects=self::_getAll($class,$cParser,$includedNext,$useCache);
 			foreach ($objects as $object){
 				$ret=self::getManyToManyFromArrayIds($object, $relationObjects, $member);
 				self::setToMember($member, $object, $ret, $class, "getManyToMany");
@@ -108,7 +109,7 @@ trait DAORelationsTrait {
 				if(method_exists($instance, $accessor)){
 					$fkv=$instance->$accessor();
 					$ret[$key]->addValue($fkv);
-					$result=self::$db->fetchAll($ret[$key]->getJoinSQL($fkv));
+					$result=self::$db->prepareAndFetchAll($ret[$key]->getJoinSQL(),[$fkv]);
 					$instance->$iMember=$result;
 				}
 			}
