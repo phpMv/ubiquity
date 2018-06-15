@@ -79,21 +79,21 @@ class SqlUtils {
 	}
 
 	public static function getCondition($keyValues,$classname=NULL,$separator=" AND ") {
-		$retArray=array ();
-		if (is_array($keyValues)) {
+		if(!is_array($keyValues)){
+			return $keyValues;
+		}else{
 			if(!UArray::isAssociative($keyValues)){
 				if(isset($classname)){
 					$keys=OrmUtils::getKeyFields($classname);
 					$keyValues=\array_combine($keys, $keyValues);
 				}
 			}
+			$retArray=array ();
 			foreach ( $keyValues as $key => $value ) {
 				$retArray[]=self::$quote . $key . self::$quote . " = '" . $value . "'";
 			}
-			$condition=implode($separator, $retArray);
-		} else
-			$condition=$keyValues;
-		return $condition;
+			return implode($separator, $retArray);
+		}
 	}
 
 	public static function getFieldList($fields,$tableName=false){

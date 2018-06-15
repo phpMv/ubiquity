@@ -97,10 +97,11 @@ class Database {
 	 * @param string $tableName
 	 * @param string $condition
 	 * @param array|string $fields
+	 * @param array $parameters
 	 * @param boolean|null $useCache
 	 * @return array
 	 */
-	public function prepareAndExecute($tableName, $condition, $fields, $useCache = NULL) {
+	public function prepareAndExecute($tableName, $condition, $fields, $parameters=null,$useCache = NULL) {
 		$cache = (DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true);
 		$result = false;
 		if ($cache) {
@@ -110,8 +111,8 @@ class Database {
 			$fields = SqlUtils::getFieldList ( $fields, $tableName );
 			$statement = $this->getStatement ( $sql="SELECT {$fields} FROM " . $tableName . $condition );
 			Logger::info("Database", $sql,"prepareAndExecute");
-			$statement->execute ();
-			$result = $statement->fetchAll ();
+			if($statement->execute ($parameters))
+				$result = $statement->fetchAll ();
 			$statement->closeCursor ();
 			if ($cache) {
 				$this->cache->store ( $tableName, $condition, $result );

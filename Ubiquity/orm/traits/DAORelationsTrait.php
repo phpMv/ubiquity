@@ -4,6 +4,7 @@ namespace Ubiquity\orm\traits;
 
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ManyToManyParser;
+use Ubiquity\orm\parser\ConditionParser;
 
 trait DAORelationsTrait {
 	
@@ -35,13 +36,13 @@ trait DAORelationsTrait {
 	
 	private static function _affectsObjectsFromArray($queries,$objects,$included,$affectsCallback,$useCache=NULL){
 		$includedNext=false;
-		foreach ($queries as $key=>$conditions){
+		foreach ($queries as $key=>$dbQuery){
 			list($class,$member,$fkField)=\explode("|", $key);
 			if(is_array($included)){
 				$includedNext=self::_getIncludedNext($included, $member);
 			}
-			$condition=\implode(" OR ", $conditions);
-			$relationObjects=self::getAll($class,$condition,$includedNext,$useCache);
+			$dbQuery->compileParts();
+			$relationObjects=self::_getAll($class,$dbQuery,$includedNext,$useCache);
 			foreach ($objects as $object){
 				$affectsCallback($object, $member,$relationObjects,$fkField);
 			}
@@ -130,9 +131,9 @@ trait DAORelationsTrait {
 					$fkv=OrmUtils::getFirstKeyValue($instance);
 					$key=$annot["className"]."|".$member."|".$annot["mappedBy"];
 					if(!isset($ret[$key])){
-						$ret[$key]=[];
+						$ret[$key]=new ConditionParser();
 					}
-					$ret[$key][$fkv]=$fkAnnot["name"] . "='" . $fkv . "'";
+					$ret[$key]->addPart($fkAnnot["name"] . "= ?",$fkv);
 				}
 			}
 	}
@@ -149,9 +150,9 @@ trait DAORelationsTrait {
 		$fk=OrmUtils::getFirstKey($annotationArray["className"]);
 		$key=$annotationArray["className"]."|".$member."|".$fkField;
 		if(!isset($ret[$key])){
-			$ret[$key]=[];
+			$ret[$key]=new ConditionParser();
 		}
-		$ret[$key][$value]=$fk . "='" . $value . "'";
+		$ret[$key]->addPart($fk . "= ?",$value);
 	}
 	
 	private static function getIncludedForStep($included){

@@ -9,6 +9,7 @@ use Ubiquity\db\SqlUtils;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\traits\DAOUpdatesTrait;
 use Ubiquity\orm\traits\DAORelationsTrait;
+use Ubiquity\orm\parser\ConditionParser;
 
 /**
  * Gateway class between database and object model
@@ -199,6 +200,10 @@ class DAO {
 	 * @return array
 	 */
 	public static function getAll($className, $condition='', $included=true,$useCache=NULL) {
+		return self::_getAll($className, new ConditionParser($condition),$included,$useCache);
+	}
+	
+	private static function _getAll($className, ConditionParser $conditionParser, $included=true,$useCache=NULL) {
 		$included=self::getIncludedForStep($included);
 		$objects=array ();
 		$invertedJoinColumns=null;
@@ -211,9 +216,9 @@ class DAO {
 		if($hasIncluded){
 			self::_initRelationFields($included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields);
 		}
-		$condition=SqlUtils::checkWhere($condition);
+		$condition=SqlUtils::checkWhere($conditionParser->getCondition());
 		$members=\array_diff($metaDatas["#fieldNames"],$metaDatas["#notSerializable"]);
-		$query=self::$db->prepareAndExecute($tableName, $condition,$members,$useCache);
+		$query=self::$db->prepareAndExecute($tableName, $condition,$members,$conditionParser->getParams(),$useCache);
 		$oneToManyQueries=[];
 		$manyToOneQueries=[];
 		$manyToManyParsers=[];
@@ -308,12 +313,10 @@ class DAO {
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getOne($className, $keyValues, $included=true,$useCache=NULL) {
-		self::parseKey($keyValues,$className);
-		$condition=SqlUtils::getCondition($keyValues,$className);
-		$limit="";
-		if(\stripos($condition, " limit ")===false)
-			$limit=" limit 1";
-		$retour=self::getAll($className, $condition.$limit, $included,$useCache);
+		$conditionParser=new ConditionParser();
+		$conditionParser->addKeyValues($keyValues,$className);
+		$conditionParser->limitOne();
+		$retour=self::_getAll($className, $conditionParser, $included,$useCache);
 		if (sizeof($retour) < 1){
 			return null;
 		}
