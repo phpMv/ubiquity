@@ -121,8 +121,19 @@ class Database {
 		$result=false;
 		$statement=$this->getStatement($sql);
 		if($statement->execute ($parameters)){
-			Logger::info("Database", $sql,"prepareAndFetchAll");
+			Logger::info("Database", $sql,"prepareAndFetchAll",$parameters);
 			$result = $statement->fetchAll ();
+		}
+		$statement->closeCursor ();
+		return $result;
+	}
+	
+	public function prepareAndFetchColumn($sql,$parameters=null,$column=null){
+		$result=false;
+		$statement=$this->getStatement($sql);
+		if($statement->execute ($parameters)){
+			Logger::info("Database", $sql,"prepareAndFetchColumn",$parameters);
+			$result = $statement->fetchAll(\PDO::FETCH_COLUMN,$column);
 		}
 		$statement->closeCursor ();
 		return $result;

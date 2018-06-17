@@ -765,8 +765,8 @@ class UbiquityMyAdminViewer {
 		if(is_array($groupBy)){
 			$gbSize=sizeof($groupBy);
 		}
-		$dt->setFields(["level","datetime","context","part","message"]);
-		$dt->setCaptions(["Level","When?","Context","Part","Message"]);
+		$dt->setFields(["level","datetime","context","part","message","extra"]);
+		$dt->setCaptions(["Level","When?","Context","Part","Message","Extra"]);
 		$dt->setValueFunction(1, function($value,$instance){
 			$lbl=new HtmlLabel(uniqid("datetime-"),UDateTime::elapsed($value),"clock");
 			$lbl->addPopup("",UDateTime::longDatetime($value,"fr"));

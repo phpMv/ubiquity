@@ -187,6 +187,10 @@ class ManyToManyParser {
 		return "`".$this->getJoinTable()."`.`". $this->getMyFkField() . "`=".$mask;
 	}
 	
+	private function getParserWhereMask($mask="'{value}'"){
+		return "`".$this->getTargetEntityTable()."`.`". $this->getPk() . "`=".$mask;
+	}
+	
 	private function generateWhereValues(){
 		$mask=$this->getWhereMask("");
 		$res=[];
@@ -198,7 +202,7 @@ class ManyToManyParser {
 	}
 	
 	private function generateParserWhereValues(ConditionParser $cParser){
-		$mask=$this->getWhereMask(" ?");
+		$mask=$this->getParserWhereMask(" ?");
 		$res=[];
 		$values=array_keys($this->whereValues);
 		foreach ($values as $value){
@@ -217,14 +221,21 @@ class ManyToManyParser {
 	 * @return \Ubiquity\orm\parser\ConditionParser
 	 */
 	public function generateConditionParser(){
-		$cParser=new ConditionParser($this->getSQL());
+		$cParser=new ConditionParser();
 		if(sizeof($this->whereValues)>0){
 			$this->generateParserWhereValues($cParser);
+			$cParser->compileParts();
 		}
 		return $cParser;
 	}
 	
 	public function addValue($value){
 		$this->whereValues[$value]=true;
+	}
+	
+	public function addValues($values){
+		foreach ($values as $value){
+			$this->whereValues[$value]=true;
+		}
 	}
 }

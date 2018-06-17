@@ -325,7 +325,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 		
 		if(!$config["debug"]){
-			$this->showSimpleMessage("Debug mode is not active in config.php file. <a class='_activateLogs ui blue button'><i class='ui toggle on icon'></i> Activate logging</a>", "info","Debug","info circle",null,"logs-message");
+			$this->showSimpleMessage("Debug mode is not active in config.php file. <br><br><a class='_activateLogs ui blue button'><i class='ui toggle on icon'></i> Activate logging</a>", "info","Debug","info circle",null,"logs-message");
 			$this->jquery->getOnClick("._activateLogs", $this->_getAdminFiles()->getAdminBaseRoute()."/activateLog","#main-content");
 		}else{
 			$item=$menu->addItem($bts=new HtmlButtonGroups("bt-apply",["","Clear all","Apply"]));

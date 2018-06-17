@@ -59,9 +59,10 @@ trait DAORelationsTrait {
 			}
 			$cParser=$parser->generateConditionParser();
 			$relationObjects=self::_getAll($class,$cParser,$includedNext,$useCache);
+			$oClass=get_class(reset($objects));
 			foreach ($objects as $object){
 				$ret=self::getManyToManyFromArrayIds($object, $relationObjects, $member);
-				self::setToMember($member, $object, $ret, $class, "getManyToMany");
+				self::setToMember($member, $object, $ret, $oClass, "getManyToMany");
 			}
 		}
 	}
@@ -108,8 +109,8 @@ trait DAORelationsTrait {
 				$accessor="get" . ucfirst($ret[$key]->getMyPk());
 				if(method_exists($instance, $accessor)){
 					$fkv=$instance->$accessor();
-					$ret[$key]->addValue($fkv);
-					$result=self::$db->prepareAndFetchAll($ret[$key]->getJoinSQL(),[$fkv]);
+					$result=self::$db->prepareAndFetchColumn($ret[$key]->getJoinSQL(),[$fkv]);
+					$ret[$key]->addValues($result);
 					$instance->$iMember=$result;
 				}
 			}

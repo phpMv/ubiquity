@@ -18,28 +18,36 @@ class UMonolog extends Logger{
 		$this->handler->setFormatter(new JsonFormatter());
 		$this->loggerInstance->pushHandler($this->handler);
 	}
-
-	public function _log($level,$context, $message,$part) {
-		return $this->loggerInstance->log($level,$message,[$context,$part]);
+	
+	private function createContext($context,$part,$extra=null){
+		return compact("context","part","extra");
 	}
 	
-	public function _info($context, $message, $part) {
-		return $this->loggerInstance->info($message,[$context,$part]);
+	public function addProcessor($callback){
+		$this->loggerInstance->pushProcessor($callback);
+	}
+
+	public function _log($level,$context, $message,$part,$extra) {
+		return $this->loggerInstance->log($level,$message,$this->createContext($context, $part,$extra));
 	}
 	
-	public function _warn($context, $message,$part) {
-		return $this->loggerInstance->warn($message,[$context,$part]);
+	public function _info($context, $message, $part,$extra) {
+		return $this->loggerInstance->info($message,$this->createContext($context, $part,$extra));
+	}
+	
+	public function _warn($context, $message,$part,$extra) {
+		return $this->loggerInstance->warn($message,$this->createContext($context, $part,$extra));
 	}
 
-	public function _error($context, $message,$part) {
-		return $this->loggerInstance->error($message,[$context,$part]);
+	public function _error($context, $message,$part,$extra) {
+		return $this->loggerInstance->error($message,$this->createContext($context, $part,$extra));
 	}
-	public function _alert($context, $message, $part) {
-		return $this->loggerInstance->alert($message,[$context,$part]);
+	public function _alert($context, $message, $part,$extra) {
+		return $this->loggerInstance->alert($message,$this->createContext($context, $part,$extra));
 	}
 
-	public function _critical($context, $message, $part) {
-		return $this->loggerInstance->critical($message,[$context,$part]);
+	public function _critical($context, $message, $part,$extra) {
+		return $this->loggerInstance->critical($message,$this->createContext($context, $part,$extra));
 	}
 	
 	public function _asObjects($reverse=true,$maxlines=10,$contexts=null){
@@ -47,8 +55,8 @@ class UMonolog extends Logger{
 		$objects=UFileSystem::getLines($this->handler->getUrl(),$reverse,$maxlines,function(&$objects,$line) use($contexts){
 			$jso=json_decode($line);
 			if($jso!==null){
-				if(self::inContext($contexts, $jso->context[0])){
-					LogMessage::addMessage($objects, new LogMessage($jso->message,$jso->context[0],$jso->context[1],$jso->level,$jso->datetime->date));
+				if(self::inContext($contexts, $jso->context->context)){
+					LogMessage::addMessage($objects, new LogMessage($jso->message,$jso->context->context,$jso->context->part,$jso->level,$jso->datetime->date,$jso->context->extra));
 				}
 			}
 		});
