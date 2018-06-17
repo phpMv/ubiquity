@@ -51,13 +51,13 @@ class View {
 	 * @return string
 	 */
 	public function render($viewName, $asString=false) {
-		$config=Startup::getConfig();
+		$templateEngine=Startup::$templateEngine;
 		$ext=\pathinfo($viewName, PATHINFO_EXTENSION);
 		if ($ext === null)
 			$viewName=$viewName . ".php";
 		$data=$this->vars;
-		if (!UString::endswith($viewName, ".php") && @$config["templateEngine"] instanceof TemplateEngine) {
-			return $config["templateEngine"]->render($viewName, $data, $asString);
+		if (!UString::endswith($viewName, ".php") && $templateEngine instanceof TemplateEngine) {
+			return $templateEngine->render($viewName, $data, $asString);
 		}
 
 		if (is_array($data)) {
@@ -76,12 +76,10 @@ class View {
 	}
 	
 	public function getBlockNames($templateName){
-		$config=Startup::getConfig();
-		return $config["templateEngine"]->getBlockNames($templateName);
+		return Startup::$templateEngine->getBlockNames($templateName);
 	}
 	
 	public function getCode($templateName){
-		$config=Startup::getConfig();
-		return $config["templateEngine"]->getCode($templateName);
+		return Startup::$templateEngine->getCode($templateName);
 	}
 }

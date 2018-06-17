@@ -308,6 +308,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function logs() {
+		$config=Startup::getConfig();
 		$this->getHeader ( "logs" );
 		$menu=$this->jquery->semantic()->htmlMenu("menu-logs");
 		$ck=$menu->addItem(HtmlCheckbox::toggle("ck-reverse"));
@@ -321,12 +322,21 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$dd->setDefaultText("Select contexts...");
 		$dd->asSelect("contexts",true);
 		$menu->addItem($dd);
-		$item=$menu->addItem($bts=new HtmlButtonGroups("bt-apply",["Clear all","Apply"]));
-		$item->addClass("right aligned");
-		$bts->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/", "frm-logs","#logs-div",["attr"=>"data-url"]);
-		$bts->addPropertyValues("class", ["red","black"]);
-		$bts->setPropertyValues("data-url", ["deleteAllLogs","logsRefresh"]);
+
 		
+		if(!$config["debug"]){
+			$this->showSimpleMessage("Debug mode is not active in config.php file. <a class='_activateLogs ui blue button'><i class='ui toggle on icon'></i> Activate logging</a>", "info","Debug","info circle",null,"logs-message");
+			$this->jquery->getOnClick("._activateLogs", $this->_getAdminFiles()->getAdminBaseRoute()."/activateLog","#main-content");
+		}else{
+			$item=$menu->addItem($bts=new HtmlButtonGroups("bt-apply",["","Clear all","Apply"]));
+			$item->addClass("right aligned");
+			$bts->postFormOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/", "frm-logs","$('#'+$(self).attr('data-target'))",["attr"=>"data-url"]);
+			$bts->addPropertyValues("class", ["","red","black"]);
+			$bts->setPropertyValues("data-url", ["deActivateLog","deleteAllLogs","logsRefresh"]);
+			$bts->setPropertyValues("title", ["Stop logging","delete all logs","Apply modifications"]);
+			$bts->setPropertyValues("data-target", ["main-content","logs-div","logs-div"]);
+			$bts->getItem(0)->asIcon("stop");
+		}
 		$this->_getAdminViewer()->getLogsDataTable(50);
 		$this->jquery->compile ( $this->view );
 		

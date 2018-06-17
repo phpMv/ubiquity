@@ -612,6 +612,19 @@ class UbiquityMyAdminViewer {
 			$input->setValue($value);
 			return $input;
 		} );
+		
+		$de->setValueFunction ( "logger", function ($v) use ($config) {
+			$r = $config ["logger"];
+			$input=new HtmlFormTextarea("logger");
+			$df=$input->getDataField();
+			$df->setProperty("rows","3");
+			$df->setProperty("data-editor","true");
+			if (\is_callable ( $r )){
+				$value= \htmlentities ( UIntrospection::closure_dump ( $r ) );
+			}
+			$input->setValue($value);
+			return $input;
+		} );
 		$de->fieldAsCheckbox ( "test", [ "class" => "ui checkbox slider" ] );
 		$de->fieldAsCheckbox ( "debug", [ "class" => "ui checkbox slider" ] );
 		$js='

@@ -136,9 +136,11 @@ class UArray {
 			$result=$v;
 		} elseif (\is_array($v)) {
 			$result=self::asPhpArray($v, $prefix,$depth+1,$format);
-		}elseif(UString::startswith(trim($v), "function") || UString::startswith(trim($v), "array(")){
+		}elseif(is_string($v) && (UString::startswith(trim($v), "function") || UString::startswith(trim($v), "array("))){
 			$result=$v;
-		} else {
+		}elseif(is_callable($v)){
+			$result=UIntrospection::closure_dump($v);
+		}else {
 			$result="\"" . \str_replace('$', '\$', $v) . "\"";
 			$result=UString::doubleBackSlashes($result);
 		}

@@ -5,6 +5,8 @@ namespace Ubiquity\controllers\admin\traits;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\log\Logger;
+use Ubiquity\utils\base\UArray;
+use Ubiquity\controllers\Startup;
 
 
 /**
@@ -56,6 +58,24 @@ trait LogsTrait{
 	public function deleteAllLogs(){
 		Logger::clearAll();
 		$this->logsRefresh();
+	}
+	
+	public function activateLog(){
+		$this->startStopLogging();
+	}
+	
+	public function deActivateLog(){
+		$this->startStopLogging(false);
+	}
+	
+	private function startStopLogging($start=true){
+		$config=Startup::getConfig();
+		$config["debug"]=$start;
+		$content="<?php\nreturn ".UArray::asPhpArray($config,"array",1,true).";";
+		Startup::saveConfig($content);
+		Startup::reloadConfig();
+		Logger::init($config);
+		$this->logs();
 	}
 
 }

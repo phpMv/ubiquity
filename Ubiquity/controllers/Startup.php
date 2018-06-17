@@ -10,6 +10,7 @@ use Ubiquity\log\Logger;
 
 class Startup {
 	public static $urlParts;
+	public static $templateEngine;
 	private static $config;
 	private static $ctrlNS;
 	private static $controller;
@@ -77,7 +78,7 @@ class Startup {
 				}
 				$engine = new $templateEngine ( $engineOptions );
 				if ($engine instanceof TemplateEngine) {
-					self::$config ["templateEngine"] = $engine;
+					self::$templateEngine = $engine;
 				}
 			}
 		} catch ( \Exception $e ) {
