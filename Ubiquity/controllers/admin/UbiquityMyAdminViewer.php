@@ -789,7 +789,9 @@ class UbiquityMyAdminViewer {
 		});
 		$dt->setHasCheckboxes(true);
 		$dt->onPreCompile ( function () use (&$dt,$gbSize) {
-			$dt->getHtmlComponent()->getBody()->addPropertyCol(5-$gbSize,"style","max-width: 500px;word-break:break-all;");
+			$body=$dt->getHtmlComponent()->getBody();
+			$body->addPropertyCol(6-$gbSize,"style","max-width: 200px;word-break:break-all;");
+			$body->addPropertyCol(5-$gbSize,"style","max-width: 500px;word-break:break-all;");
 		} );
 		if(is_array($groupBy)){
 			$dt->setGroupByFields($groupBy);

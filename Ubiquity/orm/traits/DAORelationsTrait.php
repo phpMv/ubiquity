@@ -6,6 +6,10 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\ConditionParser;
 
+/**
+ * @author jc
+ * @property \Ubiquity\db\Database $db
+ */
 trait DAORelationsTrait {
 	abstract protected static function _getAll($className, ConditionParser $conditionParser, $included=true,$useCache=NULL);
 	
@@ -57,14 +61,33 @@ trait DAORelationsTrait {
 			if(is_array($included)){
 				$includedNext=self::_getIncludedNext($included, $member);
 			}
-			$cParser=$parser->generateConditionParser();
+			$myPkValues=[];
+			$cParser=self::generateManyToManyParser($parser, $myPkValues);
 			$relationObjects=self::_getAll($class,$cParser,$includedNext,$useCache);
 			$oClass=get_class(reset($objects));
 			foreach ($objects as $object){
-				$ret=self::getManyToManyFromArrayIds($object, $relationObjects, $member);
-				self::setToMember($member, $object, $ret, $oClass, "getManyToMany");
+				$pkV=OrmUtils::getFirstKeyValue($object);
+				if(isset($myPkValues[$pkV])){
+					$ret=self::getManyToManyFromArrayIds($object, $relationObjects, $myPkValues[$pkV]);
+					self::setToMember($member, $object, $ret, $oClass, "getManyToMany");
+				}
 			}
 		}
+	}
+	
+	private static function generateManyToManyParser(ManyToManyParser $parser,&$myPkValues){
+		$sql=$parser->generateConcatSQL();
+		$result=self::$db->prepareAndFetchAll($sql,$parser->getWhereValues());
+		$condition=$parser->getParserWhereMask(" ?");
+		$cParser=new ConditionParser();
+		
+		foreach ($result as $row){
+			$values=explode(",", $row["_concat"]);
+			$myPkValues[$row["_field"]]=$values;
+			$cParser->addParts($condition, $values);
+		}
+		$cParser->compileParts();
+		return $cParser;
 	}
 	
 	private static function _getIncludedNext($included,$member){
@@ -73,9 +96,7 @@ trait DAORelationsTrait {
 	
 	
 	
-	private static function getManyToManyFromArrayIds($object, $relationObjects, $member){
-		$iMember="_".$member;
-		$ids=$object->$iMember;
+	private static function getManyToManyFromArrayIds($object, $relationObjects, $ids){
 		$ret=[];
 		foreach ( $relationObjects as $targetEntityInstance ) {
 			$id=OrmUtils::getFirstKeyValue($targetEntityInstance);
@@ -83,7 +104,6 @@ trait DAORelationsTrait {
 				array_push($ret, $targetEntityInstance);
 			}
 		}
-		unset($object->$iMember);
 		return $ret;
 	}
 	
@@ -96,24 +116,22 @@ trait DAORelationsTrait {
 	 */
 	private static function prepareManyToMany(&$ret,$instance, $member, $annot=null) {
 		$class=get_class($instance);
-		$iMember="_".$member;
-		if (!isset($annot))
+		if (!isset($annot)){
 			$annot=OrmUtils::getAnnotationInfoMember($class, "#ManyToMany", $member);
-			if ($annot !== false) {
-				$key=$annot["targetEntity"]."|".$member."|".$annot["inversedBy"];
-				if(!isset($ret[$key])){
-					$parser=new ManyToManyParser($instance, $member);
-					$parser->init($annot);
-					$ret[$key]=$parser;
-				}
-				$accessor="get" . ucfirst($ret[$key]->getMyPk());
-				if(method_exists($instance, $accessor)){
-					$fkv=$instance->$accessor();
-					$result=self::$db->prepareAndFetchColumn($ret[$key]->getJoinSQL(),[$fkv]);
-					$ret[$key]->addValues($result);
-					$instance->$iMember=$result;
-				}
+		}
+		if ($annot !== false) {
+			$key=$annot["targetEntity"]."|".$member."|".$annot["inversedBy"];
+			if(!isset($ret[$key])){
+				$parser=new ManyToManyParser($instance, $member);
+				$parser->init($annot);
+				$ret[$key]=$parser;
 			}
+			$accessor="get" . ucfirst($ret[$key]->getMyPk());
+			if(method_exists($instance, $accessor)){
+				$fkv=$instance->$accessor();
+				$ret[$key]->addValue($fkv);
+			}
+		}
 	}
 	
 	/**

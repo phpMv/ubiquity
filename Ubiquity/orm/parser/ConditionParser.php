@@ -50,6 +50,14 @@ class ConditionParser {
 		}
 	}
 	
+	public function addParts($condition,$values){
+		foreach ($values as $value){
+			if($this->addParams($value)){
+				$this->parts[]=$condition;
+			}
+		}
+	}
+	
 	public function compileParts($separator=" OR "){
 		$this->condition=implode($separator, $this->parts);
 	}

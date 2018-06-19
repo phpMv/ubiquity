@@ -179,16 +179,20 @@ class ManyToManyParser {
 		return " INNER JOIN `" . $this->getJoinTable() . "` on `".$this->getJoinTable()."`.`".$this->getFkField()."`=`".$this->getTargetEntityTable()."`.`".$this->getPk()."`";
 	}
 	
-	public function getJoinSQL($value=" ?"){
-		return "SELECT `".$this->fkField."`  FROM `".$this->joinTable."` WHERE `".$this->myFkField . "`=".$value;
+	public function getConcatSQL(){
+		return "SELECT `".$this->myFkField."` as '_field' ,GROUP_CONCAT(`".$this->fkField."` SEPARATOR ',') as '_concat' FROM `".$this->joinTable."` {condition} GROUP BY 1";
 	}
 	
 	private function getWhereMask($mask="'{value}'"){
 		return "`".$this->getJoinTable()."`.`". $this->getMyFkField() . "`=".$mask;
 	}
 	
-	private function getParserWhereMask($mask="'{value}'"){
+	public function getParserWhereMask($mask="'{value}'"){
 		return "`".$this->getTargetEntityTable()."`.`". $this->getPk() . "`=".$mask;
+	}
+	
+	private function getParserConcatWhereMask($mask="'{value}'"){
+		return "`".$this->myFkField. "`=".$mask;
 	}
 	
 	private function generateWhereValues(){
@@ -201,15 +205,6 @@ class ManyToManyParser {
 		return implode(" OR ", $res);
 	}
 	
-	private function generateParserWhereValues(ConditionParser $cParser){
-		$mask=$this->getParserWhereMask(" ?");
-		$res=[];
-		$values=array_keys($this->whereValues);
-		foreach ($values as $value){
-			$cParser->addPart($mask, $value);
-		}
-	}
-	
 	public function generate(){
 		if(sizeof($this->whereValues)>0){
 			return $this->getSQL()." WHERE ".$this->generateWhereValues();
@@ -217,25 +212,27 @@ class ManyToManyParser {
 		return;
 	}
 	
-	/**
-	 * @return \Ubiquity\orm\parser\ConditionParser
-	 */
-	public function generateConditionParser(){
-		$cParser=new ConditionParser();
-		if(sizeof($this->whereValues)>0){
-			$this->generateParserWhereValues($cParser);
-			$cParser->compileParts();
+	public function generateConcatSQL(){
+		$sql=$this->getConcatSQL();
+		$where="";
+		if(($size=sizeof($this->whereValues))>0){
+			$mask=$this->getParserConcatWhereMask(" ?");
+			$res=array_fill(0, $size, $mask);
+			$where="WHERE ".implode(" OR ", $res);
 		}
-		return $cParser;
+		return str_replace("{condition}", $where, $sql);
 	}
 	
 	public function addValue($value){
 		$this->whereValues[$value]=true;
 	}
-	
-	public function addValues($values){
-		foreach ($values as $value){
-			$this->whereValues[$value]=true;
-		}
+	/**
+	 * @return array|null
+	 */
+	public function getWhereValues() {
+		if(is_array($this->whereValues))
+			return array_keys($this->whereValues);
+		return null;
 	}
+
 }
