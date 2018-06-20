@@ -99,6 +99,7 @@ class ConditionParser {
 	 */
 	public function setCondition($condition) {
 		$this->condition = $condition;
+		return $this;
 	}
 	
 	/**
@@ -106,6 +107,7 @@ class ConditionParser {
 	 */
 	public function setParams($params) {
 		$this->params = $params;
+		return $this;
 	}
 	
 	public function limitOne(){
@@ -113,6 +115,12 @@ class ConditionParser {
 		if(\stripos($this->condition, " limit ")===false)
 			$limit=" limit 1";
 			$this->condition.=$limit;
+	}
+	
+	public static function simple($condition,$params){
+		$cParser=new ConditionParser($condition);
+		$cParser->addParams($params);
+		return $cParser;
 	}
 	
 }

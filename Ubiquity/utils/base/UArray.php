@@ -138,7 +138,7 @@ class UArray {
 			$result=self::asPhpArray($v, $prefix,$depth+1,$format);
 		}elseif(is_string($v) && (UString::startswith(trim($v), "function") || UString::startswith(trim($v), "array("))){
 			$result=$v;
-		}elseif(is_callable($v)){
+		}elseif($v instanceof \Closure){
 			$result=UIntrospection::closure_dump($v);
 		}else {
 			$result="\"" . \str_replace('$', '\$', $v) . "\"";

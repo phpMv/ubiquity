@@ -105,13 +105,18 @@ class Database {
 		$cache = (DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true);
 		$result = false;
 		if ($cache) {
-			$result = $this->cache->fetch ( $tableName, $condition );
+			$cKey=$condition;
+			if(is_array($parameters)){
+				$cKey.=implode(",", $parameters);
+			}
+			$result = $this->cache->fetch ( $tableName, $cKey );
+			Logger::info("Cache", "fetching cache for table {$tableName} with condition : {$condition}","Database::prepareAndExecute",$parameters);
 		}
 		if ($result === false) {
 			$fields = SqlUtils::getFieldList ( $fields, $tableName );
 			$result=$this->prepareAndFetchAll("SELECT {$fields} FROM " . $tableName . $condition,$parameters);
 			if ($cache) {
-				$this->cache->store ( $tableName, $condition, $result );
+				$this->cache->store ( $tableName, $cKey, $result );
 			}
 		}
 		return $result;

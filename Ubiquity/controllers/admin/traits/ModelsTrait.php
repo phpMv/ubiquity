@@ -170,7 +170,7 @@ trait ModelsTrait{
 	private function getModelInstance($ids) {
 		$model=$_SESSION['model'];
 		$ids=\explode("_", $ids);
-		$instance=DAO::getOne($model, $ids);
+		$instance=DAO::getOne($model, $ids,false);
 		if(isset($instance)){
 			return $instance;
 		}
@@ -219,7 +219,7 @@ trait ModelsTrait{
 		$viewer=$this->_getModelViewer();
 		$hasElements=false;
 		$model=$_SESSION['model'];
-		$fkInstances=CRUDHelper::getFKIntances($instance, $model);	
+		$fkInstances=CRUDHelper::getFKIntances($instance, $model,false);	
 		$semantic=$this->jquery->semantic();
 		$grid=$semantic->htmlGrid("detail");
 		if (sizeof($fkInstances) > 0) {

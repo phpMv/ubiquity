@@ -114,16 +114,19 @@ class CRUDHelper {
 		return implode(" OR ", $strs);
 	}
 	
-	public static function getFkIntance($instance,$model,$member){
+	public static function getFkIntance($instance,$model,$member,$included=false){
 		$result=[];
 		if (($annot=OrmUtils::getAnnotationInfoMember($model, "#oneToMany", $member)) !== false) {
-			$objectFK=DAO::getOneToMany($instance, $member);
+			$objectFK=DAO::getOneToMany($instance, $member,$included);
 			$fkClass=$annot["className"];
 		} elseif (($annot=OrmUtils::getAnnotationInfoMember($model, "#manyToMany", $member)) !== false) {
 			$objectFK=DAO::getManyToMany($instance, $member);
 			$fkClass=$annot["targetEntity"];
 		} else {
 			$objectFK=Reflexion::getMemberValue($instance, $member);
+			if(!is_object($objectFK)){
+				$objectFK=DAO::getManyToOne($instance, $member,$included);
+			}
 			if (isset($objectFK))
 				$fkClass=\get_class($objectFK);
 		}
@@ -134,11 +137,11 @@ class CRUDHelper {
 		return $result;
 	}
 	
-	public static function getFKIntances($instance,$model){
+	public static function getFKIntances($instance,$model,$included=false){
 		$result=[];
 		$relations=OrmUtils::getFieldsInRelations($model);
 		foreach ( $relations as $member ) {
-			$fkInstance=self::getFkIntance($instance, $model, $member);
+			$fkInstance=self::getFkIntance($instance, $model, $member,$included);
 			if(sizeof($fkInstance)>0){
 				$result=array_merge($result,$fkInstance);
 			}

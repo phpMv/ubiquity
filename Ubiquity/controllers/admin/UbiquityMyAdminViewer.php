@@ -784,13 +784,24 @@ class UbiquityMyAdminViewer {
 				return $value;
 			}
 		});
+
+		$dt->setValueFunction(5, function($value,$instance){
+			if(isset($value)){
+				$lbl=new HtmlLabel(uniqid("count-"),sizeof($value),"database");
+				$lbl->addClass("circular");
+				$lbls=new HtmlLabelGroups("",$value,["circular"]);
+				$lbl->addPopupHtml("<h4>Datas</h4>".$lbls,null,["on"=>"click"]);
+				return $lbl;
+			}
+		});
+			
 		$dt->onNewRow(function($row,$instance){
 			$row->addClass(HtmlLogFormatter::getFormat($instance));
 		});
 		$dt->setHasCheckboxes(true);
 		$dt->onPreCompile ( function () use (&$dt,$gbSize) {
 			$body=$dt->getHtmlComponent()->getBody();
-			$body->addPropertyCol(6-$gbSize,"style","max-width: 200px;word-break:break-all;");
+			$body->addPropertyCol(6-$gbSize,"style","max-width: 300px;word-break:break-all;");
 			$body->addPropertyCol(5-$gbSize,"style","max-width: 500px;word-break:break-all;");
 		} );
 		if(is_array($groupBy)){

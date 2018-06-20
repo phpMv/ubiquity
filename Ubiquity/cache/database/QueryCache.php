@@ -2,7 +2,6 @@
 
 namespace Ubiquity\cache\database;
 
-use Ubiquity\cache\database\DbCache;
 use Ubiquity\utils\base\UArray;
 
 class QueryCache extends DbCache {

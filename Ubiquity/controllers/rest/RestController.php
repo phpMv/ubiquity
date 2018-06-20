@@ -135,13 +135,13 @@ abstract class RestController extends Controller {
 	/**
 	 * Returns a list of objects from the server
 	 * @param string $condition the sql Where part
-	 * @param boolean $included
+	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 */
 	public function get($condition="1=1",$included=false,$useCache=false){
 		try{
 			$condition=\urldecode($condition);
-			$included=UString::isBooleanTrue($included);
+			$included=$this->getIncluded($included);
 			$useCache=UString::isBooleanTrue($useCache);
 			$datas=DAO::getAll($this->model,$condition,$included,$useCache);
 			echo $this->responseFormatter->get($datas);
@@ -154,12 +154,12 @@ abstract class RestController extends Controller {
 	/**
 	 * Get the first object corresponding to the $keyValues
 	 * @param string $keyValues primary key(s) value(s) or condition
-	 * @param boolean $included if true then load associated members.
+	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache if true then response is cached
 	 */
 	public function getOne($keyValues,$included=false,$useCache=false){
 		$keyValues=\urldecode($keyValues);
-		$included=UString::isBooleanTrue($included);
+		$included=$this->getIncluded($included);
 		$useCache=UString::isBooleanTrue($useCache);
 		$data=DAO::getOne($this->model, $keyValues,$included,$useCache);
 		if(isset($data)){
@@ -171,6 +171,13 @@ abstract class RestController extends Controller {
 			echo $this->responseFormatter->format(["message"=>"No result found","keyValues"=>$keyValues]);
 		}
 	}
+	
+	private function getIncluded($included){
+		if(!UString::isBoolean($included)){
+			return explode(",", $included);
+		}
+		return UString::isBooleanTrue($included);
+	}
 
 	public function _format($arrayMessage){
 		return $this->responseFormatter->format($arrayMessage);
@@ -178,13 +185,15 @@ abstract class RestController extends Controller {
 
 	/**
 	 * @param string $member
+	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception
 	 */
-	public function getOneToMany($member,$useCache=false){
+	public function getOneToMany($member,$included=false,$useCache=false){
 		if(isset($_SESSION["_restInstance"])){
+			$included=$this->getIncluded($included);
 			$useCache=UString::isBooleanTrue($useCache);
-			$datas=DAO::getOneToMany($_SESSION["_restInstance"], $member,$useCache);
+			$datas=DAO::getOneToMany($_SESSION["_restInstance"], $member,$included,$useCache);
 			echo $this->responseFormatter->get($datas);
 		}else{
 			throw new \Exception("You have to call getOne before calling getOneToMany.");
@@ -193,13 +202,15 @@ abstract class RestController extends Controller {
 
 	/**
 	 * @param string $member
+	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception
 	 */
-	public function getManyToMany($member,$useCache=false){
+	public function getManyToMany($member,$included=false,$useCache=false){
 		if(isset($_SESSION["_restInstance"])){
+			$included=$this->getIncluded($included);
 			$useCache=UString::isBooleanTrue($useCache);
-			$datas=DAO::getManyToMany($_SESSION["_restInstance"], $member,null,$useCache);
+			$datas=DAO::getManyToMany($_SESSION["_restInstance"], $member,$included,null,$useCache);
 			echo $this->responseFormatter->get($datas);
 		}else{
 			throw new \Exception("You have to call getOne before calling getManyToMany.");
