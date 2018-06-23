@@ -7,6 +7,7 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\controllers\rest\ResponseFormatter;
+use Ubiquity\orm\parser\ManyToManyParser;
 
 /**
  * Utilitaires de mappage Objet/relationnel
@@ -257,6 +258,68 @@ class OrmUtils {
 			$result=\array_merge($result, \array_keys($manyToMany));
 		}
 		return $result;
+	}
+	
+	public static function getAnnotFieldsInRelations($class) {
+		$result=[ ];
+		if ($manyToOnes=self::getAnnotationInfo($class, "#manyToOne")) {
+			$joinColumns=self::getAnnotationInfo($class, "#joinColumn");
+			foreach ($manyToOnes as $manyToOne ){
+				if(isset($joinColumns[$manyToOne])){
+					$result[$manyToOne]=["type"=>"manyToOne","value"=>$joinColumns[$manyToOne]];
+				}
+			}
+		}
+		if ($oneToManys=self::getAnnotationInfo($class, "#oneToMany")) {
+			foreach ($oneToManys as $field=>$oneToMany){
+				$result[$field]=["type"=>"oneToMany","value"=>$oneToMany];
+			}
+		}
+		if ($manyToManys=self::getAnnotationInfo($class, "#manyToMany")) {
+			foreach ($manyToManys as $field=>$manyToMany){
+				$result[$field]=["type"=>"manyToMany","value"=>$manyToMany];
+			}
+		}
+		return $result;
+	}
+	
+	public static function getUJoinSQL($model,$arrayAnnot,$field,&$aliases){
+		$type=$arrayAnnot["type"];$annot=$arrayAnnot["value"];
+		$table=self::getTableName($model);
+		$tableAlias=(isset($aliases[$table]))?$aliases[$table]:$table;
+		if($type==="manyToOne"){
+			$fkClass=$annot["className"];
+			$fkTable=OrmUtils::getTableName($fkClass);
+			$fkField=$annot["name"];
+			$pkField=self::getFirstKey($fkClass);
+			$alias=self::getJoinAlias($table, $fkTable);
+			$result="INNER JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$fkField}`=`{$alias}`.`{$pkField}`";
+		}elseif($type==="oneToMany"){
+			$fkClass=$annot["className"];
+			$fkAnnot=OrmUtils::getAnnotationInfoMember($fkClass, "#joinColumn", $annot["mappedBy"]);
+			$fkTable=OrmUtils::getTableName($fkClass);
+			$fkField=$fkAnnot["name"];
+			$pkField=self::getFirstKey($model);
+			$alias=self::getJoinAlias($table, $fkTable);
+			$result="INNER JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$pkField}`=`{$alias}`.`{$fkField}`";
+		}else{
+			$parser=new ManyToManyParser($model,$field);
+			$parser->init($annot);
+			$fkTable=$parser->getTargetEntityTable();
+			$fkClass=$parser->getTargetEntityClass();
+			$alias=self::getJoinAlias($table, $fkTable);
+			$result=$parser->getSQL($alias,$aliases);
+		}
+		
+		if(array_search($alias, $aliases)!==false){
+			$result="";
+		}
+		$aliases[$fkTable]=$alias;
+		return ["class"=>$fkClass,"table"=>$fkTable,"sql"=>$result,"alias"=>$alias];
+	}
+	
+	private static function getJoinAlias($table,$fkTable){
+		return uniqid($fkTable.'_'.$table[0]);
 	}
 
 	public static function getManyToOneFields($class) {

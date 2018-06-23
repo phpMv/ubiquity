@@ -120,12 +120,12 @@ class ModelViewer {
 	 *        	model class name (long name)
 	 * @return DataTable
 	 */
-	public function getModelDataTable($instances, $model,$page=1) {
+	public function getModelDataTable($instances, $model,$totalCount,$page=1) {
 		$adminRoute = $this->controller->_getBaseRoute ();
 		$semantic = $this->jquery->semantic ();
 		
 		$modal = ($this->isModal ( $instances, $model ) ? "modal" : "no");
-		$dataTable = $this->getDataTableInstance( $instances,$model,$page );
+		$dataTable = $this->getDataTableInstance( $instances,$model,$totalCount,$page );
 		$attributes = $this->controller->_getAdminData()->getFieldNames ( $model );
 		
 		$dataTable->setCaptions ( $this->getCaptions ( $attributes, $model ) );
@@ -164,8 +164,7 @@ class ModelViewer {
 		return;
 	}
 	
-	protected function getDataTableInstance($instances,$model,$page=1):DataTable{
-		$totalCount=DAO::count($model,$this->controller->_getInstancesFilter($model));
+	protected function getDataTableInstance($instances,$model,$totalCount,$page=1):DataTable{
 		$semantic = $this->jquery->semantic ();
 		$recordsPerPage=$this->recordsPerPage($model,$totalCount);
 		if(is_numeric($recordsPerPage)){

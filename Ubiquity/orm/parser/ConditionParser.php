@@ -11,10 +11,14 @@ class ConditionParser {
 	private $condition;
 	private $parts=[];
 	private $params;
+	private $invertedParams=true;
 	
-	public function __construct($condition=null,$firstPart=null){
+	public function __construct($condition=null,$firstPart=null,$params=null){
 		$this->condition=$condition;
 		$this->firstPart=$firstPart;
+		if(is_array($params)){
+			$this->setParams($params);
+		}
 	}
 	
 	public function addKeyValues($keyValues,$classname,$separator=" AND ") {
@@ -76,22 +80,26 @@ class ConditionParser {
 	 * @return string
 	 */
 	public function getCondition() {
-		if(!isset($this->firstPart))
+		if(!isset($this->firstPart)|| $this->firstPart==='')
 			return $this->condition;
-			$ret=$this->firstPart;
-			if(isset($this->condition)){
-				$ret.=" WHERE ".$this->condition;
-			}
-			return $ret;
+		$ret=$this->firstPart;
+		if(isset($this->condition)){
+			$ret.=" WHERE ".$this->condition;
+		}
+		return $ret;
 	}
 	
 	/**
 	 * @return mixed
 	 */
 	public function getParams() {
-		if(is_array($this->params))
-			return array_keys($this->params);
-			return;
+		if(is_array($this->params)){
+			if($this->invertedParams){
+				return array_keys($this->params);
+			}
+			return $this->params;
+		}
+		return;
 	}
 	
 	/**
@@ -107,14 +115,16 @@ class ConditionParser {
 	 */
 	public function setParams($params) {
 		$this->params = $params;
+		$this->invertedParams=false;
 		return $this;
 	}
 	
 	public function limitOne(){
 		$limit="";
-		if(\stripos($this->condition, " limit ")===false)
+		if(\stripos($this->condition, " limit ")===false){
 			$limit=" limit 1";
-			$this->condition.=$limit;
+		}
+		$this->condition.=$limit;
 	}
 	
 	public static function simple($condition,$params){

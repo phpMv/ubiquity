@@ -133,15 +133,24 @@ class Database {
 		return $result;
 	}
 	
-	public function prepareAndFetchColumn($sql,$parameters=null,$column=null){
+	public function prepareAndFetchAllColumn($sql,$parameters=null,$column=null){
 		$result=false;
 		$statement=$this->getStatement($sql);
 		if($statement->execute ($parameters)){
-			Logger::info("Database", $sql,"prepareAndFetchColumn",$parameters);
+			Logger::info("Database", $sql,"prepareAndFetchAllColumn",$parameters);
 			$result = $statement->fetchAll(\PDO::FETCH_COLUMN,$column);
 		}
 		$statement->closeCursor ();
 		return $result;
+	}
+	
+	public function prepareAndFetchColumn($sql,$parameters=null,$column=null){
+		$statement=$this->getStatement($sql);
+		if($statement->execute ($parameters)){
+			Logger::info("Database", $sql,"prepareAndFetchColumn",$parameters);
+			return $statement->fetchColumn($column);
+		}
+		return false;
 	}
 
 	/**

@@ -10,6 +10,7 @@ use Ubiquity\orm\OrmUtils;
  * @version 1.1.0.0
  */
 class ManyToManyParser {
+	private $table;
 	private $member;
 	private $joinTable;
 	private $myFkField;
@@ -23,7 +24,7 @@ class ManyToManyParser {
 	private $instance;
 	private $whereValues;
 
-	public function __construct($instance, $member) {
+	public function __construct($instance, $member=null) {
 		$this->instance=$instance;
 		$this->member=$member;
 		$this->whereValues=[];
@@ -46,6 +47,7 @@ class ManyToManyParser {
 	}
 	
 	private function _init($class,$annot){
+		$this->table=OrmUtils::getTableName($class);
 		$this->targetEntity=$annot["targetEntity"];
 		$this->inversedBy=strtolower($this->targetEntity) . "s";
 		if (!is_null($annot["inversedBy"]))
@@ -175,16 +177,25 @@ class ManyToManyParser {
 		return $this;
 	}
 	
-	private function getSQL(){
-		return " INNER JOIN `" . $this->getJoinTable() . "` on `".$this->getJoinTable()."`.`".$this->getFkField()."`=`".$this->getTargetEntityTable()."`.`".$this->getPk()."`";
+	public function getSQL($alias="",$aliases=null){
+		if($alias!==""){
+			$targetEntityTable=$alias;
+			$alias="`".$alias."`";
+		}else{
+			$targetEntityTable=$this->targetEntityTable;
+		}
+		$jtAlias=uniqid($this->joinTable);
+		$table=$this->table;
+		if(is_array($aliases)){
+			if(isset($aliases[$this->table]))
+				$table=$aliases[$this->table];
+		}
+		return " INNER JOIN `" . $this->joinTable . "` `{$jtAlias}` on `".$jtAlias."`.`".$this->myFkField."`=`".$table."`.`".$this->myPk."`".
+				" INNER JOIN `" . $this->targetEntityTable . "` {$alias} on `".$jtAlias."`.`".$this->fkField."`=`".$targetEntityTable."`.`".$this->pk."`";
 	}
 	
 	public function getConcatSQL(){
 		return "SELECT `".$this->myFkField."` as '_field' ,GROUP_CONCAT(`".$this->fkField."` SEPARATOR ',') as '_concat' FROM `".$this->joinTable."` {condition} GROUP BY 1";
-	}
-	
-	private function getWhereMask($mask="'{value}'"){
-		return "`".$this->getJoinTable()."`.`". $this->getMyFkField() . "`=".$mask;
 	}
 	
 	public function getParserWhereMask($mask="'{value}'"){
@@ -195,22 +206,6 @@ class ManyToManyParser {
 		return "`".$this->myFkField. "`=".$mask;
 	}
 	
-	private function generateWhereValues(){
-		$mask=$this->getWhereMask("");
-		$res=[];
-		$values=array_keys($this->whereValues);
-		foreach ($values as $value){
-			$res[]=str_replace("{value}", $value, $mask);
-		}
-		return implode(" OR ", $res);
-	}
-	
-	public function generate(){
-		if(sizeof($this->whereValues)>0){
-			return $this->getSQL()." WHERE ".$this->generateWhereValues();
-		}
-		return;
-	}
 	
 	public function generateConcatSQL(){
 		$sql=$this->getConcatSQL();

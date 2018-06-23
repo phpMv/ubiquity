@@ -70,20 +70,22 @@ trait ModelsTrait{
 
 	protected function _showModel($model,$id=null) {
 		$_SESSION["model"]=$model;
-		$datas=$this->getInstances($model,1,$id);
+		$totalCount=0;
+		$datas=$this->getInstances($model,$totalCount,1,$id);
 		$this->formModal=($this->_getModelViewer()->isModal($datas,$model))? "modal" : "no";
-		return $this->_getModelViewer()->getModelDataTable($datas, $model,$this->activePage);
+		return $this->_getModelViewer()->getModelDataTable($datas, $model,$totalCount,$this->activePage);
 	}
 	
-	protected function getInstances($model,$page=1,$id=null){
+	protected function getInstances($model,&$totalCount,$page=1,$id=null){
 		$this->activePage=$page;
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model));
+		$totalCount=DAO::count($model,$this->_getInstancesFilter($model));
+		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
 		if(is_numeric($recordsPerPage)){
 			if(isset($id)){
 				$rownum=DAO::getRownum($model, $id);
 				$this->activePage=Pagination::getPageOfRow($rownum,$recordsPerPage);
 			}
-			return DAO::paginate($model,$this->activePage,$recordsPerPage,null,false);
+			return DAO::paginate($model,$this->activePage,$recordsPerPage,$this->_getInstancesFilter($model),false);
 		}
 		return DAO::getAll($model,"",false);
 	}
@@ -98,16 +100,19 @@ trait ModelsTrait{
 		if(isset($_POST["s"])){
 			$instances=$this->search($model, $_POST["s"]);
 		}else{
-			$instances=$this->getInstances($model,URequest::post("p",1));
+			$instances=$this->getInstances($model,$totalCount,URequest::post("p",1));
 		}
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model));
+		if(!isset($totalCount)){
+			$totalCount=DAO::count($model,$this->_getInstancesFilter($model));
+		}
+		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
 		if(isset($recordsPerPage)){
 			UResponse::asJSON();
 			$responseFormatter=new ResponseFormatter();
 			print_r($responseFormatter->getJSONDatas($instances));
 		}else{
 			$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
-			$compo= $this->_getModelViewer()->getModelDataTable($instances, $model)->refresh(["tbody"]);
+			$compo= $this->_getModelViewer()->getModelDataTable($instances, $model,$totalCount)->refresh(["tbody"]);
 			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");$("#search-query").show();$("#table-details").html("");');
 			$this->jquery->renderView("@framework/Admin/main/component.html",["compo"=>$compo]);
 		}

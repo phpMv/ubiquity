@@ -28,19 +28,20 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * Default page : list all objects
 	 */
 	public function index() {
-		$objects=$this->getInstances();
+		$objects=$this->getInstances($totalCount);
 		$modal=($this->_getModelViewer()->isModal($objects,$this->model))?"modal":"no";
-		$this->_getModelViewer()->getModelDataTable($objects, $this->model);
+		$this->_getModelViewer()->getModelDataTable($objects, $this->model,$totalCount);
 		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute() . "/newModel/" . $modal, "#frm-add-update",["hasLoader"=>"internal"] );
 		$this->_getEvents()->onDisplayElements();
 		$this->crudLoadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ,"messages"=>$this->jquery->semantic()->matchHtmlComponents(function($compo){return $compo instanceof HtmlMessage;})]);		
 	}
 	
-	protected function getInstances($page=1,$id=null){
+	protected function getInstances(&$totalCount,$page=1,$id=null){
 		$this->activePage=$page;
 		$model=$this->model;
 		$condition=$this->_getInstancesFilter($model);
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model,$condition));
+		$totalCount=DAO::count($model,$condition);
+		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
 		if(is_numeric($recordsPerPage)){
 			if(isset($id)){
 				$rownum=DAO::getRownum($model, $id);
@@ -67,9 +68,12 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$instances=$this->search($model, $_POST["s"]);
 		}else{
 			$page=URequest::post("p",1);
-			$instances=$this->getInstances($page);
+			$instances=$this->getInstances($totalCount,$page);
 		}
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,DAO::count($model,$this->_getInstancesFilter($model)));
+		if(!isset($totalCount)){
+			$totalCount=DAO::count($model,$this->_getInstancesFilter($model));
+		}
+		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
 		$grpByFields=$this->_getModelViewer()->getGroupByFields();
 		if(isset($recordsPerPage)){
 			if(!is_array($grpByFields)){
@@ -77,17 +81,17 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				$responseFormatter=new ResponseFormatter();
 				print_r($responseFormatter->getJSONDatas($instances));
 			}else{
-				$this->_renderDataTableForRefresh($instances, $model);
+				$this->_renderDataTableForRefresh($instances, $model,$totalCount);
 			}
 		}else{
 			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");$("#search-query").show();$("#table-details").html("");');
-			$this->_renderDataTableForRefresh($instances, $model);
+			$this->_renderDataTableForRefresh($instances, $model,$totalCount);
 		}
 	}
 	
-	private function _renderDataTableForRefresh($instances,$model){
+	private function _renderDataTableForRefresh($instances,$model,$totalCount){
 		$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
-		$compo= $this->_getModelViewer()->getModelDataTable($instances, $model)->refresh(["tbody"]);
+		$compo= $this->_getModelViewer()->getModelDataTable($instances, $model,$totalCount)->refresh(["tbody"]);
 		$this->_getEvents()->onDisplayElements();
 		$this->jquery->renderView("@framework/main/component.html",["compo"=>$compo]);
 	}
@@ -167,9 +171,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	
 	protected function _showModel($id=null) {
 		$model=$this->model;
-		$datas=$this->getInstances(1,$id);
+		$datas=$this->getInstances($totalCount,1,$id);
 		$this->formModal=($this->_getModelViewer()->isModal($datas,$model))? "modal" : "no";
-		return $this->_getModelViewer()->getModelDataTable($datas, $model,$this->activePage);
+		return $this->_getModelViewer()->getModelDataTable($datas, $model,$totalCount,$this->activePage);
 	}
 	
 	/**

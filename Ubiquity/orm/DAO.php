@@ -10,6 +10,7 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\traits\DAOUpdatesTrait;
 use Ubiquity\orm\traits\DAORelationsTrait;
 use Ubiquity\orm\parser\ConditionParser;
+use Ubiquity\orm\traits\DAOUQueries;
 
 /**
  * Gateway class between database and object model
@@ -18,7 +19,8 @@ use Ubiquity\orm\parser\ConditionParser;
  * @package orm
  */
 class DAO {
-	use DAOUpdatesTrait,DAORelationsTrait;
+	use DAOUpdatesTrait,DAORelationsTrait,DAOUQueries;
+	
 	
 	/**
 	 * @var Database
@@ -26,7 +28,7 @@ class DAO {
 	public static $db;
 
 	/**
-	 * Loads member associated with $instance by a ManyToOne type relationship
+	 * Loads member associated with $instance by a ManyToOne relationship
 	 * @param object $instance
 	 * @param string $member
 	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
@@ -35,8 +37,6 @@ class DAO {
 	public static function getManyToOne($instance, $member, $included=false,$useCache=NULL) {
 		$fieldAnnot=OrmUtils::getMemberJoinColumns($instance, $member);
 		if($fieldAnnot!==null){
-			$field=$fieldAnnot[0];
-			
 			$annotationArray=$fieldAnnot[1];
 			$member=$annotationArray["member"];
 			$value=Reflexion::getMemberValue($instance, $member);
@@ -162,7 +162,7 @@ class DAO {
 		$manyToManyFields=$metaDatas["#manyToMany"];
 		if(\sizeof($manyToManyFields)>0){
 			foreach ($manyToManyFields as $member){
-				self::getManyToMany($instance, $member,$array,$useCache);
+				self::getManyToMany($instance, $member,false,$array,$useCache);
 			}
 		}
 	}
@@ -200,12 +200,24 @@ class DAO {
 	 * @param string $className class name of the model to load
 	 * @param string $condition Part following the WHERE of an SQL statement
 	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param array|null $parameters
 	 * @param boolean $useCache use the active cache if true
 	 * @return array
 	 */
-	public static function getAll($className, $condition='', $included=true,$useCache=NULL) {
-		return self::_getAll($className, new ConditionParser($condition),$included,$useCache);
+	public static function getAll($className, $condition='', $included=true,$parameters=null,$useCache=NULL) {
+		return self::_getAll($className, new ConditionParser($condition,null,$parameters),$included,$useCache);
 	}
+	
+	protected static function _getOne($className,ConditionParser $conditionParser,$included,$useCache){
+		$conditionParser->limitOne();
+		$retour=self::_getAll($className, $conditionParser, $included,$useCache);
+		if (sizeof($retour) < 1){
+			return null;
+		}
+		return \reset($retour);
+	}
+	
+
 	
 	/**
 	 * @param string $className
@@ -306,13 +318,14 @@ class DAO {
 	 * Returns the number of objects of $className from the database respecting the condition possibly passed as parameter
 	 * @param string $className complete classname of the model to load
 	 * @param string $condition Part following the WHERE of an SQL statement
+	 * @param array|null $parameters The query parameters
 	 * @return int count of objects
 	 */
-	public static function count($className, $condition='') {
+	public static function count($className, $condition='',$parameters=null) {
 		$tableName=OrmUtils::getTableName($className);
 		if ($condition != '')
 			$condition=" WHERE " . $condition;
-		return self::$db->query("SELECT COUNT(*) FROM " . $tableName . $condition)->fetchColumn();
+		return self::$db->prepareAndFetchColumn("SELECT COUNT(*) FROM " . $tableName . $condition,$parameters);
 	}
 
 	/**
@@ -320,18 +333,19 @@ class DAO {
 	 * @param String $className complete classname of the model to load
 	 * @param Array|string $keyValues primary key values or condition
 	 * @param boolean|array $included if true, charges associate members with association
+	 * @param array|null $parameters the request parameters
 	 * @param boolean $useCache use cache if true
 	 * @return object the instance loaded or null if not found
 	 */
-	public static function getOne($className, $keyValues, $included=true,$useCache=NULL) {
+	public static function getOne($className, $keyValues, $included=true,$parameters=null,$useCache=NULL) {
 		$conditionParser=new ConditionParser();
-		$conditionParser->addKeyValues($keyValues,$className);
-		$conditionParser->limitOne();
-		$retour=self::_getAll($className, $conditionParser, $included,$useCache);
-		if (sizeof($retour) < 1){
-			return null;
+		if(!isset($parameters)){
+			$conditionParser->addKeyValues($keyValues,$className);
+		}else{
+			$conditionParser->setCondition($keyValues);
+			$conditionParser->setParams($parameters);
 		}
-		return \reset($retour);
+		return self::_getOne($className, $conditionParser, $included, $useCache);
 	}
 	
 	private static function parseKey(&$keyValues,$className){
@@ -364,7 +378,7 @@ class DAO {
 	}
 
 	/**
-	 * Returns true if the connection to the database is estabished
+	 * Returns true if the connection to the database is established
 	 * @return boolean
 	 */
 	public static function isConnected(){
