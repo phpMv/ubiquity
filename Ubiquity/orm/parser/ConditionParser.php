@@ -63,7 +63,26 @@ class ConditionParser {
 	}
 	
 	public function compileParts($separator=" OR "){
-		$this->condition=implode($separator, $this->parts);
+		if($separator==" OR " && sizeof($this->parts)>3){
+			$parts=$this->refactorParts();
+			$conditions=[];
+			foreach ($parts as $part=>$values){
+				$conditions[]=$part." IN (".implode(",", $values).")";
+			}
+			$this->condition=implode(" OR ", $conditions);
+		}else{
+			$this->condition=implode($separator, $this->parts);
+		}
+	}
+	
+	private function refactorParts(){
+		$tmp="";
+		$result=[];
+		foreach ($this->parts as $part){
+			$part=str_replace("= ?", "", $part);
+			$result[$part][]='?';
+		}
+		return $result;
 	}
 	
 	private function parseKey($keyValues,$className){

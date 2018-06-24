@@ -206,14 +206,23 @@ class ManyToManyParser {
 		return "`".$this->myFkField. "`=".$mask;
 	}
 	
+	private function getParserConcatWhereInMask($mask="'{values}'"){
+		return "`".$this->myFkField. "` IN (".$mask.")";
+	}
+	
 	
 	public function generateConcatSQL(){
 		$sql=$this->getConcatSQL();
 		$where="";
 		if(($size=sizeof($this->whereValues))>0){
-			$mask=$this->getParserConcatWhereMask(" ?");
-			$res=array_fill(0, $size, $mask);
-			$where="WHERE ".implode(" OR ", $res);
+			if($size>3){
+				$res=array_fill(0, $size, " ?");
+				$where="WHERE ".$this->getParserConcatWhereInMask(implode(",", $res));
+			}else{
+				$mask=$this->getParserConcatWhereMask(" ?");
+				$res=array_fill(0, $size, $mask);
+				$where="WHERE ".implode(" OR ", $res);
+			}
 		}
 		return str_replace("{condition}", $where, $sql);
 	}
