@@ -51,7 +51,9 @@ class ConditionParser {
 	public function addPart($condition,$value){
 		if($this->addParams($value)){
 			$this->parts[]=$condition;
+			return true;
 		}
+		return false;
 	}
 	
 	public function addParts($condition,$values){
@@ -67,9 +69,10 @@ class ConditionParser {
 			$parts=$this->refactorParts();
 			$conditions=[];
 			foreach ($parts as $part=>$values){
-				$conditions[]=$part." IN (".implode(",", $values).")";
+				$values[0]="SELECT ? as _id";
+				$conditions[]=" INNER JOIN (".implode(" UNION ALL SELECT ", $values).") as _tmp ON ".$part."=_tmp._id";
 			}
-			$this->condition=implode(" OR ", $conditions);
+			$this->condition=implode(" ", $conditions);
 		}else{
 			$this->condition=implode($separator, $this->parts);
 		}
@@ -119,6 +122,25 @@ class ConditionParser {
 			return $this->params;
 		}
 		return;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function hasParam($value) {
+		if(is_array($this->params)){
+			if($this->invertedParams){
+				return isset($this->params[$value]);
+			}
+			return array_search($value,$this->params)!==false;
+		}
+		return false;
+	}
+	
+	public function countParts(){
+		if(is_array($this->params))
+			return sizeof($this->params);
+		return 0;
 	}
 	
 	/**

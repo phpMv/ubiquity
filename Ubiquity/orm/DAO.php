@@ -298,7 +298,7 @@ class DAO {
 			if (isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
 				$fk="_".$k;
 				$o->$fk=$v;
-				self::prepareManyToOne($manyToOneQueries,$v, $fk,$invertedJoinColumns[$k]);
+				self::prepareManyToOne($manyToOneQueries,$o,$v, $fk,$invertedJoinColumns[$k]);
 			}
 		}
 		if (isset($oneToManyFields)) {

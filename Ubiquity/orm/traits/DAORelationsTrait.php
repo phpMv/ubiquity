@@ -5,6 +5,7 @@ namespace Ubiquity\orm\traits;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\ConditionParser;
+use Ubiquity\orm\core\PendingRelationsRequest;
 
 /**
  * @author jc
@@ -15,13 +16,13 @@ trait DAORelationsTrait {
 	
 	private static function _affectsRelationObjects($manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache){
 		if(\sizeof($manyToOneQueries)>0){
-			self::_affectsObjectsFromArray($manyToOneQueries, $objects,$included, function($object,$member,$manyToOneObjects,$fkField){
+			self::_affectsObjectsFromArray($manyToOneQueries,$included, function($object,$member,$manyToOneObjects,$fkField){
 				self::affectsManyToOneFromArray($object,$member,$manyToOneObjects,$fkField);
 			});
 		}
 		
 		if(\sizeof($oneToManyQueries)>0){
-			self::_affectsObjectsFromArray($oneToManyQueries, $objects,$included, function($object,$member,$relationObjects,$fkField){
+			self::_affectsObjectsFromArray($oneToManyQueries,$included, function($object,$member,$relationObjects,$fkField){
 				self::affectsOneToManyFromArray($object,$member,$relationObjects,$fkField);
 			});
 		}
@@ -39,17 +40,21 @@ trait DAORelationsTrait {
 		}
 	}
 	
-	private static function _affectsObjectsFromArray($queries,$objects,$included,$affectsCallback,$useCache=NULL){
+	private static function _affectsObjectsFromArray($queries,$included,$affectsCallback,$useCache=NULL){
 		$includedNext=false;
-		foreach ($queries as $key=>$cParser){
+		foreach ($queries as $key=>$pendingRelationsRequest){
 			list($class,$member,$fkField)=\explode("|", $key);
 			if(is_array($included)){
 				$includedNext=self::_getIncludedNext($included, $member);
 			}
-			$cParser->compileParts();
-			$relationObjects=self::_getAll($class,$cParser,$includedNext,$useCache);
-			foreach ($objects as $object){
-				$affectsCallback($object, $member,$relationObjects,$fkField);
+			$objectsParsers=$pendingRelationsRequest->getObjectsConditionParsers();
+			foreach ($objectsParsers as $objectsConditionParser){
+				$objectsConditionParser->compileParts();
+				$relationObjects=self::_getAll($class,$objectsConditionParser->getConditionParser(),$includedNext,$useCache);
+				$objects=$objectsConditionParser->getObjects();
+				foreach ($objects as $object){
+					$affectsCallback($object, $member,$relationObjects,$fkField);
+				}
 			}
 		}
 	}
@@ -151,9 +156,9 @@ trait DAORelationsTrait {
 					$fkv=OrmUtils::getFirstKeyValue($instance);
 					$key=$annot["className"]."|".$member."|".$annot["mappedBy"];
 					if(!isset($ret[$key])){
-						$ret[$key]=new ConditionParser();
+						$ret[$key]=new PendingRelationsRequest();
 					}
-					$ret[$key]->addPart($fkAnnot["name"] . "= ?",$fkv);
+					$ret[$key]->addPartObject($instance,$fkAnnot["name"] . "= ?",$fkv);
 				}
 			}
 	}
@@ -161,18 +166,19 @@ trait DAORelationsTrait {
 	/**
 	 * Prepares members associated with $instance with a manyToOne type relationship
 	 * @param $ret array of sql conditions
+	 * @param object $instance
 	 * @param mixed $value
 	 * @param string $fkField
 	 * @param array $annotationArray
 	 */
-	private static function prepareManyToOne(&$ret, $value, $fkField,$annotationArray) {
+	private static function prepareManyToOne(&$ret, $instance,$value, $fkField,$annotationArray) {
 		$member=$annotationArray["member"];
 		$fk=OrmUtils::getFirstKey($annotationArray["className"]);
 		$key=$annotationArray["className"]."|".$member."|".$fkField;
 		if(!isset($ret[$key])){
-			$ret[$key]=new ConditionParser();
+			$ret[$key]=new PendingRelationsRequest();
 		}
-		$ret[$key]->addPart($fk . "= ?",$value);
+		$ret[$key]->addPartObject($instance,$fk . "= ?",$value);
 	}
 	
 	private static function getIncludedForStep($included){

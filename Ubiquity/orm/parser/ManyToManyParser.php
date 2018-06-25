@@ -207,7 +207,7 @@ class ManyToManyParser {
 	}
 	
 	private function getParserConcatWhereInMask($mask="'{values}'"){
-		return "`".$this->myFkField. "` IN (".$mask.")";
+		return " INNER JOIN (".$mask.") as _tmp ON `".$this->myFkField. "`=_tmp._id";
 	}
 	
 	
@@ -216,8 +216,9 @@ class ManyToManyParser {
 		$where="";
 		if(($size=sizeof($this->whereValues))>0){
 			if($size>3){
-				$res=array_fill(0, $size, " ?");
-				$where="WHERE ".$this->getParserConcatWhereInMask(implode(",", $res));
+				$res=array_fill(0, $size, "?");
+				$res[0]="SELECT ? as _id";
+				$where=$this->getParserConcatWhereInMask(implode(" UNION ALL SELECT ", $res));
 			}else{
 				$mask=$this->getParserConcatWhereMask(" ?");
 				$res=array_fill(0, $size, $mask);
