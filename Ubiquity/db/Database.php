@@ -114,7 +114,7 @@ class Database {
 		}
 		if ($result === false) {
 			$fields = SqlUtils::getFieldList ( $fields, $tableName );
-			$result=$this->prepareAndFetchAll("SELECT {$fields} FROM " . $tableName . $condition,$parameters);
+			$result=$this->prepareAndFetchAll("SELECT {$fields} FROM `" . $tableName ."`". $condition,$parameters);
 			if ($cache) {
 				$this->cache->store ( $tableName, $cKey, $result );
 			}
