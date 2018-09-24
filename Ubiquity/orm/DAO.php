@@ -325,7 +325,7 @@ class DAO {
 		$tableName=OrmUtils::getTableName($className);
 		if ($condition != '')
 			$condition=" WHERE " . $condition;
-		return self::$db->prepareAndFetchColumn("SELECT COUNT(*) FROM " . $tableName . $condition,$parameters);
+		return self::$db->prepareAndFetchColumn("SELECT COUNT(*) FROM `" . $tableName ."`". $condition,$parameters);
 	}
 
 	/**
