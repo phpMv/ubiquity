@@ -59,7 +59,7 @@ trait DAOUpdatesTrait{
 	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
 	private static function remove_($tableName, $where) {
-		$sql = "DELETE FROM " . $tableName . " " . SqlUtils::checkWhere ( $where );
+		$sql = "DELETE FROM `" . $tableName . "` " . SqlUtils::checkWhere ( $where );
 		Logger::info ("DAOUpdates",  $sql ,"delete");
 		$statement = self::$db->prepareStatement ( $sql );
 		try{
@@ -111,7 +111,7 @@ trait DAOUpdatesTrait{
 		$tableName = OrmUtils::getTableName ( get_class ( $instance ) );
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
-		$sql = "INSERT INTO " . $tableName . "(" . SqlUtils::getInsertFields ( $keyAndValues ) . ") VALUES(" . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ")";
+		$sql = "INSERT INTO `" . $tableName . "`(" . SqlUtils::getInsertFields ( $keyAndValues ) . ") VALUES(" . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ")";
 		Logger::info ( "DAOUpdates", $sql,"insert" );
 		Logger::info ( "DAOUpdates", json_encode ( $keyAndValues ),"Key and values" );
 		$statement = self::$db->prepareStatement ( $sql );
@@ -122,7 +122,10 @@ trait DAOUpdatesTrait{
 			$result = $statement->execute ();
 			if ($result) {
 				$accesseurId = "set" . ucfirst ( OrmUtils::getFirstKey ( get_class ( $instance ) ) );
-				$instance->$accesseurId ( self::$db->lastInserId () );
+				$lastId=self::$db->lastInserId ();
+				if($lastId!=0){
+					$instance->$accesseurId ( $lastId);
+				}
 				if ($insertMany) {
 					self::insertOrUpdateAllManyToMany ( $instance );
 				}
@@ -201,7 +204,7 @@ trait DAOUpdatesTrait{
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$ColumnskeyAndValues = array_merge ( $ColumnskeyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
-		$sql = "UPDATE " . $tableName . " SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . " WHERE " . SqlUtils::getWhere ( $keyFieldsAndValues );
+		$sql = "UPDATE `" . $tableName . "` SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . " WHERE " . SqlUtils::getWhere ( $keyFieldsAndValues );
 		Logger::info ( "DAOUpdates", $sql,"update" );
 		Logger::info ("DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
 		$statement = self::$db->prepareStatement ( $sql );

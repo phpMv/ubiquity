@@ -175,7 +175,7 @@ trait ModelsTrait{
 	private function getModelInstance($ids) {
 		$model=$_SESSION['model'];
 		$ids=\explode("_", $ids);
-		$instance=DAO::getOne($model, $ids,false);
+		$instance=DAO::getOne($model, $ids,true);
 		if(isset($instance)){
 			return $instance;
 		}

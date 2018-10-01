@@ -269,7 +269,7 @@ class DAO {
 		self::parseKey($ids,$className);
 		$condition=SqlUtils::getCondition($ids,$className);
 		$keys=implode(",", OrmUtils::getKeyFields($className));
-		return self::$db->queryColumn("SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$tableName}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE ".$condition);
+		return self::$db->queryColumn("SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM `{$tableName}`, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE ".$condition);
 	}
 
 	/**
