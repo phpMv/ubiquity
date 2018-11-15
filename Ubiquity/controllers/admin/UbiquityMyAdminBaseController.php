@@ -275,7 +275,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$cacheFiles = \array_merge ( $cacheFiles, CacheManager::$cache->getCacheFiles ( 'models' ) );
 		$form = $this->jquery->semantic ()->htmlForm ( "frmCache" );
 		$radios = HtmlFormFields::checkeds ( "ctvv","cacheTypes[]", [ "controllers" => "Controllers","models" => "Models","views" => "Views","queries" => "Queries","annotations" => "Annotations","seo" => "SEO" ], "Display cache types: ", [ "controllers","models" ] );
-		$radios->postFormOnClick ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/setCacheTypes", "frmCache", "#dtCacheFiles tbody", ["jqueryDone" => "replaceWith" ] );
+		$radios->postFormOnClick ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/setCacheTypes", "frmCache", "#dtCacheFiles tbody", ["jqueryDone" => "replaceWith","preventDefault"=>false ] );
 		$form->addField ( $radios )->setInline ();
 		$this->_getAdminViewer ()->getCacheDataTable ( $cacheFiles );
 		$this->jquery->compile ( $this->view );

@@ -156,7 +156,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if (!$modal) {
 			$this->jquery->click("#bt-cancel", "$('#form-container').transition('drop');");
 			$this->jquery->compile($this->view);
-			$this->loadView($this->_getFiles()->getViewForm(), [ "modal" => $modal ]);
+			$this->loadView($this->_getFiles()->getViewForm(), [ "modal" => $modal,"instance"=>$instance,"isNew"=>$instance->_new ]);
 		} else {
 			$this->jquery->exec("$('#modal-frmEdit').modal('show');", true);
 			$form=$form->asModal(\get_class($instance));
@@ -254,6 +254,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	
 	/**
 	 * Updates an instance from the data posted in a form
+	 * @return object The updated instance
 	 */
 	public function update() {
 		$message=new CRUDMessage("Modifications were successfully saved", "Updating");
@@ -279,6 +280,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		}
 		echo $this->_showSimpleMessage($message,"updateMsg");
 		echo $this->jquery->compile($this->view);
+		return $instance;
 	}
 	
 	protected function refreshInstance($instance,$isNew){

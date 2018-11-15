@@ -28,8 +28,9 @@ class CRUDDatas {
 	/**
 	 * Returns the fields to update in the edit an new action for $model
 	 * @param string $model
+	 * @param object $instance
 	 */
-	public function getFormFieldNames($model){
+	public function getFormFieldNames($model,$instance){
 		return OrmUtils::getSerializableFields($model);
 	}
 	

@@ -18,6 +18,7 @@ class ControllerParser {
 		$automated=false;
 		$inherited=false;
 		$this->controllerClass=$controllerClass;
+		$restAnnotsClass=[];$annotsClass=[];
 		$reflect=new \ReflectionClass($controllerClass);
 		if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\controllers\Controller")) {
 			$instance=new $controllerClass();
@@ -37,7 +38,7 @@ class ControllerParser {
 			foreach ( $methods as $method ) {
 				if ($method->getDeclaringClass()->getName() === $controllerClass || $inherited) {
 					try{
-						$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, "@route");
+						$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, ["@route","@get","@post"]);
 						if ($annots !== false) {
 							foreach ( $annots as $annot ) {
 								if (UString::isNull($annot->path)) {

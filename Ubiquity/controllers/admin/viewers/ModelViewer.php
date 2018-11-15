@@ -42,15 +42,16 @@ class ModelViewer {
 	 * @param string $identifier
 	 * @param object $instance
 	 *        	the object to add or modify
-	 * @return DataForm
+	 * @return \Ajax\semantic\widgets\dataform\DataForm
 	 */
 	public function getForm($identifier, $instance) {
 		$type = ($instance->_new) ? "new" : "edit";
 		$messageInfos = [ "new" => [ "icon" => HtmlIconGroups::corner ( "table", "plus", "big" ),"message" => "New object creation" ],"edit" => [ "icon" => HtmlIconGroups::corner ( "table", "edit", "big" ),"message" => "Editing an existing object" ] ];
 		$message = $messageInfos [$type];
-		$form = $this->jquery->semantic ()->dataForm ( $identifier, $instance );
+		$form = $this->jquery->semantic()->dataForm( $identifier, $instance);
+		$form->setLibraryId("frmEdit");
 		$className = \get_class ( $instance );
-		$fields = $this->controller->_getAdminData ()->getFormFieldNames ( $className );
+		$fields = $this->controller->_getAdminData ()->getFormFieldNames ( $className ,$instance);
 		$form->setFields ( $fields );
 		$form->insertField ( 0, "_message" );
 		$form->fieldAsMessage ( "_message", [ "icon" => $message ["icon"] ] );

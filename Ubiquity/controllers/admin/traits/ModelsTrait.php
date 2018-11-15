@@ -14,6 +14,7 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\controllers\rest\ResponseFormatter;
 use Ajax\semantic\widgets\datatable\Pagination;
+use Ubiquity\utils\base\UString;
 
 /**
  *
@@ -30,6 +31,9 @@ trait ModelsTrait{
 
 	abstract public function _getAdminViewer();
 	
+	/**
+	 * @return \Ubiquity\controllers\admin\viewers\ModelViewer
+	 */
 	abstract public function _getModelViewer();
 
 	abstract public function _getAdminFiles();
@@ -121,19 +125,20 @@ trait ModelsTrait{
 	protected function _edit($instance, $modal="no") {
 		$_SESSION["instance"]=$instance;
 		$modal=($modal == "modal");
-		$form=$this->_getModelViewer()->getForm("frmEdit", $instance);
-		$this->jquery->click("#action-modal-frmEdit-0", "$('#frmEdit').form('submit');", false);
+		$formName="frmEdit-".UString::cleanAttribute(get_class($instance));
+		$form=$this->_getModelViewer()->getForm($formName, $instance);
+		$this->jquery->click("#action-modal-".$formName."-0", "$('#".$formName."').form('submit');", false);
 		if (!$modal) {
 			$this->jquery->click("#bt-cancel", "$('#form-container').transition('drop');");
 			$this->jquery->compile($this->view);
-			$this->loadView($this->_getAdminFiles()->getViewEditTable(), [ "modal" => $modal ]);
+			$this->loadView($this->_getAdminFiles()->getViewEditTable(), [ "modal" => $modal,"frmEditName"=>$formName]);
 		} else {
-			$this->jquery->exec("$('#modal-frmEdit').modal('show');", true);
+			$this->jquery->exec("$('#modal-".$formName."').modal('show');", true);
 			$form=$form->asModal(\get_class($instance));
 			$form->setActions([ "Okay","Cancel" ]);
 			$btOkay=$form->getAction(0);
 			$btOkay->addClass("green")->setValue("Validate modifications");
-			$form->onHidden("$('#modal-frmEdit').remove();");
+			$form->onHidden("$('#modal-".$formName."').remove();");
 			echo $form->compile($this->jquery, $this->view);
 			echo $this->jquery->compile($this->view);
 		}

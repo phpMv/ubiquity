@@ -131,9 +131,23 @@ class CacheManager {
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
-		$annotationManager->registry = array_merge ( $annotationManager->registry, [ 'id' => 'Ubiquity\annotations\IdAnnotation','manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation','oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
-				'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation','joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation','table' => 'Ubiquity\annotations\TableAnnotation','transient' => 'Ubiquity\annotations\TransientAnnotation','column' => 'Ubiquity\annotations\ColumnAnnotation',
-				'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation','route' => 'Ubiquity\annotations\router\RouteAnnotation','var' => 'mindplay\annotations\standard\VarAnnotation','yuml' => 'Ubiquity\annotations\YumlAnnotation','rest' => 'Ubiquity\annotations\rest\RestAnnotation',
+		$annotationManager->registry = array_merge ( $annotationManager->registry, [ 
+				'id' => 'Ubiquity\annotations\IdAnnotation',
+				'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
+				'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
+				'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
+				'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
+				'table' => 'Ubiquity\annotations\TableAnnotation',
+				'transient' => 'Ubiquity\annotations\TransientAnnotation',
+				'column' => 'Ubiquity\annotations\ColumnAnnotation',
+				'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
+				'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
+				'route' => 'Ubiquity\annotations\router\RouteAnnotation',
+				'get' => 'Ubiquity\annotations\router\GetAnnotation','getMapping' => 'Ubiquity\annotations\router\GetAnnotation',
+				'post' => 'Ubiquity\annotations\router\PostAnnotation','postMapping' => 'Ubiquity\annotations\router\PostAnnotation',
+				'var' => 'mindplay\annotations\standard\VarAnnotation',
+				'yuml' => 'Ubiquity\annotations\YumlAnnotation',
+				'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
 				'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation' ] );
 	}
 }

@@ -96,7 +96,7 @@ class UString {
 		return $value;
 	}
 
-	public static function cleanAttribute($attr, $replacement="_") {
+	public static function cleanAttribute($attr, $replacement="-") {
 		$result=preg_replace('/[^a-zA-Z0-9\-]/s', $replacement, $attr);
 		return \str_replace($replacement . $replacement, $replacement, $result);
 	}

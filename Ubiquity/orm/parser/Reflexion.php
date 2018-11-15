@@ -86,6 +86,16 @@ class Reflexion {
 	}
 
 	public static function getAnnotationsMethod($class, $method, $annotation) {
+		if(is_array($annotation)){
+			$result=[];
+			foreach($annotation as $annot){
+				$annots=Annotations::ofMethod($class, $method, $annot);
+				if(sizeof($annots)>0){
+					$result=array_merge($result,$annots);
+				}
+			}
+			return $result;
+		}
 		$annots=Annotations::ofMethod($class, $method, $annotation);
 		if (\sizeof($annots) > 0)
 			return $annots;
