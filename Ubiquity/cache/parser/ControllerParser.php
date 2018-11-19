@@ -39,7 +39,7 @@ class ControllerParser {
 				if ($method->getDeclaringClass()->getName() === $controllerClass || $inherited) {
 					try{
 						$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, ["@route","@get","@post"]);
-						if ($annots !== false) {
+						if (sizeof($annots)>0) {
 							foreach ( $annots as $annot ) {
 								if (UString::isNull($annot->path)) {
 									$newAnnot=$this->generateRouteAnnotationFromMethod($method);

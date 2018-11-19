@@ -2,10 +2,8 @@
 
 namespace Ubiquity\annotations;
 
-use mindplay\annotations\Annotations;
 use Ubiquity\utils\base\UArray;
 use mindplay\annotations\Annotation;
-use Ubiquity\cache\ClassUtils;
 
 /**
  * @usage('property'=>true, 'inherited'=>true)

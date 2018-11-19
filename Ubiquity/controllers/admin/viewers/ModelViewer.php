@@ -62,6 +62,7 @@ class ModelViewer {
 		$form->setCaptions ( $this->getFormCaptions ( $form->getInstanceViewer ()->getVisibleProperties (), $className, $instance ) );
 		$form->setCaption ( "_message", $message ["message"] );
 		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/update", "#frm-add-update" );
+		$form->onGenerateField([$this,'onGenerateFormField']);
 		return $form;
 	}
 	
@@ -136,7 +137,7 @@ class ModelViewer {
 		$dataTable->setIdentifierFunction ( CRUDHelper::getIdentifierFunction ( $model ) );
 		if($this->showDetailsOnDataTableClick()){
 			$dataTable->getOnRow ( "click", $adminRoute . "/showDetail", "#table-details", [ "attr" => "data-ajax" ] );
-			$dataTable->setActiveRowSelector ( "error" );
+			$dataTable->setActiveRowSelector ( "active" );
 		}
 		$dataTable->setUrls ( [ "refresh"=>$adminRoute . "/refresh_","delete" => $adminRoute . "/delete","edit" => $adminRoute . "/edit/" . $modal ,"display"=> $adminRoute."/display/".$modal] );
 		$dataTable->setTargetSelector ( [ "delete" => "#table-messages","edit" => "#frm-add-update" ,"display"=>"#table-details" ] );
@@ -161,9 +162,21 @@ class ModelViewer {
 		return ;
 	}
 	
+	/**
+	 * 
+	 */
 	public function getGroupByFields(){
 		return;
 	}
+	
+	/**
+	 * For doing something when $field is generated in form
+	 * @param mixed $field
+	 */
+	public function onGenerateFormField($field){
+		return;
+	}
+	
 	
 	protected function getDataTableInstance($instances,$model,$totalCount,$page=1):DataTable{
 		$semantic = $this->jquery->semantic ();
@@ -199,12 +212,23 @@ class ModelViewer {
 		} );
 		$dataTable->addAllButtons( false, [ "ajaxTransition" => "random" ], function ($bt) {
 			$bt->addClass ( "circular" );
+			$this->dataTableRowButton($bt);
 		}, function ($bt) {
 			$bt->addClass ( "circular" );
+			$this->dataTableRowButton($bt);
 		}, function ($bt) {
 			$bt->addClass ( "circular" );
+			$this->dataTableRowButton($bt);
 		});
 		$dataTable->setDisplayBehavior(["jsCallback"=>'$("#dataTable").hide();',"ajaxTransition"=>"random"]);
+	}
+	
+	/**
+	 * To override for modifying the dataTable row buttons
+	 * @param HtmlButton $bt
+	 */
+	public function dataTableRowButton(HtmlButton $bt){
+		
 	}
 	
 	public function confirmButtons(HtmlButton $confirmBtn,HtmlButton $cancelBtn){
