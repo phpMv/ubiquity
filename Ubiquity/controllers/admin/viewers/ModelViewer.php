@@ -96,6 +96,7 @@ class ModelViewer {
 					$form->fieldAsInput ( $property, [ "inputType" => "email" ,"rules"=>[["email"]]] );
 					break;
 			}
+			
 			switch ($type) {
 				case "tinyint(1)" :
 					$form->fieldAsCheckbox ( $property );
@@ -114,6 +115,14 @@ class ModelViewer {
 		}
 	}
 	
+	/**
+	 * Returns a DataElement object for displaying the instance
+	 * Used in the display method of the CrudController
+	 * @param object $instance
+	 * @param string $model The model class name (long name)
+	 * @param boolean $modal
+	 * @return \Ajax\semantic\widgets\dataelement\DataElement
+	 */
 	public function getModelDataElement($instance,$model,$modal){
 		$adminRoute = $this->controller->_getBaseRoute ();
 		$semantic = $this->jquery->semantic ();
@@ -181,6 +190,11 @@ class ModelViewer {
 		return $dataTable;
 	}
 	
+	/**
+	 * @param string $model The model class name (long name)
+	 * @param number $totalCount The total count of objects
+	 * @return void|number default : 6
+	 */
 	public function recordsPerPage($model,$totalCount=0){
 		if($totalCount>6)
 			return 6;
@@ -188,7 +202,7 @@ class ModelViewer {
 	}
 	
 	/**
-	 * 
+	 * Returns the fields on which a grouping is performed
 	 */
 	public function getGroupByFields(){
 		return;
@@ -203,22 +217,28 @@ class ModelViewer {
 	}
 	
 	
+	/**
+	 * Returns the dataTable instance for dispaying a list of object
+	 * @param array $instances
+	 * @param string $model
+	 * @param number $totalCount
+	 * @param number $page
+	 * @return DataTable
+	 */
 	protected function getDataTableInstance($instances,$model,$totalCount,$page=1):DataTable{
 		$semantic = $this->jquery->semantic ();
 		$recordsPerPage=$this->recordsPerPage($model,$totalCount);
+		$grpByFields=$this->getGroupByFields();
+		if(is_array($grpByFields)){
+			$dataTable = $semantic->dataTable( "lv", $model, $instances );
+			$dataTable->setGroupByFields($grpByFields);
+		}else{
+			$dataTable = $semantic->jsonDataTable( "lv", $model, $instances );
+		}
 		if(is_numeric($recordsPerPage)){
-			$grpByFields=$this->getGroupByFields();
-			if(is_array($grpByFields)){
-				$dataTable = $semantic->dataTable( "lv", $model, $instances );
-				$dataTable->setGroupByFields($grpByFields);
-			}else{
-				$dataTable = $semantic->jsonDataTable( "lv", $model, $instances );
-			}
 			$dataTable->paginate($page,$totalCount,$recordsPerPage,5);
 			$dataTable->onActiveRowChange('$("#table-details").html("");');
 			$dataTable->onSearchTerminate('$("#search-query-content").html(data);$("#search-query").show();$("#table-details").html("");');
-		}else{
-			$dataTable = $semantic->dataTable( "lv", $model, $instances );
 		}
 		return $dataTable;
 	}
@@ -256,6 +276,11 @@ class ModelViewer {
 		
 	}
 	
+	/**
+	 * To override for modifying the showConfMessage dialog buttons
+	 * @param HtmlButton $confirmBtn The confirmation button
+	 * @param HtmlButton $cancelBtn The cancellation button
+	 */
 	public function confirmButtons(HtmlButton $confirmBtn,HtmlButton $cancelBtn){
 		
 	}

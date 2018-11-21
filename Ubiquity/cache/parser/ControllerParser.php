@@ -44,6 +44,8 @@ class ControllerParser {
 								if (UString::isNull($annot->path)) {
 									$newAnnot=$this->generateRouteAnnotationFromMethod($method);
 									$annot->path=$newAnnot[0]->path;
+								}else{
+									$annot->path=$this->parseMethodPath($method, $annot->path);
 								}
 							}
 							$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
@@ -86,8 +88,24 @@ class ControllerParser {
 		}
 		return "/" . \implode("/", $pathParts);
 	}
+	
+	private static function parseMethodPath(\ReflectionMethod $method,$path){
+		if($path==null || $path==='')
+			return;
+		$parameters=$method->getParameters();
+		foreach ( $parameters as $parameter ) {
+			$name=$parameter->getName();
+			if ($parameter->isVariadic()) {
+				$path=str_replace('{'.$name.'}', '{...' . $name . '}',$path);
+			}elseif ($parameter->isOptional()) {
+				$path=str_replace('{'.$name.'}', '{~' . $name . '}',$path);
+			}
+		}
+		return $path;
+	}
 
 	private static function cleanpath($prefix, $path="") {
+		$path=str_replace("//", "/", $path);
 		if (!UString::endswith($prefix, "/"))
 			$prefix=$prefix . "/";
 		if ($path !== "" && UString::startswith($path, "/"))
