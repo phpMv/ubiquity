@@ -27,7 +27,7 @@ Ubiquity framework User guide
    :maxdepth: 1
    :caption: Scaffolding
    
-   controller/scaffolding/index
+   scaffolding/index
 
 .. toctree::
    :maxdepth: 1
