@@ -22,6 +22,7 @@ Ubiquity framework User guide
    controller/uri
    controller/router
    controller/controllers
+   controller/crud/index
 
 .. toctree::
    :maxdepth: 1

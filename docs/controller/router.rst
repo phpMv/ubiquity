@@ -139,11 +139,11 @@ It is possible to specify the http method or methods associated with a route:
    
    }
 
-The **methods** attribute can accept several methods:
-`@route("testMethods","methods"=>["get","post","delete"])`
+The **methods** attribute can accept several methods: |br|
+``@route("testMethods","methods"=>["get","post","delete"])``
 
-It is also possible to use specific annotations **@get**, **@post**...
-`@get("products")`
+It is also possible to use specific annotations **@get**, **@post**... |br|
+``@get("products")``
 
 Route name
 ^^^^^^^^^^
@@ -169,7 +169,7 @@ If the **name** attribute is not specified, each route has a default name, based
    }
 
 URL or path generation
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 Route names can be used to generate URLs or paths.
 
 Linking to Pages in Twig
