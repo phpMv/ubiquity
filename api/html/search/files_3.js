@@ -1,7 +1,9 @@
 var searchData=
 [
   ['dao_2ephp',['DAO.php',['../_d_a_o_8php.html',1,'']]],
+  ['daorelationstrait_2ephp',['DAORelationsTrait.php',['../_d_a_o_relations_trait_8php.html',1,'']]],
   ['daoupdatestrait_2ephp',['DAOUpdatesTrait.php',['../_d_a_o_updates_trait_8php.html',1,'']]],
+  ['daouqueries_2ephp',['DAOUQueries.php',['../_d_a_o_u_queries_8php.html',1,'']]],
   ['database_2ephp',['Database.php',['../_database_8php.html',1,'']]],
   ['databasereversor_2ephp',['DatabaseReversor.php',['../_database_reversor_8php.html',1,'']]],
   ['databasetrait_2ephp',['DatabaseTrait.php',['../_database_trait_8php.html',1,'']]],

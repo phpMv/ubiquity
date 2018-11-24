@@ -1,11 +1,13 @@
 var class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller =
 [
+    [ "_deleteMultiple", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ace8d55637e04198854efb135b49a437e", null ],
     [ "_edit", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a35d37f23b5935befaf63966aee282ccc", null ],
     [ "_getAdminData", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a1728d8b515816623b042eeb85e48f77f", null ],
     [ "_getEvents", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a81c43af86f659468a7dc484a95b178e9", null ],
     [ "_getFiles", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a3f2a055258adc245af3d808a9b7c9edf", null ],
     [ "_getInstancesFilter", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ad45dd0b8db78b8892028cef02f5b44d3", null ],
     [ "_getModelViewer", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a7a0e99b61f747f3b7e542df8140eb1ba", null ],
+    [ "_renderDataTableForRefresh", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a4cf504c68fda5644ea8a429346d0ccf0", null ],
     [ "_showModel", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#acc72a1b1ffe7037729ff188472b4946b", null ],
     [ "crudLoadView", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a5d0c565a396b8824eadb4a32e3f7326c", null ],
     [ "delete", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a2d7f897ac0256b7a90c46716cf939281", null ],
@@ -15,7 +17,7 @@ var class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller =
     [ "getAdminData", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a378f38cff59451fa95efc4ae3e7fcf08", null ],
     [ "getEvents", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a54ecee00f83d387598096653b07f10c5", null ],
     [ "getFiles", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a7010e197d8dce475dfdd443c11dd7ee9", null ],
-    [ "getInstances", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a5d301a67dd6065dfcfa1cf2298313ae1", null ],
+    [ "getInstances", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ad0b1426de558936e253b22df166ba424", null ],
     [ "getModelInstance", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a50add1041c8caad54c79af5994a71349", null ],
     [ "getModelViewer", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a585deaa86f8c550f1c2826c6d4820ae6", null ],
     [ "getSingleton", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ad7975cac6ad37f5b551d0db0c71e1d97", null ],

@@ -20,6 +20,7 @@ var hierarchy =
     [ "ClassToYuml", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html", null ],
     [ "ClassUtils", "class_ubiquity_1_1cache_1_1_class_utils.html", null ],
     [ "CodeUtils", "class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_code_utils.html", null ],
+    [ "ConditionParser", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html", null ],
     [ "ConfigTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html", [
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],
@@ -29,9 +30,7 @@ var hierarchy =
       [ "ControllerBase", "class_ubiquity_1_1controllers_1_1_controller_base.html", [
         [ "Admin", "class_ubiquity_1_1controllers_1_1_admin.html", null ],
         [ "AuthController", "class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html", null ],
-        [ "AuthController", "class_ubiquity_1_1controllers_1_1_auth_controller.html", null ],
-        [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", null ],
-        [ "CRUDController", "class_ubiquity_1_1controllers_1_1_c_r_u_d_controller.html", null ]
+        [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", null ]
       ] ],
       [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", null ],
       [ "SeoController", "class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html", null ]
@@ -50,8 +49,13 @@ var hierarchy =
     [ "CRUDFiles", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html", null ],
     [ "CRUDHelper", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html", null ],
     [ "CRUDMessage", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html", null ],
-    [ "CRUDTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_c_r_u_d_trait.html", null ],
+    [ "DAORelationsTrait", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait.html", [
+      [ "DAO", "class_ubiquity_1_1orm_1_1_d_a_o.html", null ]
+    ] ],
     [ "DAOUpdatesTrait", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html", [
+      [ "DAO", "class_ubiquity_1_1orm_1_1_d_a_o.html", null ]
+    ] ],
+    [ "DAOUQueries", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html", [
       [ "DAO", "class_ubiquity_1_1orm_1_1_d_a_o.html", null ]
     ] ],
     [ "Database", "class_ubiquity_1_1db_1_1_database.html", null ],
@@ -88,18 +92,25 @@ var hierarchy =
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],
     [ "Gui", "class_ubiquity_1_1views_1_1_gui.html", null ],
-    [ "HasModelViewer", "interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer.html", null ],
     [ "HasModelViewerInterface", "interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html", [
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ],
       [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", null ]
     ] ],
+    [ "HtmlLogFormatter", "class_ubiquity_1_1log_1_1_html_log_formatter.html", null ],
     [ "InfoMessage", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_info_message.html", null ],
     [ "Iterator", null, [
       [ "FlashBag", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html", null ]
     ] ],
     [ "Jquery", "class_ubiquity_1_1js_1_1_jquery.html", null ],
     [ "JsCode", "class_ubiquity_1_1js_1_1_js_code.html", null ],
-    [ "Logger", "class_ubiquity_1_1log_1_1_logger.html", null ],
+    [ "Logger", "class_ubiquity_1_1log_1_1_logger.html", [
+      [ "UMonolog", "class_ubiquity_1_1log_1_1libraries_1_1_u_monolog.html", null ]
+    ] ],
+    [ "LoggerParams", "class_ubiquity_1_1log_1_1_logger_params.html", null ],
+    [ "LogMessage", "class_ubiquity_1_1log_1_1_log_message.html", null ],
+    [ "LogsTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_logs_trait.html", [
+      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
+    ] ],
     [ "Maker", "class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_maker.html", null ],
     [ "ManyToManyParser", "class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html", null ],
     [ "Member", "class_ubiquity_1_1orm_1_1creator_1_1_member.html", null ],
@@ -120,7 +131,9 @@ var hierarchy =
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],
     [ "ModelViewer", "class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html", null ],
+    [ "ObjectsConditionParser", "class_ubiquity_1_1orm_1_1core_1_1_objects_condition_parser.html", null ],
     [ "OrmUtils", "class_ubiquity_1_1orm_1_1_orm_utils.html", null ],
+    [ "PendingRelationsRequest", "class_ubiquity_1_1orm_1_1core_1_1_pending_relations_request.html", null ],
     [ "Reflexion", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html", null ],
     [ "RepositoryGit", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html", null ],
     [ "ResponseFormatter", "class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html", null ],
@@ -183,7 +196,10 @@ var hierarchy =
         [ "OneToManyAnnotation", "class_ubiquity_1_1annotations_1_1_one_to_many_annotation.html", null ],
         [ "AuthorizationAnnotation", "class_ubiquity_1_1annotations_1_1rest_1_1_authorization_annotation.html", null ],
         [ "RestAnnotation", "class_ubiquity_1_1annotations_1_1rest_1_1_rest_annotation.html", null ],
-        [ "RouteAnnotation", "class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html", null ],
+        [ "RouteAnnotation", "class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html", [
+          [ "GetAnnotation", "class_ubiquity_1_1annotations_1_1router_1_1_get_annotation.html", null ],
+          [ "PostAnnotation", "class_ubiquity_1_1annotations_1_1router_1_1_post_annotation.html", null ]
+        ] ],
         [ "TableAnnotation", "class_ubiquity_1_1annotations_1_1_table_annotation.html", null ],
         [ "TransientAnnotation", "class_ubiquity_1_1annotations_1_1_transient_annotation.html", null ],
         [ "YumlAnnotation", "class_ubiquity_1_1annotations_1_1_yuml_annotation.html", null ]

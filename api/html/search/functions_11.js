@@ -2,6 +2,7 @@ var searchData=
 [
   ['recordsperpage',['recordsPerPage',['../class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a11669bfc19098a296c10117ccd1806cf',1,'Ubiquity::controllers::admin::viewers::ModelViewer']]],
   ['redirecttoroute',['redirectToRoute',['../class_ubiquity_1_1controllers_1_1_controller.html#a56d853e2fffd3410fe0eb721e5277f19',1,'Ubiquity::controllers::Controller']]],
+  ['refactorparts',['refactorParts',['../class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#aa21e255817703a8a499e2c953c18330f',1,'Ubiquity::orm::parser::ConditionParser']]],
   ['refresh_5f',['refresh_',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a8563034d9f1632d2f83ff49dd0104872',1,'Ubiquity\controllers\admin\traits\ModelsTrait\refresh_()'],['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a8563034d9f1632d2f83ff49dd0104872',1,'Ubiquity\controllers\crud\CRUDController\refresh_()']]],
   ['refreshcommits',['refreshCommits',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#afeec671257c202d504deef2d7e2e0505',1,'Ubiquity::controllers::admin::traits::GitTrait']]],
   ['refreshfiles',['refreshFiles',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#aa3893229298e4b453b0649b4765f262f',1,'Ubiquity::controllers::admin::traits::GitTrait']]],
@@ -17,6 +18,7 @@ var searchData=
   ['remove_5f',['remove_',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#ad1ef2c9e94e501cc270f357cbb546ea1',1,'Ubiquity::orm::traits::DAOUpdatesTrait']]],
   ['removebykey',['removeByKey',['../class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a3e94114a2de69ef4d5d5086d7e4e2ade',1,'Ubiquity::utils::base::UArray']]],
   ['removebykey_5f',['removeByKey_',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a50000124a98c397e550e91776ca4c449',1,'Ubiquity::orm::traits::DAOUpdatesTrait']]],
+  ['removebykeys',['removeByKeys',['../class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a41358ed3af8c0f2de128ce479185fe66',1,'Ubiquity::utils::base::UArray']]],
   ['removeexpireds',['removeExpireds',['../class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a47e8956d182a00b9ccfc7631a30c25d4',1,'Ubiquity::controllers::rest::ApiTokens']]],
   ['removemember',['removeMember',['../class_ubiquity_1_1orm_1_1creator_1_1_model.html#a76decc4ba2e783a2a47451c662cf2195',1,'Ubiquity::orm::creator::Model']]],
   ['removeone',['removeOne',['../class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a03b0155bf02e536cf030550859c745bd',1,'Ubiquity::utils::base::UArray']]],

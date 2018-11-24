@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.3</span>
+   &#160;<span id="projectnumber">2.0.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -85,6 +85,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1orm_1_1_d_a_o.html',
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pri-static-methods">Static Private Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">DAO Class Reference</div>  </div>
@@ -98,49 +99,55 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1orm_1_1_d_a_o.html',
  <div class="center">
   <img src="class_ubiquity_1_1orm_1_1_d_a_o.png" usemap="#DAO_map" alt=""/>
   <map id="DAO_map" name="DAO_map">
-<area href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html" title="Trait for DAO Updates (Create, Update, Delete) " alt="DAOUpdatesTrait" shape="rect" coords="0,0,110,24"/>
+<area href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html" title="Trait for DAO Updates (Create, Update, Delete) " alt="DAOUpdatesTrait" shape="rect" coords="0,0,116,24"/>
+<area href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait.html" alt="DAORelationsTrait" shape="rect" coords="126,0,242,24"/>
+<area href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html" alt="DAOUQueries" shape="rect" coords="252,0,368,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a75935180dfb016f7972823642c646595"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a75935180dfb016f7972823642c646595">getManyToOne</a> ($instance, $member, $useCache=NULL)</td></tr>
-<tr class="memdesc:a75935180dfb016f7972823642c646595"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads member associated with $instance by a ManyToOne type relationship.  <a href="#a75935180dfb016f7972823642c646595">More...</a><br /></td></tr>
-<tr class="separator:a75935180dfb016f7972823642c646595"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e2be697b4769538b5f06d22592b1709"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a5e2be697b4769538b5f06d22592b1709">getOneToMany</a> ($instance, $member, $useCache=NULL, $annot=null)</td></tr>
-<tr class="memdesc:a5e2be697b4769538b5f06d22592b1709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign / load the child records in the $member member of $instance.  <a href="#a5e2be697b4769538b5f06d22592b1709">More...</a><br /></td></tr>
-<tr class="separator:a5e2be697b4769538b5f06d22592b1709"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2932683a0376280f1bbd4d67e686d223"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a2932683a0376280f1bbd4d67e686d223">getManyToOne</a> ($instance, $member, $included=false, $useCache=NULL)</td></tr>
+<tr class="memdesc:a2932683a0376280f1bbd4d67e686d223"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads member associated with $instance by a ManyToOne relationship.  <a href="#a2932683a0376280f1bbd4d67e686d223">More...</a><br /></td></tr>
+<tr class="separator:a2932683a0376280f1bbd4d67e686d223"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513674cd74e67bc44a80ca32ce83b0d8"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a513674cd74e67bc44a80ca32ce83b0d8">getOneToMany</a> ($instance, $member, $included=true, $useCache=NULL, $annot=null)</td></tr>
+<tr class="memdesc:a513674cd74e67bc44a80ca32ce83b0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign / load the child records in the $member member of $instance.  <a href="#a513674cd74e67bc44a80ca32ce83b0d8">More...</a><br /></td></tr>
+<tr class="separator:a513674cd74e67bc44a80ca32ce83b0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1444819062418af478dc97434224131b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a1444819062418af478dc97434224131b">affectsOneToManyFromArray</a> ($instance, $member, $array=null, $mappedBy=null)</td></tr>
 <tr class="separator:a1444819062418af478dc97434224131b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13d10867f0c662619b691ae1a88eb94d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a13d10867f0c662619b691ae1a88eb94d">getManyToMany</a> ($instance, $member, $array=null, $useCache=NULL)</td></tr>
-<tr class="memdesc:a13d10867f0c662619b691ae1a88eb94d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns / loads the child records in the $member member of $instance.  <a href="#a13d10867f0c662619b691ae1a88eb94d">More...</a><br /></td></tr>
-<tr class="separator:a13d10867f0c662619b691ae1a88eb94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af99cff2b7541830f2d09b3578fc530dd"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#af99cff2b7541830f2d09b3578fc530dd">getManyToMany</a> ($instance, $member, $included=false, $array=null, $useCache=NULL)</td></tr>
+<tr class="memdesc:af99cff2b7541830f2d09b3578fc530dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns / loads the child records in the $member member of $instance.  <a href="#af99cff2b7541830f2d09b3578fc530dd">More...</a><br /></td></tr>
+<tr class="separator:af99cff2b7541830f2d09b3578fc530dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a264632fa509d595d6e92ebf19d33a82c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a264632fa509d595d6e92ebf19d33a82c">affectsManyToManys</a> ($instance, $array=NULL, $useCache=NULL)</td></tr>
 <tr class="separator:a264632fa509d595d6e92ebf19d33a82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc900e07051d67d9b28de98d337810d5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#afc900e07051d67d9b28de98d337810d5">getAll</a> ($className, $condition='', $loadManyToOne=true, $loadOneToMany=false, $useCache=NULL)</td></tr>
-<tr class="memdesc:afc900e07051d67d9b28de98d337810d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an array of $className objects from the database.  <a href="#afc900e07051d67d9b28de98d337810d5">More...</a><br /></td></tr>
-<tr class="separator:afc900e07051d67d9b28de98d337810d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a4e71e4296bbb6ee2027397e1ca23e0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a7a4e71e4296bbb6ee2027397e1ca23e0">paginate</a> ($className, $page=1, $rowsPerPage=20, $condition=null)</td></tr>
-<tr class="separator:a7a4e71e4296bbb6ee2027397e1ca23e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af87c07e78e13e9f1d5ddaf11245fd029"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#af87c07e78e13e9f1d5ddaf11245fd029">getAll</a> ($className, $condition='', $included=true, $parameters=null, $useCache=NULL)</td></tr>
+<tr class="memdesc:af87c07e78e13e9f1d5ddaf11245fd029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an array of $className objects from the database.  <a href="#af87c07e78e13e9f1d5ddaf11245fd029">More...</a><br /></td></tr>
+<tr class="separator:af87c07e78e13e9f1d5ddaf11245fd029"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24dcd7c727e2f65305713a7b90668926"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a24dcd7c727e2f65305713a7b90668926">paginate</a> ($className, $page=1, $rowsPerPage=20, $condition=null, $included=true)</td></tr>
+<tr class="separator:a24dcd7c727e2f65305713a7b90668926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0fa7351394a79677854651452dfa31f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#ac0fa7351394a79677854651452dfa31f">getRownum</a> ($className, $ids)</td></tr>
 <tr class="separator:ac0fa7351394a79677854651452dfa31f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39ef8a159eb9aae4e9d65206367e14d3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a39ef8a159eb9aae4e9d65206367e14d3">count</a> ($className, $condition='')</td></tr>
-<tr class="memdesc:a39ef8a159eb9aae4e9d65206367e14d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of objects of $className from the database respecting the condition possibly passed as parameter.  <a href="#a39ef8a159eb9aae4e9d65206367e14d3">More...</a><br /></td></tr>
-<tr class="separator:a39ef8a159eb9aae4e9d65206367e14d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4d71dac0727b59b0155d8e40b3f29bf"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#aa4d71dac0727b59b0155d8e40b3f29bf">getOne</a> ($className, $keyValues, $loadManyToOne=true, $loadOneToMany=false, $useCache=NULL)</td></tr>
-<tr class="memdesc:aa4d71dac0727b59b0155d8e40b3f29bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an instance of $className from the database, from $keyvalues values of the primary key.  <a href="#aa4d71dac0727b59b0155d8e40b3f29bf">More...</a><br /></td></tr>
-<tr class="separator:aa4d71dac0727b59b0155d8e40b3f29bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1eab6a63d6d9d1a0b526179756adb34b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a1eab6a63d6d9d1a0b526179756adb34b">count</a> ($className, $condition='', $parameters=null)</td></tr>
+<tr class="memdesc:a1eab6a63d6d9d1a0b526179756adb34b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of objects of $className from the database respecting the condition possibly passed as parameter.  <a href="#a1eab6a63d6d9d1a0b526179756adb34b">More...</a><br /></td></tr>
+<tr class="separator:a1eab6a63d6d9d1a0b526179756adb34b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af55f4bc22edd15a6e6a090ecc6f1bb60"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#af55f4bc22edd15a6e6a090ecc6f1bb60">getOne</a> ($className, $keyValues, $included=true, $parameters=null, $useCache=NULL)</td></tr>
+<tr class="memdesc:af55f4bc22edd15a6e6a090ecc6f1bb60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an instance of $className from the database, from $keyvalues values of the primary key.  <a href="#af55f4bc22edd15a6e6a090ecc6f1bb60">More...</a><br /></td></tr>
+<tr class="separator:af55f4bc22edd15a6e6a090ecc6f1bb60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefd4db27ee85c2004252f4de1384c8fb"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#aefd4db27ee85c2004252f4de1384c8fb">connect</a> ($dbType, $dbName, $serverName=&quot;127.0.0.1&quot;, $port=&quot;3306&quot;, $user=&quot;root&quot;, $password=&quot;&quot;, $options=[], $cache=false)</td></tr>
 <tr class="memdesc:aefd4db27ee85c2004252f4de1384c8fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes the connection to the database using the past parameters.  <a href="#aefd4db27ee85c2004252f4de1384c8fb">More...</a><br /></td></tr>
 <tr class="separator:aefd4db27ee85c2004252f4de1384c8fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7f9fc68bf9bcc98ec93bfd1017b1818"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#ae7f9fc68bf9bcc98ec93bfd1017b1818">isConnected</a> ()</td></tr>
-<tr class="memdesc:ae7f9fc68bf9bcc98ec93bfd1017b1818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the connection to the database is estabished.  <a href="#ae7f9fc68bf9bcc98ec93bfd1017b1818">More...</a><br /></td></tr>
+<tr class="memdesc:ae7f9fc68bf9bcc98ec93bfd1017b1818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the connection to the database is established.  <a href="#ae7f9fc68bf9bcc98ec93bfd1017b1818">More...</a><br /></td></tr>
 <tr class="separator:ae7f9fc68bf9bcc98ec93bfd1017b1818"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html">DAOUpdatesTrait</a></td></tr>
 <tr class="memitem:a51f3b41ecc14ae0bf5c55a6a3440bec8 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a51f3b41ecc14ae0bf5c55a6a3440bec8">remove</a> ($instance)</td></tr>
 <tr class="memdesc:a51f3b41ecc14ae0bf5c55a6a3440bec8 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the object $instance from the database.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a51f3b41ecc14ae0bf5c55a6a3440bec8">More...</a><br /></td></tr>
 <tr class="separator:a51f3b41ecc14ae0bf5c55a6a3440bec8 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d2989c9f055b22c4bc4f0c60d24dd7 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a39d2989c9f055b22c4bc4f0c60d24dd7">deleteAll</a> ($modelName, $where)</td></tr>
+<tr class="memdesc:a39d2989c9f055b22c4bc4f0c60d24dd7 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes all instances from $modelName matching the condition $where.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a39d2989c9f055b22c4bc4f0c60d24dd7">More...</a><br /></td></tr>
+<tr class="separator:a39d2989c9f055b22c4bc4f0c60d24dd7 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43051d671cf48325266d37fd89304847 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a43051d671cf48325266d37fd89304847">delete</a> ($modelName, $ids)</td></tr>
+<tr class="memdesc:a43051d671cf48325266d37fd89304847 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes all instances from $modelName corresponding to $ids.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a43051d671cf48325266d37fd89304847">More...</a><br /></td></tr>
 <tr class="separator:a43051d671cf48325266d37fd89304847 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac185fbbf7614a399696a88039fca6f1e inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#ac185fbbf7614a399696a88039fca6f1e">insert</a> ($instance, $insertMany=false)</td></tr>
 <tr class="memdesc:ac185fbbf7614a399696a88039fca6f1e inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a new instance $ instance into the database.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#ac185fbbf7614a399696a88039fca6f1e">More...</a><br /></td></tr>
@@ -156,11 +163,44 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a5654ab9c25622bc8f03b855c4b2d14eb inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad952f3b4f904dd608b7339e586500d9c inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#ad952f3b4f904dd608b7339e586500d9c">save</a> ($instance, $updateMany=false)</td></tr>
 <tr class="separator:ad952f3b4f904dd608b7339e586500d9c inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html">DAOUQueries</a></td></tr>
+<tr class="memitem:a81d433bc4aba63c18bf3505e2b0b1e7d inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a81d433bc4aba63c18bf3505e2b0b1e7d">uGetAll</a> ($className, $ucondition='', $included=true, $parameters=null, $useCache=NULL)</td></tr>
+<tr class="memdesc:a81d433bc4aba63c18bf3505e2b0b1e7d inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an array of $className objects from the database.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a81d433bc4aba63c18bf3505e2b0b1e7d">More...</a><br /></td></tr>
+<tr class="separator:a81d433bc4aba63c18bf3505e2b0b1e7d inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d9246fa994b4293945ba30d92ad52b7 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a9d9246fa994b4293945ba30d92ad52b7">uCount</a> ($className, $ucondition='', $parameters=null)</td></tr>
+<tr class="memdesc:a9d9246fa994b4293945ba30d92ad52b7 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of objects of $className from the database respecting the condition possibly passed as parameter.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a9d9246fa994b4293945ba30d92ad52b7">More...</a><br /></td></tr>
+<tr class="separator:a9d9246fa994b4293945ba30d92ad52b7 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae15aa33653345ba3779c2d3ba1c161de inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#ae15aa33653345ba3779c2d3ba1c161de">uGetOne</a> ($className, $ucondition, $included=true, $parameters=null, $useCache=NULL)</td></tr>
+<tr class="memdesc:ae15aa33653345ba3779c2d3ba1c161de inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an instance of $className from the database, from $keyvalues values of the primary key.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#ae15aa33653345ba3779c2d3ba1c161de">More...</a><br /></td></tr>
+<tr class="separator:ae15aa33653345ba3779c2d3ba1c161de inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a1fa3127fc82f96b1436d871ef02be319">$db</a></td></tr>
 <tr class="separator:a1fa3127fc82f96b1436d871ef02be319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a2d1282b5e4184c7e131c86f988b71de5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a2d1282b5e4184c7e131c86f988b71de5">_getOne</a> ($className, <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a> $conditionParser, $included, $useCache)</td></tr>
+<tr class="separator:a2d1282b5e4184c7e131c86f988b71de5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2afe65f39e5ce2bec1dc079276164a50"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a2afe65f39e5ce2bec1dc079276164a50">_getAll</a> ($className, <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a> $conditionParser, $included=true, $useCache=NULL)</td></tr>
+<tr class="separator:a2afe65f39e5ce2bec1dc079276164a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait.html">DAORelationsTrait</a></td></tr>
+<tr class="memitem:a2afe65f39e5ce2bec1dc079276164a50 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait.html#a2afe65f39e5ce2bec1dc079276164a50">_getAll</a> ($className, <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a> $conditionParser, $included=true, $useCache=NULL)</td></tr>
+<tr class="separator:a2afe65f39e5ce2bec1dc079276164a50 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html">DAOUQueries</a></td></tr>
+<tr class="memitem:a2afe65f39e5ce2bec1dc079276164a50 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a2afe65f39e5ce2bec1dc079276164a50">_getAll</a> ($className, <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a> $conditionParser, $included=true, $useCache=NULL)</td></tr>
+<tr class="separator:a2afe65f39e5ce2bec1dc079276164a50 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d1282b5e4184c7e131c86f988b71de5 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a2d1282b5e4184c7e131c86f988b71de5">_getOne</a> ($className, <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a> $conditionParser, $included, $useCache)</td></tr>
+<tr class="separator:a2d1282b5e4184c7e131c86f988b71de5 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaccff6b7b53be5f0b8ac342156671a3e inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#aaccff6b7b53be5f0b8ac342156671a3e">uParse</a> ($className, &amp;$ucondition)</td></tr>
+<tr class="separator:aaccff6b7b53be5f0b8ac342156671a3e inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affe04ce18796b359f680a7a8f2dd0943 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#affe04ce18796b359f680a7a8f2dd0943">uParseExpression</a> ($className, $expression, &amp;$expressionArray, &amp;$condition, &amp;$ucondition, &amp;$aliases)</td></tr>
+<tr class="separator:affe04ce18796b359f680a7a8f2dd0943 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa19120a3ba0f383ebfbd156c0560723f inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#aa19120a3ba0f383ebfbd156c0560723f">getAnnotFieldsInRelations</a> ($className)</td></tr>
+<tr class="separator:aa19120a3ba0f383ebfbd156c0560723f inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88619b1ae55cdf390f5271fc97764a1a inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a88619b1ae55cdf390f5271fc97764a1a">uGetExpressions</a> ($condition)</td></tr>
+<tr class="separator:a88619b1ae55cdf390f5271fc97764a1a inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
@@ -168,29 +208,25 @@ Static Private Member Functions</h2></td></tr>
 <tr class="separator:ae08e2e3b99bca15e0b4cd5478c8bdf24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dd3d57231c60039816d19ea2fe712fe"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a9dd3d57231c60039816d19ea2fe712fe">setToMember</a> ($member, $instance, $value, $class, $part)</td></tr>
 <tr class="separator:a9dd3d57231c60039816d19ea2fe712fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3715e99d923dd44be78514383b27fa2b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a3715e99d923dd44be78514383b27fa2b">getManyToManyFromArray</a> (&amp;$ret, $instance, $array, $class, $parser)</td></tr>
-<tr class="separator:a3715e99d923dd44be78514383b27fa2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86dbfd5f41e2f560ef3aed6d2e20364a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a86dbfd5f41e2f560ef3aed6d2e20364a">_affectsObjectsFromArray</a> ($queries, $objects, $affectsCallback, $useCache=NULL)</td></tr>
-<tr class="separator:a86dbfd5f41e2f560ef3aed6d2e20364a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60fc7dd96a66b8456921dc48c9a1b14b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a60fc7dd96a66b8456921dc48c9a1b14b">affectsManyToOneFromArray</a> ($object, $member, $manyToOneObjects, $fkField)</td></tr>
-<tr class="separator:a60fc7dd96a66b8456921dc48c9a1b14b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa946c5be2f7d249234b738cc4eab0473"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#aa946c5be2f7d249234b738cc4eab0473">loadObjectFromRow</a> ($row, $className, $invertedJoinColumns, $oneToManyFields, $members, &amp;$oneToManyQueries, &amp;$manyToOneQueries)</td></tr>
-<tr class="separator:aa946c5be2f7d249234b738cc4eab0473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f442ed999d049a452de9c147df39e65"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a0f442ed999d049a452de9c147df39e65">prepareOneToMany</a> (&amp;$ret, $instance, $member, $annot=null)</td></tr>
-<tr class="memdesc:a0f442ed999d049a452de9c147df39e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares members associated with $instance with a oneToMany type relationship.  <a href="#a0f442ed999d049a452de9c147df39e65">More...</a><br /></td></tr>
-<tr class="separator:a0f442ed999d049a452de9c147df39e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a16aa772dec3c369639097a406ccc8a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a7a16aa772dec3c369639097a406ccc8a">prepareManyToOne</a> (&amp;$ret, $value, $fkField, $annotationArray)</td></tr>
-<tr class="memdesc:a7a16aa772dec3c369639097a406ccc8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares members associated with $instance with a manyToOne type relationship.  <a href="#a7a16aa772dec3c369639097a406ccc8a">More...</a><br /></td></tr>
-<tr class="separator:a7a16aa772dec3c369639097a406ccc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b658915f6f4ad3f9a4a943b15864a46"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a1b658915f6f4ad3f9a4a943b15864a46">getManyToManyFromArray</a> ($instance, $array, $class, $parser)</td></tr>
+<tr class="separator:a1b658915f6f4ad3f9a4a943b15864a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dc7f9d958674888c11ad0f591595259"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a4dc7f9d958674888c11ad0f591595259">loadObjectFromRow</a> ($row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields, $members, &amp;$oneToManyQueries, &amp;$manyToOneQueries, &amp;$manyToManyParsers)</td></tr>
+<tr class="separator:a4dc7f9d958674888c11ad0f591595259"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bac3fc93366ffb953c227d0d4078e26"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a3bac3fc93366ffb953c227d0d4078e26">parseKey</a> (&amp;$keyValues, $className)</td></tr>
 <tr class="separator:a3bac3fc93366ffb953c227d0d4078e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html">DAOUQueries</a></td></tr>
+<tr class="memitem:a403d04bc3fa6e3595fbdb748d931d4fa inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a403d04bc3fa6e3595fbdb748d931d4fa">$annotFieldsInRelations</a> =[]</td></tr>
+<tr class="separator:a403d04bc3fa6e3595fbdb748d931d4fa inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00018">18</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00021">21</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a86dbfd5f41e2f560ef3aed6d2e20364a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86dbfd5f41e2f560ef3aed6d2e20364a">&#9670;&nbsp;</a></span>_affectsObjectsFromArray()</h2>
+<a id="a2afe65f39e5ce2bec1dc079276164a50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2afe65f39e5ce2bec1dc079276164a50">&#9670;&nbsp;</a></span>_getAll()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -199,22 +235,22 @@ Static Private Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static _affectsObjectsFromArray </td>
+          <td class="memname">static _getAll </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$queries</em>, </td>
+          <td class="paramname"><em>$className</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a>&#160;</td>
+          <td class="paramname"><em>$conditionParser</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$objects</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$affectsCallback</em>, </td>
+          <td class="paramname"><em>$included</em> = <code>true</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -230,12 +266,72 @@ Static Private Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$className</td><td></td></tr>
+    <tr><td class="paramtype">ConditionParser</td><td class="paramname">$conditionParser</td><td></td></tr>
+    <tr><td class="paramtype">boolean&#160;|&#160;array</td><td class="paramname">$included</td><td></td></tr>
+    <tr><td class="paramtype">boolean</td><td class="paramname">$useCache</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00228">228</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="a2d1282b5e4184c7e131c86f988b71de5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d1282b5e4184c7e131c86f988b71de5">&#9670;&nbsp;</a></span>_getOne()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static _getOne </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$className</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a>&#160;</td>
+          <td class="paramname"><em>$conditionParser</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$included</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$useCache</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00246">246</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00210">210</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -285,7 +381,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00052">52</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00057">57</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -337,57 +433,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00149">149</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
-
-</div>
-</div>
-<a id="a60fc7dd96a66b8456921dc48c9a1b14b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60fc7dd96a66b8456921dc48c9a1b14b">&#9670;&nbsp;</a></span>affectsManyToOneFromArray()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static affectsManyToOneFromArray </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$object</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$member</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$manyToOneObjects</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$fkField</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00257">257</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00159">159</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -446,7 +492,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00093">93</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00102">102</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -535,12 +581,12 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00395">395</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00369">369</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="a39ef8a159eb9aae4e9d65206367e14d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39ef8a159eb9aae4e9d65206367e14d3">&#9670;&nbsp;</a></span>count()</h2>
+<a id="a1eab6a63d6d9d1a0b526179756adb34b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1eab6a63d6d9d1a0b526179756adb34b">&#9670;&nbsp;</a></span>count()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -558,7 +604,13 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$condition</em> = <code>''</code>&#160;</td>
+          <td class="paramname"><em>$condition</em> = <code>''</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$parameters</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -578,17 +630,18 @@ Static Private Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$className</td><td>complete classname of the model to load </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$condition</td><td>Part following the WHERE of an SQL statement </td></tr>
+    <tr><td class="paramtype">array&#160;|&#160;null</td><td class="paramname">$parameters</td><td>The query parameters </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int count of objects </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00347">347</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00323">323</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="afc900e07051d67d9b28de98d337810d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc900e07051d67d9b28de98d337810d5">&#9670;&nbsp;</a></span>getAll()</h2>
+<a id="af87c07e78e13e9f1d5ddaf11245fd029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af87c07e78e13e9f1d5ddaf11245fd029">&#9670;&nbsp;</a></span>getAll()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -612,13 +665,13 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$loadManyToOne</em> = <code>true</code>, </td>
+          <td class="paramname"><em>$included</em> = <code>true</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$loadOneToMany</em> = <code>false</code>, </td>
+          <td class="paramname"><em>$parameters</em> = <code>null</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -644,20 +697,20 @@ Static Private Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$className</td><td>class name of the model to load </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$condition</td><td>Part following the WHERE of an SQL statement </td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$loadManyToOne</td><td>if true, charges associate members with manyToOne association </td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$loadOneToMany</td><td>if true, charges associate members with oneToMany association </td></tr>
+    <tr><td class="paramtype">boolean&#160;|&#160;array</td><td class="paramname">$included</td><td>if true, loads associate members with associations, if array, example : ["client.*","commands"] </td></tr>
+    <tr><td class="paramtype">array&#160;|&#160;null</td><td class="paramname">$parameters</td><td></td></tr>
     <tr><td class="paramtype">boolean</td><td class="paramname">$useCache</td><td>use the active cache if true </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00193">193</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00206">206</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="a13d10867f0c662619b691ae1a88eb94d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13d10867f0c662619b691ae1a88eb94d">&#9670;&nbsp;</a></span>getManyToMany()</h2>
+<a id="af99cff2b7541830f2d09b3578fc530dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af99cff2b7541830f2d09b3578fc530dd">&#9670;&nbsp;</a></span>getManyToMany()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -676,6 +729,12 @@ Static Private Member Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$member</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$included</em> = <code>false</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -707,18 +766,19 @@ Static Private Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramtype">object</td><td class="paramname">$instance</td><td></td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$member</td><td>Member on which a ManyToMany annotation must be present </td></tr>
+    <tr><td class="paramtype">boolean&#160;|&#160;array</td><td class="paramname">$included</td><td>if true, loads associate members with associations, if array, example : ["client.*","commands"] </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$array</td><td>optional parameter containing the list of possible child records </td></tr>
     <tr><td class="paramtype">boolean</td><td class="paramname">$useCache</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00127">127</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00137">137</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="a3715e99d923dd44be78514383b27fa2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3715e99d923dd44be78514383b27fa2b">&#9670;&nbsp;</a></span>getManyToManyFromArray()</h2>
+<a id="a1b658915f6f4ad3f9a4a943b15864a46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b658915f6f4ad3f9a4a943b15864a46">&#9670;&nbsp;</a></span>getManyToManyFromArray()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -729,12 +789,6 @@ Static Private Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static getManyToManyFromArray </td>
           <td>(</td>
-          <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$ret</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$instance</em>, </td>
         </tr>
@@ -769,12 +823,12 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00159">159</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00169">169</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="a75935180dfb016f7972823642c646595"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75935180dfb016f7972823642c646595">&#9670;&nbsp;</a></span>getManyToOne()</h2>
+<a id="a2932683a0376280f1bbd4d67e686d223"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2932683a0376280f1bbd4d67e686d223">&#9670;&nbsp;</a></span>getManyToOne()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -798,6 +852,12 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$included</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$useCache</em> = <code>NULL</code>&#160;</td>
         </tr>
         <tr>
@@ -813,22 +873,23 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Loads member associated with $instance by a ManyToOne type relationship. </p>
+<p>Loads member associated with $instance by a ManyToOne relationship. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">object</td><td class="paramname">$instance</td><td></td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$member</td><td></td></tr>
+    <tr><td class="paramtype">boolean&#160;|&#160;array</td><td class="paramname">$included</td><td>if true, loads associate members with associations, if array, example : ["client.*","commands"] </td></tr>
     <tr><td class="paramtype">boolean</td><td class="paramname">$useCache</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00030">30</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00036">36</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="aa4d71dac0727b59b0155d8e40b3f29bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4d71dac0727b59b0155d8e40b3f29bf">&#9670;&nbsp;</a></span>getOne()</h2>
+<a id="af55f4bc22edd15a6e6a090ecc6f1bb60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af55f4bc22edd15a6e6a090ecc6f1bb60">&#9670;&nbsp;</a></span>getOne()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -852,13 +913,13 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$loadManyToOne</em> = <code>true</code>, </td>
+          <td class="paramname"><em>$included</em> = <code>true</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$loadOneToMany</em> = <code>false</code>, </td>
+          <td class="paramname"><em>$parameters</em> = <code>null</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -884,20 +945,20 @@ Static Private Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramtype">String</td><td class="paramname">$className</td><td>complete classname of the model to load </td></tr>
     <tr><td class="paramtype">Array&#160;|&#160;string</td><td class="paramname">$keyValues</td><td>primary key values or condition </td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$loadManyToOne</td><td>if true, charges associate members with manyToOne association </td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$loadOneToMany</td><td>if true, charges associate members with oneToMany association </td></tr>
+    <tr><td class="paramtype">boolean&#160;|&#160;array</td><td class="paramname">$included</td><td>if true, charges associate members with association </td></tr>
+    <tr><td class="paramtype">array&#160;|&#160;null</td><td class="paramname">$parameters</td><td>the request parameters </td></tr>
     <tr><td class="paramtype">boolean</td><td class="paramname">$useCache</td><td>use cache if true </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object the instance loaded or null if not found </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00363">363</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00339">339</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="a5e2be697b4769538b5f06d22592b1709"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e2be697b4769538b5f06d22592b1709">&#9670;&nbsp;</a></span>getOneToMany()</h2>
+<a id="a513674cd74e67bc44a80ca32ce83b0d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a513674cd74e67bc44a80ca32ce83b0d8">&#9670;&nbsp;</a></span>getOneToMany()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -916,6 +977,12 @@ Static Private Member Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$member</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$included</em> = <code>true</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -947,13 +1014,14 @@ Static Private Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramtype">object</td><td class="paramname">$instance</td><td></td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$member</td><td>Member on which a oneToMany annotation must be present </td></tr>
+    <tr><td class="paramtype">boolean&#160;|&#160;array</td><td class="paramname">$included</td><td>if true, loads associate members with associations, if array, example : ["client.*","commands"] </td></tr>
     <tr><td class="paramtype">boolean</td><td class="paramname">$useCache</td><td></td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$annot</td><td>used internally </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00071">71</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00080">80</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -991,7 +1059,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00238">238</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00266">266</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1018,15 +1086,15 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns true if the connection to the database is estabished. </p>
+<p>Returns true if the connection to the database is established. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00409">409</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00383">383</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="aa946c5be2f7d249234b738cc4eab0473"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa946c5be2f7d249234b738cc4eab0473">&#9670;&nbsp;</a></span>loadObjectFromRow()</h2>
+<a id="a4dc7f9d958674888c11ad0f591595259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dc7f9d958674888c11ad0f591595259">&#9670;&nbsp;</a></span>loadObjectFromRow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1062,6 +1130,12 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$manyToManyFields</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$members</em>, </td>
         </tr>
         <tr>
@@ -1074,7 +1148,13 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$manyToOneQueries</em>&#160;</td>
+          <td class="paramname"><em>$manyToOneQueries</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$manyToManyParsers</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1097,17 +1177,18 @@ Static Private Member Functions</h2></td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$members</td><td></td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$oneToManyQueries</td><td></td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$manyToOneQueries</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$manyToManyParsers</td><td></td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00275">275</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00285">285</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="a7a4e71e4296bbb6ee2027397e1ca23e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a4e71e4296bbb6ee2027397e1ca23e0">&#9670;&nbsp;</a></span>paginate()</h2>
+<a id="a24dcd7c727e2f65305713a7b90668926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24dcd7c727e2f65305713a7b90668926">&#9670;&nbsp;</a></span>paginate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1137,7 +1218,13 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$condition</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>$condition</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$included</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1152,7 +1239,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00231">231</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00259">259</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1190,129 +1277,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00376">376</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
-
-</div>
-</div>
-<a id="a7a16aa772dec3c369639097a406ccc8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a16aa772dec3c369639097a406ccc8a">&#9670;&nbsp;</a></span>prepareManyToOne()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static prepareManyToOne </td>
-          <td>(</td>
-          <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$ret</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$fkField</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$annotationArray</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Prepares members associated with $instance with a manyToOne type relationship. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramtype"></td><td class="paramname">$ret</td><td>array of sql conditions </td></tr>
-    <tr><td class="paramtype">mixed</td><td class="paramname">$value</td><td></td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$fkField</td><td></td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$annotationArray</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00331">331</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
-
-</div>
-</div>
-<a id="a0f442ed999d049a452de9c147df39e65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f442ed999d049a452de9c147df39e65">&#9670;&nbsp;</a></span>prepareOneToMany()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static prepareOneToMany </td>
-          <td>(</td>
-          <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$ret</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$instance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$member</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$annot</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Prepares members associated with $instance with a oneToMany type relationship. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramtype"></td><td class="paramname">$ret</td><td>array of sql conditions </td></tr>
-    <tr><td class="paramtype">object</td><td class="paramname">$instance</td><td></td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$member</td><td>Member on which a OneToMany annotation must be present </td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$annot</td><td>used internally </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00307">307</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00350">350</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1368,7 +1333,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00108">108</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00117">117</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1393,7 +1358,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00022">22</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00027">27</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1407,7 +1372,7 @@ Static Private Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm.html">orm</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html">DAO</a></li>
-    <li class="footer"><small>Generated on Thu May 31 2018 02:05:27 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:10 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

@@ -1,7 +1,9 @@
 var searchData=
 [
   ['dao',['DAO',['../class_ubiquity_1_1orm_1_1_d_a_o.html',1,'Ubiquity::orm']]],
+  ['daorelationstrait',['DAORelationsTrait',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait.html',1,'Ubiquity::orm::traits']]],
   ['daoupdatestrait',['DAOUpdatesTrait',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html',1,'Ubiquity::orm::traits']]],
+  ['daouqueries',['DAOUQueries',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html',1,'Ubiquity::orm::traits']]],
   ['database',['Database',['../class_ubiquity_1_1db_1_1_database.html',1,'Ubiquity::db']]],
   ['databasereversor',['DatabaseReversor',['../class_ubiquity_1_1orm_1_1reverse_1_1_database_reversor.html',1,'Ubiquity::orm::reverse']]],
   ['databasetrait',['DatabaseTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_database_trait.html',1,'Ubiquity::controllers::admin::traits']]],

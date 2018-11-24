@@ -12,10 +12,11 @@ var searchData=
   ['manytooneannotation_2ephp',['ManyToOneAnnotation.php',['../_many_to_one_annotation_8php.html',1,'']]],
   ['manytooneformfield',['manyToOneFormField',['../class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a100ec3dea2fc0abbc05f38d46fcaeab6',1,'Ubiquity::controllers::admin::viewers::ModelViewer']]],
   ['manytoonetostring',['manyToOneTostring',['../class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#abcd38f076be66d582226d87f13c7f43c',1,'Ubiquity::utils::yuml::ClassToYuml']]],
+  ['mask',['mask',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a0df6f6eeef7d57f471aa359970839555',1,'Ubiquity::utils::base::UString']]],
   ['master_5fdoc',['master_doc',['../namespaceconf.html#a87edce364655e617d4eea122c1c5db0a',1,'conf']]],
   ['member',['Member',['../class_ubiquity_1_1orm_1_1creator_1_1_member.html',1,'Ubiquity::orm::creator']]],
   ['member_2ephp',['Member.php',['../_member_8php.html',1,'']]],
-  ['message',['message',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a0d5395c75e330f52a914cb9a37a9af80',1,'Ubiquity\controllers\auth\AuthController\message()'],['../class_ubiquity_1_1controllers_1_1_auth_controller.html#a1e5e38759bd7171319212aa5b4cf9320',1,'Ubiquity\controllers\AuthController\message()']]],
+  ['message',['message',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a0d5395c75e330f52a914cb9a37a9af80',1,'Ubiquity::controllers::auth::AuthController']]],
   ['messagestrait',['MessagesTrait',['../class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html',1,'Ubiquity::controllers::semantic']]],
   ['messagestrait_2ephp',['MessagesTrait.php',['../_messages_trait_8php.html',1,'']]],
   ['microtemplateengine',['MicroTemplateEngine',['../class_ubiquity_1_1views_1_1engine_1_1micro_1_1_micro_template_engine.html',1,'Ubiquity::views::engine::micro']]],
@@ -36,5 +37,9 @@ var searchData=
   ['modelstrait',['ModelsTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html',1,'Ubiquity::controllers::admin::traits']]],
   ['modelstrait_2ephp',['ModelsTrait.php',['../_models_trait_8php.html',1,'']]],
   ['modelviewer',['ModelViewer',['../class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html',1,'Ubiquity::controllers::admin::viewers']]],
-  ['modelviewer_2ephp',['ModelViewer.php',['../_model_viewer_8php.html',1,'']]]
+  ['modelviewer_2ephp',['ModelViewer.php',['../_model_viewer_8php.html',1,'']]],
+  ['mysql_5fdate_5fformat',['MYSQL_DATE_FORMAT',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#a0ad7735303bceb894772d4cbc01b09de',1,'Ubiquity::utils::base::UDateTime']]],
+  ['mysql_5fdatetime_5fformat',['MYSQL_DATETIME_FORMAT',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#a5acd927e8329087d4b0d63872b3dae04',1,'Ubiquity::utils::base::UDateTime']]],
+  ['mysqldate',['mysqlDate',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#aa72fbb86352805c73e8d770951f5ec30',1,'Ubiquity::utils::base::UDateTime']]],
+  ['mysqldatetime',['mysqlDateTime',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#a20cc1c31467a551bb1ea549ec0f1b458',1,'Ubiquity::utils::base::UDateTime']]]
 ];

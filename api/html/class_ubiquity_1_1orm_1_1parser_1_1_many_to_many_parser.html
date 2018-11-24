@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.3</span>
+   &#160;<span id="projectnumber">2.0.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1orm_1_1parser_1_1_ma
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">ManyToManyParser Class Reference</div>  </div>
@@ -95,10 +96,10 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1orm_1_1parser_1_1_ma
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a63ea8568c3c110410b46eed51a262cc9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a63ea8568c3c110410b46eed51a262cc9">__construct</a> ($instance, $member)</td></tr>
-<tr class="separator:a63ea8568c3c110410b46eed51a262cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4be4055f3361d4800e16bc2e2e38cda6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a4be4055f3361d4800e16bc2e2e38cda6">init</a> ()</td></tr>
-<tr class="separator:a4be4055f3361d4800e16bc2e2e38cda6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79838ed776ddbed42d251c2f4f505b54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a79838ed776ddbed42d251c2f4f505b54">__construct</a> ($instance, $member=null)</td></tr>
+<tr class="separator:a79838ed776ddbed42d251c2f4f505b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3eb162e69ed91a555b12eec9ee908948"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a3eb162e69ed91a555b12eec9ee908948">init</a> ($annot=false)</td></tr>
+<tr class="separator:a3eb162e69ed91a555b12eec9ee908948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a839d3ac568d9da51ba79ea1d9f42fe5b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a839d3ac568d9da51ba79ea1d9f42fe5b">getMember</a> ()</td></tr>
 <tr class="separator:a839d3ac568d9da51ba79ea1d9f42fe5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d29a2cad95805452186fd56da2431a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a0d29a2cad95805452186fd56da2431a1">setMember</a> ($member)</td></tr>
@@ -143,9 +144,32 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afba86dd08ac8528cc6cfe07a44c91fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11072736ebf1034e8d573e414ca41f97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a11072736ebf1034e8d573e414ca41f97">setInstance</a> ($instance)</td></tr>
 <tr class="separator:a11072736ebf1034e8d573e414ca41f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fbccb23be102022036c24b1d7701ba8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a9fbccb23be102022036c24b1d7701ba8">getSQL</a> ($alias=&quot;&quot;, $aliases=null)</td></tr>
+<tr class="separator:a9fbccb23be102022036c24b1d7701ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdbe84ab6bee40d04edc785ff3d9fe6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#acdbe84ab6bee40d04edc785ff3d9fe6e">getConcatSQL</a> ()</td></tr>
+<tr class="separator:acdbe84ab6bee40d04edc785ff3d9fe6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8858e99f08aab0dba2c9e9105ce633bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a8858e99f08aab0dba2c9e9105ce633bb">getParserWhereMask</a> ($mask=&quot;'{value}'&quot;)</td></tr>
+<tr class="separator:a8858e99f08aab0dba2c9e9105ce633bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf5f4a885446c4613a79f645e3c7e0f9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#adf5f4a885446c4613a79f645e3c7e0f9">generateConcatSQL</a> ()</td></tr>
+<tr class="separator:adf5f4a885446c4613a79f645e3c7e0f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a683dee921785b9d556a05641e944a8bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a683dee921785b9d556a05641e944a8bd">addValue</a> ($value)</td></tr>
+<tr class="separator:a683dee921785b9d556a05641e944a8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a108a9e85032affe4a714ff2d18a406d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a108a9e85032affe4a714ff2d18a406d0">getWhereValues</a> ()</td></tr>
+<tr class="separator:a108a9e85032affe4a714ff2d18a406d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a7919ada452553b4ea00792c10170b4cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a7919ada452553b4ea00792c10170b4cc">_init</a> ($class, $annot)</td></tr>
+<tr class="separator:a7919ada452553b4ea00792c10170b4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9c7ddb2a117c9b6edff421db5f8c089"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#aa9c7ddb2a117c9b6edff421db5f8c089">getParserConcatWhereMask</a> ($mask=&quot;'{value}'&quot;)</td></tr>
+<tr class="separator:aa9c7ddb2a117c9b6edff421db5f8c089"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a918da85e6a707f1828476329ec2c2dcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a918da85e6a707f1828476329ec2c2dcb">getParserConcatWhereInMask</a> ($mask=&quot;'{values}'&quot;)</td></tr>
+<tr class="separator:a918da85e6a707f1828476329ec2c2dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:ae8876a14058f368335baccf35af4a22b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#ae8876a14058f368335baccf35af4a22b">$table</a></td></tr>
+<tr class="separator:ae8876a14058f368335baccf35af4a22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e1c849c6148a8732eee400fcee0d044"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a5e1c849c6148a8732eee400fcee0d044">$member</a></td></tr>
 <tr class="separator:a5e1c849c6148a8732eee400fcee0d044"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d55a423242e4af7ad97c5187511893f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a0d55a423242e4af7ad97c5187511893f">$joinTable</a></td></tr>
@@ -168,16 +192,18 @@ Private Attributes</h2></td></tr>
 <tr class="separator:aac4b875a598158d51d44a2b061265016"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9d7ce33ebb142b70e58b68052ca0ea8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#ad9d7ce33ebb142b70e58b68052ca0ea8">$instance</a></td></tr>
 <tr class="separator:ad9d7ce33ebb142b70e58b68052ca0ea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6acca999b6d497cc7789056cc693521"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#ac6acca999b6d497cc7789056cc693521">$whereValues</a></td></tr>
+<tr class="separator:ac6acca999b6d497cc7789056cc693521"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html" title="ManyToManyParser. ">ManyToManyParser</a>. </p>
 <dl class="section author"><dt>Author</dt><dd>jc </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.0.0.4 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.1.0.0 </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00012">12</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a63ea8568c3c110410b46eed51a262cc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63ea8568c3c110410b46eed51a262cc9">&#9670;&nbsp;</a></span>__construct()</h2>
+<a id="a79838ed776ddbed42d251c2f4f505b54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79838ed776ddbed42d251c2f4f505b54">&#9670;&nbsp;</a></span>__construct()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -192,7 +218,7 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$member</em>&#160;</td>
+          <td class="paramname"><em>$member</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -202,11 +228,107 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00025">25</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00027">27</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7919ada452553b4ea00792c10170b4cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7919ada452553b4ea00792c10170b4cc">&#9670;&nbsp;</a></span>_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_init </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$annot</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00049">49</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a683dee921785b9d556a05641e944a8bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a683dee921785b9d556a05641e944a8bd">&#9670;&nbsp;</a></span>addValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">addValue </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00231">231</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="adf5f4a885446c4613a79f645e3c7e0f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf5f4a885446c4613a79f645e3c7e0f9">&#9670;&nbsp;</a></span>generateConcatSQL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generateConcatSQL </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00214">214</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="acdbe84ab6bee40d04edc785ff3d9fe6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdbe84ab6bee40d04edc785ff3d9fe6e">&#9670;&nbsp;</a></span>getConcatSQL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getConcatSQL </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00197">197</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
 <a id="a8a989d6bbd201abbc9a7fb990a9a9ddf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8a989d6bbd201abbc9a7fb990a9a9ddf">&#9670;&nbsp;</a></span>getFkField()</h2>
 
@@ -222,7 +344,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00097">97</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00108">108</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -241,7 +363,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00160">160</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00171">171</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -260,7 +382,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00151">151</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00162">162</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -279,7 +401,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00079">79</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00090">90</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -298,7 +420,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00070">70</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00081">81</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -317,7 +439,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00088">88</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00099">99</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -336,7 +458,83 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00133">133</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00144">144</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a918da85e6a707f1828476329ec2c2dcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a918da85e6a707f1828476329ec2c2dcb">&#9670;&nbsp;</a></span>getParserConcatWhereInMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">getParserConcatWhereInMask </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$mask</em> = <code>&quot;'{values}'&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00209">209</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="aa9c7ddb2a117c9b6edff421db5f8c089"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9c7ddb2a117c9b6edff421db5f8c089">&#9670;&nbsp;</a></span>getParserConcatWhereMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">getParserConcatWhereMask </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$mask</em> = <code>&quot;'{value}'&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00205">205</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a8858e99f08aab0dba2c9e9105ce633bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8858e99f08aab0dba2c9e9105ce633bb">&#9670;&nbsp;</a></span>getParserWhereMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getParserWhereMask </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$mask</em> = <code>&quot;'{value}'&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00201">201</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -355,7 +553,37 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00142">142</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00153">153</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a9fbccb23be102022036c24b1d7701ba8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fbccb23be102022036c24b1d7701ba8">&#9670;&nbsp;</a></span>getSQL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getSQL </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$alias</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$aliases</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00180">180</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -374,7 +602,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00106">106</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00117">117</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -393,7 +621,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00115">115</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00126">126</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -412,12 +640,32 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00124">124</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00135">135</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
-<a id="a4be4055f3361d4800e16bc2e2e38cda6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4be4055f3361d4800e16bc2e2e38cda6">&#9670;&nbsp;</a></span>init()</h2>
+<a id="a108a9e85032affe4a714ff2d18a406d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a108a9e85032affe4a714ff2d18a406d0">&#9670;&nbsp;</a></span>getWhereValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getWhereValues </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>array|null </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00237">237</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a3eb162e69ed91a555b12eec9ee908948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3eb162e69ed91a555b12eec9ee908948">&#9670;&nbsp;</a></span>init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -425,13 +673,14 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">init </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$annot</em> = <code>false</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00030">30</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00033">33</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -451,7 +700,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00101">101</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00112">112</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -471,7 +720,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00164">164</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00175">175</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -491,7 +740,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00155">155</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00166">166</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -511,7 +760,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00083">83</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00094">94</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -531,7 +780,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00074">74</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00085">85</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -551,7 +800,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00092">92</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00103">103</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -571,7 +820,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00137">137</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00148">148</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -591,7 +840,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00146">146</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00157">157</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -611,7 +860,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00110">110</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00121">121</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -631,7 +880,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00119">119</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00130">130</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -651,7 +900,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00128">128</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00139">139</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -676,7 +925,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00016">16</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00017">17</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -700,7 +949,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00023">23</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00024">24</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -724,7 +973,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00021">21</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00022">22</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -748,7 +997,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00014">14</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00015">15</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -772,7 +1021,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00013">13</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00014">14</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -796,7 +1045,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00015">15</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00016">16</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -820,7 +1069,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00020">20</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00021">21</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -844,7 +1093,31 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00022">22</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00023">23</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="ae8876a14058f368335baccf35af4a22b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8876a14058f368335baccf35af4a22b">&#9670;&nbsp;</a></span>$table</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$table</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00013">13</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -868,7 +1141,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00017">17</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00018">18</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -892,7 +1165,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00018">18</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00019">19</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -916,7 +1189,31 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00019">19</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00020">20</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
+
+</div>
+</div>
+<a id="ac6acca999b6d497cc7789056cc693521"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6acca999b6d497cc7789056cc693521">&#9670;&nbsp;</a></span>$whereValues</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$whereValues</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_many_to_many_parser_8php_source.html#l00025">25</a> of file <a class="el" href="_many_to_many_parser_8php_source.html">ManyToManyParser.php</a>.</p>
 
 </div>
 </div>
@@ -930,7 +1227,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm.html">orm</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm_1_1parser.html">parser</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html">ManyToManyParser</a></li>
-    <li class="footer"><small>Generated on Thu May 31 2018 02:05:27 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:11 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

@@ -9,17 +9,11 @@ var dir_e1e156d3cf7a3d761c8efc08b76ad348 =
     [ "Admin.php", "_admin_8php.html", [
       [ "Admin", "class_ubiquity_1_1controllers_1_1_admin.html", "class_ubiquity_1_1controllers_1_1_admin" ]
     ] ],
-    [ "AuthController.php", "_auth_controller_8php.html", [
-      [ "AuthController", "class_ubiquity_1_1controllers_1_1_auth_controller.html", "class_ubiquity_1_1controllers_1_1_auth_controller" ]
-    ] ],
     [ "Controller.php", "_controller_8php.html", [
       [ "Controller", "class_ubiquity_1_1controllers_1_1_controller.html", "class_ubiquity_1_1controllers_1_1_controller" ]
     ] ],
     [ "ControllerBase.php", "_controller_base_8php.html", [
       [ "ControllerBase", "class_ubiquity_1_1controllers_1_1_controller_base.html", "class_ubiquity_1_1controllers_1_1_controller_base" ]
-    ] ],
-    [ "CRUDController.php", "_c_r_u_d_controller_8php.html", [
-      [ "CRUDController", "class_ubiquity_1_1controllers_1_1_c_r_u_d_controller.html", "class_ubiquity_1_1controllers_1_1_c_r_u_d_controller" ]
     ] ],
     [ "Router.php", "_router_8php.html", [
       [ "Router", "class_ubiquity_1_1controllers_1_1_router.html", "class_ubiquity_1_1controllers_1_1_router" ]

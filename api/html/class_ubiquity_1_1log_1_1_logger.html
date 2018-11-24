@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.3</span>
+   &#160;<span id="projectnumber">2.0.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -91,26 +91,59 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1log_1_1_logger.html'
 <div class="title">Logger Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for Logger:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="class_ubiquity_1_1log_1_1_logger.png" usemap="#Logger_map" alt=""/>
+  <map id="Logger_map" name="Logger_map">
+<area href="class_ubiquity_1_1log_1_1libraries_1_1_u_monolog.html" alt="UMonolog" shape="rect" coords="0,56,69,80"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1d5fc906d205089ddcc1a8dbaf96eecf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a1d5fc906d205089ddcc1a8dbaf96eecf">_log</a> ($id, $message, $code)</td></tr>
-<tr class="separator:a1d5fc906d205089ddcc1a8dbaf96eecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a451b638d971a7fee680aa1e2133287c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a451b638d971a7fee680aa1e2133287c2">_warn</a> ($id, $message, $code)</td></tr>
-<tr class="separator:a451b638d971a7fee680aa1e2133287c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6509fbf10e7da9622fd84be1c30d663b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a6509fbf10e7da9622fd84be1c30d663b">_error</a> ($id, $message, $code)</td></tr>
-<tr class="separator:a6509fbf10e7da9622fd84be1c30d663b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a327ef136ea5477c67089c021ddcfc3c8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a327ef136ea5477c67089c021ddcfc3c8">_log</a> ($level, $context, $message, $part, $extra)</td></tr>
+<tr class="separator:a327ef136ea5477c67089c021ddcfc3c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bf6fed0ee5f444d7090d6bdb0299cb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a2bf6fed0ee5f444d7090d6bdb0299cb7">_info</a> ($context, $message, $part, $extra)</td></tr>
+<tr class="separator:a2bf6fed0ee5f444d7090d6bdb0299cb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11332896940452a5815c87ba8a2c49c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a11332896940452a5815c87ba8a2c49c9">_warn</a> ($context, $message, $part, $extra)</td></tr>
+<tr class="separator:a11332896940452a5815c87ba8a2c49c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22a82ac7b00977668d0601c3347fc28f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a22a82ac7b00977668d0601c3347fc28f">_error</a> ($context, $message, $part, $extra)</td></tr>
+<tr class="separator:a22a82ac7b00977668d0601c3347fc28f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38104adbfb93d7ea63699e329b1482af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a38104adbfb93d7ea63699e329b1482af">_critical</a> ($context, $message, $part, $extra)</td></tr>
+<tr class="separator:a38104adbfb93d7ea63699e329b1482af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a5148e60ab55273169bee4c2f475034"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a1a5148e60ab55273169bee4c2f475034">_alert</a> ($context, $message, $part, $extra)</td></tr>
+<tr class="separator:a1a5148e60ab55273169bee4c2f475034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9007da7bcc17daeb8b3bf36dd36bfab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#aa9007da7bcc17daeb8b3bf36dd36bfab">_asObjects</a> ($reverse=true, $maxlines=10, $contexts=null)</td></tr>
+<tr class="separator:aa9007da7bcc17daeb8b3bf36dd36bfab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedfada3ba5e8740c57f36a834a931486"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#aedfada3ba5e8740c57f36a834a931486">_clearAll</a> ()</td></tr>
+<tr class="separator:aedfada3ba5e8740c57f36a834a931486"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a24f5ae49c0bfa3b640f3208fa13985d1"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a24f5ae49c0bfa3b640f3208fa13985d1">inContext</a> ($contexts, $context)</td></tr>
+<tr class="separator:a24f5ae49c0bfa3b640f3208fa13985d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b67ac7179398e39bf909d067e38c1bf"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a9b67ac7179398e39bf909d067e38c1bf">init</a> (&amp;$config)</td></tr>
 <tr class="separator:a9b67ac7179398e39bf909d067e38c1bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ff88d48c7e02ec4c72230e1aea89cf9"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a4ff88d48c7e02ec4c72230e1aea89cf9">log</a> ($id, $message, $code=0)</td></tr>
-<tr class="separator:a4ff88d48c7e02ec4c72230e1aea89cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bf32c02edd4541d847da04d7c1f5d7b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a0bf32c02edd4541d847da04d7c1f5d7b">warn</a> ($id, $message, $code=0)</td></tr>
-<tr class="separator:a0bf32c02edd4541d847da04d7c1f5d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeeae73c6b6a514be50a67e54f570e1e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#abeeae73c6b6a514be50a67e54f570e1e">error</a> ($id, $message, $code=0)</td></tr>
-<tr class="separator:abeeae73c6b6a514be50a67e54f570e1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3208ccc7b9a6076b7a34a216610e4e7"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#af3208ccc7b9a6076b7a34a216610e4e7">log</a> ($level, $context, $message, $part=null, $extra=null)</td></tr>
+<tr class="separator:af3208ccc7b9a6076b7a34a216610e4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5c8d434f89e5ce783d6a0e754474e60"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#af5c8d434f89e5ce783d6a0e754474e60">info</a> ($context, $message, $part=null, $extra=null)</td></tr>
+<tr class="separator:af5c8d434f89e5ce783d6a0e754474e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21db795c7dc2847d428e499b841a34c6"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a21db795c7dc2847d428e499b841a34c6">warn</a> ($context, $message, $part=null, $extra=null)</td></tr>
+<tr class="separator:a21db795c7dc2847d428e499b841a34c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af43fdd328dfcb0a52286a6086292c211"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#af43fdd328dfcb0a52286a6086292c211">error</a> ($context, $message, $part=null, $extra=null)</td></tr>
+<tr class="separator:af43fdd328dfcb0a52286a6086292c211"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ef34add54ccdaaf40c4541b99009eec"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a5ef34add54ccdaaf40c4541b99009eec">critical</a> ($context, $message, $part=null, $extra=null)</td></tr>
+<tr class="separator:a5ef34add54ccdaaf40c4541b99009eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b94d21604af4b9c4be9448349514b0b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a9b94d21604af4b9c4be9448349514b0b">alert</a> ($context, $message, $part=null, $extra=null)</td></tr>
+<tr class="separator:a9b94d21604af4b9c4be9448349514b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abacc1fa1b51d6d1986e51191ba77bf34"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#abacc1fa1b51d6d1986e51191ba77bf34">asObjects</a> ($reverse=true, $maxlines=10, $contexts=null)</td></tr>
+<tr class="separator:abacc1fa1b51d6d1986e51191ba77bf34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa669d52ef3bdabf2fddfe85f8bfdc7ba"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html#aa669d52ef3bdabf2fddfe85f8bfdc7ba">clearAll</a> ()</td></tr>
+<tr class="separator:aa669d52ef3bdabf2fddfe85f8bfdc7ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
@@ -128,8 +161,171 @@ Static Private Attributes</h2></td></tr>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00005">5</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6509fbf10e7da9622fd84be1c30d663b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6509fbf10e7da9622fd84be1c30d663b">&#9670;&nbsp;</a></span>_error()</h2>
+<a id="a1a5148e60ab55273169bee4c2f475034"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a5148e60ab55273169bee4c2f475034">&#9670;&nbsp;</a></span>_alert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_alert </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$part</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">abstract</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa9007da7bcc17daeb8b3bf36dd36bfab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9007da7bcc17daeb8b3bf36dd36bfab">&#9670;&nbsp;</a></span>_asObjects()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_asObjects </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$reverse</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$maxlines</em> = <code>10</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$contexts</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">abstract</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aedfada3ba5e8740c57f36a834a931486"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedfada3ba5e8740c57f36a834a931486">&#9670;&nbsp;</a></span>_clearAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_clearAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">abstract</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a38104adbfb93d7ea63699e329b1482af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38104adbfb93d7ea63699e329b1482af">&#9670;&nbsp;</a></span>_critical()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_critical </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$part</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">abstract</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a22a82ac7b00977668d0601c3347fc28f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22a82ac7b00977668d0601c3347fc28f">&#9670;&nbsp;</a></span>_error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +337,7 @@ Static Private Attributes</h2></td></tr>
           <td class="memname">_error </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$id</em>, </td>
+          <td class="paramname"><em>$context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -153,7 +349,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$code</em>&#160;</td>
+          <td class="paramname"><em>$part</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -170,8 +372,56 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a1d5fc906d205089ddcc1a8dbaf96eecf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d5fc906d205089ddcc1a8dbaf96eecf">&#9670;&nbsp;</a></span>_log()</h2>
+<a id="a2bf6fed0ee5f444d7090d6bdb0299cb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bf6fed0ee5f444d7090d6bdb0299cb7">&#9670;&nbsp;</a></span>_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_info </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$part</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">abstract</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a327ef136ea5477c67089c021ddcfc3c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a327ef136ea5477c67089c021ddcfc3c8">&#9670;&nbsp;</a></span>_log()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,7 +433,13 @@ Static Private Attributes</h2></td></tr>
           <td class="memname">_log </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$id</em>, </td>
+          <td class="paramname"><em>$level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -195,7 +451,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$code</em>&#160;</td>
+          <td class="paramname"><em>$part</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -212,8 +474,8 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a451b638d971a7fee680aa1e2133287c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a451b638d971a7fee680aa1e2133287c2">&#9670;&nbsp;</a></span>_warn()</h2>
+<a id="a11332896940452a5815c87ba8a2c49c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11332896940452a5815c87ba8a2c49c9">&#9670;&nbsp;</a></span>_warn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,7 +487,7 @@ Static Private Attributes</h2></td></tr>
           <td class="memname">_warn </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$id</em>, </td>
+          <td class="paramname"><em>$context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -237,7 +499,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$code</em>&#160;</td>
+          <td class="paramname"><em>$part</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -251,6 +519,127 @@ Static Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9b94d21604af4b9c4be9448349514b0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b94d21604af4b9c4be9448349514b0b">&#9670;&nbsp;</a></span>alert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static alert </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$part</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00061">61</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+
+</div>
+</div>
+<a id="abacc1fa1b51d6d1986e51191ba77bf34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abacc1fa1b51d6d1986e51191ba77bf34">&#9670;&nbsp;</a></span>asObjects()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static asObjects </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$reverse</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$maxlines</em> = <code>10</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$contexts</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00066">66</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+
+</div>
+</div>
+<a id="aa669d52ef3bdabf2fddfe85f8bfdc7ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa669d52ef3bdabf2fddfe85f8bfdc7ba">&#9670;&nbsp;</a></span>clearAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static clearAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00072">72</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
 
 </div>
 </div>
@@ -282,8 +671,8 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="abeeae73c6b6a514be50a67e54f570e1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abeeae73c6b6a514be50a67e54f570e1e">&#9670;&nbsp;</a></span>error()</h2>
+<a id="a5ef34add54ccdaaf40c4541b99009eec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ef34add54ccdaaf40c4541b99009eec">&#9670;&nbsp;</a></span>critical()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -292,10 +681,10 @@ Static Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static error </td>
+          <td class="memname">static critical </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$id</em>, </td>
+          <td class="paramname"><em>$context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -307,7 +696,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$code</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>$part</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -322,7 +717,145 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00032">32</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00056">56</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+
+</div>
+</div>
+<a id="af43fdd328dfcb0a52286a6086292c211"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af43fdd328dfcb0a52286a6086292c211">&#9670;&nbsp;</a></span>error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static error </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$part</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00051">51</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+
+</div>
+</div>
+<a id="a24f5ae49c0bfa3b640f3208fa13985d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24f5ae49c0bfa3b640f3208fa13985d1">&#9670;&nbsp;</a></span>inContext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static inContext </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$contexts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00023">23</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+
+</div>
+</div>
+<a id="af5c8d434f89e5ce783d6a0e754474e60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5c8d434f89e5ce783d6a0e754474e60">&#9670;&nbsp;</a></span>info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static info </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$part</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00041">41</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
 
 </div>
 </div>
@@ -350,12 +883,12 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00016">16</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00030">30</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
 
 </div>
 </div>
-<a id="a4ff88d48c7e02ec4c72230e1aea89cf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ff88d48c7e02ec4c72230e1aea89cf9">&#9670;&nbsp;</a></span>log()</h2>
+<a id="af3208ccc7b9a6076b7a34a216610e4e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3208ccc7b9a6076b7a34a216610e4e7">&#9670;&nbsp;</a></span>log()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -367,7 +900,13 @@ Static Private Attributes</h2></td></tr>
           <td class="memname">static log </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$id</em>, </td>
+          <td class="paramname"><em>$level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -379,7 +918,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$code</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>$part</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -394,12 +939,12 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00022">22</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00036">36</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
 
 </div>
 </div>
-<a id="a0bf32c02edd4541d847da04d7c1f5d7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bf32c02edd4541d847da04d7c1f5d7b">&#9670;&nbsp;</a></span>warn()</h2>
+<a id="a21db795c7dc2847d428e499b841a34c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21db795c7dc2847d428e499b841a34c6">&#9670;&nbsp;</a></span>warn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -411,7 +956,7 @@ Static Private Attributes</h2></td></tr>
           <td class="memname">static warn </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$id</em>, </td>
+          <td class="paramname"><em>$context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -423,7 +968,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$code</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>$part</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$extra</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -438,7 +989,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00027">27</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_logger_8php_source.html#l00046">46</a> of file <a class="el" href="_logger_8php_source.html">Logger.php</a>.</p>
 
 </div>
 </div>
@@ -501,7 +1052,7 @@ Static Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1log.html">log</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1log_1_1_logger.html">Logger</a></li>
-    <li class="footer"><small>Generated on Thu May 31 2018 02:05:26 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:10 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

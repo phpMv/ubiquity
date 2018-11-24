@@ -1,10 +1,12 @@
 var class_ubiquity_1_1orm_1_1parser_1_1_reflexion =
 [
+    [ "getAllJoinTables", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#ad1cd88521bfe2e4504a4f40b088395b2", null ],
     [ "getAnnotationClass", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a0d154ae10edc0c3ec28e3fb705d82470", null ],
     [ "getAnnotationMember", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#ad614f5b8496fc76d5a550b38fa599e57", null ],
     [ "getAnnotationsMethod", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#aeac7b4acae0961c2ebfd18e888cbe85e", null ],
     [ "getDbType", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a33e84651941f96bcbe28077fabc9e061", null ],
     [ "getFieldName", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a95699659593fb841414238574bf4c822", null ],
+    [ "getJoinTables", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a2892725d91b8af74260446b6daa5cd69", null ],
     [ "getKeyFields", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a308b430ed1449254339e638a157ff537", null ],
     [ "getMembersAnnotationWithAnnotation", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#a04b554d689caa16c229e79765cb0de49", null ],
     [ "getMembersNameWithAnnotation", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html#ae7a979d19b262fc3f489434aaff05432", null ],

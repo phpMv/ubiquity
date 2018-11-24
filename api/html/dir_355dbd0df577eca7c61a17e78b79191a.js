@@ -1,6 +1,6 @@
 var dir_355dbd0df577eca7c61a17e78b79191a =
 [
-    [ "CRUDController.php", "crud_2_c_r_u_d_controller_8php.html", [
+    [ "CRUDController.php", "_c_r_u_d_controller_8php.html", [
       [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller" ]
     ] ],
     [ "CRUDDatas.php", "_c_r_u_d_datas_8php.html", [

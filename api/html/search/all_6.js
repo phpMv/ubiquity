@@ -1,9 +1,13 @@
 var searchData=
 [
   ['edit',['edit',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a649f51672eea883602ee239e5d3a5997',1,'Ubiquity\controllers\admin\traits\ModelsTrait\edit()'],['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a649f51672eea883602ee239e5d3a5997',1,'Ubiquity\controllers\crud\CRUDController\edit()']]],
+  ['elapsed',['elapsed',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#a5e17a0276399e623e9600b183a59eca6',1,'Ubiquity::utils::base::UDateTime']]],
+  ['en',['en',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#ab028c52286c95de48a1c773d7ed02d04',1,'Ubiquity::utils::base::UDateTime']]],
+  ['en_5fus',['en_US',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#adc6770f2bbb7eec93f2a6a7ac41cdc2c',1,'Ubiquity::utils::base::UDateTime']]],
   ['endcondition',['endCondition',['../class_ubiquity_1_1js_1_1_jquery.html#a0acc2b558e2923f976105ca74af10452',1,'Ubiquity::js::Jquery']]],
   ['endswith',['endswith',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a86009f13f076a325b5cfaacc59589d1d',1,'Ubiquity::utils::base::UString']]],
-  ['error',['error',['../class_ubiquity_1_1log_1_1_logger.html#abeeae73c6b6a514be50a67e54f570e1e',1,'Ubiquity::log::Logger']]],
+  ['equals',['equals',['../class_ubiquity_1_1log_1_1_log_message.html#abc8301c24219907490b15b7f7a342830',1,'Ubiquity::log::LogMessage']]],
+  ['error',['error',['../class_ubiquity_1_1log_1_1_logger.html#af43fdd328dfcb0a52286a6086292c211',1,'Ubiquity::log::Logger']]],
   ['errorhandler',['errorHandler',['../class_ubiquity_1_1controllers_1_1_startup.html#a42a5590067959bc0b2736a4a9b46c34b',1,'Ubiquity::controllers::Startup']]],
   ['exclude_5fpatterns',['exclude_patterns',['../namespaceconf.html#a16535c83d9b5c141382335d79b4995b2',1,'conf']]],
   ['execute',['execute',['../class_ubiquity_1_1db_1_1_database.html#a24bba973a1b68c97d2e04175fb4a344b',1,'Ubiquity\db\Database\execute()'],['../class_ubiquity_1_1js_1_1_jquery.html#a5fcecdfc746d67ca163e4d7e2457b1ff',1,'Ubiquity\js\Jquery\execute()']]],

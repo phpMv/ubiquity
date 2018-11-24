@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.3</span>
+   &#160;<span id="projectnumber">2.0.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -123,8 +123,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a5b3a1db938c9e204e11e583e904baf1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6dc706a614f58fb01fd7f1379194fbde"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a6dc706a614f58fb01fd7f1379194fbde">doubleBackSlashes</a> ($value)</td></tr>
 <tr class="separator:a6dc706a614f58fb01fd7f1379194fbde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac58c2e682fede5dc25aaa2cd69fcbc74"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ac58c2e682fede5dc25aaa2cd69fcbc74">cleanAttribute</a> ($attr, $replacement=&quot;_&quot;)</td></tr>
-<tr class="separator:ac58c2e682fede5dc25aaa2cd69fcbc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a909912aa2fb59d3596098e730257cc3d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a909912aa2fb59d3596098e730257cc3d">cleanAttribute</a> ($attr, $replacement=&quot;-&quot;)</td></tr>
+<tr class="separator:a909912aa2fb59d3596098e730257cc3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df6f6eeef7d57f471aa359970839555"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a0df6f6eeef7d57f471aa359970839555">mask</a> ($secretString, $maskChar=&quot;*&quot;)</td></tr>
+<tr class="separator:a0df6f6eeef7d57f471aa359970839555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>String utilities. </p>
@@ -133,8 +135,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_u_string_8php_source.html#l00010">10</a> of file <a class="el" href="_u_string_8php_source.html">UString.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac58c2e682fede5dc25aaa2cd69fcbc74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac58c2e682fede5dc25aaa2cd69fcbc74">&#9670;&nbsp;</a></span>cleanAttribute()</h2>
+<a id="a909912aa2fb59d3596098e730257cc3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a909912aa2fb59d3596098e730257cc3d">&#9670;&nbsp;</a></span>cleanAttribute()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,7 +154,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$replacement</em> = <code>&quot;_&quot;</code>&#160;</td>
+          <td class="paramname"><em>$replacement</em> = <code>&quot;-&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -477,6 +479,44 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0df6f6eeef7d57f471aa359970839555"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0df6f6eeef7d57f471aa359970839555">&#9670;&nbsp;</a></span>mask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static mask </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$secretString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$maskChar</em> = <code>&quot;*&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_u_string_8php_source.html#l00104">104</a> of file <a class="el" href="_u_string_8php_source.html">UString.php</a>.</p>
+
+</div>
+</div>
 <a id="ae9b7fa40c4125034cf9cad403cea42f2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae9b7fa40c4125034cf9cad403cea42f2">&#9670;&nbsp;</a></span>pluralize()</h2>
 
@@ -675,7 +715,7 @@ Static Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1utils.html">utils</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1utils_1_1base.html">base</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_string.html">UString</a></li>
-    <li class="footer"><small>Generated on Thu May 31 2018 02:05:27 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:11 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

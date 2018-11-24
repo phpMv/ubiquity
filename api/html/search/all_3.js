@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['badlogin',['badLogin',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#ae7439a439f39f9d8115526c24e580783',1,'Ubiquity\controllers\auth\AuthController\badLogin()'],['../class_ubiquity_1_1controllers_1_1_auth_controller.html#ae7439a439f39f9d8115526c24e580783',1,'Ubiquity\controllers\AuthController\badLogin()']]],
-  ['badloginmessage',['badLoginMessage',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#ac776999cc8f49219b6e6936d94958873',1,'Ubiquity\controllers\auth\AuthController\badLoginMessage()'],['../class_ubiquity_1_1controllers_1_1_auth_controller.html#ac776999cc8f49219b6e6936d94958873',1,'Ubiquity\controllers\AuthController\badLoginMessage()']]],
+  ['badlogin',['badLogin',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#ae7439a439f39f9d8115526c24e580783',1,'Ubiquity::controllers::auth::AuthController']]],
+  ['badloginmessage',['badLoginMessage',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#ac776999cc8f49219b6e6936d94958873',1,'Ubiquity::controllers::auth::AuthController']]],
   ['baseannotation',['BaseAnnotation',['../class_ubiquity_1_1annotations_1_1_base_annotation.html',1,'Ubiquity::annotations']]],
   ['baseannotation_2ephp',['BaseAnnotation.php',['../_base_annotation_8php.html',1,'']]],
   ['batchonerow',['batchOneRow',['../class_ubiquity_1_1db_1_1export_1_1_data_export.html#aaf098c9506df619460545eafce804e71',1,'Ubiquity\db\export\DataExport\batchOneRow()'],['../class_ubiquity_1_1db_1_1export_1_1_sql_export.html#aaf098c9506df619460545eafce804e71',1,'Ubiquity\db\export\SqlExport\batchOneRow()']]],

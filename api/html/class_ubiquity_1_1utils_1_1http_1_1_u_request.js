@@ -2,6 +2,7 @@ var class_ubiquity_1_1utils_1_1http_1_1_u_request =
 [
     [ "cleanUrl", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#abc8991a1e329238d86cc546116fa2fc8", null ],
     [ "get", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a0162aaba3c7b1a86682b248d02d93d9f", null ],
+    [ "getBoolean", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a0bf9dd0f7aa34bbebde52536c44b888c", null ],
     [ "getContentType", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a06587cb9f0c3b6590d8794eb96c7dde2", null ],
     [ "getDatas", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a6e25bc29c1307ebb0b91e9d65eb22ec2", null ],
     [ "getInput", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a9d9fdcf7c2d3532391ec3927bbeb64db", null ],

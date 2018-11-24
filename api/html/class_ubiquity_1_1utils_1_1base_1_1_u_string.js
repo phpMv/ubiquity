@@ -1,6 +1,6 @@
 var class_ubiquity_1_1utils_1_1base_1_1_u_string =
 [
-    [ "cleanAttribute", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ac58c2e682fede5dc25aaa2cd69fcbc74", null ],
+    [ "cleanAttribute", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a909912aa2fb59d3596098e730257cc3d", null ],
     [ "doubleBackSlashes", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a6dc706a614f58fb01fd7f1379194fbde", null ],
     [ "endswith", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a86009f13f076a325b5cfaacc59589d1d", null ],
     [ "firstReplace", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#af33e36f0039621c50a3efad91d7703cd", null ],
@@ -11,6 +11,7 @@ var class_ubiquity_1_1utils_1_1base_1_1_u_string =
     [ "isBooleanTrue", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a853ebbe24f3849e46fbaef45831a2dda", null ],
     [ "isNotNull", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a869a811132ab25fc1154c6898dc4ff49", null ],
     [ "isNull", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#add570fc728a427d79bfe307a9fe68eb1", null ],
+    [ "mask", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a0df6f6eeef7d57f471aa359970839555", null ],
     [ "pluralize", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ae9b7fa40c4125034cf9cad403cea42f2", null ],
     [ "replaceArray", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a5b3a1db938c9e204e11e583e904baf1d", null ],
     [ "replaceFirstOccurrence", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#adfddc5af012b71976f615f658a6806d3", null ],

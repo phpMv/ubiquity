@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.3</span>
+   &#160;<span id="projectnumber">2.0.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1orm_1_1_orm_utils.ht
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">OrmUtils Class Reference</div>  </div>
@@ -107,6 +108,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:adabd22757181702a431265191bf9de4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bee06da346de815972e178d0f643ee4"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a2bee06da346de815972e178d0f643ee4">getTableName</a> ($class)</td></tr>
 <tr class="separator:a2bee06da346de815972e178d0f643ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2892725d91b8af74260446b6daa5cd69"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a2892725d91b8af74260446b6daa5cd69">getJoinTables</a> ($class)</td></tr>
+<tr class="separator:a2892725d91b8af74260446b6daa5cd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1cd88521bfe2e4504a4f40b088395b2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#ad1cd88521bfe2e4504a4f40b088395b2">getAllJoinTables</a> ($models)</td></tr>
+<tr class="separator:ad1cd88521bfe2e4504a4f40b088395b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab776e77721f5743a6115071f3f9cdf54"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#ab776e77721f5743a6115071f3f9cdf54">getKeyFieldsAndValues</a> ($instance)</td></tr>
 <tr class="separator:ab776e77721f5743a6115071f3f9cdf54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a308b430ed1449254339e638a157ff537"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a308b430ed1449254339e638a157ff537">getKeyFields</a> ($instance)</td></tr>
@@ -125,6 +130,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a728f4a680fd043a082587597f3c3871a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe7d2d10143c646730df0782a264f3e1"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#abe7d2d10143c646730df0782a264f3e1">getFirstKeyValue</a> ($instance)</td></tr>
 <tr class="separator:abe7d2d10143c646730df0782a264f3e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ba92fd77fa32829d96ecc781cf7a7b5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a3ba92fd77fa32829d96ecc781cf7a7b5">getKeyValues</a> ($instance)</td></tr>
+<tr class="separator:a3ba92fd77fa32829d96ecc781cf7a7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a023d5ef1e8bc2be014f80c8cd7c128f3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a023d5ef1e8bc2be014f80c8cd7c128f3">getManyToOneMembersAndValues</a> ($instance)</td></tr>
 <tr class="separator:a023d5ef1e8bc2be014f80c8cd7c128f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfac7b81f634708f27f5cb9b0048bdcf"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#abfac7b81f634708f27f5cb9b0048bdcf">getMembersWithAnnotation</a> ($class, $annotation)</td></tr>
@@ -141,6 +148,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a2551143ef0f5438c68f2b64f6d82335f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae71153538aa4c3c7ee50a222cdbc3cb6"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#ae71153538aa4c3c7ee50a222cdbc3cb6">getFieldsInRelations</a> ($class)</td></tr>
 <tr class="separator:ae71153538aa4c3c7ee50a222cdbc3cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6896c3c75b18ef32df01874ac4bb31"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a8c6896c3c75b18ef32df01874ac4bb31">getAnnotFieldsInRelations</a> ($class)</td></tr>
+<tr class="separator:a8c6896c3c75b18ef32df01874ac4bb31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11b7329881ef520da947a20fd7787582"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a11b7329881ef520da947a20fd7787582">getUJoinSQL</a> ($model, $arrayAnnot, $field, &amp;$aliases)</td></tr>
+<tr class="separator:a11b7329881ef520da947a20fd7787582"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad11094559136954f76b8a7c675fe543c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#ad11094559136954f76b8a7c675fe543c">getManyToOneFields</a> ($class)</td></tr>
 <tr class="separator:ad11094559136954f76b8a7c675fe543c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cf9f35aab70b2ec2fe13ed9975ef5ac"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a6cf9f35aab70b2ec2fe13ed9975ef5ac">getManyToManyFields</a> ($class)</td></tr>
@@ -152,6 +163,11 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a779a8d46e4609b2decb968b7283173f0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a779a8d46e4609b2decb968b7283173f0">objectAsJSON</a> ($instance)</td></tr>
 <tr class="separator:a779a8d46e4609b2decb968b7283173f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:ae60c1a2c42b1fbc3624bcdef70d92a40"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#ae60c1a2c42b1fbc3624bcdef70d92a40">getJoinAlias</a> ($table, $fkTable)</td></tr>
+<tr class="separator:ae60c1a2c42b1fbc3624bcdef70d92a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
 <tr class="memitem:a19b4acf9370ab8e40851fd942761234f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a19b4acf9370ab8e40851fd942761234f">$modelsMetadatas</a></td></tr>
@@ -162,7 +178,7 @@ Static Private Attributes</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>jc </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0.0.5 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00016">16</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00017">17</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a637402c3080e65a7c780de8fd6b7d0f3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a637402c3080e65a7c780de8fd6b7d0f3">&#9670;&nbsp;</a></span>exists()</h2>
@@ -213,7 +229,35 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00172">172</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00198">198</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+
+</div>
+</div>
+<a id="ad1cd88521bfe2e4504a4f40b088395b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1cd88521bfe2e4504a4f40b088395b2">&#9670;&nbsp;</a></span>getAllJoinTables()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getAllJoinTables </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$models</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00080">80</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -251,7 +295,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00195">195</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00221">221</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -295,7 +339,35 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00201">201</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00227">227</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+
+</div>
+</div>
+<a id="a8c6896c3c75b18ef32df01874ac4bb31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c6896c3c75b18ef32df01874ac4bb31">&#9670;&nbsp;</a></span>getAnnotFieldsInRelations()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getAnnotFieldsInRelations </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$class</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00263">263</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -323,7 +395,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00248">248</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00336">336</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -361,7 +433,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00042">42</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00043">43</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -389,7 +461,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00051">51</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00052">52</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -417,7 +489,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00223">223</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00249">249</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -455,7 +527,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00093">93</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00114">114</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -483,7 +555,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00086">86</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00107">107</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -511,7 +583,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00122">122</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00143">143</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -539,7 +611,45 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00127">127</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00148">148</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+
+</div>
+</div>
+<a id="ae60c1a2c42b1fbc3624bcdef70d92a40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae60c1a2c42b1fbc3624bcdef70d92a40">&#9670;&nbsp;</a></span>getJoinAlias()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getJoinAlias </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$fkTable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00321">321</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -577,7 +687,35 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00185">185</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00211">211</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+
+</div>
+</div>
+<a id="a2892725d91b8af74260446b6daa5cd69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2892725d91b8af74260446b6daa5cd69">&#9670;&nbsp;</a></span>getJoinTables()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getJoinTables </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$class</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00068">68</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -605,7 +743,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00072">72</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00093">93</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -633,7 +771,35 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00067">67</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00088">88</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+
+</div>
+</div>
+<a id="a3ba92fd77fa32829d96ecc781cf7a7b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ba92fd77fa32829d96ecc781cf7a7b5">&#9670;&nbsp;</a></span>getKeyValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getKeyValues </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$instance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00153">153</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -661,7 +827,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00241">241</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00329">329</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -689,7 +855,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00237">237</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00325">325</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -724,7 +890,7 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mixed[] </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00137">137</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00163">163</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -768,7 +934,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00252">252</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00340">340</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -796,7 +962,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00079">79</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00100">100</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -834,7 +1000,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00100">100</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00121">121</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -872,7 +1038,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00159">159</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00185">185</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -900,7 +1066,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00019">19</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00020">20</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -928,7 +1094,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00217">217</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00243">243</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -956,7 +1122,57 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00062">62</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00063">63</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+
+</div>
+</div>
+<a id="a11b7329881ef520da947a20fd7787582"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11b7329881ef520da947a20fd7787582">&#9670;&nbsp;</a></span>getUJoinSQL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getUJoinSQL </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$arrayAnnot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$aliases</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00286">286</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -1000,7 +1216,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00117">117</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00138">138</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -1038,7 +1254,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00034">34</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00035">35</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -1076,7 +1292,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00026">26</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00027">27</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -1104,7 +1320,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00266">266</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00354">354</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -1129,7 +1345,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00017">17</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_orm_utils_8php_source.html#l00018">18</a> of file <a class="el" href="_orm_utils_8php_source.html">OrmUtils.php</a>.</p>
 
 </div>
 </div>
@@ -1143,7 +1359,7 @@ Static Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm.html">orm</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html">OrmUtils</a></li>
-    <li class="footer"><small>Generated on Thu May 31 2018 02:05:27 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:10 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

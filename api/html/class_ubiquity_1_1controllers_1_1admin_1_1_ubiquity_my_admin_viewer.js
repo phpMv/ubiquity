@@ -18,6 +18,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer =
     [ "getFilterControllers", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aad9b1660664fb8ecf9cf004e8b2f87fa", null ],
     [ "getGitCommitsDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a8026c2a05da757ef82b636ad90b0db6f", null ],
     [ "getGitFilesDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#afbee7381f9f577d626f223618c16a268", null ],
+    [ "getLogsDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a9471d6f1eb9c10f4c83331c23b1a32fe", null ],
     [ "getMainIndexItems", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aa09034603f665d7a6f656118f592edef", null ],
     [ "getMainMenuElements", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a70545813a28824d49f7a5d51e7640b64", null ],
     [ "getModelsStructureDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#afc093fc0354b58c974ba4e5057adf8c5", null ],

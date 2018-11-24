@@ -12,6 +12,7 @@ var searchData=
   ['ufilesystem',['UFileSystem',['../class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html',1,'Ubiquity::utils::base']]],
   ['ugitrepository',['UGitRepository',['../class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html',1,'Ubiquity::utils::git']]],
   ['uintrospection',['UIntrospection',['../class_ubiquity_1_1utils_1_1base_1_1_u_introspection.html',1,'Ubiquity::utils::base']]],
+  ['umonolog',['UMonolog',['../class_ubiquity_1_1log_1_1libraries_1_1_u_monolog.html',1,'Ubiquity::log::libraries']]],
   ['urequest',['URequest',['../class_ubiquity_1_1utils_1_1http_1_1_u_request.html',1,'Ubiquity::utils::http']]],
   ['uresponse',['UResponse',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html',1,'Ubiquity::utils::http']]],
   ['url',['Url',['../class_ubiquity_1_1seo_1_1_url.html',1,'Ubiquity::seo']]],

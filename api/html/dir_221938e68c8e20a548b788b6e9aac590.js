@@ -1,6 +1,6 @@
 var dir_221938e68c8e20a548b788b6e9aac590 =
 [
-    [ "AuthController.php", "auth_2_auth_controller_8php.html", [
+    [ "AuthController.php", "_auth_controller_8php.html", [
       [ "AuthController", "class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html", "class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller" ]
     ] ],
     [ "AuthFiles.php", "_auth_files_8php.html", [

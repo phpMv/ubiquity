@@ -33,5 +33,6 @@ var class_ubiquity_1_1controllers_1_1_startup =
     [ "$config", "class_ubiquity_1_1controllers_1_1_startup.html#a49c7011be9c979d9174c52a8b83e5d8e", null ],
     [ "$controller", "class_ubiquity_1_1controllers_1_1_startup.html#a388ef7b1db5e6f728e63cee704ce6e23", null ],
     [ "$ctrlNS", "class_ubiquity_1_1controllers_1_1_startup.html#af5591a485f38e547259d373f1ebbd816", null ],
+    [ "$templateEngine", "class_ubiquity_1_1controllers_1_1_startup.html#a7d78f65b2b389dcfcb5ddcc7a5ac5f5b", null ],
     [ "$urlParts", "class_ubiquity_1_1controllers_1_1_startup.html#a3dc01718a1727415f550288ab7afba74", null ]
 ];

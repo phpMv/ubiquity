@@ -7,6 +7,7 @@ var class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message =
     [ "getTitle", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a95e859a4588a39a1824b717378a84c29", null ],
     [ "getType", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a830b5c75df72b32396701bc563fbe3c7", null ],
     [ "parse", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#ae646f55333c0c77dc5b912df945862c5", null ],
+    [ "parseContent", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#af2481e2c79b9beb6a79145cae4842c28", null ],
     [ "setIcon", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a279097e114946d07f9257f4014bd45ca", null ],
     [ "setMessage", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a6991eb53548e7180a3a8e6f418fbb234", null ],
     [ "setTimeout", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html#a3d80d4d51ec21d8237d6ed6808d70b8e", null ],

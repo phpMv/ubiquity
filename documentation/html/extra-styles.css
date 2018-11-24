@@ -1,0 +1,85 @@
+@CHARSET "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
+
+body, table, div, p, dl {
+    font: 400 13px/21px Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+#projectname
+{
+	font: 300% 'Righteous', cursive !important;
+}
+
+#projectbrief
+{
+	color: white;
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Poiret One', cursive;
+}
+
+#projectnumber
+{
+	color: rgb(255,255,255);
+	text-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 0px;
+	font-size: 14px;
+	font-weight: 400;
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Poiret One', cursive;
+}
+
+#version{
+	color: rgb(71, 69, 70);
+	font-size: 16px;
+	font-weight: 600;
+	margin: 0px;
+	padding: 0px 10px 0px;
+}
+
+#titlearea
+{
+	color: rgb(71, 69, 70);
+    position: relative;
+    text-align: left;
+    text-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 0px;
+    perspective-origin: 950.5px 128px;
+    transform-origin: 950.5px 128px;
+	background: #4DA0B0;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #D39D38, #4DA0B0);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #D39D38, #4DA0B0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */	padding: 0px 0px 10px;
+	margin: 0px;
+	width: 100%;
+	border-bottom: 1px solid #395D54;
+}
+.memtitle{
+	font-weight: 600 !important;
+	font-size: 120% !important;
+	background-color: #F1E2D3 !important;
+    background-image: none !important;
+    color: #935B38 !important;
+}
+.memdoc p{
+	color: #357B74;
+	font-weight: 500 !important;
+}
+#MSearchField{
+	background: none;
+	font: 9pt Roboto,sans-serif;
+	border: inherit;
+}
+#MSearchBox .left{
+	background: none;
+}
+
+#MSearchBox .right{
+	background: none;
+}
+
+.SelectItem{
+	font: 8pt Roboto,sans-serif;
+}
+.image{
+	text-align: left !important;
+}
