@@ -124,7 +124,6 @@ class ModelViewer {
 	 * @return \Ajax\semantic\widgets\dataelement\DataElement
 	 */
 	public function getModelDataElement($instance,$model,$modal){
-		$adminRoute = $this->controller->_getBaseRoute ();
 		$semantic = $this->jquery->semantic ();
 		$fields = $this->controller->_getAdminData ()->getElementFieldNames( $model );
 		
@@ -156,8 +155,6 @@ class ModelViewer {
 	 */
 	public function getModelDataTable($instances, $model,$totalCount,$page=1) {
 		$adminRoute = $this->controller->_getBaseRoute ();
-		$semantic = $this->jquery->semantic ();
-		
 		$modal = ($this->isModal ( $instances, $model ) ? "modal" : "no");
 		$dataTable = $this->getDataTableInstance( $instances,$model,$totalCount,$page );
 		$attributes = $this->controller->_getAdminData()->getFieldNames ( $model );
@@ -252,7 +249,7 @@ class ModelViewer {
 	}
 	
 	public function addAllButtons(DataTable $dataTable,$attributes){
-		$dataTable->onPreCompile ( function () use ($attributes, &$dataTable) {
+		$dataTable->onPreCompile ( function () use (&$dataTable) {
 			$dataTable->getHtmlComponent ()->colRightFromRight ( 0 );
 		} );
 		$dataTable->addAllButtons( false, [ "ajaxTransition" => "random" ], function ($bt) {

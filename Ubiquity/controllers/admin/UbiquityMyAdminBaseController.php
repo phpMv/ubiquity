@@ -252,7 +252,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$this->showSimpleMessage ( "Router cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.default" ) . "</b>", "info",null, "info circle", null, "msgRoutes" );
 		$routes = CacheManager::getRoutes ();
 		$this->_getAdminViewer ()->getRoutesDataTable ( Route::init ( $routes ) );
-		$this->jquery->getOnClick ( "#bt-init-cache", $this->_getAdminFiles ()->getAdminBaseRoute () . "/initCacheRouter", "#divRoutes", [ "dataType" => "html","attr" => "" ] );
+		$this->jquery->getOnClick ( "#bt-init-cache", $this->_getAdminFiles ()->getAdminBaseRoute () . "/initCacheRouter", "#divRoutes", [ "dataType" => "html","attr" => "","hasLoader"=>"internal" ] );
 		$this->jquery->postOnClick ( "#bt-filter-routes", $this->_getAdminFiles ()->getAdminBaseRoute () . "/filterRoutes", "{filter:$('#filter-routes').val()}", "#divRoutes", [ "ajaxTransition" => "random" ] );
 		if (isset ( $_POST ["filter"] ))
 			$this->jquery->exec ( "$(\"tr:contains('" . $_POST ["filter"] . "')\").addClass('warning');", true );

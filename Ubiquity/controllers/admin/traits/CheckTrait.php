@@ -174,10 +174,11 @@ trait CheckTrait{
 		$result=$models;
 		$tables=DAO::$db->getTablesName();
 		$allJoinTables=Reflexion::getAllJoinTables($models);
+		$tables=array_diff($tables, $allJoinTables);
 		foreach ($models as $model){
 			try{
 				$table=Reflexion::getTableName($model);
-				if(($key=UArray::iSearch($table, $tables,false))!==false){
+				if((UArray::iSearch($table, $tables,false))!==false){
 					$result=UArray::iRemoveOne($result, $model);
 				}
 			}catch (\Exception $e){

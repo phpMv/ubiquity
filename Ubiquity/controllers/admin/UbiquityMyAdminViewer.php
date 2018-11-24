@@ -40,6 +40,7 @@ use Ubiquity\log\LogMessage;
 use Ubiquity\log\Logger;
 use Ubiquity\utils\base\UDateTime;
 use Ubiquity\log\HtmlLogFormatter;
+use Ajax\semantic\html\elements\HtmlHeader;
 
 /**
  *
@@ -86,14 +87,20 @@ class UbiquityMyAdminViewer {
 		$dt->setFields ( [ "path","methods","controller","action","cache","expired","name" ] );
 		$dt->setCaptions ( [ "Path","Methods","Controller","Action & parameters","Cache","Expired","Name","" ] );
 		$dt->fieldAsLabel ( "path", "car" );
+		$dt->setValueFunction("controller", function($v){
+			$lbl=new HtmlLabel("","<span style='font-weight: bold;color: #3B83C0;'>".$v."</span>::<span style='color: #7F0055;'>class</span>","heartbeat");
+			$lbl->addClass("basic large");
+			return $lbl;
+		});
 		$this->_dtCache ( $dt );
 		$this->_dtMethods ( $dt );
 		$this->_dtAction ( $dt );
 		$this->_dtExpired ( $dt );
-		$dt->onRowClick ( '$("#filter-routes").val($(this).find(".ui.label").text());' );
+		$dt->setGroupByFields([2]);
+		$dt->onRowClick ( 'if(!$(this).is("[data-group]"))$("#filter-routes").val($(this).find(".ui.label").text());' );
 		$dt->onPreCompile ( function ($dTable) {
-			$dTable->setColAlignment ( 7, TextAlignment::RIGHT );
-			$dTable->setColAlignment ( 5, TextAlignment::CENTER );
+			$dTable->getHtmlComponent ()->colRightFromRight ( 0 );
+			$dTable->getHtmlComponent ()->colCenterFromRight ( 2 );
 		} );
 		$this->addGetPostButtons ( $dt );
 		$dt->setActiveRowSelector ( "warning" );

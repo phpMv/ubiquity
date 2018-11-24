@@ -90,7 +90,7 @@ class ControllerParser {
 	}
 	
 	private static function parseMethodPath(\ReflectionMethod $method,$path){
-		if($path==null || $path==='')
+		if(!isset($path) || $path==='')
 			return;
 		$parameters=$method->getParameters();
 		foreach ( $parameters as $parameter ) {

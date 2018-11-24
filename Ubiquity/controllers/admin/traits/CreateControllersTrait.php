@@ -147,7 +147,6 @@ trait CreateControllersTrait{
 	}
 	
 	public function frmAddAuthController(){
-		$config=Startup::getConfig();
 		$viewList=$this->jquery->semantic()->htmlDropdown("view-list","",$this->views["auth"]);
 		$viewList->asSelect("auth-views",true);
 		$viewList->setDefaultText("Select views");

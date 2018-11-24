@@ -62,7 +62,7 @@ trait DAORelationsTrait {
 	private static function _affectsManyToManyObjectsFromArray($parsers,$objects,$included,$useCache=NULL){
 		$includedNext=false;
 		foreach ($parsers as $key=>$parser){
-			list($class,$member,$inversedBy)=\explode("|", $key);
+			list($class,$member)=\explode("|", $key);
 			if(is_array($included)){
 				$includedNext=self::_getIncludedNext($included, $member);
 			}
@@ -73,7 +73,7 @@ trait DAORelationsTrait {
 			foreach ($objects as $object){
 				$pkV=OrmUtils::getFirstKeyValue($object);
 				if(isset($myPkValues[$pkV])){
-					$ret=self::getManyToManyFromArrayIds($object, $relationObjects, $myPkValues[$pkV]);
+					$ret=self::getManyToManyFromArrayIds($relationObjects, $myPkValues[$pkV]);
 					self::setToMember($member, $object, $ret, $oClass, "getManyToMany");
 				}
 			}
@@ -101,7 +101,7 @@ trait DAORelationsTrait {
 	
 	
 	
-	private static function getManyToManyFromArrayIds($object, $relationObjects, $ids){
+	private static function getManyToManyFromArrayIds($relationObjects, $ids){
 		$ret=[];
 		foreach ( $relationObjects as $targetEntityInstance ) {
 			$id=OrmUtils::getFirstKeyValue($targetEntityInstance);
@@ -187,7 +187,7 @@ trait DAORelationsTrait {
 		}
 		$ret=[];
 		if(is_array($included)){
-			foreach ($included as $index=>&$includedMember){
+			foreach ($included as &$includedMember){
 				if(is_array($includedMember)){
 					foreach ($includedMember as $iMember){
 						self::parseEncludeMember($ret, $iMember);
@@ -236,7 +236,7 @@ trait DAORelationsTrait {
 	}
 	
 	private static function getToManyFields($included,&$toManyFields){
-		foreach ($toManyFields as $member=>&$annot){
+		foreach ($toManyFields as $member=>$annotNotUsed){
 			if(isset($included[$member])===false){
 				unset($toManyFields[$member]);
 			}

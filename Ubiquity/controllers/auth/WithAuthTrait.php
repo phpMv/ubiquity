@@ -25,7 +25,7 @@ trait WithAuthTrait{
 			if($this->isValid(Startup::getAction())){
 				$this->checkConnection($authController);
 			}else{
-				if($authController->_checkConnectionTimeout()!=null)
+				if($authController->_checkConnectionTimeout()!==null)
 					$this->jquery->clearInterval("_checkConnection");
 			}
 		}
@@ -88,7 +88,7 @@ trait WithAuthTrait{
 	
 	
 	protected function checkConnection($authController){
-		if($authController->_checkConnectionTimeout()!=null){
+		if($authController->_checkConnectionTimeout()!==null){
 			$authController->_disconnected();
 			$this->jquery->ajaxInterval("get",$authController->_getBaseRoute()."/_checkConnection/",$authController->_checkConnectionTimeout(),"_checkConnection","",["jsCallback"=>"data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"]);
 		}

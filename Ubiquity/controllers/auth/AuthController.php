@@ -38,7 +38,7 @@ abstract class AuthController extends ControllerBase{
 	}
 	
 	public function index(){
-		if(($nbAttempsMax=$this->attemptsNumber())!=null){
+		if(($nbAttempsMax=$this->attemptsNumber())!==null){
 			$nb=USession::getTmp($this->_attemptsSessionKey,$nbAttempsMax);
 			if($nb<=0){
 				$this->badLogin();
@@ -145,7 +145,7 @@ abstract class AuthController extends ControllerBase{
 		$fMessage=new FlashMessage("Invalid creditentials!","Connection problem","warning","warning circle");
 		$this->badLoginMessage($fMessage);
 		$attemptsMessage="";
-		if(($nbAttempsMax=$this->attemptsNumber())!=null){
+		if(($nbAttempsMax=$this->attemptsNumber())!==null){
 			$nb=USession::getTmp($this->_attemptsSessionKey,$nbAttempsMax);
 			$nb--;
 			if($nb<0) $nb=0;
