@@ -48,7 +48,7 @@ A route can have parameters:
     	/**
     	* Matches products/*
     	*
-    	* @Route("products/{value}")
+    	* @route("products/{value}")
     	*/
     	public function search($value){
     		// $value will equal the dynamic part of the URL
@@ -74,12 +74,76 @@ A route can define optional parameters, if the associated method has optional ar
     	/**
     	* Matches products/all/(.*?)/(.*?)
     	*
-    	* @Route("products/all/{pageNum}/{countPerPage}")
+    	* @route("products/all/{pageNum}/{countPerPage}")
     	*/
     	public function list($pageNum,$countPerPage=50){
     		// ...
     	}
    }
+
+
+Route requirements
+^^^^^^^^^^^^^^^^^^
+
+**php** being an untyped language, it is possible to add specifications on the variables passed in the url via the attribute **requirements**.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/ProductsController.php
+   :emphasize-lines: 10
+   
+   namespace controllers;
+    /**
+    * Controller ProductsController
+    **/
+   class ProductsController extends ControllerBase{
+   	...
+    	/**
+    	* Matches products/all/(\d+)/(\d?)
+    	*
+    	* @route("products/all/{pageNum}/{countPerPage}","requirements"=>["pageNum"=>"\d+","countPerPage"=>"\d?"])
+    	*/
+    	public function list($pageNum,$countPerPage=50){
+    		// ...
+    	}
+   }
+   
+
+The defined route matches these urls:
+  - ``products/all/1/20``
+  - ``products/all/5/`` 
+but not with that one:
+  - ``products/all/test``
+  
+
+Route http methods
+^^^^^^^^^^^^^^^^^^
+
+It is possible to specify the http method or methods associated with a route:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/ProductsController.php
+   :emphasize-lines: 8
+   
+   namespace controllers;
+    /**
+    * Controller ProductsController
+    **/
+   class ProductsController extends ControllerBase{
+   
+   	/**
+    * @route("products","methods"=>["get"])
+    */
+   	public function index(){}
+   
+   }
+
+The **methods** attribute can accept several methods:
+`@route("testMethods","methods"=>["get","post","delete"])`
+
+It is also possible to use specific annotations **@get**, **@post**...
+`@get("products")`
 
 Route name
 ^^^^^^^^^^
@@ -131,7 +195,7 @@ The **@route** annotation can be used on a controller class :
     **/
    class ProductsController extends ControllerBase{
    
-   ...
+    ...
    	/**
     * @route("/all")
     **/
@@ -139,18 +203,18 @@ The **@route** annotation can be used on a controller class :
    
    }
 
-In this case, the route defined on the controller is used as a prefix for all controller routes :
+In this case, the route defined on the controller is used as a prefix for all controller routes : |br|
 The generated route for the action **display** is ``/product/all``
 
 automated routes
 ~~~~~~~~~~~~~~~~
-If a global route is defined, it is possible to add all controller actions as routes (using the global prefix),
- by setting the **automated** parameter :
+
+If a global route is defined, it is possible to add all controller actions as routes (using the global prefix), by setting the **automated** parameter :
 
 .. code-block:: php
    :linenos:
    :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 4
+   :emphasize-lines: 3
    
    namespace controllers;
     /**
@@ -177,7 +241,6 @@ The base class:
 .. code-block:: php
    :linenos:
    :caption: app/controllers/ProductsBase.php
-   :emphasize-lines: 4
    
    namespace controllers;
     /**
@@ -202,7 +265,7 @@ The derived class using inherited attribute:
 .. code-block:: php
    :linenos:
    :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 4
+   :emphasize-lines: 3
    
    namespace controllers;
     /**
@@ -215,7 +278,10 @@ The derived class using inherited attribute:
    	   
    }
    
+
 The **inherited** attribute defines the 2 routes contained in **ProductsBase**:
   - `/products/(index/)?`
   - `/products/sort/{name}`
 
+
+If the **automated** and **inherited** attributes are combined, the base class actions are also added to the routes.
