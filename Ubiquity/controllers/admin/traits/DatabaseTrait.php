@@ -19,7 +19,7 @@ use Ajax\semantic\html\collections\HtmlMessage;
 trait DatabaseTrait{
 	abstract public function _getAdminData();
 	abstract public function _getAdminViewer();
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 	abstract public function loadView($viewName, $pData=NULL, $asString=false);
 	abstract protected function showSimpleMessage($content, $type, $title=null,$icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
@@ -54,12 +54,12 @@ trait DatabaseTrait{
 			if(isset($actualDb) && $actualDb!==$db){
 				$btExport=$bts->addElement("Export datas script : ".$actualDb." => ".$db);
 				$btExport->addIcon("exchange");
-				$btExport->postOnClick($this->_getAdminFiles()->getAdminBaseRoute()."/exportDatasScript","{}","#div-datas");
+				$btExport->postOnClick($this->_getFiles()->getAdminBaseRoute()."/exportDatasScript","{}","#div-datas");
 			}
 			$frm->addDivider();
 			$this->jquery->exec("setAceEditor('sql');",true);
 			$this->jquery->compile($this->view);
-			$this->loadView($this->_getAdminFiles()->getViewDatabaseCreate());
+			$this->loadView($this->_getFiles()->getViewDatabaseCreate());
 		}
 	}
 
@@ -70,6 +70,6 @@ trait DatabaseTrait{
 		$text->getField()->setProperty("style", "background-color: #002B36;");
 		$this->jquery->exec("setAceEditor('datas-sql');",true);
 		$this->jquery->compile($this->view);
-		$this->loadView($this->_getAdminFiles()->getViewDatasExport());
+		$this->loadView($this->_getFiles()->getViewDatasExport());
 	}
 }

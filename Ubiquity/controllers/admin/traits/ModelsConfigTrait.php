@@ -27,7 +27,7 @@ trait ModelsConfigTrait{
 	 *
 	 * @return UbiquityMyAdminFiles
 	 */
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 	private $activeStep=5;
 	private $engineering="forward";
 	private $steps=[ "forward" => [ [ "toggle on","Engineering","Forward" ],[ "settings","Conf","Database configuration" ],[ "database","Connexion","Database connexion" ],[ "sticky note","Models","Models generation" ],[ "lightning","Cache","Models cache generation" ] ],"reverse" => [ [ "toggle off","Engineering","Reverse" ],[ "sticky note","Models","Models configuration/implementation" ],[ "lightning","Cache","Models cache generation" ],[ "database plus","Database","Database creation" ] ] ];
@@ -43,7 +43,7 @@ trait ModelsConfigTrait{
 			$step=$steps[$index];
 			$step=$stepper->addStep($step);
 			if ($index === 0) {
-				$step->addClass("_noStep")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_changeEngineering/" . $this->engineering . "/" . $completed, "#stepper", [ "jqueryDone" => "replaceWith","hasLoader" => false ]);
+				$step->addClass("_noStep")->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/_changeEngineering/" . $this->engineering . "/" . $completed, "#stepper", [ "jqueryDone" => "replaceWith","hasLoader" => false ]);
 			} else {
 				$step->setProperty("data-ajax", $index);
 			}
@@ -51,7 +51,7 @@ trait ModelsConfigTrait{
 		$stepper->setActiveStep($this->activeStep);
 		$_SESSION["step"]=$this->activeStep;
 		$stepper->asLinks();
-		$this->jquery->getOnClick(".step:not(._noStep)", $this->_getAdminFiles()->getAdminBaseRoute() . "/_loadModelStep/" . $this->engineering . "/", "#models-main", [ "attr" => "data-ajax" ]);
+		$this->jquery->getOnClick(".step:not(._noStep)", $this->_getFiles()->getAdminBaseRoute() . "/_loadModelStep/" . $this->engineering . "/", "#models-main", [ "attr" => "data-ajax" ]);
 		return $stepper;
 	}
 
@@ -67,7 +67,7 @@ trait ModelsConfigTrait{
 		$this->activeStep=\sizeof($this->getModelSteps());
 		echo $this->_getModelsStepper();
 		if ($completed !== "completed")
-			$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/_loadModelStep/" . $this->engineering . "/" . $this->activeStep, "#models-main");
+			$this->jquery->get($this->_getFiles()->getAdminBaseRoute() . "/_loadModelStep/" . $this->engineering . "/" . $this->activeStep, "#models-main");
 		echo $this->jquery->compile($this->view);
 	}
 
@@ -113,7 +113,7 @@ trait ModelsConfigTrait{
 	public function _importFromYuml() {
 		$yumlContent="[User|«pk» id:int(11);name:varchar(11)],[Groupe|«pk» id:int(11);name:varchar(11)],[User]0..*-0..*[Groupe]";
 		$bt=$this->jquery->semantic()->htmlButton("bt-gen", "Generate models", "green fluid");
-		$bt->postOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_generateFromYuml", "{code:$('#yuml-code').val()}", "#stepper", [ "attr" => "","jqueryDone" => "replaceWith" ]);
+		$bt->postOnClick($this->_getFiles()->getAdminBaseRoute() . "/_generateFromYuml", "{code:$('#yuml-code').val()}", "#stepper", [ "attr" => "","jqueryDone" => "replaceWith" ]);
 		$menu=$this->_yumlMenu("/_updateYumlDiagram", "{refresh:'true',code:$('#yuml-code').val()}", "#diag-class");
 		$this->jquery->exec('$("#modelsMessages-success").hide()', true);
 		$menu->compile($this->jquery, $this->view);
@@ -129,7 +129,7 @@ trait ModelsConfigTrait{
 			}
 		});');
 		$this->jquery->compile($this->view);
-		$this->loadView($this->_getAdminFiles()->getViewYumlReverse(), [ "diagram" => $diagram ]);
+		$this->loadView($this->_getFiles()->getViewYumlReverse(), [ "diagram" => $diagram ]);
 	}
 
 	public function _generateFromYuml() {
@@ -140,7 +140,7 @@ trait ModelsConfigTrait{
 			\ob_start();
 			$yumlGen->create($config);
 			\ob_get_clean();
-			Startup::forward($this->_getAdminFiles()->getAdminBaseRoute() . "/_changeEngineering/completed");
+			Startup::forward($this->_getFiles()->getAdminBaseRoute() . "/_changeEngineering/completed");
 		}
 	}
 
@@ -157,7 +157,7 @@ trait ModelsConfigTrait{
 	
 	private function _yumlRefresh($url="/_updateDiagram", $params="{}", $responseElement="#diag-class"){
 		$params=JsUtils::_implodeParams([ "$('#frmProperties').serialize()",$params ]);
-		return $this->jquery->postDeferred($this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
+		return $this->jquery->postDeferred($this->_getFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
 	}
 
 	private function _yumlMenu($url="/_updateDiagram", $params="{}", $responseElement="#diag-class", $type="plain", $size=";scale:100") {
@@ -165,11 +165,11 @@ trait ModelsConfigTrait{
 		$menu=new HtmlMenu("menu-diagram");
 		$ddScruffy=new HtmlDropdown("ddScruffy", $type, [ "nofunky" => "Boring","plain" => "Plain","scruffy" => "Scruffy" ], true);
 		$ddScruffy->setValue("plain")->asSelect("type");
-		$this->jquery->postOn("change", "[name='type']", $this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
+		$this->jquery->postOn("change", "[name='type']", $this->_getFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
 		$menu->addItem($ddScruffy);
 		$ddSize=new HtmlDropdown("ddSize", $size, [ ";scale:180" => "Huge",";scale:120" => "Big",";scale:100" => "Normal",";scale:80" => "Small",";scale:60" => "Tiny" ], true);
 		$ddSize->asSelect("size");
-		$this->jquery->postOn("change", "[name='size']", $this->_getAdminFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
+		$this->jquery->postOn("change", "[name='size']", $this->_getFiles()->getAdminBaseRoute() . $url, $params, $responseElement, [ "ajaxTransition" => "random","attr" => "" ]);
 		$menu->wrap("<form id='frmProperties' name='frmProperties'>", "</form>");
 		$menu->addItem($ddSize);
 		return $menu;

@@ -2,8 +2,10 @@
 
 namespace Ubiquity\controllers\admin;
 
+use Ubiquity\controllers\admin\traits\UrlsTrait;
+
 class UbiquityMyAdminFiles {
-	
+	use UrlsTrait;
 	private $viewBase="@framework/Admin";
 
 	public function getAdminBaseRoute() {

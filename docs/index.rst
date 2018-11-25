@@ -27,7 +27,7 @@ Ubiquity framework User guide
    :maxdepth: 1
    :caption: Scaffolding
    
-   scaffolding/index
+   scaffolding/crud/index
 
 .. toctree::
    :maxdepth: 1

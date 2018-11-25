@@ -23,7 +23,7 @@ trait ConfigTrait{
 
 	abstract public function _getAdminViewer();
 
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	abstract public function loadView($viewName, $pData = NULL, $asString = false);
 
@@ -40,7 +40,7 @@ trait ConfigTrait{
 		}
 		$this->_getAdminViewer ()->getConfigDataForm ( $config );
 		$this->jquery->compile ( $this->view );
-		$this->loadView ( $this->_getAdminFiles ()->getViewConfigForm () );
+		$this->loadView ( $this->_getFiles ()->getViewConfigForm () );
 	}
 	
 	public function _config(){

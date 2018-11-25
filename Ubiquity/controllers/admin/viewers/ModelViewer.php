@@ -139,7 +139,7 @@ class ModelViewer {
 				$dataElement->setValueFunction($member, function() use($fkInstanceArray,$member){
 					return $this->getFkMemberElement($member,$fkInstanceArray["objectFK"],$fkInstanceArray["fkClass"],$fkInstanceArray["fkTable"]);
 				});
-			}	
+			}
 		}
 		return $dataElement;
 	}
@@ -155,6 +155,7 @@ class ModelViewer {
 	 */
 	public function getModelDataTable($instances, $model,$totalCount,$page=1) {
 		$adminRoute = $this->controller->_getBaseRoute ();
+		$files=$this->controller->_getFiles();
 		$modal = ($this->isModal ( $instances, $model ) ? "modal" : "no");
 		$dataTable = $this->getDataTableInstance( $instances,$model,$totalCount,$page );
 		$attributes = $this->controller->_getAdminData()->getFieldNames ( $model );
@@ -167,17 +168,18 @@ class ModelViewer {
 		}
 		$dataTable->setIdentifierFunction ( CRUDHelper::getIdentifierFunction ( $model ) );
 		if($this->showDetailsOnDataTableClick()){
-			$dataTable->getOnRow ( "click", $adminRoute . "/showDetail", "#table-details", [ "attr" => "data-ajax" ] );
+			$dataTable->getOnRow ( "click", $adminRoute .$files->getRouteDetails(), "#table-details", [ "attr" => "data-ajax","hasLoader"=>false ] );
 			$dataTable->setActiveRowSelector ( "active" );
 		}
-		$dataTable->setUrls ( [ "refresh"=>$adminRoute . "/refresh_","delete" => $adminRoute . "/delete","edit" => $adminRoute . "/edit/" . $modal ,"display"=> $adminRoute."/display/".$modal] );
+		
+		$dataTable->setUrls ( [ "refresh"=>$adminRoute . $files->getRouteRefresh(),"delete" => $adminRoute . $files->getRouteDelete(),"edit" => $adminRoute . $files->getRouteEdit()."/" . $modal ,"display"=> $adminRoute.$files->getRouteDisplay()."/".$modal] );
 		$dataTable->setTargetSelector ( [ "delete" => "#table-messages","edit" => "#frm-add-update" ,"display"=>"#table-details" ] );
 		$dataTable->addClass ( "small very compact" );
 		$lbl=new HtmlLabel("search-query","<span id='search-query-content'></span>");
 		$icon=$lbl->addIcon("delete",false);
 		$lbl->wrap("<span>","</span>");
 		$lbl->setProperty("style", "display: none;");
-		$icon->getOnClick($adminRoute."/refreshTable","#lv",["jqueryDone"=>"replaceWith","hasLoader"=>"internal"]);
+		$icon->getOnClick($adminRoute.$files->getRouteRefreshTable(),"#lv",["jqueryDone"=>"replaceWith","hasLoader"=>"internal"]);
 		
 		$dataTable->addItemInToolbar($lbl);
 		$dataTable->addSearchInToolbar();
@@ -225,17 +227,19 @@ class ModelViewer {
 	protected function getDataTableInstance($instances,$model,$totalCount,$page=1):DataTable{
 		$semantic = $this->jquery->semantic ();
 		$recordsPerPage=$this->recordsPerPage($model,$totalCount);
-		$grpByFields=$this->getGroupByFields();
-		if(is_array($grpByFields)){
-			$dataTable = $semantic->dataTable( "lv", $model, $instances );
-			$dataTable->setGroupByFields($grpByFields);
-		}else{
-			$dataTable = $semantic->jsonDataTable( "lv", $model, $instances );
-		}
 		if(is_numeric($recordsPerPage)){
+			$grpByFields=$this->getGroupByFields();
+			if(is_array($grpByFields)){
+				$dataTable = $semantic->dataTable( "lv", $model, $instances );
+				$dataTable->setGroupByFields($grpByFields);
+			}else{
+				$dataTable = $semantic->jsonDataTable( "lv", $model, $instances );
+			}
 			$dataTable->paginate($page,$totalCount,$recordsPerPage,5);
 			$dataTable->onActiveRowChange('$("#table-details").html("");');
 			$dataTable->onSearchTerminate('$("#search-query-content").html(data);$("#search-query").show();$("#table-details").html("");');
+		}else{
+			$dataTable = $semantic->dataTable( "lv", $model, $instances );
 		}
 		return $dataTable;
 	}

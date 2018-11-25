@@ -40,7 +40,6 @@ use Ubiquity\log\LogMessage;
 use Ubiquity\log\Logger;
 use Ubiquity\utils\base\UDateTime;
 use Ubiquity\log\HtmlLogFormatter;
-use Ajax\semantic\html\elements\HtmlHeader;
 
 /**
  *
@@ -273,10 +272,10 @@ class UbiquityMyAdminViewer {
 		$dt->onPreCompile ( function ($dt) {
 			$dt->getHtmlComponent ()->mergeIdentiqualValues ( 0 );
 		} );
-		$this->jquery->postOnClick ( "._lnk", $this->controller->_getAdminFiles ()->getAdminBaseRoute () . "/_showFileContent", "{key:$(this).attr('data-key'),type:$(this).attr('data-type'),filename:$(this).attr('data-ajax')}", "#modal", [ "hasLoader" => false ] );
-		$this->jquery->postFormOnClick ( "._delete", $this->controller->_getAdminFiles ()->getAdminBaseRoute () . "/deleteCacheFile", "frmCache", "#dtCacheFiles tbody", [ "jqueryDone" => "replaceWith","params" => "{type:$(this).attr('data-type'),toDelete:$(this).attr('data-key')}" ] );
-		$this->jquery->postFormOnClick ( "._delete-all", $this->controller->_getAdminFiles ()->getAdminBaseRoute () . "/deleteAllCacheFiles", "frmCache", "#dtCacheFiles tbody", [ "jqueryDone" => "replaceWith","params" => "{type:$(this).attr('data-ajax')}" ] );
-		$this->jquery->postFormOnClick ( "._init", $this->controller->_getAdminFiles ()->getAdminBaseRoute () . "/initCacheType", "frmCache", "#dtCacheFiles tbody", [ "jqueryDone" => "replaceWith","params" => "{type:$(this).attr('data-ajax')}" ] );
+		$this->jquery->postOnClick ( "._lnk", $this->controller->_getFiles ()->getAdminBaseRoute () . "/_showFileContent", "{key:$(this).attr('data-key'),type:$(this).attr('data-type'),filename:$(this).attr('data-ajax')}", "#modal", [ "hasLoader" => false ] );
+		$this->jquery->postFormOnClick ( "._delete", $this->controller->_getFiles ()->getAdminBaseRoute () . "/deleteCacheFile", "frmCache", "#dtCacheFiles tbody", [ "jqueryDone" => "replaceWith","params" => "{type:$(this).attr('data-type'),toDelete:$(this).attr('data-key')}" ] );
+		$this->jquery->postFormOnClick ( "._delete-all", $this->controller->_getFiles ()->getAdminBaseRoute () . "/deleteAllCacheFiles", "frmCache", "#dtCacheFiles tbody", [ "jqueryDone" => "replaceWith","params" => "{type:$(this).attr('data-ajax')}" ] );
+		$this->jquery->postFormOnClick ( "._init", $this->controller->_getFiles ()->getAdminBaseRoute () . "/initCacheType", "frmCache", "#dtCacheFiles tbody", [ "jqueryDone" => "replaceWith","params" => "{type:$(this).attr('data-ajax')}" ] );
 		return $dt;
 	}
 
@@ -547,7 +546,7 @@ class UbiquityMyAdminViewer {
 				$input= new HtmlFormInput("database-dbName",null,"text",$value);
 				$bt=$input->addAction("Test");
 				$bt->addClass("black");
-				$bt->postFormOnClick($this->controller->_getAdminFiles()->getAdminBaseRoute() ."/_checkDbStatus","frm-frmDeConfig","#db-status",["jqueryDone"=>"replaceWith","hasLoader"=>"internal"]);
+				$bt->postFormOnClick($this->controller->_getFiles()->getAdminBaseRoute() ."/_checkDbStatus","frm-frmDeConfig","#db-status",["jqueryDone"=>"replaceWith","hasLoader"=>"internal"]);
 				return $this->labeledInput($input, '<i id="db-status" class="ui question icon"></i>&nbsp;'.$value);
 			});
 			$dbDe->setEdition();
@@ -663,7 +662,7 @@ class UbiquityMyAdminViewer {
 		$form=$de->getForm();
 		$form->setValidationParams(["inline"=>true,"on"=>"blur"]);
 		
-		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getAdminFiles()->getAdminBaseRoute()."/submitConfig/all","#action-response");
+		$de->addSubmitInToolbar("save-config-btn","Save configuration", "basic inverted",$this->controller->_getFiles()->getAdminBaseRoute()."/submitConfig/all","#action-response");
 		$de->addButtonInToolbar("Cancel edition")->onClick('$("#config-div").show();$("#action-response").html("");');
 		$de->getToolbar()->setSecondary()->wrap('<div class="ui inverted top attached segment">','</div>');
 		$de->setAttached();
@@ -687,9 +686,9 @@ class UbiquityMyAdminViewer {
 		$form->addExtraFieldRule("mvcNS-rest", "checkDirectory[app/".$controllersNS."]", Startup::getNS()."{value} directory does not exists");
 		
 		
-		$this->jquery->exec(Rule::ajax($this->jquery, "checkArray", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkArray", "{_value:value}", "result=data.result;", "post"), true);
-		$this->jquery->exec(Rule::ajax($this->jquery, "checkDirectory", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkDirectory", "{_value:value,_ruleValue:ruleValue}", "result=data.result;", "post"), true);
-		$this->jquery->exec(Rule::ajax($this->jquery, "checkClass", $this->controller->_getAdminFiles()->getAdminBaseRoute() . "/_checkClass", "{_value:value,_ruleValue:ruleValue}", "result=data.result;", "post"), true);
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkArray", $this->controller->_getFiles()->getAdminBaseRoute() . "/_checkArray", "{_value:value}", "result=data.result;", "post"), true);
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkDirectory", $this->controller->_getFiles()->getAdminBaseRoute() . "/_checkDirectory", "{_value:value,_ruleValue:ruleValue}", "result=data.result;", "post"), true);
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkClass", $this->controller->_getFiles()->getAdminBaseRoute() . "/_checkClass", "{_value:value,_ruleValue:ruleValue}", "result=data.result;", "post"), true);
 		
 		return $de->asForm();
 	}
@@ -710,7 +709,7 @@ class UbiquityMyAdminViewer {
 			$item->setProperty ( "data-ajax", $e [0] );
 			return $item;
 		} );
-		$items->getOnClick ( $this->controller->_getAdminFiles ()->getAdminBaseRoute (), "#main-content", [ "attr" => "data-ajax","historize"=>true ] );
+		$items->getOnClick ( $this->controller->_getFiles ()->getAdminBaseRoute (), "#main-content", [ "attr" => "data-ajax","historize"=>true ] );
 		return $items->addClass ( "divided relaxed link" );
 	}
 
@@ -720,7 +719,7 @@ class UbiquityMyAdminViewer {
 			return "<i class='" . GitFileStatus::getIcon ( $element->getStatus () ) . " icon'></i>&nbsp;" . $element->getName ();
 		}, $files );
 		$list->addCheckedList ( $elements, "<i class='file icon'></i>&nbsp;Files", array_keys ( $elements ), false, "files-to-commit[]" );
-		$this->jquery->getOnClick ( "#dtGitFiles label[data-value]", $this->controller->_getAdminFiles ()->getAdminBaseRoute () . "/changesInfiles", "#changesInFiles-div", [ "attr" => "data-value","preventDefault" => false,"stopPropagation" => true ] );
+		$this->jquery->getOnClick ( "#dtGitFiles label[data-value]", $this->controller->_getFiles ()->getAdminBaseRoute () . "/changesInfiles", "#changesInFiles-div", [ "attr" => "data-value","preventDefault" => false,"stopPropagation" => true ] );
 		return $list;
 	}
 
@@ -738,7 +737,7 @@ class UbiquityMyAdminViewer {
 		$dt->setFields ( [ "cHash","author","cDate","summary" ] );
 		$dt->setCaptions ( [ "Hash","Author","Date","Summary" ] );
 		$dt->setActiveRowSelector ();
-		$dt->onRowClick ( $this->jquery->getDeferred ( $this->controller->_getAdminFiles ()->getAdminBaseRoute () . "/changesInCommit", "#changesInCommit-div", [ "attr" => "data-ajax" ] ) );
+		$dt->onRowClick ( $this->jquery->getDeferred ( $this->controller->_getFiles ()->getAdminBaseRoute () . "/changesInCommit", "#changesInCommit-div", [ "attr" => "data-ajax" ] ) );
 		$dt->setValueFunction ( 0, function ($value, $instance) {
 			if ($instance->getPushed ()) {
 				return "<i class='ui green check square icon'></i>" . $value;
@@ -758,7 +757,7 @@ class UbiquityMyAdminViewer {
 		$frm->setFields ( [ "name\n","name","remoteUrl","user","password" ] );
 		$frm->setCaptions ( [ "&nbsp;Git repository settings","Repository name","Remote URL","User name","password" ] );
 		$frm->fieldAsMessage ( 0, [ "icon" => HtmlIconGroups::corner ( "git", "settings" ) ] );
-		$frm->setSubmitParams ( $this->controller->_getAdminFiles ()->getAdminBaseRoute () . "/updateGitParams", "#main-content" );
+		$frm->setSubmitParams ( $this->controller->_getFiles ()->getAdminBaseRoute () . "/updateGitParams", "#main-content" );
 		$frm->fieldAsInput ( 1 );
 		$frm->fieldAsInput ( 3, [ "rules" => [ "empty" ] ] );
 		$frm->fieldAsInput ( 4, [ "inputType" => "password" ] );

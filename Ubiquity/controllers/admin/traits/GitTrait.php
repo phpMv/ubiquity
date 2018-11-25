@@ -26,7 +26,7 @@ trait GitTrait{
 
 	abstract public function _getAdminViewer();
 
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	abstract public function loadView($viewName, $pData = NULL, $asString = false);
 
@@ -70,7 +70,7 @@ trait GitTrait{
 		$this->_getAdminViewer ()->gitFrmSettings ( $gitRepo );
 		$this->jquery->execOn ( "click", "#validate-btn", '$("#frmGitSettings").form("submit");' );
 		$this->jquery->execOn ( "click", "#cancel-btn", '$("#frm").html("");' );
-		$this->jquery->renderView ( $this->_getAdminFiles ()->getViewGitSettings () );
+		$this->jquery->renderView ( $this->_getFiles ()->getViewGitSettings () );
 	}
 
 	public function updateGitParams() {
@@ -139,8 +139,8 @@ trait GitTrait{
 
 	protected function _refreshParts() {
 		$this->jquery->exec ( '$(".to-clear").html("");$(".to-clear-value").val("");', true );
-		$this->jquery->get ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/refreshFiles", "#dtGitFiles", [ "attr" => "","jqueryDone" => "replaceWith","hasLoader" => false ] );
-		$this->jquery->get ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/refreshCommits", "#dtCommits", [ "attr" => "","jqueryDone" => "replaceWith","hasLoader" => false ] );
+		$this->jquery->get ( $this->_getFiles ()->getAdminBaseRoute () . "/refreshFiles", "#dtGitFiles", [ "attr" => "","jqueryDone" => "replaceWith","hasLoader" => false ] );
+		$this->jquery->get ( $this->_getFiles ()->getAdminBaseRoute () . "/refreshCommits", "#dtCommits", [ "attr" => "","jqueryDone" => "replaceWith","hasLoader" => false ] );
 	}
 
 	public function gitPush() {
@@ -172,20 +172,20 @@ trait GitTrait{
 	}
 
 	public function gitIgnoreEdit() {
-		$this->jquery->postFormOnClick ( "#validate-btn", $this->_getAdminFiles ()->getAdminBaseRoute () . "/gitIgnoreValidate", "gitignore-frm", "#frm" );
+		$this->jquery->postFormOnClick ( "#validate-btn", $this->_getFiles ()->getAdminBaseRoute () . "/gitIgnoreValidate", "gitignore-frm", "#frm" );
 		$this->jquery->execOn ( "click", "#cancel-btn", '$("#frm").html("");' );
 		$content = UFileSystem::load ( Startup::getApplicationDir () . DS . ".gitignore" );
 		if ($content === false) {
 			$content = "#gitignorefile\n";
 		}
-		$this->jquery->renderView ( $this->_getAdminFiles ()->getViewGitIgnore (), [ "content" => $content ] );
+		$this->jquery->renderView ( $this->_getFiles ()->getViewGitIgnore (), [ "content" => $content ] );
 	}
 
 	public function gitIgnoreValidate() {
 		if (URequest::isPost ()) {
 			$content = URequest::post ( "content" );
 			if (UFileSystem::save ( Startup::getApplicationDir () . DS . ".gitignore", $content )) {
-				$this->jquery->get ( $this->_getAdminFiles ()->getAdminBaseRoute () . "/refreshFiles", "#dtGitFiles", [ "attr" => "","jqueryDone" => "replaceWith","hasLoader" => false ] );
+				$this->jquery->get ( $this->_getFiles ()->getAdminBaseRoute () . "/refreshFiles", "#dtGitFiles", [ "attr" => "","jqueryDone" => "replaceWith","hasLoader" => false ] );
 				$message = $this->showSimpleMessage ( "<b>.gitignore</b> file saved !", "positive", "gitignore","git" );
 			} else {
 				$message = $this->showSimpleMessage ( "<b>.gitignore</b> file not saved !", "warning", "gitignore","git" );

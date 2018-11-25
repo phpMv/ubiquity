@@ -25,7 +25,7 @@ use Ubiquity\controllers\admin\utils\Constants;
  */
 trait RestTrait{
 
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	abstract public function _getAdminViewer();
 
@@ -94,14 +94,14 @@ trait RestTrait{
 		$frmHeaders=new HtmlForm("frm-headers-" . $path);
 		$frmParameters=new HtmlForm("frm-parameters-" . $path);
 
-		$this->jquery->postOnClick("#" . $btGo->getIdentifier(), $this->_getAdminFiles()->getAdminBaseRoute() . "/_runRestMethod", "{pathId: '" . $path . "',path: $('#" . $pathField->getIdentifier() . "').val(),method: $('#" . $methodField->getIdentifier() . "').val(),headers:$('#" . $frmHeaders->getIdentifier() . "').serialize(),params:$('#" . $frmParameters->getIdentifier() . "').serialize()}", "#" . $containerId . " ._runRestMethod", [ ]);
-		$this->jquery->postOnClick("#" . $containerId . " ._requestWithParams", $this->_getAdminFiles()->getAdminBaseRoute() . "/_runPostWithParams/_/parameter/rest", "{actualParams:$('#" . $frmParameters->getIdentifier() . "').serialize(),model: '" . $resource . "',toUpdate:'" . $frmParameters->getIdentifier() . "',method:$('#" . $containerId . " ._method').val(),url:$('#" . $containerId . " ._path').val()}", "#modal", [ "attr" => "","hasLoader" => false ]);
-		$this->jquery->postOnClick("#" . $containerId . " ._requestWithHeaders", $this->_getAdminFiles()->getAdminBaseRoute() . "/_runPostWithParams/_/header/rest", "{actualParams: $('#" . $frmHeaders->getIdentifier() . "').serialize(),model: '" . $resource . "',toUpdate:'" . $frmHeaders->getIdentifier() . "',method:$('#" . $containerId . " ._method').val(),url:$('#" . $containerId . " ._path').val()}", "#modal", [ "attr" => "","hasLoader" => false ]);
+		$this->jquery->postOnClick("#" . $btGo->getIdentifier(), $this->_getFiles()->getAdminBaseRoute() . "/_runRestMethod", "{pathId: '" . $path . "',path: $('#" . $pathField->getIdentifier() . "').val(),method: $('#" . $methodField->getIdentifier() . "').val(),headers:$('#" . $frmHeaders->getIdentifier() . "').serialize(),params:$('#" . $frmParameters->getIdentifier() . "').serialize()}", "#" . $containerId . " ._runRestMethod", [ ]);
+		$this->jquery->postOnClick("#" . $containerId . " ._requestWithParams", $this->_getFiles()->getAdminBaseRoute() . "/_runPostWithParams/_/parameter/rest", "{actualParams:$('#" . $frmParameters->getIdentifier() . "').serialize(),model: '" . $resource . "',toUpdate:'" . $frmParameters->getIdentifier() . "',method:$('#" . $containerId . " ._method').val(),url:$('#" . $containerId . " ._path').val()}", "#modal", [ "attr" => "","hasLoader" => false ]);
+		$this->jquery->postOnClick("#" . $containerId . " ._requestWithHeaders", $this->_getFiles()->getAdminBaseRoute() . "/_runPostWithParams/_/header/rest", "{actualParams: $('#" . $frmHeaders->getIdentifier() . "').serialize(),model: '" . $resource . "',toUpdate:'" . $frmHeaders->getIdentifier() . "',method:$('#" . $containerId . " ._method').val(),url:$('#" . $containerId . " ._path').val()}", "#modal", [ "attr" => "","hasLoader" => false ]);
 		if (!$msgHelp->_empty) {
 			$this->jquery->exec('$("#' . JString::cleanIdentifier("help-" . $action . $controller) . '").transition("show");', true);
 		}
 		$this->jquery->compile($this->view);
-		$this->loadView($this->_getAdminFiles()->getViewRestFormTester(), [ "frmHeaders" => $frmHeaders,"frmParameters" => $frmParameters,"frmTester" => $frm,"pathId" => $pathId,"msgHelp" => $msgHelp ]);
+		$this->loadView($this->_getFiles()->getViewRestFormTester(), [ "frmHeaders" => $frmHeaders,"frmParameters" => $frmParameters,"frmTester" => $frm,"pathId" => $pathId,"msgHelp" => $msgHelp ]);
 	}
 
 	protected function _displayActionDoc($controller, $action) {
@@ -134,7 +134,7 @@ trait RestTrait{
 		$fields->addButton("bt-cancel-new-resource", "Cancel", "", "$('#frmNewResource').hide();$('#divRest').show();");
 		$frm->setValidationParams([ "on" => "blur","inline" => false ]);
 		$frm->addErrorMessage();
-		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute() . "/_createNewResource", "#divRest", [ "dataType" => "html" ]);
+		$frm->setSubmitParams($this->_getFiles()->getAdminBaseRoute() . "/_createNewResource", "#divRest", [ "dataType" => "html" ]);
 		$this->jquery->exec("$('#divRest').hide();$('#div-new-resource').show();", true);
 		echo $frm->compile($this->jquery, $this->view);
 		echo $this->jquery->compile($this->view);
@@ -179,7 +179,7 @@ trait RestTrait{
 						$('#sub-td'+$(this).closest('tr').attr('id')).remove();
 					}", false, false, true);
 		$this->jquery->click("._showMsgHelp", '$("#"+$(this).attr("data-show")).transition();');
-		$this->jquery->postOnClick("._toTest", $this->_getAdminFiles()->getAdminBaseRoute() . "/_displayRestFormTester", "{resource:$(this).attr('data-resource'),controller:$(this).attr('data-controller'),action:$(this).attr('data-action'),path:$(this).closest('tr').attr('data-ajax')}", "'#sub-td'+$(self).closest('tr').attr('id')", [ "ajaxTransition" => "random","stopPropagation" => true,"jsCondition" => "!$(self).hasClass('active')" ]);
+		$this->jquery->postOnClick("._toTest", $this->_getFiles()->getAdminBaseRoute() . "/_displayRestFormTester", "{resource:$(this).attr('data-resource'),controller:$(this).attr('data-controller'),action:$(this).attr('data-action'),path:$(this).closest('tr').attr('data-ajax')}", "'#sub-td'+$(self).closest('tr').attr('id')", [ "ajaxTransition" => "random","stopPropagation" => true,"jsCondition" => "!$(self).hasClass('active')" ]);
 		$this->jquery->exec("addToken=function(jqXHR){
 			if(jqXHR.getResponseHeader('authorization')!=null && jqXHR.getResponseHeader('authorization').trim().startsWith('Bearer')){
 				var bearer=jqXHR.getResponseHeader('authorization').trim().slice(7);

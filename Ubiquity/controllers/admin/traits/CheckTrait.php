@@ -46,7 +46,7 @@ trait CheckTrait{
 	 *
 	 * @return UbiquityMyAdminFiles
 	 */
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	public function createModels($singleTable=null) {
 		$config=Startup::getConfig();
@@ -261,33 +261,33 @@ trait CheckTrait{
 		$step=$this->getActiveModelStep();
 		switch($step[1]) {
 			case "Conf":
-				$buttons->addItem("Show config file")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_config", "#action-response")->addIcon("settings");
-				$buttons->addItem("Edit config file")->addClass("orange")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/formConfig/ajax", "#action-response")->addIcon("edit");
+				$buttons->addItem("Show config file")->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/_config", "#action-response")->addIcon("settings");
+				$buttons->addItem("Edit config file")->addClass("orange")->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/formConfig/ajax", "#action-response")->addIcon("edit");
 				break;
 			case "Connexion":
 			case "Database":
 				if ($this->engineering === "reverse")
-					$buttons->addItem("(Re-)Create database")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/showDatabaseCreation", "#main-content")->addIcon("database");
+					$buttons->addItem("(Re-)Create database")->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/showDatabaseCreation", "#main-content")->addIcon("database");
 				break;
 			case "Models":
 				if ($this->engineering === "forward"){
 					if(sizeof($tables=$this->getTablesWithoutModel(Startup::getConfig()))){
 						$ddBtn=new HtmlDropdown("ddTables", "Create models for new tables",array_combine($tables,$tables));
 						$ddBtn->asButton();
-						$ddBtn->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/createModels", "#main-content", [ "attr" => "data-value" ]);
+						$ddBtn->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/createModels", "#main-content", [ "attr" => "data-value" ]);
 						$buttons->addItem($ddBtn);
 					}
-					$buttons->addItem("(Re-)Create all models")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/createModels", "#main-content", [ "attr" => "" ])->addIcon("sticky note");
+					$buttons->addItem("(Re-)Create all models")->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/createModels", "#main-content", [ "attr" => "" ])->addIcon("sticky note");
 				}else {
-					$buttons->addItem("Import from Yuml")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_importFromYuml", "#models-main", [ "attr" => "" ])->addIcon("sticky note");
+					$buttons->addItem("Import from Yuml")->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/_importFromYuml", "#models-main", [ "attr" => "" ])->addIcon("sticky note");
 				}
-				$bt=$buttons->addItem("Classes diagram")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_showAllClassesDiagram", "#action-response", [ "attr" => "","ajaxTransition" => "random" ]);
+				$bt=$buttons->addItem("Classes diagram")->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/_showAllClassesDiagram", "#action-response", [ "attr" => "","ajaxTransition" => "random" ]);
 				$bt->addIcon("sticky note outline");
 				if ($this->hasError())
 					$bt->addClass("disabled");
 				break;
 			case "Cache":
-				$buttons->addItem("(Re-)Init all models cache")->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_initModelsCache", "#main-content")->addIcon("lightning");
+				$buttons->addItem("(Re-)Init all models cache")->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/_initModelsCache", "#main-content")->addIcon("lightning");
 				break;
 		}
 		$nextStep=$this->getNextModelStep();
@@ -297,7 +297,7 @@ trait CheckTrait{
 			$bt->addLabel($nextStep[2], true, $nextStep[0]);
 			$bt->getContent()[1]->addClass("green");
 			if ($this->hasNoError()) {
-				$bt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/_loadModelStep/" . $this->engineering . "/" . ($this->activeStep + 1), "#models-main");
+				$bt->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/_loadModelStep/" . $this->engineering . "/" . ($this->activeStep + 1), "#models-main");
 			} else {
 				$bt->addClass("disabled");
 			}
@@ -305,7 +305,7 @@ trait CheckTrait{
 			$bt=$buttons->addItem("See datas")->addClass("black");
 			$bt->addIcon("unhide");
 			if ($this->hasNoError()) {
-				$bt->getOnClick($this->_getAdminFiles()->getAdminBaseRoute() . "/models/noHeader/", "#models-main");
+				$bt->getOnClick($this->_getFiles()->getAdminBaseRoute() . "/models/noHeader/", "#models-main");
 			} else {
 				$bt->addClass("disabled");
 			}

@@ -36,13 +36,13 @@ trait ModelsTrait{
 	 */
 	abstract public function _getModelViewer();
 
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	abstract protected function showSimpleMessage($content, $type, $title=null,$icon="info", $timeout=NULL, $staticName=null):HtmlMessage;
 
 	public function showModel($model,$id=null) {
 		$model=str_replace(".", "\\", $model);
-		$adminRoute=$this->_getAdminFiles()->getAdminBaseRoute();
+		$adminRoute=$this->_getFiles()->getAdminBaseRoute();
 		$this->_showModel($model,$id);
 		$this->_getAdminViewer()->getModelsStructureDataTable(OrmUtils::getModelMetadata($model));
 		$bt=$this->jquery->semantic()->htmlButton("btYuml", "Class diagram");
@@ -50,7 +50,7 @@ trait ModelsTrait{
 		$this->jquery->exec('$("#models-tab .item").tab();', true);
 		$this->jquery->getOnClick ( "#btAddNew", $adminRoute . "/newModel/" . $this->formModal, "#frm-add-update",["hasLoader"=>"internal"] );
 		$this->jquery->compile($this->view);
-		$this->loadView($this->_getAdminFiles()->getViewShowTable(), [ "classname" => $model ]);
+		$this->loadView($this->_getFiles()->getViewShowTable(), [ "classname" => $model ]);
 	}
 
 	public function refreshTable($id=null) {
@@ -131,7 +131,7 @@ trait ModelsTrait{
 		if (!$modal) {
 			$this->jquery->click("#bt-cancel", "$('#form-container').transition('drop');");
 			$this->jquery->compile($this->view);
-			$this->loadView($this->_getAdminFiles()->getViewEditTable(), [ "modal" => $modal,"frmEditName"=>$formName]);
+			$this->loadView($this->_getFiles()->getViewEditTable(), [ "modal" => $modal,"frmEditName"=>$formName]);
 		} else {
 			$this->jquery->exec("$('#modal-".$formName."').modal('show');", true);
 			$form=$form->asModal(\get_class($instance));
@@ -166,7 +166,7 @@ trait ModelsTrait{
 			$pk=OrmUtils::getFirstKeyValue($instance);
 			$message->setType("success")->setIcon("check circle outline");
 			if($isNew){
-				$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/refreshTable/".$pk, "#lv", [ "jqueryDone" => "replaceWith" ]);
+				$this->jquery->get($this->_getFiles()->getAdminBaseRoute() . "/refreshTable/".$pk, "#lv", [ "jqueryDone" => "replaceWith" ]);
 			}else{
 				$this->jquery->setJsonToElement(OrmUtils::objectAsJSON($instance));
 			}
@@ -203,7 +203,7 @@ trait ModelsTrait{
 				$message=$this->showSimpleMessage("Can not delete `" . $instanceString . "`", "warning","Error", "warning");
 			}
 		} else {
-			$message=$this->showConfMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "error","Remove confirmation", $this->_getAdminFiles()->getAdminBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
+			$message=$this->showConfMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "error","Remove confirmation", $this->_getFiles()->getAdminBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
 		}
 		echo $message;
 		echo $this->jquery->compile($this->view);
@@ -245,7 +245,7 @@ trait ModelsTrait{
 			}
 			if ($hasElements)
 				echo $grid;
-			$this->jquery->getOnClick(".showTable", $this->_getAdminFiles()->getAdminBaseRoute() . "/showModelClick", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ]);
+			$this->jquery->getOnClick(".showTable", $this->_getFiles()->getAdminBaseRoute() . "/showModelClick", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ]);
 			echo $this->jquery->compile($this->view);
 		}
 

@@ -181,7 +181,7 @@ class UFileSystem {
 						}
 						if(isset($maxLines) && sizeof($result)>=$maxLines){
 							fclose($handle);
-							if($result){
+							if(is_array($result)){
 								$result=array_reverse($result);
 							}
 							return $result;

@@ -16,7 +16,7 @@ use Ajax\semantic\html\collections\HtmlMessage;
 trait RoutesTrait{
 	abstract public function _getAdminData();
 	abstract public function _getAdminViewer();
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 	abstract protected function addNavigationTesting();
 	abstract protected function showSimpleMessage($content,$type, $title=null,$icon="info",$timeout=NULL,$staticName=null):HtmlMessage;
 

@@ -21,7 +21,7 @@ trait LogsTrait{
 
 	abstract public function _getAdminViewer();
 
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	abstract public function loadView($viewName, $pData = NULL, $asString = false);
 

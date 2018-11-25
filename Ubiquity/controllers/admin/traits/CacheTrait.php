@@ -19,7 +19,7 @@ trait CacheTrait{
 
 	abstract public function _getAdminViewer();
 
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	public function setCacheTypes() {
 		if (isset ( $_POST ["cacheTypes"] ))

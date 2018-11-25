@@ -27,7 +27,7 @@ trait CreateControllersTrait{
 	
 	abstract protected function _createClass($template,$classname,$namespace,$uses,$extendsOrImplements,$classContent);
 	
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	abstract protected function _createController($controllerName,$variables=[],$ctrlTemplate='controller.tpl',$hasView=false,$jsCallback="");
 	
@@ -45,12 +45,12 @@ trait CreateControllersTrait{
 		$frm=$this->jquery->semantic()->htmlForm("crud-controller-frm");
 		$frm->addExtraFieldRule("crud-model", "exactCount[1]");
 		$frm->addExtraFieldRules("crud-name", ["empty",["checkController","Controller {value} already exists!"]]);
-		$this->jquery->exec(Rule::ajax($this->jquery, "checkController", $this->_getAdminFiles()->getAdminBaseRoute() . "/_controllerExists/crud-name", "{}", "result=data.result;", "postForm", [ "form" => "crud-controller-frm" ]), true);
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkController", $this->_getFiles()->getAdminBaseRoute() . "/_controllerExists/crud-name", "{}", "result=data.result;", "postForm", [ "form" => "crud-controller-frm" ]), true);
 		
 		$frm->setValidationParams(["on"=>"blur","inline"=>true]);
-		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/addCrudController","#frm");
+		$frm->setSubmitParams($this->_getFiles()->getAdminBaseRoute()."/addCrudController","#frm");
 		$this->jquery->change("#ck-add-route", "$('#div-new-route').toggle($(this).is(':checked'));");
-		$this->jquery->jsonOn("change", "#ck-add-route", $this->_getAdminFiles()->getAdminBaseRoute() . "/_addCtrlRoute/crud", "post", [ "context" => "$('#crud-controller-frm')","params" => "$('#crud-controller-frm').serialize()","jsCondition" => "$('#ck-add-route').is(':checked')" ]);
+		$this->jquery->jsonOn("change", "#ck-add-route", $this->_getFiles()->getAdminBaseRoute() . "/_addCtrlRoute/crud", "post", [ "context" => "$('#crud-controller-frm')","params" => "$('#crud-controller-frm').serialize()","jsCondition" => "$('#ck-add-route').is(':checked')" ]);
 		
 		$this->jquery->click("#validate-btn",'$("#crud-controller-frm").form("submit");');
 		$this->jquery->execOn("click", "#cancel-btn", '$("#frm").html("");');
@@ -62,7 +62,7 @@ trait CreateControllersTrait{
 		
 		
 		$this->jquery->exec('$("#crud-files-ck").checkbox({onChange:function(){ $("#view-list").toggle($("#crud-files-ck").checkbox("is checked"));}});',true);
-		$this->jquery->renderView($this->_getAdminFiles()->getViewAddCrudController(),["controllerNS"=>Startup::getNS ( "controllers" )]);
+		$this->jquery->renderView($this->_getFiles()->getViewAddCrudController(),["controllerNS"=>Startup::getNS ( "controllers" )]);
 	}
 	
 	public function _addCtrlRoute($type){
@@ -141,7 +141,7 @@ trait CreateControllersTrait{
 			$uses=implode("\n", $uses);
 			$messages[]=$this->_createController($crudControllerName,["%routeName%"=>$routeName,"%route%"=>$route,"%resource%"=>$resource,"%uses%"=>$uses,"%namespace%"=>$controllerNS,"%baseClass%"=>"\\Ubiquity\\controllers\\crud\\CRUDController","%content%"=>$classContent],"crudController.tpl");
 			echo implode("", $messages);
-			$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
+			$this->jquery->get($this->_getFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
 			echo $this->jquery->compile($this->view);
 		}
 	}
@@ -159,18 +159,18 @@ trait CreateControllersTrait{
 		
 		$frm=$this->jquery->semantic()->htmlForm("auth-controller-frm");
 		$frm->addExtraFieldRules("auth-name", ["empty",["checkController","Controller {value} already exists!"]]);
-		$this->jquery->exec(Rule::ajax($this->jquery, "checkController", $this->_getAdminFiles()->getAdminBaseRoute() . "/_controllerExists/auth-name", "{}", "result=data.result;", "postForm", [ "form" => "auth-controller-frm" ]), true);
+		$this->jquery->exec(Rule::ajax($this->jquery, "checkController", $this->_getFiles()->getAdminBaseRoute() . "/_controllerExists/auth-name", "{}", "result=data.result;", "postForm", [ "form" => "auth-controller-frm" ]), true);
 		
 		$frm->setValidationParams(["on"=>"blur","inline"=>true]);
-		$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute()."/addAuthController","#frm");
+		$frm->setSubmitParams($this->_getFiles()->getAdminBaseRoute()."/addAuthController","#frm");
 		$this->jquery->change("#ck-add-route", "$('#div-new-route').toggle($(this).is(':checked'));");
-		$this->jquery->jsonOn("change", "#ck-add-route", $this->_getAdminFiles()->getAdminBaseRoute() . "/_addCtrlRoute/auth", "post", [ "context" => "$('#auth-controller-frm')","params" => "$('#auth-controller-frm').serialize()","jsCondition" => "$('#ck-add-route').is(':checked')" ]);
+		$this->jquery->jsonOn("change", "#ck-add-route", $this->_getFiles()->getAdminBaseRoute() . "/_addCtrlRoute/auth", "post", [ "context" => "$('#auth-controller-frm')","params" => "$('#auth-controller-frm').serialize()","jsCondition" => "$('#ck-add-route').is(':checked')" ]);
 		
 		$this->jquery->click("#validate-btn",'$("#auth-controller-frm").form("submit");');
 		$this->jquery->execOn("click", "#cancel-btn", '$("#frm").html("");');
 		$this->jquery->exec("$('#ck-add-route').checkbox();",true);
 		$this->jquery->exec('$("#auth-files-ck").checkbox({onChange:function(){ $("#view-list").toggle($("#auth-files-ck").checkbox("is checked"));}});',true);
-		$this->jquery->renderView($this->_getAdminFiles()->getViewAddAuthController(),["controllerNS"=>Startup::getNS ( "controllers" )]);
+		$this->jquery->renderView($this->_getFiles()->getViewAddAuthController(),["controllerNS"=>Startup::getNS ( "controllers" )]);
 	}
 	
 	public function addAuthController(){
@@ -221,7 +221,7 @@ trait CreateControllersTrait{
 			$uses=implode("\n", $uses);
 			$messages[]=$this->_createController($authControllerName,["%routeName%"=>$routeName,"%route%"=>$route,"%uses%"=>$uses,"%namespace%"=>$controllerNS,"%baseClass%"=>$baseClass,"%content%"=>$classContent],$controllerTemplate);
 			echo implode("", $messages);
-			$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
+			$this->jquery->get($this->_getFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
 			echo $this->jquery->compile($this->view);
 		}
 	}

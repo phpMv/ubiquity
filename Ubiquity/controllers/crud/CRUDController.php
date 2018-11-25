@@ -26,6 +26,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	
 	/**
 	 * Default page : list all objects
+	 * Uses modelViewer.isModal, modelViewer.getModelDataTable
+	 * Uses CRUDFiles.getViewIndex template (default : @framework/crud/index.html)
+	 * Triggers the events onDisplayElements,beforeLoadView
 	 */
 	public function index() {
 		$objects=$this->getInstances($totalCount);
@@ -52,6 +55,10 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		return DAO::getAll($model,$condition);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\controllers\admin\interfaces\HasModelViewerInterface::_getInstancesFilter()
+	 */
 	public function _getInstancesFilter($model){
 		return "1=1";
 	}
@@ -62,6 +69,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		return CRUDHelper::search($model, $search, $fields,$condition);
 	}
 	
+	/**
+	 * Refreshes the area corresponding to the DataTable
+	 */
 	public function refresh_(){
 		$model=$this->model;
 		if(isset($_POST["s"])){
@@ -316,11 +326,12 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 							$hasElements=true;
 						}
 					}
-					if ($hasElements)
+					if ($hasElements){
 						echo $grid;
 						$url=$this->_getEvents()->onDetailClickURL($this->model);
-					if(UString::isNotNull($url)){
-						$this->detailClick($url);
+						if(UString::isNotNull($url)){
+							$this->detailClick($url);
+						}
 					}
 					echo $this->jquery->compile($this->view);
 			}
@@ -380,7 +391,10 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		return new CRUDFiles();
 	}
 	
-	private function _getFiles():CRUDFiles{
+	/**
+	 * @return CRUDFiles
+	 */
+	public function _getFiles(){
 		return $this->getSingleton($this->crudFiles,"getFiles");
 	}
 	

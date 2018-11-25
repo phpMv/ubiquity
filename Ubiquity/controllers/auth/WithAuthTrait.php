@@ -7,6 +7,7 @@ use Ubiquity\controllers\Startup;
 /**
  * ControllerBase
  * @property \Ajax\php\ubiquity\JsUtils $jquery
+ * @property \Ubiquity\views\View
  **/
 trait WithAuthTrait{
 	

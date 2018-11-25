@@ -28,7 +28,7 @@ trait ControllersTrait{
 
 	abstract public function _getAdminViewer();
 
-	abstract public function _getAdminFiles();
+	abstract public function _getFiles();
 
 	abstract public function controllers();
 	
@@ -103,16 +103,16 @@ trait ControllersTrait{
 			$frm->addContent("</div>");
 
 			$frm->setValidationParams([ "on" => "blur","inline" => true ]);
-			$frm->setSubmitParams($this->_getAdminFiles()->getAdminBaseRoute() . "/_newAction", "#messages");
+			$frm->setSubmitParams($this->_getFiles()->getAdminBaseRoute() . "/_newAction", "#messages");
 			$modal->setContent($frm);
 			$modal->addAction("Validate");
 			$this->jquery->click("#action-modalNewAction-0", "$('#frmNewAction').form('submit');", false, false);
 			$modal->addAction("Close");
 			$this->jquery->exec("$('.dimmer.modals.page').html('');$('#modalNewAction').modal('show');", true);
-			$this->jquery->jsonOn("change", "#ck-add-route", $this->_getAdminFiles()->getAdminBaseRoute() . "/_addRouteWithNewAction", "post", [ "context" => "$('#frmNewAction')","params" => "$('#frmNewAction').serialize()","jsCondition" => "$('#ck-add-route').is(':checked')" ]);
-			$this->jquery->exec(Rule::ajax($this->jquery, "checkAction", $this->_getAdminFiles()->getAdminBaseRoute() . "/_methodExists", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ]), true);
-			$this->jquery->exec(Rule::ajax($this->jquery, "checkContent", $this->_getAdminFiles()->getAdminBaseRoute() . "/_checkContent", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ]), true);
-			$this->jquery->exec(Rule::ajax($this->jquery, "checkRoute", $this->_getAdminFiles()->getAdminBaseRoute() . "/_checkRoute", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ]), true);
+			$this->jquery->jsonOn("change", "#ck-add-route", $this->_getFiles()->getAdminBaseRoute() . "/_addRouteWithNewAction", "post", [ "context" => "$('#frmNewAction')","params" => "$('#frmNewAction').serialize()","jsCondition" => "$('#ck-add-route').is(':checked')" ]);
+			$this->jquery->exec(Rule::ajax($this->jquery, "checkAction", $this->_getFiles()->getAdminBaseRoute() . "/_methodExists", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ]), true);
+			$this->jquery->exec(Rule::ajax($this->jquery, "checkContent", $this->_getFiles()->getAdminBaseRoute() . "/_checkContent", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ]), true);
+			$this->jquery->exec(Rule::ajax($this->jquery, "checkRoute", $this->_getFiles()->getAdminBaseRoute() . "/_checkRoute", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ]), true);
 			$this->jquery->change("#ck-add-route", "$('#div-new-route').toggle($(this).is(':checked'));");
 			echo $modal;
 			echo $this->jquery->compile($this->view);
@@ -243,7 +243,7 @@ trait ControllersTrait{
 				}
 			}
 		}
-		$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
+		$this->jquery->get($this->_getFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
 		echo $this->jquery->compile($this->view);
 	}
 
@@ -253,7 +253,7 @@ trait ControllersTrait{
 		CacheManager::initCache($config, "controllers");
 		$message=\ob_get_clean();
 		echo $this->showSimpleMessage(\nl2br($message), "info", "info", 4000);
-		$this->jquery->get($this->_getAdminFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
+		$this->jquery->get($this->_getFiles()->getAdminBaseRoute() . "/_refreshControllers/refresh", "#dtControllers", [ "jqueryDone" => "replaceWith","hasLoader" => false,"dataType" => "html" ]);
 		echo $this->jquery->compile($this->view);
 	}
 
@@ -269,9 +269,9 @@ trait ControllersTrait{
 	public function frmFilterControllers(){
 		$controllers=CacheManager::getControllers();
 		$this->_getAdminViewer()->getFilterControllers($controllers);
-		$this->jquery->postFormOn("click", "#validate-btn", $this->_getAdminFiles()->getAdminBaseRoute()."/filterControllers", "filtering-frm","#dtControllers",["jqueryDone" => "replaceWith","hasLoader" => false,"jsCallback"=>'$("#frm").html("");']);
+		$this->jquery->postFormOn("click", "#validate-btn", $this->_getFiles()->getAdminBaseRoute()."/filterControllers", "filtering-frm","#dtControllers",["jqueryDone" => "replaceWith","hasLoader" => false,"jsCallback"=>'$("#frm").html("");']);
 		$this->jquery->execOn("click", "#cancel-btn", '$("#frm").html("");');
-		$this->jquery->renderView($this->_getAdminFiles()->getViewControllersFiltering());
+		$this->jquery->renderView($this->_getFiles()->getViewControllersFiltering());
 	}
 	
 	protected function _createClass($template,$classname,$namespace,$uses,$extendsOrImplements,$classContent){

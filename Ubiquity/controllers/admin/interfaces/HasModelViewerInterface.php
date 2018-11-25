@@ -9,5 +9,6 @@ interface HasModelViewerInterface {
 	public function _getAdminData ():CRUDDatas;
 	public function _getBaseRoute();
 	public function _getInstancesFilter($model);
+	public function _getFiles();
 }
 

@@ -2,21 +2,47 @@
 
 namespace Ubiquity\controllers\crud;
 
+use Ubiquity\controllers\admin\traits\UrlsTrait;
+
+/**
+ * 
+ * @author jc
+ *
+ */
 class CRUDFiles {
+	use UrlsTrait;
 	protected $viewBase;
 	
+	/**
+	 * To override for defining viewBase (default : @framework/crud)
+	 */
 	public function __construct(){
 		$this->viewBase="@framework/crud";
 	}
 	
+	/**
+	 * To override
+	 * Returns the template for the index route (default : @framework/crudwBase/index.html)
+	 * @return string
+	 */
 	public function getViewIndex() {
 		return $this->viewBase."/index.html";
 	}
 	
+	/**
+	 * To override
+	 * Returns the template for the edit and new instance routes (default : @framework/crud/form.html)
+	 * @return string
+	 */
 	public function getViewForm() {
 		return $this->viewBase."/form.html";
 	}
 	
+	/**
+	 * To override
+	 * Returns the template for the display route (default : @framework/crud/display.html)
+	 * @return string
+	 */
 	public function getViewDisplay() {
 		return $this->viewBase."/display.html";
 	}
