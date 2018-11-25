@@ -14,7 +14,7 @@ The CRUD controllers allow you to perform basic operations on a Model class:
  
  In the admin interface (web-tools), activate the **Controllers** part, and choose create **Crud controller**:
 
-.. image:: _static/images/crud/speControllerBtn.png
+.. image:: /_static/images/crud/speControllerBtn.png
 
 Then fill in the form:
   - Enter the controller name
