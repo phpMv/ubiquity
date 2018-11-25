@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Ubiquity framework User guide
+Ubiquity framework User guide (v2.0.5)
 ===========================================
 
 .. toctree::
@@ -27,7 +27,8 @@ Ubiquity framework User guide
    :maxdepth: 1
    :caption: Scaffolding
    
-   scaffolding/crud/index
+   scaffolding/crud
+   scaffolding/auth
 
 .. toctree::
    :maxdepth: 1
