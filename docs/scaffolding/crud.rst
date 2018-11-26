@@ -266,3 +266,21 @@ CRUDFiles methods to override
 +---------------------------------+---------------------------------------------------------------------------------------------------+-----------------------------------+
 | getDetailClickURL($model)       | Returns the route associated with a foreign key instance in list                                  | ""                                |
 +---------------------------------+---------------------------------------------------------------------------------------------------+-----------------------------------+
+
+Twig Templates structure
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+index.html
+##########
+
+.. image:: /_static/images/crud/template_index.png
+
+form.html
+#########
+
+Displayed in **frm** block
+
+display.html
+############
+
+Displayed in **frm** block
