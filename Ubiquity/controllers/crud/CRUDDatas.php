@@ -51,13 +51,35 @@ class CRUDDatas {
 	}
 
 	/**
-	 * Returns a list of $fkClass objects to select a value for $member
+	 * Returns a (filtered) list of $fkClass objects to display in an html list
 	 * @param string $fkClass
 	 * @param object $instance
-	 * @param string $member
+	 * @param string $member The member associated with a manyToMany relation
 	 * @return array
 	 */
 	public function getManyToManyDatas($fkClass,$instance,$member){
+		return DAO::getAll($fkClass);
+	}
+	
+	/**
+	 * Returns a list (filtered) of $fkClass objects to display in an html list
+	 * @param string $fkClass
+	 * @param object $instance
+	 * @param string $member The member associated with a manyToOne relation
+	 * @return array
+	 */
+	public function getManyToOneDatas($fkClass,$instance,$member){
+		return DAO::getAll($fkClass);
+	}
+	
+	/**
+	 * Returns a list (filtered) of $fkClass objects to display in an html list
+	 * @param string $fkClass
+	 * @param object $instance
+	 * @param string $member The member associated with a oneToMany relation
+	 * @return array
+	 */
+	public function getOneToManyDatas($fkClass,$instance,$member){
 		return DAO::getAll($fkClass);
 	}
 

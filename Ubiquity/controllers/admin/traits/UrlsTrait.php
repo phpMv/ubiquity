@@ -20,7 +20,7 @@ trait UrlsTrait {
 
 	/**
 	 * To override
-	 * Returns the route for refreshing the details route, when the user click on a dataTable row (default : /_showDetail)
+	 * Returns the route for the detail route, when the user click on a dataTable row (default : /showDetail)
 	 * @return string
 	 */
 	public function getRouteDetails(){
@@ -61,6 +61,16 @@ trait UrlsTrait {
 	 */
 	public function getRouteRefreshTable(){
 		return "/refreshTable";
+	}
+	
+	/**
+	 * To override
+	 * Returns the url associated with a foreign key instance in list
+	 * @param string $model
+	 * @return string
+	 */
+	public function getDetailClickURL($model){
+		return "";
 	}
 }
 

@@ -42,11 +42,11 @@ trait MessagesTrait {
 	}
 	
 	protected function _showConfMessage(CRUDMessage $message,$url, $responseElement, $data, $attributes = NULL):HtmlMessage {
-		return $this->showConfMessage($message->getMessage(), $message->getType(), $message->getTitle(), $url, $responseElement, $data,$attributes);
+		return $this->showConfMessage($message->getMessage(), $message->getType(), $message->getTitle(),$message->getIcon(),$url, $responseElement, $data,$attributes);
 	}
 	
-	public function showConfMessage($content, $type, $title,$url, $responseElement, $data, $attributes = NULL):HtmlMessage {
-		$messageDlg = $this->showSimpleMessage ( $content, $type,$title, "help circle" );
+	public function showConfMessage($content, $type, $title,$icon,$url, $responseElement, $data, $attributes = NULL):HtmlMessage {
+		$messageDlg = $this->showSimpleMessage ( $content, $type,$title, $icon );
 		$btOkay = new HtmlButton( "bt-okay", "Confirm", "negative" );
 		$btOkay->addIcon ( "check circle" );
 		$btOkay->postOnClick ( $url, "{data:'" . $data . "'}", $responseElement, $attributes );
@@ -54,7 +54,7 @@ trait MessagesTrait {
 		$btCancel->addIcon ( "remove circle outline" );
 		$btCancel->onClick ( $messageDlg->jsHide () );
 		$messageDlg->addContent ( [ new HtmlDivider( "" ),new HtmlSemDoubleElement( "", "div", "", [ $btOkay->floatRight (),$btCancel->floatRight () ] ) ] );
-		$this->_getModelViewer()->confirmButtons($btOkay, $btCancel);
+		$this->_getModelViewer()->onConfirmButtons($btOkay, $btCancel);
 		return $messageDlg;
 	}
 }

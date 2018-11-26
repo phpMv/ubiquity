@@ -203,7 +203,7 @@ trait ModelsTrait{
 				$message=$this->showSimpleMessage("Can not delete `" . $instanceString . "`", "warning","Error", "warning");
 			}
 		} else {
-			$message=$this->showConfMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "error","Remove confirmation", $this->_getFiles()->getAdminBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
+			$message=$this->showConfMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "error","Remove confirmation","question circle", $this->_getFiles()->getAdminBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
 		}
 		echo $message;
 		echo $this->jquery->compile($this->view);

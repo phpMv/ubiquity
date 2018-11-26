@@ -118,6 +118,7 @@ class ModelViewer {
 	/**
 	 * Returns a DataElement object for displaying the instance
 	 * Used in the display method of the CrudController
+	 * in display route
 	 * @param object $instance
 	 * @param string $model The model class name (long name)
 	 * @param boolean $modal
@@ -142,6 +143,16 @@ class ModelViewer {
 			}
 		}
 		return $dataElement;
+	}
+	
+	/**
+	 * Returns the captions for DataElement fields
+	 * in display route
+	 * @param array $captions
+	 * @param string $className
+	 */
+	public function getElementCaptions($captions, $className, $instance) {
+		return array_map ( "ucfirst", $captions );
 	}
 	
 	/**
@@ -258,13 +269,13 @@ class ModelViewer {
 		} );
 		$dataTable->addAllButtons( false, [ "ajaxTransition" => "random" ], function ($bt) {
 			$bt->addClass ( "circular" );
-			$this->dataTableRowButton($bt);
+			$this->onDataTableRowButton($bt);
 		}, function ($bt) {
 			$bt->addClass ( "circular" );
-			$this->dataTableRowButton($bt);
+			$this->onDataTableRowButton($bt);
 		}, function ($bt) {
 			$bt->addClass ( "circular" );
-			$this->dataTableRowButton($bt);
+			$this->onDataTableRowButton($bt);
 		});
 		$dataTable->setDisplayBehavior(["jsCallback"=>'$("#dataTable").hide();',"ajaxTransition"=>"random"]);
 	}
@@ -273,7 +284,7 @@ class ModelViewer {
 	 * To override for modifying the dataTable row buttons
 	 * @param HtmlButton $bt
 	 */
-	public function dataTableRowButton(HtmlButton $bt){
+	public function onDataTableRowButton(HtmlButton $bt){
 		
 	}
 	
@@ -282,7 +293,7 @@ class ModelViewer {
 	 * @param HtmlButton $confirmBtn The confirmation button
 	 * @param HtmlButton $cancelBtn The cancellation button
 	 */
-	public function confirmButtons(HtmlButton $confirmBtn,HtmlButton $cancelBtn){
+	public function onConfirmButtons(HtmlButton $confirmBtn,HtmlButton $cancelBtn){
 		
 	}
 	
@@ -315,16 +326,6 @@ class ModelViewer {
 	 * @param string $className
 	 */
 	public function getFormCaptions($captions, $className, $instance) {
-		return array_map ( "ucfirst", $captions );
-	}
-	
-	/**
-	 * Returns the captions for DataElement fields
-	 *
-	 * @param array $captions
-	 * @param string $className
-	 */
-	public function getElementCaptions($captions, $className, $instance) {
 		return array_map ( "ucfirst", $captions );
 	}
 	
@@ -395,7 +396,7 @@ class ModelViewer {
 					$item=$element->addItem($oItem . "");
 					$item->setProperty("data-ajax", $_fkClass . ":" . $id);
 					$item->addClass("showTable");
-					$this->displayFkElementListDetails($item, $memberFK, $fkClass, $oItem);
+					$this->onDisplayFkElementListDetails($item, $memberFK, $fkClass, $oItem);
 				}
 			}
 		} else {
@@ -419,7 +420,7 @@ class ModelViewer {
 	 * @param string $className
 	 * @param object $object
 	 */
-	public function displayFkElementListDetails($element, $member, $className, $object) {
+	public function onDisplayFkElementListDetails($element, $member, $className, $object) {
 	}
 	
 	/**
@@ -526,7 +527,7 @@ class ModelViewer {
 					$instance->{$fkField} = OrmUtils::getFirstKeyValue ( $fkObject );
 					$form->addField ( $fkField );
 				}
-				$form->fieldAsDropDown ( $fkField, JArray::modelArray ( DAO::getAll ( $fkClass ), $fkIdGetter, "__toString" ) );
+				$form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ) );
 				$form->setCaption ( $fkField, \ucfirst ( $member ) );
 			}
 		}
@@ -543,7 +544,7 @@ class ModelViewer {
 			return $elm->{$fkIdGetter} ();
 		}, $fkInstances );
 		$instance->{$newField} = \implode ( ",", $ids );
-		$form->fieldAsDropDown ( $newField, JArray::modelArray ( DAO::getAll ( $fkClass ), $fkIdGetter, "__toString" ), true );
+		$form->fieldAsDropDown ( $newField, JArray::modelArray ( $this->controller->_getAdminData ()->getOneToManyDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), true );
 		$form->setCaption ( $newField, \ucfirst ( $member ) );
 	}
 	

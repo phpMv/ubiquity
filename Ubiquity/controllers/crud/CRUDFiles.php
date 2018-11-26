@@ -22,7 +22,7 @@ class CRUDFiles {
 	
 	/**
 	 * To override
-	 * Returns the template for the index route (default : @framework/crudwBase/index.html)
+	 * Returns the template for the index route (default : @framework/crud/index.html)
 	 * @return string
 	 */
 	public function getViewIndex() {
@@ -48,7 +48,7 @@ class CRUDFiles {
 	}
 	
 	/**
-	 * Returns the base template for all Auth actions if getBaseTemplate return a base template filename
+	 * Returns the base template for all Crud actions if getBaseTemplate return a base template filename
 	 * @return string
 	 */
 	public function getViewBaseTemplate() {

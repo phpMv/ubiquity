@@ -27,7 +27,7 @@ trait LogsTrait{
 
 	abstract public function git();
 
-	abstract protected function showConfMessage($content, $type, $itle,$url, $responseElement, $data, $attributes = NULL): HtmlMessage;
+	abstract protected function showConfMessage($content, $type, $title,$icon,$url, $responseElement, $data, $attributes = NULL): HtmlMessage;
 
 	abstract protected function showSimpleMessage($content, $type, $title=null,$icon = "info", $timeout = NULL, $staticName = null): HtmlMessage;
 

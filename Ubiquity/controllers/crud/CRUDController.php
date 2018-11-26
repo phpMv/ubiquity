@@ -33,9 +33,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	public function index() {
 		$objects=$this->getInstances($totalCount);
 		$modal=($this->_getModelViewer()->isModal($objects,$this->model))?"modal":"no";
-		$this->_getModelViewer()->getModelDataTable($objects, $this->model,$totalCount);
+		$dt=$this->_getModelViewer()->getModelDataTable($objects, $this->model,$totalCount);
 		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute() . "/newModel/" . $modal, "#frm-add-update",["hasLoader"=>"internal"] );
-		$this->_getEvents()->onDisplayElements();
+		$this->_getEvents()->onDisplayElements($dt,$objects,false);
 		$this->crudLoadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ,"messages"=>$this->jquery->semantic()->matchHtmlComponents(function($compo){return $compo instanceof HtmlMessage;})]);		
 	}
 	
@@ -102,7 +102,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	private function _renderDataTableForRefresh($instances,$model,$totalCount){
 		$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
 		$compo= $this->_getModelViewer()->getModelDataTable($instances, $model,$totalCount)->refresh(["tbody"]);
-		$this->_getEvents()->onDisplayElements();
+		$this->_getEvents()->onDisplayElements($compo,$instances,true);
 		$this->jquery->renderView("@framework/main/component.html",["compo"=>$compo]);
 	}
 	
@@ -201,20 +201,20 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				try{
 					if (DAO::remove($instance)) {
 						$message=new CRUDMessage("Deletion of `<b>" . $instanceString . "</b>`","Deletion","info","info circle",4000);
-						$message=$this->_getEvents()->onSuccessDeleteMessage($message);
+						$message=$this->_getEvents()->onSuccessDeleteMessage($message,$instance);
 						$this->jquery->exec("$('._element[data-ajax={$ids}]').remove();", true);
 					} else {
 						$message=new CRUDMessage("Can not delete `" . $instanceString . "`","Deletion","warning","warning circle");
-						$message=$this->_getEvents()->onErrorDeleteMessage($message);
+						$message=$this->_getEvents()->onErrorDeleteMessage($message,$instance);
 					}
 				}catch (\Exception $e){
 					$message=new CRUDMessage("Exception : can not delete `" . $instanceString . "`","Exception", "warning", "warning");
-					$message=$this->_getEvents()->onErrorDeleteMessage($message);
+					$message=$this->_getEvents()->onErrorDeleteMessage($message,$instance);
 				}
 				$message=$this->_showSimpleMessage($message);
 			} else {
 				$message=new CRUDMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "Remove confirmation","error");
-				$this->_getEvents()->onConfDeleteMessage($message);
+				$message=$this->_getEvents()->onConfDeleteMessage($message,$instance);
 				$message=$this->_showConfMessage($message, $this->_getBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
 			}
 			echo $message;
@@ -240,7 +240,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$rep=DAO::deleteAll($this->model, $condition);
 			if($rep){
 				$message=new CRUDMessage("Deleting {count} objects","Deletion","info","info circle",4000);
-				$message=$this->_getEvents()->onSuccessDeleteMultipleMessage($message);
+				$message=$this->_getEvents()->onSuccessDeleteMultipleMessage($message,$rep);
 				$message->parseContent(["count"=>$rep]);
 			}
 			$this->_showSimpleMessage($message,"delete-all");
@@ -274,11 +274,11 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$updated=CRUDHelper::update($instance, $_POST,$this->_getAdminData()->getUpdateManyToOneInForm(),$this->_getAdminData()->getUpdateManyToManyInForm());
 			if($updated){
 				$message->setType("success")->setIcon("check circle outline");
-				$message=$this->_getEvents()->onSuccessUpdateMessage($message);
+				$message=$this->_getEvents()->onSuccessUpdateMessage($message,$instance);
 				$this->refreshInstance($instance,$isNew);
 			} else {
 				$message->setMessage("An error has occurred. Can not save changes.")->setType("error")->setIcon("warning circle");
-				$message=$this->_getEvents()->onErrorUpdateMessage($message);
+				$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
 			}
 		}catch(\Exception $e){
 			if (method_exists($instance, "__toString"))
@@ -286,7 +286,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			else
 				$instanceString=get_class($instance);
 			$message=new CRUDMessage("Exception : can not update `" . $instanceString . "`","Exception", "warning", "warning");
-			$message=$this->_getEvents()->onErrorUpdateMessage($message);
+			$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
 		}
 		echo $this->_showSimpleMessage($message,"updateMsg");
 		echo $this->jquery->compile($this->view);
@@ -328,7 +328,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 					}
 					if ($hasElements){
 						echo $grid;
-						$url=$this->_getEvents()->onDetailClickURL($this->model);
+						$url=$this->_getFiles()->getDetailClickURL($this->model);
 						if(UString::isNotNull($url)){
 							$this->detailClick($url);
 						}
@@ -353,7 +353,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			return $instance;
 		}
 		$message=new CRUDMessage("This object does not exist!","Get object","warning","warning circle");
-		$message=$this->_getEvents()->onNotFoundMessage($message);
+		$message=$this->_getEvents()->onNotFoundMessage($message,$ids);
 		echo $this->_showSimpleMessage($message);
 		echo $this->jquery->compile($this->view);
 		exit(1);
