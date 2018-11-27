@@ -205,7 +205,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				}
 				$message=$this->_showSimpleMessage($message);
 			} else {
-				$message=new CRUDMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "Remove confirmation","error");
+				$message=new CRUDMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "Remove confirmation","error","question circle");
 				$message=$this->_getEvents()->onConfDeleteMessage($message,$instance);
 				$message=$this->_showConfMessage($message, $this->_getBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
 			}
