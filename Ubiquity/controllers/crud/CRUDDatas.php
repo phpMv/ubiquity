@@ -111,4 +111,14 @@ class CRUDDatas {
 	public function refreshPartialInstance(){
 		return true;
 	}
+	
+	/**
+	 * Adds a condition for filtering the instances displayed in dataTable
+	 * Return 1=1 by default
+	 * @param string $model
+	 * @return string
+	 */
+	public function _getInstancesFilter($model){
+		return "1=1";
+	}
 }

@@ -42,7 +42,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	protected function getInstances(&$totalCount,$page=1,$id=null){
 		$this->activePage=$page;
 		$model=$this->model;
-		$condition=$this->_getInstancesFilter($model);
+		$condition=$this->_getAdminData()->_getInstancesFilter($model);
 		$totalCount=DAO::count($model,$condition);
 		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
 		if(is_numeric($recordsPerPage)){
@@ -55,17 +55,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		return DAO::getAll($model,$condition);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * @see \Ubiquity\controllers\admin\interfaces\HasModelViewerInterface::_getInstancesFilter()
-	 */
-	public function _getInstancesFilter($model){
-		return "1=1";
-	}
-	
 	protected function search($model,$search){
 		$fields=$this->_getAdminData()->getSearchFieldNames($model);
-		$condition=$this->_getInstancesFilter($model);
+		$condition=$this->_getAdminData()->_getInstancesFilter($model);
 		return CRUDHelper::search($model, $search, $fields,$condition);
 	}
 	
@@ -81,7 +73,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$instances=$this->getInstances($totalCount,$page);
 		}
 		if(!isset($totalCount)){
-			$totalCount=DAO::count($model,$this->_getInstancesFilter($model));
+			$totalCount=DAO::count($model,$this->_getAdminData()->_getInstancesFilter($model));
 		}
 		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
 		$grpByFields=$this->_getModelViewer()->getGroupByFields();

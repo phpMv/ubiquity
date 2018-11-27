@@ -82,14 +82,15 @@ trait ModelsTrait{
 	
 	protected function getInstances($model,&$totalCount,$page=1,$id=null){
 		$this->activePage=$page;
-		$totalCount=DAO::count($model,$this->_getInstancesFilter($model));
+		$adminDatas=$this->_getAdminData();
+		$totalCount=DAO::count($model,$adminDatas->_getInstancesFilter($model));
 		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
 		if(is_numeric($recordsPerPage)){
 			if(isset($id)){
 				$rownum=DAO::getRownum($model, $id);
 				$this->activePage=Pagination::getPageOfRow($rownum,$recordsPerPage);
 			}
-			return DAO::paginate($model,$this->activePage,$recordsPerPage,$this->_getInstancesFilter($model),false);
+			return DAO::paginate($model,$this->activePage,$recordsPerPage,$adminDatas->_getInstancesFilter($model),false);
 		}
 		return DAO::getAll($model,"",false);
 	}
@@ -107,7 +108,7 @@ trait ModelsTrait{
 			$instances=$this->getInstances($model,$totalCount,URequest::post("p",1));
 		}
 		if(!isset($totalCount)){
-			$totalCount=DAO::count($model,$this->_getInstancesFilter($model));
+			$totalCount=DAO::count($model,$this->_getAdminData()->_getInstancesFilter($model));
 		}
 		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
 		if(isset($recordsPerPage)){
