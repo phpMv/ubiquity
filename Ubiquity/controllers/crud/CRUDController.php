@@ -14,6 +14,7 @@ use Ajax\semantic\widgets\datatable\Pagination;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\HtmlMessage;
+use Ajax\common\html\HtmlContentOnly;
 
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface{
 	use MessagesTrait;
@@ -61,6 +62,32 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		return CRUDHelper::search($model, $search, $fields,$condition);
 	}
 	
+	public function updateMember($member,$callback=false){
+		$instance=@$_SESSION["instance"];
+		$updated=CRUDHelper::update($instance, $_POST);
+		if($updated){
+			if($callback===false){
+				$dt=$this->_getModelViewer()->getModelDataTable([$instance], $this->model, 1);
+				$dt->compile();
+				echo new HtmlContentOnly($dt->getFieldValue($member));
+			}else{
+				if(method_exists($this, $callback)){
+					$this->$callback($member,$instance);
+				}else{
+					throw new \Exception("The method `".$callback."` does not exists in ".get_class());
+				}
+			}
+		}else{
+			UResponse::setResponseCode(404);
+		}
+	}
+	
+	protected function updateMemberDataElement($member,$instance){
+		$dt=$this->_getModelViewer()->getModelDataElement($instance, $this->model, false);
+		$dt->compile();
+		echo new HtmlContentOnly($dt->getFieldValue($member));
+	}
+	
 	/**
 	 * Refreshes the area corresponding to the DataTable
 	 */
@@ -95,7 +122,8 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
 		$compo= $this->_getModelViewer()->getModelDataTable($instances, $model,$totalCount)->refresh(["tbody"]);
 		$this->_getEvents()->onDisplayElements($compo,$instances,true);
-		$this->jquery->renderView("@framework/main/component.html",["compo"=>$compo]);
+		$compo->setLibraryId("_compo_");
+		$this->jquery->renderView("@framework/main/component.html");
 	}
 	
 	/**
@@ -127,6 +155,18 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->jquery->execAtLast("$('.ui.button._new').trigger('click');");
 			$this->index();
 		}
+	}
+	
+	public function editMember($member){
+		$ids=URequest::post("id");
+		$td=URequest::post("td");
+		$part=URequest::post("part");
+		$instance=$this->getModelInstance($ids);
+		$_SESSION["instance"]=$instance;
+		$instance->_new=false;
+		$form=$this->_getModelViewer()->getMemberForm("frm-member-".$member, $instance, $member,$td,$part);
+		$form->setLibraryId("_compo_");
+		$this->jquery->renderView("@framework/main/component.html");
 	}
 	
 	/**
@@ -251,7 +291,8 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	public function refreshTable($id=null) {
 		$compo= $this->_showModel($id);
 		$this->jquery->execAtLast('$("#table-details").html("");');
-		$this->jquery->renderView("@framework/main/component.html",["compo"=>$compo]);	
+		$compo->setLibraryId("_compo_");
+		$this->jquery->renderView("@framework/main/component.html");	
 	}
 	
 	/**
@@ -263,7 +304,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$instance=@$_SESSION["instance"];
 		$isNew=$instance->_new;
 		try{
-			$updated=CRUDHelper::update($instance, $_POST,$this->_getAdminData()->getUpdateManyToOneInForm(),$this->_getAdminData()->getUpdateManyToManyInForm());
+			$updated=CRUDHelper::update($instance, $_POST);
 			if($updated){
 				$message->setType("success")->setIcon("check circle outline");
 				$message=$this->_getEvents()->onSuccessUpdateMessage($message,$instance);

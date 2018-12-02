@@ -31,7 +31,7 @@ class CRUDDatas {
 	 * @param object $instance
 	 */
 	public function getFormFieldNames($model,$instance){
-		return OrmUtils::getSerializableFields($model);
+		return OrmUtils::getFormAllFields($model);
 	}
 	
 	/**

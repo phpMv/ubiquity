@@ -162,12 +162,12 @@ trait ModelsTrait{
 		$message=new CRUDMessage("Modifications were successfully saved", "Updating");
 		$instance=@$_SESSION["instance"];
 		$isNew=$instance->_new;
-		$updated=CRUDHelper::update($instance, $_POST,$this->_getAdminData()->getUpdateManyToOneInForm(),$this->_getAdminData()->getUpdateManyToManyInForm());
+		$updated=CRUDHelper::update($instance, $_POST);
 		if($updated){
 			$pk=OrmUtils::getFirstKeyValue($instance);
 			$message->setType("success")->setIcon("check circle outline");
 			if($isNew){
-				$this->jquery->get($this->_getFiles()->getAdminBaseRoute() . "/refreshTable/".$pk, "#lv", [ "jqueryDone" => "replaceWith" ]);
+				$this->jquery->get($this->_getFiles()->getAdminBaseRoute() . $this->_getFiles()->getRouteRefreshTable()."/".$pk, "#lv", [ "jqueryDone" => "replaceWith" ]);
 			}else{
 				$this->jquery->setJsonToElement(OrmUtils::objectAsJSON($instance));
 			}

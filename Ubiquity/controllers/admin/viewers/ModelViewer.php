@@ -20,6 +20,7 @@ use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\widgets\datatable\PositionInTable;
 use Ajax\semantic\html\elements\HtmlLabel;
 use Ubiquity\utils\base\UString;
+use Ajax\semantic\html\collections\form\HtmlFormField;
 
 class ModelViewer {
 	
@@ -50,13 +51,17 @@ class ModelViewer {
 		$form->setLibraryId("frmEdit");
 		$className = \get_class ( $instance );
 		$fields = $this->controller->_getAdminData ()->getFormFieldNames ( $className ,$instance);
-		$form->setFields ( $fields );
-		$form->insertField ( 0, "_message" );
-
+		$relFields=OrmUtils::getFieldsInRelations_($className);
+		
+		$this->setFormFields_($fields, $relFields);
+		array_unshift($fields, "_message");
+		$form->setFields ($fields);
+		
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
 		$this->setFormFieldsComponent($form, $fieldTypes);
-		$this->relationMembersInForm ( $form, $instance, $className );
-		$form->setCaptions ( $this->getFormCaptions ( $form->getInstanceViewer ()->getVisibleProperties (), $className, $instance ) );
+		$this->relationMembersInForm ( $form, $instance, $className,$fields,$relFields );
+		OrmUtils::setFieldToMemberNames($fields, $relFields);
+		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
 		$message=$this->getFormTitle($form, $instance);
 		$form->setCaption ( "_message", $message ["subMessage"] );
 		$form->fieldAsMessage ( "_message", [ "icon" => $message ["icon"] ] );
@@ -64,6 +69,79 @@ class ModelViewer {
 		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/update", "#frm-add-update" );
 		$form->onGenerateField([$this,'onGenerateFormField']);
 		return $form;
+	}
+	
+	/**
+	 * @param string $identifier
+	 * @param object $instance
+	 * @param string $member
+	 * @param string $td
+	 * @param string|null $part
+	 * @return \Ajax\semantic\widgets\dataform\DataForm
+	 */
+	public function getMemberForm($identifier,$instance,$member,$td,$part=null){
+		$editMemberParams=$this->getEditMemberParams();
+		$hasButtons=$editMemberParams["hasButtons"];
+		$hasPopup=$editMemberParams["hasPopup"];
+		$redirect="";
+		if(isset($part) && isset($editMemberParams["updateCallback"])){
+			if(isset($editMemberParams["updateCallback"][$part])){
+				$redirect=$editMemberParams["updateCallback"][$part];
+			}
+		}
+		$form = $this->jquery->semantic()->dataForm( $identifier, $instance);
+		$form->setProperty("onsubmit", "return false;");
+		$form->addClass("_memberForm");
+		$className = \get_class ( $instance );
+		$fields=["id",$member];
+		$relFields=OrmUtils::getFieldsInRelations_($className);
+		$hasRelations=$this->setFormFields_($fields, $relFields);
+		$form->setFields ($fields);
+		$fieldTypes = OrmUtils::getFieldTypes ( $className );
+		$form->fieldAsHidden(0);
+		$this->setMemberFormFieldsComponent($form, $fieldTypes);
+		if($hasRelations){
+			$this->relationMembersInForm ( $form, $instance, $className,$fields,$relFields );
+		}
+		$form->setCaptions(["",""]);
+		$form->onGenerateField(function(HtmlFormField $f,$nb) use($identifier,$hasButtons,$hasPopup){
+				if($nb==1){
+				$f->setSize("mini");
+				if($hasButtons){
+					$btO=HtmlButton::icon("btO", "check")->addClass("green mini compact")->onClick("\$('#".$identifier."').trigger('validate');",true,true);
+					$btC=HtmlButton::icon("btC", "close")->addClass("mini compact")->onClick("\$('#".$identifier."').trigger('endEdit');");
+					$f->wrap("<div class='fields' style='margin:0;'>",[$btO,$btC,"</div>"]);
+				}
+				$f->on("keydown","if(event.which == 13) {\$('#".$identifier."').trigger('validate');}if(event.keyCode===27) {\$('#".$identifier."').trigger('endEdit');}");
+				$f->onClick("return false;",true,true);
+				}else{
+					$f->setProperty("style", "display: none;");
+				}
+		});
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/updateMember/".$member."/".$redirect, "#".$td ,["attr"=>"","hasLoader"=>false,"jsCallback"=>"$(self).remove();","jqueryDone"=>"html"]);
+		if($hasPopup){
+			$endEdit="\$('#".$identifier."').html();\$('.popup').hide();\$('#".$td."').popup('destroy');";
+			$validate=$endEdit;
+		}else{
+			$endEdit="let td=\$('#".$td."');td.html(td.data('originalText'));";
+			$validate="";
+		}
+		$form->on("endEdit",$endEdit);
+		$form->on("validate", "\$('#".$identifier."').form('submit');".$validate);
+		$this->jquery->execAtLast("$('form').find('input[type=text],textarea,select').filter(':visible:first').focus();");
+		return $form;
+	}
+	
+	private function setFormFields_(&$fields,$relFields){
+		$hasRelations=false;
+		$relFields=array_flip($relFields);
+		foreach ($fields as $index=>$field){
+			if(isset($relFields[$field])){
+				$fields[$index]=$relFields[$field];
+				$hasRelations=true;
+			}
+		}
+		return $hasRelations;
 	}
 	
 	/**
@@ -86,12 +164,25 @@ class ModelViewer {
 	 * @param array $fieldTypes associative array of field names (keys) and types (values)
 	 */
 	public function setFormFieldsComponent(DataForm $form,$fieldTypes){
+		$this->setFormFieldsComponent_($form, $fieldTypes);
+	}
+	
+	/**
+	 * Sets the components for each field
+	 * @param DataForm $form
+	 * @param array $fieldTypes associative array of field names (keys) and types (values)
+	 */
+	public function setMemberFormFieldsComponent(DataForm $form,$fieldTypes){
+		$this->setFormFieldsComponent_($form, $fieldTypes);
+	}
+	
+	private function setFormFieldsComponent_(DataForm $form,$fieldTypes){
 		foreach ( $fieldTypes as $property => $type ) {
 			switch ($property) {
 				case "password":
-				$form->fieldAsInput ( $property, [ "inputType" => "password" ] );
-				$form->setValidationParams(["inline"=>true]);
-				break;
+					$form->fieldAsInput ( $property, [ "inputType" => "password" ] );
+					$form->setValidationParams(["inline"=>true]);
+					break;
 				case "email": case "mail":
 					$form->fieldAsInput ( $property, [ "inputType" => "email" ,"rules"=>[["email"]]] );
 					break;
@@ -142,6 +233,7 @@ class ModelViewer {
 				});
 			}
 		}
+		$this->addEditMemberFonctionality("#de td[data-field]","dataElement","dblclick","$(this).closest('table').attr('data-ajax')");
 		return $dataElement;
 	}
 	
@@ -167,37 +259,79 @@ class ModelViewer {
 	public function getModelDataTable($instances, $model,$totalCount,$page=1) {
 		$adminRoute = $this->controller->_getBaseRoute ();
 		$files=$this->controller->_getFiles();
-		$modal = ($this->isModal ( $instances, $model ) ? "modal" : "no");
 		$dataTable = $this->getDataTableInstance( $instances,$model,$totalCount,$page );
 		$attributes = $this->controller->_getAdminData()->getFieldNames ( $model );
-		
+		$this->setDataTableAttributes($dataTable, $attributes, $model,$instances);
 		$dataTable->setCaptions ( $this->getCaptions ( $attributes, $model ) );
-		$dataTable->setButtons($this->getDataTableRowButtons());
-		$dataTable->setFields ( $attributes );
-		if(array_search("password", $attributes)!==false){
-			$dataTable->setValueFunction("password", function($v){return UString::mask($v);});
-		}
-		$dataTable->setIdentifierFunction ( CRUDHelper::getIdentifierFunction ( $model ) );
-		if($this->showDetailsOnDataTableClick()){
-			$dataTable->getOnRow ( "click", $adminRoute .$files->getRouteDetails(), "#table-details", [ "attr" => "data-ajax","hasLoader"=>false ] );
-			$dataTable->setActiveRowSelector ( "active" );
-		}
-		
-		$dataTable->setUrls ( [ "refresh"=>$adminRoute . $files->getRouteRefresh(),"delete" => $adminRoute . $files->getRouteDelete(),"edit" => $adminRoute . $files->getRouteEdit()."/" . $modal ,"display"=> $adminRoute.$files->getRouteDisplay()."/".$modal] );
-		$dataTable->setTargetSelector ( [ "delete" => "#table-messages","edit" => "#frm-add-update" ,"display"=>"#table-details" ] );
+	
 		$dataTable->addClass ( "small very compact" );
 		$lbl=new HtmlLabel("search-query","<span id='search-query-content'></span>");
 		$icon=$lbl->addIcon("delete",false);
 		$lbl->wrap("<span>","</span>");
 		$lbl->setProperty("style", "display: none;");
 		$icon->getOnClick($adminRoute.$files->getRouteRefreshTable(),"#lv",["jqueryDone"=>"replaceWith","hasLoader"=>"internal"]);
-		
+
 		$dataTable->addItemInToolbar($lbl);
 		$dataTable->addSearchInToolbar();
 		$dataTable->setToolbarPosition(PositionInTable::FOOTER);
 		$dataTable->getToolbar()->setSecondary();
-		$this->addAllButtons($dataTable, $attributes);
 		return $dataTable;
+	}
+	
+	public function setDataTableAttributes(DataTable $dataTable,$attributes,$model,$instances,$selector=null){
+		$modal = ($this->isModal ( $instances, $model ) ? "modal" : "no");
+		
+		$adminRoute = $this->controller->_getBaseRoute ();
+		$files=$this->controller->_getFiles();
+		$dataTable->setButtons($this->getDataTableRowButtons());
+		$dataTable->setFields ( $attributes );
+		if(array_search("password", $attributes)!==false){
+			$dataTable->setValueFunction("password", function($v){return UString::mask($v);});
+		}
+		$dataTable->setIdentifierFunction ( CRUDHelper::getIdentifierFunction ( $model ) );
+
+		if(!isset($selector)){
+			if($this->showDetailsOnDataTableClick()){
+				$dataTable->getOnRow ( "click", $adminRoute .$files->getRouteDetails(), "#table-details", [ "selector"=>$selector,"attr" => "data-ajax","hasLoader"=>false,"jsCondition"=>"!event.detail || event.detail==1","jsCallback"=>"return false;"] );
+				$dataTable->setActiveRowSelector ( "active" );
+			}
+			
+			$dataTable->setUrls ( [ "refresh"=>$adminRoute . $files->getRouteRefresh(),"delete" => $adminRoute . $files->getRouteDelete(),"edit" => $adminRoute . $files->getRouteEdit()."/" . $modal ,"display"=> $adminRoute.$files->getRouteDisplay()."/".$modal] );
+			$dataTable->setTargetSelector ( [ "delete" => "#table-messages","edit" => "#frm-add-update" ,"display"=>"#table-details" ] );
+			$this->addEditMemberFonctionality();
+		}
+		$this->addAllButtons($dataTable, $attributes);
+	}
+	
+	public function addEditMemberFonctionality($selector=null,$part=null,$event="dblclick",$identifierSelector="$(this).closest('tr').attr('data-ajax')"){
+		$part=(isset($part))?", part: '".$part."'":"";
+		if(($editMemberParams=$this->getEditMemberParams())!==false){
+			$hasPopup=$editMemberParams["hasPopup"];
+			if(!isset($selector)){
+				$selector="[data-field]";
+				if(isset($editMemberParams['selector'])){
+					$selector=$editMemberParams['selector'];
+				}
+			}
+			$jsCallback=$this->getJsCallbackForEditMember($hasPopup);
+			$element=null;
+			if(!$hasPopup){
+				$element="\$(self)";
+				$before=$jsCallback;
+				$jsCallback="";
+			}else{
+				$before="";
+			}
+			$this->jquery->postOn($event,$selector, $this->controller->_getBaseRoute ()."/editMember/","{id: ".$identifierSelector.",td:$(this).attr('id')".$part."}",$element,["attr"=>"data-field","hasLoader"=>false,"jqueryDone"=>"html","before"=>"$('._memberForm').trigger('endEdit');".$before,"jsCallback"=>$jsCallback]);
+		}
+	}
+	
+	private function getJsCallbackForEditMember($hasPopup){
+		if($hasPopup){
+			return "$(self).popup({hideOnScroll: false,exclusive: true,delay:{show:50,hide: 5000},closable: false, variation: 'very wide',html: data, hoverable: true,className: {popup: 'ui popup'}}).popup('show');";
+		}else{
+			return "$(self).html(function(i,v){return $(this).data('originalText', v), '';});";
+		}
 	}
 	
 	/**
@@ -497,15 +631,16 @@ class ModelViewer {
 		return true;
 	}
 	
-	protected function relationMembersInForm($form, $instance, $className) {
-		$relations = OrmUtils::getFieldsInRelations ( $className );
-		foreach ( $relations as $member ) {
-			if ($this->controller->_getAdminData ()->getUpdateManyToOneInForm () && OrmUtils::getAnnotationInfoMember ( $className, "#manyToOne", $member ) !== false) {
-				$this->manyToOneFormField ( $form, $member, $className, $instance );
-			} elseif ($this->controller->_getAdminData ()->getUpdateOneToManyInForm () && ($annot = OrmUtils::getAnnotationInfoMember ( $className, "#oneToMany", $member )) !== false) {
-				$this->oneToManyFormField ( $form, $member, $instance, $annot );
-			} elseif ($this->controller->_getAdminData ()->getUpdateManyToManyInForm () && ($annot = OrmUtils::getAnnotationInfoMember ( $className, "#manyToMany", $member )) !== false) {
-				$this->manyToManyFormField ( $form, $member, $instance, $annot );
+	protected function relationMembersInForm($form, $instance, $className,$fields,$relations) {
+		foreach ( $relations as $field=>$member ) {
+			if(array_search($field,$fields)!==false){
+				if (OrmUtils::getAnnotationInfoMember ( $className, "#manyToOne", $member ) !== false) {
+					$this->manyToOneFormField ( $form, $member, $className, $instance );
+				} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $className, "#oneToMany", $member )) !== false) {
+					$this->oneToManyFormField ( $form, $member, $instance, $annot );
+				} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $className, "#manyToMany", $member )) !== false) {
+					$this->manyToManyFormField ( $form, $member, $instance, $annot);
+				}
 			}
 		}
 	}
@@ -525,7 +660,6 @@ class ModelViewer {
 				$fkValue = OrmUtils::getFirstKeyValue ( $fkObject );
 				if (! Reflexion::setMemberValue ( $instance, $fkField, $fkValue )) {
 					$instance->{$fkField} = OrmUtils::getFirstKeyValue ( $fkObject );
-					$form->addField ( $fkField );
 				}
 				$form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ) );
 				$form->setCaption ( $fkField, \ucfirst ( $member ) );
@@ -539,7 +673,6 @@ class ModelViewer {
 		$fkId = OrmUtils::getFirstKey ( $fkClass );
 		$fkIdGetter = "get" . \ucfirst ( $fkId );
 		$fkInstances = DAO::getOneToMany ( $instance, $member );
-		$form->addField ( $newField );
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
 		}, $fkInstances );
@@ -554,7 +687,6 @@ class ModelViewer {
 		$fkId = OrmUtils::getFirstKey ( $fkClass );
 		$fkIdGetter = "get" . \ucfirst ( $fkId );
 		$fkInstances = DAO::getManyToMany ( $instance, $member );
-		$form->addField ( $newField );
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
 		}, $fkInstances );
@@ -563,6 +695,10 @@ class ModelViewer {
 				$elm->getField ()->asSearch ();
 			} ] );
 		$form->setCaption ( $newField, \ucfirst ( $member ) );
+	}
+	
+	public function getEditMemberParams(){
+		return ["hasButtons"=>true,"hasPopup"=>false,"selector"=>"[data-field]","updateCallback"=>["dataElement"=>"updateMemberDataElement"]];
 	}
 	
 }

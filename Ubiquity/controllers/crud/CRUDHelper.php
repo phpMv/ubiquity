@@ -40,10 +40,16 @@ class CRUDHelper {
 		return DAO::getAll($model,$condition);
 	}
 	
-	public static function update($instance,$values,$updateManyToOneInForm=true,$updateManyToManyInForm=false) {
-		$update=false;
+	public static function update($instance,$values) {
 		$className=\get_class($instance);
-		$relations=OrmUtils::getManyToOneFields($className);
+		$fieldsInRelationForUpdate=OrmUtils::getFieldsInRelationsForUpdate_($className);
+		$manyToOneRelations=$fieldsInRelationForUpdate["manyToOne"];
+		$manyToManyRelations=$fieldsInRelationForUpdate["manyToMany"];
+		
+		$members=array_keys($values);
+		OrmUtils::setFieldToMemberNames($members, $fieldsInRelationForUpdate["relations"]);
+		$update=false;
+		
 		$fieldTypes=OrmUtils::getFieldTypes($className);
 		foreach ( $fieldTypes as $property => $type ) {
 			if ($type == "tinyint(1)") {
@@ -55,15 +61,17 @@ class CRUDHelper {
 			}
 		}
 		URequest::setValuesToObject($instance, $values);
-		foreach ( $relations as $member ) {
-			if ($updateManyToOneInForm) {
-				$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
-				if ($joinColumn) {
-					$fkClass=$joinColumn["className"];
-					$fkField=$joinColumn["name"];
-					if (isset($values[$fkField])) {
-						$fkObject=DAO::getOne($fkClass, $values["$fkField"]);
-						Reflexion::setMemberValue($instance, $member, $fkObject);
+		if($manyToOneRelations){
+			foreach ( $manyToOneRelations as $member ) {
+				if (array_search($member, $members)!==false) {
+					$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
+					if ($joinColumn) {
+						$fkClass=$joinColumn["className"];
+						$fkField=$joinColumn["name"];
+						if (isset($values[$fkField])) {
+							$fkObject=DAO::getOne($fkClass, $values["$fkField"]);
+							Reflexion::setMemberValue($instance, $member, $fkObject);
+						}
 					}
 				}
 			}
@@ -77,10 +85,9 @@ class CRUDHelper {
 					// TODO update dbCache
 				}
 			}
-			if ($update) {
-				if ($updateManyToManyInForm) {
-					$relations=OrmUtils::getManyToManyFields($className);
-					foreach ( $relations as $member ) {
+			if ($update && $manyToManyRelations) {
+				foreach ( $manyToManyRelations as $member ) {
+					if(array_search($member, $members)!==false){
 						if (($annot=OrmUtils::getAnnotationInfoMember($className, "#manyToMany", $member)) !== false) {
 							$newField=$member . "Ids";
 							$fkClass=$annot["targetEntity"];

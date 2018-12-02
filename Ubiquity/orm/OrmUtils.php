@@ -245,9 +245,39 @@ class OrmUtils {
 		$fieldNames=\array_keys(self::getAnnotationInfo($class, "#fieldNames"));
 		return \array_diff($fieldNames, $notSerializable);
 	}
+	
+	public static function getAllFields($class){
+		return \array_keys(self::getAnnotationInfo($class, "#fieldNames"));
+	}
+	
+	public static function getFormAllFields($class){
+		$result=self::getSerializableFields($class);
+		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
+			foreach ($manyToOne as $member){
+				$joinColumn = OrmUtils::getAnnotationInfoMember ( $class, "#joinColumn", $member );
+				$result[]=$joinColumn["name"];
+			}
+		}
+		if ($manyToMany=self::getAnnotationInfo($class, "#manyToMany")) {
+			$manyToMany=array_keys($manyToMany);
+			foreach ($manyToMany as $member){
+				$result[]=$member . "Ids";
+			}
+		}
+		return $result;
+	}
+	
+	public static function setFieldToMemberNames(&$fields,$relFields){
+		foreach ($fields as $index=>$field){
+			if(isset($relFields[$field])){
+				$fields[$index]=$relFields[$field];
+			}
+		}
+	}
 
 	public static function getFieldsInRelations($class) {
 		$result=[ ];
+		
 		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
 			$result=\array_merge($result, $manyToOne);
 		}
@@ -258,6 +288,33 @@ class OrmUtils {
 			$result=\array_merge($result, \array_keys($manyToMany));
 		}
 		return $result;
+	}
+	
+	public static function getFieldsInRelations_($class) {
+		return self::getFieldsInRelationsForUpdate_($class)["relations"];
+	}
+	
+	public static function getFieldsInRelationsForUpdate_($class) {
+		$result=[ ];
+		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
+			foreach ($manyToOne as $member){
+				$joinColumn = OrmUtils::getAnnotationInfoMember ( $class, "#joinColumn", $member );
+				$result[$joinColumn["name"]]=$member;
+			}
+		}
+		if ($manyToMany=self::getAnnotationInfo($class, "#manyToMany")) {
+			$manyToMany=array_keys($manyToMany);
+			foreach ($manyToMany as $member){
+				$result[$member . "Ids"]=$member;
+			}
+		}
+		if ($oneToMany=self::getAnnotationInfo($class, "#oneToMany")) {
+			$oneToMany=array_keys($oneToMany);
+			foreach ($oneToMany as $member){
+				$result[$member . "Ids"]=$member;
+			}
+		}
+		return ["relations"=>$result,"manyToOne"=>$manyToOne,"manyToMany"=>$manyToMany,"oneToMany"=>$oneToMany];
 	}
 	
 	public static function getAnnotFieldsInRelations($class) {
@@ -320,6 +377,10 @@ class OrmUtils {
 	
 	private static function getJoinAlias($table,$fkTable){
 		return uniqid($fkTable.'_'.$table[0]);
+	}
+	
+	public static function getOneToManyFields($class) {
+		return self::getAnnotationInfo($class, "#oneToMany");
 	}
 
 	public static function getManyToOneFields($class) {
