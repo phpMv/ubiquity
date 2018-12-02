@@ -40,13 +40,13 @@ It is possible to prevent this default loading ; the third parameter allows the 
     
 HasMany loading
 ^^^^^^^^^^^^^^^
-Loading **hasMany** members must always be explicit ; the fourth parameter allows the loading of hasmany members.
+Loading **hasMany** members must always be explicit ; the third parameter allows the explicit loading of members.
 
 Each user has many groups:
 
 .. code-block:: php
     
-    $user=DAO::getOne("models\User",5,true,true);
+    $user=DAO::getOne("models\User",5,["groupes"]);
     foreach($user->getGroupes() as $groupe){
         echo $groupe->getName()."<br>";
     }
@@ -92,3 +92,20 @@ Loading instances of the `User` class:
     foreach($users as $user){
         echo $user->getName()."<br>";
     }
+
+Loading instances of the `User` class with his category and his groups :
+
+.. code-block:: php
+    
+    $users=DAO::getAll("models\User",["groupes","category"]);
+    foreach($users as $user){
+        echo "<h2>".$user->getName()."</h2>";
+        echo $user->getCategory()."<br>";
+        echo "<h3>Groups</h3>";
+        echo "<ul>";
+        foreach($user->getGroupes() as $groupe){
+        	echo "<li>".$groupe->getName()."</li>";
+        }
+        echo "</ul>";
+    }
+    

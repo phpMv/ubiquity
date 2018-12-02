@@ -21,6 +21,7 @@ use Ajax\semantic\widgets\datatable\PositionInTable;
 use Ajax\semantic\html\elements\HtmlLabel;
 use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\form\HtmlFormField;
+use Ubiquity\controllers\crud\EditMemberParams;
 
 class ModelViewer {
 	
@@ -76,20 +77,14 @@ class ModelViewer {
 	 * @param object $instance
 	 * @param string $member
 	 * @param string $td
-	 * @param string|null $part
+	 * @param string $part
 	 * @return \Ajax\semantic\widgets\dataform\DataForm
 	 */
-	public function getMemberForm($identifier,$instance,$member,$td,$part=null){
-		$editMemberParams=$this->getEditMemberParams();
-		$hasButtons=$editMemberParams["hasButtons"];
-		$hasPopup=$editMemberParams["hasPopup"];
-		$redirect="";
-		if(isset($part) && isset($editMemberParams["updateCallback"])){
-			if(isset($editMemberParams["updateCallback"][$part])){
-				$redirect=$editMemberParams["updateCallback"][$part];
-			}
-		}
+	public function getMemberForm($identifier,$instance,$member,$td,$part){
+		$editMemberParams=$this->getEditMemberParams_($part);
+
 		$form = $this->jquery->semantic()->dataForm( $identifier, $instance);
+		$form->on("dblclick","",true,true);
 		$form->setProperty("onsubmit", "return false;");
 		$form->addClass("_memberForm");
 		$className = \get_class ( $instance );
@@ -104,22 +99,25 @@ class ModelViewer {
 			$this->relationMembersInForm ( $form, $instance, $className,$fields,$relFields );
 		}
 		$form->setCaptions(["",""]);
-		$form->onGenerateField(function(HtmlFormField $f,$nb) use($identifier,$hasButtons,$hasPopup){
+		$form->onGenerateField(function(HtmlFormField $f,$nb) use($identifier,$editMemberParams){
 				if($nb==1){
-				$f->setSize("mini");
-				if($hasButtons){
-					$btO=HtmlButton::icon("btO", "check")->addClass("green mini compact")->onClick("\$('#".$identifier."').trigger('validate');",true,true);
-					$btC=HtmlButton::icon("btC", "close")->addClass("mini compact")->onClick("\$('#".$identifier."').trigger('endEdit');");
-					$f->wrap("<div class='fields' style='margin:0;'>",[$btO,$btC,"</div>"]);
-				}
-				$f->on("keydown","if(event.which == 13) {\$('#".$identifier."').trigger('validate');}if(event.keyCode===27) {\$('#".$identifier."').trigger('endEdit');}");
-				$f->onClick("return false;",true,true);
+					$f->setSize("mini");
+					if($editMemberParams->getHasButtons()){
+						$btO=HtmlButton::icon("btO", "check")->addClass("green mini compact")->onClick("\$('#".$identifier."').trigger('validate');",true,true);
+						$btC=HtmlButton::icon("btC", "close")->addClass("mini compact")->onClick("\$('#".$identifier."').trigger('endEdit');");
+						$f->wrap("<div class='fields' style='margin:0;'>",[$btO,$btC,"</div>"]);
+						if(!$editMemberParams->getHasPopup()){
+							$f->setWidth(16)->setProperty("style", "padding-left:0;");
+						}
+					}
+					$f->on("keydown","if(event.which == 13) {\$('#".$identifier."').trigger('validate');}if(event.keyCode===27) {\$('#".$identifier."').trigger('endEdit');}");
+					$f->onClick("return false;",true,true);
 				}else{
 					$f->setProperty("style", "display: none;");
 				}
 		});
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/updateMember/".$member."/".$redirect, "#".$td ,["attr"=>"","hasLoader"=>false,"jsCallback"=>"$(self).remove();","jqueryDone"=>"html"]);
-		if($hasPopup){
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/updateMember/".$member."/".$editMemberParams->getUpdateCallback(), "#".$td ,["attr"=>"","hasLoader"=>false,"jsCallback"=>"$(self).remove();","jqueryDone"=>"html"]);
+		if($editMemberParams->getHasPopup()){
 			$endEdit="\$('#".$identifier."').html();\$('.popup').hide();\$('#".$td."').popup('destroy');";
 			$validate=$endEdit;
 		}else{
@@ -233,7 +231,7 @@ class ModelViewer {
 				});
 			}
 		}
-		$this->addEditMemberFonctionality("#de td[data-field]","dataElement","dblclick","$(this).closest('table').attr('data-ajax')");
+		$this->addEditMemberFonctionality("dataElement");
 		return $dataElement;
 	}
 	
@@ -298,39 +296,17 @@ class ModelViewer {
 			
 			$dataTable->setUrls ( [ "refresh"=>$adminRoute . $files->getRouteRefresh(),"delete" => $adminRoute . $files->getRouteDelete(),"edit" => $adminRoute . $files->getRouteEdit()."/" . $modal ,"display"=> $adminRoute.$files->getRouteDisplay()."/".$modal] );
 			$dataTable->setTargetSelector ( [ "delete" => "#table-messages","edit" => "#frm-add-update" ,"display"=>"#table-details" ] );
-			$this->addEditMemberFonctionality();
+			$this->addEditMemberFonctionality("dataTable");
 		}
 		$this->addAllButtons($dataTable, $attributes);
 	}
 	
-	public function addEditMemberFonctionality($selector=null,$part=null,$event="dblclick",$identifierSelector="$(this).closest('tr').attr('data-ajax')"){
-		$part=(isset($part))?", part: '".$part."'":"";
+	public function addEditMemberFonctionality($part){
 		if(($editMemberParams=$this->getEditMemberParams())!==false){
-			$hasPopup=$editMemberParams["hasPopup"];
-			if(!isset($selector)){
-				$selector="[data-field]";
-				if(isset($editMemberParams['selector'])){
-					$selector=$editMemberParams['selector'];
-				}
+			if(isset($editMemberParams[$part])){
+				$params=$editMemberParams[$part];
+				$params->compile($this->controller->_getBaseRoute (),$this->jquery,$part);
 			}
-			$jsCallback=$this->getJsCallbackForEditMember($hasPopup);
-			$element=null;
-			if(!$hasPopup){
-				$element="\$(self)";
-				$before=$jsCallback;
-				$jsCallback="";
-			}else{
-				$before="";
-			}
-			$this->jquery->postOn($event,$selector, $this->controller->_getBaseRoute ()."/editMember/","{id: ".$identifierSelector.",td:$(this).attr('id')".$part."}",$element,["attr"=>"data-field","hasLoader"=>false,"jqueryDone"=>"html","before"=>"$('._memberForm').trigger('endEdit');".$before,"jsCallback"=>$jsCallback]);
-		}
-	}
-	
-	private function getJsCallbackForEditMember($hasPopup){
-		if($hasPopup){
-			return "$(self).popup({hideOnScroll: false,exclusive: true,delay:{show:50,hide: 5000},closable: false, variation: 'very wide',html: data, hoverable: true,className: {popup: 'ui popup'}}).popup('show');";
-		}else{
-			return "$(self).html(function(i,v){return $(this).data('originalText', v), '';});";
 		}
 	}
 	
@@ -697,8 +673,30 @@ class ModelViewer {
 		$form->setCaption ( $newField, \ucfirst ( $member ) );
 	}
 	
+	/**
+	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
+	 */
 	public function getEditMemberParams(){
-		return ["hasButtons"=>true,"hasPopup"=>false,"selector"=>"[data-field]","updateCallback"=>["dataElement"=>"updateMemberDataElement"]];
+		return $this->defaultEditMemberParams();
+	}
+	
+	/**
+	 * @param string $part
+	 * @return \Ubiquity\controllers\crud\EditMemberParams
+	 */
+	protected function getEditMemberParams_($part){
+		$params=$this->defaultEditMemberParams();
+		if($params && isset($params[$part])){
+			return $params[$part];
+		}
+		return new EditMemberParams();
+	}
+	
+	/**
+	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
+	 */
+	protected function defaultEditMemberParams(){
+		return ["dataTable"=>EditMemberParams::dataTable(),"dataElement"=>EditMemberParams::dataElement()];
 	}
 	
 }

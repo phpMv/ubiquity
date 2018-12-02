@@ -15,6 +15,7 @@ use Ubiquity\utils\http\UResponse;
 use Ubiquity\controllers\rest\ResponseFormatter;
 use Ajax\semantic\widgets\datatable\Pagination;
 use Ubiquity\utils\base\UString;
+use Ajax\common\html\HtmlContentOnly;
 
 /**
  *
@@ -269,5 +270,39 @@ trait ModelsTrait{
 		$ck->setProperty("name", "ck[]");
 		$ck->setProperty("data-ajax", $dataAjax);
 		return $ck;
+	}
+	
+	public function editMember($member){
+		$ids=URequest::post("id");
+		$td=URequest::post("td");
+		$part=URequest::post("part");
+		$instance=$this->getModelInstance($ids);
+		$_SESSION["instance"]=$instance;
+		$_SESSION["model"]=get_class($instance);
+		$instance->_new=false;
+		$form=$this->_getModelViewer()->getMemberForm("frm-member-".$member, $instance, $member,$td,$part);
+		$form->setLibraryId("_compo_");
+		$this->jquery->renderView("@framework/main/component.html");
+	}
+	
+	public function updateMember($member,$callback=false){
+		$instance=@$_SESSION["instance"];
+		$model=$_SESSION['model'];
+		$updated=CRUDHelper::update($instance, $_POST);
+		if($updated){
+			if($callback===false){
+				$dt=$this->_getModelViewer()->getModelDataTable([$instance], $model, 1);
+				$dt->compile();
+				echo new HtmlContentOnly($dt->getFieldValue($member));
+			}else{
+				if(method_exists($this, $callback)){
+					$this->$callback($member,$instance);
+				}else{
+					throw new \Exception("The method `".$callback."` does not exists in ".get_class());
+				}
+			}
+		}else{
+			UResponse::setResponseCode(404);
+		}
 	}
 }
