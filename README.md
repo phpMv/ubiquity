@@ -20,7 +20,11 @@
   - Multi-level cache
   - Rest Server
   - Admin interface
+  - Scaffolding
   
 # Installation
 
 The easiest way to install **Ubiquity** is to use [devtools](https://github.com/phpMv/ubiquity-devtools)
+
+# Performances
+Ubiquity is fast and efficient, see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
