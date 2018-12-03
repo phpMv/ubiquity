@@ -13,9 +13,7 @@
 	{{q["mainMenu"] | raw}}
 	{% block auth %}
 		{% if _userInfo is defined %}
-			<div class="ui segment">
 				{{ _userInfo | raw }}
-			</div>
 		{% endif %}
 	{% endblock %}
 	<div id="modal"></div>

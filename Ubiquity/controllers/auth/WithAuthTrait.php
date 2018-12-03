@@ -91,7 +91,7 @@ trait WithAuthTrait{
 	protected function checkConnection($authController){
 		if($authController->_checkConnectionTimeout()!==null){
 			$authController->_disconnected();
-			$this->jquery->ajaxInterval("get",$authController->_getBaseRoute()."/_checkConnection/",$authController->_checkConnectionTimeout(),"_checkConnection","",["jsCallback"=>"data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"]);
+			$this->jquery->ajaxInterval("get",$authController->_getBaseRoute()."/_checkConnection/",$authController->_checkConnectionTimeout(),"_checkConnection","",["historize"=>false,"jsCallback"=>"data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"]);
 		}
 			
 	}

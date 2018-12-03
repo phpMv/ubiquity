@@ -23,6 +23,13 @@ use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\form\HtmlFormField;
 use Ubiquity\controllers\crud\EditMemberParams;
 
+/**
+ * Associated with a CRUDController class
+ * Responsible of the display
+ * 
+ * @author jc
+ *
+ */
 class ModelViewer {
 	
 	/**
@@ -73,6 +80,7 @@ class ModelViewer {
 	}
 	
 	/**
+	 * Returns a form for member editing
 	 * @param string $identifier
 	 * @param object $instance
 	 * @param string $member

@@ -4,6 +4,11 @@ namespace Ubiquity\controllers\crud;
 
 use Ajax\JsUtils;
 
+/**
+ * For using in a CRUDController ModelViewer with getEditMemberParams method 
+ * @author jc
+ *
+ */
 class EditMemberParams {
 	private $selector;
 	private $event;
