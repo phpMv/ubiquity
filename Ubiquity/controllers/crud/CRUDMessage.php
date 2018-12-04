@@ -53,6 +53,7 @@ class CRUDMessage {
 	public function setMessage($message) {
 		$this->_message = $message;
 		$this->message=$message;
+		return $this;
 	}
 
 	/**

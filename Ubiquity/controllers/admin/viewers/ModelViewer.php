@@ -693,7 +693,7 @@ class ModelViewer {
 	 * @return \Ubiquity\controllers\crud\EditMemberParams
 	 */
 	protected function getEditMemberParams_($part){
-		$params=$this->defaultEditMemberParams();
+		$params=$this->getEditMemberParams();
 		if($params && isset($params[$part])){
 			return $params[$part];
 		}
