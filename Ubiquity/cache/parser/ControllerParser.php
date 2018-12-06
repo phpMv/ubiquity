@@ -106,6 +106,8 @@ class ControllerParser {
 
 	private static function cleanpath($prefix, $path="") {
 		$path=str_replace("//", "/", $path);
+		if($prefix!=="" && !UString::startswith($prefix, "/"))
+			$prefix="/".$prefix;
 		if (!UString::endswith($prefix, "/"))
 			$prefix=$prefix . "/";
 		if ($path !== "" && UString::startswith($path, "/"))

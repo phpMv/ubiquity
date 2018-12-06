@@ -169,7 +169,7 @@ class OrmUtils {
 				$memberAccessor="get" . ucfirst($member);
 				if (method_exists($instance, $memberAccessor)) {
 					$memberInstance=$instance->$memberAccessor();
-					if (isset($memberInstance)) {
+					if (isset($memberInstance) && is_object($memberInstance)) {
 						$keyValues=self::getKeyFieldsAndValues($memberInstance);
 						if (sizeof($keyValues) > 0) {
 							$fkName=self::getJoinColumnName($class, $member);

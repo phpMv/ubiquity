@@ -197,6 +197,13 @@ Description of the features
 Customizing templates
 *********************
 
+index.html template
+###################
+
+The index.html template manages the connection:
+
+.. image:: /_static/images/auth/template_authIndex.png
+
 Example with the **_userInfo** aera:
 
 Create a new AuthController named **PersoAuthController**:

@@ -161,7 +161,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$ids=URequest::post("id");
 		$td=URequest::post("td");
 		$part=URequest::post("part");
-		$instance=$this->getModelInstance($ids);
+		$instance=$this->getModelInstance($ids,$member);
 		$_SESSION["instance"]=$instance;
 		$instance->_new=false;
 		$form=$this->_getModelViewer()->getMemberForm("frm-member-".$member, $instance, $member,$td,$part);
@@ -379,9 +379,14 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$this->jquery->postOnClick(".showTable", $this->_getBaseRoute() . "/".$url,"{}", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ]);
 	}
 	
-	private function getModelInstance($ids) {
+	private function getModelInstance($ids,$included=true) {
 		$ids=\explode("_", $ids);
-		$instance=DAO::getOne($this->model, $ids);
+		if(!is_bool($included)){
+			if(!is_array($included)){
+				$included=[$included];
+			}
+		}
+		$instance=DAO::getOne($this->model, $ids,$included);
 		if(isset($instance)){
 			return $instance;
 		}

@@ -45,7 +45,7 @@ abstract class AuthController extends ControllerBase{
 				return;
 			}
 		}
-		$this->authLoadView($this->_getFiles()->getViewIndex(),["action"=>$this->_getBaseRoute()."/connect",
+		$this->authLoadView($this->_getFiles()->getViewIndex(),["action"=>$this->getBaseUrl()."/connect",
 				"loginInputName"=>$this->_getLoginInputName(),"loginLabel"=>$this->loginLabel(),
 				"passwordInputName"=>$this->_getPasswordInputName(),"passwordLabel"=>$this->passwordLabel(),
 				"rememberCaption"=>$this->rememberCaption()
@@ -59,6 +59,10 @@ abstract class AuthController extends ControllerBase{
 	 */
 	public function _getBaseRoute(){
 		return ClassUtils::getClassSimpleName(get_class($this));
+	}
+	
+	private function getBaseUrl(){
+		return URequest::getUrl($this->_getBaseRoute());
 	}
 	/**
 	 * {@inheritDoc}
@@ -80,7 +84,7 @@ abstract class AuthController extends ControllerBase{
 		$fMessage=$this->_noAccessMsg;
 		$this->noAccessMessage($fMessage);
 		$message=$this->fMessage($fMessage->parseContent(["url"=>implode("/",$urlParts)]));		
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
 	/**
@@ -161,7 +165,7 @@ abstract class AuthController extends ControllerBase{
 			$fMessage->addType("attached");
 		}
 		$message=$this->fMessage($fMessage,"bad-login").$attemptsMessage;
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
 	protected function noAttempts(){
@@ -215,14 +219,14 @@ abstract class AuthController extends ControllerBase{
 		$fMessage=new FlashMessage("You have been properly disconnected!","Logout","success","checkmark");
 		$this->terminateMessage($fMessage);
 		$message=$this->fMessage($fMessage);
-		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
+		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
 	public function _disConnected(){
 		$fMessage=new FlashMessage("You have been disconnected from the application!","Logout","","sign out");
 		$this->disconnectedMessage($fMessage);
 		$message=$this->fMessage($fMessage);
-		$this->jquery->getOnClick("._signin", $this->_getBaseRoute(),$this->_getBodySelector(),["stopPropagation"=>false,"preventDefault"=>false]);
+		$this->jquery->getOnClick("._signin", $this->getBaseUrl(),$this->_getBodySelector(),["stopPropagation"=>false,"preventDefault"=>false]);
 		$this->jquery->execOn("click", "._close", "window.open(window.location,'_self').close();");
 		$this->jquery->renderView($this->_getFiles()->getViewDisconnected(),["_title"=>"Session ended","_message"=>$message]);
 	}
@@ -249,7 +253,7 @@ abstract class AuthController extends ControllerBase{
 	 * @return string|null
 	 */
 	public function info(){
-		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector()],$this->_displayInfoAsString());
+		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector()],$this->_displayInfoAsString());
 	}
 	
 	protected function fMessage(FlashMessage $fMessage,$id=null){
@@ -378,7 +382,7 @@ abstract class AuthController extends ControllerBase{
 	}
 	
 	protected function getViewVars($viewname){
-		return ["authURL"=>$this->_getBaseRoute(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption];
+		return ["authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption];
 	}
 	
 	/**
