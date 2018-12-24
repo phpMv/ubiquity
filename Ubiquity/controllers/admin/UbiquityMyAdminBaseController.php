@@ -52,6 +52,7 @@ use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
 use Ajax\semantic\html\elements\HtmlInput;
 use Ubiquity\log\LoggerParams;
 use Ajax\semantic\html\elements\HtmlButtonGroups;
+use Ubiquity\translation\Translator;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface{
 	
@@ -164,8 +165,8 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function index() {
 		$array = $this->_getAdminViewer ()->getMainMenuElements ();
-		$this->_getAdminViewer ()->getMainIndexItems ( "part1", \array_slice ( $array, 0, 4 ) );
-		$this->_getAdminViewer ()->getMainIndexItems ( "part2", \array_slice ( $array, 4, 4 ) );
+		$this->_getAdminViewer ()->getMainIndexItems ( "part1", \array_slice ( $array, 0, 5 ) );
+		$this->_getAdminViewer ()->getMainIndexItems ( "part2", \array_slice ( $array, 5, 5 ) );
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewIndex () );
 	}
@@ -349,6 +350,18 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$this->_seo ();
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewSeoIndex () );
+	}
+	
+	public function translate() {
+		$baseRoute=$this->_getFiles()->getAdminBaseRoute();
+		$this->getHeader ( "translate" );
+		setlocale(LC_ALL, 'en_EN');
+		$loc=URequest::getDefaultLanguage();
+		$trans=new Translator($loc);
+		$trans->setFallbackLocale('en_EN');
+		$catalog=$trans->getCatalogue();
+		$world=$trans->trans("buttons.Okays",[],"messages");
+		$this->jquery->renderView( $this->_getFiles ()->getViewTranslateIndex() ,compact("loc","catalog","world"));
 	}
 
 	protected function _seo() {

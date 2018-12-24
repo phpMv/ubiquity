@@ -182,7 +182,7 @@ trait CreateControllersTrait{
 			
 			if($baseClass=="\\Ubiquity\\controllers\\auth\\AuthController"){
 				$controllerTemplate="authController.tpl";
-				$uses=["use Ubiquity\\controllers\\Startup;","use Ubiquity\\utils\\http\\USession;","use Ubiquity\\utils\\http\\URequest;"];
+				$uses=["use Ubiquity\\utils\\http\\USession;","use Ubiquity\\utils\\http\\URequest;"];
 			}else{
 				$controllerTemplate="authController_.tpl";
 				$uses=[];

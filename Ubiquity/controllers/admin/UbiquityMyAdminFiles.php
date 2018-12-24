@@ -31,6 +31,10 @@ class UbiquityMyAdminFiles {
 	public function getViewSeoIndex() {
 		return $this->viewBase."/seo/index.html";
 	}
+	
+	public function getViewTranslateIndex() {
+		return $this->viewBase."/translate/index.html";
+	}
 
 	public function getViewRestFormTester() {
 		return $this->viewBase."/rest/formTester.html";

@@ -47,11 +47,16 @@ class ArrayCache extends AbstractDataCache {
 	 */
 	protected function storeContent($key, $content, $tag) {
 		$path=$this->_getPath($key);
-		if (@\file_put_contents($path, $content, LOCK_EX) === false) {
-			throw new CacheException("Unable to write cache file: {$path}");
-		}
-		if (@\chmod($path, $this->_fileMode) === false) {
-			throw new CacheException("Unable to set permissions of cache file: {$path}");
+		$dir=pathinfo($path,PATHINFO_DIRNAME);
+		if(UFileSystem::safeMkdir($dir)){
+			if (@\file_put_contents($path, $content, LOCK_EX) === false) {
+				throw new CacheException("Unable to write cache file: {$path}");
+			}
+			if (@\chmod($path, $this->_fileMode) === false) {
+				throw new CacheException("Unable to set permissions of cache file: {$path}");
+			}
+		}else{
+			throw new CacheException("Unable to create folder : {$dir}");
 		}
 	}
 

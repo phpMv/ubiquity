@@ -1,6 +1,9 @@
+<div id="_userInfo">
 {% block _before %}
 {% endblock %}
 {%if connected is not null %}
+	{% block _beforeConnected %}
+	{% endblock %}
 	{% block _userInfo %}
 	<div class="ui label">
 	{{ connected | raw }}
@@ -15,13 +18,16 @@
 	</a>
 	{% endblock %}
 {% else %}
-{% block _loginButton %}
-<a href="{{authURL}}" data-target="{{bodySelector}}" class="ui button ajax">
-	{% block _loginCaption %}
-	<i class="icon sign in"></i> Log in
+	{% block _beforeNotConnected %}
 	{% endblock %}
-</a>
-{% endblock %}
+	{% block _loginButton %}
+	<a href="{{authURL}}" data-target="{{bodySelector}}" class="ui button ajax">
+		{% block _loginCaption %}
+		<i class="icon sign in"></i> Log in
+		{% endblock %}
+	</a>
+	{% endblock %}
 {% endif %}
 {% block _after %}
 {% endblock %}
+</div>

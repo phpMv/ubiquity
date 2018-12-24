@@ -67,7 +67,7 @@ class UbiquityMyAdminViewer {
 	public function getMainMenuElements() {
 		return [ "models" => [ "Models","sticky note","Used to perform CRUD operations on data." ],"routes" => [ "Routes","car","Displays defined routes with annotations" ],"controllers" => [ "Controllers","heartbeat","Displays controllers and actions" ],
 				"cache" => [ "Cache","lightning","Annotations, models, router and controller cache" ],"rest" => [ "Rest","server","Restfull web service" ],"config" => [ "Config","settings","Configuration variables" ],"git" => [ "Git","github","Git versioning" ],
-				"seo" => [ "Seo","google","Search Engine Optimization" ],"logs" => [ "Logs","bug","Log files" ] ];
+				"seo" => [ "Seo","google","Search Engine Optimization" ],"logs" => [ "Logs","bug","Log files" ],"translate" => [ "Translate","language","Translation module" ] ];
 	}
 
 	public function getRoutesDataTable($routes, $dtName = "dtRoutes") {

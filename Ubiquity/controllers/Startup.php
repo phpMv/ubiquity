@@ -25,18 +25,18 @@ class Startup {
 		self::forward ( $url );
 	}
 
-	public static function forward($url) {
+	public static function forward($url,$initialize=true,$finalize=true) {
 		$u = self::parseUrl ( $url );
 		if (($ru = Router::getRoute ( $url )) !== false) {
 			if (\is_array ( $ru ))
-				self::runAction ( $ru );
+				self::runAction ( $ru ,$initialize,$finalize);
 			else
 				echo $ru;
 		} else {
 			self::setCtrlNS ();
 			$u [0] = self::$ctrlNS . $u [0];
 			if (\class_exists ( $u [0] )) {
-				self::runAction ( $u );
+				self::runAction ( $u ,$initialize,$finalize);
 			} else {
 				\header ( 'HTTP/1.0 404 Not Found', true, 404 );
 				Logger::warn("Startup", "The controller `" . $u [0] . "` doesn't exists! <br/>","forward");

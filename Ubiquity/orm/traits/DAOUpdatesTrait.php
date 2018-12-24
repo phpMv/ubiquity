@@ -7,6 +7,7 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\db\SqlUtils;
 use Ubiquity\log\Logger;
 use Ubiquity\orm\parser\ManyToManyParser;
+use Ubiquity\events\EventsManager;
 
 /**
  * Trait for DAO Updates (Create, Update, Delete)
@@ -108,6 +109,7 @@ trait DAOUpdatesTrait{
 	 *        	if true, save instances related to $instance by a ManyToMany association
 	 */
 	public static function insert($instance, $insertMany = false) {
+		EventsManager::trigger('dao.before.insert', $instance);
 		$tableName = OrmUtils::getTableName ( get_class ( $instance ) );
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
@@ -130,6 +132,7 @@ trait DAOUpdatesTrait{
 					self::insertOrUpdateAllManyToMany ( $instance );
 				}
 			}
+			EventsManager::trigger('dao.after.insert', $instance,$result);
 			return $result;
 		}catch(\PDOException $e){
 			Logger::warn("DAOUpdates",  $e->getMessage() ,"insert");
@@ -200,6 +203,7 @@ trait DAOUpdatesTrait{
 	 *        	Adds or updates ManyToMany members
 	 */
 	public static function update($instance, $updateMany = false) {
+		EventsManager::trigger("dao.before.update", $instance);
 		$tableName = OrmUtils::getTableName ( get_class ( $instance ) );
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$ColumnskeyAndValues = array_merge ( $ColumnskeyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
@@ -215,6 +219,7 @@ trait DAOUpdatesTrait{
 			$result = $statement->execute ();
 			if ($result && $updateMany)
 				self::insertOrUpdateAllManyToMany ( $instance );
+			EventsManager::trigger('dao.after.update', $instance,$result);
 			return $result;
 		}catch(\PDOException $e){
 			Logger::warn("DAOUpdates",  $e->getMessage() ,"update");

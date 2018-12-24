@@ -58,11 +58,26 @@ abstract class RestController extends Controller {
 	}
 
 	/**
-	 * Realise the connection to the server
+	 * Realize the connection to the server
 	 * To override in derived classes to define your own authentication
 	 */
 	public function connect(){
 		$this->server->connect($this);
+	}
+	
+	private function _getResponseFormatter(){
+		if(!isset($this->responseFormatter)){
+			$this->responseFormatter=$this->getResponseFormatter();
+		}
+		return $this->responseFormatter;
+	}
+	
+	/**
+	 * To override, returns the active formatter for the response
+	 * @return \Ubiquity\controllers\rest\ResponseFormatter
+	 */
+	protected function getResponseFormatter(){
+		return new ResponseFormatter();
 	}
 
 	public function initialize(){
@@ -71,7 +86,7 @@ abstract class RestController extends Controller {
 			$this->model=CacheManager::getRestResource($thisClass);
 		if(!isset($this->model)){
 			$modelsNS=$this->config["mvcNS"]["models"];
-			$this->model=$modelsNS."\\".$this->responseFormatter->getModel($thisClass);
+			$this->model=$modelsNS."\\".$this->_getResponseFormatter()->getModel($thisClass);
 		}
 		$this->connectDb($this->config);
 	}
@@ -88,7 +103,7 @@ abstract class RestController extends Controller {
 		if($e->getCode()!==0)
 			$code=$e->getCode();
 		$this->_setResponseCode($code);
-		echo $this->responseFormatter->formatException($e);
+		echo $this->_getResponseFormatter()->formatException($e);
 	}
 
 	public function _setResponseCode($value){
@@ -121,7 +136,7 @@ abstract class RestController extends Controller {
 	 */
 	public function index() {
 			$datas=DAO::getAll($this->model);
-			echo $this->responseFormatter->get($datas);
+			echo $this->_getResponseFormatter()->get($datas);
 	}
 
 	/**
@@ -144,10 +159,10 @@ abstract class RestController extends Controller {
 			$included=$this->getIncluded($included);
 			$useCache=UString::isBooleanTrue($useCache);
 			$datas=DAO::getAll($this->model,$condition,$included,$useCache);
-			echo $this->responseFormatter->get($datas);
+			echo $this->_getResponseFormatter()->get($datas);
 		}catch (\Exception $e){
 			$this->_setResponseCode(500);
-			echo $this->responseFormatter->formatException($e);
+			echo $this->_getResponseFormatter()->formatException($e);
 		}
 	}
 
@@ -164,11 +179,11 @@ abstract class RestController extends Controller {
 		$data=DAO::getOne($this->model, $keyValues,$included,$useCache);
 		if(isset($data)){
 			$_SESSION["_restInstance"]=$data;
-			echo $this->responseFormatter->getOne($data);
+			echo $this->_getResponseFormatter()->getOne($data);
 		}
 		else{
 			$this->_setResponseCode(404);
-			echo $this->responseFormatter->format(["message"=>"No result found","keyValues"=>$keyValues]);
+			echo $this->_getResponseFormatter()->format(["message"=>"No result found","keyValues"=>$keyValues]);
 		}
 	}
 	
@@ -180,7 +195,7 @@ abstract class RestController extends Controller {
 	}
 
 	public function _format($arrayMessage){
-		return $this->responseFormatter->format($arrayMessage);
+		return $this->_getResponseFormatter()->format($arrayMessage);
 	}
 
 	/**
@@ -194,7 +209,7 @@ abstract class RestController extends Controller {
 			$included=$this->getIncluded($included);
 			$useCache=UString::isBooleanTrue($useCache);
 			$datas=DAO::getOneToMany($_SESSION["_restInstance"], $member,$included,$useCache);
-			echo $this->responseFormatter->get($datas);
+			echo $this->_getResponseFormatter()->get($datas);
 		}else{
 			throw new \Exception("You have to call getOne before calling getOneToMany.");
 		}
@@ -211,7 +226,7 @@ abstract class RestController extends Controller {
 			$included=$this->getIncluded($included);
 			$useCache=UString::isBooleanTrue($useCache);
 			$datas=DAO::getManyToMany($_SESSION["_restInstance"], $member,$included,null,$useCache);
-			echo $this->responseFormatter->get($datas);
+			echo $this->_getResponseFormatter()->get($datas);
 		}else{
 			throw new \Exception("You have to call getOne before calling getManyToMany.");
 		}
@@ -229,13 +244,14 @@ abstract class RestController extends Controller {
 			$this->_setValuesToObject($instance,URequest::getInput());
 			$result=DAO::update($instance);
 			if($result){
-				echo $this->responseFormatter->format(["status"=>"updated","data"=>$this->responseFormatter->cleanRestObject($instance)]);
+				$formatter=$this->_getResponseFormatter();
+				echo $formatter->format(["status"=>"updated","data"=>$formatter->cleanRestObject($instance)]);
 			}else{
 				throw new \Exception("Unable to update the instance");
 			}
 		}else{
 			$this->_setResponseCode(404);
-			echo $this->responseFormatter->format(["message"=>"No result found","keyValues"=>$keyValues]);
+			echo $this->_getResponseFormatter()->format(["message"=>"No result found","keyValues"=>$keyValues]);
 		}
 	}
 
@@ -251,13 +267,14 @@ abstract class RestController extends Controller {
 			$this->_setValuesToObject($instance,URequest::getInput());
 			$result=DAO::insert($instance);
 			if($result){
-				echo $this->responseFormatter->format(["status"=>"inserted","data"=>$this->responseFormatter->cleanRestObject($instance)]);
+				$formatter=$this->_getResponseFormatter();
+				echo $formatter->format(["status"=>"inserted","data"=>$formatter->cleanRestObject($instance)]);
 			}else{
 				throw new \Exception("Unable to insert the instance");
 			}
 		}else{
 			$this->_setResponseCode(500);
-			echo $this->responseFormatter->format(["message"=>"Unable to create ".$model." instance"]);
+			echo $this->_getResponseFormatter()->format(["message"=>"Unable to create ".$model." instance"]);
 		}
 	}
 
@@ -273,13 +290,14 @@ abstract class RestController extends Controller {
 		if(isset($instance)){
 			$result=DAO::remove($instance);
 			if($result){
-				echo $this->responseFormatter->format(["status"=>"deleted","data"=>$this->responseFormatter->cleanRestObject($instance)]);
+				$formatter=$this->_getResponseFormatter();
+				echo $formatter->format(["status"=>"deleted","data"=>$formatter->cleanRestObject($instance)]);
 			}else{
 				throw new \Exception("Unable to delete the instance");
 			}
 		}else{
 			$this->_setResponseCode(404);
-			echo $this->responseFormatter->format(["message"=>"No result found","keyValues"=>$keyValues]);
+			echo $this->_getResponseFormatter()->format(["message"=>"No result found","keyValues"=>$keyValues]);
 		}
 	}
 }

@@ -11,6 +11,7 @@ use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\http\UCookie;
+use Ajax\service\Javascript;
 
  /**
  * Controller Auth
@@ -27,14 +28,18 @@ abstract class AuthController extends ControllerBase{
 	protected $_noAccessMsg;
 	protected $_loginCaption;
 	protected $_attemptsSessionKey="_attempts";
+	protected $_controllerInstance;
 	
-	public function __construct(){
+	public function __construct($instance=null){
 		parent::__construct();
 		$this->_controller=Startup::getController();
 		$this->_action=Startup::getAction();
 		$this->_actionParams=Startup::getActionParams();
 		$this->_noAccessMsg=new FlashMessage("You are not authorized to access the page <b>{url}</b> !","Forbidden access","error","warning circle");
 		$this->_loginCaption="Log in";
+		$this->_controllerInstance=$instance;
+		if(isset($instance))
+			Startup::injectDependences($instance, Startup::getConfig());
 	}
 	
 	public function index(){
@@ -83,7 +88,11 @@ abstract class AuthController extends ControllerBase{
 		USession::set("urlParts", $urlParts);
 		$fMessage=$this->_noAccessMsg;
 		$this->noAccessMessage($fMessage);
-		$message=$this->fMessage($fMessage->parseContent(["url"=>implode("/",$urlParts)]));		
+		$message=$this->fMessage($fMessage->parseContent(["url"=>implode("/",$urlParts)]));
+		/*if(URequest::isAjax()){
+			$this->jquery->get($this->_getBaseRoute()."/info/f","#_userInfo",["historize"=>false,"jqueryDone"=>"replaceWith","hasLoader"=>false,"attr"=>""]);
+			$this->jquery->compile($this->view);
+		}*/
 		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
@@ -228,7 +237,7 @@ abstract class AuthController extends ControllerBase{
 		$message=$this->fMessage($fMessage);
 		$this->jquery->getOnClick("._signin", $this->getBaseUrl(),$this->_getBodySelector(),["stopPropagation"=>false,"preventDefault"=>false]);
 		$this->jquery->execOn("click", "._close", "window.open(window.location,'_self').close();");
-		$this->jquery->renderView($this->_getFiles()->getViewDisconnected(),["_title"=>"Session ended","_message"=>$message]);
+		return $this->jquery->renderView($this->_getFiles()->getViewDisconnected(),["_title"=>"Session ended","_message"=>$message],true);
 	}
 	
 	/**
@@ -252,8 +261,13 @@ abstract class AuthController extends ControllerBase{
 	 * if _displayInfoAsString returns true, use _infoUser var in views to display user info
 	 * @return string|null
 	 */
-	public function info(){
-		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector()],$this->_displayInfoAsString());
+	public function info($force=null){
+		if(isset($force)){
+			$displayInfoAsString=($force===true)?true:false;
+		}else{
+			$displayInfoAsString=$this->_displayInfoAsString();
+		}
+		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector()],$displayInfoAsString);
 	}
 	
 	protected function fMessage(FlashMessage $fMessage,$id=null){
@@ -302,7 +316,7 @@ abstract class AuthController extends ControllerBase{
 		return 3*60;
 	}
 	
-	public function _checkConnection(){
+	public function checkConnection(){
 		UResponse::asJSON();
 		echo "{\"valid\":".UString::getBooleanStr($this->_isValidUser())."}";
 	}
@@ -439,4 +453,47 @@ abstract class AuthController extends ControllerBase{
 		UCookie::delete($this->_getUserSessionKey());
 		$this->index();
 	}
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\controllers\ControllerBase::finalize()
+	 */
+	public function finalize() {
+		if(!UResponse::isJSON()){
+			if(!URequest::isAjax()){
+				if(isset($this->_controllerInstance)){
+					call_user_func_array(array($this->_controllerInstance, 'parent::finalize'), []);
+				}else{
+					parent::finalize();	
+				}
+			}
+			$this->jquery->execAtLast("if($('#_userInfo').length){\$('#_userInfo').html(".preg_replace("/$\R?^/m", "",Javascript::prep_element($this->info())).");}");
+			echo $this->jquery->compile();
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\controllers\ControllerBase::initialize()
+	 */
+	public function initialize() {
+		if(!URequest::isAjax()){
+			if(isset($this->_controllerInstance)){
+				call_user_func_array(array($this->_controllerInstance, 'parent::initialize'), []);
+			}else{
+				parent::initialize();
+			}
+		}
+	}
+	
+	/**
+	 * @param string $url
+	 */
+	public function _forward($url){
+		$initFinalize=true;
+		if(isset($this->_controllerInstance) && !URequest::isAjax()){
+			$initFinalize=false;
+		}
+		Startup::forward($url,$initFinalize,$initFinalize);
+	}
+
 }

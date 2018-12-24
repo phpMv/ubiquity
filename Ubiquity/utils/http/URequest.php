@@ -93,6 +93,49 @@ class URequest {
 		}
 		return null;
 	}
+	
+	/**
+	* Copyright © 2008 Darrin Yeager
+	* https://www.dyeager.org/
+	* Licensed under BSD license.
+	* https://www.dyeager.org/downloads/license-bsd.txt
+	**/
+	public static function getDefaultLanguage() {
+		if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]))
+			return self::parseDefaultLanguage($_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+			else
+				return self::parseDefaultLanguage(NULL);
+	}
+	
+	private static function parseDefaultLanguage($http_accept, $deflang = "en") {
+		if(isset($http_accept) && strlen($http_accept) > 1)  {
+			$x = explode(",",$http_accept);
+			foreach ($x as $val) {
+				if(preg_match("/(.*);q=([0-1]{0,1}.\d{0,4})/i",$val,$matches))
+					$lang[$matches[1]] = (float)$matches[2];
+					else
+						$lang[$val] = 1.0;
+			}
+			
+			$qval = 0.0;
+			foreach ($lang as $key => $value) {
+				if ($value > $qval) {
+					$qval = (float)$value;
+					$deflang = $key;
+				}
+			}
+		}
+		return $deflang;
+	}
+	
+	public static function setLocale(string $locale){
+		try {
+			if (class_exists('Locale', false)) {
+				\Locale::setDefault($locale);
+			}
+		} catch (\Exception $e) {
+		}
+	}
 
 	/**
 	 * Returns true if the request is an Ajax request

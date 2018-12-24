@@ -17,7 +17,7 @@ class EditMemberParams {
 	private $updateCallback;
 	private $identifierSelector;
 	
-	public function __construct($selector="[data-field]",$event="dblclick",$hasButtons=true,$hasPopup=true,$updateCallback="",$identifierSelector="$(this).closest('tr').attr('data-ajax')"){
+	public function __construct($selector="[data-field]",$event="dblclick",$hasButtons=true,$hasPopup=false,$updateCallback="",$identifierSelector="$(this).closest('tr').attr('data-ajax')"){
 		$this->selector=$selector;
 		$this->event=$event;
 		$this->hasButtons=$hasButtons;

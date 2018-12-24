@@ -11,6 +11,7 @@ use Ubiquity\orm\traits\DAOUpdatesTrait;
 use Ubiquity\orm\traits\DAORelationsTrait;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\traits\DAOUQueries;
+use Ubiquity\events\EventsManager;
 
 /**
  * Gateway class between database and object model
@@ -214,7 +215,9 @@ class DAO {
 		if (sizeof($retour) < 1){
 			return null;
 		}
-		return \reset($retour);
+		$result= \reset($retour);
+		EventsManager::trigger("dao.getone", $result,$className);
+		return $result;
 	}
 	
 
@@ -254,6 +257,7 @@ class DAO {
 		if($hasIncluded){
 			self::_affectsRelationObjects($manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
 		}
+		EventsManager::trigger("dao.getall", $objects,$className);
 		return $objects;
 	}
 	

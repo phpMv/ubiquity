@@ -1,0 +1,15 @@
+{{ q["header"] | raw }}
+
+<div style="padding: 10px 0px;" id="messages">
+{% if q["msgGlobal"] is defined %}
+	{{ q["msgGlobal"] | raw }}
+{% endif %}
+</div>
+<div class="ui label">{{loc}}</div>
+<ul>
+{%for k,cat in catalog %}
+<li>{{ k }} => {{ cat }}</li>
+{% endfor %}
+</ul>
+{{world}}
+{{ script_foot | raw }}

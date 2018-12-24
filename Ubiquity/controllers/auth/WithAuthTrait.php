@@ -10,6 +10,7 @@ use Ubiquity\controllers\Startup;
  * @property \Ubiquity\views\View
  **/
 trait WithAuthTrait{
+	protected $_checkConnectionContent;
 	
 	/**
 	 * @var AuthController
@@ -21,10 +22,10 @@ trait WithAuthTrait{
 		$authController=$this->_getAuthController();
 		if(!URequest::isAjax()){
 			if(!$authController->_displayInfoAsString()){
-			$authController->info();
+				$authController->info();
 			}
 			if($this->isValid(Startup::getAction())){
-				$this->checkConnection($authController);
+				$this->_checkConnectionContent=$this->checkConnection($authController);
 			}else{
 				if($authController->_checkConnectionTimeout()!==null)
 					$this->jquery->clearInterval("_checkConnection");
@@ -67,9 +68,9 @@ trait WithAuthTrait{
 			$this->jquery->get($auth->_getBaseRoute()."/noAccess/".implode(".", Startup::$urlParts),$auth->_getBodySelector(),["historize"=>false]);	
 			echo $this->jquery->compile($this->view);
 		}else{
-			$auth->initialize();
+			parent::initialize();
 			$auth->noAccess(Startup::$urlParts);
-			$auth->finalize();
+			parent::finalize();
 		}
 		exit();
 	}
@@ -90,10 +91,17 @@ trait WithAuthTrait{
 	
 	protected function checkConnection($authController){
 		if($authController->_checkConnectionTimeout()!==null){
-			$authController->_disconnected();
-			$this->jquery->ajaxInterval("get",$authController->_getBaseRoute()."/_checkConnection/",$authController->_checkConnectionTimeout(),"_checkConnection","",["historize"=>false,"jsCallback"=>"data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"]);
+			$ret=$authController->_disconnected();
+			$this->jquery->ajaxInterval("get",$authController->_getBaseRoute()."/checkConnection/",$authController->_checkConnectionTimeout(),"_checkConnection","",["historize"=>false,"jsCallback"=>"data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"]);
+			return $ret;
+		}	
+	}
+	
+	public function finalize(){
+		parent::finalize();
+		if(isset($this->_checkConnectionContent)){
+			echo $this->_checkConnectionContent;
 		}
-			
 	}
 
 }

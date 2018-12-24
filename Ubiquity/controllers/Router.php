@@ -241,4 +241,17 @@ class Router {
 			}
 		}
 	}
+	
+	public static function addRoutesToRoutes(&$routesArray, $paths, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = []) {
+		if (\class_exists ( $controller )) {
+			$method = new \ReflectionMethod ( $controller, $action );
+			foreach ($paths as $path){
+				$result = [ ];
+				ControllerParser::parseRouteArray ( $result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration,"requirements" => $requirements ], $method, $action );
+				foreach ( $result as $k => $v ) {
+					$routesArray [$k] = $v;
+				}
+			}
+		}
+	}
 }

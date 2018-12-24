@@ -11,7 +11,7 @@ class %controllerName% extends %baseClass%{
 		$urlParts=$this->getOriginalURL();
 		USession::set($this->_getUserSessionKey(), $connected);
 		if(isset($urlParts)){
-			Startup::forward(implode("/",$urlParts));
+			$this->_forward(implode("/",$urlParts));
 		}else{
 			//TODO
 			//Forwarding to the default controller/action

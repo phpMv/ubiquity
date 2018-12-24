@@ -11,12 +11,12 @@
 {% block body %}
 	{{ parent() }}
 	{{q["mainMenu"] | raw}}
-	{% block auth %}
+	{% block _auth %}
 		{% if _userInfo is defined %}
 				{{ _userInfo | raw }}
 		{% endif %}
 	{% endblock %}
+	<br>
 	<div id="modal"></div>
 	<div id="main-content">
 {% endblock %}
-

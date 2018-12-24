@@ -12,7 +12,7 @@ use Ubiquity\cache\CacheManager;
 /**
  *
  * @author jc
- * @staticvar array $cache
+ * @staticvar AbstractDataCache $cache
  *
  */
 trait RouterCacheTrait{
@@ -147,6 +147,12 @@ trait RouterCacheTrait{
 	public static function addRoute($path, $controller, $action="index", $methods=null, $name="") {
 		$controllerCache=self::getControllerCache();
 		Router::addRouteToRoutes($controllerCache, $path, $controller, $action, $methods, $name);
+		self::$cache->store("controllers/routes", "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
+	}
+	
+	public static function addRoutes($pathArray, $controller, $action="index", $methods=null, $name="") {
+		$controllerCache=self::getControllerCache();
+		Router::addRoutesToRoutes($controllerCache, $pathArray, $controller, $action, $methods, $name);
 		self::$cache->store("controllers/routes", "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
 	}
 
