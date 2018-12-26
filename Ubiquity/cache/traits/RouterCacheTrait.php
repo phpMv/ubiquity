@@ -147,13 +147,13 @@ trait RouterCacheTrait{
 	public static function addRoute($path, $controller, $action="index", $methods=null, $name="") {
 		$controllerCache=self::getControllerCache();
 		Router::addRouteToRoutes($controllerCache, $path, $controller, $action, $methods, $name);
-		self::$cache->store("controllers/routes", "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
+		self::$cache->store("controllers/routes.default", "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
 	}
 	
 	public static function addRoutes($pathArray, $controller, $action="index", $methods=null, $name="") {
 		$controllerCache=self::getControllerCache();
 		Router::addRoutesToRoutes($controllerCache, $pathArray, $controller, $action, $methods, $name);
-		self::$cache->store("controllers/routes", "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
+		self::$cache->store("controllers/routes.default", "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
 	}
 
 	public static function getControllersFiles(&$config, $silent=false) {

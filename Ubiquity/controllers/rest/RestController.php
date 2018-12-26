@@ -65,7 +65,7 @@ abstract class RestController extends Controller {
 		$this->server->connect($this);
 	}
 	
-	private function _getResponseFormatter(){
+	protected function _getResponseFormatter(){
 		if(!isset($this->responseFormatter)){
 			$this->responseFormatter=$this->getResponseFormatter();
 		}

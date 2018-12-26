@@ -1,0 +1,69 @@
+<?php
+
+namespace Ubiquity\contents\normalizers;
+
+use Ubiquity\exceptions\NormalizerException;
+use Ubiquity\cache\CacheManager;
+use Ubiquity\utils\base\UArray;
+
+class NormalizersManager {
+	private static $normalizers=[];
+	private static $key="contents/normalizers";
+
+	public static function start(){
+		if(CacheManager::$cache->exists(self::$key)){
+			self::$normalizers=CacheManager::$cache->fetch(self::$key);
+		}
+	}
+	
+	public static function registerClass($classname,$normalizer,$constructorParameters=[]){
+		$reflect=new \ReflectionClass($normalizer);
+		self::$normalizers[$classname]=$reflect->newInstanceArgs($constructorParameters);
+	}
+	
+	public static function registerClasses($classesAndNormalizers,...$constructorParameters){
+		foreach ($classesAndNormalizers as $class=>$normalizer){
+			self::registerClass($class, $normalizer,$constructorParameters);
+		}
+	}
+	
+	public static function getNormalizer($classname){
+		if(isset(self::$normalizers[$classname])){
+			return self::$normalizers[$classname];
+		}
+	}
+	
+	public static function normalizeArray(array $datas,NormalizerInterface $normalizer){
+		$result=[];
+		foreach ($datas as $object){
+			if($normalizer->supportsNormalization($object)){
+				$result[]=$normalizer->normalize($object);
+			}
+		}
+		return $result;
+	}
+	
+	public static function normalizeArray_(array $datas){
+		if(sizeof($datas)>0){
+			$normalizer=self::getNormalizer(get_class($datas[0]));
+			return self::normalizeArray($datas, $normalizer);
+		}
+		return [];
+	}
+	
+	public static function normalize($object,NormalizerInterface $normalizer){
+		if($normalizer->supportsNormalization($object)){
+			return $normalizer->normalize($object);
+		}
+		throw new NormalizerException(get_class($object)." does not supports ".get_class($normalizer)." normalization.");
+	}
+	
+	public static function normalize_($object){
+		return self::normalize($object, self::getNormalizer(get_class($object)));
+	}
+	
+	public static function store(){
+		CacheManager::$cache->store(self::$key, "return ".UArray::asPhpArray(self::$normalizers,'array').';');
+	}
+}
+

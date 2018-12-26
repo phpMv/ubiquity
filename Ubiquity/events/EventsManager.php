@@ -9,7 +9,7 @@ class EventsManager {
 	private static $key="events/events";
 	protected static $managedEvents=[];
 	public static function start(){
-		if(CacheManager::$cache->exists("events/events")){
+		if(CacheManager::$cache->exists(self::$key)){
 			self::$managedEvents=CacheManager::$cache->fetch(self::$key);
 		}
 	}
