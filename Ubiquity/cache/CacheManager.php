@@ -90,7 +90,8 @@ class CacheManager {
 		$viewsCacheDir = ROOT . DS . $cacheDirectory . DS . "views";
 		$seoCacheDir = ROOT . DS . $cacheDirectory . DS . "seo";
 		$gitCacheDir = ROOT . DS . $cacheDirectory . DS . "git";
-		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir ];
+		$contentsCacheDir = ROOT . DS . $cacheDirectory . DS . "contents";
+		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir,"contents"=>$contentsCacheDir ];
 	}
 
 	private static function safeMkdir($dir) {
@@ -100,7 +101,7 @@ class CacheManager {
 
 	public static function clearCache(&$config, $type = "all") {
 		$cacheDirectories = self::checkCache ( $config );
-		$cacheDirs = [ "annotations","controllers","models","queries","views" ];
+		$cacheDirs = [ "annotations","controllers","models","queries","views","contents" ];
 		foreach ( $cacheDirs as $typeRef ) {
 			self::_clearCache ( $cacheDirectories, $type, $typeRef );
 		}
@@ -140,6 +141,7 @@ class CacheManager {
 				'table' => 'Ubiquity\annotations\TableAnnotation',
 				'transient' => 'Ubiquity\annotations\TransientAnnotation',
 				'column' => 'Ubiquity\annotations\ColumnAnnotation',
+				'validator' => 'Ubiquity\annotations\ValidatorAnnotation',
 				'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
 				'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
 				'route' => 'Ubiquity\annotations\router\RouteAnnotation',

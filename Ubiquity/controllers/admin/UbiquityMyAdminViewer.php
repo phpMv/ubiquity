@@ -231,7 +231,7 @@ class UbiquityMyAdminViewer {
 			if ($instance->getFile () === "")
 				$item->getItem ( 0 )->setDisabled ();
 			$item->getItem ( 1 )->addClass ( "_init" );
-			if ($instance->getType () !== "Models" && $instance->getType () !== "Controllers")
+			if ($instance->getType () !== "Models" && $instance->getType () !== "Controllers" && $instance->getType () !== "Contents")
 				$item->getItem ( 1 )->setDisabled ();
 			$item->asButton ()->addIcon ( "folder", true, true );
 			return $item;

@@ -3,6 +3,7 @@ namespace Ubiquity\cache\traits;
 
 use Ubiquity\orm\parser\ModelParser;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\contents\validation\ValidatorsManager;
 
 /**
  * @author jc
@@ -35,7 +36,7 @@ trait ModelsCacheTrait{
 		$key=self::getModelCacheKey($classname);
 		if(isset(self::$cache))
 			return self::$cache->exists($key);
-			return false;
+		return false;
 	}
 
 	public static function initModelsCache(&$config,$forChecking=false,$silent=false) {
@@ -48,6 +49,7 @@ trait ModelsCacheTrait{
 				}
 			}
 		}
+		ValidatorsManager::initModelsValidators($config);
 		if(!$silent){
 			echo "Models cache reset\n";
 		}

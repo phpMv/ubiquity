@@ -11,8 +11,9 @@ class Translator {
 	protected $catalogues;
 	protected $fallbackLocale;
 	
-	public function __construct($locale="en_EN"){
+	public function __construct($locale="en_EN",$fallbackLocale=null){
 		$this->locale=$locale;
+		$this->fallbackLocale=$fallbackLocale;
 		$this->loader=new ArrayLoader();
 	}
 	

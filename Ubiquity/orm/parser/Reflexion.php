@@ -84,6 +84,10 @@ class Reflexion {
 			return $annot[0];
 		return false;
 	}
+	
+	public static function getAnnotationsMember($class, $member, $annotation) {
+		return Annotations::ofProperty($class, $member, $annotation);
+	}
 
 	public static function getAnnotationsMethod($class, $method, $annotation) {
 		if(is_array($annotation)){

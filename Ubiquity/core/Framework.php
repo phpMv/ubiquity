@@ -16,7 +16,7 @@ use Ubiquity\utils\http\UCookie;
 use Ubiquity\orm\OrmUtils;
 
 class Framework {
-	public const version = '2.0.3';
+	public const version = '2.0.4';
 
 	public static function getController() {
 		return Startup::getController ();

@@ -7,6 +7,7 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\admin\popo\CacheFile;
 use Ubiquity\utils\http\URequest;
 use Ajax\semantic\html\collections\form\HtmlForm;
+use Ubiquity\contents\validation\ValidatorsManager;
 
 /**
  *
@@ -99,6 +100,10 @@ trait CacheTrait{
 					break;
 				case "Controllers" :
 					CacheManager::initCache ( $config, "controllers" );
+					break;
+				case "Contents" :
+					CacheManager::start($config);
+					ValidatorsManager::initModelsValidators($config);
 					break;
 			}
 		}
