@@ -151,9 +151,21 @@ trait RouterCacheTrait{
 	}
 	
 	public static function addRoutes($pathArray, $controller, $action="index", $methods=null, $name="") {
-		$controllerCache=self::getControllerCache();
+		self::addRoutes_($pathArray, $controller,$action,$methods,$name,false);
+	}
+	
+	public static function addRestRoutes($pathArray, $controller, $action="index", $methods=null, $name="") {
+		self::addRoutes_($pathArray, $controller,$action,$methods,$name,true);
+	}
+	
+	private static function addRoutes_($pathArray, $controller, $action="index", $methods=null, $name="",$isRest=false) {
+		$controllerCache=self::getControllerCache($isRest);
+		$postfix="default";
+		if($isRest){
+			$postfix="rest";
+		}
 		Router::addRoutesToRoutes($controllerCache, $pathArray, $controller, $action, $methods, $name);
-		self::$cache->store("controllers/routes.default", "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
+		self::$cache->store("controllers/routes.".$postfix, "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
 	}
 
 	public static function getControllersFiles(&$config, $silent=false) {
