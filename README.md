@@ -31,5 +31,13 @@ Ubiquity is fast and efficient, see for yourself [orm-benchmarks](https://orm-be
 
 
 # Admin interface
-(https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
+The administration interface makes it possible to act on the main components of the framework.
+
+When creating a project, it can be installed with the **-a** and **-q=semantic** options (for Semantic-UI).
+
+```bash
+ubiquity new firstProject -a -q=semantic
+```
+
+![Admin interface](https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
 
