@@ -28,3 +28,8 @@ The easiest way to install **Ubiquity** is to use [devtools](https://github.com/
 
 # Performances
 Ubiquity is fast and efficient, see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
+
+
+# Admin interface
+(https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
+
