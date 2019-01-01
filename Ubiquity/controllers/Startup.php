@@ -5,14 +5,14 @@ namespace Ubiquity\controllers;
 use Ubiquity\utils\base\UString;
 use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\utils\http\USession;
-use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\log\Logger;
+use Ubiquity\controllers\traits\StartupConfigTrait;
 
 class Startup {
+	use StartupConfigTrait;
+	
 	public static $urlParts;
 	public static $templateEngine;
-	private static $config;
-	private static $ctrlNS;
 	private static $controller;
 	private static $action;
 	private static $actionParams;
@@ -44,19 +44,6 @@ class Startup {
 		}
 	}
 
-	public static function getNS($part = "controllers") {
-		$config = self::$config;
-		$ns = $config ["mvcNS"] [$part];
-		if ($ns !== "" && $ns !== null) {
-			$ns .= "\\";
-		}
-		return $ns;
-	}
-
-	private static function setCtrlNS() {
-		self::$ctrlNS = self::getNS ();
-	}
-
 	private static function parseUrl(&$url) {
 		if (! $url) {
 			$url = "_default";
@@ -70,8 +57,8 @@ class Startup {
 
 	private static function startTemplateEngine($config) {
 		try {
-			$engineOptions = array ('cache' => ROOT . DS . "views/cache/" );
 			if (isset ( $config ["templateEngine"] )) {
+				$engineOptions = array ('cache' => ROOT . DS . "views/cache/" );
 				$templateEngine = $config ["templateEngine"];
 				if (isset ( $config ["templateEngineOptions"] )) {
 					$engineOptions = $config ["templateEngineOptions"];
@@ -153,53 +140,6 @@ class Startup {
 		}
 	}
 
-	public static function getConfig() {
-		return self::$config;
-	}
-
-	public static function setConfig($config) {
-		self::$config = $config;
-	}
-
-	private static function needsKeyInConfigArray(&$result, $array, $needs) {
-		foreach ( $needs as $need ) {
-			if (! isset ( $array [$need] ) || UString::isNull ( $array [$need] )) {
-				$result [] = $need;
-			}
-		}
-	}
-
-	public static function checkDbConfig() {
-		$config = self::$config;
-		$result = [ ];
-		$needs = [ "type","dbName","serverName" ];
-		if (! isset ( $config ["database"] )) {
-			$result [] = "database";
-		} else {
-			self::needsKeyInConfigArray ( $result, $config ["database"], $needs );
-		}
-		return $result;
-	}
-
-	public static function checkModelsConfig() {
-		$config = self::$config;
-		$result = [ ];
-		if (! isset ( $config ["mvcNS"] )) {
-			$result [] = "mvcNS";
-		} else {
-			self::needsKeyInConfigArray ( $result, $config ["mvcNS"], [ "models" ] );
-		}
-		return $result;
-	}
-
-	public static function getModelsDir() {
-		return self::$config ["mvcNS"] ["models"];
-	}
-
-	public static function getModelsCompletePath() {
-		return ROOT . DS . self::getModelsDir ();
-	}
-
 	public static function errorHandler($message = "", $code = 0, $severity = 1, $filename = null, int $lineno = 0, $previous = NULL) {
 		if (\error_reporting () == 0) {
 			return;
@@ -239,23 +179,5 @@ class Startup {
 	
 	public static function getApplicationName() {
 		return basename(\dirname ( ROOT ));
-	}
-	
-	public static function reloadConfig(){
-		$appDir=\dirname ( ROOT );
-		$filename=$appDir."/app/config/config.php";
-		self::$config=include($filename);
-		self::startTemplateEngine(self::$config);
-		return self::$config;
-	}
-	
-	public static function saveConfig($content){
-		$appDir=\dirname ( ROOT );
-		$filename=$appDir."/app/config/config.php";
-		$oldFilename=$appDir."/app/config/config.old.php";
-		if (!file_exists($filename) || copy($filename, $oldFilename)) {
-			return UFileSystem::save($filename,$content);
-		}
-		return false;
 	}
 }
