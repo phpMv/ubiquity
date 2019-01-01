@@ -1,0 +1,151 @@
+<?php
+
+namespace Ubiquity\orm\traits;
+
+use Ubiquity\orm\parser\ManyToManyParser;
+
+trait OrmUtilsRelationsTrait {
+	
+	abstract public static function getAnnotationInfoMember($class, $keyAnnotation, $member);
+	abstract public static function getAnnotationInfo($class, $keyAnnotation);
+	abstract public static function getTableName($class);
+	abstract public static function getFirstKey($class);
+	
+	public static function getFieldsInRelations($class) {
+		$result=[ ];
+		
+		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
+			$result=\array_merge($result, $manyToOne);
+		}
+		if ($oneToMany=self::getAnnotationInfo($class, "#oneToMany")) {
+			$result=\array_merge($result, \array_keys($oneToMany));
+		}
+		if ($manyToMany=self::getAnnotationInfo($class, "#manyToMany")) {
+			$result=\array_merge($result, \array_keys($manyToMany));
+		}
+		return $result;
+	}
+	
+	public static function getFieldsInRelations_($class) {
+		return self::getFieldsInRelationsForUpdate_($class)["relations"];
+	}
+	
+	public static function getFieldsInRelationsForUpdate_($class) {
+		$result=[ ];
+		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
+			foreach ($manyToOne as $member){
+				$joinColumn = self::getAnnotationInfoMember ( $class, "#joinColumn", $member );
+				$result[$joinColumn["name"]]=$member;
+			}
+		}
+		if ($manyToMany=self::getAnnotationInfo($class, "#manyToMany")) {
+			$manyToMany=array_keys($manyToMany);
+			foreach ($manyToMany as $member){
+				$result[$member . "Ids"]=$member;
+			}
+		}
+		if ($oneToMany=self::getAnnotationInfo($class, "#oneToMany")) {
+			$oneToMany=array_keys($oneToMany);
+			foreach ($oneToMany as $member){
+				$result[$member . "Ids"]=$member;
+			}
+		}
+		return ["relations"=>$result,"manyToOne"=>$manyToOne,"manyToMany"=>$manyToMany,"oneToMany"=>$oneToMany];
+	}
+	
+	public static function getAnnotFieldsInRelations($class) {
+		$result=[ ];
+		if ($manyToOnes=self::getAnnotationInfo($class, "#manyToOne")) {
+			$joinColumns=self::getAnnotationInfo($class, "#joinColumn");
+			foreach ($manyToOnes as $manyToOne ){
+				if(isset($joinColumns[$manyToOne])){
+					$result[$manyToOne]=["type"=>"manyToOne","value"=>$joinColumns[$manyToOne]];
+				}
+			}
+		}
+		if ($oneToManys=self::getAnnotationInfo($class, "#oneToMany")) {
+			foreach ($oneToManys as $field=>$oneToMany){
+				$result[$field]=["type"=>"oneToMany","value"=>$oneToMany];
+			}
+		}
+		if ($manyToManys=self::getAnnotationInfo($class, "#manyToMany")) {
+			foreach ($manyToManys as $field=>$manyToMany){
+				$result[$field]=["type"=>"manyToMany","value"=>$manyToMany];
+			}
+		}
+		return $result;
+	}
+	
+	public static function getUJoinSQL($model,$arrayAnnot,$field,&$aliases){
+		$type=$arrayAnnot["type"];$annot=$arrayAnnot["value"];
+		$table=self::getTableName($model);
+		$tableAlias=(isset($aliases[$table]))?$aliases[$table]:$table;
+		if($type==="manyToOne"){
+			$fkClass=$annot["className"];
+			$fkTable=self::getTableName($fkClass);
+			$fkField=$annot["name"];
+			$pkField=self::getFirstKey($fkClass);
+			$alias=self::getJoinAlias($table, $fkTable);
+			$result="INNER JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$fkField}`=`{$alias}`.`{$pkField}`";
+		}elseif($type==="oneToMany"){
+			$fkClass=$annot["className"];
+			$fkAnnot=self::getAnnotationInfoMember($fkClass, "#joinColumn", $annot["mappedBy"]);
+			$fkTable=self::getTableName($fkClass);
+			$fkField=$fkAnnot["name"];
+			$pkField=self::getFirstKey($model);
+			$alias=self::getJoinAlias($table, $fkTable);
+			$result="INNER JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$pkField}`=`{$alias}`.`{$fkField}`";
+		}else{
+			$parser=new ManyToManyParser($model,$field);
+			$parser->init($annot);
+			$fkTable=$parser->getTargetEntityTable();
+			$fkClass=$parser->getTargetEntityClass();
+			$alias=self::getJoinAlias($table, $fkTable);
+			$result=$parser->getSQL($alias,$aliases);
+		}
+		
+		if(array_search($alias, $aliases)!==false){
+			$result="";
+		}
+		$aliases[$fkTable]=$alias;
+		return ["class"=>$fkClass,"table"=>$fkTable,"sql"=>$result,"alias"=>$alias];
+	}
+	
+	private static function getJoinAlias($table,$fkTable){
+		return uniqid($fkTable.'_'.$table[0]);
+	}
+	
+	public static function getOneToManyFields($class) {
+		return self::getAnnotationInfo($class, "#oneToMany");
+	}
+	
+	public static function getManyToOneFields($class) {
+		return self::getAnnotationInfo($class, "#manyToOne");
+	}
+	
+	public static function getManyToManyFields($class) {
+		$result=self::getAnnotationInfo($class, "#manyToMany");
+		if($result!==false)
+			return \array_keys($result);
+			return [];
+	}
+	
+	public static function getDefaultFk($classname) {
+		return "id" . \ucfirst(self::getTableName($classname));
+	}
+	
+	public static function getMemberJoinColumns($instance,$member,$metaDatas=NULL){
+		if(!isset($metaDatas)){
+			$class=get_class($instance);
+			$metaDatas=self::getModelMetadata($class);
+		}
+		$invertedJoinColumns=$metaDatas["#invertedJoinColumn"];
+		foreach ($invertedJoinColumns as $field=>$invertedJoinColumn){
+			if($invertedJoinColumn["member"]===$member){
+				return [$field,$invertedJoinColumn];
+			}
+		}
+		return null;
+	}
+}
+
