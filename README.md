@@ -28,3 +28,16 @@ The easiest way to install **Ubiquity** is to use [devtools](https://github.com/
 
 # Performances
 Ubiquity is fast and efficient, see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
+
+
+# Admin interface
+The administration interface makes it possible to act on the main components of the framework.
+
+When creating a project, it can be installed with the **-a** and **-q=semantic** options (for Semantic-UI).
+
+```bash
+ubiquity new firstProject -a -q=semantic
+```
+
+![Admin interface](https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
+
