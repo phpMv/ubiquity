@@ -1,6 +1,6 @@
 <?php
 
-namespace Ubiquity\controllers\router;
+namespace Ubiquity\controllers\traits;
 
 use Ubiquity\cache\parser\ControllerParser;
 

@@ -6,7 +6,7 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\base\UString;
 use Ubiquity\log\Logger;
-use Ubiquity\controllers\router\RouterModifierTrait;
+use Ubiquity\controllers\traits\RouterModifierTrait;
 
 /**
  * Router
