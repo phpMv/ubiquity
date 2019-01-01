@@ -4,33 +4,39 @@ namespace Ubiquity\controllers;
 
 use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\http\URequest;
-use Ubiquity\cache\parser\ControllerParser;
 use Ubiquity\utils\base\UString;
 use Ubiquity\log\Logger;
+use Ubiquity\controllers\router\RouterModifierTrait;
 
 /**
  * Router
  *
  * @author jc
- * @version 1.0.0.2
+ * @version 1.0.1
  */
 class Router {
+	use RouterModifierTrait;
 	private static $routes;
 
-	public static function slashPath($path) {
-		if (UString::startswith ( $path, "/" ) === false)
-			$path = "/" . $path;
-		if (! UString::endswith ( $path, "/" ))
-			$path = $path . "/";
-		return $path;
-	}
-
+	/**
+	 * Starts the router by loading normal routes (not rest)
+	 */
 	public static function start() {
 		self::$routes = CacheManager::getControllerCache ();
 	}
 
+	/**
+	 * Starts the router by loading rest routes (not normal routes)
+	 */
 	public static function startRest() {
 		self::$routes = CacheManager::getControllerCache ( true );
+	}
+	
+	/**
+	 * Starts the router by loading all routes (normal + rest routes)
+	 */
+	public static function startAll() {
+		self::$routes = array_merge(CacheManager::getControllerCache (),CacheManager::getControllerCache(true));
 	}
 
 	public static function getRoute($path, $cachedResponse = true) {
@@ -206,52 +212,21 @@ class Router {
 		return $param;
 	}
 
+	private static function slashPath($path) {
+		if (UString::startswith ( $path, "/" ) === false)
+			$path = "/" . $path;
+			if (! UString::endswith ( $path, "/" ))
+				$path = $path . "/";
+				return $path;
+	}
+	
 	/**
-	 * Déclare une route comme étant expirée ou non
+	 * Declare a route as expired or not
 	 *
 	 * @param string $routePath
 	 * @param boolean $expired
 	 */
 	public static function setExpired($routePath, $expired = true) {
 		CacheManager::setExpired ( $routePath, $expired );
-	}
-
-	/**
-	 *
-	 * @param string $path
-	 * @param string $controller
-	 * @param string $action
-	 * @param array|null $methods
-	 * @param string $name
-	 * @param boolean $cache
-	 * @param int $duration
-	 * @param array $requirements
-	 */
-	public static function addRoute($path, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = []) {
-		self::addRouteToRoutes ( self::$routes, $path, $controller, $action, $methods, $name, $cache, $duration, $requirements );
-	}
-
-	public static function addRouteToRoutes(&$routesArray, $path, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = []) {
-		$result = [ ];
-		if (\class_exists ( $controller )) {
-			$method = new \ReflectionMethod ( $controller, $action );
-			ControllerParser::parseRouteArray ( $result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration,"requirements" => $requirements ], $method, $action );
-			foreach ( $result as $k => $v ) {
-				$routesArray [$k] = $v;
-			}
-		}
-	}
-	
-	public static function addRoutesToRoutes(&$routesArray, $paths, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = []) {
-		if (\class_exists ( $controller )) {
-			$method = new \ReflectionMethod ( $controller, $action );
-			foreach ($paths as $path){
-				$result = [ ];
-				ControllerParser::parseRouteArray ( $result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration,"requirements" => $requirements ], $method, $action );
-				foreach ( $result as $k => $v ) {
-					$routesArray [$k] = $v;
-				}
-			}
-		}
 	}
 }
