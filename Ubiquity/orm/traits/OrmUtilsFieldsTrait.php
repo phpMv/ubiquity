@@ -4,6 +4,7 @@ namespace Ubiquity\orm\traits;
 
 trait OrmUtilsFieldsTrait {
 	abstract public static function getAnnotationInfo($class, $keyAnnotation);
+	abstract public static function getAnnotationInfoMember($class, $keyAnnotation, $member);
 	
 	public static function getFieldTypes($className) {
 		$fieldTypes=self::getAnnotationInfo($className, "#fieldTypes");
