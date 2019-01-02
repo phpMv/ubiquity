@@ -26,7 +26,7 @@ class ControllerParser {
 			$annotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
 			$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
 			}catch (\Exception $e){
-				
+				//When controllerClass generates an exception
 			}
 			$this->rest=\sizeof($restAnnotsClass) > 0;
 			if (\sizeof($annotsClass) > 0) {
@@ -55,7 +55,9 @@ class ControllerParser {
 									$this->routesMethods[$method->name]=[ "annotations" => $this->generateRouteAnnotationFromMethod($method),"method" => $method ];
 							}
 						}
-					}catch(\Exception $e){}
+					}catch(\Exception $e){
+						//When controllerClass generates an exception
+					}
 				}
 			}
 		}
@@ -195,19 +197,20 @@ class ControllerParser {
 	}
 
 	private static function scanParam(&$parameters, &$hasOptional, $matches, $index, $paramMatch, $find, &$path, $requirement) {
+		$toReplace=true;
 		if (isset($matches[1][$index])) {
 			if ($matches[1][$index] === "...") {
 				$parameters[]="*";
 				$path=\str_replace("\{\.\.\." . $paramMatch . "\}", "(.*?)", $path);
+				$toReplace=false;
 			} elseif ($matches[1][$index] === "~") {
 				$parameters[]="~" . $find;
 				$path=\str_replace("\{~" . $paramMatch . "\}", "", $path);
 				$hasOptional=true;
-			} else {
-				$parameters[]=$find;
-				$path=\str_replace("\{" . $paramMatch . "\}", "({$requirement})", $path);
+				$toReplace=false;
 			}
-		} else {
+		} 
+		if($toReplace) {
 			$parameters[]=$find;
 			$path=\str_replace("\{" . $paramMatch . "\}", "({$requirement})", $path);
 		}
