@@ -135,6 +135,7 @@ class URequest {
 				\Locale::setDefault($locale);
 			}
 		} catch (\Exception $e) {
+			//Nothing to do
 		}
 	}
 

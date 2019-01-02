@@ -125,8 +125,12 @@ class UArray {
 		return $array;
 	}
 	
+	/**
+	 * @param array $array
+	 * @return boolean
+	 */
 	public static function doubleBackSlashes(&$array){
-		return array_walk($array, function($value){$value=UString::doubleBackSlashes($value);});
+		return array_walk($array, function(&$value){$value=UString::doubleBackSlashes($value);});
 	}
 
 	private static function parseValue($v, $prefix="",$depth=1,$format=false) {
@@ -136,7 +140,7 @@ class UArray {
 			$result=$v;
 		} elseif (\is_array($v)) {
 			$result=self::asPhpArray($v, $prefix,$depth+1,$format);
-		}elseif(is_string($v) && (UString::startswith(trim($v), "function") || UString::startswith(trim($v), "array("))){
+		}elseif(is_string($v) && (UString::startswith(trim($v), '$config') || UString::startswith(trim($v), "function") || UString::startswith(trim($v), "array("))){
 			$result=$v;
 		}elseif($v instanceof \Closure){
 			$result=UIntrospection::closure_dump($v);

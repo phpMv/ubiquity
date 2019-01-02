@@ -6,9 +6,9 @@ use Ubiquity\utils\base\UArray;
 use Ubiquity\orm\OrmUtils;
 
 /**
- * Utilitaires SQL
+ * SQL utilities
  * @author jc
- * @version 1.0.0.4
+ * @version 1.0.1
  */
 class SqlUtils {
 	
@@ -96,6 +96,11 @@ class SqlUtils {
 		}
 	}
 
+	/**
+	 * @param array|string $fields
+	 * @param boolean|string $tableName
+	 * @return string
+	 */
 	public static function getFieldList($fields,$tableName=false){
 		if(!\is_array($fields)){
 			return $fields;

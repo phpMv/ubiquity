@@ -53,7 +53,6 @@ class LengthValidator extends ValidatorMultipleNotNull {
 			$this->violation="charset";
 			return false;
 		}
-		return false;
 	}
 	
 	/**

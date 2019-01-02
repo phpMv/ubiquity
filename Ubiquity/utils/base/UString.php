@@ -57,13 +57,11 @@ class UString {
 	 * @return string the pluralized expression
 	 */
 	public static function pluralize($count, $zero, $one,$other) {
-		$result="";
+		$result=$other;
 		if($count===0){
 			$result=$zero;
 		}elseif($count===1){
 			$result=$one;
-		}else{
-			$result=$other;
 		}
 		return \str_replace('{count}', $count, $result);
 	}

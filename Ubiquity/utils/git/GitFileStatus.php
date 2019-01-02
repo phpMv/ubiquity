@@ -8,7 +8,6 @@ class GitFileStatus {
 	public static $DELETED="deleted";
 	public static $NONE="";
 	public static function getIcon($status){
-		$icon="";
 		switch ($status){
 			case self::$UNTRACKED:
 				$icon="blue question";
