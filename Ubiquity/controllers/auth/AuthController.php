@@ -18,6 +18,8 @@ use Ajax\service\Javascript;
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  **/
 abstract class AuthController extends ControllerBase{
+	use AuthControllerVariablesTrait;
+	
 	/**
 	 * @var AuthFiles
 	 */
@@ -96,23 +98,7 @@ abstract class AuthController extends ControllerBase{
 		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
-	/**
-	 * Override for modifying the noAccess message
-	 * @param FlashMessage $fMessage
-	 */
-	protected function noAccessMessage(FlashMessage $fMessage){
-		
-	}
-	
-	/**
-	 * Override for modifying attempts message
-	 * You can use {_timer} and {_attemptsCount} variables in message content
-	 * @param FlashMessage $fMessage
-	 * @param int $attempsCount
-	 */
-	protected function attemptsNumberMessage(FlashMessage $fMessage,$attempsCount){
-		
-	}
+
 	
 	/**
 	 * Override to implement the complete connection procedure 
@@ -199,14 +185,7 @@ abstract class AuthController extends ControllerBase{
 		return new FlashMessage("<i class='ui warning icon'></i> You have no more attempt of connection !".$plus,null,"bottom attached error","");
 	}
 	
-	/**
-	 * To override for modifying the bad login message
-	 * @param FlashMessage $fMessage
-	 */
-	protected function badLoginMessage(FlashMessage $fMessage){
-		
-	}
-	
+
 	private function authLoadView($viewName,$vars=[]){
 		$files=$this->_getFiles();
 		$mainTemplate=$files->getBaseTemplate();
@@ -238,22 +217,6 @@ abstract class AuthController extends ControllerBase{
 		$this->jquery->getOnClick("._signin", $this->getBaseUrl(),$this->_getBodySelector(),["stopPropagation"=>false,"preventDefault"=>false]);
 		$this->jquery->execOn("click", "._close", "window.open(window.location,'_self').close();");
 		return $this->jquery->renderView($this->_getFiles()->getViewDisconnected(),["_title"=>"Session ended","_message"=>$message],true);
-	}
-	
-	/**
-	 * To override for modifying the logout message
-	 * @param FlashMessage $fMessage
-	 */
-	protected function terminateMessage(FlashMessage $fMessage){
-		
-	}
-	
-	/**
-	 * To override for modifying the disconnect message
-	 * @param FlashMessage $fMessage
-	 */
-	protected function disconnectedMessage(FlashMessage $fMessage){
-		
 	}
 	
 	/**
@@ -298,24 +261,6 @@ abstract class AuthController extends ControllerBase{
 		return USession::get($this->_getUserSessionKey());
 	}
 	
-	/**
-	 * To override
-	 * Returns the maximum number of allowed login attempts
-	 */
-	protected function attemptsNumber(){
-		return;
-	}
-	
-	/**
-	 * To override
-	 * Returns the time before trying to connect again
-	 * Effective only if attemptsNumber return a number
-	 * @return number
-	 */
-	protected function attemptsTimeout(){
-		return 3*60;
-	}
-	
 	public function checkConnection(){
 		UResponse::asJSON();
 		echo "{\"valid\":".UString::getBooleanStr($this->_isValidUser())."}";
@@ -334,43 +279,11 @@ abstract class AuthController extends ControllerBase{
 		return new AuthFiles();
 	}
 	
-	/**
-	 * Override to define if info is displayed as string
-	 * if set to true, use _infoUser var in views to display user info
-	 */
-	public function _displayInfoAsString(){
-		return false;
-	}
-	
-	public function _checkConnectionTimeout(){
-		return;
-	}
-	
 	private function _getFiles():AuthFiles{
 		if(!isset($this->authFiles)){
 			$this->authFiles=$this->getFiles();
 		}
 		return $this->authFiles;
-	}
-	
-	public function _getLoginInputName(){
-		return "email";
-	}
-
-	protected function loginLabel(){
-		return ucfirst($this->_getLoginInputName());
-	}
-	
-	public function _getPasswordInputName(){
-		return "password";
-	}
-	
-	protected function passwordLabel(){
-		return ucfirst($this->_getPasswordInputName());
-	}
-	
-	public function _getBodySelector(){
-		return "body";
 	}
 	
 	/**
@@ -389,10 +302,6 @@ abstract class AuthController extends ControllerBase{
 	 */
 	public function _setLoginCaption($_loginCaption) {
 		$this->_loginCaption = $_loginCaption;
-	}
-	
-	protected function rememberCaption(){
-		return "Remember me";
 	}
 	
 	protected function getViewVars($viewname){
