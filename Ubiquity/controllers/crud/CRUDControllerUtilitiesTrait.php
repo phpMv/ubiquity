@@ -8,8 +8,26 @@ use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ajax\semantic\widgets\datatable\Pagination;
 use Ajax\common\html\HtmlContentOnly;
 use Ubiquity\orm\OrmUtils;
+use Ajax\semantic\html\collections\HtmlMessage;
 
+/**
+ * @author jc
+ * @property int $activePage
+ * @property string $model
+ * @property \Ajax\php\ubiquity\JsUtils $jquery
+ * @property \Ubiquity\views\View $view
+ */
 trait CRUDControllerUtilitiesTrait {
+	abstract protected function _showSimpleMessage(CRUDMessage $message,$staticName=null):HtmlMessage;
+	abstract public function loadView($viewName, $pData = NULL, $asString = false);
+	abstract public function index();
+	abstract public function _getBaseRoute();
+	abstract protected function _showConfMessage(CRUDMessage $message,$url, $responseElement, $data, $attributes = NULL):HtmlMessage;
+
+	protected $modelViewer;
+	protected $adminDatas;
+	protected $events;
+	protected $crudFiles;
 	
 	protected function getInstances(&$totalCount,$page=1,$id=null){
 		$this->activePage=$page;
@@ -58,7 +76,6 @@ trait CRUDControllerUtilitiesTrait {
 	}
 	
 	private function _renderDataTableForRefresh($instances,$model,$totalCount){
-		$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
 		$compo= $this->_getModelViewer()->getModelDataTable($instances, $model,$totalCount)->refresh(["tbody"]);
 		$this->_getEvents()->onDisplayElements($compo,$instances,true);
 		$compo->setLibraryId("_compo_");
@@ -89,7 +106,6 @@ trait CRUDControllerUtilitiesTrait {
 	protected function _showModel($id=null) {
 		$model=$this->model;
 		$datas=$this->getInstances($totalCount,1,$id);
-		$this->formModal=($this->_getModelViewer()->isModal($datas,$model))? "modal" : "no";
 		return $this->_getModelViewer()->getModelDataTable($datas, $model,$totalCount,$this->activePage);
 	}
 
@@ -141,7 +157,7 @@ trait CRUDControllerUtilitiesTrait {
 	}
 	
 	public function _getAdminData ():CRUDDatas{
-		return $this->getSingleton($this->modelViewer,"getAdminData");
+		return $this->getSingleton($this->adminDatas,"getAdminData");
 	}
 	
 	/**

@@ -16,11 +16,8 @@ use Ajax\common\html\HtmlContentOnly;
 
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface{
 	use MessagesTrait,CRUDControllerUtilitiesTrait;
+	
 	protected $model;
-	protected $modelViewer;
-	protected $events;
-	protected $crudFiles;
-	protected $adminDatas;
 	protected $activePage;
 	
 	/**
