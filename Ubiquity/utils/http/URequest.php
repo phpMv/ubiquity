@@ -8,7 +8,7 @@ use Ubiquity\utils\base\UString;
 /**
  * Http Request utilities
  * @author jc
- * @version 1.0.0.2
+ * @version 1.0.1
  */
 class URequest {
 
@@ -110,6 +110,7 @@ class URequest {
 	private static function parseDefaultLanguage($http_accept, $deflang = "en") {
 		if(isset($http_accept) && strlen($http_accept) > 1)  {
 			$x = explode(",",$http_accept);
+			$lang=[];
 			foreach ($x as $val) {
 				if(preg_match("/(.*);q=([0-1]{0,1}.\d{0,4})/i",$val,$matches))
 					$lang[$matches[1]] = (float)$matches[2];

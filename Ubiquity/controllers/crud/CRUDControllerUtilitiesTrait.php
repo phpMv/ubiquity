@@ -51,6 +51,11 @@ trait CRUDControllerUtilitiesTrait {
 		return CRUDHelper::search($model, $search, $fields,$condition);
 	}
 	
+	/**
+	 * @param mixed $ids
+	 * @param boolean $included
+	 * @return object|NULL|mixed
+	 */
 	private function getModelInstance($ids,$included=true) {
 		$ids=\explode("_", $ids);
 		if(!is_bool($included)){

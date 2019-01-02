@@ -5,6 +5,11 @@ namespace Ubiquity\events;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UArray;
 
+/**
+ * Manage events
+ * @author jc
+ *
+ */
 class EventsManager {
 	private static $key="events/events";
 	/**
