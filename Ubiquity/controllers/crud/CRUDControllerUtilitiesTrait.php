@@ -127,7 +127,9 @@ trait CRUDControllerUtilitiesTrait {
 				$message=$this->_getEvents()->onSuccessDeleteMultipleMessage($message,$rep);
 				$message->parseContent(["count"=>$rep]);
 			}
-			$this->_showSimpleMessage($message,"delete-all");
+			if(isset($message)){
+				$this->_showSimpleMessage($message,"delete-all");
+			}
 			$this->index();
 		}else{
 			$message=new CRUDMessage("Do you confirm the deletion of this objects?", "Remove confirmation","error");

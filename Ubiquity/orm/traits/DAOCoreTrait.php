@@ -90,7 +90,7 @@ trait DAOCoreTrait {
 	 * @param string $className
 	 * @param ConditionParser $conditionParser
 	 * @param boolean|array $included
-	 * @param boolean $useCache
+	 * @param boolean|null $useCache
 	 * @return array
 	 */
 	protected static function _getAll($className, ConditionParser $conditionParser, $included=true,$useCache=NULL) {

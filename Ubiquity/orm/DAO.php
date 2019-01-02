@@ -33,7 +33,7 @@ class DAO {
 	 * @param object $instance
 	 * @param string $member
 	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
-	 * @param boolean $useCache
+	 * @param boolean|null $useCache
 	 */
 	public static function getManyToOne($instance, $member, $included=false,$useCache=NULL) {
 		$fieldAnnot=OrmUtils::getMemberJoinColumns($instance, $member);
@@ -190,7 +190,7 @@ class DAO {
 	 * @param Array|string $keyValues primary key values or condition
 	 * @param boolean|array $included if true, charges associate members with association
 	 * @param array|null $parameters the request parameters
-	 * @param boolean $useCache use cache if true
+	 * @param boolean|null $useCache use cache if true
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getOne($className, $keyValues, $included=true,$parameters=null,$useCache=NULL) {

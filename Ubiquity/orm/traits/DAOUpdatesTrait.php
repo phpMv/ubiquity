@@ -101,7 +101,7 @@ trait DAOUpdatesTrait{
 	}
 
 	/**
-	 * Inserts a new instance $ instance into the database
+	 * Inserts a new instance $instance into the database
 	 *
 	 * @param object $instance
 	 *        	the instance to insert

@@ -7,6 +7,9 @@ use Ubiquity\utils\base\UArray;
 
 class EventsManager {
 	private static $key="events/events";
+	/**
+	 * @var array|mixed
+	 */
 	protected static $managedEvents=[];
 	public static function start(){
 		if(CacheManager::$cache->exists(self::$key)){
