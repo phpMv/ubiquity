@@ -54,7 +54,7 @@ trait CRUDControllerUtilitiesTrait {
 	/**
 	 * @param mixed $ids
 	 * @param boolean $included
-	 * @return object|NULL|mixed
+	 * @return object
 	 */
 	private function getModelInstance($ids,$included=true) {
 		$ids=\explode("_", $ids);

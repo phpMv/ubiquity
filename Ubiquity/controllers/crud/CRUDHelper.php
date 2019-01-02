@@ -62,19 +62,7 @@ class CRUDHelper {
 		}
 		URequest::setValuesToObject($instance, $values);
 		if($manyToOneRelations){
-			foreach ( $manyToOneRelations as $member ) {
-				if (array_search($member, $members)!==false) {
-					$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
-					if ($joinColumn) {
-						$fkClass=$joinColumn["className"];
-						$fkField=$joinColumn["name"];
-						if (isset($values[$fkField])) {
-							$fkObject=DAO::getOne($fkClass, $values["$fkField"]);
-							Reflexion::setMemberValue($instance, $member, $fkObject);
-						}
-					}
-				}
-			}
+			self::updateManyToOne($manyToOneRelations, $members, $className, $instance, $values);
 		}
 		if (isset($instance)) {
 			if ($instance->_new) {
@@ -86,21 +74,41 @@ class CRUDHelper {
 				}
 			}
 			if ($update && $manyToManyRelations) {
-				foreach ( $manyToManyRelations as $member ) {
-					if(array_search($member, $members)!==false){
-						if (($annot=OrmUtils::getAnnotationInfoMember($className, "#manyToMany", $member)) !== false) {
-							$newField=$member . "Ids";
-							$fkClass=$annot["targetEntity"];
-							$fkObjects=DAO::getAll($fkClass, self::getMultiWhere($values[$newField], $className));
-							if (Reflexion::setMemberValue($instance, $member, $fkObjects)) {
-								DAO::insertOrUpdateManyToMany($instance, $member);
-							}
-						}
+				self::updateManyToMany($manyToManyRelations, $members, $className, $instance, $values);
+			}
+		}
+		return $update;
+	}
+	
+	protected static function updateManyToOne($manyToOneRelations,$members,$className,$instance,$values){
+		foreach ( $manyToOneRelations as $member ) {
+			if (array_search($member, $members)!==false) {
+				$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
+				if ($joinColumn) {
+					$fkClass=$joinColumn["className"];
+					$fkField=$joinColumn["name"];
+					if (isset($values[$fkField])) {
+						$fkObject=DAO::getOne($fkClass, $values["$fkField"]);
+						Reflexion::setMemberValue($instance, $member, $fkObject);
 					}
 				}
 			}
 		}
-		return $update;
+	}
+	
+	protected static function updateManyToMany($manyToManyRelations,$members,$className,$instance,$values){
+		foreach ( $manyToManyRelations as $member ) {
+			if(array_search($member, $members)!==false){
+				if (($annot=OrmUtils::getAnnotationInfoMember($className, "#manyToMany", $member)) !== false) {
+					$newField=$member . "Ids";
+					$fkClass=$annot["targetEntity"];
+					$fkObjects=DAO::getAll($fkClass, self::getMultiWhere($values[$newField], $className));
+					if (Reflexion::setMemberValue($instance, $member, $fkObjects)) {
+						DAO::insertOrUpdateManyToMany($instance, $member);
+					}
+				}
+			}
+		}
 	}
 	
 	private static function getPks($model) {

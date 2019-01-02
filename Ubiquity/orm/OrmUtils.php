@@ -8,15 +8,16 @@ use Ubiquity\utils\base\UString;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\controllers\rest\ResponseFormatter;
 use Ubiquity\orm\traits\OrmUtilsRelationsTrait;
+use Ubiquity\orm\traits\OrmUtilsFieldsTrait;
 
 /**
  * Object/relational mapping utilities
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  */
 class OrmUtils {
 	
-	use OrmUtilsRelationsTrait;
+	use OrmUtilsFieldsTrait,OrmUtilsRelationsTrait;
 	
 	private static $modelsMetadatas;
 
@@ -51,17 +52,6 @@ class OrmUtils {
 		return $ret[$member];
 	}
 
-	public static function getFieldNames($model){
-		$fields=self::getAnnotationInfo($model, "#fieldNames");
-		$result=[];
-		$serializables=self::getSerializableFields($model);
-		foreach ($fields as $member=>$field){
-			if(\array_search($member, $serializables)!==false)
-				$result[$field]=$member;
-		}
-		return $result;
-	}
-
 	public static function getTableName($class) {
 		if(isset(self::getModelMetadata($class)["#tableName"]))
 		return self::getModelMetadata($class)["#tableName"];
@@ -72,32 +62,11 @@ class OrmUtils {
 		return self::getMembersAndValues($instance, $kf);
 	}
 
-	public static function getKeyFields($instance) {
-		if(!\is_string($instance)){
-			$instance=\get_class($instance);
-		}
-		return self::getAnnotationInfo($instance, "#primaryKeys");
-	}
-
 	public static function getMembers($className) {
 		$fieldNames=self::getAnnotationInfo($className, "#fieldNames");
 		if ($fieldNames !== false)
 			return \array_keys($fieldNames);
 		return [ ];
-	}
-
-	public static function getFieldTypes($className) {
-		$fieldTypes=self::getAnnotationInfo($className, "#fieldTypes");
-		if ($fieldTypes !== false)
-			return $fieldTypes;
-		return [ ];
-	}
-
-	public static function getFieldType($className,$field){
-		$types= self::getFieldTypes($className);
-		if(isset($types[$field]))
-			return $types[$field];
-		return "int";
 	}
 
 	public static function getMembersAndValues($instance, $members=NULL) {
@@ -120,11 +89,6 @@ class OrmUtils {
 	public static function isNotNullOrNullAccepted($v, $className, $member) {
 		$notNull=UString::isNotNull($v);
 		return ($notNull) || (!$notNull && self::isNullable($className, $member));
-	}
-
-	public static function getFirstKey($class) {
-		$kf=self::getAnnotationInfo($class, "#primaryKeys");
-		return \reset($kf);
 	}
 
 	public static function getFirstKeyValue($instance) {
@@ -185,33 +149,6 @@ class OrmUtils {
 		return false;
 	}
 
-	public static function getSerializableFields($class) {
-		$notSerializable=self::getAnnotationInfo($class, "#notSerializable");
-		$fieldNames=\array_keys(self::getAnnotationInfo($class, "#fieldNames"));
-		return \array_diff($fieldNames, $notSerializable);
-	}
-	
-	public static function getAllFields($class){
-		return \array_keys(self::getAnnotationInfo($class, "#fieldNames"));
-	}
-	
-	public static function getFormAllFields($class){
-		$result=self::getSerializableFields($class);
-		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
-			foreach ($manyToOne as $member){
-				$joinColumn = self::getAnnotationInfoMember ( $class, "#joinColumn", $member );
-				$result[]=$joinColumn["name"];
-			}
-		}
-		if ($manyToMany=self::getAnnotationInfo($class, "#manyToMany")) {
-			$manyToMany=array_keys($manyToMany);
-			foreach ($manyToMany as $member){
-				$result[]=$member . "Ids";
-			}
-		}
-		return $result;
-	}
-	
 	public static function setFieldToMemberNames(&$fields,$relFields){
 		foreach ($fields as $index=>$field){
 			if(isset($relFields[$field])){
