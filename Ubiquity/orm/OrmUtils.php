@@ -67,26 +67,6 @@ class OrmUtils {
 		return self::getModelMetadata($class)["#tableName"];
 	}
 	
-	public static function getJoinTables($class){
-		$result=[];
-		
-		if(isset(self::getModelMetadata($class)["#joinTable"])){
-			$jts=self::getModelMetadata($class)["#joinTable"];
-			foreach ($jts as $jt){
-				$result[]=$jt["name"];
-			}
-		}
-		return $result;
-	}
-	
-	public static function getAllJoinTables($models){
-		$result=[];
-		foreach ($models as $model){
-			$result=array_merge($result,self::getJoinTables($model));
-		}
-		return $result;
-	}
-
 	public static function getKeyFieldsAndValues($instance) {
 		$kf=self::getAnnotationInfo(get_class($instance), "#primaryKeys");
 		return self::getMembersAndValues($instance, $kf);
@@ -126,7 +106,7 @@ class OrmUtils {
 		if (is_null($members))
 			$members=self::getMembers($className);
 		foreach ( $members as $member ) {
-			if (OrmUtils::isSerializable($className, $member)) {
+			if (self::isSerializable($className, $member)) {
 				$v=Reflexion::getMemberValue($instance, $member);
 				if (self::isNotNullOrNullAccepted($v, $className, $member)) {
 					$name=self::getFieldName($className, $member);
@@ -139,7 +119,7 @@ class OrmUtils {
 
 	public static function isNotNullOrNullAccepted($v, $className, $member) {
 		$notNull=UString::isNotNull($v);
-		return ($notNull) || (!$notNull && OrmUtils::isNullable($className, $member));
+		return ($notNull) || (!$notNull && self::isNullable($className, $member));
 	}
 
 	public static function getFirstKey($class) {
@@ -155,33 +135,6 @@ class OrmUtils {
 	public static function getKeyValues($instance) {
 		$fkv=self::getKeyFieldsAndValues($instance);
 		return implode("_",$fkv);
-	}
-
-	/**
-	 *
-	 * @param object $instance
-	 * @return mixed[]
-	 */
-	public static function getManyToOneMembersAndValues($instance) {
-		$ret=array ();
-		$class=get_class($instance);
-		$members=self::getAnnotationInfo($class, "#manyToOne");
-		if ($members !== false) {
-			foreach ( $members as $member ) {
-				$memberAccessor="get" . ucfirst($member);
-				if (method_exists($instance, $memberAccessor)) {
-					$memberInstance=$instance->$memberAccessor();
-					if (isset($memberInstance) && is_object($memberInstance)) {
-						$keyValues=self::getKeyFieldsAndValues($memberInstance);
-						if (sizeof($keyValues) > 0) {
-							$fkName=self::getJoinColumnName($class, $member);
-							$ret[$fkName]=reset($keyValues);
-						}
-					}
-				}
-			}
-		}
-		return $ret;
 	}
 
 	public static function getMembersWithAnnotation($class, $annotation) {
@@ -208,16 +161,6 @@ class OrmUtils {
 			}
 		}
 		return false;
-	}
-
-	public static function getJoinColumnName($class, $member) {
-		$annot=self::getAnnotationInfoMember($class, "#joinColumn", $member);
-		if ($annot !== false) {
-			$fkName=$annot["name"];
-		} else {
-			$fkName="id" . ucfirst(self::getTableName(ucfirst($member)));
-		}
-		return $fkName;
 	}
 
 	public static function getAnnotationInfo($class, $keyAnnotation) {
@@ -256,7 +199,7 @@ class OrmUtils {
 		$result=self::getSerializableFields($class);
 		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
 			foreach ($manyToOne as $member){
-				$joinColumn = OrmUtils::getAnnotationInfoMember ( $class, "#joinColumn", $member );
+				$joinColumn = self::getAnnotationInfoMember ( $class, "#joinColumn", $member );
 				$result[]=$joinColumn["name"];
 			}
 		}

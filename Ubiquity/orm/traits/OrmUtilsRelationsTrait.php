@@ -10,6 +10,28 @@ trait OrmUtilsRelationsTrait {
 	abstract public static function getAnnotationInfo($class, $keyAnnotation);
 	abstract public static function getTableName($class);
 	abstract public static function getFirstKey($class);
+	abstract public static function getModelMetadata($className);
+	abstract public static function getKeyFieldsAndValues($instance);
+	
+	public static function getJoinTables($class){
+		$result=[];
+		
+		if(isset(self::getModelMetadata($class)["#joinTable"])){
+			$jts=self::getModelMetadata($class)["#joinTable"];
+			foreach ($jts as $jt){
+				$result[]=$jt["name"];
+			}
+		}
+		return $result;
+	}
+	
+	public static function getAllJoinTables($models){
+		$result=[];
+		foreach ($models as $model){
+			$result=array_merge($result,self::getJoinTables($model));
+		}
+		return $result;
+	}
 	
 	public static function getFieldsInRelations($class) {
 		$result=[ ];
@@ -146,6 +168,43 @@ trait OrmUtilsRelationsTrait {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 *
+	 * @param object $instance
+	 * @return mixed[]
+	 */
+	public static function getManyToOneMembersAndValues($instance) {
+		$ret=array ();
+		$class=get_class($instance);
+		$members=self::getAnnotationInfo($class, "#manyToOne");
+		if ($members !== false) {
+			foreach ( $members as $member ) {
+				$memberAccessor="get" . ucfirst($member);
+				if (method_exists($instance, $memberAccessor)) {
+					$memberInstance=$instance->$memberAccessor();
+					if (isset($memberInstance) && is_object($memberInstance)) {
+						$keyValues=self::getKeyFieldsAndValues($memberInstance);
+						if (sizeof($keyValues) > 0) {
+							$fkName=self::getJoinColumnName($class, $member);
+							$ret[$fkName]=reset($keyValues);
+						}
+					}
+				}
+			}
+		}
+		return $ret;
+	}
+	
+	public static function getJoinColumnName($class, $member) {
+		$annot=self::getAnnotationInfoMember($class, "#joinColumn", $member);
+		if ($annot !== false) {
+			$fkName=$annot["name"];
+		} else {
+			$fkName="id" . ucfirst(self::getTableName(ucfirst($member)));
+		}
+		return $fkName;
 	}
 }
 
