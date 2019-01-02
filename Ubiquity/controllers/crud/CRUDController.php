@@ -5,19 +5,17 @@ namespace Ubiquity\controllers\crud;
 use Ubiquity\orm\DAO;
 use Ubiquity\controllers\ControllerBase;
 use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
-use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ubiquity\controllers\semantic\MessagesTrait;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\controllers\rest\ResponseFormatter;
-use Ajax\semantic\widgets\datatable\Pagination;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\common\html\HtmlContentOnly;
 
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface{
-	use MessagesTrait;
+	use MessagesTrait,CRUDControllerUtilitiesTrait;
 	protected $model;
 	protected $modelViewer;
 	protected $events;
@@ -40,28 +38,6 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$this->crudLoadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ,"messages"=>$this->jquery->semantic()->matchHtmlComponents(function($compo){return $compo instanceof HtmlMessage;})]);		
 	}
 	
-	protected function getInstances(&$totalCount,$page=1,$id=null){
-		$this->activePage=$page;
-		$model=$this->model;
-		$condition=$this->_getAdminData()->_getInstancesFilter($model);
-		$totalCount=DAO::count($model,$condition);
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
-		if(is_numeric($recordsPerPage)){
-			if(isset($id)){
-				$rownum=DAO::getRownum($model, $id);
-				$this->activePage=Pagination::getPageOfRow($rownum,$recordsPerPage);
-			}
-			return DAO::paginate($model,$this->activePage,$recordsPerPage,$condition);
-		}
-		return DAO::getAll($model,$condition);
-	}
-	
-	protected function search($model,$search){
-		$fields=$this->_getAdminData()->getSearchFieldNames($model);
-		$condition=$this->_getAdminData()->_getInstancesFilter($model);
-		return CRUDHelper::search($model, $search, $fields,$condition);
-	}
-	
 	public function updateMember($member,$callback=false){
 		$instance=@$_SESSION["instance"];
 		$updated=CRUDHelper::update($instance, $_POST);
@@ -80,12 +56,6 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		}else{
 			UResponse::setResponseCode(404);
 		}
-	}
-	
-	protected function updateMemberDataElement($member,$instance){
-		$dt=$this->_getModelViewer()->getModelDataElement($instance, $this->model, false);
-		$dt->compile();
-		echo new HtmlContentOnly($dt->getFieldValue($member));
 	}
 	
 	/**
@@ -117,15 +87,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->_renderDataTableForRefresh($instances, $model,$totalCount);
 		}
 	}
-	
-	private function _renderDataTableForRefresh($instances,$model,$totalCount){
-		$this->formModal=($this->_getModelViewer()->isModal($instances,$model))? "modal" : "no";
-		$compo= $this->_getModelViewer()->getModelDataTable($instances, $model,$totalCount)->refresh(["tbody"]);
-		$this->_getEvents()->onDisplayElements($compo,$instances,true);
-		$compo->setLibraryId("_compo_");
-		$this->jquery->renderView("@framework/main/component.html");
-	}
-	
+
 	/**
 	 * Edits an instance
 	 * @param string $modal Accept "no" or "modal" for a modal dialog
@@ -190,34 +152,6 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		}
 	}
 	
-	protected function _edit($instance, $modal="no") {
-		$_SESSION["instance"]=$instance;
-		$modal=($modal == "modal");
-		$form=$this->_getModelViewer()->getForm("frmEdit", $instance);
-		$this->jquery->click("#action-modal-frmEdit-0", "$('#frmEdit').form('submit');", false);
-		if (!$modal) {
-			$this->jquery->click("#bt-cancel", "$('#form-container').transition('drop');");
-			$this->jquery->compile($this->view);
-			$this->loadView($this->_getFiles()->getViewForm(), [ "modal" => $modal,"instance"=>$instance,"isNew"=>$instance->_new ]);
-		} else {
-			$this->jquery->exec("$('#modal-frmEdit').modal('show');", true);
-			$form=$form->asModal(\get_class($instance));
-			$form->setActions([ "Okay","Cancel" ]);
-			$btOkay=$form->getAction(0);
-			$btOkay->addClass("green")->setValue("Validate modifications");
-			$form->onHidden("$('#modal-frmEdit').remove();");
-			echo $form->compile($this->jquery, $this->view);
-			echo $this->jquery->compile($this->view);
-		}
-	}
-	
-	protected function _showModel($id=null) {
-		$model=$this->model;
-		$datas=$this->getInstances($totalCount,1,$id);
-		$this->formModal=($this->_getModelViewer()->isModal($datas,$model))? "modal" : "no";
-		return $this->_getModelViewer()->getModelDataTable($datas, $model,$totalCount,$this->activePage);
-	}
-	
 	/**
 	 * Deletes an instance
 	 * @param mixed $ids
@@ -257,37 +191,6 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		}
 	}
 	
-	/**
-	 * Helper to delete multiple objects
-	 * @param mixed $data
-	 * @param string $action
-	 * @param string $target the css selector for refreshing
-	 * @param callable|string $condition the callback for generating the SQL where (for deletion) with the parameter data, or a simple string
-	 */
-	protected function _deleteMultiple($data,$action,$target,$condition){
-		if(URequest::isPost()){
-			if(is_callable($condition)){
-				$condition=$condition($data);
-			}
-			$rep=DAO::deleteAll($this->model, $condition);
-			if($rep){
-				$message=new CRUDMessage("Deleting {count} objects","Deletion","info","info circle",4000);
-				$message=$this->_getEvents()->onSuccessDeleteMultipleMessage($message,$rep);
-				$message->parseContent(["count"=>$rep]);
-			}
-			$this->_showSimpleMessage($message,"delete-all");
-			$this->index();
-		}else{
-			$message=new CRUDMessage("Do you confirm the deletion of this objects?", "Remove confirmation","error");
-			$this->_getEvents()->onConfDeleteMultipleMessage($message,$data);
-			$message=$this->_showConfMessage($message, $this->_getBaseRoute() . "/{$action}/{$data}",$target, $data,["jqueryDone"=>"replaceWith"]);
-			echo $message;
-			echo $this->jquery->compile($this->view);
-		}
-	}
-	
-
-	
 	public function refreshTable($id=null) {
 		$compo= $this->_showModel($id);
 		$this->jquery->execAtLast('$("#table-details").html("");');
@@ -325,15 +228,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		echo $this->jquery->compile($this->view);
 		return $instance;
 	}
-	
-	protected function refreshInstance($instance,$isNew){
-		if($this->_getAdminData()->refreshPartialInstance() && !$isNew){
-			$this->jquery->setJsonToElement(OrmUtils::objectAsJSON($instance));
-		}else{
-			$pk=OrmUtils::getFirstKeyValue($instance);
-			$this->jquery->get($this->_getBaseRoute() . "/refreshTable/".$pk, "#lv", [ "jqueryDone" => "replaceWith" ]);
-		}
-	}
+
 	
 	/**
 	 * Shows associated members with foreign keys
@@ -377,101 +272,6 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	
 	public function detailClick($url) {
 		$this->jquery->postOnClick(".showTable", $this->_getBaseRoute() . "/".$url,"{}", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ]);
-	}
-	
-	private function getModelInstance($ids,$included=true) {
-		$ids=\explode("_", $ids);
-		if(!is_bool($included)){
-			if(!is_array($included)){
-				$included=[$included];
-			}
-		}
-		$instance=DAO::getOne($this->model, $ids,$included);
-		if(isset($instance)){
-			return $instance;
-		}
-		$message=new CRUDMessage("This object does not exist!","Get object","warning","warning circle");
-		$message=$this->_getEvents()->onNotFoundMessage($message,$ids);
-		echo $this->_showSimpleMessage($message);
-		echo $this->jquery->compile($this->view);
-		exit(1);
-	}
-	
-	/**
-	 * To override for defining a new adminData
-	 * @return CRUDDatas
-	 */
-	protected function getAdminData ():CRUDDatas{
-		return new CRUDDatas();
-	}
-	
-	public function _getAdminData ():CRUDDatas{
-		return $this->getSingleton($this->modelViewer,"getAdminData");
-	}
-	
-	/**
-	 * To override for defining a new ModelViewer
-	 * @return ModelViewer
-	 */
-	protected function getModelViewer ():ModelViewer{
-		return new ModelViewer($this);
-	}
-	
-	private function _getModelViewer():ModelViewer{
-		return $this->getSingleton($this->modelViewer,"getModelViewer");
-	}
-	
-	/**
-	 * To override for changing view files
-	 * @return CRUDFiles
-	 */
-	protected function getFiles ():CRUDFiles{
-		return new CRUDFiles();
-	}
-	
-	/**
-	 * @return CRUDFiles
-	 */
-	public function _getFiles(){
-		return $this->getSingleton($this->crudFiles,"getFiles");
-	}
-	
-	/**
-	 * To override for changing events
-	 * @return CRUDEvents
-	 */
-	protected function getEvents ():CRUDEvents{
-		return new CRUDEvents($this);
-	}
-	
-	private function _getEvents():CRUDEvents{
-		return $this->getSingleton($this->events,"getEvents");
-	}
-	
-	private function getSingleton($value, $method) {
-		if (! isset ( $value )) {
-			$value = $this->$method ();
-		}
-		return $value;
-	}
-	
-	private function crudLoadView($viewName,$vars=[]){
-		$this->_getEvents()->beforeLoadView($viewName,$vars);
-		if(!URequest::isAjax()){
-			$files=$this->_getFiles();
-			$mainTemplate=$files->getBaseTemplate();
-			if(isset($mainTemplate)){
-				$vars["_viewname"]=$viewName;
-				$vars["_base"]=$mainTemplate;
-				$this->jquery->renderView($files->getViewBaseTemplate(),$vars);
-			}else{
-				$vars["hasScript"]=true;
-				$this->jquery->renderView($viewName,$vars);
-			}
-		}else{
-			$vars["hasScript"]=true;
-			$this->jquery->renderView($viewName,$vars);
-		}
 	}
 
 }
