@@ -13,11 +13,12 @@ use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\traits\DAOUQueries;
 use Ubiquity\orm\traits\DAOCoreTrait;
 use Ubiquity\orm\traits\DAORelationsPrepareTrait;
+use Ubiquity\exceptions\DAOException;
 
 /**
  * Gateway class between database and object model
  * @author jc
- * @version 1.1.2
+ * @version 1.1.3
  * @package orm
  */
 class DAO {
@@ -44,7 +45,7 @@ class DAO {
 			$value=Reflexion::getMemberValue($instance, $member);
 			$key=OrmUtils::getFirstKey($annotationArray["className"]);
 			$kv=array ($key => $value );
-			$obj=self::getOne($annotationArray["className"], $kv, $included, $useCache);
+			$obj=self::getOne($annotationArray["className"], $kv, $included, null,$useCache);
 			if ($obj !== null) {
 				Logger::info("DAO", "Loading the member " . $member . " for the object " . \get_class($instance),"getManyToOne");
 				$accesseur="set" . ucfirst($member);
@@ -198,9 +199,11 @@ class DAO {
 		$conditionParser=new ConditionParser();
 		if(!isset($parameters)){
 			$conditionParser->addKeyValues($keyValues,$className);
-		}else{
+		}elseif(!is_array($keyValues)){
 			$conditionParser->setCondition($keyValues);
 			$conditionParser->setParams($parameters);
+		}else{
+			throw new DAOException("The \$keyValues parameter should not be an array if \$parameters is not null");
 		}
 		return self::_getOne($className, $conditionParser, $included, $useCache);
 	}
@@ -223,7 +226,7 @@ class DAO {
 			self::$db->connect();
 		} catch (\Exception $e) {
 			Logger::error("DAO", $e->getMessage());
-			throw $e;
+			throw new DAOException($e->getMessage(),$e->getCode(),$e->getPrevious());
 		}
 	}
 

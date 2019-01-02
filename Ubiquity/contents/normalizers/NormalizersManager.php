@@ -7,6 +7,9 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UArray;
 
 class NormalizersManager {
+	/**
+	 * @var array|mixed
+	 */
 	private static $normalizers=[];
 	private static $key="contents/normalizers";
 

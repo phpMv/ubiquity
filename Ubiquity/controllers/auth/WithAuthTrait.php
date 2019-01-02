@@ -7,7 +7,7 @@ use Ubiquity\controllers\Startup;
 /**
  * ControllerBase
  * @property \Ajax\php\ubiquity\JsUtils $jquery
- * @property \Ubiquity\views\View
+ * @property \Ubiquity\views\View $view
  **/
 trait WithAuthTrait{
 	protected $_checkConnectionContent;
