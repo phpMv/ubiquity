@@ -6,7 +6,6 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\flash\FlashMessage;
 use Ubiquity\controllers\ControllerBase;
 use Ubiquity\controllers\Auth\AuthFiles;
-use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\Startup;
@@ -18,7 +17,7 @@ use Ajax\service\Javascript;
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  **/
 abstract class AuthController extends ControllerBase{
-	use AuthControllerVariablesTrait;
+	use AuthControllerVariablesTrait,AuthControllerOverrideTrait;
 	
 	/**
 	 * @var AuthFiles
@@ -57,15 +56,6 @@ abstract class AuthController extends ControllerBase{
 				"passwordInputName"=>$this->_getPasswordInputName(),"passwordLabel"=>$this->passwordLabel(),
 				"rememberCaption"=>$this->rememberCaption()
 		]);
-	}
-	
-	/**
-	 * To override
-	 * Return the base route for this Auth controller
-	 * @return string
-	 */
-	public function _getBaseRoute(){
-		return ClassUtils::getClassSimpleName(get_class($this));
 	}
 	
 	private function getBaseUrl(){
@@ -117,24 +107,6 @@ abstract class AuthController extends ControllerBase{
 				$this->onBadCreditentials();
 			}
 		}
-	}
-	
-	/**
-	 * Processes the data posted by the login form
-	 * Have to return the connected user instance
-	 */
-	abstract protected function _connect();
-	
-	/**
-	 * @param object $connected
-	 */
-	abstract protected function onConnect($connected);
-	
-	/**
-	 * To override for defining a new action when creditentials are invalid
-	 */
-	protected function onBadCreditentials(){
-		$this->badLogin();
 	}
 	
 	/**
@@ -245,31 +217,11 @@ abstract class AuthController extends ControllerBase{
 		return USession::get("urlParts");
 	}
 	
-	/**
-	 * To override for defining user session key, default : "activeUser"
-	 * @return string
-	 */
-	public function _getUserSessionKey(){
-		return "activeUser";
-	}
-	
-	/**
-	 * To override for getting active user, default : USession::get("activeUser")
-	 * @return string
-	 */
-	public function _getActiveUser(){
-		return USession::get($this->_getUserSessionKey());
-	}
-	
 	public function checkConnection(){
 		UResponse::asJSON();
 		echo "{\"valid\":".UString::getBooleanStr($this->_isValidUser())."}";
 	}
 	
-	/**
-	 * return boolean true if activeUser is valid
-	 */
-	abstract public function _isValidUser();
 	
 	/**
 	 * To override for changing view files
@@ -325,22 +277,6 @@ abstract class AuthController extends ControllerBase{
 	 */
 	protected function getCookieUser(){
 		return UCookie::get($this->_getUserSessionKey());
-	}
-	
-	/**
-	 * Returns the value from connected user to save it in the cookie for auto connection
-	 * @param object $connected
-	 */
-	protected function toCookie($connected){
-		return;
-	}
-	
-	/**
-	 * Loads the user from database using the cookie value
-	 * @param string $cookie
-	 */
-	protected function fromCookie($cookie){
-		return;
 	}
 	
 	/**
