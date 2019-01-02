@@ -79,7 +79,6 @@ class ConditionParser {
 	}
 	
 	private function refactorParts(){
-		$tmp="";
 		$result=[];
 		foreach ($this->parts as $part){
 			$part=str_replace("= ?", "", $part);
