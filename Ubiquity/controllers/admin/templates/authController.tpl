@@ -34,7 +34,7 @@ class %controllerName% extends %baseClass%{
 	 * {@inheritDoc}
 	 * @see \Ubiquity\controllers\auth\AuthController::isValidUser()
 	 */
-	public function _isValidUser() {
+	public function _isValidUser($action=null) {
 		return USession::exists($this->_getUserSessionKey());
 	}
 

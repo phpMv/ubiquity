@@ -231,5 +231,18 @@ trait CRUDControllerUtilitiesTrait {
 			$this->jquery->renderView($viewName,$vars);
 		}
 	}
+	
+	/**
+	 * @param object $instance
+	 * @return string
+	 */
+	protected function getInstanceToString($instance){
+		if (method_exists($instance, "__toString")){
+			return $instance . "";
+		}
+		else{
+			return get_class($instance);
+		}
+	}
 }
 

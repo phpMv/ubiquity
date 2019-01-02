@@ -156,10 +156,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	public function delete($ids) {
 		if(URequest::isAjax()){
 			$instance=$this->getModelInstance($ids);
-			if (method_exists($instance, "__toString"))
-				$instanceString=$instance . "";
-			else
-				$instanceString=get_class($instance);
+			$instanceString=$this->getInstanceToString($instance);
 			if (sizeof($_POST) > 0) {
 				try{
 					if (DAO::remove($instance)) {
@@ -214,10 +211,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
 			}
 		}catch(\Exception $e){
-			if (method_exists($instance, "__toString"))
-				$instanceString=$instance . "";
-			else
-				$instanceString=get_class($instance);
+			$instanceString=$this->getInstanceToString($instance);
 			$message=new CRUDMessage("Exception : can not update `" . $instanceString . "`","Exception", "warning", "warning");
 			$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
 		}
@@ -226,7 +220,6 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		return $instance;
 	}
 
-	
 	/**
 	 * Shows associated members with foreign keys
 	 * @param mixed $ids

@@ -15,6 +15,8 @@ use Ubiquity\utils\http\URequest;
  *
  */
 abstract class RestController extends Controller {
+	use RestControllerUtilitiesTrait;
+	
 	protected $config;
 	protected $model;
 	protected $contentType;
@@ -65,21 +67,6 @@ abstract class RestController extends Controller {
 		$this->server->connect($this);
 	}
 	
-	protected function _getResponseFormatter(){
-		if(!isset($this->responseFormatter)){
-			$this->responseFormatter=$this->getResponseFormatter();
-		}
-		return $this->responseFormatter;
-	}
-	
-	/**
-	 * To override, returns the active formatter for the response
-	 * @return \Ubiquity\controllers\rest\ResponseFormatter
-	 */
-	protected function getResponseFormatter(){
-		return new ResponseFormatter();
-	}
-
 	public function initialize(){
 		$thisClass=\get_class($this);
 		if(!isset($this->model))
@@ -110,26 +97,6 @@ abstract class RestController extends Controller {
 		\http_response_code($value);
 	}
 
-	protected function connectDb($config){
-		$db=$config["database"];
-		if($db["dbName"]!==""){
-			DAO::connect($db["type"],$db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["password"],@$db["options"],@$db["cache"]);
-		}
-	}
-
-	/**
-	 * Updates $instance with $values
-	 * To eventually be redefined in derived classes
-	 * @param object $instance the instance to update
-	 * @param array|null $values
-	 */
-	protected function _setValuesToObject($instance,$values=null){
-		if(URequest::isJSON()){
-			$values=\json_decode($values,true);
-		}
-		URequest::setValuesToObject($instance,$values);
-	}
-
 	/**
 	 * Returns all objects for the resource $model
 	 * @route("cache"=>false)
@@ -158,7 +125,7 @@ abstract class RestController extends Controller {
 			$condition=\urldecode($condition);
 			$included=$this->getIncluded($included);
 			$useCache=UString::isBooleanTrue($useCache);
-			$datas=DAO::getAll($this->model,$condition,$included,$useCache);
+			$datas=DAO::getAll($this->model,$condition,$included,null,$useCache);
 			echo $this->_getResponseFormatter()->get($datas);
 		}catch (\Exception $e){
 			$this->_setResponseCode(500);
@@ -176,7 +143,7 @@ abstract class RestController extends Controller {
 		$keyValues=\urldecode($keyValues);
 		$included=$this->getIncluded($included);
 		$useCache=UString::isBooleanTrue($useCache);
-		$data=DAO::getOne($this->model, $keyValues,$included,$useCache);
+		$data=DAO::getOne($this->model, $keyValues,$included,null,$useCache);
 		if(isset($data)){
 			$_SESSION["_restInstance"]=$data;
 			echo $this->_getResponseFormatter()->getOne($data);
@@ -187,13 +154,6 @@ abstract class RestController extends Controller {
 		}
 	}
 	
-	private function getIncluded($included){
-		if(!UString::isBoolean($included)){
-			return explode(",", $included);
-		}
-		return UString::isBooleanTrue($included);
-	}
-
 	public function _format($arrayMessage){
 		return $this->_getResponseFormatter()->format($arrayMessage);
 	}
@@ -205,14 +165,9 @@ abstract class RestController extends Controller {
 	 * @throws \Exception
 	 */
 	public function getOneToMany($member,$included=false,$useCache=false){
-		if(isset($_SESSION["_restInstance"])){
-			$included=$this->getIncluded($included);
-			$useCache=UString::isBooleanTrue($useCache);
-			$datas=DAO::getOneToMany($_SESSION["_restInstance"], $member,$included,$useCache);
-			echo $this->_getResponseFormatter()->get($datas);
-		}else{
-			throw new \Exception("You have to call getOne before calling getOneToMany.");
-		}
+		$this->getMany_(function($instance,$member,$included,$useCache){
+			return DAO::getOneToMany($instance, $member,$included,$useCache);
+		}, $member,$included,$useCache);
 	}
 
 	/**
@@ -222,16 +177,11 @@ abstract class RestController extends Controller {
 	 * @throws \Exception
 	 */
 	public function getManyToMany($member,$included=false,$useCache=false){
-		if(isset($_SESSION["_restInstance"])){
-			$included=$this->getIncluded($included);
-			$useCache=UString::isBooleanTrue($useCache);
-			$datas=DAO::getManyToMany($_SESSION["_restInstance"], $member,$included,null,$useCache);
-			echo $this->_getResponseFormatter()->get($datas);
-		}else{
-			throw new \Exception("You have to call getOne before calling getManyToMany.");
-		}
+		$this->getMany_(function($instance,$member,$included,$useCache){
+			return DAO::getManyToMany($instance, $member,$included,null,$useCache);
+		}, $member,$included,$useCache);
 	}
-
+	
 	/**
 	 * Update an instance of $model selected by the primary key $keyValues
 	 * Require members values in $_POST array

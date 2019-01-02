@@ -53,9 +53,11 @@ trait AuthControllerOverrideTrait {
 	}
 	
 	/**
+	 * Checks if user is valid for the action
+	 * @param string $action
 	 * return boolean true if activeUser is valid
 	 */
-	abstract public function _isValidUser();
+	abstract public function _isValidUser($action=null);
 	
 	/**
 	 * Returns the value from connected user to save it in the cookie for auto connection
