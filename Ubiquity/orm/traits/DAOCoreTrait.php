@@ -14,11 +14,11 @@ use Ubiquity\db\SqlUtils;
  *
  */
 trait DAOCoreTrait {
-	abstract private static function _affectsRelationObjects($manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache);
-	abstract private static function prepareManyToMany(&$ret,$instance, $member, $annot=null);
-	abstract private static function prepareManyToOne(&$ret, $instance,$value, $fkField,$annotationArray);
-	abstract private static function prepareOneToMany(&$ret,$instance, $member, $annot=null);
-	abstract private static function _initRelationFields($included,$metaDatas,&$invertedJoinColumns,&$oneToManyFields,&$manyToManyFields);
+	abstract protected static function _affectsRelationObjects($manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache);
+	abstract protected static function prepareManyToMany(&$ret,$instance, $member, $annot=null);
+	abstract protected static function prepareManyToOne(&$ret, $instance,$value, $fkField,$annotationArray);
+	abstract protected static function prepareOneToMany(&$ret,$instance, $member, $annot=null);
+	abstract protected static function _initRelationFields($included,$metaDatas,&$invertedJoinColumns,&$oneToManyFields,&$manyToManyFields);
 	
 	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $mappedBy) {
 		$elementAccessor="get" . ucfirst($mappedBy);

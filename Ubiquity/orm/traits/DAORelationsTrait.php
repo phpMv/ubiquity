@@ -14,7 +14,7 @@ use Ubiquity\orm\core\PendingRelationsRequest;
 trait DAORelationsTrait {
 	abstract protected static function _getAll($className, ConditionParser $conditionParser, $included=true,$useCache=NULL);
 	
-	private static function _affectsRelationObjects($manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache){
+	protected static function _affectsRelationObjects($manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache){
 		if(\sizeof($manyToOneQueries)>0){
 			self::_affectsObjectsFromArray($manyToOneQueries,$included, function($object,$member,$manyToOneObjects,$fkField){
 				self::affectsManyToOneFromArray($object,$member,$manyToOneObjects,$fkField);
@@ -119,7 +119,7 @@ trait DAORelationsTrait {
 	 * @param string $member Member on which a ManyToMany annotation must be present
 	 * @param array $annot used internally
 	 */
-	private static function prepareManyToMany(&$ret,$instance, $member, $annot=null) {
+	protected static function prepareManyToMany(&$ret,$instance, $member, $annot=null) {
 		$class=get_class($instance);
 		if (!isset($annot)){
 			$annot=OrmUtils::getAnnotationInfoMember($class, "#ManyToMany", $member);
@@ -146,7 +146,7 @@ trait DAORelationsTrait {
 	 * @param string $member Member on which a OneToMany annotation must be present
 	 * @param array $annot used internally
 	 */
-	private static function prepareOneToMany(&$ret,$instance, $member, $annot=null) {
+	protected static function prepareOneToMany(&$ret,$instance, $member, $annot=null) {
 		$class=get_class($instance);
 		if (!isset($annot))
 			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
@@ -171,7 +171,7 @@ trait DAORelationsTrait {
 	 * @param string $fkField
 	 * @param array $annotationArray
 	 */
-	private static function prepareManyToOne(&$ret, $instance,$value, $fkField,$annotationArray) {
+	protected static function prepareManyToOne(&$ret, $instance,$value, $fkField,$annotationArray) {
 		$member=$annotationArray["member"];
 		$fk=OrmUtils::getFirstKey($annotationArray["className"]);
 		$key=$annotationArray["className"]."|".$member."|".$fkField;
@@ -243,7 +243,7 @@ trait DAORelationsTrait {
 		}
 	}
 	
-	private static function _initRelationFields($included,$metaDatas,&$invertedJoinColumns,&$oneToManyFields,&$manyToManyFields){
+	protected static function _initRelationFields($included,$metaDatas,&$invertedJoinColumns,&$oneToManyFields,&$manyToManyFields){
 		if (isset($metaDatas["#invertedJoinColumn"])){
 			$invertedJoinColumns=$metaDatas["#invertedJoinColumn"];
 		}
