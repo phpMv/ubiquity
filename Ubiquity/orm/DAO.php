@@ -12,15 +12,16 @@ use Ubiquity\orm\traits\DAORelationsTrait;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\traits\DAOUQueries;
 use Ubiquity\orm\traits\DAOCoreTrait;
+use Ubiquity\orm\traits\DAORelationsPrepareTrait;
 
 /**
  * Gateway class between database and object model
  * @author jc
- * @version 1.1.1
+ * @version 1.1.2
  * @package orm
  */
 class DAO {
-	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAOUQueries;
+	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAOUQueries;
 	
 	
 	/**
