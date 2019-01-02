@@ -46,6 +46,10 @@ trait RestControllerUtilitiesTrait {
 		URequest::setValuesToObject($instance,$values);
 	}
 	
+	/**
+	 * @param string|boolean $included
+	 * @return array|boolean
+	 */
 	private function getIncluded($included){
 		if(!UString::isBoolean($included)){
 			return explode(",", $included);
@@ -53,6 +57,13 @@ trait RestControllerUtilitiesTrait {
 		return UString::isBooleanTrue($included);
 	}
 	
+	/**
+	 * @param callable $getDatas
+	 * @param string $member
+	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param boolean $useCache
+	 * @throws \Exception
+	 */
 	protected function getMany_($getDatas,$member,$included=false,$useCache=false){
 		if(isset($_SESSION["_restInstance"])){
 			$included=$this->getIncluded($included);
