@@ -7,7 +7,14 @@ use Ubiquity\utils\base\UString;
 use Ubiquity\annotations\router\RouteAnnotation;
 use Ubiquity\cache\ClassUtils;
 
+/**
+ * Scans a controller to detect routes defined by annotations 
+ * @author jc
+ * @version 1.0.1
+ */
 class ControllerParser {
+	use ControllerParserPathTrait;
+	
 	private $controllerClass;
 	private $mainRouteClass;
 	private $routesMethods=[ ];
@@ -67,57 +74,6 @@ class ControllerParser {
 		$annot=new RouteAnnotation();
 		$annot->path=self::getPathFromMethod($method);
 		return [ $annot ];
-	}
-
-	private static function getPathFromMethod(\ReflectionMethod $method) {
-		$methodName=$method->getName();
-		if ($methodName === "index") {
-			$pathParts=[ "(index/)?" ];
-		} else {
-			$pathParts=[ $methodName ];
-		}
-		$parameters=$method->getParameters();
-		foreach ( $parameters as $parameter ) {
-			if ($parameter->isVariadic()) {
-				$pathParts[]='{...' . $parameter->getName() . '}';
-				return "/" . \implode("/", $pathParts);
-			}
-			if (!$parameter->isOptional()) {
-				$pathParts[]='{' . $parameter->getName() . '}';
-			} else {
-				$pathParts[\sizeof($pathParts) - 1].='{~' . $parameter->getName() . '}';
-			}
-		}
-		return "/" . \implode("/", $pathParts);
-	}
-	
-	private static function parseMethodPath(\ReflectionMethod $method,$path){
-		if(!isset($path) || $path==='')
-			return;
-		$parameters=$method->getParameters();
-		foreach ( $parameters as $parameter ) {
-			$name=$parameter->getName();
-			if ($parameter->isVariadic()) {
-				$path=str_replace('{'.$name.'}', '{...' . $name . '}',$path);
-			}elseif ($parameter->isOptional()) {
-				$path=str_replace('{'.$name.'}', '{~' . $name . '}',$path);
-			}
-		}
-		return $path;
-	}
-
-	private static function cleanpath($prefix, $path="") {
-		$path=str_replace("//", "/", $path);
-		if($prefix!=="" && !UString::startswith($prefix, "/"))
-			$prefix="/".$prefix;
-		if (!UString::endswith($prefix, "/"))
-			$prefix=$prefix . "/";
-		if ($path !== "" && UString::startswith($path, "/"))
-			$path=\substr($path, 1);
-		$path=$prefix . $path;
-		if (!UString::endswith($path, "/") && !UString::endswith($path, '(.*?)') && !UString::endswith($path, "(index/)?"))
-			$path=$path . "/";
-		return $path;
 	}
 
 	public function asArray() {
