@@ -11,16 +11,16 @@ use Ubiquity\orm\traits\DAOUpdatesTrait;
 use Ubiquity\orm\traits\DAORelationsTrait;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\traits\DAOUQueries;
-use Ubiquity\events\EventsManager;
+use Ubiquity\orm\traits\DAOCoreTrait;
 
 /**
  * Gateway class between database and object model
  * @author jc
- * @version 1.1.0.0
+ * @version 1.1.1
  * @package orm
  */
 class DAO {
-	use DAOUpdatesTrait,DAORelationsTrait,DAOUQueries;
+	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAOUQueries;
 	
 	
 	/**
@@ -52,21 +52,6 @@ class DAO {
 					$instance->_rest[$member]=$obj->_rest;
 					return $obj;
 				}
-			}
-		}
-	}
-
-	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $mappedBy) {
-		$elementAccessor="get" . ucfirst($mappedBy);
-		foreach ( $array as $element ) {
-			$elementRef=$element->$elementAccessor();
-			if (!is_null($elementRef)) {
-				if(is_object($elementRef))
-					$idElementRef=OrmUtils::getFirstKeyValue($elementRef);
-				else
-					$idElementRef=$elementRef;
-				if ($idElementRef == $fkv)
-					$ret[]=$element;
 			}
 		}
 	}
@@ -116,17 +101,6 @@ class DAO {
 		return $ret;
 	}
 
-	private static function setToMember($member, $instance, $value, $class, $part) {
-		$accessor="set" . ucfirst($member);
-		if (method_exists($instance, $accessor)) {
-			Logger::info("DAO", "Affectation de " . $member . " pour l'objet " . $class,$part);
-			$instance->$accessor($value);
-			$instance->_rest[$member]=$value;
-		} else {
-			Logger::warn("DAO", "L'accesseur " . $accessor . " est manquant pour " . $class,$part);
-		}
-	}
-
 	/**
 	 * Assigns / loads the child records in the $member member of $instance.
 	 * If $ array is null, the records are loaded from the database
@@ -168,34 +142,6 @@ class DAO {
 		}
 	}
 
-	private static function getManyToManyFromArray($instance, $array, $class, $parser) {
-		$ret=[];
-		$continue=true;
-		$accessorToMember="get" . ucfirst($parser->getInversedBy());
-		$myPkAccessor="get" . ucfirst($parser->getMyPk());
-
-		if (!method_exists($instance, $myPkAccessor)) {
-			Logger::warn("DAO", "L'accesseur au membre clé primaire " . $myPkAccessor . " est manquant pour " . $class,"ManyToMany");
-		}
-		if (count($array) > 0){
-			$continue=method_exists(reset($array), $accessorToMember);
-		}
-		if ($continue) {
-			foreach ( $array as $targetEntityInstance ) {
-				$instances=$targetEntityInstance->$accessorToMember();
-				if (is_array($instances)) {
-					foreach ( $instances as $inst ) {
-						if ($inst->$myPkAccessor() == $instance->$myPkAccessor())
-							array_push($ret, $targetEntityInstance);
-					}
-				}
-			}
-		} else {
-			Logger::warn("DAO", "L'accesseur au membre " . $parser->getInversedBy() . " est manquant pour " . $parser->getTargetEntity(),"ManyToMany");
-		}
-		return $ret;
-	}
-
 	/**
 	 * Returns an array of $className objects from the database
 	 * @param string $className class name of the model to load
@@ -208,59 +154,7 @@ class DAO {
 	public static function getAll($className, $condition='', $included=true,$parameters=null,$useCache=NULL) {
 		return self::_getAll($className, new ConditionParser($condition,null,$parameters),$included,$useCache);
 	}
-	
-	protected static function _getOne($className,ConditionParser $conditionParser,$included,$useCache){
-		$conditionParser->limitOne();
-		$retour=self::_getAll($className, $conditionParser, $included,$useCache);
-		if (sizeof($retour) < 1){
-			return null;
-		}
-		$result= \reset($retour);
-		EventsManager::trigger("dao.getone", $result,$className);
-		return $result;
-	}
-	
 
-	
-	/**
-	 * @param string $className
-	 * @param ConditionParser $conditionParser
-	 * @param boolean|array $included
-	 * @param boolean $useCache
-	 * @return array
-	 */
-	protected static function _getAll($className, ConditionParser $conditionParser, $included=true,$useCache=NULL) {
-		$included=self::getIncludedForStep($included);
-		$objects=array ();
-		$invertedJoinColumns=null;
-		$oneToManyFields=null;
-		$manyToManyFields=null;
-		
-		$metaDatas=OrmUtils::getModelMetadata($className);
-		$tableName=$metaDatas["#tableName"];
-		$hasIncluded=$included || (is_array($included) && sizeof($included)>0);
-		if($hasIncluded){
-			self::_initRelationFields($included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields);
-		}
-		$condition=SqlUtils::checkWhere($conditionParser->getCondition());
-		$members=\array_diff($metaDatas["#fieldNames"],$metaDatas["#notSerializable"]);
-		$query=self::$db->prepareAndExecute($tableName, $condition,$members,$conditionParser->getParams(),$useCache);
-		$oneToManyQueries=[];
-		$manyToOneQueries=[];
-		$manyToManyParsers=[];
-		
-		foreach ( $query as $row ) {
-			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$manyToManyFields,$members, $oneToManyQueries,$manyToOneQueries,$manyToManyParsers);
-			$key=OrmUtils::getKeyValues($object);
-			$objects[$key]=$object;
-		}
-		if($hasIncluded){
-			self::_affectsRelationObjects($manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
-		}
-		EventsManager::trigger("dao.getall", $objects,$className);
-		return $objects;
-	}
-	
 	public static function paginate($className,$page=1,$rowsPerPage=20,$condition=null,$included=true){
 		if(!isset($condition)){
 			$condition="1=1";
@@ -274,48 +168,6 @@ class DAO {
 		$condition=SqlUtils::getCondition($ids,$className);
 		$keys=implode(",", OrmUtils::getKeyFields($className));
 		return self::$db->queryColumn("SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM `{$tableName}`, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE ".$condition);
-	}
-
-	/**
-	 * @param array $row
-	 * @param string $className
-	 * @param array $invertedJoinColumns
-	 * @param array $oneToManyFields
-	 * @param array $members
-	 * @param array $oneToManyQueries
-	 * @param array $manyToOneQueries
-	 * @param array $manyToManyParsers
-	 * @return object
-	 */
-	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields,$members,&$oneToManyQueries,&$manyToOneQueries,&$manyToManyParsers) {
-		$o=new $className();
-		foreach ( $row as $k => $v ) {
-			if(sizeof($fields=\array_keys($members,$k))>0){
-				foreach ($fields as $field){
-					$accesseur="set" . ucfirst($field);
-					if (method_exists($o, $accesseur)) {
-						$o->$accesseur($v);
-					}
-				}
-			}
-			$o->_rest[$k]=$v;
-			if (isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
-				$fk="_".$k;
-				$o->$fk=$v;
-				self::prepareManyToOne($manyToOneQueries,$o,$v, $fk,$invertedJoinColumns[$k]);
-			}
-		}
-		if (isset($oneToManyFields)) {
-			foreach ( $oneToManyFields as $k => $annot ) {
-				self::prepareOneToMany($oneToManyQueries,$o, $k, $annot);
-			}
-		}
-		if (isset($manyToManyFields)) {
-			foreach ( $manyToManyFields as $k => $annot ) {
-				self::prepareManyToMany($manyToManyParsers,$o, $k, $annot);
-			}
-		}
-		return $o;
 	}
 
 	/**
@@ -351,14 +203,7 @@ class DAO {
 		}
 		return self::_getOne($className, $conditionParser, $included, $useCache);
 	}
-	
-	private static function parseKey(&$keyValues,$className){
-		if (!is_array($keyValues)) {
-			if (strrpos($keyValues, "=") === false && strrpos($keyValues, ">") === false && strrpos($keyValues, "<") === false) {
-				$keyValues="`" . OrmUtils::getFirstKey($className) . "`='" . $keyValues . "'";
-			}
-		}
-	}
+
 
 	/**
 	 * Establishes the connection to the database using the past parameters
