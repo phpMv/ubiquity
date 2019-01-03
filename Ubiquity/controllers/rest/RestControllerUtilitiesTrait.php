@@ -12,6 +12,7 @@ use Ubiquity\utils\base\UString;
  */
 trait RestControllerUtilitiesTrait {
 	
+	abstract public function _setResponseCode($value);
 	
 	protected function operate_($instance,$callback,$status,$exceptionMessage,$keyValues){
 		if(isset($instance)){
