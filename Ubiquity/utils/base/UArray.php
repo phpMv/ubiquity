@@ -42,6 +42,19 @@ class UArray {
 		if ($pos < sizeof($values))
 			return $values[$pos];
 	}
+	
+	public static function getRecursive($array,$key,$default=null){
+		if(array_key_exists($key,$array)){
+			return $array[$key];
+		}else{
+			foreach ($array as $item){
+				if(is_array($item)){
+					return self::getRecursive($item, $key,$default);
+				}
+			}
+		}
+		return $default;
+	}
 
 	public static function getDefaultValue($array, $key, $default) {
 		if (array_key_exists($key, $array)) {
@@ -101,6 +114,16 @@ class UArray {
 			unset($array[$key]);
 		}
 		return $array;
+	}
+	
+	public static function removeRecursive(&$array,$key){
+		foreach ($array as &$item){
+			if(array_key_exists($key, $item)){
+				unset($item[$key]);
+			}elseif(is_array($item)){
+				self::removeRecursive($item, $key);
+			}
+		}
 	}
 	
 	public static function removeByKeys($array,$keys){
@@ -172,4 +195,6 @@ class UArray {
 		}
 		return $array;
 	}
+	
+	
 }
