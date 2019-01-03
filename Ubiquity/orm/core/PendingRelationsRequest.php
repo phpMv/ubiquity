@@ -44,7 +44,7 @@ class PendingRelationsRequest {
 		return $this->activeObjectsParser;
 	}
 	/**
-	 * @return multitype:\Ubiquity\orm\core\ObjectsConditionParser 
+	 * @return \Ubiquity\orm\core\ObjectsConditionParser[] 
 	 */
 	public function getObjectsConditionParsers() {
 		return $this->objectsConditionParsers;

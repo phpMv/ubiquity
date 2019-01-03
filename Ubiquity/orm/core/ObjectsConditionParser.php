@@ -10,6 +10,9 @@ class ObjectsConditionParser {
 	 * @var ConditionParser
 	 */
 	protected $conditionParser;
+	/**
+	 * @var array
+	 */
 	protected $objects;
 	
 	public function __construct(){
@@ -29,7 +32,7 @@ class ObjectsConditionParser {
 	}
 
 	/**
-	 * @return multitype:
+	 * @return array
 	 */
 	public function getObjects() {
 		return $this->objects;

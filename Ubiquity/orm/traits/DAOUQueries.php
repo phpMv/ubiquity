@@ -62,7 +62,7 @@ trait DAOUQueries {
 	/**
 	 * Returns an array of $className objects from the database
 	 * @param string $className class name of the model to load
-	 * @param string $condition UQL condition
+	 * @param string $ucondition UQL condition
 	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
 	 * @param array|null $parameters the request parameters
 	 * @param boolean $useCache use the active cache if true

@@ -11,7 +11,7 @@ class SqlExport extends DataExport {
 	}
 
 	public function exports($tableName, $fields, $condition="") {
-		$datas=DAO::$db->prepareAndExecute($tableName, $condition, $fields, false);
+		$datas=DAO::$db->prepareAndExecute($tableName, $condition, $fields, null,false);
 		return $this->generateInsert($tableName, $fields, $datas);
 	}
 
