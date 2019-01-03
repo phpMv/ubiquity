@@ -1,9 +1,3 @@
-build:
-  nodes:
-    analysis:
-      tests:
-        override:
-          - php-scrutinizer-run
 filter:
     excluded_paths:
         - Ubiquity/log/
@@ -18,6 +12,4 @@ filter:
 checks:
     php:
         code_rating: true
-        duplication: true
-        excluded_dependencies:
-            - mindplay/annotations        
+        duplication: true       
