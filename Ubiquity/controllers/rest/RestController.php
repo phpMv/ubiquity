@@ -108,10 +108,10 @@ abstract class RestController extends Controller {
 
 	/**
 	 * Default route for requiring a single object
-	 * @route("{id}","methods"=>["get","options"])
+	 * @route("{id}","methods"=>["get","options"],"requirements"=>["id"=>"[0-9]+"])
 	 */
 	public function getById($id){
-		return $this->getOne($id,true,true);
+		return $this->getOne($id,true,false);
 	}
 
 	/**
@@ -190,19 +190,10 @@ abstract class RestController extends Controller {
 	 */
 	public function update(...$keyValues){
 		$instance=DAO::getOne($this->model, $keyValues);
-		if(isset($instance)){
-			$this->_setValuesToObject($instance,URequest::getInput());
-			$result=DAO::update($instance);
-			if($result){
-				$formatter=$this->_getResponseFormatter();
-				echo $formatter->format(["status"=>"updated","data"=>$formatter->cleanRestObject($instance)]);
-			}else{
-				throw new \Exception("Unable to update the instance");
-			}
-		}else{
-			$this->_setResponseCode(404);
-			echo $this->_getResponseFormatter()->format(["message"=>"No result found","keyValues"=>$keyValues]);
-		}
+		$this->operate_($instance, function($instance){
+			$this->_setValuesToObject($instance,URequest::getDatas());
+			return DAO::update($instance);
+		}, "updated", "Unable to update the instance", $keyValues);
 	}
 
 	/**
@@ -213,19 +204,10 @@ abstract class RestController extends Controller {
 	public function add(){
 		$model=$this->model;
 		$instance=new $model();
-		if(isset($instance)){
-			$this->_setValuesToObject($instance,URequest::getInput());
-			$result=DAO::insert($instance);
-			if($result){
-				$formatter=$this->_getResponseFormatter();
-				echo $formatter->format(["status"=>"inserted","data"=>$formatter->cleanRestObject($instance)]);
-			}else{
-				throw new \Exception("Unable to insert the instance");
-			}
-		}else{
-			$this->_setResponseCode(500);
-			echo $this->_getResponseFormatter()->format(["message"=>"Unable to create ".$model." instance"]);
-		}
+		$this->operate_($instance, function($instance){
+			$this->_setValuesToObject($instance,URequest::getDatas());
+			return DAO::insert($instance);
+		}, "inserted", "Unable to insert the instance", []);
 	}
 
 	/**
@@ -237,17 +219,8 @@ abstract class RestController extends Controller {
 	 */
 	public function delete(...$keyValues){
 		$instance=DAO::getOne($this->model, $keyValues);
-		if(isset($instance)){
-			$result=DAO::remove($instance);
-			if($result){
-				$formatter=$this->_getResponseFormatter();
-				echo $formatter->format(["status"=>"deleted","data"=>$formatter->cleanRestObject($instance)]);
-			}else{
-				throw new \Exception("Unable to delete the instance");
-			}
-		}else{
-			$this->_setResponseCode(404);
-			echo $this->_getResponseFormatter()->format(["message"=>"No result found","keyValues"=>$keyValues]);
-		}
+		$this->operate_($instance, function($instance){
+			return DAO::remove($instance);
+		}, "deleted", "Unable to delete the instance", $keyValues);
 	}
 }

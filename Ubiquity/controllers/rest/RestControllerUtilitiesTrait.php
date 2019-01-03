@@ -11,6 +11,23 @@ use Ubiquity\utils\base\UString;
  * @property ResponseFormatter $responseFormatter
  */
 trait RestControllerUtilitiesTrait {
+	
+	
+	protected function operate_($instance,$callback,$status,$exceptionMessage,$keyValues){
+		if(isset($instance)){
+			$result=$callback($instance);
+			if($result){
+				$formatter=$this->_getResponseFormatter();
+				echo $formatter->format(["status"=>$status,"data"=>$formatter->cleanRestObject($instance)]);
+			}else{
+				throw new \Exception($exceptionMessage);
+			}
+		}else{
+			$this->_setResponseCode(404);
+			echo $this->_getResponseFormatter()->format(["message"=>"No result found","keyValues"=>$keyValues]);
+		}
+	}
+	
 	protected function _getResponseFormatter(){
 		if(!isset($this->responseFormatter)){
 			$this->responseFormatter=$this->getResponseFormatter();
