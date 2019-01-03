@@ -6,6 +6,7 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UString;
 use Ubiquity\annotations\router\RouteAnnotation;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\utils\base\UArray;
 
 /**
  * Scans a controller to detect routes defined by annotations 
@@ -95,10 +96,14 @@ class ControllerParser {
 			$routeAnnotations=$arrayAnnotsMethod["annotations"];
 
 			foreach ( $routeAnnotations as $routeAnnotation ) {
-				$params=[ "path" => $routeAnnotation->path,"methods" => $routeAnnotation->methods,"name" => $routeAnnotation->name,"cache" => $routeAnnotation->cache,"duration" => $routeAnnotation->duration,"requirements" => $routeAnnotation->requirements ];
+				$params=[ "path" => $routeAnnotation->path,"methods" => $routeAnnotation->methods,"name" => $routeAnnotation->name,"cache" => $routeAnnotation->cache,"duration" => $routeAnnotation->duration,"requirements" => $routeAnnotation->requirements,"priority"=>$routeAnnotation->priority ];
 				self::parseRouteArray($result, $this->controllerClass, $params, $arrayAnnotsMethod["method"], $method, $prefix, $httpMethods);
 			}
 		}
+		uasort($result, function ($item1, $item2) {
+			return UArray::getRecursive($item2,"priority",0) <=> UArray::getRecursive($item1,"priority",0);
+		});
+		UArray::removeRecursive($result,"priority");
 		return $result;
 	}
 
@@ -115,13 +120,14 @@ class ControllerParser {
 		$duration=$routeArray["duration"];
 		$path=$pathParameters["path"];
 		$parameters=$pathParameters["parameters"];
+		$priority=$routeArray["priority"];
 		$path=self::cleanpath($prefix, $path);
 		if (isset($routeArray["methods"]) && \is_array($routeArray["methods"])) {
-			self::createRouteMethod($result, $controllerClass, $path, $routeArray["methods"], $methodName, $parameters, $name, $cache, $duration);
+			self::createRouteMethod($result, $controllerClass, $path, $routeArray["methods"], $methodName, $parameters, $name, $cache, $duration,$priority);
 		} elseif (\is_array($httpMethods)) {
-			self::createRouteMethod($result, $controllerClass, $path, $httpMethods, $methodName, $parameters, $name, $cache, $duration);
+			self::createRouteMethod($result, $controllerClass, $path, $httpMethods, $methodName, $parameters, $name, $cache, $duration,$priority);
 		} else {
-			$result[$path]=[ "controller" => $controllerClass,"action" => $methodName,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration];
+			$result[$path]=[ "controller" => $controllerClass,"action" => $methodName,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration,"priority"=>$priority];
 		}
 	}
 
@@ -172,9 +178,9 @@ class ControllerParser {
 		}
 	}
 
-	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration) {
+	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration,$priority) {
 		foreach ( $httpMethods as $httpMethod ) {
-			$result[$path][$httpMethod]=[ "controller" => $controllerClass,"action" => $method,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration ];
+			$result[$path][$httpMethod]=[ "controller" => $controllerClass,"action" => $method,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration,"priority"=>$priority ];
 		}
 	}
 

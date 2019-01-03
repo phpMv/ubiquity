@@ -16,6 +16,7 @@ class RouteAnnotation extends BaseAnnotation {
 	public $inherited;
 	public $automated;
 	public $requirements;
+	public $priority;
 
 	/**
 	 * Initialize the annotation.
@@ -24,6 +25,7 @@ class RouteAnnotation extends BaseAnnotation {
 		$this->inherited=false;
 		$this->automated=false;
 		$this->requirements=[];
+		$this->priority=0;
 		if (isset($properties[0])) {
 			$this->path=$properties[0];
 			unset($properties[0]);
