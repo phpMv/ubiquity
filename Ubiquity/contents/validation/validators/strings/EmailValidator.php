@@ -11,7 +11,7 @@ namespace Ubiquity\contents\validation\validators\strings;
 class EmailValidator extends RegexValidator {
 	
 	public function __construct(){
-		$this->message="{value is not a valid email address}";
+		$this->message="{value} is not a valid email address";
 		$this->ref="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i";
 		$this->match=true;
 	}

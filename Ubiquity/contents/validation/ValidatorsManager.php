@@ -17,10 +17,13 @@ use Ubiquity\contents\validation\validators\basic\IsEmptyValidator;
 use Ubiquity\contents\validation\validators\basic\IsTrueValidator;
 use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
 use Ubiquity\contents\validation\validators\strings\RegexValidator;
+use Ubiquity\contents\validation\validators\strings\EmailValidator;
+use Ubiquity\contents\validation\validators\strings\UrlValidator;
 
 /**
- * @author jc
- *
+ * Validators manager
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
  */
 class ValidatorsManager {
 	
@@ -39,7 +42,9 @@ class ValidatorsManager {
 			"lessThan"=>LessThanValidator::class,
 			"length"=>LengthValidator::class,
 			"id"=>IdValidator::class,
-			"regex"=>RegexValidator::class
+			"regex"=>RegexValidator::class,
+			"email"=>EmailValidator::class,
+			"url"=>UrlValidator::class
 			
 	];
 	

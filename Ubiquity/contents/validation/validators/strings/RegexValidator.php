@@ -10,7 +10,7 @@ use Ubiquity\utils\base\UString;
 /**
  * Validates a string with a regex
  * Usage @validator("regex",pattern)
- * @author jc
+ * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
  */
 class RegexValidator extends Validator {
