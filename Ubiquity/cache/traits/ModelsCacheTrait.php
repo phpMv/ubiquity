@@ -49,7 +49,9 @@ trait ModelsCacheTrait{
 				}
 			}
 		}
-		ValidatorsManager::initModelsValidators($config);
+		if(!$forChecking){
+			ValidatorsManager::initModelsValidators($config);
+		}
 		if(!$silent){
 			echo "Models cache reset\n";
 		}

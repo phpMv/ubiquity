@@ -15,6 +15,7 @@ class ValidatorAnnotation extends BaseAnnotation {
 	public $type;
 	public $message;
 	public $severity;
+	public $group;
 	public $constraints=[];
 	
 	/**

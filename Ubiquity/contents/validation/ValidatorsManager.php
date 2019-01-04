@@ -24,6 +24,7 @@ use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
 class ValidatorsManager {
 	
 	protected static $validatorInstances=[];
+
 	public static $validatorTypes=[
 			"notNull"=>NotNullValidator::class,
 			"isNull"=>IsNullValidator::class,
@@ -39,12 +40,23 @@ class ValidatorsManager {
 			"id"=>IdValidator::class
 			
 	];
+	
 	protected static $key="contents/validators/";
 	
+	/**
+	 * Registers a validator type for using with @validator annotation
+	 * @param string $type
+	 * @param string $validatorClass
+	 */
 	public static function registerType($type,$validatorClass){
 		self::$validatorTypes[$type]=$validatorClass;
 	}
 	
+	/**
+	 * Parses models and save validators in cache
+	 * to use in dev only
+	 * @param array $config
+	 */
 	public static function initModelsValidators(&$config){
 		$models=CacheManager::getModels($config,true);
 		foreach ($models as $model){
@@ -69,16 +81,56 @@ class ValidatorsManager {
 		return [];
 	}
 	
-	public static function validate($instance){
+	protected static function getGroupValidators(array $validators,$group){
 		$result=[];
-		$members=self::fetch(get_class($instance));
+		foreach ($validators as $member=>$validators){
+			$filteredValidators=self::getGroupMemberValidators($validators, $group);
+			if(sizeof($filteredValidators)){
+				$result[$member]=$filteredValidators;
+			}
+		}
+		return $result;
+	}
+	
+	protected static function getGroupMemberValidators(array $validators,$group){
+		$result=[];
+		foreach ($validators as $validator){
+			if(isset($validator["group"]) && $validator["group"]===$group){
+				$result[]=$validator;
+			}
+		}
+		return $result;
+	}
+	
+	/**
+	 * Validates an instance
+	 * @param object $instance
+	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation[]
+	 */
+	public static function validate($instance){
+		return self::validate_($instance,self::fetch(get_class($instance)));
+	}
+	
+	/**
+	 * Validates an instance using a group of validators
+	 * @param object $instance
+	 * @param string $group
+	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation[]
+	 */
+	public static function validateGroup($instance,$group){
+		$members=self::getGroupValidators(self::fetch(get_class($instance)), $group);
+		return self::validate_($instance,$members);
+	}
+	
+	protected static function validate_($instance,$members){
+		$result=[];
 		foreach ($members as $member=>$validators){
 			$accessor="get".ucfirst($member);
 			if(method_exists($instance, $accessor)){
 				foreach ($validators as $validator){
 					$validatorInstance=self::getValidatorInstance($validator["type"]);
 					if($validatorInstance!==false){
-						$valid=$validatorInstance->validate_($instance->$accessor(),$member,$instance,$validator["constraints"],@$validator["severity"],@$validator["message"]);
+						$valid=$validatorInstance->validate_($instance->$accessor(),$member,$validator["constraints"],@$validator["severity"],@$validator["message"]);
 						if($valid!==true){
 							$result[]=$valid;
 						}
