@@ -38,7 +38,13 @@ class BaseAnnotation extends Annotation {
 	public function initAnnotation(array $properties){
 		foreach ($properties as $name => $value) {
 			if(is_array($this->$name)){
-				$this->$name[]=$value;
+				if(is_array($value)){
+					foreach ($value as $k=>$v){
+						$this->$name[$k]=$v;
+					}
+				}else{
+					$this->$name[]=$value;
+				}
 			}else{
 				$this->$name = $value;
 			}

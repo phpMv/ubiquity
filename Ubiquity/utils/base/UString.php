@@ -102,5 +102,9 @@ class UString {
 	public static function mask($secretString,$maskChar="*"){
 		return str_repeat($maskChar, strlen($secretString));
 	}
+	
+	public static function isValid($value){
+		return is_scalar($value) || (\is_object($value) && method_exists($value, '__toString'));
+	}
 }
 

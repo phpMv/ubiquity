@@ -8,7 +8,15 @@ abstract class Validator implements ValidatorInterface{
 	protected $member;
 	protected $value;
 	
-	public function validate_($value,$member,$instance,$params,$severity='warning',$message=null){
+	/**
+	 * @param mixed $value
+	 * @param string $member
+	 * @param array $params
+	 * @param string $severity
+	 * @param string $message
+	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation|boolean
+	 */
+	public function validate_($value,$member,$params,$severity='warning',$message=null){
 		$this->value=$value;
 		$this->setParams($params);
 		if(!$this->validate($value)){
@@ -23,6 +31,7 @@ abstract class Validator implements ValidatorInterface{
 			$this->$member=$value;
 		}
 	}
+	
 	/**
 	 * @return mixed
 	 */

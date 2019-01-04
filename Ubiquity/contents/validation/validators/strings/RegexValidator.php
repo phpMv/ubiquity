@@ -5,12 +5,13 @@ namespace Ubiquity\contents\validation\validators\strings;
 
 use Ubiquity\contents\validation\validators\Validator;
 use Ubiquity\exceptions\ValidatorException;
+use Ubiquity\utils\base\UString;
 
 /**
- * Validates a string
- * with @validator("regex",pattern)
+ * Validates a string with a regex
+ * Usage @validator("regex",pattern)
  * @author jc
- *
+ * @version 1.0.0
  */
 class RegexValidator extends Validator {
 	protected $ref;
@@ -25,11 +26,11 @@ class RegexValidator extends Validator {
 		if (null === $value || '' === $value) {
 			return;
 		}
-		if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
+		if (!UString::isValid($value)) {
 			throw new ValidatorException('This value can not be converted to string');
 		}
 		$value = (string) $value;
-		return $this->match xor preg_match($this->ref, $value);
+		return !($this->match xor preg_match($this->ref, $value));
 	}
 	
 	/**
