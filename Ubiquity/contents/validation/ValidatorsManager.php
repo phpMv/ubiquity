@@ -16,6 +16,7 @@ use Ubiquity\contents\validation\validators\basic\IsNullValidator;
 use Ubiquity\contents\validation\validators\basic\IsEmptyValidator;
 use Ubiquity\contents\validation\validators\basic\IsTrueValidator;
 use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
+use Ubiquity\contents\validation\validators\strings\RegexValidator;
 
 /**
  * @author jc
@@ -37,7 +38,8 @@ class ValidatorsManager {
 			"greaterThan"=>GreaterThanValidator::class,
 			"lessThan"=>LessThanValidator::class,
 			"length"=>LengthValidator::class,
-			"id"=>IdValidator::class
+			"id"=>IdValidator::class,
+			"regex"=>RegexValidator::class
 			
 	];
 	

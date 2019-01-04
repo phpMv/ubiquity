@@ -34,6 +34,16 @@ class BaseAnnotation extends Annotation {
 		$fields=$this->getPropertiesAndValues();
 		return UArray::asPhpArray($fields);
 	}
+	
+	public function initAnnotation(array $properties){
+		foreach ($properties as $name => $value) {
+			if(is_array($this->$name)){
+				$this->$name[]=$value;
+			}else{
+				$this->$name = $value;
+			}
+		}
+	}
 
 	public function __toString() {
 		$extsStr=$this->asPhpArray();
