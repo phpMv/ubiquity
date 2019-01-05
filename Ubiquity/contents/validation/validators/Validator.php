@@ -2,11 +2,15 @@
 
 namespace Ubiquity\contents\validation\validators;
 
+use Ubiquity\utils\base\UString;
+use Ubiquity\exceptions\ValidatorException;
+
 abstract class Validator implements ValidatorInterface{
 	protected $modifiedMessage;
 	protected $message;
 	protected $member;
 	protected $value;
+	protected $notNull;
 	
 	/**
 	 * @param mixed $value
@@ -53,6 +57,15 @@ abstract class Validator implements ValidatorInterface{
 	public function getParameters(): array {
 		return [];
 		
+	}
+	
+	public function validate($value) {
+		if ($this->notNull!==false && (null === $value || '' === $value)) {
+			return;
+		}
+		if (!UString::isValid($value)) {
+			throw new ValidatorException('This value can not be converted to string');
+		}
 	}
 	
 	/**
