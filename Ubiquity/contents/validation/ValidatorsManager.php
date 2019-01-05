@@ -19,6 +19,13 @@ use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
 use Ubiquity\contents\validation\validators\strings\RegexValidator;
 use Ubiquity\contents\validation\validators\strings\EmailValidator;
 use Ubiquity\contents\validation\validators\strings\UrlValidator;
+use Ubiquity\contents\validation\validators\strings\IpValidator;
+use Ubiquity\contents\validation\validators\comparison\RangeValidator;
+use Ubiquity\contents\validation\validators\comparison\GreaterThanOrEqualValidator;
+use Ubiquity\contents\validation\validators\comparison\LessThanOrEqualValidator;
+use Ubiquity\contents\validation\validators\dates\DateValidator;
+use Ubiquity\contents\validation\validators\dates\DateTimeValidator;
+use Ubiquity\contents\validation\validators\dates\TimeValidator;
 
 /**
  * Validators manager
@@ -39,12 +46,19 @@ class ValidatorsManager {
 			"equals"=>EqualsValidator::class,
 			"type"=>TypeValidator::class,
 			"greaterThan"=>GreaterThanValidator::class,
+			"greaterThanOrEqual"=>GreaterThanOrEqualValidator::class,
 			"lessThan"=>LessThanValidator::class,
+			"lessThanOrEqual"=>LessThanOrEqualValidator::class,
 			"length"=>LengthValidator::class,
 			"id"=>IdValidator::class,
 			"regex"=>RegexValidator::class,
 			"email"=>EmailValidator::class,
-			"url"=>UrlValidator::class
+			"url"=>UrlValidator::class,
+			"ip"=>IpValidator::class,
+			"range"=>RangeValidator::class,
+			"date"=>DateValidator::class,
+			"dateTime"=>DateTimeValidator::class,
+			"time"=>TimeValidator::class
 			
 	];
 	
