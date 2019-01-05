@@ -8,7 +8,7 @@ use Ubiquity\log\Logger;
  * Validate Strings length using min, max, charset,notNull parameters
  * @author jc
  */
-class LengthValidator extends ValidatorMultipleNotNull {
+class LengthValidator extends ValidatorMultiple {
 	
 	protected $min;
 	protected $max;
@@ -27,9 +27,6 @@ class LengthValidator extends ValidatorMultipleNotNull {
 	public function validate($value) {
 		if(parent::validate($value)===false){
 			return false;
-		}
-		if (null === $value || '' === $value) {
-			return true;
 		}
 		if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
 			Logger::warn("Validation", "This value is not valid string for the charset ".$this->charset);

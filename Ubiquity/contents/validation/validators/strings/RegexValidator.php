@@ -4,8 +4,6 @@ namespace Ubiquity\contents\validation\validators\strings;
 
 
 use Ubiquity\contents\validation\validators\Validator;
-use Ubiquity\exceptions\ValidatorException;
-use Ubiquity\utils\base\UString;
 
 /**
  * Validates a string with a regex
@@ -23,12 +21,7 @@ class RegexValidator extends Validator {
 	}
 	
 	public function validate($value) {
-		if (null === $value || '' === $value) {
-			return;
-		}
-		if (!UString::isValid($value)) {
-			throw new ValidatorException('This value can not be converted to string');
-		}
+		parent::validate($value);
 		$value = (string) $value;
 		return !($this->match xor preg_match($this->ref, $value));
 	}

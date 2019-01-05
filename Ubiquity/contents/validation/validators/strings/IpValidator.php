@@ -4,8 +4,6 @@ namespace Ubiquity\contents\validation\validators\strings;
 
 
 use Ubiquity\contents\validation\validators\Validator;
-use Ubiquity\exceptions\ValidatorException;
-use Ubiquity\utils\base\UString;
 
 /**
  * Validates an address ip
@@ -22,12 +20,7 @@ class IpValidator extends Validator {
 	}
 	
 	public function validate($value) {
-		if (null === $value || '' === $value) {
-			return;
-		}
-		if (!UString::isValid($value)) {
-			throw new ValidatorException('This value can not be converted to string');
-		}
+		parent::validate($value);
 		$value = (string) $value;
 		
 		switch ($this->ref) {

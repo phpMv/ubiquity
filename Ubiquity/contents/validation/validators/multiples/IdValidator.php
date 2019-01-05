@@ -6,7 +6,7 @@ namespace Ubiquity\contents\validation\validators\multiples;
  * Validate int identifiers (notNull positive integer)
  * @author jc
  */
-class IdValidator extends ValidatorMultipleNotNull {
+class IdValidator extends ValidatorMultiple {
 	
 	public function __construct(){
 		parent::__construct();
@@ -19,9 +19,6 @@ class IdValidator extends ValidatorMultipleNotNull {
 	public function validate($value) {
 		if (!parent::validate($value)) {
 			return false;
-		}
-		if(null==$value){
-			return true;
 		}
 		if(!is_integer($value)){
 			$this->violation="type";

@@ -4,22 +4,30 @@ namespace Ubiquity\contents\validation\validators\comparison;
 
 use Ubiquity\contents\validation\validators\Validator;
 
-class LessThanValidator extends Validator {
+/**
+ * @author jcheron <myaddressmail@gmail.com>
+ *
+ */
+class RangeValidator extends Validator {
 	
-	protected $ref;
+	protected $min;
+	protected $max;
+	
 	public function __construct(){
-		$this->message="This value should be smaller than `{ref}`";
+		$this->message="This value should be between `{min}` and `{max}`";
 	}
+	
 	public function validate($value) {
 		parent::validate($value);
-		return $value<$this->ref;
+		return $value>=$this->min && $value<=$this->max;
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 * @see \Ubiquity\contents\validation\validators\Validator::getParameters()
 	 */
 	public function getParameters(): array {
-		return ["ref","value"];
+		return ["min","max","value"];
 	}
 
 }

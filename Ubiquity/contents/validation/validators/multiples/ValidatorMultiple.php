@@ -3,10 +3,29 @@
 namespace Ubiquity\contents\validation\validators\multiples;
 
 use Ubiquity\contents\validation\validators\Validator;
+use Ubiquity\utils\base\UString;
+use Ubiquity\exceptions\ValidatorException;
 
 abstract class ValidatorMultiple extends Validator{
-
+	
 	protected $violation;
+	
+	public function __construct(){
+		$this->message=[
+				"notNull"=>"This value should not be null"
+		];
+	}
+
+	public function validate($value) {
+		if($this->notNull===true && null==$value){
+			$this->violation="notNull";
+			return false;
+		}
+		if (!UString::isValid($value)) {
+			throw new ValidatorException('This value can not be converted to string');
+		}
+		return true;
+	}
 	
 	/**
 	 * @return array|string

@@ -13,8 +13,8 @@ class TypeValidator extends Validator {
 	}
 	
 	public function validate($value) {
-		if (null === $value) {
-			return true;
+		if ($this->notNull!==false && (null === $value || '' === $value)) {
+			return;
 		}
 		$type = strtolower($this->ref);
 		$type = 'boolean' == $type?'bool':$type;
