@@ -70,13 +70,11 @@ class UArray {
 			$tab=str_repeat("\t",$depth);
 			$nl=PHP_EOL;
 		}
-		if (self::isAssociative($array)) {
-			foreach ( $array as $k => $v ) {
+		foreach ( $array as $k => $v ) {
+			if(is_string($k)){
 				$exts[]="\"" . UString::doubleBackSlashes($k) . "\"=>" . self::parseValue($v, 'array',$depth+1,$format);
-			}
-		} else {
-			foreach ( $array as $v ) {
-				$exts[]=self::parseValue($v, 'array',$depth+1,$format);
+			}else{
+				$exts[]=self::parseValue($v, $prefix,$depth+1,$format);
 			}
 		}
 		if (\sizeof($exts) > 0 || $prefix !== "") {

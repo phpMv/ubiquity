@@ -3,6 +3,7 @@
 namespace Ubiquity\annotations;
 
 use Ubiquity\contents\validation\ValidatorsManager;
+use Ubiquity\utils\base\UArray;
 
 /**
  * Validator annotation
@@ -40,5 +41,37 @@ class ValidatorAnnotation extends BaseAnnotation {
 		if (!isset(ValidatorsManager::$validatorTypes[$this->type])) {
 			throw new \Exception('This type of annotation does not exists : '.$this->type);
 		}
+	}
+	
+	public static function initializeFromModel($type,$ref=null,$constraints=[]){
+		$validator=new ValidatorAnnotation();
+		if(!is_array($constraints)){
+			$constraints=[];
+		}
+		if(isset($ref)){
+			$constraints["ref"]=$ref;
+		}
+		$validator->type=$type;
+		$validator->constraints=$constraints;
+		return $validator;
+	}
+	
+	protected function asAnnotation(){
+		$fields=$this->getPropertiesAndValues();
+		$result=[];
+		$result[]=$fields["type"];
+		unset($fields["type"]);
+		if(isset($fields["constraints"])  && isset($fields["constraints"]["ref"]) ){
+			$result[]=$fields["constraints"]["ref"];
+			unset($fields["constraints"]["ref"]);
+		}
+		if(sizeof($fields)>0){
+			foreach ($fields as $field=>$value){
+				if((is_array($value) && sizeof($value)>0) || !is_array($value)){
+					$result[$field]=$value;
+				}
+			}
+		}
+		return UArray::asPhpArray($result);
 	}
 }

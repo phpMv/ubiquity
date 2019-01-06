@@ -50,9 +50,13 @@ class BaseAnnotation extends Annotation {
 			}
 		}
 	}
+	
+	protected function asAnnotation(){
+		return $this->asPhpArray();
+	}
 
 	public function __toString() {
-		$extsStr=$this->asPhpArray();
+		$extsStr=$this->asAnnotation();
 		$className=get_class($this);
 		$annotName=\substr($className, \strlen("Ubiquity\annotations\\"));
 		$annotName=\substr($annotName, 0, \strlen($annotName) - \strlen("Annotation"));

@@ -9,6 +9,7 @@ use Ubiquity\annotations\ManyToManyAnnotation;
 use Ubiquity\annotations\JoinTableAnnotation;
 use Ubiquity\annotations\JoinColumnAnnotation;
 use Ubiquity\annotations\ColumnAnnotation;
+use Ubiquity\annotations\ValidatorAnnotation;
 
 class Member {
 	private $name;
@@ -36,7 +37,7 @@ class Member {
 			} else {
 				$annotationsStr.="\n\t * " . \end($annotations);
 			}
-			$annotationsStr.="\n\t*/";
+			$annotationsStr.="\n\t**/";
 		}
 		return $annotationsStr . "\n\tprivate $" . $this->name . ";\n";
 	}
@@ -138,5 +139,19 @@ class Member {
 		if(isset($this->annotations["column"]))
 			return $this->annotations["column"]->dbType;
 		return "mixed";
+	}
+	
+	public function addValidators(){
+		if($this->primary){
+			$idValidator=ValidatorAnnotation::initializeFromModel("id", null,["notNull"=>false]);
+			$this->annotations[]=$idValidator;
+		}
+		switch ($this->getDbType()){
+			case "tinyint(1)":
+				$validator=ValidatorAnnotation::initializeFromModel("type","boolean");
+		}
+		if(isset($validator)){
+			$this->annotations[]=$validator;
+		}
 	}
 }
