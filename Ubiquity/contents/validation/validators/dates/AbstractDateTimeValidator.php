@@ -2,10 +2,10 @@
 
 namespace Ubiquity\contents\validation\validators\dates;
 
-use Ubiquity\contents\validation\validators\Validator;
 use Ubiquity\contents\validation\validators\ConstraintViolation;
+use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
-abstract class AbstractDateTimeValidator extends Validator {
+abstract class AbstractDateTimeValidator extends ValidatorHasNotNull {
 	
 	protected $ref;
 	protected $strict=true;

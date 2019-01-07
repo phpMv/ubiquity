@@ -2,15 +2,16 @@
 
 namespace Ubiquity\contents\validation\validators\basic;
 
-use Ubiquity\contents\validation\validators\Validator;
 use Ubiquity\utils\base\UString;
+use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
-class IsFalseValidator extends Validator {
+class IsFalseValidator extends ValidatorHasNotNull {
 	
 	public function __construct(){
 		$this->message="This value should return false";
 	}
 	public function validate($value) {
+		parent::validate($value);
 		return UString::isBooleanFalse($value);
 	}
 	

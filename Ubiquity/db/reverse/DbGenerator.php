@@ -5,6 +5,7 @@ namespace Ubiquity\db\reverse;
 use Ubiquity\orm\reverse\TableReversor;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\db\utils\DbTypes;
 
 class DbGenerator {
 	protected $nameProtection;
@@ -20,13 +21,11 @@ class DbGenerator {
 	protected $sqlScript=[];
 	protected $fieldTypes;
 	protected $defaultType;
-	protected $typeMatch='@([\s\S]*?)((?:\((?:\d)+\))*?)$@';
-	protected $intMatch='@^.*?int.*?((?:\((?:\d)+\))*?)$@';
 	protected $manyToManys=[];
 
 
 	public function isInt($fieldType){
-		return \preg_match($this->intMatch, $fieldType);
+		return DbTypes::isInt($fieldType);
 	}
 	public function __construct(){
 		$this->nameProtection="`";
@@ -38,14 +37,8 @@ class DbGenerator {
 		$this->foreignKeyMask="ALTER TABLE %tableName% ADD CONSTRAINT %fkName% FOREIGN KEY (%fkFieldName%) REFERENCES %referencesTableName% (%referencesFieldName%) ON DELETE %onDelete% ON UPDATE %onUpdate%";
 		$this->alterTableAddKey="ALTER TABLE %tableName% ADD %type% KEY (%pkFields%)";
 		$this->autoIncMask="ALTER TABLE %tableName% MODIFY %field% AUTO_INCREMENT, AUTO_INCREMENT=%value%";
-		$this->fieldTypes=["tinyint"=>0,"int"=>0,"decimal"=>0,"float"=>0,"double"=>0,"smallint"=>0,"mediumint"=>0,"bigint"=>0,
-							"date"=>"NULL","time"=>"NULL","datetime"=>"CURRENT_TIMESTAMP","timestamp"=>"CURRENT_TIMESTAMP","year"=>"'0000'",
-							"tinytext"=>"NULL","text"=>"NULL","mediumtext"=>"NULL","longtext"=>"NULL",
-							"tinyblob"=>"NULL","blob"=>"NULL","mediumblob"=>"NULL","longblob"=>"NULL",
-							"char"=>"NULL","varchar"=>"NULL","binary"=>"NULL","varbinary"=>"NULL",
-							"enum"=>"''","set"=>"''"
-		];
-		$this->defaultType="varchar(30)";
+		$this->fieldTypes=DbTypes::TYPES;
+		$this->defaultType=DbTypes::DEFAULT_TYPE;
 	}
 
 	public function createDatabase($name){
@@ -120,16 +113,13 @@ class DbGenerator {
 		$result=$fieldAttributes;
 		$type=$fieldAttributes["type"];
 		$existingType=false;
-		$matches=[];
-		if (\preg_match($this->typeMatch, $type,$matches)) {
-			if(isset($matches[1])){
-				$strType=$matches[1];
-				if(isset($this->fieldTypes[$strType])){
-					if(!isset($fieldAttributes["extra"]) || $fieldAttributes["extra"]=="") {
-						$result["extra"]="DEFAULT ".$this->fieldTypes[$strType];
-					}
-					$existingType=true;
+		$strType=DbTypes::getType($type);
+		if(isset($strType)){
+			if(isset($this->fieldTypes[$strType])){
+				if(!isset($fieldAttributes["extra"]) || $fieldAttributes["extra"]=="") {
+					$result["extra"]="DEFAULT ".$this->fieldTypes[$strType];
 				}
+				$existingType=true;
 			}
 		}
 		if(!$existingType){

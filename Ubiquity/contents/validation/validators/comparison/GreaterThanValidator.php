@@ -2,9 +2,9 @@
 
 namespace Ubiquity\contents\validation\validators\comparison;
 
-use Ubiquity\contents\validation\validators\Validator;
+use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
-class GreaterThanValidator extends Validator {
+class GreaterThanValidator extends ValidatorHasNotNull {
 	
 	protected $ref;
 	

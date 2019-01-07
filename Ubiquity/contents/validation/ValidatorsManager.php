@@ -26,6 +26,7 @@ use Ubiquity\contents\validation\validators\comparison\LessThanOrEqualValidator;
 use Ubiquity\contents\validation\validators\dates\DateValidator;
 use Ubiquity\contents\validation\validators\dates\DateTimeValidator;
 use Ubiquity\contents\validation\validators\dates\TimeValidator;
+use Ubiquity\contents\validation\validators\basic\IsBooleanValidator;
 
 /**
  * Validators manager
@@ -33,9 +34,7 @@ use Ubiquity\contents\validation\validators\dates\TimeValidator;
  * @version 1.0.0
  */
 class ValidatorsManager {
-	
-	protected static $validatorInstances=[];
-
+	protected static $instanceValidators=[];
 	public static $validatorTypes=[
 			"notNull"=>NotNullValidator::class,
 			"isNull"=>IsNullValidator::class,
@@ -43,6 +42,7 @@ class ValidatorsManager {
 			"isEmpty"=>IsEmptyValidator::class,
 			"isTrue"=>IsTrueValidator::class,
 			"isFalse"=>IsFalseValidator::class,
+			"isBool"=>IsBooleanValidator::class,
 			"equals"=>EqualsValidator::class,
 			"type"=>TypeValidator::class,
 			"greaterThan"=>GreaterThanValidator::class,
@@ -133,6 +133,56 @@ class ValidatorsManager {
 	}
 	
 	/**
+	 * Validates an array of objects
+	 * @param array $instances
+	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation[]
+	 */
+	public static function validateInstances($instances){
+		if(sizeof($instances)>0){
+			$instance=reset($instances);
+			$class=get_class($instance);
+			$members=self::fetch($class);
+			self::initInstancesValidators($instance, $members);
+			return self::validateInstances_($instances, self::$instanceValidators[$class]);
+		}
+		return [];
+	}
+	
+	protected static function validateInstances_($instances,$members){
+		$result=[];
+		foreach ($instances as $instance){
+			foreach ($members as $member=>$validators){
+				$accessor="get".ucfirst($member);
+				foreach ($validators as $validator){
+					$valid=$validator->validate_($instance->$accessor());
+					if($valid!==true){
+						$result[]=$valid;
+					}
+				}
+			}
+		}
+		return $result;
+	}
+	
+	/**
+	 * Validates an array of objects using a group of validators
+	 * @param array $instances
+	 * @param string $group
+	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation[]
+	 */
+	public static function validateInstancesGroup($instances,$group){
+		if(sizeof($instances)>0){
+			$instance=reset($instances);
+			$class=get_class($instance);
+			$members=self::fetch($class);
+			$members=self::getGroupValidators($members, $group);
+			self::initInstancesValidators($instance, $members);
+			return self::validateInstances_($instances,self::$instanceValidators[$class]);
+		}
+		return [];
+	}
+	
+	/**
 	 * Validates an instance using a group of validators
 	 * @param object $instance
 	 * @param string $group
@@ -151,7 +201,8 @@ class ValidatorsManager {
 				foreach ($validators as $validator){
 					$validatorInstance=self::getValidatorInstance($validator["type"]);
 					if($validatorInstance!==false){
-						$valid=$validatorInstance->validate_($instance->$accessor(),$member,$validator["constraints"],@$validator["severity"],@$validator["message"]);
+						$validatorInstance->setValidationParameters($member,$validator["constraints"],@$validator["severity"],@$validator["message"]);
+						$valid=$validatorInstance->validate_($instance->$accessor());
 						if($valid!==true){
 							$result[]=$valid;
 						}
@@ -162,21 +213,36 @@ class ValidatorsManager {
 		return $result;
 	}
 	
+	protected static function initInstancesValidators($instance,$members,$group=null){
+		$class=get_class($instance);
+		foreach ($members as $member=>$validators){
+			$accessor="get".ucfirst($member);
+			if(method_exists($instance, $accessor)){
+				foreach ($validators as $validator){
+					$validatorInstance=self::getValidatorInstance($validator["type"]);
+					if($validatorInstance!==false){
+						$validatorInstance->setValidationParameters($member,$validator["constraints"],@$validator["severity"],@$validator["message"]);
+						if(!isset($group) || (isset($validator["group"]) && $validator["group"]===$group)){
+							self::$instanceValidators[$class][$member][]=$validatorInstance;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	protected static function getModelCacheKey($classname){
 		return self::$key.\str_replace("\\", DIRECTORY_SEPARATOR, $classname);
 	}
 	
 	protected static function getValidatorInstance($type){
-		if(!isset(self::$validatorInstances[$type])){
-			if(isset(self::$validatorTypes[$type])){
-				$class=self::$validatorTypes[$type];
-				self::$validatorInstances[$type]=new $class();
-			}else{
-				Logger::warn("validation", "Validator ".$type." does not exists!");
-				return false;
-			}
+		if(isset(self::$validatorTypes[$type])){
+			$class=self::$validatorTypes[$type];
+			return new $class();
+		}else{
+			Logger::warn("validation", "Validator ".$type." does not exists!");
+			return false;
 		}
-		return self::$validatorInstances[$type];
 	}
 }
 

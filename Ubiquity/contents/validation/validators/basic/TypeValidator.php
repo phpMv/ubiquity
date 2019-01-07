@@ -2,9 +2,9 @@
 
 namespace Ubiquity\contents\validation\validators\basic;
 
-use Ubiquity\contents\validation\validators\Validator;
+use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
-class TypeValidator extends Validator {
+class TypeValidator extends ValidatorHasNotNull {
 	
 	protected $ref;
 	
@@ -13,9 +13,7 @@ class TypeValidator extends Validator {
 	}
 	
 	public function validate($value) {
-		if ($this->notNull!==false && (null === $value || '' === $value)) {
-			return;
-		}
+		parent::validate($value);
 		$type = strtolower($this->ref);
 		$type = 'boolean' == $type?'bool':$type;
 		$isFunction = 'is_'.$type;

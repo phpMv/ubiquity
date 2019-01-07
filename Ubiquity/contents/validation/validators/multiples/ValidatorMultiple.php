@@ -5,21 +5,28 @@ namespace Ubiquity\contents\validation\validators\multiples;
 use Ubiquity\contents\validation\validators\Validator;
 use Ubiquity\utils\base\UString;
 use Ubiquity\exceptions\ValidatorException;
+use Ubiquity\contents\validation\validators\HasNotNullInterface;
 
-abstract class ValidatorMultiple extends Validator{
+abstract class ValidatorMultiple extends Validator implements HasNotNullInterface{
 	
 	protected $violation;
+	protected $notNull;
 	
 	public function __construct(){
 		$this->message=[
 				"notNull"=>"This value should not be null"
 		];
+		$this->notNull=false;
 	}
 
 	public function validate($value) {
-		if($this->notNull===true && null==$value){
-			$this->violation="notNull";
-			return false;
+		if(null==$value){
+			if($this->notNull===true){
+				$this->violation="notNull";
+				return false;
+			}else{
+				return;
+			}
 		}
 		if (!UString::isValid($value)) {
 			throw new ValidatorException('This value can not be converted to string');

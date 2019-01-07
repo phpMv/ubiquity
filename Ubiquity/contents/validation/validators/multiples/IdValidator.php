@@ -7,7 +7,7 @@ namespace Ubiquity\contents\validation\validators\multiples;
  * @author jc
  */
 class IdValidator extends ValidatorMultiple {
-	
+	protected $autoinc;
 	public function __construct(){
 		parent::__construct();
 		$this->message=array_merge($this->message,[
@@ -20,7 +20,7 @@ class IdValidator extends ValidatorMultiple {
 		if (!parent::validate($value)) {
 			return false;
 		}
-		if(!is_integer($value)){
+		if($value!=(int)$value){
 			$this->violation="type";
 			return false;
 		}
@@ -38,6 +38,19 @@ class IdValidator extends ValidatorMultiple {
 	public function getParameters(): array {
 		return ["value"];
 	}
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\contents\validation\validators\Validator::setParams()
+	 */
+	protected function setParams(array $params) {
+		parent::setParams($params);
+		if($this->autoinc===true){
+			$this->notNull=false;
+		}
+	}
+
+	
+	
 
 }
 

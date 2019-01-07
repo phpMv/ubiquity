@@ -3,7 +3,7 @@
 namespace Ubiquity\contents\validation\validators\strings;
 
 
-use Ubiquity\contents\validation\validators\Validator;
+use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
 /**
  * Validates an address ip
@@ -12,7 +12,7 @@ use Ubiquity\contents\validation\validators\Validator;
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
  */
-class IpValidator extends Validator {
+class IpValidator extends ValidatorHasNotNull {
 	protected $ref=Ip::V4;
 	
 	public function __construct(){

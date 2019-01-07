@@ -9,7 +9,7 @@ use Ubiquity\annotations\ManyToManyAnnotation;
 use Ubiquity\annotations\JoinTableAnnotation;
 use Ubiquity\annotations\JoinColumnAnnotation;
 use Ubiquity\annotations\ColumnAnnotation;
-use Ubiquity\annotations\ValidatorAnnotation;
+use Ubiquity\contents\validation\ValidationModelGenerator;
 
 class Member {
 	private $name;
@@ -142,16 +142,10 @@ class Member {
 	}
 	
 	public function addValidators(){
-		if($this->primary){
-			$idValidator=ValidatorAnnotation::initializeFromModel("id", null,["notNull"=>false]);
-			$this->annotations[]=$idValidator;
-		}
-		switch ($this->getDbType()){
-			case "tinyint(1)":
-				$validator=ValidatorAnnotation::initializeFromModel("type","boolean");
-		}
-		if(isset($validator)){
-			$this->annotations[]=$validator;
+		$parser=new ValidationModelGenerator($this->getDbType(), $this->name, !$this->isNullable(), $this->primary);
+		$validators=$parser->parse();
+		if(sizeof($validators)){
+			$this->annotations=array_merge($this->annotations,$validators);
 		}
 	}
 }

@@ -2,32 +2,31 @@
 
 namespace Ubiquity\contents\validation\validators;
 
-use Ubiquity\utils\base\UString;
-use Ubiquity\exceptions\ValidatorException;
 
 abstract class Validator implements ValidatorInterface{
 	protected $modifiedMessage;
 	protected $message;
 	protected $member;
 	protected $value;
-	protected $notNull;
+	protected $severity;
+
 	
 	/**
 	 * @param mixed $value
-	 * @param string $member
-	 * @param array $params
-	 * @param string $severity
-	 * @param string $message
 	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation|boolean
 	 */
-	public function validate_($value,$member,$params,$severity='warning',$message=null){
+	public function validate_($value){
 		$this->value=$value;
-		$this->setParams($params);
 		if(!$this->validate($value)){
-			$this->modifiedMessage=$message;
-			return new ConstraintViolation($this->_getMessage(), $value, $member, get_class($this),$severity);
+			return new ConstraintViolation($this->_getMessage(), $value, $this->member, get_class($this),$this->severity);
 		}
 		return true;
+	}
+	
+	public function setValidationParameters($member,$params,$severity='warning',$message=null){
+		$this->setParams($params);
+		$this->member=$member;
+		$this->modifiedMessage=$message;
 	}
 	
 	protected function setParams(array $params){
@@ -57,15 +56,6 @@ abstract class Validator implements ValidatorInterface{
 	public function getParameters(): array {
 		return [];
 		
-	}
-	
-	public function validate($value) {
-		if ($this->notNull!==false && (null === $value || '' === $value)) {
-			return;
-		}
-		if (!UString::isValid($value)) {
-			throw new ValidatorException('This value can not be converted to string');
-		}
 	}
 	
 	/**

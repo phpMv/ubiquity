@@ -3,7 +3,7 @@
 namespace Ubiquity\contents\validation\validators\strings;
 
 
-use Ubiquity\contents\validation\validators\Validator;
+use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
 /**
  * Validates a string with a regex
@@ -11,7 +11,7 @@ use Ubiquity\contents\validation\validators\Validator;
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
  */
-class RegexValidator extends Validator {
+class RegexValidator extends ValidatorHasNotNull {
 	protected $ref;
 	protected $match;
 	

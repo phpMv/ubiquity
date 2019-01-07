@@ -33,6 +33,7 @@ abstract class ModelsCreator {
 						$member->setPrimary();
 					}
 					$member->setDbType($info);
+					$member->addValidators();
 					$class->addMember($member);
 				}
 				$this->classes[$table]=$class;

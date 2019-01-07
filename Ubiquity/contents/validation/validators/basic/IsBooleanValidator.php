@@ -1,26 +1,26 @@
 <?php
 
-namespace Ubiquity\contents\validation\validators\comparison;
+namespace Ubiquity\contents\validation\validators\basic;
 
+use Ubiquity\utils\base\UString;
 use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
-class LessThanValidator extends ValidatorHasNotNull {
+class IsBooleanValidator extends ValidatorHasNotNull {
 	
-	protected $ref;
 	public function __construct(){
-		$this->message="This value should be smaller than `{ref}`";
+		$this->message="This value should be a boolean";
 	}
 	public function validate($value) {
 		parent::validate($value);
-		return $value<$this->ref;
+		return UString::isBooleanStr($value);
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 * @see \Ubiquity\contents\validation\validators\Validator::getParameters()
 	 */
 	public function getParameters(): array {
-		return ["ref","value"];
+		return ["value"];
 	}
-
 }
 

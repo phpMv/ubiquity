@@ -3,12 +3,13 @@
 namespace Ubiquity\contents\validation\validators\multiples;
 
 use Ubiquity\log\Logger;
+use Ubiquity\contents\validation\validators\HasNotNullInterface;
 
 /**
  * Validate Strings length using min, max, charset,notNull parameters
  * @author jc
  */
-class LengthValidator extends ValidatorMultiple {
+class LengthValidator extends ValidatorMultiple implements HasNotNullInterface{
 	
 	protected $min;
 	protected $max;
