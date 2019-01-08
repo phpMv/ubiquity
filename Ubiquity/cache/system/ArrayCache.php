@@ -3,7 +3,6 @@
 namespace Ubiquity\cache\system;
 
 use Ubiquity\controllers\admin\popo\CacheFile;
-use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\exceptions\CacheException;
 
@@ -95,7 +94,7 @@ class ArrayCache extends AbstractDataCache {
 	 * @return string absolute path of the PHP file
 	 */
 	private function _getPath($key) {
-		return $this->_root . DIRECTORY_SEPARATOR . $key . $this->postfix . '.php';
+		return $this->_root . $key . $this->postfix . '.php';
 	}
 
 	/**
@@ -116,7 +115,7 @@ class ArrayCache extends AbstractDataCache {
 	 * @see \Ubiquity\cache\system\AbstractDataCache::clear()
 	 */
 	public function clear($matches="") {
-		$files=glob($this->_root . '/' . $matches . '*');
+		$files=glob($this->_root . $matches . '*');
 		foreach ( $files as $file ) {
 			if (\is_file($file))
 				\unlink($file);
@@ -129,9 +128,9 @@ class ArrayCache extends AbstractDataCache {
 	 * @see \Ubiquity\cache\system\AbstractDataCache::getCacheFiles()
 	 */
 	public function getCacheFiles($type) {
-		return CacheFile::initFromFiles(ROOT . DS . CacheManager::getCacheDirectory() . $type, \ucfirst($type), function ($file) use ($type) {
+		return CacheFile::initFromFiles($this->_root . $type, \ucfirst($type), function ($file) use ($type) {
 			$file=\basename($file);
-			return $type . "/" . substr($file, 0, strpos($file, $this->postfix . '.php'));
+			return $type . DIRECTORY_SEPARATOR . substr($file, 0, strpos($file, $this->postfix . '.php'));
 		});
 	}
 
@@ -141,7 +140,7 @@ class ArrayCache extends AbstractDataCache {
 	 * @see \Ubiquity\cache\system\AbstractDataCache::clearCache()
 	 */
 	public function clearCache($type) {
-		CacheFile::delete(ROOT . DS . CacheManager::getCacheDirectory() . \strtolower($type));
+		CacheFile::delete($this->_root.\strtolower($type));
 	}
 
 	/**
@@ -163,4 +162,12 @@ class ArrayCache extends AbstractDataCache {
 	public function getEntryKey($key) {
 		return UFileSystem::cleanFilePathname($this->_getPath($key));
 	}
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\cache\system\AbstractDataCache::setRoot()
+	 */
+	public function setRoot($root) {
+		$this->_root=rtrim($root,DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;		
+	}
+
 }

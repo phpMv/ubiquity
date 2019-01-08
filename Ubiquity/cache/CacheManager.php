@@ -70,6 +70,10 @@ class CacheManager {
 	public static function getCacheDirectory() {
 		return self::$cacheDirectory;
 	}
+	
+	public static function getCacheSubDirectory($subDirectory) {
+		return self::ROOT.self::DS.self::$cacheDirectory.self::DS.$subDirectory;
+	}
 
 	public static function checkCache(&$config, $silent = false) {
 		$dirs = self::getCacheDirectories ( $config, $silent );

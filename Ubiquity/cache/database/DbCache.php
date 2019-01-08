@@ -15,8 +15,7 @@ abstract class DbCache {
 	}
 
 	public function __construct() {
-		$cacheDirectory=ROOT . DS . CacheManager::getCacheDirectory() . DS . "queries";
-		$this->cache=new ArrayCache($cacheDirectory, ".query");
+		$this->cache=new ArrayCache(CacheManager::getCacheSubDirectory("queries"), ".query");
 	}
 
 	/**

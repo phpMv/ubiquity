@@ -23,7 +23,7 @@ abstract class AbstractDataCache {
 	protected $postfix;
 
 	public function __construct($root, $postfix=""){
-		$this->_root=$root;
+		$this->setRoot($root);
 		$this->postfix=$postfix;
 	}
 	/**
@@ -49,7 +49,7 @@ abstract class AbstractDataCache {
 	 * Caches the given data with the given key.
 	 * @param string $key cache key
 	 * @param string $code the source-code to be cached
-	 * @param string tag the item tag
+	 * @param string $tag the item tag
 	 * @param boolean $php
 	 * @throws CacheException if file could not be written
 	 */
@@ -64,7 +64,13 @@ abstract class AbstractDataCache {
 	public function getRoot() {
 		return $this->_root;
 	}
-
+	
+	/**
+	 * @param mixed $_root
+	 */
+	public function setRoot($_root) {
+		$this->_root = $_root;
+	}
 	abstract protected function storeContent($key,$content,$tag);
 
 	/**
@@ -107,5 +113,4 @@ abstract class AbstractDataCache {
 		return "Cache system is an instance of <b>".\get_class($this)."</b>.";
 	}
 	abstract public function getEntryKey($key);
-
 }

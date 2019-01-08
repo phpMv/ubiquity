@@ -26,13 +26,13 @@ class ControllerParser {
 		$automated=false;
 		$inherited=false;
 		$this->controllerClass=$controllerClass;
-		$restAnnotsClass=[];$annotsClass=[];
+		$restAnnotsClass=[];
 		$reflect=new \ReflectionClass($controllerClass);
 		if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\controllers\Controller")) {
 			$instance=new $controllerClass();
 			try{
-			$annotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
-			$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
+				$annotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
+				$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
 			}catch (\Exception $e){
 				//When controllerClass generates an exception
 			}
