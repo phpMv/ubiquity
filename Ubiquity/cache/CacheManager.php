@@ -13,7 +13,10 @@ use Ubiquity\cache\system\AbstractDataCache;
 
 class CacheManager {
 	use RouterCacheTrait,ModelsCacheTrait,RestCacheTrait;
-
+	
+	const ROOT=ROOT;
+	const DS=DS;
+	
 	/**
 	 *
 	 * @var AbstractDataCache
@@ -23,7 +26,7 @@ class CacheManager {
 
 	public static function start(&$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory ( $config );
-		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
+		$cacheDirectory = self::ROOT . self::DS . self::$cacheDirectory;
 		Annotations::$config ['cache'] = new AnnotationCache ( $cacheDirectory . '/annotations' );
 		self::register ( Annotations::getManager () );
 		self::getCacheInstance ( $config, $cacheDirectory, ".cache" );
@@ -36,7 +39,7 @@ class CacheManager {
 	 */
 	public static function startProd(&$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory ( $config );
-		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
+		$cacheDirectory = self::ROOT . self::DS . self::$cacheDirectory;
 		self::getCacheInstance ( $config, $cacheDirectory, ".cache" );
 	}
 
@@ -78,19 +81,20 @@ class CacheManager {
 
 	public static function getCacheDirectories(&$config, $silent = false) {
 		$cacheDirectory = self::initialGetCacheDirectory ( $config );
+		$rootDS=self::ROOT . self::DS ;
 		if (! $silent) {
-			echo "cache directory is " . UFileSystem::cleanPathname ( \ROOT . \DS . $cacheDirectory ) . "\n";
+			echo "cache directory is " . UFileSystem::cleanPathname ( $rootDS. $cacheDirectory ) . "\n";
 		}
-		$modelsDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["models"] );
-		$controllersDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["controllers"] );
-		$annotationCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "annotations";
-		$modelsCacheDir = \ROOT . \DS . $cacheDirectory . \DS . $modelsDir;
-		$queriesCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "queries";
-		$controllersCacheDir = \ROOT . \DS . $cacheDirectory . \DS . $controllersDir;
-		$viewsCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "views";
-		$seoCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "seo";
-		$gitCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "git";
-		$contentsCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "contents";
+		$modelsDir = str_replace ( "\\", self::DS, $config ["mvcNS"] ["models"] );
+		$controllersDir = str_replace ( "\\", self::DS, $config ["mvcNS"] ["controllers"] );
+		$annotationCacheDir = $rootDS . $cacheDirectory . self::DS . "annotations";
+		$modelsCacheDir = $rootDS . $cacheDirectory . self::DS . $modelsDir;
+		$queriesCacheDir = $rootDS . $cacheDirectory . self::DS. "queries";
+		$controllersCacheDir = $rootDS . $cacheDirectory . self::DS . $controllersDir;
+		$viewsCacheDir = $rootDS . $cacheDirectory . self::DS . "views";
+		$seoCacheDir = $rootDS . $cacheDirectory . self::DS . "seo";
+		$gitCacheDir = $rootDS . $cacheDirectory . self::DS . "git";
+		$contentsCacheDir = $rootDS. $cacheDirectory . self::DS . "contents";
 		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir,"contents"=>$contentsCacheDir ];
 	}
 
@@ -125,10 +129,10 @@ class CacheManager {
 
 	protected static function _getFiles(&$config, $type, $silent = false) {
 		$typeNS = $config ["mvcNS"] [$type];
-		$typeDir = \ROOT . \DS . str_replace ( "\\", \DS, $typeNS );
+		$typeDir = self::ROOT . self::DS . str_replace ( "\\", self::DS, $typeNS );
 		if (! $silent)
-			echo \ucfirst ( $type ) . " directory is " . \ROOT . $typeNS . "\n";
-		return UFileSystem::glob_recursive ( $typeDir . \DS . '*' );
+			echo \ucfirst ( $type ) . " directory is " . self::ROOT . $typeNS . "\n";
+		return UFileSystem::glob_recursive ( $typeDir . self::DS . '*' );
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
