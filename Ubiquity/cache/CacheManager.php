@@ -23,7 +23,7 @@ class CacheManager {
 
 	public static function start(&$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory ( $config );
-		$cacheDirectory = ROOT . DS . self::$cacheDirectory;
+		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
 		Annotations::$config ['cache'] = new AnnotationCache ( $cacheDirectory . '/annotations' );
 		self::register ( Annotations::getManager () );
 		self::getCacheInstance ( $config, $cacheDirectory, ".cache" );
@@ -36,7 +36,7 @@ class CacheManager {
 	 */
 	public static function startProd(&$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory ( $config );
-		$cacheDirectory = ROOT . DS . self::$cacheDirectory;
+		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
 		self::getCacheInstance ( $config, $cacheDirectory, ".cache" );
 	}
 
@@ -79,18 +79,18 @@ class CacheManager {
 	public static function getCacheDirectories(&$config, $silent = false) {
 		$cacheDirectory = self::initialGetCacheDirectory ( $config );
 		if (! $silent) {
-			echo "cache directory is " . UFileSystem::cleanPathname ( ROOT . DS . $cacheDirectory ) . "\n";
+			echo "cache directory is " . UFileSystem::cleanPathname ( \ROOT . \DS . $cacheDirectory ) . "\n";
 		}
-		$modelsDir = str_replace ( "\\", DS, $config ["mvcNS"] ["models"] );
-		$controllersDir = str_replace ( "\\", DS, $config ["mvcNS"] ["controllers"] );
-		$annotationCacheDir = ROOT . DS . $cacheDirectory . DS . "annotations";
-		$modelsCacheDir = ROOT . DS . $cacheDirectory . DS . $modelsDir;
-		$queriesCacheDir = ROOT . DS . $cacheDirectory . DS . "queries";
-		$controllersCacheDir = ROOT . DS . $cacheDirectory . DS . $controllersDir;
-		$viewsCacheDir = ROOT . DS . $cacheDirectory . DS . "views";
-		$seoCacheDir = ROOT . DS . $cacheDirectory . DS . "seo";
-		$gitCacheDir = ROOT . DS . $cacheDirectory . DS . "git";
-		$contentsCacheDir = ROOT . DS . $cacheDirectory . DS . "contents";
+		$modelsDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["models"] );
+		$controllersDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["controllers"] );
+		$annotationCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "annotations";
+		$modelsCacheDir = \ROOT . \DS . $cacheDirectory . \DS . $modelsDir;
+		$queriesCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "queries";
+		$controllersCacheDir = \ROOT . \DS . $cacheDirectory . \DS . $controllersDir;
+		$viewsCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "views";
+		$seoCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "seo";
+		$gitCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "git";
+		$contentsCacheDir = \ROOT . \DS . $cacheDirectory . \DS . "contents";
 		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir,"contents"=>$contentsCacheDir ];
 	}
 
@@ -125,10 +125,10 @@ class CacheManager {
 
 	protected static function _getFiles(&$config, $type, $silent = false) {
 		$typeNS = $config ["mvcNS"] [$type];
-		$typeDir = ROOT . DS . str_replace ( "\\", DS, $typeNS );
+		$typeDir = \ROOT . \DS . str_replace ( "\\", \DS, $typeNS );
 		if (! $silent)
-			echo \ucfirst ( $type ) . " directory is " . ROOT . $typeNS . "\n";
-		return UFileSystem::glob_recursive ( $typeDir . DS . '*' );
+			echo \ucfirst ( $type ) . " directory is " . \ROOT . $typeNS . "\n";
+		return UFileSystem::glob_recursive ( $typeDir . \DS . '*' );
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
@@ -150,6 +150,9 @@ class CacheManager {
 				'var' => 'mindplay\annotations\standard\VarAnnotation',
 				'yuml' => 'Ubiquity\annotations\YumlAnnotation',
 				'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
-				'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation' ] );
+				'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation',
+				'injected' =>'Ubiquity\annotations\di\InjectedAnnotation',
+				'autowired' =>'Ubiquity\annotations\di\AutowiredAnnotation'
+		] );
 	}
 }
