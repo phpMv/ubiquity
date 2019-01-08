@@ -3,6 +3,11 @@
 namespace Ubiquity\contents\validation\validators;
 
 
+/**
+ * Abstract class for validators
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ */
 abstract class Validator implements ValidatorInterface{
 	protected $modifiedMessage;
 	protected $message;
@@ -27,6 +32,7 @@ abstract class Validator implements ValidatorInterface{
 		$this->setParams($params);
 		$this->member=$member;
 		$this->modifiedMessage=$message;
+		$this->severity=$severity;
 	}
 	
 	protected function setParams(array $params){
