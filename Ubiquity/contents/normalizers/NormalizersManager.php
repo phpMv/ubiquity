@@ -34,6 +34,7 @@ class NormalizersManager {
 		if(isset(self::$normalizers[$classname])){
 			return self::$normalizers[$classname];
 		}
+		throw new NormalizerException($classname. "has no serializer. Use NormalizersManager::registerClass to associate a new serializer.");
 	}
 	
 	public static function normalizeArray(array $datas,NormalizerInterface $normalizer){
@@ -49,7 +50,9 @@ class NormalizersManager {
 	public static function normalizeArray_(array $datas){
 		if(sizeof($datas)>0){
 			$normalizer=self::getNormalizer(get_class($datas[0]));
-			return self::normalizeArray($datas, $normalizer);
+			if(isset($normalizer)){
+				return self::normalizeArray($datas, $normalizer);
+			}
 		}
 		return [];
 	}
@@ -62,7 +65,10 @@ class NormalizersManager {
 	}
 	
 	public static function normalize_($object){
-		return self::normalize($object, self::getNormalizer(get_class($object)));
+		$normalizer=self::getNormalizer(get_class($object));
+		if(isset($normalizer)){
+			return self::normalize($object, $normalizer);
+		}
 	}
 	
 	public static function store(){

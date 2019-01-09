@@ -4,6 +4,7 @@ namespace Ubiquity\contents\validation;
 
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UArray;
+use Ubiquity\annotations\ValidatorAnnotation;
 
 /**
  * @author jc
@@ -22,7 +23,9 @@ class ValidationModelParser {
 			if(sizeof($annots)>0){
 				$this->validators[$propName]=[];
 				foreach ($annots as $annotation){
-					$this->validators[$propName][]=$annotation->getPropertiesAndValues();
+					if($annotation instanceof ValidatorAnnotation){
+						$this->validators[$propName][]=$annotation->getPropertiesAndValues();
+					}
 				}
 			}
 		}
