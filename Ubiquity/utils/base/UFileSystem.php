@@ -2,10 +2,11 @@
 
 namespace Ubiquity\utils\base;
 
+
 /**
  * File system utilities
- * @author jc
- * @version 1.0.0.2
+ * @author jcheron <myaddressmail@gmail.com>"
+ * @version 1.0.1
  */
 class UFileSystem {
 
@@ -39,13 +40,13 @@ class UFileSystem {
 
 	public static function cleanPathname($path) {
 		if (UString::isNotNull($path)) {
-			if (DS === "/")
-				$path=\str_replace("\\", DS, $path);
+			if (DIRECTORY_SEPARATOR === "/")
+				$path=\str_replace("\\", DIRECTORY_SEPARATOR, $path);
 			else
-				$path=\str_replace("/", DS, $path);
-			$path=\str_replace(DS . DS, DS, $path);
-			if (!UString::endswith($path, DS)) {
-				$path=$path . DS;
+				$path=\str_replace("/", DIRECTORY_SEPARATOR, $path);
+			$path=\str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+			if (!UString::endswith($path, DIRECTORY_SEPARATOR)) {
+				$path=$path . DIRECTORY_SEPARATOR;
 			}
 		}
 		return $path;
@@ -53,11 +54,11 @@ class UFileSystem {
 	
 	public static function cleanFilePathname($path) {
 		if (UString::isNotNull($path)) {
-			if (DS === "/")
-				$path=\str_replace("\\", DS, $path);
+			if (DIRECTORY_SEPARATOR === "/")
+				$path=\str_replace("\\", DIRECTORY_SEPARATOR, $path);
 			else
-				$path=\str_replace("/", DS, $path);
-			$path=\str_replace(DS . DS, DS, $path);
+				$path=\str_replace("/", DIRECTORY_SEPARATOR, $path);
+			$path=\str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 		}
 		return $path;
 	}
@@ -114,7 +115,7 @@ class UFileSystem {
 	}
 	
 	public static function getDirFromNamespace($ns){
-		return ROOT . DS . str_replace ( "\\", DS, $ns );
+		return \ROOT . DIRECTORY_SEPARATOR . str_replace ( "\\", DIRECTORY_SEPARATOR, $ns );
 	}
 	
 	public static function xcopy($source, $dest, $permissions = 0755){
