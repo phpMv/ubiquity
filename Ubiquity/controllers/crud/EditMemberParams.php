@@ -63,7 +63,7 @@ class EditMemberParams {
 	}
 
 	/**
-	 * @return NULL
+	 * @return string
 	 */
 	public function getUpdateCallback() {
 		return $this->updateCallback;
@@ -98,7 +98,7 @@ class EditMemberParams {
 	}
 
 	/**
-	 * @param NULL $updateCallback
+	 * @param string $updateCallback
 	 */
 	public function setUpdateCallback($updateCallback) {
 		$this->updateCallback = $updateCallback;

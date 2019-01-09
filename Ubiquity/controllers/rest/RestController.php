@@ -99,7 +99,7 @@ abstract class RestController extends Controller {
 
 	/**
 	 * Returns all objects for the resource $model
-	 * @route("cache"=>false)
+	 * @route("cache"=>false,"priority"=>100)
 	 */
 	public function index() {
 			$datas=DAO::getAll($this->model);
@@ -111,7 +111,7 @@ abstract class RestController extends Controller {
 	 * @route("{id}","methods"=>["get","options"],"requirements"=>["id"=>"[0-9]+"])
 	 */
 	public function getById($id){
-		return $this->getOne($id,true,false);
+		$this->getOne($id,true,false);
 	}
 
 	/**
@@ -214,7 +214,7 @@ abstract class RestController extends Controller {
 	 * Delete the instance of $model selected by the primary key $keyValues
 	 * Requires an authorization with access token
 	 * @param array $keyValues
-	 * @route("methods"=>["delete"])
+	 * @route("methods"=>["delete"],"priority"=>30)
 	 * @authorization
 	 */
 	public function delete(...$keyValues){

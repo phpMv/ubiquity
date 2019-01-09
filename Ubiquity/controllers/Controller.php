@@ -132,7 +132,7 @@ abstract class Controller {
 		} else {
 			$u = \array_merge ( $u, [ $params ] );
 		}
-		return Startup::runAction ( $u, $initialize, $finalize );
+		Startup::runAction ( $u, $initialize, $finalize );
 	}
 
 	/**
@@ -149,7 +149,7 @@ abstract class Controller {
 		if ($path !== false) {
 			$route = Router::getRoute ( $path, false );
 			if ($route !== false) {
-				return $this->forward ( $route [0], $route [1], \array_slice ( $route, 2 ), $initialize, $finalize );
+				$this->forward ( $route [0], $route [1], \array_slice ( $route, 2 ), $initialize, $finalize );
 			} else {
 				throw new RouterException ( "Route {$routeName} not found", 404 );
 			}

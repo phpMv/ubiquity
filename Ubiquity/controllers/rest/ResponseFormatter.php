@@ -8,7 +8,7 @@ class ResponseFormatter {
 
 	/**
 	 * @param array $datas
-	 * @return array
+	 * @return string
 	 */
 	public function get($datas){
 		$datas=$this->getDatas($datas);
@@ -79,7 +79,7 @@ class ResponseFormatter {
 			}
 			if( is_array($value) ) {
 				$subnode = $xml_data->addChild($key);
-				array_to_xml($value, $subnode);
+				self::toXML($value, $subnode);
 			} else {
 				$xml_data->addChild("$key",htmlspecialchars("$value"));
 			}

@@ -61,7 +61,7 @@ class CacheManager {
 	private static function initialGetCacheDirectory(&$config) {
 		$cacheDirectory = @$config ["cache"] ["directory"];
 		if (! isset ( $cacheDirectory )) {
-			$config ["cache"] ["directory"] = "cache/";
+			$config ["cache"] ["directory"] = "cache".DIRECTORY_SEPARATOR;
 			$cacheDirectory = $config ["cache"] ["directory"];
 		}
 		return $cacheDirectory;
@@ -69,6 +69,10 @@ class CacheManager {
 
 	public static function getCacheDirectory() {
 		return self::$cacheDirectory;
+	}
+	
+	public static function getAbsoluteCacheDirectory(){
+		return self::ROOT.self::DS.self::$cacheDirectory;
 	}
 	
 	public static function getCacheSubDirectory($subDirectory) {
@@ -89,16 +93,17 @@ class CacheManager {
 		if (! $silent) {
 			echo "cache directory is " . UFileSystem::cleanPathname ( $rootDS. $cacheDirectory ) . "\n";
 		}
+		$cacheDirectory=$rootDS . $cacheDirectory . self::DS;
 		$modelsDir = str_replace ( "\\", self::DS, $config ["mvcNS"] ["models"] );
 		$controllersDir = str_replace ( "\\", self::DS, $config ["mvcNS"] ["controllers"] );
-		$annotationCacheDir = $rootDS . $cacheDirectory . self::DS . "annotations";
-		$modelsCacheDir = $rootDS . $cacheDirectory . self::DS . $modelsDir;
-		$queriesCacheDir = $rootDS . $cacheDirectory . self::DS. "queries";
-		$controllersCacheDir = $rootDS . $cacheDirectory . self::DS . $controllersDir;
-		$viewsCacheDir = $rootDS . $cacheDirectory . self::DS . "views";
-		$seoCacheDir = $rootDS . $cacheDirectory . self::DS . "seo";
-		$gitCacheDir = $rootDS . $cacheDirectory . self::DS . "git";
-		$contentsCacheDir = $rootDS. $cacheDirectory . self::DS . "contents";
+		$annotationCacheDir = $cacheDirectory . "annotations";
+		$modelsCacheDir = $cacheDirectory . $modelsDir;
+		$queriesCacheDir = $cacheDirectory . "queries";
+		$controllersCacheDir = $cacheDirectory . $controllersDir;
+		$viewsCacheDir = $cacheDirectory . "views";
+		$seoCacheDir = $cacheDirectory . "seo";
+		$gitCacheDir = $cacheDirectory . "git";
+		$contentsCacheDir = $cacheDirectory . "contents";
 		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir,"contents"=>$contentsCacheDir ];
 	}
 

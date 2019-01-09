@@ -27,16 +27,20 @@ class CRUDHelper {
 	
 	public static function search($model,$search,$fields,$initialCondition="1=1"){
 		$words=preg_split("@(\s*?(\(|\)|\|\||\&\&)\s*?)@", $search);
-		$words=array_filter($words,'strlen');
-		$condition=$search;
-		foreach ($words as $word){
-			$word=trim($word);
-			$condition=UString::replaceFirstOccurrence($word, "(".SqlUtils::getSearchWhere($fields,$word).")", $condition);
+		if($words!==false){
+			$words=array_filter($words,'strlen');
+			$condition=$search;
+			foreach ($words as $word){
+				$word=trim($word);
+				$condition=UString::replaceFirstOccurrence($word, "(".SqlUtils::getSearchWhere($fields,$word).")", $condition);
+			}
+			
+			$condition=str_replace("||", " OR ", $condition);
+			$condition=str_replace("&&", " AND ", $condition);
+			$condition='('.$condition.') AND '.$initialCondition.'';
+		}else{
+			$condition=$initialCondition;
 		}
-		
-		$condition=str_replace("||", " OR ", $condition);
-		$condition=str_replace("&&", " AND ", $condition);
-		$condition='('.$condition.') AND '.$initialCondition.'';
 		return DAO::getAll($model,$condition);
 	}
 	
