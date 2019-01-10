@@ -40,7 +40,7 @@ abstract class AuthController extends ControllerBase{
 		$this->_loginCaption="Log in";
 		$this->_controllerInstance=$instance;
 		if(isset($instance))
-			Startup::injectDependences($instance, Startup::getConfig());
+			Startup::injectDependences($instance);
 	}
 	
 	public function index(){

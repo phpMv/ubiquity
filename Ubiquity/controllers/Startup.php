@@ -74,7 +74,6 @@ class Startup {
 	}
 
 	public static function runAction($u, $initialize = true, $finalize = true) {
-		$config = self::getConfig ();
 		$ctrl = $u [0];
 		self::$controller = $ctrl;
 		self::$action = "index";
@@ -89,7 +88,7 @@ class Startup {
 			return;
 		}
 		// Dependency injection
-		self::injectDependences($controller, $config);
+		self::injectDependences($controller);
 		if(!$controller->isValid(self::$action)){
 			$controller->onInvalidControl();
 		}else{
@@ -101,7 +100,8 @@ class Startup {
 		}
 	}
 	
-	public static function injectDependences($controller,&$config){
+	public static function injectDependences($controller){
+		$config=self::$config;
 		if (\array_key_exists ( "di", $config )) {
 			$di = $config ["di"];
 			if (\is_array ( $di )) {

@@ -81,7 +81,7 @@ trait WithAuthTrait{
 	protected function _getAuthController():AuthController{
 		if(!isset($this->authController)){
 			$this->authController=$this->getAuthController();
-			Startup::injectDependences($this->authController, Startup::getConfig());
+			Startup::injectDependences($this->authController);
 		}
 		return $this->authController;
 	}
