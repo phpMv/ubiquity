@@ -1,10 +1,11 @@
 build:
   nodes:
+    my-tests:
+      dependencies:
+        before:
+          - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
     analysis:
       tests:
-        dependencies:
-          before:
-            - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui   
         override:
           - php-scrutinizer-run
 filter:
