@@ -4,6 +4,10 @@ namespace Ubiquity\contents\validation;
 
 use Ubiquity\cache\CacheManager;
 
+/**
+ * @author jcheron <myaddressmail@gmail.com>
+ * @property array $validatorTypes
+ */
 trait ValidatorsManagerInitTrait {
 	/**
 	 * Parses models and save validators in cache
