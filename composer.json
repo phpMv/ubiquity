@@ -9,14 +9,7 @@
 		"orm"
 	],
 	"require": {
-		"php": ">7.0",
-		"twig/twig": "^2.0",
-		"mindplay/annotations": "^1.3",
-		"phpfastcache/phpfastcache": "^7.0"
-	},
-	"require-dev": {
-		"monolog/monolog": "^1.24",
-		"czproject/git-php" : "^3.13"
+		"php": ">7.0"
 	},
 	"license": "Apache-2.0",
 	"authors": [
