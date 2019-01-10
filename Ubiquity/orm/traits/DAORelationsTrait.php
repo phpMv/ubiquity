@@ -5,7 +5,6 @@ namespace Ubiquity\orm\traits;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\ConditionParser;
-use Ubiquity\orm\core\PendingRelationsRequest;
 
 /**
  * @author jc
@@ -38,6 +37,27 @@ trait DAORelationsTrait {
 			$value=$manyToOneObjects[$object->$fkField];
 			self::setToMember($member, $object, $value, $class, "getManyToOne");
 		}
+	}
+	
+	/**
+	 * @param object $instance
+	 * @param string $member
+	 * @param array $array
+	 * @param string $mappedBy
+	 */
+	private static function affectsOneToManyFromArray($instance, $member, $array=null, $mappedBy=null) {
+		$ret=array ();
+		$class=get_class($instance);
+		if (!isset($mappedBy)){
+			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
+			$mappedBy=$annot["mappedBy"];
+		}
+		if ($mappedBy !== false) {
+			$fkv=OrmUtils::getFirstKeyValue($instance);
+			self::_getOneToManyFromArray($ret, $array, $fkv, $mappedBy);
+			self::setToMember($member, $instance, $ret, $class, "getOneToMany");
+		}
+		return $ret;
 	}
 	
 	private static function _affectsObjectsFromArray($queries,$included,$affectsCallback,$useCache=NULL){

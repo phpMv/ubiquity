@@ -11,6 +11,14 @@ abstract class ModelsCreator {
 	protected $config;
 	protected $tables=array();
 	protected $classes=array();
+	
+	abstract protected function getTablesName();
+	
+	abstract protected function getFieldsInfos($tableName);
+	
+	abstract protected function getPrimaryKeys($tableName);
+	
+	abstract protected function getForeignKeys($tableName,$pkName);
 
 	protected function init($config){
 		$this->config=$config["database"];
@@ -45,7 +53,7 @@ abstract class ModelsCreator {
 				foreach ($this->classes as $table=>$class){
 					$name=$class->getSimpleName();
 					echo "Creating the {$name} class\n";
-					$this->writeFile($modelsDir.DS.$name.".php", $class);
+					$this->writeFile($modelsDir.DIRECTORY_SEPARATOR.$name.".php", $class);
 				}
 			}
 			if($initCache===true){
@@ -58,7 +66,7 @@ abstract class ModelsCreator {
 		if(isset($this->classes[$singleTable])){
 			$class=$this->classes[$singleTable];
 			echo "Creating the {$class->getName()} class\n";
-			$this->writeFile($modelsDir.DS.$class->getSimpleName().".php", $class);
+			$this->writeFile($modelsDir.DIRECTORY_SEPARATOR.$class->getSimpleName().".php", $class);
 		}else{
 			echo "The {$singleTable} table does not exist in the database\n";
 		}
@@ -129,12 +137,6 @@ abstract class ModelsCreator {
 		}
 		return [];
 	}
-
-	abstract protected function getTablesName();
-
-	abstract protected function getFieldsInfos($tableName);
-
-	abstract protected function getPrimaryKeys($tableName);
 
 	protected function writeFile($filename,$data){
 		return file_put_contents($filename,$data);

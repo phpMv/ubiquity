@@ -83,27 +83,6 @@ class DAO {
 	}
 
 	/**
-	 * @param object $instance
-	 * @param string $member
-	 * @param array $array
-	 * @param string $mappedBy
-	 */
-	public static function affectsOneToManyFromArray($instance, $member, $array=null, $mappedBy=null) {
-		$ret=array ();
-		$class=get_class($instance);
-		if (!isset($mappedBy)){
-			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
-			$mappedBy=$annot["mappedBy"];
-		}
-		if ($mappedBy !== false) {
-				$fkv=OrmUtils::getFirstKeyValue($instance);
-				self::_getOneToManyFromArray($ret, $array, $fkv, $mappedBy);
-				self::setToMember($member, $instance, $ret, $class, "getOneToMany");
-		}
-		return $ret;
-	}
-
-	/**
 	 * Assigns / loads the child records in the $member member of $instance.
 	 * If $ array is null, the records are loaded from the database
 	 * @param object $instance
