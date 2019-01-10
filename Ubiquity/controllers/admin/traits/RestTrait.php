@@ -147,10 +147,10 @@ trait RestTrait{
 				$resource=$_POST["resource"];
 				$route=$_POST["route"];
 				$restControllerNS=RestServer::getRestNamespace();
-				$restControllersDir=ROOT . DS . str_replace("\\", DS, $restControllerNS);
+				$restControllersDir=\ROOT . \DS . str_replace("\\", \DS, $restControllerNS);
 				UFileSystem::safeMkdir($restControllersDir);
 				$controllerName=\ucfirst($_POST["ctrlName"]);
-				$filename=$restControllersDir . DS . $controllerName . ".php";
+				$filename=$restControllersDir . \DS . $controllerName . ".php";
 				if (!\file_exists($filename)) {
 					$frameworkDir=Startup::getFrameworkDir();
 					if ($restControllerNS !== "")

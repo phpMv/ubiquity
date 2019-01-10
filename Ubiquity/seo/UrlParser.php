@@ -66,8 +66,9 @@ class UrlParser {
 			if (\is_array ( $classCode )) {
 				$reflexAction = new \ReflectionMethod ( $controller . '::' . $action );
 				$views = UIntrospection::getLoadedViews ( $reflexAction, $classCode );
+				$baseView=ROOT.\DS."views".\DS;
 				foreach ( $views as $view ) {
-					$file = ROOT . DS . "views" . DS . $view;
+					$file = $baseView. $view;
 					$viewDate = UFileSystem::lastModified ( $file );
 					if ($viewDate > $lastModified)
 						$lastModified = $viewDate;

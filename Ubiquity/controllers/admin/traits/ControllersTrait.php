@@ -54,7 +54,7 @@ trait ControllersTrait{
 			$controllerFullname=$_POST["controllerFullname"];
 			$viewName=$controller . "/" . $action . ".html";
 			$this->_createViewOp($controller, $action);
-			if (\file_exists(ROOT . DS . "views" . DS . $viewName)) {
+			if (\file_exists(\ROOT . \DS . "views" . \DS . $viewName)) {
 				$this->jquery->exec('$("#msgControllers").transition("show");$("#msgControllers .content").transition("show").append("<br><b>' . $viewName . '</b> created !");', true);
 			}
 			$r=new \ReflectionMethod($controllerFullname, $action);
@@ -70,9 +70,9 @@ trait ControllersTrait{
 
 	private function _createViewOp($controller, $action) {
 		$viewName=$controller . "/" . $action . ".html";
-		UFileSystem::safeMkdir(ROOT . DS . "views" . DS . $controller);
+		UFileSystem::safeMkdir(\ROOT . \DS . "views" . \DS . $controller);
 		$frameworkDir=Startup::getFrameworkDir();
-		UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/view.tpl", ROOT . DS . "views" . DS . $viewName, [ "%controllerName%" => $controller,"%actionName%" => $action ]);
+		UFileSystem::openReplaceWriteFromTemplateFile($frameworkDir . "/admin/templates/view.tpl", \ROOT . \DS . "views" . \DS . $viewName, [ "%controllerName%" => $controller,"%actionName%" => $action ]);
 		return $viewName;
 	}
 
@@ -283,7 +283,7 @@ trait ControllersTrait{
 		$frameworkDir = Startup::getFrameworkDir ();
 		$directory=UFileSystem::getDirFromNamespace($namespace);
 		UFileSystem::safeMkdir($directory);
-		$filename=UFileSystem::cleanFilePathname($directory.DS.lcfirst($classname).".php");
+		$filename=UFileSystem::cleanFilePathname($directory.\DS.lcfirst($classname).".php");
 		if(!file_exists($filename)){
 			UFileSystem::openReplaceWriteFromTemplateFile ( $frameworkDir . "/admin/templates/" . $template, $filename, $variables );
 			$message = $this->showSimpleMessage ( "The <b>" . $classname . "</b> class has been created in <b>" . $filename . "</b>.", "success","Creation", "checkmark circle");

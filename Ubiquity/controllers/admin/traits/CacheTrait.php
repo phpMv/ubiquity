@@ -32,7 +32,7 @@ trait CacheTrait{
 			if ($cache == 'models' || $cache == 'controllers') {
 				$cacheFiles = \array_merge ( $cacheFiles, CacheManager::$cache->getCacheFiles ( $cache ) );
 			} else {
-				$cacheFiles = \array_merge ( $cacheFiles, CacheFile::initFromFiles ( ROOT . DS . CacheManager::getCacheDirectory () . $cache, \ucfirst ( $cache ) ) );
+				$cacheFiles = \array_merge ( $cacheFiles, CacheFile::initFromFiles ( \ROOT . \DS . CacheManager::getCacheDirectory () . $cache, \ucfirst ( $cache ) ) );
 			}
 		}
 		$dt = $this->_getAdminViewer ()->getCacheDataTable ( $cacheFiles );
@@ -61,7 +61,7 @@ trait CacheTrait{
 			if ($toDelete == 'models' || $toDelete == 'controllers') {
 				CacheManager::$cache->clearCache ( $toDelete );
 			} else {
-				CacheFile::delete ( ROOT . DS . CacheManager::getCacheDirectory () . \strtolower ( $toDelete ) );
+				CacheFile::delete ( \ROOT . \DS . CacheManager::getCacheDirectory () . \strtolower ( $toDelete ) );
 			}
 		}
 		$this->setCacheTypes ();

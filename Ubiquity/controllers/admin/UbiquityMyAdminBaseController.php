@@ -214,7 +214,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$baseRoute=$this->_getFiles()->getAdminBaseRoute();
 		$this->getHeader ( "controllers" );
 		$controllersNS = Startup::getNS ( 'controllers' );
-		$controllersDir = ROOT . str_replace ( "\\", DS, $controllersNS );
+		$controllersDir = \ROOT . str_replace ( "\\", \DS, $controllersNS );
 		$this->showSimpleMessage ( "Controllers directory is <b>" . UFileSystem::cleanPathname ( $controllersDir ) . "</b>", "info",null, "info circle", null, "msgControllers" );
 		$frm = $this->jquery->semantic ()->htmlForm ( "frmCtrl" );
 		$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
@@ -885,9 +885,9 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$message = "";
 		$frameworkDir = Startup::getFrameworkDir ();
 		$controllersNS = \rtrim ( Startup::getNS ( "controllers" ), "\\" );
-		$controllersDir = ROOT . DS . str_replace ( "\\", DS, $controllersNS );
+		$controllersDir = \ROOT . \DS . str_replace ( "\\", \DS, $controllersNS );
 		$controllerName = \ucfirst ( $controllerName );
-		$filename = $controllersDir . DS . $controllerName . ".php";
+		$filename = $controllersDir . \DS . $controllerName . ".php";
 		if (\file_exists ( $filename ) === false) {
 			if ($controllersNS !== "") {
 				$namespace = "namespace " . $controllersNS . ";";
@@ -895,11 +895,11 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$msgView = "";
 			$indexContent = "";
 			if ($hasView) {
-				$viewDir = ROOT . DS . "views" . DS . $controllerName . DS;
+				$viewDir = \ROOT . \DS . "views" . \DS . $controllerName . \DS;
 				UFileSystem::safeMkdir ( $viewDir );
-				$viewName = $viewDir . DS . "index.html";
+				$viewName = $viewDir . \DS . "index.html";
 				UFileSystem::openReplaceWriteFromTemplateFile ( $frameworkDir . "/admin/templates/view.tpl", $viewName, [ "%controllerName%" => $controllerName,"%actionName%" => "index" ] );
-				$msgView = "<br>The default view associated has been created in <b>" . UFileSystem::cleanPathname ( ROOT . DS . $viewDir ) . "</b>";
+				$msgView = "<br>The default view associated has been created in <b>" . UFileSystem::cleanPathname ( \ROOT . \DS . $viewDir ) . "</b>";
 				$indexContent = "\$this->loadView(\"" . $controllerName . "/index.html\");";
 			}
 			$variables = \array_merge ( $variables, [ "%controllerName%" => $controllerName,"%indexContent%" => $indexContent,"%namespace%" => $namespace ] );

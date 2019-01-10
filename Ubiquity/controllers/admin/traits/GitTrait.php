@@ -54,7 +54,7 @@ trait GitTrait{
 		$appDir=Startup::getApplicationDir ();
 		try{
 			UGitRepository::init ( Startup::getApplicationDir () );
-			$gitignoreFile=$appDir. DS . ".gitignore";
+			$gitignoreFile=$appDir. \DS . ".gitignore";
 			if(!file_exists($gitignoreFile)){
 				UFileSystem::openReplaceWriteFromTemplateFile(Startup::getFrameworkDir() . "/admin/templates/gitignore.tpl", $gitignoreFile, []);
 			}
@@ -174,7 +174,7 @@ trait GitTrait{
 	public function gitIgnoreEdit() {
 		$this->jquery->postFormOnClick ( "#validate-btn", $this->_getFiles ()->getAdminBaseRoute () . "/gitIgnoreValidate", "gitignore-frm", "#frm" );
 		$this->jquery->execOn ( "click", "#cancel-btn", '$("#frm").html("");' );
-		$content = UFileSystem::load ( Startup::getApplicationDir () . DS . ".gitignore" );
+		$content = UFileSystem::load ( Startup::getApplicationDir () . \DS . ".gitignore" );
 		if ($content === false) {
 			$content = "#gitignorefile\n";
 		}
@@ -184,7 +184,7 @@ trait GitTrait{
 	public function gitIgnoreValidate() {
 		if (URequest::isPost ()) {
 			$content = URequest::post ( "content" );
-			if (UFileSystem::save ( Startup::getApplicationDir () . DS . ".gitignore", $content )) {
+			if (UFileSystem::save ( Startup::getApplicationDir () . \DS . ".gitignore", $content )) {
 				$this->jquery->get ( $this->_getFiles ()->getAdminBaseRoute () . "/refreshFiles", "#dtGitFiles", [ "attr" => "","jqueryDone" => "replaceWith","hasLoader" => false ] );
 				$message = $this->showSimpleMessage ( "<b>.gitignore</b> file saved !", "positive", "gitignore","git" );
 			} else {
@@ -210,11 +210,11 @@ trait GitTrait{
 	}
 
 	public function changesInfiles(...$filenameParts) {
-		$filename = implode ( DS, $filenameParts );
+		$filename = implode ( \DS, $filenameParts );
 		$gitRepo = $this->_getRepo ( false );
 		$changes = $gitRepo->getRepository ()->getChangesInFile ( $filename );
 		if (UString::isNull ( $changes )) {
-			$changes = str_replace ( PHP_EOL, " ", UFileSystem::load ( Startup::getApplicationDir () . DS . $filename ) );
+			$changes = str_replace ( PHP_EOL, " ", UFileSystem::load ( Startup::getApplicationDir () . \DS . $filename ) );
 		}
 		$this->jquery->exec ( 'var value=\'' . htmlentities ( str_replace ( "'", "\\'", str_replace ( "\u", "\\\u", $changes ) ) ) . '\';$("#changes-in-file").html(Diff2Html.getPrettyHtml($("<div/>").html(value).text()),{inputFormat: "diff", showFiles: true, matching: "lines"});', true );
 		echo '<div id="changes-in-file"></div>';

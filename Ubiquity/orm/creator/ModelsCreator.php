@@ -53,7 +53,7 @@ abstract class ModelsCreator {
 				foreach ($this->classes as $table=>$class){
 					$name=$class->getSimpleName();
 					echo "Creating the {$name} class\n";
-					$this->writeFile($modelsDir.DIRECTORY_SEPARATOR.$name.".php", $class);
+					$this->writeFile($modelsDir.\DS.$name.".php", $class);
 				}
 			}
 			if($initCache===true){
@@ -66,7 +66,7 @@ abstract class ModelsCreator {
 		if(isset($this->classes[$singleTable])){
 			$class=$this->classes[$singleTable];
 			echo "Creating the {$class->getName()} class\n";
-			$this->writeFile($modelsDir.DIRECTORY_SEPARATOR.$class->getSimpleName().".php", $class);
+			$this->writeFile($modelsDir.\DS.$class->getSimpleName().".php", $class);
 		}else{
 			echo "The {$singleTable} table does not exist in the database\n";
 		}

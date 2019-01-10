@@ -179,7 +179,7 @@ class UbiquityMyAdminViewer {
 		$result = [ ];
 		$loadedViews = UIntrospection::getLoadedViews ( $r, $lines );
 		foreach ( $loadedViews as $view ) {
-			if (\file_exists ( ROOT . DS . "views" . DS . $view )) {
+			if (\file_exists ( \ROOT . \DS . "views" . \DS . $view )) {
 				$lbl = new HtmlLabel ( "lbl-view-" . $controller . $action . $view, $view, "browser", "span" );
 				$lbl->addClass ( "violet" );
 				$lbl->addPopupHtml ( "<i class='icon info circle green'></i>&nbsp;<b>" . $view . "</b> is ok." );
@@ -191,7 +191,7 @@ class UbiquityMyAdminViewer {
 			$result [] = $lbl;
 		}
 		$viewname = $controller . "/" . $action . ".html";
-		if (! \file_exists ( ROOT . DS . "views" . DS . $viewname )) {
+		if (! \file_exists ( \ROOT . \DS . "views" . \DS . $viewname )) {
 			$bt = new HtmlButton ( "", "Create view " . $viewname );
 			$bt->setProperty ( "data-action", $action );
 			$bt->setProperty ( "data-controller", $controller );

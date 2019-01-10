@@ -67,8 +67,8 @@ class Maker {
 
 	public static function createView($controller, $action) {
 		$viewName = $controller . "/" . $action . ".html";
-		UFileSystem::safeMkdir ( ROOT . DS . "views" . DS . $controller );
-		UFileSystem::openReplaceWriteFromTemplateFile ( self::$baseDir . "/admin/templates/view.tpl", ROOT . DS . "views" . DS . $viewName, [ "%controllerName%" => $controller,"%actionName%" => $action ] );
+		UFileSystem::safeMkdir ( \ROOT . \DS . "views" . \DS . $controller );
+		UFileSystem::openReplaceWriteFromTemplateFile ( self::$baseDir . "/admin/templates/view.tpl", \ROOT . \DS . "views" . \DS . $viewName, [ "%controllerName%" => $controller,"%actionName%" => $action ] );
 		return $viewName;
 	}
 

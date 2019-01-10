@@ -128,7 +128,7 @@ trait CheckTrait{
 		if ($this->missingKeyInConfigMessage("Models namespace is not well configured in <b>app/config/config.php</b>", Startup::checkModelsConfig()) === false) {
 			$modelsNS=@$config["mvcNS"]["models"];
 			$this->_addInfoMessage($infoIcon, "Models namespace <b>" . $modelsNS . "</b> is ok.");
-			$dir=UFileSystem::cleanPathname(ROOT . DS . $modelsNS);
+			$dir=UFileSystem::cleanPathname(\ROOT . \DS . $modelsNS);
 			if (\file_exists($dir) === false) {
 				$this->_addErrorMessage("warning", "The directory <b>" . $dir . "</b> does not exists.");
 			} else {
@@ -209,7 +209,7 @@ trait CheckTrait{
 			if (!isset($config["cache"]["directory"]) || UString::isNull($config["cache"]["directory"])) {
 				self::missingKeyInConfigMessage("Cache directory is not well configured in <b>app/config/config.php</b>", [ "directory" ]);
 			} else {
-				$cacheDir=UFileSystem::cleanPathname(ROOT . DS . $config["cache"]["directory"]);
+				$cacheDir=UFileSystem::cleanPathname(\ROOT . \DS . $config["cache"]["directory"]);
 				$this->_addInfoMessage($infoIcon, "Models cache directory is well configured in config file.");
 				$cacheDirs=CacheManager::getCacheDirectories($config, true);
 				if (\file_exists($cacheDir) === false) {

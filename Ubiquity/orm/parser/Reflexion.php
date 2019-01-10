@@ -54,6 +54,19 @@ class Reflexion {
 			$prop=$reflect->getProperty($member);
 		return $prop;
 	}
+	
+	public static function getPropertyType($class,$property){
+		return self::getMetadata($class, $property, "@var", "type");
+	}
+	
+	public static function getMetadata($class,$property, $type, $name){
+		$a = Annotations::ofProperty($class, $property, $type);
+		if (!count($a)){
+			return false;
+		}
+		return trim($a[0]->$name,";");
+	}
+	
 
 	public static function getPropertiesAndValues($instance, $props=NULL) {
 		$ret=array ();

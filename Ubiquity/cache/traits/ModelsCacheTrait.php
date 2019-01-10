@@ -29,7 +29,7 @@ trait ModelsCacheTrait{
 	}
 
 	public static function getModelCacheKey($classname){
-		return \str_replace("\\", DIRECTORY_SEPARATOR, $classname);
+		return \str_replace("\\", \DS, $classname);
 	}
 
 	public static function modelCacheExists($classname){

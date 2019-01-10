@@ -17,7 +17,7 @@ use Ubiquity\exceptions\DAOException;
 
 /**
  * Gateway class between database and object model
- * @author jc
+ * @author jcheron <myaddressmail@gmail.com>
  * @version 1.1.3
  * @package orm
  */
@@ -147,7 +147,12 @@ class DAO {
 		$tableName=OrmUtils::getTableName($className);
 		self::parseKey($ids,$className);
 		$condition=SqlUtils::getCondition($ids,$className);
-		$keys=implode(",", OrmUtils::getKeyFields($className));
+		$keyFields=OrmUtils::getKeyFields($className);
+		if(is_array($keyFields)){
+			$keys=implode(",", $keyFields);
+		}else{
+			$keys="1";
+		}
 		return self::$db->queryColumn("SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM `{$tableName}`, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE ".$condition);
 	}
 
@@ -156,7 +161,7 @@ class DAO {
 	 * @param string $className complete classname of the model to load
 	 * @param string $condition Part following the WHERE of an SQL statement
 	 * @param array|null $parameters The query parameters
-	 * @return int count of objects
+	 * @return int|false count of objects
 	 */
 	public static function count($className, $condition='',$parameters=null) {
 		$tableName=OrmUtils::getTableName($className);

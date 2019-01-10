@@ -1,5 +1,4 @@
 <?php
-
 namespace Ubiquity\translation\loader;
 
 use Ubiquity\utils\base\UFileSystem;
@@ -7,7 +6,12 @@ use Ubiquity\utils\base\UArray;
 use Ubiquity\log\Logger;
 
 class ArrayLoader implements LoaderInterface {
-
+	private $rootDir;
+	
+	public function __construct($rootDir){
+		$this->rootDir=$rootDir;
+	}
+	
 	public function load($locale, $domain = '*') {
 		if(apc_exists($locale.$domain)){
 			Logger::info("Translate", "Loading ".$locale.'.'.$domain." from apc_cache","load");
@@ -38,13 +42,13 @@ class ArrayLoader implements LoaderInterface {
 	}
 	
 	private function getRootDirectory($locale){
-		return  ROOT . DS . "translations". DS.$locale.DS;
+		return  $this->rootDir. \DS.$locale.\DS;
 	}
 	
 	private function getDirectory($domain,&$filename){
 		$parts=explode(".",$domain);
 		$filename=array_pop($parts).".php";
-		return implode(DS, $parts);
+		return implode(\DS, $parts);
 	}
 	
 	/**
@@ -83,13 +87,11 @@ class ArrayLoader implements LoaderInterface {
 		$filename="";
 		$path=$this->getRootDirectory($locale).$this->getDirectory($domain,$filename);
 		if(UFileSystem::safeMkdir($path)){
-			if (@\file_put_contents($path.DS.$filename, $content, LOCK_EX) === false) {
+			if (@\file_put_contents($path.\DS.$filename, $content, LOCK_EX) === false) {
 				throw new \Exception("Unable to write cache file: {$filename}");
 			}
 		}else{
 			throw new \Exception("Unable to create folder : {$path}");
 		}
 	}
-
 }
-

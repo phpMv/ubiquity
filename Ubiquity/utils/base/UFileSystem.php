@@ -40,13 +40,13 @@ class UFileSystem {
 
 	public static function cleanPathname($path) {
 		if (UString::isNotNull($path)) {
-			if (DIRECTORY_SEPARATOR === "/")
-				$path=\str_replace("\\", DIRECTORY_SEPARATOR, $path);
+			if (\DS === "/")
+				$path=\str_replace("\\", \DS, $path);
 			else
-				$path=\str_replace("/", DIRECTORY_SEPARATOR, $path);
-			$path=\str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-			if (!UString::endswith($path, DIRECTORY_SEPARATOR)) {
-				$path=$path . DIRECTORY_SEPARATOR;
+				$path=\str_replace("/", \DS, $path);
+			$path=\str_replace(\DS . \DS, \DS, $path);
+			if (!UString::endswith($path, \DS)) {
+				$path=$path . \DS;
 			}
 		}
 		return $path;
@@ -54,11 +54,11 @@ class UFileSystem {
 	
 	public static function cleanFilePathname($path) {
 		if (UString::isNotNull($path)) {
-			if (DIRECTORY_SEPARATOR === "/")
-				$path=\str_replace("\\", DIRECTORY_SEPARATOR, $path);
+			if (\DS === "/")
+				$path=\str_replace("\\", \DS, $path);
 			else
-				$path=\str_replace("/", DIRECTORY_SEPARATOR, $path);
-			$path=\str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+				$path=\str_replace("/", \DS, $path);
+			$path=\str_replace(\DS . \DS, \DS, $path);
 		}
 		return $path;
 	}
@@ -115,7 +115,7 @@ class UFileSystem {
 	}
 	
 	public static function getDirFromNamespace($ns){
-		return \ROOT . DIRECTORY_SEPARATOR . str_replace ( "\\", DIRECTORY_SEPARATOR, $ns );
+		return \ROOT . \DS . str_replace ( "\\", \DS, $ns );
 	}
 	
 	public static function xcopy($source, $dest, $permissions = 0755){

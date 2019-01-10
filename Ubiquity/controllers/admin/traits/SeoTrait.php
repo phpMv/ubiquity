@@ -115,7 +115,7 @@ trait SeoTrait{
 			if (\sizeof ( $content ) > 0) {
 				$appDir = Startup::getApplicationDir ();
 				$content = \implode ( "\n", $content );
-				UFileSystem::save ( $appDir . DS . 'robots.txt', $content );
+				UFileSystem::save ( $appDir . \DS . 'robots.txt', $content );
 				$msg = $this->showSimpleMessage ( "The file <b>robots.txt</b> has been generated in " . $appDir, "success", "info circle" );
 				$this->jquery->get ( $this->_getFiles ()->getAdminBaseRoute () . "/seoRefresh", "#seoCtrls", [ 'hasLoader' => false,'jqueryDone' => 'replaceWith' ] );
 			} else {

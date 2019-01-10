@@ -22,7 +22,7 @@ trait StartupConfigTrait {
 	}
 	
 	public static function getModelsCompletePath() {
-		return ROOT . DS . self::getModelsDir ();
+		return \ROOT . \DS . self::getModelsDir ();
 	}
 	
 	protected static function needsKeyInConfigArray(&$result, $array, $needs) {
@@ -71,7 +71,7 @@ trait StartupConfigTrait {
 	
 	
 	public static function reloadConfig(){
-		$appDir=\dirname ( ROOT );
+		$appDir=\dirname ( \ROOT );
 		$filename=$appDir."/app/config/config.php";
 		self::$config=include($filename);
 		self::startTemplateEngine(self::$config);
@@ -79,7 +79,7 @@ trait StartupConfigTrait {
 	}
 	
 	public static function saveConfig($content){
-		$appDir=\dirname ( ROOT );
+		$appDir=\dirname ( \ROOT );
 		$filename=$appDir."/app/config/config.php";
 		$oldFilename=$appDir."/app/config/config.old.php";
 		if (!file_exists($filename) || copy($filename, $oldFilename)) {

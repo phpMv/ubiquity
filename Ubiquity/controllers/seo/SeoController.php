@@ -57,7 +57,7 @@ class SeoController extends Controller {
 	}
 	
 	public static function getUrlsFileName($urlsKey){
-		return self::SEO_PREFIX.DS.$urlsKey;
+		return self::SEO_PREFIX.\DS.$urlsKey;
 	}
 
 	/**

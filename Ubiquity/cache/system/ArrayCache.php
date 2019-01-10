@@ -130,7 +130,7 @@ class ArrayCache extends AbstractDataCache {
 	public function getCacheFiles($type) {
 		return CacheFile::initFromFiles($this->_root . $type, \ucfirst($type), function ($file) use ($type) {
 			$file=\basename($file);
-			return $type . DIRECTORY_SEPARATOR . substr($file, 0, strpos($file, $this->postfix . '.php'));
+			return $type . \DS . substr($file, 0, strpos($file, $this->postfix . '.php'));
 		});
 	}
 
@@ -167,7 +167,7 @@ class ArrayCache extends AbstractDataCache {
 	 * @see \Ubiquity\cache\system\AbstractDataCache::setRoot()
 	 */
 	public function setRoot($root) {
-		$this->_root=rtrim($root,DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;		
+		$this->_root=rtrim($root,\DS).\DS;		
 	}
 
 }

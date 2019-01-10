@@ -275,7 +275,7 @@ class ValidatorsManager {
 	}
 	
 	protected static function getModelCacheKey($classname){
-		return self::$key.\str_replace("\\", DIRECTORY_SEPARATOR, $classname);
+		return self::$key.\str_replace("\\", \DS, $classname);
 	}
 	
 	protected static function getValidatorInstance($type){

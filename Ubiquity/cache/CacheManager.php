@@ -14,9 +14,6 @@ use Ubiquity\cache\system\AbstractDataCache;
 class CacheManager {
 	use RouterCacheTrait,ModelsCacheTrait,RestCacheTrait;
 	
-	const ROOT=ROOT;
-	const DS=DS;
-	
 	/**
 	 *
 	 * @var AbstractDataCache
@@ -26,7 +23,7 @@ class CacheManager {
 
 	public static function start(&$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory ( $config );
-		$cacheDirectory = self::ROOT . self::DS . self::$cacheDirectory;
+		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
 		Annotations::$config ['cache'] = new AnnotationCache ( $cacheDirectory . '/annotations' );
 		self::register ( Annotations::getManager () );
 		self::getCacheInstance ( $config, $cacheDirectory, ".cache" );
@@ -39,7 +36,7 @@ class CacheManager {
 	 */
 	public static function startProd(&$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory ( $config );
-		$cacheDirectory = self::ROOT . self::DS . self::$cacheDirectory;
+		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
 		self::getCacheInstance ( $config, $cacheDirectory, ".cache" );
 	}
 
@@ -61,7 +58,7 @@ class CacheManager {
 	private static function initialGetCacheDirectory(&$config) {
 		$cacheDirectory = @$config ["cache"] ["directory"];
 		if (! isset ( $cacheDirectory )) {
-			$config ["cache"] ["directory"] = "cache".DIRECTORY_SEPARATOR;
+			$config ["cache"] ["directory"] = "cache".\DS;
 			$cacheDirectory = $config ["cache"] ["directory"];
 		}
 		return $cacheDirectory;
@@ -72,11 +69,11 @@ class CacheManager {
 	}
 	
 	public static function getAbsoluteCacheDirectory(){
-		return self::ROOT.self::DS.self::$cacheDirectory;
+		return \ROOT.\DS.self::$cacheDirectory;
 	}
 	
 	public static function getCacheSubDirectory($subDirectory) {
-		return self::ROOT.self::DS.self::$cacheDirectory.self::DS.$subDirectory;
+		return \ROOT.\DS.self::$cacheDirectory.\DS.$subDirectory;
 	}
 
 	public static function checkCache(&$config, $silent = false) {
@@ -89,13 +86,13 @@ class CacheManager {
 
 	public static function getCacheDirectories(&$config, $silent = false) {
 		$cacheDirectory = self::initialGetCacheDirectory ( $config );
-		$rootDS=self::ROOT . self::DS ;
+		$rootDS=\ROOT . \DS ;
 		if (! $silent) {
 			echo "cache directory is " . UFileSystem::cleanPathname ( $rootDS. $cacheDirectory ) . "\n";
 		}
-		$cacheDirectory=$rootDS . $cacheDirectory . self::DS;
-		$modelsDir = str_replace ( "\\", self::DS, $config ["mvcNS"] ["models"] );
-		$controllersDir = str_replace ( "\\", self::DS, $config ["mvcNS"] ["controllers"] );
+		$cacheDirectory=$rootDS . $cacheDirectory . \DS;
+		$modelsDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["models"] );
+		$controllersDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["controllers"] );
 		$annotationCacheDir = $cacheDirectory . "annotations";
 		$modelsCacheDir = $cacheDirectory . $modelsDir;
 		$queriesCacheDir = $cacheDirectory . "queries";
@@ -138,10 +135,10 @@ class CacheManager {
 
 	protected static function _getFiles(&$config, $type, $silent = false) {
 		$typeNS = $config ["mvcNS"] [$type];
-		$typeDir = self::ROOT . self::DS . str_replace ( "\\", self::DS, $typeNS );
+		$typeDir = \ROOT . \DS . str_replace ( "\\", \DS, $typeNS );
 		if (! $silent)
-			echo \ucfirst ( $type ) . " directory is " . self::ROOT . $typeNS . "\n";
-		return UFileSystem::glob_recursive ( $typeDir . self::DS . '*' );
+			echo \ucfirst ( $type ) . " directory is " . \ROOT . $typeNS . "\n";
+		return UFileSystem::glob_recursive ( $typeDir . \DS . '*' );
 	}
 
 	private static function register(AnnotationManager $annotationManager) {

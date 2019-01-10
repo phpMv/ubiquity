@@ -1,5 +1,4 @@
 <?php
-
 namespace Ubiquity\translation;
 
 use Ubiquity\translation\loader\ArrayLoader;
@@ -11,10 +10,10 @@ class Translator {
 	protected $catalogues;
 	protected $fallbackLocale;
 	
-	public function __construct($locale="en_EN",$fallbackLocale=null){
+	public function __construct($locale="en_EN",$fallbackLocale=null,$rootDir=null){
 		$this->locale=$locale;
 		$this->fallbackLocale=$fallbackLocale;
-		$this->loader=new ArrayLoader();
+		$this->setRootDir($rootDir);
 	}
 	
 	public function setLocale($locale){
@@ -22,13 +21,22 @@ class Translator {
 		$this->locale = $locale;
 	}
 	
-	
+	public function setRootDir($rootDir=null){
+		if(!isset($rootDir)){
+			$rootDir=ROOT . DS . "translations";
+		}
+		$this->loader=new ArrayLoader($rootDir);
+	}
 	
 	public function getLocale(){
 		return $this->locale;
 	}
 	
 	public function trans($id, array $parameters = array(), $domain = null, $locale = null){
+		return $this->transCallable(function($catalog,$parameters){return $this->replaceParams($catalog,$parameters);}, $id,$parameters,$domain,$locale);
+	}
+	
+	protected function transCallable($callback,$id, array $parameters = array(), $domain = null, $locale = null){
 		if (null === $domain) {
 			$domain = 'messages';
 		}
@@ -46,7 +54,7 @@ class Translator {
 		}
 		$transId=$this->getTransId($id, $domain);
 		if(isset($catalogue[$transId])){
-			return $this->doTrans($catalogue[$transId]);
+			return $callback($catalogue[$transId],$parameters);
 		}elseif($this->fallbackLocale!==null && $locale!==$this->fallbackLocale){
 			Logger::warn("Translation", "Translation not found for ".$id.". Switch to fallbackLocale ".$this->fallbackLocale);
 			return $this->trans($id,$parameters,$domain,$this->fallbackLocale);
@@ -56,7 +64,7 @@ class Translator {
 		}
 	}
 	
-	protected function doTrans($trans,array $parameters=array()){
+	protected function replaceParams($trans,array $parameters=array()){
 		foreach ($parameters as $k=>$v){
 			$trans=str_replace('%'.$k.'%', $v, $trans);
 		}
@@ -66,7 +74,6 @@ class Translator {
 	protected function getTransId($id,$domain){
 		return $domain.".".$id;
 	}
-	
 	
 	public function getCatalogue(&$locale = null){
 		if (null === $locale) {
@@ -106,6 +113,4 @@ class Translator {
 	public function clearCache(){
 		apc_clear_cache('user');
 	}
-
 }
-

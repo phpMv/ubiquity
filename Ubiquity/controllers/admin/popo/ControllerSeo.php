@@ -98,7 +98,7 @@ class ControllerSeo{
 		$config=Startup::getConfig();
 
 		$robotsContent="";
-		$robotsFile=Startup::getApplicationDir() . DS . 'robots.txt';
+		$robotsFile=Startup::getApplicationDir() . \DS . 'robots.txt';
 		if(\file_exists($robotsFile)){
 			$robotsContent=UFileSystem::load($robotsFile);
 		}

@@ -58,7 +58,7 @@ class Startup {
 	private static function startTemplateEngine($config) {
 		try {
 			if (isset ( $config ["templateEngine"] )) {
-				$engineOptions = array ('cache' => ROOT . DS . "views/cache/" );
+				$engineOptions = array ('cache' => \ROOT . \DS . "views/cache/" );
 				$templateEngine = $config ["templateEngine"];
 				if (isset ( $config ["templateEngineOptions"] )) {
 					$engineOptions = $config ["templateEngineOptions"];
@@ -174,10 +174,10 @@ class Startup {
 	}
 
 	public static function getApplicationDir() {
-		return \dirname ( ROOT );
+		return \dirname ( \ROOT );
 	}
 	
 	public static function getApplicationName() {
-		return basename(\dirname ( ROOT ));
+		return basename(\dirname ( \ROOT ));
 	}
 }

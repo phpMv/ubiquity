@@ -19,6 +19,7 @@ trait DAOCoreTrait {
 	abstract protected static function prepareManyToOne(&$ret, $instance,$value, $fkField,$annotationArray);
 	abstract protected static function prepareOneToMany(&$ret,$instance, $member, $annot=null);
 	abstract protected static function _initRelationFields($included,$metaDatas,&$invertedJoinColumns,&$oneToManyFields,&$manyToManyFields);
+	abstract protected static function getIncludedForStep($included);
 	
 	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $mappedBy) {
 		$elementAccessor="get" . ucfirst($mappedBy);

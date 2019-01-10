@@ -257,7 +257,7 @@ trait CreateControllersTrait{
 	}
 	
 	protected function createCrudView($frameworkName,$controllerName,$newName){
-		$folder=ROOT . DS . "views" . DS .$controllerName;
+		$folder=\ROOT . \DS . "views" . \DS .$controllerName;
 		UFileSystem::safeMkdir($folder);
 		try{
 			$blocks=$this->view->getBlockNames($frameworkName);
@@ -272,6 +272,6 @@ trait CreateControllersTrait{
 		}catch(\Exception $e){
 			$content=[$this->view->getCode($frameworkName)];
 		}
-		return UFileSystem::save($folder. DS .$newName.".html", implode("", $content));
+		return UFileSystem::save($folder. \DS .$newName.".html", implode("", $content));
 	}
 }

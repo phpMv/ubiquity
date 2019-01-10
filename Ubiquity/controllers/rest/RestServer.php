@@ -94,7 +94,7 @@ class RestServer {
 	 * @return ApiTokens
 	 */
 	public function _getApiTokens() {
-		return ApiTokens::getFromCache(CacheManager::getAbsoluteCacheDirectory(). DIRECTORY_SEPARATOR, $this->tokensCacheKey);
+		return ApiTokens::getFromCache(CacheManager::getAbsoluteCacheDirectory(). \DS, $this->tokensCacheKey);
 	}
 
 	/**

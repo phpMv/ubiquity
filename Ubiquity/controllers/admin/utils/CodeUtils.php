@@ -115,11 +115,11 @@ class CodeUtils {
 		} else if (strtoupper ( substr ( PHP_OS, 0, 3 ) ) === 'WIN') {
 			$paths = explode ( PATH_SEPARATOR, getenv ( 'PATH' ) );
 			foreach ( $paths as $path ) {
-				if (substr ( $path, strlen ( $path ) - 1 ) == DIRECTORY_SEPARATOR) {
+				if (substr ( $path, strlen ( $path ) - 1 ) == \DS) {
 					$path = substr ( $path, 0, strlen ( $path ) - 1 );
 				}
 				if (substr ( $path, strlen ( $path ) - strlen ( 'php' ) ) == 'php') {
-					$response = $path . DIRECTORY_SEPARATOR . 'php.exe';
+					$response = $path . \DS . 'php.exe';
 					if (is_file ( $response )) {
 						return $response;
 					}
@@ -132,14 +132,14 @@ class CodeUtils {
 		} else {
 			$paths = explode ( PATH_SEPARATOR, getenv ( 'PATH' ) );
 			foreach ( $paths as $path ) {
-				if (substr ( $path, strlen ( $path ) - 1 ) == DIRECTORY_SEPARATOR) {
+				if (substr ( $path, strlen ( $path ) - 1 ) == \DS) {
 					$path = substr ( $path, strlen ( $path ) - 1 );
 				}
 				if (substr ( $path, strlen ( $path ) - strlen ( 'php' ) ) == 'php') {
 					if (is_file ( $path )) {
 						return $path;
 					}
-					$response = $path . DIRECTORY_SEPARATOR . 'php';
+					$response = $path . \DS . 'php';
 					if (is_file ( $response )) {
 						return $response;
 					}

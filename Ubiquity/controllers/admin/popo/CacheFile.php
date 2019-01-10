@@ -20,7 +20,7 @@ class CacheFile {
 	}
 
 	public static function initFromFiles($folder, $type, $keyFunction=null) {
-		$files=UFileSystem::glob_recursive($folder . DS . '*');
+		$files=UFileSystem::glob_recursive($folder . \DS . '*');
 		$result=[ ];
 		if (!isset($keyFunction)) {
 			$keyFunction=function ($file) {
@@ -38,7 +38,7 @@ class CacheFile {
 	}
 
 	public static function delete($folder) {
-		$files=UFileSystem::glob_recursive($folder . DS . '*');
+		$files=UFileSystem::glob_recursive($folder . \DS . '*');
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				\unlink($file);

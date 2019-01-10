@@ -188,8 +188,8 @@ class RepositoryGit{
 			$gitSettings["name"]=Startup::getApplicationName();
 	
 		$initialized=false;
-		if(file_exists(Startup::getApplicationDir().DS.".git")){
-			$repo=new UGitRepository(Startup::getApplicationDir().DS.".git");
+		if(file_exists(Startup::getApplicationDir().\DS.".git")){
+			$repo=new UGitRepository(Startup::getApplicationDir().\DS.".git");
 			if($getFiles){
 				$result->addFiles(self::loadUntrackedFiles($repo));
 				$result->addFiles(self::loadModifiedFiles($repo));
