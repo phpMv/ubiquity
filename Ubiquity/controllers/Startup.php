@@ -73,7 +73,7 @@ class Startup {
 		}
 	}
 
-	public static function runAction($u, $initialize = true, $finalize = true) {
+	public static function runAction(array &$u, $initialize = true, $finalize = true) {
 		$ctrl = $u [0];
 		self::$controller = $ctrl;
 		self::$action = "index";
@@ -112,13 +112,13 @@ class Startup {
 		}
 	}
 
-	public static function runAsString($u, $initialize = true, $finalize = true) {
+	public static function runAsString(array &$u, $initialize = true, $finalize = true) {
 		\ob_start ();
 		self::runAction ( $u, $initialize, $finalize );
 		return \ob_get_clean ();
 	}
 
-	private static function callController(Controller $controller, $u) {
+	private static function callController(Controller $controller, array &$u) {
 		$urlSize = sizeof ( $u );
 		switch ($urlSize) {
 			case 1 :
