@@ -27,7 +27,7 @@ class RestServer {
 	 */
 	protected $apiTokens;
 
-	public function __construct($config) {
+	public function __construct(&$config) {
 		$this->config=$config;
 		$this->headers=[ 'Access-Control-Allow-Origin' => 'http://127.0.0.1:4200','Access-Control-Allow-Credentials' => 'true','Access-Control-Max-Age' => '86400','Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD' ];
 	}

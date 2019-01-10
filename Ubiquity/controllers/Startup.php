@@ -55,7 +55,7 @@ class Startup {
 		return self::$urlParts;
 	}
 
-	private static function startTemplateEngine($config) {
+	private static function startTemplateEngine(&$config) {
 		try {
 			if (isset ( $config ["templateEngine"] )) {
 				$engineOptions = array ('cache' => \ROOT . \DS . "views/cache/" );
@@ -101,7 +101,7 @@ class Startup {
 		}
 	}
 	
-	public static function injectDependences($controller,$config){
+	public static function injectDependences($controller,&$config){
 		if (\array_key_exists ( "di", $config )) {
 			$di = $config ["di"];
 			if (\is_array ( $di )) {
