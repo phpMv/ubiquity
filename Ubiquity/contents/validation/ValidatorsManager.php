@@ -35,6 +35,7 @@ use Ubiquity\cache\objects\SessionCache;
  * @version 1.0.0
  */
 class ValidatorsManager {
+	use ValidatorsManagerInitTrait;
 	protected static $instanceValidators=[];
 	protected static $cache;
 	
@@ -70,32 +71,6 @@ class ValidatorsManager {
 	];
 	
 	protected static $key="contents/validators/";
-	
-	/**
-	 * Registers a validator type for using with @validator annotation
-	 * @param string $type
-	 * @param string $validatorClass
-	 */
-	public static function registerType($type,$validatorClass){
-		self::$validatorTypes[$type]=$validatorClass;
-	}
-	
-	/**
-	 * Parses models and save validators in cache
-	 * to use in dev only
-	 * @param array $config
-	 */
-	public static function initModelsValidators(&$config){
-		$models=CacheManager::getModels($config,true);
-		foreach ($models as $model){
-			$parser=new ValidationModelParser();
-			$parser->parse($model);
-			$validators=$parser->getValidators();
-			if(sizeof($validators)>0){
-				self::store($model, $parser->__toString());
-			}
-		}
-	}
 	
 	protected static function store($model,$validators){
 		CacheManager::$cache->store(self::getModelCacheKey($model), $validators);
