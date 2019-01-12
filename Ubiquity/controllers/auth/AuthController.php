@@ -9,15 +9,15 @@ use Ubiquity\controllers\Auth\AuthFiles;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\Startup;
-use Ubiquity\utils\http\UCookie;
 use Ajax\service\Javascript;
+use Ubiquity\utils\http\UCookie;
 
  /**
  * Controller Auth
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  **/
 abstract class AuthController extends ControllerBase{
-	use AuthControllerVariablesTrait,AuthControllerOverrideTrait;
+	use AuthControllerCoreTrait,AuthControllerVariablesTrait,AuthControllerOverrideTrait;
 	
 	/**
 	 * @var AuthFiles
@@ -58,9 +58,6 @@ abstract class AuthController extends ControllerBase{
 		]);
 	}
 	
-	private function getBaseUrl(){
-		return URequest::getUrl($this->_getBaseRoute());
-	}
 	/**
 	 * {@inheritDoc}
 	 * @see \controllers\ControllerBase::isValid()
@@ -135,41 +132,6 @@ abstract class AuthController extends ControllerBase{
 		$this->authLoadView($this->_getFiles()->getViewNoAccess(),["_message"=>$message,"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption]);
 	}
 	
-	protected function noAttempts(){
-		$timeout=$this->attemptsTimeout();
-		$plus="";
-		if(is_numeric($timeout)){
-			$this->jquery->exec("$('._login').addClass('disabled');",true);
-			$plus=" You can try again {_timer}";
-			$this->jquery->exec("var startTimer=function(duration, display) {var timer = duration, minutes, seconds;
-    										var interval=setInterval(function () {
-        										minutes = parseInt(timer / 60, 10);seconds = parseInt(timer % 60, 10);
-										        minutes = minutes < 10 ? '0' + minutes : minutes;
-        										seconds = seconds < 10 ? '0' + seconds : seconds;
-										        display.html(minutes + ':' + seconds);
-										        if (--timer < 0) {clearInterval(interval);$('#timeout-message').hide();$('#bad-login').removeClass('attached');$('._login').removeClass('disabled');}
-    										}, 1000);
-										}",true);
-			$timeToLeft=USession::getTimeout($this->_attemptsSessionKey);
-			$this->jquery->exec("startTimer({$timeToLeft},$('#timer'));",true);
-			$this->jquery->compile($this->view);
-		}
-		return new FlashMessage("<i class='ui warning icon'></i> You have no more attempt of connection !".$plus,null,"bottom attached error","");
-	}
-	
-
-	private function authLoadView($viewName,$vars=[]){
-		$files=$this->_getFiles();
-		$mainTemplate=$files->getBaseTemplate();
-		if(isset($mainTemplate)){
-			$vars["_viewname"]=$viewName;
-			$vars["_base"]=$mainTemplate;
-			$this->loadView($files->getViewBaseTemplate(),$vars);
-		}else{
-			$this->loadView($viewName,$vars);
-		}
-	}
-	
 	/**
 	 * Logout action
 	 * Terminate the session and display a logout message
@@ -205,37 +167,9 @@ abstract class AuthController extends ControllerBase{
 		return $this->loadView($this->_getFiles()->getViewInfo(),["connected"=>USession::get($this->_getUserSessionKey()),"authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector()],$displayInfoAsString);
 	}
 	
-	protected function fMessage(FlashMessage $fMessage,$id=null){
-		return $this->message($fMessage->getType(), $fMessage->getTitle(), $fMessage->getContent(),$fMessage->getIcon(),$id);
-	}
-	
-	public function message($type,$header,$body,$icon="info",$id=null){
-		return $this->loadView($this->_getFiles()->getViewMessage(),get_defined_vars(),true);
-	}
-	
-	protected function getOriginalURL(){
-		return USession::get("urlParts");
-	}
-	
 	public function checkConnection(){
 		UResponse::asJSON();
 		echo "{\"valid\":".UString::getBooleanStr($this->_isValidUser())."}";
-	}
-	
-	
-	/**
-	 * To override for changing view files
-	 * @return AuthFiles
-	 */
-	protected function getFiles ():AuthFiles{
-		return new AuthFiles();
-	}
-	
-	private function _getFiles():AuthFiles{
-		if(!isset($this->authFiles)){
-			$this->authFiles=$this->getFiles();
-		}
-		return $this->authFiles;
 	}
 	
 	/**
@@ -254,29 +188,6 @@ abstract class AuthController extends ControllerBase{
 	 */
 	public function _setLoginCaption($_loginCaption) {
 		$this->_loginCaption = $_loginCaption;
-	}
-	
-	protected function getViewVars($viewname){
-		return ["authURL"=>$this->getBaseUrl(),"bodySelector"=>$this->_getBodySelector(),"_loginCaption"=>$this->_loginCaption];
-	}
-	
-	/**
-	 * Saves the connected user identifier in a cookie
-	 * @param object $connected
-	 */
-	protected function rememberMe($connected){
-		$id= $this->toCookie($connected);
-		if(isset($id)){
-			UCookie::set($this->_getUserSessionKey(),$id);
-		}
-	}
-	
-	/**
-	 * Returns the cookie for auto connection
-	 * @return NULL|string
-	 */
-	protected function getCookieUser(){
-		return UCookie::get($this->_getUserSessionKey());
 	}
 	
 	/**
@@ -298,6 +209,7 @@ abstract class AuthController extends ControllerBase{
 		UCookie::delete($this->_getUserSessionKey());
 		$this->index();
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 * @see \Ubiquity\controllers\ControllerBase::finalize()
@@ -340,5 +252,4 @@ abstract class AuthController extends ControllerBase{
 		}
 		Startup::forward($url,$initFinalize,$initFinalize);
 	}
-
 }

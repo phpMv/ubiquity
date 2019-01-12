@@ -4,6 +4,7 @@ namespace Ubiquity\controllers\auth;
 
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\http\USession;
+use Ubiquity\utils\http\UCookie;
 
 trait AuthControllerOverrideTrait {
 	
@@ -73,6 +74,34 @@ trait AuthControllerOverrideTrait {
 	 */
 	protected function fromCookie($cookie){
 		return;
+	}
+	
+	
+	/**
+	 * Saves the connected user identifier in a cookie
+	 * @param object $connected
+	 */
+	protected function rememberMe($connected){
+		$id= $this->toCookie($connected);
+		if(isset($id)){
+			UCookie::set($this->_getUserSessionKey(),$id);
+		}
+	}
+	
+	/**
+	 * Returns the cookie for auto connection
+	 * @return NULL|string
+	 */
+	protected function getCookieUser(){
+		return UCookie::get($this->_getUserSessionKey());
+	}
+	
+	/**
+	 * To override for changing view files
+	 * @return AuthFiles
+	 */
+	protected function getFiles ():AuthFiles{
+		return new AuthFiles();
 	}
 }
 
