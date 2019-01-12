@@ -7,16 +7,17 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\base\UString;
 use Ubiquity\log\Logger;
 use Ubiquity\controllers\traits\RouterModifierTrait;
+use Ubiquity\controllers\traits\RouterAdminTrait;
 
 /**
- * Router
- *
- * @author jc
- * @version 1.0.1
+ * Router manager
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.2
  */
 class Router {
-	use RouterModifierTrait;
-	private static $routes;
+	use RouterModifierTrait,RouterAdminTrait;
+	
+	protected static $routes;
 
 	/**
 	 * Starts the router by loading normal routes (not rest)
@@ -53,55 +54,6 @@ class Router {
 		}
 		Logger::warn("Router", "No route found for {$path}","getRoute");
 		return false;
-	}
-
-	public static function getRouteInfoByControllerAction($controller, $action) {
-		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if (! isset ( $routeDetails ["controller"] )) {
-				$routeDetails = \reset ( $routeDetails );
-			}
-			if ($controller === $routeDetails ["controller"] && $action === $routeDetails ["action"]) {
-				$routeDetails ["path"] = $routePath;
-				return $routeDetails;
-			}
-		}
-		return false;
-	}
-
-	public static function filterRoutes($path) {
-		$path = self::slashPath ( $path );
-		$result = [ ];
-		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if (preg_match ( "@^" . $routePath . ".*?$@s", $path, $matches )) {
-				$result [$routePath] = $routeDetails;
-			}
-		}
-		return $result;
-	}
-
-	public static function getRouteInfo($path) {
-		$path = self::slashPath ( $path );
-		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if (preg_match ( "@^" . $routePath . "$@s", $path, $matches ) || \stripslashes ( $routePath ) == $path) {
-				if (! isset ( $routeDetails ["controller"] )) {
-					return \reset ( $routeDetails );
-				} else
-					return $routeDetails;
-			}
-		}
-		return false;
-	}
-
-	public static function getAnnotations($controllerName, $actionName) {
-		$result = [ ];
-		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if (! isset ( $routeDetails ["controller"] )) {
-				$routeDetails = \reset ( $routeDetails );
-			}
-			if ($routeDetails ["controller"] === $controllerName && $routeDetails ["action"] === $actionName)
-				$result [$routePath] = $routeDetails;
-		}
-		return $result;
 	}
 
 	/**
@@ -180,23 +132,8 @@ class Router {
 		$ctrl = str_replace ( "\\\\", "\\", $routeArray ["details"] ["controller"] );
 		$result = [ $ctrl,$routeArray ["details"] ["action"] ];
 		$paramsOrder = $routeArray ["details"] ["parameters"];
-		$index = 0;
-		foreach ( $paramsOrder as $order ) {
-			if ($order === "*") {
-				if (isset ( $params [$index] ))
-					$result = \array_merge ( $result, \array_diff ( \explode ( "/", $params [$index] ), [ "" ] ) );
-				break;
-			}
-			if (\substr ( $order, 0, 1 ) === "~") {
-				$order = \intval ( \substr ( $order, 1, 1 ) );
-				if (isset ( $params [$order] )) {
-					$result = \array_merge ( $result, \array_diff ( \explode ( "/", $params [$order] ), [ "" ] ) );
-					break;
-				}
-			}
-			$result [] = self::cleanParam ( $params [$order] );
-			unset ( $params [$order] );
-			$index ++;
+		if(sizeof($paramsOrder)>0){
+			self::setParamsInOrder($result, $paramsOrder, $params);
 		}
 		if ($cached === true && $cachedResponse === true) {
 			Logger::info("Router", "Route found for {$routeArray["path"]} (from cache) : ".implode("/", $result),"getRouteUrlParts");
@@ -205,19 +142,40 @@ class Router {
 		Logger::info("Router", "Route found for {$routeArray["path"]} : ".implode("/", $result),"getRouteUrlParts");
 		return $result;
 	}
+	
+	protected static function setParamsInOrder(&$routeUrlParts,$paramsOrder,$params){
+		$index = 0;
+		foreach ( $paramsOrder as $order ) {
+			if ($order === "*") {
+				if (isset ( $params [$index] ))
+					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( "/", $params [$index] ), [ "" ] ) );
+					break;
+			}
+			if (\substr ( $order, 0, 1 ) === "~") {
+				$order = \intval ( \substr ( $order, 1, 1 ) );
+				if (isset ( $params [$order] )) {
+					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( "/", $params [$order] ), [ "" ] ) );
+					break;
+				}
+			}
+			$routeUrlParts [] = self::cleanParam ( $params [$order] );
+			unset ( $params [$order] );
+			$index ++;
+		}
+	}
 
 	private static function cleanParam($param) {
 		if (UString::endswith ( $param, "/" ))
 			return \substr ( $param, 0, - 1 );
 		return $param;
 	}
-
-	private static function slashPath($path) {
+	
+	protected static function slashPath($path) {
 		if (UString::startswith ( $path, "/" ) === false)
 			$path = "/" . $path;
-			if (! UString::endswith ( $path, "/" ))
-				$path = $path . "/";
-				return $path;
+		if (! UString::endswith ( $path, "/" ))
+			$path = $path . "/";
+		return $path;
 	}
 	
 	/**

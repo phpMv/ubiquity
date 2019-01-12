@@ -73,6 +73,10 @@ trait RouterCacheTrait{
 		}
 	}
 
+	/**
+	 * @param boolean $isRest
+	 * @return array
+	 */
 	public static function getControllerCache($isRest=false) {
 		$key=($isRest) ? "rest" : "default";
 		if (self::$cache->exists("controllers/routes." . $key))
