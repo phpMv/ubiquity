@@ -55,24 +55,14 @@ class ClassToYuml {
 			}
 		}
 		$parts=[$reflect->getShortName()];
-
+		
 		if($this->displayProperties){
 			$prikeys=OrmUtils::getKeyFields($this->class);
 			$types=OrmUtils::getFieldTypes($this->class);
 			$propertiesArray=[];
 			$properties=$reflect->getProperties();
 			foreach ($properties as $property){
-				$propertyName=$property->getName();
-				$type="";$isPri="";
-				if($this->displayPropertiesTypes){
-					if(\array_key_exists($propertyName, $types)){
-						$type=Yuml::$parameterTypeSeparator.$types[$propertyName];
-					}
-				}
-				if(\array_search($propertyName, $prikeys)!==false){
-					$isPri=Yuml::$primary;
-				}
-				$propertiesArray[]=Yuml::setPropertyVariables([$this->getAccess($property),$isPri,$propertyName,$type]);
+				$this->parseProperty($propertiesArray, $property, $prikeys, $types);
 			}
 			$parts[]=\implode(Yuml::$memberSeparator, $propertiesArray);
 		}
@@ -81,16 +71,7 @@ class ClassToYuml {
 			$methodsArray=[];
 			$methods=$reflect->getMethods();
 			foreach ($methods as $method){
-				$parameters="";
-				if($this->displayMethodsParams){
-					$parameters=$this->getMethodParameters($method);
-				}
-				$methodName=$method->getName();
-				$type="";
-				if($method->hasReturnType()){
-					$type=Yuml::$parameterTypeSeparator.$method->getReturnType();
-				}
-				$methodsArray[]=Yuml::setMethodVariables([$this->getAccess($method),$methodName,$parameters,$type]);
+				$this->parseMethod($methodsArray, $method);
 			}
 			$parts[]=\implode(Yuml::$memberSeparator, $methodsArray);
 		}
@@ -102,6 +83,33 @@ class ClassToYuml {
 		}
 		$this->parseResult=$result;
 		return $result;
+	}
+	
+	protected function parseProperty(&$propertiesArray,$property,$prikeys,$types){
+		$propertyName=$property->getName();
+		$type="";$isPri="";
+		if($this->displayPropertiesTypes){
+			if(\array_key_exists($propertyName, $types)){
+				$type=Yuml::$parameterTypeSeparator.$types[$propertyName];
+			}
+		}
+		if(\array_search($propertyName, $prikeys)!==false){
+			$isPri=Yuml::$primary;
+		}
+		$propertiesArray[]=Yuml::setPropertyVariables([$this->getAccess($property),$isPri,$propertyName,$type]);
+	}
+	
+	protected function parseMethod(&$methodsArray,$method){
+		$parameters="";
+		if($this->displayMethodsParams){
+			$parameters=$this->getMethodParameters($method);
+		}
+		$methodName=$method->getName();
+		$type="";
+		if($method->hasReturnType()){
+			$type=Yuml::$parameterTypeSeparator.$method->getReturnType();
+		}
+		$methodsArray[]=Yuml::setMethodVariables([$this->getAccess($method),$methodName,$parameters,$type]);
 	}
 
 	protected function getShortClassName($class){
