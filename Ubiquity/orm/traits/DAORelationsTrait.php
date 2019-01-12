@@ -18,14 +18,12 @@ trait DAORelationsTrait {
 			self::_affectsObjectsFromArray($manyToOneQueries,$included, function($object,$member,$manyToOneObjects,$fkField){
 				self::affectsManyToOneFromArray($object,$member,$manyToOneObjects,$fkField);
 			});
-		}
-		
+		}		
 		if(\sizeof($oneToManyQueries)>0){
 			self::_affectsObjectsFromArray($oneToManyQueries,$included, function($object,$member,$relationObjects,$fkField){
 				self::affectsOneToManyFromArray($object,$member,$relationObjects,$fkField);
 			});
 		}
-		
 		if(\sizeof($manyToManyParsers)>0){
 			self::_affectsManyToManyObjectsFromArray($manyToManyParsers, $objects,$included,$useCache);
 		}
@@ -104,8 +102,7 @@ trait DAORelationsTrait {
 		$sql=$parser->generateConcatSQL();
 		$result=self::$db->prepareAndFetchAll($sql,$parser->getWhereValues());
 		$condition=$parser->getParserWhereMask(" ?");
-		$cParser=new ConditionParser();
-		
+		$cParser=new ConditionParser();		
 		foreach ($result as $row){
 			$values=explode(",", $row["_concat"]);
 			$myPkValues[$row["_field"]]=$values;
@@ -118,8 +115,6 @@ trait DAORelationsTrait {
 	private static function _getIncludedNext($included,$member){
 		return (isset($included[$member]))?(is_bool($included[$member])?$included[$member]:[$included[$member]]):false;
 	}
-	
-	
 	
 	private static function getManyToManyFromArrayIds($relationObjects, $ids){
 		$ret=[];
@@ -148,7 +143,6 @@ trait DAORelationsTrait {
 				}
 			}
 		}
-		
 		return $ret;
 	}
 	

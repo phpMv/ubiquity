@@ -81,7 +81,7 @@ trait DAOCoreTrait {
 		if (sizeof($retour) < 1){
 			return null;
 		}
-		$result= \reset($retour);
+		$result= \current($retour);
 		EventsManager::trigger("dao.getone", $result,$className);
 		return $result;
 	}

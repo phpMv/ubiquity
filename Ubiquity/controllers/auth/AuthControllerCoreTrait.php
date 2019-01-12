@@ -17,6 +17,7 @@ trait AuthControllerCoreTrait {
 	abstract protected function attemptsTimeout();
 	abstract protected function getFiles ():AuthFiles;
 	abstract public function _getBodySelector();
+	abstract public function _getBaseRoute();
 	
 	protected  function getBaseUrl(){
 		return URequest::getUrl($this->_getBaseRoute());
