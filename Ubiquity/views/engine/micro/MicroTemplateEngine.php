@@ -10,7 +10,7 @@ class MicroTemplateEngine extends TemplateEngine {
 	private $viewsFolder;
 
 	public function __construct() {
-		$this->viewsFolder=ROOT . DS . "views/";
+		$this->viewsFolder=\ROOT . \DS . "views" . \DS;
 	}
 
 	/*

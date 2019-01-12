@@ -8,11 +8,16 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\core\Framework;
 use Ubiquity\utils\base\UFileSystem;
 
+/**
+ * Ubiquity Twig template engine
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.1
+ */
 class Twig extends TemplateEngine {
 	private $twig;
 
 	public function __construct($options=array()) {
-		$loader=new \Twig_Loader_Filesystem(ROOT . \DS . "views".\DS);
+		$loader=new \Twig_Loader_Filesystem(\ROOT . \DS . "views".\DS);
 		$loader->addPath(implode(\DS,[Startup::getFrameworkDir(),"..","core","views"]).\DS,"framework");
 		if(isset($options["cache"]) && $options["cache"]===true)
 			$options["cache"]=CacheManager::getCacheSubDirectory("views");

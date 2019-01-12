@@ -1,5 +1,4 @@
 <?php
-
 namespace Ubiquity\db;
 
 use Ubiquity\cache\database\DbCache;
@@ -7,12 +6,9 @@ use Ubiquity\exceptions\CacheException;
 use Ubiquity\log\Logger;
 
 /**
- * PDO Database class
- *
- * @author jc
- * @version 1.0.0.3
- * @package db
- *
+ * PDO database class
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.3
  */
 class Database {
 	private $dbType;
@@ -28,7 +24,6 @@ class Database {
 
 	/**
 	 * Constructor
-	 *
 	 * @param string $dbName
 	 * @param string $serverName
 	 * @param string $port

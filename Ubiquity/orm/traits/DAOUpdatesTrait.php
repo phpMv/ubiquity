@@ -57,7 +57,7 @@ trait DAOUpdatesTrait{
 	 *
 	 * @param string $tableName
 	 * @param string $where
-	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
+	 * @return boolean|int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
 	private static function remove_($tableName, $where) {
 		$sql = "DELETE FROM `" . $tableName . "` " . SqlUtils::checkWhere ( $where );
@@ -231,7 +231,7 @@ trait DAOUpdatesTrait{
 	 *
 	 * @param object $instance
 	 * @param boolean $updateMany
-	 * @return int
+	 * @return boolean|int
 	 */
 	public static function save($instance, $updateMany = false) {
 		if (isset ( $instance->_rest )) {

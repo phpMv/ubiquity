@@ -23,7 +23,7 @@ class Translator {
 	
 	public function setRootDir($rootDir=null){
 		if(!isset($rootDir)){
-			$rootDir=ROOT . DS . "translations";
+			$rootDir=\ROOT . \DS . "translations";
 		}
 		$this->loader=new ArrayLoader($rootDir);
 	}

@@ -8,8 +8,9 @@ use Ubiquity\controllers\Startup;
 
 /**
  * Represents a view
- * @author jc
+ * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.2
+ *
  */
 class View {
 	private $vars;
@@ -63,7 +64,7 @@ class View {
 		if (is_array($data)) {
 			extract($data);
 		}
-		$fileName=ROOT . DS . "views/" . $viewName;
+		$fileName=\ROOT . \DS . "views".\DS . $viewName;
 		if(file_exists($fileName)){
 			if ($asString) {
 				return $this->includeFileAsString($fileName);
