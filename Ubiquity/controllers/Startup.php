@@ -17,12 +17,12 @@ class Startup {
 	private static $action;
 	private static $actionParams;
 
-	public static function run(array &$config, $url) {
+	public static function run(array &$config) {
 		self::$config = $config;
 		self::startTemplateEngine ( $config );
 		if (isset ( $config ["sessionName"] ))
 			USession::start ( $config ["sessionName"] );
-		self::forward ( $url );
+		self::forward ( $_GET["c"] );
 	}
 
 	public static function forward($url,$initialize=true,$finalize=true) {
@@ -57,11 +57,11 @@ class Startup {
 
 	private static function startTemplateEngine(&$config) {
 		try {
-			if (isset ( $config ["templateEngine"] )) {
-				$engineOptions = array ('cache' => \ROOT . \DS . "views/cache/" );
-				$templateEngine = $config ["templateEngine"];
-				if (isset ( $config ["templateEngineOptions"] )) {
-					$engineOptions = $config ["templateEngineOptions"];
+			if (isset ( $config ['templateEngine'] )) {
+				$engineOptions = array ('cache' => \ROOT . \DS . 'views/cache/' );
+				$templateEngine = $config ['templateEngine'];
+				if (isset ( $config ['templateEngineOptions'] )) {
+					$engineOptions = $config ['templateEngineOptions'];
 				}
 				$engine = new $templateEngine ( $engineOptions );
 				if ($engine instanceof TemplateEngine) {

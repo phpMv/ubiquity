@@ -14,17 +14,17 @@ class ArrayLoader implements LoaderInterface {
 	
 	public function load($locale, $domain = '*') {
 		if(apc_exists($locale.$domain)){
-			Logger::info("Translate", "Loading ".$locale.'.'.$domain." from apc_cache","load");
+			Logger::info('Translate', 'Loading '.$locale.'.'.$domain.' from apc_cache','load');
 			return apc_fetch($locale.$domain);
 		}
 		$messages=[];
 		$rootDirectory = $this->getRootDirectory($locale);
 		if(file_exists($rootDirectory)){
-			$files=UFileSystem::glob_recursive($rootDirectory.$domain.".php");
+			$files=UFileSystem::glob_recursive($rootDirectory.$domain.'.php');
 			foreach ($files as $file){
 				if(file_exists($file)){
-					$name=basename($file,".php");
-					Logger::info("Translate", "Loading ".$locale.'.'.$domain." from file ".$name,"load",[get_class()]);
+					$name=basename($file,'.php');
+					Logger::info('Translate', 'Loading '.$locale.'.'.$domain.' from file '.$name,'load',[get_class()]);
 					$messages[$name]=$this->loadFile($file);
 				}
 			}
@@ -46,7 +46,7 @@ class ArrayLoader implements LoaderInterface {
 	}
 	
 	private function getDirectory($domain,&$filename){
-		$parts=explode(".",$domain);
+		$parts=explode('.',$domain);
 		$filename=array_pop($parts).".php";
 		return implode(\DS, $parts);
 	}
