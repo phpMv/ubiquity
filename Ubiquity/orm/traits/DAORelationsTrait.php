@@ -87,7 +87,7 @@ trait DAORelationsTrait {
 			$myPkValues=[];
 			$cParser=self::generateManyToManyParser($parser, $myPkValues);
 			$relationObjects=self::_getAll($class,$cParser,$includedNext,$useCache);
-			$oClass=get_class(reset($objects));
+			$oClass=get_class(current($objects));
 			foreach ($objects as $object){
 				$pkV=OrmUtils::getFirstKeyValue($object);
 				if(isset($myPkValues[$pkV])){

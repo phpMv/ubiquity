@@ -56,8 +56,8 @@ trait DAOCoreTrait {
 		if (!method_exists($instance, $myPkAccessor)) {
 			Logger::warn("DAO", "L'accesseur au membre clé primaire " . $myPkAccessor . " est manquant pour " . $class,"ManyToMany");
 		}
-		if (count($array) > 0){
-			$continue=method_exists(reset($array), $accessorToMember);
+		if (sizeof($array) > 0){
+			$continue=method_exists(current($array), $accessorToMember);
 		}
 		if ($continue) {
 			foreach ( $array as $targetEntityInstance ) {

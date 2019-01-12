@@ -29,7 +29,7 @@ trait RouterAdminTrait {
 		foreach ( self::$routes as $routePath => $routeDetails ) {
 			if (preg_match ( "@^" . $routePath . "$@s", $path, $matches ) || \stripslashes ( $routePath ) == $path) {
 				if (! isset ( $routeDetails ["controller"] )) {
-					return \reset ( $routeDetails );
+					return \current ( $routeDetails );
 				} else
 					return $routeDetails;
 			}
@@ -41,7 +41,7 @@ trait RouterAdminTrait {
 		$result = [ ];
 		foreach ( self::$routes as $routePath => $routeDetails ) {
 			if (! isset ( $routeDetails ["controller"] )) {
-				$routeDetails = \reset ( $routeDetails );
+				$routeDetails = \current ( $routeDetails );
 			}
 			if ($routeDetails ["controller"] === $controllerName && $routeDetails ["action"] === $actionName)
 				$result [$routePath] = $routeDetails;

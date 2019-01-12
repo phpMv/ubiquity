@@ -137,7 +137,7 @@ trait RouterCacheTrait{
 					$result[$path]=$routeAttributes;
 				}
 			} else {
-				$firstValue=reset($routeAttributes);
+				$firstValue=current($routeAttributes);
 				if (isset($firstValue) && isset($firstValue["controller"])) {
 					if ($firstValue["controller"] === $controllerClass) {
 						$result[$path]=$routeAttributes;

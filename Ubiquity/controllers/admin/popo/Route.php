@@ -21,7 +21,7 @@ class Route {
 			$this->fromArray($array);
 		}else{
 			$this->methods=\array_keys($array);
-			$this->fromArray(\reset($array));
+			$this->fromArray(\current($array));
 		}
 		$this->id=\uniqid();
 	}

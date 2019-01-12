@@ -188,7 +188,7 @@ trait OrmUtilsRelationsTrait {
 						$keyValues=self::getKeyFieldsAndValues($memberInstance);
 						if (sizeof($keyValues) > 0) {
 							$fkName=self::getJoinColumnName($class, $member);
-							$ret[$fkName]=reset($keyValues);
+							$ret[$fkName]=current($keyValues);
 						}
 					}
 				}

@@ -31,7 +31,7 @@ trait OrmUtilsFieldsTrait {
 	
 	public static function getFirstKey($class) {
 		$kf=self::getAnnotationInfo($class, "#primaryKeys");
-		return \reset($kf);
+		return \current($kf);
 	}
 	
 	public static function getAllFields($class){

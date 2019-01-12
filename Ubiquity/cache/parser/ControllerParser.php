@@ -10,8 +10,8 @@ use Ubiquity\utils\base\UArray;
 
 /**
  * Scans a controller to detect routes defined by annotations 
- * @author jc
- * @version 1.0.1
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.2
  */
 class ControllerParser {
 	use ControllerParserPathTrait;
@@ -43,29 +43,33 @@ class ControllerParser {
 				$automated=$this->mainRouteClass->automated;
 			}
 			$methods=Reflexion::getMethods($instance, \ReflectionMethod::IS_PUBLIC);
-			foreach ( $methods as $method ) {
-				if ($method->getDeclaringClass()->getName() === $controllerClass || $inherited) {
-					try{
-						$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, ["@route","@get","@post"]);
-						if (sizeof($annots)>0) {
-							foreach ( $annots as $annot ) {
-								if (UString::isNull($annot->path)) {
-									$newAnnot=$this->generateRouteAnnotationFromMethod($method);
-									$annot->path=$newAnnot[0]->path;
-								}else{
-									$annot->path=$this->parseMethodPath($method, $annot->path);
-								}
-							}
-							$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
-						} else {
-							if ($automated) {
-								if ($method->class !== 'Ubiquity\\controllers\\Controller' && \array_search($method->name, self::$excludeds) === false && !UString::startswith($method->name, "_"))
-									$this->routesMethods[$method->name]=[ "annotations" => $this->generateRouteAnnotationFromMethod($method),"method" => $method ];
+			$this->parseMethods($methods, $controllerClass, $inherited, $automated);
+		}
+	}
+	
+	private function parseMethods($methods,$controllerClass,$inherited,$automated){
+		foreach ( $methods as $method ) {
+			if ($method->getDeclaringClass()->getName() === $controllerClass || $inherited) {
+				try{
+					$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, ["@route","@get","@post"]);
+					if (sizeof($annots)>0) {
+						foreach ( $annots as $annot ) {
+							if (UString::isNull($annot->path)) {
+								$newAnnot=$this->generateRouteAnnotationFromMethod($method);
+								$annot->path=$newAnnot[0]->path;
+							}else{
+								$annot->path=$this->parseMethodPath($method, $annot->path);
 							}
 						}
-					}catch(\Exception $e){
-						//When controllerClass generates an exception
+						$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
+					} else {
+						if ($automated) {
+							if ($method->class !== 'Ubiquity\\controllers\\Controller' && \array_search($method->name, self::$excludeds) === false && !UString::startswith($method->name, "_"))
+								$this->routesMethods[$method->name]=[ "annotations" => $this->generateRouteAnnotationFromMethod($method),"method" => $method ];
+						}
 					}
+				}catch(\Exception $e){
+					//When controllerClass generates an exception
 				}
 			}
 		}

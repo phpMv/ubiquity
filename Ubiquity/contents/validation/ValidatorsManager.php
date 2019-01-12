@@ -141,7 +141,7 @@ class ValidatorsManager {
 	 */
 	public static function validateInstances($instances,$group=""){
 		if(sizeof($instances)>0){
-			$instance=reset($instances);
+			$instance=current($instances);
 			$cache=self::getCacheValidators($instance,$group);
 			if($cache===false){
 				$class=get_class($instance);
