@@ -78,7 +78,7 @@ trait DAOUQueries {
 	 * @param string $className complete classname of the model to load
 	 * @param string $ucondition Part following the WHERE of an SQL statement
 	 * @param array|null $parameters The query parameters
-	 * @return int count of objects
+	 * @return int|boolean count of objects
 	 */
 	public static function uCount($className, $ucondition='',$parameters=null) {
 		$condition=self::uParse($className, $ucondition);
@@ -86,7 +86,7 @@ trait DAOUQueries {
 		if ($ucondition != ''){
 			$ucondition=" WHERE " . $ucondition;
 		}
-		return self::$db->prepareAndFetchColumn("SELECT COUNT(*) FROM " . $tableName ." ". $condition.$ucondition,$parameters,0);
+		return self::$db->prepareAndFetchColumn("SELECT COUNT(*) FROM `" . $tableName ."` ". $condition.$ucondition,$parameters,0);
 	}
 	
 	/**
