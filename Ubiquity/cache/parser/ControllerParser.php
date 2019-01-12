@@ -54,12 +54,7 @@ class ControllerParser {
 					$annots=Reflexion::getAnnotationsMethod($controllerClass, $method->name, ["@route","@get","@post"]);
 					if (sizeof($annots)>0) {
 						foreach ( $annots as $annot ) {
-							if (UString::isNull($annot->path)) {
-								$newAnnot=$this->generateRouteAnnotationFromMethod($method);
-								$annot->path=$newAnnot[0]->path;
-							}else{
-								$annot->path=$this->parseMethodPath($method, $annot->path);
-							}
+							$this->parseAnnot($annot, $method);
 						}
 						$this->routesMethods[$method->name]=[ "annotations" => $annots,"method" => $method ];
 					} else {
@@ -72,6 +67,15 @@ class ControllerParser {
 					//When controllerClass generates an exception
 				}
 			}
+		}
+	}
+	
+	private function parseAnnot(&$annot,$method){
+		if (UString::isNull($annot->path)) {
+			$newAnnot=$this->generateRouteAnnotationFromMethod($method);
+			$annot->path=$newAnnot[0]->path;
+		}else{
+			$annot->path=$this->parseMethodPath($method, $annot->path);
 		}
 	}
 
