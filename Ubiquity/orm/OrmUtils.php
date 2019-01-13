@@ -117,11 +117,9 @@ class OrmUtils {
 	public static function exists($instance, $memberKey, $array) {
 		$accessor="get" . ucfirst($memberKey);
 		if (method_exists($instance, $accessor)) {
-			if ($array !== null) {
-				foreach ( $array as $value ) {
-					if ($value->$accessor() == $instance->$accessor())
-						return true;
-				}
+			foreach ( $array as $value ) {
+				if ($value->$accessor() == $instance->$accessor())
+					return true;
 			}
 		}
 		return false;

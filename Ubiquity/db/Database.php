@@ -97,7 +97,7 @@ class Database {
 	 * @return array
 	 */
 	public function prepareAndExecute($tableName, $condition, $fields, $parameters=null,$useCache = NULL) {
-		$cache = (DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true);
+		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
 			$cKey=$condition;
