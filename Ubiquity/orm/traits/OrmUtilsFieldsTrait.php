@@ -73,7 +73,6 @@ trait OrmUtilsFieldsTrait {
 			}
 		}
 		return self::$accessors[$class]=$result;
-		//return $result;
 	}
 	
 	public static function getAllFields($class){

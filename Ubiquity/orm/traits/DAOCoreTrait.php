@@ -109,7 +109,7 @@ trait DAOCoreTrait {
 		$accessors=OrmUtils::getAccessors($className,$members);
 		$fields=array_flip($members);
 		foreach ( $query as $row ) {
-			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$manyToManyFields,$members, $oneToManyQueries,$manyToOneQueries,$manyToManyParsers,$accessors,$fields);
+			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$manyToManyFields, $oneToManyQueries,$manyToOneQueries,$manyToManyParsers,$accessors,$fields);
 			$key=OrmUtils::getPropKeyValues($object,$propsKeys);
 			$objects[$key]=$object;
 		}
@@ -126,13 +126,14 @@ trait DAOCoreTrait {
 	 * @param string $className
 	 * @param array $invertedJoinColumns
 	 * @param array $oneToManyFields
-	 * @param array $members
 	 * @param array $oneToManyQueries
 	 * @param array $manyToOneQueries
 	 * @param array $manyToManyParsers
+	 * @param array $accessors
+	 * @param array $fields
 	 * @return object
 	 */
-	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields,$members,&$oneToManyQueries,&$manyToOneQueries,&$manyToManyParsers,$accessors,$fields) {
+	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields,&$oneToManyQueries,&$manyToOneQueries,&$manyToManyParsers,&$accessors,&$fields) {
 		$o=new $className();
 		foreach ( $row as $k => $v ) {
 			if(isset($fields[$k])){
