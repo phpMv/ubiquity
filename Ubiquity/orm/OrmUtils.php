@@ -93,7 +93,7 @@ class OrmUtils {
 
 	public static function getFirstKeyValue($instance) {
 		$fkv=self::getKeyFieldsAndValues($instance);
-		return \reset($fkv);
+		return \current($fkv);
 	}
 	
 	public static function getKeyValues($instance) {

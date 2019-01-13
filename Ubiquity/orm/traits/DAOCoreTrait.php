@@ -36,17 +36,6 @@ trait DAOCoreTrait {
 		}
 	}
 	
-	private static function setToMember($member, $instance, $value, $class, $part) {
-		$accessor="set" . ucfirst($member);
-		if (method_exists($instance, $accessor)) {
-			Logger::info("DAO", "Affectation de " . $member . " pour l'objet " . $class,$part);
-			$instance->$accessor($value);
-			$instance->_rest[$member]=$value;
-		} else {
-			Logger::warn("DAO", "L'accesseur " . $accessor . " est manquant pour " . $class,$part);
-		}
-	}
-	
 	private static function getManyToManyFromArray($instance, $array, $class, $parser) {
 		$ret=[];
 		$continue=true;

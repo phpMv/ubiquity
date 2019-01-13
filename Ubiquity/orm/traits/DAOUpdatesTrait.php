@@ -77,7 +77,7 @@ trait DAOUpdatesTrait{
 	 * Deletes all instances from $modelName matching the condition $where
 	 * @param string $modelName
 	 * @param string $where
-	 * @return number
+	 * @return int|boolean
 	 */
 	public static function deleteAll($modelName,$where){
 		$tableName = OrmUtils::getTableName ( $modelName );
@@ -88,7 +88,7 @@ trait DAOUpdatesTrait{
 	 * Deletes all instances from $modelName corresponding to $ids
 	 * @param string $modelName
 	 * @param array|int $ids
-	 * @return int
+	 * @return int|boolean
 	 */
 	public static function delete($modelName, $ids) {
 		$tableName = OrmUtils::getTableName ( $modelName );

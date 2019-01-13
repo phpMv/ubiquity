@@ -76,7 +76,9 @@ class DAO {
 				if ($fkAnnot !== false) {
 					$fkv=OrmUtils::getFirstKeyValue($instance);
 					$ret=self::_getAll($annot["className"], ConditionParser::simple($fkAnnot["name"] . "= ?",$fkv), $included, $useCache);
-					self::setToMember($member, $instance, $ret, $class, "getOneToMany");
+					if($modifier=self::getAccessor($member, $instance, 'getOneToMany')){
+						self::setToMember($member, $instance, $ret, $modifier);
+					}
 				}
 			}
 			return $ret;
@@ -84,7 +86,7 @@ class DAO {
 
 	/**
 	 * Assigns / loads the child records in the $member member of $instance.
-	 * If $ array is null, the records are loaded from the database
+	 * If $array is null, the records are loaded from the database
 	 * @param object $instance
 	 * @param string $member Member on which a ManyToMany annotation must be present
 	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
@@ -103,7 +105,9 @@ class DAO {
 			}else{
 				$ret=self::getManyToManyFromArray($instance, $array, $class, $parser);
 			}
-			self::setToMember($member, $instance, $ret, $class, "getManyToMany");
+			if($modifier=self::getAccessor($member, $instance, 'getManyToMany')){
+				self::setToMember($member, $instance, $ret, $modifier);
+			}
 		}
 		return $ret;
 	}
