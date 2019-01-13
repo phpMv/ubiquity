@@ -14,15 +14,16 @@ use Ubiquity\orm\traits\DAOUQueries;
 use Ubiquity\orm\traits\DAOCoreTrait;
 use Ubiquity\orm\traits\DAORelationsPrepareTrait;
 use Ubiquity\exceptions\DAOException;
+use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
 
 /**
  * Gateway class between database and object model
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.3
+ * @version 1.1.4
  * @package orm
  */
 class DAO {
-	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAOUQueries;
+	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,DAOUQueries;
 	
 	
 	/**

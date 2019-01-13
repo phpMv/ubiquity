@@ -61,7 +61,7 @@ class OrmUtils {
 		$kf=self::getAnnotationInfo(get_class($instance), "#primaryKeys");
 		return self::getMembersAndValues($instance, $kf);
 	}
-
+	
 	public static function getMembers($className) {
 		$fieldNames=self::getAnnotationInfo($className, "#fieldNames");
 		if ($fieldNames !== false)
