@@ -65,7 +65,7 @@ abstract class ValidatorMultiple extends Validator implements HasNotNullInterfac
 		if(isset($messages[$this->violation])){
 			return $messages[$this->violation];
 		}
-		return reset($messages);
+		return current($messages);
 	}
 
 

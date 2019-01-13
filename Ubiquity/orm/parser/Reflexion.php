@@ -30,6 +30,10 @@ class Reflexion {
 		$prop->setAccessible(true);
 		return $prop->getValue($instance);
 	}
+	
+	public static function getPropValue($instance, $prop) {
+		return $prop->getValue($instance);
+	}
 
 	public static function setMemberValue($instance, $member,$value) {
 		$prop=self::getProperty($instance, $member);

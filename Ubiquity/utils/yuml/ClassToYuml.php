@@ -131,10 +131,8 @@ class ClassToYuml {
 		if($manyToOne){
 			foreach ($manyToOne as $member){
 				$joinColumn=OrmUtils::getAnnotationInfoMember($this->class, "#joinColumn", $member);
-				if($joinColumn){
-					if(isset($joinColumn["className"])){
-						$this->manyToOne[$member]=$joinColumn["className"];
-					}
+				if($joinColumn && isset($joinColumn["className"])){
+					$this->manyToOne[$member]=$joinColumn["className"];
 				}
 			}
 		}

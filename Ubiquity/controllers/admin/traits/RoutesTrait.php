@@ -19,7 +19,7 @@ trait RoutesTrait{
 	abstract public function _getFiles();
 	abstract protected function addNavigationTesting();
 	abstract protected function showSimpleMessage($content,$type, $title=null,$icon="info",$timeout=NULL,$staticName=null):HtmlMessage;
-
+	
 	public function initCacheRouter(){
 		$config=Startup::getConfig();
 		\ob_start();

@@ -5,6 +5,7 @@ namespace Ubiquity\orm\traits;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\ConditionParser;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
  * @author jc
@@ -31,10 +32,11 @@ trait DAORelationsTrait {
 		return (isset($included[$member]))?(is_bool($included[$member])?$included[$member]:[$included[$member]]):false;
 	}
 	
-	private static function getManyToManyFromArrayIds($relationObjects, $ids){
+	private static function getManyToManyFromArrayIds($objectClass,$relationObjects, $ids){
 		$ret=[];
+		$prop=OrmUtils::getFirstPropKey($objectClass);
 		foreach ( $relationObjects as $targetEntityInstance ) {
-			$id=OrmUtils::getFirstKeyValue($targetEntityInstance);
+			$id=Reflexion::getPropValue($targetEntityInstance,$prop);
 			if (array_search($id, $ids)!==false) {
 				array_push($ret, $targetEntityInstance);
 			}

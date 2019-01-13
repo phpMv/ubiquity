@@ -58,8 +58,27 @@ class OrmUtils {
 	}
 	
 	public static function getKeyFieldsAndValues($instance) {
-		$kf=self::getAnnotationInfo(get_class($instance), "#primaryKeys");
-		return self::getMembersAndValues($instance, $kf);
+		$class=get_class($instance);
+		$kf=self::getAnnotationInfo($class, "#primaryKeys");
+		return self::getFieldsAndValues_($instance, $kf);
+	}
+	
+	public static function getFieldsAndValues_($instance,$members) {
+		$ret=[];
+		foreach ($members as $member){
+			$v=Reflexion::getMemberValue($instance, $member);
+			$ret[$member]=$v;
+		}
+		return $ret;
+	}
+	
+	public static function getKeyPropsAndValues_($instance,$props) {
+		$ret=[];
+		foreach ($props as $prop){
+			$v=Reflexion::getPropValue($instance, $prop);
+			$ret[$prop->getName()]=$v;
+		}
+		return $ret;
 	}
 	
 	public static function getMembers($className) {
@@ -92,13 +111,26 @@ class OrmUtils {
 	}
 
 	public static function getFirstKeyValue($instance) {
-		$fkv=self::getKeyFieldsAndValues($instance);
+		$prop=OrmUtils::getFirstPropKey(get_class($instance));
+		return Reflexion::getPropValue($instance, $prop);
+	}
+	
+	public static function getFirstKeyValue_($instance,$members) {
+		$fkv=self::getFieldsAndValues_($instance,$members);
 		return \current($fkv);
 	}
 	
 	public static function getKeyValues($instance) {
 		$fkv=self::getKeyFieldsAndValues($instance);
 		return implode("_",$fkv);
+	}
+	
+	public static function getPropKeyValues($instance,$props) {
+		$values=[];
+		foreach ($props as $prop){
+			$values[]=Reflexion::getPropValue($instance, $prop);
+		}
+		return implode("_",$values);
 	}
 
 	public static function getMembersWithAnnotation($class, $annotation) {
@@ -126,8 +158,9 @@ class OrmUtils {
 	}
 
 	public static function getAnnotationInfo($class, $keyAnnotation) {
-		if (isset(self::getModelMetadata($class)[$keyAnnotation]))
-			return self::getModelMetadata($class)[$keyAnnotation];
+		$metas=self::getModelMetadata($class);
+		if (isset($metas[$keyAnnotation]))
+			return $metas[$keyAnnotation];
 		return false;
 	}
 

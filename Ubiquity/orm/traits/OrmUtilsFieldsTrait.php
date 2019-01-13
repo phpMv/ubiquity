@@ -5,6 +5,10 @@ namespace Ubiquity\orm\traits;
 trait OrmUtilsFieldsTrait {
 	abstract public static function getAnnotationInfo($class, $keyAnnotation);
 	abstract public static function getAnnotationInfoMember($class, $keyAnnotation, $member);
+	protected static $fieldNames=[];
+	protected static $propFirstKeys=[];
+	protected static $propKeys=[];
+	protected static $accessors=[];
 	
 	public static function getFieldTypes($className) {
 		$fieldTypes=self::getAnnotationInfo($className, "#fieldTypes");
@@ -34,12 +38,53 @@ trait OrmUtilsFieldsTrait {
 		return \current($kf);
 	}
 	
+	public static function getFirstPropKey($class) {
+		if(isset(self::$propFirstKeys[$class])){
+			return self::$propFirstKeys[$class];
+		}
+		$prop=new \ReflectionProperty($class, current(self::getAnnotationInfo($class, "#primaryKeys")));
+		$prop->setAccessible(true);
+		return self::$propFirstKeys[$class]=$prop;
+	}
+	
+	public static function getPropKeys($class){
+		if(isset(self::$propKeys[$class])){
+			return self::$propKeys[$class];
+		}
+		$result=[];
+		$pkMembers=self::getAnnotationInfo($class, "#primaryKeys");
+		foreach ($pkMembers as $member){
+			$prop=new \ReflectionProperty($class, $member);
+			$prop->setAccessible(true);
+			$result[]=$prop;
+		}
+		return self::$propKeys[$class]=$result;
+	}
+	
+	public static function getAccessors($class,$members){
+		if(isset(self::$accessors[$class])){
+			return self::$accessors[$class];
+		}
+		$result=[];
+		foreach ($members as $member=>$fieldNotUsed){
+			$accesseur="set" . ucfirst($member);
+			if (method_exists($class, $accesseur)) {
+				$result[$member]=$accesseur;
+			}
+		}
+		return self::$accessors[$class]=$result;
+		//return $result;
+	}
+	
 	public static function getAllFields($class){
 		return \array_keys(self::getAnnotationInfo($class, "#fieldNames"));
 	}
 	
 	
 	public static function getFieldNames($model){
+		if(isset(self::$fieldNames[$model])){
+			return self::$fieldNames[$model];
+		}
 		$fields=self::getAnnotationInfo($model, "#fieldNames");
 		$result=[];
 		$serializables=self::getSerializableFields($model);
@@ -47,7 +92,7 @@ trait OrmUtilsFieldsTrait {
 			if(\array_search($member, $serializables)!==false)
 				$result[$field]=$member;
 		}
-		return $result;
+		return self::$fieldNames[$model]=$result;
 	}
 	
 	public static function getSerializableFields($class) {

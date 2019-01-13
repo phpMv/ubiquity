@@ -22,19 +22,20 @@ trait DAORelationsAssignmentsTrait {
 		return false;
 	}
 	
-	protected static function _affectsRelationObjects($manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache){
+	protected static function _affectsRelationObjects($className,$manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache){
 		if(\sizeof($manyToOneQueries)>0){
 			self::_affectsObjectsFromArray($manyToOneQueries,$included, function($object,$member,$manyToOneObjects,$fkField,$accessor){
 				self::affectsManyToOneFromArray($object,$member,$manyToOneObjects,$fkField,$accessor);
 			},'getManyToOne');
 		}
 		if(\sizeof($oneToManyQueries)>0){
-			self::_affectsObjectsFromArray($oneToManyQueries,$included, function($object,$member,$relationObjects,$fkField,$accessor,$class){
-				self::affectsOneToManyFromArray($object,$member,$relationObjects,$fkField,$accessor,$class);
+			$classPropKey=OrmUtils::getFirstPropKey($className);
+			self::_affectsObjectsFromArray($oneToManyQueries,$included, function($object,$member,$relationObjects,$fkField,$accessor,$class,$prop) use ($classPropKey){
+				self::affectsOneToManyFromArray($object,$member,$relationObjects,$fkField,$accessor,$class,$prop,$classPropKey);
 			},'getOneToMany');
 		}
 		if(\sizeof($manyToManyParsers)>0){
-			self::_affectsManyToManyObjectsFromArray($manyToManyParsers, $objects,$included,$useCache);
+			self::_affectsManyToManyObjectsFromArray($className,$manyToManyParsers, $objects,$included,$useCache);
 		}
 	}
 	
@@ -51,16 +52,17 @@ trait DAORelationsAssignmentsTrait {
 	 * @param array $array
 	 * @param string $mappedBy
 	 * @param string $class
+	 * @param \ReflectionProperty $prop
 	 */
-	private static function affectsOneToManyFromArray($instance, $member, $array=null, $mappedBy=null,$accessor="",$class="") {
+	private static function affectsOneToManyFromArray($instance, $member, $array=null, $mappedBy=null,$accessor="",$class="",$prop=null,$classPropKey=null) {
 		$ret=array ();
 		if (!isset($mappedBy)){
 			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
 			$mappedBy=$annot["mappedBy"];
 		}
 		if ($mappedBy !== false) {
-			$fkv=OrmUtils::getFirstKeyValue($instance);
-			self::_getOneToManyFromArray($ret, $array, $fkv, $mappedBy);
+			$fkv=Reflexion::getPropValue($instance,$classPropKey);
+			self::_getOneToManyFromArray($ret, $array, $fkv, $mappedBy,$prop);
 			self::setToMember($member, $instance, $ret, $accessor);
 		}
 		return $ret;
@@ -74,22 +76,26 @@ trait DAORelationsAssignmentsTrait {
 				$includedNext=self::_getIncludedNext($included, $member);
 			}
 			$objectsParsers=$pendingRelationsRequest->getObjectsConditionParsers();
-			
+			$prop=null;
+			if('getOneToMany'===$part){
+				$prop=OrmUtils::getFirstPropKey($class);
+			}
 			foreach ($objectsParsers as $objectsConditionParser){
 				$objectsConditionParser->compileParts();
 				$relationObjects=self::_getAll($class,$objectsConditionParser->getConditionParser(),$includedNext,$useCache);
 				$objects=$objectsConditionParser->getObjects();
 				if($accessor=self::getAccessor($member, current($objects), $part)){
 					foreach ($objects as $object){
-						$affectsCallback($object, $member,$relationObjects,$fkField,$accessor,$class);
+						$affectsCallback($object, $member,$relationObjects,$fkField,$accessor,$class,$prop);
 					}
 				}
 			}
 		}
 	}
 	
-	private static function _affectsManyToManyObjectsFromArray($parsers,$objects,$included,$useCache=NULL){
+	private static function _affectsManyToManyObjectsFromArray($objectsClass,$parsers,$objects,$included,$useCache=NULL){
 		$includedNext=false;
+		$prop=OrmUtils::getFirstPropKey($objectsClass);
 		foreach ($parsers as $key=>$parser){
 			list($class,$member)=\explode("|", $key);
 			if(is_array($included)){
@@ -99,11 +105,10 @@ trait DAORelationsAssignmentsTrait {
 			$cParser=self::generateManyToManyParser($parser, $myPkValues);
 			$relationObjects=self::_getAll($class,$cParser,$includedNext,$useCache);
 			if($accessor=self::getAccessor($member, current($objects), 'getManyToMany')){
-				$key=OrmUtils::getFirstKey($class);
 				foreach ($objects as $object){
-					$pkV=Reflexion::getMemberValue($object, $key);
+					$pkV=Reflexion::getPropValue($object, $prop);
 					if(isset($myPkValues[$pkV])){
-						$ret=self::getManyToManyFromArrayIds($relationObjects, $myPkValues[$pkV]);
+						$ret=self::getManyToManyFromArrayIds($class,$relationObjects, $myPkValues[$pkV]);
 						self::setToMember($member, $object, $ret, $accessor);
 					}
 				}

@@ -7,6 +7,7 @@ use Ubiquity\log\Logger;
 use Ubiquity\events\EventsManager;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\db\SqlUtils;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
  * @author jc
@@ -14,24 +15,26 @@ use Ubiquity\db\SqlUtils;
  *
  */
 trait DAOCoreTrait {
-	abstract protected static function _affectsRelationObjects($manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache);
+	abstract protected static function _affectsRelationObjects($className,$manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache);
 	abstract protected static function prepareManyToMany(&$ret,$instance, $member, $annot=null);
 	abstract protected static function prepareManyToOne(&$ret, $instance,$value, $fkField,$annotationArray);
 	abstract protected static function prepareOneToMany(&$ret,$instance, $member, $annot=null);
 	abstract protected static function _initRelationFields($included,$metaDatas,&$invertedJoinColumns,&$oneToManyFields,&$manyToManyFields);
 	abstract protected static function getIncludedForStep($included);
 	
-	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $mappedBy) {
+	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $mappedBy,$prop) {
 		$elementAccessor="get" . ucfirst($mappedBy);
 		foreach ( $array as $element ) {
 			$elementRef=$element->$elementAccessor();
 			if (!is_null($elementRef)) {
-				if(is_object($elementRef))
-					$idElementRef=OrmUtils::getFirstKeyValue($elementRef);
-					else
-						$idElementRef=$elementRef;
-						if ($idElementRef == $fkv)
-							$ret[]=$element;
+				if(is_object($elementRef)){
+					$idElementRef=Reflexion::getPropValue($elementRef,$prop);
+				}else{
+					$idElementRef=$elementRef;
+				}
+				if ($idElementRef == $fkv){
+					$ret[]=$element;
+				}
 			}
 		}
 	}
@@ -102,14 +105,16 @@ trait DAOCoreTrait {
 		$oneToManyQueries=[];
 		$manyToOneQueries=[];
 		$manyToManyParsers=[];
-		
+		$propsKeys=OrmUtils::getPropKeys($className);
+		$accessors=OrmUtils::getAccessors($className,$members);
+		$fields=array_flip($members);
 		foreach ( $query as $row ) {
-			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$manyToManyFields,$members, $oneToManyQueries,$manyToOneQueries,$manyToManyParsers);
-			$key=OrmUtils::getKeyValues($object);
+			$object=self::loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields,$manyToManyFields,$members, $oneToManyQueries,$manyToOneQueries,$manyToManyParsers,$accessors,$fields);
+			$key=OrmUtils::getPropKeyValues($object,$propsKeys);
 			$objects[$key]=$object;
 		}
 		if($hasIncluded){
-			self::_affectsRelationObjects($manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
+			self::_affectsRelationObjects($className,$manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
 		}
 		EventsManager::trigger("dao.getall", $objects,$className);
 		return $objects;
@@ -127,15 +132,13 @@ trait DAOCoreTrait {
 	 * @param array $manyToManyParsers
 	 * @return object
 	 */
-	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields,$members,&$oneToManyQueries,&$manyToOneQueries,&$manyToManyParsers) {
+	private static function loadObjectFromRow($row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields,$members,&$oneToManyQueries,&$manyToOneQueries,&$manyToManyParsers,$accessors,$fields) {
 		$o=new $className();
 		foreach ( $row as $k => $v ) {
-			if(sizeof($fields=\array_keys($members,$k))>0){
-				foreach ($fields as $field){
-					$accesseur="set" . ucfirst($field);
-					if (method_exists($o, $accesseur)) {
-						$o->$accesseur($v);
-					}
+			if(isset($fields[$k])){
+				if(isset($accessors[$k])){
+					$accesseur=$accessors[$k];
+					$o->$accesseur($v);
 				}
 			}
 			$o->_rest[$k]=$v;

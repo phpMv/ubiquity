@@ -53,15 +53,15 @@ trait ReflexionFieldsTrait {
 			$instance=new $instance();
 		}
 		$reflect=new \ReflectionClass($instance);
-		$props=$reflect->getProperties();
-		return $props;
+		return $reflect->getProperties();
 	}
 	
 	public static function getProperty($instance, $member) {
 		$reflect=new \ReflectionClass($instance);
 		$prop=false;
-		if($reflect->hasProperty($member))
+		if($reflect->hasProperty($member)){
 			$prop=$reflect->getProperty($member);
+		}
 		return $prop;
 	}
 	
