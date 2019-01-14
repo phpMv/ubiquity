@@ -140,6 +140,9 @@ trait DAOCoreTrait {
 				if(isset($accessors[$k])){
 					$accesseur=$accessors[$k];
 					$o->$accesseur($v);
+				}elseif(isset($accessors[$fields[$k]])){
+					$accesseur=$accessors[$fields[$k]];
+					$o->$accesseur($v);
 				}
 			}
 			$o->_rest[$k]=$v;
