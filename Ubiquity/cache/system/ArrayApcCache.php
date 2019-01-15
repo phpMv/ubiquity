@@ -13,16 +13,22 @@ class ArrayApcCache extends ArrayCache {
 	 */
 	protected function storeContent($key, $content, $tag) {
 		parent::storeContent($key, $content, $tag);
-		if (apcu_exists($this->_root.$key)){
-			apcu_delete($this->_root.$key);
+		$apcK=$this->getApcKey($key);
+		if (apcu_exists($apcK)){
+			apcu_delete($apcK);
 		}
 	}
 	
 	protected function apcDelete($key){
-		if (apcu_exists($this->_root.$key)){
-			return apcu_delete($this->_root.$key);
+		$apcK=$this->getApcKey($key);
+		if (apcu_exists($apcK)){
+			return apcu_delete($apcK);
 		}
 		return false;
+	}
+	
+	protected function getApcKey($key){
+		return md5($this->_root.$key);
 	}
 
 	/**
@@ -30,11 +36,12 @@ class ArrayApcCache extends ArrayCache {
 	 * @see \Ubiquity\cache\system\ArrayCache::fetch()
 	 */
 	public function fetch($key) {
-		if (apcu_exists($this->_root.$key)){
-			return apcu_fetch($this->_root.$key);
+		$apcK=$this->getApcKey($key);
+		if (apcu_exists($apcK)){
+			return apcu_fetch($apcK);
 		}
 		$content= parent::fetch($key);
-		apcu_store($this->_root.$key, $content);
+		apcu_store($apcK, $content);
 		return $content;
 	}
 
