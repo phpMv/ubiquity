@@ -111,6 +111,6 @@ class Translator {
 	}
 	
 	public function clearCache(){
-		apc_clear_cache('user');
+		apcu_clear_cache();
 	}
 }

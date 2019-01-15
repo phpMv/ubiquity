@@ -13,9 +13,9 @@ class ArrayLoader implements LoaderInterface {
 	}
 	
 	public function load($locale, $domain = '*') {
-		if(apc_exists($locale.$domain)){
-			Logger::info('Translate', 'Loading '.$locale.'.'.$domain.' from apc_cache','load');
-			return apc_fetch($locale.$domain);
+		if(apcu_exists($locale.$domain)){
+			Logger::info('Translate', 'Loading '.$locale.'.'.$domain.' from apcu_cache','load');
+			return apcu_fetch($locale.$domain);
 		}
 		$messages=[];
 		$rootDirectory = $this->getRootDirectory($locale);
@@ -29,7 +29,7 @@ class ArrayLoader implements LoaderInterface {
 				}
 			}
 			$this->flatten($messages);
-			apc_store($locale.$domain, $messages);
+			apcu_store($locale.$domain, $messages);
 		}else{
 			return false;
 		}
