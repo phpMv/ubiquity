@@ -15,30 +15,30 @@ use Ubiquity\orm\parser\Reflexion;
  *
  */
 trait DAOCoreTrait {
-	abstract protected static function _affectsRelationObjects($className,$manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache);
+	abstract protected static function _affectsRelationObjects($className,$classPropKey,$manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache);
 	abstract protected static function prepareManyToMany(&$ret,$instance, $member, $annot=null);
 	abstract protected static function prepareManyToOne(&$ret, $instance,$value, $fkField,$annotationArray);
 	abstract protected static function prepareOneToMany(&$ret,$instance, $member, $annot=null);
 	abstract protected static function _initRelationFields($included,$metaDatas,&$invertedJoinColumns,&$oneToManyFields,&$manyToManyFields);
 	abstract protected static function getIncludedForStep($included);
 	
-	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $mappedBy,$prop) {
-		$elementAccessor="get" . ucfirst($mappedBy);
+	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $elementAccessor,$prop) {
 		foreach ( $array as $element ) {
 			$elementRef=$element->$elementAccessor();
-			if (!is_null($elementRef)) {
-				if(is_object($elementRef)){
-					$idElementRef=Reflexion::getPropValue($elementRef,$prop);
-				}else{
-					$idElementRef=$elementRef;
-				}
-				if ($idElementRef == $fkv){
-					$ret[]=$element;
-				}
+			if (($elementRef == $fkv) || (is_object($elementRef) && Reflexion::getPropValue($elementRef,$prop) == $fkv)){
+				$ret[]=$element;
 			}
 		}
 	}
 	
+/*	private static function _getOneToManyFromArray($array, $fkv, $mappedBy,$prop) {
+		$elementAccessor="get" . ucfirst($mappedBy);
+		return array_filter($array,function($element) use($elementAccessor,$fkv,$prop){
+			$elementRef=$element->$elementAccessor();
+			return ($elementRef == $fkv) || (is_object($elementRef) && Reflexion::getPropValue($elementRef,$prop) == $fkv);
+		});
+	}
+	*/
 	private static function getManyToManyFromArray($instance, $array, $class, $parser) {
 		$ret=[];
 		$continue=true;
@@ -114,7 +114,8 @@ trait DAOCoreTrait {
 			$objects[$key]=$object;
 		}
 		if($hasIncluded){
-			self::_affectsRelationObjects($className,$manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
+			$classPropKey=OrmUtils::getFirstPropKey($className);
+			self::_affectsRelationObjects($className,$classPropKey,$manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
 		}
 		EventsManager::trigger("dao.getall", $objects,$className);
 		return $objects;

@@ -22,14 +22,13 @@ trait DAORelationsAssignmentsTrait {
 		return false;
 	}
 	
-	protected static function _affectsRelationObjects($className,$manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache){
+	protected static function _affectsRelationObjects($className,$classPropKey,$manyToOneQueries,$oneToManyQueries,$manyToManyParsers,$objects,$included,$useCache){
 		if(\sizeof($manyToOneQueries)>0){
 			self::_affectsObjectsFromArray($manyToOneQueries,$included, function($object,$member,$manyToOneObjects,$fkField,$accessor){
 				self::affectsManyToOneFromArray($object,$member,$manyToOneObjects,$fkField,$accessor);
 			},'getManyToOne');
 		}
 		if(\sizeof($oneToManyQueries)>0){
-			$classPropKey=OrmUtils::getFirstPropKey($className);
 			self::_affectsObjectsFromArray($oneToManyQueries,$included, function($object,$member,$relationObjects,$fkField,$accessor,$class,$prop) use ($classPropKey){
 				self::affectsOneToManyFromArray($object,$member,$relationObjects,$fkField,$accessor,$class,$prop,$classPropKey);
 			},'getOneToMany');
@@ -50,22 +49,14 @@ trait DAORelationsAssignmentsTrait {
 	 * @param object $instance
 	 * @param string $member
 	 * @param array $array
-	 * @param string $mappedBy
+	 * @param string $mappedByAccessor
 	 * @param string $class
 	 * @param \ReflectionProperty $prop
 	 */
-	private static function affectsOneToManyFromArray($instance, $member, $array=null, $mappedBy=null,$accessor="",$class="",$prop=null,$classPropKey=null) {
-		$ret=array ();
-		if (!isset($mappedBy)){
-			$annot=OrmUtils::getAnnotationInfoMember($class, "#oneToMany", $member);
-			$mappedBy=$annot["mappedBy"];
-		}
-		if ($mappedBy !== false) {
-			$fkv=Reflexion::getPropValue($instance,$classPropKey);
-			self::_getOneToManyFromArray($ret, $array, $fkv, $mappedBy,$prop);
-			self::setToMember($member, $instance, $ret, $accessor);
-		}
-		return $ret;
+	private static function affectsOneToManyFromArray($instance, $member, $array=null, $mappedByAccessor=null,$accessor="",$class="",$prop=null,$classPropKey=null) {
+		$ret=[];
+		self::_getOneToManyFromArray($ret,$array, Reflexion::getPropValue($instance,$classPropKey), $mappedByAccessor,$prop);
+		self::setToMember($member, $instance, $ret, $accessor);
 	}
 	
 	private static function _affectsObjectsFromArray($queries,$included,$affectsCallback,$part,$useCache=NULL){
@@ -79,6 +70,7 @@ trait DAORelationsAssignmentsTrait {
 			$prop=null;
 			if('getOneToMany'===$part){
 				$prop=OrmUtils::getFirstPropKey($class);
+				$fkField="get" . ucfirst($fkField);
 			}
 			foreach ($objectsParsers as $objectsConditionParser){
 				$objectsConditionParser->compileParts();
