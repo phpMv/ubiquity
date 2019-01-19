@@ -106,5 +106,17 @@ class UString {
 	public static function isValid($value){
 		return is_scalar($value) || (\is_object($value) && method_exists($value, '__toString'));
 	}
+	
+	/**
+	 * Converts a value to a string
+	 * @param mixed $value
+	 * @return string
+	 */
+	public static function toString($value){
+		if(self::isValid($value)){
+			return $value.'';
+		}
+		return '';
+	}
 }
 

@@ -34,7 +34,9 @@ trait CRUDControllerUtilitiesTrait {
 		$model=$this->model;
 		$condition=$this->_getAdminData()->_getInstancesFilter($model);
 		$totalCount=DAO::count($model,$condition);
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
+		if($totalCount){
+			$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
+		}
 		if(is_numeric($recordsPerPage)){
 			if(isset($id)){
 				$rownum=DAO::getRownum($model, $id);

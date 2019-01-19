@@ -2,9 +2,12 @@
 
 namespace Ubiquity\views;
 
+use Ubiquity\utils\base\UString;
+
 /**
  * Classe technique destinée à la conception des interfaces
  * @author jc
+ * @deprecated to remove in 2.1
  *
  */
 class Gui {
@@ -18,7 +21,7 @@ class Gui {
 	public static function show($values, $method='toString', $implode="<br/>") {
 		if (is_array($values)) {
 			foreach ( $values as $v ) {
-				Gui::showOne($v, $method);
+				self::showOne($v, $method);
 				echo $implode;
 			}
 		} else
@@ -38,7 +41,7 @@ class Gui {
 				$result.=Gui::getOne($v, $method) . $implode;
 			}
 		} else
-			$result=Gui::getOne($values, $method);
+			$result=self::getOne($values, $method);
 		return $result;
 	}
 
@@ -48,7 +51,7 @@ class Gui {
 	 * @param string $method Méthode de la classe GUI ou de la classe de $value
 	 */
 	public static function showOne($value, $method='toString') {
-		echo Gui::getOne($value, $method);
+		echo self::getOne($value, $method);
 	}
 
 	/**
@@ -58,13 +61,9 @@ class Gui {
 	 */
 	public static function getOne($value, $method='toString') {
 		if (method_exists("GUI", $method)) {
-			$value=GUI::$method($value);
+			$value=self::$method($value);
 		} else {
-			if (method_exists($value, $method)) {
-				$value=$value->$method();
-			} else {
-				$value=$value . '';
-			}
+			$value=UString::toString($value);
 		}
 		return $value;
 	}
