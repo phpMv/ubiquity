@@ -33,7 +33,7 @@ class ManyToManyParser {
 	public function init($annot=false) {
 		$member=$this->member;
 		$class=$this->instance;
-		if(\is_string($class)===false){
+		if(\is_object($class)){
 			$class=get_class($class);
 		}
 		if($annot===false){
@@ -232,12 +232,10 @@ class ManyToManyParser {
 		$this->whereValues[$value]=true;
 	}
 	/**
-	 * @return array|null
+	 * @return array
 	 */
 	public function getWhereValues() {
-		if(is_array($this->whereValues))
-			return array_keys($this->whereValues);
-		return null;
+		return array_keys($this->whereValues);
 	}
 
 }

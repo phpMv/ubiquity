@@ -85,7 +85,9 @@ class SqlUtils {
 			if(!UArray::isAssociative($keyValues)){
 				if(isset($classname)){
 					$keys=OrmUtils::getKeyFields($classname);
-					$keyValues=\array_combine($keys, $keyValues);
+					if(is_array($keys)){
+						$keyValues=\array_combine($keys, $keyValues);
+					}
 				}
 			}
 			$retArray=array ();
@@ -106,12 +108,13 @@ class SqlUtils {
 			return $fields;
 		}
 		$result=[];
-		$prefix="";
-		if($tableName)
-			$prefix=self::$quote.$tableName.self::$quote.".";
+		$prefix='';
+		if(is_string($tableName)){
+			$prefix=self::$quote.$tableName.self::$quote.'.';
+		}
 		foreach ($fields as $field) {
 			$result[]= $prefix.self::$quote.$field.self::$quote;
 		}
-		return \implode(",", $result);
+		return \implode(',', $result);
 	}
 }

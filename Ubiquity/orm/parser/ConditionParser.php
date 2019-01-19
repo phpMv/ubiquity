@@ -28,7 +28,9 @@ class ConditionParser {
 			if(!UArray::isAssociative($keyValues)){
 				if(isset($classname)){
 					$keys=OrmUtils::getKeyFields($classname);
-					$keyValues=\array_combine($keys, $keyValues);
+					if(is_array($keys)){
+						$keyValues=\array_combine($keys, $keyValues);
+					}
 				}
 			}
 			$retArray=array ();
