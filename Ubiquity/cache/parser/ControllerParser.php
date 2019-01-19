@@ -112,7 +112,33 @@ class ControllerParser {
 			return UArray::getRecursive($item2,"priority",0) <=> UArray::getRecursive($item1,"priority",0);
 		});
 		UArray::removeRecursive($result,"priority");
+		self::minifyRoutes($result);
 		return $result;
+	}
+	
+	public static function minifyRoutes(&$routes){
+		foreach ($routes as &$route){
+			self::minifyRoute($route);
+		}
+	}
+	
+	private static function minifyRoute(&$route){
+		if(isset($route['name']) && !is_string($route['name'])){
+			unset($route['name']);
+		}
+		if(isset($route['parameters']) && sizeof($route['parameters'])==0){
+			unset($route['parameters']);
+		}
+		if((isset($route['cache']) && $route['cache']==false) || (array_key_exists('cache', $route) && $route['cache']==null)){
+			unset($route['cache']);
+			unset($route['duration']);
+		}
+		if((isset($route['duration']) && !is_numeric($route['duration'])) || (array_key_exists('duration', $route) && $route['duration']==null)){
+			unset($route['duration']);
+		}
+		if(isset($route['priority'])){
+			unset($route['priority']);
+		}
 	}
 
 	public static function parseRouteArray(&$result, $controllerClass, $routeArray, \ReflectionMethod $method, $methodName, $prefix="", $httpMethods=NULL) {

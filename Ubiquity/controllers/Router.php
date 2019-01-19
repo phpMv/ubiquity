@@ -40,19 +40,35 @@ class Router {
 		self::$routes = array_merge(CacheManager::getControllerCache (),CacheManager::getControllerCache(true));
 	}
 
+	/**
+	 * Returns the route corresponding to a path
+	 * @param string $path
+	 * @param boolean $cachedResponse
+	 * @return boolean|mixed[]|mixed
+	 */
 	public static function getRoute($path, $cachedResponse = true) {
 		$path = self::slashPath ( $path );
+		if(isset(self::$routes[$path])){
+			return self::getRoute_(self::$routes[$path], $path, [$path], $cachedResponse);
+		}
 		foreach ( self::$routes as $routePath => $routeDetails ) {
 			if (preg_match ( "@^" . $routePath . "$@s", $path, $matches )) {
-				if (! isset ( $routeDetails ["controller"] )) {
-					$method = URequest::getMethod ();
-					if (isset ( $routeDetails [$method] ))
-						return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails [$method] ], $matches, $routeDetails [$method] ["cache"], $routeDetails [$method] ["duration"], $cachedResponse );
-				} else
-					return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails ], $matches, $routeDetails ["cache"], $routeDetails ["duration"], $cachedResponse );
+				return self::getRoute_($routeDetails, $routePath, $matches, $cachedResponse);
 			}
 		}
 		Logger::warn("Router", "No route found for {$path}","getRoute");
+		return false;
+	}
+	
+	private static function getRoute_($routeDetails,$routePath,$matches,$cachedResponse){
+		if (! isset ( $routeDetails ["controller"] )) {
+			$method = URequest::getMethod ();
+			if (isset ( $routeDetails [$method] )){
+				return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails [$method] ], $matches, @$routeDetails [$method] ["cache"], @$routeDetails [$method] ["duration"], $cachedResponse );
+			}
+		} else{
+			return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails ], $matches, @$routeDetails ["cache"], @$routeDetails ["duration"], $cachedResponse );
+		}
 		return false;
 	}
 
@@ -131,8 +147,7 @@ class Router {
 		$params = \array_slice ( $params, 1 );
 		$ctrl = str_replace ( "\\\\", "\\", $routeArray ["details"] ["controller"] );
 		$result = [ $ctrl,$routeArray ["details"] ["action"] ];
-		$paramsOrder = $routeArray ["details"] ["parameters"];
-		if(sizeof($paramsOrder)>0){
+		if(($paramsOrder = @$routeArray ["details"] ["parameters"]) && (sizeof($paramsOrder)>0)){
 			self::setParamsInOrder($result, $paramsOrder, $params);
 		}
 		if ($cached === true && $cachedResponse === true) {

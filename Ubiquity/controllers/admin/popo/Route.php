@@ -29,9 +29,9 @@ class Route {
 	private function fromArray($array){
 		$this->controller=$array["controller"];
 		$this->action=$array["action"];
-		$this->name=$array["name"];
-		$this->cache=$array["cache"];
-		$this->duration=$array["duration"];
+		$this->name=isset($array["name"])?$array["name"]:'';
+		$this->cache=isset($array["cache"])?$array["cache"]:false;
+		$this->duration=isset($array["duration"])?$array["duration"]:false;
 		if(isset($array["parameters"]) && \sizeof($array["parameters"])>0){
 			if(\class_exists($this->controller)){
 				if(\method_exists($this->controller, $this->action)){
