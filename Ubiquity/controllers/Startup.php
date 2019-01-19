@@ -28,10 +28,7 @@ class Startup {
 	public static function forward($url,$initialize=true,$finalize=true) {
 		$u = self::parseUrl ( $url );
 		if (($ru = Router::getRoute ( $url )) !== false) {
-			if (\is_array ( $ru ))
 				self::runAction ( $ru ,$initialize,$finalize);
-			else
-				echo $ru;
 		} else {
 			self::setCtrlNS ();
 			$u [0] = self::$ctrlNS . $u [0];

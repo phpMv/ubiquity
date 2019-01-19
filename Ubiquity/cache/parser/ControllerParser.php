@@ -165,53 +165,6 @@ class ControllerParser {
 		}
 	}
 
-	public static function addParamsPath($path, \ReflectionMethod $method, $requirements) {
-		$parameters=[ ];
-		$hasOptional=false;
-		preg_match_all('@\{(\.\.\.|\~)?(.+?)\}@s', $path, $matches);
-		if (isset($matches[2]) && \sizeof($matches[2]) > 0) {
-			$path=\preg_quote($path);
-			$params=Reflexion::getMethodParameters($method);
-			$index=0;
-			foreach ( $matches[2] as $paramMatch ) {
-				$find=\array_search($paramMatch, $params);
-				if ($find !== false) {
-					$requirement='.+?';
-					if (isset($requirements[$paramMatch])) {
-						$requirement=$requirements[$paramMatch];
-					}
-					self::scanParam($parameters, $hasOptional, $matches, $index, $paramMatch, $find, $path, $requirement);
-				} else {
-					throw new \Exception("{$paramMatch} is not a parameter of the method " . $method->name);
-				}
-				$index++;
-			}
-		}
-		if ($hasOptional)
-			$path.="/(.*?)";
-		return [ "path" => $path,"parameters" => $parameters ];
-	}
-
-	private static function scanParam(&$parameters, &$hasOptional, $matches, $index, $paramMatch, $find, &$path, $requirement) {
-		$toReplace=true;
-		if (isset($matches[1][$index])) {
-			if ($matches[1][$index] === "...") {
-				$parameters[]="*";
-				$path=\str_replace("\{\.\.\." . $paramMatch . "\}", "(.*?)", $path);
-				$toReplace=false;
-			} elseif ($matches[1][$index] === "~") {
-				$parameters[]="~" . $find;
-				$path=\str_replace("\{~" . $paramMatch . "\}", "", $path);
-				$hasOptional=true;
-				$toReplace=false;
-			}
-		} 
-		if($toReplace) {
-			$parameters[]=$find;
-			$path=\str_replace("\{" . $paramMatch . "\}", "({$requirement})", $path);
-		}
-	}
-
 	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration,$priority) {
 		foreach ( $httpMethods as $httpMethod ) {
 			$result[$path][$httpMethod]=[ "controller" => $controllerClass,"action" => $method,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration,"priority"=>$priority ];

@@ -44,7 +44,7 @@ class Router {
 	 * Returns the route corresponding to a path
 	 * @param string $path
 	 * @param boolean $cachedResponse
-	 * @return boolean|mixed[]|mixed
+	 * @return boolean|mixed[]
 	 */
 	public static function getRoute($path, $cachedResponse = true) {
 		$path = self::slashPath ( $path );
