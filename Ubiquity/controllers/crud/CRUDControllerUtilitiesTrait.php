@@ -36,13 +36,13 @@ trait CRUDControllerUtilitiesTrait {
 		$totalCount=DAO::count($model,$condition);
 		if($totalCount){
 			$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
-		}
-		if(is_numeric($recordsPerPage)){
-			if(isset($id)){
-				$rownum=DAO::getRownum($model, $id);
-				$this->activePage=Pagination::getPageOfRow($rownum,$recordsPerPage);
+			if(is_numeric($recordsPerPage)){
+				if(isset($id)){
+					$rownum=DAO::getRownum($model, $id);
+					$this->activePage=Pagination::getPageOfRow($rownum,$recordsPerPage);
+				}
+				return DAO::paginate($model,$this->activePage,$recordsPerPage,$condition);
 			}
-			return DAO::paginate($model,$this->activePage,$recordsPerPage,$condition);
 		}
 		return DAO::getAll($model,$condition);
 	}
