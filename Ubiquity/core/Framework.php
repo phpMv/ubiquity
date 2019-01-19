@@ -14,9 +14,11 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\UCookie;
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\translation\TranslatorManager;
+use Ubiquity\contents\normalizers\NormalizersManager;
 
 class Framework {
-	public const version = '2.0.6';
+	public const version = '2.0.8';
 
 	public static function getController() {
 		return Startup::getController ();
@@ -48,6 +50,14 @@ class Framework {
 
 	public static function getCookies() {
 		return new UCookie ();
+	}
+	
+	public static function getTranslator(){
+		return new TranslatorManager();
+	}
+	
+	public static function getNormalizer(){
+		return new NormalizersManager();
 	}
 
 	public static function hasAdmin() {

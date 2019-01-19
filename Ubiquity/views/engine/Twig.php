@@ -7,6 +7,7 @@ use Ubiquity\controllers\Router;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\core\Framework;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\translation\TranslatorManager;
 
 /**
  * Ubiquity Twig template engine
@@ -32,11 +33,16 @@ class Twig extends TemplateEngine {
 		});
 		$this->twig->addFunction($function);
 		
+		$function=new \Twig_SimpleFunction('t', function ($context,$id, array $parameters = array(), $domain = null, $locale = null) {
+			$trans=TranslatorManager::trans($id,$parameters,$domain,$locale);
+			return $this->twig->createTemplate($trans)->render($context);
+		},['needs_context' => true]);
+		$this->twig->addFunction($function);
+		
 		$test=new \Twig_SimpleTest('instanceOf', function($var,$class){ 
 			return  $var instanceof $class;
 		});
 		$this->twig->addTest($test);
-		
 		$this->twig->addGlobal("app", new Framework());
 	}
 
@@ -45,7 +51,6 @@ class Twig extends TemplateEngine {
 	 * @see TemplateEngine::render()
 	 */
 	public function render($viewName, $pData, $asString) {
-		$pData["config"]=Startup::getConfig();
 		$render=$this->twig->render($viewName, $pData);
 		if ($asString) {
 			return $render;

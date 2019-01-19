@@ -159,9 +159,13 @@ trait ControllersTrait{
 		if (URequest::isPost()) {
 			$result=[ ];
 			header('Content-type: application/json');
-			$path=$_POST["path"];
-			$routes=CacheManager::getRoutes();
-			$result["result"]=!(isset($routes[$path]) || Router::getRouteInfo($path) !== false);
+			if(isset($_POST["path"]) && $_POST["path"]!=null){
+				$path=$_POST["path"];
+				$routes=CacheManager::getRoutes();
+				$result["result"]=!(isset($routes[$path]) || Router::getRouteInfo($path) !== false);
+			}else{
+				$result["result"]=true;
+			}
 			echo json_encode($result);
 		}
 	}
