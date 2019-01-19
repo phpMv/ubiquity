@@ -91,7 +91,7 @@ class TranslatorManager {
 		self::$catalogues[$locale]=self::$loader->load($locale);
 	}
 	
-	protected function assertValidLocale($locale){
+	protected static function assertValidLocale($locale){
 		if (1 !== preg_match('/^[a-z0-9@_\\.\\-]*$/i', $locale)) {
 			throw new \InvalidArgumentException(sprintf('Invalid "%s" locale.', $locale));
 		}
