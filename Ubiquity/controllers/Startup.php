@@ -20,9 +20,9 @@ class Startup {
 	public static function run(array &$config) {
 		self::$config = $config;
 		self::startTemplateEngine ( $config );
-		if (isset ( $config ["sessionName"] ))
-			USession::start ( $config ["sessionName"] );
-		self::forward ( $_GET["c"] );
+		if (isset ( $config ['sessionName'] ))
+			USession::start ( $config ['sessionName'] );
+		self::forward ( $_GET['c'] );
 	}
 
 	public static function forward($url,$initialize=true,$finalize=true) {
@@ -59,11 +59,8 @@ class Startup {
 	private static function startTemplateEngine(&$config) {
 		try {
 			if (isset ( $config ['templateEngine'] )) {
-				$engineOptions = array ('cache' => \ROOT . \DS . 'views/cache/' );
 				$templateEngine = $config ['templateEngine'];
-				if (isset ( $config ['templateEngineOptions'] )) {
-					$engineOptions = $config ['templateEngineOptions'];
-				}
+				$engineOptions = $config ['templateEngineOptions']??array ('cache' => \ROOT . \DS . 'views/cache/' );
 				$engine = new $templateEngine ( $engineOptions );
 				if ($engine instanceof TemplateEngine) {
 					self::$templateEngine = $engine;
@@ -102,9 +99,8 @@ class Startup {
 	}
 	
 	public static function injectDependences($controller){
-		$config=self::$config;
-		if (\array_key_exists ( "di", $config )) {
-			$di = $config ["di"];
+		if (isset(self::$config['di'])) {
+			$di = self::$config['di'];
 			if (\is_array ( $di )) {
 				foreach ( $di as $k => $v ) {
 					$controller->$k = $v ( $controller );

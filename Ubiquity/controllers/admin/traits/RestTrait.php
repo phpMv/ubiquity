@@ -71,11 +71,11 @@ trait RestTrait{
 	}
 
 	public function _displayRestFormTester() {
-		$path=@$_POST["path"];
-		$resource=@$_POST["resource"];
-		$controller=@$_POST["controller"];
+		$path=$_POST["path"]??'';
+		$resource=$_POST["resource"]??'';
+		$controller=$_POST["controller"]??'';
 		$controller=\urldecode($controller);
-		$action=@$_POST["action"];
+		$action=$_POST["action"]??'';
 		$msgHelp=$this->_displayActionDoc($controller, $action);
 		$frm=$this->jquery->semantic()->htmlForm("frmTester-" . $path);
 		$pathId=JString::cleanIdentifier($path);

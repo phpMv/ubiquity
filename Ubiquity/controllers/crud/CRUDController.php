@@ -36,22 +36,26 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	}
 	
 	public function updateMember($member,$callback=false){
-		$instance=@$_SESSION["instance"];
-		$updated=CRUDHelper::update($instance, $_POST);
-		if($updated){
-			if($callback===false){
-				$dt=$this->_getModelViewer()->getModelDataTable([$instance], $this->model, 1);
-				$dt->compile();
-				echo new HtmlContentOnly($dt->getFieldValue($member));
-			}else{
-				if(method_exists($this, $callback)){
-					$this->$callback($member,$instance);
+		$instance=$_SESSION["instance"]??null;
+		if(isset($instance)){
+			$updated=CRUDHelper::update($instance, $_POST);
+			if($updated){
+				if($callback===false){
+					$dt=$this->_getModelViewer()->getModelDataTable([$instance], $this->model, 1);
+					$dt->compile();
+					echo new HtmlContentOnly($dt->getFieldValue($member));
 				}else{
-					throw new \Exception("The method `".$callback."` does not exists in ".get_class());
+					if(method_exists($this, $callback)){
+						$this->$callback($member,$instance);
+					}else{
+						throw new \Exception("The method `".$callback."` does not exists in ".get_class());
+					}
 				}
+			}else{
+				UResponse::setResponseCode(404);
 			}
 		}else{
-			UResponse::setResponseCode(404);
+			throw new \Exception('$_SESSION["instance"] is null');
 		}
 	}
 	
@@ -198,26 +202,30 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 */
 	public function update() {
 		$message=new CRUDMessage("Modifications were successfully saved", "Updating");
-		$instance=@$_SESSION["instance"];
-		$isNew=$instance->_new;
-		try{
-			$updated=CRUDHelper::update($instance, $_POST);
-			if($updated){
-				$message->setType("success")->setIcon("check circle outline");
-				$message=$this->_getEvents()->onSuccessUpdateMessage($message,$instance);
-				$this->refreshInstance($instance,$isNew);
-			} else {
-				$message->setMessage("An error has occurred. Can not save changes.")->setType("error")->setIcon("warning circle");
+		$instance=$_SESSION["instance"]??null;
+		if(isset($instance)){
+			$isNew=$instance->_new;
+			try{
+				$updated=CRUDHelper::update($instance, $_POST);
+				if($updated){
+					$message->setType("success")->setIcon("check circle outline");
+					$message=$this->_getEvents()->onSuccessUpdateMessage($message,$instance);
+					$this->refreshInstance($instance,$isNew);
+				} else {
+					$message->setMessage("An error has occurred. Can not save changes.")->setType("error")->setIcon("warning circle");
+					$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
+				}
+			}catch(\Exception $e){
+				$instanceString=$this->getInstanceToString($instance);
+				$message=new CRUDMessage("Exception : can not update `" . $instanceString . "`","Exception", "warning", "warning");
 				$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
 			}
-		}catch(\Exception $e){
-			$instanceString=$this->getInstanceToString($instance);
-			$message=new CRUDMessage("Exception : can not update `" . $instanceString . "`","Exception", "warning", "warning");
-			$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
+			echo $this->_showSimpleMessage($message,"updateMsg");
+			echo $this->jquery->compile($this->view);
+			return $instance;
+		}else{
+			throw new \Exception('$_SESSION["instance"] is null');
 		}
-		echo $this->_showSimpleMessage($message,"updateMsg");
-		echo $this->jquery->compile($this->view);
-		return $instance;
 	}
 
 	/**

@@ -18,10 +18,7 @@ class UString {
 	}
 
 	public static function getBooleanStr($value) {
-		$ret="false";
-		if ($value)
-			$ret="true";
-		return $ret;
+		return $value?'true':'false';
 	}
 
 	public static function isNull($s) {

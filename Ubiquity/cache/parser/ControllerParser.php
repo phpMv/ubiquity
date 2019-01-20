@@ -11,7 +11,7 @@ use Ubiquity\utils\base\UArray;
 /**
  * Scans a controller to detect routes defined by annotations 
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  */
 class ControllerParser {
 	use ControllerParserPathTrait;
@@ -85,7 +85,7 @@ class ControllerParser {
 		return [ $annot ];
 	}
 
-	public function asArray() {
+	public function asArray($minify=false) {
 		$result=[ ];
 		$prefix="";
 		$httpMethods=false;
@@ -112,7 +112,9 @@ class ControllerParser {
 			return UArray::getRecursive($item2,"priority",0) <=> UArray::getRecursive($item1,"priority",0);
 		});
 		UArray::removeRecursive($result,"priority");
-		self::minifyRoutes($result);
+		if($minify){
+			self::minifyRoutes($result);
+		}
 		return $result;
 	}
 	

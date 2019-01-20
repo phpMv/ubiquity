@@ -10,13 +10,14 @@ use Ubiquity\utils\base\UArray;
 use Ubiquity\cache\CacheManager;
 
 /**
- *
- * @author jc
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.3
  * @staticvar AbstractDataCache $cache
  *
  */
 trait RouterCacheTrait{
-
+	public static $minify=false;
+	
 	abstract protected static function _getFiles(&$config, $type, $silent=false);
 	private static $expiredRoutes=[ ];
 
@@ -24,7 +25,7 @@ trait RouterCacheTrait{
 		$parser=new ControllerParser();
 		try {
 			$parser->parse($classname);
-			return $parser->asArray();
+			return $parser->asArray(self::$minify);
 		} catch ( \Exception $e ) {
 			// Nothing to do
 		}
@@ -33,14 +34,14 @@ trait RouterCacheTrait{
 
 	private static function initRouterCache(&$config, $silent=false) {
 		$routes=[ "rest" => [ ],"default" => [ ] ];
-		$files=self::getControllersFiles($config);
+		$files=self::getControllersFiles($config,$silent);
 		foreach ( $files as $file ) {
 			if (is_file($file)) {
 				$controller=ClassUtils::getClassFullNameFromFile($file);
 				$parser=new ControllerParser();
 				try {
 					$parser->parse($controller);
-					$ret=$parser->asArray();
+					$ret=$parser->asArray(self::$minify);
 					$key=($parser->isRest()) ? "rest" : "default";
 					$routes[$key]=\array_merge($routes[$key], $ret);
 				} catch ( \Exception $e ) {
@@ -169,6 +170,9 @@ trait RouterCacheTrait{
 			$postfix="rest";
 		}
 		Router::addRoutesToRoutes($controllerCache, $pathArray, $controller, $action, $methods, $name);
+		if(self::$minify){
+			ControllerParser::minifyRoutes($controllerCache);
+		}
 		self::$cache->store("controllers/routes.".$postfix, "return " . UArray::asPhpArray($controllerCache, "array") . ";", 'controllers');
 	}
 

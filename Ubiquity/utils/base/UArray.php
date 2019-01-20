@@ -57,10 +57,7 @@ class UArray {
 	}
 
 	public static function getDefaultValue($array, $key, $default) {
-		if (array_key_exists($key, $array)) {
-			return $array[$key];
-		} else
-			return $default;
+			return $array[$key]??$default;
 	}
 
 	public static function asPhpArray($array, $prefix="",$depth=1,$format=false) {

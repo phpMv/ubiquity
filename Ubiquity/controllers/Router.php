@@ -12,7 +12,7 @@ use Ubiquity\controllers\traits\RouterAdminTrait;
 /**
  * Router manager
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  */
 class Router {
 	use RouterModifierTrait,RouterAdminTrait;
@@ -60,14 +60,15 @@ class Router {
 		return false;
 	}
 	
-	private static function getRoute_($routeDetails,$routePath,$matches,$cachedResponse){
+	private static function getRoute_(&$routeDetails,$routePath,$matches,$cachedResponse){
 		if (! isset ( $routeDetails ["controller"] )) {
 			$method = URequest::getMethod ();
 			if (isset ( $routeDetails [$method] )){
-				return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails [$method] ], $matches, @$routeDetails [$method] ["cache"], @$routeDetails [$method] ["duration"], $cachedResponse );
+				$routeDetailsMethod=$routeDetails [$method];
+				return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetailsMethod ], $matches, $routeDetailsMethod ["cache"]??false, $routeDetailsMethod["duration"]??null, $cachedResponse );
 			}
 		} else{
-			return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails ], $matches, @$routeDetails ["cache"], @$routeDetails ["duration"], $cachedResponse );
+			return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails ], $matches, $routeDetails ["cache"]??false, $routeDetails ["duration"]??null, $cachedResponse );
 		}
 		return false;
 	}
@@ -144,29 +145,29 @@ class Router {
 	}
 
 	public static function getRouteUrlParts($routeArray, $params, $cached = false, $duration = NULL, $cachedResponse = true) {
-		$params = \array_slice ( $params, 1 );
-		$ctrl = str_replace ( "\\\\", "\\", $routeArray ["details"] ["controller"] );
-		$result = [ $ctrl,$routeArray ["details"] ["action"] ];
-		if(($paramsOrder = @$routeArray ["details"] ["parameters"]) && (sizeof($paramsOrder)>0)){
+		\array_shift($params);
+		$routeDetails=$routeArray ["details"];
+		$result = [ str_replace ( "\\\\", "\\", $routeDetails["controller"] ),$routeDetails["action"] ];
+		if(($paramsOrder = $routeDetails["parameters"]) && (sizeof($paramsOrder)>0)){
 			self::setParamsInOrder($result, $paramsOrder, $params);
 		}
-		if ($cached === true && $cachedResponse === true) {
-			Logger::info("Router", "Route found for {$routeArray["path"]} (from cache) : ".implode("/", $result),"getRouteUrlParts");
-			return CacheManager::getRouteCache ( $result, $duration );
+		if(!$cached || !$cachedResponse){
+			Logger::info('Router', sprintf('Route found for %s : %s',$routeArray["path"],implode("/", $result)),'getRouteUrlParts');
+			return $result;
 		}
-		Logger::info("Router", "Route found for {$routeArray["path"]} : ".implode("/", $result),"getRouteUrlParts");
-		return $result;
+		Logger::info('Router', sprintf('Route found for %s (from cache) : %s',$routeArray["path"],implode("/", $result)),'getRouteUrlParts');
+		return CacheManager::getRouteCache ( $result, $duration );
 	}
 	
 	protected static function setParamsInOrder(&$routeUrlParts,$paramsOrder,$params){
 		$index = 0;
 		foreach ( $paramsOrder as $order ) {
-			if ($order === "*") {
+			if ($order === '*') {
 				if (isset ( $params [$index] ))
 					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( "/", $params [$index] ), [ "" ] ) );
 					break;
 			}
-			if (\substr ( $order, 0, 1 ) === "~") {
+			if ($order[0] === '~') {
 				$order = \intval ( \substr ( $order, 1, 1 ) );
 				if (isset ( $params [$order] )) {
 					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( "/", $params [$order] ), [ "" ] ) );
