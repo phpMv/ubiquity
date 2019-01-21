@@ -4,37 +4,16 @@ namespace Ubiquity\translation;
 use Ubiquity\translation\loader\ArrayLoader;
 use Ubiquity\log\Logger;
 
+/**
+ * Manages translations
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.1
+ */
 class TranslatorManager {
 	protected static $locale;
 	protected static $loader;
 	protected static $catalogues;
 	protected static $fallbackLocale;
-	
-	public static function start($locale="en_EN",$fallbackLocale=null,$rootDir=null){
-		self::$locale=$locale;
-		self::$fallbackLocale=$fallbackLocale;
-		self::setRootDir($rootDir);
-	}
-	
-	public static function setLocale($locale){
-		self::assertValidLocale($locale);
-		self::$locale = $locale;
-	}
-	
-	public static function setRootDir($rootDir=null){
-		if(!isset($rootDir)){
-			$rootDir=\ROOT . \DS . "translations";
-		}
-		self::$loader=new ArrayLoader($rootDir);
-	}
-	
-	public static function getLocale(){
-		return self::$locale;
-	}
-	
-	public static function trans($id, array $parameters = array(), $domain = null, $locale = null){
-		return self::transCallable(function($catalog,$parameters){return self::replaceParams($catalog,$parameters);}, $id,$parameters,$domain,$locale);
-	}
 	
 	protected static function transCallable($callback,$id, array $parameters = array(), $domain = null, $locale = null){
 		if (null === $domain) {
@@ -75,6 +54,38 @@ class TranslatorManager {
 		return $domain.".".$id;
 	}
 	
+	protected static function assertValidLocale($locale){
+		if (1 !== preg_match('/^[a-z0-9@_\\.\\-]*$/i', $locale)) {
+			throw new \InvalidArgumentException(sprintf('Invalid "%s" locale.', $locale));
+		}
+	}
+	
+	public static function start($locale="en_EN",$fallbackLocale=null,$rootDir=null){
+		self::$locale=$locale;
+		self::$fallbackLocale=$fallbackLocale;
+		self::setRootDir($rootDir);
+	}
+	
+	public static function setLocale($locale){
+		self::assertValidLocale($locale);
+		self::$locale = $locale;
+	}
+	
+	public static function setRootDir($rootDir=null){
+		if(!isset($rootDir)){
+			$rootDir=\ROOT . \DS . "translations";
+		}
+		self::$loader=new ArrayLoader($rootDir);
+	}
+	
+	public static function getLocale(){
+		return self::$locale;
+	}
+	
+	public static function trans($id, array $parameters = array(), $domain = null, $locale = null){
+		return self::transCallable(function($catalog,$parameters){return self::replaceParams($catalog,$parameters);}, $id,$parameters,$domain,$locale);
+	}
+	
 	public static function getCatalogue(&$locale = null){
 		if (null === $locale) {
 			$locale = self::getLocale();
@@ -91,11 +102,6 @@ class TranslatorManager {
 		self::$catalogues[$locale]=self::$loader->load($locale);
 	}
 	
-	protected static function assertValidLocale($locale){
-		if (1 !== preg_match('/^[a-z0-9@_\\.\\-]*$/i', $locale)) {
-			throw new \InvalidArgumentException(sprintf('Invalid "%s" locale.', $locale));
-		}
-	}
 	/**
 	 * @return mixed
 	 */
