@@ -8,14 +8,18 @@ use Ubiquity\log\Logger;
 class ArrayLoader implements LoaderInterface {
 	private $rootDir;
 	
+	private function getRootKey($locale=null,$domain=null){
+		return $this->rootDir.$locale??''.$domain??'';
+	}
 	public function __construct($rootDir){
 		$this->rootDir=$rootDir;
 	}
 	
 	public function load($locale, $domain = '*') {
-		if(apcu_exists($locale.$domain)){
+		$key=$this->getRootKey($locale,$domain);
+		if(apcu_exists($key)){
 			Logger::info('Translate', 'Loading '.$locale.'.'.$domain.' from apcu_cache','load');
-			return apcu_fetch($locale.$domain);
+			return apcu_fetch($key);
 		}
 		$messages=[];
 		$rootDirectory = $this->getRootDirectory($locale);
@@ -29,12 +33,19 @@ class ArrayLoader implements LoaderInterface {
 				}
 			}
 			$this->flatten($messages);
-			apcu_store($locale.$domain, $messages);
+			apcu_store($key, $messages);
 		}else{
 			return false;
 		}
 		
 		return $messages;
+	}
+	
+	public function clearCache($locale=null,$domain=null){
+		$iterator=new \APCuIterator('/^'.$this->getRootKey($locale,$domain).'/');
+		foreach($iterator as $apcu_cache){
+			apcu_delete($apcu_cache['key']);
+		}
 	}
 	
 	protected function loadFile($filename){

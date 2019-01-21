@@ -117,6 +117,6 @@ class TranslatorManager {
 	}
 	
 	public static function clearCache(){
-		apcu_clear_cache();
+		self::$loader->clearCache();
 	}
 }
