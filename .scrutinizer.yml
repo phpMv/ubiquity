@@ -5,13 +5,16 @@ build:
         before:
           - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception --dev
-          - find /home/scrutinizer/.phpenv/versions -name 'php.ini' -exec sed -i 's/^;zend_extension_ts/zend_extension_ts/' {} \\;
       tests:
         override:
           - php-scrutinizer-run
+    coverage:
+      tests:
+        override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit --coverage-phpunit
-          - wget https://scrutinizer-ci.com/ocular.phar
-          - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+            coverage:
+              file: tests/_output/coverage-phpunit/index.xml
+              format: clover
 filter:
     excluded_paths:
         - Ubiquity/log/
