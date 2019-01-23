@@ -8,7 +8,7 @@ build:
       tests:
         override:
           - php-scrutinizer-run
-          - command: ./vendor/bin/codecept build -c tests && ./vendor/bin/codecept run unit -c tests
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit
 filter:
     excluded_paths:
         - Ubiquity/log/
