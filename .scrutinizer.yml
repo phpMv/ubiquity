@@ -4,7 +4,8 @@ build:
       dependencies:
         before:
           - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
-          - composer require codeception/codeception --dev 
+          - composer require codeception/codeception --dev
+          - find /home/scrutinizer/.phpenv/versions -name 'php.ini' -exec sed -i 's/^;zend_extension_ts/zend_extension_ts/' {} \\;
       tests:
         override:
           - php-scrutinizer-run
