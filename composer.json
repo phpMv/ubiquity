@@ -26,5 +26,8 @@
         "branch-alias": {
             "dev-master": "2.0.x-dev"
         }
-    }
+    },
+	"require-dev": {
+		"codeception/codeception": "^2.5"
+	}
 }

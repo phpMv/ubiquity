@@ -18,7 +18,7 @@ use Ubiquity\translation\TranslatorManager;
 use Ubiquity\contents\normalizers\NormalizersManager;
 
 class Framework {
-	public const version = '2.0.8';
+	public const version = '2.0.9';
 
 	public static function getController() {
 		return Startup::getController ();
@@ -35,9 +35,9 @@ class Framework {
 	public static function getRouter() {
 		return new Router ();
 	}
-	
+
 	public static function getORM() {
-		return new OrmUtils();
+		return new OrmUtils ();
 	}
 
 	public static function getRequest() {
@@ -51,13 +51,13 @@ class Framework {
 	public static function getCookies() {
 		return new UCookie ();
 	}
-	
-	public static function getTranslator(){
-		return new TranslatorManager();
+
+	public static function getTranslator() {
+		return new TranslatorManager ();
 	}
-	
-	public static function getNormalizer(){
-		return new NormalizersManager();
+
+	public static function getNormalizer() {
+		return new NormalizersManager ();
 	}
 
 	public static function hasAdmin() {
