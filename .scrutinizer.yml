@@ -8,7 +8,9 @@ build:
       tests:
         override:
           - php-scrutinizer-run
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit --coverage-phpunit
+          - wget https://scrutinizer-ci.com/ocular.phar
+          - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 filter:
     excluded_paths:
         - Ubiquity/log/
