@@ -14,8 +14,7 @@ build:
           mysql: 5.7
       tests:
         before:
-          - sudo service start mysql || true
-          - mysql -u root < tests/unit/db/messagerie.sql
+          - mysql -u root mysql < tests/unit/db/messagerie.sql
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit --coverage-xml
             coverage:
