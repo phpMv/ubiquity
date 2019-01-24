@@ -10,11 +10,17 @@ build:
           - php-scrutinizer-run
     coverage:
       tests:
+        before:
+          - sudo service start mysql || true
+          - mysql -u root < tests/unit/db/messagrie.sql
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit --coverage-xml
             coverage:
               file: tests/_output/coverage.xml
               format: clover
+        services:
+            # For available tags, see https://hub.docker.com/_/mysql/
+            mysql: 5.7
 filter:
     excluded_paths:
         - Ubiquity/log/
