@@ -14,7 +14,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	private $database;
 	const DB_NAME = "messagerie";
-	const DB_SERVER = "172.31.0.2";
+	const DB_SERVER = "172.18.0.2";
 
 	/**
 	 * Prepares the environment before running a test.
