@@ -9,6 +9,9 @@ build:
         override:
           - php-scrutinizer-run
     coverage:
+      services:
+          # For available tags, see https://hub.docker.com/_/mysql/
+          mysql: 5.7
       tests:
         before:
           - sudo service start mysql || true
@@ -18,9 +21,6 @@ build:
             coverage:
               file: tests/_output/coverage.xml
               format: clover
-        services:
-            # For available tags, see https://hub.docker.com/_/mysql/
-            mysql: 5.7
 filter:
     excluded_paths:
         - Ubiquity/log/
