@@ -252,7 +252,7 @@ class Database {
 	}
 
 	public function ping() {
-		return (1 === intval ( $this->pdoObject->query ( 'SELECT 1' )->fetchColumn ( 0 ) ));
+		return ($this->pdoObject && 1 === intval ( $this->pdoObject->query ( 'SELECT 1' )->fetchColumn ( 0 ) ));
 	}
 
 	public function getPort() {

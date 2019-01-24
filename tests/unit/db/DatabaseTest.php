@@ -95,6 +95,16 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->assertNotFalse ( $this->database->prepareAndFetchAll ( "SELECT 1" ) );
 		$resp = $this->database->prepareAndFetchAll ( "select * from `user`" );
 		$this->assertEquals ( 101, sizeof ( $resp ) );
+		$row = current ( $resp );
+		$this->assertEquals ( 7, sizeof ( $row ) );
+		$resp = $this->database->prepareAndFetchAll ( "select * from `user` where email= ?", [ "benjamin.sherman@gmail.com" ] );
+		$row = current ( $resp );
+		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
+		$this->assertEquals ( "Benjamin", $row ['firstname'] );
+		$resp = $this->database->prepareAndFetchAll ( "select * from `user` where email= ? and firstname= ?", [ "benjamin.sherman@gmail.com","Benjamin" ] );
+		$row = current ( $resp );
+		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
+		$this->assertEquals ( "Benjamin", $row ['firstname'] );
 	}
 
 	/**
@@ -191,10 +201,10 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Tests Database->count()
 	 */
 	public function testCount() {
-		// TODO Auto-generated DatabaseTest->testCount()
-		$this->markTestIncomplete ( "count test not implemented" );
-
-		$this->database->count(/* parameters */);
+		$this->beforeQuery ();
+		$this->assertEquals ( 101, $this->database->count ( "user" ) );
+		$this->assertEquals ( 1, $this->database->count ( "user", "`email`='benjamin.sherman@gmail.com'" ) );
+		$this->assertEquals ( 0, $this->database->count ( "user", "1=2" ) );
 	}
 
 	/**
@@ -241,10 +251,9 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Tests Database->ping()
 	 */
 	public function testPing() {
-		// TODO Auto-generated DatabaseTest->testPing()
-		$this->markTestIncomplete ( "ping test not implemented" );
-
-		$this->database->ping(/* parameters */);
+		$this->assertFalse ( $this->database->ping () );
+		$this->beforeQuery ();
+		$this->assertTrue ( $this->database->ping () );
 	}
 
 	/**
@@ -291,10 +300,8 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Tests Database::getAvailableDrivers()
 	 */
 	public function testGetAvailableDrivers() {
-		// TODO Auto-generated DatabaseTest::testGetAvailableDrivers()
-		$this->markTestIncomplete ( "getAvailableDrivers test not implemented" );
-
-		Database::getAvailableDrivers(/* parameters */);
+		$drivers = Database::getAvailableDrivers ();
+		$this->assertEquals ( 2, sizeof ( $drivers ) );
 	}
 }
 
