@@ -11,9 +11,9 @@ build:
     coverage:
       tests:
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit --coverage-phpunit
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit --coverage-xml
             coverage:
-              file: tests/_output/coverage-phpunit/index.xml
+              file: tests/_output/coverage.xml
               format: clover
 filter:
     excluded_paths:
