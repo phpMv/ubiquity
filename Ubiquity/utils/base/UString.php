@@ -83,9 +83,9 @@ class UString {
 		return preg_replace ( $pattern, $replacement, $subject, 1 );
 	}
 
-	public static function replaceArray($haystack, $needle, $replaceArray) {
+	public static function replaceArray($haystack, $needleArray, $replace) {
 		$result = $haystack;
-		foreach ( $replaceArray as $replace ) {
+		foreach ( $needleArray as $needle ) {
 			$result = self::firstReplace ( $result, $needle, $replace );
 		}
 		return $result;

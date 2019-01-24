@@ -68,10 +68,30 @@ class UStringTest extends \Codeception\Test\Unit {
 
 	public function testIsBooleanTrue() {
 		$this->assertTrue ( UString::isBooleanTrue ( 'true' ) );
+		$this->assertTrue ( UString::isBooleanTrue ( 'on' ) );
+		$this->assertTrue ( UString::isBooleanTrue ( '1' ) );
+		$this->assertTrue ( UString::isBooleanTrue ( 1 ) );
+		$this->assertTrue ( UString::isBooleanTrue ( true ) );
+
+		$this->assertFalse ( UString::isBooleanTrue ( 'false' ) );
+		$this->assertFalse ( UString::isBooleanTrue ( 'off' ) );
+		$this->assertFalse ( UString::isBooleanTrue ( '0' ) );
+		$this->assertFalse ( UString::isBooleanTrue ( 0 ) );
+		$this->assertFalse ( UString::isBooleanTrue ( false ) );
 	}
 
 	public function testIsBooleanFalse() {
+		$this->assertFalse ( UString::isBooleanFalse ( 'true' ) );
+		$this->assertFalse ( UString::isBooleanFalse ( 'on' ) );
+		$this->assertFalse ( UString::isBooleanFalse ( '1' ) );
+		$this->assertFalse ( UString::isBooleanFalse ( 1 ) );
+		$this->assertFalse ( UString::isBooleanFalse ( true ) );
+
 		$this->assertTrue ( UString::isBooleanFalse ( 'false' ) );
+		$this->assertTrue ( UString::isBooleanFalse ( 'off' ) );
+		$this->assertTrue ( UString::isBooleanFalse ( '0' ) );
+		$this->assertTrue ( UString::isBooleanFalse ( 0 ) );
+		$this->assertTrue ( UString::isBooleanFalse ( false ) );
 	}
 
 	public function testIsBoolean() {
@@ -90,26 +110,52 @@ class UStringTest extends \Codeception\Test\Unit {
 	}
 
 	public function testPluralize() {
+		$this->assertEquals ( 'aucun', UString::pluralize ( 0, 'aucun', '1 element', '{count} elements' ) );
+		$this->assertEquals ( '1 element', UString::pluralize ( 1, 'aucun', '1 element', '{count} elements' ) );
+		$this->assertEquals ( '5 elements', UString::pluralize ( 5, 'aucun', '1 element', '{count} elements' ) );
 	}
 
 	public function testFirstReplace() {
+		$this->assertEquals ( 'popopipi', UString::firstReplace ( "pipopipi", "pi", "po" ) );
+		$this->assertEquals ( 'Pipopipi', UString::firstReplace ( "pipopipi", "pi", "Pi" ) );
 	}
 
 	public function testReplaceFirstOccurrence() {
+		$this->assertEquals ( 'popopipi', UString::replaceFirstOccurrence ( "pi", "po", "pipopipi" ) );
+		$this->assertEquals ( 'popipopipi', UString::replaceFirstOccurrence ( "Pi", "pi", "popipoPipi" ) );
 	}
 
 	public function testReplaceArray() {
+		$this->assertEquals ( 'papopa', UString::replaceArray ( 'pipopu', [ 'pi','pu' ], 'pa' ) );
 	}
 
 	public function testDoubleBackSlashes() {
+		$this->assertEquals ( "models\\\\Client", UString::doubleBackSlashes ( "models\\Client" ) );
 	}
 
 	public function testMask() {
+		$this->assertEquals ( "*******", UString::mask ( "123abc*" ) );
+		$this->assertEquals ( "*", UString::mask ( "*" ) );
+		$this->assertEquals ( "---", UString::mask ( "123", "-" ) );
+		$this->assertEquals ( "ABABAB", UString::mask ( "123", "AB" ) );
 	}
 
 	public function testIsValid() {
+		$this->assertTrue ( UString::isValid ( "string" ) );
+		$this->assertTrue ( UString::isValid ( 'string' ) );
+		$this->assertTrue ( UString::isValid ( "" ) );
+		$this->assertTrue ( UString::isValid ( 5 ) );
+		$this->assertTrue ( UString::isValid ( false ) );
+		$this->assertFalse ( UString::isValid ( null ) );
+		$this->assertFalse ( UString::isValid ( $this ) );
 	}
 
 	public function testToString() {
+		$this->assertEquals ( "15", UString::toString ( 15 ) );
+		$this->assertEquals ( "0", UString::toString ( 0 ) );
+		$this->assertEquals ( "", UString::toString ( false ) );
+		$this->assertEquals ( "", UString::toString ( null ) );
+		$this->assertEquals ( "", UString::toString ( $this ) );
+		$this->assertEquals ( "quinze", UString::toString ( "quinze" ) );
 	}
 }
