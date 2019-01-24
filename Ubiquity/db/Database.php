@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\db;
 
 use Ubiquity\cache\database\DbCache;
@@ -7,6 +8,7 @@ use Ubiquity\log\Logger;
 
 /**
  * PDO database class
+ *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
  */
@@ -24,6 +26,7 @@ class Database {
 
 	/**
 	 * Constructor
+	 *
 	 * @param string $dbName
 	 * @param string $serverName
 	 * @param string $port
@@ -32,7 +35,7 @@ class Database {
 	 * @param array $options
 	 * @param boolean|string $cache
 	 */
-	public function __construct($dbType, $dbName, $serverName = "localhost", $port = "3306", $user = "root", $password = "", $options = [], $cache = false) {
+	public function __construct($dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false) {
 		$this->dbType = $dbType;
 		$this->dbName = $dbName;
 		$this->serverName = $serverName;
@@ -57,23 +60,25 @@ class Database {
 
 	/**
 	 * Creates the PDO instance and realize a safe connection
+	 *
 	 * @return boolean true if connection is established
 	 */
 	public function connect() {
-		try{
-			$this->_connect();
+		try {
+			$this->_connect ();
 			return true;
-		}catch (\PDOException $e){
+		} catch ( \PDOException $e ) {
+			echo $e->getMessage ();
 			return false;
 		}
 	}
-	
-	public function _connect(){
-		$this->options[\PDO::ATTR_ERRMODE]=\PDO::ERRMODE_EXCEPTION;
-		$this->pdoObject = new \PDO ( $this->getDSN(), $this->user, $this->password, $this->options );
+
+	public function _connect() {
+		$this->options [\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
+		$this->pdoObject = new \PDO ( $this->getDSN (), $this->user, $this->password, $this->options );
 	}
-	
-	public function getDSN(){
+
+	public function getDSN() {
 		return $this->dbType . ':dbname=' . $this->dbName . ';host=' . $this->serverName . ';charset=UTF8;port=' . $this->port;
 	}
 
@@ -96,54 +101,54 @@ class Database {
 	 * @param boolean|null $useCache
 	 * @return array
 	 */
-	public function prepareAndExecute($tableName, $condition, $fields, $parameters=null,$useCache = NULL) {
+	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = NULL) {
 		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
-			$cKey=$condition;
-			if(is_array($parameters)){
-				$cKey.=implode(",", $parameters);
+			$cKey = $condition;
+			if (is_array ( $parameters )) {
+				$cKey .= implode ( ",", $parameters );
 			}
 			$result = $this->cache->fetch ( $tableName, $cKey );
-			Logger::info("Cache", "fetching cache for table {$tableName} with condition : {$condition}","Database::prepareAndExecute",$parameters);
+			Logger::info ( "Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters );
 		}
 		if ($result === false) {
 			$fields = SqlUtils::getFieldList ( $fields, $tableName );
-			$result=$this->prepareAndFetchAll("SELECT {$fields} FROM `" . $tableName ."`". $condition,$parameters);
+			$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM `" . $tableName . "`" . $condition, $parameters );
 			if ($cache) {
 				$this->cache->store ( $tableName, $cKey, $result );
 			}
 		}
 		return $result;
 	}
-	
-	public function prepareAndFetchAll($sql,$parameters=null){
-		$result=false;
-		$statement=$this->getStatement($sql);
-		if($statement->execute ($parameters)){
-			Logger::info("Database", $sql,"prepareAndFetchAll",$parameters);
+
+	public function prepareAndFetchAll($sql, $parameters = null) {
+		$result = false;
+		$statement = $this->getStatement ( $sql );
+		if ($statement->execute ( $parameters )) {
+			Logger::info ( "Database", $sql, "prepareAndFetchAll", $parameters );
 			$result = $statement->fetchAll ();
 		}
 		$statement->closeCursor ();
 		return $result;
 	}
-	
-	public function prepareAndFetchAllColumn($sql,$parameters=null,$column=null){
-		$result=false;
-		$statement=$this->getStatement($sql);
-		if($statement->execute ($parameters)){
-			Logger::info("Database", $sql,"prepareAndFetchAllColumn",$parameters);
-			$result = $statement->fetchAll(\PDO::FETCH_COLUMN,$column);
+
+	public function prepareAndFetchAllColumn($sql, $parameters = null, $column = null) {
+		$result = false;
+		$statement = $this->getStatement ( $sql );
+		if ($statement->execute ( $parameters )) {
+			Logger::info ( "Database", $sql, "prepareAndFetchAllColumn", $parameters );
+			$result = $statement->fetchAll ( \PDO::FETCH_COLUMN, $column );
 		}
 		$statement->closeCursor ();
 		return $result;
 	}
-	
-	public function prepareAndFetchColumn($sql,$parameters=null,$column=null){
-		$statement=$this->getStatement($sql);
-		if($statement->execute ($parameters)){
-			Logger::info("Database", $sql,"prepareAndFetchColumn",$parameters);
-			return $statement->fetchColumn($column);
+
+	public function prepareAndFetchColumn($sql, $parameters = null, $column = null) {
+		$statement = $this->getStatement ( $sql );
+		if ($statement->execute ( $parameters )) {
+			Logger::info ( "Database", $sql, "prepareAndFetchColumn", $parameters );
+			return $statement->fetchColumn ( $column );
 		}
 		return false;
 	}
@@ -228,26 +233,26 @@ class Database {
 			$condition = " WHERE " . $condition;
 		return $this->query ( "SELECT COUNT(*) FROM " . $tableName . $condition )->fetchColumn ();
 	}
-	
-	public function queryColumn($query){
+
+	public function queryColumn($query) {
 		return $this->query ( $query )->fetchColumn ();
 	}
-	
-	public function fetchAll($query){
+
+	public function fetchAll($query) {
 		return $this->query ( $query )->fetchAll ( \PDO::FETCH_COLUMN );
 	}
-	
+
 	public function isConnected() {
-		return ($this->pdoObject !== null && $this->pdoObject instanceof \PDO && $this->ping());
+		return ($this->pdoObject !== null && $this->pdoObject instanceof \PDO && $this->ping ());
 	}
 
 	public function setDbType($dbType) {
 		$this->dbType = $dbType;
 		return $this;
 	}
-	
+
 	public function ping() {
-		return (1 === intval($this->pdoObject->query('SELECT 1')->fetchColumn(0)));
+		return (1 === intval ( $this->pdoObject->query ( 'SELECT 1' )->fetchColumn ( 0 ) ));
 	}
 
 	public function getPort() {
@@ -265,8 +270,72 @@ class Database {
 	public function getPdoObject() {
 		return $this->pdoObject;
 	}
-	
-	public static function getAvailableDrivers(){
-		return \PDO::getAvailableDrivers();
+
+	public static function getAvailableDrivers() {
+		return \PDO::getAvailableDrivers ();
+	}
+
+	/**
+	 *
+	 * @return mixed
+	 */
+	public function getDbType() {
+		return $this->dbType;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getPassword() {
+		return $this->password;
+	}
+
+	/**
+	 *
+	 * @return array
+	 */
+	public function getOptions() {
+		return $this->options;
+	}
+
+	/**
+	 *
+	 * @param string $port
+	 */
+	public function setPort($port) {
+		$this->port = $port;
+	}
+
+	/**
+	 *
+	 * @param string $dbName
+	 */
+	public function setDbName($dbName) {
+		$this->dbName = $dbName;
+	}
+
+	/**
+	 *
+	 * @param string $user
+	 */
+	public function setUser($user) {
+		$this->user = $user;
+	}
+
+	/**
+	 *
+	 * @param string $password
+	 */
+	public function setPassword($password) {
+		$this->password = $password;
+	}
+
+	/**
+	 *
+	 * @param array $options
+	 */
+	public function setOptions($options) {
+		$this->options = $options;
 	}
 }

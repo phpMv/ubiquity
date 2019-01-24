@@ -20,7 +20,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		$this->db_server = getenv ( 'SERVICE_MYSQL_IP' );
+		$this->db_server = getenv ( 'SERVICE_MYSQL_IP' ) ?? '127.0.0.1';
 		$this->database = new Database ( "mysql", self::DB_NAME, $this->db_server );
 	}
 
@@ -31,14 +31,17 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->database = null;
 	}
 
+	protected function beforeQuery() {
+		if (! $this->database->isConnected ())
+			$this->database->connect ();
+	}
+
 	/**
 	 * Tests Database->__construct()
 	 */
 	public function test__construct() {
-		// TODO Auto-generated DatabaseTest->test__construct()
-		$this->markTestIncomplete ( "__construct test not implemented" );
-
-		$this->database->__construct(/* parameters */);
+		$this->assertEquals ( self::DB_NAME, $this->database->getDbName () );
+		$this->assertEquals ( '3306', $this->database->getPort () );
 	}
 
 	/**
@@ -49,53 +52,49 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	}
 
 	/**
-	 * Tests Database->_connect()
-	 */
-	public function test_connect() {
-		// TODO Auto-generated DatabaseTest->test_connect()
-		$this->markTestIncomplete ( "_connect test not implemented" );
-
-		$this->database->_connect(/* parameters */);
-	}
-
-	/**
 	 * Tests Database->getDSN()
 	 */
 	public function testGetDSN() {
-		// TODO Auto-generated DatabaseTest->testGetDSN()
-		$this->markTestIncomplete ( "getDSN test not implemented" );
-
-		$this->database->getDSN(/* parameters */);
+		$db = new Database ( "mysql", "dbname" );
+		$dsn = $db->getDSN ();
+		$this->assertEquals ( 'mysql:dbname=dbname;host=127.0.0.1;charset=UTF8;port=3306', $dsn );
+		$db->setDbType ( "mongo" );
+		$this->assertEquals ( 'mongo:dbname=dbname;host=127.0.0.1;charset=UTF8;port=3306', $db->getDSN () );
+		$db->setServerName ( "localhost" );
+		$this->assertEquals ( 'mongo:dbname=dbname;host=localhost;charset=UTF8;port=3306', $db->getDSN () );
+		$db->setPort ( 23 );
+		$this->assertEquals ( 'mongo:dbname=dbname;host=localhost;charset=UTF8;port=23', $db->getDSN () );
 	}
 
 	/**
 	 * Tests Database->query()
 	 */
 	public function testQuery() {
-		// TODO Auto-generated DatabaseTest->testQuery()
-		$this->markTestIncomplete ( "query test not implemented" );
-
-		$this->database->query(/* parameters */);
+		$this->beforeQuery ();
+		$this->assertNotFalse ( $this->database->query ( "SELECT 1" ) );
 	}
 
 	/**
 	 * Tests Database->prepareAndExecute()
 	 */
 	public function testPrepareAndExecute() {
-		// TODO Auto-generated DatabaseTest->testPrepareAndExecute()
-		$this->markTestIncomplete ( "prepareAndExecute test not implemented" );
-
-		$this->database->prepareAndExecute(/* parameters */);
+		$this->beforeQuery ();
+		$response = $this->database->prepareAndExecute ( "user", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ] );
+		$this->assertEquals ( sizeof ( $response ), 1 );
+		$row = current ( $response );
+		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
+		$this->assertEquals ( "Benjamin", $row ['firstname'] );
+		$this->assertArrayNotHasKey ( 'lastname', $row );
 	}
 
 	/**
 	 * Tests Database->prepareAndFetchAll()
 	 */
 	public function testPrepareAndFetchAll() {
-		// TODO Auto-generated DatabaseTest->testPrepareAndFetchAll()
-		$this->markTestIncomplete ( "prepareAndFetchAll test not implemented" );
-
-		$this->database->prepareAndFetchAll(/* parameters */);
+		$this->beforeQuery ();
+		$this->assertNotFalse ( $this->database->prepareAndFetchAll ( "SELECT 1" ) );
+		$resp = $this->database->prepareAndFetchAll ( "select * from `user`" );
+		$this->assertEquals ( 101, sizeof ( $resp ) );
 	}
 
 	/**
