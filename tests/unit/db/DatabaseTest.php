@@ -13,14 +13,15 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * @var Database
 	 */
 	private $database;
+	private $db_server;
 	const DB_NAME = "messagerie";
-	const DB_SERVER = "172.18.0.2";
 
 	/**
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		$this->database = new Database ( "mysql", self::DB_NAME, self::DB_SERVER );
+		$this->db_server = getenv ( 'SERVICE_MYSQL_IP' );
+		$this->database = new Database ( "mysql", self::DB_NAME, $this->db_server );
 	}
 
 	/**
