@@ -5,6 +5,9 @@ require_once 'Ubiquity/db/Database.php';
 
 /**
  * Database test case.
+ *
+ * @covers \Ubiquity\db\Database
+ *
  */
 class DatabaseTest extends \Codeception\Test\Unit {
 
@@ -42,6 +45,8 @@ class DatabaseTest extends \Codeception\Test\Unit {
 
 	/**
 	 * Tests Database->__construct()
+	 *
+	 * @covers \Ubiquity\db\Database::<private>
 	 */
 	public function test__construct() {
 		$this->assertEquals ( self::DB_NAME, $this->database->getDbName () );
@@ -164,7 +169,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Tests Database->setServerName()
 	 */
 	public function testSetServerName() {
-		$this->assertEquals ( '127.0.0.1', $this->database->getServerName () );
+		$this->assertEquals ( $this->db_server, $this->database->getServerName () );
 		$this->database->setServerName ( 'localhost' );
 		$this->assertEquals ( 'localhost', $this->database->getServerName () );
 	}
@@ -196,7 +201,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->beforeQuery ();
 		$this->assertEquals ( 1, $this->database->execute ( "INSERT INTO organization(`name`,`domain`,`aliases`) VALUES('name','domain','aliases')" ) );
 		$id = $this->database->lastInserId ();
-		$this->assertIsInt ( ( int ) $id );
+		$this->assertNotNull ( $id );
 		$this->assertEquals ( 1, $this->database->execute ( "DELETE FROM organization where `id`=" . $id ) );
 	}
 

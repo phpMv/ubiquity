@@ -176,6 +176,11 @@ class Database {
 		return $this->pdoObject->exec ( $sql );
 	}
 
+	/**
+	 *
+	 * @return string
+	 * @codeCoverageIgnore
+	 */
 	public function getServerName() {
 		return $this->serverName;
 	}
@@ -255,14 +260,29 @@ class Database {
 		return ($this->pdoObject && 1 === intval ( $this->pdoObject->query ( 'SELECT 1' )->fetchColumn ( 0 ) ));
 	}
 
+	/**
+	 *
+	 * @return string
+	 * @codeCoverageIgnore
+	 */
 	public function getPort() {
 		return $this->port;
 	}
 
+	/**
+	 *
+	 * @return string
+	 * @codeCoverageIgnore
+	 */
 	public function getDbName() {
 		return $this->dbName;
 	}
 
+	/**
+	 *
+	 * @return string
+	 * @codeCoverageIgnore
+	 */
 	public function getUser() {
 		return $this->user;
 	}
@@ -278,6 +298,7 @@ class Database {
 	/**
 	 *
 	 * @return mixed
+	 * @codeCoverageIgnore
 	 */
 	public function getDbType() {
 		return $this->dbType;
@@ -286,6 +307,7 @@ class Database {
 	/**
 	 *
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	public function getPassword() {
 		return $this->password;
@@ -294,6 +316,7 @@ class Database {
 	/**
 	 *
 	 * @return array
+	 * @codeCoverageIgnore
 	 */
 	public function getOptions() {
 		return $this->options;

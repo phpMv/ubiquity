@@ -1,5 +1,11 @@
 <?php
 use Ubiquity\utils\base\UString;
+
+/**
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @covers \Ubiquity\utils\base\UString
+ */
 class UStringTest extends \Codeception\Test\Unit {
 	/**
 	 *
