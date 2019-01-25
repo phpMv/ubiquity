@@ -20,7 +20,11 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		$this->db_server = getenv ( 'SERVICE_MYSQL_IP' ) ?? '127.0.0.1';
+		$ip = getenv ( 'SERVICE_MYSQL_IP' );
+		if ($ip === false) {
+			$ip = '127.0.0.1';
+		}
+		$this->db_server = $ip;
 		$this->database = new Database ( "mysql", self::DB_NAME, $this->db_server );
 	}
 
@@ -48,7 +52,11 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Tests Database->connect()
 	 */
 	public function testConnect() {
+		$this->assertFalse ( $this->database->isConnected () );
+		$this->assertFalse ( $this->database->ping () );
 		$this->assertTrue ( $this->database->connect () );
+		$this->assertTrue ( $this->database->isConnected () );
+		$this->assertTrue ( $this->database->ping () );
 	}
 
 	/**
@@ -72,6 +80,8 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	public function testQuery() {
 		$this->beforeQuery ();
 		$this->assertNotFalse ( $this->database->query ( "SELECT 1" ) );
+		$st = $this->database->query ( "SELECT * from `user` limit 0,1" );
+		$this->assertInstanceOf ( PDOStatement::class, $st );
 	}
 
 	/**
@@ -111,90 +121,92 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Tests Database->prepareAndFetchAllColumn()
 	 */
 	public function testPrepareAndFetchAllColumn() {
-		// TODO Auto-generated DatabaseTest->testPrepareAndFetchAllColumn()
-		$this->markTestIncomplete ( "prepareAndFetchAllColumn test not implemented" );
-
-		$this->database->prepareAndFetchAllColumn(/* parameters */);
+		$this->beforeQuery ();
+		$this->assertNotFalse ( $this->database->prepareAndFetchAllColumn ( "SELECT 1" ) );
+		$resp = $this->database->prepareAndFetchAllColumn ( "select * from `user`" );
+		$this->assertEquals ( 101, sizeof ( $resp ) );
+		$resp = $this->database->prepareAndFetchAllColumn ( "select email from `user` where email= ?", [ "benjamin.sherman@gmail.com" ] );
+		$row = current ( $resp );
+		$this->assertEquals ( "benjamin.sherman@gmail.com", $row );
+		$resp = $this->database->prepareAndFetchAllColumn ( "select * from `user` where email= ? and firstname= ?", [ "benjamin.sherman@gmail.com","Benjamin" ], 3 );
+		$row = current ( $resp );
+		$this->assertEquals ( "benjamin.sherman@gmail.com", $row );
 	}
 
 	/**
 	 * Tests Database->prepareAndFetchColumn()
 	 */
 	public function testPrepareAndFetchColumn() {
-		// TODO Auto-generated DatabaseTest->testPrepareAndFetchColumn()
-		$this->markTestIncomplete ( "prepareAndFetchColumn test not implemented" );
-
-		$this->database->prepareAndFetchColumn(/* parameters */);
+		$this->beforeQuery ();
+		$result = $this->database->prepareAndFetchColumn ( "select email from `user` where email='benjamin.sherman@gmail.com'" );
+		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
+		$result = $this->database->prepareAndFetchColumn ( "select email from `user` limit 0,1" );
+		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
+		$result = $this->database->prepareAndFetchColumn ( "select * from `user` limit 0,1", null, 3 );
+		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
+		$result = $this->database->prepareAndFetchColumn ( "select * from `user` where `email`= ?", [ 'benjamin.sherman@gmail.com' ], 3 );
+		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
+		$result = $this->database->prepareAndFetchColumn ( "select email from `user` where `email`= ?", [ 'benjamin.sherman@gmail.com' ] );
+		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
 	}
 
 	/**
 	 * Tests Database->execute()
 	 */
 	public function testExecute() {
-		// TODO Auto-generated DatabaseTest->testExecute()
-		$this->markTestIncomplete ( "execute test not implemented" );
-
-		$this->database->execute(/* parameters */);
-	}
-
-	/**
-	 * Tests Database->getServerName()
-	 */
-	public function testGetServerName() {
-		// TODO Auto-generated DatabaseTest->testGetServerName()
-		$this->markTestIncomplete ( "getServerName test not implemented" );
-
-		$this->database->getServerName(/* parameters */);
+		$this->beforeQuery ();
+		$this->assertEquals ( 0, $this->database->execute ( "DELETE FROM organization where 1=2" ) );
+		$this->assertEquals ( 1, $this->database->execute ( "INSERT INTO organization(`name`,`domain`,`aliases`) VALUES('name','domain','aliases')" ) );
+		$this->assertEquals ( 1, $this->database->execute ( "DELETE FROM organization where `name`='name'" ) );
 	}
 
 	/**
 	 * Tests Database->setServerName()
 	 */
 	public function testSetServerName() {
-		// TODO Auto-generated DatabaseTest->testSetServerName()
-		$this->markTestIncomplete ( "setServerName test not implemented" );
-
-		$this->database->setServerName(/* parameters */);
+		$this->assertEquals ( '127.0.0.1', $this->database->getServerName () );
+		$this->database->setServerName ( 'localhost' );
+		$this->assertEquals ( 'localhost', $this->database->getServerName () );
 	}
 
 	/**
 	 * Tests Database->prepareStatement()
 	 */
 	public function testPrepareStatement() {
-		// TODO Auto-generated DatabaseTest->testPrepareStatement()
-		$this->markTestIncomplete ( "prepareStatement test not implemented" );
-
-		$this->database->prepareStatement(/* parameters */);
+		$this->beforeQuery ();
+		$st = $this->database->prepareStatement ( "SELECT 1" );
+		$this->assertNotNull ( $st );
+		$st = $this->database->prepareStatement ( "SELECT * from `user` limit 0,1" );
+		$this->assertInstanceOf ( PDOStatement::class, $st );
 	}
 
 	/**
 	 * Tests Database->bindValueFromStatement()
 	 */
 	public function testBindValueFromStatement() {
-		// TODO Auto-generated DatabaseTest->testBindValueFromStatement()
-		$this->markTestIncomplete ( "bindValueFromStatement test not implemented" );
-
-		$this->database->bindValueFromStatement(/* parameters */);
+		$this->beforeQuery ();
+		$st = $this->database->prepareStatement ( "SELECT * from `user` where email= :email limit 0,1" );
+		$this->assertTrue ( $this->database->bindValueFromStatement ( $st, ':email', 'benjamin.sherman@gmail.com' ) );
 	}
 
 	/**
 	 * Tests Database->lastInserId()
 	 */
 	public function testLastInserId() {
-		// TODO Auto-generated DatabaseTest->testLastInserId()
-		$this->markTestIncomplete ( "lastInserId test not implemented" );
-
-		$this->database->lastInserId(/* parameters */);
+		$this->beforeQuery ();
+		$this->assertEquals ( 1, $this->database->execute ( "INSERT INTO organization(`name`,`domain`,`aliases`) VALUES('name','domain','aliases')" ) );
+		$id = $this->database->lastInserId ();
+		$this->assertIsInt ( ( int ) $id );
+		$this->assertEquals ( 1, $this->database->execute ( "DELETE FROM organization where `id`=" . $id ) );
 	}
 
 	/**
 	 * Tests Database->getTablesName()
 	 */
 	public function testGetTablesName() {
-		// TODO Auto-generated DatabaseTest->testGetTablesName()
-		$this->markTestIncomplete ( "getTablesName test not implemented" );
-
-		$this->database->getTablesName(/* parameters */);
+		$this->beforeQuery ();
+		$tables = $this->database->getTablesName ();
+		$this->assertEquals ( 7, sizeof ( $tables ) );
 	}
 
 	/**
@@ -205,46 +217,51 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->assertEquals ( 101, $this->database->count ( "user" ) );
 		$this->assertEquals ( 1, $this->database->count ( "user", "`email`='benjamin.sherman@gmail.com'" ) );
 		$this->assertEquals ( 0, $this->database->count ( "user", "1=2" ) );
+		$this->assertEquals ( 101, $this->database->count ( "user", "1=1" ) );
 	}
 
 	/**
 	 * Tests Database->queryColumn()
 	 */
 	public function testQueryColumn() {
-		// TODO Auto-generated DatabaseTest->testQueryColumn()
-		$this->markTestIncomplete ( "queryColumn test not implemented" );
-
-		$this->database->queryColumn(/* parameters */);
+		$this->beforeQuery ();
+		$result = $this->database->queryColumn ( "select email from `user` where email='benjamin.sherman@gmail.com'" );
+		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
+		$result = $this->database->queryColumn ( "select email from `user` limit 0,1" );
+		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
+		$result = $this->database->queryColumn ( "select * from `user` limit 0,1", 3 );
+		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
 	}
 
 	/**
 	 * Tests Database->fetchAll()
 	 */
 	public function testFetchAll() {
-		// TODO Auto-generated DatabaseTest->testFetchAll()
-		$this->markTestIncomplete ( "fetchAll test not implemented" );
-
-		$this->database->fetchAll(/* parameters */);
+		$this->beforeQuery ();
+		$result = $this->database->fetchAll ( "select * from `user`" );
+		$this->assertEquals ( 101, sizeof ( $result ) );
+		$row = current ( $result );
+		$this->assertEquals ( $row ['email'], 'benjamin.sherman@gmail.com' );
 	}
 
 	/**
 	 * Tests Database->isConnected()
 	 */
 	public function testIsConnected() {
-		// TODO Auto-generated DatabaseTest->testIsConnected()
-		$this->markTestIncomplete ( "isConnected test not implemented" );
-
-		$this->database->isConnected(/* parameters */);
+		$this->assertFalse ( $this->database->isConnected () );
+		$this->assertFalse ( $this->database->ping () );
+		$this->beforeQuery ();
+		$this->assertTrue ( $this->database->isConnected () );
+		$this->assertTrue ( $this->database->ping () );
 	}
 
 	/**
 	 * Tests Database->setDbType()
 	 */
 	public function testSetDbType() {
-		// TODO Auto-generated DatabaseTest->testSetDbType()
-		$this->markTestIncomplete ( "setDbType test not implemented" );
-
-		$this->database->setDbType(/* parameters */);
+		$this->assertEquals ( 'mysql', $this->database->getDbType () );
+		$this->database->setDbType ( 'mongo' );
+		$this->assertEquals ( 'mongo', $this->database->getDbType () );
 	}
 
 	/**
@@ -257,43 +274,14 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	}
 
 	/**
-	 * Tests Database->getPort()
-	 */
-	public function testGetPort() {
-		// TODO Auto-generated DatabaseTest->testGetPort()
-		$this->markTestIncomplete ( "getPort test not implemented" );
-
-		$this->database->getPort(/* parameters */);
-	}
-
-	/**
-	 * Tests Database->getDbName()
-	 */
-	public function testGetDbName() {
-		// TODO Auto-generated DatabaseTest->testGetDbName()
-		$this->markTestIncomplete ( "getDbName test not implemented" );
-
-		$this->database->getDbName(/* parameters */);
-	}
-
-	/**
-	 * Tests Database->getUser()
-	 */
-	public function testGetUser() {
-		// TODO Auto-generated DatabaseTest->testGetUser()
-		$this->markTestIncomplete ( "getUser test not implemented" );
-
-		$this->database->getUser(/* parameters */);
-	}
-
-	/**
 	 * Tests Database->getPdoObject()
 	 */
 	public function testGetPdoObject() {
-		// TODO Auto-generated DatabaseTest->testGetPdoObject()
-		$this->markTestIncomplete ( "getPdoObject test not implemented" );
-
-		$this->database->getPdoObject(/* parameters */);
+		$this->assertNull ( $this->database->getPdoObject () );
+		$this->beforeQuery ();
+		$pdoo = $this->database->getPdoObject ();
+		$this->assertNotNull ( $pdoo );
+		$this->assertInstanceOf ( PDO::class, $pdoo );
 	}
 
 	/**
@@ -301,7 +289,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testGetAvailableDrivers() {
 		$drivers = Database::getAvailableDrivers ();
-		$this->assertEquals ( 2, sizeof ( $drivers ) );
+		$this->assertTrue ( sizeof ( $drivers ) > 0 );
 	}
 }
 

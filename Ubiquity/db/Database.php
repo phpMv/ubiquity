@@ -144,11 +144,11 @@ class Database {
 		return $result;
 	}
 
-	public function prepareAndFetchColumn($sql, $parameters = null, $column = null) {
+	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = null) {
 		$statement = $this->getStatement ( $sql );
 		if ($statement->execute ( $parameters )) {
 			Logger::info ( "Database", $sql, "prepareAndFetchColumn", $parameters );
-			return $statement->fetchColumn ( $column );
+			return $statement->fetchColumn ( $columnNumber );
 		}
 		return false;
 	}
@@ -234,12 +234,12 @@ class Database {
 		return $this->query ( "SELECT COUNT(*) FROM " . $tableName . $condition )->fetchColumn ();
 	}
 
-	public function queryColumn($query) {
-		return $this->query ( $query )->fetchColumn ();
+	public function queryColumn($query, $columnNumber = null) {
+		return $this->query ( $query )->fetchColumn ( $columnNumber );
 	}
 
 	public function fetchAll($query) {
-		return $this->query ( $query )->fetchAll ( \PDO::FETCH_COLUMN );
+		return $this->query ( $query )->fetchAll ();
 	}
 
 	public function isConnected() {
