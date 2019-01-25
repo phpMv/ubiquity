@@ -124,7 +124,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	public function testQuery() {
 		$this->beforeQuery ();
 		$this->assertNotFalse ( $this->database->query ( "SELECT 1" ) );
-		$st = $this->database->query ( "SELECT * from `user` limit 0,1" );
+		$st = $this->database->query ( "SELECT * from `User` limit 0,1" );
 		$this->assertInstanceOf ( PDOStatement::class, $st );
 	}
 
@@ -133,7 +133,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testPrepareAndExecute() {
 		$this->beforeQuery ();
-		$response = $this->database->prepareAndExecute ( "user", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ] );
+		$response = $this->database->prepareAndExecute ( "User", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ] );
 		$this->assertEquals ( sizeof ( $response ), 1 );
 		$row = current ( $response );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
@@ -143,11 +143,11 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->database->prepareAndExecute ( "users", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
 		$db = new Database ( self::DB_TYPE, self::DB_NAME, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], TableCache::class );
 		$db->connect ();
-		$response = $db->prepareAndExecute ( "user", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
+		$response = $db->prepareAndExecute ( "User", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
 		$this->assertEquals ( sizeof ( $response ), 1 );
 		$row = current ( $response );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
-		$response = $db->prepareAndExecute ( "user", "WHERE `email`= ?", [ "email","firstname" ], [ 'benjamin.sherman@gmail.com' ], true );
+		$response = $db->prepareAndExecute ( "User", "WHERE `email`= ?", [ "email","firstname" ], [ 'benjamin.sherman@gmail.com' ], true );
 		$this->assertEquals ( sizeof ( $response ), 1 );
 		$row = current ( $response );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
@@ -159,15 +159,15 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	public function testPrepareAndFetchAll() {
 		$this->beforeQuery ();
 		$this->assertNotFalse ( $this->database->prepareAndFetchAll ( "SELECT 1" ) );
-		$resp = $this->database->prepareAndFetchAll ( "select * from `user`" );
+		$resp = $this->database->prepareAndFetchAll ( "select * from `User`" );
 		$this->assertEquals ( 101, sizeof ( $resp ) );
 		$row = current ( $resp );
 		$this->assertEquals ( 7, sizeof ( $row ) );
-		$resp = $this->database->prepareAndFetchAll ( "select * from `user` where email= ?", [ "benjamin.sherman@gmail.com" ] );
+		$resp = $this->database->prepareAndFetchAll ( "select * from `User` where email= ?", [ "benjamin.sherman@gmail.com" ] );
 		$row = current ( $resp );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
 		$this->assertEquals ( "Benjamin", $row ['firstname'] );
-		$resp = $this->database->prepareAndFetchAll ( "select * from `user` where email= ? and firstname= ?", [ "benjamin.sherman@gmail.com","Benjamin" ] );
+		$resp = $this->database->prepareAndFetchAll ( "select * from `User` where email= ? and firstname= ?", [ "benjamin.sherman@gmail.com","Benjamin" ] );
 		$row = current ( $resp );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
 		$this->assertEquals ( "Benjamin", $row ['firstname'] );
@@ -179,12 +179,12 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	public function testPrepareAndFetchAllColumn() {
 		$this->beforeQuery ();
 		$this->assertNotFalse ( $this->database->prepareAndFetchAllColumn ( "SELECT 1" ) );
-		$resp = $this->database->prepareAndFetchAllColumn ( "select * from `user`" );
+		$resp = $this->database->prepareAndFetchAllColumn ( "select * from `User`" );
 		$this->assertEquals ( 101, sizeof ( $resp ) );
-		$resp = $this->database->prepareAndFetchAllColumn ( "select email from `user` where email= ?", [ "benjamin.sherman@gmail.com" ] );
+		$resp = $this->database->prepareAndFetchAllColumn ( "select email from `User` where email= ?", [ "benjamin.sherman@gmail.com" ] );
 		$row = current ( $resp );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row );
-		$resp = $this->database->prepareAndFetchAllColumn ( "select * from `user` where email= ? and firstname= ?", [ "benjamin.sherman@gmail.com","Benjamin" ], 3 );
+		$resp = $this->database->prepareAndFetchAllColumn ( "select * from `User` where email= ? and firstname= ?", [ "benjamin.sherman@gmail.com","Benjamin" ], 3 );
 		$row = current ( $resp );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row );
 	}
@@ -194,15 +194,15 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testPrepareAndFetchColumn() {
 		$this->beforeQuery ();
-		$result = $this->database->prepareAndFetchColumn ( "select email from `user` where email='benjamin.sherman@gmail.com'" );
+		$result = $this->database->prepareAndFetchColumn ( "select email from `User` where email='benjamin.sherman@gmail.com'" );
 		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
-		$result = $this->database->prepareAndFetchColumn ( "select email from `user` limit 0,1" );
+		$result = $this->database->prepareAndFetchColumn ( "select email from `User` limit 0,1" );
 		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
-		$result = $this->database->prepareAndFetchColumn ( "select * from `user` limit 0,1", null, 3 );
+		$result = $this->database->prepareAndFetchColumn ( "select * from `User` limit 0,1", null, 3 );
 		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
-		$result = $this->database->prepareAndFetchColumn ( "select * from `user` where `email`= ?", [ 'benjamin.sherman@gmail.com' ], 3 );
+		$result = $this->database->prepareAndFetchColumn ( "select * from `User` where `email`= ?", [ 'benjamin.sherman@gmail.com' ], 3 );
 		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
-		$result = $this->database->prepareAndFetchColumn ( "select email from `user` where `email`= ?", [ 'benjamin.sherman@gmail.com' ] );
+		$result = $this->database->prepareAndFetchColumn ( "select email from `User` where `email`= ?", [ 'benjamin.sherman@gmail.com' ] );
 		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
 	}
 
@@ -232,7 +232,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->beforeQuery ();
 		$st = $this->database->prepareStatement ( "SELECT 1" );
 		$this->assertNotNull ( $st );
-		$st = $this->database->prepareStatement ( "SELECT * from `user` limit 0,1" );
+		$st = $this->database->prepareStatement ( "SELECT * from `User` limit 0,1" );
 		$this->assertInstanceOf ( PDOStatement::class, $st );
 	}
 
@@ -241,7 +241,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testBindValueFromStatement() {
 		$this->beforeQuery ();
-		$st = $this->database->prepareStatement ( "SELECT * from `user` where email= :email limit 0,1" );
+		$st = $this->database->prepareStatement ( "SELECT * from `User` where email= :email limit 0,1" );
 		$this->assertTrue ( $this->database->bindValueFromStatement ( $st, ':email', 'benjamin.sherman@gmail.com' ) );
 	}
 
@@ -270,10 +270,10 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testCount() {
 		$this->beforeQuery ();
-		$this->assertEquals ( 101, $this->database->count ( "user" ) );
-		$this->assertEquals ( 1, $this->database->count ( "user", "`email`='benjamin.sherman@gmail.com'" ) );
-		$this->assertEquals ( 0, $this->database->count ( "user", "1=2" ) );
-		$this->assertEquals ( 101, $this->database->count ( "user", "1=1" ) );
+		$this->assertEquals ( 101, $this->database->count ( "User" ) );
+		$this->assertEquals ( 1, $this->database->count ( "User", "`email`='benjamin.sherman@gmail.com'" ) );
+		$this->assertEquals ( 0, $this->database->count ( "User", "1=2" ) );
+		$this->assertEquals ( 101, $this->database->count ( "User", "1=1" ) );
 	}
 
 	/**
@@ -281,11 +281,11 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testQueryColumn() {
 		$this->beforeQuery ();
-		$result = $this->database->queryColumn ( "select email from `user` where email='benjamin.sherman@gmail.com'" );
+		$result = $this->database->queryColumn ( "select email from `User` where email='benjamin.sherman@gmail.com'" );
 		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
-		$result = $this->database->queryColumn ( "select email from `user` limit 0,1" );
+		$result = $this->database->queryColumn ( "select email from `User` limit 0,1" );
 		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
-		$result = $this->database->queryColumn ( "select * from `user` limit 0,1", 3 );
+		$result = $this->database->queryColumn ( "select * from `User` limit 0,1", 3 );
 		$this->assertEquals ( 'benjamin.sherman@gmail.com', $result );
 	}
 
@@ -294,7 +294,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testFetchAll() {
 		$this->beforeQuery ();
-		$result = $this->database->fetchAll ( "select * from `user`" );
+		$result = $this->database->fetchAll ( "select * from `User`" );
 		$this->assertEquals ( 101, sizeof ( $result ) );
 		$row = current ( $result );
 		$this->assertEquals ( $row ['email'], 'benjamin.sherman@gmail.com' );
