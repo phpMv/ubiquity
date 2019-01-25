@@ -211,9 +211,9 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testExecute() {
 		$this->beforeQuery ();
-		$this->assertEquals ( 0, $this->database->execute ( "DELETE FROM organization where 1=2" ) );
-		$this->assertEquals ( 1, $this->database->execute ( "INSERT INTO organization(`name`,`domain`,`aliases`) VALUES('name','domain','aliases')" ) );
-		$this->assertEquals ( 1, $this->database->execute ( "DELETE FROM organization where `name`='name'" ) );
+		$this->assertEquals ( 0, $this->database->execute ( "DELETE FROM Organization where 1=2" ) );
+		$this->assertEquals ( 1, $this->database->execute ( "INSERT INTO Organization(`name`,`domain`,`aliases`) VALUES('name','domain','aliases')" ) );
+		$this->assertEquals ( 1, $this->database->execute ( "DELETE FROM Organization where `name`='name'" ) );
 	}
 
 	/**
