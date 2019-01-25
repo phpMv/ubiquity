@@ -2,6 +2,7 @@
 use Ubiquity\controllers\Startup;
 use tests\unit\controllers\controllers\TestController;
 use Ubiquity\utils\http\USession;
+use tests\unit\controllers\controllers\TestControllerWithControl;
 
 require_once 'Ubiquity/controllers/Startup.php';
 require_once 'tests/unit/controllers/controllers/TestController.php';
@@ -57,6 +58,53 @@ class StartupTest extends \Codeception\Test\Unit {
 			$this->assertEquals ( 'index', $this->startup->getAction () );
 			$this->assertNull ( $this->startup->getActionParams () );
 		}, 'Hello world!' );
+		// With routes
+		$_GET ["c"] = "route/test/index";
+		$this->_assertDisplayEquals ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+		}, 'initialize!-Hello world!-finalize!' );
+		$_GET ["c"] = "route/test/";
+		$this->_assertDisplayEquals ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+		}, 'initialize!-Hello world!-finalize!' );
+		$_GET ["c"] = "route/test";
+		$this->_assertDisplayEquals ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+		}, 'initialize!-Hello world!-finalize!' );
+		$_GET ["c"] = "route/test/ctrl";
+		$this->_assertDisplayEquals ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
+		}, 'invalid!' );
+		$_GET ["c"] = "route/test/ctrl/";
+		USession::set ( 'user', 'user' );
+		$this->_assertDisplayEquals ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
+		}, 'initialize!-authorized!-finalize!' );
+		// Route with params
+		$_GET ["c"] = "route/test/params/aa/bb";
+		$this->_assertDisplayEquals ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'withParams', $this->startup->getAction () );
+			$this->assertEquals ( [ 'aa','bb' ], $this->startup->getActionParams () );
+		}, 'initialize!-aa-bb!-finalize!' );
+		$_GET ["c"] = "route/test/params/aa/";
+		$this->_assertDisplayEquals ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'withParams', $this->startup->getAction () );
+			$this->assertEquals ( [ 'aa' ], $this->startup->getActionParams () );
+		}, 'initialize!-aa-default!-finalize!' );
 	}
 
 	/**

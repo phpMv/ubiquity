@@ -26,5 +26,9 @@ class TestControllerWithControl extends TestControllerInitialize {
 		}
 		return true;
 	}
+
+	public function withParams($a, $b = "default") {
+		echo $a . "-" . $b . "!";
+	}
 }
 
