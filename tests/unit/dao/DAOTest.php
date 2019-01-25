@@ -1,6 +1,9 @@
 <?php
 use Ubiquity\orm\DAO;
 use models\User;
+use models\Organization;
+use Ubiquity\db\Database;
+use models\Groupe;
 
 require_once 'Ubiquity/orm/DAO.php';
 require_once 'tests/unit/config/app/models/Groupe.php';
@@ -40,30 +43,33 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::getManyToOne()
 	 */
 	public function testGetManyToOne() {
-		// TODO Auto-generated DAOTest::testGetManyToOne()
-		$this->markTestIncomplete ( "getManyToOne test not implemented" );
-
-		DAO::getManyToOne(/* parameters */);
+		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false );
+		$orga = DAO::getManyToOne ( $user, 'organization' );
+		$this->assertInstanceOf ( Organization::class, $orga );
 	}
 
 	/**
 	 * Tests DAO::getOneToMany()
 	 */
 	public function testGetOneToMany() {
-		// TODO Auto-generated DAOTest::testGetOneToMany()
-		$this->markTestIncomplete ( "getOneToMany test not implemented" );
-
-		DAO::getOneToMany(/* parameters */);
+		$orga = DAO::getOne ( Organization::class, 'name="Conservatoire National des Arts et Métiers"', false );
+		$users = DAO::getOneToMany ( $orga, 'users' );
+		$this->assertIsArray ( $users );
+		$this->assertTrue ( sizeof ( $users ) > 0 );
+		$user = current ( $users );
+		$this->assertInstanceOf ( User::class, $user );
 	}
 
 	/**
 	 * Tests DAO::getManyToMany()
 	 */
 	public function testGetManyToMany() {
-		// TODO Auto-generated DAOTest::testGetManyToMany()
-		$this->markTestIncomplete ( "getManyToMany test not implemented" );
-
-		DAO::getManyToMany(/* parameters */);
+		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false );
+		$groupes = DAO::getManyToMany ( $user, 'groupes' );
+		$this->assertIsArray ( $groupes );
+		$this->assertTrue ( sizeof ( $groupes ) > 0 );
+		$groupe = current ( $groupes );
+		$this->assertInstanceOf ( Groupe::class, $groupe );
 	}
 
 	/**
@@ -80,67 +86,69 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::getAll()
 	 */
 	public function testGetAll() {
-		$this->dao->getAll ( User::class );
+		$users = $this->dao->getAll ( User::class );
+		$this->assertEquals ( 101, sizeof ( $users ) );
+		$user = current ( $users );
+		$this->assertInstanceOf ( User::class, $user );
+		$orga = $user->getOrganization ();
+		$this->assertInstanceOf ( Organization::class, $orga );
 	}
 
 	/**
 	 * Tests DAO::paginate()
 	 */
 	public function testPaginate() {
-		// TODO Auto-generated DAOTest::testPaginate()
-		$this->markTestIncomplete ( "paginate test not implemented" );
-
-		DAO::paginate(/* parameters */);
+		$users = $this->dao->paginate ( User::class );
+		$this->assertEquals ( 20, sizeof ( $users ) );
+		$user = current ( $users );
+		$this->assertInstanceOf ( User::class, $user );
+		$users = $this->dao->paginate ( User::class, 2, 10 );
+		$this->assertEquals ( 10, sizeof ( $users ) );
+		$users = $this->dao->paginate ( User::class, 1, 10, 'email="benjamin.sherman@gmail.com"' );
+		$this->assertEquals ( 1, sizeof ( $users ) );
+		$user = current ( $users );
+		$this->assertEquals ( 'Benjamin', $user->getFirstname () );
 	}
 
 	/**
 	 * Tests DAO::getRownum()
 	 */
 	public function testGetRownum() {
-		// TODO Auto-generated DAOTest::testGetRownum()
-		$this->markTestIncomplete ( "getRownum test not implemented" );
-
-		DAO::getRownum(/* parameters */);
+		$users = $this->dao->getAll ( User::class, '', false );
+		$index = rand ( 0, sizeof ( $users ) - 1 );
+		$this->assertEquals ( $index, $this->dao->getRownum ( User::class, $users [$index]->getId () ) );
 	}
 
 	/**
 	 * Tests DAO::count()
 	 */
 	public function testCount() {
-		// TODO Auto-generated DAOTest::testCount()
-		$this->markTestIncomplete ( "count test not implemented" );
+		$this->assertEquals ( 101, $this->dao->count ( User::class ) );
+	}
 
-		DAO::count(/* parameters */);
+	/**
+	 * Tests DAO::startDatabase()
+	 */
+	public function testStartDatabase() {
+		DAO::startDatabase ( $this->config );
+		$this->assertTrue ( DAO::isConnected () );
+		$this->assertInstanceOf ( Database::class, DAO::$db );
+		$this->assertInstanceOf ( PDO::class, DAO::$db->getPdoObject () );
 	}
 
 	/**
 	 * Tests DAO::getOne()
 	 */
 	public function testGetOne() {
-		// TODO Auto-generated DAOTest::testGetOne()
-		$this->markTestIncomplete ( "getOne test not implemented" );
-
-		DAO::getOne(/* parameters */);
-	}
-
-	/**
-	 * Tests DAO::connect()
-	 */
-	public function testConnect() {
-		// TODO Auto-generated DAOTest::testConnect()
-		$this->markTestIncomplete ( "connect test not implemented" );
-
-		DAO::connect(/* parameters */);
+		$user = $this->dao->getOne ( User::class, 'firstname="Benjamin"' );
+		$this->assertInstanceOf ( User::class, $user );
 	}
 
 	/**
 	 * Tests DAO::isConnected()
 	 */
 	public function testIsConnected() {
-		// TODO Auto-generated DAOTest::testIsConnected()
-		$this->markTestIncomplete ( "isConnected test not implemented" );
-
-		DAO::isConnected(/* parameters */);
+		$this->assertTrue ( $this->dao->isConnected () );
 	}
 }
 
