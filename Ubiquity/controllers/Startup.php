@@ -82,6 +82,7 @@ class Startup {
 		$ctrl = $u [0];
 		self::$controller = $ctrl;
 		self::$action = "index";
+		self::$actionParams = [ ];
 		if (\sizeof ( $u ) > 1)
 			self::$action = $u [1];
 		if (\sizeof ( $u ) > 2)

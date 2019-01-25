@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Ubiquity framework User guide (v2.0.5)
-===========================================
+Ubiquity framework User guide
+=============================
 
 .. toctree::
    :maxdepth: 1
