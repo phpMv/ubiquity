@@ -250,10 +250,10 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	public function testLastInserId() {
 		$this->beforeQuery ();
-		$this->assertEquals ( 1, $this->database->execute ( "INSERT INTO organization(`name`,`domain`,`aliases`) VALUES('name','domain','aliases')" ) );
+		$this->assertEquals ( 1, $this->database->execute ( "INSERT INTO Organization(`name`,`domain`,`aliases`) VALUES('name','domain','aliases')" ) );
 		$id = $this->database->lastInserId ();
 		$this->assertNotNull ( $id );
-		$this->assertEquals ( 1, $this->database->execute ( "DELETE FROM organization where `id`=" . $id ) );
+		$this->assertEquals ( 1, $this->database->execute ( "DELETE FROM Organization where `id`=" . $id ) );
 	}
 
 	/**
