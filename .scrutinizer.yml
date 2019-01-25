@@ -31,7 +31,7 @@ filter:
         - docs/
         - api/
         - documentation/
-        - tests/_support/
+        - tests/
 checks:
     php:
         code_rating: true

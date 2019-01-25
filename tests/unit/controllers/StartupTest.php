@@ -1,10 +1,12 @@
 <?php
 use Ubiquity\controllers\Startup;
 use tests\unit\controllers\controllers\TestController;
+use Ubiquity\utils\http\USession;
 
 require_once 'Ubiquity/controllers/Startup.php';
 require_once 'tests/unit/controllers/controllers/TestController.php';
 require_once 'tests/unit/controllers/controllers/TestControllerInitialize.php';
+require_once 'tests/unit/controllers/controllers/TestControllerWithControl.php';
 
 /**
  * Startup test case.
@@ -34,31 +36,52 @@ class StartupTest extends \Codeception\Test\Unit {
 		$this->startup = null;
 	}
 
+	protected function _display($callback) {
+		ob_start ();
+		$callback ();
+		return ob_get_clean ();
+	}
+
+	protected function _assertDisplayEquals($callback, $result) {
+		$res = $this->_display ( $callback );
+		$this->assertEquals ( $result, $res );
+	}
+
 	/**
 	 * Tests Startup::run()
 	 */
 	public function testRun() {
-		ob_start ();
-		Startup::run ( $this->config );
-		$this->assertEquals ( TestController::class, $this->startup->getController () );
-		$this->assertEquals ( 'index', $this->startup->getAction () );
-		$this->assertNull ( $this->startup->getActionParams () );
-		$res = ob_get_clean ();
-		$this->assertEquals ( 'Hello world!', $res );
+		$this->_assertDisplayEquals ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( TestController::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+			$this->assertNull ( $this->startup->getActionParams () );
+		}, 'Hello world!' );
 	}
 
 	/**
 	 * Tests Startup::forward()
 	 */
 	public function testForward() {
-		ob_start ();
-		Startup::forward ( "TestController/doForward" );
-		$res = ob_get_clean ();
-		$this->assertEquals ( 'forward!', $res );
-		ob_start ();
-		Startup::forward ( "TestControllerInitialize/doForward" );
-		$res = ob_get_clean ();
-		$this->assertEquals ( 'initialize!-forward!-finalize!', $res );
+		$this->_assertDisplayEquals ( function () {
+			Startup::forward ( "TestController/doForward" );
+		}, 'forward!' );
+		$this->_assertDisplayEquals ( function () {
+			Startup::forward ( "TestControllerInitialize/doForward" );
+		}, 'initialize!-forward!-finalize!' );
+		$this->_assertDisplayEquals ( function () {
+			Startup::forward ( "TestControllerWithControl/validAction" );
+		}, 'initialize!-valid action!-finalize!' );
+		$this->_assertDisplayEquals ( function () {
+			Startup::forward ( "TestControllerWithControl/validAction" );
+		}, 'initialize!-valid action!-finalize!' );
+		$this->_assertDisplayEquals ( function () {
+			Startup::forward ( "TestControllerWithControl/actionWithControl" );
+		}, 'invalid!' );
+		USession::set ( 'user', 'user' );
+		$this->_assertDisplayEquals ( function () {
+			Startup::forward ( "TestControllerWithControl/actionWithControl" );
+		}, 'initialize!-authorized!-finalize!' );
 	}
 
 	/**

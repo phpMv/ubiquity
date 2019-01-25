@@ -11,12 +11,13 @@ use Ubiquity\controllers\traits\RouterAdminTrait;
 
 /**
  * Router manager
+ * This class is part of Ubiquity
+ *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
  */
 class Router {
 	use RouterModifierTrait,RouterAdminTrait;
-	
 	protected static $routes;
 
 	/**
@@ -32,43 +33,44 @@ class Router {
 	public static function startRest() {
 		self::$routes = CacheManager::getControllerCache ( true );
 	}
-	
+
 	/**
 	 * Starts the router by loading all routes (normal + rest routes)
 	 */
 	public static function startAll() {
-		self::$routes = array_merge(CacheManager::getControllerCache (),CacheManager::getControllerCache(true));
+		self::$routes = array_merge ( CacheManager::getControllerCache (), CacheManager::getControllerCache ( true ) );
 	}
 
 	/**
 	 * Returns the route corresponding to a path
+	 *
 	 * @param string $path
 	 * @param boolean $cachedResponse
 	 * @return boolean|mixed[]|string
 	 */
 	public static function getRoute($path, $cachedResponse = true) {
 		$path = self::slashPath ( $path );
-		if(isset(self::$routes[$path])){
-			return self::getRoute_(self::$routes[$path], $path, [$path], $cachedResponse);
+		if (isset ( self::$routes [$path] )) {
+			return self::getRoute_ ( self::$routes [$path], $path, [ $path ], $cachedResponse );
 		}
 		foreach ( self::$routes as $routePath => $routeDetails ) {
 			if (preg_match ( "@^" . $routePath . "$@s", $path, $matches )) {
-				return self::getRoute_($routeDetails, $routePath, $matches, $cachedResponse);
+				return self::getRoute_ ( $routeDetails, $routePath, $matches, $cachedResponse );
 			}
 		}
-		Logger::warn("Router", "No route found for {$path}","getRoute");
+		Logger::warn ( "Router", "No route found for {$path}", "getRoute" );
 		return false;
 	}
-	
-	private static function getRoute_(&$routeDetails,$routePath,$matches,$cachedResponse){
+
+	private static function getRoute_(&$routeDetails, $routePath, $matches, $cachedResponse) {
 		if (! isset ( $routeDetails ["controller"] )) {
 			$method = URequest::getMethod ();
-			if (isset ( $routeDetails [$method] )){
-				$routeDetailsMethod=$routeDetails [$method];
-				return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetailsMethod ], $matches, $routeDetailsMethod ["cache"]??false, $routeDetailsMethod["duration"]??null, $cachedResponse );
+			if (isset ( $routeDetails [$method] )) {
+				$routeDetailsMethod = $routeDetails [$method];
+				return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetailsMethod ], $matches, $routeDetailsMethod ["cache"] ?? false, $routeDetailsMethod ["duration"] ?? null, $cachedResponse );
 			}
-		} else{
-			return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails ], $matches, $routeDetails ["cache"]??false, $routeDetails ["duration"]??null, $cachedResponse );
+		} else {
+			return self::getRouteUrlParts ( [ "path" => $routePath,"details" => $routeDetails ], $matches, $routeDetails ["cache"] ?? false, $routeDetails ["duration"] ?? null, $cachedResponse );
 		}
 		return false;
 	}
@@ -145,29 +147,29 @@ class Router {
 	}
 
 	public static function getRouteUrlParts($routeArray, $params, $cached = false, $duration = NULL, $cachedResponse = true) {
-		\array_shift($params);
-		$routeDetails=$routeArray ["details"];
-		$result = [ str_replace ( "\\\\", "\\", $routeDetails["controller"] ),$routeDetails["action"] ];
-		if(($paramsOrder = $routeDetails["parameters"]) && (sizeof($paramsOrder)>0)){
-			self::setParamsInOrder($result, $paramsOrder, $params);
+		\array_shift ( $params );
+		$routeDetails = $routeArray ["details"];
+		$result = [ str_replace ( "\\\\", "\\", $routeDetails ["controller"] ),$routeDetails ["action"] ];
+		if (($paramsOrder = $routeDetails ["parameters"]) && (sizeof ( $paramsOrder ) > 0)) {
+			self::setParamsInOrder ( $result, $paramsOrder, $params );
 		}
-		if(!$cached || !$cachedResponse){
-			Logger::info('Router', sprintf('Route found for %s : %s',$routeArray["path"],implode("/", $result)),'getRouteUrlParts');
+		if (! $cached || ! $cachedResponse) {
+			Logger::info ( 'Router', sprintf ( 'Route found for %s : %s', $routeArray ["path"], implode ( "/", $result ) ), 'getRouteUrlParts' );
 			return $result;
 		}
-		Logger::info('Router', sprintf('Route found for %s (from cache) : %s',$routeArray["path"],implode("/", $result)),'getRouteUrlParts');
+		Logger::info ( 'Router', sprintf ( 'Route found for %s (from cache) : %s', $routeArray ["path"], implode ( "/", $result ) ), 'getRouteUrlParts' );
 		return CacheManager::getRouteCache ( $result, $duration );
 	}
-	
-	protected static function setParamsInOrder(&$routeUrlParts,$paramsOrder,$params){
+
+	protected static function setParamsInOrder(&$routeUrlParts, $paramsOrder, $params) {
 		$index = 0;
 		foreach ( $paramsOrder as $order ) {
 			if ($order === '*') {
 				if (isset ( $params [$index] ))
 					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( "/", $params [$index] ), [ "" ] ) );
-					break;
+				break;
 			}
-			if ($order[0] === '~') {
+			if ($order [0] === '~') {
 				$order = \intval ( \substr ( $order, 1, 1 ) );
 				if (isset ( $params [$order] )) {
 					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( "/", $params [$order] ), [ "" ] ) );
@@ -185,7 +187,7 @@ class Router {
 			return \substr ( $param, 0, - 1 );
 		return $param;
 	}
-	
+
 	protected static function slashPath($path) {
 		if (UString::startswith ( $path, "/" ) === false)
 			$path = "/" . $path;
@@ -193,7 +195,7 @@ class Router {
 			$path = $path . "/";
 		return $path;
 	}
-	
+
 	/**
 	 * Declare a route as expired or not
 	 *

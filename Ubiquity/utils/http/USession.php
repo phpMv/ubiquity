@@ -7,9 +7,10 @@ use Ubiquity\utils\http\session\SessionObject;
 
 /**
  * Http Session utilities
+ * This class is part of Ubiquity
  *
- * @author jc
- * @version 1.0.0.4
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.4
  */
 class USession {
 	private static $name;
@@ -152,41 +153,41 @@ class USession {
 		$_SESSION [$key] = $value;
 		return $value;
 	}
-	
-	public static function setTmp($key,$value,$duration){
-		if(isset($_SESSION[$key])){
-			$object=$_SESSION[$key];
-			if($object instanceof SessionObject){
-				return $object->setValue($value);
+
+	public static function setTmp($key, $value, $duration) {
+		if (isset ( $_SESSION [$key] )) {
+			$object = $_SESSION [$key];
+			if ($object instanceof SessionObject) {
+				return $object->setValue ( $value );
 			}
 		}
-		$object=new SessionObject($value, $duration);
-		return $_SESSION[$key]=$object;
+		$object = new SessionObject ( $value, $duration );
+		return $_SESSION [$key] = $object;
 	}
-	
-	public static function getTmp($key,$default=null){
-		if(isset($_SESSION[$key])){
-			$object=$_SESSION[$key];
-			if($object instanceof SessionObject){
-				$value=$object->getValue();
-				if(isset($value))
-					return $object->getValue();
-				else{
-					self::delete($key);	
+
+	public static function getTmp($key, $default = null) {
+		if (isset ( $_SESSION [$key] )) {
+			$object = $_SESSION [$key];
+			if ($object instanceof SessionObject) {
+				$value = $object->getValue ();
+				if (isset ( $value ))
+					return $object->getValue ();
+				else {
+					self::delete ( $key );
 				}
 			}
 		}
 		return $default;
 	}
-	
-	public static function getTimeout($key){
-		if(isset($_SESSION[$key])){
-			$object=$_SESSION[$key];
-			if($object instanceof SessionObject){
-				$value=$object->getTimeout();
-				if($value<0){
+
+	public static function getTimeout($key) {
+		if (isset ( $_SESSION [$key] )) {
+			$object = $_SESSION [$key];
+			if ($object instanceof SessionObject) {
+				$value = $object->getTimeout ();
+				if ($value < 0) {
 					return 0;
-				}else{
+				} else {
 					return $value;
 				}
 			}
@@ -299,7 +300,7 @@ class USession {
 	 *        	the name of the session
 	 */
 	public static function start($name = null) {
-		if (! isset ( $_SESSION )) {
+		if (! self::isStarted ()) {
 			if (isset ( $name ) && $name !== "") {
 				self::$name = $name;
 			}
@@ -316,7 +317,7 @@ class USession {
 	 * @return boolean
 	 */
 	public static function isStarted() {
-		return isset ( $_SESSION );
+		return session_status () == PHP_SESSION_ACTIVE;
 	}
 
 	/**
@@ -330,18 +331,19 @@ class USession {
 		self::start ();
 		return isset ( $_SESSION [$key] );
 	}
-	
+
 	/**
 	 * Initialize the key in Session if key does not exists
+	 *
 	 * @param string $key
 	 * @param mixed $value
 	 * @return mixed
 	 */
-	public static function init($key,$value){
-		if(!isset($_SESSION[$key])){
-			$_SESSION[$key]=$value;
+	public static function init($key, $value) {
+		if (! isset ( $_SESSION [$key] )) {
+			$_SESSION [$key] = $value;
 		}
-		return $_SESSION[$key];
+		return $_SESSION [$key];
 	}
 
 	/**
