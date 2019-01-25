@@ -137,6 +137,8 @@ class UStringTest extends \Codeception\Test\Unit {
 
 	public function testDoubleBackSlashes() {
 		$this->assertEquals ( "models\\\\Client", UString::doubleBackSlashes ( "models\\Client" ) );
+		$this->assertNull ( UString::doubleBackSlashes ( null ) );
+		$this->assertEquals ( $this, UString::doubleBackSlashes ( $this ) );
 	}
 
 	public function testMask() {

@@ -109,14 +109,19 @@ class Database {
 			if (is_array ( $parameters )) {
 				$cKey .= implode ( ",", $parameters );
 			}
-			$result = $this->cache->fetch ( $tableName, $cKey );
-			Logger::info ( "Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters );
+			try {
+				$result = $this->cache->fetch ( $tableName, $cKey );
+				Logger::info ( "Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters );
+			} catch ( \Exception $e ) {
+				throw new CacheException ( "Cache is not created in Database constructor" );
+			}
 		}
 		if ($result === false) {
-			$fields = SqlUtils::getFieldList ( $fields, $tableName );
-			$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM `" . $tableName . "`" . $condition, $parameters );
-			if ($cache) {
-				$this->cache->store ( $tableName, $cKey, $result );
+			if ($fields = SqlUtils::getFieldList ( $fields, $tableName )) {
+				$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM `" . $tableName . "`" . $condition, $parameters );
+				if ($cache) {
+					$this->cache->store ( $tableName, $cKey, $result );
+				}
 			}
 		}
 		return $result;

@@ -1,5 +1,7 @@
 <?php
 use Ubiquity\db\Database;
+use Ubiquity\cache\database\TableCache;
+use Ubiquity\exceptions\CacheException;
 
 require_once 'Ubiquity/db/Database.php';
 
@@ -17,18 +19,23 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 */
 	private $database;
 	private $db_server;
-	const DB_NAME = "messagerie";
+	const DB_NAME = 'messagerie';
+	const DB_TYPE = 'mysql';
 
 	/**
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
+		if (! defined ( 'ROOT' )) {
+			define ( 'ROOT', __DIR__ );
+			define ( 'DS', DIRECTORY_SEPARATOR );
+		}
 		$ip = getenv ( 'SERVICE_MYSQL_IP' );
 		if ($ip === false) {
 			$ip = '127.0.0.1';
 		}
 		$this->db_server = $ip;
-		$this->database = new Database ( "mysql", self::DB_NAME, $this->db_server );
+		$this->database = new Database ( self::DB_TYPE, self::DB_NAME, $this->db_server );
 	}
 
 	/**
@@ -51,6 +58,15 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	public function test__construct() {
 		$this->assertEquals ( self::DB_NAME, $this->database->getDbName () );
 		$this->assertEquals ( '3306', $this->database->getPort () );
+		$db = new Database ( self::DB_TYPE, self::DB_NAME, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], TableCache::class );
+		$this->assertTrue ( $db->connect () );
+		$db = new Database ( self::DB_TYPE, self::DB_NAME, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], function () {
+			return new TableCache ();
+		} );
+		$this->assertTrue ( $db->connect () );
+		$this->expectException ( CacheException::class );
+		$db = new Database ( self::DB_TYPE, self::DB_NAME, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], "notExistingClass" );
+		$this->assertTrue ( $db->connect () );
 	}
 
 	/**
@@ -62,15 +78,38 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->assertTrue ( $this->database->connect () );
 		$this->assertTrue ( $this->database->isConnected () );
 		$this->assertTrue ( $this->database->ping () );
+		$this->database->setUser ( 'nobody' );
+		$this->assertFalse ( $this->database->connect () );
+	}
+
+	/**
+	 * Tests Database->setters
+	 */
+	public function testSetters() {
+		$this->database->setDbName ( 'test' );
+		$this->assertEquals ( 'test', $this->database->getDbName () );
+		$this->database->setDbType ( 'mongo' );
+		$this->assertEquals ( 'mongo', $this->database->getDbType () );
+		$options = [ "a" => true,"b" => "test" ];
+		$this->database->setOptions ( $options );
+		$this->assertEquals ( $options, $this->database->getOptions () );
+		$this->database->setPassword ( 'password' );
+		$this->assertEquals ( 'password', $this->database->getPassword () );
+		$this->database->setPort ( 3307 );
+		$this->assertEquals ( 3307, $this->database->getPort () );
+		$this->database->setServerName ( 'local' );
+		$this->assertEquals ( 'local', $this->database->getServerName () );
+		$this->database->setUser ( 'user' );
+		$this->assertEquals ( 'user', $this->database->getUser () );
 	}
 
 	/**
 	 * Tests Database->getDSN()
 	 */
 	public function testGetDSN() {
-		$db = new Database ( "mysql", "dbname" );
+		$db = new Database ( self::DB_TYPE, "dbname" );
 		$dsn = $db->getDSN ();
-		$this->assertEquals ( 'mysql:dbname=dbname;host=127.0.0.1;charset=UTF8;port=3306', $dsn );
+		$this->assertEquals ( self::DB_TYPE . ':dbname=dbname;host=127.0.0.1;charset=UTF8;port=3306', $dsn );
 		$db->setDbType ( "mongo" );
 		$this->assertEquals ( 'mongo:dbname=dbname;host=127.0.0.1;charset=UTF8;port=3306', $db->getDSN () );
 		$db->setServerName ( "localhost" );
@@ -100,6 +139,18 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
 		$this->assertEquals ( "Benjamin", $row ['firstname'] );
 		$this->assertArrayNotHasKey ( 'lastname', $row );
+		$this->expectException ( Error::class );
+		$this->database->prepareAndExecute ( "users", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
+		$db = new Database ( self::DB_TYPE, self::DB_NAME, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], TableCache::class );
+		$db->connect ();
+		$response = $db->prepareAndExecute ( "user", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
+		$this->assertEquals ( sizeof ( $response ), 1 );
+		$row = current ( $response );
+		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
+		$response = $db->prepareAndExecute ( "user", "WHERE `email`= ?", [ "email","firstname" ], [ 'benjamin.sherman@gmail.com' ], true );
+		$this->assertEquals ( sizeof ( $response ), 1 );
+		$row = current ( $response );
+		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
 	}
 
 	/**
@@ -264,7 +315,7 @@ class DatabaseTest extends \Codeception\Test\Unit {
 	 * Tests Database->setDbType()
 	 */
 	public function testSetDbType() {
-		$this->assertEquals ( 'mysql', $this->database->getDbType () );
+		$this->assertEquals ( self::DB_TYPE, $this->database->getDbType () );
 		$this->database->setDbType ( 'mongo' );
 		$this->assertEquals ( 'mongo', $this->database->getDbType () );
 	}
