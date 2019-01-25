@@ -54,7 +54,7 @@ class DAOTest extends BaseTest {
 	public function testGetOneToMany() {
 		$orga = DAO::getOne ( Organization::class, 'name="Conservatoire National des Arts et Métiers"', false );
 		$users = DAO::getOneToMany ( $orga, 'users' );
-		$this->assertIsArray ( $users );
+		$this->assertTrue ( is_array ( $users ) );
 		$this->assertTrue ( sizeof ( $users ) > 0 );
 		$user = current ( $users );
 		$this->assertInstanceOf ( User::class, $user );
@@ -66,7 +66,7 @@ class DAOTest extends BaseTest {
 	public function testGetManyToMany() {
 		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false );
 		$groupes = DAO::getManyToMany ( $user, 'groupes' );
-		$this->assertIsArray ( $groupes );
+		$this->assertTrue ( is_array ( $groupes ) );
 		$this->assertTrue ( sizeof ( $groupes ) > 0 );
 		$groupe = current ( $groupes );
 		$this->assertInstanceOf ( Groupe::class, $groupe );
