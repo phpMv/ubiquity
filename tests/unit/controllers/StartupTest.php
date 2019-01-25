@@ -4,8 +4,6 @@ use tests\unit\controllers\controllers\TestController;
 use Ubiquity\utils\http\USession;
 use tests\unit\controllers\controllers\TestControllerWithControl;
 use tests\unit\controllers\services\Service;
-use Ubiquity\cache\CacheManager;
-use Ubiquity\controllers\Router;
 use tests\unit\controllers\controllers\TestRestController;
 use Ubiquity\exceptions\RestException;
 
@@ -18,35 +16,27 @@ require_once 'tests/unit/controllers/controllers/TestRestController.php';
 /**
  * Startup test case.
  */
-class StartupTest extends \Codeception\Test\Unit {
+class StartupTest extends BaseTest {
 
 	/**
 	 *
 	 * @var Startup
 	 */
 	private $startup;
-	private $config;
 
 	/**
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		$this->config = include 'tests/unit/config/config.php';
+		$this->_loadConfig ();
 		$this->_startServices ();
 		$this->startup = new Startup ();
-		$_GET ["c"] = "TestController";
-		$_SERVER ['REQUEST_METHOD'] = 'GET';
+		$this->_initRequest ( 'TestController', 'GET' );
 	}
 
 	protected function _startServices($what = false) {
-		CacheManager::startProd ( $this->config );
-		if ($what == 'rest') {
-			Router::startRest ();
-		} elseif ($what == 'all') {
-			Router::startAll ();
-		} else {
-			Router::start ();
-		}
+		$this->_startCache ();
+		$this->_startRouter ( $what );
 	}
 
 	/**

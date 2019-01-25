@@ -1,0 +1,2 @@
+<?php
+return array("#tableName"=>"Settings","#primaryKeys"=>array("id"),"#manyToOne"=>array(),"#fieldNames"=>array("id"=>"id","name"=>"name","organizationsettingss"=>"organizationsettingss"),"#fieldTypes"=>array("id"=>"int(11)","name"=>"varchar(45)","organizationsettingss"=>"mixed"),"#nullable"=>array(),"#notSerializable"=>array("organizationsettingss"),"#oneToMany"=>array("organizationsettingss"=>array("mappedBy"=>"settings","className"=>"models\\Organizationsettings")));
