@@ -68,9 +68,10 @@ abstract class Controller {
 			$this->view->setVars ( $pData );
 		return $this->view->render ( $viewName, $asString );
 	}
-	
+
 	/**
 	 * Loads the default view (controllerName/actionName) possibly passing the variables $pdata
+	 *
 	 * @param mixed $pData
 	 *        	Variable or associative array to pass to the view <br> If a variable is passed, it will have the name <b> $ data </ b> in the view, <br>
 	 *        	If an associative array is passed, the view retrieves variables from the table's key names
@@ -79,16 +80,17 @@ abstract class Controller {
 	 * @throws \Exception
 	 * @return string
 	 */
-	public function loadDefaultView($pData=NULL,$asString=false){
-		return $this->loadView($this->getDefaultViewName(),$pData,$asString);
+	public function loadDefaultView($pData = NULL, $asString = false) {
+		return $this->loadView ( $this->getDefaultViewName (), $pData, $asString );
 	}
-	
+
 	/**
 	 * Returns the default view name for this controller/action i.e ControllerName/actionName.html for the action actionName in ControllerName
+	 *
 	 * @return string the default view name
 	 */
-	public function getDefaultViewName(){
-		return Startup::getControllerSimpleName()."/".Startup::getAction().".".Startup::getViewNameFileExtension();
+	public function getDefaultViewName() {
+		return Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
 	}
 
 	/**
@@ -107,7 +109,8 @@ abstract class Controller {
 	 * To be override in sub classes
 	 */
 	public function onInvalidControl() {
-		\header ( 'HTTP/1.1 401 Unauthorized', true, 401 );
+		if (! headers_sent ())
+			\header ( 'HTTP/1.1 401 Unauthorized', true, 401 );
 	}
 
 	/**

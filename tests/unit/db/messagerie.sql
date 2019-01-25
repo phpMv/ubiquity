@@ -27,11 +27,11 @@ USE `messagerie`;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `connection`
+-- Structure de la table `Connection`
 --
 
-DROP TABLE IF EXISTS `connection`;
-CREATE TABLE `connection` (
+DROP TABLE IF EXISTS `Connection`;
+CREATE TABLE `Connection` (
   `id` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
   `dateCo` datetime NOT NULL,
@@ -39,10 +39,10 @@ CREATE TABLE `connection` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `connection`
+-- Déchargement des données de la table `Connection`
 --
 
-INSERT INTO `connection` (`id`, `idUser`, `dateCo`, `url`) VALUES
+INSERT INTO `Connection` (`id`, `idUser`, `dateCo`, `url`) VALUES
 (3, 1, '2018-06-04 02:52:12', 'groupes'),
 (7, 1, '2018-06-04 04:25:13', 'organizations/display/2'),
 (8, 1, '2018-06-05 17:00:23', 'organizations/display/2'),
@@ -65,11 +65,11 @@ INSERT INTO `connection` (`id`, `idUser`, `dateCo`, `url`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `groupe`
+-- Structure de la table `Groupe`
 --
 
-DROP TABLE IF EXISTS `groupe`;
-CREATE TABLE `groupe` (
+DROP TABLE IF EXISTS `Groupe`;
+CREATE TABLE `Groupe` (
   `id` int(11) NOT NULL,
   `name` varchar(65) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
@@ -78,10 +78,10 @@ CREATE TABLE `groupe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `groupe`
+-- Déchargement des données de la table `Groupe`
 --
 
-INSERT INTO `groupe` (`id`, `name`, `email`, `aliases`, `idOrganization`) VALUES
+INSERT INTO `Groupe` (`id`, `name`, `email`, `aliases`, `idOrganization`) VALUES
 (1, 'Personnels', 'personnels', 'all;', 1),
 (2, 'Auditeurs', 'autiteurs', 'etu;stagiaires;', 1),
 (3, 'Personnels', 'liste.personnels', NULL, 2),
@@ -185,11 +185,11 @@ INSERT INTO `groupeusers` (`idGroupe`, `idUser`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `organization`
+-- Structure de la table `Organization`
 --
 
-DROP TABLE IF EXISTS `organization`;
-CREATE TABLE `organization` (
+DROP TABLE IF EXISTS `Organization`;
+CREATE TABLE `Organization` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `domain` varchar(255) NOT NULL,
@@ -197,10 +197,10 @@ CREATE TABLE `organization` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `organization`
+-- Déchargement des données de la table `Organization`
 --
 
-INSERT INTO `organization` (`id`, `name`, `domain`, `aliases`) VALUES
+INSERT INTO `Organization` (`id`, `name`, `domain`, `aliases`) VALUES
 (1, 'Conservatoire National des Arts et Métiers', 'lecnam.net', 'cnam-basse-normandie.fr;'),
 (2, 'Université de Caen-Normandie', 'unicaen.fr', NULL),
 (3, 'IUT Campus III', '', ''),
@@ -209,21 +209,21 @@ INSERT INTO `organization` (`id`, `name`, `domain`, `aliases`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `organizationsettings`
+-- Structure de la table `Organizationsettings`
 --
 
-DROP TABLE IF EXISTS `organizationsettings`;
-CREATE TABLE `organizationsettings` (
+DROP TABLE IF EXISTS `Organizationsettings`;
+CREATE TABLE `Organizationsettings` (
   `idSettings` int(11) NOT NULL,
   `idOrganization` int(11) NOT NULL,
   `value` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `organizationsettings`
+-- Déchargement des données de la table `Organizationsettings`
 --
 
-INSERT INTO `organizationsettings` (`idSettings`, `idOrganization`, `value`) VALUES
+INSERT INTO `Organizationsettings` (`idSettings`, `idOrganization`, `value`) VALUES
 (1, 1, '{{firstname}}{{lastname}}'),
 (1, 2, '{{firstname}}.{{lastname}}'),
 (2, 4, 'no value');
@@ -231,20 +231,20 @@ INSERT INTO `organizationsettings` (`idSettings`, `idOrganization`, `value`) VAL
 -- --------------------------------------------------------
 
 --
--- Structure de la table `settings`
+-- Structure de la table `Settings`
 --
 
-DROP TABLE IF EXISTS `settings`;
-CREATE TABLE `settings` (
+DROP TABLE IF EXISTS `Settings`;
+CREATE TABLE `Settings` (
   `id` int(11) NOT NULL,
   `name` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `settings`
+-- Déchargement des données de la table `Settings`
 --
 
-INSERT INTO `settings` (`id`, `name`) VALUES
+INSERT INTO `Settings` (`id`, `name`) VALUES
 (6, 'bop'),
 (1, 'emailMask'),
 (2, 'test'),
@@ -253,11 +253,11 @@ INSERT INTO `settings` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Structure de la table `User`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `User`;
+CREATE TABLE `User` (
   `id` int(11) NOT NULL,
   `firstname` varchar(65) NOT NULL,
   `lastname` varchar(65) NOT NULL,
@@ -268,10 +268,10 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `user`
+-- Déchargement des données de la table `User`
 --
 
-INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `suspended`, `idOrganization`) VALUES
+INSERT INTO `User` (`id`, `firstname`, `lastname`, `email`, `password`, `suspended`, `idOrganization`) VALUES
 (1, 'Benjamin', 'Shermans', 'benjamin.sherman@gmail.com', 'OWC09RSW6AE', 0, 2),
 (2, 'Acton', 'Carrillo', 'acton.carrillo@gmail.com', 'HIO59BHB8HB', 0, 2),
 (3, 'Zorita', 'Rodriguez', 'zorita.rodriguez', 'GNW04ZAO6HP', 0, 2),
@@ -379,16 +379,16 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `suspend
 --
 
 --
--- Index pour la table `connection`
+-- Index pour la table `Connection`
 --
-ALTER TABLE `connection`
+ALTER TABLE `Connection`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_co_fk` (`idUser`);
 
 --
--- Index pour la table `groupe`
+-- Index pour la table `Groupe`
 --
-ALTER TABLE `groupe`
+ALTER TABLE `Groupe`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name_orga_UNIQUE` (`name`,`idOrganization`) USING BTREE,
   ADD UNIQUE KEY `email_orga_UNIQUE` (`email`,`idOrganization`) USING BTREE,
@@ -403,32 +403,32 @@ ALTER TABLE `groupeusers`
   ADD KEY `fk_groupe_has_user_groupe_idx` (`idGroupe`);
 
 --
--- Index pour la table `organization`
+-- Index pour la table `Organization`
 --
-ALTER TABLE `organization`
+ALTER TABLE `Organization`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name_UNIQUE` (`name`),
   ADD UNIQUE KEY `domain_UNIQUE` (`domain`);
 
 --
--- Index pour la table `organizationsettings`
+-- Index pour la table `Organizationsettings`
 --
-ALTER TABLE `organizationsettings`
+ALTER TABLE `Organizationsettings`
   ADD PRIMARY KEY (`idSettings`,`idOrganization`),
   ADD KEY `fk_settings_has_organization_organization1_idx` (`idOrganization`),
   ADD KEY `fk_settings_has_organization_settings1_idx` (`idSettings`);
 
 --
--- Index pour la table `settings`
+-- Index pour la table `Settings`
 --
-ALTER TABLE `settings`
+ALTER TABLE `Settings`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name_UNIQUE` (`name`);
 
 --
--- Index pour la table `user`
+-- Index pour la table `User`
 --
-ALTER TABLE `user`
+ALTER TABLE `User`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_user_organization1_idx` (`idOrganization`);
 
@@ -437,33 +437,33 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT pour la table `connection`
+-- AUTO_INCREMENT pour la table `Connection`
 --
-ALTER TABLE `connection`
+ALTER TABLE `Connection`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
--- AUTO_INCREMENT pour la table `groupe`
+-- AUTO_INCREMENT pour la table `Groupe`
 --
-ALTER TABLE `groupe`
+ALTER TABLE `Groupe`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT pour la table `organization`
+-- AUTO_INCREMENT pour la table `Organization`
 --
-ALTER TABLE `organization`
+ALTER TABLE `Organization`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT pour la table `settings`
+-- AUTO_INCREMENT pour la table `Settings`
 --
-ALTER TABLE `settings`
+ALTER TABLE `Settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT pour la table `User`
 --
-ALTER TABLE `user`
+ALTER TABLE `User`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
@@ -471,36 +471,36 @@ ALTER TABLE `user`
 --
 
 --
--- Contraintes pour la table `connection`
+-- Contraintes pour la table `Connection`
 --
-ALTER TABLE `connection`
-  ADD CONSTRAINT `connection_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+ALTER TABLE `Connection`
+  ADD CONSTRAINT `connection_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `User` (`id`);
 
 --
--- Contraintes pour la table `groupe`
+-- Contraintes pour la table `Groupe`
 --
-ALTER TABLE `groupe`
-  ADD CONSTRAINT `fk_groupe_organization1` FOREIGN KEY (`idOrganization`) REFERENCES `organization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `Groupe`
+  ADD CONSTRAINT `fk_groupe_organization1` FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `groupeusers`
 --
 ALTER TABLE `groupeusers`
-  ADD CONSTRAINT `fk_groupe_has_user_groupe` FOREIGN KEY (`idGroupe`) REFERENCES `groupe` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_groupe_has_user_user1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_groupe_has_user_groupe` FOREIGN KEY (`idGroupe`) REFERENCES `Groupe` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_groupe_has_user_user1` FOREIGN KEY (`idUser`) REFERENCES `User` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Contraintes pour la table `organizationsettings`
+-- Contraintes pour la table `Organizationsettings`
 --
-ALTER TABLE `organizationsettings`
-  ADD CONSTRAINT `fk_settings_has_organization_organization1` FOREIGN KEY (`idOrganization`) REFERENCES `organization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_settings_has_organization_settings1` FOREIGN KEY (`idSettings`) REFERENCES `settings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `Organizationsettings`
+  ADD CONSTRAINT `fk_settings_has_organization_organization1` FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_settings_has_organization_settings1` FOREIGN KEY (`idSettings`) REFERENCES `Settings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Contraintes pour la table `user`
+-- Contraintes pour la table `User`
 --
-ALTER TABLE `user`
-  ADD CONSTRAINT `fk_user_organization1` FOREIGN KEY (`idOrganization`) REFERENCES `organization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `User`
+  ADD CONSTRAINT `fk_user_organization1` FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
