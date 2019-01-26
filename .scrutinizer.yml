@@ -32,7 +32,7 @@ build:
           - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
           - composer --working-dir=$(pwd)/tests/fw/prj-test-admin require codeception/c3 -dev
           - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php
-          - chmod 777 -R tests
+          - mkdir -p tests/fw/prj-test-admin/c3/report/clear && chmod 777 -R tests/
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
             coverage:
