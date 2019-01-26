@@ -30,6 +30,6 @@
 	},
 	"require-dev" : {
 		"codeception/codeception" : "^2.5",
-		"phpmv/ubiquity-devtools": "^1.1"
+		"phpmv/ubiquity-devtools": "dev-master"
 	}
 }
