@@ -45,6 +45,8 @@ class Startup {
 			$u [0] = self::$ctrlNS . $u [0];
 			if (\class_exists ( $u [0] )) {
 				self::runAction ( $u, $initialize, $finalize );
+			} elseif (is_callable ( $u [0] )) {
+				self::runCallable ( $u );
 			} else {
 				\header ( 'HTTP/1.0 404 Not Found', true, 404 );
 				Logger::warn ( "Startup", "The controller `" . $u [0] . "` doesn't exists! <br/>", "forward" );
@@ -104,6 +106,20 @@ class Startup {
 			if ($finalize)
 				$controller->finalize ();
 		}
+	}
+
+	public static function runCallable(array &$u) {
+		self::$actionParams = [ ];
+		if (\sizeof ( $u ) > 1) {
+			self::$actionParams = array_slice ( $u, 1 );
+		}
+		if (isset ( self::$config ['di'] )) {
+			$di = self::$config ['di'];
+			if (\is_array ( $di )) {
+				self::$actionParams = array_merge ( self::$actionParams, $di );
+			}
+		}
+		call_user_func_array ( $u [0], self::$actionParams );
 	}
 
 	public static function injectDependences($controller) {

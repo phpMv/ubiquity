@@ -11,7 +11,6 @@ extensions:
 coverage:
     enabled: true
     remote: true
-    c3_url: 'http://127.0.0.1:4444/prj-test-admin/c3.php'
     include:
         - Ubiquity/*
     exclude:
