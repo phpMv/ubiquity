@@ -27,7 +27,7 @@ build:
       tests:
         before:
           - mysql -u root mysql < tests/unit/db/messagerie.sql
-          - (cd tests/fw && ./vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic)
+          - (cd tests/fw && ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic)
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
             coverage:
