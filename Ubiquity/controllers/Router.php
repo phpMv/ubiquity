@@ -149,15 +149,21 @@ class Router {
 	public static function getRouteUrlParts($routeArray, $params, $cached = false, $duration = NULL, $cachedResponse = true) {
 		\array_shift ( $params );
 		$routeDetails = $routeArray ["details"];
-		$result = [ str_replace ( "\\\\", "\\", $routeDetails ["controller"] ),$routeDetails ["action"] ];
+		if(is_callable($routeDetails ["controller"])){
+			$result=[$routeDetails ["controller"]];
+			$resultStr="callable function";
+		}else {
+			$result = [ str_replace ( "\\\\", "\\", $routeDetails ["controller"] ),$routeDetails ["action"] ];
+			$resultStr=implode ( "/", $result );
+		}
 		if (($paramsOrder = $routeDetails ["parameters"]) && (sizeof ( $paramsOrder ) > 0)) {
 			self::setParamsInOrder ( $result, $paramsOrder, $params );
 		}
 		if (! $cached || ! $cachedResponse) {
-			Logger::info ( 'Router', sprintf ( 'Route found for %s : %s', $routeArray ["path"], implode ( "/", $result ) ), 'getRouteUrlParts' );
+			Logger::info ( 'Router', sprintf ( 'Route found for %s : %s', $routeArray ["path"], $resultStr), 'getRouteUrlParts' );
 			return $result;
 		}
-		Logger::info ( 'Router', sprintf ( 'Route found for %s (from cache) : %s', $routeArray ["path"], implode ( "/", $result ) ), 'getRouteUrlParts' );
+		Logger::info ( 'Router', sprintf ( 'Route found for %s (from cache) : %s', $routeArray ["path"], $resultStr), 'getRouteUrlParts' );
 		return CacheManager::getRouteCache ( $result, $duration );
 	}
 

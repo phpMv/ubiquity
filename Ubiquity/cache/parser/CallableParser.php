@@ -25,7 +25,7 @@ class CallableParser {
 		$path = $pathParameters ["path"];
 		$parameters = $pathParameters ["parameters"];
 		$priority = $routeArray ["priority"];
-		$path = self::cleanpath ( $prefix, $path );
+		$path = ControllerParser::cleanpath ( $prefix, $path );
 		if (isset ( $routeArray ["methods"] ) && \is_array ( $routeArray ["methods"] )) {
 			self::createRouteMethod ( $result, $callable, $path, $routeArray ["methods"], $parameters, $name, $cache, $duration, $priority );
 		} elseif (\is_array ( $httpMethods )) {

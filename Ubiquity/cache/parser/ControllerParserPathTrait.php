@@ -44,7 +44,7 @@ trait ControllerParserPathTrait {
 		return $path;
 	}
 
-	protected static function cleanpath($prefix, $path = "") {
+	public static function cleanpath($prefix, $path = "") {
 		$path = str_replace ( "//", "/", $path );
 		if ($prefix !== "" && ! UString::startswith ( $prefix, "/" )) {
 			$prefix = "/" . $prefix;
