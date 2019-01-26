@@ -10,6 +10,7 @@ extensions:
         - Codeception\Extension\RunFailed
 coverage:
     enabled: true
+    remote: true
     include:
         - Ubiquity/*
     exclude:
@@ -19,3 +20,5 @@ coverage:
         - Ubiquity/annotations/
         - Ubiquity/js/Jquery.php
         - Ubiquity/utils/git/UGitRepository.php
+settings:
+ bootstrap: _bootstrap.php

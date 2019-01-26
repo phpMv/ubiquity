@@ -8,15 +8,29 @@ build:
       tests:
         override:
           - php-scrutinizer-run
+    functional-tests:
+      before:
+        - mysql -u root mysql < tests/unit/db/messagerie.sql
+        - cd tests/fw && ./vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic
+      environment:
+        hosts:
+          'local.dev': '127.0.0.1'
+
+        apache2:
+          modules: ['rewrite']
+          sites:
+            ubiquity:
+              web_root: 'tests/fw/'
+              host: 'local.dev'
+        selenium: true
     coverage:
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
           mysql: 5.7
       tests:
         before:
-          - mysql -u root mysql < tests/unit/db/messagerie.sql
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit --coverage-xml
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
             coverage:
               file: tests/_output/coverage.xml
               format: clover
