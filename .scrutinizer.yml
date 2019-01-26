@@ -11,6 +11,8 @@ build:
 
     coverage:
       environment:
+        php:
+          version: 7.3
         hosts:
           'local.dev': '127.0.0.1'
 
