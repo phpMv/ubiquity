@@ -9,9 +9,6 @@ build:
         override:
           - php-scrutinizer-run
     functional-tests:
-      before:
-        - mysql -u root mysql < tests/unit/db/messagerie.sql
-        - cd tests/fw && ./vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic
       environment:
         hosts:
           'local.dev': '127.0.0.1'
@@ -29,6 +26,8 @@ build:
           mysql: 5.7
       tests:
         before:
+          - mysql -u root mysql < tests/unit/db/messagerie.sql
+          - cd tests/fw && ./vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
             coverage:
