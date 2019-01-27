@@ -24,7 +24,7 @@ build:
           sites:
             ubiquity:
               web_root: 'tests/fw/'
-              host: '127.0.0.1'
+              host: 'local.dev'
         selenium: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
