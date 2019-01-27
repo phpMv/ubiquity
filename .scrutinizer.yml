@@ -27,7 +27,7 @@ build:
               rules:
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
                 - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
-                - 'RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]' 
+                - 'RewriteRule ^(.*)$ /prj-test-admin/index.php?c=$1 [L,QSA]' 
         selenium: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
