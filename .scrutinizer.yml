@@ -43,7 +43,7 @@ build:
           - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
           - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
           - chmod 777 -R tests/
-          - sudo service apache2 reload
+          - sudo getent hosts local.dev | awk '{ print $1 }'
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run
             coverage:
