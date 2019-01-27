@@ -32,7 +32,7 @@ build:
           - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
           - composer --working-dir=$(pwd)/tests/fw/prj-test-admin require codeception/c3 codeception/codeception -dev
           - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php
-          - mkdir -p tests/fw/prj-test-admin/tests
+          - mkdir -p tests/fw/prj-test-admin/tests/_output/c3tmp/
           - cp codeception.yml tests/fw/prj-test-admin/
           - cp -R tests/acceptance tests/fw/prj-test-admin/tests/ && cp tests/*.yml tests/fw/prj-test-admin/tests/
           - cp tests/c3.php tests/fw/prj-test-admin/c3.php
