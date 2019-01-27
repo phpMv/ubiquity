@@ -12,7 +12,12 @@ class SigninCest {
 	public function tryToTest(AcceptanceTester $I) {
 		$I->amOnPage ( "/" );
 		$I->seeElement ( 'body' );
-		$I->amOnPage ( "/Admin" );
-		$I->canSee ( 'Translation module', [ 'css' => '#element-2-content-' ] );
+	}
+
+	// tests
+	public function tryToGotoAdmin(AcceptanceTester $I) {
+		$I->amOnPage ( "/Admin/index" );
+		$I->seeInCurrentUrl ( "Admin/index" );
+		$I->see ( 'Used to perform CRUD operations on data.', '.description' );
 	}
 }
