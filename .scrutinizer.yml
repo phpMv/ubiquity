@@ -17,14 +17,14 @@ build:
         php:
           version: 7.3
         hosts:
-          'local.dev': '127.0.0.1'
+          local.dev: 127.0.0.1
 
         apache2:
           modules: ['rewrite', 'macro', 'headers']
           sites:
             ubiquity:
-              web_root: 'tests/fw/prj-test-admin/'
-              host: 'local.dev'
+              web_root: tests/fw/prj-test-admin/
+              host: local.dev
               rules:
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
                 - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
