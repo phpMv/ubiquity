@@ -24,10 +24,8 @@ build:
           sites:
             ubiquity:
               web_root: 'tests/fw/'
-              host: 'local.dev'
+              host: '127.0.0.1'
               rules:
-                - 'RewriteCond %{HTTP}  !=on'
-                - 'RewriteRule ^/?(.*) http://%{SERVER_NAME}/$1 [R,L]'
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
                 - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
                 - 'RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]' 
