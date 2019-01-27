@@ -41,7 +41,7 @@ build:
           - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
           - chmod 777 -R tests/
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage --xml
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage-xml
             coverage:
               file: tests/_output/coverage.xml
               format: clover
