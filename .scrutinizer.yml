@@ -20,11 +20,16 @@ build:
           'local.dev': '127.0.0.1'
 
         apache2:
-          modules: ['rewrite']
+          modules: ['rewrite', 'ssl', 'macro', 'headers']
           sites:
             ubiquity:
               web_root: 'tests/fw/'
               host: 'local.dev'
+              rules:
+                - 'RewriteBase /prj-test-admin/'
+                - 'RewriteCond %{REQUEST_FILENAME} !-f'
+                - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
+                - 'RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]' 
         selenium: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
