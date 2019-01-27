@@ -10,9 +10,9 @@ build:
           - php-scrutinizer-run
 
     coverage:
-    dependencies:
-      before:
-        - sudo apt-get install -y zip
+      dependencies:
+        before:
+          - sudo apt-get install -y zip
       environment:
         php:
           version: 7.3
