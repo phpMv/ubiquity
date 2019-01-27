@@ -6,7 +6,7 @@ class SigninCest {
 
 	// tests
 	public function tryToTest(AcceptanceTester $I) {
-		$I->amOnPage ( "/" );
+		$I->amOnPage ( "/prj-test-admin/" );
 		$I->seeElement ( 'body' );
 	}
 }
