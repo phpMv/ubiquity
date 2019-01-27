@@ -6,7 +6,7 @@ abstract class BaseTest extends \Codeception\Test\Unit {
 	protected $config;
 
 	protected function _loadConfig() {
-		$this->config = include 'tests/unit/config/config.php';
+		$this->config = include 'tests/config/config.php';
 	}
 
 	protected function _startCache() {

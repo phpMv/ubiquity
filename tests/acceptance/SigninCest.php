@@ -6,6 +6,7 @@ class SigninCest {
 
 	// tests
 	public function tryToTest(AcceptanceTester $I) {
+		$I->amOnPage ( "/" );
 		$I->seeElement ( 'body' );
 	}
 }

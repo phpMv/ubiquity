@@ -30,11 +30,12 @@ build:
         before:
           - mysql -u root mysql < tests/unit/db/messagerie.sql
           - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
-          - composer --working-dir=$(pwd)/tests/fw/prj-test-admin require codeception/c3 -dev
+          - composer --working-dir=$(pwd)/tests/fw/prj-test-admin require codeception/c3 codeception/codeception -dev
           - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php
-          - mkdir -p tests/fw/prj-test-admin/c3/report/clear && chmod 777 -R tests/
+          - mkdir -p tests/fw/prj-test-admin/tests && chmod 777 -R tests/
+          - cp codeception.yml tests/fw/prj-test-admin/
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage-xml
             coverage:
               file: tests/_output/coverage.xml
               format: clover

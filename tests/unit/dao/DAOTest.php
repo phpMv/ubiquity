@@ -6,11 +6,11 @@ use Ubiquity\db\Database;
 use models\Groupe;
 
 require_once 'Ubiquity/orm/DAO.php';
-require_once 'tests/unit/config/app/models/Groupe.php';
-require_once 'tests/unit/config/app/models/Organization.php';
-require_once 'tests/unit/config/app/models/Organizationsettings.php';
-require_once 'tests/unit/config/app/models/Settings.php';
-require_once 'tests/unit/config/app/models/User.php';
+require_once 'tests/config/app/models/Groupe.php';
+require_once 'tests/config/app/models/Organization.php';
+require_once 'tests/config/app/models/Organizationsettings.php';
+require_once 'tests/config/app/models/Settings.php';
+require_once 'tests/config/app/models/User.php';
 /**
  * DAO test case.
  */
