@@ -3,6 +3,7 @@ class SigninCest {
 
 	public function _before(AcceptanceTester $I) {
 		$I->amOnPage ( "/" );
+		$I->setCookie ( 'PHPSESSID', 'el4ukv0kqbvoirg7nkp4dncpk3' );
 	}
 
 	// tests
