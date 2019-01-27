@@ -10,6 +10,9 @@ build:
           - php-scrutinizer-run
 
     coverage:
+    dependencies:
+      before:
+        - sudo apt-get install -y zip
       environment:
         php:
           version: 7.3
@@ -33,8 +36,8 @@ build:
           - composer --working-dir=$(pwd)/tests/fw/prj-test-admin require codeception/c3 codeception/codeception -dev
           - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php
           - mkdir -p tests/fw/prj-test-admin/tests/_output/c3tmp/
-          - cp codeception.yml tests/fw/prj-test-admin/
-          - cp -R tests/acceptance tests/fw/prj-test-admin/tests/ && cp tests/*.yml tests/fw/prj-test-admin/tests/
+          - cp codeception.yml tests/fw/prj-test-admin/codeception.yml
+          - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
           - cp tests/c3.php tests/fw/prj-test-admin/c3.php
           - chmod 777 -R tests/
         override:
