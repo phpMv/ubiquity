@@ -24,7 +24,7 @@ build:
           sites:
             ubiquity:
               web_root: 'tests/fw/prj-test-admin/'
-              host: '127.0.0.1'
+              host: 'local.dev'
               rules:
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
                 - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
