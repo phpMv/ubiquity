@@ -17,13 +17,13 @@ build:
         php:
           version: 7.3
         hosts:
-          ubi.local.dev: 127.0.0.1
+          local.dev: 127.0.0.1
         apache2:
           modules: ['rewrite']
           sites:
             ubiquity:
-              web_root: tests/fw/prj-test-admin/
-              host: ubi.local.dev
+              web_root: tests/fw/
+              host: local.dev
               rules:
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
                 - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'

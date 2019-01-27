@@ -8,7 +8,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: http://ubi.local.dev
+            url: http://127.0.0.1/prj-test-admin/
             browser: chrome
         - \Helper\Acceptance
     coverage:
