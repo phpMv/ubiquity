@@ -18,12 +18,13 @@ build:
           version: 7.3
         hosts:
           local.dev: '127.0.0.1'
+          tests.dev: '127.0.0.1'
         apache2:
           modules: ['rewrite']
           sites:
             ubiquity:
-              web_root: 'tests/fw/'
               host: 'local.dev'
+              web_root: 'tests/fw/'
               rules:
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
                 - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
@@ -43,7 +44,7 @@ build:
           - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
           - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
           - chmod 777 -R tests/
-          - sudo service apache2 restart
+          - sudo getent hosts local.dev | awk '{ print $1 }' && sudo service apache2 restart
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run
             coverage:
