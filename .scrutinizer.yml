@@ -26,6 +26,8 @@ build:
               web_root: 'tests/fw/'
               host: 'local.dev'
               rules:
+                - 'RewriteCond %{HTTP}  !=on'
+                - 'RewriteRule ^/?(.*) http://%{SERVER_NAME}/$1 [R,L]'
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
                 - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
                 - 'RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]' 
