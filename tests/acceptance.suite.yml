@@ -9,7 +9,7 @@ modules:
     enabled:
         - WebDriver:
             url: http://local.dev/prj-test-admin
-            browser: firefox
+            browser: chrome
         - \Helper\Acceptance
     coverage:
         - remote: true
