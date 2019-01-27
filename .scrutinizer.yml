@@ -20,7 +20,7 @@ build:
           'local.dev': '127.0.0.1'
 
         apache2:
-          modules: ['rewrite', 'ssl', 'macro', 'headers']
+          modules: ['rewrite', 'macro', 'headers']
           sites:
             ubiquity:
               web_root: 'tests/fw/'
