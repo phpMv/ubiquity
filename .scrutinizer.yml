@@ -34,7 +34,7 @@ build:
           - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php
           - mkdir -p tests/fw/prj-test-admin/tests
           - cp codeception.yml tests/fw/prj-test-admin/
-          - cp tests/acceptance/ tests/fw/prj-test-admin/tests/ && cp tests/*.yml tests/fw/prj-test-admin/tests/
+          - cp -R tests/acceptance tests/fw/prj-test-admin/tests/ && cp tests/*.yml tests/fw/prj-test-admin/tests/
           - chmod 777 -R tests/
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage-xml
