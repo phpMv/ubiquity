@@ -8,7 +8,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: http://local.dev/prj-test-admin
+            url: https://local.dev/prj-test-admin
             browser: firefox
         - \Helper\Acceptance
     coverage:
