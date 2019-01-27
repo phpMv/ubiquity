@@ -12,6 +12,7 @@ class SigninCest {
 	public function tryToTest(AcceptanceTester $I) {
 		$I->amOnPage ( "/" );
 		$I->seeElement ( 'body' );
+		$I->see ( 'Ubiquity', [ 'css' => 'body' ] );
 	}
 
 	// tests
