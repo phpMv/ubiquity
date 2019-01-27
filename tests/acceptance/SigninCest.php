@@ -10,7 +10,9 @@ class SigninCest {
 
 	// tests
 	public function tryToTest(AcceptanceTester $I) {
-		$I->amOnPage ( "/Admin" );
+		$I->amOnPage ( "/" );
 		$I->seeElement ( 'body' );
+		$I->amOnPage ( "/Admin" );
+		$I->canSee ( 'Translation module', [ 'css' => '#element-2-content-' ] );
 	}
 }

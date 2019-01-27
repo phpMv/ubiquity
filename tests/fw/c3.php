@@ -7,8 +7,7 @@
  *
  * @author tiger
  */
-$_SERVER ['HTTP_X_CODECEPTION_CODECOVERAGE_DEBUG'] = 1;
-
+// $_SERVER ['HTTP_X_CODECEPTION_CODECOVERAGE_DEBUG'] = 1;
 if (isset ( $_COOKIE ['CODECEPTION_CODECOVERAGE'] )) {
 	$cookie = json_decode ( $_COOKIE ['CODECEPTION_CODECOVERAGE'], true );
 
@@ -25,11 +24,9 @@ if (isset ( $_COOKIE ['CODECEPTION_CODECOVERAGE'] )) {
 	}
 }
 
-/*
- * if (!array_key_exists('HTTP_X_CODECEPTION_CODECOVERAGE', $_SERVER)) {
- * return;
- * }
- */
+if (! array_key_exists ( 'HTTP_X_CODECEPTION_CODECOVERAGE', $_SERVER )) {
+	return;
+}
 
 if (! function_exists ( '__c3_error' )) {
 
