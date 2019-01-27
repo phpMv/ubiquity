@@ -34,7 +34,7 @@ build:
           - mysql -u root mysql < tests/unit/db/messagerie.sql
           - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
           - composer --working-dir=$(pwd)/tests/fw/prj-test-admin require codeception/c3 codeception/codeception -dev
-          - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php
+          - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php && cp tests/fw/_blank.html tests/fw/prj-test-admin/blank.html
           - cp -R Ubiquity tests/fw/prj-test-admin/Ubiquity/
           - cp codeception.yml tests/fw/prj-test-admin/codeception.yml
           - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
