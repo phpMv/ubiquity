@@ -18,6 +18,6 @@ class SigninCest {
 	public function tryToGotoAdmin(AcceptanceTester $I) {
 		$I->amOnPage ( "/Admin/index" );
 		$I->seeInCurrentUrl ( "Admin/index" );
-		$I->see ( 'Used to perform CRUD operations on data.', '.description' );
+		$I->see ( 'Used to perform CRUD operations on data', [ 'css' => 'body' ] );
 	}
 }
