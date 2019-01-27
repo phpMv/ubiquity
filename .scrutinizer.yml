@@ -23,7 +23,7 @@ build:
           modules: ['rewrite', 'macro', 'headers']
           sites:
             ubiquity:
-              web_root: 'tests/fw/'
+              web_root: 'tests/fw/prj-test-admin/'
               host: '127.0.0.1'
               rules:
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
