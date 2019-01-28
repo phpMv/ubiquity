@@ -4,51 +4,10 @@ build:
       dependencies:
         before:
           - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
-          - composer require codeception/codeception --dev
       tests:
         override:
           - php-scrutinizer-run
 
-    coverage:
-      dependencies:
-        before:
-          - sudo apt-get install -y zip
-      environment:
-        php:
-          version: 7.3
-        hosts:
-          local.dev: '127.0.0.1'
-          tests.dev: '127.0.0.1'
-        apache2:
-          modules: ['rewrite']
-          sites:
-            ubiquity:
-              host: 'local.dev'
-              web_root: 'tests/fw/'
-              rules:
-                - RewriteCond %{HTTPS} on
-                - RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI}
-        selenium: true
-      services:
-          # For available tags, see https://hub.docker.com/_/mysql/
-          mysql: 5.7
-      tests:
-        before:
-          - mysql -u root mysql < tests/unit/db/messagerie.sql
-          - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
-          - composer --working-dir=$(pwd)/tests/fw/prj-test-admin require codeception/c3 codeception/codeception -dev
-          - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php && cp tests/fw/_blank.html tests/fw/prj-test-admin/blank.html
-          - cp -R Ubiquity tests/fw/prj-test-admin/Ubiquity/
-          - cp codeception.yml tests/fw/prj-test-admin/codeception.yml
-          - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
-          - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
-          - sudo chmod 777 -R tests/ && sudo chown -R www-data:www-data tests/fw/
-          - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://local.dev/prj-test-admin/
-        override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage-xml
-            coverage:
-              file: tests/_output/coverage.xml
-              format: clover
 filter:
     excluded_paths:
         - Ubiquity/log/
@@ -65,3 +24,5 @@ checks:
     php:
         code_rating: true
         duplication: true
+tools:
+  external_code_coverage: true
