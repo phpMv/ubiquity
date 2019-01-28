@@ -23,7 +23,7 @@ build:
           modules: ['rewrite']
           sites:
             ubiquity:
-              host: '127.0.0.1'
+              host: 'local.dev'
               web_root: 'tests/fw/'
         selenium: true
       services:
@@ -40,13 +40,12 @@ build:
           - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
           - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
           - sudo chmod 777 -R tests/ && sudo chown -R www-data:www-data tests/fw/
-          - sudo service apache2 restart && sudo service apache2 reload
+          - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://local.dev/prj-test-admin/
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run
             coverage:
               file: tests/_output/coverage.xml
               format: clover
-
 filter:
     excluded_paths:
         - Ubiquity/log/
