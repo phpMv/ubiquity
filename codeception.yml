@@ -11,7 +11,7 @@ extensions:
 coverage:
     enabled: true
     remote: true
-    c3_url: 'http://127.0.0.1:8090'
+    c3_url: 'http://dev.local'
     include:
         - Ubiquity/*
     exclude:
