@@ -45,7 +45,7 @@ build:
           - sudo chmod 777 -R tests/ && sudo chown -R www-data:www-data tests/fw/
           - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://local.dev/prj-test-admin/
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run unit --steps --coverage-xml
             coverage:
               file: tests/_output/coverage.xml
               format: clover
