@@ -13,13 +13,13 @@ coverage:
     remote: true
     c3_url: 'http://dev.local/prj-test-admin'
     include:
-        - Ubiquity/*
+        - tests/fw/prj-test-admin/vendor/phpmv/ubiquity/Ubiquity/*
     exclude:
-        - Ubiquity/log/
-        - Ubiquity/controllers/Autoloader.php
-        - Ubiquity/controllers/admin/
-        - Ubiquity/annotations/
-        - Ubiquity/js/Jquery.php
-        - Ubiquity/utils/git/UGitRepository.php
+        - tests/fw/prj-test-admin/vendor/phpmv/ubiquity/Ubiquity/log/
+        - tests/fw/prj-test-admin/vendor/phpmv/ubiquity/Ubiquity/controllers/Autoloader.php
+        - tests/fw/prj-test-admin/vendor/phpmv/ubiquity/Ubiquity/controllers/admin/
+        - tests/fw/prj-test-admin/vendor/phpmv/ubiquity/Ubiquity/annotations/
+        - tests/fw/prj-test-admin/vendor/phpmv/ubiquity/Ubiquity/js/Jquery.php
+        - tests/fw/prj-test-admin/vendor/phpmv/ubiquity/Ubiquity/utils/git/UGitRepository.php
 settings:
  bootstrap: _bootstrap.php
