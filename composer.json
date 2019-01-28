@@ -20,7 +20,7 @@
 	],
 	"autoload" : {
 		"psr-4" : {
-			"Ubiquity\\" : "tests/fw/prj-test-admin/vendor/phpmv/ubiquity/Ubiquity/"
+			"Ubiquity\\" : "Ubiquity/"
 		}
 	},
 	"extra" : {
