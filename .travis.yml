@@ -16,18 +16,6 @@ before_install:
   - sudo apt-get install -y zip
   - travis_retry composer selfupdate
 
-  - mysql -u root mysql < tests/unit/db/messagerie.sql
-  - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
-  - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php && cp tests/fw/.htrouter.php tests/fw/prj-test-admin/
-  - cp -R Ubiquity tests/fw/prj-test-admin/Ubiquity/
-  - cp codeception.yml tests/fw/prj-test-admin/codeception.yml
-  - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
-  - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
-  - cp composer-tests.json composer.json
-  - cp tests/fw/composer.json tests/fw/prj-test-admin/
-  - composer --working-dir=$(pwd)/tests/fw/prj-test-admin update
-
-  
   - phantomjs --version
   - export PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
   - phantomjs --version
@@ -37,7 +25,18 @@ before_install:
   - phantomjs --version
 
 install:
+  - cp composer-tests.json composer.json
   - travis_retry composer install --no-interaction
+
+  - mysql -u root mysql < tests/unit/db/messagerie.sql
+  - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
+  - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php && cp tests/fw/.htrouter.php tests/fw/prj-test-admin/
+  - cp -R Ubiquity tests/fw/prj-test-admin/Ubiquity/
+  - cp codeception.yml tests/fw/prj-test-admin/codeception.yml
+  - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
+  - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
+  - cp tests/fw/composer.json tests/fw/prj-test-admin/
+  - composer --working-dir=$(pwd)/tests/fw/prj-test-admin update
 
 before_script:
   - mkdir -p build/logs
