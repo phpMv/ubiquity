@@ -16,8 +16,8 @@ build:
       environment:
         php:
           version: 7.2
-            ini:
-                'xdebug.remote_enable': '1'
+          ini:
+          'xdebug.remote_enable': '1'
         hosts:
           dev.local: '127.0.0.1'
         apache2:
