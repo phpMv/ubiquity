@@ -25,6 +25,9 @@ build:
             ubiquity:
               host: 'local.dev'
               web_root: 'tests/fw/'
+              rules:
+                - RewriteCond %{HTTPS} on
+                - RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI}
         selenium: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
