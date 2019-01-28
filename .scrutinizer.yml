@@ -14,7 +14,7 @@ build:
         before:
           - sudo apt-get update
           - sudo apt-get install -y zip
-          - sudo yes | apt-get install php-pear
+          - yes | sudo apt-get install php-pear
           - sudo pecl install xdebug-beta
           - sudo bash -c "echo zend_extension=xdebug.so > /etc/php7.2-sp/conf.d/xdebug.ini"
       environment:
