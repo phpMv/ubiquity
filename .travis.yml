@@ -1,7 +1,5 @@
 language: php
 
-sudo: false
-
 php:
   - 7.0
   - 7.1
@@ -14,7 +12,8 @@ branches:
   only:
     - master
 before_install:
-  - apt-get install -y zip
+  - sudo apt-get update
+  - sudo apt-get install -y zip
   - travis_retry composer selfupdate
 
   - mysql -u root mysql < tests/unit/db/messagerie.sql
