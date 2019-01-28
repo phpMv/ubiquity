@@ -13,11 +13,11 @@ build:
       dependencies:
         before:
           - sudo apt-get install -y zip
+          - sudo bash -c "echo zend_extension=xdebug.so > /etc/php7.2-sp/conf.d/xdebug.ini"
+
       environment:
         php:
           version: 7.2
-          ini:
-          'xdebug.remote_enable': '1'
         hosts:
           dev.local: '127.0.0.1'
         apache2:
