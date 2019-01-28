@@ -7,14 +7,12 @@ build:
           - composer require codeception/codeception --dev
       tests:
         override:
-#          - php-scrutinizer-run
+          - php-scrutinizer-run
 
     coverage:
       dependencies:
         before:
-          - sudo apt-get update
           - sudo apt-get install -y zip
-          - pecl install xdebug
       environment:
         php:
           version: 7.2
