@@ -25,11 +25,6 @@ build:
             ubiquity:
               host: 'local.dev'
               web_root: 'tests/fw/'
-              rules:
-                - 'RewriteBase /prj-test-admin/'
-                - 'RewriteCond %{REQUEST_FILENAME} !-f'
-                - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
-                - 'RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]' 
         selenium: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
@@ -45,7 +40,7 @@ build:
           - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
           - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
           - sudo chmod 777 -R tests/ && sudo chown -R www-data:www-data tests/fw/
-          - sudo a2ensite ubiquity-b44aa3 && sudo service apache2 restart && sudo service apache2 reload
+          - sudo service apache2 restart && sudo service apache2 reload
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run
             coverage:
