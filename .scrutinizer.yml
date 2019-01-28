@@ -43,7 +43,7 @@ build:
           - cp codeception.yml tests/fw/prj-test-admin/codeception.yml
           - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
           - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
-          - chmod 777 -R tests/
+          - sudo chmod 777 -R tests/ && sudo chown -R www-data:www-data /var/www
           - sudo a2ensite ubiquity-b44aa3
           - sudo service apache2 restart
           - sudo service apache2 reload
