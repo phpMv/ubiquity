@@ -26,6 +26,7 @@ build:
               host: 'local.dev'
               web_root: 'tests/fw/'
               rules:
+                - 'RewriteBase /prj-test-admin/'
                 - 'RewriteCond %{REQUEST_FILENAME} !-f'
                 - 'RewriteCond %{HTTP_ACCEPT} !(.*images.*)'
                 - 'RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]' 
