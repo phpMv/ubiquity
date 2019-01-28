@@ -12,13 +12,14 @@ build:
     coverage:
       dependencies:
         before:
+          - sudo apt-get update
           - sudo apt-get install -y zip
           - sudo apt-get install php-pear
           - sudo pecl install xdebug-beta
-          - sudo bash -c "echo zend_extension=xdebug.so > /etc/php7.3-sp/conf.d/xdebug.ini"
+          - sudo bash -c "echo zend_extension=xdebug.so > /etc/php7.2-sp/conf.d/xdebug.ini"
       environment:
         php:
-          version: 7.3
+          version: 7.2
         hosts:
           dev.local: '127.0.0.1'
         apache2:
