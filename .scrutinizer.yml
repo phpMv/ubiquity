@@ -3,7 +3,7 @@ build:
     analysis:
       dependencies:
         before:
-          - composer require phpunit/phpcov twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
+          - composer twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception --dev
       tests:
         override:
@@ -47,10 +47,9 @@ build:
           - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://dev.local/prj-test-admin/xdebug.php
           - mv composer-tests.json composer.json
           - composer update
-        after:
-          - ./vendor/bin/phpcov merge tests/_output/ --clover tests/_output/clover.xml
+
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage --coverage-xml --fail-fast
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage --coverage-xml --fail-fast && ./vendor/bin/phpcov merge tests/_output/ --clover tests/_output/clover.xml
             coverage:
               file: tests/_output/clover.xml
               format: clover
