@@ -1,0 +1,25 @@
+paths:
+    tests: tests
+    output: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
+actor_suffix: Tester
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+coverage:
+    enabled: true
+    remote: true
+    c3_url: 'http://dev.local/prj-test-admin'
+    include:
+        - Ubiquity/*
+    exclude:
+        - Ubiquity/log/
+        - Ubiquity/controllers/Autoloader.php
+        - Ubiquity/controllers/admin/
+        - Ubiquity/annotations/
+        - Ubiquity/js/Jquery.php
+        - Ubiquity/utils/git/UGitRepository.php
+settings:
+ bootstrap: _bootstrap.php
