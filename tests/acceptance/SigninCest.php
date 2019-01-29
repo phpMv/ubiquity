@@ -21,7 +21,11 @@ class SigninCest {
 		$I->seeInCurrentUrl ( "Admin/index" );
 		$I->see ( 'Used to perform CRUD operations on data', [ 'css' => 'body' ] );
 		$I->click ( "a[href='Admin/Models']" );
-		$I->waitForElementVisible ( "#htmlbuttongroups-step-actions-1", 10 );
+		$I->waitForElementVisible ( "#content-header", 10 );
 		$I->canSeeInCurrentUrl ( "/Admin/Models" );
+		$I->click ( "a[data-model='models.Connection']" );
+		$I->waitForElementVisible ( "#btAddNew", 10 );
+		$I->canSeeInCurrentUrl ( "/Admin/showModel/models.Connection" );
+		$I->see ( 'organizations/display/4', "#lv td" );
 	}
 }
