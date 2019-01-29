@@ -125,10 +125,14 @@ class StartupTest extends BaseTest {
 		}, 'service init!{"test":"ok"}' );
 		$_GET ["c"] = "rest/test/ticket";
 		$this->expectException ( RestException::class );
-		$this->_assertDisplayEquals ( function () {
-			$this->startup->run ( $this->config );
-		}, '' );
-		ob_get_clean ();
+		try {
+
+			$this->_assertDisplayEquals ( function () {
+				$this->startup->run ( $this->config );
+			}, '' );
+		} finally{
+			ob_get_clean ();
+		}
 	}
 
 	/**

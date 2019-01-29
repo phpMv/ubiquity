@@ -140,7 +140,11 @@ class DatabaseTest extends \Codeception\Test\Unit {
 		$this->assertEquals ( "Benjamin", $row ['firstname'] );
 		$this->assertArrayNotHasKey ( 'lastname', $row );
 		$this->expectException ( Error::class );
-		$this->database->prepareAndExecute ( "users", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
+		try {
+			$this->database->prepareAndExecute ( "users", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
+		} catch ( Exception $e ) {
+			// Nothing
+		}
 		$db = new Database ( self::DB_TYPE, self::DB_NAME, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], TableCache::class );
 		$db->connect ();
 		$response = $db->prepareAndExecute ( "User", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
