@@ -51,9 +51,9 @@ build:
           - composer update
 
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage && cp tests/fw/prj-test-admin/tests/_output/c3tmp/codecoverage.serialized tests/_output/remote.codecoverage.serialized && ./vendor/bin/phpcov merge tests/_output/ --clover tests/_output/clover.xml
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
             coverage:
-              file: tests/_output/clover.xml
+              file: tests/_output/coverage.xml
               format: clover
 filter:
     excluded_paths:
