@@ -20,5 +20,8 @@ class SigninCest {
 		$I->amOnPage ( "/Admin/index" );
 		$I->seeInCurrentUrl ( "Admin/index" );
 		$I->see ( 'Used to perform CRUD operations on data', [ 'css' => 'body' ] );
+		$I->click ( "a[href='Admin/Models']" );
+		$I->waitForElementVisible ( "#htmlbuttongroups-step-actions-1", 10 );
+		$I->canSeeInCurrentUrl ( "/Admin/Models" );
 	}
 }
