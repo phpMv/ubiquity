@@ -128,6 +128,7 @@ class StartupTest extends BaseTest {
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 		}, '' );
+		ob_get_clean ();
 	}
 
 	/**
