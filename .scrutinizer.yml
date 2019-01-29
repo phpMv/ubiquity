@@ -49,9 +49,9 @@ build:
           - mv composer-tests.json composer.json
           - composer update
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run -v --coverage --xml
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage-xml
             coverage:
-              file: tests/_output/report.xml
+              file: tests/_output/coverage.xml
               format: clover
 filter:
     excluded_paths:
