@@ -11,7 +11,7 @@ extensions:
 coverage:
     enabled: true
     remote: true
-    c3_url: 'http://dev.local/tests/fw/prj-test-admin'
+    c3_url: 'http://dev.local/prj-test-admin'
     include:
         - tests/fw/prj-test-admin/Ubiquity/*
     exclude:
