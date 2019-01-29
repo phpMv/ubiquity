@@ -32,6 +32,7 @@ build:
           mysql: 5.7
       tests:
         before:
+          - sudo cp tests/fw/xdebug.ini /home/scrutinizer/.phpenv/versions/7.2.13/etc/conf.d/xdebug.ini
           - mysql -u root mysql < tests/unit/db/messagerie.sql
           - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
           - cp tests/fw/composer.json tests/fw/prj-test-admin/
