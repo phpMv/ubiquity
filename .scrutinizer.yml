@@ -50,7 +50,7 @@ build:
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage --coverage-xml --fail-fast
             coverage:
-              file: tests/_output/coverage.xml
+              file: tests/_output/acceptance.remote.coverage.xml
               format: clover
 filter:
     excluded_paths:
