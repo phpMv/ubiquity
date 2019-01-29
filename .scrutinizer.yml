@@ -36,12 +36,12 @@ build:
           - mysql -u root mysql < tests/unit/db/messagerie.sql
           - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
           - cp tests/fw/composer.json tests/fw/prj-test-admin/
-          - sudo mkdir -p tests/fw/prj-test-admin/tests/fw/prj-test-admin/Ubiquity/
           - composer --working-dir=$(pwd)/tests/fw/prj-test-admin update
           - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php && cp tests/fw/xdebug.php tests/fw/prj-test-admin/xdebug.php
           - cp -R Ubiquity tests/fw/prj-test-admin/Ubiquity/
           - cp codeception.yml tests/fw/prj-test-admin/codeception.yml
           - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
+          - sudo mkdir -p tests/fw/prj-test-admin/tests/fw/prj-test-admin/Ubiquity/
           - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
           - sudo chmod 777 -R tests/ && sudo chown -R www-data:www-data tests/fw/
           - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://dev.local/prj-test-admin/xdebug.php
