@@ -16,7 +16,6 @@ build:
       dependencies:
         before:
           - sudo apt-get install -y zip
-#          - sudo bash -c "echo zend_extension=xdebug.so > /etc/php7.2-sp/conf.d/xdebug.ini"
 
       environment:
         php:
@@ -52,7 +51,7 @@ build:
           - composer update
 
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage --coverage-xml --fail-fast && ./vendor/bin/phpcov merge tests/_output/ --clover tests/_output/clover.xml
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --steps --coverage --coverage-xml --fail-fast && cp tests/fw/prj-test-admin/tests/_output/c3tmp/codecoverage.serialized tests/_output/remote.codecoverage.serialized && ./vendor/bin/phpcov merge tests/_output/ --clover tests/_output/clover.xml
             coverage:
               file: tests/_output/clover.xml
               format: clover
