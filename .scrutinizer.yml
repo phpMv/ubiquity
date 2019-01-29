@@ -5,6 +5,9 @@ build:
         before:
           - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception --dev
+      environment:
+        php:
+          version: 7.2
       tests:
         override:
           - php-scrutinizer-run
