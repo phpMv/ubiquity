@@ -30,7 +30,6 @@
 	},
 	"require-dev" : {
 		"codeception/codeception" : "^2.5",
-		"phpmv/ubiquity-devtools": "dev-master",
-		"se/selenium-server-standalone": "^2.4"
+		"phpmv/ubiquity-devtools": "dev-master"
 	}
 }
