@@ -36,6 +36,7 @@ build:
           - mysql -u root mysql < tests/unit/db/messagerie.sql
           - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
           - cp tests/fw/composer.json tests/fw/prj-test-admin/
+          - cp tests/fw/.htaccess tests/fw/prj-test-admin/
           - composer --working-dir=$(pwd)/tests/fw/prj-test-admin update
           - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php && cp tests/fw/xdebug.php tests/fw/prj-test-admin/xdebug.php
           - cp -R Ubiquity tests/fw/prj-test-admin/Ubiquity/
