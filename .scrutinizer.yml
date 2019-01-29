@@ -13,7 +13,7 @@ build:
       dependencies:
         before:
           - sudo apt-get install -y zip
-          - sudo bash -c "echo zend_extension=xdebug.so > /etc/php7.2-sp/conf.d/xdebug.ini"
+#          - sudo bash -c "echo zend_extension=xdebug.so > /etc/php7.2-sp/conf.d/xdebug.ini"
 
       environment:
         php:
