@@ -27,5 +27,8 @@ class SigninCest {
 		$I->waitForElementVisible ( "#btAddNew", 10 );
 		$I->canSeeInCurrentUrl ( "/Admin/showModel/models.Connection" );
 		$I->see ( 'organizations/display/4', "#lv td" );
+		$I->click ( "button._edit[data-ajax='8']" );
+		$I->waitForElementVisible ( "#modal-frmEdit-models-Connection", 10 );
+		$I->canSee ( 'Editing an existing object', 'form' );
 	}
 }
