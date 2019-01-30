@@ -53,7 +53,7 @@ build:
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
             coverage:
-              file: tests/_output/acceptance.remote.coverage
+              file: tests/_output/acceptance.remote.coverage.xml
               format: clover
 filter:
     excluded_paths:
