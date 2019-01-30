@@ -11,6 +11,7 @@ extensions:
 coverage:
     enabled: true
     remote: false
+    work_dir: '/home/scrutinizer/build/'
     c3_url: 'http://dev.local/prj-test-admin'
     include:
         - tests/fw/prj-test-admin/Ubiquity/*
