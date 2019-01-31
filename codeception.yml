@@ -14,8 +14,9 @@ coverage:
     work_dir: '/home/scrutinizer/build/'
     c3_url: 'http://dev.local/prj-test-admin'
     include:
-        - tests/fw/prj-test-admin/Ubiquity/*
+        - tests/fw/prj-test-admin/Ubiquity/*.php
     exclude:
+        - tests/fw/prj-test-admin/Ubiquity/*Interface.php
         - tests/fw/prj-test-admin/Ubiquity/log/
         - tests/fw/prj-test-admin/Ubiquity/controllers/Autoloader.php
         - tests/fw/prj-test-admin/Ubiquity/controllers/admin/
@@ -24,3 +25,7 @@ coverage:
         - tests/fw/prj-test-admin/Ubiquity/utils/git/UGitRepository.php
 settings:
  bootstrap: _bootstrap.php
+reporters:
+    xml: Codeception\PHPUnit\Log\JUnit
+    html: Codeception\PHPUnit\ResultPrinter\HTML
+    report: Codeception\PHPUnit\ResultPrinter\Report

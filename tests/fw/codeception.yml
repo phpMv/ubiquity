@@ -23,4 +23,8 @@ coverage:
         - Ubiquity/js/Jquery.php
         - Ubiquity/utils/git/UGitRepository.php
 settings:
- bootstrap: _bootstrap.php
+    bootstrap: _bootstrap.php
+reporters:
+    xml: Codeception\PHPUnit\Log\JUnit
+    html: Codeception\PHPUnit\ResultPrinter\HTML
+    report: Codeception\PHPUnit\ResultPrinter\Report
