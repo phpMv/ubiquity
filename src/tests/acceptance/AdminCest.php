@@ -45,11 +45,29 @@ class AdminCest {
 	// tests
 	public function tryGotoAdminRoutes(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Routes", $I );
+		$I->click ( "#bt-init-cache" );
+		$I->waitForElementVisible ( "#div-routes .ui.message.info", self::TIMEOUT );
+		$I->canSee ( 'Router cache reset', '.ui.message.info' );
 	}
 
 	// tests
 	public function tryGotoAdminControllers(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Controllers", $I );
+		// Create a new controller
+		$I->appendField ( "#frmCtrl [name='name']", 'TestController' );
+		$I->click ( '#lbl-ck-div-name' ); // Click on create associated view
+		$I->click ( '#action-field-name' ); // Create the controller
+		$I->waitForElementVisible ( "#msgGlobal", self::TIMEOUT );
+		// Test controller creation
+		$I->canSee ( 'TestController', '#msgGlobal' );
+		$I->canSee ( 'controller has been created in', '#msgGlobal' );
+		$I->canSee ( 'The default view associated has been created in', '#msgGlobal' );
+		$I->canSeeElement ( "#bt-controllers5CTestController" ); // Controller button
+		$I->canSeeElement ( '#lbl-view-TestControllerindexTestControllerindexhtml' ); // Associated view label
+		$I->click ( "button._get[data-url='TestController/index']" );
+		$I->waitForElementVisible ( "#response" );
+		$I->canSee ( 'GET:TestController/index', '#header-response' );
+		$I->see ( "<!--View associated to index action of TestController controller -->", "#content-response" ); // No error with get
 	}
 
 	// tests
