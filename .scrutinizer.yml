@@ -16,7 +16,7 @@ build:
     coverage:
       dependencies:
         before:
-          - sudo apt-get install -y zip
+#          - sudo apt-get install -y zip
 
       environment:
         php:
@@ -37,6 +37,7 @@ build:
         before:
           - sudo cp tests/fw/xdebug.ini /home/scrutinizer/.phpenv/versions/7.2.13/etc/conf.d/xdebug.ini
           - mysql -u root mysql < tests/unit/db/messagerie.sql
+          - rm composer.lock
           - (yes | ./vendor/bin/Ubiquity new build -b=messagerie -q=semantic -m -a)
           - cp tests/fw/composer.json composer.json
           - composer update
