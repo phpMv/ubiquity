@@ -5,7 +5,7 @@ define ( 'DS', DIRECTORY_SEPARATOR );
 define ( 'ROOT', __DIR__ . DS . 'app' . DS );
 define ( 'MY_APP_STARTED', true );
 $config = include ROOT . 'config/config.php';
-$config ["siteUrl"] = "http://dev.local/prj-test-admin/";
+$config ["siteUrl"] = "http://dev.local/";
 $config ['sessionName'] = '';
 require ROOT . './../vendor/autoload.php';
 require ROOT . 'config/services.php';

@@ -5,6 +5,7 @@ build:
         before:
           - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception --dev
+          - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
         php:
           version: 7.2
@@ -27,7 +28,7 @@ build:
           sites:
             ubiquity:
               host: 'dev.local'
-              web_root: 'tests/fw/'
+              web_root: '.'
         selenium: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
@@ -36,19 +37,12 @@ build:
         before:
           - sudo cp tests/fw/xdebug.ini /home/scrutinizer/.phpenv/versions/7.2.13/etc/conf.d/xdebug.ini
           - mysql -u root mysql < tests/unit/db/messagerie.sql
-          - (cd tests/fw && yes | ./../../vendor/bin/Ubiquity new prj-test-admin -b=messagerie -q=semantic -m -a)
-          - cp tests/fw/composer.json tests/fw/prj-test-admin/
-          - composer --working-dir=$(pwd)/tests/fw/prj-test-admin update
-          - cp tests/fw/_index.php tests/fw/prj-test-admin/index.php && cp tests/fw/xdebug.php tests/fw/prj-test-admin/xdebug.php
-          - cp -R Ubiquity tests/fw/prj-test-admin/Ubiquity/
-          - cp tests/fw/codeception.yml tests/fw/prj-test-admin/codeception.yml
-          - unzip tests/fw/tests.zip -d tests/fw/prj-test-admin/tests/
-
-#          - cp tests/fw/c3.php tests/fw/prj-test-admin/c3.php
-          - sudo chmod 777 -R tests/ && sudo chown -R www-data:www-data tests/fw/
-          - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://dev.local/prj-test-admin/xdebug.php
-          - mv composer-tests.json composer.json
+          - (yes | ./vendor/bin/Ubiquity new build -b=messagerie -q=semantic -m -a)
+          - cp tests/fw/composer.json composer.json
           - composer update
+          - cp tests/fw/_index.php index.php && cp tests/fw/xdebug.php xdebug.php
+          - sudo chmod 777 -R /home/scrutinizer/build/ && sudo chown -R www-data:www-data /home/scrutinizer/build/
+          - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://dev.local/xdebug.php
 
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage --coverage-xml

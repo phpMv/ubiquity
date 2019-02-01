@@ -11,18 +11,18 @@ extensions:
 coverage:
     enabled: true
     remote: false
-    work_dir: '/home/scrutinizer/build/'
-    c3_url: 'http://dev.local/prj-test-admin'
+
+    c3_url: 'http://dev.local'
     include:
-        - tests/fw/prj-test-admin/Ubiquity/*.php
+        - Ubiquity/*.php
     exclude:
-        - tests/fw/prj-test-admin/Ubiquity/*Interface.php
-        - tests/fw/prj-test-admin/Ubiquity/log/
-        - tests/fw/prj-test-admin/Ubiquity/controllers/Autoloader.php
-        - tests/fw/prj-test-admin/Ubiquity/controllers/admin/
-        - tests/fw/prj-test-admin/Ubiquity/annotations/
-        - tests/fw/prj-test-admin/Ubiquity/js/Jquery.php
-        - tests/fw/prj-test-admin/Ubiquity/utils/git/UGitRepository.php
+        - Ubiquity/*Interface.php
+        - Ubiquity/log/
+        - Ubiquity/controllers/Autoloader.php
+        - Ubiquity/controllers/admin/
+        - Ubiquity/annotations/
+        - Ubiquity/js/Jquery.php
+        - Ubiquity/utils/git/UGitRepository.php
 settings:
  bootstrap: _bootstrap.php
 reporters:
