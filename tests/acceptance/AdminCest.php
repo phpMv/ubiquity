@@ -10,13 +10,11 @@ class AdminCest {
 	}
 
 	// tests
-	/*
-	 * public function tryToGotoIndex(AcceptanceTester $I) {
-	 * $I->amOnPage ( "/" );
-	 * $I->seeElement ( 'body' );
-	 * $I->see ( 'Ubiquity', [ 'css' => 'body' ] );
-	 * }
-	 */
+	public function tryToGotoIndex(AcceptanceTester $I) {
+		$I->amOnPage ( "/" );
+		$I->seeElement ( 'body' );
+		$I->see ( 'Ubiquity', [ 'css' => 'body' ] );
+	}
 
 	// tests
 	public function tryToGotoAdminIndex(AcceptanceTester $I) {
