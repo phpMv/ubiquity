@@ -8,7 +8,8 @@
 		"codeception/codeception": "^2.5"
 	},
 	"require-dev": {
-		"monolog\/monolog": "^1.24"
+		"monolog\/monolog": "^1.24",
+		"czproject/git-php" : "^3.13"
 	},
 	"autoload": {
 		"psr-4": {

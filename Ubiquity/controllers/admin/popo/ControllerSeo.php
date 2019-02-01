@@ -1,5 +1,7 @@
 <?php
+
 namespace Ubiquity\controllers\admin\popo;
+
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\cache\ClassUtils;
@@ -7,26 +9,28 @@ use Ubiquity\controllers\Router;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UString;
 
-class ControllerSeo{
+class ControllerSeo {
 	private $name;
 	private $urlsFile;
 	private $siteMapTemplate;
 	private $route;
 	private $inRobots;
 
-	public function __construct($className=null){
-		if(isset($className) && \class_exists($className)){
-			$route=Router::getRouteInfoByControllerAction($className, "index");
-			if($route){
-				$this->route=$route["path"];
+	public function __construct($className = null) {
+		if (isset ( $className ) && \class_exists ( $className )) {
+			$route = Router::getRouteInfoByControllerAction ( $className, "index" );
+			if ($route) {
+				$this->route = $route ["path"];
 			}
-			$ctrl=new $className();
-			$this->name=$className;
-			$this->urlsFile=$ctrl->_getUrlsFilename();
-			$this->siteMapTemplate=$ctrl->_getSeoTemplateFilename();
+			$ctrl = new $className ();
+			$this->name = $className;
+			$this->urlsFile = $ctrl->_getUrlsFilename ();
+			$this->siteMapTemplate = $ctrl->_getSeoTemplateFilename ();
 		}
 	}
+
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getName() {
@@ -34,6 +38,7 @@ class ControllerSeo{
 	}
 
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getUrlsFile() {
@@ -41,6 +46,7 @@ class ControllerSeo{
 	}
 
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getSiteMapTemplate() {
@@ -48,6 +54,7 @@ class ControllerSeo{
 	}
 
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getRoute() {
@@ -55,6 +62,7 @@ class ControllerSeo{
 	}
 
 	/**
+	 *
 	 * @param mixed $name
 	 */
 	public function setName($name) {
@@ -62,6 +70,7 @@ class ControllerSeo{
 	}
 
 	/**
+	 *
 	 * @param mixed $urlsFile
 	 */
 	public function setUrlsFile($urlsFile) {
@@ -69,6 +78,7 @@ class ControllerSeo{
 	}
 
 	/**
+	 *
 	 * @param mixed $siteMapTemplate
 	 */
 	public function setSiteMapTemplate($siteMapTemplate) {
@@ -76,50 +86,51 @@ class ControllerSeo{
 	}
 
 	/**
+	 *
 	 * @param mixed $route
 	 */
 	public function setRoute($route) {
 		$this->route = $route;
 	}
 
-	public function getPath(){
-		if(UString::isNotNull($this->route))
+	public function getPath() {
+		if (UString::isNotNull ( $this->route ))
 			return $this->route;
-		$parts=\explode("\\", $this->name);
-		return end($parts);
-	}
-	
-	public function urlExists(){
-		return CacheManager::$cache->exists($this->urlsFile);
+		$parts = \explode ( "\\", $this->name );
+		return end ( $parts );
 	}
 
-	public static function init(){
-		$result=[ ];
-		$config=Startup::getConfig();
+	public function urlExists() {
+		return CacheManager::$cache->exists ( $this->urlsFile );
+	}
 
-		$robotsContent="";
-		$robotsFile=Startup::getApplicationDir() . \DS . 'robots.txt';
-		if(\file_exists($robotsFile)){
-			$robotsContent=UFileSystem::load($robotsFile);
+	public static function init() {
+		$result = [ ];
+		$config = Startup::getConfig ();
+
+		$robotsContent = "";
+		$robotsFile = Startup::getApplicationDir () . \DS . 'robots.txt';
+		if (\file_exists ( $robotsFile )) {
+			$robotsContent = UFileSystem::load ( $robotsFile );
 		}
-		$files=CacheManager::getControllersFiles($config, true);
+		$files = CacheManager::getControllersFiles ( $config, true );
 		try {
-			$restCtrls=CacheManager::getRestCache();
+			$restCtrls = CacheManager::getRestCache ();
 		} catch ( \Exception $e ) {
-			$restCtrls=[ ];
+			$restCtrls = [ ];
 		}
 
 		foreach ( $files as $file ) {
-			if (is_file($file)) {
-				$controllerClass=ClassUtils::getClassFullNameFromFile($file);
-				if (isset($restCtrls[$controllerClass]) === false) {
-					if(\class_exists($controllerClass)){
-						$reflect=new \ReflectionClass($controllerClass);
-						if (!$reflect->isAbstract() && $reflect->isSubclassOf('Ubiquity\controllers\seo\SeoController')) {
-							$ctrlSeo=new ControllerSeo($controllerClass);
-							$path=$ctrlSeo->getPath();
-							$ctrlSeo->setInRobots(\strpos($robotsContent, $path)!==false);
-							$result[]=$ctrlSeo;
+			if (is_file ( $file )) {
+				$controllerClass = ClassUtils::getClassFullNameFromFile ( $file );
+				if (isset ( $restCtrls [$controllerClass] ) === false) {
+					if (\class_exists ( $controllerClass, true )) {
+						$reflect = new \ReflectionClass ( $controllerClass );
+						if (! $reflect->isAbstract () && $reflect->isSubclassOf ( 'Ubiquity\controllers\seo\SeoController' )) {
+							$ctrlSeo = new ControllerSeo ( $controllerClass );
+							$path = $ctrlSeo->getPath ();
+							$ctrlSeo->setInRobots ( \strpos ( $robotsContent, $path ) !== false );
+							$result [] = $ctrlSeo;
 						}
 					}
 				}
@@ -127,7 +138,9 @@ class ControllerSeo{
 		}
 		return $result;
 	}
+
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getInRobots() {
@@ -135,11 +148,10 @@ class ControllerSeo{
 	}
 
 	/**
+	 *
 	 * @param mixed $inRobots
 	 */
 	public function setInRobots($inRobots) {
 		$this->inRobots = $inRobots;
 	}
-
-
 }
