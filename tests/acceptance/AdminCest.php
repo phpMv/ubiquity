@@ -1,6 +1,6 @@
 <?php
 class AdminCest {
-	const TIMEOUT = 30;
+	const TIMEOUT = 20;
 
 	public function _before(AcceptanceTester $I) {
 		/*
@@ -10,11 +10,13 @@ class AdminCest {
 	}
 
 	// tests
-	public function tryToGotoIndex(AcceptanceTester $I) {
-		$I->amOnPage ( "/" );
-		$I->seeElement ( 'body' );
-		$I->see ( 'Ubiquity', [ 'css' => 'body' ] );
-	}
+	/*
+	 * public function tryToGotoIndex(AcceptanceTester $I) {
+	 * $I->amOnPage ( "/" );
+	 * $I->seeElement ( 'body' );
+	 * $I->see ( 'Ubiquity', [ 'css' => 'body' ] );
+	 * }
+	 */
 
 	// tests
 	public function tryToGotoAdminIndex(AcceptanceTester $I) {
@@ -68,8 +70,8 @@ class AdminCest {
 	}
 
 	// tests
-	public function tryGotoAdminGit(AcceptanceTester $I) {
-		$this->gotoAdminModule ( "Admin/Git", $I );
+	public function tryGotoAdminConfig(AcceptanceTester $I) {
+		$this->gotoAdminModule ( "Admin/Config", $I );
 	}
 
 	// tests
