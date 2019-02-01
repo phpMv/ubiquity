@@ -64,7 +64,7 @@ class AdminCest {
 		$I->canSee ( 'The default view associated has been created in', '#msgGlobal' );
 		$I->canSeeElement ( "#bt-controllers5CTestController" ); // Controller button
 		$I->canSeeElement ( '#lbl-view-TestControllerindexTestControllerindexhtml' ); // Associated view label
-		$I->click ( "button._get[data-url='TestController/index']" );
+		$I->click ( "#htmlbuttongroups-bts-TestControllerindex-5-0" );
 		$I->waitForElementVisible ( "#response" );
 		$I->canSee ( 'GET:TestController/index', '#header-response' );
 		$I->see ( "<!--View associated to index action of TestController controller -->", "#content-response" ); // No error with get

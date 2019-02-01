@@ -1,0 +1,15 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+branches:
+  only:
+    - master
+before_install:
+  - travis_retry composer selfupdate
+
+install:
+  - travis_retry composer install --no-interaction
