@@ -8,8 +8,3 @@ php:
 branches:
   only:
     - master
-before_install:
-  - travis_retry composer selfupdate
-
-install:
-  - travis_retry composer install --no-interaction
