@@ -1,4 +1,6 @@
 <?php
+include 'Ubiquity/utils/base/UFileSystem.php';
 use Ubiquity\utils\base\UFileSystem;
-$str = UFileSystem::load ( ROOT . 'config/services.php' );
-echo $str;
+echo UFileSystem::load ( ROOT . 'config/services.php' );
+echo "*************************************************";
+echo UFileSystem::load ( ROOT . '../.htaccess' );
