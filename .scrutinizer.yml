@@ -41,7 +41,7 @@ build:
           - (yes | ./vendor/bin/Ubiquity new build -b=messagerie -q=semantic -m -a)
           - cp -f tests/fw/composer.json composer.json
           - composer update -a
-          - cp -f tests/fw/_index.php index.php && cp -f tests/fw/.htaccess . && cp -f tests/fw/essai.php . 
+          - cp -f tests/fw/_index.php index.php && cp -f tests/fw/.htaccess /home/scrutinizer/build/.htaccess
           - sudo chmod 777 -R /home/scrutinizer/build/ && sudo chown -R www-data:www-data /home/scrutinizer/build/
           - sudo service apache2 restart && sudo service apache2 reload 
           - sudo curl -v http://dev.local/index.php?c=Admin
