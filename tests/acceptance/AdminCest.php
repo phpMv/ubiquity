@@ -1,6 +1,6 @@
 <?php
 class AdminCest {
-	const TIMEOUT = 15;
+	const TIMEOUT = 30;
 
 	public function _before(AcceptanceTester $I) {
 		/*
@@ -11,7 +11,7 @@ class AdminCest {
 
 	// tests
 	public function tryToGotoIndex(AcceptanceTester $I) {
-		$I->amOnPage ( "/" );
+		$I->amOnPage ( "/Main" );
 		$I->seeElement ( 'body' );
 		$I->see ( 'Ubiquity', [ 'css' => 'body' ] );
 	}
