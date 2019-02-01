@@ -28,7 +28,7 @@ build:
           sites:
             ubiquity:
               host: 'dev.local'
-              web_root: '.'
+              web_root: '/home/scrutinizer/build/'
         selenium: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
@@ -44,7 +44,7 @@ build:
           - cp -f tests/fw/_index.php index.php && cp -f tests/fw/.htaccess . && cp -f tests/fw/essai.php . 
           - sudo chmod 777 -R /home/scrutinizer/build/ && sudo chown -R www-data:www-data /home/scrutinizer/build/
           - sudo service apache2 restart && sudo service apache2 reload 
-          - sudo curl -v http://dev.local/c3.php
+          - sudo curl -v http://dev.local/index.php?c=IndexController
 
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
