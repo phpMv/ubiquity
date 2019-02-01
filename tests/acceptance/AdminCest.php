@@ -70,10 +70,11 @@ class AdminCest {
 	}
 
 	// tests
-	public function tryGotoAdminConfig(AcceptanceTester $I) {
-		$this->gotoAdminModule ( "Admin/Config", $I );
-	}
-
+	/*
+	 * public function tryGotoAdminGit(AcceptanceTester $I) {
+	 * $this->gotoAdminModule ( "Admin/Git", $I );
+	 * }
+	 */
 	// tests
 	public function tryGotoAdminSeo(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
