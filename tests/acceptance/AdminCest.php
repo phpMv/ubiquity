@@ -11,7 +11,7 @@ class AdminCest {
 
 	// tests
 	public function tryToGotoIndex(AcceptanceTester $I) {
-		$I->amOnPage ( "/Main" );
+		$I->amOnPage ( "/" );
 		$I->seeElement ( 'body' );
 		$I->see ( 'Ubiquity', [ 'css' => 'body' ] );
 	}
