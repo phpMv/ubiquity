@@ -10,9 +10,8 @@ extensions:
         - Codeception\Extension\RunFailed
 coverage:
     enabled: true
-    remote: false
-
     c3_url: 'http://dev.local'
+
     include:
         - Ubiquity/*.php
     exclude:

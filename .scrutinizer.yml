@@ -39,11 +39,11 @@ build:
           - mysql -u root mysql < tests/unit/db/messagerie.sql
           - rm composer.lock
           - (yes | ./vendor/bin/Ubiquity new build -b=messagerie -q=semantic -m -a)
-          - cp tests/fw/composer.json composer.json
+          - cp -f tests/fw/composer.json composer.json
           - composer update
           - cp tests/fw/_index.php index.php && cp tests/fw/xdebug.php xdebug.php
           - sudo chmod 777 -R /home/scrutinizer/build/ && sudo chown -R www-data:www-data /home/scrutinizer/build/
-          - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://dev.local/xdebug.php
+          - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://dev.local/
 
         override:
           - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage --coverage-xml
