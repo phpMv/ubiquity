@@ -46,7 +46,7 @@ class AdminCest {
 	public function tryGotoAdminRoutes(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Routes", $I );
 		$I->click ( "#bt-init-cache" );
-		$I->waitForElementVisible ( "#div-routes .ui.message.info", self::TIMEOUT );
+		$I->waitForElementVisible ( "#divRoutes .ui.message.info", self::TIMEOUT );
 		$I->canSee ( 'Router cache reset', '.ui.message.info' );
 	}
 
@@ -55,7 +55,7 @@ class AdminCest {
 		$this->gotoAdminModule ( "Admin/Controllers", $I );
 		// Create a new controller
 		$I->appendField ( "#frmCtrl [name='name']", 'TestController' );
-		$I->click ( '#lbl-ck-div-name' ); // Click on create associated view
+		$I->click ( '#ck-lbl-ck-div-name' ); // Click on create associated view
 		$I->click ( '#action-field-name' ); // Create the controller
 		$I->waitForElementVisible ( "#msgGlobal", self::TIMEOUT );
 		// Test controller creation
