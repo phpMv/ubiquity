@@ -13,3 +13,4 @@ require ROOT . 'config/services.php';
 	require ROOT . './../c3.php';
 } );
 \Ubiquity\controllers\Startup::run ( $config );
+echo "hello";
