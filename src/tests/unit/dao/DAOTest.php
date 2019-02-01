@@ -5,7 +5,6 @@ use models\Organization;
 use Ubiquity\db\Database;
 use models\Groupe;
 
-require_once 'Ubiquity/orm/DAO.php';
 require_once 'tests/config/app/models/Groupe.php';
 require_once 'tests/config/app/models/Organization.php';
 require_once 'tests/config/app/models/Organizationsettings.php';

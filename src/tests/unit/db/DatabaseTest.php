@@ -3,8 +3,6 @@ use Ubiquity\db\Database;
 use Ubiquity\cache\database\TableCache;
 use Ubiquity\exceptions\CacheException;
 
-require_once 'Ubiquity/db/Database.php';
-
 /**
  * Database test case.
  *

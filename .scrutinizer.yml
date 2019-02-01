@@ -28,41 +28,37 @@ build:
           sites:
             ubiquity:
               host: 'dev.local'
-              web_root: '.'
+              web_root: 'src/'
         selenium: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
           mysql: 5.7
       tests:
         before:
-          - sudo cp tests/fw/xdebug.ini /home/scrutinizer/.phpenv/versions/7.2.13/etc/conf.d/xdebug.ini
-          - mysql -u root mysql < tests/unit/db/messagerie.sql
-          - rm composer.lock
-          - (yes | ./vendor/bin/Ubiquity new build -b=messagerie -q=semantic -m -a)
-          - cp -f tests/fw/composer.json composer.json
-          - composer update -a
-          - cp -f tests/fw/_index.php index.php && cp -f tests/fw/.htaccess /home/scrutinizer/build/.htaccess
-          - sudo chmod 777 -R /home/scrutinizer/build/ && sudo chown -R www-data:www-data /home/scrutinizer/build/
+          - sudo cp src/tests/files/xdebug.ini /home/scrutinizer/.phpenv/versions/7.2.13/etc/conf.d/xdebug.ini
+          - mysql -u root mysql < src/tests/unit/db/messagerie.sql
+          - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -q=semantic -m -a)
+          - cp -f src/tests/files/composer.json src/composer.json
+          - (cd src/ && composer update -a)
+          - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess
+          - sudo chmod 777 -R src/ && sudo chown -R www-data:www-data src/
           - sudo service apache2 restart && sudo service apache2 reload 
           - sudo curl -v http://dev.local/index.php?c=Admin
 
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
+          - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml)
             coverage:
-              file: tests/_output/coverage.xml
+              file: src/tests/_output/coverage.xml
               format: clover
 filter:
+    paths: ["src/Ubiquity/*"]
     excluded_paths:
-        - Ubiquity/log/
-        - Ubiquity/controllers/Autoloader.php
-        - Ubiquity/controllers/admin/
-        - Ubiquity/annotations/
-        - Ubiquity/js/Jquery.php
-        - Ubiquity/utils/git/UGitRepository.php
-        - docs/
-        - api/
-        - documentation/
-        - tests/
+        - src/Ubiquity/log/
+        - src/Ubiquity/controllers/Autoloader.php
+        - src/Ubiquity/controllers/admin/
+        - src/Ubiquity/annotations/
+        - src/Ubiquity/js/Jquery.php
+        - src/Ubiquity/utils/git/UGitRepository.php
 checks:
     php:
         code_rating: true

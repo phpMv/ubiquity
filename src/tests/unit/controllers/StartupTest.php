@@ -7,7 +7,6 @@ use tests\unit\controllers\services\Service;
 use tests\unit\controllers\controllers\TestRestController;
 use Ubiquity\exceptions\RestException;
 
-require_once 'Ubiquity/controllers/Startup.php';
 require_once 'tests/unit/controllers/controllers/TestController.php';
 require_once 'tests/unit/controllers/controllers/TestControllerInitialize.php';
 require_once 'tests/unit/controllers/controllers/TestControllerWithControl.php';

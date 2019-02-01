@@ -1,8 +1,6 @@
 <?php
 use Ubiquity\utils\base\UArray;
 
-require_once 'Ubiquity/utils/base/UArray.php';
-
 /**
  * UArray test case.
  */
