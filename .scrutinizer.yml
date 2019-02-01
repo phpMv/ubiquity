@@ -43,10 +43,11 @@ build:
           - composer update -a
           - cp -f tests/fw/_index.php index.php && cp -f tests/fw/.htaccess . && cp -f tests/fw/essai.php . 
           - sudo chmod 777 -R /home/scrutinizer/build/ && sudo chown -R www-data:www-data /home/scrutinizer/build/
-          - sudo service apache2 restart && sudo service apache2 reload && sudo curl -v http://dev.local/essai.php
+          - sudo service apache2 restart && sudo service apache2 reload 
+          - sudo curl -v http://dev.local/c3.php
 
         override:
-          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage --coverage-xml
+          - command: ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml
             coverage:
               file: tests/_output/coverage.xml
               format: clover
