@@ -39,7 +39,7 @@ build:
           - mysql -u root mysql < src/tests/unit/db/messagerie.sql
           - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -q=semantic -m -a)
           - cp -f src/tests/files/composer.json src/composer.json
-          - (cd src/ && composer update -a)
+          - (cd src/ && composer update)
           - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess
           - sudo chmod 777 -R src/ && sudo chown -R www-data:www-data src/
           - sudo service apache2 restart && sudo service apache2 reload 

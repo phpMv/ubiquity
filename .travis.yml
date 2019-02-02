@@ -15,13 +15,13 @@ before_install:
   - sudo apt-get install -y zip
   - travis_retry composer selfupdate
   - composer require phpmv/ubiquity-devtools:dev-master --dev
-  - phantomjs --version
-  - export PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
-  - phantomjs --version
-  - if [ $(phantomjs --version) != '2.1.1' ]; then rm -rf $HOME/travis_phantomjs; mkdir -p $HOME/travis_phantomjs; fi
-  - if [ $(phantomjs --version) != '2.1.1' ]; then travis_retry wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2; fi
-  - if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs; fi
-  - phantomjs --version
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sudo apt-get update
+  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome*.deb
 
 install:
   - cp composer-tests.json composer.json
@@ -36,11 +36,8 @@ install:
 
 before_script:
   - mkdir -p build/logs
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
+  - "nohup java vendor/se/selenium-server-standalone/composer/bin/selenium-server-standalone.jar > /dev/null 2> /dev/null &"
   - sleep 3
-  - curl http://localhost:4444/wd/hub/status
   - (cd src/ && php -S 127.0.0.1:8090 .htrouter.php &)
   - sleep 3
 
