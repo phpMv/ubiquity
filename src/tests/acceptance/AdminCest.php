@@ -127,7 +127,7 @@ class AdminCest {
 		$I->amOnPage ( "/rest/Users/connect/" );
 		$I->see ( 'Bearer' );
 		$I->amOnPage ( "/rest/Users/get/firstname+like+%27B%25%27" );
-		$I->see ( '"count": 7' );
+		$I->see ( '"count":7' );
 	}
 
 	// tests
@@ -156,6 +156,8 @@ class AdminCest {
 		$I->fillField ( "#controllerName", "TestSEOController" );
 		$I->click ( "#action-modalNewSeo-0" );
 		$I->waitForText ( "The TestSEOController controller has been created" );
+		$I->wait ( 5 );
+		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$I->click ( "#seoCtrls-tr-controllersTestSEOController" );
 		$I->waitForText ( "nothing to display", self::TIMEOUT, "body" );
 		$this->gotoAdminModule ( "Admin/Routes", $I );
