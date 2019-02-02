@@ -27,13 +27,13 @@ install:
 
   - mysql -u root mysql < src/tests/unit/db/messagerie.sql
   - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -q=semantic -m -a)
-  - cp -f src/tests/files/composer.json src/composer.json && cp -f src/tests/files/.htrouter.php src/.htrouter.php
+  - cp -f src/tests/files/composer.json src/composer.json && cp -f src/tests/files/.htrouter.php src/.htrouter.php && cp -f src/tests/files/services.php src/app/config/
   - cp -f src/tests/files/travis/acceptance.suite.yml src/tests/ && cp -f src/tests/files/travis/codeception.yml src/
   - (cd src/ && composer update)
   - cp -f src/tests/files/travis/_index.php src/index.php
 
 before_script:
-  - "wget http://chromedriver.storage.googleapis.com/2.23/chromedriver_linux64.zip -O chromedriver.zip && unzip chromedriver.zip && sudo mv chromedriver /usr/local/bin"
+  - "wget http://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip -O chromedriver.zip && unzip chromedriver.zip && sudo mv chromedriver /usr/local/bin"
   - mkdir -p build/logs
   - export DISPLAY=':99'
   - Xvfb :99 -screen 0 1280x1024x16 +extension RANDR > /dev/null 2>&1 &

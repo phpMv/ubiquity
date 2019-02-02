@@ -103,6 +103,15 @@ class AdminCest {
 		$I->canSee ( "Rest error", "body" );
 		$I->click ( "#bt-init-rest-cache" );
 		$I->waitForText ( "No resource Rest found. You can add a new resource.", self::TIMEOUT, "body" );
+		// Add a new resource
+		$I->click ( "#bt-new-resource" );
+		$I->waitForText ( "Creating a new REST controller...", "body" );
+		$I->appendField ( "#ctrlName", "RestUsersController" );
+		$I->appendField ( "#route", "/rest/Users" );
+		$I->click ( "#bt-create-new-resource" );
+		$I->waitForText ( "controllers\RestUsersController", "body" );
+		$I->amOnPage ( "/rest/Users" );
+		$I->see ( '"count":101' );
 	}
 
 	// tests
