@@ -54,7 +54,7 @@ class AdminCest {
 	public function tryGotoAdminControllers(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Controllers", $I );
 		// Create a new controller
-		$I->appendField ( "#frmCtrl [name='name']", 'TestController' );
+		$I->fillField ( "#frmCtrl [name='name']", 'TestController' );
 		$I->click ( '#ck-lbl-ck-div-name' ); // Click on create associated view
 		$I->click ( '#action-field-name' ); // Create the controller
 		$I->waitForElementVisible ( "#msgGlobal", self::TIMEOUT );
@@ -106,8 +106,8 @@ class AdminCest {
 		// Add a new resource
 		$I->click ( "#bt-new-resource" );
 		$I->waitForText ( "Creating a new REST controller...", self::TIMEOUT, "body" );
-		$I->appendField ( "#ctrlName", "RestUsersController" );
-		$I->appendField ( "#route", "/rest/Users" );
+		$I->fillField ( "#ctrlName", "RestUsersController" );
+		$I->fillField ( "#route", "/rest/Users" );
 		$I->click ( "#bt-create-new-resource" );
 		$I->waitForText ( "controllers\RestUsersController", self::TIMEOUT, "body" );
 		$I->amOnPage ( "/rest/Users" );
