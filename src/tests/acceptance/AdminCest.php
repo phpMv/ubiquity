@@ -118,7 +118,7 @@ class AdminCest {
 		$I->see ( 'Benjamin' );
 		$I->amOnPage ( "/rest/Users/getOne/1/true" );
 		$I->see ( 'Benjamin' );
-		$I->see ( 'Université de Caen-Normandie' );
+		$I->see ( 'de Caen-Normandie' );
 		$I->see ( 'Auditeurs' );
 		$I->see ( 'myaddressmail@gmail.com' );
 		$I->amOnPage ( "/rest/Users/getOne/500" );
