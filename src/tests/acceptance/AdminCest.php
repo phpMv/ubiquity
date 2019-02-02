@@ -124,7 +124,7 @@ class AdminCest {
 		$I->amOnPage ( "/rest/Users/getOne/500" );
 		$I->see ( '{"message":"No result found","keyValues":"500"}' );
 		$I->amOnPage ( "/rest/Users/connect/" );
-		$I->see ( '"token_type": "Bearer"' );
+		$I->see ( 'Bearer' );
 		$I->amOnPage ( "/rest/Users/get/firstname+like+%27B%25%27" );
 		$I->see ( '"count": 7' );
 	}
@@ -157,6 +157,11 @@ class AdminCest {
 		$I->waitForText ( "The TestSEOController controller has been created" );
 		$I->click ( "#seoCtrls-tr-controllersTestSEOController" );
 		$I->waitForText ( "nothing to display", self::TIMEOUT, "body" );
+		$this->gotoAdminModule ( "Admin/Routes", $I );
+		$I->click ( "#bt-init-cache" );
+		$I->waitForElementVisible ( "#divRoutes .ui.message.info", self::TIMEOUT );
+		$I->canSee ( 'Router cache reset', '.ui.message.info' );
+		$I->canSee ( "TestSEOController-index", "td" );
 	}
 
 	// tests
