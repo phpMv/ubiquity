@@ -6,21 +6,20 @@ php:
   - 7.3
 services:
   - mysql
-
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
 branches:
   only:
     - master
 before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y zip
   - travis_retry composer selfupdate
   - composer require phpmv/ubiquity-devtools:dev-master --dev
-  - "npm -g install npm@latest"
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sudo apt-get update
-  - sudo apt-get install -y libappindicator1 fonts-liberation
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo dpkg -i google-chrome*.deb
 
 install:
   - cp composer-tests.json composer.json
@@ -34,10 +33,12 @@ install:
   - cp -f src/tests/files/travis/_index.php src/index.php
 
 before_script:
+  - "wget http://chromedriver.storage.googleapis.com/2.23/chromedriver_linux64.zip -O chromedriver.zip && unzip chromedriver.zip && sudo mv chromedriver /usr/local/bin"
   - mkdir -p build/logs
-  - "npm run selenium-install"
-  - "npm run selenium-start &"
-  - "sleep 5"
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - "java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver  -jar vendor/se/selenium-server-standalone/composer/bin/selenium-server-standalone.jar > /dev/null 2> /dev/null &"
+  - sleep 3
   - (cd src/ && php -S 127.0.0.1:8090 .htrouter.php &)
   - sleep 3
 

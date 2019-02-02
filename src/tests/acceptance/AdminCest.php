@@ -62,13 +62,9 @@ class AdminCest {
 		$I->canSee ( 'TestController', '#msgGlobal' );
 		$I->canSee ( 'controller has been created in', '#msgGlobal' );
 		$I->canSee ( 'The default view associated has been created in', '#msgGlobal' );
-		$I->wait ( 10 );
 		$I->click ( "#filter-bt" );
 		$I->waitForElementVisible ( "#filtering-frm", self::TIMEOUT );
-		$I->checkOption ( "[data-value='controllers\TestController']" );
-		$I->click ( "#validate-btn" );
-		// $I->canSeeElement ( "#bt-controllers5CTestController" ); // Controller button
-		// $I->canSeeElement ( '#lbl-view-TestControllerindexTestControllerindexhtml' ); // Associated view label
+		$I->click ( "#cancel-btn" );
 		$I->amOnPage ( "/TestController" );
 		$I->canSeeInCurrentUrl ( "/TestController" );
 	}
