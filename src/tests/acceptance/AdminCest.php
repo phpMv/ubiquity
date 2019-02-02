@@ -160,16 +160,13 @@ class AdminCest {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$I->click ( "#seoCtrls-tr-controllersTestSEOController" );
 		$I->waitForText ( "nothing to display", self::TIMEOUT, "body" );
-		$this->gotoAdminModule ( "Admin/Routes", $I );
-		$I->click ( "#bt-init-cache" );
-		$I->waitForElementVisible ( "#divRoutes .ui.message.info", self::TIMEOUT );
-		$I->canSee ( 'Router cache reset', '.ui.message.info' );
-		$I->canSee ( "TestSEOController-index", "td" );
 	}
 
 	// tests
 	public function tryGotoAdminLogs(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Logs", $I );
+		$I->click ( "a._activateLogs" );
+		$I->waitForElement ( "#maxLines" );
 	}
 
 	// tests
