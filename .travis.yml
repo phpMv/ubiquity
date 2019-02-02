@@ -35,9 +35,9 @@ install:
 before_script:
   - "wget http://chromedriver.storage.googleapis.com/2.23/chromedriver_linux64.zip -O chromedriver.zip && unzip chromedriver.zip && sudo mv chromedriver /usr/local/bin"
   - mkdir -p build/logs
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - "java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver  -jar vendor/se/selenium-server-standalone/composer/bin/selenium-server-standalone.jar > /dev/null 2> /dev/null &"
+  - export DISPLAY=':99'
+  - Xvfb :99 -screen 0 1280x1024x16 +extension RANDR > /dev/null 2>&1 &
+  - "java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver  -jar vendor/se/selenium-server-standalone/composer/bin/selenium-server-standalone.jar &"
   - sleep 3
   - (cd src/ && php -S 127.0.0.1:8090 .htrouter.php &)
   - sleep 3
