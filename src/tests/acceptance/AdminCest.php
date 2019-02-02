@@ -94,7 +94,7 @@ class AdminCest {
 	public function tryGotoAdminCache(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Cache", $I );
 		$I->click ( "#ck-cacheTypes-4" );
-		$I->waitForElement ( "#dd-type-Annotations" );
+		$I->waitForElement ( "#dd-type-Annotations", self::TIMEOUT );
 	}
 
 	// tests
@@ -105,11 +105,11 @@ class AdminCest {
 		$I->waitForText ( "No resource Rest found. You can add a new resource.", self::TIMEOUT, "body" );
 		// Add a new resource
 		$I->click ( "#bt-new-resource" );
-		$I->waitForText ( "Creating a new REST controller...", "body" );
+		$I->waitForText ( "Creating a new REST controller...", self::TIMEOUT, "body" );
 		$I->appendField ( "#ctrlName", "RestUsersController" );
 		$I->appendField ( "#route", "/rest/Users" );
 		$I->click ( "#bt-create-new-resource" );
-		$I->waitForText ( "controllers\RestUsersController", "body" );
+		$I->waitForText ( "controllers\RestUsersController", self::TIMEOUT, "body" );
 		$I->amOnPage ( "/rest/Users" );
 		$I->see ( '"count":101' );
 	}
