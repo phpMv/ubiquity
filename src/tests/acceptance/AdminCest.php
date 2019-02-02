@@ -66,29 +66,37 @@ class AdminCest {
 		$I->waitForElementVisible ( "#filtering-frm", self::TIMEOUT );
 		$I->click ( "#cancel-btn" );
 		// Create action in controller
-		$I->moveMouseOver ( "#dd-bt-controllers5CTestController" );
-		$I->click ( "#dd-item-dd-bt-controllers5CTestController-0" );
-		$I->waitForElementVisible ( "#modalNewAction", self::TIMEOUT );
-		$I->appendField ( "#action", 'hello' );
-		$I->appendField ( "#parameters", 'who="world"' );
-		$I->appendField ( "#content", 'echo "Hello ".$who."!";' );
-		$I->click ( "#action-modalNewAction-0" );
-		$I->waitForText ( "hello", self::TIMEOUT, "#dtControllers-tr-controllers5CTestController" );
+		/*
+		 * $I->moveMouseOver( "#dd-bt-controllers5CTestController" );
+		 * $I->click ( "#dd-item-dd-bt-controllers5CTestController-0" );
+		 * $I->waitForElementVisible ( "#modalNewAction", self::TIMEOUT );
+		 * $I->appendField ( "#action", 'hello' );
+		 * $I->appendField ( "#parameters", 'who="world"' );
+		 * $I->appendField ( "#content", 'echo "Hello ".$who."!";' );
+		 * $I->click ( "#action-modalNewAction-0" );
+		 * $I->waitForText ( "hello", self::TIMEOUT, "#dtControllers-tr-controllers5CTestController" );
+		 */
 
 		$I->amOnPage ( "/TestController" );
 		$I->canSeeInCurrentUrl ( "/TestController" );
 
-		$I->amOnPage ( "/TestController/hello" );
-		$I->canSeeInCurrentUrl ( "/TestController/hello" );
-		$I->see ( 'Hello world!', [ 'css' => 'body' ] );
-		$I->amOnPage ( "/TestController/hello/nobody" );
-		$I->canSeeInCurrentUrl ( "/TestController/hello/nobody" );
-		$I->see ( 'Hello nobody!', [ 'css' => 'body' ] );
+		/*
+		 * $I->amOnPage ( "/TestController/hello" );
+		 * $I->canSeeInCurrentUrl ( "/TestController/hello" );
+		 * $I->see ( 'Hello world!', [ 'css' => 'body' ] );
+		 * $I->amOnPage ( "/TestController/hello/nobody" );
+		 * $I->canSeeInCurrentUrl ( "/TestController/hello/nobody" );
+		 * $I->see ( 'Hello nobody!', [ 'css' => 'body' ] );
+		 */
 	}
 
 	// tests
 	public function tryGotoAdminCache(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Cache", $I );
+		$I->click ( "#ck-cacheTypes-4" );
+		$I->waitForElement ( "#dd-type-Annotations" );
+		$I->click ( "#dd-type-Annotations" );
+		$I->click ( "#dd-item-dd-type-Annotations-0" );
 	}
 
 	// tests

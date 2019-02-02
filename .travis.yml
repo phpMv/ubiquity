@@ -19,7 +19,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install -y zip
   - travis_retry composer selfupdate
-  - composer require phpmv/ubiquity-devtools:dev-master --dev
+  - composer require phpmv/ubiquity-devtools:dev-master se/selenium-server-standalone --dev
 
 install:
   - cp composer-tests.json composer.json
