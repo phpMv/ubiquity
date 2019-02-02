@@ -29,7 +29,7 @@ install:
   - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -q=semantic -m -a)
   - cp -f src/tests/files/composer.json src/composer.json && cp -f src/tests/files/.htrouter.php src/.htrouter.php
   - cp -f src/tests/files/travis/acceptance.suite.yml src/tests/ && cp -f src/tests/files/travis/codeception.yml src/
-  - (cd src/ && composer update -a)
+  - (cd src/ && composer update)
   - cp -f src/tests/files/travis/_index.php src/index.php
 
 before_script:
@@ -37,7 +37,7 @@ before_script:
   - mkdir -p build/logs
   - export DISPLAY=':99'
   - Xvfb :99 -screen 0 1280x1024x16 +extension RANDR > /dev/null 2>&1 &
-  - "java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver  -jar vendor/se/selenium-server-standalone/composer/bin/selenium-server-standalone.jar &"
+  - "java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver  -jar ./vendor/se/selenium-server-standalone/bin/selenium-server-standalone.jar &"
   - sleep 3
   - (cd src/ && php -S 127.0.0.1:8090 .htrouter.php &)
   - sleep 3

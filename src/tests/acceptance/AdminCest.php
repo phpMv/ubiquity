@@ -95,13 +95,14 @@ class AdminCest {
 		$this->gotoAdminModule ( "Admin/Cache", $I );
 		$I->click ( "#ck-cacheTypes-4" );
 		$I->waitForElement ( "#dd-type-Annotations" );
-		$I->click ( "#dd-type-Annotations" );
-		$I->click ( "#dd-item-dd-type-Annotations-0" );
 	}
 
 	// tests
 	public function tryGotoAdminRest(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Rest", $I );
+		$I->canSee ( "Rest error", "body" );
+		$I->click ( "#bt-init-rest-cache" );
+		$I->waitForText ( "No resource Rest found. You can add a new resource.", self::TIMEOUT, "body" );
 	}
 
 	// tests
