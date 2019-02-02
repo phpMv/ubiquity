@@ -38,8 +38,9 @@ before_script:
   - mkdir -p build/logs
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "nohup java -jar vendor/se/selenium-server-standalone/composer/bin/selenium-server-standalone.jar > /dev/null 2> /dev/null &"
+  - phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
   - sleep 3
+  - curl http://localhost:4444/wd/hub/status
   - (cd src/ && php -S 127.0.0.1:8090 .htrouter.php &)
   - sleep 3
 
