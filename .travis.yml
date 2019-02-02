@@ -30,8 +30,9 @@ install:
   - mysql -u root mysql < src/tests/unit/db/messagerie.sql
   - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -q=semantic -m -a)
   - cp -f src/tests/files/composer.json src/composer.json && cp -f src/tests/files/.htrouter.php src/.htrouter.php
+  - cp -f src/tests/files/travis/acceptance.suite.yml src/tests/ && cp -f src/tests/files/travis/codeception.yml src/tests/
   - (cd src/ && composer update -a)
-  - cp -f src/tests/files/_index-travis.php src/index.php
+  - cp -f src/tests/files/travis/_index.php src/index.php
 
 before_script:
   - mkdir -p build/logs
