@@ -40,18 +40,18 @@ class USession {
 	 *        	the key of the array to add or remove in
 	 * @param mixed $value
 	 *        	the value to add
-	 * @param boolean $add
+	 * @param boolean|null $add
 	 *        	If true, adds otherwise removes
 	 * @return boolean
 	 */
-	public static function addOrRemoveValueFromArray($arrayKey, $value, $add = true) {
+	public static function addOrRemoveValueFromArray($arrayKey, $value, $add = null) {
 		$array = self::getArray ( $arrayKey );
 		$_SESSION [$arrayKey] = $array;
 		$search = array_search ( $value, $array );
 		if ($search === FALSE && $add) {
 			$_SESSION [$arrayKey] [] = $value;
 			return true;
-		} else {
+		} else if ($add !== true) {
 			unset ( $_SESSION [$arrayKey] [$search] );
 			$_SESSION [$arrayKey] = array_values ( $_SESSION [$arrayKey] );
 			return false;
