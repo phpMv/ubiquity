@@ -54,13 +54,12 @@ use Ubiquity\log\LoggerParams;
 use Ajax\semantic\html\elements\HtmlButtonGroups;
 use Ubiquity\translation\Translator;
 
-class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface{
-	
-	
+class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
+
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
 	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait,
 	LogsTrait;
-	
+
 	/**
 	 *
 	 * @var CRUDDatas
@@ -80,10 +79,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	private $adminFiles;
 
 	/**
-     * @var ModelViewer
-     */
+	 *
+	 * @var ModelViewer
+	 */
 	private $adminModelViewer;
-	
 	private $globalMessage;
 
 	public function initialize() {
@@ -93,11 +92,11 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$mainMenuElements = $this->_getAdminViewer ()->getMainMenuElements ();
 			$elements = [ "UbiquityMyAdmin" ];
 			$dataAjax = [ "index" ];
-			$hrefs=[$this->_getFiles()->getAdminBaseRoute()."/index"];
+			$hrefs = [ $this->_getFiles ()->getAdminBaseRoute () . "/index" ];
 			foreach ( $mainMenuElements as $elm => $values ) {
 				$elements [] = $elm;
 				$dataAjax [] = $values [0];
-				$hrefs[]= $this->_getFiles()->getAdminBaseRoute()."/".$values [0];
+				$hrefs [] = $this->_getFiles ()->getAdminBaseRoute () . "/" . $values [0];
 			}
 			$mn = $semantic->htmlMenu ( "mainMenu", $elements );
 			$mn->getItem ( 0 )->addClass ( "header" )->addIcon ( "home big link" );
@@ -105,7 +104,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$mn->setPropertyValues ( "href", $hrefs );
 			$mn->setActiveItem ( 0 );
 			$mn->setSecondary ();
-			$mn->getOnClick ( "Admin", "#main-content", [ "attr" => "data-ajax","historize"=>true ] );
+			$mn->getOnClick ( "Admin", "#main-content", [ "attr" => "data-ajax","historize" => true ] );
 			$this->jquery->compile ( $this->view );
 			$this->loadView ( $this->_getFiles ()->getViewHeader () );
 		}
@@ -114,7 +113,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	public static function _error_handler($buffer) {
 		$e = error_get_last ();
 		if ($e) {
-			if ($e ['file'] != 'xdebug://debug-eval' && !UResponse::isJSON()) {
+			if ($e ['file'] != 'xdebug://debug-eval' && ! UResponse::isJSON ()) {
 				$staticName = "msg-" . rand ( 0, 50 );
 				$message = new HtmlMessage ( $staticName );
 				$message->addClass ( "error" );
@@ -128,7 +127,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 					default :
 						return str_replace ( $e ['message'], "", $buffer ) . $message;
 				}
-			}else{
+			} else {
 				return str_replace ( $e ['message'], "", $buffer );
 			}
 		}
@@ -179,24 +178,24 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$stepper = $this->_getModelsStepper ();
 		}
 		if ($this->_isModelsCompleted () || $hasHeader !== true) {
-			$config=Startup::getConfig();
+			$config = Startup::getConfig ();
 			try {
-				$models = CacheManager::getModels($config,true);
+				$models = CacheManager::getModels ( $config, true );
 				$menu = $semantic->htmlMenu ( "menuDbs" );
 				$menu->setVertical ()->setInverted ();
 				foreach ( $models as $model ) {
 					$count = DAO::count ( $model );
-					$item = $menu->addItem ( ClassUtils::getClassSimpleName($model) );
+					$item = $menu->addItem ( ClassUtils::getClassSimpleName ( $model ) );
 					$item->addLabel ( $count );
 					$tbl = OrmUtils::getTableName ( $model );
 					$item->setProperty ( "data-ajax", $tbl );
-					$item->setProperty ( "data-model", str_replace("\\", ".", $model));
+					$item->setProperty ( "data-model", str_replace ( "\\", ".", $model ) );
 				}
-				$menu->getOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/showModel", "#divTable", [ "attr" => "data-model" ,"historize"=>true] );
+				$menu->getOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/showModel", "#divTable", [ "attr" => "data-model","historize" => true ] );
 				$menu->onClick ( "$('.ui.label.left.pointing.teal').removeClass('left pointing teal');$(this).find('.ui.label').addClass('left pointing teal');" );
 			} catch ( \Exception $e ) {
 				throw $e;
-				$this->showSimpleMessage ( "Models cache is not created!&nbsp;", "error","Exception", "warning circle", null, "errorMsg" );
+				$this->showSimpleMessage ( "Models cache is not created!&nbsp;", "error", "Exception", "warning circle", null, "errorMsg" );
 			}
 			$this->jquery->compile ( $this->view );
 			$this->loadView ( $this->_getFiles ()->getViewDataIndex () );
@@ -211,25 +210,25 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function controllers() {
-		$baseRoute=$this->_getFiles()->getAdminBaseRoute();
+		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "controllers" );
 		$controllersNS = Startup::getNS ( 'controllers' );
 		$controllersDir = \ROOT . str_replace ( "\\", \DS, $controllersNS );
-		$this->showSimpleMessage ( "Controllers directory is <b>" . UFileSystem::cleanPathname ( $controllersDir ) . "</b>", "info",null, "info circle", null, "msgControllers" );
+		$this->showSimpleMessage ( "Controllers directory is <b>" . UFileSystem::cleanPathname ( $controllersDir ) . "</b>", "info", null, "info circle", null, "msgControllers" );
 		$frm = $this->jquery->semantic ()->htmlForm ( "frmCtrl" );
 		$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
-		$fields=$frm->addFields();
+		$fields = $frm->addFields ();
 		$input = $fields->addInput ( "name", null, "text", "", "Controller name" )->addRules ( [ [ "empty","Controller name must have a value" ],"regExp[/^[A-Za-z]\w*$/]" ] )->setWidth ( 8 );
 		$input->labeledCheckbox ( Direction::LEFT, "View", "v", "slider" );
 		$input->addAction ( "Create controller", true, "plus", true )->addClass ( "teal" )->asSubmit ();
-		$frm->setSubmitParams ( $baseRoute. "/createController", "#main-content");
-		$bt=$fields->addDropdown("crud-bt", ["frmAddCrudController"=>"CRUD controller","frmAddAuthController"=>"Auth controller"],"Create special controller");
-		$bt->asButton();
-		$bt->addIcon("plus");
-		$this->jquery->getOnClick("#dropdown-crud-bt [data-value]",$baseRoute,"#frm",["attr"=>"data-value"]);
-		$bt=$fields->addButton("filter-bt", "Filter controllers");
-		$bt->getOnClick($baseRoute."/frmFilterControllers","#frm",["attr"=>""]);
-		$bt->addIcon("filter");
+		$frm->setSubmitParams ( $baseRoute . "/createController", "#main-content" );
+		$bt = $fields->addDropdown ( "crud-bt", [ "frmAddCrudController" => "CRUD controller","frmAddAuthController" => "Auth controller" ], "Create special controller" );
+		$bt->asButton ();
+		$bt->addIcon ( "plus" );
+		$this->jquery->getOnClick ( "#dropdown-crud-bt [data-value]", $baseRoute, "#frm", [ "attr" => "data-value" ] );
+		$bt = $fields->addButton ( "filter-bt", "Filter controllers" );
+		$bt->getOnClick ( $baseRoute . "/frmFilterControllers", "#frm", [ "attr" => "" ] );
+		$bt->addIcon ( "filter" );
 		$this->_refreshControllers ();
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewControllersIndex () );
@@ -238,8 +237,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	public function _refreshControllers($refresh = false) {
 		$dt = $this->_getAdminViewer ()->getControllersDataTable ( ControllerAction::init () );
 		$this->jquery->postOnClick ( "._route[data-ajax]", $this->_getFiles ()->getAdminBaseRoute () . "/routes", "{filter:$(this).attr('data-ajax')}", "#main-content" );
-		$this->jquery->postOnClick ( "._create-view", $this->_getFiles ()->getAdminBaseRoute () . "/_createView", "{action:$(this).attr('data-action'),controller:$(this).attr('data-controller'),controllerFullname:$(this).attr('data-controllerFullname')}", '$(self).closest("._views-container")', [
-				'hasLoader' => false ] );
+		$this->jquery->postOnClick ( "._create-view", $this->_getFiles ()->getAdminBaseRoute () . "/_createView", "{action:$(this).attr('data-action'),controller:$(this).attr('data-controller'),controllerFullname:$(this).attr('data-controllerFullname')}", '$(self).closest("._views-container")', [ 'hasLoader' => false ] );
 		$this->jquery->execAtLast ( "$('#bt-0-controllersAdmin._clickFirst').click();" );
 		$this->jquery->postOnClick ( "._add-new-action", $this->_getFiles ()->getAdminBaseRoute () . "/_newActionFrm", "{controller:$(this).attr('data-controller')}", "#modal", [ "hasLoader" => false ] );
 		$this->addNavigationTesting ();
@@ -251,10 +249,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function routes() {
 		$this->getHeader ( "routes" );
-		$this->showSimpleMessage ( "Router cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.default" ) . "</b>", "info",null, "info circle", null, "msgRoutes" );
+		$this->showSimpleMessage ( "Router cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.default" ) . "</b>", "info", null, "info circle", null, "msgRoutes" );
 		$routes = CacheManager::getRoutes ();
 		$this->_getAdminViewer ()->getRoutesDataTable ( Route::init ( $routes ) );
-		$this->jquery->getOnClick ( "#bt-init-cache", $this->_getFiles ()->getAdminBaseRoute () . "/initCacheRouter", "#divRoutes", [ "dataType" => "html","attr" => "","hasLoader"=>"internal" ] );
+		$this->jquery->getOnClick ( "#bt-init-cache", $this->_getFiles ()->getAdminBaseRoute () . "/initCacheRouter", "#divRoutes", [ "dataType" => "html","attr" => "","hasLoader" => "internal" ] );
 		$this->jquery->postOnClick ( "#bt-filter-routes", $this->_getFiles ()->getAdminBaseRoute () . "/filterRoutes", "{filter:$('#filter-routes').val()}", "#divRoutes", [ "ajaxTransition" => "random" ] );
 		if (isset ( $_POST ["filter"] ))
 			$this->jquery->exec ( "$(\"tr:contains('" . $_POST ["filter"] . "')\").addClass('warning');", true );
@@ -271,13 +269,13 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function cache() {
 		$this->getHeader ( "cache" );
-		$this->showSimpleMessage ( CacheManager::$cache->getCacheInfo (), "info",null, "info circle", null, "msgCache" );
+		$this->showSimpleMessage ( CacheManager::$cache->getCacheInfo (), "info", null, "info circle", null, "msgCache" );
 
 		$cacheFiles = CacheManager::$cache->getCacheFiles ( 'controllers' );
 		$cacheFiles = \array_merge ( $cacheFiles, CacheManager::$cache->getCacheFiles ( 'models' ) );
 		$form = $this->jquery->semantic ()->htmlForm ( "frmCache" );
-		$radios = HtmlFormFields::checkeds ( "ctvv","cacheTypes[]", [ "controllers" => "Controllers","models" => "Models","views" => "Views","queries" => "Queries","annotations" => "Annotations","seo" => "SEO","contents"=>"Contents" ], "Display cache types: ", [ "controllers","models" ] );
-		$radios->postFormOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/setCacheTypes", "frmCache", "#dtCacheFiles tbody", ["jqueryDone" => "replaceWith","preventDefault"=>false ] );
+		$radios = HtmlFormFields::checkeds ( "ctvv", "cacheTypes[]", [ "controllers" => "Controllers","models" => "Models","views" => "Views","queries" => "Queries","annotations" => "Annotations","seo" => "SEO","contents" => "Contents" ], "Display cache types: ", [ "controllers","models" ] );
+		$radios->postFormOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/setCacheTypes", "frmCache", "#dtCacheFiles tbody", [ "jqueryDone" => "replaceWith","preventDefault" => false ] );
 		$form->addField ( $radios )->setInline ();
 		$this->_getAdminViewer ()->getCacheDataTable ( $cacheFiles );
 		$this->jquery->compile ( $this->view );
@@ -286,7 +284,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function rest() {
 		$this->getHeader ( "rest" );
-		$this->showSimpleMessage ( "Router Rest cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.rest" ) . "</b>", "info","Rest service", "info circle", null, "msgRest" );
+		$this->showSimpleMessage ( "Router Rest cache entry is <b>" . CacheManager::$cache->getEntryKey ( "controllers\\routes.rest" ) . "</b>", "info", "Rest service", "info circle", null, "msgRest" );
 		$this->_refreshRest ();
 		$this->jquery->getOnClick ( "#bt-init-rest-cache", $this->_getFiles ()->getAdminBaseRoute () . "/initRestCache", "#divRest", [ "attr" => "","dataType" => "html" ] );
 		$this->jquery->postOn ( "change", "#access-token", $this->_getFiles ()->getAdminBaseRoute () . "/_saveToken", "{_token:$(this).val()}" );
@@ -300,48 +298,47 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function config($hasHeader = true) {
-		$config=Startup::getConfig();
+		$config = Startup::getConfig ();
 		if ($hasHeader === true)
 			$this->getHeader ( "config" );
 		$this->_getAdminViewer ()->getConfigDataElement ( $config );
-		$this->jquery->getOnClick("#edit-config-btn", $this->_getFiles()->getAdminBaseRoute() . "/formConfig/ajax","#action-response",["hasLoader"=>"internal","jsCallback"=>'$("#config-div").hide();']);
+		$this->jquery->getOnClick ( "#edit-config-btn", $this->_getFiles ()->getAdminBaseRoute () . "/formConfig/ajax", "#action-response", [ "hasLoader" => "internal","jsCallback" => '$("#config-div").hide();' ] );
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewConfigIndex () );
 	}
 
 	public function logs() {
-		$config=Startup::getConfig();
+		$config = Startup::getConfig ();
 		$this->getHeader ( "logs" );
-		$menu=$this->jquery->semantic()->htmlMenu("menu-logs");
-		$ck=$menu->addItem(HtmlCheckbox::toggle("ck-reverse"));
-		$ck->postFormOnClick($this->_getFiles()->getAdminBaseRoute()."/logsRefresh", "frm-logs","#logs-div");
-		$menu->addItem(new HtmlInput("maxLines","number",50));
-		$dd=new HtmlDropdown("groupBy","1,2",["1"=>"Date","2"=>"Context","3"=>"Part"]);
-		$dd->setDefaultText("Group by...");
-		$dd->asSelect("group-by",true);
-		$menu->addItem($dd);
-		$dd=new HtmlDropdown("dd-contexts","",array_combine(LoggerParams::$contexts,LoggerParams::$contexts));
-		$dd->setDefaultText("Select contexts...");
-		$dd->asSelect("contexts",true);
-		$menu->addItem($dd);
+		$menu = $this->jquery->semantic ()->htmlMenu ( "menu-logs" );
+		$ck = $menu->addItem ( HtmlCheckbox::toggle ( "ck-reverse" ) );
+		$ck->postFormOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/logsRefresh", "frm-logs", "#logs-div" );
+		$menu->addItem ( new HtmlInput ( "maxLines", "number", 50 ) );
+		$dd = new HtmlDropdown ( "groupBy", "1,2", [ "1" => "Date","2" => "Context","3" => "Part" ] );
+		$dd->setDefaultText ( "Group by..." );
+		$dd->asSelect ( "group-by", true );
+		$menu->addItem ( $dd );
+		$dd = new HtmlDropdown ( "dd-contexts", "", array_combine ( LoggerParams::$contexts, LoggerParams::$contexts ) );
+		$dd->setDefaultText ( "Select contexts..." );
+		$dd->asSelect ( "contexts", true );
+		$menu->addItem ( $dd );
 
-		
-		if(!$config["debug"]){
-			$this->showSimpleMessage("Debug mode is not active in config.php file. <br><br><a class='_activateLogs ui blue button'><i class='ui toggle on icon'></i> Activate logging</a>", "info","Debug","info circle",null,"logs-message");
-			$this->jquery->getOnClick("._activateLogs", $this->_getFiles()->getAdminBaseRoute()."/activateLog","#main-content");
-		}else{
-			$item=$menu->addItem($bts=new HtmlButtonGroups("bt-apply",["","Clear all","Apply"]));
-			$item->addClass("right aligned");
-			$bts->postFormOnClick($this->_getFiles()->getAdminBaseRoute()."/", "frm-logs","$('#'+$(self).attr('data-target'))",["attr"=>"data-url"]);
-			$bts->addPropertyValues("class", ["","red","black"]);
-			$bts->setPropertyValues("data-url", ["deActivateLog","deleteAllLogs","logsRefresh"]);
-			$bts->setPropertyValues("title", ["Stop logging","delete all logs","Apply modifications"]);
-			$bts->setPropertyValues("data-target", ["main-content","logs-div","logs-div"]);
-			$bts->getItem(0)->asIcon("stop");
+		if (! $config ["debug"]) {
+			$this->showSimpleMessage ( "Debug mode is not active in config.php file. <br><br><a class='_activateLogs ui blue button'><i class='ui toggle on icon'></i> Activate logging</a>", "info", "Debug", "info circle", null, "logs-message" );
+			$this->jquery->getOnClick ( "._activateLogs", $this->_getFiles ()->getAdminBaseRoute () . "/activateLog", "#main-content" );
+		} else {
+			$item = $menu->addItem ( $bts = new HtmlButtonGroups ( "bt-apply", [ "","Clear all","Apply" ] ) );
+			$item->addClass ( "right aligned" );
+			$bts->postFormOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/", "frm-logs", "$('#'+$(self).attr('data-target'))", [ "attr" => "data-url" ] );
+			$bts->addPropertyValues ( "class", [ "","red","black" ] );
+			$bts->setPropertyValues ( "data-url", [ "deActivateLog","deleteAllLogs","logsRefresh" ] );
+			$bts->setPropertyValues ( "title", [ "Stop logging","delete all logs","Apply modifications" ] );
+			$bts->setPropertyValues ( "data-target", [ "main-content","logs-div","logs-div" ] );
+			$bts->getItem ( 0 )->asIcon ( "stop" );
 		}
-		$this->_getAdminViewer()->getLogsDataTable(50);
+		$this->_getAdminViewer ()->getLogsDataTable ( 50 );
 		$this->jquery->compile ( $this->view );
-		
+
 		$this->loadView ( $this->_getFiles ()->getViewLogsIndex () );
 	}
 
@@ -351,17 +348,17 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewSeoIndex () );
 	}
-	
+
 	public function translate() {
-		$baseRoute=$this->_getFiles()->getAdminBaseRoute();
+		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "translate" );
-		setlocale(LC_ALL, 'en_EN');
-		$loc=URequest::getDefaultLanguage();
-		$trans=new Translator($loc);
-		$trans->setFallbackLocale('en_EN');
-		$catalog=$trans->getCatalogue();
-		$world=$trans->trans("buttons.Okays",[],"messages");
-		$this->jquery->renderView( $this->_getFiles ()->getViewTranslateIndex() ,compact("loc","catalog","world"));
+		setlocale ( LC_ALL, 'en_EN' );
+		$loc = URequest::getDefaultLanguage ();
+		$trans = new Translator ( $loc );
+		$trans->setFallbackLocale ( 'en_EN' );
+		$catalog = $trans->getCatalogue ();
+		$world = $trans->trans ( "buttons.Okays", [ ], "messages" );
+		$this->jquery->renderView ( $this->_getFiles ()->getViewTranslateIndex (), compact ( "loc", "catalog", "world" ) );
 	}
 
 	protected function _seo() {
@@ -421,10 +418,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$initializeBt->addIcon ( "magic" );
 			$initializeBt->getOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/gitInit", "#main-content", [ "attr" => "" ] );
 			if ($hasMessage)
-				$this->showSimpleMessage ( "<b>{$gitRepo->getName()}</b> respository is not initialized!", "warning",null, "warning circle", null, "init-message" );
+				$this->showSimpleMessage ( "<b>{$gitRepo->getName()}</b> respository is not initialized!", "warning", null, "warning circle", null, "init-message" );
 		} else {
 			if ($hasMessage) {
-				$this->showSimpleMessage ( "<b>{$gitRepo->getName()}</b> repository is correctly initialized.", "info",null, "info circle", null, "init-message" );
+				$this->showSimpleMessage ( "<b>{$gitRepo->getName()}</b> repository is correctly initialized.", "info", null, "info circle", null, "init-message" );
 			}
 			$pushPullBts = $this->jquery->semantic ()->htmlButtonGroups ( "push-pull-bts", [ "3-Push","1-Pull" ] );
 			$pushPullBts->addIcons ( [ "upload","download" ] );
@@ -440,15 +437,15 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		}
 
 		$this->jquery->exec ( '$.fn.form.settings.rules.checkeds=function(value){var fields = $("[name=\'files-to-commit[]\']:checked");return fields.length>0;};', true );
-		$files=$gitRepo->getFiles ();
+		$files = $gitRepo->getFiles ();
 		$this->_getAdminViewer ()->getGitFilesDataTable ( $files );
 		$this->_getAdminViewer ()->getGitCommitsDataTable ( $gitRepo->getCommits () );
-		
-		$this->jquery->exec('$("#lbl-changed").toggle('.((sizeof($files)>0)?"true":"false").');',true);
+
+		$this->jquery->exec ( '$("#lbl-changed").toggle(' . ((sizeof ( $files ) > 0) ? "true" : "false") . ');', true );
 
 		$this->jquery->getOnClick ( "#settings-btn", $this->_getFiles ()->getAdminBaseRoute () . "/frmSettings", "#frm" );
-		$this->jquery->exec ( '$("#commit-frm").form({"fields":{"summary":{"rules":[{"type":"empty"}]},"files-to-commit[]":{"rules":[{"type":"checkeds","prompt":"You must select at least 1 file!"}]}},"on":"blur","onSuccess":function(event,fields){' . $this->jquery->postFormDeferred ( $this->_getFiles ()->getAdminBaseRoute () . "/commit", "commit-frm", "#messages", [
-				"preventDefault" => true,"stopPropagation" => true,"ajaxLoader" => $loader ] ) . ';return false;}});', true );
+		$this->jquery->exec ( '$("#commit-frm").form({"fields":{"summary":{"rules":[{"type":"empty"}]},"files-to-commit[]":{"rules":[{"type":"checkeds","prompt":"You must select at least 1 file!"}]}},"on":"blur","onSuccess":function(event,fields){' . $this->jquery->postFormDeferred ( $this->_getFiles ()->getAdminBaseRoute () . "/commit", "commit-frm", "#messages", [ "preventDefault" => true,
+				"stopPropagation" => true,"ajaxLoader" => $loader ] ) . ';return false;}});', true );
 		$this->jquery->exec ( '$("#git-tabs .item").tab();', true );
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewGitIndex (), [ "repo" => $gitRepo,"initializeBt" => $initializeBt,"gitIgnoreBt" => $gitIgnoreBt,"pushPullBts" => $pushPullBts,"btRefresh" => $btRefresh ] );
@@ -904,18 +901,18 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			}
 			$variables = \array_merge ( $variables, [ "%controllerName%" => $controllerName,"%indexContent%" => $indexContent,"%namespace%" => $namespace ] );
 			UFileSystem::openReplaceWriteFromTemplateFile ( $frameworkDir . "/admin/templates/" . $ctrlTemplate, $filename, $variables );
-			$msgContent = "The <b>" . $controllerName . "</b> controller has been created in <b>" . UFileSystem::cleanFilePathname( $filename ) . "</b>." . $msgView;
+			$msgContent = "The <b>" . $controllerName . "</b> controller has been created in <b>" . UFileSystem::cleanFilePathname ( $filename ) . "</b>." . $msgView;
 			if (isset ( $variables ["%path%"] ) && $variables ["%path%"] !== "") {
 				$msgContent .= $this->_addMessageForRouteCreation ( $variables ["%path%"], $jsCallback );
 			}
-			USession::addOrRemoveValueFromArray("filtered-controllers",$controllersNS."\\".$controllerName);
-			$message = $this->showSimpleMessage ( $msgContent, "success", null,"checkmark circle", NULL, "msgGlobal" );
+			USession::addOrRemoveValueFromArray ( "filtered-controllers", $controllersNS . "\\" . $controllerName, true );
+			$message = $this->showSimpleMessage ( $msgContent, "success", null, "checkmark circle", NULL, "msgGlobal" );
 		} else {
-			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning",null, "warning circle", 100000, "msgGlobal" );
+			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning", null, "warning circle", 100000, "msgGlobal" );
 		}
 		return $message;
 	}
-	
+
 	protected function _addMessageForRouteCreation($path, $jsCallback = "") {
 		$msgContent = "<br>Created route : <b>" . $path . "</b>";
 		$msgContent .= "<br>You need to re-init Router cache to apply this update:";
@@ -927,15 +924,15 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	protected function getAdminData() {
-		return new CRUDDatas();
+		return new CRUDDatas ();
 	}
 
 	protected function getUbiquityMyAdminViewer() {
 		return new UbiquityMyAdminViewer ( $this );
 	}
-	
+
 	protected function getUbiquityMyAdminModelViewer() {
-		return new ModelViewer( $this );
+		return new ModelViewer ( $this );
 	}
 
 	protected function getUbiquityMyAdminFiles() {
@@ -953,15 +950,16 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	 *
 	 * @return CRUDDatas
 	 */
-	public function _getAdminData():CRUDDatas {
+	public function _getAdminData(): CRUDDatas {
 		return $this->getSingleton ( $this->adminData, "getAdminData" );
 	}
-	
+
 	/**
+	 *
 	 * @return ModelViewer
 	 */
-	public function _getModelViewer(){
-		return $this->getSingleton($this->adminModelViewer, "getUbiquityMyAdminModelViewer");
+	public function _getModelViewer() {
+		return $this->getSingleton ( $this->adminModelViewer, "getUbiquityMyAdminModelViewer" );
 	}
 
 	/**
@@ -979,14 +977,15 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	public function _getFiles() {
 		return $this->getSingleton ( $this->adminFiles, "getUbiquityMyAdminFiles" );
 	}
-	
+
 	protected function getTableNames() {
 		return $this->_getAdminData ()->getTableNames ();
 	}
-	
-	public function _getBaseRoute(){
+
+	public function _getBaseRoute() {
 		return $this->_getFiles ()->getAdminBaseRoute ();
 	}
+
 	public function _getInstancesFilter($model) {
 		return "1=1";
 	}

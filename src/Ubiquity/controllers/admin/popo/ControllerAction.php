@@ -3,9 +3,11 @@
 namespace Ubiquity\controllers\admin\popo;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\controllers\Startup;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\Router;
+use Ubiquity\controllers\Startup;
+use Ubiquity\controllers\seo\SeoController;
 use Ubiquity\utils\base\UString;
 
 class ControllerAction {
@@ -70,7 +72,7 @@ class ControllerAction {
 				if (class_exists ( $controllerClass, true ) && isset ( $restCtrls [$controllerClass] ) === false) {
 					self::$controllers [] = $controllerClass;
 					$reflect = new \ReflectionClass ( $controllerClass );
-					if (! $reflect->isAbstract () && $reflect->isSubclassOf ( "Ubiquity\controllers\Controller" ) && ! $reflect->isSubclassOf ( "Ubiquity\controllers\seo\SeoController" )) {
+					if (! $reflect->isAbstract () && $reflect->isSubclassOf ( Controller::class ) && ! $reflect->isSubclassOf ( SeoController::class )) {
 						$methods = $reflect->getMethods ( \ReflectionMethod::IS_PUBLIC );
 						foreach ( $methods as $method ) {
 							$r = self::scanMethod ( $controllerClass, $method );
