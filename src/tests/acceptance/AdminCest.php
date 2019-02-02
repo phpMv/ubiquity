@@ -123,11 +123,20 @@ class AdminCest {
 		$I->see ( 'myaddressmail@gmail.com' );
 		$I->amOnPage ( "/rest/Users/getOne/500" );
 		$I->see ( '{"message":"No result found","keyValues":"500"}' );
+		$I->amOnPage ( "/rest/Users/connect/" );
+		$I->see ( '"token_type": "Bearer"' );
+		$I->amOnPage ( "/rest/Users/get/firstname+like+%27B%25%27" );
+		$I->see ( '"count": 7' );
 	}
 
 	// tests
 	public function tryGotoAdminConfig(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Config", $I );
+		$I->click ( '#edit-config-btn' );
+		$I->waitForElement ( "#save-config-btn", self::TIMEOUT );
+		$I->click ( "#save-config-btn" );
+		$I->waitForElement ( "#edit-config-btn" );
+		$I->see ( "http://dev.local/" );
 	}
 
 	// tests

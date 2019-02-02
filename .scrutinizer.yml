@@ -57,7 +57,6 @@ filter:
         - src/Ubiquity/controllers/Autoloader.php
         - src/Ubiquity/controllers/admin/
         - src/Ubiquity/annotations/
-        - src/Ubiquity/js/Jquery.php
         - src/Ubiquity/utils/git/UGitRepository.php
 checks:
     php:

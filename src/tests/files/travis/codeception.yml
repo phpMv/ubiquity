@@ -21,7 +21,6 @@ coverage:
         - Ubiquity/controllers/Autoloader.php
         - Ubiquity/controllers/admin/
         - Ubiquity/annotations/
-        - Ubiquity/js/Jquery.php
         - Ubiquity/utils/git/UGitRepository.php
 settings:
  bootstrap: _bootstrap.php
