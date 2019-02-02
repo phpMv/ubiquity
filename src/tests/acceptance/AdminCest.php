@@ -148,6 +148,15 @@ class AdminCest {
 	// tests
 	public function tryGotoAdminSeo(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
+		$I->click ( "#generateRobots" );
+		$I->waitForText ( "Can not generate robots.txt if no SEO controller is selected.", self::TIMEOUT, "body" );
+		$I->click ( "#addNewSeo" );
+		$I->waitForText ( "Creating a new Seo controller", self::TIMEOUT, "body" );
+		$I->fillField ( "#controllerName", "TestSEOController" );
+		$I->click ( "#action-modalNewSeo-0" );
+		$I->waitForText ( "The TestSEOController controller has been created" );
+		$I->click ( "#seoCtrls-tr-controllersTestSEOController" );
+		$I->waitForText ( "nothing to display", self::TIMEOUT, "body" );
 	}
 
 	// tests
