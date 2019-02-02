@@ -111,7 +111,7 @@ class AdminCest {
 		$I->click ( "#bt-create-new-resource" );
 		$I->waitForText ( "controllers\RestUsersController", self::TIMEOUT, "body" );
 		$I->click ( "#bt-init-rest-cache" );
-		$I->waitForText ( " /rest/Users/(index/)?", self::TIMEOUT, "body" );
+		$I->waitForText ( "/rest/Users/(index/)?", self::TIMEOUT, "body" );
 		$I->amOnPage ( "/rest/Users" );
 		$I->see ( '"count":101' );
 		$I->amOnPage ( "/rest/Users/1" );
