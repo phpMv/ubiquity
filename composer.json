@@ -9,7 +9,8 @@
 		"orm"
 	],
 	"require" : {
-		"php" : ">7.0"
+		"php" : ">7.0",
+		"phpmv/ubiquity-codeception": "@dev"
 	},
 	"license" : "Apache-2.0",
 	"authors" : [{
