@@ -1,9 +1,11 @@
 <?php
 error_reporting ( E_ALL );
 include 'c3.php';
-define ( 'DS', DIRECTORY_SEPARATOR );
-define ( 'ROOT', __DIR__ . DS . 'app' . DS );
-define ( 'MY_APP_STARTED', true );
+if (! defined ( 'DS' )) {
+	define ( 'DS', DIRECTORY_SEPARATOR );
+	define ( 'ROOT', __DIR__ . DS . 'app' . DS );
+	define ( 'MY_APP_STARTED', true );
+}
 $config = include ROOT . 'config/config.php';
 $config ["siteUrl"] = "http://dev.local/";
 $config ['sessionName'] = '';
