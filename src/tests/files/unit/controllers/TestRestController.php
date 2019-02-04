@@ -6,7 +6,7 @@ use Ubiquity\controllers\rest\RestController;
 
 /**
  *
- * @route("/benchmark/rest","inherited"=>false,"automated"=>false)
+ * @route("/rest/test","inherited"=>false,"automated"=>false)
  * @rest("resource"=>"")
  */
 class TestRestController extends RestController {

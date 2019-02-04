@@ -15,6 +15,10 @@ class TestControllerWithControl extends TestControllerInitialize {
 		echo "valid action!";
 	}
 
+	/**
+	 *
+	 * @route("/route/test/ctrl/")
+	 */
 	public function actionWithControl() {
 		echo "authorized!";
 	}
@@ -27,6 +31,12 @@ class TestControllerWithControl extends TestControllerInitialize {
 		return true;
 	}
 
+	/**
+	 *
+	 * @route("/route/test/params/{a}/{b}")
+	 * @param string $a
+	 * @param string $b
+	 */
 	public function withParams($a, $b = "default") {
 		echo $a . "-" . $b . "!";
 	}
