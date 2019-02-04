@@ -31,10 +31,8 @@ class StartupTest extends BaseTest {
 	}
 
 	protected function _startServices($what = false) {
-		if (file_exists ( CacheManager::getAbsoluteCacheDirectory () )) {
-			$this->_startCache ();
-			$this->_startRouter ( $what );
-		}
+		$this->_startCache ();
+		$this->_startRouter ( $what );
 	}
 
 	/**
@@ -59,79 +57,79 @@ class StartupTest extends BaseTest {
 	 * Tests Startup::run()
 	 */
 	public function testRun() {
-		if (file_exists ( CacheManager::getAbsoluteCacheDirectory () )) {
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestController::class, $this->startup->getController () );
-				$this->assertEquals ( 'index', $this->startup->getAction () );
-				$this->assertEquals ( 0, sizeof ( $this->startup->getActionParams () ) );
-			}, 'service init!Hello world!' );
-			// With routes
-			$_GET ["c"] = "route/test/index";
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
-				$this->assertEquals ( 'index', $this->startup->getAction () );
-			}, 'service init!initialize!-Hello world!-finalize!' );
-			$_GET ["c"] = "route/test/";
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
-				$this->assertEquals ( 'index', $this->startup->getAction () );
-			}, 'service init!initialize!-Hello world!-finalize!' );
-			$_GET ["c"] = "route/test";
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
-				$this->assertEquals ( 'index', $this->startup->getAction () );
-			}, 'service init!initialize!-Hello world!-finalize!' );
-			$_GET ["c"] = "route/test/ctrl";
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
-				$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
-			}, 'service init!invalid!' );
-			$_GET ["c"] = "route/test/ctrl/";
-			USession::set ( 'user', 'user' );
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
-				$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
-			}, 'service init!initialize!-authorized!-finalize!' );
-			// Route with params
-			$_GET ["c"] = "route/test/params/aa/bb";
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
-				$this->assertEquals ( 'withParams', $this->startup->getAction () );
-				$this->assertEquals ( [ 'aa','bb' ], $this->startup->getActionParams () );
-			}, 'service init!initialize!-aa-bb!-finalize!' );
-			$_GET ["c"] = "route/test/params/aa/";
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
-				$this->assertEquals ( 'withParams', $this->startup->getAction () );
-				$this->assertEquals ( [ 'aa' ], $this->startup->getActionParams () );
-			}, 'service init!initialize!-aa-default!-finalize!' );
-			// Rest
-			$this->_startServices ( 'rest' );
-			$_GET ["c"] = "rest/test";
-			$this->_assertDisplayEquals ( function () {
-				$this->startup->run ( $this->config );
-				$this->assertEquals ( TestRestController::class, $this->startup->getController () );
-				$this->assertEquals ( 'index', $this->startup->getAction () );
-				$this->assertEquals ( 0, sizeof ( $this->startup->getActionParams () ) );
-			}, 'service init!{"test":"ok"}' );
-			$_GET ["c"] = "rest/test/ticket";
-			$this->expectException ( RestException::class );
-			try {
+		$this->assertEquals ( $this->config ["cache"] ["directory"], "cache-tests/" );
+		$this->assertEquals ( CacheManager::getCacheDirectory (), "cache-tests/" );
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestController::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+			$this->assertEquals ( 0, sizeof ( $this->startup->getActionParams () ) );
+		}, 'service init!Hello world!' );
+		// With routes
+		$_GET ["c"] = "route/test/index";
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+		}, 'service init!initialize!-Hello world!-finalize!' );
+		$_GET ["c"] = "route/test/";
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+		}, 'service init!initialize!-Hello world!-finalize!' );
+		$_GET ["c"] = "route/test";
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+		}, 'service init!initialize!-Hello world!-finalize!' );
+		$_GET ["c"] = "route/test/ctrl";
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
+		}, 'service init!invalid!' );
+		$_GET ["c"] = "route/test/ctrl/";
+		USession::set ( 'user', 'user' );
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
+		}, 'service init!initialize!-authorized!-finalize!' );
+		// Route with params
+		$_GET ["c"] = "route/test/params/aa/bb";
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'withParams', $this->startup->getAction () );
+			$this->assertEquals ( [ 'aa','bb' ], $this->startup->getActionParams () );
+		}, 'service init!initialize!-aa-bb!-finalize!' );
+		$_GET ["c"] = "route/test/params/aa/";
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
+			$this->assertEquals ( 'withParams', $this->startup->getAction () );
+			$this->assertEquals ( [ 'aa' ], $this->startup->getActionParams () );
+		}, 'service init!initialize!-aa-default!-finalize!' );
+		// Rest
+		$this->_startServices ( 'rest' );
+		$_GET ["c"] = "rest/test";
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestRestController::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+			$this->assertEquals ( 0, sizeof ( $this->startup->getActionParams () ) );
+		}, 'service init!{"test":"ok"}' );
+		$_GET ["c"] = "rest/test/ticket";
+		$this->expectException ( RestException::class );
+		try {
 
-				$this->_assertDisplayEquals ( function () {
-					$this->startup->run ( $this->config );
-				}, '' );
-			} finally{
-				ob_get_clean ();
-			}
+			$this->_assertDisplayEquals ( function () {
+				$this->startup->run ( $this->config );
+			}, '' );
+		} finally{
+			ob_get_clean ();
 		}
 	}
 
