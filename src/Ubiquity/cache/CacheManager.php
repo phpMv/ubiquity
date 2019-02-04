@@ -2,18 +2,26 @@
 
 namespace Ubiquity\cache;
 
-use mindplay\annotations\Annotations;
-use mindplay\annotations\AnnotationCache;
-use mindplay\annotations\AnnotationManager;
-use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\cache\traits\RouterCacheTrait;
 use Ubiquity\cache\traits\ModelsCacheTrait;
 use Ubiquity\cache\traits\RestCacheTrait;
-use Ubiquity\cache\system\AbstractDataCache;
+use Ubiquity\cache\traits\RouterCacheTrait;
+use Ubiquity\utils\base\UFileSystem;
+use mindplay\annotations\AnnotationCache;
+use mindplay\annotations\AnnotationManager;
+use mindplay\annotations\Annotations;
 
+/**
+ * Manager for caches (Router, Rest, models)
+ * Ubiquity\cache$CacheManager
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ *
+ */
 class CacheManager {
 	use RouterCacheTrait,ModelsCacheTrait,RestCacheTrait;
-	
+
 	/**
 	 *
 	 * @var AbstractDataCache
@@ -56,19 +64,19 @@ class CacheManager {
 	}
 
 	private static function initialGetCacheDirectory(&$config) {
-		return $config ["cache"] ["directory"]??($config ["cache"] ["directory"] = "cache".\DS);
+		return $config ["cache"] ["directory"] ?? ($config ["cache"] ["directory"] = "cache" . \DS);
 	}
 
 	public static function getCacheDirectory() {
 		return self::$cacheDirectory;
 	}
-	
-	public static function getAbsoluteCacheDirectory(){
-		return \ROOT.\DS.self::$cacheDirectory;
+
+	public static function getAbsoluteCacheDirectory() {
+		return \ROOT . \DS . self::$cacheDirectory;
 	}
-	
+
 	public static function getCacheSubDirectory($subDirectory) {
-		return \ROOT.\DS.self::$cacheDirectory.\DS.$subDirectory;
+		return \ROOT . \DS . self::$cacheDirectory . \DS . $subDirectory;
 	}
 
 	public static function checkCache(&$config, $silent = false) {
@@ -81,11 +89,11 @@ class CacheManager {
 
 	public static function getCacheDirectories(&$config, $silent = false) {
 		$cacheDirectory = self::initialGetCacheDirectory ( $config );
-		$rootDS=\ROOT . \DS ;
+		$rootDS = \ROOT . \DS;
 		if (! $silent) {
-			echo "cache directory is " . UFileSystem::cleanPathname ( $rootDS. $cacheDirectory ) . "\n";
+			echo "cache directory is " . UFileSystem::cleanPathname ( $rootDS . $cacheDirectory ) . "\n";
 		}
-		$cacheDirectory=$rootDS . $cacheDirectory . \DS;
+		$cacheDirectory = $rootDS . $cacheDirectory . \DS;
 		$modelsDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["models"] );
 		$controllersDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["controllers"] );
 		$annotationCacheDir = $cacheDirectory . "annotations";
@@ -96,7 +104,7 @@ class CacheManager {
 		$seoCacheDir = $cacheDirectory . "seo";
 		$gitCacheDir = $cacheDirectory . "git";
 		$contentsCacheDir = $cacheDirectory . "contents";
-		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir,"contents"=>$contentsCacheDir ];
+		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir,"contents" => $contentsCacheDir ];
 	}
 
 	private static function safeMkdir($dir) {
@@ -137,27 +145,9 @@ class CacheManager {
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
-		$annotationManager->registry = array_merge ( $annotationManager->registry, [ 
-				'id' => 'Ubiquity\annotations\IdAnnotation',
-				'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
-				'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
-				'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
-				'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
-				'table' => 'Ubiquity\annotations\TableAnnotation',
-				'transient' => 'Ubiquity\annotations\TransientAnnotation',
-				'column' => 'Ubiquity\annotations\ColumnAnnotation',
-				'validator' => 'Ubiquity\annotations\ValidatorAnnotation',
-				'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
-				'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
-				'route' => 'Ubiquity\annotations\router\RouteAnnotation',
-				'get' => 'Ubiquity\annotations\router\GetAnnotation','getMapping' => 'Ubiquity\annotations\router\GetAnnotation',
-				'post' => 'Ubiquity\annotations\router\PostAnnotation','postMapping' => 'Ubiquity\annotations\router\PostAnnotation',
-				'var' => 'mindplay\annotations\standard\VarAnnotation',
-				'yuml' => 'Ubiquity\annotations\YumlAnnotation',
-				'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
-				'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation',
-				'injected' =>'Ubiquity\annotations\di\InjectedAnnotation',
-				'autowired' =>'Ubiquity\annotations\di\AutowiredAnnotation'
-		] );
+		$annotationManager->registry = array_merge ( $annotationManager->registry, [ 'id' => 'Ubiquity\annotations\IdAnnotation','manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation','oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation','manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation','joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
+				'table' => 'Ubiquity\annotations\TableAnnotation','transient' => 'Ubiquity\annotations\TransientAnnotation','column' => 'Ubiquity\annotations\ColumnAnnotation','validator' => 'Ubiquity\annotations\ValidatorAnnotation','joinTable' => 'Ubiquity\annotations\JoinTableAnnotation','requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
+				'route' => 'Ubiquity\annotations\router\RouteAnnotation','get' => 'Ubiquity\annotations\router\GetAnnotation','getMapping' => 'Ubiquity\annotations\router\GetAnnotation','post' => 'Ubiquity\annotations\router\PostAnnotation','postMapping' => 'Ubiquity\annotations\router\PostAnnotation','var' => 'mindplay\annotations\standard\VarAnnotation',
+				'yuml' => 'Ubiquity\annotations\YumlAnnotation','rest' => 'Ubiquity\annotations\rest\RestAnnotation','authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation','injected' => 'Ubiquity\annotations\di\InjectedAnnotation','autowired' => 'Ubiquity\annotations\di\AutowiredAnnotation' ] );
 	}
 }
