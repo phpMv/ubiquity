@@ -60,7 +60,7 @@ class StartupTest extends BaseTest {
 	public function testRun() {
 		$this->assertEquals ( $this->config ["cache"] ["directory"], "cache-tests/" );
 		$this->assertEquals ( CacheManager::getCacheDirectory (), "cache-tests/" );
-		$this->assertEquals ( CacheManager::getControllerCache (), "return" );
+		$this->assertEquals ( CacheManager::getControllerCache (), [ ] );
 
 		$info = Router::getRouteInfo ( "route/test/index" );
 		$this->assertEquals ( $info, "controllers\\TestControllerWithControl" );
