@@ -32,7 +32,6 @@ class StartupTest extends BaseTest {
 	}
 
 	protected function _startServices($what = false) {
-		CacheManager::initCache ( $this->config, 'all', true );
 		$this->_startCache ();
 		$this->_startRouter ( $what );
 	}
@@ -61,7 +60,7 @@ class StartupTest extends BaseTest {
 	public function testRun() {
 		$this->assertEquals ( $this->config ["cache"] ["directory"], "cache-tests/" );
 		$this->assertEquals ( CacheManager::getCacheDirectory (), "cache-tests/" );
-		$this->assertEquals ( CacheManager::getControllerCache (), [ ] );
+		$this->assertEquals ( CacheManager::getControllerCache (), [ "bla" ] );
 
 		$info = Router::getRouteInfo ( "route/test/index" );
 		$this->assertEquals ( $info, "controllers\\TestControllerWithControl" );
