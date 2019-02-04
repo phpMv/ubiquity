@@ -43,7 +43,7 @@ build:
           - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/
           - cp -R src/tests/files/unit/cache-tests/ src/app/ && cp -R src/tests/files/unit/controllers/ src/app/ && cp -R src/tests/files/unit/services/ src/app/
           - sudo chmod 777 -R src/ && sudo chown -R www-data:www-data src/
-          - sudo service apache2 restart && sudo service apache2 reload 
+          - sudo service apache2 restart && sudo service apache2 reload && cat src/app/cache-tests/controllers/routes.default.cache.php
           - sudo curl -v http://dev.local/index.php?c=Admin
 
         override:
