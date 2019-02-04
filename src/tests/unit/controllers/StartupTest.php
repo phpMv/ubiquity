@@ -7,6 +7,7 @@ use controllers\TestControllerWithControl;
 use controllers\TestRestController;
 use controllers\TestControllerInitialize;
 use services\Service;
+use Ubiquity\cache\CacheManager;
 
 /**
  * Startup test case.
@@ -24,13 +25,13 @@ class StartupTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
-		$this->config ["cache"] ["directory"] = "cache-tests/";
 		$this->_startServices ();
 		$this->startup = new Startup ();
 		$this->_initRequest ( 'TestController', 'GET' );
 	}
 
 	protected function _startServices($what = false) {
+		$this->assertTrue ( file_exists ( CacheManager::getAbsoluteCacheDirectory () ) );
 		$this->_startCache ();
 		$this->_startRouter ( $what );
 	}
