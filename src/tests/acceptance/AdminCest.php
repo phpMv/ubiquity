@@ -54,12 +54,12 @@ class AdminCest {
 	public function tryGotoAdminControllers(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Controllers", $I );
 		// Create a new controller
-		$I->fillField ( "#frmCtrl [name='name']", 'TestController' );
+		$I->fillField ( "#frmCtrl [name='name']", 'TestAcceptanceController' );
 		$I->click ( '#ck-lbl-ck-div-name' ); // Click on create associated view
 		$I->click ( '#action-field-name' ); // Create the controller
 		$I->waitForElementVisible ( "#msgGlobal", self::TIMEOUT );
 		// Test controller creation
-		$I->canSee ( 'TestController', '#msgGlobal' );
+		$I->canSee ( 'TestAcceptanceController', '#msgGlobal' );
 		$I->canSee ( 'controller has been created in', '#msgGlobal' );
 		$I->canSee ( 'The default view associated has been created in', '#msgGlobal' );
 		$I->click ( "#filter-bt" );
@@ -77,8 +77,8 @@ class AdminCest {
 		 * $I->waitForText ( "hello", self::TIMEOUT, "#dtControllers-tr-controllers5CTestController" );
 		 */
 
-		$I->amOnPage ( "/TestController" );
-		$I->canSeeInCurrentUrl ( "/TestController" );
+		$I->amOnPage ( "/TestAcceptanceController" );
+		$I->canSeeInCurrentUrl ( "/TestAcceptanceController" );
 
 		/*
 		 * $I->amOnPage ( "/TestController/hello" );
@@ -102,7 +102,7 @@ class AdminCest {
 		$this->gotoAdminModule ( "Admin/Rest", $I );
 		$I->canSee ( "Rest error", "body" );
 		$I->click ( "#bt-init-rest-cache" );
-		$I->waitForText ( "No resource Rest found. You can add a new resource.", self::TIMEOUT, "body" );
+		$I->waitForText ( "Rest service", self::TIMEOUT, "body" );
 		// Add a new resource
 		$I->click ( "#bt-new-resource" );
 		$I->waitForText ( "Creating a new REST controller...", self::TIMEOUT, "body" );
