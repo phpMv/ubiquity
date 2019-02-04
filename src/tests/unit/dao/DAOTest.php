@@ -5,11 +5,6 @@ use models\Organization;
 use Ubiquity\db\Database;
 use models\Groupe;
 
-require_once 'tests/config/app/models/Groupe.php';
-require_once 'tests/config/app/models/Organization.php';
-require_once 'tests/config/app/models/Organizationsettings.php';
-require_once 'tests/config/app/models/Settings.php';
-require_once 'tests/config/app/models/User.php';
 /**
  * DAO test case.
  */
@@ -25,6 +20,7 @@ class DAOTest extends BaseTest {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
+		parent::_before();
 		$this->dao = new DAO ();
 		$this->_loadConfig ();
 		$this->_startCache ();

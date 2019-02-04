@@ -1,0 +1,2 @@
+<?php
+return array("#tableName"=>"Connection","#primaryKeys"=>array("id"),"#manyToOne"=>array("user"),"#fieldNames"=>array("id"=>"id","dateCo"=>"dateCo","url"=>"url","user"=>"idUser"),"#fieldTypes"=>array("id"=>"int(11)","dateCo"=>"datetime","url"=>"varchar(255)","user"=>false),"#nullable"=>array(),"#notSerializable"=>array("user"),"#joinColumn"=>array("user"=>array("className"=>"models\\User","name"=>"idUser","nullable"=>false)),"#invertedJoinColumn"=>array("idUser"=>array("member"=>"user","className"=>"models\\User")));

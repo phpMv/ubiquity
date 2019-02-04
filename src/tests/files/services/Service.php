@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\unit\controllers\services;
+namespace services;
 
 class Service {
 

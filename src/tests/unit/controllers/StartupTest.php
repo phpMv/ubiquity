@@ -1,16 +1,12 @@
 <?php
 use Ubiquity\controllers\Startup;
-use tests\unit\controllers\controllers\TestController;
 use Ubiquity\utils\http\USession;
-use tests\unit\controllers\controllers\TestControllerWithControl;
-use tests\unit\controllers\services\Service;
-use tests\unit\controllers\controllers\TestRestController;
 use Ubiquity\exceptions\RestException;
-
-require_once 'tests/unit/controllers/controllers/TestController.php';
-require_once 'tests/unit/controllers/controllers/TestControllerInitialize.php';
-require_once 'tests/unit/controllers/controllers/TestControllerWithControl.php';
-require_once 'tests/unit/controllers/controllers/TestRestController.php';
+use controllers\TestController;
+use controllers\TestControllerWithControl;
+use controllers\TestRestController;
+use controllers\TestControllerInitialize;
+use services\Service;
 
 /**
  * Startup test case.
@@ -27,7 +23,7 @@ class StartupTest extends BaseTest {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		$this->_loadConfig ();
+		parent::_before();
 		$this->_startServices ();
 		$this->startup = new Startup ();
 		$this->_initRequest ( 'TestController', 'GET' );
@@ -173,7 +169,7 @@ class StartupTest extends BaseTest {
 	 * Tests Startup::runAsString()
 	 */
 	public function testRunAsString() {
-		$u = [ "tests\\unit\\controllers\\controllers\\TestControllerInitialize","index" ];
+		$u = [ TestControllerInitialize::class,"index" ];
 		$this->assertEquals ( 'service init!initialize!-Hello world!-finalize!', $this->startup->runAsString ( $u ) );
 		$this->assertEquals ( 'service init!initialize!-Hello world!', $this->startup->runAsString ( $u, true, false ) );
 		$this->assertEquals ( 'service init!Hello world!', $this->startup->runAsString ( $u, false, false ) );
