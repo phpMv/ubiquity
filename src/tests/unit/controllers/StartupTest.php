@@ -32,7 +32,6 @@ class StartupTest extends BaseTest {
 	}
 
 	protected function _startServices($what = false) {
-		CacheManager::start ( $this->config );
 		CacheManager::initCache ( $this->config, 'all', true );
 		$this->_startCache ();
 		$this->_startRouter ( $what );
