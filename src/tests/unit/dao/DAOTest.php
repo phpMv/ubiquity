@@ -20,7 +20,7 @@ class DAOTest extends BaseTest {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		parent::_before();
+		parent::_before ();
 		$this->dao = new DAO ();
 		$this->_loadConfig ();
 		$this->_startCache ();
@@ -47,7 +47,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::getOneToMany()
 	 */
 	public function testGetOneToMany() {
-		$orga = DAO::getOne ( Organization::class, 'name="Conservatoire National des Arts et Métiers"', false );
+		$orga = DAO::getOne ( Organization::class, 'domain="lecnam.net"', false );
 		$users = DAO::getOneToMany ( $orga, 'users' );
 		$this->assertTrue ( is_array ( $users ) );
 		$this->assertTrue ( sizeof ( $users ) > 0 );
