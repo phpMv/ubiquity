@@ -7,8 +7,6 @@ use controllers\TestControllerWithControl;
 use controllers\TestRestController;
 use controllers\TestControllerInitialize;
 use services\Service;
-use Ubiquity\cache\CacheManager;
-use Ubiquity\controllers\Router;
 
 /**
  * Startup test case.
@@ -58,12 +56,6 @@ class StartupTest extends BaseTest {
 	 * Tests Startup::run()
 	 */
 	public function testRun() {
-		$this->assertEquals ( $this->config ["cache"] ["directory"], "cache-tests/" );
-		$this->assertEquals ( CacheManager::getCacheDirectory (), "cache-tests/" );
-		$this->assertEquals ( CacheManager::getControllerCache (), [ "bla" ] );
-
-		$info = Router::getRouteInfo ( "route/test/index" );
-		$this->assertEquals ( $info, "controllers\\TestControllerWithControl" );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
