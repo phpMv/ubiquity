@@ -23,7 +23,8 @@ class StartupTest extends BaseTest {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		parent::_before();
+		parent::_before ();
+		$this->config ["cache"] ["directory"] = "cache-tests/";
 		$this->_startServices ();
 		$this->startup = new Startup ();
 		$this->_initRequest ( 'TestController', 'GET' );
