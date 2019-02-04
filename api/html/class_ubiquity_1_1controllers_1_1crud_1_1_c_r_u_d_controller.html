@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.4</span>
+   &#160;<span id="projectnumber">2.0.9</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -84,9 +84,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1crud_
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="#pri-methods">Private Member Functions</a>  </div>
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">CRUDController Class Reference</div>  </div>
 </div><!--header-->
@@ -99,21 +97,23 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1crud_
  <div class="center">
   <img src="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.png" usemap="#CRUDController_map" alt=""/>
   <map id="CRUDController_map" name="CRUDController_map">
-<area href="class_ubiquity_1_1controllers_1_1_controller_base.html" alt="ControllerBase" shape="rect" coords="0,56,159,80"/>
-<area href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html" alt="MessagesTrait" shape="rect" coords="169,56,328,80"/>
-<area href="interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html" alt="HasModelViewerInterface" shape="rect" coords="338,56,497,80"/>
-<area href="class_ubiquity_1_1controllers_1_1_controller.html" title="Base class for controllers. " alt="Controller" shape="rect" coords="0,0,159,24"/>
+<area href="class_ubiquity_1_1controllers_1_1_controller_base.html" alt="ControllerBase" shape="rect" coords="0,56,166,80"/>
+<area href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html" alt="MessagesTrait" shape="rect" coords="176,56,342,80"/>
+<area href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html" alt="CRUDControllerUtilitiesTrait" shape="rect" coords="352,56,518,80"/>
+<area href="interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html" alt="HasModelViewerInterface" shape="rect" coords="528,56,694,80"/>
+<area href="class_ubiquity_1_1controllers_1_1_controller.html" title="Base class for controllers. " alt="Controller" shape="rect" coords="0,0,166,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a149eb92716c1084a935e04a8d95f7347"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a149eb92716c1084a935e04a8d95f7347">index</a> ()</td></tr>
-<tr class="memdesc:a149eb92716c1084a935e04a8d95f7347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default page : list all objects.  <a href="#a149eb92716c1084a935e04a8d95f7347">More...</a><br /></td></tr>
+<tr class="memdesc:a149eb92716c1084a935e04a8d95f7347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default page : list all objects Uses modelViewer.isModal, modelViewer.getModelDataTable Uses <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html#a0c4b4aaf46d1e264775d02f4ef0be1ba" title="To override Returns the template for the index route (default : /crud/index.html) ...">CRUDFiles.getViewIndex</a> template (default : /crud/index.html) Triggers the events onDisplayElements,beforeLoadView.  <a href="#a149eb92716c1084a935e04a8d95f7347">More...</a><br /></td></tr>
 <tr class="separator:a149eb92716c1084a935e04a8d95f7347"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad45dd0b8db78b8892028cef02f5b44d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ad45dd0b8db78b8892028cef02f5b44d3">_getInstancesFilter</a> ($model)</td></tr>
-<tr class="separator:ad45dd0b8db78b8892028cef02f5b44d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9a635e10bc35ad531c68b8bc9d2f3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#adc9a635e10bc35ad531c68b8bc9d2f3c">updateMember</a> ($member, $callback=false)</td></tr>
+<tr class="separator:adc9a635e10bc35ad531c68b8bc9d2f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8563034d9f1632d2f83ff49dd0104872"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a8563034d9f1632d2f83ff49dd0104872">refresh_</a> ()</td></tr>
+<tr class="memdesc:a8563034d9f1632d2f83ff49dd0104872"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refreshes the area corresponding to the DataTable.  <a href="#a8563034d9f1632d2f83ff49dd0104872">More...</a><br /></td></tr>
 <tr class="separator:a8563034d9f1632d2f83ff49dd0104872"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a649f51672eea883602ee239e5d3a5997"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a649f51672eea883602ee239e5d3a5997">edit</a> ($modal=&quot;no&quot;, $ids=&quot;&quot;)</td></tr>
 <tr class="memdesc:a649f51672eea883602ee239e5d3a5997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Edits an instance.  <a href="#a649f51672eea883602ee239e5d3a5997">More...</a><br /></td></tr>
@@ -121,6 +121,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aecdbe3615973e0882335d16af111760c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#aecdbe3615973e0882335d16af111760c">newModel</a> ($modal=&quot;no&quot;)</td></tr>
 <tr class="memdesc:aecdbe3615973e0882335d16af111760c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new instance and edits it.  <a href="#aecdbe3615973e0882335d16af111760c">More...</a><br /></td></tr>
 <tr class="separator:aecdbe3615973e0882335d16af111760c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa79caf3934e4b7fa0efe087357259e3d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#aa79caf3934e4b7fa0efe087357259e3d">editMember</a> ($member)</td></tr>
+<tr class="separator:aa79caf3934e4b7fa0efe087357259e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee7a0b7c039b4e7b1e9b6369c72497c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#aee7a0b7c039b4e7b1e9b6369c72497c3">display</a> ($modal=&quot;no&quot;, $ids=&quot;&quot;)</td></tr>
 <tr class="memdesc:aee7a0b7c039b4e7b1e9b6369c72497c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays an instance.  <a href="#aee7a0b7c039b4e7b1e9b6369c72497c3">More...</a><br /></td></tr>
 <tr class="separator:aee7a0b7c039b4e7b1e9b6369c72497c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,8 +139,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaf28d5ac1cb666403b89871949c97a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa906108cfd3c16703cc7c0c61690940f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#aa906108cfd3c16703cc7c0c61690940f">detailClick</a> ($url)</td></tr>
 <tr class="separator:aa906108cfd3c16703cc7c0c61690940f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1728d8b515816623b042eeb85e48f77f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a1728d8b515816623b042eeb85e48f77f">_getAdminData</a> ()</td></tr>
-<tr class="separator:a1728d8b515816623b042eeb85e48f77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_ubiquity_1_1controllers_1_1_controller_base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_ubiquity_1_1controllers_1_1_controller_base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1_controller_base.html">ControllerBase</a></td></tr>
 <tr class="memitem:a91098fa7d1917ce4833f284bbef12627 inherit pub_methods_class_ubiquity_1_1controllers_1_1_controller_base"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1_controller_base.html#a91098fa7d1917ce4833f284bbef12627">initialize</a> ()</td></tr>
 <tr class="separator:a91098fa7d1917ce4833f284bbef12627 inherit pub_methods_class_ubiquity_1_1controllers_1_1_controller_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,57 +186,31 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7a0e99b61f747f3b7e542df8140eb1ba inherit pub_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f264bde41669e90f8df8627b7444788 inherit pub_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html#a4f264bde41669e90f8df8627b7444788">showSimpleMessage</a> ($content, $type, $title=null, $icon=&quot;info&quot;, $timeout=NULL, $staticName=null)</td></tr>
 <tr class="separator:a4f264bde41669e90f8df8627b7444788 inherit pub_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad808d545ba09d4ddad7c6b3746bb8b2f inherit pub_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html#ad808d545ba09d4ddad7c6b3746bb8b2f">showConfMessage</a> ($content, $type, $title, $url, $responseElement, $data, $attributes=NULL)</td></tr>
-<tr class="separator:ad808d545ba09d4ddad7c6b3746bb8b2f inherit pub_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b79eb8dc929a4fca7da4c8e2f17dd1b inherit pub_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html#a4b79eb8dc929a4fca7da4c8e2f17dd1b">showConfMessage</a> ($content, $type, $title, $icon, $url, $responseElement, $data, $attributes=NULL)</td></tr>
+<tr class="separator:a4b79eb8dc929a4fca7da4c8e2f17dd1b inherit pub_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html">CRUDControllerUtilitiesTrait</a></td></tr>
+<tr class="memitem:a80a71e60aa536de9b98b7b773fb54bec inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a80a71e60aa536de9b98b7b773fb54bec">loadView</a> ($viewName, $pData=NULL, $asString=false)</td></tr>
+<tr class="separator:a80a71e60aa536de9b98b7b773fb54bec inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a149eb92716c1084a935e04a8d95f7347 inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a149eb92716c1084a935e04a8d95f7347">index</a> ()</td></tr>
+<tr class="separator:a149eb92716c1084a935e04a8d95f7347 inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afabd88e26b52cfdbcf65ddd5f7c3fef8 inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#afabd88e26b52cfdbcf65ddd5f7c3fef8">_getBaseRoute</a> ()</td></tr>
+<tr class="separator:afabd88e26b52cfdbcf65ddd5f7c3fef8 inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1728d8b515816623b042eeb85e48f77f inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a1728d8b515816623b042eeb85e48f77f">_getAdminData</a> ()</td></tr>
+<tr class="separator:a1728d8b515816623b042eeb85e48f77f inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f2a055258adc245af3d808a9b7c9edf inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a3f2a055258adc245af3d808a9b7c9edf">_getFiles</a> ()</td></tr>
+<tr class="separator:a3f2a055258adc245af3d808a9b7c9edf inherit pub_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html">HasModelViewerInterface</a></td></tr>
+<tr class="memitem:a1728d8b515816623b042eeb85e48f77f inherit pub_methods_interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html#a1728d8b515816623b042eeb85e48f77f">_getAdminData</a> ()</td></tr>
+<tr class="separator:a1728d8b515816623b042eeb85e48f77f inherit pub_methods_interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afabd88e26b52cfdbcf65ddd5f7c3fef8 inherit pub_methods_interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html#afabd88e26b52cfdbcf65ddd5f7c3fef8">_getBaseRoute</a> ()</td></tr>
 <tr class="separator:afabd88e26b52cfdbcf65ddd5f7c3fef8 inherit pub_methods_interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:ad0b1426de558936e253b22df166ba424"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ad0b1426de558936e253b22df166ba424">getInstances</a> (&amp;$totalCount, $page=1, $id=null)</td></tr>
-<tr class="separator:ad0b1426de558936e253b22df166ba424"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afce08894c25d78aa0fa63f14fa9c2886"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#afce08894c25d78aa0fa63f14fa9c2886">search</a> ($model, $search)</td></tr>
-<tr class="separator:afce08894c25d78aa0fa63f14fa9c2886"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35d37f23b5935befaf63966aee282ccc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a35d37f23b5935befaf63966aee282ccc">_edit</a> ($instance, $modal=&quot;no&quot;)</td></tr>
-<tr class="separator:a35d37f23b5935befaf63966aee282ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc72a1b1ffe7037729ff188472b4946b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#acc72a1b1ffe7037729ff188472b4946b">_showModel</a> ($id=null)</td></tr>
-<tr class="separator:acc72a1b1ffe7037729ff188472b4946b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace8d55637e04198854efb135b49a437e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ace8d55637e04198854efb135b49a437e">_deleteMultiple</a> ($data, $action, $target, $condition)</td></tr>
-<tr class="memdesc:ace8d55637e04198854efb135b49a437e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to delete multiple objects.  <a href="#ace8d55637e04198854efb135b49a437e">More...</a><br /></td></tr>
-<tr class="separator:ace8d55637e04198854efb135b49a437e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adef734655684377251fa2c5a125f576b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#adef734655684377251fa2c5a125f576b">refreshInstance</a> ($instance, $isNew)</td></tr>
-<tr class="separator:adef734655684377251fa2c5a125f576b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a378f38cff59451fa95efc4ae3e7fcf08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a378f38cff59451fa95efc4ae3e7fcf08">getAdminData</a> ()</td></tr>
-<tr class="memdesc:a378f38cff59451fa95efc4ae3e7fcf08"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for defining a new adminData.  <a href="#a378f38cff59451fa95efc4ae3e7fcf08">More...</a><br /></td></tr>
-<tr class="separator:a378f38cff59451fa95efc4ae3e7fcf08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a585deaa86f8c550f1c2826c6d4820ae6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a585deaa86f8c550f1c2826c6d4820ae6">getModelViewer</a> ()</td></tr>
-<tr class="memdesc:a585deaa86f8c550f1c2826c6d4820ae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for defining a new ModelViewer.  <a href="#a585deaa86f8c550f1c2826c6d4820ae6">More...</a><br /></td></tr>
-<tr class="separator:a585deaa86f8c550f1c2826c6d4820ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7010e197d8dce475dfdd443c11dd7ee9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a7010e197d8dce475dfdd443c11dd7ee9">getFiles</a> ()</td></tr>
-<tr class="memdesc:a7010e197d8dce475dfdd443c11dd7ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for changing view files.  <a href="#a7010e197d8dce475dfdd443c11dd7ee9">More...</a><br /></td></tr>
-<tr class="separator:a7010e197d8dce475dfdd443c11dd7ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54ecee00f83d387598096653b07f10c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a54ecee00f83d387598096653b07f10c5">getEvents</a> ()</td></tr>
-<tr class="memdesc:a54ecee00f83d387598096653b07f10c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for changing events.  <a href="#a54ecee00f83d387598096653b07f10c5">More...</a><br /></td></tr>
-<tr class="separator:a54ecee00f83d387598096653b07f10c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html">MessagesTrait</a></td></tr>
-<tr class="memitem:ab205202d5e6be605abe8774d3b24da73 inherit pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html#ab205202d5e6be605abe8774d3b24da73">_showSimpleMessage</a> (<a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html">CRUDMessage</a> $message, $staticName=null)</td></tr>
-<tr class="separator:ab205202d5e6be605abe8774d3b24da73 inherit pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94259800d8f88f3a277c2302d8573d8e inherit pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html#a94259800d8f88f3a277c2302d8573d8e">_showConfMessage</a> (<a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html">CRUDMessage</a> $message, $url, $responseElement, $data, $attributes=NULL)</td></tr>
-<tr class="separator:a94259800d8f88f3a277c2302d8573d8e inherit pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f2a055258adc245af3d808a9b7c9edf inherit pub_methods_interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html#a3f2a055258adc245af3d808a9b7c9edf">_getFiles</a> ()</td></tr>
+<tr class="separator:a3f2a055258adc245af3d808a9b7c9edf inherit pub_methods_interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a08fdd91bde255dbe3e2d15a22d9663e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a08fdd91bde255dbe3e2d15a22d9663e8">$model</a></td></tr>
 <tr class="separator:a08fdd91bde255dbe3e2d15a22d9663e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e91173b0626f88675de9b7ec23542dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a9e91173b0626f88675de9b7ec23542dd">$modelViewer</a></td></tr>
-<tr class="separator:a9e91173b0626f88675de9b7ec23542dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bcec9bbd34255927faaf155bf3a940a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a1bcec9bbd34255927faaf155bf3a940a">$events</a></td></tr>
-<tr class="separator:a1bcec9bbd34255927faaf155bf3a940a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4c9680e6a6970bfc67e7ef0135bd267"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ae4c9680e6a6970bfc67e7ef0135bd267">$crudFiles</a></td></tr>
-<tr class="separator:ae4c9680e6a6970bfc67e7ef0135bd267"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8a28cce12b34e5384f246e90abc9318"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ad8a28cce12b34e5384f246e90abc9318">$adminDatas</a></td></tr>
-<tr class="separator:ad8a28cce12b34e5384f246e90abc9318"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10dad9009ff7a9d585fe258645a0d97b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a10dad9009ff7a9d585fe258645a0d97b">$activePage</a></td></tr>
 <tr class="separator:a10dad9009ff7a9d585fe258645a0d97b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_ubiquity_1_1controllers_1_1_controller_base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_ubiquity_1_1controllers_1_1_controller_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1_controller_base.html">ControllerBase</a></td></tr>
@@ -247,361 +221,62 @@ Protected Attributes</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_ubiquity_1_1controllers_1_1_controller')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html">Controller</a></td></tr>
 <tr class="memitem:acccf2eac8663e0cebe8101e90fbab089 inherit pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#acccf2eac8663e0cebe8101e90fbab089">$view</a></td></tr>
 <tr class="separator:acccf2eac8663e0cebe8101e90fbab089 inherit pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html">CRUDControllerUtilitiesTrait</a></td></tr>
+<tr class="memitem:a9e91173b0626f88675de9b7ec23542dd inherit pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a9e91173b0626f88675de9b7ec23542dd">$modelViewer</a></td></tr>
+<tr class="separator:a9e91173b0626f88675de9b7ec23542dd inherit pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8a28cce12b34e5384f246e90abc9318 inherit pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#ad8a28cce12b34e5384f246e90abc9318">$adminDatas</a></td></tr>
+<tr class="separator:ad8a28cce12b34e5384f246e90abc9318 inherit pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bcec9bbd34255927faaf155bf3a940a inherit pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a1bcec9bbd34255927faaf155bf3a940a">$events</a></td></tr>
+<tr class="separator:a1bcec9bbd34255927faaf155bf3a940a inherit pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4c9680e6a6970bfc67e7ef0135bd267 inherit pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#ae4c9680e6a6970bfc67e7ef0135bd267">$crudFiles</a></td></tr>
+<tr class="separator:ae4c9680e6a6970bfc67e7ef0135bd267 inherit pro_attribs_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a4cf504c68fda5644ea8a429346d0ccf0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a4cf504c68fda5644ea8a429346d0ccf0">_renderDataTableForRefresh</a> ($instances, $model, $totalCount)</td></tr>
-<tr class="separator:a4cf504c68fda5644ea8a429346d0ccf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50add1041c8caad54c79af5994a71349"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a50add1041c8caad54c79af5994a71349">getModelInstance</a> ($ids)</td></tr>
-<tr class="separator:a50add1041c8caad54c79af5994a71349"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a0e99b61f747f3b7e542df8140eb1ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a7a0e99b61f747f3b7e542df8140eb1ba">_getModelViewer</a> ()</td></tr>
-<tr class="separator:a7a0e99b61f747f3b7e542df8140eb1ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f2a055258adc245af3d808a9b7c9edf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a3f2a055258adc245af3d808a9b7c9edf">_getFiles</a> ()</td></tr>
-<tr class="separator:a3f2a055258adc245af3d808a9b7c9edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81c43af86f659468a7dc484a95b178e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a81c43af86f659468a7dc484a95b178e9">_getEvents</a> ()</td></tr>
-<tr class="separator:a81c43af86f659468a7dc484a95b178e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7975cac6ad37f5b551d0db0c71e1d97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#ad7975cac6ad37f5b551d0db0c71e1d97">getSingleton</a> ($value, $method)</td></tr>
-<tr class="separator:ad7975cac6ad37f5b551d0db0c71e1d97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d0c565a396b8824eadb4a32e3f7326c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a5d0c565a396b8824eadb4a32e3f7326c">crudLoadView</a> ($viewName, $vars=[])</td></tr>
-<tr class="separator:a5d0c565a396b8824eadb4a32e3f7326c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html">MessagesTrait</a></td></tr>
+<tr class="memitem:ab205202d5e6be605abe8774d3b24da73 inherit pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html#ab205202d5e6be605abe8774d3b24da73">_showSimpleMessage</a> (<a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html">CRUDMessage</a> $message, $staticName=null)</td></tr>
+<tr class="separator:ab205202d5e6be605abe8774d3b24da73 inherit pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94259800d8f88f3a277c2302d8573d8e inherit pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html#a94259800d8f88f3a277c2302d8573d8e">_showConfMessage</a> (<a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html">CRUDMessage</a> $message, $url, $responseElement, $data, $attributes=NULL)</td></tr>
+<tr class="separator:a94259800d8f88f3a277c2302d8573d8e inherit pro_methods_class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html">CRUDControllerUtilitiesTrait</a></td></tr>
+<tr class="memitem:ab205202d5e6be605abe8774d3b24da73 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#ab205202d5e6be605abe8774d3b24da73">_showSimpleMessage</a> (<a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html">CRUDMessage</a> $message, $staticName=null)</td></tr>
+<tr class="separator:ab205202d5e6be605abe8774d3b24da73 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94259800d8f88f3a277c2302d8573d8e inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a94259800d8f88f3a277c2302d8573d8e">_showConfMessage</a> (<a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_message.html">CRUDMessage</a> $message, $url, $responseElement, $data, $attributes=NULL)</td></tr>
+<tr class="separator:a94259800d8f88f3a277c2302d8573d8e inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0b1426de558936e253b22df166ba424 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#ad0b1426de558936e253b22df166ba424">getInstances</a> (&amp;$totalCount, $page=1, $id=null)</td></tr>
+<tr class="separator:ad0b1426de558936e253b22df166ba424 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afce08894c25d78aa0fa63f14fa9c2886 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#afce08894c25d78aa0fa63f14fa9c2886">search</a> ($model, $search)</td></tr>
+<tr class="separator:afce08894c25d78aa0fa63f14fa9c2886 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54cb346cad18365465ccaf747a17c13b inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a54cb346cad18365465ccaf747a17c13b">updateMemberDataElement</a> ($member, $instance)</td></tr>
+<tr class="separator:a54cb346cad18365465ccaf747a17c13b inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35d37f23b5935befaf63966aee282ccc inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a35d37f23b5935befaf63966aee282ccc">_edit</a> ($instance, $modal=&quot;no&quot;)</td></tr>
+<tr class="separator:a35d37f23b5935befaf63966aee282ccc inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc72a1b1ffe7037729ff188472b4946b inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#acc72a1b1ffe7037729ff188472b4946b">_showModel</a> ($id=null)</td></tr>
+<tr class="separator:acc72a1b1ffe7037729ff188472b4946b inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8d55637e04198854efb135b49a437e inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#ace8d55637e04198854efb135b49a437e">_deleteMultiple</a> ($data, $action, $target, $condition)</td></tr>
+<tr class="memdesc:ace8d55637e04198854efb135b49a437e inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to delete multiple objects.  <a href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#ace8d55637e04198854efb135b49a437e">More...</a><br /></td></tr>
+<tr class="separator:ace8d55637e04198854efb135b49a437e inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adef734655684377251fa2c5a125f576b inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#adef734655684377251fa2c5a125f576b">refreshInstance</a> ($instance, $isNew)</td></tr>
+<tr class="separator:adef734655684377251fa2c5a125f576b inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a378f38cff59451fa95efc4ae3e7fcf08 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a378f38cff59451fa95efc4ae3e7fcf08">getAdminData</a> ()</td></tr>
+<tr class="memdesc:a378f38cff59451fa95efc4ae3e7fcf08 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for defining a new adminData.  <a href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a378f38cff59451fa95efc4ae3e7fcf08">More...</a><br /></td></tr>
+<tr class="separator:a378f38cff59451fa95efc4ae3e7fcf08 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a585deaa86f8c550f1c2826c6d4820ae6 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a585deaa86f8c550f1c2826c6d4820ae6">getModelViewer</a> ()</td></tr>
+<tr class="memdesc:a585deaa86f8c550f1c2826c6d4820ae6 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for defining a new ModelViewer.  <a href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a585deaa86f8c550f1c2826c6d4820ae6">More...</a><br /></td></tr>
+<tr class="separator:a585deaa86f8c550f1c2826c6d4820ae6 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7010e197d8dce475dfdd443c11dd7ee9 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a7010e197d8dce475dfdd443c11dd7ee9">getFiles</a> ()</td></tr>
+<tr class="memdesc:a7010e197d8dce475dfdd443c11dd7ee9 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for changing view files.  <a href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a7010e197d8dce475dfdd443c11dd7ee9">More...</a><br /></td></tr>
+<tr class="separator:a7010e197d8dce475dfdd443c11dd7ee9 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54ecee00f83d387598096653b07f10c5 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a54ecee00f83d387598096653b07f10c5">getEvents</a> ()</td></tr>
+<tr class="memdesc:a54ecee00f83d387598096653b07f10c5 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for changing events.  <a href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a54ecee00f83d387598096653b07f10c5">More...</a><br /></td></tr>
+<tr class="separator:a54ecee00f83d387598096653b07f10c5 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01390a6627905a9917112fa1dc9c7ed9 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a01390a6627905a9917112fa1dc9c7ed9">getInstanceToString</a> ($instance)</td></tr>
+<tr class="separator:a01390a6627905a9917112fa1dc9c7ed9 inherit pro_methods_class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00018">18</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00017">17</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ace8d55637e04198854efb135b49a437e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace8d55637e04198854efb135b49a437e">&#9670;&nbsp;</a></span>_deleteMultiple()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">_deleteMultiple </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$action</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$target</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$condition</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Helper to delete multiple objects. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramtype">mixed</td><td class="paramname">$data</td><td></td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$action</td><td></td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$target</td><td>the css selector for refreshing </td></tr>
-    <tr><td class="paramtype">callable&#160;|&#160;string</td><td class="paramname">$condition</td><td>the callback for generating the SQL where (for deletion) with the parameter data, or a simple string </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00224">224</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a35d37f23b5935befaf63966aee282ccc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35d37f23b5935befaf63966aee282ccc">&#9670;&nbsp;</a></span>_edit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">_edit </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$instance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$modal</em> = <code>&quot;no&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00150">150</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a1728d8b515816623b042eeb85e48f77f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1728d8b515816623b042eeb85e48f77f">&#9670;&nbsp;</a></span>_getAdminData()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">_getAdminData </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Implements <a class="el" href="interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html#a1728d8b515816623b042eeb85e48f77f">HasModelViewerInterface</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00358">358</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a81c43af86f659468a7dc484a95b178e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81c43af86f659468a7dc484a95b178e9">&#9670;&nbsp;</a></span>_getEvents()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">_getEvents </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00394">394</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a3f2a055258adc245af3d808a9b7c9edf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f2a055258adc245af3d808a9b7c9edf">&#9670;&nbsp;</a></span>_getFiles()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">_getFiles </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00382">382</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="ad45dd0b8db78b8892028cef02f5b44d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad45dd0b8db78b8892028cef02f5b44d3">&#9670;&nbsp;</a></span>_getInstancesFilter()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">_getInstancesFilter </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$model</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Implements <a class="el" href="interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html#ad45dd0b8db78b8892028cef02f5b44d3">HasModelViewerInterface</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00054">54</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a7a0e99b61f747f3b7e542df8140eb1ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a0e99b61f747f3b7e542df8140eb1ba">&#9670;&nbsp;</a></span>_getModelViewer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">_getModelViewer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00370">370</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a4cf504c68fda5644ea8a429346d0ccf0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cf504c68fda5644ea8a429346d0ccf0">&#9670;&nbsp;</a></span>_renderDataTableForRefresh()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">_renderDataTableForRefresh </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$instances</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$model</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$totalCount</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00091">91</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="acc72a1b1ffe7037729ff188472b4946b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc72a1b1ffe7037729ff188472b4946b">&#9670;&nbsp;</a></span>_showModel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">_showModel </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$id</em> = <code>null</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00171">171</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a5d0c565a396b8824eadb4a32e3f7326c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d0c565a396b8824eadb4a32e3f7326c">&#9670;&nbsp;</a></span>crudLoadView()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">crudLoadView </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$viewName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$vars</em> = <code>[]</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00405">405</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
 <a id="a2d7f897ac0256b7a90c46716cf939281"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2d7f897ac0256b7a90c46716cf939281">&#9670;&nbsp;</a></span>delete()</h2>
 
@@ -626,7 +301,7 @@ Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00182">182</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00159">159</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -646,7 +321,7 @@ Private Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00333">333</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00270">270</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -685,7 +360,7 @@ Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00134">134</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00139">139</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -724,237 +399,27 @@ Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00103">103</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00096">96</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
-<a id="a378f38cff59451fa95efc4ae3e7fcf08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a378f38cff59451fa95efc4ae3e7fcf08">&#9670;&nbsp;</a></span>getAdminData()</h2>
+<a id="aa79caf3934e4b7fa0efe087357259e3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa79caf3934e4b7fa0efe087357259e3d">&#9670;&nbsp;</a></span>editMember()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">getAdminData </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>To override for defining a new adminData. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html" title="The base class for displaying datas in CRUD controllers. ">CRUDDatas</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00354">354</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a54ecee00f83d387598096653b07f10c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54ecee00f83d387598096653b07f10c5">&#9670;&nbsp;</a></span>getEvents()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">getEvents </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>To override for changing events. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_events.html">CRUDEvents</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00390">390</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a7010e197d8dce475dfdd443c11dd7ee9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7010e197d8dce475dfdd443c11dd7ee9">&#9670;&nbsp;</a></span>getFiles()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">getFiles </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>To override for changing view files. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html">CRUDFiles</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00378">378</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="ad0b1426de558936e253b22df166ba424"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0b1426de558936e253b22df166ba424">&#9670;&nbsp;</a></span>getInstances()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">getInstances </td>
-          <td>(</td>
-          <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$totalCount</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$page</em> = <code>1</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$id</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00038">38</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a50add1041c8caad54c79af5994a71349"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50add1041c8caad54c79af5994a71349">&#9670;&nbsp;</a></span>getModelInstance()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">getModelInstance </td>
+          <td class="memname">editMember </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$ids</em></td><td>)</td>
+          <td class="paramname"><em>$member</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00337">337</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a585deaa86f8c550f1c2826c6d4820ae6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a585deaa86f8c550f1c2826c6d4820ae6">&#9670;&nbsp;</a></span>getModelViewer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">getModelViewer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>To override for defining a new ModelViewer. </p>
-<dl class="section return"><dt>Returns</dt><dd>ModelViewer </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00366">366</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="ad7975cac6ad37f5b551d0db0c71e1d97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7975cac6ad37f5b551d0db0c71e1d97">&#9670;&nbsp;</a></span>getSingleton()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">getSingleton </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$method</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00398">398</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00122">122</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -973,9 +438,9 @@ Private Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Default page : list all objects. </p>
+<p>Default page : list all objects Uses modelViewer.isModal, modelViewer.getModelDataTable Uses <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html#a0c4b4aaf46d1e264775d02f4ef0be1ba" title="To override Returns the template for the index route (default : /crud/index.html) ...">CRUDFiles.getViewIndex</a> template (default : /crud/index.html) Triggers the events onDisplayElements,beforeLoadView. </p>
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00029">29</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00028">28</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -1003,7 +468,7 @@ Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00117">117</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00110">110</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -1022,45 +487,9 @@ Private Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Refreshes the area corresponding to the DataTable. </p>
+
 <p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00064">64</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="adef734655684377251fa2c5a125f576b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adef734655684377251fa2c5a125f576b">&#9670;&nbsp;</a></span>refreshInstance()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">refreshInstance </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$instance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$isNew</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00285">285</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -1080,45 +509,7 @@ Private Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00248">248</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="afce08894c25d78aa0fa63f14fa9c2886"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afce08894c25d78aa0fa63f14fa9c2886">&#9670;&nbsp;</a></span>search()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">search </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$model</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$search</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00058">58</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00191">191</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -1146,7 +537,7 @@ Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00298">298</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00234">234</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -1168,7 +559,37 @@ Private Member Functions</h2></td></tr>
 <p>Updates an instance from the data posted in a form. </p>
 <dl class="section return"><dt>Returns</dt><dd>object The updated instance </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00258">258</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00202">202</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+
+</div>
+</div>
+<a id="adc9a635e10bc35ad531c68b8bc9d2f3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc9a635e10bc35ad531c68b8bc9d2f3c">&#9670;&nbsp;</a></span>updateMember()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">updateMember </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$member</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$callback</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00037">37</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -1193,79 +614,7 @@ Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00024">24</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="ad8a28cce12b34e5384f246e90abc9318"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8a28cce12b34e5384f246e90abc9318">&#9670;&nbsp;</a></span>$adminDatas</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">$adminDatas</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00023">23</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="ae4c9680e6a6970bfc67e7ef0135bd267"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4c9680e6a6970bfc67e7ef0135bd267">&#9670;&nbsp;</a></span>$crudFiles</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">$crudFiles</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00022">22</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
-<a id="a1bcec9bbd34255927faaf155bf3a940a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1bcec9bbd34255927faaf155bf3a940a">&#9670;&nbsp;</a></span>$events</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">$events</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00021">21</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00020">20</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
 
 </div>
 </div>
@@ -1293,32 +642,8 @@ Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9e91173b0626f88675de9b7ec23542dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e91173b0626f88675de9b7ec23542dd">&#9670;&nbsp;</a></span>$modelViewer</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">$modelViewer</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_c_r_u_d_controller_8php_source.html#l00020">20</a> of file <a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Ubiquity/controllers/crud/<a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a></li>
+<li>src/Ubiquity/controllers/crud/<a class="el" href="_c_r_u_d_controller_8php_source.html">CRUDController.php</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -1327,7 +652,7 @@ Private Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers.html">controllers</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers_1_1crud.html">crud</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html">CRUDController</a></li>
-    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:09 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Mon Feb 4 2019 04:28:16 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

@@ -5,6 +5,7 @@ var class_ubiquity_1_1orm_1_1creator_1_1_member =
     [ "addManyToMany", "class_ubiquity_1_1orm_1_1creator_1_1_member.html#a6f2eee7adf750453e823f013a6830002", null ],
     [ "addManyToOne", "class_ubiquity_1_1orm_1_1creator_1_1_member.html#a2f819306d65d7c5ec2a0d15324938253", null ],
     [ "addOneToMany", "class_ubiquity_1_1orm_1_1creator_1_1_member.html#a6af1f38f0ddec7e2a91b579a0bdb6d68", null ],
+    [ "addValidators", "class_ubiquity_1_1orm_1_1creator_1_1_member.html#a57326421d2df0e5bd744173ce2be2265", null ],
     [ "getDbType", "class_ubiquity_1_1orm_1_1creator_1_1_member.html#a36e6adfcbef4d922b36b8c6cea954c5c", null ],
     [ "getGetter", "class_ubiquity_1_1orm_1_1creator_1_1_member.html#ad8b0113c0d18c9b4ccb81529b5aa1acb", null ],
     [ "getManyToOne", "class_ubiquity_1_1orm_1_1creator_1_1_member.html#a7e5a0b92744719402922084ce88d2708", null ],

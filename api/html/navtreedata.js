@@ -1,13 +1,9 @@
 var NAVTREE =
 [
   [ "Ubiquity", "index.html", [
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", null, [
-      [ "Namespace List", "namespaces.html", "namespaces" ],
-      [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ],
-        [ "Variables", "namespacemembers_vars.html", null ]
-      ] ]
+      [ "Namespace List", "namespaces.html", "namespaces" ]
     ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -20,11 +16,7 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", null, [
-      [ "File List", "files.html", "files" ],
-      [ "Globals", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Variables", "globals_vars.html", null ]
-      ] ]
+      [ "File List", "files.html", "files" ]
     ] ]
   ] ]
 ];
@@ -32,16 +24,19 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_data_cache_8php.html",
-"_u_file_system_8php.html",
-"class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#ac14f99b5df39f469149bf5cb735d64ea",
-"class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a67c6c960449e393f8d9c9227c0905c8f",
-"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a8e9a50d2b67a17a5e43c59045682d8c5",
-"class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#ae7e89ec9a760b5a4a2f2d915380050a1",
-"class_ubiquity_1_1db_1_1_database.html#ae8efadadc0951629356d7585aa23ed60",
-"class_ubiquity_1_1orm_1_1_orm_utils.html#abe7d2d10143c646730df0782a264f3e1",
-"class_ubiquity_1_1orm_1_1reverse_1_1_table_reversor.html#a84b81212fef1b0e013ba34d0c9fd2fee",
-"class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a556a0931d5527e43f436102aa6d7d3fc",
-"doctools_8js.html"
+"_not_empty_validator_8php.html",
+"class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#a83152f39fb1f1f73a7d25d3b991b5b4f",
+"class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#af23480e4715a40089f7e0290074b82df",
+"class_ubiquity_1_1controllers_1_1_startup.html#a1edfce13e91555f721c423a69f935d8a",
+"class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#affa1b19acab951d6af346d7f85b0ac68",
+"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait.html#a3f2a055258adc245af3d808a9b7c9edf",
+"class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html#a095c5d389db211932136b53f25f39685",
+"class_ubiquity_1_1db_1_1_sql_utils.html#a0a8636649359826ae83b0876b814add2",
+"class_ubiquity_1_1orm_1_1creator_1_1_member.html#ab8bb33f458cfb59d5cc0ddb45c2da486",
+"class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait.html#ada99c9f64b150bad6edb513455361fb6",
+"class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#af343507d1926e6ecf964625d41db528c",
+"class_ubiquity_1_1views_1_1engine_1_1micro_1_1_template_parser.html",
+"namespace_ubiquity_1_1orm_1_1core.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

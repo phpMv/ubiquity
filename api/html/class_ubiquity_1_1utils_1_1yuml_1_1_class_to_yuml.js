@@ -15,6 +15,8 @@ var class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml =
     [ "manyToOneTostring", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#abcd38f076be66d582226d87f13c7f43c", null ],
     [ "oneToManyTostring", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a016a3a3264ba20e310e93c15e27374fb", null ],
     [ "parse", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a38d99acc70a1d8fd8f94455743b2d237", null ],
+    [ "parseMethod", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#ab70991ea9ee7f56b457cb26972f06aee", null ],
+    [ "parseProperty", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#af95ab4bbe8ce556648e2f9144c5b0b30", null ],
     [ "setDisplayAssociations", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#adb3096a7a726b878ff593a2e1c8810a4", null ],
     [ "setDisplayMethods", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a6031ed69357bd8d51d9100cb1d547485", null ],
     [ "setDisplayProperties", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a05514cca70b27a047e84ebddde09bd98", null ],

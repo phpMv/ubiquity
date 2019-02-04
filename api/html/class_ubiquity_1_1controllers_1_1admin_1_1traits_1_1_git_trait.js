@@ -1,8 +1,8 @@
 var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait =
 [
     [ "_getAdminData", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a1728d8b515816623b042eeb85e48f77f", null ],
-    [ "_getAdminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a2f32225e4026bee7bb54926d2b33ebf1", null ],
     [ "_getAdminViewer", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a8ea5b67955e5d461bbd70274d6ae7b98", null ],
+    [ "_getFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a3f2a055258adc245af3d808a9b7c9edf", null ],
     [ "_getRepo", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#ad966df4759c6efc302fb5dea07c4c411", null ],
     [ "_git", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a30723835043eb23057ea2dad80bd29d0", null ],
     [ "_refreshParts", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#ace0c46e6c50f2997c4977d2ce3d95a89", null ],
@@ -20,7 +20,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait =
     [ "loadView", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a80a71e60aa536de9b98b7b773fb54bec", null ],
     [ "refreshCommits", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#afeec671257c202d504deef2d7e2e0505", null ],
     [ "refreshFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#aa3893229298e4b453b0649b4765f262f", null ],
-    [ "showConfMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a3130711ef7cb1af29d075ec8e72c5969", null ],
+    [ "showConfMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a65fffa67c9172bd4fc7c2cff6e893ae8", null ],
     [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a4f264bde41669e90f8df8627b7444788", null ],
     [ "updateGitParams", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a600a3e17afcb6ceb940d878934db9ff0", null ]
 ];

@@ -26,6 +26,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files =
     [ "getViewSeoDetails", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#aaf2c7aa6a30a9ba9a6841a15f589cc86", null ],
     [ "getViewSeoIndex", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#aefdd149a8e24fa73457ec3020819585f", null ],
     [ "getViewShowTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a14b65a22ff6e36c1bd16ebb089db691f", null ],
+    [ "getViewTranslateIndex", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a8e0c12316a90c5bc85b4f255b1f7873a", null ],
     [ "getViewYumlReverse", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#a6834b84d0e8557b129b8aebc7b47a03f", null ],
     [ "$viewBase", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html#aa9343708d905912d2a51891ce2523430", null ]
 ];

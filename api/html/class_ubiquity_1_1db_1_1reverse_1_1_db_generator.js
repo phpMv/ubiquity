@@ -30,10 +30,8 @@ var class_ubiquity_1_1db_1_1reverse_1_1_db_generator =
     [ "$fieldMask", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a6cfac5ff8dc25392290aa6ac5446d4fa", null ],
     [ "$fieldTypes", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a8693c80d1448665a9b26c0b04b9b64db", null ],
     [ "$foreignKeyMask", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a03c2b2965cdf2b6b3c490a01ff4ccab7", null ],
-    [ "$intMatch", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a1ce002311fb756851675195e270cbe20", null ],
     [ "$manyToManys", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#ac60a1833adbf51a34de701405abb7e01", null ],
     [ "$nameProtection", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#abd0d9f03c53c741a0a0c7d6879db0eb2", null ],
     [ "$selectDbMask", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#aee07f7d6c69af5e4566b7e0c5de167f7", null ],
-    [ "$sqlScript", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#ac8d122491ca5f2723b8211fa6cfbcbe0", null ],
-    [ "$typeMatch", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a7c8f668445eb461d70ba41c4c33f8bb6", null ]
+    [ "$sqlScript", "class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#ac8d122491ca5f2723b8211fa6cfbcbe0", null ]
 ];

@@ -1,6 +1,6 @@
 var class_ubiquity_1_1controllers_1_1rest_1_1_rest_server =
 [
-    [ "__construct", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#acf2ad978657d47ceab41038dc7d95737", null ],
+    [ "__construct", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a7b103396d136b662e2d0e01de876c659", null ],
     [ "_addHeaderToken", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a6275573a5647b8deb92eedeeee07e2d1", null ],
     [ "_getApiTokens", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a39cde955fcb96e0dda2d4e74a74c5258", null ],
     [ "_getHeader", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a35058f7fd8388739b627d59b4a6f36ec", null ],

@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.4</span>
+   &#160;<span id="projectnumber">2.0.9</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -103,6 +103,9 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 <li>addAutoInc()
 : <a class="el" href="class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a94fb07a9f7923f5fab740242656ac025">DbGenerator</a>
 </li>
+<li>addCallableRoute()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1traits_1_1_router_modifier_trait.html#a66160d97f6a7582e98c360ce69518717">RouterModifierTrait</a>
+</li>
 <li>addControllerCache()
 : <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a0f778cd649ae02167a282881c24f5fdd">RouterCacheTrait</a>
 </li>
@@ -111,6 +114,9 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 </li>
 <li>addDelete()
 : <a class="el" href="class_ubiquity_1_1views_1_1_gui.html#a5a58d7a744d985e9ae7a1fca35253869">Gui</a>
+</li>
+<li>addEditMemberFonctionality()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#aed5fec222be45a7c39a006924059b924">ModelViewer</a>
 </li>
 <li>addFiles()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#affa1b19acab951d6af346d7f85b0ac68">RepositoryGit</a>
@@ -129,6 +135,9 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 </li>
 <li>addKeyValues()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a0b255bf910a69a7053dc7b3db5199bb2">ConditionParser</a>
+</li>
+<li>addListener()
+: <a class="el" href="class_ubiquity_1_1events_1_1_events_manager.html#a92fabb4b24a8c174caa2d9108873f55d">EventsManager</a>
 </li>
 <li>addManyToMany()
 : <a class="el" href="class_ubiquity_1_1db_1_1export_1_1_db_export.html#a0f2fbfd93d0670c6ddca9a59405727ec">DbExport</a>
@@ -162,16 +171,14 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 , <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1_model.html#ac5aa941fc4bf3e17f9e49b9b34cfef39">Model</a>
 </li>
 <li>addOrRemoveValueFromArray()
-: <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a7497a86be20655eedf1be301c560523e">USession</a>
-</li>
-<li>addParam()
-: <a class="el" href="class_ubiquity_1_1js_1_1_jquery.html#a5561d81b6cd230973dd5e0a37056681f">Jquery</a>
+: <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a97258df4a2ba2ab64e5acda64573b0fe">USession</a>
 </li>
 <li>addParams()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a7a5e1c3138a7dfc8a14adb382040a6ee">ConditionParser</a>
 </li>
 <li>addParamsPath()
-: <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ab89ce25c75ab3936d61655037016b84a">ControllerParser</a>
+: <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_callable_parser.html#af5a6adabdc695d7ba1e2168702d7590e">CallableParser</a>
+, <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html#ab89ce25c75ab3936d61655037016b84a">ControllerParserPathTrait</a>
 </li>
 <li>addPart()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a1664ecaef095ba473094e28f8876a0e2">ConditionParser</a>
@@ -186,26 +193,36 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 <li>addProcessor()
 : <a class="el" href="class_ubiquity_1_1log_1_1libraries_1_1_u_monolog.html#a7a48c5c32c213475652fb521e4ce341d">UMonolog</a>
 </li>
+<li>addRestRoutes()
+: <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#ab4fe6b962a0abe38cc1c80d461d1841a">RouterCacheTrait</a>
+</li>
 <li>addRoute()
 : <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#add52b672dacee8822f085cbe9b65d7d6">RouterCacheTrait</a>
-, <a class="el" href="class_ubiquity_1_1controllers_1_1_router.html#ac96535fecece764ca9447209840e7f57">Router</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1traits_1_1_router_modifier_trait.html#a01829b24b3b60846fa49995a9176d21b">RouterModifierTrait</a>
+</li>
+<li>addRoutes()
+: <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a0b7a6f5a7cdacf8278e5a71aa5cb5f22">RouterCacheTrait</a>
+</li>
+<li>addRoutes_()
+: <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a0589bc41114b959b5fe350c49d019545">RouterCacheTrait</a>
+</li>
+<li>addRoutesToRoutes()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1traits_1_1_router_modifier_trait.html#ada6fb0fa85ab5b509d2d5e8a7fc3771e">RouterModifierTrait</a>
 </li>
 <li>addRouteToRoutes()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1_router.html#a2372e685bbbd4522a9092a58578b2b65">Router</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1traits_1_1_router_modifier_trait.html#aa6b077ec34767fd92580ccb555378828">RouterModifierTrait</a>
 </li>
 <li>addScript()
 : <a class="el" href="class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a5818237a5366d01d9e23b3ea64a1c99f">DbGenerator</a>
-, <a class="el" href="class_ubiquity_1_1js_1_1_jquery.html#ad0cb3aa69b527ca37e91e095ced19030">Jquery</a>
-, <a class="el" href="class_ubiquity_1_1js_1_1_js_code.html#ad0cb3aa69b527ca37e91e095ced19030">JsCode</a>
-</li>
-<li>addToCodes()
-: <a class="el" href="class_ubiquity_1_1js_1_1_jquery.html#ae8527c9c8e8a01161bd8fc02907a8460">Jquery</a>
 </li>
 <li>addToken()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a721c28d09d52f1dcdf3b4b3cfc6dc282">ApiTokens</a>
 </li>
 <li>addType()
 : <a class="el" href="class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html#aaf4aaa87a48ea1168c94609f75435871">FlashMessage</a>
+</li>
+<li>addValidators()
+: <a class="el" href="class_ubiquity_1_1orm_1_1creator_1_1_member.html#a57326421d2df0e5bd744173ce2be2265">Member</a>
 </li>
 <li>addValue()
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#a683dee921785b9d556a05641e944a8bd">ManyToManyParser</a>
@@ -217,19 +234,38 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 : <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a264632fa509d595d6e92ebf19d33a82c">DAO</a>
 </li>
 <li>affectsManyToOneFromArray()
-: <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait.html#a60fc7dd96a66b8456921dc48c9a1b14b">DAORelationsTrait</a>
+: <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_assignments_trait.html#a9f125aa5200d26b0bd8b8764189c23fc">DAORelationsAssignmentsTrait</a>
 </li>
 <li>affectsOneToManyFromArray()
-: <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a1444819062418af478dc97434224131b">DAO</a>
+: <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_assignments_trait.html#ab0ca715acee67f882714b6a401a139e3">DAORelationsAssignmentsTrait</a>
 </li>
 <li>alert()
 : <a class="el" href="class_ubiquity_1_1log_1_1_logger.html#a9b94d21604af4b9c4be9448349514b0b">Logger</a>
 </li>
+<li>ALL
+: <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_ip.html#ab56e734000051e5c12c8c5cf6d8d160d">Ip</a>
+</li>
+<li>ALL_NO_PRIV
+: <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_ip.html#a6650db9d9eb94062846f6b984f2ac7de">Ip</a>
+</li>
+<li>ALL_NO_RES
+: <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_ip.html#afb01e673ba1c4056da8612c2231832d8">Ip</a>
+</li>
+<li>ALL_ONLY_PUBLIC
+: <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_ip.html#aa81f6a30d20853d86522f514b8d5c3bb">Ip</a>
+</li>
+<li>apcDelete()
+: <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_array_apc_cache.html#a1c6ba331e3d05830ec9449810f2eda54">ArrayApcCache</a>
+</li>
 <li>apply()
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#ad1b8e50b5302a6440f4e6880e163dfd4">USession</a>
 </li>
+<li>asAnnotation()
+: <a class="el" href="class_ubiquity_1_1annotations_1_1_base_annotation.html#a4b9b9fed46c4b4ca1c62de8d3635755f">BaseAnnotation</a>
+, <a class="el" href="class_ubiquity_1_1annotations_1_1_validator_annotation.html#a4b9b9fed46c4b4ca1c62de8d3635755f">ValidatorAnnotation</a>
+</li>
 <li>asArray()
-: <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979">ControllerParser</a>
+: <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a0cadd9705c355d3eace65fc217fd7aa0">ControllerParser</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_rest_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979">RestControllerParser</a>
 </li>
 <li>asHtml()
@@ -246,6 +282,9 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 : <a class="el" href="class_ubiquity_1_1annotations_1_1_base_annotation.html#af9fd0237c27cd114088e4dcf76ef5616">BaseAnnotation</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a2890c6c1adb3203241d2fac52d8fce68">UArray</a>
 </li>
+<li>assertValidLocale()
+: <a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a511c7f17fe33e3fe2e8cbc8b594a4ce5">TranslatorManager</a>
+</li>
 <li>asText()
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a5f1344e06b0eb07bc93e6f291616e12c">UResponse</a>
 </li>
@@ -253,16 +292,17 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#ab93ec40575cba783fd80b2ed5dcf41c0">UResponse</a>
 </li>
 <li>attemptsNumber()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a130f200c6d28263535df559034204762">AuthController</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_variables_trait.html#a130f200c6d28263535df559034204762">AuthControllerVariablesTrait</a>
 </li>
 <li>attemptsNumberMessage()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a9106fec1f8c637c7946b0735d5e0a2a4">AuthController</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_variables_trait.html#a9106fec1f8c637c7946b0735d5e0a2a4">AuthControllerVariablesTrait</a>
 </li>
 <li>attemptsTimeout()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a88a87900fcac7c59b0e82606742afef2">AuthController</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_core_trait.html#a88a87900fcac7c59b0e82606742afef2">AuthControllerCoreTrait</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_variables_trait.html#a88a87900fcac7c59b0e82606742afef2">AuthControllerVariablesTrait</a>
 </li>
 <li>authLoadView()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a5f5440dda1be4579f6ae6ad61356de62">AuthController</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_core_trait.html#a5f5440dda1be4579f6ae6ad61356de62">AuthControllerCoreTrait</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -271,7 +311,7 @@ $(document).ready(function(){initNavTree('functions_a.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:13 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Mon Feb 4 2019 04:28:22 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

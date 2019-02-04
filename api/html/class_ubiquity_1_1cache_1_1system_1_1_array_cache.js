@@ -12,6 +12,7 @@ var class_ubiquity_1_1cache_1_1system_1_1_array_cache =
     [ "getEntryKey", "class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#ac97e94d37deeb951293028c85dbfb0db", null ],
     [ "getTimestamp", "class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#aff0cbcd61bb5f05632e20fd0baf65714", null ],
     [ "remove", "class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#a95483af4e2c07dc9893fe058b026bd5d", null ],
+    [ "setRoot", "class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#add62296b4282102a718559b183c025bc", null ],
     [ "storeContent", "class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#a92ecbb1a81e82f7397b6016128b594c6", null ],
     [ "$_fileMode", "class_ubiquity_1_1cache_1_1system_1_1_array_cache.html#ac14f99b5df39f469149bf5cb735d64ea", null ]
 ];

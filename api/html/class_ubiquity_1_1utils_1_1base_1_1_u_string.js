@@ -11,9 +11,11 @@ var class_ubiquity_1_1utils_1_1base_1_1_u_string =
     [ "isBooleanTrue", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a853ebbe24f3849e46fbaef45831a2dda", null ],
     [ "isNotNull", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a869a811132ab25fc1154c6898dc4ff49", null ],
     [ "isNull", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#add570fc728a427d79bfe307a9fe68eb1", null ],
+    [ "isValid", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a1ba90c01bec66aeb6e444fcb0e0aef1d", null ],
     [ "mask", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a0df6f6eeef7d57f471aa359970839555", null ],
     [ "pluralize", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ae9b7fa40c4125034cf9cad403cea42f2", null ],
-    [ "replaceArray", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a5b3a1db938c9e204e11e583e904baf1d", null ],
+    [ "replaceArray", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ac04b0c7a7a317eb764e1c66e044ed268", null ],
     [ "replaceFirstOccurrence", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#adfddc5af012b71976f615f658a6806d3", null ],
-    [ "startswith", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a341f878795fe17896d77e1e4277a3f50", null ]
+    [ "startswith", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a341f878795fe17896d77e1e4277a3f50", null ],
+    [ "toString", "class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ac6675c8ec383724ca1ed03309a380abc", null ]
 ];

@@ -13,6 +13,7 @@ var class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache =
     [ "getRoot", "class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#aad5f81bb01a9f12cfb3fc38ca462a90d", null ],
     [ "getTimestamp", "class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#aff0cbcd61bb5f05632e20fd0baf65714", null ],
     [ "remove", "class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#a95483af4e2c07dc9893fe058b026bd5d", null ],
+    [ "setRoot", "class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#a0498fee866c6720c0fde94fcc7664f15", null ],
     [ "store", "class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#a42af565dba40b474c39aad09fbd26ac0", null ],
     [ "storeContent", "class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#a92ecbb1a81e82f7397b6016128b594c6", null ],
     [ "$_root", "class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#a15ea8c78d28d8d9b6023dedbe622c731", null ],

@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.4</span>
+   &#160;<span id="projectnumber">2.0.9</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -91,12 +91,15 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1db_1_1_database.html
 <div class="title">Database Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>PDO database class.  
+ <a href="class_ubiquity_1_1db_1_1_database.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9bd5116e22973751be9c0b42ded266e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a9bd5116e22973751be9c0b42ded266e6">__construct</a> ($dbType, $dbName, $serverName=&quot;localhost&quot;, $port=&quot;3306&quot;, $user=&quot;root&quot;, $password=&quot;&quot;, $options=[], $cache=false)</td></tr>
-<tr class="memdesc:a9bd5116e22973751be9c0b42ded266e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9bd5116e22973751be9c0b42ded266e6">More...</a><br /></td></tr>
-<tr class="separator:a9bd5116e22973751be9c0b42ded266e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac47161d682f3c98c368fcba62bcfbafa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#ac47161d682f3c98c368fcba62bcfbafa">__construct</a> ($dbType, $dbName, $serverName=&quot;127.0.0.1&quot;, $port=&quot;3306&quot;, $user=&quot;root&quot;, $password=&quot;&quot;, $options=[], $cache=false)</td></tr>
+<tr class="memdesc:ac47161d682f3c98c368fcba62bcfbafa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac47161d682f3c98c368fcba62bcfbafa">More...</a><br /></td></tr>
+<tr class="separator:ac47161d682f3c98c368fcba62bcfbafa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78572828d11dcdf2a498497d9001d557"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a78572828d11dcdf2a498497d9001d557">connect</a> ()</td></tr>
 <tr class="memdesc:a78572828d11dcdf2a498497d9001d557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the PDO instance and realize a safe connection.  <a href="#a78572828d11dcdf2a498497d9001d557">More...</a><br /></td></tr>
 <tr class="separator:a78572828d11dcdf2a498497d9001d557"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,8 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1472c9ddeda44de31e4cfe3297cd48de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff4564cb603a37a17b23b8eac39b554c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#aff4564cb603a37a17b23b8eac39b554c">prepareAndFetchAllColumn</a> ($sql, $parameters=null, $column=null)</td></tr>
 <tr class="separator:aff4564cb603a37a17b23b8eac39b554c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86618491f7d6a0821b6d883fd2f868cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a86618491f7d6a0821b6d883fd2f868cb">prepareAndFetchColumn</a> ($sql, $parameters=null, $column=null)</td></tr>
-<tr class="separator:a86618491f7d6a0821b6d883fd2f868cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96a0df818722ed5ff9d82fc4299bc875"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a96a0df818722ed5ff9d82fc4299bc875">prepareAndFetchColumn</a> ($sql, $parameters=null, $columnNumber=null)</td></tr>
+<tr class="separator:a96a0df818722ed5ff9d82fc4299bc875"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24bba973a1b68c97d2e04175fb4a344b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a24bba973a1b68c97d2e04175fb4a344b">execute</a> ($sql)</td></tr>
 <tr class="memdesc:a24bba973a1b68c97d2e04175fb4a344b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute an SQL statement and return the number of affected rows (INSERT, UPDATE or DELETE)  <a href="#a24bba973a1b68c97d2e04175fb4a344b">More...</a><br /></td></tr>
 <tr class="separator:a24bba973a1b68c97d2e04175fb4a344b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,8 +139,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaaedbcc5fda1af124303f22783c74c05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#aaaedbcc5fda1af124303f22783c74c05">count</a> ($tableName, $condition='')</td></tr>
 <tr class="memdesc:aaaedbcc5fda1af124303f22783c74c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of records in $tableName that respects the condition passed as a parameter.  <a href="#aaaedbcc5fda1af124303f22783c74c05">More...</a><br /></td></tr>
 <tr class="separator:aaaedbcc5fda1af124303f22783c74c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8fc1bc2376e77da73d8326d05951556"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#af8fc1bc2376e77da73d8326d05951556">queryColumn</a> ($<a class="el" href="class_ubiquity_1_1db_1_1_database.html#a6b251c8058230359b2922377699c4f29">query</a>)</td></tr>
-<tr class="separator:af8fc1bc2376e77da73d8326d05951556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32c94e3077ebbd70badea6c915032d67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a32c94e3077ebbd70badea6c915032d67">queryColumn</a> ($<a class="el" href="class_ubiquity_1_1db_1_1_database.html#a6b251c8058230359b2922377699c4f29">query</a>, $columnNumber=null)</td></tr>
+<tr class="separator:a32c94e3077ebbd70badea6c915032d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a380bcbf9c2b12d508609656e6306ad35"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a380bcbf9c2b12d508609656e6306ad35">fetchAll</a> ($<a class="el" href="class_ubiquity_1_1db_1_1_database.html#a6b251c8058230359b2922377699c4f29">query</a>)</td></tr>
 <tr class="separator:a380bcbf9c2b12d508609656e6306ad35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af160f7fbbf281d018ae3162521b8267d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#af160f7fbbf281d018ae3162521b8267d">isConnected</a> ()</td></tr>
@@ -154,6 +157,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae81b7186fb97a7c6457edcc68c9aa2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8aa8154ae685caaa8ced9e09d50718b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a8aa8154ae685caaa8ced9e09d50718b0">getPdoObject</a> ()</td></tr>
 <tr class="separator:a8aa8154ae685caaa8ced9e09d50718b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36e6adfcbef4d922b36b8c6cea954c5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a36e6adfcbef4d922b36b8c6cea954c5c">getDbType</a> ()</td></tr>
+<tr class="separator:a36e6adfcbef4d922b36b8c6cea954c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04e0957baeb7acde9c0c86556da2d43f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a04e0957baeb7acde9c0c86556da2d43f">getPassword</a> ()</td></tr>
+<tr class="separator:a04e0957baeb7acde9c0c86556da2d43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a49b8dded6e91a52e2fd07195d334da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a1a49b8dded6e91a52e2fd07195d334da">getOptions</a> ()</td></tr>
+<tr class="separator:a1a49b8dded6e91a52e2fd07195d334da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a000ce1ff20433f6ac9297e01c31d0678"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a000ce1ff20433f6ac9297e01c31d0678">setPort</a> ($port)</td></tr>
+<tr class="separator:a000ce1ff20433f6ac9297e01c31d0678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55e274fa64c9f7618333cb9e9d4bc1ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a55e274fa64c9f7618333cb9e9d4bc1ed">setDbName</a> ($dbName)</td></tr>
+<tr class="separator:a55e274fa64c9f7618333cb9e9d4bc1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45c268861653a20ab9677bbba15ec075"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a45c268861653a20ab9677bbba15ec075">setUser</a> ($user)</td></tr>
+<tr class="separator:a45c268861653a20ab9677bbba15ec075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e35c8d3dbb2c513c618a664389e0926"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a3e35c8d3dbb2c513c618a664389e0926">setPassword</a> ($password)</td></tr>
+<tr class="separator:a3e35c8d3dbb2c513c618a664389e0926"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8213e4c39213f7d6250f72ff6f2699f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1_database.html#a8213e4c39213f7d6250f72ff6f2699f2">setOptions</a> ($options)</td></tr>
+<tr class="separator:a8213e4c39213f7d6250f72ff6f2699f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -189,11 +208,14 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a011800c63ece4cbbfa77136a20607023"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00017">17</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<div class="textblock"><p>PDO database class. </p>
+<dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.3 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00015">15</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9bd5116e22973751be9c0b42ded266e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9bd5116e22973751be9c0b42ded266e6">&#9670;&nbsp;</a></span>__construct()</h2>
+<a id="ac47161d682f3c98c368fcba62bcfbafa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac47161d682f3c98c368fcba62bcfbafa">&#9670;&nbsp;</a></span>__construct()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,7 +236,7 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$serverName</em> = <code>&quot;localhost&quot;</code>, </td>
+          <td class="paramname"><em>$serverName</em> = <code>&quot;127.0.0.1&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -268,7 +290,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00040">40</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00038">38</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -335,7 +357,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00205">205</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00215">215</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -357,7 +379,7 @@ Private Attributes</h2></td></tr>
 <p>Creates the PDO instance and realize a safe connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean true if connection is established </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00067">67</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00066">66</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -396,7 +418,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00231">231</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00241">241</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -425,7 +447,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int the number of rows that were modified or deleted by the SQL statement you issued </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00175">175</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00180">180</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -445,7 +467,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00241">241</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00251">251</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -472,7 +494,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00274">274</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00299">299</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -490,8 +512,29 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>string  </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00262">262</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00282">282</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+
+</div>
+</div>
+<a id="a36e6adfcbef4d922b36b8c6cea954c5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36e6adfcbef4d922b36b8c6cea954c5c">&#9670;&nbsp;</a></span>getDbType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getDbType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>mixed  </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00308">308</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -514,6 +557,46 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a1a49b8dded6e91a52e2fd07195d334da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a49b8dded6e91a52e2fd07195d334da">&#9670;&nbsp;</a></span>getOptions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getOptions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>array  </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00326">326</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+
+</div>
+</div>
+<a id="a04e0957baeb7acde9c0c86556da2d43f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04e0957baeb7acde9c0c86556da2d43f">&#9670;&nbsp;</a></span>getPassword()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getPassword </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>string  </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00317">317</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+
+</div>
+</div>
 <a id="a8aa8154ae685caaa8ced9e09d50718b0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8aa8154ae685caaa8ced9e09d50718b0">&#9670;&nbsp;</a></span>getPdoObject()</h2>
 
@@ -529,7 +612,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00270">270</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00295">295</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -547,8 +630,9 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>string  </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00258">258</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00273">273</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -566,8 +650,9 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>string  </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00179">179</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00189">189</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -602,7 +687,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00161">161</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00166">166</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -621,7 +706,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00218">218</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00228">228</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -639,8 +724,9 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>string  </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00266">266</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00291">291</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -659,7 +745,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00245">245</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00255">255</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -681,7 +767,7 @@ Private Attributes</h2></td></tr>
 <p>Returns the last insert id. </p>
 <dl class="section return"><dt>Returns</dt><dd>integer </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00214">214</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00224">224</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -700,7 +786,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00254">254</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00264">264</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -789,7 +875,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00125">125</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00130">130</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -825,12 +911,12 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00136">136</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00141">141</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
-<a id="a86618491f7d6a0821b6d883fd2f868cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86618491f7d6a0821b6d883fd2f868cb">&#9670;&nbsp;</a></span>prepareAndFetchColumn()</h2>
+<a id="a96a0df818722ed5ff9d82fc4299bc875"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96a0df818722ed5ff9d82fc4299bc875">&#9670;&nbsp;</a></span>prepareAndFetchColumn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -851,7 +937,7 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$column</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>$columnNumber</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -861,7 +947,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00147">147</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00152">152</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -890,7 +976,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00193">193</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00203">203</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -923,8 +1009,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="af8fc1bc2376e77da73d8326d05951556"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8fc1bc2376e77da73d8326d05951556">&#9670;&nbsp;</a></span>queryColumn()</h2>
+<a id="a32c94e3077ebbd70badea6c915032d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32c94e3077ebbd70badea6c915032d67">&#9670;&nbsp;</a></span>queryColumn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -933,13 +1019,49 @@ Private Attributes</h2></td></tr>
           <td class="memname">queryColumn </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$query</em></td><td>)</td>
+          <td class="paramname"><em>$query</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$columnNumber</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00237">237</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00247">247</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+
+</div>
+</div>
+<a id="a55e274fa64c9f7618333cb9e9d4bc1ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55e274fa64c9f7618333cb9e9d4bc1ed">&#9670;&nbsp;</a></span>setDbName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setDbName </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$dbName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$dbName</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00342">342</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -959,7 +1081,85 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00249">249</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00259">259</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+
+</div>
+</div>
+<a id="a8213e4c39213f7d6250f72ff6f2699f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8213e4c39213f7d6250f72ff6f2699f2">&#9670;&nbsp;</a></span>setOptions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setOptions </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00366">366</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+
+</div>
+</div>
+<a id="a3e35c8d3dbb2c513c618a664389e0926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e35c8d3dbb2c513c618a664389e0926">&#9670;&nbsp;</a></span>setPassword()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setPassword </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$password</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$password</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00358">358</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+
+</div>
+</div>
+<a id="a000ce1ff20433f6ac9297e01c31d0678"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a000ce1ff20433f6ac9297e01c31d0678">&#9670;&nbsp;</a></span>setPort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setPort </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$port</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00334">334</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -979,7 +1179,33 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00183">183</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00193">193</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+
+</div>
+</div>
+<a id="a45c268861653a20ab9677bbba15ec075"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45c268861653a20ab9677bbba15ec075">&#9670;&nbsp;</a></span>setUser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setUser </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$user</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$user</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00350">350</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1004,7 +1230,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00026">26</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00024">24</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1028,7 +1254,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00021">21</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00019">19</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1052,7 +1278,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00018">18</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00016">16</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1076,7 +1302,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00027">27</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00025">25</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1100,7 +1326,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00023">23</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00021">21</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1124,7 +1350,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00024">24</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00022">22</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1148,7 +1374,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00020">20</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00018">18</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1172,7 +1398,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00019">19</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00017">17</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1196,7 +1422,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00025">25</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00023">23</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
@@ -1220,12 +1446,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00022">22</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_8php_source.html#l00020">20</a> of file <a class="el" href="_database_8php_source.html">Database.php</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Ubiquity/db/<a class="el" href="_database_8php_source.html">Database.php</a></li>
+<li>src/Ubiquity/db/<a class="el" href="_database_8php_source.html">Database.php</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -1234,7 +1460,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1db.html">db</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1db_1_1_database.html">Database</a></li>
-    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:10 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Mon Feb 4 2019 04:28:17 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

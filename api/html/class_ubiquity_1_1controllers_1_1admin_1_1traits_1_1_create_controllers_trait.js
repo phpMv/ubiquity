@@ -4,7 +4,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trai
     [ "_createClass", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#ac8365ecaaf29be8e2b65c6dceaf32f1d", null ],
     [ "_createController", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a0c171f3547c08ae5bb78fa1e649d5f35", null ],
     [ "_createMethod", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a905cc03e9750db303a074a73fedbd7d4", null ],
-    [ "_getAdminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a2f32225e4026bee7bb54926d2b33ebf1", null ],
+    [ "_getFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a3f2a055258adc245af3d808a9b7c9edf", null ],
     [ "addAuthController", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a1788350669a05aa0fde7e3e768bfc5b2", null ],
     [ "addCrudController", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a7cb4a8dd0b4210a314df432f285d75ea", null ],
     [ "createAuthFilesClass", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#aba4e9210831a86d29656c102f039649e", null ],

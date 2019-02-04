@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.4</span>
+   &#160;<span id="projectnumber">2.0.9</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -98,10 +98,20 @@ $(document).ready(function(){initNavTree('functions_func_l.html','');});
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#aa54322ebfbfa4527ee789df5bfc20e31">ConditionParser</a>
 </li>
 <li>load()
-: <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a276901c86c421cd1f52662cb0f0b7a14">UFileSystem</a>
+: <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#a6b86b51c78571a5fec353c3e9d9aca88">ArrayLoader</a>
+, <a class="el" href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html#a9e76f4e254c0b64d0ca4827e281f25f6">LoaderInterface</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1_messages_catalog.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4">MessagesCatalog</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a276901c86c421cd1f52662cb0f0b7a14">UFileSystem</a>
+</li>
+<li>loadCatalogue()
+: <a class="el" href="class_ubiquity_1_1translation_1_1_translator.html#a9978758107e6b5a1f62837c7b24ff983">Translator</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a8b49b1aa65e7dc95b11336c78968aad5">TranslatorManager</a>
 </li>
 <li>loadDefaultView()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a185d3ac21b5e9e328c09e1824885e253">Controller</a>
+</li>
+<li>loadFile()
+: <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#a64d6ef0b5dd542185ab771b9d169a0da">ArrayLoader</a>
 </li>
 <li>loadManyToOne()
 : <a class="el" href="class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a19af5568579534eec338d921bf38b256">ClassToYuml</a>
@@ -110,7 +120,7 @@ $(document).ready(function(){initNavTree('functions_func_l.html','');});
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#aff183410c1e30a768ccaa1355083b4a3">RepositoryGit</a>
 </li>
 <li>loadObjectFromRow()
-: <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a4dc7f9d958674888c11ad0f591595259">DAO</a>
+: <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a87d538466c95a247f50401c06dabaa6a">DAOCoreTrait</a>
 </li>
 <li>loadOneToManys()
 : <a class="el" href="class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a57073712d534343b5e982bc22a5c10ed">ClassToYuml</a>
@@ -124,14 +134,16 @@ $(document).ready(function(){initNavTree('functions_func_l.html','');});
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a80a71e60aa536de9b98b7b773fb54bec">GitTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_logs_trait.html#a80a71e60aa536de9b98b7b773fb54bec">LogsTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#a80a71e60aa536de9b98b7b773fb54bec">SeoTrait</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_core_trait.html#a80a71e60aa536de9b98b7b773fb54bec">AuthControllerCoreTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_with_auth_trait.html#a80a71e60aa536de9b98b7b773fb54bec">WithAuthTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a80a71e60aa536de9b98b7b773fb54bec">Controller</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a80a71e60aa536de9b98b7b773fb54bec">CRUDControllerUtilitiesTrait</a>
 </li>
 <li>log()
 : <a class="el" href="class_ubiquity_1_1log_1_1_logger.html#af3208ccc7b9a6076b7a34a216610e4e7">Logger</a>
 </li>
 <li>loginLabel()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#ab687352f8b187794853a2fc4d29eefd8">AuthController</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_variables_trait.html#ab687352f8b187794853a2fc4d29eefd8">AuthControllerVariablesTrait</a>
 </li>
 <li>logs()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a3257c03c7bee4ddbfaa8d650543a8c81">UbiquityMyAdminBaseController</a>
@@ -152,7 +164,7 @@ $(document).ready(function(){initNavTree('functions_func_l.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:14 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Mon Feb 4 2019 04:28:22 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

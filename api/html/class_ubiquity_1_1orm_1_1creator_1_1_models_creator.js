@@ -5,6 +5,7 @@ var class_ubiquity_1_1orm_1_1creator_1_1_models_creator =
     [ "createOneClass", "class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#a82ab2bed22447d5e71e79b81c83fbda0", null ],
     [ "createRelations", "class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#a3a631f19d5acf8d9d3264453fffb0f19", null ],
     [ "getFieldsInfos", "class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#a917b5cf6a9fe21878b312f137f1bd8ea", null ],
+    [ "getForeignKeys", "class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#af707f11c06d47e5cffa2696425c0015c", null ],
     [ "getJoinTableArray", "class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#a14974d7aa233a3cc954b9050531e1fc7", null ],
     [ "getPrimaryKeys", "class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#ac2080ca261ce17f09273586a963b7337", null ],
     [ "getTableName", "class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#aeced989fa76f83304f8e41c8bea8ba03", null ],

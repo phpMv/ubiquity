@@ -4,7 +4,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait =
     [ "_addInfoMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#ae9b3de4fa76e2842cdd36abe708628cd", null ],
     [ "_addMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#ad0b6cbdb1e5b0e8f1370604ab0249403", null ],
     [ "_checkStep", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a2ad1fdbcdee21c9ecbe6ba9beaa335d2", null ],
-    [ "_getAdminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a2f32225e4026bee7bb54926d2b33ebf1", null ],
+    [ "_getFiles", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a3f2a055258adc245af3d808a9b7c9edf", null ],
     [ "_isModelsCompleted", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a198b93145a55ea982516e1c54ebda1e2", null ],
     [ "_modelCheckOneNiveau", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a4397c94e88a689ca23d63d358dec5700", null ],
     [ "checkArrayCache", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#abbe89313cfefc1becdafc0b9e8873238", null ],

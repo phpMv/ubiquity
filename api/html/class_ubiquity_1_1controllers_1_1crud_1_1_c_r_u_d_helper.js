@@ -6,5 +6,7 @@ var class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper =
     [ "getMultiWhere", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a0a81e242161ba5e5a954fd93f324e184", null ],
     [ "getPks", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a74ff45c462e10a0bbef36d47c3427030", null ],
     [ "search", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a427a1d2674193a2e0e6cce47f88a12e6", null ],
-    [ "update", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#add9ef105ef2ab2facd720d32c3d1528f", null ]
+    [ "update", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a23bc38512f006cc62cdea823dc1075cb", null ],
+    [ "updateManyToMany", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#a79224a8a14adc369f6e54da92eca4581", null ],
+    [ "updateManyToOne", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_helper.html#ab92c22cac8af09b95e98b188bdd28b49", null ]
 ];

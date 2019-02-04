@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.4</span>
+   &#160;<span id="projectnumber">2.0.9</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -93,40 +93,59 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1cache_1_1parser_1_1_
 <div class="title">ControllerParser Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Scans a controller to detect routes defined by annotations.  
+ <a href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#details">More...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for ControllerParser:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.png" usemap="#ControllerParser_map" alt=""/>
+  <map id="ControllerParser_map" name="ControllerParser_map">
+<area href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html" alt="ControllerParserPathTrait" shape="rect" coords="0,0,156,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae10e2a95818ce5924cf9c36c7943f4b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ae10e2a95818ce5924cf9c36c7943f4b3">parse</a> ($controllerClass)</td></tr>
 <tr class="separator:ae10e2a95818ce5924cf9c36c7943f4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12b8efb717cb31322bfa4d1d75146979"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979">asArray</a> ()</td></tr>
-<tr class="separator:a12b8efb717cb31322bfa4d1d75146979"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cadd9705c355d3eace65fc217fd7aa0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a0cadd9705c355d3eace65fc217fd7aa0">asArray</a> ($minify=false)</td></tr>
+<tr class="separator:a0cadd9705c355d3eace65fc217fd7aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd385c67829effd7f9c6dca817c7fc40"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#acd385c67829effd7f9c6dca817c7fc40">isRest</a> ()</td></tr>
 <tr class="separator:acd385c67829effd7f9c6dca817c7fc40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a5f5ec378068f3e5c50dce6a2c89cfd6f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a5f5ec378068f3e5c50dce6a2c89cfd6f">minifyRoutes</a> (&amp;$routes)</td></tr>
+<tr class="separator:a5f5ec378068f3e5c50dce6a2c89cfd6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab8e307cd75f163e578e4f8892c6a2c1"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#aab8e307cd75f163e578e4f8892c6a2c1">parseRouteArray</a> (&amp;$result, $controllerClass, $routeArray, \ReflectionMethod $method, $methodName, $prefix=&quot;&quot;, $httpMethods=NULL)</td></tr>
 <tr class="separator:aab8e307cd75f163e578e4f8892c6a2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab89ce25c75ab3936d61655037016b84a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ab89ce25c75ab3936d61655037016b84a">addParamsPath</a> ($path, \ReflectionMethod $method, $requirements)</td></tr>
-<tr class="separator:ab89ce25c75ab3936d61655037016b84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html">ControllerParserPathTrait</a></td></tr>
+<tr class="memitem:a13022e56dc25cb2c79ef671eb540c183 inherit pub_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html#a13022e56dc25cb2c79ef671eb540c183">cleanpath</a> ($prefix, $path=&quot;&quot;)</td></tr>
+<tr class="separator:a13022e56dc25cb2c79ef671eb540c183 inherit pub_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab89ce25c75ab3936d61655037016b84a inherit pub_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html#ab89ce25c75ab3936d61655037016b84a">addParamsPath</a> ($path, \ReflectionMethod $method, $requirements)</td></tr>
+<tr class="separator:ab89ce25c75ab3936d61655037016b84a inherit pub_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cd5abf0e1149a00bae969c835f938c0 inherit pub_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html#a8cd5abf0e1149a00bae969c835f938c0">scanParam</a> (&amp;$parameters, &amp;$hasOptional, $matches, $index, $paramMatch, $find, &amp;$path, $requirement)</td></tr>
+<tr class="separator:a8cd5abf0e1149a00bae969c835f938c0 inherit pub_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:ae04424244c5b27426f182c94799cb93d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ae04424244c5b27426f182c94799cb93d">parseMethods</a> ($methods, $controllerClass, $inherited, $automated)</td></tr>
+<tr class="separator:ae04424244c5b27426f182c94799cb93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85c605c95de41f34994e0ba469d84f50"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a85c605c95de41f34994e0ba469d84f50">parseAnnot</a> (&amp;$annot, $method)</td></tr>
+<tr class="separator:a85c605c95de41f34994e0ba469d84f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08717e36b017c31fe1926ea18830e26b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a08717e36b017c31fe1926ea18830e26b">generateRouteAnnotationFromMethod</a> (\ReflectionMethod $method)</td></tr>
 <tr class="separator:a08717e36b017c31fe1926ea18830e26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
-<tr class="memitem:ae265450d78b284d3fe0127f80ee09fb3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ae265450d78b284d3fe0127f80ee09fb3">getPathFromMethod</a> (\ReflectionMethod $method)</td></tr>
-<tr class="separator:ae265450d78b284d3fe0127f80ee09fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80336e8299d017c81a1a892e4d52799b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a80336e8299d017c81a1a892e4d52799b">parseMethodPath</a> (\ReflectionMethod $method, $path)</td></tr>
-<tr class="separator:a80336e8299d017c81a1a892e4d52799b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13022e56dc25cb2c79ef671eb540c183"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a13022e56dc25cb2c79ef671eb540c183">cleanpath</a> ($prefix, $path=&quot;&quot;)</td></tr>
-<tr class="separator:a13022e56dc25cb2c79ef671eb540c183"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cd5abf0e1149a00bae969c835f938c0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a8cd5abf0e1149a00bae969c835f938c0">scanParam</a> (&amp;$parameters, &amp;$hasOptional, $matches, $index, $paramMatch, $find, &amp;$path, $requirement)</td></tr>
-<tr class="separator:a8cd5abf0e1149a00bae969c835f938c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45844c3494dca7099e56dcfd09cf35e6"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a45844c3494dca7099e56dcfd09cf35e6">createRouteMethod</a> (&amp;$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration)</td></tr>
-<tr class="separator:a45844c3494dca7099e56dcfd09cf35e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1105c66788f7e537247f83394b8562a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#af1105c66788f7e537247f83394b8562a">minifyRoute</a> (&amp;$route)</td></tr>
+<tr class="separator:af1105c66788f7e537247f83394b8562a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5d4a35634f25163c3293e5a666eeb09"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ac5d4a35634f25163c3293e5a666eeb09">createRouteMethod</a> (&amp;$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority)</td></tr>
+<tr class="separator:ac5d4a35634f25163c3293e5a666eeb09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -143,57 +162,24 @@ Private Attributes</h2></td></tr>
 Static Private Attributes</h2></td></tr>
 <tr class="memitem:a8f4725709bb81392d58f6f0a35f24f6c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a8f4725709bb81392d58f6f0a35f24f6c">$excludeds</a> =[ &quot;__construct&quot;,&quot;isValid&quot;,&quot;initialize&quot;,&quot;finalize&quot;,&quot;onInvalidControl&quot;,&quot;loadView&quot;,&quot;forward&quot;,&quot;redirectToRoute&quot; ]</td></tr>
 <tr class="separator:a8f4725709bb81392d58f6f0a35f24f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html">ControllerParserPathTrait</a></td></tr>
+<tr class="memitem:ae265450d78b284d3fe0127f80ee09fb3 inherit pro_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html#ae265450d78b284d3fe0127f80ee09fb3">getPathFromMethod</a> (\ReflectionMethod $method)</td></tr>
+<tr class="separator:ae265450d78b284d3fe0127f80ee09fb3 inherit pro_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80336e8299d017c81a1a892e4d52799b inherit pro_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html#a80336e8299d017c81a1a892e4d52799b">parseMethodPath</a> (\ReflectionMethod $method, $path)</td></tr>
+<tr class="separator:a80336e8299d017c81a1a892e4d52799b inherit pro_static_methods_class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00010">10</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<div class="textblock"><p>Scans a controller to detect routes defined by annotations. </p>
+<dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.3 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00016">16</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab89ce25c75ab3936d61655037016b84a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab89ce25c75ab3936d61655037016b84a">&#9670;&nbsp;</a></span>addParamsPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static addParamsPath </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">\ReflectionMethod&#160;</td>
-          <td class="paramname"><em>$method</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$requirements</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00168">168</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
-
-</div>
-</div>
-<a id="a12b8efb717cb31322bfa4d1d75146979"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12b8efb717cb31322bfa4d1d75146979">&#9670;&nbsp;</a></span>asArray()</h2>
+<a id="a0cadd9705c355d3eace65fc217fd7aa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cadd9705c355d3eace65fc217fd7aa0">&#9670;&nbsp;</a></span>asArray()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,56 +187,19 @@ Static Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">asArray </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$minify</em> = <code>false</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00119">119</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00087">87</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
-<a id="a13022e56dc25cb2c79ef671eb540c183"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13022e56dc25cb2c79ef671eb540c183">&#9670;&nbsp;</a></span>cleanpath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static cleanpath </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$prefix</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$path</em> = <code>&quot;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00107">107</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
-
-</div>
-</div>
-<a id="a45844c3494dca7099e56dcfd09cf35e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45844c3494dca7099e56dcfd09cf35e6">&#9670;&nbsp;</a></span>createRouteMethod()</h2>
+<a id="ac5d4a35634f25163c3293e5a666eeb09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5d4a35634f25163c3293e5a666eeb09">&#9670;&nbsp;</a></span>createRouteMethod()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -310,7 +259,13 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$duration</em>&#160;</td>
+          <td class="paramname"><em>$duration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$priority</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -325,7 +280,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00214">214</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00169">169</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
@@ -353,35 +308,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00064">64</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
-
-</div>
-</div>
-<a id="ae265450d78b284d3fe0127f80ee09fb3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae265450d78b284d3fe0127f80ee09fb3">&#9670;&nbsp;</a></span>getPathFromMethod()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static getPathFromMethod </td>
-          <td>(</td>
-          <td class="paramtype">\ReflectionMethod&#160;</td>
-          <td class="paramname"><em>$method</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00070">70</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00081">81</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
@@ -400,7 +327,63 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00220">220</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00175">175</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+
+</div>
+</div>
+<a id="af1105c66788f7e537247f83394b8562a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1105c66788f7e537247f83394b8562a">&#9670;&nbsp;</a></span>minifyRoute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static minifyRoute </td>
+          <td>(</td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$route</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00126">126</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a5f5ec378068f3e5c50dce6a2c89cfd6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f5ec378068f3e5c50dce6a2c89cfd6f">&#9670;&nbsp;</a></span>minifyRoutes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static minifyRoutes </td>
+          <td>(</td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$routes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00120">120</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
@@ -420,12 +403,12 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00017">17</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00024">24</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
-<a id="a80336e8299d017c81a1a892e4d52799b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80336e8299d017c81a1a892e4d52799b">&#9670;&nbsp;</a></span>parseMethodPath()</h2>
+<a id="a85c605c95de41f34994e0ba469d84f50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85c605c95de41f34994e0ba469d84f50">&#9670;&nbsp;</a></span>parseAnnot()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -434,16 +417,16 @@ Static Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static parseMethodPath </td>
+          <td class="memname">parseAnnot </td>
           <td>(</td>
-          <td class="paramtype">\ReflectionMethod&#160;</td>
-          <td class="paramname"><em>$method</em>, </td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$annot</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$path</em>&#160;</td>
+          <td class="paramname"><em>$method</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -453,12 +436,62 @@ Static Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00092">92</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00072">72</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+
+</div>
+</div>
+<a id="ae04424244c5b27426f182c94799cb93d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae04424244c5b27426f182c94799cb93d">&#9670;&nbsp;</a></span>parseMethods()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">parseMethods </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$methods</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$controllerClass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$inherited</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$automated</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00049">49</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
@@ -530,80 +563,6 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8cd5abf0e1149a00bae969c835f938c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cd5abf0e1149a00bae969c835f938c0">&#9670;&nbsp;</a></span>scanParam()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static scanParam </td>
-          <td>(</td>
-          <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$parameters</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$hasOptional</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$matches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$paramMatch</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$find</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$requirement</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00195">195</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
-
-</div>
-</div>
 <h2 class="groupheader">Field Documentation</h2>
 <a id="ae59cce8aa29e170d0f225cea7d0a14fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae59cce8aa29e170d0f225cea7d0a14fd">&#9670;&nbsp;</a></span>$controllerClass</h2>
@@ -625,7 +584,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00011">11</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00018">18</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
@@ -649,7 +608,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00015">15</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00022">22</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
@@ -673,7 +632,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00012">12</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00019">19</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
@@ -697,7 +656,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00014">14</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00021">21</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
@@ -721,12 +680,12 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00013">13</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_parser_8php_source.html#l00020">20</a> of file <a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Ubiquity/cache/parser/<a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a></li>
+<li>src/Ubiquity/cache/parser/<a class="el" href="_controller_parser_8php_source.html">ControllerParser.php</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -735,7 +694,7 @@ Static Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1cache.html">cache</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1cache_1_1parser.html">parser</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html">ControllerParser</a></li>
-    <li class="footer"><small>Generated on Wed Nov 21 2018 03:25:08 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Mon Feb 4 2019 04:28:13 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

@@ -1,6 +1,7 @@
 var namespace_ubiquity_1_1cache =
 [
     [ "database", "namespace_ubiquity_1_1cache_1_1database.html", "namespace_ubiquity_1_1cache_1_1database" ],
+    [ "objects", "namespace_ubiquity_1_1cache_1_1objects.html", "namespace_ubiquity_1_1cache_1_1objects" ],
     [ "parser", "namespace_ubiquity_1_1cache_1_1parser.html", "namespace_ubiquity_1_1cache_1_1parser" ],
     [ "system", "namespace_ubiquity_1_1cache_1_1system.html", "namespace_ubiquity_1_1cache_1_1system" ],
     [ "traits", "namespace_ubiquity_1_1cache_1_1traits.html", "namespace_ubiquity_1_1cache_1_1traits" ],
