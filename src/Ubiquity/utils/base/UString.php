@@ -5,13 +5,21 @@ namespace Ubiquity\utils\base;
 /**
  * String utilities
  *
- * @author jc
- * @version 1.0.0.2
+ * Ubiquity\utils\base$UString
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.2
+ *
  */
 class UString {
 
 	public static function startswith($hay, $needle) {
 		return \substr ( $hay, 0, strlen ( $needle ) ) === $needle;
+	}
+
+	public static function contains($needle, $haystack) {
+		return strpos ( $haystack, $needle ) !== false;
 	}
 
 	public static function endswith($hay, $needle) {

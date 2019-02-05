@@ -37,7 +37,6 @@ class CrudOrgaCest {
 		$I->fillField ( "#frmEdit [name='domain']", "Organization domain test" );
 		$I->fillField ( "#frmEdit [name='aliases']", "Organization aliases test" );
 		$I->click ( "#action-modal-frmEdit-0" );
-		$I->waitForText ( "Modifications were successfully saved", self::TIMEOUT, "body" );
 		$I->waitForText ( "Organization name test", self::TIMEOUT, "body" );
 		$I->click ( "tr:contains('Organization name test') button._delete" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
