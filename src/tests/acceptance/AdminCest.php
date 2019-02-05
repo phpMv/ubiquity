@@ -1,6 +1,6 @@
 <?php
 class AdminCest {
-	const TIMEOUT = 20;
+	const TIMEOUT = 30;
 
 	public function _before(AcceptanceTester $I) {
 		/*
