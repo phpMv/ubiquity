@@ -12,7 +12,7 @@ class UserNormalizer implements NormalizerInterface {
 		return $data instanceof User;
 	}
 
-	public function normalize(User $object) {
+	public function normalize($object) {
 		return [ 'id' => $object->getId (),'email' => $object->getEmail (),'firstname' => $object->getFirstname (),'lastname' => $object->getLastname (),'password' => $object->getPassword (),'translated' => TranslatorManager::trans ( 'translated.2000', [ ], 'phpbenchmarks' ) ];
 	}
 }

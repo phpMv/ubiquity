@@ -79,7 +79,7 @@ class AdminCest {
 	// tests
 	public function tryGotoAdminRest(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Rest", $I );
-		$I->canSee ( "Rest error", "body" );
+		$I->canSee ( "Restfull web service", "body" );
 		$I->click ( "#bt-init-rest-cache" );
 		$I->waitForText ( "Rest service", self::TIMEOUT, "body" );
 		// Add a new resource

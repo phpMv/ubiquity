@@ -13,7 +13,7 @@ class OrgaNormalizer implements NormalizerInterface {
 		return $data instanceof Organization;
 	}
 
-	public function normalize(Organization $object) {
+	public function normalize($object) {
 		return [ 'id' => $object->getId (),'name' => $object->getName (),'domain' => $object->getDomain (),'aliases' => $object->getAliases (),'translated' => TranslatorManager::trans ( 'translated.1000', [ ], 'phpbenchmarks' ),'users' => NormalizersManager::normalizeArray_ ( $object->getUsers () ) ];
 	}
 }
