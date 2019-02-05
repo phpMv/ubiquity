@@ -19,5 +19,12 @@ class CrudOrgaCest {
 		$I->click ( "#action-modal-frmEdit-0" );
 		$I->waitForText ( "Modifications were successfully saved", self::TIMEOUT, "body" );
 		$I->canSee ( "cnam-basse-normandie.fr;cnam.fr", "tr[data-ajax='1'] td[data-field='aliases']" );
+		$I->doubleClick ( "tr[data-ajax='3'] td[data-field='domain']" );
+		$I->waitForElement ( "#frm-member-domain", self::TIMEOUT );
+		$I->fillField ( "[name='domain']", "iutc3.unicaen.fr" );
+		$I->click ( "#btO" );
+		$I->waitForText ( "iutc3.unicaen.fr", self::TIMEOUT );
+		$I->amOnPage ( "/TestCrudOrgas" );
+		$I->see ( "iutc3.unicaen.fr" );
 	}
 }
