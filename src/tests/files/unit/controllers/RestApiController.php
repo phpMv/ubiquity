@@ -7,10 +7,10 @@ use Ubiquity\controllers\rest\RestController;
 use Ubiquity\events\EventsManager;
 use eventListener\DefineLocaleEventListener;
 use models\User;
-use services\Service;
 use normalizer\UserNormalizer;
 use models\Organization;
 use normalizer\OrgaNormalizer;
+use Ubiquity\orm\DAO;
 
 /**
  *
@@ -30,7 +30,8 @@ class RestApiController extends RestController {
 	public function index() {
 		EventsManager::trigger ( DefineLocaleEventListener::EVENT_NAME, $this->translator );
 		NormalizersManager::registerClasses ( [ User::class => UserNormalizer::class,Organization::class => OrgaNormalizer::class ] );
-		$datas = NormalizersManager::normalizeArray_ ( Service::getUsers () );
+		$orgas = DAO::getAll ( Organization::class, '', [ 'users' ] );
+		$datas = NormalizersManager::normalizeArray_ ( $orgas );
 		echo $this->_getResponseFormatter ()->toJson ( $datas );
 	}
 }

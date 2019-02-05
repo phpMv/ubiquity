@@ -88,10 +88,9 @@ class AdminCest {
 		$I->fillField ( "#ctrlName", "RestUsersController" );
 		$I->fillField ( "#route", "/rest/Users" );
 		$I->click ( "#bt-create-new-resource" );
-		$I->waitForText ( "controllers\RestUsersController", self::TIMEOUT, "body" );
-		$I->wait ( 5 );
+		$I->wait ( 10 );
 		$I->click ( "#bt-init-rest-cache" );
-		$I->waitForText ( "/rest/Users/(index/)?", self::TIMEOUT, "body" );
+		$I->wait ( 10 );
 		$I->amOnPage ( "/rest/Users" );
 		$I->see ( '"count":101' );
 		$I->amOnPage ( "/rest/Users/1" );
