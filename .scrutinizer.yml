@@ -47,7 +47,7 @@ build:
           - sudo curl -v http://dev.local/index.php?c=Admin
 
         override:
-          - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml)
+          - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v --debug)
             coverage:
               file: src/tests/_output/coverage.xml
               format: clover
