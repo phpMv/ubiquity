@@ -78,13 +78,16 @@ class DAO {
 	public static function getOneToMany($instance, $member, $included = true, $useCache = NULL, $annot = null) {
 		$ret = array ();
 		$class = get_class ( $instance );
-		if (! isset ( $annot ))
+		if (! isset ( $annot )) {
 			$annot = OrmUtils::getAnnotationInfoMember ( $class, "#oneToMany", $member );
+			var_dump ( $annot );
+			ob_end_flush ();
+		}
 		if ($annot !== false) {
 			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
+			var_dump ( $fkAnnot );
+			ob_end_flush ();
 			if ($fkAnnot !== false) {
-				var_dump ( $annot );
-				ob_end_flush ();
 				$fkv = OrmUtils::getFirstKeyValue ( $instance );
 				$ret = self::_getAll ( $annot ["className"], ConditionParser::simple ( $fkAnnot ["name"] . "= ?", $fkv ), $included, $useCache );
 				if ($modifier = self::getAccessor ( $member, $instance, 'getOneToMany' )) {
