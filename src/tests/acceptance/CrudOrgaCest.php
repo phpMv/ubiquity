@@ -11,7 +11,7 @@ class CrudOrgaCest {
 		$I->see ( "lecnam.net" );
 		// Test relation objects
 		$I->amOnPage ( "/TestCrudOrgas/showDetail/1" );
-		$I->waitForElement ( "users (12)", self::TIMEOUT, "body" );
+		$I->waitForText ( "users (12)", self::TIMEOUT, "body" );
 		// Test object insertion
 		$I->amOnPage ( "/TestCrudOrgas/edit/no/1" );
 		$I->waitForText ( "Editing an existing object", self::TIMEOUT, "body" );
