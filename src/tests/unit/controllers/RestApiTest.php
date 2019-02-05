@@ -61,7 +61,7 @@ class RestApiTest extends BaseTest {
 			$this->assertEquals ( 'index', $this->startup->getAction () );
 			$this->assertEquals ( 0, sizeof ( $this->startup->getActionParams () ) );
 		} );
-		$this->assertTrue ( UString::contains ( 'Conservatoire National des Arts et Métiers', $result ) );
+		$this->assertTrue ( UString::contains ( 'Conservatoire National des Arts', $result ) );
 	}
 }
 
