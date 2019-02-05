@@ -83,8 +83,6 @@ class DAO {
 		}
 		if ($annot !== false) {
 			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
-			var_dump ( [ "annot" => OrmUtils::getAnnotationInfo ( $annot ["className"], "#joinColumn" ),"member" => $annot ["mappedBy"],"class" => $annot ["className"] ] );
-			ob_end_flush ();
 			if ($fkAnnot !== false) {
 				$fkv = OrmUtils::getFirstKeyValue ( $instance );
 				$ret = self::_getAll ( $annot ["className"], ConditionParser::simple ( $fkAnnot ["name"] . "= ?", $fkv ), $included, $useCache );
