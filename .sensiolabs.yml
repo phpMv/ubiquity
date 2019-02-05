@@ -1,14 +1,14 @@
 global_exclude_dirs:
-    - Ubiquity/annotations
-    - Ubiquity/tests
+    - src/Ubiquity/annotations
+    - src/tests
     - docs
     - api
     - documentation
 
 exclude_patterns:
-    - Ubiquity/log/chromePhp.php
-    - Ubiquity/controllers/Autoloader.php
-    - Ubiquity/controllers/admin/UbiquityMyAdminBaseController.php
+    - src/Ubiquity/log/chromePhp.php
+    - src/Ubiquity/controllers/Autoloader.php
+    - src/Ubiquity/controllers/admin/UbiquityMyAdminBaseController.php
 
 rules:
     doctrine.database_query_contains_string_and_variable_concatenation:
