@@ -42,6 +42,6 @@ class CrudOrgaCest {
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
 		$I->click ( "#bt-okay" );
 		$I->waitForText ( "Deletion of", self::TIMEOUT, "body" );
-		$I->dontSee ( "Organization domain test", "body" );
+		$I->dontSee ( "Organization aliases test", "body" );
 	}
 }
