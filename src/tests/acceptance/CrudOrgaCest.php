@@ -6,7 +6,7 @@ class CrudOrgaCest {
 	}
 
 	// tests
-	public function tryToGotoIndex(AcceptanceTester $I) {
+	public function tryToGotoCrudIndex(AcceptanceTester $I) {
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->see ( "lecnam.net" );
 		// Test relation objects
@@ -19,6 +19,7 @@ class CrudOrgaCest {
 		$I->click ( "#action-modal-frmEdit-0" );
 		$I->waitForText ( "Modifications were successfully saved", self::TIMEOUT, "body" );
 		$I->canSee ( "cnam-basse-normandie.fr;cnam.fr", "tr[data-ajax='1'] td[data-field='aliases']" );
+		// Test field updating
 		$I->doubleClick ( "tr[data-ajax='3'] td[data-field='domain']" );
 		$I->waitForElement ( "#frm-member-domain", self::TIMEOUT );
 		$I->fillField ( "[name='domain']", "iutc3.unicaen.fr" );
@@ -26,5 +27,22 @@ class CrudOrgaCest {
 		$I->waitForText ( "iutc3.unicaen.fr", self::TIMEOUT );
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->see ( "iutc3.unicaen.fr" );
+	}
+
+	public function tryToCrudAddNewAndDelete(AcceptanceTester $I) {
+		$I->amOnPage ( "/TestCrudOrgas" );
+		$I->click ( "#btAddNew" );
+		$I->waitForText ( "New object creation", self::TIMEOUT );
+		$I->fillField ( "#frmEdit [name='name']", "Organization name test" );
+		$I->fillField ( "#frmEdit [name='domain']", "Organization domain test" );
+		$I->fillField ( "#frmEdit [name='aliases']", "Organization aliases test" );
+		$I->click ( "#action-modal-frmEdit-0" );
+		$I->waitForText ( "Modifications were successfully saved", "body" );
+		$I->canSee ( "Organization name test", "body" );
+		$I->click ( "tr:contains('Organization name test') button._delete" );
+		$I->waitForText ( "Remove confirmation", self::TIMEOUT );
+		$I->click ( "#bt-okay" );
+		$I->waitForText ( "Deletion of", self::TIMEOUT );
+		$I->dontSee ( "Organization domain test", "body" );
 	}
 }
