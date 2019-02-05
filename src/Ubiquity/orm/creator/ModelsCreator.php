@@ -88,7 +88,7 @@ abstract class ModelsCreator {
 				foreach ( $fks as $fk ) {
 					$field = \lcfirst ( $table );
 					$fkTable = $fk ["TABLE_NAME"];
-					$this->classes [$table]->addOneToMany ( \lcfirst ( $fkTable ) . "s", $table, $this->classes [$fkTable]->getName () );
+					$this->classes [$table]->addOneToMany ( \lcfirst ( $fkTable ) . "s", \lcfirst ( $table ), $this->classes [$fkTable]->getName () );
 					$this->classes [$fkTable]->addManyToOne ( $field, \lcfirst ( $fk ["COLUMN_NAME"] ), $class->getName () );
 				}
 			}
