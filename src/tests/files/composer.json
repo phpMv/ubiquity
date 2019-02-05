@@ -17,5 +17,7 @@
 			"": "app\/",
 			"Ubiquity\\": "Ubiquity/"
 		}
-	}
+	},
+	"minimum-stability": "dev",
+    "prefer-stable": true
 }
