@@ -80,6 +80,8 @@ class DAO {
 		$class = get_class ( $instance );
 		if (! isset ( $annot )) {
 			$annot = OrmUtils::getAnnotationInfoMember ( $class, "#oneToMany", $member );
+			var_dump ( [ "annot" => OrmUtils::getAnnotationInfo ( $class, "#oneToMany" ),"member" => $member,"class" => $class ] );
+			ob_end_flush ();
 		}
 		if ($annot !== false) {
 			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
