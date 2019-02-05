@@ -9,8 +9,7 @@
 		"orm"
 	],
 	"require" : {
-		"php" : ">7.0",
-		"phpmv/ubiquity-codeception": "1.0.x-dev"
+		"php" : ">7.0"
 	},
 	"license" : "Apache-2.0",
 	"authors" : [{
@@ -30,6 +29,7 @@
 		}
 	},
 	"require-dev" : {
-		"phpmv/ubiquity-devtools": "dev-master"
+		"phpmv/ubiquity-devtools": "dev-master",
+		"phpmv/ubiquity-codeception": "^1.0"
 	}
 }
