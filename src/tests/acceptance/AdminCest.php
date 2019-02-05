@@ -159,7 +159,7 @@ class AdminCest {
 		$I->wait ( 5 );
 		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$I->click ( "#seoCtrls-tr-controllersTestSEOController" );
-		$I->waitForText ( "nothing to display", self::TIMEOUT, "body" );
+		$I->waitForText ( "Change Frequency", self::TIMEOUT, "body" );
 	}
 
 	// tests
