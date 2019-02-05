@@ -10,7 +10,7 @@
 	],
 	"require" : {
 		"php" : ">7.0",
-		"phpmv/ubiquity-codeception": "@dev"
+		"phpmv/ubiquity-codeception": "1.0.x-dev"
 	},
 	"license" : "Apache-2.0",
 	"authors" : [{

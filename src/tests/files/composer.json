@@ -6,7 +6,7 @@
 		"phpmv\/php-mv-ui": "dev-master",
 		"codeception/c3": "^2.4",
 		"codeception/codeception": "^2.5",
-		"phpmv/ubiquity-codeception": "@dev"
+		"phpmv/ubiquity-codeception": "1.0.x-dev"
 	},
 	"require-dev": {
 		"monolog\/monolog": "^1.24",
@@ -17,7 +17,5 @@
 			"": "app\/",
 			"Ubiquity\\": "Ubiquity/"
 		}
-	},
-	"minimum-stability": "dev",
-    "prefer-stable": true
+	}
 }
