@@ -8,7 +8,7 @@ use Ubiquity\translation\TranslatorManager;
 /**
  * Startup test case.
  */
-class StartupTest extends BaseTest {
+class RestApiTest extends BaseTest {
 
 	/**
 	 *
