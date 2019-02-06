@@ -12,11 +12,11 @@ class CrudOrgaCest {
 		// Test relation objects
 		$I->amOnPage ( "/TestCrudOrgas/showDetail/1" );
 		$I->waitForText ( "users (12)", self::TIMEOUT, "body" );
-		// Test object insertion
+		// Test object updating
 		$I->amOnPage ( "/TestCrudOrgas/edit/no/1" );
 		$I->waitForText ( "Editing an existing object", self::TIMEOUT, "body" );
 		$I->fillField ( "[name='aliases']", "cnam-basse-normandie.fr;cnam.fr" );
-		$I->click ( "#frm-add-update button.positive" );
+		$I->click ( "#action-modal-frmEdit-0" );
 		$I->waitForText ( "Modifications were successfully saved", self::TIMEOUT, "body" );
 		$I->canSee ( "cnam-basse-normandie.fr;cnam.fr", "tr[data-ajax='1'] td[data-field='aliases']" );
 		// Test field updating
@@ -36,6 +36,7 @@ class CrudOrgaCest {
 		$I->fillField ( "#frmEdit [name='name']", "Organization name test" );
 		$I->fillField ( "#frmEdit [name='domain']", "Organization domain test" );
 		$I->fillField ( "#frmEdit [name='aliases']", "Organization aliases test" );
+
 		$I->click ( "#action-modal-frmEdit-0" );
 		$I->waitForText ( "Organization name test", self::TIMEOUT, "body" );
 		$I->click ( "tr:last-child button._delete" );
