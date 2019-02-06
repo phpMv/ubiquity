@@ -24,7 +24,7 @@ class CacheManager {
 
 	/**
 	 *
-	 * @var AbstractDataCache
+	 * @var \Ubiquity\cache\system\AbstractDataCache
 	 */
 	public static $cache;
 	private static $cacheDirectory;

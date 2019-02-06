@@ -4,6 +4,10 @@ use Ubiquity\contents\validation\ValidatorsManager;
 use models\User;
 use Ubiquity\contents\validation\validators\multiples\IdValidator;
 use Ubiquity\contents\validation\validators\ConstraintViolation;
+use Ubiquity\orm\DAO;
+use models\Organization;
+use Ubiquity\cache\CacheManager;
+use models\Groupe;
 
 /**
  * ValidatorsManager test case.
@@ -64,10 +68,14 @@ class ValidatorsManagerTest extends BaseTest {
 	 * Tests ValidatorsManager::validateInstances()
 	 */
 	public function testValidateInstances() {
-		// TODO Auto-generated ValidatorsManagerTest::testValidateInstances()
-		$this->markTestIncomplete ( "validateInstances test not implemented" );
-
-		ValidatorsManager::validateInstances(/* parameters */);
+		$orgas = DAO::getAll ( Organization::class, '', false );
+		$result = ValidatorsManager::validateInstances ( $orgas );
+		if (sizeof ( $result ) != 0) {
+			$violation = current ( $result );
+			$this->assertTrue ( $violation instanceof ConstraintViolation );
+			$this->assertEquals ( "This value should not be null", $violation->getMessage () );
+			$this->assertEquals ( "domain", $violation->getMember () );
+		}
 	}
 
 	/**
@@ -88,6 +96,17 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->markTestIncomplete ( "initCacheInstanceValidators test not implemented" );
 
 		ValidatorsManager::initCacheInstanceValidators(/* parameters */);
+	}
+
+	/**
+	 * Tests ValidationModelGenerator::__construct()
+	 */
+	public function testValidationModelGenerator() {
+		CacheManager::initModelsCache ( $this->config );
+		ValidatorsManager::start ();
+		$groupes = DAO::getAll ( Groupe::class, '', false );
+		$result = ValidatorsManager::validateInstances ( $groupes );
+		$this->assertEquals ( sizeof ( $result ), 9 );
 	}
 }
 
