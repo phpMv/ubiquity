@@ -1,5 +1,5 @@
 <?php
-class AuthControllerTest {
+class AuthControllerCest {
 	const TIMEOUT = 30;
 
 	public function _before(AcceptanceTester $I) {
