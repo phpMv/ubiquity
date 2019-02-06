@@ -196,7 +196,7 @@ class ValidatorsManager {
 	}
 
 	/**
-	 * Initializes the cache (SessionCache) for the class of înstance
+	 * Initializes the cache (SessionCache) for the class of instance
 	 *
 	 * @param object $instance
 	 * @param string $group
