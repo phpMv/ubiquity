@@ -6,5 +6,13 @@ use Ubiquity\controllers\admin\viewers\ModelViewer;
  * Class TestCrudOrgasViewer
  **/
 class TestCrudOrgasViewer extends ModelViewer{
-	//use override/implement Methods
+	/**
+	 * {@inheritDoc}
+	 * @see \Ubiquity\controllers\admin\viewers\ModelViewer::getDataTableRowButtons()
+	 */
+	protected function getDataTableRowButtons() {
+		return ["display","edit","delete"];
+	}
+
+
 }

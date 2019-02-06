@@ -29,6 +29,7 @@ class CrudOrgaCest {
 		$I->see ( "iutc3.unicaen.fr" );
 	}
 
+	// Tests
 	public function tryToCrudAddNewAndDelete(AcceptanceTester $I) {
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->click ( "#btAddNew" );
@@ -44,5 +45,32 @@ class CrudOrgaCest {
 		$I->click ( "#bt-okay" );
 		$I->waitForText ( "Deletion of", self::TIMEOUT, "body" );
 		$I->dontSee ( "Organization aliases test", "body" );
+	}
+
+	// Tests
+	public function tryToGotoDisplay(AcceptanceTester $I) {
+		$I->amOnPage ( "TestCrudOrgas/display/no/1" );
+		$I->waitForText ( "Organizationsettingss", self::TIMEOUT, "body" );
+		$I->canSee ( "cnam-basse-normandie.fr", "body" );
+		// Test field updating
+		$I->doubleClick ( "td[data-field='aliases']" );
+		$I->waitForElement ( "#frm-member-aliases", self::TIMEOUT );
+		$I->fillField ( "[name='aliases']", "cnam-basse-normandie.fr;cnam.fr;theCnam.org" );
+		$I->click ( "#btO" );
+		$I->waitForText ( "cnam-basse-normandie.fr;cnam.fr;theCnam.org", self::TIMEOUT );
+		$I->amOnPage ( "/TestCrudOrgas" );
+		$I->see ( "cnam-basse-normandie.fr;cnam.fr;theCnam.org" );
+	}
+
+	// Tests
+	public function tryToSearchText(AcceptanceTester $I) {
+		$I->amOnPage ( "/TestCrudOrgas" );
+		$I->fillField ( "#search-lv", "le" );
+		$I->executeJS ( "$('#search-lv').trigger(jQuery.Event('keypress', {keyCode: 13}));" );
+		$I->waitForElement ( "#search-query", self::TIMEOUT );
+		$I->dontSee ( "Université de Caen-Normandie", "#lv" );
+		$I->dontSee ( "IUT Campus III", "#lv" );
+		$I->canSee ( "Conservatoire National des Arts et Métiers", "#lv" );
+		$I->canSee ( "Lycée Sainte-Ursule", "#lv" );
 	}
 }
