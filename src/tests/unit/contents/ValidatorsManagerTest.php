@@ -9,6 +9,7 @@ use models\Organization;
 use Ubiquity\cache\CacheManager;
 use models\Groupe;
 use Ubiquity\orm\creator\database\DbModelsCreator;
+use Ubiquity\controllers\Startup;
 
 /**
  * ValidatorsManager test case.
@@ -105,6 +106,7 @@ class ValidatorsManagerTest extends BaseTest {
 	public function testValidationModelGenerator() {
 		$this->config ["cache"] ["directory"] = "new-cache/";
 		$this->config ["mvcNS"] = [ "models" => "models","controllers" => "controllers","rest" => "" ];
+		Startup::setConfig ( $this->config );
 		(new DbModelsCreator ())->create ( $this->config, false );
 		CacheManager::$cache = null;
 		CacheManager::start ( $this->config );
