@@ -138,6 +138,8 @@ class AdminCest {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$I->click ( "#seoCtrls-tr-controllersTestSEOController" );
 		$I->waitForText ( "Change Frequency", self::TIMEOUT, "body" );
+		$this->amOnPage ( "/TestSEOController" );
+		$I->canSeeInSource ( "http://www.sitemaps.org/schemas/sitemap/0.9" );
 	}
 
 	// tests
