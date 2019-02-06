@@ -103,6 +103,8 @@ class ValidatorsManagerTest extends BaseTest {
 	 */
 	public function testValidationModelGenerator() {
 		$this->config ["cache"] ["directory"] = "new-cache/";
+		CacheManager::$cache = null;
+		CacheManager::start ( $this->config );
 		CacheManager::initModelsCache ( $this->config );
 		ValidatorsManager::start ();
 		$groupes = DAO::getAll ( Groupe::class, '', false );
