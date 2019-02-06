@@ -1,10 +1,15 @@
 <?php
-use Ubiquity\controllers\Startup;
 use Ubiquity\db\Database;
 use Ubiquity\contents\validation\ValidatorsManager;
 use models\User;
 use Ubiquity\contents\validation\validators\ConstraintViolation;
 use Ubiquity\contents\validation\validators\multiples\IdValidator;
+/**
+ * ValidatorsManager test case.
+ *
+ * @covers \Ubiquity\contents\validation\ValidatorsManager
+ *
+ */
 class ValidationTest extends \BaseTest {
 	protected $dbType;
 	protected $dbName;
@@ -38,7 +43,9 @@ class ValidationTest extends \BaseTest {
 			$this->database->connect ();
 	}
 
-	// Test
+	/**
+	 * Tests ValidatorsManager->validate()
+	 */
 	public function validateAUserTest() {
 		$user = new User ();
 		$result = ValidatorsManager::validate ( $user );
