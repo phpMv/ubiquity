@@ -14,10 +14,8 @@ class DatabaseReversorTest extends BaseTest {
 	 */
 	private $databaseReversor;
 
-	/**
-	 * Tests DatabaseReversor->__construct()
-	 */
-	public function test__construct() {
+	protected function _before() {
+		parent::_before ();
 		Startup::setConfig ( $this->config );
 		$this->databaseReversor = new DatabaseReversor ( new DbGenerator () );
 	}
