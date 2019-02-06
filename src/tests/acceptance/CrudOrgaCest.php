@@ -16,7 +16,7 @@ class CrudOrgaCest {
 		$I->amOnPage ( "/TestCrudOrgas/edit/no/1" );
 		$I->waitForText ( "Editing an existing object", self::TIMEOUT, "body" );
 		$I->fillField ( "[name='aliases']", "cnam-basse-normandie.fr;cnam.fr" );
-		$I->click ( "#frmEdit button.positive" );
+		$I->click ( "#frm-add-update button.positive" );
 		$I->waitForText ( "Modifications were successfully saved", self::TIMEOUT, "body" );
 		$I->canSee ( "cnam-basse-normandie.fr;cnam.fr", "tr[data-ajax='1'] td[data-field='aliases']" );
 		// Test field updating
