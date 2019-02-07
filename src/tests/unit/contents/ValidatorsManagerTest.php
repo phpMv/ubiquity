@@ -162,34 +162,41 @@ class ValidatorsManagerTest extends BaseTest {
 
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setIsNull ( 'pas null' );
-		}, IsNullValidator::class );
+		}, IsNullValidator::class, TestClassToValidate::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setNotEmpty ( '' );
-		}, NotEmptyValidator::class );
+		}, NotEmptyValidator::class, TestClassToValidate::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setNotEmpty ( null );
-		}, NotEmptyValidator::class );
+		}, NotEmptyValidator::class, TestClassToValidate::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setNotNull ( null );
-		}, NotNullValidator::class );
+		}, NotNullValidator::class, TestClassToValidate::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setIsFalse ( true );
-		}, IsFalseValidator::class );
+		}, IsFalseValidator::class, TestClassToValidate::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setIsFalse ( "blop" );
-		}, IsFalseValidator::class );
+		}, IsFalseValidator::class, TestClassToValidate::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setIsTrue ( false );
-		}, IsTrueValidator::class );
+		}, IsTrueValidator::class, TestClassToValidate::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$user = new User ();
 			$user->setEmail ( "email" );
 			$object->setType ( $user );
-		}, TypeValidator::class );
+		}, TypeValidator::class, TestClassToValidate::class );
 
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setIsEmpty ( "not empty" );
-		}, IsEmptyValidator::class );
+		}, IsEmptyValidator::class, TestClassToValidate::class );
 	}
 
 	/**
@@ -200,39 +207,46 @@ class ValidatorsManagerTest extends BaseTest {
 		ValidatorsManager::addClassValidators ( TestClassComparison::class );
 		$res = ValidatorsManager::validate ( $object );
 		$this->assertEquals ( 0, sizeof ( $res ) );
+
 		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
 			$object->setEqualsValue ( "not value" );
-		}, EqualsValidator::class );
+		}, EqualsValidator::class, TestClassComparison::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
 			$object->setGreaterThan100 ( 50 );
-		}, GreaterThanValidator::class );
+		}, GreaterThanValidator::class, TestClassComparison::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
 			$object->setGreaterThanOrEquals100 ( 99 );
-		}, GreaterThanOrEqualValidator::class );
+		}, GreaterThanOrEqualValidator::class, TestClassComparison::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
 			$object->setLessThan10 ( 11 );
-		}, LessThanValidator::class );
+		}, LessThanValidator::class, TestClassComparison::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
 			$object->setLessThanOrEquals100 ( 101 );
-		}, LessThanOrEqualValidator::class );
+		}, LessThanOrEqualValidator::class, TestClassComparison::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
 			$object->setRange2_10 ( - 1 );
-		}, RangeValidator::class );
+		}, RangeValidator::class, TestClassComparison::class );
+
 		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
 			$object->setRange2_10 ( 11 );
-		}, RangeValidator::class );
+		}, RangeValidator::class, TestClassComparison::class );
 	}
 
-	protected function testValidator($callback) {
-		$object = new TestClassToValidate ();
+	protected function testValidator($callback, $classname) {
+		$object = new $classname ();
 		$callback ( $object );
 		$res = ValidatorsManager::validate ( $object );
 		$this->assertEquals ( 1, sizeof ( $res ) );
 		return current ( $res );
 	}
 
-	protected function testValidatorInstanceOf($callback, $classValidator) {
-		$constraint = $this->testValidator ( $callback );
+	protected function testValidatorInstanceOf($callback, $classValidator, $classInstance) {
+		$constraint = $this->testValidator ( $callback, $classInstance );
 		$this->assertEquals ( $classValidator, $constraint->getValidatorType () );
 	}
 }
