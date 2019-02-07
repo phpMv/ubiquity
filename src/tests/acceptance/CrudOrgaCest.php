@@ -53,7 +53,7 @@ class CrudOrgaCest {
 		$I->waitForText ( "Organizationsettingss", self::TIMEOUT, "body" );
 		$I->canSee ( "cnam-basse-normandie.fr", "body" );
 		// Test field updating
-		$I->doubleClick ( "td[data-field='aliases']" );
+		$I->doubleClick ( "table._element td[data-field='aliases']" );
 		$I->waitForElement ( "#frm-member-aliases", self::TIMEOUT );
 		$I->fillField ( "[name='aliases']", "cnam-basse-normandie.fr;cnam.fr;theCnam.org" );
 		$I->click ( "#btO" );
