@@ -3,34 +3,40 @@
 namespace services;
 
 class TestClassToValidate {
-	
+
 	/**
+	 *
 	 * @validator("notNull")
 	 */
 	private $notNull;
 
 	/**
+	 *
 	 * @validator("isNull")
 	 */
 	private $isNull;
 
 	/**
+	 *
 	 * @validator("notEmpty")
 	 */
 	private $notEmpty;
-	
+
 	/**
+	 *
 	 * @validator("isBool")
 	 */
 	private $bool;
-	
-	public function __construct(){
-		$this->notNull="plein";
-		$this->bool=true;
-		$this->isNull=null;
-		$this->notEmpty="pas vide";
+
+	public function __construct() {
+		$this->notNull = "plein";
+		$this->bool = true;
+		$this->isNull = null;
+		$this->notEmpty = "pas vide";
 	}
+
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getNotNull() {
@@ -38,6 +44,7 @@ class TestClassToValidate {
 	}
 
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getIsNull() {
@@ -45,13 +52,7 @@ class TestClassToValidate {
 	}
 
 	/**
-	 * @return mixed
-	 */
-	public function getName() {
-		return $this->name;
-	}
-
-	/**
+	 *
 	 * @return mixed
 	 */
 	public function getBool() {
@@ -59,6 +60,7 @@ class TestClassToValidate {
 	}
 
 	/**
+	 *
 	 * @param mixed $notNull
 	 */
 	public function setNotNull($notNull) {
@@ -66,6 +68,7 @@ class TestClassToValidate {
 	}
 
 	/**
+	 *
 	 * @param mixed $isNull
 	 */
 	public function setIsNull($isNull) {
@@ -73,18 +76,27 @@ class TestClassToValidate {
 	}
 
 	/**
-	 * @param mixed $name
-	 */
-	public function setName($name) {
-		$this->name = $name;
-	}
-
-	/**
+	 *
 	 * @param mixed $bool
 	 */
 	public function setBool($bool) {
 		$this->bool = $bool;
 	}
 
+	/**
+	 *
+	 * @return string
+	 */
+	public function getNotEmpty() {
+		return $this->notEmpty;
+	}
+
+	/**
+	 *
+	 * @param string $notEmpty
+	 */
+	public function setNotEmpty($notEmpty) {
+		$this->notEmpty = $notEmpty;
+	}
 }
 

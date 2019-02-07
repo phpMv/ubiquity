@@ -12,6 +12,8 @@ use Ubiquity\orm\creator\database\DbModelsCreator;
 use Ubiquity\controllers\Startup;
 use services\TestClassToValidate;
 use Ubiquity\contents\validation\validators\basic\IsBooleanValidator;
+use Ubiquity\contents\validation\validators\basic\IsNullValidator;
+use Ubiquity\contents\validation\validators\basic\NotEmptyValidator;
 
 /**
  * ValidatorsManager test case.
@@ -145,6 +147,32 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->assertEquals ( "bool", $current->getMember () );
 		$this->assertEquals ( IsBooleanValidator::class, $current->getValidatorType () );
 		$this->assertNull ( $current->getSeverity () );
+
+		$this->testValidatorInstanceOf ( function ($object) {
+			$object->setIsNull('pas null')
+		}, IsNullValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setNotEmpty ( '' );
+		}, NotEmptyValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setNotEmpty ( null );
+		}, NotEmptyValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setNotNull ( null );
+		}, NotEmptyValidator::class );
+	}
+
+	protected function testValidator($callback) {
+		$object = new TestClassToValidate ();
+		$callback ( $object );
+		$res = ValidatorsManager::validate ( $object );
+		$this->assertEquals ( 1, sizeof ( $res ) );
+		return current ( $res );
+	}
+
+	protected function testValidatorInstanceOf($callback, $classValidator) {
+		$constraint = $this->testValidator ( $callback );
+		$this->assertInstanceOf ( $classValidator, $constraint );
 	}
 }
 
