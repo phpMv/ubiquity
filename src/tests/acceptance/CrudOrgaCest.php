@@ -78,6 +78,7 @@ class CrudOrgaCest {
 	// Tests
 	public function tryToDeleteOne(AcceptanceTester $I) {
 		$I->amOnPage ( "TestCrudOrgas/display/no/1" );
+		$I->waitForText ( "Organizationsettingss", self::TIMEOUT, "body" );
 		$I->click ( "._delete._element" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
 		$I->click ( "#bt-okay.negative" );
