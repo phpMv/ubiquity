@@ -87,7 +87,7 @@ class CrudOrgaCest {
 		$I->amOnPage ( "TestCrudOrgas" );
 		$I->click ( "button[data-ajax='4']._delete" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
-		$I->click ( "#content #bt-okay.negative" );
+		$I->click ( "#bt-okay.negative", "#content" );
 		$I->waitForText ( "Can not delete `lycee-sainte-ursule.com`", self::TIMEOUT, "body" );
 	}
 }
