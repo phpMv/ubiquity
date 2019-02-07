@@ -19,6 +19,13 @@ use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
 use Ubiquity\contents\validation\validators\basic\IsTrueValidator;
 use Ubiquity\contents\validation\validators\basic\TypeValidator;
 use Ubiquity\contents\validation\validators\basic\IsEmptyValidator;
+use services\TestClassComparison;
+use Ubiquity\contents\validation\validators\comparison\EqualsValidator;
+use Ubiquity\contents\validation\validators\comparison\GreaterThanValidator;
+use Ubiquity\contents\validation\validators\comparison\GreaterThanOrEqualValidator;
+use Ubiquity\contents\validation\validators\comparison\LessThanValidator;
+use Ubiquity\contents\validation\validators\comparison\LessThanOrEqualValidator;
+use Ubiquity\contents\validation\validators\comparison\RangeValidator;
 
 /**
  * ValidatorsManager test case.
@@ -183,6 +190,37 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setIsEmpty ( "not empty" );
 		}, IsEmptyValidator::class );
+	}
+
+	/**
+	 * Tests comparison validators
+	 */
+	public function testValidatorsComparison() {
+		$object = new TestClassComparison ();
+		ValidatorsManager::addClassValidators ( TestClassComparison::class );
+		$res = ValidatorsManager::validate ( $object );
+		$this->assertEquals ( 0, sizeof ( $res ) );
+		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
+			$object->setEqualsValue ( "not value" );
+		}, EqualsValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
+			$object->setGreaterThan100 ( 50 );
+		}, GreaterThanValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
+			$object->setGreaterThanOrEquals100 ( 99 );
+		}, GreaterThanOrEqualValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
+			$object->setLessThan10 ( 11 );
+		}, LessThanValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
+			$object->setLessThanOrEquals100 ( 101 );
+		}, LessThanOrEqualValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
+			$object->setRange2_10 ( - 1 );
+		}, RangeValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
+			$object->setRange2_10 ( 11 );
+		}, RangeValidator::class );
 	}
 
 	protected function testValidator($callback) {
