@@ -148,8 +148,8 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->assertEquals ( IsBooleanValidator::class, $current->getValidatorType () );
 		$this->assertNull ( $current->getSeverity () );
 
-		$this->testValidatorInstanceOf ( function ($object) {
-			$object->setIsNull('pas null')
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setIsNull ( 'pas null' );
 		}, IsNullValidator::class );
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setNotEmpty ( '' );
