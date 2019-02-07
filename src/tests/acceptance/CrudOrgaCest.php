@@ -79,7 +79,7 @@ class CrudOrgaCest {
 	public function tryToDeleteOne(AcceptanceTester $I) {
 		$I->amOnPage ( "TestCrudOrgas/display/no/1" );
 		$I->waitForText ( "Organizationsettingss", self::TIMEOUT, "body" );
-		$I->click ( "._delete._element" );
+		$I->click ( "a._delete._element", "#buttons" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
 		$I->click ( "#bt-okay.negative" );
 		$I->waitForText ( "Can not delete `lecnam.net`", self::TIMEOUT, "body" );
