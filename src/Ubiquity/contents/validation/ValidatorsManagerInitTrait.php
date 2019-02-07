@@ -21,7 +21,7 @@ trait ValidatorsManagerInitTrait {
 	public static function initModelsValidators(&$config) {
 		$models = CacheManager::getModels ( $config, true );
 		foreach ( $models as $model ) {
-			self::initClassValidators ( $config, $model );
+			self::initClassValidators ( $model );
 		}
 	}
 
@@ -30,10 +30,9 @@ trait ValidatorsManagerInitTrait {
 	 * Parses a class and save validators in cache
 	 * to use in dev only
 	 *
-	 * @param array $config
 	 * @param string $class
 	 */
-	public static function initClassValidators(&$config, $class) {
+	public static function initClassValidators($class) {
 		$parser = new ValidationModelParser ();
 		$parser->parse ( $class );
 		$validators = $parser->getValidators ();

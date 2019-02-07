@@ -135,7 +135,8 @@ class ValidatorsManagerTest extends BaseTest {
 		$res = ValidatorsManager::validate ( $object );
 		$this->assertEquals ( 0, sizeof ( $res ) );
 
-		$res = $object->setBool ( "not boolean" );
+		$object->setBool ( "not boolean" );
+		$res = ValidatorsManager::validate ( $object );
 		$this->assertEquals ( 1, sizeof ( $res ) );
 		$current = current ( $res );
 		$this->assertInstanceOf ( ConstraintViolation::class, $current );
