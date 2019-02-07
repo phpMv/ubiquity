@@ -14,6 +14,11 @@ use services\TestClassToValidate;
 use Ubiquity\contents\validation\validators\basic\IsBooleanValidator;
 use Ubiquity\contents\validation\validators\basic\IsNullValidator;
 use Ubiquity\contents\validation\validators\basic\NotEmptyValidator;
+use Ubiquity\contents\validation\validators\basic\NotNullValidator;
+use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
+use Ubiquity\contents\validation\validators\basic\IsTrueValidator;
+use Ubiquity\contents\validation\validators\basic\TypeValidator;
+use Ubiquity\contents\validation\validators\basic\IsEmptyValidator;
 
 /**
  * ValidatorsManager test case.
@@ -159,7 +164,23 @@ class ValidatorsManagerTest extends BaseTest {
 		}, NotEmptyValidator::class );
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
 			$object->setNotNull ( null );
-		}, NotEmptyValidator::class );
+		}, NotNullValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setIsFalse ( true );
+		}, IsFalseValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setIsFalse ( "blop" );
+		}, IsFalseValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setIsTrue ( false );
+		}, IsTrueValidator::class );
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setType ( $this );
+		}, TypeValidator::class );
+
+		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+			$object->setIsEmpty ( "not empty" );
+		}, IsEmptyValidator::class );
 	}
 
 	protected function testValidator($callback) {

@@ -28,11 +28,39 @@ class TestClassToValidate {
 	 */
 	private $bool;
 
+	/**
+	 *
+	 * @validator("isFalse")
+	 */
+	private $isFalse;
+
+	/**
+	 *
+	 * @validator("isTrue")
+	 */
+	private $isTrue;
+
+	/**
+	 *
+	 * @validator("isEmpty")
+	 */
+	private $isEmpty;
+
+	/**
+	 *
+	 * @validator("type","services\\Service")
+	 */
+	private $type;
+
 	public function __construct() {
 		$this->notNull = "plein";
 		$this->bool = true;
 		$this->isNull = null;
 		$this->notEmpty = "pas vide";
+		$this->isEmpty = '';
+		$this->isFalse = false;
+		$this->isTrue = true;
+		$this->type = new Service ( null );
 	}
 
 	/**
@@ -97,6 +125,70 @@ class TestClassToValidate {
 	 */
 	public function setNotEmpty($notEmpty) {
 		$this->notEmpty = $notEmpty;
+	}
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function getIsFalse() {
+		return $this->isFalse;
+	}
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function getIsTrue() {
+		return $this->isTrue;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getIsEmpty() {
+		return $this->isEmpty;
+	}
+
+	/**
+	 *
+	 * @return \services\Service
+	 */
+	public function getType() {
+		return $this->type;
+	}
+
+	/**
+	 *
+	 * @param boolean $isFalse
+	 */
+	public function setIsFalse($isFalse) {
+		$this->isFalse = $isFalse;
+	}
+
+	/**
+	 *
+	 * @param boolean $isTrue
+	 */
+	public function setIsTrue($isTrue) {
+		$this->isTrue = $isTrue;
+	}
+
+	/**
+	 *
+	 * @param string $isEmpty
+	 */
+	public function setIsEmpty($isEmpty) {
+		$this->isEmpty = $isEmpty;
+	}
+
+	/**
+	 *
+	 * @param \services\Service $type
+	 */
+	public function setType($type) {
+		$this->type = $type;
 	}
 }
 
