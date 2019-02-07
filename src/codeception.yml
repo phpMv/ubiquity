@@ -22,6 +22,7 @@ coverage:
         - Ubiquity/controllers/admin/
         - Ubiquity/annotations/
         - Ubiquity/utils/git/UGitRepository.php
+        - Ubiquity/views/engine/micro/
 settings:
  bootstrap: _bootstrap.php
 reporters:
