@@ -143,6 +143,32 @@ class DAOTest extends BaseTest {
 	}
 
 	/**
+	 * Tests DAO::uCount()
+	 */
+	public function testUCount() {
+		$res = DAO::uCount ( User::class, "firstname like ? or lastname like ?", [ "b%","a%" ] );
+		$this->assertEquals ( 8, $res );
+	}
+
+	/**
+	 * Tests DAO::uGetAll()
+	 */
+	public function testuGetAll() {
+		$res = DAO::uGetAll ( User::class, "firstname like ? or lastname like ?", [ "b%","a%" ] );
+		$this->assertEquals ( 8, sizeof ( $res ) );
+		$this->assertEquals ( "benjamin.sherman@gmail.com", current ( $res ) . "" );
+	}
+
+	/**
+	 * Tests DAO::UGetAllWithQuery()
+	 */
+	public function testUGetAllWithQuery() {
+		$users = DAO::uGetAll ( User::class, "groupes.name = ?", [ "groupes" ], [ "Personnels" ] );
+		$this->assertEquals ( "jeremy.bryan", current ( $users ) . "" );
+		$this->assertEquals ( 8, sizeof ( $users ) . "" );
+	}
+
+	/**
 	 * Tests DAO::isConnected()
 	 */
 	public function testIsConnected() {
