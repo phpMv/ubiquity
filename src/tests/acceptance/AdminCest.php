@@ -129,7 +129,7 @@ class AdminCest {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$I->click ( "#generateRobots" );
 		$I->waitForText ( "Can not generate robots.txt if no SEO controller is selected.", self::TIMEOUT, "body" );
-		$I->click ( "#addNewSeo" );
+		$I->click ( "#addNewSeo", "#main-content" );
 		$I->waitForText ( "Creating a new Seo controller", self::TIMEOUT, "body" );
 		$I->fillField ( "#controllerName", "TestSEOController" );
 		$I->click ( "#action-modalNewSeo-0" );
