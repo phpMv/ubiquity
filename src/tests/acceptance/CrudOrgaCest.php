@@ -67,6 +67,7 @@ class CrudOrgaCest {
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->fillField ( "#search-lv", "le" );
 		$I->executeJS ( "$('#search-lv').trigger(jQuery.Event('keypress', {keyCode: 13}));" );
+		$I->wait ( 5 );
 		$I->waitForElement ( "#search-query", self::TIMEOUT );
 		$I->dontSee ( "Université de Caen-Normandie", "#lv" );
 		$I->dontSee ( "IUT Campus III", "#lv" );
