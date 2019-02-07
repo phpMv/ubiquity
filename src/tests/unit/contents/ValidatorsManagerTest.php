@@ -10,6 +10,8 @@ use Ubiquity\cache\CacheManager;
 use models\Groupe;
 use Ubiquity\orm\creator\database\DbModelsCreator;
 use Ubiquity\controllers\Startup;
+use services\TestClassToValidate;
+use Ubiquity\contents\validation\validators\basic\IsBooleanValidator;
 
 /**
  * ValidatorsManager test case.
@@ -51,6 +53,12 @@ class ValidatorsManagerTest extends BaseTest {
 	protected function beforeQuery() {
 		if (! $this->database->isConnected ())
 			$this->database->connect ();
+	}
+
+	protected function _display($callback) {
+		ob_start ();
+		$callback ();
+		return ob_get_clean ();
 	}
 
 	/**
@@ -116,6 +124,26 @@ class ValidatorsManagerTest extends BaseTest {
 		$groupes = DAO::getAll ( Groupe::class, '', false );
 		$result = ValidatorsManager::validateInstances ( $groupes );
 		$this->assertEquals ( sizeof ( $result ), 9 );
+	}
+
+	/**
+	 * Tests base validators
+	 */
+	public function testValidatorsBase() {
+		$object = new TestClassToValidate ();
+		ValidatorsManager::addClassValidators ( TestClassToValidate::class );
+		$res = ValidatorsManager::validate ( $object );
+		$this->assertEquals ( 0, sizeof ( $res ) );
+
+		$res = $object->setBool ( "not boolean" );
+		$this->assertEquals ( 1, sizeof ( $res ) );
+		$current = current ( $res );
+		$this->assertInstanceOf ( ConstraintViolation::class, $current );
+		$this->assertEquals ( "This value should be a boolean", $current->getMessage () );
+		$this->assertEquals ( "not boolean", $current->getValue () );
+		$this->assertEquals ( "bool", $current->getMember () );
+		$this->assertEquals ( IsBooleanValidator::class, $current->getValidatorType () );
+		$this->assertNull ( $current->getSeverity () );
 	}
 }
 
