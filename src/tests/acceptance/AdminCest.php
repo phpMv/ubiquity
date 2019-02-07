@@ -145,8 +145,8 @@ class AdminCest {
 	// tests
 	public function tryGotoAdminLogs(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Logs", $I );
-		$I->click ( "a._activateLogs" );
-		$I->waitForElement ( "#maxLines" );
+		$I->click ( "a._activateLogs", "#logs-message" );
+		$I->waitForElement ( "#maxLines", self::TIMEOUT );
 	}
 
 	// tests
