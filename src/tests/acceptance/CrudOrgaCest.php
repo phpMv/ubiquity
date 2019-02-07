@@ -74,4 +74,19 @@ class CrudOrgaCest {
 		$I->canSee ( "Conservatoire National des Arts et Métiers", "#lv" );
 		$I->canSee ( "Lycée Sainte-Ursule", "#lv" );
 	}
+
+	// Tests
+	public function tryToDeleteOne(AcceptanceTester $I) {
+		$I->amOnPage ( "TestCrudOrgas/display/no/1" );
+		$I->click ( "._delete._element" );
+		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
+		$I->click ( "#bt-okay.negative" );
+		$I->waitForText ( "Can not delete `lecnam.net`", self::TIMEOUT, "body" );
+
+		$I->amOnPage ( "TestCrudOrgas" );
+		$I->click ( "button[data-ajax='4']._delete" );
+		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
+		$I->click ( "#bt-okay.negative" );
+		$I->waitForText ( "Can not delete `lycee-sainte-ursule.com`", self::TIMEOUT, "body" );
+	}
 }
