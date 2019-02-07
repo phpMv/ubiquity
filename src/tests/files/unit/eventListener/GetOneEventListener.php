@@ -3,7 +3,7 @@
 namespace eventListener;
 
 use Ubiquity\events\EventListenerInterface;
-use src\Ubiquity\events\DAOEvents;
+use Ubiquity\events\DAOEvents;
 
 class GetOneEventListener implements EventListenerInterface {
 	const EVENT_NAME = DAOEvents::GET_ONE;
