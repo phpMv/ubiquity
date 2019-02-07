@@ -172,7 +172,7 @@ class ValidatorsManagerTest extends BaseTest {
 
 	protected function testValidatorInstanceOf($callback, $classValidator) {
 		$constraint = $this->testValidator ( $callback );
-		$this->assertInstanceOf ( $classValidator, $constraint );
+		$this->assertEquals ( $classValidator, $constraint->getValidatorType () );
 	}
 }
 
