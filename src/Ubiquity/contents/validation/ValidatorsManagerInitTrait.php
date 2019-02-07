@@ -49,7 +49,7 @@ trait ValidatorsManagerInitTrait {
 	public static function addClassValidators($class) {
 		$config = Startup::getConfig ();
 		CacheManager::start ( $config );
-		self::initClassValidators ( $config, $class );
+		self::initClassValidators ( $class );
 	}
 
 	/**
