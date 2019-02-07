@@ -175,7 +175,7 @@ class ValidatorsManagerTest extends BaseTest {
 			$object->setIsTrue ( false );
 		}, IsTrueValidator::class );
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setType ( $this );
+			$object->setType ( new User () );
 		}, TypeValidator::class );
 
 		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
