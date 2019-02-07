@@ -154,7 +154,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::uGetAll()
 	 */
 	public function testuGetAll() {
-		$res = DAO::uGetAll ( User::class, "firstname like ? or lastname like ?", [ "b%","a%" ] );
+		$res = DAO::uGetAll ( User::class, "firstname like ? or lastname like ?", false, [ "b%","a%" ] );
 		$this->assertEquals ( 8, sizeof ( $res ) );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", current ( $res ) . "" );
 	}
@@ -163,7 +163,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::UGetAllWithQuery()
 	 */
 	public function testUGetAllWithQuery() {
-		$users = DAO::uGetAll ( User::class, "groupes.name = ?", [ "Etudiants" ] );
+		$users = DAO::uGetAll ( User::class, "groupes.name = ?", [ "groupes" ], [ "Etudiants" ] );
 		$this->assertEquals ( "jeremy.bryan", current ( $users ) . "" );
 		$this->assertEquals ( 8, sizeof ( $users ) . "" );
 	}
