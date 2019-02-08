@@ -270,6 +270,14 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->testValidatorInstanceOf ( function (TestClassString $object) {
 			$object->setIp ( "localhost" );
 		}, IpValidator::class, TestClassString::class );
+		// Test no private ipV4
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setIpV4Noprive ( "192.168.0.0" );
+		}, IpValidator::class, TestClassString::class );
+		// Test ipV6
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setIpV6 ( "127.0.0.1" );
+		}, IpValidator::class, TestClassString::class );
 		// Test phone number (regex)
 		$this->testValidatorInstanceOf ( function (TestClassString $object) {
 			$object->setRegexPhone ( "06.72.86.20" );
