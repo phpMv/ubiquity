@@ -1,31 +1,35 @@
 <?php
-use Ubiquity\db\Database;
-use Ubiquity\contents\validation\ValidatorsManager;
-use models\User;
-use Ubiquity\contents\validation\validators\multiples\IdValidator;
-use Ubiquity\contents\validation\validators\ConstraintViolation;
-use Ubiquity\orm\DAO;
-use models\Organization;
 use Ubiquity\cache\CacheManager;
-use models\Groupe;
-use Ubiquity\orm\creator\database\DbModelsCreator;
-use Ubiquity\controllers\Startup;
-use services\TestClassToValidate;
+use Ubiquity\contents\validation\ValidatorsManager;
+use Ubiquity\contents\validation\validators\ConstraintViolation;
 use Ubiquity\contents\validation\validators\basic\IsBooleanValidator;
+use Ubiquity\contents\validation\validators\basic\IsEmptyValidator;
+use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
 use Ubiquity\contents\validation\validators\basic\IsNullValidator;
+use Ubiquity\contents\validation\validators\basic\IsTrueValidator;
 use Ubiquity\contents\validation\validators\basic\NotEmptyValidator;
 use Ubiquity\contents\validation\validators\basic\NotNullValidator;
-use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
-use Ubiquity\contents\validation\validators\basic\IsTrueValidator;
 use Ubiquity\contents\validation\validators\basic\TypeValidator;
-use Ubiquity\contents\validation\validators\basic\IsEmptyValidator;
-use services\TestClassComparison;
 use Ubiquity\contents\validation\validators\comparison\EqualsValidator;
-use Ubiquity\contents\validation\validators\comparison\GreaterThanValidator;
 use Ubiquity\contents\validation\validators\comparison\GreaterThanOrEqualValidator;
-use Ubiquity\contents\validation\validators\comparison\LessThanValidator;
+use Ubiquity\contents\validation\validators\comparison\GreaterThanValidator;
 use Ubiquity\contents\validation\validators\comparison\LessThanOrEqualValidator;
+use Ubiquity\contents\validation\validators\comparison\LessThanValidator;
 use Ubiquity\contents\validation\validators\comparison\RangeValidator;
+use Ubiquity\contents\validation\validators\multiples\IdValidator;
+use Ubiquity\contents\validation\validators\strings\EmailValidator;
+use Ubiquity\contents\validation\validators\strings\IpValidator;
+use Ubiquity\contents\validation\validators\strings\RegexValidator;
+use Ubiquity\controllers\Startup;
+use Ubiquity\db\Database;
+use Ubiquity\orm\DAO;
+use Ubiquity\orm\creator\database\DbModelsCreator;
+use models\Groupe;
+use models\Organization;
+use models\User;
+use services\TestClassComparison;
+use services\TestClassString;
+use services\TestClassToValidate;
 
 /**
  * ValidatorsManager test case.
@@ -235,6 +239,50 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->testValidatorInstanceOf ( function (TestClassComparison $object) {
 			$object->setRange2_10 ( 11 );
 		}, RangeValidator::class, TestClassComparison::class );
+	}
+
+	/**
+	 * Tests string validators
+	 */
+	public function testValidatorsString() {
+		$object = new TestClassString ();
+		ValidatorsManager::addClassValidators ( TestClassString::class );
+		$res = ValidatorsManager::validate ( $object );
+		$this->assertEquals ( 0, sizeof ( $res ) );
+		// Test email
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setEmail ( "mymail@" );
+		}, EmailValidator::class, TestClassString::class );
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setEmail ( "mymail@test" );
+		}, EmailValidator::class, TestClassString::class );
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setEmail ( "test" );
+		}, EmailValidator::class, TestClassString::class );
+		// Test Ip
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setIp ( "1270.0.0.1" );
+		}, IpValidator::class, TestClassString::class );
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setIp ( "127.0.0." );
+		}, IpValidator::class, TestClassString::class );
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setIp ( "localhost" );
+		}, IpValidator::class, TestClassString::class );
+		// Test phone number (regex)
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setRegexPhone ( "06.72.86.20" );
+		}, RegexValidator::class, TestClassString::class );
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setRegexPhone ( "09 09 09 09" );
+		}, RegexValidator::class, TestClassString::class );
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setRegexPhone ( "not tel" );
+		}, RegexValidator::class, TestClassString::class );
+		// Test url
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setUrl ( "http://" );
+		}, RegexValidator::class, TestClassString::class );
 	}
 
 	protected function testValidator($callback, $classname) {
