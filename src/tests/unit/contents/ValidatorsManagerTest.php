@@ -30,6 +30,7 @@ use models\User;
 use services\TestClassComparison;
 use services\TestClassString;
 use services\TestClassToValidate;
+use Ubiquity\contents\validation\validators\strings\UrlValidator;
 
 /**
  * ValidatorsManager test case.
@@ -282,7 +283,7 @@ class ValidatorsManagerTest extends BaseTest {
 		// Test url
 		$this->testValidatorInstanceOf ( function (TestClassString $object) {
 			$object->setUrl ( "http://" );
-		}, RegexValidator::class, TestClassString::class );
+		}, UrlValidator::class, TestClassString::class );
 	}
 
 	protected function testValidator($callback, $classname) {
