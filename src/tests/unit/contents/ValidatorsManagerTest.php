@@ -292,6 +292,11 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->testValidatorInstanceOf ( function (TestClassString $object) {
 			$object->setUrl ( "http://" );
 		}, UrlValidator::class, TestClassString::class );
+
+		// Test NotNull
+		$this->testValidatorInstanceOf ( function (TestClassString $object) {
+			$object->setIpNotNull ( null );
+		}, IpValidator::class, TestClassString::class );
 	}
 
 	protected function testValidator($callback, $classname) {

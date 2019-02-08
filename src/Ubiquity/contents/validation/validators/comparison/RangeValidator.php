@@ -22,7 +22,10 @@ class RangeValidator extends ValidatorHasNotNull {
 
 	public function validate($value) {
 		parent::validate ( $value );
-		return $value >= $this->min && $value <= $this->max;
+		if ($this->notNull !== false) {
+			return $value >= $this->min && $value <= $this->max;
+		}
+		return true;
 	}
 
 	/**

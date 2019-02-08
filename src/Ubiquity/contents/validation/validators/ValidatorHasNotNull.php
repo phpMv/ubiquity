@@ -5,15 +5,15 @@ namespace Ubiquity\contents\validation\validators;
 use Ubiquity\exceptions\ValidatorException;
 use Ubiquity\utils\base\UString;
 
-abstract class ValidatorHasNotNull extends Validator implements HasNotNullInterface{
+abstract class ValidatorHasNotNull extends Validator implements HasNotNullInterface {
 	protected $notNull;
-	
+
 	public function validate($value) {
-		if ($this->notNull!==false && (null === $value || '' === $value)) {
+		if ($this->notNull !== false && (null === $value || '' === $value)) {
 			return;
 		}
-		if (!UString::isValid($value)) {
-			throw new ValidatorException('This value can not be converted to string');
+		if ($this->notNull === true && ! UString::isValid ( $value )) {
+			throw new ValidatorException ( 'This value can not be converted to string' );
 		}
 	}
 }

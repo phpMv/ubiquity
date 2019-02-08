@@ -36,6 +36,18 @@ class TestClassString {
 
 	/**
 	 *
+	 * @validator("ip","4","constraints"=>["notNull"=>false])
+	 */
+	private $ipNull;
+
+	/**
+	 *
+	 * @validator("ip","4","constraints"=>["notNull"=>true])
+	 */
+	private $ipNotNull;
+
+	/**
+	 *
 	 * @validator("url")
 	 */
 	private $url;
@@ -47,6 +59,8 @@ class TestClassString {
 		$this->url = "http://ubiquity.kobject.net";
 		$this->ipV4Noprive = "163.172.210.33";
 		$this->ipV6 = "FE80:0000:0000:0000:0202:B3FF:FE1E:8329";
+		$this->ipNull = null;
+		$this->ipNotNull = "163.172.210.33";
 	}
 
 	/**
@@ -143,6 +157,38 @@ class TestClassString {
 	 */
 	public function setIpV4Noprive($ipV4Noprive) {
 		$this->ipV4Noprive = $ipV4Noprive;
+	}
+
+	/**
+	 *
+	 * @return NULL
+	 */
+	public function getIpNull() {
+		return $this->ipNull;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getIpNotNull() {
+		return $this->ipNotNull;
+	}
+
+	/**
+	 *
+	 * @param NULL $ipNull
+	 */
+	public function setIpNull($ipNull) {
+		$this->ipNull = $ipNull;
+	}
+
+	/**
+	 *
+	 * @param string $ipNotNull
+	 */
+	public function setIpNotNull($ipNotNull) {
+		$this->ipNotNull = $ipNotNull;
 	}
 }
 
