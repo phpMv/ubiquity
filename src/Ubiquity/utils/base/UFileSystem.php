@@ -20,7 +20,7 @@ class UFileSystem {
 	 * Find recursively pathnames matching a pattern
 	 *
 	 * @param string $pattern
-	 * @param number $flags
+	 * @param integer $flags
 	 * @return array
 	 */
 	public static function glob_recursive($pattern, $flags = 0) {

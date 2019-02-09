@@ -25,6 +25,8 @@ trait DatabaseOperationsTrait {
 	protected $pdoObject;
 	private $statements = [ ];
 
+	abstract public function getDSN();
+
 	public function getPdoObject() {
 		return $this->pdoObject;
 	}
@@ -38,7 +40,7 @@ trait DatabaseOperationsTrait {
 	 * Executes an SQL statement, returning a result set as a PDOStatement object
 	 *
 	 * @param string $sql
-	 * @return \PDOStatement
+	 * @return \PDOStatement|boolean
 	 */
 	public function query($sql) {
 		return $this->pdoObject->query ( $sql );
@@ -137,7 +139,7 @@ trait DatabaseOperationsTrait {
 	 * Prepares a statement for execution and returns a statement object
 	 *
 	 * @param String $sql
-	 * @return \PDOStatement
+	 * @return \PDOStatement|boolean
 	 */
 	public function prepareStatement($sql) {
 		return $this->pdoObject->prepare ( $sql );
@@ -158,7 +160,7 @@ trait DatabaseOperationsTrait {
 	/**
 	 * Returns the last insert id
 	 *
-	 * @return integer
+	 * @return string
 	 */
 	public function lastInserId() {
 		return $this->pdoObject->lastInsertId ();

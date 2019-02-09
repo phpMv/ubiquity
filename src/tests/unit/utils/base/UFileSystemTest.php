@@ -18,8 +18,8 @@ class UFileSystemTest extends BaseTest {
 	protected function _before() {
 		parent::_before ();
 		$this->uFileSystem = new UFileSystem ();
-		$this->testDir = $this->uFileSystem->cleanFilePathname ( \ROOT . \DS . "cache-tests/tests" );
-		$this->uFileSystem->xcopy ( $this->uFileSystem->cleanFilePathname ( \ROOT . \DS . "cache-tests/tmp" ), $this->testDir );
+		$this->testDir = $this->uFileSystem->cleanFilePathname ( \ROOT . \DS . "tests-files/" );
+		$this->uFileSystem->xcopy ( $this->uFileSystem->cleanFilePathname ( \ROOT . \DS . "files-tests/" ), $this->testDir );
 	}
 
 	/**
