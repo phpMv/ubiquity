@@ -42,7 +42,7 @@ class CrudOrgaCest {
 		$I->waitForText ( "Organization name test", self::TIMEOUT, "body" );
 		$I->click ( "tr:last-child button._delete" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
-		$I->click ( "#bt-okay" );
+		$I->click ( "#bt-okay", "#table-messages" );
 		$I->waitForText ( "Deletion of", self::TIMEOUT, "body" );
 		$I->dontSee ( "Organization aliases test", "body" );
 	}
