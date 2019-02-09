@@ -64,7 +64,7 @@ class UFileSystem {
 	 * @param boolean $recursive
 	 * @return boolean
 	 */
-	public static function safeMkdir($dir, $mode = null, $recursive = true) {
+	public static function safeMkdir($dir, $mode = 0777, $recursive = true) {
 		if (! \is_dir ( $dir ))
 			return \mkdir ( $dir, $mode, $recursive );
 		return true;
