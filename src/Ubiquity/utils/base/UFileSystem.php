@@ -32,7 +32,7 @@ class UFileSystem {
 	}
 
 	/**
-	 * Deletes all files from a folder
+	 * Deletes all files from a folder (not in subfolders)
 	 *
 	 * @param string $folder
 	 */
@@ -179,8 +179,8 @@ class UFileSystem {
 	 */
 	public static function getLines($filename, $reverse = false, $maxLines = null, $lineCallback = null) {
 		if (file_exists ( $filename )) {
-			$result = [ ];
 			if ($reverse && isset ( $maxLines )) {
+				$result = [ ];
 				$fl = fopen ( $filename, "r" );
 				for($x_pos = 0, $ln = 0, $lines = [ ]; fseek ( $fl, $x_pos, SEEK_END ) !== - 1; $x_pos --) {
 					$char = fgetc ( $fl );
@@ -202,32 +202,37 @@ class UFileSystem {
 				fclose ( $fl );
 				return $result;
 			} else {
-				$handle = fopen ( $filename, "r" );
-				if ($handle) {
-					while ( ($line = fgets ( $handle )) !== false ) {
-						if (is_callable ( $lineCallback )) {
-							$lineCallback ( $result, $line );
-						} else {
-							$result [] = $line;
-						}
-						if (isset ( $maxLines ) && sizeof ( $result ) >= $maxLines) {
-							fclose ( $handle );
-							if (is_array ( $result ) && $reverse) {
-								$result = array_reverse ( $result );
-							}
-							return $result;
-						}
-					}
-					fclose ( $handle );
-				} else {
-					// error opening the file.
-				}
-				if ($reverse) {
-					$result = array_reverse ( $result );
-				}
-				return $result;
+				return self::getLinesByLine ( $filename, $reverse, $maxLines, $lineCallback );
 			}
 		}
 		return [ ];
+	}
+
+	protected static function getLinesByLine($filename, $reverse, $maxLines, $lineCallback) {
+		$result = [ ];
+		$handle = fopen ( $filename, "r" );
+		if ($handle) {
+			while ( ($line = fgets ( $handle )) !== false ) {
+				if (is_callable ( $lineCallback )) {
+					$lineCallback ( $result, $line );
+				} else {
+					$result [] = $line;
+				}
+				if (isset ( $maxLines ) && sizeof ( $result ) >= $maxLines) {
+					fclose ( $handle );
+					if (is_array ( $result ) && $reverse) {
+						$result = array_reverse ( $result );
+					}
+					return $result;
+				}
+			}
+			fclose ( $handle );
+		} else {
+			// error opening the file.
+		}
+		if ($reverse) {
+			$result = array_reverse ( $result );
+		}
+		return $result;
 	}
 }

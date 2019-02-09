@@ -46,6 +46,9 @@ class UFileSystemTest extends BaseTest {
 		$this->assertEquals ( 4, sizeof ( $files ) );
 		$this->uFileSystem->deleteAllFilesFromFolder ( $this->testDir );
 		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
+		$this->assertEquals ( 2, sizeof ( $files ) );
+		$this->uFileSystem->delTree ( $this->testDir );
+		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 0, sizeof ( $files ) );
 	}
 
