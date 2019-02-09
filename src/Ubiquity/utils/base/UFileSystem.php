@@ -6,13 +6,23 @@ use Ubiquity\utils\base\traits\UFileSystemWriter;
 
 /**
  * File system utilities
+ * Ubiquity\utils\base$UFileSystem
+ * This class is part of Ubiquity
  *
- * @author jcheron <myaddressmail@gmail.com>"
+ * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.2
+ *
  */
 class UFileSystem {
 	use UFileSystemWriter;
 
+	/**
+	 * Find recursively pathnames matching a pattern
+	 *
+	 * @param string $pattern
+	 * @param number $flags
+	 * @return array
+	 */
 	public static function glob_recursive($pattern, $flags = 0) {
 		$files = \glob ( $pattern, $flags );
 		foreach ( \glob ( \dirname ( $pattern ) . '/*', GLOB_ONLYDIR | GLOB_NOSORT ) as $dir ) {
@@ -21,6 +31,11 @@ class UFileSystem {
 		return $files;
 	}
 
+	/**
+	 * Deletes all files from a folder
+	 *
+	 * @param string $folder
+	 */
 	public static function deleteAllFilesFromFolder($folder) {
 		$files = \glob ( $folder . '/*' );
 		foreach ( $files as $file ) {
@@ -29,18 +44,38 @@ class UFileSystem {
 		}
 	}
 
+	/**
+	 * Deletes a file, in safe mode
+	 *
+	 * @param string $filename
+	 * @return boolean
+	 */
 	public static function deleteFile($filename) {
 		if (\file_exists ( $filename ))
 			return \unlink ( $filename );
 		return false;
 	}
 
-	public static function safeMkdir($dir) {
+	/**
+	 * Tests the existance and eventually creates a directory
+	 *
+	 * @param string $dir
+	 * @param int $mode
+	 * @param boolean $recursive
+	 * @return boolean
+	 */
+	public static function safeMkdir($dir, $mode = null, $recursive = true) {
 		if (! \is_dir ( $dir ))
-			return \mkdir ( $dir, 0777, true );
+			return \mkdir ( $dir, $mode, $recursive );
 		return true;
 	}
 
+	/**
+	 * Cleans a directory path by removing double backslashes or slashes and using DIRECTORY_SEPARATOR
+	 *
+	 * @param string $path
+	 * @return string
+	 */
 	public static function cleanPathname($path) {
 		if (UString::isNotNull ( $path )) {
 			if (\DS === "/")
@@ -55,6 +90,12 @@ class UFileSystem {
 		return $path;
 	}
 
+	/**
+	 * Cleans a file path by removing double backslashes or slashes and using DIRECTORY_SEPARATOR
+	 *
+	 * @param string $path
+	 * @return string
+	 */
 	public static function cleanFilePathname($path) {
 		if (UString::isNotNull ( $path )) {
 			if (\DS === "/")
@@ -66,6 +107,12 @@ class UFileSystem {
 		return $path;
 	}
 
+	/**
+	 * Try to require a file, in safe mode
+	 *
+	 * @param string $file
+	 * @return boolean
+	 */
 	public static function tryToRequire($file) {
 		if (\file_exists ( $file )) {
 			require_once ($file);
@@ -74,10 +121,22 @@ class UFileSystem {
 		return false;
 	}
 
+	/**
+	 * Gets file modification time
+	 *
+	 * @param string $filename
+	 * @return number
+	 */
 	public static function lastModified($filename) {
 		return \filemtime ( $filename );
 	}
 
+	/**
+	 * Reads entire file into a string in safe mode
+	 *
+	 * @param string $filename
+	 * @return string|boolean
+	 */
 	public static function load($filename) {
 		if (\file_exists ( $filename )) {
 			return \file_get_contents ( $filename );
@@ -85,10 +144,22 @@ class UFileSystem {
 		return false;
 	}
 
+	/**
+	 * Returns the directory base on ROOT, corresponding to a namespace
+	 *
+	 * @param string $ns
+	 * @return string
+	 */
 	public static function getDirFromNamespace($ns) {
 		return \ROOT . \DS . str_replace ( "\\", \DS, $ns );
 	}
 
+	/**
+	 * Deletes recursivly a folder and its content
+	 *
+	 * @param string $dir
+	 * @return boolean
+	 */
 	public static function delTree($dir) {
 		$files = array_diff ( scandir ( $dir ), array ('.','..' ) );
 		foreach ( $files as $file ) {
@@ -97,6 +168,15 @@ class UFileSystem {
 		return rmdir ( $dir );
 	}
 
+	/**
+	 * Returns the lines of a file in an array
+	 *
+	 * @param string $filename
+	 * @param boolean $reverse
+	 * @param null|int $maxLines
+	 * @param callback $lineCallback
+	 * @return array
+	 */
 	public static function getLines($filename, $reverse = false, $maxLines = null, $lineCallback = null) {
 		if (file_exists ( $filename )) {
 			$result = [ ];
