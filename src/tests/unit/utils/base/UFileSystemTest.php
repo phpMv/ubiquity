@@ -143,26 +143,26 @@ class UFileSystemTest extends BaseTest {
 	public function testGetLines() {
 		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp' );
 		$this->assertEquals ( 4, sizeof ( $lines ) );
-		$this->assertEquals ( 'a\n', $lines [0] );
-		$this->assertEquals ( 'aa\n', $lines [1] );
-		$this->assertEquals ( 'aaa\n', $lines [2] );
+		$this->assertEquals ( "a\n", $lines [0] );
+		$this->assertEquals ( "aa\n", $lines [1] );
+		$this->assertEquals ( "aaa\n", $lines [2] );
 		$this->assertEquals ( 'aaaa', $lines [3] );
 		// get lines reverse
 		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', true );
 		$this->assertEquals ( 4, sizeof ( $lines ) );
-		$this->assertEquals ( 'a\n', $lines [3] );
-		$this->assertEquals ( 'aa\n', $lines [2] );
-		$this->assertEquals ( 'aaa\n', $lines [1] );
+		$this->assertEquals ( "a\n", $lines [3] );
+		$this->assertEquals ( "aa\n", $lines [2] );
+		$this->assertEquals ( "aaa\n", $lines [1] );
 		$this->assertEquals ( 'aaaa', $lines [0] );
 		// get 2 lines
 		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', false, 2 );
 		$this->assertEquals ( 2, sizeof ( $lines ) );
-		$this->assertEquals ( 'a\n', $lines [0] );
-		$this->assertEquals ( 'aa\n', $lines [1] );
+		$this->assertEquals ( "a\n", $lines [0] );
+		$this->assertEquals ( "aa\n", $lines [1] );
 		// get 2 lines reverse
 		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', true, 2 );
 		$this->assertEquals ( 2, sizeof ( $lines ) );
-		$this->assertEquals ( 'aaa\n', $lines [1] );
+		$this->assertEquals ( "aaa\n", $lines [1] );
 		$this->assertEquals ( 'aaaa', $lines [0] );
 	}
 }
