@@ -35,7 +35,7 @@ class UFileSystemTest extends BaseTest {
 	 */
 	public function testGlob_recursive() {
 		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
-		$this->assertEquals ( 3, sizeof ( $files ) );
+		$this->assertEquals ( 4, sizeof ( $files ) );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class UFileSystemTest extends BaseTest {
 	 */
 	public function testDeleteAllFilesFromFolder() {
 		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
-		$this->assertEquals ( 3, sizeof ( $files ) );
+		$this->assertEquals ( 4, sizeof ( $files ) );
 		$this->uFileSystem->deleteAllFilesFromFolder ( $this->testDir );
 		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 0, sizeof ( $files ) );
@@ -54,10 +54,10 @@ class UFileSystemTest extends BaseTest {
 	 */
 	public function testDeleteFile() {
 		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
-		$this->assertEquals ( 3, sizeof ( $files ) );
+		$this->assertEquals ( 4, sizeof ( $files ) );
 		$this->uFileSystem->deleteFile ( $this->testDir . \DS . 'a.tmp' );
 		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
-		$this->assertEquals ( 2, sizeof ( $files ) );
+		$this->assertEquals ( 3, sizeof ( $files ) );
 	}
 
 	/**
@@ -131,7 +131,7 @@ class UFileSystemTest extends BaseTest {
 	 */
 	public function testDelTree() {
 		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
-		$this->assertEquals ( 3, sizeof ( $files ) );
+		$this->assertEquals ( 4, sizeof ( $files ) );
 		UFileSystem::delTree ( $this->testDir );
 		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 0, sizeof ( $files ) );
@@ -141,28 +141,36 @@ class UFileSystemTest extends BaseTest {
 	 * Tests UFileSystem::getLines()
 	 */
 	public function testGetLines() {
-		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp' );
+		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', false, null, function (&$result, $line) {
+			$result [] = trim ( $line, "\n" );
+		} );
 		$this->assertEquals ( 4, sizeof ( $lines ) );
-		$this->assertEquals ( "a\n", $lines [0] );
-		$this->assertEquals ( "aa\n", $lines [1] );
-		$this->assertEquals ( "aaa\n", $lines [2] );
+		$this->assertEquals ( "a", $lines [0] );
+		$this->assertEquals ( "aa", $lines [1] );
+		$this->assertEquals ( "aaa", $lines [2] );
 		$this->assertEquals ( 'aaaa', $lines [3] );
 		// get lines reverse
-		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', true );
+		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', true, null, function (&$result, $line) {
+			$result [] = trim ( $line, "\n" );
+		} );
 		$this->assertEquals ( 4, sizeof ( $lines ) );
-		$this->assertEquals ( "a\n", $lines [3] );
-		$this->assertEquals ( "aa\n", $lines [2] );
-		$this->assertEquals ( "aaa\n", $lines [1] );
+		$this->assertEquals ( "a", $lines [3] );
+		$this->assertEquals ( "aa", $lines [2] );
+		$this->assertEquals ( "aaa", $lines [1] );
 		$this->assertEquals ( 'aaaa', $lines [0] );
 		// get 2 lines
-		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', false, 2 );
+		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', false, 2, function (&$result, $line) {
+			$result [] = trim ( $line, "\n" );
+		} );
 		$this->assertEquals ( 2, sizeof ( $lines ) );
-		$this->assertEquals ( "a\n", $lines [0] );
-		$this->assertEquals ( "aa\n", $lines [1] );
+		$this->assertEquals ( "a", $lines [0] );
+		$this->assertEquals ( "aa", $lines [1] );
 		// get 2 lines reverse
-		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', true, 2 );
+		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', true, 2, function (&$result, $line) {
+			$result [] = trim ( $line, "\n" );
+		} );
 		$this->assertEquals ( 2, sizeof ( $lines ) );
-		$this->assertEquals ( "aaa\n", $lines [1] );
+		$this->assertEquals ( "aaa", $lines [1] );
 		$this->assertEquals ( 'aaaa', $lines [0] );
 	}
 }
