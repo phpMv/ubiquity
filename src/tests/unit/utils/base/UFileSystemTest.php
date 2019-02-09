@@ -34,7 +34,7 @@ class UFileSystemTest extends BaseTest {
 	 * Tests UFileSystem::glob_recursive()
 	 */
 	public function testGlob_recursive() {
-		$files = $this->uFileSystem->glob_recursive ( $this->testDir );
+		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 3, sizeof ( $files ) );
 	}
 
@@ -42,10 +42,10 @@ class UFileSystemTest extends BaseTest {
 	 * Tests UFileSystem::deleteAllFilesFromFolder()
 	 */
 	public function testDeleteAllFilesFromFolder() {
-		$files = $this->uFileSystem->glob_recursive ( $this->testDir );
+		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 3, sizeof ( $files ) );
 		$this->uFileSystem->deleteAllFilesFromFolder ( $this->testDir );
-		$files = $this->uFileSystem->glob_recursive ( $this->testDir );
+		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 0, sizeof ( $files ) );
 	}
 
@@ -53,10 +53,10 @@ class UFileSystemTest extends BaseTest {
 	 * Tests UFileSystem::deleteFile()
 	 */
 	public function testDeleteFile() {
-		$files = $this->uFileSystem->glob_recursive ( $this->testDir );
+		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 3, sizeof ( $files ) );
 		$this->uFileSystem->deleteFile ( $this->testDir . \DS . 'a.tmp' );
-		$files = $this->uFileSystem->glob_recursive ( $this->testDir );
+		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 2, sizeof ( $files ) );
 	}
 
@@ -130,10 +130,10 @@ class UFileSystemTest extends BaseTest {
 	 * Tests UFileSystem::delTree()
 	 */
 	public function testDelTree() {
-		$files = $this->uFileSystem->glob_recursive ( $this->testDir );
+		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 3, sizeof ( $files ) );
 		UFileSystem::delTree ( $this->testDir );
-		$files = $this->uFileSystem->glob_recursive ( $this->testDir );
+		$files = $this->uFileSystem->glob_recursive ( $this->testDir . \DS . '*' );
 		$this->assertEquals ( 0, sizeof ( $files ) );
 	}
 
@@ -143,26 +143,26 @@ class UFileSystemTest extends BaseTest {
 	public function testGetLines() {
 		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp' );
 		$this->assertEquals ( 4, sizeof ( $lines ) );
-		$this->assertEquals ( 'a', $lines [0] );
-		$this->assertEquals ( 'aa', $lines [1] );
-		$this->assertEquals ( 'aaa', $lines [2] );
+		$this->assertEquals ( 'a\n', $lines [0] );
+		$this->assertEquals ( 'aa\n', $lines [1] );
+		$this->assertEquals ( 'aaa\n', $lines [2] );
 		$this->assertEquals ( 'aaaa', $lines [3] );
 		// get lines reverse
 		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', true );
 		$this->assertEquals ( 4, sizeof ( $lines ) );
-		$this->assertEquals ( 'a', $lines [3] );
-		$this->assertEquals ( 'aa', $lines [2] );
-		$this->assertEquals ( 'aaa', $lines [1] );
+		$this->assertEquals ( 'a\n', $lines [3] );
+		$this->assertEquals ( 'aa\n', $lines [2] );
+		$this->assertEquals ( 'aaa\n', $lines [1] );
 		$this->assertEquals ( 'aaaa', $lines [0] );
 		// get 2 lines
 		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', false, 2 );
 		$this->assertEquals ( 2, sizeof ( $lines ) );
-		$this->assertEquals ( 'a', $lines [0] );
-		$this->assertEquals ( 'aa', $lines [1] );
+		$this->assertEquals ( 'a\n', $lines [0] );
+		$this->assertEquals ( 'aa\n', $lines [1] );
 		// get 2 lines reverse
 		$lines = $this->uFileSystem->getLines ( $this->testDir . \DS . 'a.tmp', true, 2 );
 		$this->assertEquals ( 2, sizeof ( $lines ) );
-		$this->assertEquals ( 'aaa', $lines [1] );
+		$this->assertEquals ( 'aaa\n', $lines [1] );
 		$this->assertEquals ( 'aaaa', $lines [0] );
 	}
 }
