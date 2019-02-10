@@ -4,6 +4,7 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\utils\base\UFileSystem;
 
 /**
  * YumlModelsCreator test case.
@@ -45,6 +46,7 @@ class YumlModelsCreatorTest extends BaseTest {
 		CacheManager::createOrmModelCache ( 'models\TestConnection' );
 		CacheManager::getOrmModelCache ( 'models\TestConnection' );
 		$this->assertEquals ( 'id', OrmUtils::getFirstKey ( 'models\TestConnection' ) );
+		UFileSystem::deleteAllFilesFromFolder ( Startup::getModelsCompletePath (), 'Test*' );
 	}
 }
 

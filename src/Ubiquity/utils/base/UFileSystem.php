@@ -35,9 +35,10 @@ class UFileSystem {
 	 * Deletes all files from a folder (not in subfolders)
 	 *
 	 * @param string $folder
+	 * @param string $mask
 	 */
-	public static function deleteAllFilesFromFolder($folder) {
-		$files = \glob ( $folder . '/*' );
+	public static function deleteAllFilesFromFolder($folder, $mask = '*') {
+		$files = \glob ( $folder . \DS . $mask );
 		foreach ( $files as $file ) {
 			if (\is_file ( $file ))
 				\unlink ( $file );
