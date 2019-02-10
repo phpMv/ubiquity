@@ -1,6 +1,7 @@
 <?php
 use Ubiquity\controllers\Router;
-
+$config ["debug"] = true;
+\Ubiquity\log\Logger::init ( $config );
 \Ubiquity\cache\CacheManager::startProd ( $config );
 $db = $config ["database"];
 if ($db ["dbName"] !== "") {
