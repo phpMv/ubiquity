@@ -57,6 +57,9 @@ class UMonologTest extends BaseTest {
 		$logs = Logger::asObjects ( false, null, LoggerParams::DATABASE );
 		$this->assertEquals ( 6, sizeof ( $logs ) );
 		$this->assertInstanceOf ( LogMessage::class, $logs [0] );
+		$log = $logs [0];
+		$this->assertEquals ( "info", $log->getLevel () );
+		$this->assertEquals ( LoggerParams::DATABASE, $log->getContext () );
 	}
 }
 
