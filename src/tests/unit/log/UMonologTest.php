@@ -29,6 +29,7 @@ class UMonologTest extends BaseTest {
 	 * Cleans up the environment after running a test.
 	 */
 	protected function _after() {
+		Logger::clearAll ();
 		$this->config ["debug"] = false;
 	}
 
@@ -42,6 +43,19 @@ class UMonologTest extends BaseTest {
 		Startup::run ( $this->config );
 		$logs = Logger::asObjects ( false, null, LoggerParams::ROUTER );
 		$this->assertEquals ( 1, sizeof ( $logs ) );
+		$this->assertInstanceOf ( LogMessage::class, $logs [0] );
+	}
+
+	/**
+	 * Tests Logget::warn()
+	 */
+	public function database() {
+		$logs = Logger::asObjects ();
+		$this->assertEquals ( 0, sizeof ( $logs ) );
+		$this->_initRequest ( '/TestCrudController', 'GET' );
+		Startup::run ( $this->config );
+		$logs = Logger::asObjects ( false, null, LoggerParams::DATABASE );
+		$this->assertEquals ( 6, sizeof ( $logs ) );
 		$this->assertInstanceOf ( LogMessage::class, $logs [0] );
 	}
 }

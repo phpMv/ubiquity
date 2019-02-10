@@ -54,7 +54,6 @@ build:
 filter:
     paths: ["src/Ubiquity/*"]
     excluded_paths:
-        - src/Ubiquity/log/
         - src/Ubiquity/controllers/Autoloader.php
         - src/Ubiquity/controllers/admin/
         - src/Ubiquity/annotations/

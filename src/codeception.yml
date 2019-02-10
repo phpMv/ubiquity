@@ -17,7 +17,6 @@ coverage:
         - Ubiquity/*.php
     exclude:
         - Ubiquity/*Interface.php
-        - Ubiquity/log/
         - Ubiquity/controllers/Autoloader.php
         - Ubiquity/controllers/admin/
         - Ubiquity/annotations/
