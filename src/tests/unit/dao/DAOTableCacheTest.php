@@ -101,7 +101,7 @@ class DAOTableCacheTest extends BaseTest {
 		$users = $this->dao->getAll ( User::class, '', false, null, true );
 		$users = array_values ( $users );
 		$index = rand ( 0, sizeof ( $users ) - 1 );
-		$this->assertEquals ( $index - 1, $this->dao->getRownum ( User::class, $users [$index]->getId () ) );
+		$this->assertEquals ( $index + 1, $this->dao->getRownum ( User::class, $users [$index]->getId () ) );
 	}
 
 	/**
