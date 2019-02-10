@@ -5,11 +5,12 @@ use models\Organization;
 use Ubiquity\db\Database;
 use models\Groupe;
 use Ubiquity\cache\database\TableCache;
+use Ubiquity\cache\database\QueryCache;
 
 /**
  * DAO test case.
  */
-class DAOTableCacheTest extends BaseTest {
+class DAOQueryCacheTest extends BaseTest {
 
 	/**
 	 *
@@ -24,7 +25,7 @@ class DAOTableCacheTest extends BaseTest {
 		parent::_before ();
 		$this->dao = new DAO ();
 		$this->_loadConfig ();
-		$this->config ["database"] ["cache"] = TableCache::class;
+		$this->config ["database"] ["cache"] = QueryCache::class;
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
 	}
@@ -70,16 +71,6 @@ class DAOTableCacheTest extends BaseTest {
 		$this->assertTrue ( sizeof ( $groupes ) > 0 );
 		$groupe = current ( $groupes );
 		$this->assertInstanceOf ( Groupe::class, $groupe );
-	}
-
-	/**
-	 * Tests DAO::affectsManyToManys()
-	 */
-	public function testAffectsManyToManys() {
-		// TODO Auto-generated DAOTest::testAffectsManyToManys()
-		$this->markTestIncomplete ( "affectsManyToManys test not implemented" );
-
-		DAO::affectsManyToManys(/* parameters */);
 	}
 
 	/**
