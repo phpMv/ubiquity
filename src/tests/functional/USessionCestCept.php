@@ -9,7 +9,7 @@ $I->amOnPage ( "/TestUSessionController/testTmp" );
 $I->canSeeInSource ( "testTmp" );
 $I->amOnPage ( "/TestUSessionController/getTmp" );
 $I->canSeeInSource ( "tmpValue" );
-sleep ( 15 );
+sleep ( 20 );
 $I->amOnPage ( "/TestUSessionController/getTmpExpired" );
 $I->canSeeInSource ( "null" );
 $I->amOnPage ( "/TestUSessionController/delete" );
