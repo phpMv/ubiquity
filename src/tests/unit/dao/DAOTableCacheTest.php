@@ -4,11 +4,12 @@ use models\User;
 use models\Organization;
 use Ubiquity\db\Database;
 use models\Groupe;
+use Ubiquity\cache\database\TableCache;
 
 /**
  * DAO test case.
  */
-class DAOTest extends BaseTest {
+class DAOTableCacheTest extends BaseTest {
 
 	/**
 	 *
@@ -23,6 +24,7 @@ class DAOTest extends BaseTest {
 		parent::_before ();
 		$this->dao = new DAO ();
 		$this->_loadConfig ();
+		$this->config ["database"] ["cache"] = TableCache::class;
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
 	}
@@ -38,8 +40,8 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::getManyToOne()
 	 */
 	public function testGetManyToOne() {
-		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false );
-		$orga = DAO::getManyToOne ( $user, 'organization' );
+		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false, null, true );
+		$orga = DAO::getManyToOne ( $user, 'organization', false, true );
 		$this->assertInstanceOf ( Organization::class, $orga );
 	}
 
@@ -47,10 +49,10 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::getOneToMany()
 	 */
 	public function testGetOneToMany() {
-		$orga = DAO::getOne ( Organization::class, 'domain="lecnam.net"', false );
+		$orga = DAO::getOne ( Organization::class, 'domain="lecnam.net"', false, null, false );
 		$this->assertEquals ( "Conservatoire National des Arts et Métiers", $orga->getName () );
 		$this->assertEquals ( 1, $orga->getId () );
-		$users = DAO::getOneToMany ( $orga, 'users' );
+		$users = DAO::getOneToMany ( $orga, 'users', true, true );
 		$this->assertTrue ( is_array ( $users ) );
 
 		$this->assertTrue ( sizeof ( $users ) > 0 );
@@ -62,8 +64,8 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::getManyToMany()
 	 */
 	public function testGetManyToMany() {
-		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false );
-		$groupes = DAO::getManyToMany ( $user, 'groupes' );
+		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false, null, true );
+		$groupes = DAO::getManyToMany ( $user, 'groupes', false, null, true );
 		$this->assertTrue ( is_array ( $groupes ) );
 		$this->assertTrue ( sizeof ( $groupes ) > 0 );
 		$groupe = current ( $groupes );
@@ -84,7 +86,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::getAll()
 	 */
 	public function testGetAll() {
-		$users = $this->dao->getAll ( User::class );
+		$users = $this->dao->getAll ( User::class, '', true, null, true );
 		$this->assertEquals ( 101, sizeof ( $users ) );
 		$user = current ( $users );
 		$this->assertInstanceOf ( User::class, $user );
@@ -93,26 +95,10 @@ class DAOTest extends BaseTest {
 	}
 
 	/**
-	 * Tests DAO::paginate()
-	 */
-	public function testPaginate() {
-		$users = $this->dao->paginate ( User::class );
-		$this->assertEquals ( 20, sizeof ( $users ) );
-		$user = current ( $users );
-		$this->assertInstanceOf ( User::class, $user );
-		$users = $this->dao->paginate ( User::class, 2, 10 );
-		$this->assertEquals ( 10, sizeof ( $users ) );
-		$users = $this->dao->paginate ( User::class, 1, 10, 'email="benjamin.sherman@gmail.com"' );
-		$this->assertEquals ( 1, sizeof ( $users ) );
-		$user = current ( $users );
-		$this->assertEquals ( 'Benjamin', $user->getFirstname () );
-	}
-
-	/**
 	 * Tests DAO::getRownum()
 	 */
 	public function testGetRownum() {
-		$users = $this->dao->getAll ( User::class, '', false );
+		$users = $this->dao->getAll ( User::class, '', false, null, true );
 		$users = array_values ( $users );
 		$index = rand ( 0, sizeof ( $users ) - 1 );
 		$this->assertEquals ( $index, $this->dao->getRownum ( User::class, $users [$index]->getId () ) );
@@ -139,7 +125,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::getOne()
 	 */
 	public function testGetOne() {
-		$user = $this->dao->getOne ( User::class, 'firstname="Benjamin"' );
+		$user = $this->dao->getOne ( User::class, 'firstname="Benjamin"', true, null, true );
 		$this->assertInstanceOf ( User::class, $user );
 	}
 
