@@ -10,6 +10,7 @@ See :doc:`createproject` for project creation.
 Controller creation
 -------------------
 Creates the controller ``controllers\ClientController`` class in ``app/controllers/ClientController.php``
+
 .. code-block:: bash
    
    Ubiquity controller ClientController

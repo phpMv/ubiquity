@@ -50,13 +50,13 @@ class AdminScaffoldController extends ScaffoldController {
 		USession::addOrRemoveValueFromArray ( "filtered-controllers", $controller, true );
 	}
 
-	public static function createClass($controller, $template, $classname, $namespace, $uses, $extendsOrImplements, $classContent) {
-		$self = new AdminScaffoldController ( $controller );
+	public static function createClass($controller, $jquery, $template, $classname, $namespace, $uses, $extendsOrImplements, $classContent) {
+		$self = new AdminScaffoldController ( $controller, $jquery );
 		return $self->_createClass ( $template, $classname, $namespace, $uses, $extendsOrImplements, $classContent );
 	}
 
-	public static function createMethod($controller, $access, $name, $parameters, $return, $content, $comment) {
-		$self = new AdminScaffoldController ( $controller );
+	public static function createMethod($controller, $jquery, $access, $name, $parameters, $return, $content, $comment) {
+		$self = new AdminScaffoldController ( $controller, $jquery );
 		return $self->_createMethod ( $access, $name, $parameters, $return, $content, $comment );
 	}
 }

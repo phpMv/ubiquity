@@ -5,6 +5,9 @@ namespace Ubiquity\scaffolding;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UString;
+use Ubiquity\controllers\admin\utils\CodeUtils;
+use Ubiquity\utils\base\UIntrospection;
+use Ubiquity\cache\ClassUtils;
 
 abstract class ScaffoldController {
 	public static $views = [ "CRUD" => [ "index" => "@framework/crud/index.html","form" => "@framework/crud/form.html","display" => "@framework/crud/display.html" ],
@@ -24,7 +27,7 @@ abstract class ScaffoldController {
 		return UFileSystem::openReplaceInTemplateFile ( $templateDir . "method.tpl", $keyAndValues );
 	}
 
-	protected function _createController($controllerName, $variables = [], $ctrlTemplate = 'controller.tpl', $hasView = false, $jsCallback = "") {
+	public function _createController($controllerName, $variables = [], $ctrlTemplate = 'controller.tpl', $hasView = false, $jsCallback = "") {
 		$message = "";
 		$templateDir = $this->getTemplateDir ();
 		$controllersNS = \rtrim ( Startup::getNS ( "controllers" ), "\\" );
@@ -181,6 +184,76 @@ abstract class ScaffoldController {
 		return $message;
 	}
 
+	public function _newAction($controller, $action, $parameters = null, $content = '', $routeInfo = null, $createView = false) {
+		$templateDir = $this->getTemplateDir ();
+		$msgContent = "";
+		$r = new \ReflectionClass ( $controller );
+		$ctrlFilename = $r->getFileName ();
+		$content = CodeUtils::indent ( $content, 2 );
+		$fileContent = \implode ( "", UIntrospection::getClassCode ( $controller ) );
+		$fileContent = \trim ( $fileContent );
+		$posLast = \strrpos ( $fileContent, "}" );
+		if ($posLast !== false) {
+			if ($createView) {
+				$viewname = $this->_createViewOp ( ClassUtils::getClassSimpleName ( $controller ), $action );
+				$content .= "\n\t\t\$this->loadView('" . $viewname . "');\n";
+				$msgContent .= "<br>Created view : <b>" . $viewname . "</b>";
+			}
+			$routeAnnotation = "";
+			if (is_array ( $routeInfo )) {
+				$name = "route";
+				$path = $routeInfo ["path"];
+				$routeProperties = [ '"' . $path . '"' ];
+				$methods = $routeInfo ["methods"];
+				if (UString::isNotNull ( $methods )) {
+					$routeProperties [] = '"methods"=>' . $this->getMethods ( $methods );
+				}
+				if (isset ( $routeInfo ["ck-Cache"] )) {
+					$routeProperties [] = '"cache"=>true';
+					if (isset ( $routeInfo ["duration"] )) {
+						$duration = $routeInfo ["duration"];
+						if (\ctype_digit ( $duration )) {
+							$routeProperties [] = '"duration"=>' . $duration;
+						}
+					}
+				}
+				$routeProperties = \implode ( ",", $routeProperties );
+				$routeAnnotation = UFileSystem::openReplaceInTemplateFile ( $templateDir . "annotation.tpl", [ "%name%" => $name,"%properties%" => $routeProperties ] );
+
+				$msgContent .= $this->_addMessageForRouteCreation ( $path );
+			}
+			$parameters = CodeUtils::cleanParameters ( $parameters );
+			$actionContent = UFileSystem::openReplaceInTemplateFile ( $templateDir . "action.tpl", [ "%route%" => "\n" . $routeAnnotation,"%actionName%" => $action,"%parameters%" => $parameters,"%content%" => $content ] );
+			$fileContent = \substr_replace ( $fileContent, "\n%content%", $posLast - 1, 0 );
+			if (! CodeUtils::isValidCode ( '<?php ' . $content )) {
+				echo $this->showSimpleMessage ( "Errors parsing action content!", "warning", "Creation", "warning circle", null, "msgControllers" );
+				return;
+			} else {
+				if (UFileSystem::replaceWriteFromContent ( $fileContent . "\n", $ctrlFilename, [ '%content%' => $actionContent ] )) {
+					$msgContent = "The action <b>{$action}</b> is created in controller <b>{$controller}</b>" . $msgContent;
+					echo $this->showSimpleMessage ( $msgContent, "info", "Creation", "info circle", null, "msgControllers" );
+				}
+			}
+		}
+	}
+
+	protected function getMethods($strMethods) {
+		$methods = \explode ( ",", $strMethods );
+		$result = [ ];
+		foreach ( $methods as $method ) {
+			$result [] = '"' . $method . '"';
+		}
+		return "[" . \implode ( ",", $result ) . "]";
+	}
+
+	protected function _createViewOp($controller, $action) {
+		$viewName = $controller . "/" . $action . ".html";
+		UFileSystem::safeMkdir ( \ROOT . \DS . "views" . \DS . $controller );
+		$templateDir = $this->getTemplateDir ();
+		UFileSystem::openReplaceWriteFromTemplateFile ( $templateDir . "view.tpl", \ROOT . \DS . "views" . \DS . $viewName, [ "%controllerName%" => $controller,"%actionName%" => $action ] );
+		return $viewName;
+	}
+
 	protected function createCRUDDatasClass($crudControllerName) {
 		$ns = Startup::getNS ( "controllers" ) . "crud\\datas";
 		$uses = "\nuse Ubiquity\\controllers\\crud\\CRUDDatas;";
@@ -230,7 +303,9 @@ abstract class ScaffoldController {
 		} catch ( \Exception $e ) {
 			$content = [ $teInstance->getCode ( $frameworkName ) ];
 		}
-		return UFileSystem::save ( $folder . \DS . $newName . ".html", implode ( "", $content ) );
+		if (isset ( $content )) {
+			return UFileSystem::save ( $folder . \DS . $newName . ".html", implode ( "", $content ) );
+		}
 	}
 }
 

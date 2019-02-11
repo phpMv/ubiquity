@@ -53,6 +53,7 @@ use Ajax\semantic\html\elements\HtmlInput;
 use Ubiquity\log\LoggerParams;
 use Ajax\semantic\html\elements\HtmlButtonGroups;
 use Ubiquity\translation\Translator;
+use Ubiquity\scaffolding\AdminScaffoldController;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
@@ -83,6 +84,12 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	 * @var ModelViewer
 	 */
 	private $adminModelViewer;
+
+	/**
+	 *
+	 * @var AdminScaffoldController
+	 */
+	private $scaffold;
 	private $globalMessage;
 
 	public function initialize() {
@@ -108,6 +115,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$this->jquery->compile ( $this->view );
 			$this->loadView ( $this->_getFiles ()->getViewHeader () );
 		}
+		$this->scaffold = new AdminScaffoldController ( $this, $this->jquery );
 	}
 
 	public static function _error_handler($buffer) {
@@ -879,38 +887,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	protected function _createController($controllerName, $variables = [], $ctrlTemplate = 'controller.tpl', $hasView = false, $jsCallback = "") {
-		$message = "";
-		$frameworkDir = Startup::getFrameworkDir ();
-		$controllersNS = \rtrim ( Startup::getNS ( "controllers" ), "\\" );
-		$controllersDir = \ROOT . \DS . str_replace ( "\\", \DS, $controllersNS );
-		$controllerName = \ucfirst ( $controllerName );
-		$filename = $controllersDir . \DS . $controllerName . ".php";
-		if (\file_exists ( $filename ) === false) {
-			if ($controllersNS !== "") {
-				$namespace = "namespace " . $controllersNS . ";";
-			}
-			$msgView = "";
-			$indexContent = "";
-			if ($hasView) {
-				$viewDir = \ROOT . \DS . "views" . \DS . $controllerName . \DS;
-				UFileSystem::safeMkdir ( $viewDir );
-				$viewName = $viewDir . \DS . "index.html";
-				UFileSystem::openReplaceWriteFromTemplateFile ( $frameworkDir . "/admin/templates/view.tpl", $viewName, [ "%controllerName%" => $controllerName,"%actionName%" => "index" ] );
-				$msgView = "<br>The default view associated has been created in <b>" . UFileSystem::cleanPathname ( \ROOT . \DS . $viewDir ) . "</b>";
-				$indexContent = "\$this->loadView(\"" . $controllerName . "/index.html\");";
-			}
-			$variables = \array_merge ( $variables, [ "%controllerName%" => $controllerName,"%indexContent%" => $indexContent,"%namespace%" => $namespace ] );
-			UFileSystem::openReplaceWriteFromTemplateFile ( $frameworkDir . "/admin/templates/" . $ctrlTemplate, $filename, $variables );
-			$msgContent = "The <b>" . $controllerName . "</b> controller has been created in <b>" . UFileSystem::cleanFilePathname ( $filename ) . "</b>." . $msgView;
-			if (isset ( $variables ["%path%"] ) && $variables ["%path%"] !== "") {
-				$msgContent .= $this->_addMessageForRouteCreation ( $variables ["%path%"], $jsCallback );
-			}
-			USession::addOrRemoveValueFromArray ( "filtered-controllers", $controllersNS . "\\" . $controllerName, true );
-			$message = $this->showSimpleMessage ( $msgContent, "success", null, "checkmark circle", NULL, "msgGlobal" );
-		} else {
-			$message = $this->showSimpleMessage ( "The file <b>" . $filename . "</b> already exists.<br>Can not create the <b>" . $controllerName . "</b> controller!", "warning", null, "warning circle", 100000, "msgGlobal" );
-		}
-		return $message;
+		return $this->scaffold->_createController ( $controllerName, $variables, $ctrlTemplate, $hasView, $jsCallback );
 	}
 
 	protected function _addMessageForRouteCreation($path, $jsCallback = "") {
