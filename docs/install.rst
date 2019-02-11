@@ -16,7 +16,7 @@ Download the Ubiquity-devtools installer using Composer.
 Make sure to place the ``~/.composer/vendor/bin`` directory in your PATH so the **Ubiquity** executable can be located by your system.
 
 
-Once installed, the simple ``Ubiquity new`` command will create a fresh micro installation in the directory you specify.
+Once installed, the simple ``Ubiquity new`` command will create a fresh Ubiquity installation in the directory you specify.
 For instance, ``Ubiquity new blog`` would create a directory named **blog** containing an Ubiquity project:
 
 .. code-block:: bash
