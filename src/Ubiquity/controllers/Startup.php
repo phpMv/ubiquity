@@ -38,8 +38,8 @@ class Startup {
 			if (\is_array ( $ru )) {
 				if (is_callable ( $ru [0] )) {
 					self::runCallable ( $ru );
-				}else{
-					self::_preRunAction( $ru, $initialize, $finalize );
+				} else {
+					self::_preRunAction ( $ru, $initialize, $finalize );
 				}
 			} else {
 				echo $ru; // Displays route response from cache
@@ -47,14 +47,14 @@ class Startup {
 		} else {
 			self::setCtrlNS ();
 			$u [0] = self::$ctrlNS . $u [0];
-			self::_preRunAction($u,$initialize,$finalize);
+			self::_preRunAction ( $u, $initialize, $finalize );
 		}
 	}
-	
-	private static function _preRunAction(&$u,$initialize=true,$finalize=true){
+
+	private static function _preRunAction(&$u, $initialize = true, $finalize = true) {
 		if (\class_exists ( $u [0] )) {
 			self::runAction ( $u, $initialize, $finalize );
-		}else {
+		} else {
 			\header ( 'HTTP/1.0 404 Not Found', true, 404 );
 			Logger::warn ( "Startup", "The controller `" . $u [0] . "` doesn't exists! <br/>", "forward" );
 		}
@@ -83,6 +83,18 @@ class Startup {
 			}
 		} catch ( \Exception $e ) {
 			echo $e->getTraceAsString ();
+		}
+	}
+
+	/**
+	 *
+	 * @return TemplateEngine
+	 */
+	public static function getTempateEngineInstance() {
+		$config = self::$config;
+		if (isset ( $config ['templateEngine'] )) {
+			$templateEngine = $config ['templateEngine'];
+			return new $templateEngine ( [ ] );
 		}
 	}
 

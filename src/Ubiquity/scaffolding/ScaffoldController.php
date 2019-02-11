@@ -5,6 +5,7 @@ namespace Ubiquity\scaffolding;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UString;
+use Ubiquity\views\engine\Twig;
 
 abstract class ScaffoldController {
 	public static $views = [ "CRUD" => [ "index" => "@framework/crud/index.html","form" => "@framework/crud/form.html","display" => "@framework/crud/display.html" ],
@@ -15,6 +16,8 @@ abstract class ScaffoldController {
 	protected abstract function storeControllerNameInSession($controller);
 
 	protected abstract function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null);
+
+	protected abstract function _addMessageForRouteCreation($path, $jsCallback = "");
 
 	public function _createMethod($access, $name, $parameters = "", $return = "", $content = "", $comment = "") {
 		$templateDir = $this->getTemplateDir ();
@@ -30,6 +33,7 @@ abstract class ScaffoldController {
 		$controllerName = \ucfirst ( $controllerName );
 		$filename = $controllersDir . \DS . $controllerName . ".php";
 		if (\file_exists ( $filename ) === false) {
+			$namespace = "";
 			if ($controllersNS !== "") {
 				$namespace = "namespace " . $controllersNS . ";";
 			}
@@ -59,7 +63,6 @@ abstract class ScaffoldController {
 
 	public function addCrudController($crudControllerName, $resource, $crudDatas = null, $crudViewer = null, $crudEvents = null, $crudViews = null, $routePath = '') {
 		$classContent = "";
-		$routeName = "";
 		$uses = [ ];
 		$controllerNS = Startup::getNS ( "controllers" );
 		$messages = [ ];
@@ -89,8 +92,8 @@ abstract class ScaffoldController {
 			$messages [] = $this->createEventsClass ( $crudControllerName );
 		}
 
-		if (isset( $crudViews )) {
-			$crudViews=explode(",", $crudViews);
+		if (isset ( $crudViews )) {
+			$crudViews = explode ( ",", $crudViews );
 			$uses [] = "use controllers\\crud\\files\\{$crudControllerName}Files;";
 			$uses [] = "use Ubiquity\\controllers\\crud\\CRUDFiles;";
 			$classContent .= $this->_createMethod ( "protected", "getFiles", "", ": CRUDFiles", "\t\treturn new {$crudControllerName}Files();" );
@@ -104,7 +107,7 @@ abstract class ScaffoldController {
 			}
 			$messages [] = $this->createCRUDFilesClass ( $crudControllerName, implode ( "", $classFilesContent ) );
 		}
-		if ($routePath!=null) {
+		if ($routePath != null) {
 			if (UString::isNotNull ( $routePath )) {
 				if (! UString::startswith ( $routePath, "/" )) {
 					$routePath = "/" . $routePath;
@@ -120,8 +123,6 @@ abstract class ScaffoldController {
 
 	public function addAuthController($authControllerName, $baseClass, $authViews = null, $routePath = "") {
 		$classContent = "";
-		$routeName = "";
-
 		if ($baseClass == "\\Ubiquity\\controllers\\auth\\AuthController") {
 			$controllerTemplate = "authController.tpl";
 			$uses = [ "use Ubiquity\\utils\\http\\USession;","use Ubiquity\\utils\\http\\URequest;" ];
@@ -134,7 +135,7 @@ abstract class ScaffoldController {
 		$messages = [ ];
 		$routeName = $authControllerName;
 		if (isset ( $authViews )) {
-			$authViews=explode(",", $authViews);
+			$authViews = explode ( ",", $authViews );
 			$uses [] = "use controllers\\auth\\files\\{$authControllerName}Files;";
 			$uses [] = "use Ubiquity\\controllers\\auth\\AuthFiles;";
 			$classContent .= $this->_createMethod ( "protected", "getFiles", "", ": AuthFiles", "\t\treturn new {$authControllerName}Files();" );
@@ -148,7 +149,7 @@ abstract class ScaffoldController {
 			}
 			$messages [] = $this->createAuthFilesClass ( $authControllerName, implode ( "", $classFilesContent ) );
 		}
-		if ($routePath!=null) {
+		if ($routePath != null) {
 			if (UString::isNotNull ( $routePath )) {
 				if (! UString::startswith ( $routePath, "/" )) {
 					$routePath = "/" . $routePath;
@@ -215,14 +216,17 @@ abstract class ScaffoldController {
 		$folder = \ROOT . \DS . "views" . \DS . $controllerName;
 		UFileSystem::safeMkdir ( $folder );
 		try {
-			$blocks = $this->view->getBlockNames ( $frameworkName );
-			if (sizeof ( $blocks ) > 0) {
-				$content = [ "{% extends \"" . $frameworkName . "\" %}\n" ];
-				foreach ( $blocks as $blockname ) {
-					$content [] = "{% block " . $blockname . " %}\n\t{{ parent() }}\n{% endblock %}\n";
+			$teInstance = Startup::getTempateEngineInstance ();
+			if (isset ( $teInstance )) {
+				$blocks = $teInstance->getBlockNames ( $frameworkName );
+				if (sizeof ( $blocks ) > 0) {
+					$content = [ "{% extends \"" . $frameworkName . "\" %}\n" ];
+					foreach ( $blocks as $blockname ) {
+						$content [] = "{% block " . $blockname . " %}\n\t{{ parent() }}\n{% endblock %}\n";
+					}
+				} else {
+					$content = [ $teInstance->view->getCode ( $frameworkName ) ];
 				}
-			} else {
-				$content = [ $this->view->getCode ( $frameworkName ) ];
 			}
 		} catch ( \Exception $e ) {
 			$content = [ $this->view->getCode ( $frameworkName ) ];

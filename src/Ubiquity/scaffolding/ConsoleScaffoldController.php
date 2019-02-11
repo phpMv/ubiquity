@@ -19,5 +19,9 @@ class ConsoleScaffoldController extends ScaffoldController {
 	protected function getTemplateDir() {
 		return $this->activeDir . "/project-files/templates/";
 	}
+
+	protected function _addMessageForRouteCreation($path, $jsCallback = "") {
+		echo "You need to re-init Router cache to apply this update with init-cache command\n";
+	}
 }
 
