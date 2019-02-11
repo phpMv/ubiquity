@@ -13,6 +13,7 @@ class ConsoleScaffoldController extends ScaffoldController {
 	}
 
 	protected function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null) {
+		$content = str_replace ( "<br>", "\n", $content );
 		return strip_tags ( $content );
 	}
 

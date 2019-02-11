@@ -5,7 +5,6 @@ namespace Ubiquity\scaffolding;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UString;
-use Ubiquity\views\engine\Twig;
 
 abstract class ScaffoldController {
 	public static $views = [ "CRUD" => [ "index" => "@framework/crud/index.html","form" => "@framework/crud/form.html","display" => "@framework/crud/display.html" ],
@@ -225,11 +224,11 @@ abstract class ScaffoldController {
 						$content [] = "{% block " . $blockname . " %}\n\t{{ parent() }}\n{% endblock %}\n";
 					}
 				} else {
-					$content = [ $teInstance->view->getCode ( $frameworkName ) ];
+					$content = [ $teInstance->getCode ( $frameworkName ) ];
 				}
 			}
 		} catch ( \Exception $e ) {
-			$content = [ $this->view->getCode ( $frameworkName ) ];
+			$content = [ $teInstance->getCode ( $frameworkName ) ];
 		}
 		return UFileSystem::save ( $folder . \DS . $newName . ".html", implode ( "", $content ) );
 	}
