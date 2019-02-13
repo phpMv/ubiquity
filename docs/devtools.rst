@@ -24,8 +24,27 @@ Creates the controller ``controllers\ClientController`` class in ``app/controlle
 Model creation
 --------------
 
+.. note:: Optionally check the database connection settings in the app/config/config.php file before running these commands.
+
+To generate a model corresponding to the **user** table in database:
+
+.. code-block:: bash
+   
+   Ubiquity model user
+
 All models creation
 -------------------
 
+For generating all models from the database:
+
+.. code-block:: bash
+   
+   Ubiquity all-models
+
 Cache initialization
 --------------------
+To initialize the cache for routing (based on annotations in controllers) and orm (based on annotations in models) :
+
+.. code-block:: bash
+   
+   Ubiquity init-cache

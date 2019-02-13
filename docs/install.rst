@@ -21,6 +21,8 @@ For instance, ``Ubiquity new blog`` would create a directory named **blog** cont
 
 .. code-block:: bash
    
-   Ubiquity new blog
+   Ubiquity new blog -q=semantic
 
+The semantic option adds Semantic-UI for the front end.
+ 
 You can see more options about installation by reading the :doc:`createproject` section.

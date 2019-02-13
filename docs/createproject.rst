@@ -3,9 +3,25 @@ Project creation
 After installing :doc:`install`, 
 in a bash console, call the *new* command in the root folder of your web server : 
 
+Samples
+-------
+A simple project
+
 .. code-block:: bash
    
    Ubiquity new projectName
+   
+A project with Semantic-UI integration
+
+.. code-block:: bash
+   
+   Ubiquity new projectName -q=semantic
+
+A project with UbiquityMyAdmin interface and Semantic-UI integration
+
+.. code-block:: bash
+   
+   Ubiquity new projectName -q=semantic -a
 
 Installer arguments
 -------------------
@@ -27,13 +43,15 @@ Installer arguments
 +------------+------------+---------------------------------+-----------+-----------------------+
 |      m     | all-models | Creates all models from db.     |     false |                       |
 +------------+------------+---------------------------------+-----------+-----------------------+
+|      a     | admin      | Adds UbiquityMyAdmin interface. |     false |                       |
++------------+------------+---------------------------------+-----------+-----------------------+
 
 Arguments usage
 ---------------
 
 short names
 ^^^^^^^^^^^
-Example of creation of the blog project, connected to the blogDb database, with generation of all models
+Example of creation of the **blog** project, connected to the **blogDb** database, with generation of all models
 
 .. code-block:: bash
    
@@ -41,14 +59,19 @@ Example of creation of the blog project, connected to the blogDb database, with 
 
 long names
 ^^^^^^^^^^^
-Example of creation of the blog project, connected to the bogDb database, with generation of all models and integration of phpMv-toolkit
+Example of creation of the **blog** project, connected to the **bogDb** database, with generation of all models and integration of phpMv-toolkit
 
 .. code-block:: bash
    
    Ubiquity new blog --dbName=blogDb --all-models=true --phpmv=semantic 
 
-.. note:: Markdown doesn't support a lot of the features of Sphinx,
-          like inline markup and directives. However, it works for
-          basic prose content. reStructuredText is the preferred
-          format for technical documentation, please read `this blog post`_
-          for motivation.
+Testing
+-------
+
+To start the embedded web server and test your pages, run from the application root folder:
+
+.. code-block:: bash
+   
+   Ubiquity serve
+   
+The web server is started at ``127.0.0.1:8090``
