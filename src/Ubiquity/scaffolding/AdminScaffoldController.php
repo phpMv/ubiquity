@@ -32,7 +32,7 @@ class AdminScaffoldController extends ScaffoldController {
 		return Startup::getFrameworkDir () . "/admin/templates/";
 	}
 
-	protected function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null) {
+	public function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null) {
 		return $this->controller->showSimpleMessage ( $content, $type, $title, $icon, $timeout, $staticName );
 	}
 

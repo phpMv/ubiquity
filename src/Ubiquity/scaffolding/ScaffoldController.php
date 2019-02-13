@@ -17,7 +17,7 @@ abstract class ScaffoldController {
 
 	protected abstract function storeControllerNameInSession($controller);
 
-	protected abstract function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null);
+	public abstract function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null);
 
 	protected abstract function _addMessageForRouteCreation($path, $jsCallback = "");
 
@@ -188,52 +188,56 @@ abstract class ScaffoldController {
 		$templateDir = $this->getTemplateDir ();
 		$msgContent = "";
 		$r = new \ReflectionClass ( $controller );
-		$ctrlFilename = $r->getFileName ();
-		$content = CodeUtils::indent ( $content, 2 );
-		$fileContent = \implode ( "", UIntrospection::getClassCode ( $controller ) );
-		$fileContent = \trim ( $fileContent );
-		$posLast = \strrpos ( $fileContent, "}" );
-		if ($posLast !== false) {
-			if ($createView) {
-				$viewname = $this->_createViewOp ( ClassUtils::getClassSimpleName ( $controller ), $action );
-				$content .= "\n\t\t\$this->loadView('" . $viewname . "');\n";
-				$msgContent .= "<br>Created view : <b>" . $viewname . "</b>";
-			}
-			$routeAnnotation = "";
-			if (is_array ( $routeInfo )) {
-				$name = "route";
-				$path = $routeInfo ["path"];
-				$routeProperties = [ '"' . $path . '"' ];
-				$methods = $routeInfo ["methods"];
-				if (UString::isNotNull ( $methods )) {
-					$routeProperties [] = '"methods"=>' . $this->getMethods ( $methods );
+		if (! method_exists ( $controller, $action )) {
+			$ctrlFilename = $r->getFileName ();
+			$content = CodeUtils::indent ( $content, 2 );
+			$fileContent = \implode ( "", UIntrospection::getClassCode ( $controller ) );
+			$fileContent = \trim ( $fileContent );
+			$posLast = \strrpos ( $fileContent, "}" );
+			if ($posLast !== false) {
+				if ($createView) {
+					$viewname = $this->_createViewOp ( ClassUtils::getClassSimpleName ( $controller ), $action );
+					$content .= "\n\t\t\$this->loadView('" . $viewname . "');\n";
+					$msgContent .= "<br>Created view : <b>" . $viewname . "</b>";
 				}
-				if (isset ( $routeInfo ["ck-Cache"] )) {
-					$routeProperties [] = '"cache"=>true';
-					if (isset ( $routeInfo ["duration"] )) {
-						$duration = $routeInfo ["duration"];
-						if (\ctype_digit ( $duration )) {
-							$routeProperties [] = '"duration"=>' . $duration;
+				$routeAnnotation = "";
+				if (is_array ( $routeInfo )) {
+					$name = "route";
+					$path = $routeInfo ["path"];
+					$routeProperties = [ '"' . $path . '"' ];
+					$methods = $routeInfo ["methods"];
+					if (UString::isNotNull ( $methods )) {
+						$routeProperties [] = '"methods"=>' . $this->getMethods ( $methods );
+					}
+					if (isset ( $routeInfo ["ck-Cache"] )) {
+						$routeProperties [] = '"cache"=>true';
+						if (isset ( $routeInfo ["duration"] )) {
+							$duration = $routeInfo ["duration"];
+							if (\ctype_digit ( $duration )) {
+								$routeProperties [] = '"duration"=>' . $duration;
+							}
 						}
 					}
-				}
-				$routeProperties = \implode ( ",", $routeProperties );
-				$routeAnnotation = UFileSystem::openReplaceInTemplateFile ( $templateDir . "annotation.tpl", [ "%name%" => $name,"%properties%" => $routeProperties ] );
+					$routeProperties = \implode ( ",", $routeProperties );
+					$routeAnnotation = UFileSystem::openReplaceInTemplateFile ( $templateDir . "annotation.tpl", [ "%name%" => $name,"%properties%" => $routeProperties ] );
 
-				$msgContent .= $this->_addMessageForRouteCreation ( $path );
-			}
-			$parameters = CodeUtils::cleanParameters ( $parameters );
-			$actionContent = UFileSystem::openReplaceInTemplateFile ( $templateDir . "action.tpl", [ "%route%" => "\n" . $routeAnnotation,"%actionName%" => $action,"%parameters%" => $parameters,"%content%" => $content ] );
-			$fileContent = \substr_replace ( $fileContent, "\n%content%", $posLast - 1, 0 );
-			if (! CodeUtils::isValidCode ( '<?php ' . $content )) {
-				echo $this->showSimpleMessage ( "Errors parsing action content!", "warning", "Creation", "warning circle", null, "msgControllers" );
-				return;
-			} else {
-				if (UFileSystem::replaceWriteFromContent ( $fileContent . "\n", $ctrlFilename, [ '%content%' => $actionContent ] )) {
-					$msgContent = "The action <b>{$action}</b> is created in controller <b>{$controller}</b>" . $msgContent;
-					echo $this->showSimpleMessage ( $msgContent, "info", "Creation", "info circle", null, "msgControllers" );
+					$msgContent .= $this->_addMessageForRouteCreation ( $path );
+				}
+				$parameters = CodeUtils::cleanParameters ( $parameters );
+				$actionContent = UFileSystem::openReplaceInTemplateFile ( $templateDir . "action.tpl", [ "%route%" => "\n" . $routeAnnotation,"%actionName%" => $action,"%parameters%" => $parameters,"%content%" => $content ] );
+				$fileContent = \substr_replace ( $fileContent, "\n%content%", $posLast - 1, 0 );
+				if (! CodeUtils::isValidCode ( '<?php ' . $content )) {
+					echo $this->showSimpleMessage ( "Errors parsing action content!", "warning", "Creation", "warning circle", null, "msgControllers" );
+					return;
+				} else {
+					if (UFileSystem::replaceWriteFromContent ( $fileContent . "\n", $ctrlFilename, [ '%content%' => $actionContent ] )) {
+						$msgContent = "The action <b>{$action}</b> is created in controller <b>{$controller}</b>" . $msgContent;
+						echo $this->showSimpleMessage ( $msgContent, "info", "Creation", "info circle", null, "msgControllers" );
+					}
 				}
 			}
+		} else {
+			echo $this->showSimpleMessage ( "The action {$action} already exists in {$controller}!", "error", "Creation", "warning circle", null, "msgControllers" );
 		}
 	}
 

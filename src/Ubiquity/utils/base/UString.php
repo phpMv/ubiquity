@@ -132,5 +132,16 @@ class UString {
 		}
 		return '';
 	}
+
+	/**
+	 * Explodes a string with an array of delimiters
+	 *
+	 * @param array $delimiters
+	 * @param string $string
+	 * @return array
+	 */
+	public static function explode($delimiters, $string) {
+		return explode ( $delimiters [0], str_replace ( $delimiters, $delimiters [0], $string ) );
+	}
 }
 

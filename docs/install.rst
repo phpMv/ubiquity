@@ -11,7 +11,7 @@ Download the Ubiquity-devtools installer using Composer.
 
 .. code-block:: bash
    
-   composer global require phpmv/ubiquity-devtools 1.0.x-dev
+   composer global require phpmv/ubiquity-devtools
 
 Make sure to place the ``~/.composer/vendor/bin`` directory in your PATH so the **Ubiquity** executable can be located by your system.
 
