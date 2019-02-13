@@ -56,6 +56,7 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 
 .highlight-bash pre{
 	color: #fff!important;
+	font-size: 14px!important;
 }
 .wy-side-nav-search input[type=text]{
 	border-radius: 4px!important;

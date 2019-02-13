@@ -31,4 +31,4 @@ Start the build-in php server:
    
 Check the correct operation at the address **http://127.0.0.1:8090**:
 
-.. image:: _static/quick-start/quick-start-main.png
+.. image:: _static/images/quick-start/quick-start-main.png
