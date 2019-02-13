@@ -13,6 +13,11 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	max-width: none!important;
 }
 
+.code-block-caption{
+	font-style: normal!important;
+	text-align: left!important;
+}
+
 .wy-side-nav-search{
 	background: #4DA0B0!important;  /* fallback for old browsers */
 	background: -webkit-linear-gradient(to left, #D39D38, #4DA0B0)!important;  /* Chrome 10-25, Safari 5.1-6 */
@@ -75,4 +80,5 @@ div[class^='highlight'] pre{
 .btn{
 	border-radius: 5px;
 	box-shadow: none;
+	padding: 6px 12px!important;
 }

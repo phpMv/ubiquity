@@ -8,6 +8,11 @@ Ubiquity framework User guide
 
 .. toctree::
    :maxdepth: 1
+   
+   quickstart
+
+.. toctree::
+   :maxdepth: 1
    :caption: Installation & configuration
    
    install

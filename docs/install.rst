@@ -1,5 +1,5 @@
 Ubiquity-devtools installation
-===========================
+==============================
 
 Install Composer
 ----------------
