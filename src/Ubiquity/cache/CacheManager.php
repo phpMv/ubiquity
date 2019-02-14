@@ -136,6 +136,11 @@ class CacheManager {
 			self::initRestCache ( $config, $silent );
 	}
 
+	public static function getAllRoutes() {
+		$routes = self::getControllerCache ();
+		return array_merge ( $routes, self::getControllerCache ( true ) );
+	}
+
 	protected static function _getFiles(&$config, $type, $silent = false) {
 		$typeNS = $config ["mvcNS"] [$type];
 		$typeDir = \ROOT . \DS . str_replace ( "\\", \DS, $typeNS );

@@ -8,16 +8,17 @@ use Ubiquity\utils\base\UString;
 use Ubiquity\log\Logger;
 use Ubiquity\controllers\traits\RouterModifierTrait;
 use Ubiquity\controllers\traits\RouterAdminTrait;
+use Ubiquity\controllers\traits\RouterTestTrait;
 
 /**
  * Router manager
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  */
 class Router {
-	use RouterModifierTrait,RouterAdminTrait;
+	use RouterModifierTrait,RouterAdminTrait,RouterTestTrait;
 	protected static $routes;
 
 	/**
