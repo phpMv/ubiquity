@@ -70,20 +70,21 @@ We go through it to create a controller.
 We can then edit ``app/controllers/DefaultController`` file in our favorite IDE:
 
 .. code-block:: php
-   
+   :linenos:
+   :caption: app/controllers/DefaultController.php
+      
    namespace controllers;
     /**
     * Controller DefaultController
     **/
    class DefaultController extends ControllerBase{
-   
     	public function index(){}
-   
    }
 
 Add the traditional message, and test your page at ``http://127.0.0.1:8090/DefaultController``
 
 .. code-block:: php
+   :caption: app/controllers/DefaultController.php
    
 	class DefaultController extends ControllerBase{
 	
@@ -101,12 +102,14 @@ The default action is the **index** method, we do not need to specify it in the 
 
 Route
 -----
-The routing is defined with the annotation ``@route`` and is not done in a file of configuration: |br|
-it's a design choice.
+The routing is defined with the annotation ``@route`` and is not done in a configuration file: |br|
+it's a design choice. |br|
 The **automated** parameter set to **true** allows the methods of our class to be defined as sub routes of the main route ``/hello``.
 
 .. code-block:: php
-   
+   :linenos:
+   :caption: app/controllers/DefaultController.php
+      
 	namespace controllers;
 	 /**
 	 * Controller DefaultController
@@ -145,9 +148,12 @@ We can now test the page at ``http://127.0.0.1:8090/hello``
 
 Action & route with params
 --------------------------
+
 We will now create an action (sayHello) with a parameter (name), and the associated route (to): |br|
 The route will use the name parameter of the action
+
 .. code-block:: bash
+
 	Ubiquity action DefaultController.sayHello -p=name -r=to/{name}/
 	
 .. image:: _static/images/quick-start/action-creation.png
@@ -159,7 +165,8 @@ After re-initializing the cache (**init-cache** command), the **info:routes** co
 Change the code in your IDE: the action must say Hello to somebody...
 
 .. code-block:: php
-
+   :caption: app/controllers/DefaultController.php
+   
 	/**
 	 *@route("to/{name}/")
 	**/
@@ -168,3 +175,59 @@ Change the code in your IDE: the action must say Hello to somebody...
 	}
 
 and test the page at ``http://127.0.0.1:8090/hello/to/Mr SMITH``
+
+Action, route params & view
+---------------------------
+
+We will now create an action (information) with tow parameters (title and message), the associated route (info), and a view to display the message: |br|
+The route will use the two parameters of the action.
+
+.. code-block:: bash
+	Ubiquity action DefaultController.information -p=title,message='nothing' -r=info/{title}/{message} -v
+
+.. note:: The -v (--view) parameter is used to create the view associated with the action.
+
+After re-initializing the cache, we now have 3 routes:
+
+.. image:: _static/images/quick-start/3-routes.png
+
+Let's go back to our development environment and see the generated code:
+
+.. code-block:: php
+   :caption: app/controllers/DefaultController.php
+
+	/**
+	 *@route("info/{title}/{message}")
+	**/
+	public function information($title,$message='nothing'){
+		$this->loadView('DefaultController/information.html');
+	}
+
+We need to pass the 2 variables to the view:
+
+.. code-block:: php
+
+	/**
+	 *@route("info/{title}/{message}")
+	**/
+	public function information($title,$message='nothing'){
+		$this->loadView('DefaultController/information.html',compact('title','message'));
+	}
+	
+And we use our 2 variables in the associated twig view:
+
+.. code-block:: html
+   :caption: app/views/DefaultController/information.html
+
+	<h1>{{title}}</h1>
+	<div>{{message | raw}}</div>
+
+We can test our page at ``http://127.0.0.1:8090/hello/info/Quick start/Ubiquity is quiet simple`` |br|
+It's obvious
+
+.. image:: _static/images/quick-start/quiet-simple.png
+
+
+.. |br| raw:: html
+
+   <br />
