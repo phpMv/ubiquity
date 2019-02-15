@@ -83,3 +83,7 @@ div[class^='highlight'] pre{
 	box-shadow: none;
 	padding: 6px 12px!important;
 }
+
+.admonition.note .admonition-title:before{
+	content: "\f27a";
+}
