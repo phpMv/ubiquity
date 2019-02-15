@@ -19,12 +19,34 @@
   - ORM implementing Data Mapper
   - Multi-level cache
   - Rest Server
-  - Admin interface
+  - Web admin interface (UbiquityMyAdmin)
   - Scaffolding
+  - Console Admin interface (Devtools)
   
 # Installation
 
 The easiest way to install **Ubiquity** is to use [devtools](https://github.com/phpMv/ubiquity-devtools)
+* Install Ubiquity-devtools:
+```bash
+composer global require phpmv/ubiquity-devtools
+```
+* Create a project:
+```bash
+Ubiquity new firstProject -a -q=semantic
+```
+* Start the server:
+```bash
+Ubiquity serve
+```
+# Need some help?
+Ubiquity is a recent project and does not have a community yet.
+In the meantime, you can consult:
+ - The [quick-start guide](https://micro-framework.readthedocs.io/en/latest/quickstart.html)
+ - The [documentation](https://micro-framework.readthedocs.io/en/latest/)
+ - The [API doc](http://api.kobject.net/ubiquity/)
+If needed, 
+ - ask your questions directly using [gitter](https://gitter.im/ubiquity-framework/community)
+ - create a new [issue](https://github.com/phpMv/ubiquity/issues/new)
 
 # Performances
 Ubiquity is fast and efficient, see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
