@@ -13,6 +13,21 @@ Download the Ubiquity-devtools installer using Composer.
    
    composer global require phpmv/ubiquity-devtools
    
+Test your recent installation by doing:
+
+.. code-block:: bash
+   
+   Ubiquity version
+
+You can get at all times help with a command by typing: ``Ubiquity help`` followed by what you are looking for.
+
+Example :
+
+.. code-block:: bash
+   
+   Ubiquity help project
+   
+   
 Project creation
 ----------------
 Create the **quick-start** projet with UbiquityMyAdmin interface and Semantic-UI integration
@@ -102,8 +117,11 @@ The default action is the **index** method, we do not need to specify it in the 
 
 Route
 -----
-The routing is defined with the annotation ``@route`` and is not done in a configuration file: |br|
-it's a design choice. |br|
+
+.. important::
+	The routing is defined with the annotation ``@route`` and is not done in a configuration file: |br|
+	it's a design choice.
+	
 The **automated** parameter set to **true** allows the methods of our class to be defined as sub routes of the main route ``/hello``.
 
 .. code-block:: php
@@ -146,8 +164,8 @@ Let's check that the route exists:
 
 We can now test the page at ``http://127.0.0.1:8090/hello``
 
-Action & route with params
---------------------------
+Action & route with parameters
+------------------------------
 
 We will now create an action (sayHello) with a parameter (name), and the associated route (to): |br|
 The route will use the name parameter of the action
@@ -176,8 +194,8 @@ Change the code in your IDE: the action must say Hello to somebody...
 
 and test the page at ``http://127.0.0.1:8090/hello/to/Mr SMITH``
 
-Action, route params & view
----------------------------
+Action, route parameters & view
+-------------------------------
 
 We will now create an action (information) with tow parameters (title and message), the associated route (info), and a view to display the message: |br|
 The route will use the two parameters of the action.
