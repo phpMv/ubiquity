@@ -41,12 +41,13 @@ Ubiquity serve
 # Need some help?
 Ubiquity is a recent project and does not have a community yet.
 In the meantime, you can consult:
- - The [quick-start guide](https://micro-framework.readthedocs.io/en/latest/quickstart.html)
- - The [documentation](https://micro-framework.readthedocs.io/en/latest/)
- - The [API doc](http://api.kobject.net/ubiquity/)
-If needed, 
+ - the [quick-start guide](https://micro-framework.readthedocs.io/en/latest/quickstart.html)
+ - the [documentation](https://micro-framework.readthedocs.io/en/latest/)
+ - the [doc API](http://api.kobject.net/ubiquity/)
+
+For further assistance please feel free to : 
  - ask your questions directly using [gitter](https://gitter.im/ubiquity-framework/community)
- - create a new [issue](https://github.com/phpMv/ubiquity/issues/new)
+ - create an [issue](https://github.com/phpMv/ubiquity/issues/new) if you notice a bug or suspicious behavior
 
 # Performances
 Ubiquity is fast and efficient, see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
