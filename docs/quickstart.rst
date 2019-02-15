@@ -18,6 +18,8 @@ Test your recent installation by doing:
 .. code-block:: bash
    
    Ubiquity version
+   
+.. image:: _static/images/quick-start/ubi-version.png
 
 You can get at all times help with a command by typing: ``Ubiquity help`` followed by what you are looking for.
 
@@ -143,10 +145,11 @@ The **automated** parameter set to **true** allows the methods of our class to b
 	
 Router cache
 ^^^^^^^^^^^^
-No changes on the routes are effective without initializing the cache. |br|
-Annotations are never read at runtime. This is also a design choice.
+.. important::
+	No changes on the routes are effective without initializing the cache. |br|
+	Annotations are never read at runtime. This is also a design choice.
 
-We can use the console for this purpose:
+We can use the console for the cache re-initialization:
 
 .. code-block:: bash
    
@@ -168,7 +171,7 @@ Action & route with parameters
 ------------------------------
 
 We will now create an action (sayHello) with a parameter (name), and the associated route (to): |br|
-The route will use the name parameter of the action
+The route will use the parameter **name** of the action:
 
 .. code-block:: bash
 
