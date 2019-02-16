@@ -77,24 +77,14 @@ Check the correct operation at the address **http://127.0.0.1:8090**:
 Controller
 ----------
 
-Goto admin interface by clicking on the button **UbiquityMyAdmin**:
-
-.. image:: /_static/images/quick-start-2/ubi-my-admin-btn.png
-
-The web application **UbiquityMyAdmin** saves time in repetitive operations.
-
-.. image:: /_static/images/quick-start-2/ubi-my-admin-interface.png
-
+The console application **dev-tools** saves time in repetitive operations.
 We go through it to create a controller.
 
-Go to the **controllers** part, enter **DefaultController** in the **controllerName** field and create the controller:
-
-.. image:: /_static/images/quick-start-2/create-controller-btn.png
-
-The controller **DefaultController** is created:
-
-.. image:: /_static/images/quick-start-2/controller-created.png
-
+.. code-block:: bash
+   
+   Ubiquity controller DefaultController
+   
+.. image:: /_static/images/quick-start/controller-creation.png
 
 We can then edit ``app/controllers/DefaultController`` file in our favorite IDE:
 
