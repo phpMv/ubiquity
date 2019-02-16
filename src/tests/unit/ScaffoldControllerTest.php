@@ -67,8 +67,8 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->_initRequest ( 'TestScaffoldCrudUser', 'GET' );
 		$this->_assertDisplayEquals ( function () {
 			Startup::run ( $this->config );
-			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", $this->startup->getController () );
-			$this->assertEquals ( 'index', $this->startup->getAction () );
+			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", Startup::getController () );
+			$this->assertEquals ( 'index', Startup::getAction () );
 		}, 'benjamin.sherman@gmail.com' );
 
 		$this->_initRequest ( 'TestScaffoldCrudUser\refresh_', 'POST' );
@@ -76,8 +76,8 @@ class ScaffoldControllerTest extends BaseTest {
 		$_POST ['model'] = 'models\User';
 		$this->_assertDisplayEquals ( function () {
 			Startup::run ( $this->config );
-			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", $this->startup->getController () );
-			$this->assertEquals ( 'refresh_', $this->startup->getAction () );
+			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", Startup::getController () );
+			$this->assertEquals ( 'refresh_', Startup::getAction () );
 		}, 'carolyn.pace' );
 	}
 

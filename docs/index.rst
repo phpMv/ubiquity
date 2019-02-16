@@ -10,8 +10,8 @@ Ubiquity framework User guide
    :maxdepth: 1
    :caption: Quick-starts
    
-   quickstart/quickstart
-   quickstart/quickstart-html
+   with console <quickstart/quickstart>
+   with web-tools <quickstart/quickstart-html>
 
 .. toctree::
    :maxdepth: 1
