@@ -1,3 +1,4 @@
+.. _quickstart-html:
 Quick start with web tools 
 ==========================
 
@@ -19,7 +20,7 @@ Test your recent installation by doing:
    
    Ubiquity version
    
-.. image:: _static/images/quick-start/ubi-version.png
+.. image:: /_static/images/quick-start/ubi-version.png
 
 You can get at all times help with a command by typing: ``Ubiquity help`` followed by what you are looking for.
 
@@ -63,7 +64,7 @@ Go to the newly created folder **quick-start** and start the build-in php server
    
 Check the correct operation at the address **http://127.0.0.1:8090**:
 
-.. image:: _static/images/quick-start/quick-start-main.png
+.. image:: /_static/images/quick-start/quick-start-main.png
 
 .. note:: If port 8090 is busy, you can start the server on another port using -p option.
 
@@ -82,7 +83,7 @@ We go through it to create a controller.
    
    Ubiquity controller DefaultController
    
-.. image:: _static/images/quick-start/controller-creation.png
+.. image:: /_static/images/quick-start/controller-creation.png
 
 We can then edit ``app/controllers/DefaultController`` file in our favorite IDE:
 
@@ -155,7 +156,7 @@ We can use the console for the cache re-initialization:
    
    Ubiquity init-cache
 
-.. image:: _static/images/quick-start/init-cache.png
+.. image:: /_static/images/quick-start/init-cache.png
 
 Let's check that the route exists:
 
@@ -163,7 +164,7 @@ Let's check that the route exists:
    
    Ubiquity info:routes
 
-.. image:: _static/images/quick-start/info-routes.png
+.. image:: /_static/images/quick-start/info-routes.png
 
 We can now test the page at ``http://127.0.0.1:8090/hello``
 
@@ -177,11 +178,11 @@ The route will use the parameter **name** of the action:
 
 	Ubiquity action DefaultController.sayHello -p=name -r=to/{name}/
 	
-.. image:: _static/images/quick-start/action-creation.png
+.. image:: /_static/images/quick-start/action-creation.png
 
 After re-initializing the cache (**init-cache** command), the **info:routes** command should display:
 
-.. image:: _static/images/quick-start/2-routes.png
+.. image:: /_static/images/quick-start/2-routes.png
 
 Change the code in your IDE: the action must say Hello to somebody...
 
@@ -210,7 +211,7 @@ The route will use the two parameters of the action.
 
 After re-initializing the cache, we now have 3 routes:
 
-.. image:: _static/images/quick-start/3-routes.png
+.. image:: /_static/images/quick-start/3-routes.png
 
 Let's go back to our development environment and see the generated code:
 
@@ -246,7 +247,7 @@ And we use our 2 variables in the associated twig view:
 We can test our page at ``http://127.0.0.1:8090/hello/info/Quick start/Ubiquity is quiet simple`` |br|
 It's obvious
 
-.. image:: _static/images/quick-start/quiet-simple.png
+.. image:: /_static/images/quick-start/quiet-simple.png
 
 
 .. |br| raw:: html

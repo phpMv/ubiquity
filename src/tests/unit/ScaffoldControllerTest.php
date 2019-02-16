@@ -41,12 +41,44 @@ class ScaffoldControllerTest extends BaseTest {
 		parent::_after ();
 	}
 
+	protected function _display($callback) {
+		ob_start ();
+		$callback ();
+		return ob_get_clean ();
+	}
+
+	protected function _assertDisplayEquals($callback, $result) {
+		$res = $this->_display ( $callback );
+		$this->assertEquals ( $result, $res );
+	}
+
+	protected function _assertDisplayContains($callback, $result) {
+		$res = $this->_display ( $callback );
+		$this->assertContains ( $result, $res );
+	}
+
 	/**
 	 * Tests AdminScaffoldController::addCrudController()
 	 */
 	public function testAddCrudController() {
 		$this->scaffoldController->addCrudController ( "TestScaffoldCrudUser", User::class );
 		$this->assertTrue ( class_exists ( "controllers\\TestScaffoldCrudUser" ) );
+
+		$this->_initRequest ( 'TestScaffoldCrudUser', 'GET' );
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+		}, 'benjamin.sherman@gmail.com' );
+
+		$this->_initRequest ( 'TestScaffoldCrudUser\refresh_', 'POST' );
+		$_POST ['p'] = 2;
+		$_POST ['model'] = 'models\User';
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", $this->startup->getController () );
+			$this->assertEquals ( 'refresh_', $this->startup->getAction () );
+		}, 'carolyn.pace' );
 	}
 
 	/**
