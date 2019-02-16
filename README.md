@@ -1,4 +1,4 @@
-![Ubiquity](https://static.kobject.net/ubiquity/images/logo-ubiquity-2.png "Ubiquity")
+![Ubiquity](https://static.kobject.net/ubiquity/images/logo-ubiquity.png "Ubiquity")
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpMv/ubiquity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpMv/ubiquity/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/phpMv/ubiquity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phpMv/ubiquity/?branch=master) [![Documentation Status](https://readthedocs.org/projects/micro-framework/badge/?version=latest)](http://micro-framework.readthedocs.io/en/latest/?badge=latest)
  [![SensioLabsInsight](https://insight.sensiolabs.com/projects/17973125-9452-4d32-af68-75ecfc2ff658/mini.png)](https://insight.sensiolabs.com/projects/17973125-9452-4d32-af68-75ecfc2ff658)
