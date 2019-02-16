@@ -41,9 +41,9 @@ Ubiquity serve
 # Need some help?
 Ubiquity is a recent project and does not have a community yet.
 In the meantime, you can consult:
- - the [quick-start guide](https://micro-framework.readthedocs.io/en/latest/quickstart.html)
- - the [documentation](https://micro-framework.readthedocs.io/en/latest/)
- - the [doc API](http://api.kobject.net/ubiquity/)
+ - [Quick-start guide](https://micro-framework.readthedocs.io/en/latest/quickstart.html) to discover the framework
+ - [Documentation](https://micro-framework.readthedocs.io/en/latest/) to go deeper
+ - [API documentation](http://api.kobject.net/ubiquity/) to search further
 
 For further assistance please feel free to : 
  - ask your questions directly using [gitter](https://gitter.im/ubiquity-framework/community)
@@ -52,16 +52,50 @@ For further assistance please feel free to :
 # Performances
 Ubiquity is fast and efficient, see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
 
+# About design choices
+Ubiquity was created in April 2017.
 
-# Admin interface
-The administration interface makes it possible to act on the main components of the framework.
+The project tries to simplify the development process, to empower web developers delivering value through their applications.
+It aims to reconcile performance and ease of handling.
+
+This dual purpose has led to some design choices:
+
+>Get inspired by best practices and successful concepts from other frameworks, but do not try to reproduce what is not in the logic of PHP.
+
+Some PHP frameworks were inspired by the Java world, which has contributed to more professional php development.
+But java is not PHP, environments and languages are completely different (though their syntax are similar), and what is good in Java is not necessarily in PHP.
+
+Ubiquity wants to stay in the spirit of PHP and what it does best, for example:
+  - By using php (packed) arrays because they are effective in php (with php7 optimization)
+  - By not creating instances of classes to inject for the core part of the framework, to prefer the use of classes with static methods
+
+>Not multiplying the ways of doing things.
+
+if a method or technique is satisfactory, there's no reason to implement an alternative version, especially if there is a risk of degrading performance, or complicating the handling of the framework.
+
+>Avoiding multiple external dependencies, which are sometimes loaded when they are never used.
+- They prevent the developer from optimizing his own code.
+- In some applications, the dependency loading time is more expensive than running the application code.
+
+The framework used must give the developer the means to optimize his application and not the other way around.
+
+# Preview of some features
+## Devtools console program
+```bash
+Ubiquity help
+```
+The program in console mode makes it easy to perform all the repetitive tasks related to the design of projects:
+- creations : project, controllers, actions, routes, models, views, 
+- checking : routes, models, validators
+- scaffolding (CRUD + authentification)
+
+## Admin interface
+Like the console, the administration interface makes it possible to act on the main components of the framework.
 
 When creating a project, it can be installed with the **-a** and **-q=semantic** options (for Semantic-UI).
-
 ```bash
 ubiquity new firstProject -a -q=semantic
 ```
-
 ![Admin interface](https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
 
 # Donations
