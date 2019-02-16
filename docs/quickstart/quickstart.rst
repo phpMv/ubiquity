@@ -1,7 +1,7 @@
 Quick start with console
 ========================
 
-.. note:: If you do not like console mode, you can switch to quick-start with :ref:`web interface (UbiquityMyAdmin)<quickstart-html>`.
+.. note:: If you do not like console mode, you can switch to quick-start with :ref:`web tools (UbiquityMyAdmin)<quickstart-html>`.
 
 Install Composer
 ----------------
