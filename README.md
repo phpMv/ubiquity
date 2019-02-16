@@ -1,4 +1,4 @@
-![php-mv-UI](https://static.kobject.net/ubiquity/images/logo-ubiquity.png "Ubiquity")
+![Ubiquity](https://static.kobject.net/ubiquity/images/logo-ubiquity.png "Ubiquity")
 
 [php MVC Ubiquity framework](https://ubiquity.kobject.net), One of the fastest frameworks, with the main features of the bests
 
@@ -50,7 +50,27 @@ For further assistance please feel free to :
  - create an [issue](https://github.com/phpMv/ubiquity/issues/new) if you notice a bug or suspicious behavior
 
 # Performances
-Ubiquity is fast and efficient, see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
+Ubiquity realizes its own benchmarks, especially for the ORM part:
+
+This test involves loading from a Mysql database:
+- 2100 instances of the **Host** class
+  - each host is associated with 1 **user**, who can have configured some **virtualhosts**
+  - each host is present on 1 **server**, of a certain **type**.
+Approximately 6000 objects are loaded, in this intuitive line with Ubiquity
+```php
+$hosts=DAO::getAll(Host::class,"",["user.virtualhosts","servers.stype"]);
+```
+On this type of related object loading that can be very time consuming with an ORM,
+Ubiquity is **1,8 times** faster than Codeigniter associated with Doctrine, **2 times** faster than Symfony, **12 times** more than Laravel Eloquent!
+
+Unlike Doctrine, for this data loading, Ubiquity:
+- does not perform any SQL joins
+- executes only 123 queries, against 3190 for Doctrine
+
+![ORM benchmarks](https://static.kobject.net/ubiquity/images/orm-benchmarks-2.png "ORM benchmarks")
+see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
+
+These excellent results have been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
 
 # About design choices
 Ubiquity was created in April 2017.
