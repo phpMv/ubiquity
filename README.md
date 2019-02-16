@@ -55,7 +55,7 @@ Ubiquity realizes its own benchmarks, especially for the ORM part:
 This test involves loading from a Mysql database:
 - 2100 instances of the **Host** class
   - each host is associated with 1 **user**, who can have configured some **virtualhosts**
-  - each host is present on 1 **server**, of a certain **type**.
+  - each host has multiple **servers**, of a certain **type**.
   
 Approximately 6000 objects are loaded, in this intuitive line with Ubiquity:
 ```php
