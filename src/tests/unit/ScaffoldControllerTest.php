@@ -48,5 +48,18 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->scaffoldController->addCrudController ( "TestScaffoldCrudUser", User::class );
 		$this->assertTrue ( class_exists ( "controllers\\TestScaffoldCrudUser" ) );
 	}
+
+	/**
+	 *
+	 * {@inheritdoc}
+	 * @see BaseTest::getDi()
+	 */
+	protected function getDi() {
+		return [ 'jquery' => function ($controller) {
+			$jquery = new \Ajax\php\ubiquity\JsUtils ( [ "defer" => true ], $controller );
+			$jquery->semantic ( new \Ajax\Semantic () );
+			return $jquery;
+		} ];
+	}
 }
 
