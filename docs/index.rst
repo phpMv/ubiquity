@@ -8,8 +8,10 @@ Ubiquity framework User guide
 
 .. toctree::
    :maxdepth: 1
+   :caption: Quick-starts
    
-   quickstart
+   quickstart/quickstart
+   quickstart/quickstart-html
 
 .. toctree::
    :maxdepth: 1

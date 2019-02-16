@@ -21,7 +21,7 @@ class ScaffoldControllerTest extends BaseTest {
 	protected function _before() {
 		parent::_before ();
 		$this->_startServices ();
-
+		Startup::setConfig ( $this->config );
 		$adminController = new Admin ();
 		Startup::injectDependences ( $adminController );
 		$this->scaffoldController = new AdminScaffoldController ( $adminController, $adminController->jquery );

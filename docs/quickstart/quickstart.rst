@@ -1,5 +1,7 @@
-Quick start guide
-=================
+Quick start with console
+========================
+
+.. note:: If you do not like console mode, you can switch to quick-start with :ref:`web interface (UbiquityMyAdmin)<quickstart/quickstart-html>`.
 
 Install Composer
 ----------------
@@ -32,11 +34,11 @@ Example :
    
 Project creation
 ----------------
-Create the **quick-start** projet with UbiquityMyAdmin interface and Semantic-UI integration
+Create the **quick-start** projet with Semantic-UI integration
 
 .. code-block:: bash
    
-   Ubiquity new quick-start -q=semantic -a
+   Ubiquity new quick-start -q=semantic
 
 Directory structure
 -------------------
