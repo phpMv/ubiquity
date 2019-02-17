@@ -42,7 +42,7 @@ build:
           - (cd src/ && composer update)
           - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/
           - cp -R src/tests/files/unit/* src/app/
-          - sudo chmod 0777 -R src/* && sudo chown -R www-data:www-data src/*
+          - sudo chmod 0777 -R src/*
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
 
