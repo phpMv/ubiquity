@@ -156,27 +156,23 @@ The **automated** parameter set to **true** allows the methods of our class to b
 	
 Router cache
 ^^^^^^^^^^^^
+
 .. important::
 	No changes on the routes are effective without initializing the cache. |br|
 	Annotations are never read at runtime. This is also a design choice.
 
-We can use the console for the cache re-initialization:
+We can use the **web tools** for the cache re-initialization:
 
-.. code-block:: bash
-   
-   Ubiquity init-cache
+Go to the **Routes** section and click on the **re-init cache** button
 
-.. image:: /_static/images/quick-start/init-cache.png
+.. image:: /_static/images/quick-start2/re-init-cache-btn.png
 
-Let's check that the route exists:
+The route now appears in the interface:
 
-.. code-block:: bash
-   
-   Ubiquity info:routes
+.. image:: /_static/images/quick-start2/1-route.png
 
-.. image:: /_static/images/quick-start/info-routes.png
+We can now test the page by clicking on the **GET** button or by going to the address ``http://127.0.0.1:8090/hello``
 
-We can now test the page at ``http://127.0.0.1:8090/hello``
 
 Action & route with parameters
 ------------------------------
@@ -184,29 +180,35 @@ Action & route with parameters
 We will now create an action (sayHello) with a parameter (name), and the associated route (to): |br|
 The route will use the parameter **name** of the action:
 
-.. code-block:: bash
+Go to the **Controllers** section:
 
-	Ubiquity action DefaultController.sayHello -p=name -r=to/{name}/
-	
-.. image:: /_static/images/quick-start/action-creation.png
+- click on the + button associated with DefaultController,
+- then select **Add new action in..** item.
 
-After re-initializing the cache (**init-cache** command), the **info:routes** command should display:
+.. image:: /_static/images/quick-start2/create-action-btn.png
 
-.. image:: /_static/images/quick-start/2-routes.png
+Enter the action information in the following form:
 
-Change the code in your IDE: the action must say Hello to somebody...
+.. image:: /_static/images/quick-start2/create-action.png
 
-.. code-block:: php
-   :caption: app/controllers/DefaultController.php
-   
-	/**
-	 *@route("to/{name}/")
-	**/
-	public function sayHello($name){
-		echo 'Hello '.$name.'!';
-	}
+After re-initializing the cache with the orange button, we can see the new route **hello/to/{name}**:
 
-and test the page at ``http://127.0.0.1:8090/hello/to/Mr SMITH``
+.. image:: /_static/images/quick-start2/router-re-init-1.png
+
+
+Check the route creation by going to the Routes section:
+
+.. image:: /_static/images/quick-start2/router-re-init-2.png
+
+We can now test the page by clicking on the **GET** button:
+
+.. image:: /_static/images/quick-start2/test-action.png
+
+We can see the result:
+
+.. image:: /_static/images/quick-start2/test-action-result.png
+
+We could directly go to ``http://127.0.0.1:8090/hello/to/Mr SMITH`` address to test 
 
 Action, route parameters & view
 -------------------------------
@@ -214,14 +216,19 @@ Action, route parameters & view
 We will now create an action (information) with tow parameters (title and message), the associated route (info), and a view to display the message: |br|
 The route will use the two parameters of the action.
 
-.. code-block:: bash
-	Ubiquity action DefaultController.information -p=title,message='nothing' -r=info/{title}/{message} -v
+In the **Controllers** section, create another action on **DefaultController**:
 
-.. note:: The -v (--view) parameter is used to create the view associated with the action.
+.. image:: /_static/images/quick-start2/create-action-btn.png
+
+Enter the action information in the following form:
+
+.. image:: /_static/images/quick-start2/create-action-view.png
+
+.. note:: The view checkbox is used to create the view associated with the action.
 
 After re-initializing the cache, we now have 3 routes:
 
-.. image:: /_static/images/quick-start/3-routes.png
+.. image:: /_static/images/quick-start2/create-action-view-result.png
 
 Let's go back to our development environment and see the generated code:
 

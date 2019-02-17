@@ -65,7 +65,7 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->assertTrue ( class_exists ( "controllers\\TestScaffoldCrudUser" ) );
 
 		$this->_initRequest ( 'TestScaffoldCrudUser', 'GET' );
-		$this->_assertDisplayEquals ( function () {
+		$this->_assertDisplayContains ( function () {
 			Startup::run ( $this->config );
 			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", Startup::getController () );
 			$this->assertEquals ( 'index', Startup::getAction () );
@@ -74,7 +74,7 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->_initRequest ( 'TestScaffoldCrudUser\refresh_', 'POST' );
 		$_POST ['p'] = 2;
 		$_POST ['model'] = 'models\User';
-		$this->_assertDisplayEquals ( function () {
+		$this->_assertDisplayContains ( function () {
 			Startup::run ( $this->config );
 			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", Startup::getController () );
 			$this->assertEquals ( 'refresh_', Startup::getAction () );

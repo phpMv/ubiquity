@@ -206,7 +206,9 @@ We will now create an action (information) with tow parameters (title and messag
 The route will use the two parameters of the action.
 
 .. code-block:: bash
+
 	Ubiquity action DefaultController.information -p=title,message='nothing' -r=info/{title}/{message} -v
+	
 
 .. note:: The -v (--view) parameter is used to create the view associated with the action.
 
