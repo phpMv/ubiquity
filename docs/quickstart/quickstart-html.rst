@@ -65,6 +65,7 @@ Go to the newly created folder **quick-start** and start the build-in php server
 Check the correct operation at the address **http://127.0.0.1:8090**:
 
 .. image:: /_static/images/quick-start/quick-start-main.png
+   :class: bordered
 
 .. note:: If port 8090 is busy, you can start the server on another port using -p option.
 

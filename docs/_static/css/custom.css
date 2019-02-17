@@ -22,6 +22,15 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	background-color: #e3e3e3!important;
 }
 
+img.bordered{
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border: 2px solid #dbdbdb;
+}
+
+
+
 
 h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
   color: #5C7C98;
