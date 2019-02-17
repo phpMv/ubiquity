@@ -165,11 +165,11 @@ We can use the **web tools** for the cache re-initialization:
 
 Go to the **Routes** section and click on the **re-init cache** button
 
-.. image:: /_static/images/quick-start2/re-init-cache-btn.png
+.. image:: /_static/images/quick-start-2/re-init-cache-btn.png
 
 The route now appears in the interface:
 
-.. image:: /_static/images/quick-start2/1-route.png
+.. image:: /_static/images/quick-start-2/1-route.png
 
 We can now test the page by clicking on the **GET** button or by going to the address ``http://127.0.0.1:8090/hello``
 
@@ -185,28 +185,28 @@ Go to the **Controllers** section:
 - click on the + button associated with DefaultController,
 - then select **Add new action in..** item.
 
-.. image:: /_static/images/quick-start2/create-action-btn.png
+.. image:: /_static/images/quick-start-2/create-action-btn.png
 
 Enter the action information in the following form:
 
-.. image:: /_static/images/quick-start2/create-action.png
+.. image:: /_static/images/quick-start-2/create-action.png
 
 After re-initializing the cache with the orange button, we can see the new route **hello/to/{name}**:
 
-.. image:: /_static/images/quick-start2/router-re-init-1.png
+.. image:: /_static/images/quick-start-2/router-re-init-1.png
 
 
 Check the route creation by going to the Routes section:
 
-.. image:: /_static/images/quick-start2/router-re-init-2.png
+.. image:: /_static/images/quick-start-2/router-re-init-2.png
 
 We can now test the page by clicking on the **GET** button:
 
-.. image:: /_static/images/quick-start2/test-action.png
+.. image:: /_static/images/quick-start-2/test-action.png
 
 We can see the result:
 
-.. image:: /_static/images/quick-start2/test-action-result.png
+.. image:: /_static/images/quick-start-2/test-action-result.png
 
 We could directly go to ``http://127.0.0.1:8090/hello/to/Mr SMITH`` address to test 
 
@@ -218,17 +218,17 @@ The route will use the two parameters of the action.
 
 In the **Controllers** section, create another action on **DefaultController**:
 
-.. image:: /_static/images/quick-start2/create-action-btn.png
+.. image:: /_static/images/quick-start-2/create-action-btn.png
 
 Enter the action information in the following form:
 
-.. image:: /_static/images/quick-start2/create-action-view.png
+.. image:: /_static/images/quick-start-2/create-action-view.png
 
 .. note:: The view checkbox is used to create the view associated with the action.
 
 After re-initializing the cache, we now have 3 routes:
 
-.. image:: /_static/images/quick-start2/create-action-view-result.png
+.. image:: /_static/images/quick-start-2/create-action-view-result.png
 
 Let's go back to our development environment and see the generated code:
 

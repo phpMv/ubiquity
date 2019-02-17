@@ -77,7 +77,6 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->_assertDisplayContains ( function () {
 			Startup::run ( $this->config );
 			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", Startup::getController () );
-			$this->assertEquals ( 'refresh_', Startup::getAction () );
 		}, 'carolyn.pace' );
 	}
 
