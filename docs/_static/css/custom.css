@@ -8,6 +8,68 @@ body{
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif!important;
 }
+/* -- titles ----------------------------------------------------------- */
+a.headerlink {
+  visibility: hidden;
+  color: #ddd;
+  padding: 0 4px;
+  text-decoration: none;
+}
+
+h1:hover > a.headerlink,
+h2:hover > a.headerlink,
+h3:hover > a.headerlink,
+h4:hover > a.headerlink,
+h5:hover > a.headerlink,
+h6:hover > a.headerlink,
+dt:hover > a.headerlink {
+  visibility: visible;
+}
+
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+  color: #5C7C98;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: black;
+  font-weight: normal;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 38px;
+  padding: 10px 10px 10px 45px;
+  margin: 20px 0 35px -45px;
+  background-color: aliceblue;
+  width: calc(100% + 90px);
+  border-bottom: 1px solid #D8E4EF;
+}
+
+h2 {
+  font-size: 34px;
+  padding: .2em 0;
+  border-bottom: 1px solid #ddd;
+}
+
+h3 {
+  margin-top: 35px;
+  font-size: 28px;
+}
+
+h4 {
+  margin-top: 30px;
+  font-size: 24px;
+}
+
+h5 {
+  margin-top: 25px;
+  font-size: 20px;
+}
 
 .wy-nav-content{
 	max-width: none!important;
@@ -90,6 +152,7 @@ div[class^='highlight'] pre{
 
 .rst-content .admonition-title:before{
 	content:'';
+	margin-right: 0px!important;
 }
 
 .admonition {
@@ -115,7 +178,6 @@ div[class^='highlight'] pre{
   font-weight: bold!important;
   font-size: 18px!important;
   line-height: 1.1!important;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: transparent!important;
 }
 
