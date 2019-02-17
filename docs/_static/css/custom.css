@@ -8,29 +8,18 @@ body{
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif!important;
 }
-/* -- titles ----------------------------------------------------------- */
-/*a.headerlink {
-  visibility: hidden;
-  color: #ddd;
-  padding: 0 4px;
-  text-decoration: none;
+.wy-menu-vertical header, .wy-menu-vertical p.caption{
+	background-color: #4EA0AF!important;
 }
-
-h1:hover > a.headerlink,
-h2:hover > a.headerlink,
-h3:hover > a.headerlink,
-h4:hover > a.headerlink,
-h5:hover > a.headerlink,
-h6:hover > a.headerlink,
-dt:hover > a.headerlink {
-  visibility: visible;
-}
-*/
 .wy-menu-vertical li.current{
 	background-color: #f4f4f4!important; 
 }
 .wy-menu-vertical li.toctree-l2.current>a{
 	background-color: #ebebeb!important;
+}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3>a{
+	background-color: #e3e3e3!important;
 }
 
 
@@ -105,18 +94,20 @@ h5 {
 	font-size: small;
 }
 
-/*.highlight .hll { background-color: #404040!important; }
-.highlight  { background: #202020!important; color: #d0d0d0!important; }*/
+.rst-content pre.literal-block, .rst-content div[class^='highlight'] pre, .rst-content .linenodiv pre{
+	font-size: 14px!important;
+}
 
 .highlight .hll, [class^='highlight-']:not([class='highlight-default']){
 	font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace!important;
-	background: #1b2426!important;
+	background: #343131!important;
 	color: #d0d0d0!important;
 }
+/*
 .highlight .hll{
 	background-color: #323e41 !important;
 }
-
+*/
 .highlight-bash pre{
 	color: #fff!important;
 	font-size: 14px!important;
@@ -139,7 +130,7 @@ div[class^='highlight'] pre{
 }
 
 .rst-content .highlight>pre, .rst-content .linenodiv>pre {
-	line-height: 18px!important;
+	line-height: 15px!important;
 }
 .btn{
 	border-radius: 5px;
