@@ -34,9 +34,7 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 .wy-side-nav-search input[type=text]{
 	border-color:#4DA0B0!important;
 }
-.wy-alert.wy-alert-info, .rst-content .note, .rst-content .wy-alert-info.attention, .rst-content .wy-alert-info.caution, .rst-content .wy-alert-info.danger, .rst-content .wy-alert-info.error, .rst-content .wy-alert-info.hint, .rst-content .wy-alert-info.important, .rst-content .wy-alert-info.tip, .rst-content .wy-alert-info.warning, .rst-content .seealso, .rst-content .wy-alert-info.admonition-todo{
-	border-radius: 6px;
-}
+
 .code-block-caption .caption-text{
 	font-weight: bolder;
 	font-size: small;
@@ -84,15 +82,23 @@ div[class^='highlight'] pre{
 	padding: 6px 12px!important;
 }
 
+.first {
+  margin-top: 0 !important;
+}
+
 /* -- admonitions ----------------------------------------------------------- */
 
+.rst-content .admonition-title:before{
+	content:'';
+}
+
 .admonition {
-  margin: 20px 0;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #eee;
-  border-left-width: 6px;
-  border-radius: 3px;
+  margin: 20px 0!important;
+  padding: 20px!important;
+  background-color: #fff!important;
+  border: 1px solid #eee!important;
+  border-left-width: 6px!important;
+  border-radius: 3px!important;
 }
 
 .admonition dt {
@@ -104,12 +110,13 @@ div[class^='highlight'] pre{
 }
 
 .admonition-title {
-  margin: 0px 0 5px;
+  margin: 0px 0 5px!important;
   padding: 0;
   font-weight: bold;
   font-size: 18px;
   line-height: 1.1;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: transparent!important;
 }
 
 .admonition.danger,

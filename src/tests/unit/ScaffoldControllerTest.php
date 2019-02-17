@@ -76,6 +76,33 @@ class ScaffoldControllerTest extends BaseTest {
 			Startup::run ( $this->config );
 			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", Startup::getController () );
 		}, 'acton.carrillo@gmail.com' );
+
+		$this->_initRequest ( 'TestScaffoldCrudUser/delete/3', 'GET' );
+		$this->_assertDisplayContains ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", Startup::getController () );
+		}, 'Do you confirm the deletion of' );
+	}
+
+	/**
+	 * Tests AdminScaffoldController::addController()
+	 */
+	public function testAddControllerAndAction() {
+		$this->scaffoldController->_createController ( "TestNewController", [ "%baseClass%" => "ControllerBase" ] );
+		$this->assertTrue ( class_exists ( "controllers\\TestNewController" ) );
+		$this->scaffoldController->_newAction ( "controllers\\TestNewController", "newAction", "a,b=5", "echo 'test-'.\$a.'-'.\$b;", [ "path" => "/test/new/{a}/{b}/","methods" => [ "get" ] ] );
+
+		$this->_initRequest ( '/test/new/essai/', 'GET' );
+		$this->_assertDisplayContains ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( "controllers\\TestNewController", Startup::getController () );
+		}, 'test-essai-5' );
+
+		$this->_initRequest ( '/test/new/autreEssai/12/', 'GET' );
+		$this->_assertDisplayContains ( function () {
+			Startup::run ( $this->config );
+			$this->assertEquals ( "controllers\\TestNewController", Startup::getController () );
+		}, 'test-autreEssai-12' );
 	}
 
 	/**
