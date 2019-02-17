@@ -9,7 +9,7 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif!important;
 }
 /* -- titles ----------------------------------------------------------- */
-a.headerlink {
+/*a.headerlink {
   visibility: hidden;
   color: #ddd;
   padding: 0 4px;
@@ -25,6 +25,11 @@ h6:hover > a.headerlink,
 dt:hover > a.headerlink {
   visibility: visible;
 }
+*/
+.wy-menu-vertical li.current{
+	background-color: #f4f4f4!important; 
+}
+
 
 h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
   color: #5C7C98;
@@ -45,7 +50,7 @@ h1 {
   font-size: 38px;
   padding: 10px 10px 10px 45px;
   margin: 20px 0 35px -45px;
-  background-color: aliceblue;
+  background-color: #fbf6ed;
   width: calc(100% + 90px);
   border-bottom: 1px solid #D8E4EF;
 }
