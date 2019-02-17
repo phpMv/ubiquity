@@ -33,7 +33,7 @@ Example :
    
 Project creation
 ----------------
-Create the **quick-start** projet with UbiquityMyAdmin interface and Semantic-UI integration
+Create the **quick-start** projet with **UbiquityMyAdmin** interface (the **-a** option) and Semantic-UI integration
 
 .. code-block:: bash
    
