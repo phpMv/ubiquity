@@ -92,9 +92,9 @@ class ScaffoldControllerTest extends BaseTest {
 	 */
 	public function testAddControllerAndAction() {
 		$this->scaffoldController->_createController ( "TestNewController", [ "%baseClass%" => "ControllerBase" ] );
-		$this->assertTrue ( class_exists ( "controllers\\TestNewController" ) );
-		$this->scaffoldController->_newAction ( "controllers\\TestNewController", "newAction", "a,b=5", "echo 'test-'.\$a.'-'.\$b;", [ "path" => "/test/new/{a}/{b}/","methods" => "" ] );
-
+		$this->assertTrue ( class_exists ( "\\controllers\\TestNewController" ) );
+		$this->scaffoldController->_newAction ( "\\controllers\\TestNewController", "newAction", "a,b=5", 'echo "test-".$a."-".$b;' );
+		sleep ( 2 );
 		$this->_initRequest ( '/TestNewController/newAction/essai/', 'GET' );
 		$this->_assertDisplayContains ( function () {
 			Startup::run ( $this->config );
