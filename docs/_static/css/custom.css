@@ -47,7 +47,6 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 38px;
   padding: 10px 10px 10px 45px;
   margin: 20px 0 35px -45px;
   background-color: #fbf6ed;
@@ -56,24 +55,20 @@ h1 {
 }
 
 h2 {
-  font-size: 34px;
   padding: .2em 0;
   border-bottom: 1px solid #ddd;
 }
 
 h3 {
   margin-top: 35px;
-  font-size: 28px;
 }
 
 h4 {
   margin-top: 30px;
-  font-size: 24px;
 }
 
 h5 {
   margin-top: 25px;
-  font-size: 20px;
 }
 
 .wy-nav-content{
@@ -181,7 +176,6 @@ div[class^='highlight'] pre{
   margin: 0px 0 5px!important;
   padding: 0!important;
   font-weight: bold!important;
-  font-size: 18px!important;
   line-height: 1.1!important;
   background-color: transparent!important;
 }
