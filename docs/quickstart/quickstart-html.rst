@@ -122,7 +122,7 @@ Add the traditional message, and test your page at ``http://127.0.0.1:8090/Defau
 	
 	}
    
-For now, we have not defined routes,|br|
+For now, we have not defined routes, |br|
 Access to the application is thus made according to the following scheme: |br|
 ``controllerName/actionName/param``
 
