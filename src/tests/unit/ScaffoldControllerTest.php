@@ -95,7 +95,7 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->assertTrue ( class_exists ( "controllers\\TestNewController" ) );
 		$this->scaffoldController->_newAction ( "controllers\\TestNewController", "newAction", "a,b=5", "echo 'test-'.\$a.'-'.\$b;", [ "path" => "/test/new/{a}/{b}/","methods" => "get" ] );
 
-		CacheManager::initCache ( $this->config, 'all', true );
+		CacheManager::initCache ( $this->config, 'controllers', true );
 		CacheManager::startProd ( $this->config );
 		$this->_initRequest ( '/test/new/essai/', 'GET' );
 		$this->_assertDisplayContains ( function () {
