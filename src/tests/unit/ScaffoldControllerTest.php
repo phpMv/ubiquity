@@ -3,6 +3,7 @@ use Ubiquity\scaffolding\AdminScaffoldController;
 use controllers\Admin;
 use Ubiquity\controllers\Startup;
 use models\User;
+use Ubiquity\utils\http\URequest;
 
 /**
  * ScaffoldController test case.
@@ -78,6 +79,7 @@ class ScaffoldControllerTest extends BaseTest {
 		}, 'acton.carrillo@gmail.com' );
 
 		$this->_initRequest ( 'TestScaffoldCrudUser/delete/3', 'GET' );
+		$_SERVER ['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
 		$this->_assertDisplayContains ( function () {
 			Startup::run ( $this->config );
 			$this->assertEquals ( "controllers\\TestScaffoldCrudUser", Startup::getController () );
