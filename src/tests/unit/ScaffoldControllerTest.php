@@ -95,15 +95,13 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->assertTrue ( class_exists ( "controllers\\TestNewController" ) );
 		$this->scaffoldController->_newAction ( "controllers\\TestNewController", "newAction", "a,b=5", "echo 'test-'.\$a.'-'.\$b;", [ "path" => "/test/new/{a}/{b}/","methods" => "get" ] );
 
-		CacheManager::initCache ( $this->config, 'controllers', true );
-		CacheManager::startProd ( $this->config );
-		$this->_initRequest ( '/test/new/essai/', 'GET' );
+		$this->_initRequest ( '/TestNewController/newAction/essai/', 'GET' );
 		$this->_assertDisplayContains ( function () {
 			Startup::run ( $this->config );
 			$this->assertEquals ( "controllers\\TestNewController", Startup::getController () );
 		}, 'test-essai-5' );
 
-		$this->_initRequest ( '/test/new/autreEssai/12/', 'GET' );
+		$this->_initRequest ( '/TestNewController/newAction/autreEssai/12/', 'GET' );
 		$this->_assertDisplayContains ( function () {
 			Startup::run ( $this->config );
 			$this->assertEquals ( "controllers\\TestNewController", Startup::getController () );
