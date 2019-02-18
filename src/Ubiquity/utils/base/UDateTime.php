@@ -14,7 +14,7 @@ namespace Ubiquity\utils\base;
 class UDateTime {
 	const MYSQL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 	const MYSQL_DATE_FORMAT = 'Y-m-d';
-	private static $locales = [ "fr" => [ "fr","fr_FR","fr_FR.ISO8859-1" ],"en" => [ "en","en_US","en_US.UTF-8" ] ];
+	private static $locales = [ "fr" => [ "fr","fr_FR","fr_FR.UTF-8" ],"en" => [ "en","en_US","en_US.UTF-8" ] ];
 
 	private static function setLocale($locale) {
 		if (isset ( self::$locales [$locale] )) {
