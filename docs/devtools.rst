@@ -3,12 +3,34 @@ Devtools usage
 
 Project creation
 ----------------
-See :doc:`createproject` for project creation.
+See :doc:`createproject` to create a project.
 
-.. note:: For all other commands, you must be in your project folder or one of its subfolders.
+.. tip:: For all other commands, you must be in your project folder or one of its subfolders.
+
+.. tip:: 
+   The ``.ubiquity`` folder created automatically with the project allows the devtools to find the root folder of the project.
+   If it has been deleted or is no longer present, you must recreate this empty folder.
 
 Controller creation
 -------------------
+Specifications
+++++++++++++++
+
+- command : `controller`
+- Argument : `controller-name`
+- aliases : `create-controller`
+
+Parameters
+++++++++++
+
++------------+------------+------------------------------------+-----------+-----------------------+
+| short name | name       | role                               | default   | Allowed values        |
++============+============+====================================+===========+=======================+
+|      v     | view       | Creates the associated view index. |   true    | true, false           |
++------------+------------+------------------------------------+-----------+-----------------------+
+
+Samples:
++++++++
 Creates the controller ``controllers\ClientController`` class in ``app/controllers/ClientController.php``
 
 .. code-block:: bash
