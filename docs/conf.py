@@ -44,6 +44,7 @@ source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
+html_favicon = 'favicon.png'
 
 # General information about the project.
 project = 'Ubiquity'
