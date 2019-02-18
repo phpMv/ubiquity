@@ -65,7 +65,7 @@ class ScaffoldControllerTest extends BaseTest {
 	 * Tests AdminScaffoldController::addCrudController()
 	 */
 	public function testAddCrudController() {
-		$this->scaffoldController->addCrudController ( "TestScaffoldCrudUser", User::class, true, true, "index,form,display", [ "path" => "scaff/test","methods" => "" ] );
+		$this->scaffoldController->addCrudController ( "TestScaffoldCrudUser", User::class, true, true, true, "index,form,display", [ "path" => "scaff/test","methods" => "" ] );
 		$this->assertTrue ( class_exists ( "controllers\\TestScaffoldCrudUser" ) );
 
 		$this->_initRequest ( 'TestScaffoldCrudUser', 'GET' );
