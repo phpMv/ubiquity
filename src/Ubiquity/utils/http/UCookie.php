@@ -44,8 +44,7 @@ class UCookie {
 	 * Removes the cookie with the name $name
 	 *
 	 * @param string $name
-	 * @param
-	 *        	$path
+	 * @param string $path
 	 */
 	public static function delete($name, $path = "/") {
 		if (isset ( $_COOKIE [$name] )) {

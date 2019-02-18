@@ -17,6 +17,10 @@ class TestUCookieController extends ControllerBase {
 		echo "deleted";
 	}
 
+	public function get() {
+		echo UCookie::get ( "user", "not-exists" );
+	}
+
 	public function deleteAll() {
 		UCookie::deleteAll ();
 		echo "deleteds";
