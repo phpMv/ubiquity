@@ -68,12 +68,8 @@ class FlashBagTest extends BaseTest {
 	 */
 	public function testClear() {
 		$this->assertEquals ( 3, sizeof ( $this->flashBag->getAll () ) );
-		$fb = new FlashBag ();
-		$this->assertEquals ( 3, sizeof ( $fb->getAll () ) );
 		$this->flashBag->clear ();
 		$this->assertEquals ( 0, sizeof ( $this->flashBag->getAll () ) );
-		$fb = new FlashBag ();
-		$this->assertEquals ( 0, sizeof ( $fb->getAll () ) );
 	}
 
 	/**
@@ -93,7 +89,7 @@ class FlashBagTest extends BaseTest {
 
 		$this->flashBag->rewind ();
 		$this->assertEquals ( 0, $this->flashBag->key () );
-		$this->assertEquals ( "message1", $current->getContent () );
+		$this->assertEquals ( "message1", $this->flashBag->current ()->getContent () );
 	}
 
 	/**

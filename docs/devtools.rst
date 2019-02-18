@@ -105,18 +105,76 @@ Adds the action ``display`` in controller ``Users`` with a parameter:
    Les paramètres doivent respecter les règles de nommage php pour les variables. |br|
    Il est inutile de mettre le **$** devant le nom des paramètres.
 
+code result:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 5-7
+   
+	class Users extends ControllerBase{
+	
+		public function index(){}
+	
+		public function display($idUser){
+			
+		}
+	}
+
 Adds the action ``display`` with an associated route:
 
 .. code-block:: bash
    
    Ubiquity action Users.display -p=idUser -r=/users/display/{idUser}
 
+code result:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 5-10
+   
+	class Users extends ControllerBase{
+	
+		public function index(){}
+	
+		/**
+		 *@route("/users/display/{idUser}")
+		**/
+		public function display($idUser){
+			
+		}
+	}
+
 Adds the action ``search`` with multiple parameters:
 
 .. code-block:: bash
    
    Ubiquity action Users.search -p=name,address=''
-                  · 
+
+code result:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 12-14
+   
+	class Users extends ControllerBase{
+	
+		public function index(){}
+	
+		/**
+		 *@route("/users/display/{idUser}")
+		**/
+		public function display($idUser){
+			
+		}
+	
+		public function search($name,$address=''){
+			
+		}
+	}
+
 Adds the action ``search`` and creates the associated view:
 
 .. code-block:: bash
