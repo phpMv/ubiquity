@@ -97,7 +97,9 @@ class ScaffoldControllerTest extends BaseTest {
 		ob_start ();
 		$this->scaffoldController->_newAction ( "controllers\\TestNewController", "newAction", "a,b=5", "echo 'test-'.\$a.'-'.\$b;", [ "path" => "/test/new/{a}/{b}/","methods" => "" ], true );
 		$res = ob_get_clean ();
-		$this->assertContains ( "The action <b>newAction</b> is created in controller <b>controllers\TestNewController</b><br>Created route : <b>/test/new/{a}/{b}/</b><br>You need to re-init Router cache to apply this update:&nbsp;", $res );
+		$this->assertContains ( "The action <b>newAction</b> is created in controller <b>controllers\TestNewController</b>", $res );
+		$this->assertContains ( "Created route : <b>/test/new/{a}/{b}/</b>", $res );
+		$this->assertContains ( "You need to re-init Router cache to apply this update", $res );
 		$this->assertContains ( "DefaultController/newAction.html", $res );
 	}
 
@@ -105,7 +107,7 @@ class ScaffoldControllerTest extends BaseTest {
 	 * Tests AdminScaffoldController::addAuthController()
 	 */
 	public function testAddAuthController() {
-		$this->scaffoldController->addAuthController ( "TestScaffoldAuth", "\\Ubiquity\\controllers\\auth\\AuthController", "index,info,noAccess,disconnected,message,baseTemplate", [ "path" => "crud/test","methods" => "" ] );
+		$this->scaffoldController->addAuthController ( "TestScaffoldAuth", "\\Ubiquity\\controllers\\auth\\AuthController", "index,info,noAccess,disconnected,message,baseTemplate", "crud/test" );
 		$this->assertTrue ( class_exists ( "controllers\\TestScaffoldAuth" ) );
 	}
 

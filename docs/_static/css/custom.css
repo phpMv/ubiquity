@@ -31,10 +31,10 @@ img.bordered{
 
 img.console{
 	background-color: #300A24;
-	padding: 4px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	padding: 12px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 	border: 2px solid #dbdbdb;	
 }
 
@@ -121,7 +121,7 @@ h5 {
 }
 
 .highlight{
-	background-color: ##343131 !important;
+	background-color: #343131!important;
 }
 
 .highlight-bash pre{
