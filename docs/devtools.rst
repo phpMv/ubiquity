@@ -7,8 +7,8 @@ See :doc:`createproject` to create a project.
 
 .. tip:: For all other commands, you must be in your project folder or one of its subfolders.
 
-.. tip:: 
-   The ``.ubiquity`` folder created automatically with the project allows the devtools to find the root folder of the project.
+.. important:: 
+   The ``.ubiquity`` folder created automatically with the project allows the devtools to find the root folder of the project. |br|
    If it has been deleted or is no longer present, you must recreate this empty folder.
 
 Controller creation
@@ -16,9 +16,9 @@ Controller creation
 Specifications
 ++++++++++++++
 
-- command : `controller`
-- Argument : `controller-name`
-- aliases : `create-controller`
+- command : ``controller``
+- Argument : ``controller-name``
+- aliases : ``create-controller``
 
 Parameters
 ++++++++++
@@ -31,18 +31,78 @@ Parameters
 
 Samples:
 +++++++
-Creates the controller ``controllers\ClientController`` class in ``app/controllers/ClientController.php``
+Creates the controller ``controllers\ClientController`` class in ``app/controllers/ClientController.php``:
 
 .. code-block:: bash
    
    Ubiquity controller ClientController
 
-Creates the controller ``controllers\ClientController`` class in ``app/controllers/ClientController.php`` and the associated view in ``app/views/ClientController/index.html``
+Creates the controller ``controllers\ClientController`` class in ``app/controllers/ClientController.php`` and the associated view in ``app/views/ClientController/index.html``:
 
 .. code-block:: bash
    
    Ubiquity controller ClientController -v
+
+Action creation
+---------------
+Specifications
+++++++++++++++
+
+- command : ``action``
+- Argument : ``controller-name.action-name``
+- aliases : ``new-action``
+
+Parameters
+++++++++++
+
++------------+---------------+---------------------------------------+-----------+-----------------------+
+| short name | name          | role                                  | default   | Allowed values        |
++============+===============+=======================================+===========+=======================+
+|      p     | params        | The action parameters (or arguments). |           | a,b=5 or $a,$b,$c     |
++------------+---------------+---------------------------------------+-----------+-----------------------+
+|      r     | route         | The associated route path.            |           | /path/to/route        |
++------------+---------------+---------------------------------------+-----------+-----------------------+
+|      v     | create-view   | Creates the associated view.          | false     | true,false            |
++------------+---------------+---------------------------------------+-----------+-----------------------+
+
+Samples:
++++++++
+Adds the action ``all`` in controller ``Users``:
+
+.. code-block:: bash
    
+   Ubiquity action Users.all
+
+
+Adds the action ``display`` in controller ``Users`` with a parameter:
+
+.. code-block:: bash
+   
+   Ubiquity action Users.display -p=idUser
+ 
+.. info::
+   Les paramètres doivent respecter les règles de nommage php pour les variables. |br|
+   Il est inutile de mettre le **$** devant le nom des paramètres.
+
+Adds the action ``display`` with an associated route:
+
+.. code-block:: bash
+   
+   Ubiquity action Users.display -p=idUser -r=/users/display/{idUser}
+
+Adds the action ``search`` with multiple parameters:
+
+.. code-block:: bash
+   
+   Ubiquity action Users.search -p=name,address=''
+                  · 
+Adds the action ``search`` and creates the associated view:
+
+.. code-block:: bash
+   
+   Ubiquity action Users.search -p=name,address -v
+
+                  
 Model creation
 --------------
 
@@ -70,3 +130,7 @@ To initialize the cache for routing (based on annotations in controllers) and or
 .. code-block:: bash
    
    Ubiquity init-cache
+
+.. |br| raw:: html
+
+   <br />

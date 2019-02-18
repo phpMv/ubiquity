@@ -2,8 +2,6 @@
 use Ubiquity\utils\flash\FlashBag;
 use Ubiquity\utils\flash\FlashMessage;
 
-require_once 'src/Ubiquity/utils/flash/FlashBag.php';
-
 /**
  * FlashBag test case.
  */
