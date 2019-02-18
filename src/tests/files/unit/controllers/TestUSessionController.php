@@ -41,6 +41,32 @@ class TestUSessionController extends ControllerBase {
 		echo USession::get ( "user", "user-null" );
 	}
 
+	public function testInc() {
+		USession::set ( "inc", 10 );
+		USession::inc ( "inc" );
+		echo USession::session ( "inc" );
+	}
+
+	public function testDec() {
+		USession::set ( "dec", 10 );
+		USession::dec ( "dec", 2 );
+		echo USession::session ( "dec" );
+	}
+
+	public function testApply() {
+		USession::set ( "apply", "MAJUSCULE" );
+		USession::apply ( "apply", "strtolower" );
+		echo USession::session ( "apply" );
+	}
+
+	public function testApplyBis() {
+		USession::set ( "apply2", "content" );
+		USession::apply ( "apply2", function ($v) {
+			return 'prefix-' . $v;
+		} );
+		echo USession::session ( "apply2" );
+	}
+
 	public function terminate() {
 		USession::terminate ();
 		if (sizeof ( $_SESSION ) == 0)

@@ -3,10 +3,6 @@ use Ubiquity\scaffolding\AdminScaffoldController;
 use controllers\Admin;
 use Ubiquity\controllers\Startup;
 use models\User;
-use Ubiquity\utils\http\URequest;
-use Ubiquity\cache\CacheManager;
-use Ubiquity\cache\ClassUtils;
-use Ubiquity\orm\parser\Reflexion;
 
 /**
  * ScaffoldController test case.
