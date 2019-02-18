@@ -82,10 +82,10 @@ class FlashBagTest extends BaseTest {
 
 		$this->flashBag->rewind ();
 		$this->assertEquals ( 0, $this->flashBag->key () );
-		$this->assertEquals ( "message1", $current->getContent () );
+		$this->assertEquals ( "message1", $this->flashBag->current ()->getContent () );
 		$this->flashBag->next ();
 		$this->assertEquals ( 1, $this->flashBag->key () );
-		$this->assertEquals ( "message2", $current->getContent () );
+		$this->assertEquals ( "message2", $this->flashBag->current ()->getContent () );
 
 		$this->flashBag->rewind ();
 		$this->assertEquals ( 0, $this->flashBag->key () );
