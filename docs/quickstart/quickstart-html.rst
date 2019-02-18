@@ -21,6 +21,7 @@ Test your recent installation by doing:
    Ubiquity version
    
 .. image:: /_static/images/quick-start/ubi-version.png
+   :class: console
 
 You can get at all times help with a command by typing: ``Ubiquity help`` followed by what you are looking for.
 
@@ -84,6 +85,7 @@ Goto admin interface by clicking on the button **UbiquityMyAdmin**:
 The web application **UbiquityMyAdmin** saves time in repetitive operations.
 
 .. image:: /_static/images/quick-start-2/ubi-my-admin-interface.png
+   :class: bordered
 
 We go through it to create a controller.
 
@@ -94,7 +96,7 @@ Go to the **controllers** part, enter **DefaultController** in the **controllerN
 The controller **DefaultController** is created:
 
 .. image:: /_static/images/quick-start-2/controller-created.png
-
+   :class: bordered
 
 We can then edit ``app/controllers/DefaultController`` file in our favorite IDE:
 
@@ -171,6 +173,7 @@ Go to the **Routes** section and click on the **re-init cache** button
 The route now appears in the interface:
 
 .. image:: /_static/images/quick-start-2/1-route.png
+   :class: bordered
 
 We can now test the page by clicking on the **GET** button or by going to the address ``http://127.0.0.1:8090/hello``
 
@@ -191,6 +194,7 @@ Go to the **Controllers** section:
 Enter the action information in the following form:
 
 .. image:: /_static/images/quick-start-2/create-action.png
+   :class: bordered
 
 After re-initializing the cache with the orange button, we can see the new route **hello/to/{name}**:
 
@@ -204,10 +208,12 @@ Check the route creation by going to the Routes section:
 We can now test the page by clicking on the **GET** button:
 
 .. image:: /_static/images/quick-start-2/test-action.png
+   :class: bordered
 
 We can see the result:
 
 .. image:: /_static/images/quick-start-2/test-action-result.png
+   :class: bordered
 
 We could directly go to ``http://127.0.0.1:8090/hello/to/Mr SMITH`` address to test 
 
@@ -224,6 +230,7 @@ In the **Controllers** section, create another action on **DefaultController**:
 Enter the action information in the following form:
 
 .. image:: /_static/images/quick-start-2/create-action-view.png
+   :class: bordered
 
 .. note:: The view checkbox is used to create the view associated with the action.
 

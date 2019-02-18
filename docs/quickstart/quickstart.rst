@@ -22,6 +22,7 @@ Test your recent installation by doing:
    Ubiquity version
    
 .. image:: /_static/images/quick-start/ubi-version.png
+   :class: console
 
 You can get at all times help with a command by typing: ``Ubiquity help`` followed by what you are looking for.
 
@@ -159,6 +160,7 @@ We can use the console for the cache re-initialization:
    Ubiquity init-cache
 
 .. image:: /_static/images/quick-start/init-cache.png
+   :class: console
 
 Let's check that the route exists:
 
@@ -167,6 +169,7 @@ Let's check that the route exists:
    Ubiquity info:routes
 
 .. image:: /_static/images/quick-start/info-routes.png
+   :class: console
 
 We can now test the page at ``http://127.0.0.1:8090/hello``
 
@@ -181,10 +184,12 @@ The route will use the parameter **name** of the action:
 	Ubiquity action DefaultController.sayHello -p=name -r=to/{name}/
 	
 .. image:: /_static/images/quick-start/action-creation.png
+   :class: console
 
 After re-initializing the cache (**init-cache** command), the **info:routes** command should display:
 
 .. image:: /_static/images/quick-start/2-routes.png
+   :class: console
 
 Change the code in your IDE: the action must say Hello to somebody...
 
@@ -216,6 +221,7 @@ The route will use the two parameters of the action.
 After re-initializing the cache, we now have 3 routes:
 
 .. image:: /_static/images/quick-start/3-routes.png
+   :class: console
 
 Let's go back to our development environment and see the generated code:
 
