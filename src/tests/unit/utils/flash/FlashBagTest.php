@@ -58,7 +58,7 @@ class FlashBagTest extends BaseTest {
 	 */
 	public function testGetAll() {
 		$messages = $this->flashBag->getAll ();
-		$this->assertInstanceOf ( current ( $messages ), FlashMessage::class );
+		$this->assertInstanceOf ( FlashMessage::class, current ( $messages ) );
 		$message = $messages [1];
 		$this->assertEquals ( "message2", $message->getContent () );
 		$this->assertEquals ( "t2", $message->getTitle () );

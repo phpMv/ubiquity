@@ -72,6 +72,27 @@ Adds the action ``all`` in controller ``Users``:
 .. code-block:: bash
    
    Ubiquity action Users.all
+   
+code result:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 9-11
+
+	namespace controllers;
+	 /**
+	 * Controller Users
+	 **/
+	class Users extends ControllerBase{
+	
+		public function index(){}
+	
+		public function all(){
+			
+		}
+	
+	}
 
 
 Adds the action ``display`` in controller ``Users`` with a parameter:
