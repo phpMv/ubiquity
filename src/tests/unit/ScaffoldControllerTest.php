@@ -5,6 +5,8 @@ use Ubiquity\controllers\Startup;
 use models\User;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\cache\CacheManager;
+use Ubiquity\cache\ClassUtils;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
  * ScaffoldController test case.
@@ -63,7 +65,7 @@ class ScaffoldControllerTest extends BaseTest {
 	 * Tests AdminScaffoldController::addCrudController()
 	 */
 	public function testAddCrudController() {
-		$this->scaffoldController->addCrudController ( "TestScaffoldCrudUser", User::class );
+		$this->scaffoldController->addCrudController ( "TestScaffoldCrudUser", User::class, true, true, "index,form,display", [ "path" => "scaff/test","methods" => "" ] );
 		$this->assertTrue ( class_exists ( "controllers\\TestScaffoldCrudUser" ) );
 
 		$this->_initRequest ( 'TestScaffoldCrudUser', 'GET' );
@@ -93,27 +95,18 @@ class ScaffoldControllerTest extends BaseTest {
 	public function testAddControllerAndAction() {
 		$this->scaffoldController->_createController ( "TestNewController", [ "%baseClass%" => "ControllerBase" ] );
 		ob_start ();
-		$this->scaffoldController->_newAction ( "controllers\\TestNewController", "newAction", "a,b=5", "echo 'test-'.\$a.'-'.\$b;", [ "path" => "/test/new/{a}/{b}/","methods" => "" ] );
+		$this->scaffoldController->_newAction ( "controllers\\TestNewController", "newAction", "a,b=5", "echo 'test-'.\$a.'-'.\$b;", [ "path" => "/test/new/{a}/{b}/","methods" => "" ], true );
 		$res = ob_get_clean ();
-		$this->assertEquals ( "bla", $res );
-		/*
-		 * $this->assertTrue ( method_exists ( "controllers\TestNewController", "newAction" ) );
-		 * $this->assertTrue ( class_exists ( "controllers\\TestNewController" ) );
-		 */
+		$this->assertContains ( "The action <b>newAction</b> is created in controller <b>controllers\TestNewController</b><br>Created route : <b>/test/new/{a}/{b}/</b><br>You need to re-init Router cache to apply this update:&nbsp;", $res );
+		$this->assertContains ( "DefaultController/newAction.html", $res );
+	}
 
-		/*
-		 * $_GET ["c"] = '/TestNewController/newAction/essai/';
-		 * $this->_assertDisplayContains ( function () {
-		 * Startup::run ( $this->config );
-		 * $this->assertEquals ( "controllers\\TestNewController", Startup::getController () );
-		 * }, 'test-essai-5' );
-		 *
-		 * $_GET ["c"] = '/TestNewController/newAction/autreEssai/12/';
-		 * $this->_assertDisplayContains ( function () {
-		 * Startup::run ( $this->config );
-		 * $this->assertEquals ( "controllers\\TestNewController", Startup::getController () );
-		 * }, 'test-autreEssai-12' );
-		 */
+	/**
+	 * Tests AdminScaffoldController::addAuthController()
+	 */
+	public function testAddAuthController() {
+		$this->scaffoldController->addAuthController ( "TestScaffoldAuth", "\\Ubiquity\\controllers\\auth\\AuthController", "index,info,noAccess,disconnected,message,baseTemplate", [ "path" => "crud/test","methods" => "" ] );
+		$this->assertTrue ( class_exists ( "controllers\\TestScaffoldAuth" ) );
 	}
 
 	/**

@@ -29,7 +29,14 @@ img.bordered{
 	border: 2px solid #dbdbdb;
 }
 
-
+img.console{
+	background-color: #300A24;
+	padding: 4px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border: 2px solid #dbdbdb;	
+}
 
 
 h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {

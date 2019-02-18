@@ -85,6 +85,7 @@ We go through it to create a controller.
    Ubiquity controller DefaultController
    
 .. image:: /_static/images/quick-start/controller-creation.png
+   :class: console
 
 We can then edit ``app/controllers/DefaultController`` file in our favorite IDE:
 
