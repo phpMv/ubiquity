@@ -12,18 +12,6 @@ class TestUCookieController extends ControllerBase {
 		echo "cookie";
 	}
 
-	public function testUser() {
-		echo UCookie::get ( "user", "not-exists" );
-	}
-
-	public function testOther() {
-		echo UCookie::get ( "other", "not-exists" );
-	}
-
-	public function testNotExists() {
-		echo UCookie::get ( "not-exists", "not-exists" );
-	}
-
 	public function delete() {
 		UCookie::delete ( "user" );
 		echo "deleted";
@@ -32,14 +20,6 @@ class TestUCookieController extends ControllerBase {
 	public function deleteAll() {
 		UCookie::deleteAll ();
 		echo "deleteds";
-	}
-
-	public function testAllDeleted() {
-		echo UCookie::get ( "user", "no" ) . ':' . UCookie::get ( "other", "no" );
-	}
-
-	public function testDeleted() {
-		echo UCookie::get ( "user", "no-user" );
 	}
 }
 
