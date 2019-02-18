@@ -46,8 +46,6 @@ class FlashBagTest extends BaseTest {
 	 */
 	public function testGetMessages() {
 		$this->assertEquals ( 3, sizeof ( $this->flashBag->getAll () ) );
-		$this->flashBag->getMessages ();
-
 		$this->assertEquals ( 2, sizeof ( $this->flashBag->getMessages ( "info" ) ) );
 		$this->assertEquals ( 1, sizeof ( $this->flashBag->getMessages ( "error" ) ) );
 		$this->assertEquals ( 0, sizeof ( $this->flashBag->getMessages ( "notExists" ) ) );
