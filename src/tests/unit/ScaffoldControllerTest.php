@@ -65,7 +65,7 @@ class ScaffoldControllerTest extends BaseTest {
 	 * Tests AdminScaffoldController::addCrudController()
 	 */
 	public function testAddCrudController() {
-		$this->scaffoldController->addCrudController ( "TestScaffoldCrudUser", User::class, true, true, true, "index,form,display", [ "path" => "scaff/test","methods" => "" ] );
+		$this->scaffoldController->addCrudController ( "TestScaffoldCrudUser", User::class, true, true, true, "index,form,display", "scaff/test" );
 		$this->assertTrue ( class_exists ( "controllers\\TestScaffoldCrudUser" ) );
 
 		$this->_initRequest ( 'TestScaffoldCrudUser', 'GET' );
@@ -100,7 +100,7 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->assertContains ( "The action <b>newAction</b> is created in controller <b>controllers\TestNewController</b>", $res );
 		$this->assertContains ( "Created route : <b>/test/new/{a}/{b}/</b>", $res );
 		$this->assertContains ( "You need to re-init Router cache to apply this update", $res );
-		$this->assertContains ( "DefaultController/newAction.html", $res );
+		$this->assertContains ( "Created view : <b>TestNewController/newAction.html</b>", $res );
 	}
 
 	/**

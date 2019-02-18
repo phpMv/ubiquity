@@ -273,7 +273,7 @@ We can test our page at ``http://127.0.0.1:8090/hello/info/Quick start/Ubiquity 
 It's obvious
 
 .. image:: /_static/images/quick-start/quiet-simple.png
-
+   :class: bordered
 
 .. |br| raw:: html
 
