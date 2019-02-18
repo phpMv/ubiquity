@@ -2,10 +2,19 @@
 
 namespace Ubiquity\utils\base;
 
+/**
+ * DateTime utilities
+ * Ubiquity\utils\base$UDateTime
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.1
+ *
+ */
 class UDateTime {
 	const MYSQL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 	const MYSQL_DATE_FORMAT = 'Y-m-d';
-	private static $locales = [ "fr" => [ "fr","fr_FR","fr_FR.UTF-8" ],"en" => [ "en","en_US","en_US.UTF-8" ] ];
+	private static $locales = [ "fr" => [ "fr","fr_FR","fr_FR.ISO8859-1" ],"en" => [ "en","en_US","en_US.UTF-8" ] ];
 
 	private static function setLocale($locale) {
 		if (isset ( self::$locales [$locale] )) {
@@ -38,7 +47,7 @@ class UDateTime {
 
 	public static function shortDate($date, $locale = "en") {
 		self::setLocale ( $locale );
-		return strftime ( "%AD", strtotime ( $date ) );
+		return strftime ( "%x", strtotime ( $date ) );
 	}
 
 	public static function shortDatetime($datetime, $locale = "en") {

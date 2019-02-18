@@ -7,7 +7,12 @@ Routing can be used in addition to the default mechanism that associates ``contr
 Routing works by using the **@route** annotation on controller methods.
 
 Routes definition
--------------------
+-----------------
+Simple route
+^^^^^^^^^^^^
+
+
+
 Creation
 ^^^^^^^
 .. code-block:: php
