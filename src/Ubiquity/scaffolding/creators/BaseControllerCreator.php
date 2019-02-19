@@ -34,7 +34,7 @@ abstract class BaseControllerCreator {
 		$this->controllerNS = Startup::getNS ( "controllers" );
 	}
 
-	protected function addRoute($routePath) {
+	protected function addRoute(&$routePath) {
 		if (! UString::startswith ( $routePath, "/" )) {
 			$routePath = "/" . $routePath;
 		}

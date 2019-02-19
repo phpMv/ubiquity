@@ -47,9 +47,30 @@ class ValidatorsManager {
 	public static function start() {
 		self::$cache = new SessionCache ();
 	}
-	public static $validatorTypes = [ "notNull" => NotNullValidator::class,"isNull" => IsNullValidator::class,"notEmpty" => NotEmptyValidator::class,"isEmpty" => IsEmptyValidator::class,"isTrue" => IsTrueValidator::class,"isFalse" => IsFalseValidator::class,"isBool" => IsBooleanValidator::class,"equals" => EqualsValidator::class,"type" => TypeValidator::class,
-			"greaterThan" => GreaterThanValidator::class,"greaterThanOrEqual" => GreaterThanOrEqualValidator::class,"lessThan" => LessThanValidator::class,"lessThanOrEqual" => LessThanOrEqualValidator::class,"length" => LengthValidator::class,"id" => IdValidator::class,"regex" => RegexValidator::class,"email" => EmailValidator::class,"url" => UrlValidator::class,"ip" => IpValidator::class,
-			"range" => RangeValidator::class,"date" => DateValidator::class,"dateTime" => DateTimeValidator::class,"time" => TimeValidator::class ];
+	public static $validatorTypes = [
+									"notNull" => NotNullValidator::class,
+									"isNull" => IsNullValidator::class,
+									"notEmpty" => NotEmptyValidator::class,
+									"isEmpty" => IsEmptyValidator::class,
+									"isTrue" => IsTrueValidator::class,
+									"isFalse" => IsFalseValidator::class,
+									"isBool" => IsBooleanValidator::class,
+									"equals" => EqualsValidator::class,
+									"type" => TypeValidator::class,
+									"greaterThan" => GreaterThanValidator::class,
+									"greaterThanOrEqual" => GreaterThanOrEqualValidator::class,
+									"lessThan" => LessThanValidator::class,
+									"lessThanOrEqual" => LessThanOrEqualValidator::class,
+									"length" => LengthValidator::class,
+									"id" => IdValidator::class,
+									"regex" => RegexValidator::class,
+									"email" => EmailValidator::class,
+									"url" => UrlValidator::class,
+									"ip" => IpValidator::class,
+									"range" => RangeValidator::class,
+									"date" => DateValidator::class,
+									"dateTime" => DateTimeValidator::class,
+									"time" => TimeValidator::class ];
 	protected static $key = "contents/validators/";
 
 	protected static function store($model, $validators) {
