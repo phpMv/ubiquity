@@ -49,15 +49,6 @@ class AuthControllerCreator extends BaseControllerCreator {
 		echo implode ( "\n", $messages );
 	}
 
-	private function addRoute($routePath) {
-		if (! UString::startswith ( $routePath, "/" )) {
-			$routePath = "/" . $routePath;
-		}
-		$routeName = $routePath;
-		$routePath = "\n * @route(\"{$routePath}\",\"inherited\"=>true,\"automated\"=>true)";
-		return $routeName;
-	}
-
 	protected function addViews(&$uses, &$messages, &$classContent) {
 		$scaffoldController = $this->scaffoldController;
 		$authControllerName = $this->controllerName;
