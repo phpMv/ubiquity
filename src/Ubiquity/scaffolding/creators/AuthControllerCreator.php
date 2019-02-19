@@ -32,7 +32,7 @@ class AuthControllerCreator extends BaseControllerCreator {
 			$controllerTemplate = "authController_.tpl";
 			$uses = [ ];
 		}
-		$controllerNS = Startup::getNS ( "controllers" );
+		$controllerNS = $this->controllerNS;
 
 		$messages = [ ];
 		$routeName = $this->controllerName;
