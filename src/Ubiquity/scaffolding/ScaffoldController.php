@@ -8,10 +8,22 @@ use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\admin\utils\CodeUtils;
 use Ubiquity\utils\base\UIntrospection;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\scaffolding\creators\AuthControllerCreator;
+use Ubiquity\scaffolding\creators\CrudControllerCreator;
 
+/**
+ * Base class for Scaffolding
+ * Ubiquity\scaffolding$ScaffoldController
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.2
+ *
+ */
 abstract class ScaffoldController {
-	public static $views = [ "CRUD" => [ "index" => "@framework/crud/index.html","form" => "@framework/crud/form.html","display" => "@framework/crud/display.html" ],
-			"auth" => [ "index" => "@framework/auth/index.html","info" => "@framework/auth/info.html","noAccess" => "@framework/auth/noAccess.html","disconnected" => "@framework/auth/disconnected.html","message" => "@framework/auth/message.html","baseTemplate" => "@framework/auth/baseTemplate.html" ] ];
+	public static $views = [
+							"CRUD" => [ "index" => "@framework/crud/index.html","form" => "@framework/crud/form.html","display" => "@framework/crud/display.html" ],
+							"auth" => [ "index" => "@framework/auth/index.html","info" => "@framework/auth/info.html","noAccess" => "@framework/auth/noAccess.html","disconnected" => "@framework/auth/disconnected.html","message" => "@framework/auth/message.html","baseTemplate" => "@framework/auth/baseTemplate.html" ] ];
 
 	protected abstract function getTemplateDir();
 
@@ -64,105 +76,13 @@ abstract class ScaffoldController {
 	}
 
 	public function addCrudController($crudControllerName, $resource, $crudDatas = null, $crudViewer = null, $crudEvents = null, $crudViews = null, $routePath = '') {
-		$classContent = "";
-		$uses = [ ];
-		$controllerNS = Startup::getNS ( "controllers" );
-		$messages = [ ];
-		$routeName = $crudControllerName;
-		$this->_createMethod ( "public", "__construct", "", "", "\n\t\tparent::__construct();\n\$this->model=\"{$resource}\";" );
-
-		if (isset ( $crudDatas )) {
-			$uses [] = "use controllers\\crud\\datas\\{$crudControllerName}Datas;";
-			$uses [] = "use Ubiquity\\controllers\\crud\\CRUDDatas;";
-
-			$classContent .= $this->_createMethod ( "protected", "getAdminData", "", ": CRUDDatas", "\t\treturn new {$crudControllerName}Datas(\$this);" );
-			$messages [] = $this->createCRUDDatasClass ( $crudControllerName );
-		}
-
-		if (isset ( $crudViewer )) {
-			$uses [] = "use controllers\\crud\\viewers\\{$crudControllerName}Viewer;";
-			$uses [] = "use Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
-
-			$classContent .= $this->_createMethod ( "protected", "getModelViewer", "", ": ModelViewer", "\t\treturn new {$crudControllerName}Viewer(\$this);" );
-			$messages [] = $this->createModelViewerClass ( $crudControllerName );
-		}
-		if (isset ( $crudEvents )) {
-			$uses [] = "use controllers\\crud\\events\\{$crudControllerName}Events;";
-			$uses [] = "use Ubiquity\\controllers\\crud\\CRUDEvents;";
-
-			$classContent .= $this->_createMethod ( "protected", "getEvents", "", ": CRUDEvents", "\t\treturn new {$crudControllerName}Events(\$this);" );
-			$messages [] = $this->createEventsClass ( $crudControllerName );
-		}
-
-		if (isset ( $crudViews )) {
-			$crudViews = explode ( ",", $crudViews );
-			$uses [] = "use controllers\\crud\\files\\{$crudControllerName}Files;";
-			$uses [] = "use Ubiquity\\controllers\\crud\\CRUDFiles;";
-			$classContent .= $this->_createMethod ( "protected", "getFiles", "", ": CRUDFiles", "\t\treturn new {$crudControllerName}Files();" );
-			$classFilesContent = [ ];
-			foreach ( $crudViews as $file ) {
-				if (isset ( self::$views ["CRUD"] [$file] )) {
-					$frameworkViewname = self::$views ["CRUD"] [$file];
-					$this->createCrudView ( $frameworkViewname, $crudControllerName, $file );
-					$classFilesContent [] = $this->_createMethod ( "public", "getView" . ucfirst ( $file ), "", "", "\t\treturn \"" . $crudControllerName . "/" . $file . ".html\";" );
-				}
-			}
-			$messages [] = $this->createCRUDFilesClass ( $crudControllerName, implode ( "", $classFilesContent ) );
-		}
-		if ($routePath != null) {
-			if (UString::isNotNull ( $routePath )) {
-				if (! UString::startswith ( $routePath, "/" )) {
-					$routePath = "/" . $routePath;
-				}
-				$routeName = $routePath;
-				$routePath = "\n * @route(\"{$routePath}\",\"inherited\"=>true,\"automated\"=>true)";
-			}
-		}
-		$uses = implode ( "\n", $uses );
-		$messages [] = $this->_createController ( $crudControllerName, [ "%routeName%" => $routeName,"%route%" => $routePath,"%resource%" => $resource,"%uses%" => $uses,"%namespace%" => $controllerNS,"%baseClass%" => "\\Ubiquity\\controllers\\crud\\CRUDController","%content%" => $classContent ], "crudController.tpl" );
-		echo implode ( "\n", $messages );
+		$crudController = new CrudControllerCreator ( $crudControllerName, $resource, $crudDatas, $crudViewer, $crudEvents, $crudViews, $routePath );
+		$crudController->create ( $this );
 	}
 
 	public function addAuthController($authControllerName, $baseClass, $authViews = null, $routePath = "") {
-		$classContent = "";
-		if ($baseClass == "\\Ubiquity\\controllers\\auth\\AuthController") {
-			$controllerTemplate = "authController.tpl";
-			$uses = [ "use Ubiquity\\utils\\http\\USession;","use Ubiquity\\utils\\http\\URequest;" ];
-		} else {
-			$controllerTemplate = "authController_.tpl";
-			$uses = [ ];
-		}
-		$controllerNS = Startup::getNS ( "controllers" );
-
-		$messages = [ ];
-		$routeName = $authControllerName;
-		if (isset ( $authViews )) {
-			$authViews = explode ( ",", $authViews );
-			$uses [] = "use controllers\\auth\\files\\{$authControllerName}Files;";
-			$uses [] = "use Ubiquity\\controllers\\auth\\AuthFiles;";
-			$classContent .= $this->_createMethod ( "protected", "getFiles", "", ": AuthFiles", "\t\treturn new {$authControllerName}Files();" );
-			$classFilesContent = [ ];
-			foreach ( $authViews as $file ) {
-				if (isset ( self::$views ["auth"] [$file] )) {
-					$frameworkViewname = self::$views ["auth"] [$file];
-					$this->createCrudView ( $frameworkViewname, $authControllerName, $file );
-					$classFilesContent [] = $this->_createMethod ( "public", "getView" . ucfirst ( $file ), "", "", "\t\treturn \"" . $authControllerName . "/" . $file . ".html\";" );
-				}
-			}
-			$messages [] = $this->createAuthFilesClass ( $authControllerName, implode ( "", $classFilesContent ) );
-		}
-		if ($routePath != null) {
-			if (UString::isNotNull ( $routePath )) {
-				if (! UString::startswith ( $routePath, "/" )) {
-					$routePath = "/" . $routePath;
-				}
-				$routeName = $routePath;
-				$routePath = "\n * @route(\"{$routePath}\",\"inherited\"=>true,\"automated\"=>true)";
-			}
-		}
-		$uses = implode ( "\n", $uses );
-		$messages [] = $this->_createController ( $authControllerName, [ "%routeName%" => $routeName,"%route%" => $routePath,"%uses%" => $uses,"%namespace%" => $controllerNS,"%baseClass%" => $baseClass,"%content%" => $classContent ], $controllerTemplate );
-		echo implode ( "\n", $messages );
+		$authCreator = new AuthControllerCreator ( $authControllerName, $baseClass, $authViews, $routePath );
+		$authCreator->create ( $this );
 	}
 
 	public function _createClass($template, $classname, $namespace, $uses, $extendsOrImplements, $classContent) {
@@ -258,37 +178,7 @@ abstract class ScaffoldController {
 		return $viewName;
 	}
 
-	protected function createCRUDDatasClass($crudControllerName) {
-		$ns = Startup::getNS ( "controllers" ) . "crud\\datas";
-		$uses = "\nuse Ubiquity\\controllers\\crud\\CRUDDatas;";
-		return $this->_createClass ( "class.tpl", $crudControllerName . "Datas", $ns, $uses, "extends CRUDDatas", "\t//use override/implement Methods" );
-	}
-
-	protected function createModelViewerClass($crudControllerName) {
-		$ns = Startup::getNS ( "controllers" ) . "crud\\viewers";
-		$uses = "\nuse Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
-		return $this->_createClass ( "class.tpl", $crudControllerName . "Viewer", $ns, $uses, "extends ModelViewer", "\t//use override/implement Methods" );
-	}
-
-	protected function createEventsClass($crudControllerName) {
-		$ns = Startup::getNS ( "controllers" ) . "crud\\events";
-		$uses = "\nuse Ubiquity\\controllers\\crud\\CRUDEvents;";
-		return $this->_createClass ( "class.tpl", $crudControllerName . "Events", $ns, $uses, "extends CRUDEvents", "\t//use override/implement Methods" );
-	}
-
-	protected function createCRUDFilesClass($crudControllerName, $classContent = "") {
-		$ns = Startup::getNS ( "controllers" ) . "crud\\files";
-		$uses = "\nuse Ubiquity\\controllers\\crud\\CRUDFiles;";
-		return $this->_createClass ( "class.tpl", $crudControllerName . "Files", $ns, $uses, "extends CRUDFiles", $classContent );
-	}
-
-	protected function createAuthFilesClass($authControllerName, $classContent = "") {
-		$ns = Startup::getNS ( "controllers" ) . "auth\\files";
-		$uses = "\nuse Ubiquity\\controllers\\auth\\AuthFiles;";
-		return $this->_createClass ( "class.tpl", $authControllerName . "Files", $ns, $uses, "extends AuthFiles", $classContent );
-	}
-
-	protected function createCrudView($frameworkName, $controllerName, $newName) {
+	public function createAuthCrudView($frameworkName, $controllerName, $newName) {
 		$folder = \ROOT . \DS . "views" . \DS . $controllerName;
 		UFileSystem::safeMkdir ( $folder );
 		try {
