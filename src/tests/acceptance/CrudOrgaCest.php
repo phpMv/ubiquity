@@ -38,11 +38,13 @@ class CrudOrgaCest {
 		$I->fillField ( "#frmEdit [name='name']", "Organization name test" );
 		$I->fillField ( "#frmEdit [name='domain']", "Organization domain test" );
 		$I->fillField ( "#frmEdit [name='aliases']", "Organization aliases test" );
-
+		$I->waitForElementClickable ( "#action-modal-frmEdit-0", self::TIMEOUT );
 		$I->click ( "#action-modal-frmEdit-0" );
 		$I->waitForText ( "Organization name test", self::TIMEOUT, "body" );
+		$I->waitForElementClickable ( "tr:last-child button._delete", self::TIMEOUT );
 		$I->click ( "tr:last-child button._delete" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
+		$I->waitForElementClickable ( "#table-messages #bt-okay", self::TIMEOUT );
 		$I->click ( "#bt-okay", "#table-messages" );
 		$I->waitForText ( "Deletion of", self::TIMEOUT, "body" );
 		$I->dontSee ( "Organization aliases test", "body" );
