@@ -875,6 +875,15 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$controller = $route ["controller"];
 			$action = $route ["action"];
 		}
+		if (! is_string ( $controller )) {
+			if (is_callable ( $controller )) {
+				$func = new \ReflectionFunction ( $controller );
+				return \array_map ( function ($e) {
+					return $e->name;
+				}, \array_slice ( $func->getParameters (), 0, $func->getNumberOfRequiredParameters () ) );
+			}
+			return [ ];
+		}
 		if (\class_exists ( $controller )) {
 			if (\method_exists ( $controller, $action )) {
 				$method = new \ReflectionMethod ( $controller, $action );

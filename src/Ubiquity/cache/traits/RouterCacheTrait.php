@@ -55,6 +55,12 @@ trait RouterCacheTrait {
 		}
 	}
 
+	public static function storeDynamicRoutes($isRest = false) {
+		$routes = Router::getRoutes ();
+		$part = ($isRest) ? 'rest' : 'default';
+		self::$cache->store ( "controllers/routes." . $part, "return " . UArray::asPhpArray ( $routes, "array" ) . ";", 'controllers' );
+	}
+
 	private static function storeRouteResponse($key, $response) {
 		self::setKeyExpired ( $key, false );
 		self::$cache->store ( "controllers/" . $key, $response, 'controllers', false );

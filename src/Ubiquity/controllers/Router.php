@@ -204,13 +204,12 @@ class Router {
 	}
 
 	/**
-	 * Declare a route as expired or not
+	 * Declare a route as expired
 	 *
 	 * @param string $routePath
-	 * @param boolean $expired
 	 */
-	public static function setExpired($routePath, $expired = true) {
-		CacheManager::setExpired ( $routePath, $expired );
+	public static function setExpired($routePath) {
+		CacheManager::setExpired ( $routePath );
 	}
 
 	public static function getRoutes() {

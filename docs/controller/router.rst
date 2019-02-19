@@ -10,6 +10,7 @@ It is possible to define these routes in the **app/config/services.php** file.
 
 .. important::
 	Dynamic routes should only be used if the situation requires it:
+
 	- in the case of a micro-application
 	- if a route must be dynamically defined
 	
@@ -413,17 +414,17 @@ In this case, the response is cached and is no longer dynamic.
 
 .. code-block:: php
    
-   	/**
-    * @route("products/all","cache"=>true)
-    */
-   	public function all(){}
+	/**
+	* @route("products/all","cache"=>true)
+	*/
+	public function all(){}
 
 Cache duration
 ^^^^^^^^^^^^^^
 The **duration** is expressed in seconds, if it is omitted, the duration of the cache is infinite.
 
 .. code-block:: php
-   
+	
    	/**
     * @route("products/all","cache"=>true,"duration"=>3600)
     */
@@ -437,6 +438,25 @@ It is possible to force reloading of the response by deleting the associated cac
 .. code-block:: php
 
 		Router::setExpired("products/all");
+
+Dynamic routes caching
+----------------------
+
+Dynamic routes can also be cached.
+
+.. important::
+   This possiblity is only useful if this caching is not done in production, but at the time of initialization of the cache.
+
+.. code-block:: php
+
+	Router::get("foo", function(){
+		echo 'Hello world!';
+	});
+	
+	Router::addRoute("string", \controllers\Main::class,"index");
+	CacheManager::storeDynamicRoutes(false);
+
+Checking routes with devtools :
 
 
 .. |br| raw:: html
