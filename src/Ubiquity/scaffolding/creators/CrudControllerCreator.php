@@ -18,11 +18,6 @@ class CrudControllerCreator extends BaseControllerCreator {
 	private $crudDatas;
 	private $crudViewer;
 	private $crudEvents;
-	/**
-	 *
-	 * @var ScaffoldController
-	 */
-	private $scaffoldController;
 
 	public function __construct($crudControllerName, $resource, $crudDatas = null, $crudViewer = null, $crudEvents = null, $crudViews = null, $routePath = '') {
 		parent::__construct ( $crudControllerName, $routePath, $crudViews );
