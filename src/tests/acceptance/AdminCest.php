@@ -1,6 +1,5 @@
 <?php
-class AdminCest {
-	const TIMEOUT = 30;
+class AdminCest extends BaseAcceptance {
 
 	public function _before(AcceptanceTester $I) {
 		/*
@@ -26,7 +25,7 @@ class AdminCest {
 	private function gotoAdminModule(string $url, AcceptanceTester $I) {
 		$I->amOnPage ( "/Admin/index" );
 		$I->seeInCurrentUrl ( "Admin/index" );
-		$I->click ( "a[href='" . $url . "']" );
+		$this->waitAndclick ( $I, "a[href='" . $url . "']" );
 		$I->waitForElementVisible ( "#content-header", self::TIMEOUT );
 		$I->canSeeInCurrentUrl ( $url );
 	}
@@ -129,14 +128,14 @@ class AdminCest {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$I->click ( "#generateRobots" );
 		$I->waitForText ( "Can not generate robots.txt if no SEO controller is selected.", self::TIMEOUT, "body" );
-		$I->click ( "#addNewSeo", "#main-content" );
+		$this->waitAndclick ( $I, "#addNewSeo", "#main-content" );
 		$I->waitForText ( "Creating a new Seo controller", self::TIMEOUT, "body" );
 		$I->fillField ( "#controllerName", "TestSEOController" );
-		$I->click ( "#action-modalNewSeo-0" );
+		$this->waitAndclick ( $I, "#action-modalNewSeo-0" );
 		$I->waitForText ( "The TestSEOController controller has been created" );
 		$I->wait ( 5 );
 		$this->gotoAdminModule ( "Admin/Seo", $I );
-		$I->click ( "#seoCtrls-tr-controllersTestSEOController" );
+		$this->waitAndclick ( "#seoCtrls-tr-controllersTestSEOController" );
 		$I->waitForText ( "Change Frequency", self::TIMEOUT, "body" );
 		$I->amOnPage ( "/TestSEOController" );
 		$I->canSeeInSource ( "http://www.sitemaps.org/schemas/sitemap/0.9" );
