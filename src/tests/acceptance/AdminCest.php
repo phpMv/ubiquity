@@ -136,7 +136,7 @@ class AdminCest extends BaseAcceptance {
 		$I->waitForText ( "The TestSEOController controller has been created" );
 		$I->wait ( 5 );
 		$this->gotoAdminModule ( "Admin/Seo", $I );
-		$this->waitAndclick ( "#seoCtrls-tr-controllersTestSEOController" );
+		$this->waitAndclick ( $I, "#seoCtrls-tr-controllersTestSEOController" );
 		$I->waitForText ( "Change Frequency", self::TIMEOUT, "body" );
 		$I->amOnPage ( "/TestSEOController" );
 		$I->canSeeInSource ( "http://www.sitemaps.org/schemas/sitemap/0.9" );
