@@ -458,6 +458,12 @@ Dynamic routes can also be cached.
 
 Checking routes with devtools :
 
+.. code-block:: bash
+
+   Ubiquity info:routes
+   
+.. image:: /_static/images/quick-start/ubi-version.png
+   :class: console
 
 .. |br| raw:: html
 
