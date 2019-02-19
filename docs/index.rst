@@ -41,6 +41,7 @@ Ubiquity User guide
    :maxdepth: 1
    :caption: Models and ORM
    
+   model/generation
    model/models
    model/dao
   
