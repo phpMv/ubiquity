@@ -1,4 +1,5 @@
 <?php
+include_once 'tests/acceptance/BaseAcceptance.php';
 class AdminCest extends BaseAcceptance {
 
 	public function _before(AcceptanceTester $I) {
