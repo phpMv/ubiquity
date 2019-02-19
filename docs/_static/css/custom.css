@@ -146,8 +146,9 @@ div[class^='highlight'] pre{
 }
 
 .rst-content .highlight>pre, .rst-content .linenodiv>pre {
-	line-height: 15px!important;
+	line-height: 17px!important;
 }
+
 .btn{
 	border-radius: 5px;
 	box-shadow: none;

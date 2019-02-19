@@ -80,14 +80,17 @@ class CrudOrgaCest {
 	public function tryToDeleteOne(AcceptanceTester $I) {
 		$I->amOnPage ( "TestCrudOrgas/display/no/1" );
 		$I->waitForText ( "Organizationsettingss", self::TIMEOUT, "body" );
+		$I->waitForElementClickable ( "#table-details #buttons a._delete._element", self::TIMEOUT );
 		$I->click ( "a._delete._element", "#table-details #buttons" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
 		$I->click ( "#bt-okay.negative" );
 		$I->waitForText ( "Can not delete `lecnam.net`", self::TIMEOUT, "body" );
 
 		$I->amOnPage ( "TestCrudOrgas" );
+		$I->waitForElementClickable ( "button[data-ajax='4']._delete", self::TIMEOUT );
 		$I->click ( "button[data-ajax='4']._delete" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
+		$I->waitForElementClickable ( ".content #bt-okay", self::TIMEOUT );
 		$I->click ( "#bt-okay", ".content" );
 		$I->waitForText ( "Can not delete", self::TIMEOUT, "body" );
 	}
