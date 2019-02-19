@@ -1,17 +1,100 @@
 Router
 ======
-.. |br| raw:: html
 
-   <br />
 Routing can be used in addition to the default mechanism that associates ``controller/action/{parameters}`` with an url. |br|
-Routing works by using the **@route** annotation on controller methods.
 
-Routes definition
------------------
-Simple route
-^^^^^^^^^^^^
+Dynamic routes
+--------------
+Dynamic routes are defined at runtime. |br|
+It is possible to define these routes in the **app/config/services.php** file.
+
+.. important::
+	Dynamic routes should only be used if the situation requires it:
+	- in the case of a micro-application
+	- if a route must be dynamically defined
+	
+	In all other cases, it is advisable to declare the routes with annotations, to benefit from caching.
+
+Callback routes
+^^^^^^^^^^^^^^^
+The most basic Ubiquity routes accept a Closure. |br|
+In the context of micro-applications, this method avoids having to create a controller.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/config/services.php
+   :emphasize-lines: 3-5
+   
+	use Ubiquity\controllers\Router;
+	
+	Router::get("foo", function(){
+		echo 'Hello world!';
+	});
 
 
+Callback routes can be defined for all http methods with:
+
+- Router::post
+- Router::put
+- Router::delete
+- Router::patch
+- Router::options
+
+Controller routes
+^^^^^^^^^^^^^^^^^
+Routes can also be associated more conventionally with an action of a controller:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/config/services.php
+   :emphasize-lines: 3
+   
+	use Ubiquity\controllers\Router;
+	
+	Router::addRoute("bar", \controllers\FooController::class,'index');
+
+The method ``FooController::index()`` will be accessible via the url ``/bar``.
+
+In this case, the **FooController** must be a class inheriting from **Ubiquity\controllers\Controller** or one of its subclasses,
+and must have an **index** method:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/FooController.php
+   :emphasize-lines: 5-7
+
+	namespace controllers;
+	
+	class FooController extends ControllerBase{
+	
+		public function index(){
+			echo 'Hello from foo';
+		}
+	}
+
+Default route
+^^^^^^^^^^^^^
+The default route matches the path **/**. |br|
+It can be defined using the reserved path **_default**
+
+.. code-block:: php
+   :linenos:
+   :caption: app/config/services.php
+   :emphasize-lines: 3
+   
+	use Ubiquity\controllers\Router;
+	
+	Router::addRoute("_default", \controllers\FooController::class,'bar');
+
+
+Static routes
+-------------
+
+Static routes are defined using the **@route** annotation on controller methods.
+
+.. note::
+	These annotations are never read at runtime. |br|
+	It is necessary to reset the router cache to take into account the changes made on the routes.
 
 Creation
 ^^^^^^^
@@ -62,7 +145,7 @@ A route can have parameters:
     	}
    }
 Route optional parameters
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 A route can define optional parameters, if the associated method has optional arguments:
 
 .. code-block:: php
@@ -290,3 +373,72 @@ The **inherited** attribute defines the 2 routes contained in **ProductsBase**:
 
 
 If the **automated** and **inherited** attributes are combined, the base class actions are also added to the routes.
+
+Route priority
+^^^^^^^^^^^^^^
+The prority parameter of a route allows this route to be resolved more quickly.
+
+The higher the priority parameter, the more the route will be defined at the beginning of the stack of routes in the cache.
+
+In the example below, the **products/all** route will be defined before the **/products** route.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/ProductsController.php
+   :emphasize-lines: 8,13
+   
+   namespace controllers;
+    /**
+    * Controller ProductsController
+    **/
+   class ProductsController extends ControllerBase{
+   
+   	/**
+    * @route("products","priority"=>1)
+    */
+   	public function index(){}
+   	
+   	/**
+    * @route("products/all","priority"=>10)
+    */
+   	public function all(){}
+   
+   }
+
+Routes response caching
+-----------------------
+It is possible to cache the response produced by a route:
+
+In this case, the response is cached and is no longer dynamic.
+
+.. code-block:: php
+   
+   	/**
+    * @route("products/all","cache"=>true)
+    */
+   	public function all(){}
+
+Cache duration
+^^^^^^^^^^^^^^
+The **duration** is expressed in seconds, if it is omitted, the duration of the cache is infinite.
+
+.. code-block:: php
+   
+   	/**
+    * @route("products/all","cache"=>true,"duration"=>3600)
+    */
+   	public function all(){}
+   	
+
+Cache expiration
+^^^^^^^^^^^^^^^^
+It is possible to force reloading of the response by deleting the associated cache.
+
+.. code-block:: php
+
+		Router::setExpired("products/all");
+
+
+.. |br| raw:: html
+
+   <br />

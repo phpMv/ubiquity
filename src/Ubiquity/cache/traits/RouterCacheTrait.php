@@ -13,20 +13,18 @@ use Ubiquity\cache\CacheManager;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
- * @staticvar AbstractDataCache $cache
+ * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
 trait RouterCacheTrait {
-	public static $minify = false;
 
 	abstract protected static function _getFiles(&$config, $type, $silent = false);
-	private static $expiredRoutes = [ ];
 
 	private static function addControllerCache($classname) {
 		$parser = new ControllerParser ();
 		try {
 			$parser->parse ( $classname );
-			return $parser->asArray ( self::$minify );
+			return $parser->asArray ();
 		} catch ( \Exception $e ) {
 			// Nothing to do
 		}
@@ -42,7 +40,7 @@ trait RouterCacheTrait {
 				$parser = new ControllerParser ();
 				try {
 					$parser->parse ( $controller );
-					$ret = $parser->asArray ( self::$minify );
+					$ret = $parser->asArray ();
 					$key = ($parser->isRest ()) ? "rest" : "default";
 					$routes [$key] = \array_merge ( $routes [$key], $ret );
 				} catch ( \Exception $e ) {
@@ -64,15 +62,10 @@ trait RouterCacheTrait {
 	}
 
 	private static function getRouteKey($routePath) {
-		return "path" . \md5 ( \implode ( "", $routePath ) );
-	}
-
-	private static function setKeyExpired($key, $expired = true) {
-		if ($expired) {
-			self::$expiredRoutes [$key] = true;
-		} else {
-			unset ( self::$expiredRoutes [$key] );
+		if (is_array ( $routePath )) {
+			return "path" . \md5 ( \implode ( "", $routePath ) );
 		}
+		return "path" . \md5 ( Router::slashPath ( $routePath ) );
 	}
 
 	/**
@@ -87,33 +80,31 @@ trait RouterCacheTrait {
 		return [ ];
 	}
 
-	public static function getRouteCache($routePath, $duration) {
+	public static function getRouteCache($routePath, $routeArray, $duration) {
 		$key = self::getRouteKey ( $routePath );
 
 		if (self::$cache->exists ( "controllers/" . $key ) && ! self::expired ( $key, $duration )) {
 			$response = self::$cache->file_get_contents ( "controllers/" . $key );
 			return $response;
 		} else {
-			$response = Startup::runAsString ( $routePath );
+			$response = Startup::runAsString ( $routeArray );
 			return self::storeRouteResponse ( $key, $response );
 		}
 	}
 
-	public static function expired($key, $duration) {
-		return self::$cache->expired ( "controllers/" . $key, $duration ) === true || \array_key_exists ( $key, self::$expiredRoutes );
+	protected static function expired($key, $duration) {
+		return self::$cache->expired ( "controllers/" . $key, $duration ) === true;
 	}
 
-	public static function isExpired($path, $duration) {
-		$route = Router::getRoute ( $path, false );
-		if ($route !== false && \is_array ( $route )) {
-			return self::expired ( self::getRouteKey ( $route ), $duration );
-		}
-		return true;
+	public static function isExpired($routePath, $duration) {
+		return self::expired ( self::getRouteKey ( $routePath ), $duration );
 	}
 
-	public static function setExpired($routePath, $expired = true) {
+	public static function setExpired($routePath) {
 		$key = self::getRouteKey ( $routePath );
-		self::setKeyExpired ( $key, $expired );
+		if (self::$cache->exists ( "controllers/" . $key )) {
+			self::$cache->remove ( "controllers/" . $key );
+		}
 	}
 
 	public static function setRouteCache($routePath) {
@@ -172,9 +163,6 @@ trait RouterCacheTrait {
 			$postfix = "rest";
 		}
 		Router::addRoutesToRoutes ( $controllerCache, $pathArray, $controller, $action, $methods, $name );
-		if (self::$minify) {
-			ControllerParser::minifyRoutes ( $controllerCache );
-		}
 		self::$cache->store ( "controllers/routes." . $postfix, "return " . UArray::asPhpArray ( $controllerCache, "array" ) . ";", 'controllers' );
 	}
 
@@ -197,7 +185,7 @@ trait RouterCacheTrait {
 		foreach ( $files as $file ) {
 			if (is_file ( $file )) {
 				$controllerClass = ClassUtils::getClassFullNameFromFile ( $file, $backslash );
-				if (class_exists ( $controllerClass ) && isset ( $restCtrls [$controllerClass] ) === false) {
+				if (isset ( $restCtrls [$controllerClass] ) === false) {
 					$r = new \ReflectionClass ( $controllerClass );
 					if ($r->isSubclassOf ( $subClass ) && ! $r->isAbstract ()) {
 						$result [] = $controllerClass;

@@ -165,7 +165,7 @@ class Router {
 			return $result;
 		}
 		Logger::info ( 'Router', sprintf ( 'Route found for %s (from cache) : %s', $routeArray ["path"], $resultStr ), 'getRouteUrlParts' );
-		return CacheManager::getRouteCache ( $result, $duration );
+		return CacheManager::getRouteCache ( $routeArray ["path"], $result, $duration );
 	}
 
 	protected static function setParamsInOrder(&$routeUrlParts, $paramsOrder, $params) {
@@ -195,7 +195,7 @@ class Router {
 		return $param;
 	}
 
-	protected static function slashPath($path) {
+	public static function slashPath($path) {
 		if (UString::startswith ( $path, "/" ) === false)
 			$path = "/" . $path;
 		if (! UString::endswith ( $path, "/" ))
