@@ -5,6 +5,6 @@ Models generation
 From existing database
 ----------------------
    
-- :ref:`with console <model/generation/db-console>`
-- :ref:`with web-tools <model/generation/db-html>`
+- :doc:`with console <model/generation/db-console>`
+- :doc:`with web-tools <model/generation/db-html>`
 

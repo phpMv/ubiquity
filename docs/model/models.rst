@@ -1,7 +1,7 @@
 ORM
 ===
 .. note::
-   if you want to automatically generate the models, consult the :ref:`generating models<model/generation>` part.
+   if you want to automatically generate the models, consult the :doc:`generating models<model/generation>` part.
 
 A model class is just a plain old php object without inheritance. |br|
 Models are located by default in the **app\\models** folder. |br|
@@ -244,7 +244,7 @@ Annotations for classes
 +-------------+----------------------------------------------+------------+-----------------------+
 | @annotation | role                                         | properties | role                  |
 +=============+==============================================+============+=======================+
-| @table      | Defines the associated table name.           |            |                       |
+| @table      | Defines the associated table name.                                                |
 +-------------+----------------------------------------------+------------+-----------------------+
 
 Annotations for members
@@ -253,15 +253,15 @@ Annotations for members
 +-------------+----------------------------------------------+--------------+-----------------------------------+
 | @annotation | role                                         | properties   | role                              |
 +=============+==============================================+==============+===================================+
-| @id         | Defines the primary key(s).                  |              |                                   |
+| @id         | Defines the primary key(s).                                                                     |
 +-------------+----------------------------------------------+--------------+-----------------------------------+
 | @column     | Specify the associated field caracteristics. | name         | The name of the associated field  |
-+-------------+----------------------------------------------+--------------+-----------------------------------+
++             +                                              +--------------+-----------------------------------+
 |             |                                              | nullable     | true if value can be null         |
 +             |                                              +--------------+-----------------------------------+
 |             |                                              | dbType       | the type of the field in database |
 +-------------+----------------------------------------------+--------------+-----------------------------------+
-| @transient  | Specify that the field is not persistent.    |              |                                   |
+| @transient  | Specify that the field is not persistent.                                                       |
 +-------------+----------------------------------------------+--------------+-----------------------------------+
 
 Associations
@@ -273,7 +273,7 @@ Associations
 | @manyToOne           | Defines a single-valued association to another entity class.                                                |
 +----------------------+----------------------------------------------+--------------------------+-----------------------------------+
 | @joinColumn (@column)| indicates the foreign key in manyToOne asso. | className                | The class of the member           |
-+----------------------+----------------------------------------------+--------------------------+-----------------------------------+
++                      +                                              +--------------------------+-----------------------------------+
 |                      |                                              | [referencedColumnName]   | The name of the associated column |
 +----------------------+----------------------------------------------+--------------------------+-----------------------------------+
 
