@@ -103,6 +103,12 @@ If the name of a field is different from the name of a member in the class, the 
 
 Associations
 ^^^^^^^^^^^^
+.. note:: 
+   **Naming convention** |br|
+   Foreign key field names consist of the primary key name of the referenced table followed by the name of the referenced table whose first letter is capitalized
+   **Example** |br|
+   ``idUser`` for the table ``user`` whose primary key is ``id``
+
 
 ManyToOne
 +++++++++
@@ -236,6 +242,34 @@ ManyToMany
 
     }
 
+If the naming conventions are not respected for foreign keys, |br|
+it is possible to specify the related fields.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/models/Group.php
+   :emphasize-lines: 11-16
+   
+    namespace models;
+    
+    class Group{
+    	/**
+    	 * @id
+    	**/
+    	private $id;
+    
+    	private $name;
+
+		/**
+		 * @manyToMany("targetEntity"=>"models\\User","inversedBy"=>"groupes")
+		 * @joinTable("name"=>"groupeusers",
+		 * "joinColumns"=>["name"=>"id_groupe","referencedColumnName"=>"id"],
+		 * "inverseJoinColumns"=>["name"=>"id_user","referencedColumnName"=>"id"])
+		**/
+		private $users;
+
+    }
+
 ORM Annotations
 ---------------
 Annotations for classes
@@ -255,11 +289,11 @@ Annotations for members
 +=============+==============================================+==============+===================================+
 | @id         | Defines the primary key(s).                                                                     |
 +-------------+----------------------------------------------+--------------+-----------------------------------+
-| @column     | Specify the associated field caracteristics. | name         | The name of the associated field  |
+| @column     | Specify the associated field caracteristics. | name         | Name of the associated field      |
 +             +                                              +--------------+-----------------------------------+
 |             |                                              | nullable     | true if value can be null         |
 +             |                                              +--------------+-----------------------------------+
-|             |                                              | dbType       | the type of the field in database |
+|             |                                              | dbType       | Type of the field in database     |
 +-------------+----------------------------------------------+--------------+-----------------------------------+
 | @transient  | Specify that the field is not persistent.                                                       |
 +-------------+----------------------------------------------+--------------+-----------------------------------+
@@ -267,16 +301,32 @@ Annotations for members
 Associations
 ^^^^^^^^^^^^
 
-+----------------------+----------------------------------------------+--------------------------+-----------------------------------+
-| @annotation (extends)| role                                         | properties [optional]    | role                              |
-+======================+==============================================+==========================+===================================+
-| @manyToOne           | Defines a single-valued association to another entity class.                                                |
-+----------------------+----------------------------------------------+--------------------------+-----------------------------------+
-| @joinColumn (@column)| indicates the foreign key in manyToOne asso. | className                | The class of the member           |
-+                      +                                              +--------------------------+-----------------------------------+
-|                      |                                              | [referencedColumnName]   | The name of the associated column |
-+----------------------+----------------------------------------------+--------------------------+-----------------------------------+
-
++----------------------+----------------------------------------------+--------------------------+-------------------------------------------------------------+
+| @annotation (extends)| role                                         | properties [optional]    | role                                                        |
++======================+==============================================+==========================+=============================================================+
+| @manyToOne           | Defines a single-valued association to another entity class.                                                                          |
++----------------------+----------------------------------------------+--------------------------+-------------------------------------------------------------+
+| @joinColumn (@column)| Indicates the foreign key in manyToOne asso. | className                | Class of the member                                         |
++                      +                                              +--------------------------+-------------------------------------------------------------+
+|                      |                                              | [referencedColumnName]   | Name of the associated column                               |
++----------------------+----------------------------------------------+--------------------------+-------------------------------------------------------------+
+| @oneToMany           | Defines a multi-valued association to        | className                | Class of the objects in member                              |
++                      + another entity class.                        +--------------------------+-------------------------------------------------------------+
+|                      |                                              | [mappedBy]               | Name of the association-mapping                             |
+|                      |                                              |                          | attribute on the owning side                                |
++----------------------+----------------------------------------------+--------------------------+-------------------------------------------------------------+
+| @manyToMany          | Defines a many-valued association with       | targetEntity             | Class of the objects in member                              |
++                      + many-to-many multiplicity                    +--------------------------+-------------------------------------------------------------+
+|                      |                                              | [inversedBy]             | Name of the association-member on the inverse-side          |
++                      |                                              +--------------------------+-------------------------------------------------------------+
+|                      |                                              | [mappedBy]               | Name of the association-member on the owning side           |
++----------------------+----------------------------------------------+--------------------------+-------------------------------------------------------------+
+| @joinTable           | Defines the association table for            | name                     | The name of the association table                           |
++                      + many-to-many multiplicity                    +--------------------------+-------------------------------------------------------------+
+|                      |                                              | [joinColumns]            | @column => name and referencedColumnName for this side      |
++                      |                                              +--------------------------+-------------------------------------------------------------+
+|                      |                                              | [inverseJoinColumns]     | @column => name and referencedColumnName for the other side |
++----------------------+----------------------------------------------+--------------------------+-------------------------------------------------------------+
 
 .. |br| raw:: html
 
