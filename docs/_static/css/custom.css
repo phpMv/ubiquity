@@ -239,8 +239,8 @@ div.body p.centered {
 }
 
 div.seealso {
-  background-color: #ffc;
-  border: 1px solid #ff6;
+  background-color: #ffc!important;
+  border: 1px solid #ff6!important;
 }
 
 div.admonition tt.xref, div.admonition a tt {

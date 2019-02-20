@@ -1,7 +1,7 @@
 ORM
 ===
 .. note::
-   if you want to automatically generate the models, consult the :ref:`generating models<models/generation>` part.
+   if you want to automatically generate the models, consult the :ref:`generating models<model/generation>` part.
 
 A model class is just a plain old php object without inheritance. |br|
 Models are located by default in the **app\\models** folder. |br|
@@ -236,6 +236,31 @@ ManyToMany
 
     }
 
+ORM Annotations
+---------------
+Annotations for classes
+^^^^^^^^^^^^^^^^^^^^^^^
+
++-------------+----------------------------------------------+------------+-----------------------+
+| @annotation | role                                         | properties | role                  |
++=============+==============================================+============+=======================+
+| @table      | Defines the associated table name.           |            |                       |
++-------------+----------------------------------------------+------------+-----------------------+
+
+Annotations for members
+^^^^^^^^^^^^^^^^^^^^^^^
+
++-------------+----------------------------------------------+--------------+-----------------------------------+
+| @annotation | role                                         | properties   | role                              |
++=============+==============================================+==============+===================================+
+| @id         | Defines the primary key(s).                  |              |                                   |
++-------------+----------------------------------------------+--------------+-----------------------------------+
+| @column     | Specify the associated field caracteristics. | name         | The name of the associated field  |
++-------------+----------------------------------------------+--------------+-----------------------------------+
+|                                                            | nullable     | true if value can be null         |
++                                                            +--------------+-----------------------------------+
+|                                                            | dbType       | the type of the field in database |
++-------------+----------------------------------------------+--------------+-----------------------------------+
 
 .. |br| raw:: html
 
