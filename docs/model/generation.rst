@@ -1,12 +1,9 @@
-Ubiquity Models generation
-==========================
+Models generation
+=================
 
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: From existing database
+From existing database
+----------------------
    
-   with console <model/generation/db-console>
-   with web-tools <model/generation/db-html>
+- :ref:`with console <model/generation/db-console>`
+- :ref:`with web-tools <model/generation/db-html>`
 

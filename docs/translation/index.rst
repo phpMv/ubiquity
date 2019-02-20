@@ -2,7 +2,7 @@ Translation module
 ==================
 //TODO
 
-::seealso TranslatorManager
+.. seealso:: TranslatorManager
 
 .. |br| raw:: html
 

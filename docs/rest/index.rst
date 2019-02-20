@@ -1,4 +1,4 @@
-REST
+Rest
 ====
 //TODO
 
