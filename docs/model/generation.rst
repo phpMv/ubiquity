@@ -1,3 +1,4 @@
+.. _generation:
 Models generation
 =================
 

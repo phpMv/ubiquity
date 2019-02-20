@@ -1,3 +1,4 @@
+.. _db-console:
 Generate models from Database with devtools
 ===========================================
 
