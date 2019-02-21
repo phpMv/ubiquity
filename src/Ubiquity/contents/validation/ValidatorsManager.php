@@ -36,7 +36,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class ValidatorsManager {
@@ -85,6 +85,10 @@ class ValidatorsManager {
 		return [ ];
 	}
 
+	public static function getCacheInfo($model) {
+		return self::fetch ( $model );
+	}
+
 	protected static function getGroupArrayValidators(array $validators, $group) {
 		$result = [ ];
 		foreach ( $validators as $member => $validators ) {
@@ -107,8 +111,12 @@ class ValidatorsManager {
 	}
 
 	private static function getCacheValidators($instance, $group = "") {
+		return self::getClassCacheValidators ( get_class ( $instance ), $group );
+	}
+
+	protected static function getClassCacheValidators($class, $group = "") {
 		if (isset ( self::$cache )) {
-			$key = self::getHash ( get_class ( $instance ) . $group );
+			$key = self::getHash ( $class . $group );
 			if (self::$cache->exists ( $key )) {
 				return self::$cache->fetch ( $key );
 			}
@@ -124,11 +132,12 @@ class ValidatorsManager {
 	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation[]
 	 */
 	public static function validate($instance, $group = "") {
-		$cache = self::getCacheValidators ( $instance, $group );
+		$class = get_class ( $instance );
+		$cache = self::getClassCacheValidators ( $class, $group );
 		if ($cache !== false) {
 			return self::validateFromCache_ ( $instance, $cache );
 		}
-		$members = self::fetch ( get_class ( $instance ) );
+		$members = self::fetch ( $class );
 		if ($group !== "") {
 			$members = self::getGroupArrayValidators ( $members, $group );
 		}
@@ -145,9 +154,9 @@ class ValidatorsManager {
 	public static function validateInstances($instances, $group = "") {
 		if (sizeof ( $instances ) > 0) {
 			$instance = current ( $instances );
-			$cache = self::getCacheValidators ( $instance, $group );
+			$class = get_class ( $instance );
+			$cache = self::getClassCacheValidators ( $class, $group );
 			if ($cache === false) {
-				$class = get_class ( $instance );
 				$members = self::fetch ( $class );
 				self::initInstancesValidators ( $instance, $members, $group );
 				$cache = self::$instanceValidators [$class];

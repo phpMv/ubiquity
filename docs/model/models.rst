@@ -1,7 +1,7 @@
 ORM
 ===
 .. note::
-   if you want to automatically generate the models, consult the :doc:`generating models<model/generation>` part.
+   if you want to automatically generate the models, consult the :doc:`generating models</model/generation>` part.
 
 A model class is just a plain old php object without inheritance. |br|
 Models are located by default in the **app\\models** folder. |br|
@@ -105,7 +105,7 @@ Associations
 ^^^^^^^^^^^^
 .. note:: 
    **Naming convention** |br|
-   Foreign key field names consist of the primary key name of the referenced table followed by the name of the referenced table whose first letter is capitalized
+   Foreign key field names consist of the primary key name of the referenced table followed by the name of the referenced table whose first letter is capitalized. |br|
    **Example** |br|
    ``idUser`` for the table ``user`` whose primary key is ``id``
 
@@ -260,13 +260,13 @@ it is possible to specify the related fields.
     
     	private $name;
 
-		/**
-		 * @manyToMany("targetEntity"=>"models\\User","inversedBy"=>"groupes")
-		 * @joinTable("name"=>"groupeusers",
-		 * "joinColumns"=>["name"=>"id_groupe","referencedColumnName"=>"id"],
-		 * "inverseJoinColumns"=>["name"=>"id_user","referencedColumnName"=>"id"])
-		**/
-		private $users;
+    	/**
+    	 * @manyToMany("targetEntity"=>"models\\User","inversedBy"=>"groupes")
+    	 * @joinTable("name"=>"groupeusers",
+    	 * "joinColumns"=>["name"=>"id_groupe","referencedColumnName"=>"id"],
+    	 * "inverseJoinColumns"=>["name"=>"id_user","referencedColumnName"=>"id"])
+    	**/
+    	private $users;
 
     }
 

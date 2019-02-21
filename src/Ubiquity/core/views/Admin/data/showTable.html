@@ -7,6 +7,7 @@
 <div id="models-tab" class="ui top attached tabular menu">
   <a class="item active" data-tab="datas">Datas</a>
   <a class="item" data-tab="structure">Structure</a>
+  <a class="item" data-tab="validation">Validation</a>
 </div>
 <div class="ui bottom attached tab segment active" data-tab="datas">
 	<a id="btAddNew" class="ui button orange">
@@ -21,5 +22,8 @@
 <div class="ui bottom attached tab segment" data-tab="structure">
   {{ q["dtStructure"] | raw }}
   {{ q["btYuml"] | raw }}
+</div>
+<div class="ui bottom attached tab segment" data-tab="validation">
+  {{ q["dtValidation"] | raw }}
 </div>
 {{script_foot | raw}}

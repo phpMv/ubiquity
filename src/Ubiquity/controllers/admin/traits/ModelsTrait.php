@@ -16,6 +16,7 @@ use Ubiquity\controllers\rest\ResponseFormatter;
 use Ajax\semantic\widgets\datatable\Pagination;
 use Ubiquity\utils\base\UString;
 use Ajax\common\html\HtmlContentOnly;
+use Ubiquity\contents\validation\ValidatorsManager;
 
 /**
  *
@@ -46,6 +47,7 @@ trait ModelsTrait{
 		$adminRoute=$this->_getFiles()->getAdminBaseRoute();
 		$this->_showModel($model,$id);
 		$this->_getAdminViewer()->getModelsStructureDataTable(OrmUtils::getModelMetadata($model));
+		$this->_getAdminViewer()->getModelsStructureDataTable(ValidatorsManager::getCacheInfo($model),"dtValidation");
 		$bt=$this->jquery->semantic()->htmlButton("btYuml", "Class diagram");
 		$bt->postOnClick($adminRoute. "/_showDiagram/", "{model:'" . \str_replace("\\", "|", $model) . "'}", "#modal", [ "attr" => "" ]);
 		$this->jquery->exec('$("#models-tab .item").tab();', true);

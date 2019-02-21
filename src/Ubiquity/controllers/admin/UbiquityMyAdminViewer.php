@@ -282,20 +282,59 @@ class UbiquityMyAdminViewer {
 		return $dt;
 	}
 
-	public function getModelsStructureDataTable($datas) {
-		$de = $this->jquery->semantic ()->dataElement ( "dtStructure", $datas );
+	public function getModelsStructureDataTable($datas,$name="dtStructure") {
+		$de = $this->jquery->semantic ()->dataElement ( $name, $datas );
 		$fields = \array_keys ( $datas );
 		$de->setFields ( $fields );
 		$de->setCaptions ( $fields );
 		foreach ( $fields as $key ) {
 			$de->setValueFunction ( $key, function ($value) {
 				if ($value instanceof \stdClass) {
-					$value = ( array ) $value;
+					$value=$this->parseArray($value);
+				}elseif (is_array($value)){
+					$value=$this->parseInlineArray($value);
 				}
-				return \print_r ( $value, true );
+				return $value;
 			} );
 		}
 		return $de;
+	}
+	
+	protected function parseArray($value){
+		$values=(array)$value;
+		$de=new DataElement("", $value);
+		$fields = \array_keys ( $values );
+		$de->setFields ( $fields );
+		$de->setCaptions ( $fields );
+		foreach ( $fields as $key ) {
+			$de->setValueFunction ( $key, function ($value) {
+				if ($value instanceof \stdClass) {
+					$value=$this->parseInlineArray((array)$value);
+				}elseif (is_array($value)){
+					$value=$this->parseInlineArray($value);
+				}
+				return new HtmlLabel("",$value);
+			} );
+		}
+		return $de;
+	}
+	
+	protected function parseInlineArray($value){
+		$result=[];
+		foreach ($value as $k=>$v){
+			$prefix="";
+			if(!is_int($k)){
+				$prefix=$k.": ";
+			}
+			if(is_array($v)){
+				$v=$this->parseInlineArray($v);
+			}elseif ($v instanceof \stdClass) {
+				$v=$this->parseInlineArray((array)$v);
+			}
+			$result[]=$prefix.$v;
+			
+		}
+		return '['.implode(", ",$result).']';
 	}
 
 	public function getRestRoutesTab($datas) {
