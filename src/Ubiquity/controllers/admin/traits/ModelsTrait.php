@@ -46,14 +46,41 @@ trait ModelsTrait{
 		$model=str_replace(".", "\\", $model);
 		$adminRoute=$this->_getFiles()->getAdminBaseRoute();
 		$this->_showModel($model,$id);
-		$this->_getAdminViewer()->getModelsStructureDataTable(OrmUtils::getModelMetadata($model));
+		$metas=OrmUtils::getModelMetadata($model);
+		$metas_=[];
+		foreach ($metas as $k=>$meta){
+			$metas_[ltrim($k,'#')]=$meta;
+		}
+		$this->_getAdminViewer()->getModelsStructureDataTable($metas_);
 		$this->_getAdminViewer()->getModelsStructureDataTable(ValidatorsManager::getCacheInfo($model),"dtValidation");
 		$bt=$this->jquery->semantic()->htmlButton("btYuml", "Class diagram");
 		$bt->postOnClick($adminRoute. "/_showDiagram/", "{model:'" . \str_replace("\\", "|", $model) . "'}", "#modal", [ "attr" => "" ]);
+		$bt=$this->jquery->semantic()->htmlButton("btValidation", "Validate instances");
+		$bt->addIcon("check",true,true);
+		$bt->postOnClick($adminRoute. "/validateInstances/", "{model:'" . \str_replace("\\", "|", $model) . "'}", "#validationResults", [ "attr" => "","hasLoader"=>"internal" ]);
 		$this->jquery->exec('$("#models-tab .item").tab();', true);
 		$this->jquery->getOnClick ( "#btAddNew", $adminRoute . "/newModel/" . $this->formModal, "#frm-add-update",["hasLoader"=>"internal"] );
 		$this->jquery->compile($this->view);
 		$this->loadView($this->_getFiles()->getViewShowTable(), [ "classname" => $model ]);
+	}
+	
+	public function validateInstances(){
+		$model=$_POST['model'];
+		$model=str_replace("|", "\\", $model);
+		if(class_exists($model)){
+			ValidatorsManager::start();
+			$result=[];
+			$instances=DAO::getAll($model,'',false);
+			foreach ($instances as $instance){
+				$violations=ValidatorsManager::validate($instance);
+				if(sizeof($violations)>0){
+					$result[]=[$instance,$violations];
+				}
+			}
+			$this->_getAdminViewer()->displayViolations($result);
+		}else{
+			echo $this->showSimpleMessage("{$model} class does not exists!", "Instances validation","error",'error');
+		}
 	}
 
 	public function refreshTable($id=null) {

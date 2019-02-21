@@ -40,7 +40,6 @@ use Ubiquity\controllers\admin\traits\GitTrait;
 use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\admin\traits\ConfigTrait;
 use Ubiquity\utils\http\UResponse;
-use Ubiquity\utils\http\USession;
 use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\semantic\MessagesTrait;
@@ -875,14 +874,14 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$controller = $route ["controller"];
 			$action = $route ["action"];
 		}
-		if (! is_string ( $controller )) {
-			if (is_callable ( $controller )) {
-				$func = new \ReflectionFunction ( $controller );
+		if(!is_string($controller)){
+			if(is_callable($controller)){
+				$func = new \ReflectionFunction($controller);
 				return \array_map ( function ($e) {
 					return $e->name;
 				}, \array_slice ( $func->getParameters (), 0, $func->getNumberOfRequiredParameters () ) );
 			}
-			return [ ];
+			return [];
 		}
 		if (\class_exists ( $controller )) {
 			if (\method_exists ( $controller, $action )) {

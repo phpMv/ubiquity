@@ -200,7 +200,7 @@ class ValidatorsManager {
 				foreach ( $validators as $validator ) {
 					$validatorInstance = self::getValidatorInstance ( $validator ["type"] );
 					if ($validatorInstance !== false) {
-						$validatorInstance->setValidationParameters ( $member, $validator ["constraints"], @$validator ["severity"], @$validator ["message"] );
+						$validatorInstance->setValidationParameters ( $member, $validator ["constraints"], $validator ["severity"]??null, $validator ["message"]??null );
 						$valid = $validatorInstance->validate_ ( $instance->$accessor () );
 						if ($valid !== true) {
 							$result [] = $valid;
@@ -246,7 +246,7 @@ class ValidatorsManager {
 				foreach ( $validators as $validator ) {
 					$validatorInstance = self::getValidatorInstance ( $validator ["type"] );
 					if ($validatorInstance !== false) {
-						$validatorInstance->setValidationParameters ( $member, $validator ["constraints"], @$validator ["severity"], @$validator ["message"] );
+						$validatorInstance->setValidationParameters ( $member, $validator ["constraints"], $validator ["severity"]??null, $validator ["message"]??null );
 						if ($group === "" || (isset ( $validator ["group"] ) && $validator ["group"] === $group)) {
 							self::$instanceValidators [$class] [$accessor] [] = $validatorInstance;
 							$result [$accessor] [] = $validatorInstance;
