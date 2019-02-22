@@ -18,7 +18,7 @@ use Ubiquity\translation\TranslatorManager;
 use Ubiquity\contents\normalizers\NormalizersManager;
 
 class Framework {
-	public const version = '2.0.9';
+	public const version = '2.0.10';
 
 	public static function getController() {
 		return Startup::getController ();
