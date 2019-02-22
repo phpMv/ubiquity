@@ -65,21 +65,22 @@ To obtain the validation rules for the model **User**:
    
    Ubiquity info:validation -m=User
 
-.. image:: /_static/images/model/model-validation-user.png
+.. image:: /_static/images/model/info-validation-user.png
    :class: console
 
-On a particular member:
+On a particular member (email):
 
 .. code-block:: bash
    
    Ubiquity info:validation -m=User -f=email
 
-.. image:: /_static/images/model/model-validation-user-email.png
+.. image:: /_static/images/model/infos-validation-user-email.png
    :class: console
    
 Generated classes
 ^^^^^^^^^^^^^^^^^
 The **User** class:
+
 .. code-block:: php
    :linenos:
    :caption: app/models/User.php
