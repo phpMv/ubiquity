@@ -65,7 +65,7 @@ To obtain the validation rules for the model **User**:
    
    Ubiquity info:validation -m=User
 
-.. image:: /_static/images/model/info-validation-user.png
+.. image:: /_static/images/model/infos-validation-user.png
    :class: console
 
 On a particular member (email):
@@ -143,3 +143,7 @@ The **User** class:
 		private $groupes;
 	}
 
+
+.. |br| raw:: html
+
+   <br />
