@@ -25,7 +25,7 @@ The **get** method can be called with the optional second parameter returning a 
 
 .. code-block:: php
    
-   $name=URequest::get("page",1);
+   $name=URequest::get("name",1);
 
 From the post method
 ^^^^^^^^^^^^^^^^^^^
@@ -41,7 +41,7 @@ The **post** method can be called with the optional second parameter returning a
 
 .. code-block:: php
    
-   $name=URequest::post("page",1);
+   $name=URequest::post("name",1);
 
 The **getPost** method applies a callback to the elements of the $_POST array and return them (default callback : **htmlEntities**) :
 
@@ -61,7 +61,7 @@ Consider a **User** class:
 .. code-block:: php
    
    class User {
-    private $id;
+    	private $id;
    	private $firstname;
    	private $lastname;
    	
