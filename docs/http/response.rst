@@ -22,7 +22,7 @@ Forcing multiple header of the same type:
    
    UResponse::header('Animal','monkey',false);
 
-Forces the HTTP response code to the specified value
+Forces the HTTP response code to the specified value:
 
 .. code-block:: php
    
@@ -57,7 +57,7 @@ Setting the response content-type to **application/xml**:
    
    UResponse::asXml();
    
-Defining specific encoding (default value is always **utf-8**)
+Defining specific encoding (default value is always **utf-8**):
 
 .. code-block:: php
    
@@ -65,7 +65,7 @@ Defining specific encoding (default value is always **utf-8**)
 
 Cache
 -----
-Forcing the disabling of the browser cache
+Forcing the disabling of the browser cache:
 
 .. code-block:: php
    
@@ -75,7 +75,7 @@ Forcing the disabling of the browser cache
 Accept
 ------
 Define which content types, expressed as MIME types, the client is able to understand. |br|
-See `Accept default values <https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation/List_of_default_Accept_values>`
+See `Accept default values <https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation/List_of_default_Accept_values>`_
 
 .. code-block:: php
    
@@ -145,3 +145,7 @@ Testing if response content-type is **application/json**:
    if(UResponse::isJSON()){
    	//do something if response is a JSON response
    	}
+
+.. |br| raw:: html
+
+   <br />
