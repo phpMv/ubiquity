@@ -13,7 +13,7 @@ Check the database configuration with **webtools** at ``http://127.0.0.1:8090/Ad
 
 Go to **models** part:
 
-.. image:: /_static/images/model/gene-web/update-dbName.png
+.. image:: /_static/images/model/gene-web/models-part.png
    :class: bordered
    
 .. note::
@@ -36,7 +36,7 @@ Change the configuration of the database to use the **messagerie** database:
    
 Generation
 ----------
-To generate all models, click on **(Re)create all models** button.
+To generate all models, click on **(Re-)create all models** button.
 
 .. image:: /_static/images/model/gene-web/models-generated.png
    :class: bordered
@@ -58,3 +58,6 @@ You can now see datas.
       Ubiquity new quick-start -q=semantic -a  -m -b=messagerie 
 
 
+.. |br| raw:: html
+
+   <br />
