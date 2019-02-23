@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - methods in ``UCookie``
   - ``exists``: Tests the existence of a cookie
   - ``setRaw``: Sends a raw cookie without urlencoding the cookie value
-
+- method in ``UResponse``
+  - ``enableCORS``: enables globaly CORS for a domain (this was possible before by using ``setAccessControl*`` methods)
+  
 ### Changed
 - method ``set`` in ``UCookie`` (parameters ``$secure`` & ``$httpOnly`` added)
 
