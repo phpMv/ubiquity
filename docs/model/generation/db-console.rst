@@ -1,14 +1,14 @@
 .. _db-console:
 Generate models from Database with devtools
 ===========================================
-
-In this part, your project is already created. |br|
-If you do not have a mysql database on hand, you can download this one: :download:`messagerie.sql </model/messagerie.sql>`
+.. note::
+   In this part, your project is already created. |br|
+   If you do not have a mysql database on hand, you can download this one: :download:`messagerie.sql </model/messagerie.sql>`
 
 Configuration
 -------------
 
-Check the database configuration in **app/config/config.php**
+Check the database configuration with **devtools** console program:
 
 .. code-block:: bash
    
@@ -16,6 +16,9 @@ Check the database configuration in **app/config/config.php**
 
 .. image:: /_static/images/model/check-config.png
    :class: console
+   
+.. note::
+   The configuration file is located in in **app/config/config.php**
   
 Change the configuration of the database to use the **messagerie** database:
 
@@ -79,6 +82,13 @@ On a particular member (email):
    
 Generated classes
 ^^^^^^^^^^^^^^^^^
+Generated classes are located in **app/models** folder, if the configuration of `mvcNS.models` has not been changed.
+
+.. note::
+   If you want to know more about:
+   - object/relational mapping rules, see the :ref:`ORM part</model/models>`
+   - data querying and persistence, see :ref:`DAO part</model/dao>`
+
 The **User** class:
 
 .. code-block:: php
@@ -143,6 +153,80 @@ The **User** class:
 		private $groupes;
 	}
 
+Querying
+--------
+
+At this point, we can already query the database in console mode, to give an idea of the possibilities of the :ref:`DAO part</model/dao>`:
+
+Classic queries
+^^^^^^^^^^^^^^^
+
+Getting all the groups:
+
+.. code-block:: bash
+   
+   Ubiquity dao getAll -r=Groupe
+
+.. image:: /_static/images/model/get-all.png
+   :class: console
+   
+With there organization:
+
+.. code-block:: bash
+   
+   Ubiquity dao getAll -r=Groupe -i=organization
+
+.. image:: /_static/images/model/get-all-groupes-orga.png
+   :class: console
+
+A more complete query: |br|
+Search for groups with the word **"list"** in their email, displaying the name, email and organization of each group:
+
+.. code-block:: bash
+   
+   Ubiquity dao getAll -r=Groupe -c="email like '%liste%'" -f=email,name,organization -i=organization
+
+.. image:: /_static/images/model/query-groupes-orga.png
+   :class: console
+   
+Getting one **User** by id:
+
+.. code-block:: bash
+
+   Ubiquity dao getOne -r=User -c="id=4"
+   
+.. image:: /_static/images/model/get-one-user.png
+   :class: console
+
+uQueries
+^^^^^^^^
+
+**UQueries** are special in that they allow to set criteria on the values of the members of the associated objects:
+
+
+Search for groups with a user named **Shermans**
+
+.. code-block:: bash
+
+   Ubiquity dao uGetAll -r=Groupe -c="users.lastname='Shermans'" -i=users
+   
+.. image:: /_static/images/model/groupes-sherman.png
+   :class: console
+
+We can verify that **Shermans** belongs to the group **Auditeurs**
+
+.. code-block:: bash
+
+   Ubiquity dao uGetAll -r=User -c="groupes.name='Auditeurs' and lastname='Shermans'" -i=groupes
+   
+.. image:: /_static/images/model/shermans-groupe.png
+   :class: console
+
+The same with a parameterized query:
+
+.. code-block:: bash
+
+   Ubiquity dao uGetAll -r=User -c="groupes.name= ? and lastname= ?" -i=groupes -p=Auditeurs,Shermans
 
 .. |br| raw:: html
 
