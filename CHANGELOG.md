@@ -5,14 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-Nothing
+### Added
+- methods in ``UCookie``
+  - ``exists``: Tests the existence of a cookie
+  - ``setRaw``: Sends a raw cookie without urlencoding the cookie value
+
+### Changed
+- method ``set`` in ``UCookie`` (parameters ``$secure`` & ``$httpOnly`` added)
 
 ## [2.0.10] - 2019-02-22
 ### Added
 - Webtools
   - validation info in models part
 - Acceptance, functionnal and unit tests (70% coverage)
-
 
 ### Changed
 - Webtools
