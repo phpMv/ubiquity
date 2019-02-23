@@ -18,7 +18,7 @@ Check the database configuration with **devtools** console program:
    :class: console
    
 .. note::
-   The configuration file is located in in **app/config/config.php**
+   The configuration file is located in **app/config/config.php**
   
 Change the configuration of the database to use the **messagerie** database:
 
@@ -86,8 +86,9 @@ Generated classes are located in **app/models** folder, if the configuration of 
 
 .. note::
    If you want to know more about:
-   - object/relational mapping rules, see the :ref:`ORM part</model/models>`
-   - data querying and persistence, see :ref:`DAO part</model/dao>`
+   
+   - object/relational mapping rules, see the :doc:`ORM part</model/models>`
+   - data querying and persistence, see :doc:`DAO part</model/dao>`
 
 The **User** class:
 
@@ -153,10 +154,20 @@ The **User** class:
 		private $groupes;
 	}
 
+
+.. important::
+
+   Any modification on the classes (code or annotations) requires the reset of the cache to be taken into account.
+   
+   .. code-block:: bash
+   
+      Ubiquity init-cache -t=models
+
 Querying
 --------
 
-At this point, we can already query the database in console mode, to give an idea of the possibilities of the :ref:`DAO part</model/dao>`:
+Classes are generated, and models cache also. |br|
+At this point, we can already query the database in console mode, to give an idea of the possibilities of the :doc:`DAO part</model/dao>`:
 
 Classic queries
 ^^^^^^^^^^^^^^^
