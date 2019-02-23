@@ -4,14 +4,15 @@ namespace Ubiquity\utils\http;
 
 /**
  * Http Response utilities
+ * Ubiquity\utils\http$UResponse
+ * This class is part of Ubiquity
  *
- * @author jc
- * @version 1.0.0.0
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.2
  *
  */
 class UResponse {
-	
-	public static $headers=[];
+	public static $headers = [ ];
 
 	/**
 	 * Send a raw HTTP header
@@ -26,7 +27,7 @@ class UResponse {
 	 *        	Forces the HTTP response code to the specified value
 	 */
 	public static function header($headerField, $value, $replace = null, $responseCode = null) {
-		self::$headers[trim ( $headerField )]=trim($value);
+		self::$headers [trim ( $headerField )] = trim ( $value );
 		\header ( trim ( $headerField ) . ": " . trim ( $value ), $replace, $responseCode );
 	}
 
@@ -42,6 +43,12 @@ class UResponse {
 		self::header ( $headerField, $values );
 	}
 
+	/**
+	 * Sets header content-type
+	 *
+	 * @param string $contentType
+	 * @param string $encoding
+	 */
 	public static function setContentType($contentType, $encoding = null) {
 		$value = $contentType;
 		if (isset ( $encoding ))
@@ -60,9 +67,13 @@ class UResponse {
 	/**
 	 * Checks if or where headers have been sent
 	 *
+	 * @param string $file
+	 *        	If the optional file andline parameters are set,headers_sent will put the PHP source file nameand line number where output started in the fileand line variables.
+	 * @param int $line
+	 *        	The line number where the output started.
 	 * @return boolean
 	 */
-	public static function isSent() {
+	public static function isSent(&$file = null, &$line = null) {
 		return \headers_sent ();
 	}
 
@@ -72,9 +83,15 @@ class UResponse {
 	public static function asJSON() {
 		self::header ( 'Content-Type', 'application/json' );
 	}
-	
-	public static function isJSON(){
-		return isset(self::$headers["Content-Type"]) && self::$headers["Content-Type"]==='application/json';
+
+	/**
+	 * Tests if response content-type is application/json
+	 * Only Works if UResponse has been used for setting headers
+	 *
+	 * @return boolean
+	 */
+	public static function isJSON() {
+		return isset ( self::$headers ["Content-Type"] ) && self::$headers ["Content-Type"] === 'application/json';
 	}
 
 	/**
@@ -119,12 +136,33 @@ class UResponse {
 	}
 
 	/**
+	 * Enables CORS
+	 *
+	 * @param string $origin
+	 *        	The allowed origin (default: '*')
+	 * @param string $methods
+	 *        	The allowed methods (default: 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+	 * @param string $headers
+	 *        	The allowed headers (default: 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+	 * @since Ubiquity 2.0.11
+	 */
+	public static function enableCors($origin = '*', $methods = 'GET, POST, PUT, DELETE, PATCH, OPTIONS', $headers = 'X-Requested-With, Content-Type, Accept, Origin, Authorization') {
+		self::setAccessControlOrigin ( $origin );
+		self::setAccessControlMethods ( $methods );
+		self::setAccessControlHeaders ( $headers );
+	}
+
+	/**
 	 * Sets the Access-Control-Allow-Origin field value
+	 * Only a single origin can be specified.
 	 *
 	 * @param string $origin
 	 */
-	public static function setAccessControlOrigin($origin) {
+	public static function setAccessControlOrigin($origin = '*') {
 		self::header ( 'Access-Control-Allow-Origin', $origin );
+		if ($origin !== '*') {
+			self::header ( 'Vary', 'Origin' );
+		}
 	}
 
 	/**

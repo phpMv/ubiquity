@@ -12,7 +12,9 @@ Cookie creation or modification
    Cookies are part of the HTTP header, so cookie creation must be called before any output is sent to the browser.
 
 .. code-block:: php
-   
+
+   use Ubiquity\utils\http\UCookie;
+      
    $cookie_name = 'user';
    $cookie_value = 'John Doe';
    UCookie::set($cookie_name, $cookie_value);//duration : 1 day
