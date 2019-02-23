@@ -40,6 +40,16 @@ To generate all models, use the **all-models** command:
 .. image:: /_static/images/model/db-created.png
    :class: console
 
+That's all! |br|
+The models are generated and operational.
+
+.. note::
+   It is possible to generate models automatically when creating a project with the ``-m`` option for models and ``-b`` to specify the database:
+   
+   .. code-block:: bash
+      
+      Ubiquity new quick-start -q=semantic -a  -m -b=messagerie 
+
 Checking
 --------
 
