@@ -12,6 +12,12 @@ Ubiquity User guide
    
    with console <quickstart/quickstart>
    with web-tools <quickstart/quickstart-html>
+   
+.. sidebar:: Sidebar test?
+
+   Test.
+
+.. End of sidebar
 
 .. toctree::
    :maxdepth: 1

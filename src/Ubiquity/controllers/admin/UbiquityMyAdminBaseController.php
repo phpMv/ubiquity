@@ -451,8 +451,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$this->jquery->exec ( '$("#lbl-changed").toggle(' . ((sizeof ( $files ) > 0) ? "true" : "false") . ');', true );
 
 		$this->jquery->getOnClick ( "#settings-btn", $this->_getFiles ()->getAdminBaseRoute () . "/frmSettings", "#frm" );
-		$this->jquery->exec ( '$("#commit-frm").form({"fields":{"summary":{"rules":[{"type":"empty"}]},"files-to-commit[]":{"rules":[{"type":"checkeds","prompt":"You must select at least 1 file!"}]}},"on":"blur","onSuccess":function(event,fields){' . $this->jquery->postFormDeferred ( $this->_getFiles ()->getAdminBaseRoute () . "/commit", "commit-frm", "#messages", [ "preventDefault" => true,
-				"stopPropagation" => true,"ajaxLoader" => $loader ] ) . ';return false;}});', true );
+		$this->jquery->exec ( '$("#commit-frm").form({"fields":{"summary":{"rules":[{"type":"empty"}]},"files-to-commit[]":{"rules":[{"type":"checkeds","prompt":"You must select at least 1 file!"}]}},"on":"blur","onSuccess":function(event,fields){' . $this->jquery->postFormDeferred ( $this->_getFiles ()->getAdminBaseRoute () . "/commit", "commit-frm", "#messages", [
+																																																																																													"preventDefault" => true,
+																																																																																													"stopPropagation" => true,
+																																																																																													"ajaxLoader" => $loader ] ) . ';return false;}});', true );
 		$this->jquery->exec ( '$("#git-tabs .item").tab();', true );
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewGitIndex (), [ "repo" => $gitRepo,"initializeBt" => $initializeBt,"gitIgnoreBt" => $gitIgnoreBt,"pushPullBts" => $pushPullBts,"btRefresh" => $btRefresh ] );
@@ -491,11 +493,11 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$props = \array_flip ( $post ["properties"] );
 			$yuml = new ClassToYuml ( $model, isset ( $props ["displayProperties"] ), isset ( $props ["displayAssociations"] ), isset ( $props ["displayMethods"] ), isset ( $props ["displayMethodsParams"] ), isset ( $props ["displayPropertiesTypes"] ), isset ( $props ["displayAssociationClassProperties"] ) );
 			if (isset ( $props ["displayAssociations"] )) {
-				$yuml->init ( true, true );
+				$yuml->init ( true, true, true );
 			}
 		} else {
 			$yuml = new ClassToYuml ( $model, ! isset ( $_POST ["refresh"] ) );
-			$yuml->init ( true, true );
+			$yuml->init ( true, true, true );
 		}
 		return $yuml;
 	}
@@ -874,14 +876,14 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$controller = $route ["controller"];
 			$action = $route ["action"];
 		}
-		if(!is_string($controller)){
-			if(is_callable($controller)){
-				$func = new \ReflectionFunction($controller);
+		if (! is_string ( $controller )) {
+			if (is_callable ( $controller )) {
+				$func = new \ReflectionFunction ( $controller );
 				return \array_map ( function ($e) {
 					return $e->name;
 				}, \array_slice ( $func->getParameters (), 0, $func->getNumberOfRequiredParameters () ) );
 			}
-			return [];
+			return [ ];
 		}
 		if (\class_exists ( $controller )) {
 			if (\method_exists ( $controller, $action )) {

@@ -57,6 +57,73 @@ You can now see datas.
       
       Ubiquity new quick-start -q=semantic -a  -m -b=messagerie 
 
+Navigation between data
+-----------------------
+
+You can now see the data and move between related objects:
+
+.. image:: /_static/images/model/gene-web/datas-navigation.png
+   :class: bordered
+   
+You can also perform basic operations on objects:
+- Create
+- Read (navigate and see)
+- Update
+- Delete
+- Search
+
+Checking
+--------
+
+Class diagram
+^^^^^^^^^^^^^
+Still in the **models** part, click on the **models generation** step:
+
+.. image:: /_static/images/model/gene-web/step-models-generation.png
+
+Then click on **Classes diagram** button:
+
+.. image:: /_static/images/model/gene-web/access-class-diagram.png
+   :class: bordered
+   
+
+You can see the class diagram, using the `yUML API<https://yuml.me/>`_:
+
+.. image:: /_static/images/model/gene-web/classes-diagram.png
+   :class: bordered
+
+Models meta-datas
+^^^^^^^^^^^^^^^^^
+To see the metadatas of a created model:
+
+Select a model, and activate the **Structure** tab:
+
+.. image:: /_static/images/model/gene-web/structure-tab.png
+   :class: bordered
+   
+You can also view the partial class diagram:
+
+.. image:: /_static/images/model/gene-web/settings-class-diagram.png
+   :class: bordered
+
+Models validation
+^^^^^^^^^^^^^^^^^
+The third tab gives information about object validation:
+
+.. image:: /_static/images/model/gene-web/validation-info.png
+   :class: bordered
+
+.. note::
+   The validation rules were generated automatically with the classes. |br|
+   They are defined through ``@validator`` annotations on each member of a class and are stored in cache.
+
+The **Validate instances** button is used to check the validity of the instances:
+
+.. image:: /_static/images/model/gene-web/validation-results.png
+   :class: bordered
+
+.. note::
+   It is normal that by default all instances in the database do not check all validation rules.
 
 .. |br| raw:: html
 
