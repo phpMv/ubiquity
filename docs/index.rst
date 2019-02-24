@@ -15,10 +15,11 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
-- :ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`
-- Generating models:
-  - :doc:`with webtools (UbiquityMyAdmin)</model/generation/db-html>`
-  - :doc:`with console (devtools)</model/generation/db-console>` 
+   - :ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`
+   - Generating models:
+     - :doc:`with webtools (UbiquityMyAdmin)</model/generation/db-html>`
+     - :doc:`with console (devtools)</model/generation/db-console>`
+     
 .. End of sidebar
 
 .. toctree::
