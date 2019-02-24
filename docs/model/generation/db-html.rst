@@ -66,6 +66,7 @@ You can now see the data and move between related objects:
    :class: bordered
    
 You can also perform basic operations on objects:
+
 - Create
 - Read (navigate and see)
 - Update
@@ -87,7 +88,7 @@ Then click on **Classes diagram** button:
    :class: bordered
    
 
-You can see the class diagram, using the `yUML API<https://yuml.me/>`_:
+You can see the class diagram, using the `yUML API<https://yuml.me/>`_ :
 
 .. image:: /_static/images/model/gene-web/classes-diagram.png
    :class: bordered
@@ -124,6 +125,53 @@ The **Validate instances** button is used to check the validity of the instances
 
 .. note::
    It is normal that by default all instances in the database do not check all validation rules.
+
+Generated classes
+^^^^^^^^^^^^^^^^^
+Generated classes are located in **app/models** folder, if the configuration of `mvcNS.models` has not been changed.
+
+.. note::
+   If you want to know more about:
+   
+   - object/relational mapping rules, see the :doc:`ORM part</model/models>`
+   - data querying and persistence, see :doc:`DAO part</model/dao>`
+
+The **Settings** class:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/models/Settings.php
+   
+    namespace models;
+	class Settings{
+		/**
+		 * @id
+		 * @column("name"=>"id","nullable"=>false,"dbType"=>"int(11)")
+		 * @validator("id","constraints"=>array("autoinc"=>true))
+		**/
+		private $id;
+	
+		/**
+		 * @column("name"=>"name","nullable"=>true,"dbType"=>"varchar(45)")
+		 * @validator("length","constraints"=>array("max"=>45))
+		**/
+		private $name;
+	
+		/**
+		 * @oneToMany("mappedBy"=>"settings","className"=>"models\\Organizationsettings")
+		**/
+		private $organizationsettingss;
+	}
+
+
+.. important::
+
+   Any modification on the classes (code or annotations) requires the reset of the cache to be taken into account.
+   
+   .. code-block:: bash
+   
+      Ubiquity init-cache -t=models
+
 
 .. |br| raw:: html
 

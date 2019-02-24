@@ -22,6 +22,17 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	background-color: #e3e3e3!important;
 }
 
+.rst-content .sidebar{
+	background-color: #fff!important;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+.rst-content .sidebar .sidebar-title{
+	background-color: #fbf6ed!important;
+}
+
 img.bordered{
 	border-radius: 10px 10px 10px 10px;
 	-moz-border-radius: 10px 10px 10px 10px;

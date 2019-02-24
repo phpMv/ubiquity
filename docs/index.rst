@@ -13,10 +13,12 @@ Ubiquity User guide
    with console <quickstart/quickstart>
    with web-tools <quickstart/quickstart-html>
    
-.. sidebar:: Sidebar test?
+.. sidebar:: New in documentation
 
-   Test.
-
+- :ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`
+- Generating models:
+  - :doc:`with webtools (UbiquityMyAdmin)</model/generation/db-html>`
+  - :doc:`with console (devtools)</model/generation/db-console>` 
 .. End of sidebar
 
 .. toctree::
