@@ -88,7 +88,7 @@ Then click on **Classes diagram** button:
    :class: bordered
    
 
-You can see the class diagram, using the `yUML API<https://yuml.me/>`_ :
+You can see the class diagram, using the `yUML API <https://yuml.me/>`_
 
 .. image:: /_static/images/model/gene-web/classes-diagram.png
    :class: bordered

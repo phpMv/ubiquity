@@ -3,6 +3,7 @@
 namespace Ubiquity\utils\yuml;
 
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\utils\yuml\traits\ClassToYumlRelationsTrait;
 
 /**
  * yuml export tool for class
@@ -10,10 +11,11 @@ use Ubiquity\orm\OrmUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class ClassToYuml {
+	use ClassToYumlRelationsTrait;
 	protected $class;
 	protected $displayProperties = true;
 	protected $displayMethods = false;
@@ -23,10 +25,6 @@ class ClassToYuml {
 	protected $displayAssociationClassProperties = false;
 	protected $displayForeignKeys = true;
 	protected $properties;
-	protected $oneToManys = [ ];
-	protected $manyToOne = [ ];
-	protected $manyToManys = [ ];
-	protected $extManyToManys = [ ];
 	protected $parseResult;
 	protected $note;
 
@@ -128,60 +126,6 @@ class ClassToYuml {
 		return $reflect->getShortName ();
 	}
 
-	protected function loadOneToManys() {
-		$oneToManys = OrmUtils::getAnnotationInfo ( $this->class, "#oneToMany" );
-		if ($oneToManys) {
-			foreach ( $oneToManys as $member => $array ) {
-				$this->oneToManys [$member] = $array ["className"];
-			}
-		}
-	}
-
-	public function loadManyToManys() {
-		$manyToManys = OrmUtils::getAnnotationInfo ( $this->class, "#manyToMany" );
-		if ($manyToManys) {
-			foreach ( $manyToManys as $member => $array ) {
-				if (isset ( $array ["targetEntity"] )) {
-					$this->manyToManys [$member] = $array ["targetEntity"];
-					$this->extManyToManys [$array ["targetEntity"]] = $this->class;
-				}
-			}
-		}
-	}
-
-	protected function loadManyToOne() {
-		$manyToOne = OrmUtils::getAnnotationInfo ( $this->class, "#manyToOne" );
-		if ($manyToOne) {
-			foreach ( $manyToOne as $member ) {
-				$joinColumn = OrmUtils::getAnnotationInfoMember ( $this->class, "#joinColumn", $member );
-				if ($joinColumn && isset ( $joinColumn ["className"] )) {
-					$this->manyToOne [$member] = $joinColumn ["className"];
-				}
-			}
-		}
-	}
-
-	protected function _getYumlManyToOne() {
-		return $this->_getYumlRelationsType ( $this->manyToOne, "0..*-1" );
-	}
-
-	protected function _getYumlOneToMany() {
-		return $this->_getYumlRelationsType ( $this->oneToManys, "1-0..*" );
-	}
-
-	protected function _getYumlManyToMany() {
-		return $this->_getYumlRelationsType ( $this->manyToManys, "0..*-0..*" );
-	}
-
-	protected function _getYumlRelationsType($relations, $branche) {
-		$myClass = $this->getShortClassName ( $this->class );
-		$yumlRelations = [ ];
-		foreach ( $relations as $model ) {
-			$yumlRelations [] = Yuml::setClassContent ( $myClass ) . $branche . new ClassToYuml ( $model, $this->displayAssociationClassProperties, false );
-		}
-		return $yumlRelations;
-	}
-
 	protected function _getNote() {
 		return "-[note:" . $this->note . "]";
 	}
@@ -219,8 +163,8 @@ class ClassToYuml {
 		return \implode ( Yuml::$groupeSeparator, $this->_getYumlOneToMany () );
 	}
 
-	public function manyToManyTostring($load=true) {
-		if($load){
+	public function manyToManyTostring($load = true) {
+		if ($load) {
 			$this->loadManyToManys ();
 		}
 		return \implode ( Yuml::$groupeSeparator, $this->_getYumlManyToMany () );
@@ -249,20 +193,5 @@ class ClassToYuml {
 	public function setDisplayAssociations($displayAssociations) {
 		$this->displayAssociations = $displayAssociations;
 		return $this;
-	}
-
-	/**
-	 *
-	 * @return array
-	 */
-	public function getExtManyToManys() {
-		return $this->extManyToManys;
-	}
-
-	public function removeManyToManyExt($targetClass) {
-		$member = array_search ( $targetClass, $this->manyToManys );
-		if ($member !== false) {
-			unset ( $this->manyToManys [$member] );
-		}
 	}
 }

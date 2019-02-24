@@ -68,13 +68,13 @@ class UResponse {
 	 * Checks if or where headers have been sent
 	 *
 	 * @param string $file
-	 *        	If the optional file andline parameters are set,headers_sent will put the PHP source file nameand line number where output started in the fileand line variables.
+	 *        	If the optional file and line parameters are set,headers_sent will put the PHP source file nameand line number where output started in the fileand line variables.
 	 * @param int $line
 	 *        	The line number where the output started.
 	 * @return boolean
 	 */
 	public static function isSent(&$file = null, &$line = null) {
-		return \headers_sent ();
+		return \headers_sent ( $file, $line );
 	}
 
 	/**

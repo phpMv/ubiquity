@@ -31,7 +31,7 @@ class UCookie {
 	 * @return boolean
 	 */
 	public static function set($name, $value, $duration = 60*60*24, $path = "/", $secure = false, $httpOnly = false) {
-		\setcookie ( $name, $value, \time () + $duration, $path );
+		\setcookie ( $name, $value, \time () + $duration, $path, $secure, $httpOnly );
 	}
 
 	/**
