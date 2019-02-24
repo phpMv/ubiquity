@@ -17,6 +17,7 @@ Ubiquity User guide
 
    - :ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`
    - Generating models:
+   
      - :doc:`with webtools (UbiquityMyAdmin)</model/generation/db-html>`
      - :doc:`with console (devtools)</model/generation/db-console>`
      

@@ -31,6 +31,7 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 
 .rst-content .sidebar .sidebar-title{
 	background-color: #fbf6ed!important;
+	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif!important;
 }
 
 img.bordered{
