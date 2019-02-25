@@ -121,11 +121,6 @@ class ClassToYuml {
 		$methodsArray [] = Yuml::setMethodVariables ( [ $this->getAccess ( $method ),$methodName,$parameters,$type ] );
 	}
 
-	protected function getShortClassName($class) {
-		$reflect = new \ReflectionClass ( $class );
-		return $reflect->getShortName ();
-	}
-
 	protected function _getNote() {
 		return "-[note:" . $this->note . "]";
 	}

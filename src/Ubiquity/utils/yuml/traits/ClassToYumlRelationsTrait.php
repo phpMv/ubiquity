@@ -53,6 +53,11 @@ trait ClassToYumlRelationsTrait {
 		}
 	}
 
+	protected function getShortClassName($class) {
+		$reflect = new \ReflectionClass ( $class );
+		return $reflect->getShortName ();
+	}
+
 	protected function _getYumlRelationsType($relations, $branche) {
 		$myClass = $this->getShortClassName ( $this->class );
 		$yumlRelations = [ ];
