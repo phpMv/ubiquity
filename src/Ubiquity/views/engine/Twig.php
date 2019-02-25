@@ -12,7 +12,7 @@ use Ubiquity\translation\TranslatorManager;
 /**
  * Ubiquity Twig template engine
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  */
 class Twig extends TemplateEngine {
 	private $twig;
@@ -44,6 +44,7 @@ class Twig extends TemplateEngine {
 		});
 		$this->twig->addTest($test);
 		$this->twig->addGlobal("app", new Framework());
+		$this->twig->addGlobal("config", Startup::getConfig());
 	}
 
 	/*
