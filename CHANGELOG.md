@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - method ``set`` in ``UCookie`` (parameters ``$secure`` & ``$httpOnly`` added)
 
+### Fixed
+- issue [pb with config variable in Twig views](https://github.com/phpMv/ubiquity/issues/7)
+
 ## [2.0.10] - 2019-02-22
 ### Added
 - Webtools
