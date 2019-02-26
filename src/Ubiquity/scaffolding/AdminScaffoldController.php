@@ -28,7 +28,7 @@ class AdminScaffoldController extends ScaffoldController {
 		$this->jquery = $jquery;
 	}
 
-	protected function getTemplateDir() {
+	public function getTemplateDir() {
 		return Startup::getFrameworkDir () . "/admin/templates/";
 	}
 
@@ -58,6 +58,14 @@ class AdminScaffoldController extends ScaffoldController {
 	public static function createMethod($controller, $jquery, $access, $name, $parameters, $return, $content, $comment) {
 		$self = new AdminScaffoldController ( $controller, $jquery );
 		return $self->_createMethod ( $access, $name, $parameters, $return, $content, $comment );
+	}
+
+	public function initRestCache($refresh = true) {
+		$this->controller->initRestCache ( $refresh );
+	}
+
+	public function _refreshRest($refresh = false) {
+		$this->controller->_refreshRest ( $refresh );
 	}
 }
 

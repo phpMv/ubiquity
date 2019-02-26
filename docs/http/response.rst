@@ -133,7 +133,7 @@ Checking if headers have been sent:
    
    if(!UResponse::isSent()){
    	//do something if headers are not send
-   	}
+   }
 
 Testing if response content-type is **application/json**:
 
@@ -144,7 +144,7 @@ Testing if response content-type is **application/json**:
    
    if(UResponse::isJSON()){
    	//do something if response is a JSON response
-   	}
+   }
 
 .. |br| raw:: html
 

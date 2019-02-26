@@ -10,6 +10,7 @@ use Ubiquity\utils\base\UIntrospection;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\scaffolding\creators\AuthControllerCreator;
 use Ubiquity\scaffolding\creators\CrudControllerCreator;
+use Ubiquity\scaffolding\creators\RestControllerCreator;
 
 /**
  * Base class for Scaffolding
@@ -25,7 +26,13 @@ abstract class ScaffoldController {
 							"CRUD" => [ "index" => "@framework/crud/index.html","form" => "@framework/crud/form.html","display" => "@framework/crud/display.html" ],
 							"auth" => [ "index" => "@framework/auth/index.html","info" => "@framework/auth/info.html","noAccess" => "@framework/auth/noAccess.html","disconnected" => "@framework/auth/disconnected.html","message" => "@framework/auth/message.html","baseTemplate" => "@framework/auth/baseTemplate.html" ] ];
 
-	protected abstract function getTemplateDir();
+	public abstract function getTemplateDir();
+
+	public function _refreshRest($refresh = false) {
+	}
+
+	public function initRestCache($refresh = true) {
+	}
 
 	protected abstract function storeControllerNameInSession($controller);
 
@@ -83,6 +90,11 @@ abstract class ScaffoldController {
 	public function addAuthController($authControllerName, $baseClass, $authViews = null, $routePath = "") {
 		$authCreator = new AuthControllerCreator ( $authControllerName, $baseClass, $authViews, $routePath );
 		$authCreator->create ( $this );
+	}
+
+	public function addRestController($restControllerName, $resource, $routePath = "", $reInit = true) {
+		$restCreator = new RestControllerCreator ( $restControllerName, $resource, $routePath );
+		$restCreator->create ( $this, $reInit );
 	}
 
 	public function _createClass($template, $classname, $namespace, $uses, $extendsOrImplements, $classContent) {
