@@ -2,7 +2,6 @@
 
 namespace Ubiquity\controllers\admin;
 
-use Ajax\service\JString;
 use Ajax\semantic\html\elements\HtmlHeader;
 use Ajax\semantic\html\elements\HtmlButton;
 use Ubiquity\orm\DAO;
@@ -796,7 +795,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 					$keys = $_POST ["name"];
 					$values = $_POST ["value"];
 					for($i = 0; $i < \sizeof ( $values ); $i ++) {
-						if (JString::isNotNull ( $keys [$i] ))
+						if ($keys [$i] != null)
 							$postParams [$keys [$i]] = $values [$i];
 					}
 					if (\sizeof ( $postParams ) > 0) {
