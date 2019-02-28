@@ -28,7 +28,7 @@ class ArrayLoader implements LoaderInterface {
 
 	public function load($locale, $domain = '*') {
 		$key = $this->getRootKey ( $locale, $domain );
-		if (apc_exists ( $key )) {
+		if (self::hasAPC () && apc_exists ( $key )) {
 			Logger::info ( 'Translate', 'Loading ' . $locale . '.' . $domain . ' from apc_cache', 'load' );
 			return apc_fetch ( $key );
 		}
@@ -44,7 +44,9 @@ class ArrayLoader implements LoaderInterface {
 				}
 			}
 			$this->flatten ( $messages );
-			apc_store ( $key, $messages );
+			if (self::hasAPC ()) {
+				apc_store ( $key, $messages );
+			}
 		} else {
 			return false;
 		}
@@ -52,10 +54,16 @@ class ArrayLoader implements LoaderInterface {
 		return $messages;
 	}
 
+	private static function hasAPC() {
+		return function_exists ( 'apc_exists' );
+	}
+
 	public function clearCache($locale = null, $domain = null) {
-		$iterator = new \APCIterator ( '/^' . $this->getRootKey ( $locale, $domain ) . '/' );
-		foreach ( $iterator as $apc_cache ) {
-			apc_delete ( $apc_cache ['key'] );
+		if (self::hasAPC ()) {
+			$iterator = new \APCIterator ( '/^' . $this->getRootKey ( $locale, $domain ) . '/' );
+			foreach ( $iterator as $apc_cache ) {
+				apc_delete ( $apc_cache ['key'] );
+			}
 		}
 	}
 
