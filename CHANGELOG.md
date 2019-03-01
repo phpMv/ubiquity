@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - issue [pb with config variable in Twig views](https://github.com/phpMv/ubiquity/issues/7)
+- deprecated ref to apcu in Translation ``ArrayLoader`` removed
 
 ## [2.0.10] - 2019-02-22
 ### Added
