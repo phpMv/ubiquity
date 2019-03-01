@@ -108,6 +108,18 @@ The program in console mode makes it easy to perform all the repetitive tasks re
 - checking : routes, models, validators
 - scaffolding (CRUD + authentification)
 
+## Scaffolding
+
+Generation of the CRUD elements for a model class with devtools :
+
+```bash
+Ubiquity crud --resource=Developers --path=/devs/
+```
+
+The generated route **/devs/** provides an entry point for CRUD operations:
+
+![crud index](https://static.kobject.net/ubiquity/images/github/crud-index.png "crud index")
+
 ## Admin interface
 Like the console, the administration interface makes it possible to act on the main components of the framework.
 
