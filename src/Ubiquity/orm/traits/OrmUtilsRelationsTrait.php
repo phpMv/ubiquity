@@ -48,6 +48,25 @@ trait OrmUtilsRelationsTrait {
 		return $result;
 	}
 	
+	public static function getRelationInfos($class){
+		$result=[ ];
+		$joinColumns=self::getAnnotationInfo($class, "#joinColumn");
+		$invertedJoinColumns=self::getAnnotationInfo($class, "#invertedJoinColumn");
+		if ($manyToOne=self::getAnnotationInfo($class, "#manyToOne")) {
+			foreach ($manyToOne as $oneField){
+				$field=$joinColumns[$oneField]['name'];
+				$result[$field]=$invertedJoinColumns[$field];
+			}
+		}
+		if ($oneToMany=self::getAnnotationInfo($class, "#oneToMany")) {
+			$result=\array_merge($result, $oneToMany);
+		}
+		if ($manyToMany=self::getAnnotationInfo($class, "#manyToMany")) {
+			$result=\array_merge($result, $manyToMany);
+		}
+		return $result;
+	}
+	
 	public static function getFieldsInRelations_($class) {
 		return self::getFieldsInRelationsForUpdate_($class)["relations"];
 	}

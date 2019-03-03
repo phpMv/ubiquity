@@ -40,9 +40,9 @@ abstract class RestController extends Controller {
 		if (! \headers_sent ()) {
 			@\set_exception_handler ( array ($this,'_errorHandler' ) );
 			$this->config = Startup::getConfig ();
-			$this->server = new RestServer ( $this->config );
+			$this->server = $this->_getRestServer ();
 			$this->server->cors ();
-			$this->responseFormatter = new ResponseFormatter ();
+			$this->responseFormatter = $this->_getResponseFormatter ();
 			$this->contentType = "application/json";
 			$this->server->_setContentType ( $this->contentType );
 			$this->restCache = CacheManager::getRestCacheController ( \get_class ( $this ) );

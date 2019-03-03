@@ -10,6 +10,7 @@ use Ubiquity\utils\http\URequest;
  *
  * @author jc
  * @property ResponseFormatter $responseFormatter
+ * @property RestServer $server
  */
 trait RestControllerUtilitiesTrait {
 
@@ -42,8 +43,24 @@ trait RestControllerUtilitiesTrait {
 	 *
 	 * @return \Ubiquity\controllers\rest\ResponseFormatter
 	 */
-	protected function getResponseFormatter() {
+	protected function getResponseFormatter(): ResponseFormatter {
 		return new ResponseFormatter ();
+	}
+
+	protected function _getRestServer() {
+		if (! isset ( $this->server )) {
+			$this->server = $this->getRestServer ();
+		}
+		return $this->server;
+	}
+
+	/**
+	 * To override, returns the active RestServer
+	 *
+	 * @return \Ubiquity\controllers\rest\RestServer
+	 */
+	protected function getRestServer(): RestServer {
+		return new RestServer ( $this->config );
 	}
 
 	protected function connectDb($config) {
