@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Rest [JsonAPI](https://jsonapi.org/format/) implementation
+  - ``JsonApiRestController`` class started
 - methods in ``UCookie``
   - ``exists``: Tests the existence of a cookie
   - ``setRaw``: Sends a raw cookie without urlencoding the cookie value
