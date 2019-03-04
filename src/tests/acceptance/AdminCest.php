@@ -101,7 +101,7 @@ class AdminCest extends BaseAcceptance {
 		$I->see ( 'Auditeurs' );
 		$I->see ( 'myaddressmail@gmail.com' );
 		$I->amOnPage ( "/rest/Users/getOne/500" );
-		$I->see ( '{"message":"No result found","keyValues":"500"}' );
+		$I->see ( 'No result found for primary key(s): 500' );
 		$I->amOnPage ( "/rest/Users/connect/" );
 		$I->see ( 'Bearer' );
 		$I->amOnPage ( "/rest/Users/get/firstname+like+%27B%25%27" );
