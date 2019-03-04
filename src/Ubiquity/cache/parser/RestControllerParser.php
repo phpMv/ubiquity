@@ -4,6 +4,7 @@ namespace Ubiquity\cache\parser;
 
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\controllers\rest\RestBaseController;
 
 class RestControllerParser {
 	private $controllerClass;
@@ -20,7 +21,7 @@ class RestControllerParser {
 	public function parse($controllerClass, $config) {
 		$this->controllerClass=$controllerClass;
 		$reflect=new \ReflectionClass($controllerClass);
-		if (!$reflect->isAbstract() && $reflect->isSubclassOf("Ubiquity\\controllers\\rest\\RestController")) {
+		if (!$reflect->isAbstract() && $reflect->isSubclassOf(RestBaseController::class)) {
 			$restAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@rest");
 			if (\sizeof($restAnnotsClass) > 0) {
 				$routeAnnotsClass=Reflexion::getAnnotationClass($controllerClass, "@route");
@@ -41,8 +42,11 @@ class RestControllerParser {
 	}
 
 	private function _getResourceName($config, $name) {
-		$modelsNS=$config["mvcNS"]["models"];
-		return ClassUtils::getClassNameWithNS($modelsNS, $name);
+		if($name!=null){
+			$modelsNS=$config["mvcNS"]["models"];
+			return ClassUtils::getClassNameWithNS($modelsNS, $name);
+		}
+		return '';
 	}
 
 	public function asArray() {

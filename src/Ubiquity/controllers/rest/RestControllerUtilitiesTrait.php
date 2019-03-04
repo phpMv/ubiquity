@@ -30,6 +30,21 @@ trait RestControllerUtilitiesTrait {
 			echo $this->_getResponseFormatter ()->format ( [ "message" => "No result found","keyValues" => $keyValues ] );
 		}
 	}
+	
+	protected function generatePagination(&$filter,$pageNumber,$pageSize){
+			$count=DAO::count($this->model,$filter);
+			$pagesCount=ceil($count/$pageSize);
+			$pages=['self'=>$pageNumber,'first'=>1,'last'=>$pagesCount,'pageSize'=>$pageSize];
+			if($pageNumber-1>0){
+				$pages['prev']=$pageNumber-1;
+			}
+			if($pageNumber+1<=$pagesCount){
+				$pages['next']=$pageNumber+1;
+			}
+			$offset=($pageNumber-1)*$pageSize;
+			$filter.=' limit '.$offset.','.$pageSize;
+			return $pages;
+	}
 
 	protected function _getResponseFormatter() {
 		if (! isset ( $this->responseFormatter )) {
@@ -90,7 +105,7 @@ trait RestControllerUtilitiesTrait {
 	 * @param string|boolean $included
 	 * @return array|boolean
 	 */
-	private function getIncluded($included) {
+	protected function getIncluded($included) {
 		if (! UString::isBooleanStr ( $included )) {
 			return explode ( ",", $included );
 		}

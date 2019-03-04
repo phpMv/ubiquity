@@ -56,6 +56,7 @@ trait OrmUtilsRelationsTrait {
 			foreach ($manyToOne as $oneField){
 				$field=$joinColumns[$oneField]['name'];
 				$result[$field]=$invertedJoinColumns[$field];
+				$result[$oneField]=$invertedJoinColumns[$field];
 			}
 		}
 		if ($oneToMany=self::getAnnotationInfo($class, "#oneToMany")) {

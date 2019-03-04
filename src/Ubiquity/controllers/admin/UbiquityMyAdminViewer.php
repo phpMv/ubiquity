@@ -374,7 +374,11 @@ class UbiquityMyAdminViewer {
 				$errors = \array_merge ( $errors, $route->getMessages () );
 			}
 			$resource = $restAttributes ["restAttributes"] ["resource"];
-			$tab = $tabs->addTab ( $resource, [ $doc,$list,$this->_getRestRoutesDataTable ( $routes, "dtRest", $resource, $restAttributes ["restAttributes"] ["authorizations"] ) ] );
+			$title=$resource;
+			if($resource==null){
+				$title=call_user_func([$controller,'_getApiVersion']);
+			}
+			$tab = $tabs->addTab ( $title, [ $doc,$list,$this->_getRestRoutesDataTable ( $routes, "dtRest", $resource, $restAttributes ["restAttributes"] ["authorizations"] ) ] );
 			if (\sizeof ( $errors ) > 0) {
 				$tab->menuTab->addLabel ( "error" )->setColor ( "red" )->addIcon ( "warning sign" );
 				$tab->addContent ( $this->controller->showSimpleMessage ( \array_values ( $errors ), "error", null, "warning" ), true );
