@@ -91,9 +91,9 @@ class AdminCest extends BaseAcceptance {
 		$I->wait ( 10 );
 		$I->click ( "#bt-init-rest-cache" );
 		$I->wait ( 10 );
-		$I->amOnPage ( "/rest/Users" );
+		$I->amOnPage ( "/rest/Users/get/1" );
 		$I->see ( '"count":101' );
-		$I->amOnPage ( "/rest/Users/1" );
+		$I->amOnPage ( "/rest/Users/getOne/1/false" );
 		$I->see ( 'Benjamin' );
 		$I->amOnPage ( "/rest/Users/getOne/1/true" );
 		$I->see ( 'Benjamin' );
