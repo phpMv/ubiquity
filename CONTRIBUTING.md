@@ -21,7 +21,7 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 - Open a new GitHub [pull request](https://github.com/phpMv/ubiquity/blob/master/CONTRIBUTING.md#pull-requests) with your patch
 
 ### Writing guide and documentation
-Read Contributing to Ubiquity documentation(//TODO)
+Read [Contributing to Ubiquity documentation](https://micro-framework.readthedocs.io/en/latest/contributing/doc.html)
 
 ### Coding of demo applications
 //TODO
@@ -31,7 +31,8 @@ Read Contributing to Ubiquity documentation(//TODO)
 - Before submitting, please read the Contributing guide to know more about coding conventions and benchmarks
 
 ### Questions
-Ask any question about how to use Ubiquity in the 
+Ask any question about how to use Ubiquity in the chat.
+
 [![Join the chat at https://gitter.im/ubiquity-framework/community](https://badges.gitter.im/ubiquity-framework/community.svg)](https://gitter.im/ubiquity-framework/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Pull requests
@@ -58,5 +59,6 @@ We especially will be interested in the following points:
    - No degradation of performance for benchmarks performed 
 
 While the prerequisites above must be satisfied prior to having your pull request reviewed, the reviewer(s) may ask you to complete additional design work, tests, or other changes before your pull request can be ultimately accepted.
+
 
 Ubiquity's contributing process owes its inspiration to the [Atom contributing process](https://github.com/atom/atom/blob/master/CONTRIBUTING.md).
