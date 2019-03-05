@@ -72,6 +72,13 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 		$r ['links'] ['self'] = $this->getLink ( $this->selfLink, [ "baseRoute" => $this->baseRoute,'id' => $pk,'classname' => $frontClassname ] );
 	}
 
+	/**
+	 * Adds page links
+	 *
+	 * @param array $r
+	 * @param string $classname
+	 * @param array $pages
+	 */
 	protected function addPageLinks(&$r, $classname, $pages) {
 		$pageSize = $pages ['pageSize'];
 		unset ( $pages ['pageSize'] );

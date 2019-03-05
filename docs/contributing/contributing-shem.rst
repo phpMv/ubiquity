@@ -1,0 +1,74 @@
+Contributing
+============
+
+System requirements
+-------------------
+Before working on Ubiquity, setup your environment with the following software:
+
+- Git
+- PHP version 7.1 or above.
+
+Get Ubiquity source code
+------------------------
+
+On [Ubiquity github repository](https://github.com/phpMv/ubiquity):
+
+- Click `Fork` Ubiquity project
+
+- Clone your fork locally:
+
+.. code-block:: bash
+   
+   git clone git@github.com:USERNAME/ubiquity.git
+
+
+Work on your Patch
+------------------
+
+.. info::
+   Before you start, you must know that all the patches you are going to submit must be released under the Apache 2.0 license, unless explicitly specified in your commits.
+
+
+Create a Topic Branch
+^^^^^^^^^^^^^^^^^^^^^
+
+.. info::
+   Use a descriptive name for your branch:
+      - issue_xxx where xxx is the issue number is a good convention for bug fixes
+      - feature_name is a good convention for new features
+
+.. code-block:: bash
+   
+   git checkout -b NEW_BRANCH_NAME master
+
+Work on your Patch
+^^^^^^^^^^^^^^^^^^
+Work on your code and commit as much as you want, and keep in mind the following:
+
+- Read about the :ref:`Ubiquity coding standards<coding>`;
+- Add unit, fonctional or acceptance tests to prove that the bug is fixed or that the new feature actually works;
+- Do atomic and logically separate commits (use `git rebase` to have a clean and logical history);
+- Write good commit messages (see the tip below).
+
+Submit your Patch
+-----------------
+
+Eventualy rebase your Patch |br|
+Before submitting, update your branch (needed if it takes you a while to finish your changes):
+
+.. code-block:: bash
+
+   git checkout master
+   git fetch upstream
+   git merge upstream/master
+   git checkout NEW_BRANCH_NAME
+   git rebase master
+
+Make a Pull Request
+-------------------
+
+You can now make a pull request on [Ubiquity github repository](https://github.com/phpMv/ubiquity).
+
+.. |br| raw:: html
+
+   <br />  

@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Contributing</contributing/contributing-shem>`
    - :ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`
    - Generating models:
    
@@ -84,6 +85,15 @@ Ubiquity User guide
    
    rest/index
 
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contributing
+   
+   contributing/contributing-shem
+   contributing/coding
+   contributing/doc
+   
 .. toctree::
    :maxdepth: 1
    :caption: Extras
