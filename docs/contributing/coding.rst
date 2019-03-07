@@ -15,7 +15,7 @@ Avoid using dependency injection for all parts of the framework, internally. |br
 Dependency injection is a resource-intensive mechanism:
 
 - it needs to identify the element to instantiate ;
-- then to proceed to this instantiation ;
+- then to proceed to its instantiation ;
 - to finally assign it to a member of a class.
 
 In addition to this problematic resource consumption, the dependency injection poses another problem during development. |br|
@@ -37,12 +37,12 @@ Optimization
 Execution of each line of code can have significant performance implications. |br|
 Compare and benchmark implementation solutions, especially if the code is repeatedly called:
 
-- Identify these repetitive and expensive calls with php profiling tools (Blackfire profiler, Tideways...)
+- Identify these repetitive and expensive calls with php profiling tools (`Blackfire profiler <https://blackfire.io>`_ , `Tideways <https://tideways.com>`_ ...)
 - Benchmark your different implementation solutions with `phpMyBenchmarks <https://phpMyBenchmarks.kobject.net>`_
 
 Code quality
 ------------
-Ubiquity use Scrutinizer-CI for code quality.
+Ubiquity use `Scrutinizer-CI <https://scrutinizer-ci.com/g/phpMv/ubiquity/>`_ for code quality.
 
 - For classes and methods :
 
@@ -127,7 +127,7 @@ Example
 	use Ubiquity\othernamespace\Foo;
 
 	/**
-	 * Class description
+	 * Class description.
 	 * Ubiquity\namespace$Example
 	 * This class is part of Ubiquity
 	 *
@@ -143,10 +143,10 @@ Example
 		private $theInt = 1;
 	
 		/**
-		 * Does something from a and b
+		 * Does something from **a** and **b**
 		 *
-		 * @param int $a the a
-		 * @param int $b the b
+		 * @param int $a The a
+		 * @param int $b The b
 		 */
 		function foo($a, $b) {
 			switch ($a) {
@@ -161,7 +161,7 @@ Example
 		/**
 		 * Adds some values
 		 *
-		 * @param param V $v the v object
+		 * @param param V $v The v object
 		 */
 		function bar($v) {
 			for($i = 0; $i < 10; $i ++) {

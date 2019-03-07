@@ -12,7 +12,7 @@ Before working on Ubiquity, setup your environment with the following software:
 Get Ubiquity source code
 ------------------------
 
-On [Ubiquity github repository](https://github.com/phpMv/ubiquity):
+On `Ubiquity github repository <https://github.com/phpMv/ubiquity>`_ :
 
 - Click `Fork` Ubiquity project
 
@@ -27,6 +27,7 @@ Work on your Patch
 ------------------
 
 .. info::
+   
    Before you start, you must know that all the patches you are going to submit must be released under the Apache 2.0 license, unless explicitly specified in your commits.
 
 
@@ -34,7 +35,9 @@ Create a Topic Branch
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. info::
+   
    Use a descriptive name for your branch:
+
       - issue_xxx where xxx is the issue number is a good convention for bug fixes
       - feature_name is a good convention for new features
 
@@ -50,7 +53,7 @@ Work on your code and commit as much as you want, and keep in mind the following
 - Add unit, fonctional or acceptance tests to prove that the bug is fixed or that the new feature actually works;
 - Do atomic and logically separate commits (use `git rebase` to have a clean and logical history);
 - Write good commit messages (see the tip below).
-- Increase the version numbers in any modified files, respecting `semver<https://semver.org>`_ rules:
+- Increase the version numbers in any modified files, respecting `semver <https://semver.org>`_ rules:
 
    Given a version number ``MAJOR.MINOR.PATCH``, increment the:
    
@@ -61,7 +64,8 @@ Work on your code and commit as much as you want, and keep in mind the following
 Submit your Patch
 -----------------
 
-Update the [Unrelease] part of the CHANGELOG file by integrating your changes into the appropriate parts:
+Update the [Unrelease] part of the `CHANGELOG.md <https://github.com/phpMv/ubiquity/blob/master/CHANGELOG.md#changelog>`_ file by integrating your changes into the appropriate parts:
+
 - Added
 - Changed
 - Removed
@@ -81,7 +85,7 @@ Before submitting, update your branch (needed if it takes you a while to finish 
 Make a Pull Request
 -------------------
 
-You can now make a pull request on [Ubiquity github repository](https://github.com/phpMv/ubiquity).
+You can now make a pull request on `Ubiquity github repository <https://github.com/phpMv/ubiquity>`_ .
 
 .. |br| raw:: html
 
