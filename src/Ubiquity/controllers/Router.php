@@ -11,7 +11,7 @@ use Ubiquity\controllers\traits\RouterAdminTrait;
 use Ubiquity\controllers\traits\RouterTestTrait;
 
 /**
- * Router manager
+ * Router manager.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
@@ -46,6 +46,7 @@ class Router {
 	 * Returns the route corresponding to a path
 	 *
 	 * @param string $path
+	 *        	The route path
 	 * @param boolean $cachedResponse
 	 * @return boolean|mixed[]|string
 	 */
@@ -103,7 +104,7 @@ class Router {
 	 * Returns the generated path from a route
 	 *
 	 * @param string $name
-	 *        	the route name
+	 *        	The route name
 	 * @param array $parameters
 	 *        	default: []
 	 * @param boolean $absolute
@@ -195,6 +196,13 @@ class Router {
 		return $param;
 	}
 
+	/**
+	 * Adds a slash before and after a path
+	 *
+	 * @param string $path
+	 *        	The path to modify
+	 * @return string The path with slashes
+	 */
 	public static function slashPath($path) {
 		if (UString::startswith ( $path, "/" ) === false)
 			$path = "/" . $path;
@@ -212,6 +220,11 @@ class Router {
 		CacheManager::setExpired ( $routePath );
 	}
 
+	/**
+	 * Returns the array of loaded routes
+	 *
+	 * @return array|mixed
+	 */
 	public static function getRoutes() {
 		return self::$routes;
 	}

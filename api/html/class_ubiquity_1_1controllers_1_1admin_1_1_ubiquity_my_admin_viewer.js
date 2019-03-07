@@ -8,6 +8,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer =
     [ "_dtMethods", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ac93ad031d610b4acd70bd408bd1b81b1", null ],
     [ "_getRestRoutesDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a95b52ce4862d40a5d450718dc4a542f4", null ],
     [ "addGetPostButtons", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a4fb3ddd5fcd886f4b8a4c36ce1b90cb0", null ],
+    [ "displayViolations", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ab2d309243659a1c5dcbb3012bb7706b2", null ],
     [ "formatBytes", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a598de0ead09f737371825c4c84bc0672", null ],
     [ "getActionViews", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a619678ad71a09789e0fe8687333d98ce", null ],
     [ "getCacheDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a67c6c960449e393f8d9c9227c0905c8f", null ],
@@ -21,11 +22,13 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer =
     [ "getLogsDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a9471d6f1eb9c10f4c83331c23b1a32fe", null ],
     [ "getMainIndexItems", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aa09034603f665d7a6f656118f592edef", null ],
     [ "getMainMenuElements", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a70545813a28824d49f7a5d51e7640b64", null ],
-    [ "getModelsStructureDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#afc093fc0354b58c974ba4e5057adf8c5", null ],
+    [ "getModelsStructureDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a20f47604940b6f16ef76734675fccbc8", null ],
     [ "getRestRoutesTab", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a9310d2296530fe831c9fa439a37b8566", null ],
     [ "getRoutesDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a625ebb75b30465bc6feff4d9794879aa", null ],
     [ "gitFrmSettings", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a30f95e83e35f6acc3db56c78f7a032ac", null ],
     [ "labeledInput", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aae94bd0fbf099d8b1878e0da3825bc18", null ],
+    [ "parseArray", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a87f2cefb1413c5acb743a8c29f719897", null ],
+    [ "parseInlineArray", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#af7b782d6ede838eac6fd377df2e1bdf2", null ],
     [ "$controller", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a388ef7b1db5e6f728e63cee704ce6e23", null ],
     [ "$jquery", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a3578a3af1e94000010593ed7989c55a9", null ]
 ];

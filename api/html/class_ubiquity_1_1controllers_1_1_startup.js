@@ -11,6 +11,7 @@ var class_ubiquity_1_1controllers_1_1_startup =
     [ "getController", "class_ubiquity_1_1controllers_1_1_startup.html#a0c5216068060ca9253dbad31e5895a2b", null ],
     [ "getControllerSimpleName", "class_ubiquity_1_1controllers_1_1_startup.html#a22e067a1ccc62011b6262a6945d474d0", null ],
     [ "getFrameworkDir", "class_ubiquity_1_1controllers_1_1_startup.html#aed04b12fd6e0cccdf365d9030e470218", null ],
+    [ "getTempateEngineInstance", "class_ubiquity_1_1controllers_1_1_startup.html#aaadd5b8954fdceecfea80183306d0163", null ],
     [ "getViewNameFileExtension", "class_ubiquity_1_1controllers_1_1_startup.html#ae22575f9314792333e004322ab516566", null ],
     [ "injectDependences", "class_ubiquity_1_1controllers_1_1_startup.html#ab6135f4a6139f3116aaf17744581e430", null ],
     [ "parseUrl", "class_ubiquity_1_1controllers_1_1_startup.html#a58b3479266333c083ac380b82cb42064", null ],

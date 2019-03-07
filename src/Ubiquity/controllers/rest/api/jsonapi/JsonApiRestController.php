@@ -8,7 +8,7 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\rest\RestBaseController;
 
 /**
- * Rest JsonAPI implementation
+ * Rest JsonAPI implementation.
  * Ubiquity\controllers\rest\api\jsonapi$JsonApiRestController
  * This class is part of Ubiquity
  *
@@ -43,6 +43,12 @@ abstract class JsonApiRestController extends RestBaseController {
 	}
 
 	/**
+	 * Returns all the instances from the model $resource.
+	 * Query parameters:
+	 * - **included**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
+	 * - **page[number]**: The page to display (in this case, the page size is set to 1).
+	 * - **page[size]**: The page size (count of instance per page) (default: 1).
 	 *
 	 * @route("{resource}/","methods"=>["get"],"priority"=>0)
 	 */
@@ -61,6 +67,15 @@ abstract class JsonApiRestController extends RestBaseController {
 	}
 
 	/**
+	 * Returns an instance of $resource, by primary key $id.
+	 * Query parameters:
+	 * - **included**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
+	 *
+	 * @param string $resource
+	 *        	The resource (model) to use
+	 * @param string $id
+	 *        	The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
 	 *
 	 * @route("{resource}/{id}/","methods"=>["get"],"priority"=>1000)
 	 */
@@ -70,6 +85,11 @@ abstract class JsonApiRestController extends RestBaseController {
 		} );
 	}
 
+	/**
+	 * Returns the api version
+	 *
+	 * @return string
+	 */
 	public static function _getApiVersion() {
 		return self::API_VERSION;
 	}

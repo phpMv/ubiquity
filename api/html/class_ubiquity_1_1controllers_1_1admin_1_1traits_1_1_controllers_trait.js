@@ -5,9 +5,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait =
     [ "_checkContent", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#aef2dcf5c12a265cb9c50e3da4281d357", null ],
     [ "_checkRoute", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a35007cb425bd9cecfbdf5b3f192cc200", null ],
     [ "_controllerExists", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a2ef25110271ccf639d0b6d494b73daca", null ],
-    [ "_createClass", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#ac8365ecaaf29be8e2b65c6dceaf32f1d", null ],
     [ "_createController", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a0c171f3547c08ae5bb78fa1e649d5f35", null ],
-    [ "_createMethod", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a905cc03e9750db303a074a73fedbd7d4", null ],
     [ "_createView", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a3149cc366b235e391497f5bfb4f5ecd5", null ],
     [ "_createViewOp", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a5ad67ae42c8ba8e2aaf3d8e421ffd2b8", null ],
     [ "_getAdminData", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a1728d8b515816623b042eeb85e48f77f", null ],
@@ -22,6 +20,5 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait =
     [ "createController", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#aad03d2b544dccdf06d138d86af6de103", null ],
     [ "filterControllers", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a6383a50f66a8924567f25f17469947a6", null ],
     [ "frmFilterControllers", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a8dca6363bcea2df8d6958053af8793c5", null ],
-    [ "getMethods", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a7bd5929d2a37809236b84654bed41e8d", null ],
     [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a4f264bde41669e90f8df8627b7444788", null ]
 ];

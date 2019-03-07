@@ -55,5 +55,6 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller
     [ "$adminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a8c12dd2d5c03145576cc0d13c14a4c29", null ],
     [ "$adminModelViewer", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ae784350b9b32a5b0cdc6df0abcb2a653", null ],
     [ "$adminViewer", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a1d2c1aa3975fb0a5d1fa81f74382621a", null ],
-    [ "$globalMessage", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ada3b5bf52147ece4ba630d31f11ead33", null ]
+    [ "$globalMessage", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ada3b5bf52147ece4ba630d31f11ead33", null ],
+    [ "$scaffold", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ad2e5ab0c68fdcd1bf70226f20c5b4456", null ]
 ];

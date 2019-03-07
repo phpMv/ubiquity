@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.9</span>
+   &#160;<span id="projectnumber">2.0.10</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -104,13 +104,12 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_code_utils.html#ac22c3593fdb3a8b05270a5a0d4c6400c">CodeUtils</a>
 </li>
 <li>index()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1_admin.html#a149eb92716c1084a935e04a8d95f7347">Admin</a>
-, <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a149eb92716c1084a935e04a8d95f7347">UbiquityMyAdminBaseController</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a149eb92716c1084a935e04a8d95f7347">UbiquityMyAdminBaseController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#a149eb92716c1084a935e04a8d95f7347">AuthController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a149eb92716c1084a935e04a8d95f7347">Controller</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#a149eb92716c1084a935e04a8d95f7347">CRUDController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a149eb92716c1084a935e04a8d95f7347">CRUDControllerUtilitiesTrait</a>
-, <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#a149eb92716c1084a935e04a8d95f7347">RestController</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a149eb92716c1084a935e04a8d95f7347">RestBaseController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html#a149eb92716c1084a935e04a8d95f7347">SeoController</a>
 </li>
 <li>info()
@@ -120,6 +119,7 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 <li>init()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a9f0be6ae273d3669e11c29910a0be338">ControllerAction</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html#a9f0be6ae273d3669e11c29910a0be338">ControllerSeo</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_instance_violations.html#a89779fc84b4b82117d190870494950dd">InstanceViolations</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#a5b7a8b4dddaf0df5c63e3e3538612765">RepositoryGit</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#aa9e7328a224a9f368433034755ad4902">Route</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_maker.html#a15cb385bc5bd28642a1ab85548d69bff">Maker</a>
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 , <a class="el" href="class_ubiquity_1_1orm_1_1reverse_1_1_table_reversor.html#a2facc6abaca94a599fca1d94a1a73314">TableReversor</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#a01ac74e41a12c13afb6d135ba233e9e7">UGitRepository</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a5f5b5821198729b23cc28b2f324c288c">USession</a>
-, <a class="el" href="class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a846dfca1167e284b08c8c459d9d685d2">ClassToYuml</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a20d58554806fd41ff42e1e2c16154a95">ClassToYuml</a>
 </li>
 <li>initAnnotation()
 : <a class="el" href="class_ubiquity_1_1annotations_1_1_base_annotation.html#a33d4564dcd62c7891955cf6f83e06e34">BaseAnnotation</a>
@@ -152,6 +152,12 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 <li>initCacheType()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_cache_trait.html#a9090589cf0ef200abb899c6d20957955">CacheTrait</a>
 </li>
+<li>initClassValidators()
+: <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1_validators_manager_init_trait.html#a274a0d0dec902aab4bdf4e7fffb8c235">ValidatorsManagerInitTrait</a>
+</li>
+<li>initFromArray()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_instance_violations.html#aa387701c0cd504e397e6bdd316516e40">InstanceViolations</a>
+</li>
 <li>initFromClass()
 : <a class="el" href="class_ubiquity_1_1orm_1_1reverse_1_1_table_reversor.html#a252b2f5062987e8c6335cd6912ac621d">TableReversor</a>
 </li>
@@ -167,6 +173,7 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 , <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_with_auth_trait.html#a91098fa7d1917ce4833f284bbef12627">WithAuthTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a91098fa7d1917ce4833f284bbef12627">Controller</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1_controller_base.html#a91098fa7d1917ce4833f284bbef12627">ControllerBase</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a91098fa7d1917ce4833f284bbef12627">RestBaseController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#a91098fa7d1917ce4833f284bbef12627">RestController</a>
 </li>
 <li>initializeFromModel()
@@ -187,6 +194,8 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 <li>initRestCache()
 : <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_rest_cache_trait.html#a76dc970533d600ca466bbe5f2690c3bd">RestCacheTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html#a18334470dee3cb89eb8e8c00a5fc4577">RestTrait</a>
+, <a class="el" href="class_ubiquity_1_1scaffolding_1_1_admin_scaffold_controller.html#a18334470dee3cb89eb8e8c00a5fc4577">AdminScaffoldController</a>
+, <a class="el" href="class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#a18334470dee3cb89eb8e8c00a5fc4577">ScaffoldController</a>
 </li>
 <li>initRouterCache()
 : <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a0325c1dfb46fbe26208f6abab558396a">RouterCacheTrait</a>
@@ -237,7 +246,7 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a853ebbe24f3849e46fbaef45831a2dda">UString</a>
 </li>
 <li>isConnected()
-: <a class="el" href="class_ubiquity_1_1db_1_1_database.html#af160f7fbbf281d018ae3162521b8267d">Database</a>
+: <a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#af160f7fbbf281d018ae3162521b8267d">DatabaseOperationsTrait</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#ae7f9fc68bf9bcc98ec93bfd1017b1818">DAO</a>
 </li>
 <li>isCrossSite()
@@ -250,7 +259,7 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 : <a class="el" href="class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#aedcc52b3673b8df9425e52f13accb2a1">DocParser</a>
 </li>
 <li>isExpired()
-: <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#ab825874bfd17c14ec7c181ca7157ffd5">RouterCacheTrait</a>
+: <a class="el" href="class_ubiquity_1_1cache_1_1traits_1_1_router_cache_trait.html#a58679ac8b47a0e0505ad24f1f67512da">RouterCacheTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a6ba3605bafa091a0fd6b5ed6cd8b2f13">ApiTokens</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1session_1_1_session_object.html#abb11289cf089b701b7dc4002c10713d1">SessionObject</a>
 </li>
@@ -296,7 +305,7 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 , <a class="el" href="class_ubiquity_1_1cache_1_1parser_1_1_rest_controller_parser.html#acd385c67829effd7f9c6dca817c7fc40">RestControllerParser</a>
 </li>
 <li>isSent()
-: <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a2f473dd8647862ede3e72aac082776d6">UResponse</a>
+: <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a29553b4c7672d5c39f6b7b617c1be1ff">UResponse</a>
 </li>
 <li>isSerializable()
 : <a class="el" href="class_ubiquity_1_1orm_1_1_orm_utils.html#a226f09d5c5d64cf36340328f5c4edc3a">OrmUtils</a>
@@ -312,7 +321,7 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 : <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html#ad1d410c5fc522dc8cc9ddbd5752b00ad">AuthController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_with_auth_trait.html#ad1d410c5fc522dc8cc9ddbd5752b00ad">WithAuthTrait</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#ad1d410c5fc522dc8cc9ddbd5752b00ad">Controller</a>
-, <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html#ad1d410c5fc522dc8cc9ddbd5752b00ad">RestController</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ad1d410c5fc522dc8cc9ddbd5752b00ad">RestBaseController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a7b37efab7473a1effc29f8be2421f6e3">RestServer</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a1ba90c01bec66aeb6e444fcb0e0aef1d">UString</a>
 </li>
@@ -326,7 +335,7 @@ $(document).ready(function(){initNavTree('functions_func_i.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Mon Feb 4 2019 04:28:22 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Mar 7 2019 01:10:15 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

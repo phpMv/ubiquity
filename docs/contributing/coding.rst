@@ -3,14 +3,33 @@ Coding guide
 ============
 
 .. info::
+   
    Although the framework is very recent, please note some early Ubiquity classes do not fully follow this guide and have not been modified for backward compatibility reasons. |br|
-   However all new classes must follow this guide.
+   However all new codes must follow this guide.
 
 Design choices
 --------------
 Dependency injections
 ^^^^^^^^^^^^^^^^^^^^^
-//TODO
+Avoid using dependency injection for all parts of the framework, internally. |br|
+Dependency injection is a resource-intensive mechanism:
+
+- it needs to identify the element to instantiate ;
+- then to proceed to this instantiation ;
+- to finally assign it to a member of a class.
+
+In addition to this problematic resource consumption, the dependency injection poses another problem during development. |br|
+Access to injected resources returns an element without type, not easy to handle for the developer.
+
+For example,
+It's hard to manipulate the untyped return of ``$this->serviceContainer->get('translator')``,
+and know which methods to call on it.
+
+The use of classes with static methods avoids all the disadvantages mentioned above:
+
+For a developer, the ``TranslatorManager`` class is accessible from an entire project. |br|
+It exposes its public interface and allows code completion.
+
 
 
 Optimization
@@ -19,7 +38,7 @@ Execution of each line of code can have significant performance implications. |b
 Compare and benchmark implementation solutions, especially if the code is repeatedly called:
 
 - Identify these repetitive and expensive calls with php profiling tools (Blackfire profiler, Tideways...)
-- Compare different implementation solutions with `phpMyBenchmarks <https://phpMyBenchmarks.kobject.net>`_
+- Benchmark your different implementation solutions with `phpMyBenchmarks <https://phpMyBenchmarks.kobject.net>`_
 
 Code quality
 ------------
@@ -50,7 +69,7 @@ Tests
 Any bugfix that doesn’t include a test proving the existence of the bug being fixed, may be suspect. |br|
 Ditto for new features that can’t prove they actually work.
 
-It is also important to maintain acceptable coverage, which may drop if a new feature is not tested.
+It is also important to maintain an acceptable coverage, which may drop if a new feature is not tested.
 
 Code Documentation
 ------------------
@@ -67,11 +86,11 @@ Naming Conventions
 - Use camelCase for PHP variables, members, function and method names, arguments (e.g. $modelsCacheDirectory, isStarted());
 - Use namespaces for all PHP classes and UpperCamelCase for their names (e.g. CacheManager);
 - Prefix all abstract classes with Abstract except PHPUnit BaseTests;
-- Suffix interfaces with `Interface`;
-- Suffix traits with `Trait`;
-- Suffix exceptions with `Exception`;
-- Suffix core classes manager with `Manager` (e.g. CacheManager, TanslatorManager);
-- Prefix Utility classes with `U` (e.g. UString, URequest);
+- Suffix interfaces with ``Interface``;
+- Suffix traits with ``Trait``;
+- Suffix exceptions with ``Exception``;
+- Suffix core classes manager with ``Manager`` (e.g. CacheManager, TanslatorManager);
+- Prefix Utility classes with ``U`` (e.g. UString, URequest);
 - Use UpperCamelCase for naming PHP files (e.g. CacheManager.php);
 - Use uppercase for constants (e.g. const SESSION_NAME='Ubiquity'
 
@@ -153,8 +172,10 @@ Example
 
 
 .. important::
-   If you work with Eclipse, you can integrate this standardization file that integrates all these rules:
+   
+   If you work with Eclipse, you can import this standardization file that integrates all these rules:
    :download:`phpMv-coding-standards.xml </contributing/phpMv-coding-standards.xml>`
+
 
 .. |br| raw:: html
 

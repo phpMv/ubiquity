@@ -9,7 +9,7 @@ use Ubiquity\log\Logger;
 use Ubiquity\controllers\traits\StartupConfigTrait;
 
 /**
- * Starts the framework
+ * Starts the framework.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
@@ -23,33 +23,6 @@ class Startup {
 	private static $controller;
 	private static $action;
 	private static $actionParams;
-
-	public static function run(array &$config) {
-		self::$config = $config;
-		self::startTemplateEngine ( $config );
-		if (isset ( $config ['sessionName'] ))
-			USession::start ( $config ['sessionName'] );
-		self::forward ( $_GET ['c'] );
-	}
-
-	public static function forward($url, $initialize = true, $finalize = true) {
-		$u = self::parseUrl ( $url );
-		if (($ru = Router::getRoute ( $url )) !== false) {
-			if (\is_array ( $ru )) {
-				if (is_callable ( $ru [0] )) {
-					self::runCallable ( $ru );
-				} else {
-					self::_preRunAction ( $ru, $initialize, $finalize );
-				}
-			} else {
-				echo $ru; // Displays route response from cache
-			}
-		} else {
-			self::setCtrlNS ();
-			$u [0] = self::$ctrlNS . $u [0];
-			self::_preRunAction ( $u, $initialize, $finalize );
-		}
-	}
 
 	private static function _preRunAction(&$u, $initialize = true, $finalize = true) {
 		if (\class_exists ( $u [0] )) {
@@ -87,6 +60,50 @@ class Startup {
 	}
 
 	/**
+	 * Handles the request
+	 *
+	 * @param array $config
+	 *        	The loaded config array
+	 */
+	public static function run(array &$config) {
+		self::$config = $config;
+		self::startTemplateEngine ( $config );
+		if (isset ( $config ['sessionName'] ))
+			USession::start ( $config ['sessionName'] );
+		self::forward ( $_GET ['c'] );
+	}
+
+	/**
+	 * Forwards to url
+	 *
+	 * @param string $url
+	 *        	The url to forward to
+	 * @param boolean $initialize
+	 *        	If true, the **initialize** method of the controller is called
+	 * @param boolean $finalize
+	 *        	If true, the **finalize** method of the controller is called
+	 */
+	public static function forward($url, $initialize = true, $finalize = true) {
+		$u = self::parseUrl ( $url );
+		if (($ru = Router::getRoute ( $url )) !== false) {
+			if (\is_array ( $ru )) {
+				if (is_callable ( $ru [0] )) {
+					self::runCallable ( $ru );
+				} else {
+					self::_preRunAction ( $ru, $initialize, $finalize );
+				}
+			} else {
+				echo $ru; // Displays route response from cache
+			}
+		} else {
+			self::setCtrlNS ();
+			$u [0] = self::$ctrlNS . $u [0];
+			self::_preRunAction ( $u, $initialize, $finalize );
+		}
+	}
+
+	/**
+	 * Returns the template engine instance
 	 *
 	 * @return TemplateEngine
 	 */
@@ -98,6 +115,16 @@ class Startup {
 		}
 	}
 
+	/**
+	 * Runs an action on a controller
+	 *
+	 * @param array $u
+	 *        	An array containing controller, action and parameters
+	 * @param boolean $initialize
+	 *        	If true, the **initialize** method of the controller is called
+	 * @param boolean $finalize
+	 *        	If true, the **finalize** method of the controller is called
+	 */
 	public static function runAction(array &$u, $initialize = true, $finalize = true) {
 		$ctrl = $u [0];
 		self::$controller = $ctrl;
@@ -126,6 +153,12 @@ class Startup {
 		}
 	}
 
+	/**
+	 * Runs a callback
+	 *
+	 * @param array $u
+	 *        	An array containing a callback, and some parameters
+	 */
 	public static function runCallable(array &$u) {
 		self::$actionParams = [ ];
 		if (\sizeof ( $u ) > 1) {
@@ -140,6 +173,12 @@ class Startup {
 		call_user_func_array ( $u [0], self::$actionParams );
 	}
 
+	/**
+	 * Injects the dependencies from the **di** config key in a controller
+	 *
+	 * @param object $controller
+	 *        	An instance of Controller
+	 */
 	public static function injectDependences($controller) {
 		if (isset ( self::$config ['di'] )) {
 			$di = self::$config ['di'];
@@ -151,6 +190,16 @@ class Startup {
 		}
 	}
 
+	/**
+	 * Runs an action on a controller and returns a string
+	 *
+	 * @param array $u
+	 * @param boolean $initialize
+	 *        	If true, the **initialize** method of the controller is called
+	 * @param boolean $finalize
+	 *        	If true, the **finalize** method of the controller is called
+	 * @return string
+	 */
 	public static function runAsString(array &$u, $initialize = true, $finalize = true) {
 		\ob_start ();
 		self::runAction ( $u, $initialize, $finalize );
@@ -188,34 +237,74 @@ class Startup {
 		}
 	}
 
+	/**
+	 * Returns the active controller name
+	 *
+	 * @return string
+	 */
 	public static function getController() {
 		return self::$controller;
 	}
 
+	/**
+	 * Returns the class simple name of the active controller
+	 *
+	 * @return string
+	 */
 	public static function getControllerSimpleName() {
 		return (new \ReflectionClass ( self::$controller ))->getShortName ();
 	}
 
+	/**
+	 * Returns the extension for view files
+	 *
+	 * @return string
+	 */
 	public static function getViewNameFileExtension() {
 		return "html";
 	}
 
+	/**
+	 * Returns tha active action
+	 *
+	 * @return string
+	 */
 	public static function getAction() {
 		return self::$action;
 	}
 
+	/**
+	 * Returns the active parameters
+	 *
+	 * @return array
+	 */
 	public static function getActionParams() {
 		return self::$actionParams;
 	}
 
+	/**
+	 * Returns the framework directory
+	 *
+	 * @return string
+	 */
 	public static function getFrameworkDir() {
 		return \dirname ( __FILE__ );
 	}
 
+	/**
+	 * Returns the application directory (app directory)
+	 *
+	 * @return string
+	 */
 	public static function getApplicationDir() {
 		return \dirname ( \ROOT );
 	}
 
+	/**
+	 * Returns the application name
+	 *
+	 * @return string
+	 */
 	public static function getApplicationName() {
 		return basename ( \dirname ( \ROOT ) );
 	}

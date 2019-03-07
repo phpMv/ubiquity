@@ -5,6 +5,7 @@ var class_ubiquity_1_1cache_1_1_cache_manager =
     [ "checkCache", "class_ubiquity_1_1cache_1_1_cache_manager.html#ab83ad1e7fc8dae11ebbeaa6eb3a77094", null ],
     [ "clearCache", "class_ubiquity_1_1cache_1_1_cache_manager.html#ada2cc636a8918d2eba51959a44f79ebf", null ],
     [ "getAbsoluteCacheDirectory", "class_ubiquity_1_1cache_1_1_cache_manager.html#acbb07c2deca1419d3deb382c9a5aa72b", null ],
+    [ "getAllRoutes", "class_ubiquity_1_1cache_1_1_cache_manager.html#aa70dcd0f5112ddc60e6bf23c93d11f17", null ],
     [ "getCacheDirectories", "class_ubiquity_1_1cache_1_1_cache_manager.html#a8c15e35c13c3f1e64d6141e6f522547f", null ],
     [ "getCacheDirectory", "class_ubiquity_1_1cache_1_1_cache_manager.html#ab702308623f96f243020067a5c8d3050", null ],
     [ "getCacheInstance", "class_ubiquity_1_1cache_1_1_cache_manager.html#a1a411f748de9a16c88c965e799be9b58", null ],

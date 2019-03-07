@@ -2,6 +2,7 @@ var searchData=
 [
   ['dao_2ephp',['DAO.php',['../_d_a_o_8php.html',1,'']]],
   ['daocoretrait_2ephp',['DAOCoreTrait.php',['../_d_a_o_core_trait_8php.html',1,'']]],
+  ['daoevents_2ephp',['DAOEvents.php',['../_d_a_o_events_8php.html',1,'']]],
   ['daoexception_2ephp',['DAOException.php',['../_d_a_o_exception_8php.html',1,'']]],
   ['daorelationsassignmentstrait_2ephp',['DAORelationsAssignmentsTrait.php',['../_d_a_o_relations_assignments_trait_8php.html',1,'']]],
   ['daorelationspreparetrait_2ephp',['DAORelationsPrepareTrait.php',['../_d_a_o_relations_prepare_trait_8php.html',1,'']]],
@@ -9,6 +10,7 @@ var searchData=
   ['daoupdatestrait_2ephp',['DAOUpdatesTrait.php',['../_d_a_o_updates_trait_8php.html',1,'']]],
   ['daouqueries_2ephp',['DAOUQueries.php',['../_d_a_o_u_queries_8php.html',1,'']]],
   ['database_2ephp',['Database.php',['../_database_8php.html',1,'']]],
+  ['databaseoperationstrait_2ephp',['DatabaseOperationsTrait.php',['../_database_operations_trait_8php.html',1,'']]],
   ['databasereversor_2ephp',['DatabaseReversor.php',['../_database_reversor_8php.html',1,'']]],
   ['databasetrait_2ephp',['DatabaseTrait.php',['../_database_trait_8php.html',1,'']]],
   ['dataexport_2ephp',['DataExport.php',['../_data_export_8php.html',1,'']]],

@@ -7,9 +7,6 @@ var dir_c1a162a682241892726ae1c868c4afa0 =
     [ "semantic", "dir_9d808500da397f1dbb825e57632be73c.html", "dir_9d808500da397f1dbb825e57632be73c" ],
     [ "seo", "dir_7a24361217a12bb1d2d68d3823f2b12a.html", "dir_7a24361217a12bb1d2d68d3823f2b12a" ],
     [ "traits", "dir_2f722f73f2f15b0d4decddc993a1e223.html", "dir_2f722f73f2f15b0d4decddc993a1e223" ],
-    [ "Admin.php", "_admin_8php.html", [
-      [ "Admin", "class_ubiquity_1_1controllers_1_1_admin.html", "class_ubiquity_1_1controllers_1_1_admin" ]
-    ] ],
     [ "Controller.php", "_controller_8php.html", [
       [ "Controller", "class_ubiquity_1_1controllers_1_1_controller.html", "class_ubiquity_1_1controllers_1_1_controller" ]
     ] ],

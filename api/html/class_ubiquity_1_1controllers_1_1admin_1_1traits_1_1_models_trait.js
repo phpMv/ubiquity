@@ -25,6 +25,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait =
     [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a4f264bde41669e90f8df8627b7444788", null ],
     [ "update", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a842e4774e3b3601a005b995c02f7e883", null ],
     [ "updateMember", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#adc9a635e10bc35ad531c68b8bc9d2f3c", null ],
+    [ "validateInstances", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a6c1a36cf79d81906ada78fc11a751970", null ],
     [ "$activePage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a10dad9009ff7a9d585fe258645a0d97b", null ],
     [ "$formModal", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aca21e538e73f5233ef7080bd4e41687a", null ]
 ];

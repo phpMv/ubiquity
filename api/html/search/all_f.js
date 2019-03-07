@@ -19,6 +19,7 @@ var searchData=
   ['normalizersmanager_2ephp',['NormalizersManager.php',['../_normalizers_manager_8php.html',1,'']]],
   ['notemptyvalidator',['NotEmptyValidator',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1basic_1_1_not_empty_validator.html',1,'Ubiquity::contents::validation::validators::basic']]],
   ['notemptyvalidator_2ephp',['NotEmptyValidator.php',['../_not_empty_validator_8php.html',1,'']]],
+  ['notfound',['notFound',['../class_ubiquity_1_1controllers_1_1rest_1_1_rest_error.html#a409fa5e1db6ec7ebad3c8fa620cc8d23',1,'Ubiquity::controllers::rest::RestError']]],
   ['notnullvalidator',['NotNullValidator',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1basic_1_1_not_null_validator.html',1,'Ubiquity::contents::validation::validators::basic']]],
   ['notnullvalidator_2ephp',['NotNullValidator.php',['../_not_null_validator_8php.html',1,'']]],
   ['null',['null',['../class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_parser.html#a24d794dfc756320ffadb905d526299bc',1,'Ubiquity::orm::creator::yuml::YumlParser']]]

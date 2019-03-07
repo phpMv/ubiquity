@@ -5,8 +5,8 @@ var indexSectionsWithContent =
   2: "au",
   3: "abcdefghijlmnopqrstuvwy",
   4: "_abcdefghiklmnopqrstuvwx",
-  5: "$adefimnprstuv",
-  6: "d"
+  5: "$acdefgimnprstuv",
+  6: "du"
 };
 
 var indexSectionNames =

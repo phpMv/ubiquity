@@ -2,6 +2,7 @@ var searchData=
 [
   ['dao',['DAO',['../class_ubiquity_1_1orm_1_1_d_a_o.html',1,'Ubiquity::orm']]],
   ['daocoretrait',['DAOCoreTrait',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html',1,'Ubiquity::orm::traits']]],
+  ['daoevents',['DAOEvents',['../class_ubiquity_1_1events_1_1_d_a_o_events.html',1,'Ubiquity::events']]],
   ['daoexception',['DAOException',['../class_ubiquity_1_1exceptions_1_1_d_a_o_exception.html',1,'Ubiquity::exceptions']]],
   ['daorelationsassignmentstrait',['DAORelationsAssignmentsTrait',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_assignments_trait.html',1,'Ubiquity::orm::traits']]],
   ['daorelationspreparetrait',['DAORelationsPrepareTrait',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_prepare_trait.html',1,'Ubiquity::orm::traits']]],
@@ -9,6 +10,7 @@ var searchData=
   ['daoupdatestrait',['DAOUpdatesTrait',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html',1,'Ubiquity::orm::traits']]],
   ['daouqueries',['DAOUQueries',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html',1,'Ubiquity::orm::traits']]],
   ['database',['Database',['../class_ubiquity_1_1db_1_1_database.html',1,'Ubiquity::db']]],
+  ['databaseoperationstrait',['DatabaseOperationsTrait',['../class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html',1,'Ubiquity::db::traits']]],
   ['databasereversor',['DatabaseReversor',['../class_ubiquity_1_1orm_1_1reverse_1_1_database_reversor.html',1,'Ubiquity::orm::reverse']]],
   ['databasetrait',['DatabaseTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_database_trait.html',1,'Ubiquity::controllers::admin::traits']]],
   ['dataexport',['DataExport',['../class_ubiquity_1_1db_1_1export_1_1_data_export.html',1,'Ubiquity::db::export']]],

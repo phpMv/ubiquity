@@ -1,11 +1,9 @@
 var class_ubiquity_1_1cache_1_1parser_1_1_controller_parser =
 [
-    [ "asArray", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a0cadd9705c355d3eace65fc217fd7aa0", null ],
+    [ "asArray", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a12b8efb717cb31322bfa4d1d75146979", null ],
     [ "createRouteMethod", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ac5d4a35634f25163c3293e5a666eeb09", null ],
     [ "generateRouteAnnotationFromMethod", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a08717e36b017c31fe1926ea18830e26b", null ],
     [ "isRest", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#acd385c67829effd7f9c6dca817c7fc40", null ],
-    [ "minifyRoute", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#af1105c66788f7e537247f83394b8562a", null ],
-    [ "minifyRoutes", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a5f5ec378068f3e5c50dce6a2c89cfd6f", null ],
     [ "parse", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ae10e2a95818ce5924cf9c36c7943f4b3", null ],
     [ "parseAnnot", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#a85c605c95de41f34994e0ba469d84f50", null ],
     [ "parseMethods", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html#ae04424244c5b27426f182c94799cb93d", null ],

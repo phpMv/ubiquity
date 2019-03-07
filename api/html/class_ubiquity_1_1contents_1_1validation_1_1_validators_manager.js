@@ -2,7 +2,9 @@ var class_ubiquity_1_1contents_1_1validation_1_1_validators_manager =
 [
     [ "clearCache", "class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#a54ca299fa0b83b7884efc041deb66681", null ],
     [ "fetch", "class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#ade0d6a933cbeda77f5ee35c4ba41949c", null ],
+    [ "getCacheInfo", "class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#a2c9cf7d5029a9dcbf1f8494fde6e2bb1", null ],
     [ "getCacheValidators", "class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#a0aa52f018503fc3bddda5d1965509200", null ],
+    [ "getClassCacheValidators", "class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#abd71b3c2055b8296b57d6ab4d3120a06", null ],
     [ "getGroupArrayValidators", "class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#af4008ee548c11548cafa19d6fa66d5e4", null ],
     [ "getGroupMemberValidators", "class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#a0036b3b9fe85dc4a57bc4a1b633bad7b", null ],
     [ "getHash", "class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#a65232dab2805caf395664c56ed5dd5dc", null ],

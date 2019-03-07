@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['scaffoldcontroller_2ephp',['ScaffoldController.php',['../_scaffold_controller_8php.html',1,'']]],
   ['seocontroller_2ephp',['SeoController.php',['../_seo_controller_8php.html',1,'']]],
   ['seotrait_2ephp',['SeoTrait.php',['../_seo_trait_8php.html',1,'']]],
   ['sessioncache_2ephp',['SessionCache.php',['../_session_cache_8php.html',1,'']]],

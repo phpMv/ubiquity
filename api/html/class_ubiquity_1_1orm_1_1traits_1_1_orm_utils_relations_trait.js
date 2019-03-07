@@ -19,6 +19,7 @@ var class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_relations_trait =
     [ "getMemberJoinColumns", "class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_relations_trait.html#a425ed559272ca921bbb858712f85b719", null ],
     [ "getModelMetadata", "class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_relations_trait.html#abed50222ca942aa8a1adefa4010f4ab6", null ],
     [ "getOneToManyFields", "class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_relations_trait.html#a4cfe396c496a5d58f74e452c34ff1404", null ],
+    [ "getRelationInfos", "class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_relations_trait.html#a87d7303355db05288c39c49b95f797ec", null ],
     [ "getTableName", "class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_relations_trait.html#a2bee06da346de815972e178d0f643ee4", null ],
     [ "getUJoinSQL", "class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_relations_trait.html#a11b7329881ef520da947a20fd7787582", null ]
 ];

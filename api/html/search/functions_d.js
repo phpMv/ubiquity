@@ -10,5 +10,6 @@ var searchData=
   ['normalize',['normalize',['../interface_ubiquity_1_1contents_1_1normalizers_1_1_normalizer_interface.html#a6db7111efda8dec5c7cee13a7335346c',1,'Ubiquity\contents\normalizers\NormalizerInterface\normalize()'],['../class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#adeb003c4cf836b8f40fa588b22e3a096',1,'Ubiquity\contents\normalizers\NormalizersManager\normalize()']]],
   ['normalize_5f',['normalize_',['../class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#af339d9a6fb81dddaf2e492c0858effe9',1,'Ubiquity::contents::normalizers::NormalizersManager']]],
   ['normalizearray',['normalizeArray',['../class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#a3db362d019357ec4fae24f2a498c10fd',1,'Ubiquity::contents::normalizers::NormalizersManager']]],
-  ['normalizearray_5f',['normalizeArray_',['../class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#af23480e4715a40089f7e0290074b82df',1,'Ubiquity::contents::normalizers::NormalizersManager']]]
+  ['normalizearray_5f',['normalizeArray_',['../class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#af23480e4715a40089f7e0290074b82df',1,'Ubiquity::contents::normalizers::NormalizersManager']]],
+  ['notfound',['notFound',['../class_ubiquity_1_1controllers_1_1rest_1_1_rest_error.html#a409fa5e1db6ec7ebad3c8fa620cc8d23',1,'Ubiquity::controllers::rest::RestError']]]
 ];

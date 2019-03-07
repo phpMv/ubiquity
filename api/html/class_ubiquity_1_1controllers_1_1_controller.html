@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.9</span>
+   &#160;<span id="projectnumber">2.0.10</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -101,12 +101,13 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1_cont
   <img src="class_ubiquity_1_1controllers_1_1_controller.png" usemap="#Controller_map" alt=""/>
   <map id="Controller_map" name="Controller_map">
 <area href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html" alt="UbiquityMyAdminBaseController" shape="rect" coords="0,56,193,80"/>
-<area href="class_ubiquity_1_1controllers_1_1_controller_base.html" alt="ControllerBase" shape="rect" coords="203,56,396,80"/>
-<area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html" title="Abstract base class for Rest controllers Ubiquity$RestController This class is part of Ubiquity..." alt="RestController" shape="rect" coords="406,56,599,80"/>
-<area href="class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html" alt="SeoController" shape="rect" coords="609,56,802,80"/>
-<area href="class_ubiquity_1_1controllers_1_1_admin.html" title="(&quot;/admin&quot;) " alt="Admin" shape="rect" coords="0,112,193,136"/>
-<area href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html" alt="AuthController" shape="rect" coords="203,112,396,136"/>
-<area href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html" alt="CRUDController" shape="rect" coords="406,112,599,136"/>
+<area href="class_ubiquity_1_1controllers_1_1_controller_base.html" title="Default controller used in a new project. " alt="ControllerBase" shape="rect" coords="203,56,396,80"/>
+<area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html" title="Abstract base class for Rest controllers Ubiquity$RestController This class is part of Ubiquity..." alt="RestBaseController" shape="rect" coords="609,56,802,80"/>
+<area href="class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html" alt="SeoController" shape="rect" coords="812,56,1005,80"/>
+<area href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html" alt="AuthController" shape="rect" coords="101,112,294,136"/>
+<area href="class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html" alt="CRUDController" shape="rect" coords="304,112,497,136"/>
+<area href="class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html" title="Rest JsonAPI implementation. " alt="JsonApiRestController" shape="rect" coords="507,112,700,136"/>
+<area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html" title="Abstract base class for Rest controllers Ubiquity$RestController This class is part of Ubiquity..." alt="RestController" shape="rect" coords="710,112,903,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -137,8 +138,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad1d410c5fc522dc8cc9ddbd5752b00ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns True if access to the controller is allowed To be override in sub classes.  <a href="#ad1d410c5fc522dc8cc9ddbd5752b00ad">More...</a><br /></td></tr>
 <tr class="separator:ad1d410c5fc522dc8cc9ddbd5752b00ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2051a426b1e66a8f0124acc49d0d059"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#ac2051a426b1e66a8f0124acc49d0d059">onInvalidControl</a> ()</td></tr>
-<tr class="memdesc:ac2051a426b1e66a8f0124acc49d0d059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called if isValid () returns false <br />
- To be override in sub classes.  <a href="#ac2051a426b1e66a8f0124acc49d0d059">More...</a><br /></td></tr>
+<tr class="memdesc:ac2051a426b1e66a8f0124acc49d0d059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called if isValid () returns false To be override in sub classes.  <a href="#ac2051a426b1e66a8f0124acc49d0d059">More...</a><br /></td></tr>
 <tr class="separator:ac2051a426b1e66a8f0124acc49d0d059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41dc0210a4e99cb5d50bd89b800c7b51"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a41dc0210a4e99cb5d50bd89b800c7b51">forward</a> ($controller, $action=&quot;index&quot;, $params=array(), $<a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a91098fa7d1917ce4833f284bbef12627">initialize</a>=false, $<a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a9caaa1f5ea6177e55f13ebe7dec2bd60">finalize</a>=false)</td></tr>
 <tr class="memdesc:a41dc0210a4e99cb5d50bd89b800c7b51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the controller $controller and calls its $action method by passing the parameters $params.  <a href="#a41dc0210a4e99cb5d50bd89b800c7b51">More...</a><br /></td></tr>
@@ -147,6 +147,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a56d853e2fffd3410fe0eb721e5277f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redirect to a route by its name.  <a href="#a56d853e2fffd3410fe0eb721e5277f19">More...</a><br /></td></tr>
 <tr class="separator:a56d853e2fffd3410fe0eb721e5277f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50677812ea3f0258f7d03bbac5265413"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a50677812ea3f0258f7d03bbac5265413">getView</a> ()</td></tr>
+<tr class="memdesc:a50677812ea3f0258f7d03bbac5265413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the associated view instance.  <a href="#a50677812ea3f0258f7d03bbac5265413">More...</a><br /></td></tr>
 <tr class="separator:a50677812ea3f0258f7d03bbac5265413"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -156,10 +157,11 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for controllers. </p>
-<dl class="section author"><dt>Author</dt><dd>jcheron </dd></dl>
+<p><a class="el" href="namespace_ubiquity.html">Ubiquity</a>$Controller This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a></p>
+<dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0.3 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00018">18</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00017">17</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a095c5d389db211932136b53f25f39685"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a095c5d389db211932136b53f25f39685">&#9670;&nbsp;</a></span>__construct()</h2>
@@ -178,7 +180,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Constructor initialize $view variable. </p>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00035">35</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00034">34</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -200,7 +202,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Method called after each action Can be override in derived class. </p>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00050">50</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00049">49</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -253,7 +255,7 @@ Protected Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$controller</td><td>The <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html" title="Base class for controllers. ">Controller</a> </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$action</td><td>The action to call </td></tr>
-    <tr><td class="paramtype">mixed</td><td class="paramname">$params</td><td>Parameters passed to the $action method </td></tr>
+    <tr><td class="paramtype">mixed</td><td class="paramname">$params</td><td>Parameters passed to the <b>$action</b> method </td></tr>
     <tr><td class="paramtype">boolean</td><td class="paramname">$initialize</td><td>If true, the controller's initialize method is called before $action </td></tr>
     <tr><td class="paramtype">boolean</td><td class="paramname">$finalize</td><td>If true, the controller's finalize method is called after $action </td></tr>
   </table>
@@ -266,7 +268,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00131">131</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00132">132</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -288,7 +290,7 @@ Protected Attributes</h2></td></tr>
 <p>Returns the default view name for this controller/action i.e ControllerName/actionName.html for the action actionName in ControllerName. </p>
 <dl class="section return"><dt>Returns</dt><dd>string the default view name </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00092">92</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00093">93</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -306,9 +308,11 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the associated view instance. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00168">168</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00174">174</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -356,7 +360,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Method called before each action Can be override in derived class. </p>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00043">43</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00042">42</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -385,7 +389,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00103">103</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00104">104</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -418,10 +422,8 @@ Protected Attributes</h2></td></tr>
 <p>Loads the default view (controllerName/actionName) possibly passing the variables $pdata. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">mixed</td><td class="paramname">$pData</td><td>Variable or associative array to pass to the view <br />
- If a variable is passed, it will have the name <b> $ data &lt;/ b&gt; in the view, <br />
- If an associative array is passed, the view retrieves variables from the table's key names </b></td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$asString</td><td><b> If true, the view is not displayed but returned as a string (usable in a variable) </b></td></tr>
+    <tr><td class="paramtype">mixed</td><td class="paramname">$pData</td><td>Variable or associative array to pass to the view If a variable is passed, it will have the name <b>$data</b> in the view, If an associative array is passed, the view retrieves variables from the table's key names </td></tr>
+    <tr><td class="paramtype">boolean</td><td class="paramname">$asString</td><td>If true, the view is not displayed but returned as a string (usable in a variable) </td></tr>
   </table>
   </dd>
 </dl>
@@ -432,7 +434,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00083">83</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00084">84</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -471,11 +473,9 @@ Protected Attributes</h2></td></tr>
 <p>Loads the view $viewName possibly passing the variables $pdata. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$viewName</td><td>view name to load </td></tr>
-    <tr><td class="paramtype">mixed</td><td class="paramname">$pData</td><td>Variable or associative array to pass to the view <br />
- If a variable is passed, it will have the name <b> $ data &lt;/ b&gt; in the view, <br />
- If an associative array is passed, the view retrieves variables from the table's key names </b></td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$asString</td><td><b> If true, the view is not displayed but returned as a string (usable in a variable) </b></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$viewName</td><td>The name of the view to load </td></tr>
+    <tr><td class="paramtype">mixed</td><td class="paramname">$pData</td><td>Variable or associative array to pass to the view If a variable is passed, it will have the name <b>$data</b> in the view, If an associative array is passed, the view retrieves variables from the table's key names </td></tr>
+    <tr><td class="paramtype">boolean</td><td class="paramname">$asString</td><td>If true, the view is not displayed but returned as a string (usable in a variable) </td></tr>
   </table>
   </dd>
 </dl>
@@ -505,10 +505,9 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Called if isValid () returns false <br />
- To be override in sub classes. </p>
+<p>Called if isValid () returns false To be override in sub classes. </p>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00111">111</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00112">112</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -553,10 +552,10 @@ Protected Attributes</h2></td></tr>
 <p>Redirect to a route by its name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$routeName</td><td></td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$parameters</td><td></td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$initialize</td><td></td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$finalize</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$routeName</td><td>The route name </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$parameters</td><td>The parameters to pass to the route action </td></tr>
+    <tr><td class="paramtype">boolean</td><td class="paramname">$initialize</td><td>Call the <b>initialize</b> method if true </td></tr>
+    <tr><td class="paramtype">boolean</td><td class="paramname">$finalize</td><td>Call the <b>finalize</b> method if true </td></tr>
   </table>
   </dd>
 </dl>
@@ -567,7 +566,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00150">150</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00155">155</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -592,7 +591,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00024">24</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_controller_8php_source.html#l00023">23</a> of file <a class="el" href="_controller_8php_source.html">Controller.php</a>.</p>
 
 </div>
 </div>
@@ -606,7 +605,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers.html">controllers</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html">Controller</a></li>
-    <li class="footer"><small>Generated on Mon Feb 4 2019 04:28:15 for <a href="http://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Mar 7 2019 01:10:08 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

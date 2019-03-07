@@ -1,19 +1,18 @@
 <?php
 
-/**
- * This file is part of Ubiquity framework
- *
- */
 namespace Ubiquity\controllers;
 
 use Ubiquity\views\View;
 use Ubiquity\exceptions\RouterException;
 
 /**
- * Base class for controllers
+ * Base class for controllers.
+ * Ubiquity\controllers$Controller
+ * This class is part of Ubiquity
  *
- * @author jcheron
+ * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
+ *
  */
 abstract class Controller {
 	/**
@@ -54,14 +53,15 @@ abstract class Controller {
 	 * Loads the view $viewName possibly passing the variables $pdata
 	 *
 	 * @param string $viewName
-	 *        	view name to load
+	 *        	The name of the view to load
 	 * @param mixed $pData
-	 *        	Variable or associative array to pass to the view <br> If a variable is passed, it will have the name <b> $ data </ b> in the view, <br>
+	 *        	Variable or associative array to pass to the view
+	 *        	If a variable is passed, it will have the name **$data** in the view,
 	 *        	If an associative array is passed, the view retrieves variables from the table's key names
 	 * @param boolean $asString
 	 *        	If true, the view is not displayed but returned as a string (usable in a variable)
 	 * @throws \Exception
-	 * @return string
+	 * @return string null or the view content if **$asString** parameter is true
 	 */
 	public function loadView($viewName, $pData = NULL, $asString = false) {
 		if (isset ( $pData ))
@@ -70,15 +70,16 @@ abstract class Controller {
 	}
 
 	/**
-	 * Loads the default view (controllerName/actionName) possibly passing the variables $pdata
+	 * Loads the default view (controllerName/actionName) possibly passing the variables $pdata.
 	 *
 	 * @param mixed $pData
-	 *        	Variable or associative array to pass to the view <br> If a variable is passed, it will have the name <b> $ data </ b> in the view, <br>
+	 *        	Variable or associative array to pass to the view
+	 *        	If a variable is passed, it will have the name **$data** in the view,
 	 *        	If an associative array is passed, the view retrieves variables from the table's key names
 	 * @param boolean $asString
 	 *        	If true, the view is not displayed but returned as a string (usable in a variable)
 	 * @throws \Exception
-	 * @return string
+	 * @return string null or the view content if **$asString** parameter is true
 	 */
 	public function loadDefaultView($pData = NULL, $asString = false) {
 		return $this->loadView ( $this->getDefaultViewName (), $pData, $asString );
@@ -105,7 +106,7 @@ abstract class Controller {
 	}
 
 	/**
-	 * Called if isValid () returns false <br>
+	 * Called if isValid () returns false
 	 * To be override in sub classes
 	 */
 	public function onInvalidControl() {
@@ -121,7 +122,7 @@ abstract class Controller {
 	 * @param string $action
 	 *        	The action to call
 	 * @param mixed $params
-	 *        	Parameters passed to the $action method
+	 *        	Parameters passed to the **$action** method
 	 * @param boolean $initialize
 	 *        	If true, the controller's initialize method is called before $action
 	 * @param boolean $finalize
@@ -142,9 +143,13 @@ abstract class Controller {
 	 * Redirect to a route by its name
 	 *
 	 * @param string $routeName
+	 *        	The route name
 	 * @param array $parameters
+	 *        	The parameters to pass to the route action
 	 * @param boolean $initialize
+	 *        	Call the **initialize** method if true
 	 * @param boolean $finalize
+	 *        	Call the **finalize** method if true
 	 * @throws RouterException
 	 */
 	public function redirectToRoute($routeName, $parameters = [], $initialize = false, $finalize = false) {
@@ -162,6 +167,7 @@ abstract class Controller {
 	}
 
 	/**
+	 * Returns the associated view instance
 	 *
 	 * @return \Ubiquity\views\View
 	 */

@@ -15,7 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
-   - :ref:`Contributing</contributing/contributing-shem>`
+   - :ref:`Contributing<contributing>`
    - :ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`
    - Generating models:
    

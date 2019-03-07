@@ -10,6 +10,7 @@ var dir_d1d0ffe7c28c5b70acdc3f5f1f767b44 =
     [ "exceptions", "dir_ed8fa1b4d474eb0f5cd7744f886db814.html", "dir_ed8fa1b4d474eb0f5cd7744f886db814" ],
     [ "log", "dir_109268d0ef0a42e49bfc383d5695e2fd.html", "dir_109268d0ef0a42e49bfc383d5695e2fd" ],
     [ "orm", "dir_21b683703041edde56c52b034902c9cf.html", "dir_21b683703041edde56c52b034902c9cf" ],
+    [ "scaffolding", "dir_9022554128a4d75c6b842dd654d79345.html", "dir_9022554128a4d75c6b842dd654d79345" ],
     [ "seo", "dir_7c9b56246af79f7aa4304b86e413c368.html", "dir_7c9b56246af79f7aa4304b86e413c368" ],
     [ "translation", "dir_89904839d21ddfeaab7e33ca68a4851c.html", "dir_89904839d21ddfeaab7e33ca68a4851c" ],
     [ "utils", "dir_06af97f116dab97e66c84d0341dafaea.html", "dir_06af97f116dab97e66c84d0341dafaea" ],
