@@ -2,7 +2,7 @@
 Coding guide
 ============
 
-.. info::
+.. note::
    
    Although the framework is very recent, please note some early Ubiquity classes do not fully follow this guide and have not been modified for backward compatibility reasons. |br|
    However all new codes must follow this guide.

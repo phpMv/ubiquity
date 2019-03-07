@@ -26,7 +26,7 @@ On `Ubiquity github repository <https://github.com/phpMv/ubiquity>`_ :
 Work on your Patch
 ------------------
 
-.. info::
+.. note::
    
    Before you start, you must know that all the patches you are going to submit must be released under the Apache 2.0 license, unless explicitly specified in your commits.
 
@@ -34,7 +34,7 @@ Work on your Patch
 Create a Topic Branch
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. info::
+.. note::
    
    Use a descriptive name for your branch:
 
