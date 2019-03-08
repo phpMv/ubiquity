@@ -23,7 +23,6 @@ abstract class RestBaseController extends Controller {
 	protected $model;
 	protected $contentType;
 	protected $restCache;
-	protected $errors;
 
 	/**
 	 *

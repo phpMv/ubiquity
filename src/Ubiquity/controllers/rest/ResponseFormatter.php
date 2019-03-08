@@ -12,14 +12,14 @@ class ResponseFormatter {
 	 * @param array|null $pages
 	 * @return string
 	 */
-	public function get($datas,$pages=null) {
-		$datas = $this->getDatas ( $datas,$pages);
+	public function get($datas, $pages = null) {
+		$datas = $this->getDatas ( $datas );
 		return $this->format ( [ "datas" => $datas,"count" => \sizeof ( $datas ) ] );
 	}
 
-	public function getDatas($datas,&$classname) {
-		$datas = \array_map ( function ($o) use(&$classname){
-			return $this->cleanRestObject ( $o ,$classname);
+	public function getDatas($datas, &$classname = null) {
+		$datas = \array_map ( function ($o) use (&$classname) {
+			return $this->cleanRestObject ( $o, $classname );
 		}, $datas );
 		return \array_values ( $datas );
 	}
@@ -28,7 +28,7 @@ class ResponseFormatter {
 		return $this->toJson ( $this->getDatas ( $datas ) );
 	}
 
-	public function cleanRestObject($o,&$classname=null) {
+	public function cleanRestObject($o, &$classname = null) {
 		$o = $o->_rest;
 		foreach ( $o as $k => $v ) {
 			if (isset ( $v->_rest )) {
@@ -37,7 +37,7 @@ class ResponseFormatter {
 			if (\is_array ( $v )) {
 				foreach ( $v as $index => $values ) {
 					if (isset ( $values->_rest ))
-						$v [$index] = $this->cleanRestObject ( $values);
+						$v [$index] = $this->cleanRestObject ( $values );
 				}
 				$o [$k] = $v;
 			}
@@ -73,8 +73,8 @@ class ResponseFormatter {
 	}
 
 	public function formatException($e) {
-		$error=new RestError(@$e->getCode (), \utf8_encode ( $e->getMessage ()),@$e->getTraceAsString(),@$e->getFile(),500);
-		return $this->format ($error->asArray() );
+		$error = new RestError ( @$e->getCode (), \utf8_encode ( $e->getMessage () ), @$e->getTraceAsString (), @$e->getFile (), 500 );
+		return $this->format ( $error->asArray () );
 	}
 
 	public static function toXML($data, &$xml_data) {

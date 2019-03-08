@@ -38,6 +38,7 @@ class RestControllerCreator extends BaseControllerCreator {
 		$filename = $restControllersDir . \DS . $controllerName . ".php";
 		if (! \file_exists ( $filename )) {
 			$templateDir = $scaffoldController->getTemplateDir ();
+			$namespace = '';
 			if ($controllerNS != null)
 				$namespace = "namespace " . $controllerNS . ";";
 			if ($this->routePath != null) {

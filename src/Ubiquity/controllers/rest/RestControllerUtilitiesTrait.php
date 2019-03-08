@@ -18,6 +18,7 @@ use Ubiquity\utils\http\URequest;
  *
  */
 trait RestControllerUtilitiesTrait {
+	protected $errors;
 
 	abstract public function _setResponseCode($value);
 
