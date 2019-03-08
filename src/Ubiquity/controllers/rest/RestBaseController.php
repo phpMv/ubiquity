@@ -7,15 +7,14 @@ use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\UString;
-use Ubiquity\utils\http\URequest;
 
 /**
- * Abstract base class for Rest controllers
+ * Abstract base class for Rest controllers.
  * Ubiquity\controllers\rest$RestController
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 abstract class RestBaseController extends Controller {
@@ -24,6 +23,8 @@ abstract class RestBaseController extends Controller {
 	protected $model;
 	protected $contentType;
 	protected $restCache;
+	protected $errors;
+
 	/**
 	 *
 	 * @var ResponseFormatter
@@ -184,7 +185,7 @@ abstract class RestBaseController extends Controller {
 	public function update(...$keyValues) {
 		$instance = DAO::getOne ( $this->model, $keyValues );
 		$this->operate_ ( $instance, function ($instance) {
-			$this->_setValuesToObject ( $instance, URequest::getDatas () );
+			$this->_setValuesToObject ( $instance, $this->getDatas () );
 			return DAO::update ( $instance );
 		}, "updated", "Unable to update the instance", $keyValues );
 	}
@@ -199,7 +200,7 @@ abstract class RestBaseController extends Controller {
 		$model = $this->model;
 		$instance = new $model ();
 		$this->operate_ ( $instance, function ($instance) {
-			$this->_setValuesToObject ( $instance, URequest::getDatas () );
+			$this->_setValuesToObject ( $instance, $this->getDatas () );
 			return DAO::insert ( $instance );
 		}, "inserted", "Unable to insert the instance", [ ] );
 	}

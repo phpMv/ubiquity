@@ -7,14 +7,23 @@ use Ubiquity\utils\base\UString;
 use Ubiquity\utils\http\URequest;
 
 /**
+ * Rest controller internal utilities.
+ * Ubiquity\controllers\rest$RestControllerUtilitiesTrait
+ * This class is part of Ubiquity
  *
- * @author jc
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
  * @property ResponseFormatter $responseFormatter
  * @property RestServer $server
+ *
  */
 trait RestControllerUtilitiesTrait {
 
 	abstract public function _setResponseCode($value);
+
+	protected function getDatas() {
+		return URequest::getDatas ();
+	}
 
 	protected function operate_($instance, $callback, $status, $exceptionMessage, $keyValues) {
 		if (isset ( $instance )) {
@@ -30,20 +39,20 @@ trait RestControllerUtilitiesTrait {
 			echo $this->_getResponseFormatter ()->format ( [ "message" => "No result found","keyValues" => $keyValues ] );
 		}
 	}
-	
-	protected function generatePagination(&$filter,$pageNumber,$pageSize){
-			$count=DAO::count($this->model,$filter);
-			$pagesCount=ceil($count/$pageSize);
-			$pages=['self'=>$pageNumber,'first'=>1,'last'=>$pagesCount,'pageSize'=>$pageSize];
-			if($pageNumber-1>0){
-				$pages['prev']=$pageNumber-1;
-			}
-			if($pageNumber+1<=$pagesCount){
-				$pages['next']=$pageNumber+1;
-			}
-			$offset=($pageNumber-1)*$pageSize;
-			$filter.=' limit '.$offset.','.$pageSize;
-			return $pages;
+
+	protected function generatePagination(&$filter, $pageNumber, $pageSize) {
+		$count = DAO::count ( $this->model, $filter );
+		$pagesCount = ceil ( $count / $pageSize );
+		$pages = [ 'self' => $pageNumber,'first' => 1,'last' => $pagesCount,'pageSize' => $pageSize ];
+		if ($pageNumber - 1 > 0) {
+			$pages ['prev'] = $pageNumber - 1;
+		}
+		if ($pageNumber + 1 <= $pagesCount) {
+			$pages ['next'] = $pageNumber + 1;
+		}
+		$offset = ($pageNumber - 1) * $pageSize;
+		$filter .= ' limit ' . $offset . ',' . $pageSize;
+		return $pages;
 	}
 
 	protected function _getResponseFormatter() {
@@ -110,6 +119,31 @@ trait RestControllerUtilitiesTrait {
 			return explode ( ",", $included );
 		}
 		return UString::isBooleanTrue ( $included );
+	}
+
+	protected function addError($code, $title, $detail = null, $source = null, $status = null) {
+		$this->errors [] = new RestError ( $code, $title, $detail, $source, $status );
+	}
+
+	protected function hasErrors() {
+		return is_array ( $this->errors ) && sizeof ( $this->errors ) > 0;
+	}
+
+	protected function displayErrors() {
+		if ($this->hasErrors ()) {
+			$status = 200;
+			$errors = [ ];
+			foreach ( $this->errors as $error ) {
+				$errors [] = $error->asArray ();
+				if ($error->getStatus () > $status) {
+					$status = $error->getStatus ();
+				}
+			}
+			echo $this->_getResponseFormatter ()->format ( [ 'errors' => $errors ] );
+			$this->_setResponseCode ( $status );
+			return true;
+		}
+		return false;
 	}
 
 	/**

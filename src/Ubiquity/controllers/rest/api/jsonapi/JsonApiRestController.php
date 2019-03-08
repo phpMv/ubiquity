@@ -6,6 +6,8 @@ use Ubiquity\orm\DAO;
 use Ubiquity\controllers\rest\RestError;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\rest\RestBaseController;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\orm\OrmUtils;
 
 /**
  * Rest JsonAPI implementation.
@@ -40,6 +42,28 @@ abstract class JsonApiRestController extends RestBaseController {
 			return $_GET [$param];
 		}
 		return $default;
+	}
+
+	protected function getDatas() {
+		$datas = URequest::getInput ();
+		if (sizeof ( $datas ) > 0) {
+			$datas = current ( array_keys ( $datas ) );
+			$datas = json_decode ( $datas, true );
+			$attributes = $datas ["data"] ["attributes"] ?? [ ];
+			if (isset ( $datas ["id"] )) {
+				$key = OrmUtils::getFirstKey ( $this->model );
+				$attributes [$key] = $datas ["id"];
+			}
+			return $attributes;
+		}
+		$this->addError ( 204, "No content", 'The POST request has no content!' );
+	}
+
+	/**
+	 *
+	 * @route("{resource}/","methods"=>["options"])
+	 */
+	public function options($resource) {
 	}
 
 	/**
@@ -82,6 +106,20 @@ abstract class JsonApiRestController extends RestBaseController {
 	public function getOne_($resource, $id) {
 		$this->_checkResource ( $resource, function () use ($id) {
 			$this->_getOne ( $id, true, false );
+		} );
+	}
+
+	/**
+	 * Inserts a new instance of $resource.
+	 * Data attributes are send in data[attributes] request header
+	 *
+	 * @param string $resource
+	 *        	The resource (model) to use
+	 * @route("{resource}/","methods"=>["post"],"priority"=>0)
+	 */
+	public function add_($resource) {
+		$this->_checkResource ( $resource, function () {
+			parent::add ();
 		} );
 	}
 

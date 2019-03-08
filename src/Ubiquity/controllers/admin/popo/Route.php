@@ -15,15 +15,25 @@ class Route {
 	private $messages;
 
 	public function __construct($path="",$array=[]){
-		$this->messages=[];
-		$this->path=$path;
-		if(isset($array["controller"])){
+		if(isset($array['controller'])){
+			$this->messages=[];
+			$this->path=$path;
+			$this->methods=$array['methods']??'';
 			$this->fromArray($array);
-		}else{
-			$this->methods=\array_keys($array);
-			$this->fromArray(\current($array));
+			$this->id=\uniqid();
 		}
-		$this->id=\uniqid();
+	}
+	
+	private static function mergeRouteArray($routeArrays){
+		$response=[];
+		foreach ($routeArrays as $method=>$route){
+			$routeName=$route['name'];
+			if(!isset($response[$routeName])){
+				$response[$routeName]=$route;
+			}
+			$response[$routeName]['methods'][]=$method;
+		}
+		return $response;
 	}
 
 	private function fromArray($array){
@@ -140,7 +150,14 @@ class Route {
 	public static function init($array){
 		$result=[];
 		foreach ($array as $k=>$v){
-			$result[]=new Route($k, $v);
+			if(isset($v['controller'])){
+				$result[]=new Route($k, $v);
+			}else{
+				$routes=self::mergeRouteArray($v);
+				foreach ($routes as $route){
+					$result[]=new Route($k,$route);
+				}
+			}
 		}
 		return $result;
 	}
