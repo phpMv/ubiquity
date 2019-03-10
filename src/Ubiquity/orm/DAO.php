@@ -14,9 +14,10 @@ use Ubiquity\orm\traits\DAOCoreTrait;
 use Ubiquity\orm\traits\DAORelationsPrepareTrait;
 use Ubiquity\exceptions\DAOException;
 use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
- * Gateway class between database and object model
+ * Gateway class between database and object model.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
@@ -45,11 +46,14 @@ class DAO {
 	 */
 	public static function getManyToOne($instance, $member, $included = false, $useCache = NULL) {
 		$classname = self::getClass_ ( $instance );
+		if(is_array($instance)){
+			$instance=self::getOne($classname, $instance[1], false, $useCache);
+		}
 		$fieldAnnot = OrmUtils::getMemberJoinColumns ( $classname, $member );
 		if ($fieldAnnot !== null) {
 			$annotationArray = $fieldAnnot [1];
 			$member = $annotationArray ["member"];
-			$value = self::getValue_ ( $instance, $member );
+			$value = Reflexion::getMemberValue ( $instance, $member );
 			$key = OrmUtils::getFirstKey ( $annotationArray ["className"] );
 			$kv = array ($key => $value );
 			$obj = self::getOne ( $annotationArray ["className"], $kv, $included, null, $useCache );

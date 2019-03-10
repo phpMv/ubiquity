@@ -30,7 +30,7 @@ class JsonAPICest extends BaseAcceptance {
 	// tests
 	public function tryToGetManyToOne(AcceptanceTester $I) {
 		$I->amOnPage ( "/jsonapi/user/1/relationships/organization/" );
-		$I->see ( 'lecnam.net' );
+		$I->see ( 'unicaen.fr' );
 	}
 
 	// tests
