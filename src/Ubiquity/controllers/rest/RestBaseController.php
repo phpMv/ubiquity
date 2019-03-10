@@ -154,7 +154,7 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param array|boolean $included
+	 * @param string|boolean $included
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 */
@@ -168,7 +168,7 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param array|boolean $included
+	 * @param string|boolean $included
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception
@@ -183,7 +183,7 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param array|boolean $included
+	 * @param string|boolean $included
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception

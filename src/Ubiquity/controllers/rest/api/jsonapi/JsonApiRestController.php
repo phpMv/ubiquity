@@ -146,13 +146,13 @@ abstract class JsonApiRestController extends RestBaseController {
 				$included = $this->getRequestParam ( 'included', true );
 				switch ($relations [$member] ['type']) {
 					case 'manyToOne' :
-						$this->_getManyToOne ( $id, $member, $this->getIncluded ( $included ) );
+						$this->_getManyToOne ( $id, $member, $included );
 						break;
 					case 'oneToMany' :
-						$this->_getOneToMany ( $id, $member, $this->getIncluded ( $included ) );
+						$this->_getOneToMany ( $id, $member, $included );
 						break;
 					case 'manyToMany' :
-						$this->_getManyToMany ( $id, $member, $this->getIncluded ( $included ) );
+						$this->_getManyToMany ( $id, $member, $included );
 						break;
 				}
 			}

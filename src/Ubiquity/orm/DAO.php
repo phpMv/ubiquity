@@ -46,8 +46,8 @@ class DAO {
 	 */
 	public static function getManyToOne($instance, $member, $included = false, $useCache = NULL) {
 		$classname = self::getClass_ ( $instance );
-		if(is_array($instance)){
-			$instance=self::getOne($classname, $instance[1], false, $useCache);
+		if (is_array ( $instance )) {
+			$instance = self::getOne ( $classname, $instance [1], false, null, $useCache );
 		}
 		$fieldAnnot = OrmUtils::getMemberJoinColumns ( $classname, $member );
 		if ($fieldAnnot !== null) {

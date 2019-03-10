@@ -164,7 +164,7 @@ trait RestControllerUtilitiesTrait {
 	 * @param callable $getDatas
 	 * @param string $member
 	 *        	The member to load
-	 * @param boolean|array $included
+	 * @param boolean|string $included
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @param boolean $multiple
