@@ -154,8 +154,7 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param
-	 *        	boolean boolean|string $included
+	 * @param boolean|string $included
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 */

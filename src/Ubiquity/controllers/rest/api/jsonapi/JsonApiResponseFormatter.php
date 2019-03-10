@@ -106,24 +106,6 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 	/**
 	 *
 	 * {@inheritdoc}
-	 * @see \Ubiquity\controllers\rest\ResponseFormatter::format()
-	 */
-	public function format($arrayResponse) {
-		return parent::format ( $arrayResponse );
-	}
-
-	/**
-	 *
-	 * {@inheritdoc}
-	 * @see \Ubiquity\controllers\rest\ResponseFormatter::formatException()
-	 */
-	public function formatException($e) {
-		return parent::formatException ( $e );
-	}
-
-	/**
-	 *
-	 * {@inheritdoc}
 	 * @see \Ubiquity\controllers\rest\ResponseFormatter::get()
 	 */
 	public function get($datas, $pages = null) {
@@ -133,51 +115,6 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 			$this->addPageLinks ( $r, $this->getFrontClassname ( $classname ), $pages );
 		}
 		return $this->format ( $r );
-	}
-
-	/**
-	 *
-	 * {@inheritdoc}
-	 * @see \Ubiquity\controllers\rest\ResponseFormatter::getDatas()
-	 */
-	public function getDatas($datas, &$classname) {
-		return parent::getDatas ( $datas, $classname );
-	}
-
-	/**
-	 *
-	 * {@inheritdoc}
-	 * @see \Ubiquity\controllers\rest\ResponseFormatter::getJSONDatas()
-	 */
-	public function getJSONDatas($datas) {
-		return parent::getJSONDatas ( $datas );
-	}
-
-	/**
-	 *
-	 * {@inheritdoc}
-	 * @see \Ubiquity\controllers\rest\ResponseFormatter::getModel()
-	 */
-	public function getModel($controllerName) {
-		return parent::getModel ( $controllerName );
-	}
-
-	/**
-	 *
-	 * {@inheritdoc}
-	 * @see \Ubiquity\controllers\rest\ResponseFormatter::getOne()
-	 */
-	public function getOne($datas) {
-		return parent::getOne ( $datas );
-	}
-
-	/**
-	 *
-	 * {@inheritdoc}
-	 * @see \Ubiquity\controllers\rest\ResponseFormatter::toJson()
-	 */
-	public function toJson($data) {
-		return parent::toJson ( $data );
 	}
 }
 

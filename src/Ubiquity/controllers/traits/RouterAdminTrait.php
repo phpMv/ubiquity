@@ -34,12 +34,12 @@ trait RouterAdminTrait {
 			if (! isset ( $routeDetails ['controller'] )) {
 				foreach ( $routeDetails as $method => $routeInfo ) {
 					if ($routeInfo ['controller'] === $controller) {
-						$result [] = [ 'method' => $method,self::getRoutePathInfos ( $controller, $routePath, $routeInfo ) ];
+						$result [] = [ 'method' => $method,'url'=>self::getRoutePathInfos ( $controller, $routePath, $routeInfo ) ];
 					}
 				}
 			} else {
 				if ($routeDetails ['controller'] === $controller) {
-					$result [] = [ 'method' => '*',self::getRoutePathInfos ( $controller, $routePath, $routeDetails ) ];
+					$result [] = [ 'method' => '*','url'=>self::getRoutePathInfos ( $controller, $routePath, $routeDetails ) ];
 				}
 			}
 		}

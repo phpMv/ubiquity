@@ -70,7 +70,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 *
 	 * {@inheritdoc}
 	 * @see \Ubiquity\controllers\rest\RestBaseController::index()
-	 * @route("links/","methods"=>["get"])
+	 * @route("links/","methods"=>["get"],"priority"=>3000)
 	 */
 	public function index() {
 		parent::index ();
@@ -195,7 +195,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 * @param string $ids
 	 *        	The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
 	 *
-	 * @route("{resource}/{$id}/","methods"=>["delete"],"priority"=>0)
+	 * @route("{resource}/{id}/","methods"=>["delete"],"priority"=>0)
 	 */
 	public function delete_($resource, ...$id) {
 		$this->_checkResource ( $resource, function () use ($id) {
