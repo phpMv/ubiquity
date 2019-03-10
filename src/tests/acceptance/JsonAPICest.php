@@ -15,7 +15,7 @@ class JsonAPICest extends BaseAcceptance {
 
 	// tests
 	public function tryToGetLinks(AcceptanceTester $I) {
-		$I->amOnPage ( "\/jsonapi\/links\/" );
+		$I->amOnPage ( "/jsonapi/links/" );
 		$I->see ( 'links' );
 		$I->see ( '\/jsonapi\/{resource}\/' );
 	}
