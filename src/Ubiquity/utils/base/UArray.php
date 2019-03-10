@@ -177,10 +177,10 @@ class UArray {
 	}
 
 	private static function parseValue($v, $prefix = "", $depth = 1, $format = false) {
-		if (UString::isBooleanStr ( $v )) {
-			$result = UString::getBooleanStr ( $v );
-		} elseif (\is_numeric ( $v )) {
+		if (\is_numeric ( $v )) {
 			$result = $v;
+		} elseif (UString::isBooleanStr ( $v )) {
+			$result = UString::getBooleanStr ( $v );
 		} elseif (\is_array ( $v )) {
 			$result = self::asPhpArray ( $v, $prefix, $depth + 1, $format );
 		} elseif (is_string ( $v ) && (UString::startswith ( trim ( $v ), '$config' ) || UString::startswith ( trim ( $v ), "function" ) || UString::startswith ( trim ( $v ), "array(" ))) {

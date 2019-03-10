@@ -9,10 +9,13 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\base\UArray;
 
 /**
- * Scans a controller to detect routes defined by annotations
+ * Scans a controller to detect routes defined by annotations.
+ * Ubiquity\cache\parser$ControllerParser
+ * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.4
+ *
  */
 class ControllerParser {
 	use ControllerParserPathTrait;

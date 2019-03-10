@@ -5,6 +5,9 @@ namespace Ubiquity\controllers\rest;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\http\URequest;
+use Ubiquity\contents\validation\ValidatorsManager;
+use Ubiquity\contents\validation\validators\ConstraintViolation;
+use Ubiquity\orm\OrmUtils;
 
 /**
  * Rest controller internal utilities.
@@ -12,9 +15,10 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.3
  * @property ResponseFormatter $responseFormatter
  * @property RestServer $server
+ * @property string $model
  *
  */
 trait RestControllerUtilitiesTrait {
@@ -29,9 +33,11 @@ trait RestControllerUtilitiesTrait {
 	protected function operate_($instance, $callback, $status, $exceptionMessage, $keyValues) {
 		if (isset ( $instance )) {
 			$result = $callback ( $instance );
-			if ($result) {
+			if ($result === true) {
 				$formatter = $this->_getResponseFormatter ();
 				echo $formatter->format ( [ "status" => $status,"data" => $formatter->cleanRestObject ( $instance ) ] );
+			} elseif ($result === null) {
+				echo $this->displayErrors ();
 			} else {
 				throw new \Exception ( $exceptionMessage );
 			}
@@ -56,6 +62,10 @@ trait RestControllerUtilitiesTrait {
 		return $pages;
 	}
 
+	/**
+	 *
+	 * @return \Ubiquity\controllers\rest\ResponseFormatter
+	 */
 	protected function _getResponseFormatter() {
 		if (! isset ( $this->responseFormatter )) {
 			$this->responseFormatter = $this->getResponseFormatter ();
@@ -149,22 +159,54 @@ trait RestControllerUtilitiesTrait {
 
 	/**
 	 *
+	 * @param string $ids
+	 *        	The primary key values (comma separated if pk is multiple)
 	 * @param callable $getDatas
 	 * @param string $member
+	 *        	The member to load
 	 * @param boolean|string $included
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
+	 * @param boolean $multiple
 	 * @throws \Exception
 	 */
-	protected function getMany_($getDatas, $member, $included = false, $useCache = false) {
-		if (isset ( $_SESSION ["_restInstance"] )) {
-			$included = $this->getIncluded ( $included );
-			$useCache = UString::isBooleanTrue ( $useCache );
-			$datas = $getDatas ( $_SESSION ["_restInstance"], $member, $included, $useCache );
+	protected function getAssociatedMemberValues_($ids, $getDatas, $member, $included = false, $useCache = false, $multiple = true) {
+		$included = $this->getIncluded ( $included );
+		$useCache = UString::isBooleanTrue ( $useCache );
+		$datas = $getDatas ( [ $this->model,$ids ], $member, $included, $useCache );
+		if ($multiple) {
 			echo $this->_getResponseFormatter ()->get ( $datas );
 		} else {
-			throw new \Exception ( "You have to call getOne before calling getManyToMany or getOneToMany." );
+			echo $this->_getResponseFormatter ()->getOne ( $datas );
 		}
+	}
+
+	protected function validateInstance($instance) {
+		if ($this->useValidation) {
+			$violations = ValidatorsManager::validate ( $instance );
+			foreach ( $violations as $violation ) {
+				$this->addViolation ( $violation );
+			}
+			return sizeof ( $violations ) === 0;
+		}
+		return true;
+	}
+
+	protected function addViolation(ConstraintViolation $violation) {
+		$this->addError ( 406, 'Validation error', $violation->getMessage (), $violation->getMember (), $violation->getValidatorType () );
+	}
+
+	protected function getPrimaryKeysFromDatas($datas, $model) {
+		$pks = OrmUtils::getKeyFields ( $model );
+		$result = [ ];
+		foreach ( $pks as $pk ) {
+			if (isset ( $datas [$pk] )) {
+				$result [$pk] = $datas [$pk];
+			} else {
+				$this->addError ( 404, 'Primary key required', 'The primary key ' . $pk . ' is required!', $pk );
+			}
+		}
+		return $result;
 	}
 }
 

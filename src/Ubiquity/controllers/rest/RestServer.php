@@ -14,7 +14,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.2
  *
  */
 class RestServer {
@@ -26,6 +26,7 @@ class RestServer {
 	protected $headers;
 	protected $tokensFolder;
 	protected $tokensCacheKey = "_apiTokens";
+
 	/**
 	 *
 	 * @var ApiTokens
@@ -159,5 +160,9 @@ class RestServer {
 			$restNS = $config ["mvcNS"] ["rest"];
 		}
 		return ClassUtils::getNamespaceFromParts ( [ $controllerNS,$restNS ] );
+	}
+
+	public function setAccessAllowOrigin($address = '*') {
+		$this->headers ['Access-Control-Allow-Origin'] = $address;
 	}
 }

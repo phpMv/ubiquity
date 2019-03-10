@@ -7,6 +7,7 @@ use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\UString;
+use Ubiquity\controllers\Router;
 
 /**
  * Abstract base class for Rest controllers.
@@ -23,6 +24,7 @@ abstract class RestBaseController extends Controller {
 	protected $model;
 	protected $contentType;
 	protected $restCache;
+	protected $useValidation = true;
 
 	/**
 	 *
@@ -52,6 +54,8 @@ abstract class RestBaseController extends Controller {
 	}
 
 	public function index() {
+		$routesPath = Router::getRoutesPathByController ( get_class ( $this ) );
+		echo $this->_getResponseFormatter ()->format ( [ "links" => $routesPath ] );
 	}
 
 	public function isValid($action) {
@@ -97,7 +101,7 @@ abstract class RestBaseController extends Controller {
 	}
 
 	/**
-	 * Returns a list of objects from the server
+	 * Returns a list of objects from the server.
 	 *
 	 * @param string $condition
 	 *        	the sql Where part
@@ -119,7 +123,7 @@ abstract class RestBaseController extends Controller {
 	}
 
 	/**
-	 * Get the first object corresponding to the $keyValues
+	 * Get the first object corresponding to the $keyValues.
 	 *
 	 * @param string $keyValues
 	 *        	primary key(s) value(s) or condition
@@ -148,30 +152,47 @@ abstract class RestBaseController extends Controller {
 
 	/**
 	 *
+	 * @param string $ids
 	 * @param string $member
-	 * @param boolean|string $included
+	 * @param
+	 *        	boolean boolean|string $included
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
-	 * @throws \Exception
 	 */
-	public function _getOneToMany($member, $included = false, $useCache = false) {
-		$this->getMany_ ( function ($instance, $member, $included, $useCache) {
-			return DAO::getOneToMany ( $instance, $member, $included, $useCache );
-		}, $member, $included, $useCache );
+	public function _getManyToOne($ids, $member, $included = false, $useCache = false) {
+		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $included, $useCache) {
+			return DAO::getManyToOne ( $instance, $member, $included, $useCache );
+		}, $member, $included, $useCache, false );
 	}
 
 	/**
 	 *
+	 * @param string $ids
 	 * @param string $member
 	 * @param boolean|string $included
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception
 	 */
-	public function _getManyToMany($member, $included = false, $useCache = false) {
-		$this->getMany_ ( function ($instance, $member, $included, $useCache) {
+	public function _getOneToMany($ids, $member, $included = false, $useCache = false) {
+		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $included, $useCache) {
+			return DAO::getOneToMany ( $instance, $member, $included, $useCache );
+		}, $member, $included, $useCache, true );
+	}
+
+	/**
+	 *
+	 * @param string $ids
+	 * @param string $member
+	 * @param boolean|string $included
+	 *        	if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param boolean $useCache
+	 * @throws \Exception
+	 */
+	public function _getManyToMany($ids, $member, $included = false, $useCache = false) {
+		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $included, $useCache) {
 			return DAO::getManyToMany ( $instance, $member, $included, null, $useCache );
-		}, $member, $included, $useCache );
+		}, $member, $included, $useCache, true );
 	}
 
 	/**
@@ -185,7 +206,10 @@ abstract class RestBaseController extends Controller {
 		$instance = DAO::getOne ( $this->model, $keyValues );
 		$this->operate_ ( $instance, function ($instance) {
 			$this->_setValuesToObject ( $instance, $this->getDatas () );
-			return DAO::update ( $instance );
+			if ($this->validateInstance ( $instance )) {
+				return DAO::update ( $instance );
+			}
+			return null;
 		}, "updated", "Unable to update the instance", $keyValues );
 	}
 
@@ -200,7 +224,10 @@ abstract class RestBaseController extends Controller {
 		$instance = new $model ();
 		$this->operate_ ( $instance, function ($instance) {
 			$this->_setValuesToObject ( $instance, $this->getDatas () );
-			return DAO::insert ( $instance );
+			if ($this->validateInstance ( $instance )) {
+				return DAO::insert ( $instance );
+			}
+			return null;
 		}, "inserted", "Unable to insert the instance", [ ] );
 	}
 

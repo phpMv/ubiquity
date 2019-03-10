@@ -4,6 +4,15 @@ namespace Ubiquity\controllers\rest;
 
 use Ubiquity\utils\base\UString;
 
+/**
+ * Base class for Formating Rest responses.
+ * Ubiquity\controllers\rest$ResponseFormatter
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ *
+ */
 class ResponseFormatter {
 
 	/**

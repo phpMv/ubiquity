@@ -11,7 +11,7 @@ use mindplay\annotations\AnnotationManager;
 use mindplay\annotations\Annotations;
 
 /**
- * Manager for caches (Router, Rest, models)
+ * Manager for caches (Router, Rest, models).
  * Ubiquity\cache$CacheManager
  * This class is part of Ubiquity
  *
@@ -150,9 +150,28 @@ class CacheManager {
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
-		$annotationManager->registry = array_merge ( $annotationManager->registry, [ 'id' => 'Ubiquity\annotations\IdAnnotation','manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation','oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation','manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation','joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
-				'table' => 'Ubiquity\annotations\TableAnnotation','transient' => 'Ubiquity\annotations\TransientAnnotation','column' => 'Ubiquity\annotations\ColumnAnnotation','validator' => 'Ubiquity\annotations\ValidatorAnnotation','joinTable' => 'Ubiquity\annotations\JoinTableAnnotation','requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
-				'route' => 'Ubiquity\annotations\router\RouteAnnotation','get' => 'Ubiquity\annotations\router\GetAnnotation','getMapping' => 'Ubiquity\annotations\router\GetAnnotation','post' => 'Ubiquity\annotations\router\PostAnnotation','postMapping' => 'Ubiquity\annotations\router\PostAnnotation','var' => 'mindplay\annotations\standard\VarAnnotation',
-				'yuml' => 'Ubiquity\annotations\YumlAnnotation','rest' => 'Ubiquity\annotations\rest\RestAnnotation','authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation','injected' => 'Ubiquity\annotations\di\InjectedAnnotation','autowired' => 'Ubiquity\annotations\di\AutowiredAnnotation' ] );
+		$annotationManager->registry = array_merge ( $annotationManager->registry, [
+																						'id' => 'Ubiquity\annotations\IdAnnotation',
+																						'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
+																						'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
+																						'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
+																						'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
+																						'table' => 'Ubiquity\annotations\TableAnnotation',
+																						'transient' => 'Ubiquity\annotations\TransientAnnotation',
+																						'column' => 'Ubiquity\annotations\ColumnAnnotation',
+																						'validator' => 'Ubiquity\annotations\ValidatorAnnotation',
+																						'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
+																						'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
+																						'route' => 'Ubiquity\annotations\router\RouteAnnotation',
+																						'get' => 'Ubiquity\annotations\router\GetAnnotation',
+																						'getMapping' => 'Ubiquity\annotations\router\GetAnnotation',
+																						'post' => 'Ubiquity\annotations\router\PostAnnotation',
+																						'postMapping' => 'Ubiquity\annotations\router\PostAnnotation',
+																						'var' => 'mindplay\annotations\standard\VarAnnotation',
+																						'yuml' => 'Ubiquity\annotations\YumlAnnotation',
+																						'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
+																						'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation',
+																						'injected' => 'Ubiquity\annotations\di\InjectedAnnotation',
+																						'autowired' => 'Ubiquity\annotations\di\AutowiredAnnotation' ] );
 	}
 }

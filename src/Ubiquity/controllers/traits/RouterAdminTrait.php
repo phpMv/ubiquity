@@ -3,10 +3,13 @@
 namespace Ubiquity\controllers\traits;
 
 /**
+ * Trait for admin part of Router class.
+ * Ubiquity\controllers\traits$RouterAdminTrait
+ * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.2
  * @property array $routes
- *
  */
 trait RouterAdminTrait {
 
@@ -23,6 +26,45 @@ trait RouterAdminTrait {
 			}
 		}
 		return false;
+	}
+
+	public static function getRoutesPathByController($controller) {
+		$result = [ ];
+		foreach ( self::$routes as $routePath => $routeDetails ) {
+			if (! isset ( $routeDetails ['controller'] )) {
+				foreach ( $routeDetails as $method => $routeInfo ) {
+					if ($routeInfo ['controller'] === $controller) {
+						$result [] = [ 'method' => $method,self::getRoutePathInfos ( $controller, $routePath, $routeInfo ) ];
+					}
+				}
+			} else {
+				if ($routeDetails ['controller'] === $controller) {
+					$result [] = [ 'method' => '*',self::getRoutePathInfos ( $controller, $routePath, $routeDetails ) ];
+				}
+			}
+		}
+		return $result;
+	}
+
+	public static function getRoutePathInfos($controller, $routePath, $routeInfo) {
+		$method = new \ReflectionMethod (  $controller,$routeInfo ['action'] );
+		$parameters = $method->getParameters ();
+		$routeParams = $routeInfo ['parameters'];
+		$pattern = "@\(.*?\)@";
+		$params = [ ];
+		foreach ( $routeParams as $param ) {
+			if ($param === '*') {
+				$params [] = $parameters [sizeof ( $params )]->getName();
+			} else {
+				$index = ( int ) filter_var ( $param, FILTER_SANITIZE_NUMBER_INT );
+				$params [] = $parameters [$index]->getName();
+			}
+		}
+		$path = $routePath;
+		foreach ( $params as $param ) {
+			$path = preg_replace ( $pattern, '{'.$param.'}', $path, 1 );
+		}
+		return $path;
 	}
 
 	public static function getRouteInfo($path) {

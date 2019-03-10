@@ -6,7 +6,6 @@ use Ubiquity\db\Database;
 use Ubiquity\log\Logger;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\db\SqlUtils;
-use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\traits\DAOUpdatesTrait;
 use Ubiquity\orm\traits\DAORelationsTrait;
 use Ubiquity\orm\parser\ConditionParser;
@@ -21,7 +20,7 @@ use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.5
+ * @version 1.1.6
  *
  */
 class DAO {
@@ -36,29 +35,32 @@ class DAO {
 	/**
 	 * Loads member associated with $instance by a ManyToOne relationship
 	 *
-	 * @param object $instance
+	 * @param object|array $instance
+	 *        	The instance object or an array with [classname,id]
 	 * @param string $member
+	 *        	The member to load
 	 * @param boolean|array $included
 	 *        	if true, loads associate members with associations, if array, example : ["client.*","commands"]
 	 * @param boolean|null $useCache
 	 */
 	public static function getManyToOne($instance, $member, $included = false, $useCache = NULL) {
-		$fieldAnnot = OrmUtils::getMemberJoinColumns ( $instance, $member );
+		$classname = self::getClass_ ( $instance );
+		$fieldAnnot = OrmUtils::getMemberJoinColumns ( $classname, $member );
 		if ($fieldAnnot !== null) {
 			$annotationArray = $fieldAnnot [1];
 			$member = $annotationArray ["member"];
-			$value = Reflexion::getMemberValue ( $instance, $member );
+			$value = self::getValue_ ( $instance, $member );
 			$key = OrmUtils::getFirstKey ( $annotationArray ["className"] );
 			$kv = array ($key => $value );
 			$obj = self::getOne ( $annotationArray ["className"], $kv, $included, null, $useCache );
 			if ($obj !== null) {
-				Logger::info ( "DAO", "Loading the member " . $member . " for the object " . \get_class ( $instance ), "getManyToOne" );
+				Logger::info ( "DAO", "Loading the member " . $member . " for the object " . $classname, "getManyToOne" );
 				$accesseur = "set" . ucfirst ( $member );
-				if (method_exists ( $instance, $accesseur )) {
+				if (is_object ( $instance ) && method_exists ( $instance, $accesseur )) {
 					$instance->$accesseur ( $obj );
 					$instance->_rest [$member] = $obj->_rest;
-					return $obj;
 				}
+				return $obj;
 			}
 		}
 	}
@@ -66,7 +68,8 @@ class DAO {
 	/**
 	 * Assign / load the child records in the $member member of $instance.
 	 *
-	 * @param object $instance
+	 * @param object|array $instance
+	 *        	The instance object or an array with [classname,id]
 	 * @param string $member
 	 *        	Member on which a oneToMany annotation must be present
 	 * @param boolean|array $included
@@ -77,16 +80,16 @@ class DAO {
 	 */
 	public static function getOneToMany($instance, $member, $included = true, $useCache = NULL, $annot = null) {
 		$ret = array ();
-		$class = get_class ( $instance );
+		$class = self::getClass_ ( $instance );
 		if (! isset ( $annot )) {
 			$annot = OrmUtils::getAnnotationInfoMember ( $class, "#oneToMany", $member );
 		}
 		if ($annot !== false) {
 			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
 			if ($fkAnnot !== false) {
-				$fkv = OrmUtils::getFirstKeyValue ( $instance );
+				$fkv = self::getFirstKeyValue_ ( $instance );
 				$ret = self::_getAll ( $annot ["className"], ConditionParser::simple ( $fkAnnot ["name"] . "= ?", $fkv ), $included, $useCache );
-				if ($modifier = self::getAccessor ( $member, $instance, 'getOneToMany' )) {
+				if (is_object ( $instance ) && $modifier = self::getAccessor ( $member, $instance, 'getOneToMany' )) {
 					self::setToMember ( $member, $instance, $ret, $modifier );
 				}
 			}
@@ -98,7 +101,8 @@ class DAO {
 	 * Assigns / loads the child records in the $member member of $instance.
 	 * If $array is null, the records are loaded from the database
 	 *
-	 * @param object $instance
+	 * @param object|array $instance
+	 *        	The instance object or an array with [classname,id]
 	 * @param string $member
 	 *        	Member on which a ManyToMany annotation must be present
 	 * @param boolean|array $included
@@ -109,17 +113,17 @@ class DAO {
 	 */
 	public static function getManyToMany($instance, $member, $included = false, $array = null, $useCache = NULL) {
 		$ret = [ ];
-		$class = get_class ( $instance );
-		$parser = new ManyToManyParser ( $instance, $member );
+		$class = self::getClass_ ( $instance );
+		$parser = new ManyToManyParser ( $class, $member );
 		if ($parser->init ()) {
 			if (is_null ( $array )) {
-				$accessor = "get" . ucfirst ( $parser->getMyPk () );
+				$pk = self::getFirstKeyValue_ ( $instance );
 				$condition = " INNER JOIN `" . $parser->getJoinTable () . "` on `" . $parser->getJoinTable () . "`.`" . $parser->getFkField () . "`=`" . $parser->getTargetEntityTable () . "`.`" . $parser->getPk () . "` WHERE `" . $parser->getJoinTable () . "`.`" . $parser->getMyFkField () . "`= ?";
-				$ret = self::_getAll ( $parser->getTargetEntityClass (), ConditionParser::simple ( $condition, $instance->$accessor () ), $included, $useCache );
+				$ret = self::_getAll ( $parser->getTargetEntityClass (), ConditionParser::simple ( $condition, $pk ), $included, $useCache );
 			} else {
 				$ret = self::getManyToManyFromArray ( $instance, $array, $class, $parser );
 			}
-			if ($modifier = self::getAccessor ( $member, $instance, 'getManyToMany' )) {
+			if (is_object ( $instance ) && $modifier = self::getAccessor ( $member, $instance, 'getManyToMany' )) {
 				self::setToMember ( $member, $instance, $ret, $modifier );
 			}
 		}

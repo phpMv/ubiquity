@@ -11,8 +11,13 @@ use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\Reflexion;
 
 /**
+ * Core Trait for DAO class.
+ * Ubiquity\orm\traits$DAOCoreTrait
+ * This class is part of Ubiquity
  *
- * @author jc
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.2
+ *
  * @property \Ubiquity\db\Database $db
  *
  */
@@ -53,10 +58,8 @@ trait DAOCoreTrait {
 		$continue = true;
 		$accessorToMember = "get" . ucfirst ( $parser->getInversedBy () );
 		$myPkAccessor = "get" . ucfirst ( $parser->getMyPk () );
+		$pk = self::getFirstKeyValue_ ( $instance );
 
-		if (! method_exists ( $instance, $myPkAccessor )) {
-			Logger::warn ( "DAO", "L'accesseur au membre clé primaire " . $myPkAccessor . " est manquant pour " . $class, "ManyToMany" );
-		}
 		if (sizeof ( $array ) > 0) {
 			$continue = method_exists ( current ( $array ), $accessorToMember );
 		}
@@ -65,7 +68,7 @@ trait DAOCoreTrait {
 				$instances = $targetEntityInstance->$accessorToMember ();
 				if (is_array ( $instances )) {
 					foreach ( $instances as $inst ) {
-						if ($inst->$myPkAccessor () == $instance->$myPkAccessor ())
+						if ($inst->$myPkAccessor () == $pk)
 							array_push ( $ret, $targetEntityInstance );
 					}
 				}
@@ -74,6 +77,34 @@ trait DAOCoreTrait {
 			Logger::warn ( "DAO", "L'accesseur au membre " . $parser->getInversedBy () . " est manquant pour " . $parser->getTargetEntity (), "ManyToMany" );
 		}
 		return $ret;
+	}
+
+	protected static function getClass_($instance) {
+		if (is_object ( $instance )) {
+			return get_class ( $instance );
+		}
+		return $instance [0];
+	}
+
+	protected static function getInstance_($instance) {
+		if (is_object ( $instance )) {
+			return $instance;
+		}
+		return $instance [0];
+	}
+
+	protected static function getValue_($instance, $member) {
+		if (is_object ( $instance )) {
+			return Reflexion::getMemberValue ( $instance, $member );
+		}
+		return $instance [1];
+	}
+
+	protected static function getFirstKeyValue_($instance) {
+		if (is_object ( $instance )) {
+			return OrmUtils::getFirstKeyValue ( $instance );
+		}
+		return $instance [1];
 	}
 
 	protected static function _getOne($className, ConditionParser $conditionParser, $included, $useCache) {
