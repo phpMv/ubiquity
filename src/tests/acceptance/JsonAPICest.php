@@ -14,6 +14,13 @@ class JsonAPICest extends BaseAcceptance {
 	}
 
 	// tests
+	public function tryToGetWithInclude(AcceptanceTester $I) {
+		$I->amOnPage ( "/jsonapi/user/1/?included=organization" );
+		$I->see ( 'Benjamin' );
+		$I->see ( 'lecnam.net' );
+	}
+
+	// tests
 	public function tryToGetLinks(AcceptanceTester $I) {
 		$I->amOnPage ( "/jsonapi/links/" );
 		$I->see ( 'links' );
@@ -24,6 +31,12 @@ class JsonAPICest extends BaseAcceptance {
 	public function tryToGetManyToOne(AcceptanceTester $I) {
 		$I->amOnPage ( "/jsonapi/user/1/relationships/organization/" );
 		$I->see ( 'lecnam.net' );
+	}
+
+	// tests
+	public function tryToGetOneToMany(AcceptanceTester $I) {
+		$I->amOnPage ( "/jsonapi/organization/1/relationships/users/" );
+		$I->see ( 'wyatt.higgins' );
 	}
 
 	// tests
