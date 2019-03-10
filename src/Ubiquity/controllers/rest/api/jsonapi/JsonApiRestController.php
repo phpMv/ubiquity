@@ -169,7 +169,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 */
 	public function add_($resource) {
 		$this->_checkResource ( $resource, function () {
-			parent::add ();
+			parent::_add ();
 		} );
 	}
 
@@ -186,7 +186,7 @@ abstract class JsonApiRestController extends RestBaseController {
 		$this->_checkResource ( $resource, function () {
 			$pks = $this->getPrimaryKeysFromDatas ( $this->getDatas (), $this->model );
 			if (! $this->hasErrors ()) {
-				parent::update ( $pks );
+				parent::_update ( $pks );
 			} else {
 				echo $this->displayErrors ();
 			}
@@ -205,7 +205,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 */
 	public function delete_($resource, ...$id) {
 		$this->_checkResource ( $resource, function () use ($id) {
-			$this->delete ( $id );
+			$this->_delete ( $id );
 		} );
 	}
 

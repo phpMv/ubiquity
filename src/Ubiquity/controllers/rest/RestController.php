@@ -6,12 +6,12 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\orm\DAO;
 
 /**
- * Abstract base class for Rest controllers
+ * Abstract base class for Rest controllers.
  * Ubiquity\controllers\rest$RestController
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 abstract class RestController extends RestBaseController {
@@ -24,7 +24,7 @@ abstract class RestController extends RestBaseController {
 			$modelsNS = $this->config ["mvcNS"] ["models"];
 			$this->model = $modelsNS . "\\" . $this->_getResponseFormatter ()->getModel ( $thisClass );
 		}
-		parent::initialize();
+		parent::initialize ();
 	}
 
 	/**
@@ -45,7 +45,7 @@ abstract class RestController extends RestBaseController {
 	 * @param boolean $useCache
 	 */
 	public function get($condition = "1=1", $included = false, $useCache = false) {
-		$this->_get($condition,$included,$useCache);
+		$this->_get ( $condition, $included, $useCache );
 	}
 
 	/**
@@ -59,6 +59,41 @@ abstract class RestController extends RestBaseController {
 	 *        	if true then response is cached
 	 */
 	public function getOne($keyValues, $included = false, $useCache = false) {
-		$this->_getOne($keyValues,$included,$useCache);
+		$this->_getOne ( $keyValues, $included, $useCache );
+	}
+
+	/**
+	 * Update an instance of $model selected by the primary key $keyValues
+	 * Require members values in $_POST array
+	 * Requires an authorization with access token
+	 *
+	 * @param array $keyValues
+	 * @authorization
+	 */
+	public function update(...$keyValues) {
+		$this->_update ( $keyValues );
+	}
+
+	/**
+	 * Insert a new instance of $model
+	 * Require members values in $_POST array
+	 * Requires an authorization with access token
+	 *
+	 * @authorization
+	 */
+	public function add() {
+		$this->_add ();
+	}
+
+	/**
+	 * Delete the instance of $model selected by the primary key $keyValues
+	 * Requires an authorization with access token
+	 *
+	 * @param array $keyValues
+	 * @route("methods"=>["delete"],"priority"=>30)
+	 * @authorization
+	 */
+	public function delete(...$keyValues) {
+		$this->_delete ( $keyValues );
 	}
 }

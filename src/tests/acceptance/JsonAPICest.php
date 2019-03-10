@@ -15,14 +15,15 @@ class JsonAPICest extends BaseAcceptance {
 
 	// tests
 	public function tryToGetLinks(AcceptanceTester $I) {
-		$I->amOnPage ( "/jsonapi/links" );
+		$I->amOnPage ( "/jsonapi/links/" );
 		$I->see ( 'links' );
+		$I->see ( '/rest/{resource}/{id}/relationships/{member}/' );
 	}
 
 	// tests
 	public function tryToGetManyToOne(AcceptanceTester $I) {
 		$I->amOnPage ( "/jsonapi/user/1/relationships/organization/" );
-		$I->see ( 'Université de Caen-Normandie' );
+		$I->see ( 'lecnam.net' );
 	}
 
 	// tests

@@ -15,7 +15,7 @@ use Ubiquity\controllers\Router;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 abstract class RestBaseController extends Controller {
@@ -199,9 +199,8 @@ abstract class RestBaseController extends Controller {
 	 * Require members values in $_POST array
 	 *
 	 * @param array $keyValues
-	 * @authorization
 	 */
-	public function update(...$keyValues) {
+	public function _update(...$keyValues) {
 		$instance = DAO::getOne ( $this->model, $keyValues );
 		$this->operate_ ( $instance, function ($instance) {
 			$this->_setValuesToObject ( $instance, $this->getDatas () );
@@ -215,10 +214,8 @@ abstract class RestBaseController extends Controller {
 	/**
 	 * Insert a new instance of $model
 	 * Require members values in $_POST array
-	 *
-	 * @authorization
 	 */
-	public function add() {
+	public function _add() {
 		$model = $this->model;
 		$instance = new $model ();
 		$this->operate_ ( $instance, function ($instance) {
@@ -232,13 +229,10 @@ abstract class RestBaseController extends Controller {
 
 	/**
 	 * Delete the instance of $model selected by the primary key $keyValues
-	 * Requires an authorization with access token
 	 *
 	 * @param array $keyValues
-	 * @route("methods"=>["delete"],"priority"=>30)
-	 * @authorization
 	 */
-	public function delete(...$keyValues) {
+	public function _delete(...$keyValues) {
 		$instance = DAO::getOne ( $this->model, $keyValues );
 		$this->operate_ ( $instance, function ($instance) {
 			return DAO::remove ( $instance );
