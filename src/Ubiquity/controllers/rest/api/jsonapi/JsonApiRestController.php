@@ -37,6 +37,12 @@ abstract class JsonApiRestController extends RestBaseController {
 		}
 	}
 
+	/**
+	 *
+	 * @param string $param
+	 * @param string $default
+	 * @return string
+	 */
 	protected function getRequestParam($param, $default) {
 		if (isset ( $_GET [$param] )) {
 			return $_GET [$param];
