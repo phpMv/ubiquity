@@ -56,9 +56,9 @@ abstract class JsonApiRestController extends RestBaseController {
 			$datas = current ( array_keys ( $datas ) );
 			$datas = json_decode ( $datas, true );
 			$attributes = $datas ["data"] ["attributes"] ?? [ ];
-			if (isset ( $datas ["data"]["id"] )) {
+			if (isset ( $datas ["data"] ["id"] )) {
 				$key = OrmUtils::getFirstKey ( $this->model );
-				$attributes [$key] = $datas["data"] ["id"];
+				$attributes [$key] = $datas ["data"] ["id"];
 			}
 			return $attributes;
 		}
@@ -112,10 +112,8 @@ abstract class JsonApiRestController extends RestBaseController {
 	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
 	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
 	 *
-	 * @param string $resource
-	 *        	The resource (model) to use
-	 * @param string $id
-	 *        	The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
+	 * @param string $resource The resource (model) to use
+	 * @param string $id The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
 	 *
 	 * @route("{resource}/{id}/","methods"=>["get"],"priority"=>1000)
 	 */
@@ -130,12 +128,9 @@ abstract class JsonApiRestController extends RestBaseController {
 	 * Query parameters:
 	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
 	 *
-	 * @param string $resource
-	 *        	The resource (model) to use
-	 * @param string $id
-	 *        	The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
-	 * @param string $member
-	 *        	The member to load
+	 * @param string $resource The resource (model) to use
+	 * @param string $id The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
+	 * @param string $member The member to load
 	 *
 	 * @route("{resource}/{id}/relationships/{member}/","methods"=>["get"],"priority"=>2000)
 	 */
@@ -146,13 +141,13 @@ abstract class JsonApiRestController extends RestBaseController {
 				$include = $this->getRequestParam ( 'include', true );
 				switch ($relations [$member] ['type']) {
 					case 'manyToOne' :
-						$this->_getManyToOne ( $id, $member, $this->getInclude ( $include ) );
+						$this->_getManyToOne ( $id, $member, $include );
 						break;
 					case 'oneToMany' :
-						$this->_getOneToMany ( $id, $member, $this->getInclude ( $include ) );
+						$this->_getOneToMany ( $id, $member, $include );
 						break;
 					case 'manyToMany' :
-						$this->_getManyToMany ( $id, $member, $this->getInclude ( $include ) );
+						$this->_getManyToMany ( $id, $member, $include );
 						break;
 				}
 			}
@@ -163,8 +158,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 * Inserts a new instance of $resource.
 	 * Data attributes are send in data[attributes] request header
 	 *
-	 * @param string $resource
-	 *        	The resource (model) to use
+	 * @param string $resource The resource (model) to use
 	 * @route("{resource}/","methods"=>["post"],"priority"=>0)
 	 */
 	public function add_($resource) {
@@ -177,8 +171,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 * Updates an existing instance of $resource.
 	 * Data attributes are send in data[attributes] request header
 	 *
-	 * @param string $resource
-	 *        	The resource (model) to use
+	 * @param string $resource The resource (model) to use
 	 *
 	 * @route("{resource}/","methods"=>["patch"],"priority"=>0)
 	 */
@@ -196,8 +189,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	/**
 	 * Deletes an existing instance of $resource.
 	 *
-	 * @param string $resource
-	 *        	The resource (model) to use
+	 * @param string $resource The resource (model) to use
 	 * @param string $ids The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
 	 *
 	 * @route("{resource}/{id}/","methods"=>["delete"],"priority"=>0)
@@ -209,7 +201,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	}
 
 	/**
-	 * Returns the api version
+	 * Returns the api version.
 	 *
 	 * @return string
 	 */

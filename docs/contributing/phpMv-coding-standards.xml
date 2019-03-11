@@ -56,7 +56,7 @@
 <setting id="org.eclipse.php.formatter.core.formatter.comment.indent_parameter_description" value="true"/>
 <setting id="org.eclipse.php.formatter.core.formatter.comment.indent_root_tags" value="true"/>
 <setting id="org.eclipse.php.formatter.core.formatter.comment.insert_new_line_before_root_tags" value="true"/>
-<setting id="org.eclipse.php.formatter.core.formatter.comment.insert_new_line_for_parameter" value="true"/>
+<setting id="org.eclipse.php.formatter.core.formatter.comment.insert_new_line_for_parameter" value="false"/>
 <setting id="org.eclipse.php.formatter.core.formatter.comment.keep_empty_line_for_empty_description" value="true"/>
 <setting id="org.eclipse.php.formatter.core.formatter.comment.line_length" value="9999"/>
 <setting id="org.eclipse.php.formatter.core.formatter.comment.never_format_unknown_tags" value="true"/>

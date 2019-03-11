@@ -109,8 +109,7 @@ trait RestControllerUtilitiesTrait {
 	 * Updates $instance with $values
 	 * To eventually be redefined in derived classes
 	 *
-	 * @param object $instance
-	 *        	the instance to update
+	 * @param object $instance the instance to update
 	 * @param array|null $values
 	 */
 	protected function _setValuesToObject($instance, $values = null) {
@@ -159,13 +158,10 @@ trait RestControllerUtilitiesTrait {
 
 	/**
 	 *
-	 * @param string $ids
-	 *        	The primary key values (comma separated if pk is multiple)
+	 * @param string $ids The primary key values (comma separated if pk is multiple)
 	 * @param callable $getDatas
-	 * @param string $member
-	 *        	The member to load
-	 * @param boolean|string $include
-	 *        	if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param string $member The member to load
+	 * @param boolean|string $include if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @param boolean $multiple
 	 * @throws \Exception

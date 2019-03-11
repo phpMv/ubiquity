@@ -103,10 +103,8 @@ abstract class RestBaseController extends Controller {
 	/**
 	 * Returns a list of objects from the server.
 	 *
-	 * @param string $condition
-	 *        	the sql Where part
-	 * @param boolean|string $include
-	 *        	if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param string $condition the sql Where part
+	 * @param boolean|string $include if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 */
 	public function _get($condition = "1=1", $include = false, $useCache = false) {
@@ -125,12 +123,9 @@ abstract class RestBaseController extends Controller {
 	/**
 	 * Get the first object corresponding to the $keyValues.
 	 *
-	 * @param string $keyValues
-	 *        	primary key(s) value(s) or condition
-	 * @param boolean|string $include
-	 *        	if true, loads associate members with associations, if string, example : client.*,commands
-	 * @param boolean $useCache
-	 *        	if true then response is cached
+	 * @param string $keyValues primary key(s) value(s) or condition
+	 * @param boolean|string $include if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param boolean $useCache if true then response is cached
 	 */
 	public function _getOne($keyValues, $include = false, $useCache = false) {
 		$keyValues = \urldecode ( $keyValues );
@@ -154,8 +149,7 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param array|boolean $include
-	 *        	if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param string|boolean $include if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 */
 	public function _getManyToOne($ids, $member, $include = false, $useCache = false) {
@@ -168,8 +162,7 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param array|boolean $include
-	 *        	if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param string|boolean $include if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception
 	 */
@@ -183,8 +176,7 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param array|boolean $include
-	 *        	if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param string|boolean $include if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception
 	 */
@@ -203,9 +195,9 @@ abstract class RestBaseController extends Controller {
 	public function _update(...$keyValues) {
 		$instance = DAO::getOne ( $this->model, $keyValues );
 		$this->operate_ ( $instance, function ($instance) {
-			$datas=$this->getDatas ();
+			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
-			if ($this->validateInstance ( $instance ,array_keys($datas))) {
+			if ($this->validateInstance ( $instance, array_keys ( $datas ) )) {
 				return DAO::update ( $instance );
 			}
 			return null;
@@ -220,9 +212,9 @@ abstract class RestBaseController extends Controller {
 		$model = $this->model;
 		$instance = new $model ();
 		$this->operate_ ( $instance, function ($instance) {
-			$datas=$this->getDatas ();
+			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
-			if ($this->validateInstance ( $instance ,$datas)) {
+			if ($this->validateInstance ( $instance, $datas )) {
 				return DAO::insert ( $instance );
 			}
 			return null;
