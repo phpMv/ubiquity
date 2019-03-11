@@ -45,7 +45,6 @@ abstract class RestBaseController extends Controller {
 			$this->server = $this->_getRestServer ();
 			$this->server->cors ();
 			$this->responseFormatter = $this->_getResponseFormatter ();
-			$this->contentType = "application/json";
 			$this->server->_setContentType ( $this->contentType );
 			$this->restCache = CacheManager::getRestCacheController ( \get_class ( $this ) );
 		}

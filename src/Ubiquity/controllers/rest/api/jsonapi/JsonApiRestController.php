@@ -8,6 +8,7 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\rest\RestBaseController;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\controllers\rest\RestServer;
 
 /**
  * Rest JsonAPI implementation.
@@ -63,6 +64,14 @@ abstract class JsonApiRestController extends RestBaseController {
 			return $attributes;
 		}
 		$this->addError ( 204, 'No content', 'The POST request has no content!' );
+	}
+
+	/**
+	 *
+	 * @return RestServer
+	 */
+	protected function getRestServer(): RestServer {
+		return new JsonApiRestServer ( $this->config );
 	}
 
 	/**
