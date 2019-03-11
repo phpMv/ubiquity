@@ -15,7 +15,7 @@ use Ubiquity\orm\OrmUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  * @since Ubiquity 2.0.11
  *
  */
@@ -56,9 +56,9 @@ abstract class JsonApiRestController extends RestBaseController {
 			$datas = current ( array_keys ( $datas ) );
 			$datas = json_decode ( $datas, true );
 			$attributes = $datas ["data"] ["attributes"] ?? [ ];
-			if (isset ( $datas ["id"] )) {
+			if (isset ( $datas ["data"]["id"] )) {
 				$key = OrmUtils::getFirstKey ( $this->model );
-				$attributes [$key] = $datas ["id"];
+				$attributes [$key] = $datas["data"] ["id"];
 			}
 			return $attributes;
 		}
@@ -85,7 +85,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	/**
 	 * Returns all the instances from the model $resource.
 	 * Query parameters:
-	 * - **included**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
 	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
 	 * - **page[number]**: The page to display (in this case, the page size is set to 1).
 	 * - **page[size]**: The page size (count of instance per page) (default: 1).
@@ -101,7 +101,7 @@ abstract class JsonApiRestController extends RestBaseController {
 				$pageSize = $_GET ['page'] ['size'] ?? 1;
 				$pages = $this->generatePagination ( $filter, $pageNumber, $pageSize );
 			}
-			$datas = DAO::getAll ( $this->model, $filter, $this->getIncluded ( $this->getRequestParam ( 'included', true ) ) );
+			$datas = DAO::getAll ( $this->model, $filter, $this->getInclude ( $this->getRequestParam ( 'include', true ) ) );
 			echo $this->_getResponseFormatter ()->get ( $datas, $pages );
 		} );
 	}
@@ -109,7 +109,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	/**
 	 * Returns an instance of $resource, by primary key $id.
 	 * Query parameters:
-	 * - **included**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
 	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
 	 *
 	 * @param string $resource
@@ -128,7 +128,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	/**
 	 * Returns an associated member value(s).
 	 * Query parameters:
-	 * - **included**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
 	 *
 	 * @param string $resource
 	 *        	The resource (model) to use
@@ -143,16 +143,16 @@ abstract class JsonApiRestController extends RestBaseController {
 		$this->_checkResource ( $resource, function () use ($id, $member) {
 			$relations = OrmUtils::getAnnotFieldsInRelations ( $this->model );
 			if (isset ( $relations [$member] )) {
-				$included = $this->getRequestParam ( 'included', true );
+				$include = $this->getRequestParam ( 'include', true );
 				switch ($relations [$member] ['type']) {
 					case 'manyToOne' :
-						$this->_getManyToOne ( $id, $member, $included );
+						$this->_getManyToOne ( $id, $member, $this->getInclude ( $include ) );
 						break;
 					case 'oneToMany' :
-						$this->_getOneToMany ( $id, $member, $included );
+						$this->_getOneToMany ( $id, $member, $this->getInclude ( $include ) );
 						break;
 					case 'manyToMany' :
-						$this->_getManyToMany ( $id, $member, $included );
+						$this->_getManyToMany ( $id, $member, $this->getInclude ( $include ) );
 						break;
 				}
 			}
@@ -186,7 +186,7 @@ abstract class JsonApiRestController extends RestBaseController {
 		$this->_checkResource ( $resource, function () {
 			$pks = $this->getPrimaryKeysFromDatas ( $this->getDatas (), $this->model );
 			if (! $this->hasErrors ()) {
-				parent::_update ( $pks );
+				parent::_update ( ...$pks );
 			} else {
 				echo $this->displayErrors ();
 			}
@@ -198,8 +198,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 *
 	 * @param string $resource
 	 *        	The resource (model) to use
-	 * @param string $ids
-	 *        	The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
+	 * @param string $ids The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
 	 *
 	 * @route("{resource}/{id}/","methods"=>["delete"],"priority"=>0)
 	 */

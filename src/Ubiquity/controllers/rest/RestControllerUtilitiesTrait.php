@@ -37,7 +37,7 @@ trait RestControllerUtilitiesTrait {
 				$formatter = $this->_getResponseFormatter ();
 				echo $formatter->format ( [ "status" => $status,"data" => $formatter->cleanRestObject ( $instance ) ] );
 			} elseif ($result === null) {
-				echo $this->displayErrors ();
+				$this->displayErrors ();
 			} else {
 				throw new \Exception ( $exceptionMessage );
 			}
@@ -122,14 +122,14 @@ trait RestControllerUtilitiesTrait {
 
 	/**
 	 *
-	 * @param string|boolean $included
+	 * @param string|boolean $include
 	 * @return array|boolean
 	 */
-	protected function getIncluded($included) {
-		if (! UString::isBooleanStr ( $included )) {
-			return explode ( ",", $included );
+	protected function getInclude($include) {
+		if (! UString::isBooleanStr ( $include )) {
+			return explode ( ",", $include );
 		}
-		return UString::isBooleanTrue ( $included );
+		return UString::isBooleanTrue ( $include );
 	}
 
 	protected function addError($code, $title, $detail = null, $source = null, $status = null) {
@@ -164,16 +164,16 @@ trait RestControllerUtilitiesTrait {
 	 * @param callable $getDatas
 	 * @param string $member
 	 *        	The member to load
-	 * @param boolean|string $included
+	 * @param boolean|string $include
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @param boolean $multiple
 	 * @throws \Exception
 	 */
-	protected function getAssociatedMemberValues_($ids, $getDatas, $member, $included = false, $useCache = false, $multiple = true) {
-		$included = $this->getIncluded ( $included );
+	protected function getAssociatedMemberValues_($ids, $getDatas, $member, $include = false, $useCache = false, $multiple = true) {
+		$include = $this->getInclude ( $include );
 		$useCache = UString::isBooleanTrue ( $useCache );
-		$datas = $getDatas ( [ $this->model,$ids ], $member, $included, $useCache );
+		$datas = $getDatas ( [ $this->model,$ids ], $member, $include, $useCache );
 		if ($multiple) {
 			echo $this->_getResponseFormatter ()->get ( $datas );
 		} else {
@@ -181,13 +181,17 @@ trait RestControllerUtilitiesTrait {
 		}
 	}
 
-	protected function validateInstance($instance) {
+	protected function validateInstance($instance, $members) {
 		if ($this->useValidation) {
+			$isValid = true;
 			$violations = ValidatorsManager::validate ( $instance );
 			foreach ( $violations as $violation ) {
-				$this->addViolation ( $violation );
+				if (array_search ( $violation->getMember (), $members ) !== false) {
+					$this->addViolation ( $violation );
+					$isValid = false;
+				}
 			}
-			return sizeof ( $violations ) === 0;
+			return $isValid;
 		}
 		return true;
 	}
@@ -201,7 +205,7 @@ trait RestControllerUtilitiesTrait {
 		$result = [ ];
 		foreach ( $pks as $pk ) {
 			if (isset ( $datas [$pk] )) {
-				$result [$pk] = $datas [$pk];
+				$result [] = $datas [$pk];
 			} else {
 				$this->addError ( 404, 'Primary key required', 'The primary key ' . $pk . ' is required!', $pk );
 			}

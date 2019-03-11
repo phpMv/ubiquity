@@ -95,7 +95,7 @@ trait RestTrait {
 		$frmHeaders = new HtmlForm ( "frm-headers-" . $path );
 		$frmParameters = new HtmlForm ( "frm-parameters-" . $path );
 
-		$this->jquery->postOnClick ( "#" . $btGo->getIdentifier (), $this->_getFiles ()->getAdminBaseRoute () . "/_runRestMethod", "{pathId: '" . $path . "',path: $('#" . $pathField->getIdentifier () . "').val(),method: $('#" . $methodField->getIdentifier () . "').val(),headers:$('#" . $frmHeaders->getIdentifier () . "').serialize(),params:$('#" . $frmParameters->getIdentifier () . "').serialize()}", "#" . $containerId . " ._runRestMethod", [ ] );
+		$this->jquery->postOnClick ( "#" . $btGo->getIdentifier (), $this->_getFiles ()->getAdminBaseRoute () . "/_runRestMethod", "{payload:$(\"[name='payload']\").val(),pathId: '" . $path . "',path: $('#" . $pathField->getIdentifier () . "').val(),method: $('#" . $methodField->getIdentifier () . "').val(),headers:$('#" . $frmHeaders->getIdentifier () . "').serialize(),params:$('#" . $frmParameters->getIdentifier () . "').serialize()}", "#" . $containerId . " ._runRestMethod", [ ] );
 		$this->jquery->postOnClick ( "#" . $containerId . " ._requestWithParams", $this->_getFiles ()->getAdminBaseRoute () . "/_runPostWithParams/_/parameter/rest", "{actualParams:$('#" . $frmParameters->getIdentifier () . "').serialize(),model: '" . $resource . "',toUpdate:'" . $frmParameters->getIdentifier () . "',method:$('#" . $containerId . " ._method').val(),url:$('#" . $containerId . " ._path').val()}", "#modal", [
 																																																																																																											"attr" => "",
 																																																																																																											"hasLoader" => false ] );
@@ -181,10 +181,10 @@ trait RestTrait {
 		$headers = $this->getRestRequestHeaders ();
 		$method = $_POST ["method"];
 		$path = $_POST ["path"];
+		$payload = $_POST ["payload"]??null;
 		$formId = "sub-tddtRest-tr-" . JString::cleanIdentifier ( $_POST ["pathId"] );
-		$this->jquery->ajax ( $method, $path, "#" . $formId . " ._restResponse", [
-																					"jsCallback" => "$('#" . $formId . " ._restResponse').html(JSON.stringify(data,null,2))",
-																					"complete" => "var status = { 200 : 'green', 401 : 'orange', 403 : 'brown', 404 : 'black', 500 : 'red' };
+		$parameters=[  "jsCallback" => "$('#" . $formId . " ._restResponse').html(JSON.stringify(data,null,2))",
+				"complete" => "var status = { 200 : 'green', 401 : 'orange', 403 : 'brown', 404 : 'black', 500 : 'red' };
 							var headers=jqXHR.getAllResponseHeaders();
 							headers=headers.split(/\\r\\n/);
 							var bHeaders=[];
@@ -204,21 +204,26 @@ trait RestTrait {
 						$('#" . $formId . " ._status').html(jqXHR.status);
 						$('#" . $formId . " ._status').removeClass('red black brown orange green').addClass(status[jqXHR.status]);
 						addToken(jqXHR);",
-																					"dataType" => "json",
-																					"headers" => $headers,
-																					"params" => $this->getRestRequestParams () ] );
+				"dataType" => "json",
+				"headers" => $headers,
+				"params" => $this->getRestRequestParams () ];
+		if(isset($payload)){
+			$parameters["contentType"]="'application/json; charset=utf-8'";
+		}
+		$this->jquery->ajax ( $method, $path, "#" . $formId . " ._restResponse", $parameters );
 		echo '<div><h5 class="ui top block attached header">Response headers</h5><div class="ui attached segment"><pre style="font-size: 10px;" class="_responseHeaders"></pre></div></div>';
 		echo $this->jquery->compile ( $this->view );
 	}
 
 	protected function getRestRequestHeaders() {
-		$result = [ '"Authorization": "Bearer "+$("#access-token").val()' ];
+		$result=["Authorization"=>'"Bearer "+$("#access-token").val()'];
 		if (isset ( $_POST ["headers"] )) {
 			$headers = urldecode ( $_POST ["headers"] );
 			\parse_str ( $headers, $output );
 			$this->_getParamsForJSON ( $result, $output );
 		}
-		return "{" . \implode ( ",", $result ) . "}";
+		$result["content-type"]="'application/json; charset=utf-8'";
+		return $result;
 	}
 
 	protected function getRestRequestParams() {
@@ -228,7 +233,7 @@ trait RestTrait {
 			\parse_str ( $headers, $output );
 			$this->_getParamsForJSON ( $result, $output );
 		}
-		return "{" . \implode ( ",", $result ) . "}";
+		return json_encode($result);
 	}
 
 	protected function _getParamsForJSON(&$result, $params) {
@@ -239,8 +244,14 @@ trait RestTrait {
 			for($i = 0; $i < $count; $i ++) {
 				$name = $names [$i];
 				if (UString::isNotNull ( $name )) {
-					if (isset ( $values [$i] ))
-						$result [] = '"' . $name . '": "' . \addslashes ( $values [$i] ) . '"';
+					if (isset ( $values [$i] )){
+						if(UString::isJson($values[$i])){
+							$value=str_replace("'", '"', $values[$i]);
+							$result [$name] = json_decode( $value ,true);
+						}else{
+							$result [] = '"' . $name . '": "' . \addslashes ( $values [$i] ) . '"';
+						}
+					}
 				}
 			}
 		}

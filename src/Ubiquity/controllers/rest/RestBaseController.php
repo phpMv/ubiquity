@@ -105,16 +105,16 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $condition
 	 *        	the sql Where part
-	 * @param boolean|string $included
+	 * @param boolean|string $include
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 */
-	public function _get($condition = "1=1", $included = false, $useCache = false) {
+	public function _get($condition = "1=1", $include = false, $useCache = false) {
 		try {
 			$condition = \urldecode ( $condition );
-			$included = $this->getIncluded ( $included );
+			$include = $this->getInclude ( $include );
 			$useCache = UString::isBooleanTrue ( $useCache );
-			$datas = DAO::getAll ( $this->model, $condition, $included, null, $useCache );
+			$datas = DAO::getAll ( $this->model, $condition, $include, null, $useCache );
 			echo $this->_getResponseFormatter ()->get ( $datas );
 		} catch ( \Exception $e ) {
 			$this->_setResponseCode ( 500 );
@@ -127,16 +127,16 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $keyValues
 	 *        	primary key(s) value(s) or condition
-	 * @param boolean|string $included
+	 * @param boolean|string $include
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 *        	if true then response is cached
 	 */
-	public function _getOne($keyValues, $included = false, $useCache = false) {
+	public function _getOne($keyValues, $include = false, $useCache = false) {
 		$keyValues = \urldecode ( $keyValues );
-		$included = $this->getIncluded ( $included );
+		$include = $this->getInclude ( $include );
 		$useCache = UString::isBooleanTrue ( $useCache );
-		$data = DAO::getOne ( $this->model, $keyValues, $included, null, $useCache );
+		$data = DAO::getOne ( $this->model, $keyValues, $include, null, $useCache );
 		if (isset ( $data )) {
 			$_SESSION ["_restInstance"] = $data;
 			echo $this->_getResponseFormatter ()->getOne ( $data );
@@ -154,44 +154,44 @@ abstract class RestBaseController extends Controller {
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param string|boolean $included
+	 * @param array|boolean $include
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 */
-	public function _getManyToOne($ids, $member, $included = false, $useCache = false) {
-		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $included, $useCache) {
-			return DAO::getManyToOne ( $instance, $member, $included, $useCache );
-		}, $member, $included, $useCache, false );
+	public function _getManyToOne($ids, $member, $include = false, $useCache = false) {
+		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $include, $useCache) {
+			return DAO::getManyToOne ( $instance, $member, $include, $useCache );
+		}, $member, $include, $useCache, false );
 	}
 
 	/**
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param string|boolean $included
+	 * @param array|boolean $include
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception
 	 */
-	public function _getOneToMany($ids, $member, $included = false, $useCache = false) {
-		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $included, $useCache) {
-			return DAO::getOneToMany ( $instance, $member, $included, $useCache );
-		}, $member, $included, $useCache, true );
+	public function _getOneToMany($ids, $member, $include = false, $useCache = false) {
+		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $include, $useCache) {
+			return DAO::getOneToMany ( $instance, $member, $include, $useCache );
+		}, $member, $include, $useCache, true );
 	}
 
 	/**
 	 *
 	 * @param string $ids
 	 * @param string $member
-	 * @param string|boolean $included
+	 * @param array|boolean $include
 	 *        	if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
 	 * @throws \Exception
 	 */
-	public function _getManyToMany($ids, $member, $included = false, $useCache = false) {
-		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $included, $useCache) {
-			return DAO::getManyToMany ( $instance, $member, $included, null, $useCache );
-		}, $member, $included, $useCache, true );
+	public function _getManyToMany($ids, $member, $include = false, $useCache = false) {
+		$this->getAssociatedMemberValues_ ( $ids, function ($instance, $member, $include, $useCache) {
+			return DAO::getManyToMany ( $instance, $member, $include, null, $useCache );
+		}, $member, $include, $useCache, true );
 	}
 
 	/**
@@ -203,8 +203,9 @@ abstract class RestBaseController extends Controller {
 	public function _update(...$keyValues) {
 		$instance = DAO::getOne ( $this->model, $keyValues );
 		$this->operate_ ( $instance, function ($instance) {
-			$this->_setValuesToObject ( $instance, $this->getDatas () );
-			if ($this->validateInstance ( $instance )) {
+			$datas=$this->getDatas ();
+			$this->_setValuesToObject ( $instance, $datas );
+			if ($this->validateInstance ( $instance ,array_keys($datas))) {
 				return DAO::update ( $instance );
 			}
 			return null;
@@ -219,8 +220,9 @@ abstract class RestBaseController extends Controller {
 		$model = $this->model;
 		$instance = new $model ();
 		$this->operate_ ( $instance, function ($instance) {
-			$this->_setValuesToObject ( $instance, $this->getDatas () );
-			if ($this->validateInstance ( $instance )) {
+			$datas=$this->getDatas ();
+			$this->_setValuesToObject ( $instance, $datas );
+			if ($this->validateInstance ( $instance ,$datas)) {
 				return DAO::insert ( $instance );
 			}
 			return null;

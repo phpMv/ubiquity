@@ -648,7 +648,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$fieldsButton = $frm->addFields ();
 			$fieldsButton->addClass ( "_notToClone" );
 			$fieldsButton->addButton ( "clone", "Add " . $type, "yellow" )->setTagName ( "div" );
-			if (isset ( $model )) {
+			if ($model!=null) {
 				$model = UbiquityUtils::getModelsName ( Startup::getConfig (), $model );
 				$modelFields = OrmUtils::getSerializableFields ( $model );
 				if (\sizeof ( $modelFields ) > 0) {

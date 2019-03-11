@@ -119,6 +119,11 @@ class UString {
 	public static function isValid($value) {
 		return is_scalar ( $value ) || (\is_object ( $value ) && method_exists ( $value, '__toString' ));
 	}
+	
+	public static function isJson($value) {
+		return preg_match('/[^,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]/',
+				preg_replace('/"(\\.|[^"\\\\])*"/', '', $value));
+	}
 
 	/**
 	 * Converts a value to a string
