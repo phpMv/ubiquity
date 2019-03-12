@@ -6,11 +6,12 @@ use Ubiquity\scaffolding\ScaffoldController;
 use Ubiquity\utils\base\UString;
 
 /**
+ * Creates a CRUD controller.
  * Ubiquity\scaffolding\creators$CrudControllerCreator
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class CrudControllerCreator extends BaseControllerCreator {
@@ -25,6 +26,7 @@ class CrudControllerCreator extends BaseControllerCreator {
 		$this->crudDatas = $crudDatas;
 		$this->crudViewer = $crudViewer;
 		$this->crudEvents = $crudEvents;
+		$this->templateName = 'crudController.tpl';
 	}
 
 	public function create(ScaffoldController $scaffoldController) {
@@ -70,7 +72,7 @@ class CrudControllerCreator extends BaseControllerCreator {
 			}
 		}
 		$uses = implode ( "\n", $uses );
-		$messages [] = $scaffoldController->_createController ( $crudControllerName, [ "%routeName%" => $routeName,"%route%" => $this->routePath,"%resource%" => $resource,"%uses%" => $uses,"%namespace%" => $controllerNS,"%baseClass%" => "\\Ubiquity\\controllers\\crud\\CRUDController","%content%" => $classContent ], "crudController.tpl" );
+		$messages [] = $scaffoldController->_createController ( $crudControllerName, [ "%routeName%" => $routeName,"%route%" => $this->routePath,"%resource%" => $resource,"%uses%" => $uses,"%namespace%" => $controllerNS,"%baseClass%" => "\\Ubiquity\\controllers\\crud\\CRUDController","%content%" => $classContent ], $this->templateName );
 		echo implode ( "\n", $messages );
 	}
 

@@ -7,6 +7,7 @@ use Ubiquity\utils\base\UString;
 use Ubiquity\scaffolding\ScaffoldController;
 
 /**
+ * Creates an authentification controller.
  * Ubiquity\scaffolding\creators$AuthControllerCreator
  * This class is part of Ubiquity
  *

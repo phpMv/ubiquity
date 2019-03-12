@@ -7,12 +7,12 @@ use Ubiquity\scaffolding\ScaffoldController;
 use Ubiquity\controllers\Startup;
 
 /**
- * Base class for class creation in scaffolding
+ * Base class for class creation in scaffolding.
  * Ubiquity\scaffolding\creators$BaseControllerCreator
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.2
  *
  */
 abstract class BaseControllerCreator {
@@ -20,6 +20,7 @@ abstract class BaseControllerCreator {
 	protected $routePath;
 	protected $views;
 	protected $controllerNS;
+	protected $templateName;
 
 	/**
 	 *
@@ -46,5 +47,21 @@ abstract class BaseControllerCreator {
 	abstract public function create(ScaffoldController $scaffoldController);
 
 	abstract protected function addViews(&$uses, &$messages, &$classContent);
+
+	/**
+	 *
+	 * @return mixed
+	 */
+	public function getTemplateName() {
+		return $this->templateName;
+	}
+
+	/**
+	 *
+	 * @param mixed $templateName
+	 */
+	public function setTemplateName($templateName) {
+		$this->templateName = $templateName;
+	}
 }
 

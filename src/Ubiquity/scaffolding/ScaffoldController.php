@@ -11,14 +11,15 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\scaffolding\creators\AuthControllerCreator;
 use Ubiquity\scaffolding\creators\CrudControllerCreator;
 use Ubiquity\scaffolding\creators\RestControllerCreator;
+use Ubiquity\scaffolding\creators\RestApiControllerCreator;
 
 /**
- * Base class for Scaffolding
+ * Base class for Scaffolding.
  * Ubiquity\scaffolding$ScaffoldController
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 abstract class ScaffoldController {
@@ -94,6 +95,11 @@ abstract class ScaffoldController {
 
 	public function addRestController($restControllerName, $resource, $routePath = "", $reInit = true) {
 		$restCreator = new RestControllerCreator ( $restControllerName, $resource, $routePath );
+		$restCreator->create ( $this, $reInit );
+	}
+
+	public function addRestApiController($restControllerName, $routePath = "", $reInit = true) {
+		$restCreator = new RestApiControllerCreator ( $restControllerName, $routePath );
 		$restCreator->create ( $this, $reInit );
 	}
 
