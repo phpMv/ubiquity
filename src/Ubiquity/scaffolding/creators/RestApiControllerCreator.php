@@ -35,14 +35,15 @@ class RestApiControllerCreator extends BaseControllerCreator {
 
 		$filename = $restControllersDir . \DS . $controllerName . ".php";
 		if (! \file_exists ( $filename )) {
+			$routeName = "";
 			$templateDir = $scaffoldController->getTemplateDir ();
 			$namespace = '';
 			if ($controllerNS != null)
 				$namespace = "namespace " . $controllerNS . ";";
 			if ($this->routePath != null) {
-				$this->addRoute ( $this->routePath );
+				$routeName = $this->addRoute ( $this->routePath );
 			}
-			$variables = [ "%route%" => $this->routePath,"%controllerName%" => $controllerName,"%namespace%" => $namespace ];
+			$variables = [ "%route%" => $this->routePath,"%controllerName%" => $controllerName,"%namespace%" => $namespace,"%routeName%" => $routeName ];
 			$this->addVariablesForReplacement ( $variables );
 			UFileSystem::openReplaceWriteFromTemplateFile ( $templateDir . $this->templateName, $filename, $variables );
 			$messages [] = $scaffoldController->showSimpleMessage ( "The <b>" . $controllerName . "</b> Rest controller has been created in <b>" . UFileSystem::cleanPathname ( $filename ) . "</b>.", "success", "Rest creation", "checkmark circle", 30000, "msgGlobal" );
