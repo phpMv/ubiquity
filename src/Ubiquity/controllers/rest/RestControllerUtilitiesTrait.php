@@ -61,6 +61,14 @@ trait RestControllerUtilitiesTrait {
 		$filter .= ' limit ' . $offset . ',' . $pageSize;
 		return $pages;
 	}
+	
+	protected function updateOperation($instance,$datas,$updateMany=false){
+		return DAO::update($instance,$updateMany);
+	}
+	
+	protected function AddOperation($instance,$datas,$insertMany=false){
+		return DAO::insert($instance,$insertMany);
+	}
 
 	/**
 	 *
@@ -101,7 +109,7 @@ trait RestControllerUtilitiesTrait {
 	protected function connectDb($config) {
 		$db = $config ["database"];
 		if ($db ["dbName"] !== "") {
-			DAO::connect ( $db ["type"], $db ["dbName"], @$db ["serverName"], @$db ["port"], @$db ["user"], @$db ["password"], @$db ["options"], @$db ["cache"] );
+			DAO::connect ( $db ["type"], $db ["dbName"], $db ["serverName"]??'127.0.0.1', $db ["port"]??3306, $db ["user"]??'root', $db ["password"]??'', $db ["options"]??[], $db ["cache"]??false );
 		}
 	}
 
@@ -177,7 +185,7 @@ trait RestControllerUtilitiesTrait {
 		}
 	}
 
-	protected function validateInstance($instance, $members) {
+	public function validateInstance($instance, $members) {
 		if ($this->useValidation) {
 			$isValid = true;
 			$violations = ValidatorsManager::validate ( $instance );

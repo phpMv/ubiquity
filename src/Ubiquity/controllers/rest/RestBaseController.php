@@ -8,6 +8,7 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\Router;
+use Ubiquity\controllers\crud\CRUDHelper;
 
 /**
  * Abstract base class for Rest controllers.
@@ -192,12 +193,12 @@ abstract class RestBaseController extends Controller {
 	 * @param array $keyValues
 	 */
 	public function _update(...$keyValues) {
-		$instance = DAO::getOne ( $this->model, $keyValues );
+		$instance = DAO::getOne ( $this->model, $keyValues,false );
 		$this->operate_ ( $instance, function ($instance) {
 			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
 			if ($this->validateInstance ( $instance, array_keys ( $datas ) )) {
-				return DAO::update ( $instance );
+				return $this->updateOperation($instance, $datas,true);
 			}
 			return null;
 		}, "updated", "Unable to update the instance", $keyValues );
@@ -214,7 +215,7 @@ abstract class RestBaseController extends Controller {
 			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
 			if ($this->validateInstance ( $instance, $datas )) {
-				return DAO::insert ( $instance );
+				return $this->AddOperation($instance, $datas,true);
 			}
 			return null;
 		}, "inserted", "Unable to insert the instance", [ ] );

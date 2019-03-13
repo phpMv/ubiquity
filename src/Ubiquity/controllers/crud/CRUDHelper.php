@@ -44,7 +44,7 @@ class CRUDHelper {
 		return DAO::getAll($model,$condition);
 	}
 	
-	public static function update($instance,$values) {
+	public static function update($instance,$values,$setValues=true,$updateMany=true) {
 		$className=\get_class($instance);
 		$fieldsInRelationForUpdate=OrmUtils::getFieldsInRelationsForUpdate_($className);
 		$manyToOneRelations=$fieldsInRelationForUpdate["manyToOne"];
@@ -64,7 +64,9 @@ class CRUDHelper {
 				}
 			}
 		}
-		URequest::setValuesToObject($instance, $values);
+		if($setValues){
+			URequest::setValuesToObject($instance, $values);
+		}
 		if($manyToOneRelations){
 			self::updateManyToOne($manyToOneRelations, $members, $className, $instance, $values);
 		}
@@ -77,7 +79,7 @@ class CRUDHelper {
 					// TODO update dbCache
 				}
 			}
-			if ($update && $manyToManyRelations) {
+			if ($updateMany && $update && $manyToManyRelations) {
 				self::updateManyToMany($manyToManyRelations, $members, $className, $instance, $values);
 			}
 		}

@@ -9,6 +9,7 @@ use Ubiquity\controllers\rest\RestBaseController;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\controllers\rest\RestServer;
+use Ubiquity\controllers\crud\CRUDHelper;
 
 /**
  * Rest JsonAPI implementation.
@@ -25,7 +26,7 @@ abstract class JsonApiRestController extends RestBaseController {
 
 	protected function _setResource($resource) {
 		$modelsNS = $this->config ["mvcNS"] ["models"];
-		$this->model = $modelsNS . "\\" . ucfirst ( $resource );
+		$this->model = $modelsNS . "\\" . $this->_getResponseFormatter ()->getModel ( $resource );
 	}
 
 	protected function _checkResource($resource, $callback) {
@@ -61,9 +62,22 @@ abstract class JsonApiRestController extends RestBaseController {
 				$key = OrmUtils::getFirstKey ( $this->model );
 				$attributes [$key] = $datas ["data"] ["id"];
 			}
+			$this->loadRelationshipsDatas($datas, $attributes);
 			return $attributes;
 		}
 		$this->addError ( 204, 'No content', 'The POST request has no content!' );
+	}
+	
+	protected function loadRelationshipsDatas($datas,&$attributes){
+		if(isset($datas['data']['relationships'])){
+			$relationShips=$datas['data']['relationships'];
+			foreach ($relationShips as $member=>$data){
+				if(isset($data['data']['id'])){
+					$m=OrmUtils::getJoinColumnName($this->model, $member);
+					$attributes[$m]=$data['data']['id'];
+				}
+			}
+		}
 	}
 
 	/**
@@ -73,12 +87,22 @@ abstract class JsonApiRestController extends RestBaseController {
 	protected function getRestServer(): RestServer {
 		return new JsonApiRestServer ( $this->config );
 	}
+	
+	protected function updateOperation($instance,$datas,$updateMany=false){
+		$instance->_new=false;
+		return CRUDHelper::update($instance,$datas,false,$updateMany);
+	}
+	
+	protected function AddOperation($instance,$datas,$insertMany=false){
+		$instance->_new=true;
+		return CRUDHelper::update($instance,$datas,false,$insertMany);
+	}
 
 	/**
 	 *
-	 * @route("{resource}/","methods"=>["options"])
+	 * @route("{resource}","methods"=>["options"],"priority"=>3000)
 	 */
-	public function options($resource) {
+	public function options(...$resource) {
 	}
 
 	/**
@@ -182,13 +206,12 @@ abstract class JsonApiRestController extends RestBaseController {
 	 *
 	 * @param string $resource The resource (model) to use
 	 *
-	 * @route("{resource}/","methods"=>["patch"],"priority"=>0)
+	 * @route("{resource}/{id}","methods"=>["patch"],"priority"=>0)
 	 */
-	public function update_($resource) {
-		$this->_checkResource ( $resource, function () {
-			$pks = $this->getPrimaryKeysFromDatas ( $this->getDatas (), $this->model );
+	public function update_($resource,...$id) {
+		$this->_checkResource ( $resource, function () use ($id){
 			if (! $this->hasErrors ()) {
-				parent::_update ( ...$pks );
+				parent::_update ( ...$id );
 			} else {
 				echo $this->displayErrors ();
 			}
