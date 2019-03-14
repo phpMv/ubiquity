@@ -50,7 +50,7 @@ If the name of the table is different from the name of the class, the annotation
     namespace models;
     
     /**
-    * @table("user")
+    * @table("name"=>"user")
     **/
     class User{
     	/**
