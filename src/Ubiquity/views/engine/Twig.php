@@ -2,16 +2,19 @@
 
 namespace Ubiquity\views\engine;
 
-use Ubiquity\controllers\Startup;
-use Ubiquity\controllers\Router;
-use Ubiquity\cache\CacheManager;
-use Ubiquity\core\Framework;
-use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\translation\TranslatorManager;
-use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use Twig\TwigFunction;
 use Twig\TwigTest;
+use Twig\Loader\FilesystemLoader;
+use Ubiquity\cache\CacheManager;
+use Ubiquity\controllers\Router;
+use Ubiquity\controllers\Startup;
+use Ubiquity\core\Framework;
+use Ubiquity\events\EventsManager;
+use Ubiquity\events\ViewEvents;
+use Ubiquity\exceptions\ThemesException;
+use Ubiquity\translation\TranslatorManager;
+use Ubiquity\utils\base\UFileSystem;
 
 /**
  * Ubiquity Twig template engine.
@@ -20,7 +23,7 @@ use Twig\TwigTest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class Twig extends TemplateEngine {
@@ -63,7 +66,9 @@ class Twig extends TemplateEngine {
 	 */
 	public function render($viewName, $pData, $asString) {
 		$pData ["config"] = Startup::getConfig ();
+		EventsManager::trigger ( ViewEvents::BEFORE_RENDER, $viewName, $pData );
 		$render = $this->twig->render ( $viewName, $pData );
+		EventsManager::trigger ( ViewEvents::AFTER_RENDER, $render, $viewName, $pData );
 		if ($asString) {
 			return $render;
 		} else {
@@ -92,12 +97,27 @@ class Twig extends TemplateEngine {
 	/**
 	 * Adds a new path in a namespace
 	 *
-	 * @param string $path
-	 *        	The path to add
-	 * @param string $namespace
-	 *        	The namespace to use
+	 * @param string $path The path to add
+	 * @param string $namespace The namespace to use
 	 */
 	public function addPath(string $path, string $namespace) {
 		$this->loader->addPath ( $path, $namespace );
+	}
+
+	/**
+	 * Defines the activeTheme.
+	 * **activeTheme** namespace is @activeTheme
+	 *
+	 * @param string $theme
+	 * @param string $themeFolder
+	 * @throws ThemesException
+	 */
+	public function setTheme($theme, $themeFolder = 'themes') {
+		$path = \ROOT . \DS . 'views' . \DS . $themeFolder . \DS . $theme;
+		if (file_exists ( $path )) {
+			$this->loader->addPath ( $path, "activeTheme" );
+		} else {
+			throw new ThemesException ( sprintf ( 'The path `%s` does not exists!', $path ) );
+		}
 	}
 }
