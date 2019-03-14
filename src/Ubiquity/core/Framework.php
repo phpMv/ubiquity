@@ -1,9 +1,11 @@
 <?php
 
 /**
- * This class gives access to useful methods or objects of the framework
- * @author jc
- * @version 1.0.0.1
+ * This class gives access to useful methods or objects of the framework.
+ * Ubiquity\core
+ * This class is part of Ubiquity
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.1
  *
  */
 namespace Ubiquity\core;
@@ -18,7 +20,7 @@ use Ubiquity\translation\TranslatorManager;
 use Ubiquity\contents\normalizers\NormalizersManager;
 
 class Framework {
-	public const version = '2.0.10';
+	public const version = '2.0.11';
 
 	public static function getController() {
 		return Startup::getController ();
