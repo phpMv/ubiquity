@@ -2,47 +2,45 @@
 
 namespace Ubiquity\controllers\admin;
 
-use Ajax\JsUtils;
-use Ubiquity\cache\CacheManager;
-use Ajax\semantic\html\elements\HtmlIcon;
-use Ajax\semantic\html\base\constants\TextAlignment;
-use Ajax\semantic\html\elements\HtmlLabel;
+use Ajax\semantic\components\validation\Rule;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
-use Ajax\semantic\widgets\dataelement\DataElement;
+use Ajax\semantic\html\base\constants\TextAlignment;
+use Ajax\semantic\html\collections\HtmlMessage;
+use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
+use Ajax\semantic\html\collections\form\HtmlFormInput;
+use Ajax\semantic\html\collections\form\HtmlFormTextarea;
+use Ajax\semantic\html\content\view\HtmlItem;
 use Ajax\semantic\html\elements\HtmlButton;
-use Ajax\semantic\html\elements\html5\HtmlLink;
 use Ajax\semantic\html\elements\HtmlButtonGroups;
+use Ajax\semantic\html\elements\HtmlIcon;
+use Ajax\semantic\html\elements\HtmlIconGroups;
+use Ajax\semantic\html\elements\HtmlLabel;
+use Ajax\semantic\html\elements\HtmlLabelGroups;
+use Ajax\semantic\html\elements\HtmlList;
+use Ajax\semantic\html\elements\html5\HtmlLink;
+use Ajax\semantic\html\views\HtmlItems;
+use Ajax\semantic\widgets\dataelement\DataElement;
 use Ajax\semantic\widgets\datatable\DataTable;
 use Ajax\service\JString;
-use Ajax\semantic\html\elements\HtmlList;
-use Ubiquity\controllers\admin\popo\Route;
-use Ubiquity\utils\base\UString;
-use Ajax\semantic\html\elements\HtmlIconGroups;
-use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\annotations\parser\DocParser;
+use Ubiquity\cache\CacheManager;
 use Ubiquity\cache\ClassUtils;
-use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
-use Ajax\semantic\html\elements\HtmlLabelGroups;
-use Ubiquity\utils\base\UIntrospection;
-use Ajax\semantic\html\content\view\HtmlItem;
-use Ajax\semantic\html\views\HtmlItems;
-use Ubiquity\controllers\admin\popo\RepositoryGit;
-use Ubiquity\utils\git\GitFileStatus;
-use Ubiquity\utils\http\USession;
-use Ubiquity\utils\base\UArray;
-use Ubiquity\controllers\admin\popo\ControllerAction;
-use Ajax\semantic\html\collections\form\HtmlFormInput;
-use Ubiquity\db\Database;
-use Ajax\semantic\html\collections\form\HtmlFormTextarea;
-use Ajax\semantic\components\validation\Rule;
+use Ubiquity\contents\validation\validators\ConstraintViolationViewer;
 use Ubiquity\controllers\Startup;
+use Ubiquity\controllers\admin\popo\ControllerAction;
+use Ubiquity\controllers\admin\popo\InstanceViolations;
+use Ubiquity\controllers\admin\popo\RepositoryGit;
+use Ubiquity\controllers\admin\popo\Route;
+use Ubiquity\db\Database;
+use Ubiquity\log\HtmlLogFormatter;
 use Ubiquity\log\LogMessage;
 use Ubiquity\log\Logger;
+use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\base\UDateTime;
-use Ubiquity\log\HtmlLogFormatter;
-use Ubiquity\controllers\admin\popo\InstanceViolations;
-use Ubiquity\orm\parser\Reflexion;
-use Ubiquity\contents\validation\validators\ConstraintViolationViewer;
+use Ubiquity\utils\base\UIntrospection;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\git\GitFileStatus;
+use Ubiquity\utils\http\USession;
 
 /**
  *
@@ -52,7 +50,7 @@ use Ubiquity\contents\validation\validators\ConstraintViolationViewer;
 class UbiquityMyAdminViewer {
 	/**
 	 *
-	 * @var JsUtils
+	 * @var \Ajax\php\ubiquity\JsUtils
 	 */
 	private $jquery;
 
@@ -376,7 +374,9 @@ class UbiquityMyAdminViewer {
 			$resource = $restAttributes ["restAttributes"] ["resource"];
 			$title=$resource;
 			if($resource==null){
-				$title=call_user_func([$controller,'_getApiVersion']);
+				if(class_exists($controller)){
+					$title=call_user_func([$controller,'_getApiVersion']);
+				}
 			}
 			$tab = $tabs->addTab ( $title, [ $doc,$list,$this->_getRestRoutesDataTable ( $routes, "dtRest", $resource, $restAttributes ["restAttributes"] ["authorizations"] ) ] );
 			if (\sizeof ( $errors ) > 0) {

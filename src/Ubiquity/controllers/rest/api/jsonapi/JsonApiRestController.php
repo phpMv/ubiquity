@@ -17,7 +17,7 @@ use Ubiquity\controllers\crud\CRUDHelper;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.1
+ * @version 1.1.2
  * @since Ubiquity 2.0.11
  *
  */
@@ -239,6 +239,14 @@ abstract class JsonApiRestController extends RestBaseController {
 	 */
 	public static function _getApiVersion() {
 		return self::API_VERSION;
+	}
+	
+	/**
+	 * Returns the template for creating this type of controller
+	 * @return string
+	 */
+	public static function _getTemplateFile(){
+		return 'restApiController.tpl';
 	}
 }
 

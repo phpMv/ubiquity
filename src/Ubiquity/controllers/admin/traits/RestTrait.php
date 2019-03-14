@@ -2,20 +2,23 @@
 
 namespace Ubiquity\controllers\admin\traits;
 
-use Ajax\service\JString;
+use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\semantic\html\collections\form\HtmlForm;
+use Ajax\semantic\html\elements\HtmlIconGroups;
 use Ajax\semantic\html\elements\HtmlLabel;
-use Ubiquity\utils\base\UString;
+use Ajax\service\JString;
+use Ubiquity\annotations\parser\DocParser;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
-use Ajax\semantic\html\elements\HtmlIconGroups;
-use Ubiquity\utils\http\URequest;
-use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\controllers\rest\RestServer;
-use Ubiquity\annotations\parser\DocParser;
-use Ajax\semantic\html\collections\HtmlMessage;
-use Ubiquity\exceptions\UbiquityException;
 use Ubiquity\controllers\admin\utils\Constants;
+use Ubiquity\controllers\rest\RestServer;
+use Ubiquity\exceptions\UbiquityException;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\controllers\rest\RestBaseController;
+use Ubiquity\controllers\rest\HasResourceInterface;
+use Ubiquity\controllers\rest\RestController;
+use Ubiquity\controllers\rest\api\jsonapi\JsonApiRestController;
 
 /**
  *
@@ -123,13 +126,24 @@ trait RestTrait {
 		$config = Startup::getConfig ();
 		$frm = $this->jquery->semantic ()->htmlForm ( "frmNewResource" );
 		$frm->addMessage ( "msg", "Creating a new REST controller...", "New resource", HtmlIconGroups::corner ( "heartbeat", "plus" ) );
-		$input = $frm->addInput ( "ctrlName", "Controller name" )->addRule ( "empty" );
+		$fields = $frm->addFields ();
+		$input = $fields->addInput ( "ctrlName", "Controller name" )->addRule ( "empty" );
 		$input->labeled ( RestServer::getRestNamespace () . "\\" );
+		$baseClasses = array_merge([RestBaseController::class,RestController::class,JsonApiRestController::class],CacheManager::getControllers ( RestBaseController::class, true, true ));
+		$baseClasses=array_combine($baseClasses, $baseClasses);
+		$dd=$fields->addDropdown("baseClass",$baseClasses,"Base class",current($baseClasses));
+		$dd->getField()->each(function($index,$item){
+			$class=$item->getProperty("data-value");
+			if(is_subclass_of($class, HasResourceInterface::class,true)){
+				$item->setProperty("data-resource",'true');
+			}
+		});
+		$dd->getField()->onClick("\$('#field-resource').toggle('true'==$(event.target).attr('data-resource'));");
 		$fields = $frm->addFields ();
 		$resources = CacheManager::getModels ( $config, true );
 		$resources = \array_combine ( $resources, $resources );
-		$fields->addDropdown ( "resource", $resources, "Resource", end ( $resources ) )->addRule ( [ "exactCount[1]" ] );
 		$fields->addInput ( "route", "Main route path", "text", "/rest/" )->addRule ( "empty" );
+		$fields->addDropdown ( "resource", $resources, "Resource", end ( $resources ) )->addRule ( [ "exactCount[1]" ] );
 		$frm->addCheckbox ( "re-init", "Re-init Rest cache (recommanded)", "reInit" )->setChecked ( true );
 
 		$frm->addDivider ();
@@ -148,7 +162,7 @@ trait RestTrait {
 	public function _createNewResource() {
 		if (URequest::isPost ()) {
 			if (isset ( $_POST ["ctrlName"] ) && $_POST ["ctrlName"] !== "") {
-				$this->scaffold->addRestController ( ucfirst ( $_POST ["ctrlName"] ), UString::doubleBackSlashes ( $_POST ["resource"] ), $_POST ["route"], isset ( $_POST ["re-init"] ) );
+				$this->scaffold->addRestController ( ucfirst ( $_POST ["ctrlName"] ), $_POST["baseClass"],UString::doubleBackSlashes ( $_POST ["resource"]??'' ), $_POST ["route"], isset ( $_POST ["re-init"] ) );
 			}
 			$this->jquery->exec ( "$('#div-new-resource').hide();$('#divRest').show();", true );
 			echo $this->jquery->compile ( $this->view );

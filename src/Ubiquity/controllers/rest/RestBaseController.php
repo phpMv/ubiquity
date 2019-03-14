@@ -8,7 +8,6 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\Router;
-use Ubiquity\controllers\crud\CRUDHelper;
 
 /**
  * Abstract base class for Rest controllers.
@@ -16,7 +15,7 @@ use Ubiquity\controllers\crud\CRUDHelper;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 abstract class RestBaseController extends Controller {
@@ -197,7 +196,7 @@ abstract class RestBaseController extends Controller {
 		$this->operate_ ( $instance, function ($instance) {
 			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
-			if ($this->validateInstance ( $instance, array_keys ( $datas ) )) {
+			if ($this->_validateInstance ( $instance, array_keys ( $datas ) )) {
 				return $this->updateOperation($instance, $datas,true);
 			}
 			return null;
@@ -214,7 +213,7 @@ abstract class RestBaseController extends Controller {
 		$this->operate_ ( $instance, function ($instance) {
 			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
-			if ($this->validateInstance ( $instance, $datas )) {
+			if ($this->_validateInstance ( $instance, $datas )) {
 				return $this->AddOperation($instance, $datas,true);
 			}
 			return null;
@@ -235,5 +234,13 @@ abstract class RestBaseController extends Controller {
 
 	public static function _getApiVersion() {
 		return '?';
+	}
+	
+	/**
+	 * Returns the template for creating this type of controller
+	 * @return string
+	 */
+	public static function _getTemplateFile(){
+		return 'restController.tpl';
 	}
 }

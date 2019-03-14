@@ -14,7 +14,7 @@ use Ubiquity\orm\DAO;
  * @version 1.0.4
  *
  */
-abstract class RestController extends RestBaseController {
+abstract class RestController extends RestBaseController implements HasResourceInterface {
 
 	public function initialize() {
 		$thisClass = \get_class ( $this );

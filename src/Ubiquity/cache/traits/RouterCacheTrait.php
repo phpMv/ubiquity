@@ -176,7 +176,7 @@ trait RouterCacheTrait {
 		return self::_getFiles ( $config, "controllers", $silent );
 	}
 
-	public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false) {
+	public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false,$includeAbstract=false) {
 		$result = [ ];
 		if ($includeSubclass) {
 			$result [] = $subClass;
@@ -193,7 +193,7 @@ trait RouterCacheTrait {
 				$controllerClass = ClassUtils::getClassFullNameFromFile ( $file, $backslash );
 				if (isset ( $restCtrls [$controllerClass] ) === false) {
 					$r = new \ReflectionClass ( $controllerClass );
-					if ($r->isSubclassOf ( $subClass ) && ! $r->isAbstract ()) {
+					if ($r->isSubclassOf ( $subClass ) && ($includeAbstract || ! $r->isAbstract ())) {
 						$result [] = $controllerClass;
 					}
 				}

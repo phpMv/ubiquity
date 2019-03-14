@@ -15,7 +15,7 @@ use Ubiquity\orm\OrmUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  * @property ResponseFormatter $responseFormatter
  * @property RestServer $server
  * @property string $model
@@ -185,7 +185,7 @@ trait RestControllerUtilitiesTrait {
 		}
 	}
 
-	public function validateInstance($instance, $members) {
+	public function _validateInstance($instance, $members) {
 		if ($this->useValidation) {
 			$isValid = true;
 			$violations = ValidatorsManager::validate ( $instance );
