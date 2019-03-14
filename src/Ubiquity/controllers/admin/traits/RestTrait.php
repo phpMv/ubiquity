@@ -129,9 +129,9 @@ trait RestTrait {
 		$fields = $frm->addFields ();
 		$input = $fields->addInput ( "ctrlName", "Controller name" )->addRule ( "empty" );
 		$input->labeled ( RestServer::getRestNamespace () . "\\" );
-		$baseClasses = array_merge ( [ RestBaseController::class,RestController::class,JsonApiRestController::class ], CacheManager::getControllers ( RestController::class, true, true ) );
+		$baseClasses = array_merge ( [ RestBaseController::class,RestController::class,JsonApiRestController::class ], CacheManager::getControllers ( RestBaseController::class, true, true ) );
 		$baseClasses = array_combine ( $baseClasses, $baseClasses );
-		$dd = $fields->addDropdown ( "baseClass", $baseClasses, "Base class", current ( $baseClasses ) );
+		$dd = $fields->addDropdown ( "baseClass", $baseClasses, "Base class", RestController::class );
 		$dd->getField ()->each ( function ($index, $item) {
 			$class = $item->getProperty ( "data-value" );
 			if (is_subclass_of ( $class, HasResourceInterface::class, true )) {
