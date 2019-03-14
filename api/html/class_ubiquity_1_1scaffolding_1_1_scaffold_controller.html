@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.0.10</span>
+   &#160;<span id="projectnumber">2.0.11</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1scaffolding_1_1_scaf
 </div><!--header-->
 <div class="contents">
 
-<p>Base class for Scaffolding <a class="el" href="namespace_ubiquity.html">Ubiquity</a>$ScaffoldController This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a>.  
+<p>Base class for Scaffolding.  
  <a href="class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#details">More...</a></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for ScaffoldController:</div>
@@ -123,8 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a34ea7a871b2ac875073eeeb7035a28d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adffc1c0e487681093b160ac06e4d64df"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#adffc1c0e487681093b160ac06e4d64df">addAuthController</a> ($authControllerName, $baseClass, $authViews=null, $routePath=&quot;&quot;)</td></tr>
 <tr class="separator:adffc1c0e487681093b160ac06e4d64df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6148fa83b12915bd06e4bd4098dabc97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#a6148fa83b12915bd06e4bd4098dabc97">addRestController</a> ($restControllerName, $resource, $routePath=&quot;&quot;, $reInit=true)</td></tr>
-<tr class="separator:a6148fa83b12915bd06e4bd4098dabc97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9957e4f843933085a4c3e939fe48bbb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#ab9957e4f843933085a4c3e939fe48bbb">addRestController</a> ($restControllerName, $baseClass, $resource, $routePath=&quot;&quot;, $reInit=true)</td></tr>
+<tr class="separator:ab9957e4f843933085a4c3e939fe48bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8365ecaaf29be8e2b65c6dceaf32f1d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#ac8365ecaaf29be8e2b65c6dceaf32f1d">_createClass</a> ($template, $classname, $namespace, $uses, $extendsOrImplements, $classContent)</td></tr>
 <tr class="separator:ac8365ecaaf29be8e2b65c6dceaf32f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a306c0e7727f0eac9e9dd8636536b0614"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#a306c0e7727f0eac9e9dd8636536b0614">_newAction</a> ($controller, $action, $parameters=null, $content='', $routeInfo=null, $createView=false)</td></tr>
@@ -151,9 +151,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a5ad67ae42c8ba8e2aaf3d8e421ffd2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Base class for Scaffolding <a class="el" href="namespace_ubiquity.html">Ubiquity</a>$ScaffoldController This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a>. </p>
+<div class="textblock"><p>Base class for Scaffolding. </p>
+<p><a class="el" href="namespace_ubiquity.html">Ubiquity</a>$ScaffoldController This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a></p>
 <dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.0.2 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.3 </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scaffold_controller_8php_source.html#l00024">24</a> of file <a class="el" href="_scaffold_controller_8php_source.html">ScaffoldController.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -383,7 +384,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_scaffold_controller_8php_source.html#l00185">185</a> of file <a class="el" href="_scaffold_controller_8php_source.html">ScaffoldController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_scaffold_controller_8php_source.html#l00188">188</a> of file <a class="el" href="_scaffold_controller_8php_source.html">ScaffoldController.php</a>.</p>
 
 </div>
 </div>
@@ -563,8 +564,8 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6148fa83b12915bd06e4bd4098dabc97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6148fa83b12915bd06e4bd4098dabc97">&#9670;&nbsp;</a></span>addRestController()</h2>
+<a id="ab9957e4f843933085a4c3e939fe48bbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9957e4f843933085a4c3e939fe48bbb">&#9670;&nbsp;</a></span>addRestController()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -574,6 +575,12 @@ Protected Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$restControllerName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$baseClass</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -637,7 +644,7 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_scaffold_controller_8php_source.html#l00193">193</a> of file <a class="el" href="_scaffold_controller_8php_source.html">ScaffoldController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_scaffold_controller_8php_source.html#l00196">196</a> of file <a class="el" href="_scaffold_controller_8php_source.html">ScaffoldController.php</a>.</p>
 
 </div>
 </div>
@@ -665,7 +672,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_scaffold_controller_8php_source.html#l00176">176</a> of file <a class="el" href="_scaffold_controller_8php_source.html">ScaffoldController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_scaffold_controller_8php_source.html#l00179">179</a> of file <a class="el" href="_scaffold_controller_8php_source.html">ScaffoldController.php</a>.</p>
 
 </div>
 </div>
@@ -859,7 +866,7 @@ Protected Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1scaffolding.html">scaffolding</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html">ScaffoldController</a></li>
-    <li class="footer"><small>Generated on Thu Mar 7 2019 01:10:11 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Mar 14 2019 03:22:00 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

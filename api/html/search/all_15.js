@@ -18,7 +18,7 @@ var searchData=
   ['timevalidator',['TimeValidator',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1dates_1_1_time_validator.html',1,'Ubiquity::contents::validation::validators::dates']]],
   ['timevalidator_2ephp',['TimeValidator.php',['../_time_validator_8php.html',1,'']]],
   ['tocookie',['toCookie',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_override_trait.html#ad73203cad56334adc10b92fc114cdede',1,'Ubiquity::controllers::auth::AuthControllerOverrideTrait']]],
-  ['tojson',['toJson',['../class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#a2b39955dcd2181fe19869fdbede5a754',1,'Ubiquity\controllers\rest\api\jsonapi\JsonApiResponseFormatter\toJson()'],['../class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html#a2b39955dcd2181fe19869fdbede5a754',1,'Ubiquity\controllers\rest\ResponseFormatter\toJson()']]],
+  ['tojson',['toJson',['../class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html#a2b39955dcd2181fe19869fdbede5a754',1,'Ubiquity::controllers::rest::ResponseFormatter']]],
   ['toselect',['toSelect',['../class_ubiquity_1_1views_1_1_gui.html#a4f0630e0c586f68acc0e668907171b40',1,'Ubiquity::views::Gui']]],
   ['tostring',['toString',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ac6675c8ec383724ca1ed03309a380abc',1,'Ubiquity::utils::base::UString']]],
   ['toxml',['toXML',['../class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html#af78721c3ae3e1aec245e5430bfd0c179',1,'Ubiquity::controllers::rest::ResponseFormatter']]],

@@ -1,5 +1,10 @@
 var NAVTREEINDEX6 =
 {
+"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#ac3e20f9386d0723c70ea3fb261b8bd8a":[3,0,0,3,0,2,8,17],
+"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#ac55a441ea10f0ff43d0a2ab3fa46c544":[3,0,0,3,0,2,8,1],
+"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#ad7fe4ac38e764b49c2f8e01733ff5986":[3,0,0,3,0,2,8,18],
+"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#afc9aa009c9816bf08ff021fc9e24cdaf":[3,0,0,3,0,2,8,11],
+"class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html":[3,0,0,3,0,2,9],
 "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a10dad9009ff7a9d585fe258645a0d97b":[3,0,0,3,0,2,9,26],
 "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a1728d8b515816623b042eeb85e48f77f":[3,0,0,3,0,2,9,1],
 "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a1e721f96dc13dd0136afc0325c0b4325":[3,0,0,3,0,2,9,21],
@@ -244,10 +249,5 @@ var NAVTREEINDEX6 =
 "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a149eb92716c1084a935e04a8d95f7347":[3,0,0,3,3,1,20],
 "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a1728d8b515816623b042eeb85e48f77f":[3,0,0,3,3,1,2],
 "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a1bcec9bbd34255927faaf155bf3a940a":[3,0,0,3,3,1,27],
-"class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a35d37f23b5935befaf63966aee282ccc":[3,0,0,3,3,1,1],
-"class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a378f38cff59451fa95efc4ae3e7fcf08":[3,0,0,3,3,1,12],
-"class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a3f2a055258adc245af3d808a9b7c9edf":[3,0,0,3,3,1,5],
-"class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a4cf504c68fda5644ea8a429346d0ccf0":[3,0,0,3,3,1,7],
-"class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a54cb346cad18365465ccaf747a17c13b":[3,0,0,3,3,1,24],
-"class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a54ecee00f83d387598096653b07f10c5":[3,0,0,3,3,1,13]
+"class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a35d37f23b5935befaf63966aee282ccc":[3,0,0,3,3,1,1]
 };

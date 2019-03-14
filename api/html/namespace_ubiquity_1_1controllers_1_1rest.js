@@ -2,6 +2,7 @@ var namespace_ubiquity_1_1controllers_1_1rest =
 [
     [ "api", "namespace_ubiquity_1_1controllers_1_1rest_1_1api.html", "namespace_ubiquity_1_1controllers_1_1rest_1_1api" ],
     [ "ApiTokens", "class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html", "class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens" ],
+    [ "HasResourceInterface", "interface_ubiquity_1_1controllers_1_1rest_1_1_has_resource_interface.html", null ],
     [ "ResponseFormatter", "class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html", "class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter" ],
     [ "RestBaseController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller" ],
     [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller" ],

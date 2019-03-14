@@ -15,6 +15,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route =
     [ "getPath", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a30c5c67b2bf8e2e2ccc7e361faa20afe", null ],
     [ "getVariadicParam", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#ab5d503b2393ed85fbe963cef614e4044", null ],
     [ "init", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#aa9e7328a224a9f368433034755ad4902", null ],
+    [ "mergeRouteArray", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#ad07919e0580216d1895e015788917f5b", null ],
     [ "setAction", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a0366b3b0db0bd90abfc461c372f86599", null ],
     [ "setCache", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a1bfa0b30d50d9ccce38cd1bcf2375109", null ],
     [ "setController", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#aa4f9c9e545ef3a90856d30de93fe5e09", null ],

@@ -4,6 +4,9 @@ var dir_4193867d1b1809355284af1aafb90429 =
     [ "ApiTokens.php", "_api_tokens_8php.html", [
       [ "ApiTokens", "class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html", "class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens" ]
     ] ],
+    [ "HasResourceInterface.php", "_has_resource_interface_8php.html", [
+      [ "HasResourceInterface", "interface_ubiquity_1_1controllers_1_1rest_1_1_has_resource_interface.html", null ]
+    ] ],
     [ "ResponseFormatter.php", "_response_formatter_8php.html", [
       [ "ResponseFormatter", "class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html", "class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter" ]
     ] ],

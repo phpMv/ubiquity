@@ -184,6 +184,8 @@ var NAVTREEINDEX0 =
 "_has_model_viewer_interface_8php_source.html":[4,0,0,0,3,0,0,0],
 "_has_not_null_interface_8php.html":[4,0,0,0,2,1,0,7],
 "_has_not_null_interface_8php_source.html":[4,0,0,0,2,1,0,7],
+"_has_resource_interface_8php.html":[4,0,0,0,3,3,2],
+"_has_resource_interface_8php_source.html":[4,0,0,0,3,3,2],
 "_html_log_formatter_8php.html":[4,0,0,0,8,1],
 "_html_log_formatter_8php_source.html":[4,0,0,0,8,1],
 "_id_annotation_8php.html":[4,0,0,0,0,5],
@@ -216,6 +218,8 @@ var NAVTREEINDEX0 =
 "_json_api_response_formatter_8php_source.html":[4,0,0,0,3,3,0,0,0],
 "_json_api_rest_controller_8php.html":[4,0,0,0,3,3,0,0,1],
 "_json_api_rest_controller_8php_source.html":[4,0,0,0,3,3,0,0,1],
+"_json_api_rest_server_8php.html":[4,0,0,0,3,3,0,0,2],
+"_json_api_rest_server_8php_source.html":[4,0,0,0,3,3,0,0,2],
 "_length_validator_8php.html":[4,0,0,0,2,1,0,3,1],
 "_length_validator_8php_source.html":[4,0,0,0,2,1,0,3,1],
 "_less_than_or_equal_validator_8php.html":[4,0,0,0,2,1,0,1,3],
@@ -245,9 +249,5 @@ var NAVTREEINDEX0 =
 "_messages_catalog_8php.html":[4,0,0,0,12,1],
 "_messages_catalog_8php_source.html":[4,0,0,0,12,1],
 "_messages_domain_8php.html":[4,0,0,0,12,2],
-"_messages_domain_8php_source.html":[4,0,0,0,12,2],
-"_messages_trait_8php.html":[4,0,0,0,3,4,0],
-"_messages_trait_8php_source.html":[4,0,0,0,3,4,0],
-"_micro_template_engine_8php.html":[4,0,0,0,14,0,0,0],
-"_micro_template_engine_8php_source.html":[4,0,0,0,14,0,0,0]
+"_messages_domain_8php_source.html":[4,0,0,0,12,2]
 };

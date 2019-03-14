@@ -16,6 +16,7 @@ var searchData=
   ['member',['Member',['../class_ubiquity_1_1orm_1_1creator_1_1_member.html',1,'Ubiquity::orm::creator']]],
   ['member_2ephp',['Member.php',['../_member_8php.html',1,'']]],
   ['mergemessages',['mergeMessages',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1multiples_1_1_validator_multiple.html#a55f9699c65ddfca4d7bcfa908757e68b',1,'Ubiquity\contents\validation\validators\multiples\ValidatorMultiple\mergeMessages()'],['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1_validator.html#a55f9699c65ddfca4d7bcfa908757e68b',1,'Ubiquity\contents\validation\validators\Validator\mergeMessages()']]],
+  ['mergeroutearray',['mergeRouteArray',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#ad07919e0580216d1895e015788917f5b',1,'Ubiquity::controllers::admin::popo::Route']]],
   ['message',['message',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_core_trait.html#a0d5395c75e330f52a914cb9a37a9af80',1,'Ubiquity::controllers::auth::AuthControllerCoreTrait']]],
   ['messagescatalog',['MessagesCatalog',['../class_ubiquity_1_1translation_1_1_messages_catalog.html',1,'Ubiquity::translation']]],
   ['messagescatalog_2ephp',['MessagesCatalog.php',['../_messages_catalog_8php.html',1,'']]],

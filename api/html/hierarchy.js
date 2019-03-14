@@ -171,6 +171,9 @@ var hierarchy =
         ] ]
       ] ]
     ] ],
+    [ "HasResourceInterface", "interface_ubiquity_1_1controllers_1_1rest_1_1_has_resource_interface.html", [
+      [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", null ]
+    ] ],
     [ "HtmlLogFormatter", "class_ubiquity_1_1log_1_1_html_log_formatter.html", null ],
     [ "InfoMessage", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_info_message.html", null ],
     [ "InstanceViolations", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_instance_violations.html", null ],
@@ -236,7 +239,9 @@ var hierarchy =
       [ "RestBaseController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html", null ]
     ] ],
     [ "RestError", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_error.html", null ],
-    [ "RestServer", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html", null ],
+    [ "RestServer", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html", [
+      [ "JsonApiRestServer", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_server.html", null ]
+    ] ],
     [ "RestTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html", [
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],

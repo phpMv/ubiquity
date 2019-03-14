@@ -9,7 +9,7 @@ var class_ubiquity_1_1scaffolding_1_1_scaffold_controller =
     [ "_refreshRest", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#a5154019cfdbb46e1cc4486242cb30c2d", null ],
     [ "addAuthController", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#adffc1c0e487681093b160ac06e4d64df", null ],
     [ "addCrudController", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#a34ea7a871b2ac875073eeeb7035a28d9", null ],
-    [ "addRestController", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#a6148fa83b12915bd06e4bd4098dabc97", null ],
+    [ "addRestController", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#ab9957e4f843933085a4c3e939fe48bbb", null ],
     [ "createAuthCrudView", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#aac5ab7695a3425d512c4a6e8042a7599", null ],
     [ "getMethods", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#a7bd5929d2a37809236b84654bed41e8d", null ],
     [ "getTemplateDir", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#ac3fb4d72b37431b8ad3b0c28af888473", null ],
