@@ -129,16 +129,16 @@ trait RestTrait {
 		$fields = $frm->addFields ();
 		$input = $fields->addInput ( "ctrlName", "Controller name" )->addRule ( "empty" );
 		$input->labeled ( RestServer::getRestNamespace () . "\\" );
-		$baseClasses = array_merge([RestBaseController::class,RestController::class,JsonApiRestController::class],CacheManager::getControllers ( RestBaseController::class, true, true ));
-		$baseClasses=array_combine($baseClasses, $baseClasses);
-		$dd=$fields->addDropdown("baseClass",$baseClasses,"Base class",current($baseClasses));
-		$dd->getField()->each(function($index,$item){
-			$class=$item->getProperty("data-value");
-			if(is_subclass_of($class, HasResourceInterface::class,true)){
-				$item->setProperty("data-resource",'true');
+		$baseClasses = array_merge ( [ RestBaseController::class,RestController::class,JsonApiRestController::class ], CacheManager::getControllers ( RestController::class, true, true ) );
+		$baseClasses = array_combine ( $baseClasses, $baseClasses );
+		$dd = $fields->addDropdown ( "baseClass", $baseClasses, "Base class", current ( $baseClasses ) );
+		$dd->getField ()->each ( function ($index, $item) {
+			$class = $item->getProperty ( "data-value" );
+			if (is_subclass_of ( $class, HasResourceInterface::class, true )) {
+				$item->setProperty ( "data-resource", 'true' );
 			}
-		});
-		$dd->getField()->onClick("\$('#field-resource').toggle('true'==$(event.target).attr('data-resource'));");
+		} );
+		$dd->getField ()->onClick ( "\$('#field-resource').toggle('true'==$(event.target).attr('data-resource'));" );
 		$fields = $frm->addFields ();
 		$resources = CacheManager::getModels ( $config, true );
 		$resources = \array_combine ( $resources, $resources );
@@ -162,7 +162,7 @@ trait RestTrait {
 	public function _createNewResource() {
 		if (URequest::isPost ()) {
 			if (isset ( $_POST ["ctrlName"] ) && $_POST ["ctrlName"] !== "") {
-				$this->scaffold->addRestController ( ucfirst ( $_POST ["ctrlName"] ), $_POST["baseClass"],UString::doubleBackSlashes ( $_POST ["resource"]??'' ), $_POST ["route"], isset ( $_POST ["re-init"] ) );
+				$this->scaffold->addRestController ( ucfirst ( $_POST ["ctrlName"] ), $_POST ["baseClass"], UString::doubleBackSlashes ( $_POST ["resource"] ?? ''), $_POST ["route"], isset ( $_POST ["re-init"] ) );
 			}
 			$this->jquery->exec ( "$('#div-new-resource').hide();$('#divRest').show();", true );
 			echo $this->jquery->compile ( $this->view );
@@ -195,10 +195,11 @@ trait RestTrait {
 		$headers = $this->getRestRequestHeaders ();
 		$method = $_POST ["method"];
 		$path = $_POST ["path"];
-		$payload = $_POST ["payload"]??null;
+		$payload = $_POST ["payload"] ?? null;
 		$formId = "sub-tddtRest-tr-" . JString::cleanIdentifier ( $_POST ["pathId"] );
-		$parameters=[  "jsCallback" => "$('#" . $formId . " ._restResponse').html(JSON.stringify(data,null,2))",
-				"complete" => "var status = { 200 : 'green', 401 : 'orange', 403 : 'brown', 404 : 'black', 500 : 'red' };
+		$parameters = [
+						"jsCallback" => "$('#" . $formId . " ._restResponse').html(JSON.stringify(data,null,2))",
+						"complete" => "var status = { 200 : 'green', 401 : 'orange', 403 : 'brown', 404 : 'black', 500 : 'red' };
 							var headers=jqXHR.getAllResponseHeaders();
 							headers=headers.split(/\\r\\n/);
 							var bHeaders=[];
@@ -218,11 +219,11 @@ trait RestTrait {
 						$('#" . $formId . " ._status').html(jqXHR.status);
 						$('#" . $formId . " ._status').removeClass('red black brown orange green').addClass(status[jqXHR.status]);
 						addToken(jqXHR);",
-				"dataType" => "json",
-				"headers" => $headers,
-				"params" => $this->getRestRequestParams () ];
-		if(isset($payload)){
-			$parameters["contentType"]="'application/json; charset=utf-8'";
+						"dataType" => "json",
+						"headers" => $headers,
+						"params" => $this->getRestRequestParams () ];
+		if (isset ( $payload )) {
+			$parameters ["contentType"] = "'application/json; charset=utf-8'";
 		}
 		$this->jquery->ajax ( $method, $path, "#" . $formId . " ._restResponse", $parameters );
 		echo '<div><h5 class="ui top block attached header">Response headers</h5><div class="ui attached segment"><pre style="font-size: 10px;" class="_responseHeaders"></pre></div></div>';
@@ -230,13 +231,13 @@ trait RestTrait {
 	}
 
 	protected function getRestRequestHeaders() {
-		$result=["Authorization"=>'"Bearer "+$("#access-token").val()'];
+		$result = [ "Authorization" => '"Bearer "+$("#access-token").val()' ];
 		if (isset ( $_POST ["headers"] )) {
 			$headers = urldecode ( $_POST ["headers"] );
 			\parse_str ( $headers, $output );
 			$this->_getParamsForJSON ( $result, $output );
 		}
-		$result["content-type"]="'application/json; charset=utf-8'";
+		$result ["content-type"] = "'application/json; charset=utf-8'";
 		return $result;
 	}
 
@@ -247,7 +248,7 @@ trait RestTrait {
 			\parse_str ( $headers, $output );
 			$this->_getParamsForJSON ( $result, $output );
 		}
-		return json_encode($result);
+		return json_encode ( $result );
 	}
 
 	protected function _getParamsForJSON(&$result, $params) {
@@ -258,11 +259,11 @@ trait RestTrait {
 			for($i = 0; $i < $count; $i ++) {
 				$name = $names [$i];
 				if (UString::isNotNull ( $name )) {
-					if (isset ( $values [$i] )){
-						if(UString::isJson($values[$i])){
-							$value=str_replace("'", '"', $values[$i]);
-							$result [$name] = json_decode( $value ,true);
-						}else{
+					if (isset ( $values [$i] )) {
+						if (UString::isJson ( $values [$i] )) {
+							$value = str_replace ( "'", '"', $values [$i] );
+							$result [$name] = json_decode ( $value, true );
+						} else {
 							$result [] = '"' . $name . '": "' . \addslashes ( $values [$i] ) . '"';
 						}
 					}
