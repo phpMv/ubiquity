@@ -15,7 +15,7 @@
 	"authors" : [{
 			"name" : "Jean-Christophe HERON",
 			"email" : "myaddressmail@gmail.com",
-			"role" : "Developer"
+			"role" : "Lead developer"
 		}
 	],
 	"autoload" : {
@@ -25,7 +25,8 @@
 	},
 	"extra" : {
 		"branch-alias" : {
-			"dev-master" : "2.0.x-dev"
+			"dev-master" : "2.0.x-dev",
+			"themes_module" : "2.1.x-dev"
 		}
 	},
 	"require-dev" : {
