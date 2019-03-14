@@ -86,25 +86,25 @@ class AdminCest extends BaseAcceptance {
 		$I->click ( "#bt-new-resource" );
 		$I->waitForText ( "Creating a new REST controller...", self::TIMEOUT, "body" );
 		$I->fillField ( "#ctrlName", "RestUsersController" );
-		$I->fillField ( "#route", "/rest/Users" );
+		$I->fillField ( "#route", "/rest-users" );
 		$I->click ( "#bt-create-new-resource" );
 		$I->wait ( 10 );
 		$I->click ( "#bt-init-rest-cache" );
 		$I->wait ( 10 );
-		$I->amOnPage ( "/rest/Users/get/1" );
+		$I->amOnPage ( "/rest-users/get/1" );
 		$I->see ( '"count":101' );
-		$I->amOnPage ( "/rest/Users/getOne/1/false" );
+		$I->amOnPage ( "/rest-users/getOne/1/false" );
 		$I->see ( 'Benjamin' );
-		$I->amOnPage ( "/rest/Users/getOne/1/true" );
+		$I->amOnPage ( "/rest-users/getOne/1/true" );
 		$I->see ( 'Benjamin' );
 		$I->see ( 'de Caen-Normandie' );
 		$I->see ( 'Auditeurs' );
 		$I->see ( 'myaddressmail@gmail.com' );
-		$I->amOnPage ( "/rest/Users/getOne/500" );
+		$I->amOnPage ( "/rest-users/getOne/500" );
 		$I->see ( 'No result found for primary key(s): 500' );
-		$I->amOnPage ( "/rest/Users/connect/" );
+		$I->amOnPage ( "/rest-users/connect/" );
 		$I->see ( 'Bearer' );
-		$I->amOnPage ( "/rest/Users/get/firstname+like+%27B%25%27" );
+		$I->amOnPage ( "/rest-users/get/firstname+like+%27B%25%27" );
 		$I->see ( '"count":7' );
 	}
 
