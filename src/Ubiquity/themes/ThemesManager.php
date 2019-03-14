@@ -64,7 +64,7 @@ class ThemesManager {
 
 	/**
 	 * Adds a listener before theme rendering.
-	 * The callback function takes the following parameters: $view (the view name), $pData (array od datas sent to the view)
+	 * The callback function takes the following parameters: $view (the view name), $pData (array of datas sent to the view)
 	 *
 	 * @param callable $callback
 	 */
@@ -74,7 +74,7 @@ class ThemesManager {
 
 	/**
 	 * Adds a listener after theme rendering.
-	 * The callback function takes the following parameters: $render (the response string), $view (the view name), $pData (array od datas sent to the view)
+	 * The callback function takes the following parameters: $render (the response string), $view (the view name), $pData (array of datas sent to the view)
 	 *
 	 * @param callable $callback
 	 */
