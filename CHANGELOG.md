@@ -4,8 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
-Nothing
-
+### Fixed
+- An exception is thrown In case of problem with the Database connection (in `DataBase::connect` method) see https://github.com/phpMv/ubiquity/issues/12
+>The connection to the database must be protected by a `try/catch` in `app/config/services.php`
+```
+try{
+	\Ubiquity\orm\DAO::startDatabase($config);
+}catch(Exception $e){
+	echo $e->getMessage();
+}
+```
 ## [2.0.11] - 2019-03-14
 ### Added
 - Rest [JsonAPI](https://jsonapi.org/format/) implementation
