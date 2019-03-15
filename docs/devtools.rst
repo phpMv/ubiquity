@@ -102,8 +102,8 @@ Adds the action ``display`` in controller ``Users`` with a parameter:
    Ubiquity action Users.display -p=idUser
  
 .. info::
-   Les paramètres doivent respecter les règles de nommage php pour les variables. |br|
-   Il est inutile de mettre le **$** devant le nom des paramètres.
+   The parameters must respect the php naming rules for the variables. | Br |
+   You do not have to put the **$** in front of the parameter names.
 
 code result:
 
