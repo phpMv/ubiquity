@@ -7,7 +7,6 @@ use Ubiquity\views\engine\Twig;
 use Ubiquity\exceptions\ThemesException;
 use Ubiquity\events\EventsManager;
 use Ubiquity\events\ViewEvents;
-use Ubiquity\utils\base\UFileSystem;
 
 /**
  * Themes manager.
@@ -22,10 +21,6 @@ use Ubiquity\utils\base\UFileSystem;
 class ThemesManager {
 	const THEMES_FOLDER = 'themes';
 	private static $activeTheme;
-
-	public static function start(string $activeTheme = null) {
-		self::setActiveTheme ( $activeTheme ?? 'default');
-	}
 
 	public static function getActiveTheme() {
 		return self::$activeTheme;
@@ -45,6 +40,15 @@ class ThemesManager {
 		} else {
 			throw new ThemesException ( 'Template engine must be an instance of Twig for themes activation!' );
 		}
+	}
+	
+	/**
+	 * Sets the activeTheme
+	 *
+	 * @param string $activeTheme
+	 */
+	public static function setActiveThemeFromTwig($activeTheme) {
+		self::$activeTheme = $activeTheme;
 	}
 
 	/**

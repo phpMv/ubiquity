@@ -19,11 +19,11 @@ class AssetsManager {
 	private static $siteURL;
 
 	private static function script($src) {
-		return sprintf ( '<script src="%s"></script>', $src );
+		return sprintf ( '<script type="text/javascript" src="%s"></script>', $src );
 	}
 
 	private static function stylesheet($link) {
-		return sprintf ( '<link href="%s" rel="stylesheet">', $link );
+		return sprintf ( '<link href="%s" type="text/css" rel="stylesheet">', $link );
 	}
 
 	/**
@@ -51,7 +51,7 @@ class AssetsManager {
 		if ($absolute) {
 			return self::$siteURL . self::ASSETS_FOLDER . $resource;
 		}
-		return self::ASSETS_FOLDER . $resource;
+		return ltrim(self::ASSETS_FOLDER,'/') . $resource;
 	}
 
 	/**
@@ -78,7 +78,7 @@ class AssetsManager {
 		if ($absolute) {
 			return self::$siteURL . self::ASSETS_FOLDER . $theme . '/' . $resource;
 		}
-		return self::ASSETS_FOLDER . $theme . '/' . $resource;
+		return ltrim(self::ASSETS_FOLDER,'/') . $theme . '/' . $resource;
 	}
 
 	/**
