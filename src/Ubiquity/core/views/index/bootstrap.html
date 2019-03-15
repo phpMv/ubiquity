@@ -21,7 +21,7 @@
 			<hr class="my-4">			
 			<ul class="list-group">
 				{% set infos = infos|merge({'Template': _self}) %}
-				<li class='list-group-item list-group-item-dark'><strong><i class="fa fa-info-circle"></i> Page informations</strong></li>
+				<li class='list-group-item inverted'><strong><i class="fa fa-info-circle"></i> Page informations</strong></li>
 				{% for key, value in infos %}
 				  <li class="list-group-item">{{key}} :&nbsp;<span class="font-weight-bold text-info">{{value}}</span>
 				  </li>
