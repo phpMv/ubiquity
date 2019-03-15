@@ -15,6 +15,8 @@ use Ubiquity\events\ViewEvents;
 use Ubiquity\exceptions\ThemesException;
 use Ubiquity\translation\TranslatorManager;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\themes\ThemesManager;
+use Ubiquity\assets\AssetsManager;
 
 /**
  * Ubiquity Twig template engine.
@@ -33,31 +35,48 @@ class Twig extends TemplateEngine {
 	public function __construct($options = array()) {
 		$loader = new FilesystemLoader ( \ROOT . \DS . "views" . \DS );
 		$loader->addPath ( implode ( \DS, [ Startup::getFrameworkDir (),"..","core","views" ] ) . \DS, "framework" );
-		if (isset ( $options ["cache"] ) && $options ["cache"] === true)
+		$this->loader = $loader;
+		
+		if (isset ( $options ["cache"] ) && $options ["cache"] === true){
 			$options ["cache"] = CacheManager::getCacheSubDirectory ( "views" );
+		}
+		if(isset($options["activeTheme"])){
+			ThemesManager::setActiveThemeFromTwig($options["activeTheme"]);
+			self::setTheme($options["activeTheme"],ThemesManager::THEMES_FOLDER);
+			unset($options["activeTheme"]);
+		}
 		$this->twig = new Environment ( $loader, $options );
 
-		$function = new TwigFunction ( 'path', function ($name, $params = [], $absolute = false) {
+		$this->addFunction( 'path', function ($name, $params = [], $absolute = false) {
 			return Router::path ( $name, $params, $absolute );
 		} );
-		$this->twig->addFunction ( $function );
-		$function = new TwigFunction ( 'url', function ($name, $params) {
+		
+		$this->addFunction( 'url', function ($name, $params) {
 			return Router::url ( $name, $params );
 		} );
-		$this->twig->addFunction ( $function );
+		
+		$this->addFunction( 'css_', function ($resource, $absolute=false) {
+			return AssetsManager::css_( $resource, $absolute );
+		} );
+			
+		$this->addFunction( 'js_', function ($resource, $absolute=false) {
+			return AssetsManager::js_( $resource, $absolute );
+		} );
 
-		$function = new TwigFunction ( 't', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
+		$this->addFunction( 't', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
 			$trans = TranslatorManager::trans ( $id, $parameters, $domain, $locale );
 			return $this->twig->createTemplate ( $trans )->render ( $context );
 		}, [ 'needs_context' => true ] );
-		$this->twig->addFunction ( $function );
 
 		$test = new TwigTest ( 'instanceOf', function ($var, $class) {
 			return $var instanceof $class;
 		} );
 		$this->twig->addTest ( $test );
 		$this->twig->addGlobal ( "app", new Framework () );
-		$this->loader = $loader;
+	}
+	
+	protected function addFunction($name,$callback){
+		$this->twig->addFunction ( new TwigFunction ( $name, $callback ) );
 	}
 
 	/*
