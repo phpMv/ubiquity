@@ -1,8 +1,14 @@
 <br>
 <div class="ui container">
 	<div class="ui segment">
-		{{q["header"] |raw }}
-		{{q["btTest"] |raw }}
+		<h1  id="header" class="ui header">
+			<div id="content-header" class="content">Welcome to Ubiquity 
+				<div id="subheader-header" class="sub header">
+					Version {{app.getVersion()}}
+				</div>
+				<button id="btTest" class="ui button">Semantic-UI Button</button>
+			</div>
+		</h1>
 		<div class="ui icon positive message">
 			<i class="ui info circle icon"></i>
 			<div class="content">
@@ -13,11 +19,17 @@
 					<li>Action : <b>{{app.getAction()}}</b></li>
 					<li>Route : <b>{{app.getUrl()}}</b></li>
 					<li>Path : <b>{{path('')}}</b></li>
-					<li>Template : <b>{{_self.getTemplateName()}}</b></li>
+					<li>Template : <b>{{_self}}</b></li>
+					<li>Theme : <b>{{app.assets().getActiveThemeUrl('')}}</b></li>
 				</ul>
 			</div>
 		</div>
-		{{q["menu"] |raw }}
+		<div id="menu" class="ui menu secondary">
+			<a id="menu-item-0" class="item" href="https://ubiquity.kobject.net" target="new">Ubiquity website</a> 
+			<a id="menu-item-1" class="item" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest" target="new">Guide</a> 
+			<a id="menu-item-2" class="item" href="https://api.kobject.net/ubiquity/" target="new">Doc API</a> 
+			<a id="menu-item-3" class="item" href="https://github.com/phpMv/ubiquity" target="new">GitHub</a> 
+			<a id="htmlmenu-menu-4" class="item" href="Admin" target="admin">UbiquityMyAdmin</a>
+		</div>
 	</div>
 </div>
-{{ script_foot |raw }}
