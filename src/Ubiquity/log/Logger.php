@@ -29,6 +29,12 @@ abstract class Logger {
 			self::$instance = $instance;
 		}
 	}
+	
+	abstract public function _registerError();
+	
+	public static function registerError(){
+		self::$instance->_registerError();
+	}
 
 	public static function inContext($contexts, $context) {
 		if ($contexts === null) {

@@ -4,14 +4,15 @@ namespace Ubiquity\db;
 
 use Ubiquity\exceptions\CacheException;
 use Ubiquity\db\traits\DatabaseOperationsTrait;
+use Ubiquity\exceptions\DBException;
 
 /**
- * PDO database class
+ * Ubiquity PDO database class.
  * Ubiquity\db$Database
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class Database {
@@ -60,17 +61,17 @@ class Database {
 	}
 
 	/**
-	 * Creates the PDO instance and realize a safe connection
+	 * Creates the PDO instance and realize a safe connection.
 	 *
-	 * @return boolean true if connection is established
+	 * @throws DBException
+	 * @return boolean
 	 */
 	public function connect() {
 		try {
 			$this->_connect ();
 			return true;
 		} catch ( \PDOException $e ) {
-			echo $e->getMessage ();
-			return false;
+			throw new DBException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
 		}
 	}
 
