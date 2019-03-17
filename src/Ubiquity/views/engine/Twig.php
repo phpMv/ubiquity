@@ -25,7 +25,7 @@ use Ubiquity\assets\AssetsManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.0.7
  *
  */
 class Twig extends TemplateEngine {
@@ -57,11 +57,19 @@ class Twig extends TemplateEngine {
 		
 		$this->addFunction( 'css_', function ($resource, $absolute=false) {
 			return AssetsManager::css_( $resource, $absolute );
-		} );
-			
+		} ,true);
+		
+		$this->addFunction( 'css', function ($resource, $absolute=false) {
+			return AssetsManager::css( $resource, $absolute );
+		} ,true);
+
+		$this->addFunction( 'js', function ($resource, $absolute=false) {
+			return AssetsManager::js( $resource, $absolute );
+		} ,true);
+		
 		$this->addFunction( 'js_', function ($resource, $absolute=false) {
 			return AssetsManager::js_( $resource, $absolute );
-		} );
+		},true );
 
 		$this->addFunction( 't', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
 			$trans = TranslatorManager::trans ( $id, $parameters, $domain, $locale );
@@ -75,8 +83,9 @@ class Twig extends TemplateEngine {
 		$this->twig->addGlobal ( "app", new Framework () );
 	}
 	
-	protected function addFunction($name,$callback){
-		$this->twig->addFunction ( new TwigFunction ( $name, $callback ) );
+	protected function addFunction($name,$callback,$safe=false){
+		$options=($safe)?['is_safe' =>['html']]:[];
+		$this->twig->addFunction ( new TwigFunction ( $name, $callback,$options ) );
 	}
 
 	/*
@@ -134,7 +143,7 @@ class Twig extends TemplateEngine {
 	public function setTheme($theme, $themeFolder = 'themes') {
 		$path = \ROOT . \DS . 'views' . \DS . $themeFolder . \DS . $theme;
 		if (file_exists ( $path )) {
-			$this->loader->addPath ( $path, "activeTheme" );
+			$this->loader->setPaths( [$path], "activeTheme" );
 		} else {
 			throw new ThemesException ( sprintf ( 'The path `%s` does not exists!', $path ) );
 		}
