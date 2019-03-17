@@ -1,35 +1,44 @@
 <br>
 <div class="container">
-	<div class="jumbotron jumbotron-fluid">
-		<h1  id="header" class="ui header">
-			<div id="content-header" class="content">Welcome to Ubiquity 
-				<div id="subheader-header" class="sub header">
-					Version {{app.getVersion()}}
+	<div class="">
+		<div class="container">
+			<div class="alert alert-success" role="alert">
+			    <div class="row">
+			        <div class="col-auto align-self-start">
+			           <i class="fa fa-check-circle fa-3x"></i>
+			        </div>
+			        <div class="col">
+			           	<h4>It works !</h4>
+			           	<span>Your application is now ready. You can start working by reading the <a class="alert-link" target="_new" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest">Quick start guide</a>.</span>
+			        </div>
+			    </div>
+			</div>				
+			<h1>Welcome to Ubiquity</h1>
+
+			<p class="lead">
+				Version <span class="badge version">{{app.getVersion()}}</span>
+			</p>
+			<hr class="my-4">			
+			<ul class="list-group">
+				{% set infos = infos|merge({'Template': _self}) %}
+				<li class='list-group-item list-group-item-dark'><strong><i class="fa fa-info-circle"></i> Page informations</strong></li>
+				{% for key, value in infos %}
+				  <li class="list-group-item">{{key}} :&nbsp;<span class="font-weight-bold text-info">{{value}}</span>
+				  </li>
+				  {% endfor %}
+			</ul>
+			<p></p>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<span class="navbar-brand mb-0 h1">Ubiquity</span>
+			  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			    <div class="navbar-nav">
+			    {% for name, link in links %}
+					<a class="nav-item nav-link" href="{{link}}" target="new">{{name}}</a> 
+				{% endfor %}	
+					</div>
 				</div>
-				<button id="btTest" class="ui button">Semantic-UI Button</button>
-			</div>
-		</h1>
-		<div class="ui icon positive message">
-			<i class="ui info circle icon"></i>
-			<div class="content">
-				<div class="header" id="test">It works !</div>
-				<p>Page informations</p>
-				<ul class="list">
-					<li>Controller : <b>{{app.getController()}}</b></li>
-					<li>Action : <b>{{app.getAction()}}</b></li>
-					<li>Route : <b>{{app.getUrl()}}</b></li>
-					<li>Path : <b>{{path('')}}</b></li>
-					<li>Template : <b>{{_self}}</b></li>
-					<li>Theme : <b>{{app.assets().getActiveThemeUrl('')}}</b></li>
-				</ul>
-			</div>
-		</div>
-		<div id="menu" class="ui menu secondary">
-			<a id="menu-item-0" class="item" href="https://ubiquity.kobject.net" target="new">Ubiquity website</a> 
-			<a id="menu-item-1" class="item" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest" target="new">Guide</a> 
-			<a id="menu-item-2" class="item" href="https://api.kobject.net/ubiquity/" target="new">Doc API</a> 
-			<a id="menu-item-3" class="item" href="https://github.com/phpMv/ubiquity" target="new">GitHub</a> 
-			<a id="htmlmenu-menu-4" class="item" href="Admin" target="admin">UbiquityMyAdmin</a>
+			</nav>
 		</div>
 	</div>
 </div>
+<p></p>
