@@ -36,19 +36,7 @@ class Twig extends TemplateEngine {
 		$loader = new FilesystemLoader ( \ROOT . \DS . "views" . \DS );
 		$loader->addPath ( implode ( \DS, [ Startup::getFrameworkDir (),"..","core","views" ] ) . \DS, "framework" );
 		$this->loader = $loader;
-<<<<<<< HEAD
 
-=======
-		
-		if (isset ( $options ["cache"] ) && $options ["cache"] === true){
-			$options ["cache"] = CacheManager::getCacheSubDirectory ( "views" );
-		}
-		if(isset($options["activeTheme"])){
-			ThemesManager::setActiveThemeFromTwig($options["activeTheme"]);
-			self::setTheme($options["activeTheme"],ThemesManager::THEMES_FOLDER);
-			unset($options["activeTheme"]);
-		}
->>>>>>> [update] activeTheme setting
 		$this->twig = new Environment ( $loader, $options );
 		if (isset ( $options ["cache"] ) && $options ["cache"] === true) {
 			$options ["cache"] = CacheManager::getCacheSubDirectory ( "views" );
@@ -59,7 +47,6 @@ class Twig extends TemplateEngine {
 			unset ( $options ["activeTheme"] );
 		}
 
-<<<<<<< HEAD
 		$this->addFunction ( 'path', function ($name, $params = [], $absolute = false) {
 			return Router::path ( $name, $params, $absolute );
 		} );
@@ -85,25 +72,6 @@ class Twig extends TemplateEngine {
 		}, true );
 
 		$this->addFunction ( 't', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
-=======
-		$this->addFunction( 'path', function ($name, $params = [], $absolute = false) {
-			return Router::path ( $name, $params, $absolute );
-		} );
-		
-		$this->addFunction( 'url', function ($name, $params) {
-			return Router::url ( $name, $params );
-		} );
-		
-		$this->addFunction( 'css_', function ($resource, $absolute=false) {
-			return AssetsManager::css_( $resource, $absolute );
-		} );
-			
-		$this->addFunction( 'js_', function ($resource, $absolute=false) {
-			return AssetsManager::js_( $resource, $absolute );
-		} );
-
-		$this->addFunction( 't', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
->>>>>>> [update] activeTheme setting
 			$trans = TranslatorManager::trans ( $id, $parameters, $domain, $locale );
 			return $this->twig->createTemplate ( $trans )->render ( $context );
 		}, [ 'needs_context' => true ] );
@@ -114,16 +82,10 @@ class Twig extends TemplateEngine {
 		$this->twig->addTest ( $test );
 		$this->twig->addGlobal ( "app", new Framework () );
 	}
-<<<<<<< HEAD
 
 	protected function addFunction($name, $callback, $safe = false) {
 		$options = ($safe) ? [ 'is_safe' => [ 'html' ] ] : [ ];
 		$this->twig->addFunction ( new TwigFunction ( $name, $callback, $options ) );
-=======
-	
-	protected function addFunction($name,$callback){
-		$this->twig->addFunction ( new TwigFunction ( $name, $callback ) );
->>>>>>> [update] activeTheme setting
 	}
 
 	/*
