@@ -30,10 +30,12 @@ The main configuration of a project is localised in the ``app/conf/config.php`` 
    		"cacheDirectory"=>"cache/",
    		"mvcNS"=>["models"=>"models","controllers"=>"controllers"]
    );
-   
+
+
 .. info::
    
    You can also use **devtools** (at the command prompt) to view or modify the configuration :
+   
    .. code-block:: bash
    
       Ubiquity config
@@ -41,7 +43,8 @@ The main configuration of a project is localised in the ``app/conf/config.php`` 
    .. code-block:: bash
       
        Ubiquity config:set --database.dbName=blog
-       
+
+     
 Services configuration
 ----------------------
 Services loaded on startup are configured in the ``app/conf/services.php`` file.
