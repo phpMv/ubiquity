@@ -1,35 +1,46 @@
 <br>
 <div class="ui container">
-	<div class="ui segment">
+	<div class="">
+
+		<div class="ui icon positive message">
+			<i class="ui check circle icon"></i>
+			<div class="content">
+				<div class="header">It works !</div>
+				<p>Your application is now ready. You can start working by reading the <a target="_new" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest">Quick start guide</a>.</p>
+			</div>
+		</div>
+
 		<h1  id="header" class="ui header">
 			<div id="content-header" class="content">Welcome to Ubiquity 
 				<div id="subheader-header" class="sub header">
-					Version {{app.getVersion()}}
+					Version <span class="ui label version">{{app.getVersion()}}</span>
 				</div>
-				<button id="btTest" class="ui button">Semantic-UI Button</button>
 			</div>
 		</h1>
-		<div class="ui icon positive message">
-			<i class="ui info circle icon"></i>
-			<div class="content">
-				<div class="header" id="test">It works !</div>
-				<p>Page informations</p>
-				<ul class="list">
-					<li>Controller : <b>{{app.getController()}}</b></li>
-					<li>Action : <b>{{app.getAction()}}</b></li>
-					<li>Route : <b>{{app.getUrl()}}</b></li>
-					<li>Path : <b>{{path('')}}</b></li>
-					<li>Template : <b>{{_self}}</b></li>
-					<li>Theme : <b>{{app.assets().getActiveThemeUrl('')}}</b></li>
-				</ul>
+		
+		<!-- page Informations begin -->
+		<h3 class="ui top attached header inverted"><i class="info circle icon"></i> Page informations</h3>
+		<div class="ui attached segment">
+			<div class="ui relaxed divided list">
+			{% set infos = infos|merge({'Template': _self}) %}
+				{% for key, value in infos %}
+				  <div class="item">
+				    <div class="content">
+				      <a class="header">{{key}}</a>
+				      <div class="description">{{value}}</div>
+				    </div>
+				  </div>
+				  {% endfor %}
 			</div>
 		</div>
-		<div id="menu" class="ui menu secondary">
-			<a id="menu-item-0" class="item" href="https://ubiquity.kobject.net" target="new">Ubiquity website</a> 
-			<a id="menu-item-1" class="item" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest" target="new">Guide</a> 
-			<a id="menu-item-2" class="item" href="https://api.kobject.net/ubiquity/" target="new">Doc API</a> 
-			<a id="menu-item-3" class="item" href="https://github.com/phpMv/ubiquity" target="new">GitHub</a> 
-			<a id="htmlmenu-menu-4" class="item" href="Admin" target="admin">UbiquityMyAdmin</a>
+		<!-- page Informations end -->
+		  
+		<div class="ui menu links secondary">
+			<div class="header item">Ubiquity</div>
+			{% for name, link in links %}
+				<a class="item" href="{{link}}" target="new">{{name}}</a> 
+			{% endfor %}
 		</div>
 	</div>
 </div>
+<p>&nbsp;</p>
