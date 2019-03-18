@@ -7,6 +7,7 @@ use Ubiquity\views\engine\Twig;
 use Ubiquity\exceptions\ThemesException;
 use Ubiquity\events\EventsManager;
 use Ubiquity\events\ViewEvents;
+use Ubiquity\utils\base\UArray;
 
 /**
  * Themes manager.
@@ -40,6 +41,14 @@ class ThemesManager {
 		} else {
 			throw new ThemesException ( 'Template engine must be an instance of Twig for themes activation!' );
 		}
+	}
+	
+	public static function saveActiveTheme($theme){
+		$config=Startup::getConfig();
+		$config['templateEngineOptions']['activeTheme']=$theme;
+		$content="<?php\nreturn ".UArray::asPhpArray($config,"array",1,true).";";
+		Startup::saveConfig($content);
+		return $config;
 	}
 	
 	/**

@@ -52,14 +52,11 @@ abstract class Controller {
 	/**
 	 * Loads the view $viewName possibly passing the variables $pdata
 	 *
-	 * @param string $viewName
-	 *        	The name of the view to load
-	 * @param mixed $pData
-	 *        	Variable or associative array to pass to the view
-	 *        	If a variable is passed, it will have the name **$data** in the view,
-	 *        	If an associative array is passed, the view retrieves variables from the table's key names
-	 * @param boolean $asString
-	 *        	If true, the view is not displayed but returned as a string (usable in a variable)
+	 * @param string $viewName The name of the view to load
+	 * @param mixed $pData Variable or associative array to pass to the view
+	 *        If a variable is passed, it will have the name **$data** in the view,
+	 *        If an associative array is passed, the view retrieves variables from the table's key names
+	 * @param boolean $asString If true, the view is not displayed but returned as a string (usable in a variable)
 	 * @throws \Exception
 	 * @return string null or the view content if **$asString** parameter is true
 	 */
@@ -72,12 +69,10 @@ abstract class Controller {
 	/**
 	 * Loads the default view (controllerName/actionName) possibly passing the variables $pdata.
 	 *
-	 * @param mixed $pData
-	 *        	Variable or associative array to pass to the view
-	 *        	If a variable is passed, it will have the name **$data** in the view,
-	 *        	If an associative array is passed, the view retrieves variables from the table's key names
-	 * @param boolean $asString
-	 *        	If true, the view is not displayed but returned as a string (usable in a variable)
+	 * @param mixed $pData Variable or associative array to pass to the view
+	 *        If a variable is passed, it will have the name **$data** in the view,
+	 *        If an associative array is passed, the view retrieves variables from the table's key names
+	 * @param boolean $asString If true, the view is not displayed but returned as a string (usable in a variable)
 	 * @throws \Exception
 	 * @return string null or the view content if **$asString** parameter is true
 	 */
@@ -117,16 +112,11 @@ abstract class Controller {
 	/**
 	 * Loads the controller $controller and calls its $action method by passing the parameters $params
 	 *
-	 * @param string $controller
-	 *        	The Controller
-	 * @param string $action
-	 *        	The action to call
-	 * @param mixed $params
-	 *        	Parameters passed to the **$action** method
-	 * @param boolean $initialize
-	 *        	If true, the controller's initialize method is called before $action
-	 * @param boolean $finalize
-	 *        	If true, the controller's finalize method is called after $action
+	 * @param string $controller The Controller
+	 * @param string $action The action to call
+	 * @param mixed $params Parameters passed to the **$action** method
+	 * @param boolean $initialize If true, the controller's initialize method is called before $action
+	 * @param boolean $finalize If true, the controller's finalize method is called after $action
 	 * @throws \Exception
 	 */
 	public function forward($controller, $action = "index", $params = array(), $initialize = false, $finalize = false) {
@@ -142,14 +132,10 @@ abstract class Controller {
 	/**
 	 * Redirect to a route by its name
 	 *
-	 * @param string $routeName
-	 *        	The route name
-	 * @param array $parameters
-	 *        	The parameters to pass to the route action
-	 * @param boolean $initialize
-	 *        	Call the **initialize** method if true
-	 * @param boolean $finalize
-	 *        	Call the **finalize** method if true
+	 * @param string $routeName The route name
+	 * @param array $parameters The parameters to pass to the route action
+	 * @param boolean $initialize Call the **initialize** method if true
+	 * @param boolean $finalize Call the **finalize** method if true
 	 * @throws RouterException
 	 */
 	public function redirectToRoute($routeName, $parameters = [], $initialize = false, $finalize = false) {
