@@ -14,12 +14,23 @@ use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\common\html\HtmlContentOnly;
 
-abstract class CRUDController extends ControllerBase implements HasModelViewerInterface{
+abstract class CRUDController extends ControllerBase implements HasModelViewerInterface {
 	use MessagesTrait,CRUDControllerUtilitiesTrait;
-	
 	protected $model;
 	protected $activePage;
-	
+
+	/**
+	 *
+	 * @var \Ajax\php\ubiquity\JsUtils
+	 */
+	public $jquery;
+
+	public function __construct() {
+		parent::__construct ();
+		$this->jquery = new \Ajax\php\ubiquity\JsUtils ( [ "defer" => true ], $this );
+		$this->jquery->semantic ( new \Ajax\Semantic () );
+	}
+
 	/**
 	 * Default page : list all objects
 	 * Uses modelViewer.isModal, modelViewer.getModelDataTable
@@ -27,249 +38,256 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * Triggers the events onDisplayElements,beforeLoadView
 	 */
 	public function index() {
-		$objects=$this->getInstances($totalCount);
-		$modal=($this->_getModelViewer()->isModal($objects,$this->model))?"modal":"no";
-		$dt=$this->_getModelViewer()->getModelDataTable($objects, $this->model,$totalCount);
-		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute() . "/newModel/" . $modal, "#frm-add-update",["hasLoader"=>"internal"] );
-		$this->_getEvents()->onDisplayElements($dt,$objects,false);
-		$this->crudLoadView($this->_getFiles()->getViewIndex(), [ "classname" => $this->model ,"messages"=>$this->jquery->semantic()->matchHtmlComponents(function($compo){return $compo instanceof HtmlMessage;})]);		
+		$objects = $this->getInstances ( $totalCount );
+		$modal = ($this->_getModelViewer ()->isModal ( $objects, $this->model )) ? "modal" : "no";
+		$dt = $this->_getModelViewer ()->getModelDataTable ( $objects, $this->model, $totalCount );
+		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute () . "/newModel/" . $modal, "#frm-add-update", [ "hasLoader" => "internal" ] );
+		$this->_getEvents ()->onDisplayElements ( $dt, $objects, false );
+		$this->crudLoadView ( $this->_getFiles ()->getViewIndex (), [ "classname" => $this->model,"messages" => $this->jquery->semantic ()->matchHtmlComponents ( function ($compo) {
+			return $compo instanceof HtmlMessage;
+		} ) ] );
 	}
-	
-	public function updateMember($member,$callback=false){
-		$instance=$_SESSION["instance"]??null;
-		if(isset($instance)){
-			$updated=CRUDHelper::update($instance, $_POST);
-			if($updated){
-				if($callback===false){
-					$dt=$this->_getModelViewer()->getModelDataTable([$instance], $this->model, 1);
-					$dt->compile();
-					echo new HtmlContentOnly($dt->getFieldValue($member));
-				}else{
-					if(method_exists($this, $callback)){
-						$this->$callback($member,$instance);
-					}else{
-						throw new \Exception("The method `".$callback."` does not exists in ".get_class());
+
+	public function updateMember($member, $callback = false) {
+		$instance = $_SESSION ["instance"] ?? null;
+		if (isset ( $instance )) {
+			$updated = CRUDHelper::update ( $instance, $_POST );
+			if ($updated) {
+				if ($callback === false) {
+					$dt = $this->_getModelViewer ()->getModelDataTable ( [ $instance ], $this->model, 1 );
+					$dt->compile ();
+					echo new HtmlContentOnly ( $dt->getFieldValue ( $member ) );
+				} else {
+					if (method_exists ( $this, $callback )) {
+						$this->$callback ( $member, $instance );
+					} else {
+						throw new \Exception ( "The method `" . $callback . "` does not exists in " . get_class () );
 					}
 				}
-			}else{
-				UResponse::setResponseCode(404);
+			} else {
+				UResponse::setResponseCode ( 404 );
 			}
-		}else{
-			throw new \Exception('$_SESSION["instance"] is null');
+		} else {
+			throw new \Exception ( '$_SESSION["instance"] is null' );
 		}
 	}
-	
+
 	/**
 	 * Refreshes the area corresponding to the DataTable
 	 */
-	public function refresh_(){
-		$model=$this->model;
-		if(isset($_POST["s"])){
-			$instances=$this->search($model, $_POST["s"]);
-		}else{
-			$page=URequest::post("p",1);
-			$instances=$this->getInstances($totalCount,$page);
+	public function refresh_() {
+		$model = $this->model;
+		if (isset ( $_POST ["s"] )) {
+			$instances = $this->search ( $model, $_POST ["s"] );
+		} else {
+			$page = URequest::post ( "p", 1 );
+			$instances = $this->getInstances ( $totalCount, $page );
 		}
-		if(!isset($totalCount)){
-			$totalCount=DAO::count($model,$this->_getAdminData()->_getInstancesFilter($model));
+		if (! isset ( $totalCount )) {
+			$totalCount = DAO::count ( $model, $this->_getAdminData ()->_getInstancesFilter ( $model ) );
 		}
-		$recordsPerPage=$this->_getModelViewer()->recordsPerPage($model,$totalCount);
-		$grpByFields=$this->_getModelViewer()->getGroupByFields();
-		if(isset($recordsPerPage)){
-			if(!is_array($grpByFields)){
-				UResponse::asJSON();
-				$responseFormatter=new ResponseFormatter();
-				print_r($responseFormatter->getJSONDatas($instances));
-			}else{
-				$this->_renderDataTableForRefresh($instances, $model,$totalCount);
+		$recordsPerPage = $this->_getModelViewer ()->recordsPerPage ( $model, $totalCount );
+		$grpByFields = $this->_getModelViewer ()->getGroupByFields ();
+		if (isset ( $recordsPerPage )) {
+			if (! is_array ( $grpByFields )) {
+				UResponse::asJSON ();
+				$responseFormatter = new ResponseFormatter ();
+				print_r ( $responseFormatter->getJSONDatas ( $instances ) );
+			} else {
+				$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 			}
-		}else{
-			$this->jquery->execAtLast('$("#search-query-content").html("'.$_POST["s"].'");$("#search-query").show();$("#table-details").html("");');
-			$this->_renderDataTableForRefresh($instances, $model,$totalCount);
+		} else {
+			$this->jquery->execAtLast ( '$("#search-query-content").html("' . $_POST ["s"] . '");$("#search-query").show();$("#table-details").html("");' );
+			$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 		}
 	}
 
 	/**
 	 * Edits an instance
+	 *
 	 * @param string $modal Accept "no" or "modal" for a modal dialog
 	 * @param string $ids the primary value(s)
 	 */
-	public function edit($modal="no", $ids="") {
-		if(URequest::isAjax()){
-			$instance=$this->getModelInstance($ids);
-			$instance->_new=false;
-			$this->_edit($instance, $modal);
-		}else{
-			$this->jquery->execAtLast("$('._edit[data-ajax={$ids}]').trigger('click');");
-			$this->index();
+	public function edit($modal = "no", $ids = "") {
+		if (URequest::isAjax ()) {
+			$instance = $this->getModelInstance ( $ids );
+			$instance->_new = false;
+			$this->_edit ( $instance, $modal );
+		} else {
+			$this->jquery->execAtLast ( "$('._edit[data-ajax={$ids}]').trigger('click');" );
+			$this->index ();
 		}
 	}
+
 	/**
 	 * Adds a new instance and edits it
+	 *
 	 * @param string $modal Accept "no" or "modal" for a modal dialog
 	 */
-	public function newModel($modal="no") {
-		if(URequest::isAjax()){
-			$model=$this->model;
-			$instance=new $model();
-			$instance->_new=true;
-			$this->_edit($instance, $modal);
-		}else{
-			$this->jquery->execAtLast("$('.ui.button._new').trigger('click');");
-			$this->index();
+	public function newModel($modal = "no") {
+		if (URequest::isAjax ()) {
+			$model = $this->model;
+			$instance = new $model ();
+			$instance->_new = true;
+			$this->_edit ( $instance, $modal );
+		} else {
+			$this->jquery->execAtLast ( "$('.ui.button._new').trigger('click');" );
+			$this->index ();
 		}
 	}
-	
-	public function editMember($member){
-		$ids=URequest::post("id");
-		$td=URequest::post("td");
-		$part=URequest::post("part");
-		$instance=$this->getModelInstance($ids,$member);
-		$_SESSION["instance"]=$instance;
-		$instance->_new=false;
-		$form=$this->_getModelViewer()->getMemberForm("frm-member-".$member, $instance, $member,$td,$part);
-		$form->setLibraryId("_compo_");
-		$this->jquery->renderView("@framework/main/component.html");
+
+	public function editMember($member) {
+		$ids = URequest::post ( "id" );
+		$td = URequest::post ( "td" );
+		$part = URequest::post ( "part" );
+		$instance = $this->getModelInstance ( $ids, $member );
+		$_SESSION ["instance"] = $instance;
+		$instance->_new = false;
+		$form = $this->_getModelViewer ()->getMemberForm ( "frm-member-" . $member, $instance, $member, $td, $part );
+		$form->setLibraryId ( "_compo_" );
+		$this->jquery->renderView ( "@framework/main/component.html" );
 	}
-	
+
 	/**
 	 * Displays an instance
+	 *
 	 * @param string $modal
 	 * @param string $ids
 	 */
-	public function display($modal="no",$ids=""){
-		if(URequest::isAjax()){
-			$instance=$this->getModelInstance($ids);
-			$key=OrmUtils::getFirstKeyValue($instance);
-			$this->jquery->execOn("click","._close",'$("#table-details").html("");$("#dataTable").show();');
-			$this->jquery->getOnClick("._edit", $this->_getBaseRoute()."/edit/".$modal."/".$key,"#frm-add-update");
-			$this->jquery->getOnClick("._delete", $this->_getBaseRoute()."/delete/".$key,"#table-messages");
-			
-			$this->_getModelViewer()->getModelDataElement($instance, $this->model,$modal);
-			$this->jquery->renderView($this->_getFiles()->getViewDisplay(), [ "classname" => $this->model,"instance"=>$instance,"pk"=>$key ]);
-		}else{
-			$this->jquery->execAtLast("$('._display[data-ajax={$ids}]').trigger('click');");
-			$this->index();
+	public function display($modal = "no", $ids = "") {
+		if (URequest::isAjax ()) {
+			$instance = $this->getModelInstance ( $ids );
+			$key = OrmUtils::getFirstKeyValue ( $instance );
+			$this->jquery->execOn ( "click", "._close", '$("#table-details").html("");$("#dataTable").show();' );
+			$this->jquery->getOnClick ( "._edit", $this->_getBaseRoute () . "/edit/" . $modal . "/" . $key, "#frm-add-update" );
+			$this->jquery->getOnClick ( "._delete", $this->_getBaseRoute () . "/delete/" . $key, "#table-messages" );
+
+			$this->_getModelViewer ()->getModelDataElement ( $instance, $this->model, $modal );
+			$this->jquery->renderView ( $this->_getFiles ()->getViewDisplay (), [ "classname" => $this->model,"instance" => $instance,"pk" => $key ] );
+		} else {
+			$this->jquery->execAtLast ( "$('._display[data-ajax={$ids}]').trigger('click');" );
+			$this->index ();
 		}
 	}
-	
+
 	/**
 	 * Deletes an instance
+	 *
 	 * @param mixed $ids
 	 */
 	public function delete($ids) {
-		if(URequest::isAjax()){
-			$instance=$this->getModelInstance($ids);
-			$instanceString=$this->getInstanceToString($instance);
-			if (sizeof($_POST) > 0) {
-				try{
-					if (DAO::remove($instance)) {
-						$message=new CRUDMessage("Deletion of `<b>" . $instanceString . "</b>`","Deletion","info","info circle",4000);
-						$message=$this->_getEvents()->onSuccessDeleteMessage($message,$instance);
-						$this->jquery->exec("$('._element[data-ajax={$ids}]').remove();", true);
+		if (URequest::isAjax ()) {
+			$instance = $this->getModelInstance ( $ids );
+			$instanceString = $this->getInstanceToString ( $instance );
+			if (sizeof ( $_POST ) > 0) {
+				try {
+					if (DAO::remove ( $instance )) {
+						$message = new CRUDMessage ( "Deletion of `<b>" . $instanceString . "</b>`", "Deletion", "info", "info circle", 4000 );
+						$message = $this->_getEvents ()->onSuccessDeleteMessage ( $message, $instance );
+						$this->jquery->exec ( "$('._element[data-ajax={$ids}]').remove();", true );
 					} else {
-						$message=new CRUDMessage("Can not delete `" . $instanceString . "`","Deletion","warning","warning circle");
-						$message=$this->_getEvents()->onErrorDeleteMessage($message,$instance);
+						$message = new CRUDMessage ( "Can not delete `" . $instanceString . "`", "Deletion", "warning", "warning circle" );
+						$message = $this->_getEvents ()->onErrorDeleteMessage ( $message, $instance );
 					}
-				}catch (\Exception $e){
-					$message=new CRUDMessage("Exception : can not delete `" . $instanceString . "`","Exception", "warning", "warning");
-					$message=$this->_getEvents()->onErrorDeleteMessage($message,$instance);
+				} catch ( \Exception $e ) {
+					$message = new CRUDMessage ( "Exception : can not delete `" . $instanceString . "`", "Exception", "warning", "warning" );
+					$message = $this->_getEvents ()->onErrorDeleteMessage ( $message, $instance );
 				}
-				$message=$this->_showSimpleMessage($message);
+				$message = $this->_showSimpleMessage ( $message );
 			} else {
-				$message=new CRUDMessage("Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "Remove confirmation","error","question circle");
-				$message=$this->_getEvents()->onConfDeleteMessage($message,$instance);
-				$message=$this->_showConfMessage($message, $this->_getBaseRoute() . "/delete/{$ids}", "#table-messages", $ids);
+				$message = new CRUDMessage ( "Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "Remove confirmation", "error", "question circle" );
+				$message = $this->_getEvents ()->onConfDeleteMessage ( $message, $instance );
+				$message = $this->_showConfMessage ( $message, $this->_getBaseRoute () . "/delete/{$ids}", "#table-messages", $ids );
 			}
 			echo $message;
-			echo $this->jquery->compile($this->view);
-		}else{
-			$this->jquery->execAtLast("$('._delete[data-ajax={$ids}]').trigger('click');");
-			$this->index();
+			echo $this->jquery->compile ( $this->view );
+		} else {
+			$this->jquery->execAtLast ( "$('._delete[data-ajax={$ids}]').trigger('click');" );
+			$this->index ();
 		}
 	}
-	
-	public function refreshTable($id=null) {
-		$compo= $this->_showModel($id);
-		$this->jquery->execAtLast('$("#table-details").html("");');
-		$compo->setLibraryId("_compo_");
-		$this->jquery->renderView("@framework/main/component.html");	
+
+	public function refreshTable($id = null) {
+		$compo = $this->_showModel ( $id );
+		$this->jquery->execAtLast ( '$("#table-details").html("");' );
+		$compo->setLibraryId ( "_compo_" );
+		$this->jquery->renderView ( "@framework/main/component.html" );
 	}
-	
+
 	/**
 	 * Updates an instance from the data posted in a form
+	 *
 	 * @return object The updated instance
 	 */
 	public function update() {
-		$message=new CRUDMessage("Modifications were successfully saved", "Updating");
-		$instance=$_SESSION["instance"]??null;
-		if(isset($instance)){
-			$isNew=$instance->_new;
-			try{
-				$updated=CRUDHelper::update($instance, $_POST);
-				if($updated){
-					$message->setType("success")->setIcon("check circle outline");
-					$message=$this->_getEvents()->onSuccessUpdateMessage($message,$instance);
-					$this->refreshInstance($instance,$isNew);
+		$message = new CRUDMessage ( "Modifications were successfully saved", "Updating" );
+		$instance = $_SESSION ["instance"] ?? null;
+		if (isset ( $instance )) {
+			$isNew = $instance->_new;
+			try {
+				$updated = CRUDHelper::update ( $instance, $_POST );
+				if ($updated) {
+					$message->setType ( "success" )->setIcon ( "check circle outline" );
+					$message = $this->_getEvents ()->onSuccessUpdateMessage ( $message, $instance );
+					$this->refreshInstance ( $instance, $isNew );
 				} else {
-					$message->setMessage("An error has occurred. Can not save changes.")->setType("error")->setIcon("warning circle");
-					$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
+					$message->setMessage ( "An error has occurred. Can not save changes." )->setType ( "error" )->setIcon ( "warning circle" );
+					$message = $this->_getEvents ()->onErrorUpdateMessage ( $message, $instance );
 				}
-			}catch(\Exception $e){
-				$instanceString=$this->getInstanceToString($instance);
-				$message=new CRUDMessage("Exception : can not update `" . $instanceString . "`","Exception", "warning", "warning");
-				$message=$this->_getEvents()->onErrorUpdateMessage($message,$instance);
+			} catch ( \Exception $e ) {
+				$instanceString = $this->getInstanceToString ( $instance );
+				$message = new CRUDMessage ( "Exception : can not update `" . $instanceString . "`", "Exception", "warning", "warning" );
+				$message = $this->_getEvents ()->onErrorUpdateMessage ( $message, $instance );
 			}
-			echo $this->_showSimpleMessage($message,"updateMsg");
-			echo $this->jquery->compile($this->view);
+			echo $this->_showSimpleMessage ( $message, "updateMsg" );
+			echo $this->jquery->compile ( $this->view );
 			return $instance;
-		}else{
-			throw new \Exception('$_SESSION["instance"] is null');
+		} else {
+			throw new \Exception ( '$_SESSION["instance"] is null' );
 		}
 	}
 
 	/**
 	 * Shows associated members with foreign keys
+	 *
 	 * @param mixed $ids
 	 */
 	public function showDetail($ids) {
-		if(URequest::isAjax()){
-			$instance=$this->getModelInstance($ids);
-			$viewer=$this->_getModelViewer();
-			$hasElements=false;
-			$model=$this->model;
-			$fkInstances=CRUDHelper::getFKIntances($instance, $model);
-			$semantic=$this->jquery->semantic();
-			$grid=$semantic->htmlGrid("detail");
-			if (sizeof($fkInstances) > 0) {
-				$wide=intval(16 / sizeof($fkInstances));
+		if (URequest::isAjax ()) {
+			$instance = $this->getModelInstance ( $ids );
+			$viewer = $this->_getModelViewer ();
+			$hasElements = false;
+			$model = $this->model;
+			$fkInstances = CRUDHelper::getFKIntances ( $instance, $model );
+			$semantic = $this->jquery->semantic ();
+			$grid = $semantic->htmlGrid ( "detail" );
+			if (sizeof ( $fkInstances ) > 0) {
+				$wide = intval ( 16 / sizeof ( $fkInstances ) );
 				if ($wide < 4)
-					$wide=4;
-					foreach ( $fkInstances as $member=>$fkInstanceArray ) {
-						$element=$viewer->getFkMemberElementDetails($member,$fkInstanceArray["objectFK"],$fkInstanceArray["fkClass"],$fkInstanceArray["fkTable"]);
-						if (isset($element)) {
-							$grid->addCol($wide)->setContent($element);
-							$hasElements=true;
-						}
+					$wide = 4;
+				foreach ( $fkInstances as $member => $fkInstanceArray ) {
+					$element = $viewer->getFkMemberElementDetails ( $member, $fkInstanceArray ["objectFK"], $fkInstanceArray ["fkClass"], $fkInstanceArray ["fkTable"] );
+					if (isset ( $element )) {
+						$grid->addCol ( $wide )->setContent ( $element );
+						$hasElements = true;
 					}
-					if ($hasElements){
-						echo $grid;
-						$url=$this->_getFiles()->getDetailClickURL($this->model);
-						if(UString::isNotNull($url)){
-							$this->detailClick($url);
-						}
+				}
+				if ($hasElements) {
+					echo $grid;
+					$url = $this->_getFiles ()->getDetailClickURL ( $this->model );
+					if (UString::isNotNull ( $url )) {
+						$this->detailClick ( $url );
 					}
-					echo $this->jquery->compile($this->view);
+				}
+				echo $this->jquery->compile ( $this->view );
 			}
-		}else{
-			$this->jquery->execAtLast("$('tr[data-ajax={$ids}]').trigger('click');");
-			$this->index();
+		} else {
+			$this->jquery->execAtLast ( "$('tr[data-ajax={$ids}]').trigger('click');" );
+			$this->index ();
 		}
-
 	}
-	
+
 	public function detailClick($url) {
-		$this->jquery->postOnClick(".showTable", $this->_getBaseRoute() . "/".$url,"{}", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ]);
+		$this->jquery->postOnClick ( ".showTable", $this->_getBaseRoute () . "/" . $url, "{}", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ] );
 	}
-
 }

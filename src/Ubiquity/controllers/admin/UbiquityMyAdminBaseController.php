@@ -94,7 +94,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	 *
 	 * @var \Ajax\php\ubiquity\JsUtils
 	 */
-	private $jquery;
+	public $jquery;
 
 	public function __construct() {
 		parent::__construct ();
