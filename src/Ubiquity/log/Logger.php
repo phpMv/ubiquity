@@ -80,7 +80,7 @@ abstract class Logger {
 	}
 
 	public static function asObjects($reverse = true, $maxlines = 10, $contexts = null) {
-		if (self::$test)
+		if (isset(self::$instance) && self::$test)
 			return self::$instance->_asObjects ( $reverse, $maxlines, $contexts );
 		return [ ];
 	}
