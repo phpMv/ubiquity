@@ -7,13 +7,14 @@ use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\utils\http\USession;
 use Ubiquity\log\Logger;
 use Ubiquity\controllers\traits\StartupConfigTrait;
+use Ubiquity\controllers\di\DiManager;
 
 /**
- * Starts the framework
+ * Starts the framework.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 class Startup {
@@ -32,6 +33,11 @@ class Startup {
 		self::forward ( $_GET ['c'] );
 	}
 
+	/**
+	 * @param string $url
+	 * @param boolean $initialize
+	 * @param boolean $finalize
+	 */
 	public static function forward($url, $initialize = true, $finalize = true) {
 		$u = self::parseUrl ( $url );
 		if (($ru = Router::getRoute ( $url )) !== false) {
@@ -140,14 +146,14 @@ class Startup {
 		call_user_func_array ( $u [0], self::$actionParams );
 	}
 
+	/**
+	 * Injects dependencies in a controller
+	 * @param string $controller The controller classname
+	 */
 	public static function injectDependences($controller) {
-		if (isset ( self::$config ['di'] )) {
-			$di = self::$config ['di'];
-			if (\is_array ( $di )) {
-				foreach ( $di as $k => $v ) {
-					$controller->$k = $v ( $controller );
-				}
-			}
+	    $di=DiManager::fetch($controller);
+		foreach ( $di as $k => $v ) {
+			$controller->$k = $v ( $controller );
 		}
 	}
 
