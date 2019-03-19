@@ -3,9 +3,12 @@
 namespace Ubiquity\utils\base;
 
 /**
- * Array utilities
+ * Array utilities.
+ * Ubiquity\utils\base$UArray
+ * This class is part of Ubiquity
  *
- * @author jc
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.1
  *
  */
 class UArray {
@@ -23,10 +26,8 @@ class UArray {
 	/**
 	 * Returns a new array with the keys $keys
 	 *
-	 * @param array $array
-	 *        	an associative array
-	 * @param array $keys
-	 *        	some keys
+	 * @param array $array an associative array
+	 * @param array $keys some keys
 	 * @return array
 	 */
 	public static function extractKeys($array, $keys) {
@@ -179,7 +180,7 @@ class UArray {
 	private static function parseValue($v, $prefix = "", $depth = 1, $format = false) {
 		if (\is_numeric ( $v )) {
 			$result = $v;
-		} elseif ($v!='' && UString::isBooleanStr ( $v )) {
+		} elseif ($v !== '' && UString::isBooleanStr ( $v )) {
 			$result = UString::getBooleanStr ( $v );
 		} elseif (\is_array ( $v )) {
 			$result = self::asPhpArray ( $v, $prefix, $depth + 1, $format );
