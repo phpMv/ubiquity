@@ -179,7 +179,7 @@ class UArray {
 	private static function parseValue($v, $prefix = "", $depth = 1, $format = false) {
 		if (\is_numeric ( $v )) {
 			$result = $v;
-		} elseif (UString::isBooleanStr ( $v )) {
+		} elseif ($v!='' && UString::isBooleanStr ( $v )) {
 			$result = UString::getBooleanStr ( $v );
 		} elseif (\is_array ( $v )) {
 			$result = self::asPhpArray ( $v, $prefix, $depth + 1, $format );
