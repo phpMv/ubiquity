@@ -8,7 +8,7 @@ namespace Ubiquity\log;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 abstract class Logger {
@@ -29,11 +29,11 @@ abstract class Logger {
 			self::$instance = $instance;
 		}
 	}
-	
+
 	abstract public function _registerError();
-	
-	public static function registerError(){
-		self::$instance->_registerError();
+
+	public static function registerError() {
+		self::$instance->_registerError ();
 	}
 
 	public static function inContext($contexts, $context) {
@@ -80,7 +80,7 @@ abstract class Logger {
 	}
 
 	public static function asObjects($reverse = true, $maxlines = 10, $contexts = null) {
-		if (isset(self::$instance) && self::$test)
+		if (isset ( self::$instance ) && self::$test)
 			return self::$instance->_asObjects ( $reverse, $maxlines, $contexts );
 		return [ ];
 	}
