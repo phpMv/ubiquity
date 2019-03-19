@@ -4,9 +4,11 @@ namespace Ubiquity\controllers\di;
 
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UArray;
+use Ubiquity\utils\base\UString;
+use Ubiquity\cache\ClassUtils;
 
 /**
- * Parse the controllers for dependancy injections
+ * Parse the controllers for dependency injections.
  *
  * Ubiquity\controllers\di$DiControllerParser
  * This class is part of Ubiquity
@@ -38,6 +40,19 @@ class DiControllerParser {
 				}
 			}
 		}
+		$this->scanGlobalDi($config['di']??[], $controllerClass);
+	}
+	
+	protected function scanGlobalDi($diConfig,$controller){
+	    $classname=ClassUtils::getClassSimpleName($controller);
+	    foreach ($diConfig as $k=>$v){
+	        if(UString::startswith($k, "*.") || UString::startswith($k, $classname.".")){
+	            $nkey=end(explode('.', $k));
+	            if(property_exists($controller, $nkey)===false){
+	                $this->injections[$nkey]=$v;
+	            }
+	        }
+	    }
 	}
 
 	protected function getInjection($name, $config, $code = null) {
