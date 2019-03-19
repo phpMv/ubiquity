@@ -37,6 +37,7 @@ class Twig extends TemplateEngine {
 		$loader->addPath ( implode ( \DS, [ Startup::getFrameworkDir (),"..","core","views" ] ) . \DS, "framework" );
 		$this->loader = $loader;
 		
+		$this->twig = new Environment ( $loader, $options );
 		if (isset ( $options ["cache"] ) && $options ["cache"] === true){
 			$options ["cache"] = CacheManager::getCacheSubDirectory ( "views" );
 		}
@@ -45,7 +46,6 @@ class Twig extends TemplateEngine {
 			self::setTheme($options["activeTheme"],ThemesManager::THEMES_FOLDER);
 			unset($options["activeTheme"]);
 		}
-		$this->twig = new Environment ( $loader, $options );
 
 		$this->addFunction( 'path', function ($name, $params = [], $absolute = false) {
 			return Router::path ( $name, $params, $absolute );
@@ -140,8 +140,11 @@ class Twig extends TemplateEngine {
 	 * @param string $themeFolder
 	 * @throws ThemesException
 	 */
-	public function setTheme($theme, $themeFolder = 'themes') {
+	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER) {
 		$path = \ROOT . \DS . 'views' . \DS . $themeFolder . \DS . $theme;
+		if($theme==''){
+			$path=\ROOT . \DS . 'views';
+		}
 		if (file_exists ( $path )) {
 			$this->loader->setPaths( [$path], "activeTheme" );
 		} else {

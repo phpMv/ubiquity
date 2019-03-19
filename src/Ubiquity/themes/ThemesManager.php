@@ -34,8 +34,8 @@ class ThemesManager {
 	 * @throws ThemesException
 	 */
 	public static function setActiveTheme($activeTheme) {
-		self::$activeTheme = $activeTheme ?? 'default';
-		$engineInstance = Startup::getTempateEngineInstance ();
+		self::$activeTheme = $activeTheme ?? '';
+		$engineInstance = Startup::$templateEngine;
 		if ($engineInstance instanceof Twig) {
 			$engineInstance->setTheme ( $activeTheme, self::THEMES_FOLDER );
 		} else {
