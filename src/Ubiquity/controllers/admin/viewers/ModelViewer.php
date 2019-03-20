@@ -362,7 +362,7 @@ class ModelViewer {
 	 *
 	 * @param mixed $field
 	 */
-	public function onGenerateFormField($field,$nb,$v) {
+	public function onGenerateFormField($field,$nb) {
 		if($field instanceof HtmlFormInput){
 			if($field->getDataField()->getProperty('type')=="datetime-local"){
 				$v=$field->getDataField()->getProperty('value');
