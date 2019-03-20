@@ -22,6 +22,7 @@ use Ubiquity\scaffolding\creators\RestControllerCreator;
  *
  */
 abstract class ScaffoldController {
+	protected $config;
 	public static $views = [
 							"CRUD" => [ "index" => "@framework/crud/index.html","form" => "@framework/crud/form.html","display" => "@framework/crud/display.html" ],
 							"auth" => [ "index" => "@framework/auth/index.html","info" => "@framework/auth/info.html","noAccess" => "@framework/auth/noAccess.html","disconnected" => "@framework/auth/disconnected.html","message" => "@framework/auth/message.html","baseTemplate" => "@framework/auth/baseTemplate.html" ] ];
@@ -92,8 +93,8 @@ abstract class ScaffoldController {
 		$authCreator->create ( $this );
 	}
 
-	public function addRestController($restControllerName, $baseClass,$resource, $routePath = "", $reInit = true) {
-		$restCreator = new RestControllerCreator ( $restControllerName, $baseClass,$resource, $routePath );
+	public function addRestController($restControllerName, $baseClass, $resource, $routePath = "", $reInit = true) {
+		$restCreator = new RestControllerCreator ( $restControllerName, $baseClass, $resource, $routePath );
 		$restCreator->create ( $this, $reInit );
 	}
 
@@ -116,7 +117,7 @@ abstract class ScaffoldController {
 		return $message;
 	}
 
-	public function _newAction($controller, $action, $parameters = null, $content = '', $routeInfo = null, $createView = false) {
+	public function _newAction($controller, $action, $parameters = null, $content = '', $routeInfo = null, $createView = false, $theme = null) {
 		$templateDir = $this->getTemplateDir ();
 		$msgContent = "";
 		$r = new \ReflectionClass ( $controller );
@@ -130,7 +131,7 @@ abstract class ScaffoldController {
 				$posLast = \strrpos ( $fileContent, "}" );
 				if ($posLast !== false) {
 					if ($createView) {
-						$viewname = $this->_createViewOp ( ClassUtils::getClassSimpleName ( $controller ), $action );
+						$viewname = $this->_createViewOp ( ClassUtils::getClassSimpleName ( $controller ), $action, $theme );
 						$content .= "\n\t\t\$this->loadView('" . $viewname . "');\n";
 						$msgContent .= "<br>Created view : <b>" . $viewname . "</b>";
 					}
@@ -185,9 +186,16 @@ abstract class ScaffoldController {
 		return "[" . \implode ( ",", $result ) . "]";
 	}
 
-	protected function _createViewOp($controller, $action) {
-		$viewName = $controller . "/" . $action . ".html";
-		UFileSystem::safeMkdir ( \ROOT . \DS . "views" . \DS . $controller );
+	protected function _createViewOp($controller, $action, $theme = null) {
+		$prefix = "";
+		if (! isset ( $theme )) {
+			$theme = $this->config ["templateEngineOptions"] ["activeTheme"] ?? null;
+		}
+		if ($theme != null) {
+			$prefix = 'themes/' . $theme . '/';
+		}
+		$viewName = $prefix . $controller . "/" . $action . ".html";
+		UFileSystem::safeMkdir ( \ROOT . \DS . "views" . \DS . $prefix . $controller );
 		$templateDir = $this->getTemplateDir ();
 		UFileSystem::openReplaceWriteFromTemplateFile ( $templateDir . "view.tpl", \ROOT . \DS . "views" . \DS . $viewName, [ "%controllerName%" => $controller,"%actionName%" => $action ] );
 		return $viewName;
@@ -215,6 +223,10 @@ abstract class ScaffoldController {
 		if (isset ( $content )) {
 			return UFileSystem::save ( $folder . \DS . $newName . ".html", implode ( "", $content ) );
 		}
+	}
+
+	public function setConfig($config) {
+		$this->config = $config;
 	}
 }
 
