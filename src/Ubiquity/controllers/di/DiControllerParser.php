@@ -6,6 +6,7 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\base\UString;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\exceptions\DiException;
 
 /**
  * Parse the controllers for dependency injections.
@@ -36,11 +37,23 @@ class DiControllerParser {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {
 						$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
+					}else{
+					    throw new DiException(sprintf('%s property has no type and cannot be autowired!',$propName));
 					}
 				}
 			}
 		}
 		$this->scanGlobalDi($config['di']??[], $controllerClass);
+	}
+	
+	protected function isMemberInGlobalDi($diConfig,$member,$controller){
+	    $classname=ClassUtils::getClassSimpleName($controller);
+	    foreach ($diConfig as $k=>$notUsed){
+	        if( $k==='*.'.$member || $k===$classname.'.'.$member){
+                return true;	            
+	        }
+	    }
+	    return false;
 	}
 	
 	protected function scanGlobalDi($diConfig,$controller){
