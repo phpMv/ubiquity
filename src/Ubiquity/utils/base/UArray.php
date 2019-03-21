@@ -8,7 +8,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class UArray {
@@ -215,5 +215,13 @@ class UArray {
 			unset ( $array [$key] );
 		}
 		return $array;
+	}
+
+	public static function implodeAsso($array, $glue, $op = '=', $quoteKey = '"', $quoteValue = '"') {
+		$res = [ ];
+		foreach ( $array as $k => $v ) {
+			$res [] = "{$quoteKey}{$k}{$quoteKey}{$op}{$quoteValue}{$v}{$quoteValue}";
+		}
+		implode ( $glue, $res );
 	}
 }
