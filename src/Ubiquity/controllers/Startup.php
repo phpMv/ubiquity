@@ -203,7 +203,6 @@ class Startup {
 	 * Injects the dependencies from the **di** config key in a controller
 	 *
 	 * @param object $controller An instance of Controller
-	 *        Injects dependencies in a controller
 	 * @param string $controller The controller classname
 	 */
 	public static function injectDependences($controller) {
