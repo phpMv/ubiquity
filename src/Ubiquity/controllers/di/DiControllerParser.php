@@ -16,7 +16,7 @@ use Ubiquity\exceptions\DiException;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
- * @since Ubiquity 2.1
+ * @since Ubiquity 2.1.0
  *
  */
 class DiControllerParser {
@@ -37,36 +37,36 @@ class DiControllerParser {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {
 						$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
-					}else{
-					    throw new DiException(sprintf('%s property has no type and cannot be autowired!',$propName));
+					} else {
+						throw new DiException ( sprintf ( '%s property has no type and cannot be autowired!', $propName ) );
 					}
 				}
 			}
 		}
-		$this->scanGlobalDi($config['di']??[], $controllerClass);
+		$this->scanGlobalDi ( $config ['di'] ?? [ ], $controllerClass );
 	}
-	
-	protected function isMemberInGlobalDi($diConfig,$member,$controller){
-	    $classname=ClassUtils::getClassSimpleName($controller);
-	    foreach ($diConfig as $k=>$notUsed){
-	        if( $k==='*.'.$member || $k===$classname.'.'.$member){
-                return true;	            
-	        }
-	    }
-	    return false;
+
+	protected function isMemberInGlobalDi($diConfig, $member, $controller) {
+		$classname = ClassUtils::getClassSimpleName ( $controller );
+		foreach ( $diConfig as $k => $notUsed ) {
+			if ($k === '*.' . $member || $k === $classname . '.' . $member) {
+				return true;
+			}
+		}
+		return false;
 	}
-	
-	protected function scanGlobalDi($diConfig,$controller){
-	    $classname=ClassUtils::getClassSimpleName($controller);
-	    foreach ($diConfig as $k=>$v){
-	        if(UString::startswith($k, "*.") || UString::startswith($k, $classname.".")){
-	            $dis=explode('.', $k);
-	            $nkey=end($dis);
-	            if(property_exists($controller, $nkey)===false){
-	                $this->injections[$nkey]=$v;
-	            }
-	        }
-	    }
+
+	protected function scanGlobalDi($diConfig, $controller) {
+		$classname = ClassUtils::getClassSimpleName ( $controller );
+		foreach ( $diConfig as $k => $v ) {
+			if (UString::startswith ( $k, "*." ) || UString::startswith ( $k, $classname . "." )) {
+				$dis = explode ( '.', $k );
+				$nkey = end ( $dis );
+				if (property_exists ( $controller, $nkey ) === false) {
+					$this->injections [$nkey] = $v;
+				}
+			}
+		}
 	}
 
 	protected function getInjection($name, $config, $code = null) {
