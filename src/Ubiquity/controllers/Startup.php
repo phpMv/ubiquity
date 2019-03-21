@@ -152,8 +152,15 @@ class Startup {
 	 */
 	public static function injectDependences($controller) {
 	    $di=DiManager::fetch($controller);
+	    $rClass=new \ReflectionClass($controller);
 		foreach ( $di as $k => $v ) {
-			$controller->$k = $v ( $controller );
+		    if($rClass->hasProperty($k)){
+		        $prop=$rClass->getProperty($k);
+		        $prop->setAccessible(true);
+		        $prop->setValue($controller, $v($controller));
+		    }else{
+			 $controller->$k = $v ( $controller );
+		    }
 		}
 	}
 

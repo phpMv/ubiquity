@@ -60,7 +60,8 @@ class DiControllerParser {
 	    $classname=ClassUtils::getClassSimpleName($controller);
 	    foreach ($diConfig as $k=>$v){
 	        if(UString::startswith($k, "*.") || UString::startswith($k, $classname.".")){
-	            $nkey=end(explode('.', $k));
+	            $dis=explode('.', $k);
+	            $nkey=end($dis);
 	            if(property_exists($controller, $nkey)===false){
 	                $this->injections[$nkey]=$v;
 	            }
