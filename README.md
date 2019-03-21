@@ -20,6 +20,10 @@
   - Scaffolding
   - Console Admin interface (Devtools)
   
+ ## Next release is coming (2.0.1)
+ - Assets & themes management
+ - Dependency injection refactoring & optimization 
+  
 # Installation
 
 The easiest way to install **Ubiquity** is to use [devtools](https://github.com/phpMv/ubiquity-devtools)
@@ -36,7 +40,7 @@ Ubiquity new firstProject -a -q=semantic
 Ubiquity serve
 ```
 # Need some help?
-Ubiquity is a recent project and does not have a community yet.
+Ubiquity is a recent project and does not yet have a community.
 In the meantime, you can consult:
  - [Quick-start guide](https://micro-framework.readthedocs.io/en/latest/quickstart/quickstart.html) to discover the framework
  - [Documentation](https://micro-framework.readthedocs.io/en/latest/) to go deeper
@@ -47,7 +51,7 @@ For further assistance please feel free to :
  - create an [issue](https://github.com/phpMv/ubiquity/issues/new) if you notice a bug or suspicious behavior
 
 # Performances
-Ubiquity realizes its own benchmarks, especially for the ORM part:
+Ubiquity executes its own benchmarks, especially for the ORM part:
 
 This test involves loading from a Mysql database:
 - 2100 instances of the **Host** class
@@ -58,7 +62,7 @@ Approximately 6000 objects are loaded, in this intuitive line with Ubiquity:
 ```php
 $hosts=DAO::getAll(Host::class,"",["user.virtualhosts","servers.stype"]);
 ```
-On this type of related object loading that can be very time consuming with an ORM,
+In regards to this type of related object loading that can be very time consuming with an ORM,
 Ubiquity is **3,1 times** faster than Codeigniter associated with Doctrine, **3,6 times** faster than Symfony, **20 times** more than Laravel-Eloquent!
 
 Unlike Doctrine, for this data loading, Ubiquity:
@@ -74,23 +78,23 @@ These excellent results have been confirmed by an independent benchmark site : [
 # About design choices
 Ubiquity was created in April 2017.
 
-The project tries to simplify the development process, to empower web developers delivering value through their applications.
-It aims to reconcile performance and ease of handling.
+The project tries to simplify the development process, and empowers web developers who delivering value through their applications.
+It aims to combine performance and ease of handling.
 
 This dual purpose has led to some design choices:
 
->Get inspired by best practices and successful concepts from other frameworks, but do not try to reproduce what is not in the logic of PHP.
+>Get inspired by the best practices and successful concepts from other frameworks, but do not try to reproduce things that are not a part of the logic of PHP.
 
 Some PHP frameworks were inspired by the Java world, which has contributed to more professional php development.
-But java is not PHP, environments and languages are completely different (though their syntax are similar), and what is good in Java is not necessarily in PHP.
+But java is not PHP : the environments and languages are completely different (though their syntax is similar). What is good in Java is not necessarily in PHP.
 
-Ubiquity wants to stay in the spirit of PHP and what it does best, for example:
+Ubiquity wants to keep the essence of PHP and what it does best, for example:
   - By using php (packed) arrays because they are effective in php (with php7 optimization)
   - By not creating instances of classes to inject for the core part of the framework, to prefer the use of classes with static methods
 
 >Not multiplying the ways of doing things.
 
-if a method or technique is satisfactory, there's no reason to implement an alternative version, especially if there is a risk of degrading performance, or complicating the handling of the framework.
+If a method or technique is optimal, there's no reason to implement an alternative version, especially if there is a risk of degrading the performance or complicating the handling of the framework.
 
 >Avoiding multiple external dependencies, which are sometimes loaded when they are never used.
 - They prevent the developer from optimizing his own code.
@@ -103,7 +107,7 @@ The framework used must give the developer the means to optimize his application
 ```bash
 Ubiquity help
 ```
-The program in console mode makes it easy to perform all the repetitive tasks related to the design of projects:
+The console mode makes it easy to perform all the repetitive tasks related to the design of projects:
 - creations : project, controllers, actions, routes, models, views, 
 - checking : routes, models, validators
 - scaffolding (CRUD + authentification)
