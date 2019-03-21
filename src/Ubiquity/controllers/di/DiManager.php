@@ -5,19 +5,20 @@ namespace Ubiquity\controllers\di;
 use Ubiquity\cache\CacheManager;
 
 /**
+ * Manage dependency injection.
  * Ubiquity\controllers\di$DiManager
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
- * @since Ubiquity 2.1
+ * @since Ubiquity 2.1.0
  *
  */
 class DiManager {
 	protected static $key = "controllers/di/";
 
 	/**
-	 * Initialize dependancy injection cache
+	 * Initialize dependency injection cache
 	 * To use in dev only!
 	 *
 	 * @param array $config
@@ -47,9 +48,9 @@ class DiManager {
 	}
 
 	protected static function getControllerCacheKey($classname) {
-	    if(is_object($classname)){
-	        $classname=get_class($classname);
-	    }
+		if (is_object ( $classname )) {
+			$classname = get_class ( $classname );
+		}
 		return self::$key . \str_replace ( "\\", \DS, $classname );
 	}
 }
