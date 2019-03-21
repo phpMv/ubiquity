@@ -20,7 +20,7 @@
   - Scaffolding
   - Console Admin interface (Devtools)
   
- ## Next release is coming (2.0.1)
+ ## Next release is coming (2.1.0)
  - Assets & themes management
  - Dependency injection refactoring & optimization 
   
