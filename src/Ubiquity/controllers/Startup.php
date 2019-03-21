@@ -34,6 +34,7 @@ class Startup {
 	}
 
 	/**
+	 *
 	 * @param string $url
 	 * @param boolean $initialize
 	 * @param boolean $finalize
@@ -147,20 +148,23 @@ class Startup {
 	}
 
 	/**
-	 * Injects dependencies in a controller
+	 * Injects dependencies in a controller.
+	 *
 	 * @param string $controller The controller classname
 	 */
 	public static function injectDependences($controller) {
-	    $di=DiManager::fetch($controller);
-	    $rClass=new \ReflectionClass($controller);
-		foreach ( $di as $k => $v ) {
-		    if($rClass->hasProperty($k)){
-		        $prop=$rClass->getProperty($k);
-		        $prop->setAccessible(true);
-		        $prop->setValue($controller, $v($controller));
-		    }else{
-			 $controller->$k = $v ( $controller );
-		    }
+		$di = DiManager::fetch ( $controller );
+		if ($di !== false) {
+			$rClass = new \ReflectionClass ( $controller );
+			foreach ( $di as $k => $v ) {
+				if ($rClass->hasProperty ( $k )) {
+					$prop = $rClass->getProperty ( $k );
+					$prop->setAccessible ( true );
+					$prop->setValue ( $controller, $v ( $controller ) );
+				} else {
+					$controller->$k = $v ( $controller );
+				}
+			}
 		}
 	}
 

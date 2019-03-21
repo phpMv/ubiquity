@@ -44,7 +44,7 @@ class DiManager {
 		if (CacheManager::$cache->exists ( $key )) {
 			return CacheManager::$cache->fetch ( $key );
 		}
-		return [ ];
+		return false;
 	}
 
 	protected static function getControllerCacheKey($classname) {
