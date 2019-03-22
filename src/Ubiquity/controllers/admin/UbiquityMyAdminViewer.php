@@ -372,10 +372,10 @@ class UbiquityMyAdminViewer {
 				$errors = \array_merge ( $errors, $route->getMessages () );
 			}
 			$resource = $restAttributes ["restAttributes"] ["resource"];
-			$title=$resource;
-			if($resource==null){
-				if(class_exists($controller)){
-					$title=call_user_func([$controller,'_getApiVersion']);
+			$title = $resource;
+			if ($resource == null) {
+				if (class_exists ( $controller )) {
+					$title = call_user_func ( [ $controller,'_getApiVersion' ] );
 				}
 			}
 			$tab = $tabs->addTab ( $title, [ $doc,$list,$this->_getRestRoutesDataTable ( $routes, "dtRest", $resource, $restAttributes ["restAttributes"] ["authorizations"] ) ] );
@@ -508,20 +508,22 @@ class UbiquityMyAdminViewer {
 			$mvcDe->setCaptions ( [ "Models","Controllers","Rest" ] );
 			return $mvcDe;
 		} );
-		$de->setValueFunction ( "di", function ($v, $instance, $index) use ($config) {
-			$diDe = new DataElement ( "", $v );
-			$keys = \array_keys ( $config ["di"] );
-			$diDe->setFields ( $keys );
-			foreach ( $keys as $key ) {
-				$diDe->setValueFunction ( $key, function ($value) use ($config, $key) {
-					$r = $config ['di'] [$key];
-					if (\is_callable ( $r ))
-						return \nl2br ( \htmlentities ( UIntrospection::closure_dump ( $r ) ) );
-					return $value;
-				} );
-			}
-			return $diDe;
-		} );
+		if (isset ( $config ["di"] ) && sizeof ( $config ["di"] ) > 0) {
+			$de->setValueFunction ( "di", function ($v, $instance, $index) use ($config) {
+				$diDe = new DataElement ( "", $v );
+				$keys = \array_keys ( $config ["di"] );
+				$diDe->setFields ( $keys );
+				foreach ( $keys as $key ) {
+					$diDe->setValueFunction ( $key, function ($value) use ($config, $key) {
+						$r = $config ['di'] [$key];
+						if (\is_callable ( $r ))
+							return \nl2br ( \htmlentities ( UIntrospection::closure_dump ( $r ) ) );
+						return $value;
+					} );
+				}
+				return $diDe;
+			} );
+		}
 		$de->setValueFunction ( "isRest", function ($v) use ($config) {
 			$r = $config ["isRest"];
 			if (\is_callable ( $r ))
@@ -648,32 +650,34 @@ class UbiquityMyAdminViewer {
 
 			return $mvcDe;
 		} );
-		$de->setValueFunction ( "di", function ($v, $instance, $index) use ($config) {
-			$diDe = new DataElement ( "di", $v );
-			$diDe->setDefaultValueFunction ( function ($name, $value) {
-				return new HtmlFormInput ( "di-" . $name, null, "text", $value );
-			} );
-			$keys = \array_keys ( $config ["di"] );
-			$diDe->setFields ( $keys );
-			foreach ( $keys as $key ) {
-				$diDe->setValueFunction ( $key, function ($value) use ($config, $key) {
-					$input = new HtmlFormTextarea ( "di-" . $key );
-					$df = $input->getDataField ();
-					$df->setProperty ( "rows", "5" );
-					$df->setProperty ( "data-editor", "true" );
-					$r = $config ['di'] [$key];
-					if (\is_callable ( $r )) {
-						$value = \htmlentities ( UIntrospection::closure_dump ( $r ) );
-					}
-					$input->setValue ( $value );
-					return $input;
+		if (isset ( $config ["di"] ) && sizeof ( $config ["di"] ) > 0) {
+			$de->setValueFunction ( "di", function ($v, $instance, $index) use ($config) {
+				$diDe = new DataElement ( "di", $v );
+				$diDe->setDefaultValueFunction ( function ($name, $value) {
+					return new HtmlFormInput ( "di-" . $name, null, "text", $value );
 				} );
-			}
-			$diDe->onPreCompile ( function () use (&$diDe) {
-				$diDe->getHtmlComponent ()->setColWidth ( 0, 1 );
+				$keys = \array_keys ( $config ["di"] );
+				$diDe->setFields ( $keys );
+				foreach ( $keys as $key ) {
+					$diDe->setValueFunction ( $key, function ($value) use ($config, $key) {
+						$input = new HtmlFormTextarea ( "di-" . $key );
+						$df = $input->getDataField ();
+						$df->setProperty ( "rows", "5" );
+						$df->setProperty ( "data-editor", "true" );
+						$r = $config ['di'] [$key];
+						if (\is_callable ( $r )) {
+							$value = \htmlentities ( UIntrospection::closure_dump ( $r ) );
+						}
+						$input->setValue ( $value );
+						return $input;
+					} );
+				}
+				$diDe->onPreCompile ( function () use (&$diDe) {
+					$diDe->getHtmlComponent ()->setColWidth ( 0, 1 );
+				} );
+				return $diDe;
 			} );
-			return $diDe;
-		} );
+		}
 		$de->setValueFunction ( "isRest", function ($v) use ($config) {
 			$r = $config ["isRest"];
 			$input = new HtmlFormTextarea ( "isRest" );
@@ -833,7 +837,8 @@ class UbiquityMyAdminViewer {
 	}
 
 	public function getLogsDataTable($maxLines = null, $reverse = true, $groupBy = [1,2], $contexts = null) {
-		$dt = $this->jquery->semantic ()->dataTable ( "dt-logs", LogMessage::class, Logger::asObjects ( $reverse, $maxLines, $contexts ) );
+		$os=Logger::asObjects ( $reverse, $maxLines, $contexts );
+		$dt = $this->jquery->semantic ()->dataTable ( "dt-logs", LogMessage::class, $os );
 		$gbSize = 0;
 		if (is_array ( $groupBy )) {
 			$gbSize = sizeof ( $groupBy );

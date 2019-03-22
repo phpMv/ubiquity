@@ -2,7 +2,6 @@
 
 namespace Ubiquity\controllers\admin;
 
-use Ajax\JsUtils;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\semantic\html\base\constants\Direction;
 use Ajax\semantic\html\collections\HtmlMessage;
@@ -52,6 +51,7 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\yuml\ClassToYuml;
 use Ubiquity\utils\yuml\ClassesToYuml;
+use Ajax\php\ubiquity\JsUtils;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
@@ -89,18 +89,19 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	 */
 	private $scaffold;
 	private $globalMessage;
-	
+
 	/**
-	 * @var JsUtils
+	 *
+	 * @var \Ajax\php\ubiquity\JsUtils
 	 */
 	public $jquery;
 
-	public function __construct(){
-		parent::__construct();
-		$this->jquery=new \Ajax\php\ubiquity\JsUtils(["defer"=>true],$this);
-		$this->jquery->semantic(new \Ajax\Semantic());
+	public function __construct() {
+		parent::__construct ();
+		$this->jquery = new \Ajax\php\ubiquity\JsUtils ( [ "defer" => true ], $this );
+		$this->jquery->semantic ( new \Ajax\Semantic () );
 	}
-	
+
 	public function initialize() {
 		ob_start ( array (__class__,'_error_handler' ) );
 		if (URequest::isAjax () === false) {
@@ -659,7 +660,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$fieldsButton = $frm->addFields ();
 			$fieldsButton->addClass ( "_notToClone" );
 			$fieldsButton->addButton ( "clone", "Add " . $type, "yellow" )->setTagName ( "div" );
-			if ($model!=null) {
+			if ($model != null) {
 				$model = UbiquityUtils::getModelsName ( Startup::getConfig (), $model );
 				$modelFields = OrmUtils::getSerializableFields ( $model );
 				if (\sizeof ( $modelFields ) > 0) {

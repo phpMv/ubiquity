@@ -5,7 +5,7 @@
  * Ubiquity\core
  * This class is part of Ubiquity
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 namespace Ubiquity\core;
@@ -18,10 +18,14 @@ use Ubiquity\utils\http\UCookie;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\translation\TranslatorManager;
 use Ubiquity\contents\normalizers\NormalizersManager;
+use Ubiquity\assets\AssetsManager;
 
 class Framework {
-	public const version = '2.0.11';
+	public const version = '2.0.11+';
 
+	public static function getVersion(){
+		return self::version;
+	}
 	public static function getController() {
 		return Startup::getController ();
 	}
@@ -64,6 +68,10 @@ class Framework {
 
 	public static function hasAdmin() {
 		return \class_exists ( "controllers\Admin" );
+	}
+
+	public static function getAssets() {
+		return new AssetsManager ();
 	}
 }
 

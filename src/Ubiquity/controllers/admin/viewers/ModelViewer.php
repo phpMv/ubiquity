@@ -22,6 +22,7 @@ use Ajax\semantic\html\elements\HtmlLabel;
 use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\form\HtmlFormField;
 use Ubiquity\controllers\crud\EditMemberParams;
+use Ajax\semantic\html\collections\form\HtmlFormInput;
 
 /**
  * Associated with a CRUDController class
@@ -361,7 +362,13 @@ class ModelViewer {
 	 *
 	 * @param mixed $field
 	 */
-	public function onGenerateFormField($field) {
+	public function onGenerateFormField($field,$nb) {
+		if($field instanceof HtmlFormInput){
+			if($field->getDataField()->getProperty('type')=="datetime-local"){
+				$v=$field->getDataField()->getProperty('value');
+				$field->getDataField()->setValue(date("Y-m-d\TH:i:s", strtotime($v)));
+			}
+		}
 		return;
 	}
 

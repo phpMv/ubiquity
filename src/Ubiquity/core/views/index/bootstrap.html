@@ -1,4 +1,44 @@
-{{q["header"] |raw }}
-{{q["btTest"] |raw }}
-<div id="test">It works !</div>
-{{ script_foot |raw }}
+<br>
+<div class="container">
+	<div class="">
+		<div class="container">
+			<div class="alert alert-success" role="alert">
+			    <div class="row">
+			        <div class="col-auto align-self-start">
+			           <i class="fa fa-check-circle fa-3x"></i>
+			        </div>
+			        <div class="col">
+			           	<h4>It works !</h4>
+			           	<span>Your application is now ready. You can start working by reading the <a class="alert-link" target="_new" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest">Quick start guide</a>.</span>
+			        </div>
+			    </div>
+			</div>				
+			<h1>Welcome to Ubiquity</h1>
+
+			<p class="lead">
+				Version <span class="badge version">{{app.getVersion()}}</span>
+			</p>
+			<hr class="my-4">			
+			<ul class="list-group">
+				{% set infos = infos|merge({'Template': _self}) %}
+				<li class='list-group-item inverted'><strong><i class="fa fa-info-circle"></i> Page informations</strong></li>
+				{% for key, value in infos %}
+				  <li class="list-group-item">{{key}} :&nbsp;<span class="font-weight-bold text-info">{{value}}</span>
+				  </li>
+				  {% endfor %}
+			</ul>
+			<p></p>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<span class="navbar-brand mb-0 h1">Ubiquity</span>
+			  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			    <div class="navbar-nav">
+			    {% for name, link in links %}
+					<a class="nav-item nav-link" href="{{link}}" target="new">{{name}}</a> 
+				{% endfor %}	
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+</div>
+<p></p>

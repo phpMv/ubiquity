@@ -1,0 +1,38 @@
+<br>
+<div class="grid-container">
+	<div class="row">
+		<div class="callout success radius">
+		    <div class="grid-x">
+		        <div class="cell small-1">
+		           <i class="fi-checkbox large"></i>
+		        </div>
+		        <div class="cell small-11">
+		           	<h4>It works !</h4>
+		           	<span>Your application is now ready. You can start working by reading the <a class="alert-link" target="_new" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest">Quick start guide</a>.</span>
+		        </div>
+		    </div>
+		</div>				
+		<h1>Welcome to Ubiquity</h1>
+
+		<p>
+			Version <span class="label radius version">{{app.getVersion()}}</span>
+		</p>
+		<hr class="my-4">
+		<div class="callout radius small inverted"><h4><i class="fi-info"></i> Page informations</h4></div>
+		<dl class="infos square">
+			{% set infos = infos|merge({'Template': _self}) %}
+			{% for key, value in infos %}
+			  <dt>{{key}} :&nbsp;<dt>
+			  <dd class="value">{{value}}</dd>
+			  {% endfor %}
+		</dl>
+		<p></p>
+		<ul class="menu links">
+			<li class="menu-text">Ubiquity</li>
+			{% for name, link in links %}
+				<li><a href="{{link}}" target="new">{{name}}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+<p></p>
