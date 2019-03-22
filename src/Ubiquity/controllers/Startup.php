@@ -7,13 +7,14 @@ use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\utils\http\USession;
 use Ubiquity\log\Logger;
 use Ubiquity\controllers\traits\StartupConfigTrait;
+use Ubiquity\controllers\di\DiManager;
 
 /**
  * Starts the framework.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 class Startup {
@@ -62,8 +63,7 @@ class Startup {
 	/**
 	 * Handles the request
 	 *
-	 * @param array $config
-	 *        	The loaded config array
+	 * @param array $config The loaded config array
 	 */
 	public static function run(array &$config) {
 		self::$config = $config;
@@ -76,12 +76,9 @@ class Startup {
 	/**
 	 * Forwards to url
 	 *
-	 * @param string $url
-	 *        	The url to forward to
-	 * @param boolean $initialize
-	 *        	If true, the **initialize** method of the controller is called
-	 * @param boolean $finalize
-	 *        	If true, the **finalize** method of the controller is called
+	 * @param string $url The url to forward to
+	 * @param boolean $initialize If true, the **initialize** method of the controller is called
+	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 */
 	public static function forward($url, $initialize = true, $finalize = true) {
 		$u = self::parseUrl ( $url );
@@ -118,12 +115,9 @@ class Startup {
 	/**
 	 * Runs an action on a controller
 	 *
-	 * @param array $u
-	 *        	An array containing controller, action and parameters
-	 * @param boolean $initialize
-	 *        	If true, the **initialize** method of the controller is called
-	 * @param boolean $finalize
-	 *        	If true, the **finalize** method of the controller is called
+	 * @param array $u An array containing controller, action and parameters
+	 * @param boolean $initialize If true, the **initialize** method of the controller is called
+	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 */
 	public static function runAction(array &$u, $initialize = true, $finalize = true) {
 		$ctrl = $u [0];
@@ -156,8 +150,7 @@ class Startup {
 	/**
 	 * Runs a callback
 	 *
-	 * @param array $u
-	 *        	An array containing a callback, and some parameters
+	 * @param array $u An array containing a callback, and some parameters
 	 */
 	public static function runCallable(array &$u) {
 		self::$actionParams = [ ];
@@ -176,14 +169,18 @@ class Startup {
 	/**
 	 * Injects the dependencies from the **di** config key in a controller
 	 *
-	 * @param object $controller
-	 *        	An instance of Controller
+	 * @param string $controller The controller classname
 	 */
 	public static function injectDependences($controller) {
-		if (isset ( self::$config ['di'] )) {
-			$di = self::$config ['di'];
-			if (\is_array ( $di )) {
-				foreach ( $di as $k => $v ) {
+		$di = DiManager::fetch ( $controller );
+		if ($di !== false) {
+			$rClass = new \ReflectionClass ( $controller );
+			foreach ( $di as $k => $v ) {
+				if ($rClass->hasProperty ( $k )) {
+					$prop = $rClass->getProperty ( $k );
+					$prop->setAccessible ( true );
+					$prop->setValue ( $controller, $v ( $controller ) );
+				} else {
 					$controller->$k = $v ( $controller );
 				}
 			}
@@ -194,10 +191,8 @@ class Startup {
 	 * Runs an action on a controller and returns a string
 	 *
 	 * @param array $u
-	 * @param boolean $initialize
-	 *        	If true, the **initialize** method of the controller is called
-	 * @param boolean $finalize
-	 *        	If true, the **finalize** method of the controller is called
+	 * @param boolean $initialize If true, the **initialize** method of the controller is called
+	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 * @return string
 	 */
 	public static function runAsString(array &$u, $initialize = true, $finalize = true) {

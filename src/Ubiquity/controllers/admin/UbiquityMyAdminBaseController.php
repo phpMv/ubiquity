@@ -2,56 +2,56 @@
 
 namespace Ubiquity\controllers\admin;
 
-use Ajax\semantic\html\elements\HtmlHeader;
-use Ajax\semantic\html\elements\HtmlButton;
-use Ubiquity\orm\DAO;
-use Ubiquity\orm\OrmUtils;
-use Ubiquity\controllers\Startup;
-use Ubiquity\utils\http\URequest;
-use Ubiquity\cache\CacheManager;
-use Ubiquity\controllers\admin\popo\Route;
-use Ubiquity\controllers\Router;
+use Ajax\JsUtils;
+use Ajax\semantic\html\base\HtmlSemDoubleElement;
+use Ajax\semantic\html\base\constants\Direction;
+use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\semantic\html\collections\form\HtmlFormFields;
-use Ubiquity\controllers\admin\popo\ControllerAction;
-use Ubiquity\controllers\admin\traits\ModelsConfigTrait;
-use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\utils\yuml\ClassToYuml;
-use Ubiquity\utils\yuml\ClassesToYuml;
+use Ajax\semantic\html\collections\form\HtmlFormInput;
+use Ajax\semantic\html\collections\menus\HtmlMenu;
+use Ajax\semantic\html\elements\HtmlButton;
+use Ajax\semantic\html\elements\HtmlButtonGroups;
+use Ajax\semantic\html\elements\HtmlHeader;
+use Ajax\semantic\html\elements\HtmlInput;
 use Ajax\semantic\html\elements\HtmlList;
 use Ajax\semantic\html\modules\HtmlDropdown;
-use Ajax\semantic\html\collections\menus\HtmlMenu;
-use Ajax\JsUtils;
-use Ajax\semantic\html\base\constants\Direction;
-use Ubiquity\controllers\admin\traits\RestTrait;
-use Ubiquity\controllers\admin\traits\CacheTrait;
-use Ubiquity\controllers\admin\traits\ControllersTrait;
-use Ubiquity\controllers\admin\traits\ModelsTrait;
-use Ubiquity\controllers\admin\traits\RoutesTrait;
-use Ubiquity\utils\base\UString;
-use Ubiquity\utils\UbiquityUtils;
-use Ubiquity\controllers\admin\traits\DatabaseTrait;
-use Ajax\semantic\html\collections\form\HtmlFormInput;
-use Ajax\semantic\html\base\HtmlSemDoubleElement;
-use Ubiquity\controllers\admin\popo\ControllerSeo;
-use Ubiquity\controllers\admin\traits\SeoTrait;
-use Ajax\semantic\html\collections\HtmlMessage;
-use Ubiquity\controllers\admin\traits\GitTrait;
-use Ubiquity\controllers\Controller;
-use Ubiquity\controllers\admin\traits\ConfigTrait;
-use Ubiquity\utils\http\UResponse;
-use Ubiquity\controllers\admin\viewers\ModelViewer;
-use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
-use Ubiquity\controllers\semantic\MessagesTrait;
-use Ubiquity\controllers\crud\CRUDDatas;
-use Ubiquity\controllers\admin\traits\CreateControllersTrait;
-use Ubiquity\cache\ClassUtils;
-use Ubiquity\controllers\admin\traits\LogsTrait;
 use Ajax\semantic\html\modules\checkbox\HtmlCheckbox;
-use Ajax\semantic\html\elements\HtmlInput;
+use Ubiquity\cache\CacheManager;
+use Ubiquity\cache\ClassUtils;
+use Ubiquity\controllers\Controller;
+use Ubiquity\controllers\Router;
+use Ubiquity\controllers\Startup;
+use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
+use Ubiquity\controllers\admin\popo\ControllerAction;
+use Ubiquity\controllers\admin\popo\ControllerSeo;
+use Ubiquity\controllers\admin\popo\Route;
+use Ubiquity\controllers\admin\traits\CacheTrait;
+use Ubiquity\controllers\admin\traits\ConfigTrait;
+use Ubiquity\controllers\admin\traits\ControllersTrait;
+use Ubiquity\controllers\admin\traits\CreateControllersTrait;
+use Ubiquity\controllers\admin\traits\DatabaseTrait;
+use Ubiquity\controllers\admin\traits\GitTrait;
+use Ubiquity\controllers\admin\traits\LogsTrait;
+use Ubiquity\controllers\admin\traits\ModelsConfigTrait;
+use Ubiquity\controllers\admin\traits\ModelsTrait;
+use Ubiquity\controllers\admin\traits\RestTrait;
+use Ubiquity\controllers\admin\traits\RoutesTrait;
+use Ubiquity\controllers\admin\traits\SeoTrait;
+use Ubiquity\controllers\admin\viewers\ModelViewer;
+use Ubiquity\controllers\crud\CRUDDatas;
+use Ubiquity\controllers\semantic\MessagesTrait;
 use Ubiquity\log\LoggerParams;
-use Ajax\semantic\html\elements\HtmlButtonGroups;
-use Ubiquity\translation\Translator;
+use Ubiquity\orm\DAO;
+use Ubiquity\orm\OrmUtils;
 use Ubiquity\scaffolding\AdminScaffoldController;
+use Ubiquity\translation\Translator;
+use Ubiquity\utils\UbiquityUtils;
+use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\UResponse;
+use Ubiquity\utils\yuml\ClassToYuml;
+use Ubiquity\utils\yuml\ClassesToYuml;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
@@ -89,7 +89,18 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	 */
 	private $scaffold;
 	private $globalMessage;
+	
+	/**
+	 * @var JsUtils
+	 */
+	public $jquery;
 
+	public function __construct(){
+		parent::__construct();
+		$this->jquery=new \Ajax\php\ubiquity\JsUtils(["defer"=>true],$this);
+		$this->jquery->semantic(new \Ajax\Semantic());
+	}
+	
 	public function initialize() {
 		ob_start ( array (__class__,'_error_handler' ) );
 		if (URequest::isAjax () === false) {

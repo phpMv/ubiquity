@@ -8,6 +8,7 @@ use Ubiquity\cache\parser\ControllerParser;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\cache\CacheManager;
+use Ubiquity\controllers\di\DiManager;
 
 /**
  *
@@ -50,6 +51,7 @@ trait RouterCacheTrait {
 		}
 		self::$cache->store ( "controllers/routes.default", "return " . UArray::asPhpArray ( $routes ["default"], "array" ) . ";", 'controllers' );
 		self::$cache->store ( "controllers/routes.rest", "return " . UArray::asPhpArray ( $routes ["rest"], "array" ) . ";", 'controllers' );
+		DiManager::init($config);
 		if (! $silent) {
 			echo "Router cache reset\n";
 		}
