@@ -42,7 +42,6 @@ class ThemesManager {
 			throw new ThemesException ( 'Template engine must be an instance of Twig for themes activation!' );
 		}
 	}
-<<<<<<< HEAD
 
 	public static function saveActiveTheme($theme) {
 		$config = Startup::getConfig ();
@@ -52,17 +51,6 @@ class ThemesManager {
 		return $config;
 	}
 
-=======
-	
-	public static function saveActiveTheme($theme){
-		$config=Startup::getConfig();
-		$config['templateEngineOptions']['activeTheme']=$theme;
-		$content="<?php\nreturn ".UArray::asPhpArray($config,"array",1,true).";";
-		Startup::saveConfig($content);
-		return $config;
-	}
-	
->>>>>>> e6b17f6967b1b3b4822fd3aba80585537ec7c1ff
 	/**
 	 * Sets the activeTheme
 	 *
@@ -107,7 +95,3 @@ class ThemesManager {
 		EventsManager::addListener ( ViewEvents::AFTER_RENDER, $callback );
 	}
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> e6b17f6967b1b3b4822fd3aba80585537ec7c1ff
