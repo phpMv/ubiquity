@@ -30,30 +30,20 @@ class DiControllerParser {
 			$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@injected" );
 			if ($annot !== false) {
 				$name = $annot->name;
-				$this->injections [$propName] = $this->getInjection ( $name, $config, @$annot->code );
+				$this->injections [$propName] = $this->getInjection ( $name ?? $propName, $config,$controllerClass, $annot->code??null );
 			} else {
 				$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@autowired" );
 				if ($annot !== false) {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {
 						$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
-					} else {
+					}else {
 						throw new DiException ( sprintf ( '%s property has no type and cannot be autowired!', $propName ) );
 					}
 				}
 			}
 		}
 		$this->scanGlobalDi ( $config ['di'] ?? [ ], $controllerClass );
-	}
-
-	protected function isMemberInGlobalDi($diConfig, $member, $controller) {
-		$classname = ClassUtils::getClassSimpleName ( $controller );
-		foreach ( $diConfig as $k => $notUsed ) {
-			if ($k === '*.' . $member || $k === $classname . '.' . $member) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	protected function scanGlobalDi($diConfig, $controller) {
@@ -69,16 +59,23 @@ class DiControllerParser {
 		}
 	}
 
-	protected function getInjection($name, $config, $code = null) {
+	protected function getInjection($name, $config, $controller,$code = null) {
 		if ($code != null) {
 			return "function(\$controller){return " . $code . ";}";
 		}
 		if (isset ( $config ["di"] )) {
 			$di = $config ['di'];
-			if (isset ( $di [$name] )) {
-				return '$config["di"]["' . $name . '"]';
-			} else {
+			if ($name != null){
+				$classname = ClassUtils::getClassSimpleName ( $controller );
+				if(isset ( $di [$name] )) {
+					return $di[$name];
+				}elseif(isset ( $di [$classname.'.'.$name] )){
+					return $di[$classname.'.'.$name];
+				}elseif(isset ( $di ['*.'.$name] )){
+					return $di['*.'.$name];
+				}else {
 				throw new \Exception ( "key " . $name . " is not present in config di array" );
+				}
 			}
 		} else {
 			throw new \Exception ( "key di is not present in config array" );

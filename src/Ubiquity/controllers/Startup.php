@@ -25,39 +25,6 @@ class Startup {
 	private static $action;
 	private static $actionParams;
 
-	public static function run(array &$config) {
-		self::$config = $config;
-		self::startTemplateEngine ( $config );
-		if (isset ( $config ['sessionName'] ))
-			USession::start ( $config ['sessionName'] );
-		self::forward ( $_GET ['c'] );
-	}
-
-	/**
-	 *
-	 * @param string $url
-	 * @param boolean $initialize
-	 * @param boolean $finalize
-	 */
-	public static function forward($url, $initialize = true, $finalize = true) {
-		$u = self::parseUrl ( $url );
-		if (($ru = Router::getRoute ( $url )) !== false) {
-			if (\is_array ( $ru )) {
-				if (is_callable ( $ru [0] )) {
-					self::runCallable ( $ru );
-				} else {
-					self::_preRunAction ( $ru, $initialize, $finalize );
-				}
-			} else {
-				echo $ru; // Displays route response from cache
-			}
-		} else {
-			self::setCtrlNS ();
-			$u [0] = self::$ctrlNS . $u [0];
-			self::_preRunAction ( $u, $initialize, $finalize );
-		}
-	}
-
 	private static function _preRunAction(&$u, $initialize = true, $finalize = true) {
 		if (\class_exists ( $u [0] )) {
 			self::runAction ( $u, $initialize, $finalize );

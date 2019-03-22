@@ -26,8 +26,7 @@ class InjectedAnnotation extends BaseAnnotation {
 				$this->code = $properties [1];
 				unset ( $properties [1] );
 			}
-		} else {
-			throw new \Exception ( 'Injected annotation must have a name' );
 		}
+		parent::initAnnotation($properties);
 	}
 }
