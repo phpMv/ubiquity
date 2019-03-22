@@ -151,4 +151,8 @@ class Twig extends TemplateEngine {
 			throw new ThemesException ( sprintf ( 'The path `%s` does not exists!', $path ) );
 		}
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e6b17f6967b1b3b4822fd3aba80585537ec7c1ff

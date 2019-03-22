@@ -135,3 +135,7 @@ class AssetsManager {
 		return self::stylesheet ( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
 	}
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> e6b17f6967b1b3b4822fd3aba80585537ec7c1ff
