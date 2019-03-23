@@ -13,22 +13,16 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\common\html\HtmlContentOnly;
+use Ubiquity\controllers\semantic\InsertJqueryTrait;
 
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface {
-	use MessagesTrait,CRUDControllerUtilitiesTrait;
+	use MessagesTrait,CRUDControllerUtilitiesTrait,InsertJqueryTrait;
 	protected $model;
 	protected $activePage;
 
-	/**
-	 *
-	 * @var \Ajax\php\ubiquity\JsUtils
-	 */
-	public $jquery;
-
 	public function __construct() {
 		parent::__construct ();
-		$this->jquery = new \Ajax\php\ubiquity\JsUtils ( [ "defer" => true ], $this );
-		$this->jquery->semantic ( new \Ajax\Semantic () );
+		$this->insertJquerySemantic ();
 	}
 
 	/**

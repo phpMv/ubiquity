@@ -52,12 +52,13 @@ use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\yuml\ClassToYuml;
 use Ubiquity\utils\yuml\ClassesToYuml;
 use Ajax\php\ubiquity\JsUtils;
+use Ubiquity\controllers\semantic\InsertJqueryTrait;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
 	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait,
-	LogsTrait;
+	LogsTrait,InsertJqueryTrait;
 
 	/**
 	 *
@@ -90,16 +91,9 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	private $scaffold;
 	private $globalMessage;
 
-	/**
-	 *
-	 * @var \Ajax\php\ubiquity\JsUtils
-	 */
-	public $jquery;
-
 	public function __construct() {
 		parent::__construct ();
-		$this->jquery = new \Ajax\php\ubiquity\JsUtils ( [ "defer" => true ], $this );
-		$this->jquery->semantic ( new \Ajax\Semantic () );
+		$this->insertJquerySemantic ();
 	}
 
 	public function initialize() {
