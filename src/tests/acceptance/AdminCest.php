@@ -114,7 +114,7 @@ class AdminCest extends BaseAcceptance {
 		$I->click ( '#edit-config-btn' );
 		$I->waitForElement ( "#save-config-btn", self::TIMEOUT );
 		$I->click ( "#save-config-btn" );
-		$I->waitForElement ( "#edit-config-btn" );
+		$I->waitForElement ( "#edit-config-btn", self::TIMEOUT );
 		$I->see ( "http://dev.local/" );
 	}
 
