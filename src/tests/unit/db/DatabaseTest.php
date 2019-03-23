@@ -71,8 +71,8 @@ class DatabaseTest extends BaseTest {
 		$this->assertTrue ( $this->database->isConnected () );
 		$this->assertTrue ( $this->database->ping () );
 		$this->database->setUser ( 'nobody' );
-		$this->database->connect ();
 		$this->expectException ( DBException::class );
+		$this->database->connect ();
 	}
 
 	/**
