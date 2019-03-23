@@ -169,7 +169,7 @@ class Startup {
 	/**
 	 * Injects the dependencies from the **di** config key in a controller
 	 *
-	 * @param string $controller The controller classname
+	 * @param Controller $controller The controller
 	 */
 	public static function injectDependences($controller) {
 		$di = DiManager::fetch ( $controller );

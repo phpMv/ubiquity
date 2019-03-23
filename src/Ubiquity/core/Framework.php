@@ -23,9 +23,10 @@ use Ubiquity\assets\AssetsManager;
 class Framework {
 	public const version = '2.0.11+';
 
-	public static function getVersion(){
+	public static function getVersion() {
 		return self::version;
 	}
+
 	public static function getController() {
 		return Startup::getController ();
 	}

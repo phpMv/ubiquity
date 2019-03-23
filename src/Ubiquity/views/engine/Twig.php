@@ -43,7 +43,7 @@ class Twig extends TemplateEngine {
 		}
 		if (isset ( $options ["activeTheme"] )) {
 			ThemesManager::setActiveThemeFromTwig ( $options ["activeTheme"] );
-			self::setTheme ( $options ["activeTheme"], ThemesManager::THEMES_FOLDER );
+			$this->setTheme ( $options ["activeTheme"], ThemesManager::THEMES_FOLDER );
 			unset ( $options ["activeTheme"] );
 		}
 

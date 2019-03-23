@@ -30,14 +30,14 @@ class DiControllerParser {
 			$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@injected" );
 			if ($annot !== false) {
 				$name = $annot->name;
-				$this->injections [$propName] = $this->getInjection ( $name ?? $propName, $config,$controllerClass, $annot->code??null );
+				$this->injections [$propName] = $this->getInjection ( $name ?? $propName, $config, $controllerClass, $annot->code ?? null);
 			} else {
 				$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@autowired" );
 				if ($annot !== false) {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {
 						$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
-					}else {
+					} else {
 						throw new DiException ( sprintf ( '%s property has no type and cannot be autowired!', $propName ) );
 					}
 				}
@@ -59,22 +59,22 @@ class DiControllerParser {
 		}
 	}
 
-	protected function getInjection($name, $config, $controller,$code = null) {
+	protected function getInjection($name, $config, $controller, $code = null) {
 		if ($code != null) {
 			return "function(\$controller){return " . $code . ";}";
 		}
 		if (isset ( $config ["di"] )) {
 			$di = $config ['di'];
-			if ($name != null){
+			if ($name != null) {
 				$classname = ClassUtils::getClassSimpleName ( $controller );
-				if(isset ( $di [$name] )) {
-					return $di[$name];
-				}elseif(isset ( $di [$classname.'.'.$name] )){
-					return $di[$classname.'.'.$name];
-				}elseif(isset ( $di ['*.'.$name] )){
-					return $di['*.'.$name];
-				}else {
-				throw new \Exception ( "key " . $name . " is not present in config di array" );
+				if (isset ( $di [$name] )) {
+					return $di [$name];
+				} elseif (isset ( $di [$classname . '.' . $name] )) {
+					return $di [$classname . '.' . $name];
+				} elseif (isset ( $di ['*.' . $name] )) {
+					return $di ['*.' . $name];
+				} else {
+					throw new \Exception ( "key " . $name . " is not present in config di array" );
 				}
 			}
 		} else {
@@ -88,7 +88,7 @@ class DiControllerParser {
 
 	/**
 	 *
-	 * @return multitype:
+	 * @return array
 	 */
 	public function getInjections() {
 		return $this->injections;
