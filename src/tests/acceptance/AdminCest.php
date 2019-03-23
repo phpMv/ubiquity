@@ -47,7 +47,7 @@ class AdminCest extends BaseAcceptance {
 		$this->gotoAdminModule ( "Admin/Routes", $I );
 		$I->click ( "#bt-init-cache" );
 		$I->waitForElementVisible ( "#divRoutes .ui.message.info", self::TIMEOUT );
-		$I->canSee ( 'Router cache reset', '.ui.message.info' );
+		$I->canSee ( 'Router cache', '.ui.message.info' );
 	}
 
 	// tests

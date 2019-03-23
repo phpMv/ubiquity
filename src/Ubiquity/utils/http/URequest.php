@@ -6,26 +6,31 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UString;
 
 /**
- * Http Request utilities
- * @author jc
- * @version 1.0.1
+ * Http Request utilities, wrapper for accessing to $_GET, $_POST and php://input.
+ * Ubiquity\utils\http$URequest
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ *
  */
 class URequest {
 
 	/**
 	 * Affects member to member the values of the associative array $values to the members of the object $object
 	 * Used for example to retrieve the variables posted and assign them to the members of an object
+	 *
 	 * @param object $object
 	 * @param associative array $values
 	 */
-	public static function setValuesToObject($object, $values=null) {
-		if (!isset($values))
-			$values=$_POST;
+	public static function setValuesToObject($object, $values = null) {
+		if (! isset ( $values ))
+			$values = $_POST;
 		foreach ( $values as $key => $value ) {
-			$accessor="set" . ucfirst($key);
-			if (method_exists($object, $accessor)) {
-				$object->$accessor($value);
-				$object->_rest[$key]=$value;
+			$accessor = "set" . ucfirst ( $key );
+			if (method_exists ( $object, $accessor )) {
+				$object->$accessor ( $value );
+				$object->_rest [$key] = $value;
 			}
 		}
 	}
@@ -33,203 +38,242 @@ class URequest {
 	/**
 	 * Affects member to member the values of $_GET to the members of the object $object
 	 * $object must have accessors to each members
+	 *
 	 * @param object $object
 	 */
 	public static function setGetValuesToObject($object) {
-		self::setValuesToObject($object,$_GET);
+		self::setValuesToObject ( $object, $_GET );
 	}
 
 	/**
 	 * Affects member to member the values of $_POST to the members of the object $object
 	 * $object must have accessors to each members
+	 *
 	 * @param object $object
 	 */
 	public static function setPostValuesToObject($object) {
-		self::setValuesToObject($object,$_POST);
+		self::setValuesToObject ( $object, $_POST );
 	}
 
 	/**
 	 * Call a cleaning function on the post
+	 *
 	 * @param string $function the cleaning function, default htmlentities
 	 * @return array
 	 */
-	public static function getPost($function="htmlentities") {
-		return array_map($function, $_POST);
+	public static function getPost($function = "htmlentities") {
+		return array_map ( $function, $_POST );
 	}
 
 	/**
 	 * Returns the query data, for PUT, DELETE PATCH methods
 	 */
 	public static function getInput() {
-		$put=array ();
-		\parse_str(\file_get_contents('php://input'), $put);
+		$put = array ();
+		\parse_str ( \file_get_contents ( 'php://input' ), $put );
 		return $put;
 	}
 
 	/**
 	 * Returns the query data, regardless of the method
+	 *
 	 * @return array
 	 */
 	public static function getDatas() {
-		$method=\strtolower($_SERVER['REQUEST_METHOD']);
-		switch($method) {
-			case 'post':
+		$method = \strtolower ( $_SERVER ['REQUEST_METHOD'] );
+		switch ($method) {
+			case 'post' :
 				return $_POST;
-			case 'get':
+			case 'get' :
 				return $_GET;
-			default:
-				return self::getInput();
+			default :
+				return self::getInput ();
 		}
 	}
 
 	/**
 	 * Returns the request content-type header
+	 *
 	 * @return string
 	 */
 	public static function getContentType() {
-		$headers=getallheaders();
-		if (isset($headers["content-type"])) {
-			return $headers["content-type"];
+		$headers = getallheaders ();
+		if (isset ( $headers ["content-type"] )) {
+			return $headers ["content-type"];
 		}
 		return null;
 	}
-	
+
 	/**
-	* Copyright © 2008 Darrin Yeager
-	* https://www.dyeager.org/
-	* Licensed under BSD license.
-	* https://www.dyeager.org/downloads/license-bsd.txt
-	**/
+	 * Copyright © 2008 Darrin Yeager
+	 * https://www.dyeager.org/
+	 * Licensed under BSD license.
+	 * https://www.dyeager.org/downloads/license-bsd.txt
+	 */
 	public static function getDefaultLanguage() {
-		if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]))
-			return self::parseDefaultLanguage($_SERVER["HTTP_ACCEPT_LANGUAGE"]);
-			else
-				return self::parseDefaultLanguage(NULL);
+		if (isset ( $_SERVER ["HTTP_ACCEPT_LANGUAGE"] ))
+			return self::parseDefaultLanguage ( $_SERVER ["HTTP_ACCEPT_LANGUAGE"] );
+		else
+			return self::parseDefaultLanguage ( NULL );
 	}
-	
+
 	private static function parseDefaultLanguage($http_accept, $deflang = "en") {
-		if(isset($http_accept) && strlen($http_accept) > 1)  {
-			$x = explode(",",$http_accept);
-			$lang=[];
-			foreach ($x as $val) {
-				if(preg_match("/(.*);q=([0-1]{0,1}.\d{0,4})/i",$val,$matches))
-					$lang[$matches[1]] = (float)$matches[2];
-					else
-						$lang[$val] = 1.0;
+		if (isset ( $http_accept ) && strlen ( $http_accept ) > 1) {
+			$x = explode ( ",", $http_accept );
+			$lang = [ ];
+			foreach ( $x as $val ) {
+				if (preg_match ( "/(.*);q=([0-1]{0,1}.\d{0,4})/i", $val, $matches ))
+					$lang [$matches [1]] = ( float ) $matches [2];
+				else
+					$lang [$val] = 1.0;
 			}
-			
+
 			$qval = 0.0;
-			foreach ($lang as $key => $value) {
+			foreach ( $lang as $key => $value ) {
 				if ($value > $qval) {
-					$qval = (float)$value;
+					$qval = ( float ) $value;
 					$deflang = $key;
 				}
 			}
 		}
 		return $deflang;
 	}
-	
-	public static function setLocale(string $locale){
+
+	public static function setLocale(string $locale) {
 		try {
-			if (class_exists('Locale', false)) {
-				\Locale::setDefault($locale);
+			if (class_exists ( 'Locale', false )) {
+				\Locale::setDefault ( $locale );
 			}
-		} catch (\Exception $e) {
-			//Nothing to do
+		} catch ( \Exception $e ) {
+			// Nothing to do
 		}
 	}
 
 	/**
 	 * Returns true if the request is an Ajax request
+	 *
 	 * @return boolean
 	 */
 	public static function isAjax() {
-		return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+		return (isset ( $_SERVER ['HTTP_X_REQUESTED_WITH'] ) && ! empty ( $_SERVER ['HTTP_X_REQUESTED_WITH'] ) && strtolower ( $_SERVER ['HTTP_X_REQUESTED_WITH'] ) == 'xmlhttprequest');
 	}
 
 	/**
 	 * Returns true if the request is sent by the POST method
+	 *
 	 * @return boolean
 	 */
 	public static function isPost() {
-		return $_SERVER['REQUEST_METHOD'] === 'POST';
+		return $_SERVER ['REQUEST_METHOD'] === 'POST';
 	}
 
 	/**
 	 * Returns true if the request is cross site
+	 *
 	 * @return boolean
 	 */
 	public static function isCrossSite() {
-		return stripos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']) === FALSE;
+		return stripos ( $_SERVER ['HTTP_REFERER'], $_SERVER ['SERVER_NAME'] ) === FALSE;
 	}
 
 	/**
 	 * Returns true if request contentType is set to json
+	 *
 	 * @return boolean
 	 */
 	public static function isJSON() {
-		$contentType=self::getContentType();
-		return \stripos($contentType, "json") !== false;
+		$contentType = self::getContentType ();
+		return \stripos ( $contentType, "json" ) !== false;
 	}
 
 	/**
 	 * Returns the value of the $key variable passed by the get method or $default if the $key variable does not exist
+	 *
 	 * @param string $key
 	 * @param string $default return value by default
 	 * @return string
 	 */
-	public static function get($key, $default=NULL) {
-		return isset($_GET[$key]) ? $_GET[$key] : $default;
+	public static function get($key, $default = NULL) {
+		return isset ( $_GET [$key] ) ? $_GET [$key] : $default;
 	}
-	
+
 	/**
 	 * Returns a boolean at the key position in request
 	 *
-	 * @param string $key
-	 *        	the key to add or set
+	 * @param string $key the key to add or set
 	 * @return boolean
 	 */
 	public static function getBoolean($key) {
 		$ret = false;
-		if (isset ( $_REQUEST[$key] )) {
-			$ret = UString::isBooleanTrue ( $_REQUEST[$key] );
+		if (isset ( $_REQUEST [$key] )) {
+			$ret = UString::isBooleanTrue ( $_REQUEST [$key] );
 		}
 		return $ret;
 	}
 
 	/**
 	 * Returns the value of the $key variable passed by the post method or $default if the $key variable does not exist
+	 *
 	 * @param string $key
 	 * @param string $default return value by default
 	 * @return string
 	 */
-	public static function post($key, $default=NULL) {
-		return isset($_POST[$key]) ? $_POST[$key] : $default;
+	public static function post($key, $default = NULL) {
+		return isset ( $_POST [$key] ) ? $_POST [$key] : $default;
 	}
 
 	public static function getUrl($url) {
-		$config=Startup::getConfig();
-		$siteUrl=\rtrim($config["siteUrl"], '/');
-		if (UString::startswith($url, "/") === false) {
-			$url="/" . $url;
+		$config = Startup::getConfig ();
+		$siteUrl = \rtrim ( $config ["siteUrl"], '/' );
+		if (UString::startswith ( $url, "/" ) === false) {
+			$url = "/" . $url;
 		}
 		return $siteUrl . $url;
 	}
 
 	public static function getUrlParts() {
-		return \explode("/", $_GET["c"]);
+		return \explode ( "/", $_GET ["c"] );
 	}
 
 	/**
 	 * Returns the http method
+	 *
 	 * @return string
 	 */
 	public static function getMethod() {
-		return \strtolower($_SERVER['REQUEST_METHOD']);
+		return \strtolower ( $_SERVER ['REQUEST_METHOD'] );
 	}
 
-	public static function cleanUrl($url){
-		$url=\str_replace("\\", "/", $url);
-		return \str_replace("//", "/", $url);
+	public static function cleanUrl($url) {
+		$url = \str_replace ( "\\", "/", $url );
+		return \str_replace ( "//", "/", $url );
+	}
+
+	/**
+	 * Fix up PHP's messing up input containing dots, etc.
+	 * `$source` can be either 'post' or 'get'
+	 *
+	 * @param string $source
+	 * @return string[]
+	 * @see https://stackoverflow.com/questions/68651/can-i-get-php-to-stop-replacing-characters-in-get-or-post-arrays#68667
+	 */
+	public static function getRealInput($source = 'post') {
+		$pairs = explode ( "&", strtolower ( $source ) === 'post' ? file_get_contents ( "php://input" ) : $_SERVER ['QUERY_STRING'] );
+		$vars = array ();
+		foreach ( $pairs as $pair ) {
+			$nv = explode ( "=", $pair );
+			$name = urldecode ( $nv [0] );
+			$value = urldecode ( $nv [1] ?? '');
+			$vars [$name] = $value;
+		}
+		return $vars;
+	}
+
+	public static function getRealGET() {
+		return self::getRealInput ( 'get' );
+	}
+
+	public static function getRealPOST() {
+		return self::getRealInput ( 'post' );
 	}
 }

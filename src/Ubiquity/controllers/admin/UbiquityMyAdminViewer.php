@@ -667,6 +667,8 @@ class UbiquityMyAdminViewer {
 						$r = $config ['di'] [$key];
 						if (\is_callable ( $r )) {
 							$value = \htmlentities ( UIntrospection::closure_dump ( $r ) );
+						} elseif (is_array ( $r )) {
+							$value = UArray::asPhpArray ( $r, 'array' );
 						}
 						$input->setValue ( $value );
 						return $input;
@@ -837,7 +839,7 @@ class UbiquityMyAdminViewer {
 	}
 
 	public function getLogsDataTable($maxLines = null, $reverse = true, $groupBy = [1,2], $contexts = null) {
-		$os=Logger::asObjects ( $reverse, $maxLines, $contexts );
+		$os = Logger::asObjects ( $reverse, $maxLines, $contexts );
 		$dt = $this->jquery->semantic ()->dataTable ( "dt-logs", LogMessage::class, $os );
 		$gbSize = 0;
 		if (is_array ( $groupBy )) {
