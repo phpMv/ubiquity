@@ -185,8 +185,9 @@ class Startup {
 				}
 			}
 		}
-		if (isset ( $di ['exec'] )) {
-			foreach ( $di ['exec'] as $k => $v ) {
+		$di = self::$config ['di'] ?? [ ];
+		if (isset ( $di ['@exec'] )) {
+			foreach ( $di ['@exec'] as $k => $v ) {
 				$controller->$k = $v ( $controller );
 			}
 		}

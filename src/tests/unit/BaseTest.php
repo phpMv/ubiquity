@@ -4,7 +4,7 @@ use Ubiquity\tests\unit\BaseUnitTest;
 class BaseTest extends BaseUnitTest {
 
 	protected function getDi() {
-		return [ 'exec' => [ 'injected' => function ($controller) {
+		return [ '@exec' => [ 'injected' => function ($controller) {
 			return new Service ( $controller );
 		} ] ];
 	}

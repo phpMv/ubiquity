@@ -40,7 +40,7 @@ build:
           - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -m -a)
           - cp -f src/tests/files/composer.json src/composer.json
           - (cd src/ && composer update)
-          - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/
+          - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/ && cp -f src/tests/files/config.php src/app/config/
           - cp -R src/tests/files/unit/* src/app/
           - sudo chmod 0777 -R src/*
           - sudo /usr/share/locales/install-language-pack fr_FR
