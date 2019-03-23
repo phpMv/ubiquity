@@ -2,6 +2,7 @@
 use Ubiquity\db\Database;
 use Ubiquity\cache\database\TableCache;
 use Ubiquity\exceptions\CacheException;
+use Ubiquity\exceptions\DBException;
 
 /**
  * Database test case.
@@ -18,16 +19,15 @@ class DatabaseTest extends BaseTest {
 	 */
 	private $database;
 
-
 	/**
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		parent::_before();
-		$db=$this->config["database"];
-		$this->dbType=$db['type'];
-		$this->dbName=$db['dbName'];
-		$this->database = new Database ($this->dbType, $this->dbName, $this->db_server );
+		parent::_before ();
+		$db = $this->config ["database"];
+		$this->dbType = $db ['type'];
+		$this->dbName = $db ['dbName'];
+		$this->database = new Database ( $this->dbType, $this->dbName, $this->db_server );
 	}
 
 	/**
@@ -71,7 +71,8 @@ class DatabaseTest extends BaseTest {
 		$this->assertTrue ( $this->database->isConnected () );
 		$this->assertTrue ( $this->database->ping () );
 		$this->database->setUser ( 'nobody' );
-		$this->assertFalse ( $this->database->connect () );
+		$this->database->connect ();
+		$this->expectException ( DBException::class );
 	}
 
 	/**

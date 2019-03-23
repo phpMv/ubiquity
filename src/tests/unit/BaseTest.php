@@ -1,11 +1,12 @@
 <?php
 use services\Service;
 use Ubiquity\tests\unit\BaseUnitTest;
-
 class BaseTest extends BaseUnitTest {
-	
+
 	protected function getDi() {
-		return ['injected'=>function($controller){return new Service($controller);}];
+		return [ 'exec' => [ 'injected' => function ($controller) {
+			return new Service ( $controller );
+		} ] ];
 	}
 
 	protected function getDatabase() {
@@ -14,7 +15,5 @@ class BaseTest extends BaseUnitTest {
 	protected function getCacheDirectory() {
 		return "cache-tests/";
 	}
-
-
 }
 

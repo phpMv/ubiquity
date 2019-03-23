@@ -185,6 +185,11 @@ class Startup {
 				}
 			}
 		}
+		if (isset ( $di ['exec'] )) {
+			foreach ( $di ['exec'] as $k => $v ) {
+				$controller->$k = $v ( $controller );
+			}
+		}
 	}
 
 	/**
