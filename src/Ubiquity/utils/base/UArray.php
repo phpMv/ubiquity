@@ -222,6 +222,6 @@ class UArray {
 		foreach ( $array as $k => $v ) {
 			$res [] = "{$quoteKey}{$k}{$quoteKey}{$op}{$quoteValue}{$v}{$quoteValue}";
 		}
-		implode ( $glue, $res );
+		return implode ( $glue, $res );
 	}
 }
