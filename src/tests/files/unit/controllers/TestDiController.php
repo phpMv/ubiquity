@@ -7,6 +7,7 @@ use Ubiquity\controllers\Controller;
 use services\IInjected;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
+use Ubiquity\exceptions\RestException;
 
 /**
  * Controller TestDiController
@@ -24,7 +25,10 @@ class TestDiController extends Controller {
 	public function initCache() {
 		$config = Startup::getConfig ();
 		CacheManager::start ( $config );
-		CacheManager::initCache ( $config );
+		try {
+			CacheManager::initCache ( $config );
+		} catch ( RestException $e ) {
+		}
 	}
 
 	/**
