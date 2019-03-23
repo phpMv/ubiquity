@@ -31,6 +31,6 @@ class DiCest extends BaseAcceptance {
 	public function tryToAllInject(AcceptanceTester $I) {
 		$I->amOnPage ( "/TestDiController/allInjected" );
 		$I->see ( 'IService instanciationIAllService instanciationIAllService instanciation' );
-		$I->see ( 'do !:injected:!in IAllService' );
+		$I->see ( 'do !:*injected:!in IAllService' );
 	}
 }
