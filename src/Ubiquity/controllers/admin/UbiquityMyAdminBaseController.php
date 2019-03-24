@@ -53,6 +53,7 @@ use Ubiquity\utils\yuml\ClassToYuml;
 use Ubiquity\utils\yuml\ClassesToYuml;
 use Ajax\php\ubiquity\JsUtils;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
+use Ubiquity\themes\ThemesManager;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
@@ -234,10 +235,18 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$input->labeledCheckbox ( Direction::LEFT, "View", "v", "slider" );
 		$input->addAction ( "Create controller", true, "plus", true )->addClass ( "teal" )->asSubmit ();
 		$frm->setSubmitParams ( $baseRoute . "/createController", "#main-content" );
+		$activeTheme=ThemesManager::getActiveTheme();
+		
 		$bt = $fields->addDropdown ( "crud-bt", [ "frmAddCrudController" => "CRUD controller","frmAddAuthController" => "Auth controller" ], "Create special controller" );
 		$bt->asButton ();
 		$bt->addIcon ( "plus" );
-		$this->jquery->getOnClick ( "#dropdown-crud-bt [data-value]", $baseRoute, "#frm", [ "attr" => "data-value" ] );
+		if($activeTheme==null){
+			$this->jquery->getOnClick ( "#dropdown-crud-bt [data-value]", $baseRoute, "#frm", [ "attr" => "data-value" ] );
+		}else{
+			$bt->setDisabled(true);
+			$bt->addPopup("Scaffolding","No scaffolding with an active theme!");
+		}
+		
 		$bt = $fields->addButton ( "filter-bt", "Filter controllers" );
 		$bt->getOnClick ( $baseRoute . "/frmFilterControllers", "#frm", [ "attr" => "" ] );
 		$bt->addIcon ( "filter" );
