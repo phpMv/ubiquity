@@ -45,6 +45,8 @@ class Twig extends TemplateEngine {
 			ThemesManager::setActiveThemeFromTwig ( $options ["activeTheme"] );
 			$this->setTheme ( $options ["activeTheme"], ThemesManager::THEMES_FOLDER );
 			unset ( $options ["activeTheme"] );
+		} else {
+			$this->loader->setPaths ( [ \ROOT . \DS . 'views' ], "activeTheme" );
 		}
 
 		$this->addFunction ( 'path', function ($name, $params = [], $absolute = false) {

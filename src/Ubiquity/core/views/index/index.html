@@ -1,4 +1,46 @@
-<header>
-	<h1>Ubiquity framework</h1>
-	It works !
-</header>
+<br>
+<div class="ui container">
+	<div class="">
+
+		<div class="ui icon positive message">
+			<i class="ui check circle icon"></i>
+			<div class="content">
+				<div class="header">It works !</div>
+				<p>Your application is now ready. You can start working by reading the <a target="_new" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest">Quick start guide</a>.</p>
+			</div>
+		</div>
+
+		<h1  id="header" class="ui header">
+			<div id="content-header" class="content">Welcome to Ubiquity 
+				<div id="subheader-header" class="sub header">
+					Version <span class="ui label version">{{app.getVersion()}}</span>
+				</div>
+			</div>
+		</h1>
+		
+		<!-- page Informations begin -->
+		<h3 class="ui top attached header inverted"><i class="info circle icon"></i> Page informations</h3>
+		<div class="ui attached segment">
+			<div class="ui relaxed divided list">
+			{% set infos = infos|merge({'Template': _self}) %}
+				{% for key, value in infos %}
+				  <div class="item">
+				    <div class="content">
+				      <a class="header">{{key}}</a>
+				      <div class="description">{{value}}</div>
+				    </div>
+				  </div>
+				  {% endfor %}
+			</div>
+		</div>
+		<!-- page Informations end -->
+		  
+		<div class="ui menu links secondary">
+			<div class="header item">Ubiquity</div>
+			{% for name, link in links %}
+				<a class="item" href="{{link}}" target="new">{{name}}</a> 
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<p>&nbsp;</p>
