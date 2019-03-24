@@ -4,6 +4,7 @@ namespace Ubiquity\controllers;
 
 use Ubiquity\views\View;
 use Ubiquity\exceptions\RouterException;
+use Ubiquity\themes\ThemesManager;
 
 /**
  * Base class for controllers.
@@ -11,7 +12,7 @@ use Ubiquity\exceptions\RouterException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 abstract class Controller {
@@ -68,6 +69,7 @@ abstract class Controller {
 
 	/**
 	 * Loads the default view (controllerName/actionName) possibly passing the variables $pdata.
+	 * (@activeTheme/controllerName/actionName if themes are activated)
 	 *
 	 * @param mixed $pData Variable or associative array to pass to the view
 	 *        If a variable is passed, it will have the name **$data** in the view,
@@ -82,10 +84,15 @@ abstract class Controller {
 
 	/**
 	 * Returns the default view name for this controller/action i.e ControllerName/actionName.html for the action actionName in ControllerName
+	 * If there is an activeTheme **@activeTheme/ControllerName/actionName.html**
 	 *
 	 * @return string the default view name
 	 */
 	public function getDefaultViewName() {
+		$activeTheme = ThemesManager::getActiveTheme ();
+		if ($activeTheme !== '') {
+			return '@activeTheme/' . Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
+		}
 		return Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
 	}
 

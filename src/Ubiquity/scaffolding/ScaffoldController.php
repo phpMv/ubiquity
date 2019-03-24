@@ -188,7 +188,7 @@ abstract class ScaffoldController {
 
 	protected function _createViewOp($controller, $action, $theme = null) {
 		$prefix = "";
-		if (! isset ( $theme )) {
+		if (! isset ( $theme ) || $theme == '') {
 			$theme = $this->config ["templateEngineOptions"] ["activeTheme"] ?? null;
 		}
 		if ($theme != null) {
