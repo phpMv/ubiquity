@@ -5,6 +5,7 @@ namespace Ubiquity\controllers\admin\traits;
 use Ubiquity\themes\ThemesManager;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\utils\base\UString;
+use Ubiquity\utils\http\URequest;
 
 /**
  * @property \Ajax\JsUtils $jquery
@@ -111,6 +112,17 @@ trait ThemesTrait {
 		$res=system($command);
 		$return_var=ob_get_clean();
 		return $res;
+	}
+	
+	public function _themeExists($fieldname) {
+		if (URequest::isPost ()) {
+			$result = [ ];
+			header ( 'Content-type: application/json' );
+			$theme = $_POST [$fieldname];
+			$allThemes=ThemesManager::getRefThemes();
+			$result ["result"] = (array_search($theme, $allThemes)===false);
+			echo json_encode ( $result );
+		}
 	}
 
 }

@@ -77,12 +77,22 @@ class ThemesManager {
 	}
 
 	/**
-	 * Returns all referenced themes
+	 * Returns all referenced themes.
 	 *
 	 * @return string[]
 	 */
 	public static function getRefThemes() {
 		return self::$refThemes;
+	}
+
+	/**
+	 * Returns if a theme is a custom Theme (not in refThemes).
+	 *
+	 * @param string $theme
+	 * @return boolean
+	 */
+	public static function isCustom($theme) {
+		return array_search ( $theme, self::$refThemes ) === false;
 	}
 
 	/**

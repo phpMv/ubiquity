@@ -55,6 +55,7 @@ use Ajax\php\ubiquity\JsUtils;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ubiquity\themes\ThemesManager;
 use Ubiquity\controllers\admin\traits\ThemesTrait;
+use Ajax\semantic\components\validation\Rule;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
@@ -488,6 +489,11 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$dd->getField()->setClearable(true);
 		$fields->addButton("btNewTheme", "Create theme","positive");
 		$frm->setSubmitParams("Admin/createNewTheme", "#refresh-theme");
+		$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
+		
+		$frm->addExtraFieldRules ( "themeName", [ "empty",[ "checkTheme","Theme {value} already exists!" ] ] );
+		$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkTheme", $this->_getFiles ()->getAdminBaseRoute () . "/_themeExists/themeName", "{}", "result=data.result;", "postForm", [ "form" => "frmNewTheme" ] ), true );
+		
 		$this->jquery->getOnClick("._installTheme", "Admin/installTheme","#refresh-theme",["attr"=>"data-ajax"]);
 		$this->jquery->getHref("._setTheme","#refresh-theme");
 		$this->jquery->compile ( $this->view);
