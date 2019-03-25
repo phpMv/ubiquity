@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+### Added
+- Themes manager with bootstrap, Semantic-ui and foundation
+  - `AssetsManager` for css,js, fonts and images integration
+  - `ThemesManager` for css framework integration
+- Dependency injection annotations
+  - `@injected` inject a member in a controller defined by a dependency in config
+  - `@autowired` inject an instance of class defined by type with `@var` annotation
+  
+### Changed
+- dependency injection mecanism
+  - controller cache for di
+  - `@exec`key in `config[di]` for injections at runtime
+  
 ### Fixed
 - An exception is thrown In case of problem with the Database connection (in `DataBase::connect` method) see https://github.com/phpMv/ubiquity/issues/12
 >The connection to the database must be protected by a `try/catch` in `app/config/services.php`
