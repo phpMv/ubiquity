@@ -81,12 +81,36 @@ You can use a dot (.) to access attributes of a variable (methods or properties 
       
     {{ foo.bar }}
     {{ foo['bar'] }}
+    
+Ubiquity extra functions
+------------------------
+Global `app` variable provides access to predefined Ubiquity Twig features:
+
+- `app` is an instance of Frameork class.\\
+- `app` is an instance of Framework and provides access to public methods of this class.
+
+Get framework installed version:
+
+.. code-block:: smarty
+
+{{ app.version() }}
+
+
+Return the active controller and action names:
+
+.. code-block:: smarty
+
+{{ app.getController() }}
+{{ app.getAction() }}
+
+Return global wrapper classes :
+
+.. code-block:: smarty
+
+{{ app.getRequest().isAjax() }}
 
 Themes
 ==============
-.. |br| raw:: html
-
-   <br />
 
 Ubiquity support themes wich can have it's own assets and views according to theme template to be rendered by controller. 
 Each controller action can render a specif theme, or they can use the default theme configured at *config.php* file in templateEngineOptions => array("activeTheme" => "semantic").
