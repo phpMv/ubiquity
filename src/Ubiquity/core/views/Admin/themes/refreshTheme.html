@@ -7,7 +7,7 @@
 		    Installed themes
 		  </div>
 		  {% for theme in themes %}
-		  <a class="item {{ activeTheme==theme ? 'active' }}" href="IndexController/ct/{{theme}}">
+		  <a class="item {{ activeTheme==theme ? 'active' }} _setTheme" href="Admin/setTheme/{{theme}}">
 		    {{theme}}
 		  </a>
 		  {% endfor %}

@@ -42,6 +42,7 @@ trait ThemesTrait {
 			}
 		}
 		
+		$this->jquery->getHref("._setTheme","#refresh-theme");
 		$this->jquery->compile($this->view);
 		$this->refreshTheme();
 	}
@@ -62,6 +63,18 @@ trait ThemesTrait {
 			}
 			
 		}
+		$this->jquery->getHref("._setTheme","#refresh-theme");
+		$this->jquery->compile($this->view);
+		$this->refreshTheme();
+	}
+	
+	public function setTheme($theme){
+		$allThemes=ThemesManager::getAvailableThemes();
+		if(array_search($theme, $allThemes)!==false){
+			ThemesManager::setActiveTheme($theme);
+			ThemesManager::saveActiveTheme($theme);
+		}
+		$this->jquery->getHref("._setTheme","#refresh-theme");
 		$this->jquery->compile($this->view);
 		$this->refreshTheme();
 	}

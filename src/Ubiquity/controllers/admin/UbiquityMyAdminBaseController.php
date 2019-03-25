@@ -489,6 +489,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$fields->addButton("btNewTheme", "Create theme","positive");
 		$frm->setSubmitParams("Admin/createNewTheme", "#refresh-theme");
 		$this->jquery->getOnClick("._installTheme", "Admin/installTheme","#refresh-theme",["attr"=>"data-ajax"]);
+		$this->jquery->getHref("._setTheme","#refresh-theme");
 		$this->jquery->compile ( $this->view);
 		
 		$this->loadView($this->_getFiles()->getViewThemesIndex(),compact('activeTheme','themes','notInstalled'));
