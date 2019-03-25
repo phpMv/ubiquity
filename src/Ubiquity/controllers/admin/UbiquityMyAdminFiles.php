@@ -119,4 +119,8 @@ class UbiquityMyAdminFiles {
 	public function getViewGitIgnore() {
 		return $this->viewBase . "/git/formGitIgnore.html";
 	}
+	
+	public function getViewThemesIndex(){
+		return $this->viewBase . "/themes/index.html";
+	}
 }

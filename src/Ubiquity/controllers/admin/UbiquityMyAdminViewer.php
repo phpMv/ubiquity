@@ -76,7 +76,9 @@ class UbiquityMyAdminViewer {
 				"git" => [ "Git","github","Git versioning" ],
 				"seo" => [ "Seo","google","Search Engine Optimization" ],
 				"logs" => [ "Logs","bug","Log files" ],
-				"translate" => [ "Translate","language","Translation module" ] ];
+				"translate" => [ "Translate","language","Translation module" ],
+				"themes" => ["Themes","paint brush","Themes module"]
+		];
 	}
 
 	public function getRoutesDataTable($routes, $dtName = "dtRoutes") {

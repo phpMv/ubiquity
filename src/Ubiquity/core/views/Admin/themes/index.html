@@ -1,0 +1,17 @@
+{{ q["header"] | raw }}
+
+<div class="ui segment">
+	<div id="refresh-theme">
+	{% include('@framework/Admin/themes/refreshTheme.html') %}
+	</div>
+	<div class="ui divider"></div>
+	<h5 class="ui header">
+		<i class="ui sticky note outline icon"></i>
+		<div class="content">
+			Create a new theme
+		</div>
+	</h5>
+	{{ q["frmNewTheme"] | raw }}
+
+</div>
+{{ script_foot | raw }}

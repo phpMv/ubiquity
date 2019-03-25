@@ -54,12 +54,13 @@ use Ubiquity\utils\yuml\ClassesToYuml;
 use Ajax\php\ubiquity\JsUtils;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ubiquity\themes\ThemesManager;
+use Ubiquity\controllers\admin\traits\ThemesTrait;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
 	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait,
-	LogsTrait,InsertJqueryTrait;
+	LogsTrait,InsertJqueryTrait,ThemesTrait;
 
 	/**
 	 *
@@ -177,8 +178,8 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function index() {
 		$array = $this->_getAdminViewer ()->getMainMenuElements ();
-		$this->_getAdminViewer ()->getMainIndexItems ( "part1", \array_slice ( $array, 0, 5 ) );
-		$this->_getAdminViewer ()->getMainIndexItems ( "part2", \array_slice ( $array, 5, 5 ) );
+		$this->_getAdminViewer ()->getMainIndexItems ( "part1", \array_slice ( $array, 0, 6 ) );
+		$this->_getAdminViewer ()->getMainIndexItems ( "part2", \array_slice ( $array, 6, 5 ) );
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewIndex () );
 	}
@@ -472,6 +473,25 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$this->jquery->exec ( '$("#git-tabs .item").tab();', true );
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewGitIndex (), [ "repo" => $gitRepo,"initializeBt" => $initializeBt,"gitIgnoreBt" => $gitIgnoreBt,"pushPullBts" => $pushPullBts,"btRefresh" => $btRefresh ] );
+	}
+	
+	public function themes(){
+		$this->getHeader ( "themes" );
+		$this->jquery->semantic()->htmlLabel("activeTheme");
+		$activeTheme=ThemesManager::getActiveTheme()??'no theme';
+		$themes=ThemesManager::getAvailableThemes();
+		$notInstalled=ThemesManager::getNotInstalledThemes();
+		$frm=$this->jquery->semantic()->htmlForm('frmNewTheme');
+		$fields=$frm->addFields();
+		$fields->addInput("themeName",null,'text','','Theme name');
+		$dd=$fields->addDropdown("extendTheme", ['bootstrap'=>'Bootstrap','foundation'=>'foundation'],'','extends...');
+		$dd->getField()->setClearable(true);
+		$fields->addButton("btNewTheme", "Create theme","positive");
+		$frm->setSubmitParams("Admin/createNewTheme", "#refresh-theme");
+		$this->jquery->getOnClick("._installTheme", "Admin/installTheme","#refresh-theme",["attr"=>"data-ajax"]);
+		$this->jquery->compile ( $this->view);
+		
+		$this->loadView($this->_getFiles()->getViewThemesIndex(),compact('activeTheme','themes','notInstalled'));
 	}
 
 	protected function getHeader($key) {

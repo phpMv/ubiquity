@@ -22,6 +22,7 @@ use Ubiquity\utils\base\UArray;
 class ThemesManager {
 	const THEMES_FOLDER = 'themes';
 	private static $activeTheme;
+	private static $refThemes = [ 'bootstrap','foundation','semantic' ];
 
 	public static function getActiveTheme() {
 		return self::$activeTheme;
@@ -73,6 +74,25 @@ class ThemesManager {
 			$result [] = basename ( $dir );
 		}
 		return $result;
+	}
+
+	/**
+	 * Returns all referenced themes
+	 *
+	 * @return string[]
+	 */
+	public static function getRefThemes() {
+		return self::$refThemes;
+	}
+
+	/**
+	 * Returns the not installed themes
+	 *
+	 * @return array
+	 */
+	public static function getNotInstalledThemes() {
+		$AvailableThemes = self::getAvailableThemes ();
+		return array_diff ( self::$refThemes, $AvailableThemes );
 	}
 
 	/**
