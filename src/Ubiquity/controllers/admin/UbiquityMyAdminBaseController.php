@@ -488,11 +488,12 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$activeTheme = ThemesManager::getActiveTheme () ?? 'no theme';
 		$themes = ThemesManager::getAvailableThemes ();
 		$notInstalled = ThemesManager::getNotInstalledThemes ();
+		$refThemes=ThemesManager::getRefThemes();
 		$frm = $this->jquery->semantic ()->htmlForm ( 'frmNewTheme' );
 		$fields = $frm->addFields ();
 		$input = $fields->addInput ( "themeName", null, 'text', '', 'Theme name' );
 		$input->addRules ( [ "empty",[ "checkTheme","Theme {value} already exists!" ] ] );
-		$dd = $fields->addDropdown ( "extendTheme", [ 'bootstrap' => 'Bootstrap','foundation' => 'foundation' ], '', 'extends...' );
+		$dd = $fields->addDropdown ( "extendTheme", array_combine($refThemes, $refThemes), '', 'extends...' );
 		$dd->getField ()->setClearable ( true );
 		$fields->addButton ( "btNewTheme", "Create theme", "positive" );
 
