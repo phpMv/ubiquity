@@ -1,5 +1,14 @@
 {{ q["header"] | raw }}
 
+<div class="ui secondary menu">
+	 <div class="item">
+	    <div class="ui left labeled action input">
+	    <div class="ui basic teal label">devtools command</div>
+	      <input type="text" placeholder="Ubiquity command location" value="{{devtoolsPath}}">
+	      <a class="ui button _saveConfig">Enregistrer</a>
+	    </div>
+	  </div>
+</div>
 <div class="ui segment">
 	<div id="refresh-theme">
 	{% include('@framework/Admin/themes/refreshTheme.html') %}

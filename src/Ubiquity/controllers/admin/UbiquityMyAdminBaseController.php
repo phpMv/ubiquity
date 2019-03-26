@@ -56,6 +56,7 @@ use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ubiquity\themes\ThemesManager;
 use Ubiquity\controllers\admin\traits\ThemesTrait;
 use Ajax\semantic\components\validation\Rule;
+use Ubiquity\utils\base\UArray;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
@@ -93,10 +94,14 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	 */
 	private $scaffold;
 	private $globalMessage;
+	protected $config = [ 'devtools-path' => 'Ubiquity' ];
 
 	public function __construct() {
 		parent::__construct ();
 		$this->insertJquerySemantic ();
+		if (file_exists ( 'adminConfig.php' )) {
+			$this->config = include ('adminConfig.php');
+		}
 	}
 
 	public function initialize() {
@@ -237,18 +242,18 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$input->labeledCheckbox ( Direction::LEFT, "View", "v", "slider" );
 		$input->addAction ( "Create controller", true, "plus", true )->addClass ( "teal" )->asSubmit ();
 		$frm->setSubmitParams ( $baseRoute . "/createController", "#main-content" );
-		$activeTheme=ThemesManager::getActiveTheme();
-		
+		$activeTheme = ThemesManager::getActiveTheme ();
+
 		$bt = $fields->addDropdown ( "crud-bt", [ "frmAddCrudController" => "CRUD controller","frmAddAuthController" => "Auth controller" ], "Create special controller" );
 		$bt->asButton ();
 		$bt->addIcon ( "plus" );
-		if($activeTheme==null){
+		if ($activeTheme == null) {
 			$this->jquery->getOnClick ( "#dropdown-crud-bt [data-value]", $baseRoute, "#frm", [ "attr" => "data-value" ] );
-		}else{
-			$bt->setDisabled(true);
-			$bt->addPopup("Scaffolding","No scaffolding with an active theme!");
+		} else {
+			$bt->setDisabled ( true );
+			$bt->addPopup ( "Scaffolding", "No scaffolding with an active theme!" );
 		}
-		
+
 		$bt = $fields->addButton ( "filter-bt", "Filter controllers" );
 		$bt->getOnClick ( $baseRoute . "/frmFilterControllers", "#frm", [ "attr" => "" ] );
 		$bt->addIcon ( "filter" );
@@ -475,30 +480,33 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewGitIndex (), [ "repo" => $gitRepo,"initializeBt" => $initializeBt,"gitIgnoreBt" => $gitIgnoreBt,"pushPullBts" => $pushPullBts,"btRefresh" => $btRefresh ] );
 	}
-	
-	public function themes(){
+
+	public function themes() {
+		$devtoolsPath=$this->config["devtools-path"]??'Ubiquity';
 		$this->getHeader ( "themes" );
-		$this->jquery->semantic()->htmlLabel("activeTheme");
-		$activeTheme=ThemesManager::getActiveTheme()??'no theme';
-		$themes=ThemesManager::getAvailableThemes();
-		$notInstalled=ThemesManager::getNotInstalledThemes();
-		$frm=$this->jquery->semantic()->htmlForm('frmNewTheme');
-		$fields=$frm->addFields();
-		$fields->addInput("themeName",null,'text','','Theme name');
-		$dd=$fields->addDropdown("extendTheme", ['bootstrap'=>'Bootstrap','foundation'=>'foundation'],'','extends...');
-		$dd->getField()->setClearable(true);
-		$fields->addButton("btNewTheme", "Create theme","positive");
-		$frm->setSubmitParams("Admin/createNewTheme", "#refresh-theme");
-		$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
-		
-		$frm->addExtraFieldRules ( "themeName", [ "empty",[ "checkTheme","Theme {value} already exists!" ] ] );
+		$this->jquery->semantic ()->htmlLabel ( "activeTheme" );
+		$activeTheme = ThemesManager::getActiveTheme () ?? 'no theme';
+		$themes = ThemesManager::getAvailableThemes ();
+		$notInstalled = ThemesManager::getNotInstalledThemes ();
+		$frm = $this->jquery->semantic ()->htmlForm ( 'frmNewTheme' );
+		$fields = $frm->addFields ();
+		$input = $fields->addInput ( "themeName", null, 'text', '', 'Theme name' );
+		$input->addRules ( [ "empty",[ "checkTheme","Theme {value} already exists!" ] ] );
+		$dd = $fields->addDropdown ( "extendTheme", [ 'bootstrap' => 'Bootstrap','foundation' => 'foundation' ], '', 'extends...' );
+		$dd->getField ()->setClearable ( true );
+		$fields->addButton ( "btNewTheme", "Create theme", "positive" );
+
 		$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkTheme", $this->_getFiles ()->getAdminBaseRoute () . "/_themeExists/themeName", "{}", "result=data.result;", "postForm", [ "form" => "frmNewTheme" ] ), true );
-		
-		$this->jquery->getOnClick("._installTheme", "Admin/installTheme","#refresh-theme",["attr"=>"data-ajax"]);
-		$this->jquery->getHref("._setTheme","#refresh-theme");
-		$this->jquery->compile ( $this->view);
-		
-		$this->loadView($this->_getFiles()->getViewThemesIndex(),compact('activeTheme','themes','notInstalled'));
+
+		$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
+		$frm->setSubmitParams ( "Admin/createNewTheme", "#refresh-theme",["hasLoader"=>"internal"] );
+
+		$this->jquery->getOnClick ( "._installTheme", "Admin/installTheme", "#refresh-theme", [ "attr" => "data-ajax","hasLoader"=>"internal" ] );
+		$this->jquery->getOnClick("._saveConfig","Admin/setDevtoolsPath","",[ "attr" => "val","hasLoader"=>"internal" ]);
+		$this->jquery->getHref ( "._setTheme", "#refresh-theme" );
+		$this->jquery->compile ( $this->view );
+
+		$this->loadView ( $this->_getFiles ()->getViewThemesIndex (), compact ( 'activeTheme', 'themes', 'notInstalled','devtoolsPath' ) );
 	}
 
 	protected function getHeader($key) {
@@ -1016,5 +1024,14 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function _getInstancesFilter($model) {
 		return "1=1";
+	}
+
+	public function getConfig() {
+		return $this->config;
+	}
+
+	public function saveConfig() {
+		$content = "<?php\nreturn " . UArray::asPhpArray ( $this->config, "array", 1, true ) . ";";
+		return UFileSystem::save ( 'adminConfig.php', $content );
 	}
 }

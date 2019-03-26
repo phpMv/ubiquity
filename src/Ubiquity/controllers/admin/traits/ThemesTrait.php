@@ -14,6 +14,8 @@ use Ubiquity\utils\http\URequest;
  */
 trait ThemesTrait {
 	abstract public function showSimpleMessage($content, $type, $title=null,$icon = "info", $timeout = NULL, $staticName = null): HtmlMessage;
+	abstract public function saveConfig() ;
+	
 	protected function refreshTheme($partial=true){
 		$activeTheme=ThemesManager::getActiveTheme()??'no theme';
 		$themes=ThemesManager::getAvailableThemes();
@@ -24,12 +26,13 @@ trait ThemesTrait {
 	
 	public function createNewTheme(){
 		$themeName=$_POST["themeName"];
+		$ubiquityCmd=$this->config["devtools-path"]??'Ubiquity';
 		$allThemes=ThemesManager::getRefThemes();
 		$extend="";
 		if(array_search($_POST["extendTheme"], $allThemes)!==false){
 			$extend=" -x=".trim($_POST["extendTheme"]);
 		}
-		$run=$this->runSilent("echo n | Ubiquity create-theme ".$themeName.$extend,$output);
+		$run=$this->runSilent("echo n | {$ubiquityCmd} create-theme ".$themeName.$extend,$output);
 		$hasError=$this->showConsoleMessage($output, "Theme creation");
 		if(!$hasError){
 			if($run===false){
@@ -50,9 +53,10 @@ trait ThemesTrait {
 	
 	public function installTheme($themeName){
 		$allThemes=ThemesManager::getRefThemes();
+		$ubiquityCmd=$this->config["devtools-path"]??'Ubiquity';
 		
 		if(array_search($themeName, $allThemes)!==false){
-			$run=$this->runSilent("echo n | Ubiquity install-theme ".$themeName,$output);
+			$run=$this->runSilent("echo n | {$ubiquityCmd} install-theme ".$themeName,$output);
 			$hasError=$this->showConsoleMessage($output, "Theme installation");
 			if(!$hasError){
 				if($run===false){
@@ -78,6 +82,11 @@ trait ThemesTrait {
 		$this->jquery->getHref("._setTheme","#refresh-theme");
 		$this->jquery->compile($this->view);
 		$this->refreshTheme();
+	}
+	
+	public function setDevtoolsPath($path){
+		$this->config["devtools-path"]=$path;
+		$this->saveConfig();
 	}
 	
 	private function getConsoleMessage($originalMessage){
@@ -119,7 +128,8 @@ trait ThemesTrait {
 			$result = [ ];
 			header ( 'Content-type: application/json' );
 			$theme = $_POST [$fieldname];
-			$allThemes=ThemesManager::getRefThemes();
+			$refThemes=ThemesManager::getRefThemes();
+			$allThemes=array_merge($refThemes,ThemesManager::getAvailableThemes());
 			$result ["result"] = (array_search($theme, $allThemes)===false);
 			echo json_encode ( $result );
 		}
