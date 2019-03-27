@@ -86,31 +86,77 @@ Ubiquity extra functions
 ------------------------
 Global `app` variable provides access to predefined Ubiquity Twig features:
 
-- `app` is an instance of Frameork class.\\
 - `app` is an instance of Framework and provides access to public methods of this class.
 
 Get framework installed version:
 
 .. code-block:: smarty
 
-{{ app.version() }}
+    {{ app.version() }}
 
 
 Return the active controller and action names:
 
 .. code-block:: smarty
 
-{{ app.getController() }}
-{{ app.getAction() }}
+    {{ app.getController() }}
+    {{ app.getAction() }}
 
 Return global wrapper classes :
 
+For request:
+
 .. code-block:: smarty
 
-{{ app.getRequest().isAjax() }}
+    {{ app.getRequest().isAjax() }}
+
+For session :
+
+.. code-block:: smarty
+
+    {{ app.getSession().get('homePage','index') }}
+
+Assets
+======
+Assets correspond to javascript files, style sheets, fonts, images to include in your application.
+They are located from the **public/assets** folder. |br|
+It is preferable to separate resources into sub-folders by type.
+
+Assets integration with twig
+++++++++++++++++++++++++++++
+Local files
+~~~~~~~~~~
+
+```bash
+public/assets
+     ├ css
+     │    ├ style.css
+     │    └ semantic.min.css
+     └ js
+          └ jquery.min.js
+           
+```
+
+.. code-block:: smarty
+
+    {{ css('css/style.css') }}
+    {{ css('css/semantic.min.css') }}
+    
+    {{ js('js/jquery.min.js') }}
+
+CDN files
+~~~~~~~~~~
+
+.. code-block:: smarty
+
+    {{ css('https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css') }}
+    
+    {{ js('https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js') }}
+
+
 
 Themes
-==============
+======
 
 Ubiquity support themes wich can have it's own assets and views according to theme template to be rendered by controller. 
 Each controller action can render a specif theme, or they can use the default theme configured at *config.php* file in templateEngineOptions => array("activeTheme" => "semantic").
@@ -119,7 +165,7 @@ Ubiquity is shipped with 3 default themes, bootstrap, foundation and semantic
 
 
 Creating a theme
--------
+----------------
 
 To create a new theme you must:
 
