@@ -8,10 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Themes manager with bootstrap, Semantic-ui and foundation
   - `AssetsManager` for css,js, fonts and images integration
   - `ThemesManager` for css framework integration
+  - Themes part in webtools interface
 - Dependency injection annotations
   - `@injected` inject a member in a controller defined by a dependency in config
   - `@autowired` inject an instance of class defined by type with `@var` annotation
-  
+   
 ### Changed
 - dependency injection mecanism
   - controller cache for di

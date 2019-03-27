@@ -123,7 +123,6 @@ class AdminCest extends BaseAcceptance {
 		$this->gotoAdminModule ( "Admin/Themes", $I );
 		$I->canSee ( "Themes module", "body" );
 		$I->click ( '._saveConfig' );
-		$I->waitForElement ( "#save-config-btn", self::TIMEOUT );
 		$this->waitAndclick ( $I, ".setTheme[href='Admin/setTheme/foundation']" );
 		$I->amOnPage ( "/" );
 		$I->canSee ( "foundation", "dd.value" );
