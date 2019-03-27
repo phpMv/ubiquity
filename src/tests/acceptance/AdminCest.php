@@ -119,6 +119,17 @@ class AdminCest extends BaseAcceptance {
 	}
 
 	// tests
+	public function tryGotoAdminThemes(AcceptanceTester $I) {
+		$this->gotoAdminModule ( "Admin/Themes", $I );
+		$I->canSee ( "Themes module", "body" );
+		$I->click ( '._saveConfig' );
+		$I->waitForElement ( "#save-config-btn", self::TIMEOUT );
+		$this->waitAndclick ( $I, ".setTheme[href='Admin/setTheme/foundation']" );
+		$I->amOnPage ( "/" );
+		$I->canSee ( "foundation", "dd.value" );
+	}
+
+	// tests
 	/*
 	 * public function tryGotoAdminGit(AcceptanceTester $I) {
 	 * $this->gotoAdminModule ( "Admin/Git", $I );

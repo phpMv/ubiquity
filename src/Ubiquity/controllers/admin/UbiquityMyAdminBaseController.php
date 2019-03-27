@@ -95,12 +95,14 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	private $scaffold;
 	private $globalMessage;
 	protected $config = [ 'devtools-path' => 'Ubiquity' ];
+	
+	protected $configFile=ROOT.DS.'config'.DS.'adminConfig.php';
 
 	public function __construct() {
 		parent::__construct ();
 		$this->insertJquerySemantic ();
-		if (file_exists ( 'adminConfig.php' )) {
-			$this->config = include ('adminConfig.php');
+		if (file_exists ( $this->configFile)) {
+			$this->config = include ($this->configFile);
 		}
 	}
 
@@ -503,11 +505,13 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$frm->setSubmitParams ( "Admin/createNewTheme", "#refresh-theme",["hasLoader"=>"internal"] );
 
 		$this->jquery->getOnClick ( "._installTheme", "Admin/installTheme", "#refresh-theme", [ "attr" => "data-ajax","hasLoader"=>"internal" ] );
-		$this->jquery->getOnClick("._saveConfig","Admin/setDevtoolsPath","",[ "attr" => "val","hasLoader"=>"internal" ]);
+		$this->jquery->postOnClick("._saveConfig","Admin/setDevtoolsPath","{path:$('#devtools-path').val()}","#devtools-message",[ "hasLoader"=>"internal" ]);
 		$this->jquery->getHref ( "._setTheme", "#refresh-theme" );
+		
+		$checkDevtools=$this->_checkDevtoolsPath($devtoolsPath);
 		$this->jquery->compile ( $this->view );
-
-		$this->loadView ( $this->_getFiles ()->getViewThemesIndex (), compact ( 'activeTheme', 'themes', 'notInstalled','devtoolsPath' ) );
+		
+		$this->loadView ( $this->_getFiles ()->getViewThemesIndex (), compact ( 'activeTheme', 'themes', 'notInstalled','devtoolsPath','checkDevtools' ) );
 	}
 
 	protected function getHeader($key) {
@@ -1033,6 +1037,6 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function saveConfig() {
 		$content = "<?php\nreturn " . UArray::asPhpArray ( $this->config, "array", 1, true ) . ";";
-		return UFileSystem::save ( 'adminConfig.php', $content );
+		return UFileSystem::save ( $this->configFile, $content );
 	}
 }

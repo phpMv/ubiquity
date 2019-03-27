@@ -14,21 +14,23 @@
 		</div>
 	</div>
 </div>
-
-<div class="ui divider"></div>
-<h5 class="ui header">
-	<i class="ui download icon"></i>
-	<div class="content">
-		Install an existing theme
+<div class="devtools-related">
+	<div class="ui inverted dimmer"></div>
+	<div class="ui divider"></div>
+	<h5 class="ui header">
+		<i class="ui download icon"></i>
+		<div class="content">
+			Install an existing theme
+		</div>
+	</h5>
+	<div class="ui buttons">
+		{% for theme in notInstalled %}
+			<a class="ui right labeled icon button _installTheme" data-ajax="{{theme}}"><i class="ui paint brush icon"></i>{{theme}}</a>
+		{% else %}
+			<div class="ui label">All existing themes are installed.</div>
+		{% endfor %}
 	</div>
-</h5>
-<div class="ui buttons">
-	{% for theme in notInstalled %}
-		<a class="ui right labeled icon button _installTheme" data-ajax="{{theme}}"><i class="ui paint brush icon"></i>{{theme}}</a>
-	{% else %}
-		<div class="ui label">All existing themes are installed.</div>
-	{% endfor %}
 </div>
-{% if partial %}
-	{{ script_foot | raw }}
-{% endif %}
+	{% if partial %}
+		{{ script_foot | raw }}
+	{% endif %}

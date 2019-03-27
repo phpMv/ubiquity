@@ -33,7 +33,7 @@ trait ThemesTrait {
 			$extend=" -x=".trim($_POST["extendTheme"]);
 		}
 		$run=$this->runSilent("echo n | {$ubiquityCmd} create-theme ".$themeName.$extend,$output);
-		$hasError=$this->showConsoleMessage($output, "Theme creation");
+		echo $this->showConsoleMessage($output, "Theme creation",$hasError);
 		if(!$hasError){
 			if($run===false){
 				echo $this->showSimpleMessage("Command executed with errors", "error","Theme creation","warning circle");
@@ -57,7 +57,7 @@ trait ThemesTrait {
 		
 		if(array_search($themeName, $allThemes)!==false){
 			$run=$this->runSilent("echo n | {$ubiquityCmd} install-theme ".$themeName,$output);
-			$hasError=$this->showConsoleMessage($output, "Theme installation");
+			echo $this->showConsoleMessage($output, "Theme installation",$hasError);
 			if(!$hasError){
 				if($run===false){
 					echo $this->showSimpleMessage("Command executed with errors", "error","Theme installation","warning circle");
@@ -84,9 +84,24 @@ trait ThemesTrait {
 		$this->refreshTheme();
 	}
 	
-	public function setDevtoolsPath($path){
+	public function setDevtoolsPath(){
+		$path=$_POST['path'];
 		$this->config["devtools-path"]=$path;
 		$this->saveConfig();
+		echo $this->_checkDevtoolsPath($path);
+		echo $this->jquery->compile();
+	}
+	
+	public function _checkDevtoolsPath($path){
+		$res=$this->runSilent($path.' version', $return_var);
+		if(UString::contains('Ubiquity devtools', $return_var)){
+			$res= $this->showConsoleMessage($return_var, "Ubiquity devtools", $hasError,"success","check square");
+			$this->jquery->exec('$("._checkDevtools").toggleClass("green check square",true);$("._checkDevtools").toggleClass("red warning circle",false);$(".devtools-related").dimmer("hide");',true);
+		}else{
+			$res= $this->showSimpleMessage(sprintf("Devtools are not available at %s",$path),"error",'Devtools command path','warning circle');
+			$this->jquery->exec('$("._checkDevtools").toggleClass("green check square",false);$("._checkDevtools").toggleClass("red warning circle",true);$(".devtools-related").dimmer("show").dimmer({closable:false});',true);
+		}
+		return $res;
 	}
 	
 	private function getConsoleMessage($originalMessage){
@@ -101,22 +116,19 @@ trait ThemesTrait {
 		return implode("<br>", $result);
 	}
 	
-	private function showConsoleMessage($originalMessage,$title){
+	private function showConsoleMessage($originalMessage,$title,&$hasError,$type='info',$icon='info circle'){
 		$hasError=false;
 		if($originalMessage!=null){
-			$icon="info circle";
-			$type="info";
 			if(UString::contains("error", $originalMessage)){
 				$type="error";
 				$icon="warning circle";
 				$hasError=true;
 			}
-			echo $this->showSimpleMessage($this->getConsoleMessage($originalMessage),$type,$title,$icon);
+			return $this->showSimpleMessage($this->getConsoleMessage($originalMessage),$type,$title,$icon);
 		}
-		return $hasError;
 	}
 	
-	private function runSilent($command,&$return_var){
+	protected function runSilent($command,&$return_var){
 		ob_start();
 		$res=system($command);
 		$return_var=ob_get_clean();
