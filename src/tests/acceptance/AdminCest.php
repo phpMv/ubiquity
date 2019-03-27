@@ -125,7 +125,7 @@ class AdminCest extends BaseAcceptance {
 		$I->click ( '._saveConfig' );
 		$this->waitAndclick ( $I, "._setTheme[href='Admin/setTheme/foundation']" );
 		$I->amOnPage ( "/" );
-		$I->canSee ( "foundation", "dd.value" );
+		$I->canSee ( "foundation" );
 	}
 
 	// tests
