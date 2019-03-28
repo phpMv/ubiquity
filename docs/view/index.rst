@@ -146,7 +146,7 @@ For session :
 
     {{ app.getSession().get('homePage','index') }}
     
-see `Framework class in API<https://api.kobject.net/ubiquity/class_ubiquity_1_1core_1_1_framework.html>`_ for more.
+see `Framework class in API <https://api.kobject.net/ubiquity/class_ubiquity_1_1core_1_1_framework.html>`_ for more.
 
 Assets
 ======
@@ -212,7 +212,7 @@ With devtools, run :
 
 	Ubiquity install-theme bootstrap
 	
-The installed theme is one of **Bootstrap**, **Foundation** or **Semantic-UI**.
+The installed theme is one of **bootstrap**, **foundation** or **semantic**.
 
 With **webtools**, you can do the same, provided that the **devtools** are installed and accessible (Ubiquity folder added in the system path) :
 
@@ -391,6 +391,25 @@ Or if the change should only concern one action :
 	    }
 	}
 
+Conditional theme change, regardless of the controller :
+
+Example with a modification of the theme according to a variable passed in the URL
+
+.. code-block:: php
+   :linenos:
+   :caption: app/config/services.php
+   
+   use Ubiquity\themes\ThemesManager;
+   use Ubiquity\utils\http\URequest;
+   
+   ...
+   
+   ThemesManager::onBeforeRender(function(){
+		if(URequest::get("th")=='bootstrap'){
+			ThemesManager::setActiveTheme("bootstrap");
+		}
+	});
+
 View and assets loading
 -----------------------
 
@@ -463,3 +482,6 @@ The mechanism is the same as for the views : ``@activeTheme`` namespace refers t
 
 If the **bootstrap** theme is active, |br|
 the assets folder is ``public/assets/bootstrap/``.
+
+Css compilation
+---------------

@@ -80,6 +80,18 @@ class UArray {
 		return $array [$key] ?? $default;
 	}
 
+	/**
+	 * Save a php array to the disk.
+	 *
+	 * @param array $array The array to save
+	 * @param string $filename The path of the file to save in
+	 * @return int
+	 */
+	public static function save($array, $filename) {
+		$content = "<?php\nreturn " . self::asPhpArray ( $array, "array", 1, true ) . ";";
+		return UFileSystem::save ( $filename, $content );
+	}
+
 	public static function asPhpArray($array, $prefix = "", $depth = 1, $format = false) {
 		$exts = array ();
 		$extsStr = "";
