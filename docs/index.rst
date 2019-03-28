@@ -42,6 +42,7 @@ Ubiquity User guide
    controller/uri
    controller/router
    controller/controllers
+   events/index
    
 .. toctree::
    :maxdepth: 1

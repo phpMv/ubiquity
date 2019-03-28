@@ -1,6 +1,6 @@
 .. _events:
 Events
-==================
+======
 
 .. note::
    The Events module uses the static class **EventsManager** to manage events.
@@ -197,6 +197,12 @@ Create a client script, or a controller action (not accessible in production mod
 After running, cache file is generated in ``app/cache/events/events.cache.php``.
 
 Once the cache is created, the ``services.php`` file just needs to have the line :
+
 .. code-block:: php
    
    \Ubiquity\events\EventsManager::start();
+
+
+.. |br| raw:: html
+
+   <br />
