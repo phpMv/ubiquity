@@ -1,3 +1,4 @@
+.. _views:
 Views
 ==============
 .. |br| raw:: html
@@ -25,6 +26,35 @@ Views are loaded from controllers:
     		}
     	}
     }
+
+Default view loading
+~~~~~~~~~~~~~~~~~~~~
+If you use the default view naming method : |br|
+The default view associated to an action in a controller is located in `views/controller-name/action-name` folder:
+
+.. code-block:: bash
+
+	views
+	     │
+	     └ Users
+	         └ info.html
+	         
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 6
+      
+    namespace controllers;
+    
+    class Users extends BaseController{
+    	...
+    	public function info(){
+    			$this->loadDefaultView();
+    		}
+    	}
+    }
+  
 
 Loading and passing variables
 -----------------------------
@@ -118,7 +148,7 @@ For session :
 
 Assets
 ======
-Assets correspond to javascript files, style sheets, fonts, images to include in your application.
+Assets correspond to javascript files, style sheets, fonts, images to include in your application. |br|
 They are located from the **public/assets** folder. |br|
 It is preferable to separate resources into sub-folders by type.
 
@@ -127,18 +157,18 @@ Assets integration with twig
 Local files
 ~~~~~~~~~~
 
-```bash
-public/assets
-     ├ css
-     │    ├ style.css
-     │    └ semantic.min.css
-     └ js
-          └ jquery.min.js
-           
-```
+.. code-block:: bash
+
+	public/assets
+	     ├ css
+	     │   ├ style.css
+	     │   └ semantic.min.css
+	     └ js
+	         └ jquery.min.js
+
 
 .. code-block:: smarty
-
+    
     {{ css('css/style.css') }}
     {{ css('css/semantic.min.css') }}
     
@@ -154,34 +184,217 @@ CDN files
     {{ js('https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js') }}
 
 
+CDN with extra parameters:
+
+.. code-block:: smarty
+
+    {{ css('https://cdn.jsdelivr.net/npm/foundation-sites@6.5.3/dist/css/foundation.min.css',{crossorigin: 'anonymous',integrity: 'sha256-/PFxCnsMh+...'}) }}
+    
 
 Themes
 ======
 
 Ubiquity support themes wich can have it's own assets and views according to theme template to be rendered by controller. 
-Each controller action can render a specif theme, or they can use the default theme configured at *config.php* file in templateEngineOptions => array("activeTheme" => "semantic").
+Each controller action can render a specific theme, or they can use the default theme configured at *config.php* file in `templateEngineOptions => array("activeTheme" => "semantic")`.
 
-Ubiquity is shipped with 3 default themes, bootstrap, foundation and semantic
+Ubiquity is shipped with 3 default themes : **Bootstrap**, **Foundation** and **Semantic-UI**.
 
 
-Creating a theme
-----------------
+Installing a theme
+------------------
 
-To create a new theme you must:
+With devtools, run :
 
-1. Inside /app/views/themes create a new folder with desired *theme-name*
-2. Inside /public/assets/ create a new folder with same name used on step above
-3. Assets folder struct must contain the subfolders |br|
+.. code-block:: bash
 
-                                                   /css |br|
-                                                   /scss |br|
-                                                   /webfonts |br|
-                                                   /others like /js, /img, /etc... |br|
-4. View files must be created inside /themes/theme-name/Controller-name/action-name.html
-5. Include ThemeManager in your controller 
+	Ubiquity install-theme bootstrap
+	
+The installed theme is one of **Bootstrap**, **Foundation** or **Semantic-UI**.
 
-    Inser after your namespace declaration - *use \\Ubiquity\\themes\\ThemesManager;*
-6. Set the theme name inside your controller action
+With **webtools**, you can do the same, provided that the **devtools** are installed and accessible (Ubiquity folder added in the system path) :
+
+.. image:: /_static/images/views/themesManager-install-theme.png
+
+
+Creating a new theme
+--------------------
+
+With devtools, run :
+
+.. code-block:: bash
+
+	Ubiquity create-theme myTheme
+
+
+Creating a new theme from Bootstrap, Semantic...
+
+With devtools, run :
+
+.. code-block:: bash
+
+	Ubiquity create-theme myBootstrap -x=bootstrap
+	
+
+With **webtools** :
+
+.. image:: /_static/images/views/themesManager-create-theme.png
+
+
+Theme functioning and structure
+-------------------------------
+Structure
+~~~~~~~~~
+
+**Theme view folder**
+
+The views of a theme are located from the **app/views/themes/theme-name** folder
+
+.. code-block:: bash
+
+	app/views
+			└ themes
+			       ├ bootstrap
+			       │         └ main
+			       │              ├ vHeader.html
+			       │              └ vFooter.html
+                   └ semantic
+			                └ main
+			                     ├ vHeader.html
+			                     └ vFooter.html
+
+The controller base class is responsible for loading views to define the header and footer of each page  :
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/ControllerBase.php
+   
+	<?php
+	namespace controllers;
+	
+	use Ubiquity\controllers\Controller;
+	use Ubiquity\utils\http\URequest;
+	
+	/**
+	 * ControllerBase.
+	 **/
+	abstract class ControllerBase extends Controller{
+		protected $headerView = "@activeTheme/main/vHeader.html";
+		protected $footerView = "@activeTheme/main/vFooter.html";
+		
+		public function initialize() {
+			if (! URequest::isAjax ()) {
+				$this->loadView ( $this->headerView );
+			}
+		}
+		public function finalize() {
+			if (! URequest::isAjax ()) {
+				$this->loadView ( $this->footerView );
+			}
+		}
+	}
+
+
+**Theme assets folder**
+
+The assets of a theme are created inside **public/assets/theme-name** folder.
+
+The structure of the assets folder is often as follows :
+
+.. code-block:: bash
+    
+	public/assets/bootstrap
+					     ├ css
+					     │   ├ style.css
+					     │   └ all.min.css
+				     	 ├ scss
+					     │   ├ myVariables.scss
+					     │   └ app.scss
+					     ├ webfonts
+					     │
+					     └ img
+
+
+Change of the active theme
+--------------------------
+Persistent change
+~~~~~~~~~~~~~~~~~
+
+**activeTheme** is defined in `app/config/config.php` with `templateEngineOptions => array("activeTheme" => "semantic")`
+
+The active theme can be changed with devtools :
+
+.. code-block:: bash
+    
+    Ubiquity config:set --templateEngineOptions.activeTheme=bootstrap
+    
+It can also be done from the home page, or with webtools :
+
+**From the home page :**
+
+.. image:: /_static/images/views/change-theme-home.png
+
+**From the webtools :**
+
+.. image:: /_static/images/views/change-theme-webtools.png
+
+
+This change can also be made at runtime :
+
+**From a controller :**
+
+.. code-block:: php
+    
+    ThemeManager::saveActiveTheme('bootstrap');
+
+Non-persistent local change
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To set a specific theme for all actions within a controller, the simplest method is to override the controller's initialize method :
+
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 9
+      
+    namespace controllers;
+    
+    use \Ubiquity\themes\ThemesManager;
+    
+    class Users extends BaseController{
+    
+	    public function initialize(){
+	    	parent::intialize();
+	    	ThemesManager::setActiveTheme('bootstrap');
+	    }
+	}
+
+Or if the change should only concern one action :
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 8
+      
+    namespace controllers;
+    
+    use \Ubiquity\themes\ThemesManager;
+    
+    class Users extends BaseController{
+    
+	    public function doStuff(){
+	    	ThemesManager::setActiveTheme('bootstrap');
+	    	...
+	    }
+	}
+
+View and assets loading
+-----------------------
+
+Views
+~~~~~
+
+For loading a view from the **activeTheme** folder, you can use the **@activeTheme** namespace :
 
 .. code-block:: php
    :linenos:
@@ -190,13 +403,60 @@ To create a new theme you must:
       
     namespace controllers;
     
-    use \Ubiquity\themes\ThemesManager;
+    class Users extends BaseController{
+    
+	    public function action(){
+	    	$this->loadView('@activeTheme/action.html');
+	    	...
+	    }
+	}
+
+If the **activeTheme** is **bootstrap**, the loaded view is `app/views/themes/bootstrap/action.html`.
+
+DefaultView
+~~~~~~~~~~
+
+If you follow the Ubiquity view naming model, the default view loaded for an action in a controller when a theme is active is :
+`app/views/themes/theme-name/controller-name/action-name.html`.
+
+For example, if the activeTheme is bootstrap, the default view for the action display in the Users controller must be loacated in 
+`app/views/themes/bootstrap/Users/display.html`.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 6
+      
+    namespace controllers;
     
     class Users extends BaseController{
-    	...
-    	public function display($message,$type){
-            ThemesManager::setActiveTheme('theme-name');
-		      $this->loadView('@activeTheme/Users/display.html');
-    		}
-    	}
-    }
+    
+	    public function display(){
+	    	$this->loadDefaultView();
+	    	...
+	    }
+	}
+	
+.. note::
+   The devtools commands to create a controller or an action and their associated view use the **@activeTheme** folder if a theme is active.
+   
+   .. code-block:: php
+      
+      Ubiquity controller Users -v
+      
+      Ubiquity action Users.display -v
+
+
+Assets loading
+--------------
+
+The mechanism is the same as for the views : `@activeTheme` namespace refers to the `public/assets/theme-name/` folder
+
+.. code-block:: smarty
+    
+    {{ css('@activeTheme/css/style.css') }}
+    
+    {{ js('@activeTheme/js/scripts.js') }}
+
+If the **bootstrap** theme is active, |br|
+the assets folder is `public/assets/bootstrap/`.

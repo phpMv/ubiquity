@@ -57,20 +57,18 @@ class Twig extends TemplateEngine {
 			return Router::url ( $name, $params );
 		} );
 
-		$this->addFunction ( 'css_', function ($resource, $parameters = [], $absolute = false) {
-			return AssetsManager::css_ ( $resource, $parameters, $absolute );
-		}, true );
-
 		$this->addFunction ( 'css', function ($resource, $parameters = [], $absolute = false) {
+			if ($this->hasThemeResource ( $resource )) {
+				return AssetsManager::css_ ( $resource, $parameters, $absolute );
+			}
 			return AssetsManager::css ( $resource, $parameters, $absolute );
 		}, true );
 
 		$this->addFunction ( 'js', function ($resource, $parameters = [], $absolute = false) {
+			if ($this->hasThemeResource ( $resource )) {
+				return AssetsManager::js_ ( $resource, $parameters, $absolute );
+			}
 			return AssetsManager::js ( $resource, $parameters, $absolute );
-		}, true );
-
-		$this->addFunction ( 'js_', function ($resource, $parameters = [], $absolute = false) {
-			return AssetsManager::js_ ( $resource, $parameters, $absolute );
 		}, true );
 
 		$this->addFunction ( 't', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
@@ -83,6 +81,11 @@ class Twig extends TemplateEngine {
 		} );
 		$this->twig->addTest ( $test );
 		$this->twig->addGlobal ( "app", new Framework () );
+	}
+
+	protected function hasThemeResource(&$resource) {
+		$resource = str_replace ( '@activeTheme/', "", $resource, $count );
+		return $count > 0;
 	}
 
 	protected function addFunction($name, $callback, $safe = false) {

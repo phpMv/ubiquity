@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Views and themes<views>`
    - :ref:`Contributing<contributing>`
    - :ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`
    - Generating models:
