@@ -30,7 +30,7 @@ Views are loaded from controllers:
 Default view loading
 ~~~~~~~~~~~~~~~~~~~~
 If you use the default view naming method : |br|
-The default view associated to an action in a controller is located in `views/controller-name/action-name` folder:
+The default view associated to an action in a controller is located in ``views/controller-name/action-name`` folder:
 
 .. code-block:: bash
 
@@ -114,9 +114,9 @@ You can use a dot (.) to access attributes of a variable (methods or properties 
     
 Ubiquity extra functions
 ------------------------
-Global `app` variable provides access to predefined Ubiquity Twig features:
+Global ``app`` variable provides access to predefined Ubiquity Twig features:
 
-- `app` is an instance of Framework and provides access to public methods of this class.
+- ``app`` is an instance of ``Framework`` and provides access to public methods of this class.
 
 Get framework installed version:
 
@@ -145,6 +145,8 @@ For session :
 .. code-block:: smarty
 
     {{ app.getSession().get('homePage','index') }}
+    
+see `Framework class in API<https://api.kobject.net/ubiquity/class_ubiquity_1_1core_1_1_framework.html>`_ for more.
 
 Assets
 ======
@@ -166,6 +168,7 @@ Local files
 	     └ js
 	         └ jquery.min.js
 
+Integration of css or js files :
 
 .. code-block:: smarty
     
@@ -195,7 +198,7 @@ Themes
 ======
 
 Ubiquity support themes wich can have it's own assets and views according to theme template to be rendered by controller. 
-Each controller action can render a specific theme, or they can use the default theme configured at *config.php* file in `templateEngineOptions => array("activeTheme" => "semantic")`.
+Each controller action can render a specific theme, or they can use the default theme configured at *config.php* file in ``templateEngineOptions => array("activeTheme" => "semantic")``.
 
 Ubiquity is shipped with 3 default themes : **Bootstrap**, **Foundation** and **Semantic-UI**.
 
@@ -252,15 +255,15 @@ The views of a theme are located from the **app/views/themes/theme-name** folder
 .. code-block:: bash
 
 	app/views
-			└ themes
-			       ├ bootstrap
-			       │         └ main
-			       │              ├ vHeader.html
-			       │              └ vFooter.html
-                   └ semantic
-			                └ main
-			                     ├ vHeader.html
-			                     └ vFooter.html
+		└ themes
+		       ├ bootstrap
+		       │         └ main
+		       │              ├ vHeader.html
+		       │              └ vFooter.html
+		       └ semantic
+		                └ main
+		                     ├ vHeader.html
+		                     └ vFooter.html
 
 The controller base class is responsible for loading views to define the header and footer of each page  :
 
@@ -296,7 +299,7 @@ The controller base class is responsible for loading views to define the header 
 
 **Theme assets folder**
 
-The assets of a theme are created inside **public/assets/theme-name** folder.
+The assets of a theme are created inside ``public/assets/theme-name`` folder.
 
 The structure of the assets folder is often as follows :
 
@@ -306,7 +309,7 @@ The structure of the assets folder is often as follows :
 					     ├ css
 					     │   ├ style.css
 					     │   └ all.min.css
-				     	 ├ scss
+				         ├ scss
 					     │   ├ myVariables.scss
 					     │   └ app.scss
 					     ├ webfonts
@@ -319,15 +322,15 @@ Change of the active theme
 Persistent change
 ~~~~~~~~~~~~~~~~~
 
-**activeTheme** is defined in `app/config/config.php` with `templateEngineOptions => array("activeTheme" => "semantic")`
+**activeTheme** is defined in ``app/config/config.php`` with ``templateEngineOptions => array("activeTheme" => "semantic")``
 
-The active theme can be changed with devtools :
+The active theme can be changed with **devtools** :
 
 .. code-block:: bash
     
     Ubiquity config:set --templateEngineOptions.activeTheme=bootstrap
     
-It can also be done from the home page, or with webtools :
+It can also be done from the home page, or with **webtools** :
 
 **From the home page :**
 
@@ -349,7 +352,7 @@ This change can also be made at runtime :
 Non-persistent local change
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To set a specific theme for all actions within a controller, the simplest method is to override the controller's initialize method :
+To set a specific theme for all actions within a controller, the simplest method is to override the controller's **initialize** method :
 
 
 .. code-block:: php
@@ -411,16 +414,16 @@ For loading a view from the **activeTheme** folder, you can use the **@activeThe
 	    }
 	}
 
-If the **activeTheme** is **bootstrap**, the loaded view is `app/views/themes/bootstrap/action.html`.
+If the **activeTheme** is **bootstrap**, the loaded view is ``app/views/themes/bootstrap/action.html``.
 
 DefaultView
 ~~~~~~~~~~
 
 If you follow the Ubiquity view naming model, the default view loaded for an action in a controller when a theme is active is :
-`app/views/themes/theme-name/controller-name/action-name.html`.
+``app/views/themes/theme-name/controller-name/action-name.html``.
 
 For example, if the activeTheme is bootstrap, the default view for the action display in the Users controller must be loacated in 
-`app/views/themes/bootstrap/Users/display.html`.
+``app/views/themes/bootstrap/Users/display.html``.
 
 .. code-block:: php
    :linenos:
@@ -440,7 +443,7 @@ For example, if the activeTheme is bootstrap, the default view for the action di
 .. note::
    The devtools commands to create a controller or an action and their associated view use the **@activeTheme** folder if a theme is active.
    
-   .. code-block:: php
+   .. code-block:: bash
       
       Ubiquity controller Users -v
       
@@ -450,7 +453,7 @@ For example, if the activeTheme is bootstrap, the default view for the action di
 Assets loading
 --------------
 
-The mechanism is the same as for the views : `@activeTheme` namespace refers to the `public/assets/theme-name/` folder
+The mechanism is the same as for the views : ``@activeTheme`` namespace refers to the ``public/assets/theme-name/`` folder
 
 .. code-block:: smarty
     
@@ -459,4 +462,4 @@ The mechanism is the same as for the views : `@activeTheme` namespace refers to 
     {{ js('@activeTheme/js/scripts.js') }}
 
 If the **bootstrap** theme is active, |br|
-the assets folder is `public/assets/bootstrap/`.
+the assets folder is ``public/assets/bootstrap/``.
