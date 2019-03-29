@@ -39,7 +39,15 @@ class DiControllerParser {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {
 						if ($this->isInjectable ( $controllerClass, $propName, false )) {
-							$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
+							$typeR = new \ReflectionClass ( $type );
+							$nbParams = $typeR->getConstructor ()->getNumberOfRequiredParameters ();
+							if ($nbParams == 0) {
+								$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
+							} elseif ($nbParams == 1) {
+								$this->injections [$propName] = "function(\$controller){return new " . $type . "(\$controller);}";
+							} else {
+								throw new DiException ( sprintf ( 'Service %s constructor has too many mandatory arguments for %s injection!', $type, $propName ) );
+							}
 						}
 					} else {
 						throw new DiException ( sprintf ( '%s property has no type and cannot be autowired!', $propName ) );
