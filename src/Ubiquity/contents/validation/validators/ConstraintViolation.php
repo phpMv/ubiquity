@@ -106,5 +106,9 @@ class ConstraintViolation {
 	public function setSeverity($severity) {
 		$this->severity = $severity;
 	}
+
+	public function __toString() {
+		return sprintf ( '%s : %s', $this->member, $this->message );
+	}
 }
 
