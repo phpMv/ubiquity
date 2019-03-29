@@ -254,7 +254,7 @@ And we use our 2 variables in the associated twig view:
 	<h1>{{title}}</h1>
 	<div>{{message | raw}}</div>
 
-We can test our page at ``http://127.0.0.1:8090/hello/info/Quick start/Ubiquity is quiet simple`` |br|
+We can test your page at ``http://127.0.0.1:8090/hello/info/Quick start/Ubiquity is quiet simple`` |br|
 It's obvious
 
 .. image:: /_static/images/quick-start/quiet-simple.png

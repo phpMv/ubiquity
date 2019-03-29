@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Dependency injection<di>`
    - :ref:`Events<events>`
    - :ref:`Views and themes<views>`
    - :ref:`Contributing<contributing>`
@@ -43,6 +44,7 @@ Ubiquity User guide
    controller/router
    controller/controllers
    events/index
+   controller/di/index
    
 .. toctree::
    :maxdepth: 1
