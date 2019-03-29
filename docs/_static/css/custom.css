@@ -29,6 +29,10 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
 	-webkit-border-radius: 6px;
 }
 
+code, .rst-content tt, .rst-content code{
+	font-size: 95%!important;
+}
+
 .rst-content .sidebar .sidebar-title{
 	background-color: #fbf6ed!important;
 	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif!important;

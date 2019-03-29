@@ -149,9 +149,6 @@ Modifications must always be folowed by a re-initialization of the model cache.
    
    Ubiquity init-cache -t=models
 
-.. image:: /_static/images/validation/info-validation-devtools.png
-   :class: console
-
 Models validation informations can be displayed with devtools :
 
 .. code-block:: php

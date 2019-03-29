@@ -30,13 +30,17 @@ class DiControllerParser {
 			$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@injected" );
 			if ($annot !== false) {
 				$name = $annot->name;
-				$this->injections [$propName] = $this->getInjection ( $name ?? $propName, $config, $controllerClass, $annot->code ?? null);
+				if ($this->isInjectable ( $controllerClass, $name ?? $propName, false )) {
+					$this->injections [$propName] = $this->getInjection ( $name ?? $propName, $config, $controllerClass, $annot->code ?? null);
+				}
 			} else {
 				$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@autowired" );
 				if ($annot !== false) {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {
-						$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
+						if ($this->isInjectable ( $controllerClass, $propName, false )) {
+							$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
+						}
 					} else {
 						throw new DiException ( sprintf ( '%s property has no type and cannot be autowired!', $propName ) );
 					}
@@ -57,6 +61,21 @@ class DiControllerParser {
 				}
 			}
 		}
+	}
+
+	protected function isInjectable($classname, $member, $silent = true) {
+		$prop = new \ReflectionProperty ( $classname, $member );
+		if ($prop->isPublic ()) {
+			return true;
+		}
+		$setter = 'set' . ucfirst ( $member );
+		if (method_exists ( $classname, $setter )) {
+			return true;
+		}
+		if (! $silent) {
+			throw new DiException ( sprintf ( '%s member must be public or have a setter to be injected in the class %s!', $member, $classname ) );
+		}
+		return false;
 	}
 
 	protected function getInjection($name, $config, $controller, $code = null) {

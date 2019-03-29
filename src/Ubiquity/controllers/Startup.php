@@ -174,17 +174,16 @@ class Startup {
 	public static function injectDependences($controller) {
 		$di = DiManager::fetch ( $controller );
 		if ($di !== false) {
-			$rClass = new \ReflectionClass ( $controller );
 			foreach ( $di as $k => $v ) {
-				if ($rClass->hasProperty ( $k )) {
-					$prop = $rClass->getProperty ( $k );
-					$prop->setAccessible ( true );
-					$prop->setValue ( $controller, $v ( $controller ) );
+				$setter = 'set' . ucfirst ( $k );
+				if (method_exists ( $controller, $setter )) {
+					$controller->$setter ( $v ( $controller ) );
 				} else {
 					$controller->$k = $v ( $controller );
 				}
 			}
 		}
+
 		$di = self::$config ['di'] ?? [ ];
 		if (isset ( $di ['@exec'] )) {
 			foreach ( $di ['@exec'] as $k => $v ) {

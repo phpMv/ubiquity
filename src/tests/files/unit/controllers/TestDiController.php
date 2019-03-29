@@ -36,7 +36,7 @@ class TestDiController extends Controller {
 	 * @injected
 	 * @var IInjected
 	 */
-	private $inj;
+	public $inj;
 
 	public function index() {
 	}
@@ -51,5 +51,9 @@ class TestDiController extends Controller {
 
 	public function allInjected() {
 		$this->allS->do ( "!:*injected:!" );
+	}
+
+	public function setIService($iService) {
+		$this->iService = $iService;
 	}
 }
