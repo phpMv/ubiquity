@@ -71,15 +71,16 @@ Create a controller that requires the service
 
 In the above example, Ubiquity looks for and injects **$service** when **ClientController** is created.
 
-The **@autowired** annotation requires that: |br|
-- the type to be instantiated is declared with the **@var** annotation
-- **$service** property has a setter, or whether declared public
+The **@autowired** annotation requires that:
+  - the type to be instantiated is declared with the **@var** annotation
+  - **$service** property has a setter, or whether declared public
 
 As the annotations are never read at runtime, it is necessary to generate the cache of the controllers:
 
 .. code-block:: bash
-   Ubiquity init-cache -t=controllers
    
+   Ubiquity init-cache -t=controllers
+
 It remains to check that the service is injected by going to the address ``/ClientController``.
 
 Service injection
@@ -171,8 +172,9 @@ In ``app/config/config.php``, create a new key for **serviceToInit** property to
 generate the cache of the controllers:
 
 .. code-block:: bash
-   Ubiquity init-cache -t=controllers
    
+   Ubiquity init-cache -t=controllers
+
 Check that the service is injected by going to the address ``/ClientController``.
 
 .. |br| raw:: html
