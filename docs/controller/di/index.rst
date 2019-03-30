@@ -14,8 +14,11 @@ It allows the creation of dependent objects outside of a class and provides thos
    - setter injection
    Only controllers support dependency injection.
 
-Service
--------
+Service autowiring
+------------------
+Service creation
+++++++++++++++++
+
 Create a service
 
 .. code-block:: php
@@ -34,7 +37,143 @@ Create a service
 	    }
 	}
 
+Autowiring in Controller
+++++++++++++++++++++++++
 
+Create a controller that requires the service
+
+.. code-block:: php
+   :linenos:
+   :caption: app/services/Service.php
+   
+	namespace controllers;
+	
+	 /**
+	 * Controller Client
+	 **/
+	class ClientController extends ControllerBase{
+	
+		/**
+		 * @autowired
+		 * @var services\Service
+		 */
+		private $service;
+		
+		public function index(){}
+	
+		/**
+		 * @param \services\Service $service
+		 */
+		public function setService($service) {
+			$this->service = $service;
+		}
+	}
+
+In the above example, Ubiquity looks for and injects **$service** when **ClientController** is created.
+
+The **@autowired** annotation requires that: |br|
+- the type to be instantiated is declared with the **@var** annotation
+- **$service** property has a setter, or whether declared public
+
+As the annotations are never read at runtime, it is necessary to generate the cache of the controllers:
+
+.. code-block:: bash
+   Ubiquity init-cache -t=controllers
+   
+It remains to check that the service is injected by going to the address ``/ClientController``.
+
+Service injection
+-----------------
+Service
++++++++
+
+Let's now create a second service, requiring a special initialization.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/services/ServiceWithInit.php
+   
+	class ServiceWithInit{
+		private $init;
+		
+		public function init(){
+			$this->init=true;
+		}
+		
+		public function do(){
+			if($this->init){
+				echo 'init well initialized!';
+			}else{
+				echo 'Service not initialized';
+			}
+		}
+	}
+
+Injection in controller
++++++++++++++++++++++++
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/ClientController.php
+   :emphasize-lines: 15
+   
+   namespace controllers;
+
+	 /**
+	 * Controller Client
+	 **/
+	class ClientController extends ControllerBase{
+	
+		/**
+		 * @autowired
+		 * @var \services\Service
+		 */
+		private $service;
+		
+		/**
+		 * @injected
+		 */
+		private $serviceToInit;
+		
+		public function index(){
+			$this->serviceToInit->do();
+		}
+	
+		/**
+		 * @param \services\Service $service
+		 */
+		public function setService($service) {
+			$this->service = $service;
+		}
+		
+		/**
+		 * @param mixed $serviceToInit
+		 */
+		public function setServiceToInit($serviceToInit) {
+			$this->serviceToInit = $serviceToInit;
+		}
+	
+	}
+
+Di declaration
+++++++++++++++
+
+In ``app/config/config.php``, create a new key for **serviceToInit** property to inject in **di** part.
+
+.. code-block:: php
+   
+		"di"=>["ClientController.serviceToInit"=>function(){
+					$service=new \services\ServiceWithInit();
+					$service->init();
+				}
+			]
+
+generate the cache of the controllers:
+
+.. code-block:: bash
+   Ubiquity init-cache -t=controllers
+   
+Check that the service is injected by going to the address ``/ClientController``.
 
 .. |br| raw:: html
 

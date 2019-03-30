@@ -26,6 +26,7 @@ class DiManager {
 	public static function init(&$config) {
 		$controllers = CacheManager::getControllers ();
 		foreach ( $controllers as $controller ) {
+			CacheManager::$cache->remove( self::getControllerCacheKey ( $controller ));
 			$parser = new DiControllerParser ();
 			$parser->parse ( $controller, $config );
 			$injections = $parser->getInjections ();
