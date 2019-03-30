@@ -10,8 +10,8 @@ It allows the creation of dependent objects outside of a class and provides thos
 
 .. note::
    Ubiquity only supports 2 types of injections, so as not to require introspection at execution:
-   - property injection
-   - setter injection
+     - property injection
+     - setter injection
    Only controllers support dependency injection.
 
 Service autowiring

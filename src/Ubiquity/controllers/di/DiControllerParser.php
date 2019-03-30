@@ -39,15 +39,7 @@ class DiControllerParser {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {
 						if ($this->isInjectable ( $controllerClass, $propName, false )) {
-							$typeR = new \ReflectionClass ( $type );
-							$nbParams = $typeR->getConstructor ()->getNumberOfRequiredParameters ();
-							if ($nbParams == 0) {
-								$this->injections [$propName] = "function(\$controller){return new " . $type . "();}";
-							} elseif ($nbParams == 1) {
-								$this->injections [$propName] = "function(\$controller){return new " . $type . "(\$controller);}";
-							} else {
-								throw new DiException ( sprintf ( 'Service %s constructor has too many mandatory arguments for %s injection!', $type, $propName ) );
-							}
+							$this->getInjectableAutowired ( $type, $propName );
 						}
 					} else {
 						throw new DiException ( sprintf ( '%s property has no type and cannot be autowired!', $propName ) );
@@ -56,6 +48,33 @@ class DiControllerParser {
 			}
 		}
 		$this->scanGlobalDi ( $config ['di'] ?? [ ], $controllerClass );
+	}
+
+	protected function getInjectableAutowired($type, $propName) {
+		$typeR = new \ReflectionClass ( $type );
+		if ($typeR->isInstantiable ()) {
+			$constructor= $typeR->getConstructor ();
+			$nbParams = $constructor==null?0:$typeR->getConstructor ()->getNumberOfRequiredParameters ();
+			if ($nbParams == 0) {
+				$this->injections [$propName] = "function(){return new " . $type . "();}";
+			} elseif ($nbParams == 1) {
+				$this->injections [$propName] = "function(\$controller){return new " . $type . "(\$controller);}";
+			} else {
+				throw new DiException ( sprintf ( 'Service %s constructor has too many mandatory arguments for %s injection!', $type, $propName ) );
+			}
+		} else {
+			$namespace = $typeR->getNamespaceName ();
+			$oClass = $namespace . "\\" . ucfirst ( $propName );
+			if (class_exists ( $oClass )) {
+				if (is_subclass_of ( $oClass, $type )) {
+					$this->getInjectableAutowired ( $oClass, $propName );
+				} else {
+					throw new DiException ( sprintf ( 'Class %s is not a subclass of %s!', $oClass, $type ) );
+				}
+			} else {
+				throw new DiException ( sprintf ( 'Class %s does not exists!', $oClass ) );
+			}
+		}
 	}
 
 	protected function scanGlobalDi($diConfig, $controller) {
