@@ -16,7 +16,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  * @property \Ubiquity\db\Database $db
  *
@@ -44,15 +44,6 @@ trait DAOCoreTrait {
 		}
 	}
 
-	/*
-	 * private static function _getOneToManyFromArray($array, $fkv, $mappedBy,$prop) {
-	 * $elementAccessor="get" . ucfirst($mappedBy);
-	 * return array_filter($array,function($element) use($elementAccessor,$fkv,$prop){
-	 * $elementRef=$element->$elementAccessor();
-	 * return ($elementRef == $fkv) || (is_object($elementRef) && Reflexion::getPropValue($elementRef,$prop) == $fkv);
-	 * });
-	 * }
-	 */
 	private static function getManyToManyFromArray($instance, $array, $class, $parser) {
 		$ret = [ ];
 		$continue = true;
@@ -147,18 +138,33 @@ trait DAOCoreTrait {
 		$manyToManyParsers = [ ];
 		$propsKeys = OrmUtils::getPropKeys ( $className );
 		$accessors = OrmUtils::getAccessors ( $className, $members );
+		$types = OrmUtils::getFieldTypes ( $className );
 		$fields = array_flip ( $members );
+		if ($row = current ( $query )) {
+			$accessors = self::prepareAccessors ( $accessors, $fields, $row );
+		}
 		foreach ( $query as $row ) {
-			$object = self::loadObjectFromRow ( $row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToOneQueries, $manyToManyParsers, $accessors, $fields );
-			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
-			$objects [$key] = $object;
+			$object = self::loadObjectFromRow ( $row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToOneQueries, $manyToManyParsers, $accessors, $fields, $types );
+			$objects [OrmUtils::getPropKeyValues ( $object, $propsKeys )] = $object;
 		}
 		if ($hasIncluded) {
-			$classPropKey = OrmUtils::getFirstPropKey ( $className );
+			$classPropKey = current ( $propsKeys );
 			self::_affectsRelationObjects ( $className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache );
 		}
 		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
 		return $objects;
+	}
+
+	private static function prepareAccessors($accessors, $fields, $row) {
+		$accesseurs = [ ];
+		foreach ( $row as $k => $vNotUsed ) {
+			if (isset ( $accessors [$k] )) {
+				$accesseurs [$k] = $accessors [$k];
+			} elseif (isset ( $accessors [$fields [$k] ?? - 1] )) {
+				$accesseurs [$k] = $accessors [$fields [$k]];
+			}
+		}
+		return $accesseurs;
 	}
 
 	/**
@@ -174,17 +180,12 @@ trait DAOCoreTrait {
 	 * @param array $fields
 	 * @return object
 	 */
-	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToOneQueries, &$manyToManyParsers, &$accessors, &$fields) {
+	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToOneQueries, &$manyToManyParsers, &$accessors, &$fields, &$types) {
 		$o = new $className ();
 		foreach ( $row as $k => $v ) {
-			if (isset ( $fields [$k] )) {
-				if (isset ( $accessors [$k] )) {
-					$accesseur = $accessors [$k];
-					$o->$accesseur ( $v );
-				} elseif (isset ( $accessors [$fields [$k]] )) {
-					$accesseur = $accessors [$fields [$k]];
-					$o->$accesseur ( $v );
-				}
+			if (isset ( $accessors [$k] )) {
+				$accesseur = $accessors [$k];
+				$o->$accesseur ( $v );
 			}
 			$o->_rest [$k] = $v;
 			if (isset ( $invertedJoinColumns ) && isset ( $invertedJoinColumns [$k] )) {

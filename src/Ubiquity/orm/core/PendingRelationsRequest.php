@@ -3,52 +3,57 @@
 namespace Ubiquity\orm\core;
 
 class PendingRelationsRequest {
-	public static $MAX_ROW_COUNT=30;
+	public static $MAX_ROW_COUNT = 35;
 	/**
+	 *
 	 * @var ObjectsConditionParser[]
 	 */
-	protected $objectsConditionParsers=[];
+	protected $objectsConditionParsers = [ ];
 	/**
+	 *
 	 * @var ObjectsConditionParser
 	 */
 	protected $activeObjectsParser;
-	
-	public function __construct(){
-		$this->addNewParser();
+
+	public function __construct() {
+		$this->addNewParser ();
 	}
-	
-	public function addPartObject($object,$condition,$value){
-		$inserted=false;$i=0;$count=sizeof($this->objectsConditionParsers);
-		while(!$inserted && $i<$count){
-			$objectsConditionParser=$this->objectsConditionParsers[$i];
-			if($objectsConditionParser->hasParam($value)){
-				$objectsConditionParser->addObject($object);
-				$inserted=true;
+
+	public function addPartObject($object, $condition, $value) {
+		$inserted = false;
+		$i = 0;
+		$count = sizeof ( $this->objectsConditionParsers );
+		while ( ! $inserted && $i < $count ) {
+			$objectsConditionParser = $this->objectsConditionParsers [$i];
+			if ($objectsConditionParser->hasParam ( $value )) {
+				$objectsConditionParser->addObject ( $object );
+				$inserted = true;
 			}
-			$i++;
+			$i ++;
 		}
-		if(!$inserted){
-			$this->getActiveParser()->addPartObject($object, $condition, $value);
+		if (! $inserted) {
+			$this->getActiveParser ()->addPartObject ( $object, $condition, $value );
 		}
 	}
-	
-	protected function addNewParser(){
-		$this->activeObjectsParser=new ObjectsConditionParser();
-		return $this->objectsConditionParsers[]=$this->activeObjectsParser;
+
+	protected function addNewParser() {
+		$this->activeObjectsParser = new ObjectsConditionParser ();
+		return $this->objectsConditionParsers [] = $this->activeObjectsParser;
 	}
-	
-	protected function getActiveParser(){
-		if($this->activeObjectsParser->isFull()){
-			return $this->addNewParser();
+
+	protected function getActiveParser() {
+		if ($this->activeObjectsParser->isFull ()) {
+			return $this->addNewParser ();
 		}
 		return $this->activeObjectsParser;
 	}
+
 	/**
-	 * @return \Ubiquity\orm\core\ObjectsConditionParser[] 
+	 *
+	 * @return \Ubiquity\orm\core\ObjectsConditionParser[]
 	 */
 	public function getObjectsConditionParsers() {
 		return $this->objectsConditionParsers;
 	}
-
 }
 
