@@ -19,7 +19,7 @@
   - Web admin interface (UbiquityMyAdmin)
   - Scaffolding
   - Console Admin interface (Devtools)
-  - Assets & themes management (since 2.1.0)
+  - Assets & themes management (since 2.1.0, on a [proposal](https://github.com/phpMv/ubiquity/issues/11) from [@Gildonei](https://github.com/gildonei))
   
 # Installation
 
