@@ -55,7 +55,7 @@ You can now see datas.
    
    .. code-block:: bash
       
-      Ubiquity new quick-start -q=semantic -a  -m -b=messagerie 
+      Ubiquity new quick-start -a  -m -b=messagerie 
 
 Navigation between data
 -----------------------

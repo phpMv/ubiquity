@@ -48,7 +48,7 @@ The models are generated and operational.
    
    .. code-block:: bash
       
-      Ubiquity new quick-start -q=semantic -a  -m -b=messagerie 
+      Ubiquity new quick-start -a  -m -b=messagerie 
 
 Checking
 --------

@@ -34,11 +34,11 @@ Example :
    
 Project creation
 ----------------
-Create the **quick-start** projet with **UbiquityMyAdmin** interface (the **-a** option) and Semantic-UI integration
+Create the **quick-start** projet with **UbiquityMyAdmin** interface (the **-a** option)
 
 .. code-block:: bash
    
-   Ubiquity new quick-start -q=semantic -a
+   Ubiquity new quick-start -a
 
 Directory structure
 -------------------

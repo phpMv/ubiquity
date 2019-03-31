@@ -11,40 +11,40 @@ A simple project
    
    Ubiquity new projectName
    
-A project with Semantic-UI integration
+A project with UbiquityMyAdmin interface
 
 .. code-block:: bash
    
-   Ubiquity new projectName -q=semantic
-
-A project with UbiquityMyAdmin interface and Semantic-UI integration
+   Ubiquity new projectName -a
+   
+A project with bootstrap and semantic-ui themes installed
 
 .. code-block:: bash
    
-   Ubiquity new projectName -q=semantic -a
+   Ubiquity new projectName -themes=bootstrap,semantic
 
 Installer arguments
 -------------------
 
-+------------+------------+---------------------------------+-----------+-----------------------+
-| short name | name       | role                            | default   | Allowed values        |
-+============+============+=================================+===========+=======================+
-|      b     | dbName     | Sets the database name.         |           |                       |
-+------------+------------+---------------------------------+-----------+-----------------------+
-|      s     | serverName | Defines the db server address.  | 127.0.0.1 |                       |
-+------------+------------+---------------------------------+-----------+-----------------------+
-|      p     | port       | Defines the db server port.     |      3306 |                       |
-+------------+------------+---------------------------------+-----------+-----------------------+
-|      u     | user       | Defines the db server user.     |      root |                       |
-+------------+------------+---------------------------------+-----------+-----------------------+
-|      w     | password   | Defines the db server password. |        '' |                       |
-+------------+------------+---------------------------------+-----------+-----------------------+
-|      q     | phpmv      | Integrates phpMv-UI toolkit.    |     false | semantic,bootstrap,ui |
-+------------+------------+---------------------------------+-----------+-----------------------+
-|      m     | all-models | Creates all models from db.     |     false |                       |
-+------------+------------+---------------------------------+-----------+-----------------------+
-|      a     | admin      | Adds UbiquityMyAdmin interface. |     false |                       |
-+------------+------------+---------------------------------+-----------+-----------------------+
++------------+------------+---------------------------------+-----------+-------------------------------+
+| short name | name       | role                            | default   | Allowed values                |
++============+============+=================================+===========+===============================+
+|      b     | dbName     | Sets the database name.         |           |                               |
++------------+------------+---------------------------------+-----------+-------------------------------+
+|      s     | serverName | Defines the db server address.  | 127.0.0.1 |                               |
++------------+------------+---------------------------------+-----------+-------------------------------+
+|      p     | port       | Defines the db server port.     |      3306 |                               |
++------------+------------+---------------------------------+-----------+-------------------------------+
+|      u     | user       | Defines the db server user.     |      root |                               |
++------------+------------+---------------------------------+-----------+-------------------------------+
+|      w     | password   | Defines the db server password. |        '' |                               |
++------------+------------+---------------------------------+-----------+-------------------------------+
+|      h     | themes     | Install themes.                 |           | semantic,bootstrap,foundation |
++------------+------------+---------------------------------+-----------+-------------------------------+
+|      m     | all-models | Creates all models from db.     |     false |                               |
++------------+------------+---------------------------------+-----------+-------------------------------+
+|      a     | admin      | Adds UbiquityMyAdmin interface. |     false |                               |
++------------+------------+---------------------------------+-----------+-------------------------------+
 
 Arguments usage
 ---------------
@@ -59,11 +59,11 @@ Example of creation of the **blog** project, connected to the **blogDb** databas
 
 long names
 ^^^^^^^^^^^
-Example of creation of the **blog** project, connected to the **bogDb** database, with generation of all models and integration of phpMv-toolkit
+Example of creation of the **blog** project, connected to the **bogDb** database, with generation of all models and integration of semantic theme
 
 .. code-block:: bash
    
-   Ubiquity new blog --dbName=blogDb --all-models=true --phpmv=semantic 
+   Ubiquity new blog --dbName=blogDb --all-models=true --themes=semantic 
 
 Testing
 -------

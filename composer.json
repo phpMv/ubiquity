@@ -25,12 +25,11 @@
 	},
 	"extra" : {
 		"branch-alias" : {
-			"dev-master" : "2.0.x-dev",
-			"themes_module" : "2.1.x-dev"
+			"dev-master" : "2.2.x-dev"
 		}
 	},
 	"require-dev" : {
-		"phpmv/ubiquity-devtools": "dev-master",
+		"phpmv/ubiquity-devtools": "^1.2",
 		"phpmv/ubiquity-codeception": "^1.0"
 	}
 }

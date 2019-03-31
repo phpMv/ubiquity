@@ -26,7 +26,7 @@ install:
   - travis_retry composer install --no-interaction
 
   - mysql -u root mysql < src/tests/unit/db/messagerie.sql
-  - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -q=semantic -m -a)
+  - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -m -a)
   - cp -f src/tests/files/composer.json src/composer.json && cp -f src/tests/files/.htrouter.php src/.htrouter.php && cp -f src/tests/files/services.php src/app/config/
   - cp -f src/tests/files/travis/acceptance.suite.yml src/tests/ && cp -f src/tests/files/travis/codeception.yml src/
   - (cd src/ && composer update)

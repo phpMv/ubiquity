@@ -19,10 +19,7 @@
   - Web admin interface (UbiquityMyAdmin)
   - Scaffolding
   - Console Admin interface (Devtools)
-  
- ## Next release is coming (2.1.0)
- - Assets & themes management
- - Dependency injection refactoring & optimization 
+  - Assets & themes management (since 2.1.0)
   
 # Installation
 
@@ -33,7 +30,7 @@ composer global require phpmv/ubiquity-devtools
 ```
 * Create a project:
 ```bash
-Ubiquity new firstProject -a -q=semantic
+Ubiquity new firstProject -a
 ```
 * Start the server:
 ```bash
@@ -127,9 +124,9 @@ The generated route **/devs/** provides an entry point for CRUD operations:
 ## Admin interface
 Like the console, the administration interface makes it possible to act on the main components of the framework.
 
-When creating a project, it can be installed with the **-a** and **-q=semantic** options (for Semantic-UI).
+When creating a project, it can be installed with the **-a** option.
 ```bash
-ubiquity new firstProject -a -q=semantic
+ubiquity new firstProject -a
 ```
 ![Admin interface](https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
 

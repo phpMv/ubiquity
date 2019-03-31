@@ -35,11 +35,11 @@ Example :
    
 Project creation
 ----------------
-Create the **quick-start** projet with Semantic-UI integration
+Create the **quick-start** projet
 
 .. code-block:: bash
    
-   Ubiquity new quick-start -q=semantic
+   Ubiquity new quick-start
 
 Directory structure
 -------------------
