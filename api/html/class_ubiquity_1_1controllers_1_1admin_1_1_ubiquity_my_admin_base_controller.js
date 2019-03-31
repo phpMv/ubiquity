@@ -1,5 +1,6 @@
 var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller =
 [
+    [ "__construct", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a095c5d389db211932136b53f25f39685", null ],
     [ "_addMessageForRouteCreation", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a57439dde2ed96ea560cd0dd516bfcc6e", null ],
     [ "_addNameValueParamFields", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a2a3ffb109e1b25440316dff202b5779e", null ],
     [ "_createController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a0c171f3547c08ae5bb78fa1e649d5f35", null ],
@@ -33,6 +34,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller
     [ "controllers", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a0e8565a8bd71996272bb2b74a355079e", null ],
     [ "finalize", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a9caaa1f5ea6177e55f13ebe7dec2bd60", null ],
     [ "getAdminData", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a378f38cff59451fa95efc4ae3e7fcf08", null ],
+    [ "getConfig", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a628300eb8464467d9344c7c59cc8770b", null ],
     [ "getHeader", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#aa1f2a2f92a2561c725c77e9aef934553", null ],
     [ "getRequiredRouteParameters", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#aa329073c68f7506e3c1358a427f9e572", null ],
     [ "getSingleton", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ad7975cac6ad37f5b551d0db0c71e1d97", null ],
@@ -48,13 +50,17 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller
     [ "models", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#aaede950e31c49610ddbc5686563590d7", null ],
     [ "rest", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a11343040fb55468085525906f60fa228", null ],
     [ "routes", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a57102936c05e571c397f794a752795a5", null ],
+    [ "saveConfig", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a0e7d96a1cd52769359a491e99076593f", null ],
     [ "seo", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#abb091e327dd2c55004991402aed401c9", null ],
     [ "showDatabaseCreation", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a2c741cd21bb185ce076b2ad4e4c384bc", null ],
+    [ "themes", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#aaa789826eabe3211f396caa763cc89a5", null ],
     [ "translate", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a89ea6fc1dd64c515da7c373792fd74ff", null ],
     [ "$adminData", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a416272b385513556b726735b17ce4ca8", null ],
     [ "$adminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a8c12dd2d5c03145576cc0d13c14a4c29", null ],
     [ "$adminModelViewer", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ae784350b9b32a5b0cdc6df0abcb2a653", null ],
     [ "$adminViewer", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a1d2c1aa3975fb0a5d1fa81f74382621a", null ],
+    [ "$config", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a49c7011be9c979d9174c52a8b83e5d8e", null ],
+    [ "$configFile", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a3e265c431ca42bf2f20753540bb64d00", null ],
     [ "$globalMessage", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ada3b5bf52147ece4ba630d31f11ead33", null ],
     [ "$scaffold", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#ad2e5ab0c68fdcd1bf70226f20c5b4456", null ]
 ];

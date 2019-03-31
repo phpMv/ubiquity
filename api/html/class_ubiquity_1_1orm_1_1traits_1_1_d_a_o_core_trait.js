@@ -11,8 +11,9 @@ var class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait =
     [ "getInstance_", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a863139fd7a6045823f0d989321a7862c", null ],
     [ "getManyToManyFromArray", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a1b658915f6f4ad3f9a4a943b15864a46", null ],
     [ "getValue_", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#aa115581b40e2a41d84787dac06ef6b5a", null ],
-    [ "loadObjectFromRow", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a87d538466c95a247f50401c06dabaa6a", null ],
+    [ "loadObjectFromRow", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a64e5a28492856098339dc8f3c4bcc5a2", null ],
     [ "parseKey", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a3bac3fc93366ffb953c227d0d4078e26", null ],
+    [ "prepareAccessors", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a34605f93378f55807be642852110bb3d", null ],
     [ "prepareManyToMany", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a386e6b385c44379c9d7455065b03b80b", null ],
     [ "prepareManyToOne", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a0ac90385e6be7e3ec0e60c80d353a1d2", null ],
     [ "prepareOneToMany", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a0f442ed999d049a452de9c147df39e65", null ]

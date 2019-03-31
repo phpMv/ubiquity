@@ -16,6 +16,7 @@ var searchData=
   ['adderror',['addError',['../class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ae35438feaa5e67b5e79dfb8db7c99f15',1,'Ubiquity::controllers::rest::RestControllerUtilitiesTrait']]],
   ['addfiles',['addFiles',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#affa1b19acab951d6af346d7f85b0ac68',1,'Ubiquity::controllers::admin::popo::RepositoryGit']]],
   ['addforeignkey',['addForeignKey',['../class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a8ad543a62ef231fd1946031b716939aa',1,'Ubiquity::db::reverse::DbGenerator']]],
+  ['addfunction',['addFunction',['../class_ubiquity_1_1views_1_1engine_1_1_twig.html#adbab19f4739c48c7777588b5b2c1592d',1,'Ubiquity::views::engine::Twig']]],
   ['addgetpostbuttons',['addGetPostButtons',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a4fb3ddd5fcd886f4b8a4c36ce1b90cb0',1,'Ubiquity::controllers::admin::UbiquityMyAdminViewer']]],
   ['addinarray',['addInArray',['../class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#a807643260f7a6d26fe515c5cf8fa7d59',1,'Ubiquity::annotations::parser::DocParser']]],
   ['addkey',['addKey',['../class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#add72a42bad7fbf54ead1e38d7590946e',1,'Ubiquity::db::reverse::DbGenerator']]],

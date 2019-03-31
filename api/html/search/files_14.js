@@ -10,5 +10,6 @@ var searchData=
   ['validatormultiple_2ephp',['ValidatorMultiple.php',['../_validator_multiple_8php.html',1,'']]],
   ['validatorsmanager_2ephp',['ValidatorsManager.php',['../_validators_manager_8php.html',1,'']]],
   ['validatorsmanagerinittrait_2ephp',['ValidatorsManagerInitTrait.php',['../_validators_manager_init_trait_8php.html',1,'']]],
-  ['view_2ephp',['View.php',['../_view_8php.html',1,'']]]
+  ['view_2ephp',['View.php',['../_view_8php.html',1,'']]],
+  ['viewevents_2ephp',['ViewEvents.php',['../_view_events_8php.html',1,'']]]
 ];

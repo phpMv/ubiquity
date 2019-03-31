@@ -95,13 +95,12 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	private $scaffold;
 	private $globalMessage;
 	protected $config = [ 'devtools-path' => 'Ubiquity' ];
-	
-	protected $configFile=ROOT.DS.'config'.DS.'adminConfig.php';
+	protected $configFile = ROOT . DS . 'config' . DS . 'adminConfig.php';
 
 	public function __construct() {
 		parent::__construct ();
 		$this->insertJquerySemantic ();
-		if (file_exists ( $this->configFile)) {
+		if (file_exists ( $this->configFile )) {
 			$this->config = include ($this->configFile);
 		}
 	}
@@ -388,7 +387,8 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$trans->setFallbackLocale ( 'en_EN' );
 		$catalog = $trans->getCatalogue ();
 		$world = $trans->trans ( "buttons.Okays", [ ], "messages" );
-		$this->jquery->renderView ( $this->_getFiles ()->getViewTranslateIndex (), compact ( "loc", "catalog", "world" ) );
+		$message = $this->showSimpleMessage ( "This part is under development, and will be available in the next version.", "info", "Translate","info circle", null, "msg" );
+		$this->jquery->renderView ( $this->_getFiles ()->getViewTranslateIndex (), compact ( "loc", "catalog", "world", "message" ) );
 	}
 
 	protected function _seo() {
@@ -484,34 +484,34 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function themes() {
-		$devtoolsPath=$this->config["devtools-path"]??'Ubiquity';
+		$devtoolsPath = $this->config ["devtools-path"] ?? 'Ubiquity';
 		$this->getHeader ( "themes" );
 		$this->jquery->semantic ()->htmlLabel ( "activeTheme" );
 		$activeTheme = ThemesManager::getActiveTheme () ?? 'no theme';
 		$themes = ThemesManager::getAvailableThemes ();
 		$notInstalled = ThemesManager::getNotInstalledThemes ();
-		$refThemes=ThemesManager::getRefThemes();
+		$refThemes = ThemesManager::getRefThemes ();
 		$frm = $this->jquery->semantic ()->htmlForm ( 'frmNewTheme' );
 		$fields = $frm->addFields ();
 		$input = $fields->addInput ( "themeName", null, 'text', '', 'Theme name' );
 		$input->addRules ( [ "empty",[ "checkTheme","Theme {value} already exists!" ] ] );
-		$dd = $fields->addDropdown ( "extendTheme", array_combine($refThemes, $refThemes), '', 'extends...' );
+		$dd = $fields->addDropdown ( "extendTheme", array_combine ( $refThemes, $refThemes ), '', 'extends...' );
 		$dd->getField ()->setClearable ( true );
 		$fields->addButton ( "btNewTheme", "Create theme", "positive" );
 
 		$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkTheme", $this->_getFiles ()->getAdminBaseRoute () . "/_themeExists/themeName", "{}", "result=data.result;", "postForm", [ "form" => "frmNewTheme" ] ), true );
 
 		$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
-		$frm->setSubmitParams ( "Admin/createNewTheme", "#refresh-theme",["hasLoader"=>"internal"] );
+		$frm->setSubmitParams ( "Admin/createNewTheme", "#refresh-theme", [ "hasLoader" => "internal" ] );
 
-		$this->jquery->getOnClick ( "._installTheme", "Admin/installTheme", "#refresh-theme", [ "attr" => "data-ajax","hasLoader"=>"internal" ] );
-		$this->jquery->postOnClick("._saveConfig","Admin/setDevtoolsPath","{path:$('#devtools-path').val()}","#devtools-message",[ "hasLoader"=>"internal" ]);
+		$this->jquery->getOnClick ( "._installTheme", "Admin/installTheme", "#refresh-theme", [ "attr" => "data-ajax","hasLoader" => "internal" ] );
+		$this->jquery->postOnClick ( "._saveConfig", "Admin/setDevtoolsPath", "{path:$('#devtools-path').val()}", "#devtools-message", [ "hasLoader" => "internal" ] );
 		$this->jquery->getHref ( "._setTheme", "#refresh-theme" );
-		
-		$checkDevtools=$this->_checkDevtoolsPath($devtoolsPath);
+
+		$checkDevtools = $this->_checkDevtoolsPath ( $devtoolsPath );
 		$this->jquery->compile ( $this->view );
-		
-		$this->loadView ( $this->_getFiles ()->getViewThemesIndex (), compact ( 'activeTheme', 'themes', 'notInstalled','devtoolsPath','checkDevtools' ) );
+
+		$this->loadView ( $this->_getFiles ()->getViewThemesIndex (), compact ( 'activeTheme', 'themes', 'notInstalled', 'devtoolsPath', 'checkDevtools' ) );
 	}
 
 	protected function getHeader($key) {

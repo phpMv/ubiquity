@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cache',['CACHE',['../class_ubiquity_1_1log_1_1_logger_params.html#ab5e3ff56e48ffcdd5de92788cb1fa81f',1,'Ubiquity::log::LoggerParams']]]
+  ['before_5frender',['BEFORE_RENDER',['../class_ubiquity_1_1events_1_1_view_events.html#af569355f6f67f70e1f99b129dad6b044',1,'Ubiquity::events::ViewEvents']]]
 ];

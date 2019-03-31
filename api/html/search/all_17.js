@@ -38,5 +38,7 @@ var searchData=
   ['variables',['variables',['../class_ubiquity_1_1annotations_1_1parser_1_1_doc_formater.html#a626e63c7be6e71872233832cce1dccc0',1,'Ubiquity::annotations::parser::DocFormater']]],
   ['version',['version',['../class_ubiquity_1_1core_1_1_framework.html#a265a39dcf2f0b7c6b96574362aa01ad9',1,'Ubiquity::core::Framework']]],
   ['view',['View',['../class_ubiquity_1_1views_1_1_view.html',1,'Ubiquity::views']]],
-  ['view_2ephp',['View.php',['../_view_8php.html',1,'']]]
+  ['view_2ephp',['View.php',['../_view_8php.html',1,'']]],
+  ['viewevents',['ViewEvents',['../class_ubiquity_1_1events_1_1_view_events.html',1,'Ubiquity::events']]],
+  ['viewevents_2ephp',['ViewEvents.php',['../_view_events_8php.html',1,'']]]
 ];

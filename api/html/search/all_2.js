@@ -20,6 +20,7 @@ var searchData=
   ['adderror',['addError',['../class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ae35438feaa5e67b5e79dfb8db7c99f15',1,'Ubiquity::controllers::rest::RestControllerUtilitiesTrait']]],
   ['addfiles',['addFiles',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#affa1b19acab951d6af346d7f85b0ac68',1,'Ubiquity::controllers::admin::popo::RepositoryGit']]],
   ['addforeignkey',['addForeignKey',['../class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#a8ad543a62ef231fd1946031b716939aa',1,'Ubiquity::db::reverse::DbGenerator']]],
+  ['addfunction',['addFunction',['../class_ubiquity_1_1views_1_1engine_1_1_twig.html#adbab19f4739c48c7777588b5b2c1592d',1,'Ubiquity::views::engine::Twig']]],
   ['addgetpostbuttons',['addGetPostButtons',['../class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a4fb3ddd5fcd886f4b8a4c36ce1b90cb0',1,'Ubiquity::controllers::admin::UbiquityMyAdminViewer']]],
   ['addinarray',['addInArray',['../class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#a807643260f7a6d26fe515c5cf8fa7d59',1,'Ubiquity::annotations::parser::DocParser']]],
   ['addkey',['addKey',['../class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#add72a42bad7fbf54ead1e38d7590946e',1,'Ubiquity::db::reverse::DbGenerator']]],
@@ -68,6 +69,7 @@ var searchData=
   ['affectsmanytoonefromarray',['affectsManyToOneFromArray',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_assignments_trait.html#a9f125aa5200d26b0bd8b8764189c23fc',1,'Ubiquity::orm::traits::DAORelationsAssignmentsTrait']]],
   ['affectsonetomanyfromarray',['affectsOneToManyFromArray',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_assignments_trait.html#ab0ca715acee67f882714b6a401a139e3',1,'Ubiquity::orm::traits::DAORelationsAssignmentsTrait']]],
   ['after_5finsert',['AFTER_INSERT',['../class_ubiquity_1_1events_1_1_d_a_o_events.html#ae73c69f7ea819cc4c541423a6799807c',1,'Ubiquity::events::DAOEvents']]],
+  ['after_5frender',['AFTER_RENDER',['../class_ubiquity_1_1events_1_1_view_events.html#af5e9f652d44f51c339aa7410e419ebee',1,'Ubiquity::events::ViewEvents']]],
   ['after_5fupdate',['AFTER_UPDATE',['../class_ubiquity_1_1events_1_1_d_a_o_events.html#aa46d3afd9aa0d84688ad48023b2f6a23',1,'Ubiquity::events::DAOEvents']]],
   ['alert',['alert',['../class_ubiquity_1_1log_1_1_logger.html#a9b94d21604af4b9c4be9448349514b0b',1,'Ubiquity::log::Logger']]],
   ['all',['ALL',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_ip.html#ab56e734000051e5c12c8c5cf6d8d160d',1,'Ubiquity::contents::validation::validators::strings::Ip']]],
@@ -96,6 +98,9 @@ var searchData=
   ['asobjects',['asObjects',['../class_ubiquity_1_1log_1_1_logger.html#abacc1fa1b51d6d1986e51191ba77bf34',1,'Ubiquity::log::Logger']]],
   ['asphparray',['asPhpArray',['../class_ubiquity_1_1annotations_1_1_base_annotation.html#af9fd0237c27cd114088e4dcf76ef5616',1,'Ubiquity\annotations\BaseAnnotation\asPhpArray()'],['../class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a2890c6c1adb3203241d2fac52d8fce68',1,'Ubiquity\utils\base\UArray\asPhpArray()']]],
   ['assertvalidlocale',['assertValidLocale',['../class_ubiquity_1_1translation_1_1_translator_manager.html#a511c7f17fe33e3fe2e8cbc8b594a4ce5',1,'Ubiquity::translation::TranslatorManager']]],
+  ['assets_5ffolder',['ASSETS_FOLDER',['../class_ubiquity_1_1assets_1_1_assets_manager.html#ad815b0e06d034d81087a377a344f8e8b',1,'Ubiquity::assets::AssetsManager']]],
+  ['assetsmanager',['AssetsManager',['../class_ubiquity_1_1assets_1_1_assets_manager.html',1,'Ubiquity::assets']]],
+  ['assetsmanager_2ephp',['AssetsManager.php',['../_assets_manager_8php.html',1,'']]],
   ['astext',['asText',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a5f1344e06b0eb07bc93e6f291616e12c',1,'Ubiquity::utils::http::UResponse']]],
   ['asxml',['asXml',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#ab93ec40575cba783fd80b2ed5dcf41c0',1,'Ubiquity::utils::http::UResponse']]],
   ['attemptsnumber',['attemptsNumber',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_variables_trait.html#a130f200c6d28263535df559034204762',1,'Ubiquity::controllers::auth::AuthControllerVariablesTrait']]],
@@ -115,5 +120,7 @@ var searchData=
   ['authfiles_2ephp',['AuthFiles.php',['../_auth_files_8php.html',1,'']]],
   ['authloadview',['authLoadView',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_core_trait.html#a5f5440dda1be4579f6ae6ad61356de62',1,'Ubiquity::controllers::auth::AuthControllerCoreTrait']]],
   ['authorizationannotation',['AuthorizationAnnotation',['../class_ubiquity_1_1annotations_1_1rest_1_1_authorization_annotation.html',1,'Ubiquity::annotations::rest']]],
-  ['authorizationannotation_2ephp',['AuthorizationAnnotation.php',['../_authorization_annotation_8php.html',1,'']]]
+  ['authorizationannotation_2ephp',['AuthorizationAnnotation.php',['../_authorization_annotation_8php.html',1,'']]],
+  ['autowiredannotation',['AutowiredAnnotation',['../class_ubiquity_1_1annotations_1_1di_1_1_autowired_annotation.html',1,'Ubiquity::annotations::di']]],
+  ['autowiredannotation_2ephp',['AutowiredAnnotation.php',['../_autowired_annotation_8php.html',1,'']]]
 ];

@@ -61,6 +61,7 @@ var searchData=
   ['createmethod',['createMethod',['../class_ubiquity_1_1scaffolding_1_1_admin_scaffold_controller.html#a917fa1e6deef55883586c84dfa7b2227',1,'Ubiquity::scaffolding::AdminScaffoldController']]],
   ['createmodels',['createModels',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html#a6961cd9d058cc14197dc045446fdc34c',1,'Ubiquity::controllers::admin::traits::CheckTrait']]],
   ['createmodelviewerclass',['createModelViewerClass',['../class_ubiquity_1_1scaffolding_1_1creators_1_1_crud_controller_creator.html#a3af1ff7c72c8d3d82496b8df6160e0f9',1,'Ubiquity::scaffolding::creators::CrudControllerCreator']]],
+  ['createnewtheme',['createNewTheme',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait.html#a4f34674cb7d502aaab62c75f291e5c5e',1,'Ubiquity::controllers::admin::traits::ThemesTrait']]],
   ['createoneclass',['createOneClass',['../class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#a82ab2bed22447d5e71e79b81c83fbda0',1,'Ubiquity::orm::creator::ModelsCreator']]],
   ['createormmodelcache',['createOrmModelCache',['../class_ubiquity_1_1cache_1_1traits_1_1_models_cache_trait.html#a474f492aa83f33b691fac7b2814c52cc',1,'Ubiquity::cache::traits::ModelsCacheTrait']]],
   ['createrelations',['createRelations',['../class_ubiquity_1_1orm_1_1creator_1_1_models_creator.html#a3a631f19d5acf8d9d3264453fffb0f19',1,'Ubiquity::orm::creator::ModelsCreator']]],
@@ -71,5 +72,7 @@ var searchData=
   ['createview',['createView',['../class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_maker.html#a8aeaa935bb6422c2b948a8ebb8728932',1,'Ubiquity::controllers::admin::utils::Maker']]],
   ['critical',['critical',['../class_ubiquity_1_1log_1_1_logger.html#a5ef34add54ccdaaf40c4541b99009eec',1,'Ubiquity::log::Logger']]],
   ['crudloadview',['crudLoadView',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#a5d0c565a396b8824eadb4a32e3f7326c',1,'Ubiquity::controllers::crud::CRUDControllerUtilitiesTrait']]],
+  ['css',['css',['../class_ubiquity_1_1assets_1_1_assets_manager.html#a59f86a9b9f11c74837d7e584bb3a56e2',1,'Ubiquity::assets::AssetsManager']]],
+  ['css_5f',['css_',['../class_ubiquity_1_1assets_1_1_assets_manager.html#aae19ffc34f82dba02161ab2f7de5994e',1,'Ubiquity::assets::AssetsManager']]],
   ['current',['current',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#af343507d1926e6ecf964625d41db528c',1,'Ubiquity::utils::flash::FlashBag']]]
 ];

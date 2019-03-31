@@ -19,7 +19,7 @@ var searchData=
   ['loadmanytomanys',['loadManyToManys',['../class_ubiquity_1_1utils_1_1yuml_1_1traits_1_1_class_to_yuml_relations_trait.html#a19209e708c5c62f18f0949a88a2a2bc9',1,'Ubiquity::utils::yuml::traits::ClassToYumlRelationsTrait']]],
   ['loadmanytoone',['loadManyToOne',['../class_ubiquity_1_1utils_1_1yuml_1_1traits_1_1_class_to_yuml_relations_trait.html#a19af5568579534eec338d921bf38b256',1,'Ubiquity::utils::yuml::traits::ClassToYumlRelationsTrait']]],
   ['loadmodifiedfiles',['loadModifiedFiles',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#aff183410c1e30a768ccaa1355083b4a3',1,'Ubiquity::controllers::admin::popo::RepositoryGit']]],
-  ['loadobjectfromrow',['loadObjectFromRow',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a87d538466c95a247f50401c06dabaa6a',1,'Ubiquity::orm::traits::DAOCoreTrait']]],
+  ['loadobjectfromrow',['loadObjectFromRow',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a64e5a28492856098339dc8f3c4bcc5a2',1,'Ubiquity::orm::traits::DAOCoreTrait']]],
   ['loadonetomanys',['loadOneToManys',['../class_ubiquity_1_1utils_1_1yuml_1_1traits_1_1_class_to_yuml_relations_trait.html#a57073712d534343b5e982bc22a5c10ed',1,'Ubiquity::utils::yuml::traits::ClassToYumlRelationsTrait']]],
   ['loadrelationshipsdatas',['loadRelationshipsDatas',['../class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#aebc72fa2fbc8a323bfec5c26b96d93c2',1,'Ubiquity::controllers::rest::api::jsonapi::JsonApiRestController']]],
   ['loaduntrackedfiles',['loadUntrackedFiles',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#aeaf126ee8eb687cb49b1ef1f99dff231',1,'Ubiquity::controllers::admin::popo::RepositoryGit']]],

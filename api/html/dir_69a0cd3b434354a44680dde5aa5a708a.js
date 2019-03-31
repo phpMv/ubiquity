@@ -8,5 +8,8 @@ var dir_69a0cd3b434354a44680dde5aa5a708a =
     ] ],
     [ "EventsManager.php", "_events_manager_8php.html", [
       [ "EventsManager", "class_ubiquity_1_1events_1_1_events_manager.html", "class_ubiquity_1_1events_1_1_events_manager" ]
+    ] ],
+    [ "ViewEvents.php", "_view_events_8php.html", [
+      [ "ViewEvents", "class_ubiquity_1_1events_1_1_view_events.html", "class_ubiquity_1_1events_1_1_view_events" ]
     ] ]
 ];

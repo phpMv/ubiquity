@@ -4,6 +4,7 @@
 {% if q["msgGlobal"] is defined %}
 	{{ q["msgGlobal"] | raw }}
 {% endif %}
+{{ message | raw }}
 </div>
 <div class="ui label">{{loc}}</div>
 <ul>

@@ -13,5 +13,6 @@ var namespace_ubiquity_1_1controllers_1_1admin_1_1traits =
     [ "RestTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait" ],
     [ "RoutesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait" ],
     [ "SeoTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait" ],
+    [ "ThemesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait" ],
     [ "UrlsTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_urls_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_urls_trait" ]
 ];

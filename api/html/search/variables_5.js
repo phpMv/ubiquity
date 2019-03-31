@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['flags',['FLAGS',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_ip_validator.html#a5b4ede44ff5f199f153bb54fe3c7e8b3',1,'Ubiquity::contents::validation::validators::strings::IpValidator']]],
-  ['flash_5fbag_5fkey',['FLASH_BAG_KEY',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#aabc4d1e1ba6fce60f6294ea4276a04ad',1,'Ubiquity::utils::flash::FlashBag']]],
-  ['form',['form',['../class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html#a5250c7b8d4db609ffe17f7211a9b7619',1,'Ubiquity::scaffolding::ScaffoldController']]]
+  ['en',['en',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#ab028c52286c95de48a1c773d7ed02d04',1,'Ubiquity::utils::base::UDateTime']]],
+  ['en_5fus',['en_US',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#adc6770f2bbb7eec93f2a6a7ac41cdc2c',1,'Ubiquity::utils::base::UDateTime']]],
+  ['entry_5fkey',['ENTRY_KEY',['../class_ubiquity_1_1cache_1_1objects_1_1_session_cache.html#a76534569aac7c649f986be275269fd38',1,'Ubiquity::cache::objects::SessionCache']]]
 ];

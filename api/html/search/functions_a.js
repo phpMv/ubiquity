@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['key',['key',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#a729e946b4ef600e71740113c6d4332c0',1,'Ubiquity::utils::flash::FlashBag']]]
+  ['js',['js',['../class_ubiquity_1_1assets_1_1_assets_manager.html#a9ce04097f51cabdf4672ce72c75b17f5',1,'Ubiquity::assets::AssetsManager']]],
+  ['js_5f',['js_',['../class_ubiquity_1_1assets_1_1_assets_manager.html#a0544913cac141baa1d5ba70028b69b91',1,'Ubiquity::assets::AssetsManager']]]
 ];

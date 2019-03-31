@@ -1,5 +1,6 @@
 var namespace_ubiquity_1_1annotations =
 [
+    [ "di", "namespace_ubiquity_1_1annotations_1_1di.html", "namespace_ubiquity_1_1annotations_1_1di" ],
     [ "parser", "namespace_ubiquity_1_1annotations_1_1parser.html", "namespace_ubiquity_1_1annotations_1_1parser" ],
     [ "rest", "namespace_ubiquity_1_1annotations_1_1rest.html", "namespace_ubiquity_1_1annotations_1_1rest" ],
     [ "router", "namespace_ubiquity_1_1annotations_1_1router.html", "namespace_ubiquity_1_1annotations_1_1router" ],

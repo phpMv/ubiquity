@@ -15,11 +15,13 @@ var searchData=
   ['refreshinstance',['refreshInstance',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html#adef734655684377251fa2c5a125f576b',1,'Ubiquity::controllers::crud::CRUDControllerUtilitiesTrait']]],
   ['refreshpartialinstance',['refreshPartialInstance',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_datas.html#a8359f0267b5cf871f6e03dacb5608c0e',1,'Ubiquity::controllers::crud::CRUDDatas']]],
   ['refreshtable',['refreshTable',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aa75022dbfd65e526bdd393b28e6bbdbc',1,'Ubiquity\controllers\admin\traits\ModelsTrait\refreshTable()'],['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#aa75022dbfd65e526bdd393b28e6bbdbc',1,'Ubiquity\controllers\crud\CRUDController\refreshTable()']]],
+  ['refreshtheme',['refreshTheme',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait.html#abe9b3b16b6b2ac30f1549fcea053e62e',1,'Ubiquity::controllers::admin::traits::ThemesTrait']]],
   ['regexvalidator',['RegexValidator',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_regex_validator.html',1,'Ubiquity::contents::validation::validators::strings']]],
   ['regexvalidator_2ephp',['RegexValidator.php',['../_regex_validator_8php.html',1,'']]],
   ['register',['register',['../class_ubiquity_1_1cache_1_1_cache_manager.html#a055a23d3db0f492071d672c2159dbea1',1,'Ubiquity::cache::CacheManager']]],
   ['registerclass',['registerClass',['../class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#a67bf292dcda864b948941d69524c1f34',1,'Ubiquity::contents::normalizers::NormalizersManager']]],
   ['registerclasses',['registerClasses',['../class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#a8f4d074d075d45ebea6949c5ba3a849a',1,'Ubiquity::contents::normalizers::NormalizersManager']]],
+  ['registererror',['registerError',['../class_ubiquity_1_1log_1_1_logger.html#a0df09aea3ec889ba23fa459d44f439e9',1,'Ubiquity::log::Logger']]],
   ['registertype',['registerType',['../class_ubiquity_1_1contents_1_1validation_1_1_validators_manager_init_trait.html#aee1cfd66c251c45b2d13ae5132cd2b3b',1,'Ubiquity::contents::validation::ValidatorsManagerInitTrait']]],
   ['relationmembersinform',['relationMembersInForm',['../class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a9245ff6de305027f87e08d06cc86f258',1,'Ubiquity::controllers::admin::viewers::ModelViewer']]],
   ['reloadconfig',['reloadConfig',['../class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#ae55847c2aaa427140ee69f05286914fe',1,'Ubiquity::controllers::traits::StartupConfigTrait']]],
@@ -101,5 +103,6 @@ var searchData=
   ['run',['run',['../class_ubiquity_1_1controllers_1_1_startup.html#a6d55937a791862d84e6078f4c464ed45',1,'Ubiquity\controllers\Startup\run()'],['../class_ubiquity_1_1utils_1_1git_1_1_u_git_repository.html#aa19533f5f4887e8753dcb00ee823ee82',1,'Ubiquity\utils\git\UGitRepository\run()']]],
   ['runaction',['runAction',['../class_ubiquity_1_1controllers_1_1_startup.html#a33e383e8013b9b44e53031b0b173dae5',1,'Ubiquity::controllers::Startup']]],
   ['runasstring',['runAsString',['../class_ubiquity_1_1controllers_1_1_startup.html#a194099a5629f99f27533f917de1149a5',1,'Ubiquity::controllers::Startup']]],
-  ['runcallable',['runCallable',['../class_ubiquity_1_1controllers_1_1_startup.html#a1edfce13e91555f721c423a69f935d8a',1,'Ubiquity::controllers::Startup']]]
+  ['runcallable',['runCallable',['../class_ubiquity_1_1controllers_1_1_startup.html#a1edfce13e91555f721c423a69f935d8a',1,'Ubiquity::controllers::Startup']]],
+  ['runsilent',['runSilent',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait.html#a2ad07af2dc743087a453a2f7b16a3680',1,'Ubiquity::controllers::admin::traits::ThemesTrait']]]
 ];

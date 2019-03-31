@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['seo_5fprefix',['SEO_PREFIX',['../class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html#a342fff5beb5457544d836cbcf610c1e1',1,'Ubiquity::controllers::seo::SeoController']]],
-  ['severity_5ficons',['SEVERITY_ICONS',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1_constraint_violation_viewer.html#ad821ed7143b7ed21ad07437f270df17f',1,'Ubiquity::contents::validation::validators::ConstraintViolationViewer']]],
-  ['startup',['STARTUP',['../class_ubiquity_1_1log_1_1_logger_params.html#a978e9b6891eb28d32249009087573ef9',1,'Ubiquity::log::LoggerParams']]]
+  ['request_5fmethods',['REQUEST_METHODS',['../class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_constants.html#a8ee33bd9212fd1204d34218e5c53fe1d',1,'Ubiquity::controllers::admin::utils::Constants']]],
+  ['rest',['REST',['../class_ubiquity_1_1log_1_1_logger_params.html#a1273e4f6dfecad5cc711360770b7d784',1,'Ubiquity::log::LoggerParams']]],
+  ['reverse',['reverse',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a247637008a7d22a04f4f44ac0e58e96f',1,'Ubiquity::controllers::admin::traits::ModelsConfigTrait']]],
+  ['router',['ROUTER',['../class_ubiquity_1_1log_1_1_logger_params.html#ac8c67f1796228f249bd2f6cdb2e19b1d',1,'Ubiquity::log::LoggerParams']]]
 ];

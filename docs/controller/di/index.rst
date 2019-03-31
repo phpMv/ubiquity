@@ -4,7 +4,7 @@ Dependency injection
 
 .. note::
    For performance reasons, dependency injection is not used in the core part of the framework.
-   
+
 Dependency Injection (DI) is a design pattern used to implement IoC. |br|
 It allows the creation of dependent objects outside of a class and provides those objects to a class through different ways. Using DI, we move the creation and binding of the dependent objects outside of the class that depends on it.
 
@@ -177,6 +177,88 @@ generate the cache of the controllers:
 
 Check that the service is injected by going to the address ``/ClientController``.
 
+.. note::
+   If the same service is to be used in several controllers, use the wildcard notation :
+   
+   .. code-block:: php
+      
+   		"di"=>["*.serviceToInit"=>function(){
+   					$service=new \services\ServiceWithInit();
+   					$service->init();
+   				}
+   			]
+
+Injection with a qualifier name
++++++++++++++++++++++++++++++++
+
+If the name of the service to be injected is different from the key of the **di** array, it is possible to use the name attribute of the **@injected** annotation
+
+In ``app/config/config.php``, create a new key for **serviceToInit** property to inject in **di** part.
+
+.. code-block:: php
+   
+		"di"=>["*.service"=>function(){
+					$service=new \services\ServiceWithInit();
+					$service->init();
+				}
+			]
+
+.. code-block:: php
+   
+		/**
+		 * @injected("service")
+		 */
+		private $serviceToInit;
+		
+
 .. |br| raw:: html
+
+Service injection at runtime
+----------------------------
+
+It is possible to inject services at runtime, without these having been previously declared in the controller classes.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/services/RuntimeService.php
+   
+   namespace services;
+
+	class RuntimeService{
+	    public function __construct($ctrl){
+	        echo 'Service instanciation in '.get_class($ctrl);
+	    }
+	}
+
+In ``app/config/config.php``, create the **@exec** key in **di** part.
+
+.. code-block:: php
+   
+		"di"=>["@exec"=>"rService"=>function($ctrl){
+					return new \services\RuntimeService($ctrl);
+					$service->init();
+				}
+			]
+
+With this declaration, the **$rService** member, instance of **RuntimeService**, is injected into all the controllers. [br|
+It is then advisable to use the documentation to declare **$rService** in the controllers that use it (to get the code completion on **$rService** in your IDE).
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/MyController.php
+   :emphasize-lines: 5,10
+   
+   namespace controllers;
+
+	 /**
+	 * Controller Client
+	 * property services\RuntimeService $rService
+	 **/
+	class MyController extends ControllerBase{
+	
+		public function index(){
+			$this->rService->do();
+		}
+	}
 
    <br />

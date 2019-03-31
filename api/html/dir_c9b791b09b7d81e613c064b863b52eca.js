@@ -39,6 +39,9 @@ var dir_c9b791b09b7d81e613c064b863b52eca =
     [ "SeoTrait.php", "_seo_trait_8php.html", [
       [ "SeoTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait" ]
     ] ],
+    [ "ThemesTrait.php", "_themes_trait_8php.html", [
+      [ "ThemesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait" ]
+    ] ],
     [ "UrlsTrait.php", "_urls_trait_8php.html", [
       [ "UrlsTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_urls_trait.html", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_urls_trait" ]
     ] ]

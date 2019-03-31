@@ -7,6 +7,7 @@ var class_ubiquity_1_1log_1_1_logger =
     [ "_error", "class_ubiquity_1_1log_1_1_logger.html#a22a82ac7b00977668d0601c3347fc28f", null ],
     [ "_info", "class_ubiquity_1_1log_1_1_logger.html#a2bf6fed0ee5f444d7090d6bdb0299cb7", null ],
     [ "_log", "class_ubiquity_1_1log_1_1_logger.html#a327ef136ea5477c67089c021ddcfc3c8", null ],
+    [ "_registerError", "class_ubiquity_1_1log_1_1_logger.html#aa7d543528439fe4f8e3c8b094dc58674", null ],
     [ "_warn", "class_ubiquity_1_1log_1_1_logger.html#a11332896940452a5815c87ba8a2c49c9", null ],
     [ "alert", "class_ubiquity_1_1log_1_1_logger.html#a9b94d21604af4b9c4be9448349514b0b", null ],
     [ "asObjects", "class_ubiquity_1_1log_1_1_logger.html#abacc1fa1b51d6d1986e51191ba77bf34", null ],
@@ -18,6 +19,7 @@ var class_ubiquity_1_1log_1_1_logger =
     [ "info", "class_ubiquity_1_1log_1_1_logger.html#af5c8d434f89e5ce783d6a0e754474e60", null ],
     [ "init", "class_ubiquity_1_1log_1_1_logger.html#a9b67ac7179398e39bf909d067e38c1bf", null ],
     [ "log", "class_ubiquity_1_1log_1_1_logger.html#af3208ccc7b9a6076b7a34a216610e4e7", null ],
+    [ "registerError", "class_ubiquity_1_1log_1_1_logger.html#a0df09aea3ec889ba23fa459d44f439e9", null ],
     [ "warn", "class_ubiquity_1_1log_1_1_logger.html#a21db795c7dc2847d428e499b841a34c6", null ],
     [ "$instance", "class_ubiquity_1_1log_1_1_logger.html#ad9d7ce33ebb142b70e58b68052ca0ea8", null ],
     [ "$test", "class_ubiquity_1_1log_1_1_logger.html#a31daebf88fc668f410293e2c70cea3fc", null ]
