@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - dependency injection mecanism
   - controller cache for di
   - `@exec`key in `config[di]` for injections at runtime
+
+#### Breaking change possible:
+  use `"di"=>["@exec"=>[your injections]] `instead of `"di"=>[your injections]`
   
 ### Fixed
 - An exception is thrown In case of problem with the Database connection (in `DataBase::connect` method) see https://github.com/phpMv/ubiquity/issues/12
