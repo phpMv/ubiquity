@@ -67,9 +67,10 @@ an instance
 	}
 
 
-if the **name** of the author is empty, this action should display :
+if the **name** of the author is empty, this action should display:
 
 .. code-block:: bash
+   
    name : This value should not be empty
 
 The **validate** method returns an array of **ConstraintViolation** instances.
@@ -142,7 +143,7 @@ When classes are automatically generated from the database, default validators a
 		private $suspended;
 	}
 
-These validators can then be modified. [br|
+These validators can then be modified. |br|
 Modifications must always be folowed by a re-initialization of the model cache.
 
 .. code-block:: php

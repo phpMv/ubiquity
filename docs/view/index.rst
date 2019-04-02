@@ -306,15 +306,15 @@ The structure of the assets folder is often as follows :
 .. code-block:: bash
     
 	public/assets/bootstrap
-					     ├ css
-					     │   ├ style.css
-					     │   └ all.min.css
-				         ├ scss
-					     │   ├ myVariables.scss
-					     │   └ app.scss
-					     ├ webfonts
-					     │
-					     └ img
+					├ css
+					│   ├ style.css
+					│   └ all.min.css
+					├ scss
+					│   ├ myVariables.scss
+					│   └ app.scss
+					├ webfonts
+					│
+					└ img
 
 
 Change of the active theme
@@ -485,3 +485,23 @@ the assets folder is ``public/assets/bootstrap/``.
 
 Css compilation
 ---------------
+
+For Bootstrap or foundation, install sass:
+
+.. code-block:: bash
+   
+   npm install -g sass
+
+Then run from the project root folder:
+
+**For bootstrap:**
+
+.. code-block:: bash
+   
+   ssass public/assets/bootstrap/scss/app.scss public/assets/bootstrap/css/style.css --load-path=vendor
+
+**For foundation:**
+
+.. code-block:: bash
+   
+   ssass public/assets/foundation/scss/app.scss public/assets/foundation/css/style.css --load-path=vendor
