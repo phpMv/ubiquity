@@ -20,7 +20,12 @@
   - Scaffolding
   - Console Admin interface (Devtools)
   - Assets & themes management (since 2.1.0, on a [proposal](https://github.com/phpMv/ubiquity/issues/11) from [@Gildonei](https://github.com/gildonei))
-  
+
+# Upgrade
+If Ubiquity devtools are already globally installed, and you want to upgrade to the last stable version:
+```bash
+composer global update
+```
 # Installation
 
 The easiest way to install **Ubiquity** is to use [devtools](https://github.com/phpMv/ubiquity-devtools)
