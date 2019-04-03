@@ -211,7 +211,6 @@ In ``app/config/config.php``, create a new key for **serviceToInit** property to
 		private $serviceToInit;
 		
 
-.. |br| raw:: html
 
 Service injection at runtime
 ----------------------------
@@ -241,7 +240,7 @@ In ``app/config/config.php``, create the **@exec** key in **di** part.
 			]
 
 With this declaration, the **$rService** member, instance of **RuntimeService**, is injected into all the controllers. [br|
-It is then advisable to use the documentation to declare **$rService** in the controllers that use it (to get the code completion on **$rService** in your IDE).
+It is then advisable to use the javadoc comments to declare **$rService** in the controllers that use it (to get the code completion on **$rService** in your IDE).
 
 .. code-block:: php
    :linenos:
@@ -260,5 +259,8 @@ It is then advisable to use the documentation to declare **$rService** in the co
 			$this->rService->do();
 		}
 	}
+
+
+.. |br| raw:: html
 
    <br />

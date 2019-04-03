@@ -167,7 +167,7 @@ abstract class ScaffoldController {
 					} else {
 						if (UFileSystem::replaceWriteFromContent ( $fileContent . "\n", $ctrlFilename, [ '%content%' => $actionContent ] )) {
 							$msgContent = "The action <b>{$action}</b> is created in controller <b>{$controller}</b>" . $msgContent;
-							echo $this->showSimpleMessage ( $msgContent, "info", "Creation", "info circle", null, "msgControllers" );
+							echo $this->showSimpleMessage ( $msgContent, "success", "Creation", "info circle", null, "msgControllers" );
 						}
 					}
 				}
