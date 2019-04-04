@@ -160,6 +160,7 @@ class CacheManager {
 																						'transient' => 'Ubiquity\annotations\TransientAnnotation',
 																						'column' => 'Ubiquity\annotations\ColumnAnnotation',
 																						'validator' => 'Ubiquity\annotations\ValidatorAnnotation',
+																						'transformer' => 'Ubiquity\annotations\TransformerAnnotation',
 																						'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
 																						'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
 																						'route' => 'Ubiquity\annotations\router\RouteAnnotation',
