@@ -69,6 +69,7 @@ class ModelParser {
 		$result ["#fieldTypes"] = $this->fieldTypes;
 		$result ["#nullable"] = $this->nullableMembers;
 		$result ["#notSerializable"] = $this->notSerializableMembers;
+		$result ["#transformers"]=[];
 		if (isset ( $this->yuml ))
 			$result ["#yuml"] = $this->yuml->getPropertiesAndValues ();
 		foreach ( $this->oneToManyMembers as $member => $annotation ) {

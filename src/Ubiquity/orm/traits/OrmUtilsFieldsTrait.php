@@ -70,7 +70,7 @@ trait OrmUtilsFieldsTrait {
 		$result = [ ];
 		foreach ( $members as $member => $field ) {
 			$accesseur = "set" . ucfirst ( $member );
-			if (method_exists ( $class, $accesseur )) {
+			if (! isset ( $result [$field] ) && method_exists ( $class, $accesseur )) {
 				$result [$field] = $accesseur;
 			}
 		}

@@ -260,15 +260,6 @@ trait DAOCoreTrait {
 		return $o;
 	}
 
-	private static function postLoadObjectMember($o, $k, $v, &$invertedJoinColumns, &$manyToOneQueries) {
-		$o->_rest [$k] = $v;
-		if (isset ( $invertedJoinColumns ) && isset ( $invertedJoinColumns [$k] )) {
-			$fk = "_" . $k;
-			$o->$fk = $v;
-			self::prepareManyToOne ( $manyToOneQueries, $o, $v, $fk, $invertedJoinColumns [$k] );
-		}
-	}
-
 	private static function postLoadObject($o, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers) {
 		if (isset ( $oneToManyFields )) {
 			foreach ( $oneToManyFields as $k => $annot ) {
