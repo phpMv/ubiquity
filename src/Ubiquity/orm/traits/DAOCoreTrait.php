@@ -139,30 +139,11 @@ trait DAOCoreTrait {
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
 		$propsKeys = OrmUtils::getPropKeys ( $className );
-		$accessors = OrmUtils::getAccessors ( $className, $members );
-		$fields = array_flip ( $members );
-		$hasTransformers = sizeof ( $transformers ) > 0;
-		if ($row = current ( $query )) {
-			if ($hasTransformers) {
-				$accessors = self::prepareTransformers ( $className, $accessors, $fields, $transformers, $row );
-			} else {
-				$accessors = self::prepareAccessors ( $className, $accessors, $fields, $row );
-			}
-		}
-		if ($hasTransformers) {
-			foreach ( $query as $row ) {
-				$object = self::loadObjectFromRowTransformer ( $row, $className, $invertedJoinColumns, $manyToOneQueries, $accessors );
-				self::postLoadObject ( $object, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers );
-				$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
-				$objects [$key] = $object;
-			}
-		} else {
-			foreach ( $query as $row ) {
-				$object = self::loadObjectFromRow ( $row, $className, $invertedJoinColumns, $manyToOneQueries, $accessors );
-				self::postLoadObject ( $object, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers );
-				$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
-				$objects [$key] = $object;
-			}
+		$accessors = $metaDatas ["#accessors"];
+		foreach ( $query as $row ) {
+			$object = self::loadObjectFromRow($row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers);
+			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
+			$objects [$key] = $object;
 		}
 		if ($hasIncluded) {
 			$classPropKey = OrmUtils::getFirstPropKey ( $className );
@@ -170,43 +151,6 @@ trait DAOCoreTrait {
 		}
 		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
 		return $objects;
-	}
-
-	private static function prepareTransformers($classname, &$accessors, &$fields, &$transformers, &$row) {
-		if (isset ( self::$accessors [$classname] )) {
-			return self::$accessors [$classname];
-		}
-		$accesseurs = [ ];
-		$transform = 'transform';
-		foreach ( $row as $k => $vNotUsed ) {
-			if (isset ( $accessors [$k] )) {
-				$a = $accessors [$k];
-			}
-			if (isset ( $transformers [$k] )) {
-				$trans = $transformers [$k];
-				$accesseurs [$k] = function ($o, $v) use ($a, $trans, $transform) {
-					$o->$a ( $trans::$transform ( $v ) );
-				};
-			} else {
-				$accesseurs [$k] = function ($o, $v) use ($a) {
-					$o->$a ( $v );
-				};
-			}
-		}
-		return self::$accessors [$classname] = $accesseurs;
-	}
-
-	private static function prepareAccessors($classname, &$accessors, &$fields, &$row) {
-		if (isset ( self::$accessors [$classname] )) {
-			return self::$accessors [$classname];
-		}
-		$accesseurs = [ ];
-		foreach ( $row as $k => $vNotUsed ) {
-			if (isset ( $accessors [$k] )) {
-				$accesseurs [$k] = $accessors [$k];
-			}
-		}
-		return self::$accessors [$classname] = $accesseurs;
 	}
 
 	/**
@@ -218,8 +162,12 @@ trait DAOCoreTrait {
 	 * @param array $accessors
 	 * @return object
 	 */
-	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$accessors) {
+	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers,&$accessors,&$transformers) {
 		$o = new $className ();
+		foreach ($transformers as $field=>$transformer){
+			$transform='transform';
+			$row[$field]=$transformer::$transform ( $row[$field] );
+		}
 		foreach ( $row as $k => $v ) {
 			if (isset ( $accessors [$k] )) {
 				$accesseur = $accessors [$k];
@@ -232,35 +180,6 @@ trait DAOCoreTrait {
 				self::prepareManyToOne ( $manyToOneQueries, $o, $v, $fk, $invertedJoinColumns [$k] );
 			}
 		}
-		return $o;
-	}
-
-	/**
-	 *
-	 * @param array $row
-	 * @param string $className
-	 * @param array $invertedJoinColumns
-	 * @param array $manyToOneQueries
-	 * @param array $accessors
-	 * @return object
-	 */
-	private static function loadObjectFromRowTransformer($row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$accessors) {
-		$o = new $className ();
-		foreach ( $row as $k => $v ) {
-			if (isset ( $accessors [$k] )) {
-				$accessors [$k] ( $o, $v );
-			}
-			$o->_rest [$k] = $v;
-			if (isset ( $invertedJoinColumns ) && isset ( $invertedJoinColumns [$k] )) {
-				$fk = "_" . $k;
-				$o->$fk = $v;
-				self::prepareManyToOne ( $manyToOneQueries, $o, $v, $fk, $invertedJoinColumns [$k] );
-			}
-		}
-		return $o;
-	}
-
-	private static function postLoadObject($o, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers) {
 		if (isset ( $oneToManyFields )) {
 			foreach ( $oneToManyFields as $k => $annot ) {
 				self::prepareOneToMany ( $oneToManyQueries, $o, $k, $annot );
@@ -271,6 +190,7 @@ trait DAOCoreTrait {
 				self::prepareManyToMany ( $manyToManyParsers, $o, $k, $annot );
 			}
 		}
+		return $o;
 	}
 
 	private static function parseKey(&$keyValues, $className) {

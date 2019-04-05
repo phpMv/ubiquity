@@ -29,6 +29,7 @@ class ModelParser {
 	protected $fieldNames;
 	protected $fieldTypes = [ ];
 	protected $transformers = [ ];
+	protected $accessors=[];
 	protected $yuml;
 
 	public function parse($modelClass) {
@@ -46,7 +47,8 @@ class ModelParser {
 		$properties = Reflexion::getProperties ( $instance );
 		foreach ( $properties as $property ) {
 			$propName = $property->getName ();
-			$this->fieldNames [$propName] = Reflexion::getFieldName ( $modelClass, $propName );
+			$fieldName=Reflexion::getFieldName ( $modelClass, $propName );
+			$this->fieldNames [$propName] = $fieldName;
 			$nullable = Reflexion::isNullable ( $modelClass, $propName );
 			$serializable = Reflexion::isSerializable ( $modelClass, $propName );
 			if ($nullable)
@@ -57,7 +59,12 @@ class ModelParser {
 			if ($type === false)
 				$type = "mixed";
 			$this->fieldTypes [$propName] = $type;
+			$accesseur="set" . ucfirst($propName);
+			if (! isset ( $this->accessors [$fieldName] ) && method_exists ( $modelClass, $accesseur )) {
+				$this->accessors [$fieldName] = $accesseur;
+			}
 		}
+		
 		$this->global ["#tableName"] = Reflexion::getTableName ( $modelClass );
 	}
 
@@ -70,6 +77,7 @@ class ModelParser {
 		$result ["#nullable"] = $this->nullableMembers;
 		$result ["#notSerializable"] = $this->notSerializableMembers;
 		$result ["#transformers"]=[];
+		$result ["#accessors"]=$this->accessors;
 		if (isset ( $this->yuml ))
 			$result ["#yuml"] = $this->yuml->getPropertiesAndValues ();
 		foreach ( $this->oneToManyMembers as $member => $annotation ) {
@@ -97,7 +105,7 @@ class ModelParser {
 			}
 			$result ["#transformers"] [$member] = $trans;
 		}
-
+		
 		foreach ( $this->joinColumnMembers as $member => $annotation ) {
 			$result ["#joinColumn"] [$member] = $annotation->getPropertiesAndValues ();
 			$result ["#invertedJoinColumn"] [$annotation->name] = [ "member" => $member,"className" => $annotation->className ];
