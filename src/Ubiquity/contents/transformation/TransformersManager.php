@@ -5,6 +5,9 @@ namespace Ubiquity\contents\transformation;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\contents\transformation\transformers\DateTime;
+use Ubiquity\contents\transformation\transformers\UpperCase;
+use Ubiquity\contents\transformation\transformers\FirstUpperCase;
+use Ubiquity\orm\OrmUtils;
 
 /**
  * Transform objects after loading
@@ -21,7 +24,7 @@ class TransformersManager {
 	 *
 	 * @var array|mixed
 	 */
-	private static $transformers = [ 'datetime' => DateTime::class ];
+	private static $transformers = [ 'datetime' => DateTime::class,'upper' => UpperCase::class,'firstUpper' => FirstUpperCase::class ];
 	private static $key = "contents/transformers";
 
 	/**
@@ -62,6 +65,14 @@ class TransformersManager {
 			return self::$transformers [$transformer];
 		}
 		return null;
+	}
+
+	public static function transform($instance, $member, $transform = 'transform') {
+		$metas = OrmUtils::getModelMetadata ( get_class ( $instance ) );
+		$getter = 'get' . $member;
+		$transformer = $metas ['#transformers'] [$member];
+		$trans = 'transform';
+		return $transformer::$trans ( $instance->{$getter} () );
 	}
 
 	public static function store() {
