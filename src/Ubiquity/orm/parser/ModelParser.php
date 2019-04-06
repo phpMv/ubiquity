@@ -29,7 +29,7 @@ class ModelParser {
 	protected $fieldNames;
 	protected $fieldTypes = [ ];
 	protected $transformers = [ ];
-	protected $accessors=[];
+	protected $accessors = [ ];
 	protected $yuml;
 
 	public function parse($modelClass) {
@@ -47,7 +47,7 @@ class ModelParser {
 		$properties = Reflexion::getProperties ( $instance );
 		foreach ( $properties as $property ) {
 			$propName = $property->getName ();
-			$fieldName=Reflexion::getFieldName ( $modelClass, $propName );
+			$fieldName = Reflexion::getFieldName ( $modelClass, $propName );
 			$this->fieldNames [$propName] = $fieldName;
 			$nullable = Reflexion::isNullable ( $modelClass, $propName );
 			$serializable = Reflexion::isSerializable ( $modelClass, $propName );
@@ -59,12 +59,12 @@ class ModelParser {
 			if ($type === false)
 				$type = "mixed";
 			$this->fieldTypes [$propName] = $type;
-			$accesseur="set" . ucfirst($propName);
+			$accesseur = "set" . ucfirst ( $propName );
 			if (! isset ( $this->accessors [$fieldName] ) && method_exists ( $modelClass, $accesseur )) {
 				$this->accessors [$fieldName] = $accesseur;
 			}
 		}
-		
+
 		$this->global ["#tableName"] = Reflexion::getTableName ( $modelClass );
 	}
 
@@ -76,8 +76,8 @@ class ModelParser {
 		$result ["#fieldTypes"] = $this->fieldTypes;
 		$result ["#nullable"] = $this->nullableMembers;
 		$result ["#notSerializable"] = $this->notSerializableMembers;
-		$result ["#transformers"]=[];
-		$result ["#accessors"]=$this->accessors;
+		$result ["#transformers"] = [ ];
+		$result ["#accessors"] = $this->accessors;
 		if (isset ( $this->yuml ))
 			$result ["#yuml"] = $this->yuml->getPropertiesAndValues ();
 		foreach ( $this->oneToManyMembers as $member => $annotation ) {
@@ -92,6 +92,9 @@ class ModelParser {
 		}
 
 		foreach ( $this->transformers as $member => $annotation ) {
+			if (array_search ( $member, $this->notSerializableMembers, false ) !== false) {
+				throw new TransformerException ( sprintf ( '%s member is not serializable and does not supports transformers!', $member ) );
+			}
 			$trans = $annotation->name;
 			if (! is_subclass_of ( $trans, TransformerInterface::class, true )) {
 				$trans = TransformersManager::getTransformerClass ( $annotation->name );
@@ -105,7 +108,7 @@ class ModelParser {
 			}
 			$result ["#transformers"] [$member] = $trans;
 		}
-		
+
 		foreach ( $this->joinColumnMembers as $member => $annotation ) {
 			$result ["#joinColumn"] [$member] = $annotation->getPropertiesAndValues ();
 			$result ["#invertedJoinColumn"] [$annotation->name] = [ "member" => $member,"className" => $annotation->className ];

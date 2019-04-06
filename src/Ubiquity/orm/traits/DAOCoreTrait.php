@@ -23,6 +23,8 @@ use Ubiquity\orm\parser\Reflexion;
  */
 trait DAOCoreTrait {
 	protected static $accessors = [ ];
+	
+	public static $useTransformers=true;
 
 	abstract protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
 
@@ -164,9 +166,11 @@ trait DAOCoreTrait {
 	 */
 	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers,&$accessors,&$transformers) {
 		$o = new $className ();
-		foreach ($transformers as $field=>$transformer){
-			$transform='transform';
-			$row[$field]=$transformer::$transform ( $row[$field] );
+		if(self::$useTransformers){
+			foreach ($transformers as $field=>$transformer){
+				$transform='transform';
+				$row[$field]=$transformer::$transform ( $row[$field] );
+			}
 		}
 		foreach ( $row as $k => $v ) {
 			if (isset ( $accessors [$k] )) {
