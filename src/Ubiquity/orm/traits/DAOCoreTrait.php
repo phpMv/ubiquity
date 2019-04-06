@@ -16,15 +16,15 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  * @property \Ubiquity\db\Database $db
  *
  */
 trait DAOCoreTrait {
 	protected static $accessors = [ ];
-	
-	public static $useTransformers=true;
+	public static $useTransformers = false;
+	public static $transformerOp = 'transform';
 
 	abstract protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
 
@@ -143,7 +143,7 @@ trait DAOCoreTrait {
 		$propsKeys = OrmUtils::getPropKeys ( $className );
 		$accessors = $metaDatas ["#accessors"];
 		foreach ( $query as $row ) {
-			$object = self::loadObjectFromRow($row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers);
+			$object = self::loadObjectFromRow ( $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
 			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
 			$objects [$key] = $object;
 		}
@@ -164,12 +164,12 @@ trait DAOCoreTrait {
 	 * @param array $accessors
 	 * @return object
 	 */
-	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers,&$accessors,&$transformers) {
+	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers, &$accessors, &$transformers) {
 		$o = new $className ();
-		if(self::$useTransformers){
-			foreach ($transformers as $field=>$transformer){
-				$transform='transform';
-				$row[$field]=$transformer::$transform ( $row[$field] );
+		if (self::$useTransformers) {
+			foreach ( $transformers as $field => $transformer ) {
+				$transform = self::$transformerOp;
+				$row [$field] = $transformer::$transform ( $row [$field] );
 			}
 		}
 		foreach ( $row as $k => $v ) {

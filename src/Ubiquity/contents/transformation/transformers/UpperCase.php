@@ -25,6 +25,6 @@ class UpperCase implements TransformerInterface {
 	}
 
 	public static function toView($value) {
-		return $value;
+		return self::transform($value);
 	}
 }

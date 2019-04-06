@@ -9,6 +9,7 @@ use Ubiquity\contents\transformation\transformers\UpperCase;
 use Ubiquity\contents\transformation\transformers\FirstUpperCase;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\contents\transformation\transformers\LowerCase;
+use Ubiquity\orm\DAO;
 
 /**
  * Transform objects after loading
@@ -35,6 +36,10 @@ class TransformersManager {
 		if (CacheManager::$cache->exists ( self::$key )) {
 			self::$transformers = CacheManager::$cache->fetch ( self::$key );
 		}
+	}
+
+	public static function startProd() {
+		DAO::$useTransformers = true;
 	}
 
 	public static function registerClass($transformer, $classname) {
@@ -80,6 +85,35 @@ class TransformersManager {
 			}
 		}
 		return null;
+	}
+
+	public static function applyTransformer($instance, $member, $value, $transform = 'transform') {
+		$class = get_class ( $instance );
+		$getter = 'get' . $member;
+		if (method_exists ( $instance, $getter )) {
+			$metas = OrmUtils::getModelMetadata ( $class );
+			if (isset ( $metas ['#transformers'] [$member] )) {
+				$transformer = $metas ['#transformers'] [$member];
+				return $transformer::$transform ( $value );
+			}
+		}
+		return $value;
+	}
+
+	public static function transformInstance($instance, $transform = 'transform') {
+		$class = get_class ( $instance );
+		$metas = OrmUtils::getModelMetadata ( $class );
+		foreach ( $metas ['#transformers'] as $member => $transformer ) {
+			$getter = 'get' . ucfirst ( $member );
+			$setter = 'set' . ucfirst ( $member );
+			if (method_exists ( $instance, $getter )) {
+				$value = $transformer::$transform ( $instance->{$getter} () );
+				if (method_exists ( $instance, $setter )) {
+					$instance->{$setter} ( $value );
+				}
+				$instance->_rest [$member] = $value;
+			}
+		}
 	}
 
 	public static function store() {

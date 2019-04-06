@@ -17,6 +17,7 @@ use Ajax\semantic\widgets\datatable\Pagination;
 use Ubiquity\utils\base\UString;
 use Ajax\common\html\HtmlContentOnly;
 use Ubiquity\contents\validation\ValidatorsManager;
+use Ubiquity\contents\transformation\TransformersManager;
 
 /**
  *
@@ -175,7 +176,7 @@ trait ModelsTrait {
 	}
 
 	public function edit($modal = "no", $ids = "") {
-		$instance = $this->getModelInstance ( $ids );
+		$instance = $this->getModelInstance ( $ids ,false);
 		$instance->_new = false;
 		$this->_edit ( $instance, $modal );
 	}
@@ -198,6 +199,9 @@ trait ModelsTrait {
 			if ($isNew) {
 				$this->jquery->get ( $this->_getFiles ()->getAdminBaseRoute () . $this->_getFiles ()->getRouteRefreshTable () . "/" . $pk, "#lv", [ "jqueryDone" => "replaceWith" ] );
 			} else {
+				if(DAO::$useTransformers){
+					TransformersManager::transformInstance($instance,'toView');
+				}
 				$this->jquery->setJsonToElement ( OrmUtils::objectAsJSON ( $instance ) );
 			}
 		} else {
@@ -207,9 +211,10 @@ trait ModelsTrait {
 		echo $this->jquery->compile ( $this->view );
 	}
 
-	private function getModelInstance($ids) {
+	private function getModelInstance($ids,$transform=true) {
 		$model = $_SESSION ['model'];
 		$ids = \explode ( "_", $ids );
+		DAO::$useTransformers=$transform;
 		$instance = DAO::getOne ( $model, $ids, true );
 		if (isset ( $instance )) {
 			return $instance;
@@ -303,7 +308,7 @@ trait ModelsTrait {
 		$ids = URequest::post ( "id" );
 		$td = URequest::post ( "td" );
 		$part = URequest::post ( "part" );
-		$instance = $this->getModelInstance ( $ids );
+		$instance = $this->getModelInstance ( $ids ,false);
 		$_SESSION ["instance"] = $instance;
 		$_SESSION ["model"] = get_class ( $instance );
 		$instance->_new = false;
@@ -320,7 +325,11 @@ trait ModelsTrait {
 			if ($callback === false) {
 				$dt = $this->_getModelViewer ()->getModelDataTable ( [ $instance ], $model, 1 );
 				$dt->compile ();
-				echo new HtmlContentOnly ( $dt->getFieldValue ( $member ) );
+				$value=$dt->getFieldValue ( $member );
+				if(DAO::$useTransformers){
+					$value=TransformersManager::applyTransformer($instance, $member, $value,'toView');
+				}
+				echo new HtmlContentOnly ($value );
 			} else {
 				if (method_exists ( $this, $callback )) {
 					$this->$callback ( $member, $instance );

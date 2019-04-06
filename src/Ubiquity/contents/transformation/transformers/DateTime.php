@@ -27,6 +27,6 @@ class DateTime implements TransformerInterface {
 	}
 
 	public static function toView($value) {
-		return self::reverse ( $value );
+		return $value;
 	}
 }
