@@ -10,6 +10,7 @@ use Ubiquity\contents\transformation\transformers\FirstUpperCase;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\contents\transformation\transformers\LowerCase;
 use Ubiquity\orm\DAO;
+use Ubiquity\contents\transformation\transformers\Password;
 
 /**
  * Transform objects after loading
@@ -26,7 +27,13 @@ class TransformersManager {
 	 *
 	 * @var array|mixed
 	 */
-	private static $transformers = [ 'datetime' => DateTime::class,'upper' => UpperCase::class,'firstUpper' => FirstUpperCase::class,'lower' => LowerCase::class ];
+	private static $transformers = [ 
+			'datetime' => DateTime::class,
+			'upper' => UpperCase::class,
+			'firstUpper' => FirstUpperCase::class,
+			'lower' => LowerCase::class,
+			'password'=>Password::class
+	];
 	private static $key = "contents/transformers";
 
 	/**

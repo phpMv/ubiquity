@@ -3,6 +3,7 @@
 namespace Ubiquity\contents\transformation\transformers;
 
 use Ubiquity\contents\transformation\TransformerInterface;
+use Ubiquity\contents\transformation\TransformerViewInterface;
 
 /**
  * Transform a mysql date to a php DateTime.
@@ -13,7 +14,7 @@ use Ubiquity\contents\transformation\TransformerInterface;
  * @version 1.0.0
  * @since 2.1.1
  */
-class DateTime implements TransformerInterface {
+class DateTime implements TransformerInterface,TransformerViewInterface {
 
 	public static function transform($value) {
 		if ($value != null)
@@ -27,6 +28,8 @@ class DateTime implements TransformerInterface {
 	}
 
 	public static function toView($value) {
+		if($value instanceof \DateTime)
+			return self::reverse($value);
 		return $value;
 	}
 }

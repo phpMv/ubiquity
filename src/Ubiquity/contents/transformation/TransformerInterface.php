@@ -28,10 +28,4 @@ interface TransformerInterface {
 	 */
 	public static function reverse($value);
 
-	/**
-	 * Transforms normalized data to view data
-	 *
-	 * @param string $value
-	 */
-	public static function toView($value);
 }

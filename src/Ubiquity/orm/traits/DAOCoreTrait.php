@@ -135,7 +135,7 @@ trait DAOCoreTrait {
 		}
 		$condition = SqlUtils::checkWhere ( $conditionParser->getCondition () );
 		$members = \array_diff ( $metaDatas ["#fieldNames"], $metaDatas ["#notSerializable"] );
-		$transformers = $metaDatas ["#transformers"];
+		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
 		$query = self::$db->prepareAndExecute ( $tableName, $condition, $members, $conditionParser->getParams (), $useCache );
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];

@@ -2,10 +2,11 @@
 
 namespace Ubiquity\contents\transformation\transformers;
 
+use Ubiquity\utils\base\UString;
 use Ubiquity\contents\transformation\TransformerViewInterface;
 
 /**
- * Make a string lowercase.
+ * Mask a password.
  * Ubiquity\contents\transformation\transformers$LowerCase
  * This class is part of Ubiquity
  *
@@ -13,10 +14,10 @@ use Ubiquity\contents\transformation\TransformerViewInterface;
  * @version 1.0.0
  * @since 2.1.1
  */
-class LowerCase implements TransformerViewInterface {
+class Password implements TransformerViewInterface {
 
 	public static function toView($value) {
 		if ($value != null)
-			return strtolower ( $value );
+			return UString::mask($value);
 	}
 }

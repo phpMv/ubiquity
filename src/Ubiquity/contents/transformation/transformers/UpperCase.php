@@ -2,7 +2,7 @@
 
 namespace Ubiquity\contents\transformation\transformers;
 
-use Ubiquity\contents\transformation\TransformerInterface;
+use Ubiquity\contents\transformation\TransformerViewInterface;
 
 /**
  * Make a string uppercase.
@@ -13,18 +13,10 @@ use Ubiquity\contents\transformation\TransformerInterface;
  * @version 1.0.0
  * @since 2.1.1
  */
-class UpperCase implements TransformerInterface {
-
-	public static function transform($value) {
-		if ($value != null)
-			return strtoupper ( $value );
-	}
-
-	public static function reverse($value) {
-		return $value;
-	}
+class UpperCase implements TransformerViewInterface {
 
 	public static function toView($value) {
-		return self::transform($value);
+		if ($value != null)
+			return strtoupper ( $value );
 	}
 }
