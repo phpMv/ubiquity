@@ -7,6 +7,7 @@ use Ubiquity\contents\transformation\TransformerInterface;
 use Ubiquity\contents\transformation\TransformersManager;
 use Ubiquity\exceptions\TransformerException;
 use Ubiquity\contents\transformation\TransformerViewInterface;
+use Ubiquity\contents\transformation\TransformerFormInterface;
 
 /**
  * Parse model annotation for cache generation.
@@ -92,26 +93,24 @@ class ModelParser {
 			$result ["#joinTable"] [$member] = $annotation->getPropertiesAndValues ();
 		}
 
-		if(class_exists("Ubiquity\\contents\\transformation\\TransformersManager")){
+		if (class_exists ( "Ubiquity\\contents\\transformation\\TransformersManager" )) {
 			foreach ( $this->transformers as $member => $annotation ) {
-				$goodTransformer=false;
+				$goodTransformer = false;
 				if (array_search ( $member, $this->notSerializableMembers, false ) !== false) {
 					throw new TransformerException ( sprintf ( '%s member is not serializable and does not supports transformers!', $member ) );
 				}
 				$trans = TransformersManager::getTransformerClass ( $annotation->name );
 				if ($trans == null) {
-					throw new TransformerException ( sprintf ( '%s value is not a declared transformer.', $annotation->name) );
+					throw new TransformerException ( sprintf ( '%s value is not a declared transformer.', $annotation->name ) );
 				} else {
-					if (is_subclass_of ( $trans, TransformerInterface::class, true )) {
-						$goodTransformer=true;
-						$result ["#transformers"] ['transform'][$member] = $trans;
+					foreach ( TransformersManager::TRANSFORMER_TYPES as $transType => $transInterface ) {
+						if (is_subclass_of ( $trans, $transInterface, true )) {
+							$goodTransformer = true;
+							$result ["#transformers"] [$transType] [$member] = $trans;
+						}
 					}
-					if(is_subclass_of ( $trans, TransformerViewInterface::class, true)){
-						$goodTransformer=true;
-						$result ["#transformers"] ['toView'][$member] = $trans;
-					}
-					if(!$goodTransformer){
-						throw new TransformerException ( sprintf ( '%s does not implements %s', $trans, 'TransformerInterfaces') );
+					if (! $goodTransformer) {
+						throw new TransformerException ( sprintf ( '%s does not implements %s', $trans, 'TransformerInterfaces' ) );
 					}
 				}
 			}

@@ -3,14 +3,14 @@
 namespace Ubiquity\contents\transformation;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\base\UArray;
 use Ubiquity\contents\transformation\transformers\DateTime;
-use Ubiquity\contents\transformation\transformers\UpperCase;
 use Ubiquity\contents\transformation\transformers\FirstUpperCase;
-use Ubiquity\orm\OrmUtils;
 use Ubiquity\contents\transformation\transformers\LowerCase;
-use Ubiquity\orm\DAO;
 use Ubiquity\contents\transformation\transformers\Password;
+use Ubiquity\contents\transformation\transformers\UpperCase;
+use Ubiquity\orm\DAO;
+use Ubiquity\orm\OrmUtils;
+use Ubiquity\utils\base\UArray;
 
 /**
  * Transform objects after loading
@@ -23,17 +23,12 @@ use Ubiquity\contents\transformation\transformers\Password;
  *
  */
 class TransformersManager {
+	const TRANSFORMER_TYPES = [ 'transform' => TransformerInterface::class,'toView' => TransformerViewInterface::class,'toForm' => TransformerFormInterface::class ];
 	/**
 	 *
 	 * @var array|mixed
 	 */
-	private static $transformers = [ 
-			'datetime' => DateTime::class,
-			'upper' => UpperCase::class,
-			'firstUpper' => FirstUpperCase::class,
-			'lower' => LowerCase::class,
-			'password'=>Password::class
-	];
+	private static $transformers = [ 'datetime' => DateTime::class,'upper' => UpperCase::class,'firstUpper' => FirstUpperCase::class,'lower' => LowerCase::class,'password' => Password::class ];
 	private static $key = "contents/transformers";
 
 	/**
@@ -81,28 +76,19 @@ class TransformersManager {
 	}
 
 	public static function transform($instance, $member, $transform = 'transform') {
-		$class = get_class ( $instance );
 		$getter = 'get' . $member;
 		if (method_exists ( $instance, $getter )) {
-			$metas = OrmUtils::getModelMetadata ( $class );
-			if (isset ( $metas ['#transformers'] [$member] )) {
-				$transformer = $metas ['#transformers'] [$member];
-				$trans = 'transform';
-				return $transformer::$trans ( $instance->{$getter} () );
-			}
+			return self::applyTransformer ( $instance, $member, $instance->{$getter} (), $transform );
 		}
 		return null;
 	}
 
 	public static function applyTransformer($instance, $member, $value, $transform = 'transform') {
 		$class = get_class ( $instance );
-		$getter = 'get' . $member;
-		if (method_exists ( $instance, $getter )) {
-			$metas = OrmUtils::getModelMetadata ( $class );
-			if (isset ( $metas ['#transformers'] [$member] )) {
-				$transformer = $metas ['#transformers'] [$member];
-				return $transformer::$transform ( $value );
-			}
+		$metas = OrmUtils::getModelMetadata ( $class );
+		if (isset ( $metas ['#transformers'] [$transform] [$member] )) {
+			$transformer = $metas ['#transformers'] [$transform] [$member];
+			return $transformer::$transform ( $value );
 		}
 		return $value;
 	}
@@ -110,7 +96,8 @@ class TransformersManager {
 	public static function transformInstance($instance, $transform = 'transform') {
 		$class = get_class ( $instance );
 		$metas = OrmUtils::getModelMetadata ( $class );
-		foreach ( $metas ['#transformers'] as $member => $transformer ) {
+		$transformers = $metas ['#transformers'] [$transform] ?? [ ];
+		foreach ( $transformers as $member => $transformer ) {
 			$getter = 'get' . ucfirst ( $member );
 			$setter = 'set' . ucfirst ( $member );
 			if (method_exists ( $instance, $getter )) {
