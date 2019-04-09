@@ -99,6 +99,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function __construct() {
 		parent::__construct ();
+		DAO::$transformerOp='toView';
 		$this->insertJquerySemantic ();
 		if (file_exists ( $this->configFile )) {
 			$this->config = include ($this->configFile);

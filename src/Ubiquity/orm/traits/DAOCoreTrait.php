@@ -22,6 +22,9 @@ use Ubiquity\orm\parser\Reflexion;
  *
  */
 trait DAOCoreTrait {
+	protected static $accessors = [ ];
+	public static $useTransformers = false;
+	public static $transformerOp = 'transform';
 
 	abstract protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
 
@@ -132,39 +135,24 @@ trait DAOCoreTrait {
 		}
 		$condition = SqlUtils::checkWhere ( $conditionParser->getCondition () );
 		$members = \array_diff ( $metaDatas ["#fieldNames"], $metaDatas ["#notSerializable"] );
+		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
 		$query = self::$db->prepareAndExecute ( $tableName, $condition, $members, $conditionParser->getParams (), $useCache );
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
 		$propsKeys = OrmUtils::getPropKeys ( $className );
-		$accessors = OrmUtils::getAccessors ( $className, $members );
-		$types = OrmUtils::getFieldTypes ( $className );
-		$fields = array_flip ( $members );
-		if ($row = current ( $query )) {
-			$accessors = self::prepareAccessors ( $accessors, $fields, $row );
-		}
+		$accessors = $metaDatas ["#accessors"];
 		foreach ( $query as $row ) {
-			$object = self::loadObjectFromRow ( $row, $className, $invertedJoinColumns, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToOneQueries, $manyToManyParsers, $accessors, $fields, $types );
-			$objects [OrmUtils::getPropKeyValues ( $object, $propsKeys )] = $object;
+			$object = self::loadObjectFromRow ( $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
+			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
+			$objects [$key] = $object;
 		}
 		if ($hasIncluded) {
-			$classPropKey = current ( $propsKeys );
+			$classPropKey = OrmUtils::getFirstPropKey ( $className );
 			self::_affectsRelationObjects ( $className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache );
 		}
 		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
 		return $objects;
-	}
-
-	private static function prepareAccessors($accessors, $fields, $row) {
-		$accesseurs = [ ];
-		foreach ( $row as $k => $vNotUsed ) {
-			if (isset ( $accessors [$k] )) {
-				$accesseurs [$k] = $accessors [$k];
-			} elseif (isset ( $accessors [$fields [$k] ?? - 1] )) {
-				$accesseurs [$k] = $accessors [$fields [$k]];
-			}
-		}
-		return $accesseurs;
 	}
 
 	/**
@@ -172,16 +160,18 @@ trait DAOCoreTrait {
 	 * @param array $row
 	 * @param string $className
 	 * @param array $invertedJoinColumns
-	 * @param array $oneToManyFields
-	 * @param array $oneToManyQueries
 	 * @param array $manyToOneQueries
-	 * @param array $manyToManyParsers
 	 * @param array $accessors
-	 * @param array $fields
 	 * @return object
 	 */
-	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToOneQueries, &$manyToManyParsers, &$accessors, &$fields, &$types) {
+	private static function loadObjectFromRow($row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers, &$accessors, &$transformers) {
 		$o = new $className ();
+		if (self::$useTransformers) {
+			foreach ( $transformers as $field => $transformer ) {
+				$transform = self::$transformerOp;
+				$row [$field] = $transformer::$transform ( $row [$field] );
+			}
+		}
 		foreach ( $row as $k => $v ) {
 			if (isset ( $accessors [$k] )) {
 				$accesseur = $accessors [$k];
@@ -215,4 +205,3 @@ trait DAOCoreTrait {
 		}
 	}
 }
-

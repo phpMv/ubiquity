@@ -15,11 +15,9 @@ trait ModelsCacheTrait{
 	public static function createOrmModelCache($classname) {
 		$key=self::getModelCacheKey($classname);
 		if(isset(self::$cache)){
-			if (!self::$cache->exists($key)) {
-				$p=new ModelParser();
-				$p->parse($classname);
-				self::$cache->store($key, $p->__toString(),'models');
-			}
+			$p=new ModelParser();
+			$p->parse($classname);
+			self::$cache->store($key, $p->__toString(),'models');
 			return self::$cache->fetch($key);
 		}
 	}

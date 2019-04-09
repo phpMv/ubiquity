@@ -22,6 +22,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 
 	public function __construct() {
 		parent::__construct ();
+		DAO::$transformerOp='toView';
 		$this->insertJquerySemantic ();
 	}
 
@@ -104,7 +105,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 */
 	public function edit($modal = "no", $ids = "") {
 		if (URequest::isAjax ()) {
-			$instance = $this->getModelInstance ( $ids );
+			$instance = $this->getModelInstance ( $ids, false );
 			$instance->_new = false;
 			$this->_edit ( $instance, $modal );
 		} else {
@@ -134,7 +135,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$ids = URequest::post ( "id" );
 		$td = URequest::post ( "td" );
 		$part = URequest::post ( "part" );
-		$instance = $this->getModelInstance ( $ids, $member );
+		$instance = $this->getModelInstance ( $ids, false, $member );
 		$_SESSION ["instance"] = $instance;
 		$instance->_new = false;
 		$form = $this->_getModelViewer ()->getMemberForm ( "frm-member-" . $member, $instance, $member, $td, $part );
