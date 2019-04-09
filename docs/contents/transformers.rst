@@ -3,7 +3,7 @@ Transformers
 ============
 
 .. note::
-   The Transformers module uses the static class **TansformersManager** to manage transformations.
+   The Transformers module uses the static class **TransformersManager** to manage data transformations.
    
 
 Transformers are used to transform datas after loading from the database, or before displaying in a view.
@@ -174,9 +174,76 @@ Existing transformers
 +------------+---------------------------+----------------------------------------------------------------+
 |password    |toView                     |Mask the member characters                                      |
 +------------+---------------------------+----------------------------------------------------------------+
+|md5         |toView                     |Hash the value with md5                                         |
++------------+---------------------------+----------------------------------------------------------------+
 
 Create your own
 ---------------
+Creation
+++++++++
+
+Create a transformer to display a user name as a local email address:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/transformers/toLocalEmail.php
+   
+	namespace transformers;
+	use Ubiquity\contents\transformation\TransformerViewInterface;
+	
+	class ToLocalEmail implements TransformerViewInterface{
+		
+		public static function toView($value) {
+			if($value!=null)
+				return sprintf('%s@mydomain.local',strtolower($value));
+		}
+	
+	}
+
+Registration
+++++++++++++
+
+Register the transformer by executing the following script:
+
+.. code-block:: php
+   
+   TransformersManager::registerClassAndSave('localEmail',\transformers\ToLocalEmail::class);
+
+
+Usage
++++++
+
+.. code-block:: php
+   :linenos:
+   :caption: app/models/User.php
+   :emphasize-lines: 6
+   
+	namespace models;
+	
+	class User {
+		/**
+		 * @var string
+		 * @transformer("localEmail")
+		 */
+		private $name;
+		
+		public function getName(){
+			return $this->name;
+		}
+		
+		public function setName($name){
+			$this->name=$name;
+		}
+	}
+
+
+.. code-block:: php
+   
+   DAO::transformersOp='toView';
+   $user=DAO::getOne(User::class,"name='Smith'");
+   echo $user->getName();
+
+**Smith** user name will be displayed as **smith@mydomain.local**.
 
 .. |br| raw:: html
 

@@ -3,11 +3,9 @@
 namespace Ubiquity\orm\parser;
 
 use Ubiquity\utils\base\UArray;
-use Ubiquity\contents\transformation\TransformerInterface;
 use Ubiquity\contents\transformation\TransformersManager;
 use Ubiquity\exceptions\TransformerException;
-use Ubiquity\contents\transformation\TransformerViewInterface;
-use Ubiquity\contents\transformation\TransformerFormInterface;
+
 
 /**
  * Parse model annotation for cache generation.
@@ -94,6 +92,7 @@ class ModelParser {
 		}
 
 		if (class_exists ( "Ubiquity\\contents\\transformation\\TransformersManager" )) {
+			TransformersManager::start();
 			foreach ( $this->transformers as $member => $annotation ) {
 				$goodTransformer = false;
 				if (array_search ( $member, $this->notSerializableMembers, false ) !== false) {

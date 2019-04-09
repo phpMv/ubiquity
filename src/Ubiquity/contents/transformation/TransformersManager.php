@@ -6,6 +6,7 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\contents\transformation\transformers\DateTime;
 use Ubiquity\contents\transformation\transformers\FirstUpperCase;
 use Ubiquity\contents\transformation\transformers\LowerCase;
+use Ubiquity\contents\transformation\transformers\Md5;
 use Ubiquity\contents\transformation\transformers\Password;
 use Ubiquity\contents\transformation\transformers\UpperCase;
 use Ubiquity\orm\DAO;
@@ -28,38 +29,62 @@ class TransformersManager {
 	 *
 	 * @var array|mixed
 	 */
-	private static $transformers = [ 'datetime' => DateTime::class,'upper' => UpperCase::class,'firstUpper' => FirstUpperCase::class,'lower' => LowerCase::class,'password' => Password::class ];
+	private static $transformers = [ 'md5' => Md5::class,'datetime' => DateTime::class,'upper' => UpperCase::class,'firstUpper' => FirstUpperCase::class,'lower' => LowerCase::class,'password' => Password::class ];
 	private static $key = "contents/transformers";
 
 	/**
 	 * Do not use at runtime !
 	 */
 	public static function start() {
+		$transformers = [ ];
 		if (CacheManager::$cache->exists ( self::$key )) {
-			self::$transformers = CacheManager::$cache->fetch ( self::$key );
+			$transformers = CacheManager::$cache->fetch ( self::$key );
 		}
+		self::$transformers = array_merge ( self::$transformers, $transformers );
 	}
 
 	public static function startProd() {
 		DAO::$useTransformers = true;
 	}
 
+	/**
+	 * Do not used at runtime !
+	 *
+	 * @param string $transformer
+	 * @param string $classname
+	 */
 	public static function registerClass($transformer, $classname) {
 		self::$transformers [$transformer] = $classname;
 	}
 
-	public static function registerAndSaveClass($transformer, $classname) {
+	/**
+	 * Do not used at runtime !
+	 *
+	 * @param string $transformer
+	 * @param string $classname
+	 */
+	public static function registerClassAndSave($transformer, $classname) {
 		self::start ();
 		self::registerClass ( $transformer, $classname );
 		self::store ();
 	}
 
+	/**
+	 * Do not used at runtime !
+	 *
+	 * @param array $transformersAndClasses
+	 */
 	public static function registerClasses($transformersAndClasses) {
 		foreach ( $transformersAndClasses as $transformer => $class ) {
 			self::registerClass ( $transformer, $class );
 		}
 	}
 
+	/**
+	 * Do not used at runtime !
+	 *
+	 * @param array $transformersAndClasses
+	 */
 	public static function registerClassesAndSave($transformersAndClasses) {
 		self::start ();
 		foreach ( $transformersAndClasses as $transformer => $class ) {
