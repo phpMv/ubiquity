@@ -5,6 +5,7 @@ namespace Ubiquity\translation\loader;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\log\Logger;
+use Ubiquity\cache\CacheManager;
 
 /**
  * ArrayLoader for TranslatorManager
@@ -12,14 +13,15 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class ArrayLoader implements LoaderInterface {
 	private $rootDir;
+	private $key="translations/";
 
 	private function getRootKey($locale = null, $domain = null) {
-		return $this->rootDir . $locale ?? '' . $domain ?? '';
+		return $this->key . $locale ?? '' . $domain ?? '';
 	}
 
 	public function __construct($rootDir) {
@@ -28,9 +30,8 @@ class ArrayLoader implements LoaderInterface {
 
 	public function load($locale, $domain = '*') {
 		$key = $this->getRootKey ( $locale, $domain );
-		if (self::hasAPC () && apc_exists ( $key )) {
-			Logger::info ( 'Translate', 'Loading ' . $locale . '.' . $domain . ' from apc_cache', 'load' );
-			return apc_fetch ( $key );
+		if(CacheManager::$cache->exists($key)){
+			return CacheManager::$cache->fetch($key);
 		}
 		$messages = [ ];
 		$rootDirectory = $this->getRootDirectory ( $locale );
@@ -44,9 +45,7 @@ class ArrayLoader implements LoaderInterface {
 				}
 			}
 			$this->flatten ( $messages );
-			if (self::hasAPC ()) {
-				apc_store ( $key, $messages );
-			}
+			CacheManager::$cache->store($key, "return ".UArray::asPhpArray($messages,'array').';');
 		} else {
 			return false;
 		}
@@ -54,17 +53,8 @@ class ArrayLoader implements LoaderInterface {
 		return $messages;
 	}
 
-	private static function hasAPC() {
-		return function_exists ( 'apc_exists' );
-	}
-
 	public function clearCache($locale = null, $domain = null) {
-		if (self::hasAPC ()) {
-			$iterator = new \APCIterator ( '/^' . $this->getRootKey ( $locale, $domain ) . '/' );
-			foreach ( $iterator as $apc_cache ) {
-				apc_delete ( $apc_cache ['key'] );
-			}
-		}
+		CacheManager::$cache->clearCache($this->getRootKey($locale,$domain));
 	}
 
 	protected function loadFile($filename) {

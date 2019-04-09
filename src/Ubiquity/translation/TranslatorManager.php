@@ -9,7 +9,7 @@ use Ubiquity\log\Logger;
  * Manages translations
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  */
 class TranslatorManager {
 	protected static $locale;
@@ -123,6 +123,6 @@ class TranslatorManager {
 	}
 
 	public static function clearCache() {
-		self::$loader->clearCache ();
+		self::$loader->clearCache ( '*' );
 	}
 }
