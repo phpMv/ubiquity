@@ -2,6 +2,7 @@
 use models\User;
 use Ubiquity\contents\transformation\TransformersManager;
 use Ubiquity\orm\DAO;
+use Ubiquity\controllers\Startup;
 
 /**
  * TransformersManager test case.
@@ -14,6 +15,7 @@ class TransformersManagerTest extends BaseTest {
 	protected function _before() {
 		parent::_before ();
 		$this->_loadConfig ();
+		Startup::setConfig ( $this->config );
 		$this->_startCache ();
 		$db = $this->config ["database"] ?? [ ];
 		if ($db ["dbName"] !== "") {
