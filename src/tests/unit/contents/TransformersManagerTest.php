@@ -54,7 +54,7 @@ class TransformersManagerTest extends BaseTest {
 		$password = $user->getPassword ();
 		DAO::$transformerOp = 'toView';
 		$user2 = DAO::getOne ( User::class, 'id=1' );
-		$this->assertEquals ( sha1 ( $password ), $user2->getPassword () );
+		$this->assertEquals ( $password, $user2->getPassword () );
 	}
 
 	protected function getCacheDirectory() {
