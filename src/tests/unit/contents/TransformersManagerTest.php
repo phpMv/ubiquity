@@ -42,7 +42,7 @@ class TransformersManagerTest extends BaseTest {
 	 * Tests Perso transformer
 	 */
 	public function testPerso() {
-		$this->assertEquals ( $this->config ['cache'] ['directory'], 'cache-tests/' );
+		$this->assertEquals ( $this->config ['cache'] ['directory'], 'cache-contents/' );
 		$this->assertTrue ( DAO::$useTransformers );
 		$metaDatas = OrmUtils::getModelMetadata ( User::class );
 		$transformers = $metaDatas ["#transformers"] ['toView'] ?? [ ];
@@ -52,6 +52,10 @@ class TransformersManagerTest extends BaseTest {
 		DAO::$transformerOp = 'toView';
 		$user = DAO::getOne ( User::class, 1 );
 		$this->assertEquals ( sha1 ( $password ), $user->getPassword () );
+	}
+
+	protected function getCacheDirectory() {
+		return "cache-contents/";
 	}
 }
 
