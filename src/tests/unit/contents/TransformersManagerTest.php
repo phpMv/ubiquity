@@ -3,6 +3,7 @@ use models\User;
 use Ubiquity\contents\transformation\TransformersManager;
 use Ubiquity\orm\DAO;
 use Ubiquity\controllers\Startup;
+use Ubiquity\orm\OrmUtils;
 
 /**
  * TransformersManager test case.
@@ -43,6 +44,9 @@ class TransformersManagerTest extends BaseTest {
 	public function testPerso() {
 		$this->assertEquals ( $this->config ['cache'] ['directory'], 'cache-tests/' );
 		$this->assertTrue ( DAO::$useTransformers );
+		$metaDatas = OrmUtils::getModelMetadata ( User::class );
+		$transformers = $metaDatas ["#transformers"] ['toView'] ?? [ ];
+		$this->assertEquals ( 1, sizeof ( $transformers ) );
 		$user = DAO::getOne ( User::class, 1 );
 		$password = $user->getPassword ();
 		DAO::$transformerOp = 'toView';
