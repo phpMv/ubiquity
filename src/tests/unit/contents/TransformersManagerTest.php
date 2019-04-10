@@ -44,7 +44,7 @@ class TransformersManagerTest extends BaseTest {
 	public function testPerso() {
 		$user = $this->dao->getOne ( User::class, 1 );
 		$password = $user->getPassword ();
-		$this->dao->transformerOp = 'toView';
+		$this->dao->setTransformerOp ( 'toView' );
 		$user = $this->dao->getOne ( User::class, 1 );
 		$this->assertEquals ( sha1 ( $password ), $user->getPassword () );
 	}

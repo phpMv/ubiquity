@@ -36,12 +36,9 @@ class DAO {
 	/**
 	 * Loads member associated with $instance by a ManyToOne relationship
 	 *
-	 * @param object|array $instance
-	 *        	The instance object or an array with [classname,id]
-	 * @param string $member
-	 *        	The member to load
-	 * @param boolean|array $included
-	 *        	if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param object|array $instance The instance object or an array with [classname,id]
+	 * @param string $member The member to load
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
 	 * @param boolean|null $useCache
 	 */
 	public static function getManyToOne($instance, $member, $included = false, $useCache = NULL) {
@@ -72,15 +69,11 @@ class DAO {
 	/**
 	 * Assign / load the child records in the $member member of $instance.
 	 *
-	 * @param object|array $instance
-	 *        	The instance object or an array with [classname,id]
-	 * @param string $member
-	 *        	Member on which a oneToMany annotation must be present
-	 * @param boolean|array $included
-	 *        	if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param object|array $instance The instance object or an array with [classname,id]
+	 * @param string $member Member on which a oneToMany annotation must be present
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
 	 * @param boolean $useCache
-	 * @param array $annot
-	 *        	used internally
+	 * @param array $annot used internally
 	 */
 	public static function getOneToMany($instance, $member, $included = true, $useCache = NULL, $annot = null) {
 		$ret = array ();
@@ -105,14 +98,10 @@ class DAO {
 	 * Assigns / loads the child records in the $member member of $instance.
 	 * If $array is null, the records are loaded from the database
 	 *
-	 * @param object|array $instance
-	 *        	The instance object or an array with [classname,id]
-	 * @param string $member
-	 *        	Member on which a ManyToMany annotation must be present
-	 * @param boolean|array $included
-	 *        	if true, loads associate members with associations, if array, example : ["client.*","commands"]
-	 * @param array $array
-	 *        	optional parameter containing the list of possible child records
+	 * @param object|array $instance The instance object or an array with [classname,id]
+	 * @param string $member Member on which a ManyToMany annotation must be present
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param array $array optional parameter containing the list of possible child records
 	 * @param boolean $useCache
 	 */
 	public static function getManyToMany($instance, $member, $included = false, $array = null, $useCache = NULL) {
@@ -153,15 +142,11 @@ class DAO {
 	/**
 	 * Returns an array of $className objects from the database
 	 *
-	 * @param string $className
-	 *        	class name of the model to load
-	 * @param string $condition
-	 *        	Part following the WHERE of an SQL statement
-	 * @param boolean|array $included
-	 *        	if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param string $className class name of the model to load
+	 * @param string $condition Part following the WHERE of an SQL statement
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
 	 * @param array|null $parameters
-	 * @param boolean $useCache
-	 *        	use the active cache if true
+	 * @param boolean $useCache use the active cache if true
 	 * @return array
 	 */
 	public static function getAll($className, $condition = '', $included = true, $parameters = null, $useCache = NULL) {
@@ -191,12 +176,9 @@ class DAO {
 	/**
 	 * Returns the number of objects of $className from the database respecting the condition possibly passed as parameter
 	 *
-	 * @param string $className
-	 *        	complete classname of the model to load
-	 * @param string $condition
-	 *        	Part following the WHERE of an SQL statement
-	 * @param array|null $parameters
-	 *        	The query parameters
+	 * @param string $className complete classname of the model to load
+	 * @param string $condition Part following the WHERE of an SQL statement
+	 * @param array|null $parameters The query parameters
 	 * @return int|false count of objects
 	 */
 	public static function count($className, $condition = '', $parameters = null) {
@@ -209,16 +191,11 @@ class DAO {
 	/**
 	 * Returns an instance of $className from the database, from $keyvalues values of the primary key
 	 *
-	 * @param String $className
-	 *        	complete classname of the model to load
-	 * @param Array|string $keyValues
-	 *        	primary key values or condition
-	 * @param boolean|array $included
-	 *        	if true, charges associate members with association
-	 * @param array|null $parameters
-	 *        	the request parameters
-	 * @param boolean|null $useCache
-	 *        	use cache if true
+	 * @param String $className complete classname of the model to load
+	 * @param Array|string $keyValues primary key values or condition
+	 * @param boolean|array $included if true, charges associate members with association
+	 * @param array|null $parameters the request parameters
+	 * @param boolean|null $useCache use cache if true
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getOne($className, $keyValues, $included = true, $parameters = null, $useCache = NULL) {
@@ -259,8 +236,7 @@ class DAO {
 	/**
 	 * Establishes the connection to the database using the $config array
 	 *
-	 * @param array $config
-	 *        	the config array (Startup::getConfig())
+	 * @param array $config the config array (Startup::getConfig())
 	 */
 	public static function startDatabase(&$config) {
 		$db = $config ['database'] ?? [ ];
@@ -276,5 +252,9 @@ class DAO {
 	 */
 	public static function isConnected() {
 		return self::$db !== null && (self::$db instanceof Database) && self::$db->isConnected ();
+	}
+
+	public static function setTransformerOp($op) {
+		self::$transformerOp = $op;
 	}
 }
