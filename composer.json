@@ -29,7 +29,7 @@
 		}
 	},
 	"require-dev" : {
-		"phpmv/ubiquity-devtools": "^1.2",
+		"phpmv/ubiquity-devtools": "dev-master",
 		"phpmv/ubiquity-codeception": "^1.0"
 	}
 }
