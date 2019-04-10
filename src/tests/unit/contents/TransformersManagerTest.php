@@ -31,6 +31,8 @@ class TransformersManagerTest extends BaseTest {
 	 */
 	protected function _after() {
 		$this->database = null;
+		DAO::$transformerOp = 'toView';
+		DAO::$useTransformers = false;
 	}
 
 	protected function _display($callback) {
