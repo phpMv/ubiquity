@@ -41,6 +41,8 @@ class TransformersManagerTest extends BaseTest {
 	 * Tests Perso transformer
 	 */
 	public function testPerso() {
+		$this->assertEquals ( $this->config ['cache'] ['directory'], 'cache-tests/' );
+		$this->assertTrue ( DAO::$useTransformers );
 		$user = DAO::getOne ( User::class, 1 );
 		$password = $user->getPassword ();
 		DAO::$transformerOp = 'toView';
