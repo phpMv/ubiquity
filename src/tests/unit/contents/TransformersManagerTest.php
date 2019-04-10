@@ -50,11 +50,11 @@ class TransformersManagerTest extends BaseTest {
 		$metaDatas = OrmUtils::getModelMetadata ( User::class );
 		$transformers = $metaDatas ["#transformers"] ['toView'] ?? [ ];
 		$this->assertEquals ( 1, sizeof ( $transformers ) );
-		$user = DAO::getOne ( User::class, 1 );
+		$user = DAO::getOne ( User::class, 'id=1' );
 		$password = $user->getPassword ();
 		DAO::$transformerOp = 'toView';
-		$user = DAO::getOne ( User::class, 1 );
-		$this->assertEquals ( sha1 ( $password ), $user->getPassword () );
+		$user2 = DAO::getOne ( User::class, 'id=1' );
+		$this->assertEquals ( sha1 ( $password ), $user2->getPassword () );
 	}
 
 	protected function getCacheDirectory() {
