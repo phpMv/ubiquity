@@ -7,21 +7,18 @@ use Ubiquity\orm\DAO;
  * TransformersManager test case.
  */
 class TransformersManagerTest extends BaseTest {
-	/**
-	 *
-	 * @var DAO
-	 */
-	private $dao;
 
 	/**
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
 		parent::_before ();
-		$this->dao = new DAO ();
 		$this->_loadConfig ();
 		$this->_startCache ();
-		$this->_startDatabase ( $this->dao );
+		$db = $this->config ["database"] ?? [ ];
+		if ($db ["dbName"] !== "") {
+			DAO::connect ( $db ["type"] ?? 'mysql', $db ["dbName"], $db ["serverName"] ?? '127.0.0.1', $db ["port"] ?? 3306, $db ["user"] ?? 'root', $db ["password"] ?? '', $db ["options"] ?? [ ], $db ["cache"] ?? false);
+		}
 		TransformersManager::startProd ();
 	}
 
@@ -42,10 +39,10 @@ class TransformersManagerTest extends BaseTest {
 	 * Tests Perso transformer
 	 */
 	public function testPerso() {
-		$user = $this->dao->getOne ( User::class, 1 );
+		$user = DAO::getOne ( User::class, 1 );
 		$password = $user->getPassword ();
-		$this->dao->setTransformerOp ( 'toView' );
-		$user = $this->dao->getOne ( User::class, 1 );
+		DAO::$transformerOp = 'toView';
+		$user = DAO::getOne ( User::class, 1 );
 		$this->assertEquals ( sha1 ( $password ), $user->getPassword () );
 	}
 }
