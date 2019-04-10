@@ -15,6 +15,7 @@ class TransformersManagerTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
+		OrmUtils::clearMetaDatas ();
 		$this->_loadConfig ();
 		Startup::setConfig ( $this->config );
 		$this->_startCache ();

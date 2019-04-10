@@ -203,4 +203,8 @@ class OrmUtils {
 		if (isset ( self::getModelMetadata ( $class ) ["#accessors"] ))
 			return self::getModelMetadata ( $class ) ["#accessors"];
 	}
+
+	public static function clearMetaDatas() {
+		self::$modelsMetadatas = [ ];
+	}
 }
