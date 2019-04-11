@@ -41,6 +41,11 @@ class FrameworkTest extends BaseTest {
 		parent::_after ();
 	}
 
+	protected function _startServices($what = false) {
+		$this->_startCache ();
+		$this->_startRouter ( $what );
+	}
+
 	/**
 	 * Tests Framework::getVersion()
 	 */
