@@ -5,6 +5,7 @@ use Ubiquity\contents\transformation\TransformersManager;
 use Ubiquity\orm\DAO;
 use Ubiquity\controllers\Startup;
 use Ubiquity\orm\OrmUtils;
+use models\Groupe;
 
 /**
  * TransformersManager test case.
@@ -91,6 +92,15 @@ class TransformersManagerTest extends BaseTest {
 		$this->assertNull ( $val );
 		$val = TransformersManager::applyTransformer ( $co, 'dateCo', $co->getDateCo () );
 		$this->assertInstanceOf ( DateTime::class, $val );
+	}
+
+	public function testOtherTransformers() {
+		$groupe = DAO::getOne ( Groupe::class, 1 );
+		TransformersManager::startProd ( 'toView' );
+		$groupeU = DAO::getOne ( Groupe::class, 1 );
+		$this->assertEquals ( ucfirst ( $groupe->getName () ), $groupeU->getName () );
+		$this->assertEquals ( strtolower ( $groupe->getEmail () ), $groupeU->getEmail () );
+		$this->assertEquals ( strtoupper ( $groupe->getAliases () ), $groupeU->getAliases () );
 	}
 
 	protected function getCacheDirectory() {
