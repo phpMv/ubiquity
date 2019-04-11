@@ -89,7 +89,7 @@ class TransformersManagerTest extends BaseTest {
 		$this->assertEquals ( $dt->format ( 'Y-m-d\TH:i:s' ), $val );
 		$val = TransformersManager::applyTransformer ( $co, 'dateCo', null );
 		$this->assertNull ( $val );
-		$val = TransformersManager::applyTransformer ( $co, 'dateCo', $co->getDateCo ()->format ( 'Y-m-d H:i:s' ) );
+		$val = TransformersManager::applyTransformer ( $co, 'dateCo', $co->getDateCo () );
 		$this->assertInstanceOf ( DateTime::class, $val );
 	}
 
