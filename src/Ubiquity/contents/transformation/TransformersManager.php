@@ -43,8 +43,9 @@ class TransformersManager {
 		self::$transformers = array_merge ( self::$transformers, $transformers );
 	}
 
-	public static function startProd() {
+	public static function startProd($op = null) {
 		DAO::$useTransformers = true;
+		DAO::$transformerOp = $op ?? 'transform';
 	}
 
 	/**

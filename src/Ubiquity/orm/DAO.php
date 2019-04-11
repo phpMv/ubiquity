@@ -21,7 +21,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.6
+ * @version 1.1.7
  *
  */
 class DAO {
@@ -32,6 +32,8 @@ class DAO {
 	 * @var Database
 	 */
 	public static $db;
+	public static $useTransformers = false;
+	public static $transformerOp = 'transform';
 
 	/**
 	 * Loads member associated with $instance by a ManyToOne relationship

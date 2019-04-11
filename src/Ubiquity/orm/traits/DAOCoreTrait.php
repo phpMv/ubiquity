@@ -16,15 +16,15 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  * @property \Ubiquity\db\Database $db
+ * @property boolean $useTransformers
+ * @property string $transformerOp
  *
  */
 trait DAOCoreTrait {
 	protected static $accessors = [ ];
-	public static $useTransformers = false;
-	public static $transformerOp = 'transform';
 
 	abstract protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
 
