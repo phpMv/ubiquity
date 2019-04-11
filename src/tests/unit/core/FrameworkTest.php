@@ -8,6 +8,11 @@ use Ubiquity\utils\http\UCookie;
 use Ubiquity\translation\TranslatorManager;
 use Ubiquity\contents\normalizers\NormalizersManager;
 use Ubiquity\assets\AssetsManager;
+use Ubiquity\controllers\Startup;
+use Ajax\JsUtils;
+use Ajax\Semantic;
+use controllers\TestController;
+use Ajax\Bootstrap;
 
 /**
  * Framework test case.
@@ -40,14 +45,20 @@ class FrameworkTest extends BaseTest {
 	 * Tests Framework::getVersion()
 	 */
 	public function testGetVersion() {
-		Framework::getVersion(/* parameters */);
+		$version = Framework::getVersion ();
+		$this->assertEquals ( Framework::version, $version );
 	}
 
 	/**
 	 * Tests Framework::getController()
 	 */
 	public function testGetController() {
-		Framework::getController(/* parameters */);
+		$this->_startServices ();
+		$this->_initRequest ( 'TestController', 'GET' );
+		Startup::run ( $this->config );
+		$ctrl = Framework::getController ();
+		$this->assertEquals ( 'TestController', $ctrl );
+		$this->assertEquals ( 'index', Framework::getAction () );
 	}
 
 	/**
@@ -64,10 +75,11 @@ class FrameworkTest extends BaseTest {
 	 * Tests Framework::getUrl()
 	 */
 	public function testGetUrl() {
-		// TODO Auto-generated FrameworkTest::testGetUrl()
-		$this->markTestIncomplete ( "getUrl test not implemented" );
-
-		Framework::getUrl(/* parameters */);
+		$this->_startServices ();
+		$this->_initRequest ( 'TestController', 'GET' );
+		Startup::run ( $this->config );
+		$url = Framework::getUrl ();
+		$this->assertEquals ( '/TestController', $url );
 	}
 
 	/**
@@ -145,20 +157,18 @@ class FrameworkTest extends BaseTest {
 	 * Tests Framework::diSemantic()
 	 */
 	public function testDiSemantic() {
-		// TODO Auto-generated FrameworkTest::testDiSemantic()
-		$this->markTestIncomplete ( "diSemantic test not implemented" );
-
-		Framework::diSemantic(/* parameters */);
+		$jquery = Framework::diSemantic ( new TestController () );
+		$this->assertInstanceOf ( JsUtils::class, $jquery );
+		$this->assertInstanceOf ( Semantic::class, $jquery->semantic () );
 	}
 
 	/**
 	 * Tests Framework::diBootstrap()
 	 */
 	public function testDiBootstrap() {
-		// TODO Auto-generated FrameworkTest::testDiBootstrap()
-		$this->markTestIncomplete ( "diBootstrap test not implemented" );
-
-		Framework::diBootstrap(/* parameters */);
+		$jquery = Framework::diBootstrap ( new TestController () );
+		$this->assertInstanceOf ( JsUtils::class, $jquery );
+		$this->assertInstanceOf ( Bootstrap::class, $jquery->bootstrap () );
 	}
 }
 
