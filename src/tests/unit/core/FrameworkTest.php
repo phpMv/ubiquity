@@ -62,7 +62,7 @@ class FrameworkTest extends BaseTest {
 		$this->_initRequest ( 'TestController', 'GET' );
 		Startup::run ( $this->config );
 		$ctrl = Framework::getController ();
-		$this->assertEquals ( 'TestController', $ctrl );
+		$this->assertEquals ( 'controllers\TestController', $ctrl );
 		$this->assertEquals ( 'index', Framework::getAction () );
 	}
 
@@ -84,7 +84,7 @@ class FrameworkTest extends BaseTest {
 		$this->_initRequest ( 'TestController', 'GET' );
 		Startup::run ( $this->config );
 		$url = Framework::getUrl ();
-		$this->assertEquals ( '/TestController', $url );
+		$this->assertEquals ( 'TestController', $url );
 	}
 
 	/**
