@@ -81,9 +81,8 @@ class TransformersManagerTest extends BaseTest {
 		$dt = $co->getDateCo ();
 		$this->assertInstanceOf ( DateTime::class, $dt );
 		$co = DAO::getOne ( Connection::class, 3 );
-		TransformersManager::transform ( $co, 'dateCo' );
-		$dt = $co->getDateCo ();
-		$this->assertInstanceOf ( DateTime::class, $dt );
+		$val = TransformersManager::transform ( $co, 'dateCo' );
+		$this->assertInstanceOf ( DateTime::class, $val );
 	}
 
 	protected function getCacheDirectory() {

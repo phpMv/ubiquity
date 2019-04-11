@@ -35,7 +35,7 @@ class DateTime implements TransformerInterface, TransformerViewInterface, Transf
 
 	public static function toForm($value) {
 		if ($value instanceof \DateTime)
-			return $value->format ( "Y-m-d\TH:i:s" );
-		return date ( "Y-m-d\TH:i:s", strtotime ( $value ) );
+			return $value->format ( 'Y-m-d\TH:i:s' );
+		return date ( 'Y-m-d\TH:i:s', strtotime ( $value ) );
 	}
 }
