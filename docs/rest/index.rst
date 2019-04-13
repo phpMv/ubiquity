@@ -55,7 +55,7 @@ Resource REST
 A REST controller can be directly associated with a resource (a model).
 
 Creation
---------
+++++++++
 
 With devtools:
 
@@ -93,12 +93,19 @@ Since the attributes **automated** and **inherited** of the route are set to tru
    The base controller RestController is not standardized, it should be considered as an example for data interrogation.
 
 Test interface
---------------
+++++++++++++++
+
 Webtools provide an interface for querying datas:
 
 .. image:: /_static/images/rest/createdResource.png
    :class: bordered
 
+Getting one User
+~~~~~~~~~~~~~~~~
+
+
+.. image:: /_static/images/rest/getOneResource.png
+   :class: bordered
 
 
 .. |br| raw:: html
