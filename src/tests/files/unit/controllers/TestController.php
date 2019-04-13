@@ -19,5 +19,9 @@ class TestController extends Controller {
 	public function test() {
 		echo "test!";
 	}
+
+	public function doForward() {
+		echo "forward!";
+	}
 }
 

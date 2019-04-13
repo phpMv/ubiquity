@@ -60,7 +60,8 @@ Creation
 With devtools:
 
 .. code-block:: bash
-   Ubiquity rest -r=User -p=/rest/users
+   
+   Ubiquity rest RestUsersController -r=User -p=/rest/users
 
 Or with webtools:
 
