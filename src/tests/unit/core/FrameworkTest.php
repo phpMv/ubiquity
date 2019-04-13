@@ -70,10 +70,11 @@ class FrameworkTest extends BaseTest {
 	 * Tests Framework::getAction()
 	 */
 	public function testGetAction() {
-		// TODO Auto-generated FrameworkTest::testGetAction()
-		$this->markTestIncomplete ( "getAction test not implemented" );
-
-		Framework::getAction(/* parameters */);
+		$this->_startServices ();
+		$this->_initRequest ( 'TestController/forward', 'GET' );
+		Startup::run ( $this->config );
+		$action = Framework::getAction ();
+		$this->assertEquals ( 'forward', $action );
 	}
 
 	/**

@@ -1,3 +1,4 @@
+.. _auth:
 Auth Controllers
 ================
 

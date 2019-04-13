@@ -140,7 +140,34 @@ If the file extension is html, the **loadView** method loads an html twig file.
    		$this->loadView("index.html");
    	}
    }
+Default view loading
+~~~~~~~~~~~~~~~~~~~~
+If you use the default view naming method : |br|
+The default view associated to an action in a controller is located in ``views/controller-name/action-name`` folder:
 
+.. code-block:: bash
+
+	views
+	     │
+	     └ Users
+	         └ info.html
+	         
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 6
+      
+    namespace controllers;
+    
+    class Users extends BaseController{
+    	...
+    	public function info(){
+    			$this->loadDefaultView();
+    		}
+    	}
+    }
+  
 view parameters
 ^^^^^^^^^^^^^^^
 One of the missions of the controller is to pass variables to the view. |br| 
@@ -214,18 +241,130 @@ To load the ``index.html`` view, stored in ``app/views/First``:
 
 initialize and finalize
 -----------------------
+The **initialize** method is automatically called before each requested action, the method **finalize** after each action.
+
+Example of using the initialize and finalize methods with the base class automatically created with a new project:
+
+.. code-block:: php
+   :caption: app/controllers/ControllerBase.php
+   
+	namespace controllers;
+	
+	use Ubiquity\controllers\Controller;
+	use Ubiquity\utils\http\URequest;
+	
+	/**
+	 * ControllerBase.
+	 **/
+	abstract class ControllerBase extends Controller{
+		protected $headerView = "@activeTheme/main/vHeader.html";
+		protected $footerView = "@activeTheme/main/vFooter.html";
+	
+		public function initialize() {
+			if (! URequest::isAjax ()) {
+				$this->loadView ( $this->headerView );
+			}
+		}
+	
+		public function finalize() {
+			if (! URequest::isAjax ()) {
+				$this->loadView ( $this->footerView );
+			}
+		}
+	}
 
 Access control
 --------------
+Access control to a controller can be performed manually, using the `isValid` and `onInvalidControl` methods.
+
+The `isValid` method must return a boolean wich determine if access to the `action` passed as a parameter is possible:
+
+Dans l'exemple suivant, l'accès aux actions du contrôleur **IndexController** n'est possible que si une variable de session **activeUser** existe:
+
+.. code-block:: php
+   :caption: app/controllers/IndexController.php
+   :emphasize-lines: 3-5
+   
+	class IndexController extends ControllerBase{
+	...
+		public function isValid($action){
+			return USession::exists('activeUser');
+		}
+	}
+
+If the **activeUser** variable does not exist, an **unauthorized 401** error is returned.
+
+The `onInvalidControl` method allows you to customize the unauthorized access:
+
+.. code-block:: php
+   :caption: app/controllers/IndexController.php
+   :emphasize-lines: 7-11
+   
+	class IndexController extends ControllerBase{
+		...
+		public function isValid($action){
+			return USession::exists('activeUser');
+		}
+		
+		public function onInvalidControl(){
+			$this->initialize();
+			$this->loadView("unauthorized.html");
+			$this->finalize();
+		}
+	}
+
+.. code-block:: smarty
+   :caption: app/views/unauthorized.html
+   
+	<div class="ui container">
+		<div class="ui brown icon message">
+		<i class="ui ban icon"></i>
+		<div class="content">
+			<div class="header">
+				Error 401
+				</div>
+				<p>You are not authorized to access to <b>{{app.getController() ~ "::" ~ app.getAction()}}</b>.</p>
+			</div>
+		</div>
+	</div>
+
+It is also possible to automatically generate access control from :ref:`AuthControllers<auth>`
 
 Forwarding
 ----------
 
+A redirection is not a simple call to an action of a controller. |br|
+The redirection involves the `initialize` and `finalize` methods, as well as access control.
+
+.. code-block:: php
+   $this->forward(IndexController::class,'test');
+   
+
+The **forward** method can be invoked without the use of the `initialize` and `finalize` methods:
+
+.. code-block:: php
+   $this->forward(IndexController::class,'test',[],false,false);
+   
+It is possible to redirect to a route by its name:
+
+.. code-block:: php
+   $this->redirectToRoute('indexController_test');
+   
+
 Dependency injection
 --------------------
+See :ref:`Dependency injection<di>`
 
 namespaces
 ----------
+The controller namespace is defined by default to `controllers` in the `app/config/config.php` file.
+
+.. code-block:: bash
+   Ubiquity config -f=mvcNS
 
 Super class
 -----------
+
+The use of inheritance can be used to factorize controller behavior. |br|
+The `BaseController` class created with a new project is present for this purpose.
+

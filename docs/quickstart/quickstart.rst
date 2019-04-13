@@ -208,7 +208,7 @@ and test the page at ``http://127.0.0.1:8090/hello/to/Mr SMITH``
 Action, route parameters & view
 -------------------------------
 
-We will now create an action (information) with tow parameters (title and message), the associated route (info), and a view to display the message: |br|
+We will now create an action (information) with two parameters (title and message), the associated route (info), and a view to display the message: |br|
 The route will use the two parameters of the action.
 
 .. code-block:: bash
