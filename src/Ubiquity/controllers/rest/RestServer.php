@@ -14,7 +14,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class RestServer {
@@ -33,9 +33,12 @@ class RestServer {
 	 */
 	protected $apiTokens;
 
-	public function __construct(&$config) {
+	public function __construct(&$config, $headers = null) {
 		$this->config = $config;
 		$this->headers = [ 'Access-Control-Allow-Origin' => 'http://127.0.0.1:4200','Access-Control-Allow-Credentials' => 'true','Access-Control-Max-Age' => '86400','Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD','Content-type' => 'application/json; charset=utf8' ];
+		if (is_array ( $headers )) {
+			$this->headers = array_merge ( $this->headers, $headers );
+		}
 	}
 
 	public function connect(RestBaseController $controller) {
@@ -66,11 +69,16 @@ class RestServer {
 	public function _getHeaderToken() {
 		$authHeader = $this->_getHeader ( "Authorization" );
 		if ($authHeader !== false) {
-			list ( $type, $data ) = explode ( " ", $authHeader, 2 );
-			if (\strcasecmp ( $type, "Bearer" ) == 0) {
-				return $data;
+			$headerDatas = explode ( " ", $authHeader, 2 );
+			if (sizeof ( $headerDatas ) === 2) {
+				list ( $type, $data ) = $headerDatas;
+				if (\strcasecmp ( $type, "Bearer" ) == 0) {
+					return $data;
+				} else {
+					throw new RestException ( "Bearer is required in authorization header." );
+				}
 			} else {
-				throw new RestException ( "Bearer is required in authorization header." );
+				throw new RestException ( "The header Authorization is required in http headers." );
 			}
 		} else {
 			throw new RestException ( "The header Authorization is required in http headers." );

@@ -71,10 +71,10 @@ class FrameworkTest extends BaseTest {
 	 */
 	public function testGetAction() {
 		$this->_startServices ();
-		$this->_initRequest ( 'TestController/forward', 'GET' );
+		$this->_initRequest ( 'TestController/test', 'GET' );
 		Startup::run ( $this->config );
 		$action = Framework::getAction ();
-		$this->assertEquals ( 'forward', $action );
+		$this->assertEquals ( 'test', $action );
 	}
 
 	/**

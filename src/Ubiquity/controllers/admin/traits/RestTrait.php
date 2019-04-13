@@ -19,6 +19,7 @@ use Ubiquity\controllers\rest\RestBaseController;
 use Ubiquity\controllers\rest\HasResourceInterface;
 use Ubiquity\controllers\rest\RestController;
 use Ubiquity\controllers\rest\api\jsonapi\JsonApiRestController;
+use Ubiquity\controllers\rest\SimpleRestController;
 
 /**
  *
@@ -129,7 +130,7 @@ trait RestTrait {
 		$fields = $frm->addFields ();
 		$input = $fields->addInput ( "ctrlName", "Controller name" )->addRule ( "empty" );
 		$input->labeled ( RestServer::getRestNamespace () . "\\" );
-		$baseClasses = array_merge ( [ RestBaseController::class,RestController::class,JsonApiRestController::class ], CacheManager::getControllers ( RestBaseController::class, true, true ) );
+		$baseClasses = array_merge ( [ RestBaseController::class,RestController::class,JsonApiRestController::class,SimpleRestController::class ], CacheManager::getControllers ( RestBaseController::class, true, true ) );
 		$baseClasses = array_combine ( $baseClasses, $baseClasses );
 		$dd = $fields->addDropdown ( "baseClass", $baseClasses, "Base class", RestController::class );
 		$dd->getField ()->each ( function ($index, $item) {

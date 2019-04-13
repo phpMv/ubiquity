@@ -7,14 +7,14 @@ use Ubiquity\orm\DAO;
 
 /**
  * Abstract base class for Rest controllers.
- * Ubiquity\controllers\rest$RestController
+ * Ubiquity\controllers\rest$SimpleRestController
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.0
  *
  */
-abstract class RestController extends RestBaseController implements HasResourceInterface {
+class SimpleRestController extends RestBaseController implements HasResourceInterface {
 
 	public function initialize() {
 		$thisClass = \get_class ( $this );
@@ -36,26 +36,38 @@ abstract class RestController extends RestBaseController implements HasResourceI
 	}
 
 	/**
-	 * Returns a list of objects from the server
+	 * Returns all the instances from the model $this->model.
+	 * Query parameters:
+	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
+	 * - **page[number]**: The page to display (in this case, the page size is set to 1).
+	 * - **page[size]**: The page size (count of instance per page) (default: 1).
 	 *
-	 * @param string $condition the sql Where part
-	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
-	 * @param boolean $useCache
-	 *
+	 * @route("/","methods"=>["get"],"priority"=>0)
 	 */
-	public function get($condition = "1=1", $included = false, $useCache = false) {
-		$this->_get ( $condition, $included, $useCache );
+	public function getAll_() {
+		$filter = $this->getRequestParam ( 'filter', '1=1' );
+		$pages = null;
+		if (isset ( $_GET ['page'] )) {
+			$pageNumber = $_GET ['page'] ['number'];
+			$pageSize = $_GET ['page'] ['size'] ?? 1;
+			$pages = $this->generatePagination ( $filter, $pageNumber, $pageSize );
+		}
+		$datas = DAO::getAll ( $this->model, $filter, $this->getInclude ( $this->getRequestParam ( 'include', true ) ) );
+		echo $this->_getResponseFormatter ()->get ( $datas, $pages );
 	}
 
 	/**
 	 * Get the first object corresponding to the $keyValues
+	 * Query parameters:
+	 * - **include**: A string of associated members to load, comma separated (e.g.
+	 * users,groups,organization...), or a boolean: true for all members, false for none (default: true).
 	 *
-	 * @param string $keyValues primary key(s) value(s) or condition
-	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
-	 * @param boolean $useCache if true then response is cached
+	 * @param string $id primary key(s) value(s) or condition
+	 * @route("{id}/","methods"=>["get"],"priority"=>1000)
 	 */
-	public function getOne($keyValues, $included = false, $useCache = false) {
-		$this->_getOne ( $keyValues, $included, $useCache );
+	public function getOne($id) {
+		$this->_getOne ( $id, $this->getRequestParam ( 'include', true ) );
 	}
 
 	/**

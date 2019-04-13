@@ -39,19 +39,6 @@ abstract class JsonApiRestController extends RestBaseController {
 		}
 	}
 
-	/**
-	 *
-	 * @param string $param
-	 * @param string|boolean $default
-	 * @return string|boolean
-	 */
-	protected function getRequestParam($param, $default) {
-		if (isset ( $_GET [$param] )) {
-			return $_GET [$param];
-		}
-		return $default;
-	}
-
 	protected function getDatas() {
 		$datas = URequest::getInput ();
 		if (sizeof ( $datas ) > 0) {
@@ -62,19 +49,19 @@ abstract class JsonApiRestController extends RestBaseController {
 				$key = OrmUtils::getFirstKey ( $this->model );
 				$attributes [$key] = $datas ["data"] ["id"];
 			}
-			$this->loadRelationshipsDatas($datas, $attributes);
+			$this->loadRelationshipsDatas ( $datas, $attributes );
 			return $attributes;
 		}
 		$this->addError ( 204, 'No content', 'The POST request has no content!' );
 	}
-	
-	protected function loadRelationshipsDatas($datas,&$attributes){
-		if(isset($datas['data']['relationships'])){
-			$relationShips=$datas['data']['relationships'];
-			foreach ($relationShips as $member=>$data){
-				if(isset($data['data']['id'])){
-					$m=OrmUtils::getJoinColumnName($this->model, $member);
-					$attributes[$m]=$data['data']['id'];
+
+	protected function loadRelationshipsDatas($datas, &$attributes) {
+		if (isset ( $datas ['data'] ['relationships'] )) {
+			$relationShips = $datas ['data'] ['relationships'];
+			foreach ( $relationShips as $member => $data ) {
+				if (isset ( $data ['data'] ['id'] )) {
+					$m = OrmUtils::getJoinColumnName ( $this->model, $member );
+					$attributes [$m] = $data ['data'] ['id'];
 				}
 			}
 		}
@@ -87,15 +74,15 @@ abstract class JsonApiRestController extends RestBaseController {
 	protected function getRestServer(): RestServer {
 		return new JsonApiRestServer ( $this->config );
 	}
-	
-	protected function updateOperation($instance,$datas,$updateMany=false){
-		$instance->_new=false;
-		return CRUDHelper::update($instance,$datas,false,$updateMany);
+
+	protected function updateOperation($instance, $datas, $updateMany = false) {
+		$instance->_new = false;
+		return CRUDHelper::update ( $instance, $datas, false, $updateMany );
 	}
-	
-	protected function AddOperation($instance,$datas,$insertMany=false){
-		$instance->_new=true;
-		return CRUDHelper::update($instance,$datas,false,$insertMany);
+
+	protected function AddOperation($instance, $datas, $insertMany = false) {
+		$instance->_new = true;
+		return CRUDHelper::update ( $instance, $datas, false, $insertMany );
 	}
 
 	/**
@@ -141,9 +128,6 @@ abstract class JsonApiRestController extends RestBaseController {
 
 	/**
 	 * Returns an instance of $resource, by primary key $id.
-	 * Query parameters:
-	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
-	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
 	 *
 	 * @param string $resource The resource (model) to use
 	 * @param string $id The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
@@ -208,8 +192,8 @@ abstract class JsonApiRestController extends RestBaseController {
 	 *
 	 * @route("{resource}/{id}","methods"=>["patch"],"priority"=>0)
 	 */
-	public function update_($resource,...$id) {
-		$this->_checkResource ( $resource, function () use ($id){
+	public function update_($resource, ...$id) {
+		$this->_checkResource ( $resource, function () use ($id) {
 			if (! $this->hasErrors ()) {
 				parent::_update ( ...$id );
 			} else {
@@ -240,12 +224,13 @@ abstract class JsonApiRestController extends RestBaseController {
 	public static function _getApiVersion() {
 		return self::API_VERSION;
 	}
-	
+
 	/**
 	 * Returns the template for creating this type of controller
+	 *
 	 * @return string
 	 */
-	public static function _getTemplateFile(){
+	public static function _getTemplateFile() {
 		return 'restApiController.tpl';
 	}
 }
