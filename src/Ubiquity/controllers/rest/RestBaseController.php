@@ -226,7 +226,7 @@ abstract class RestBaseController extends Controller {
 	 * @param array $keyValues
 	 */
 	public function _delete(...$keyValues) {
-		$instance = DAO::getOne ( $this->model, $keyValues );
+		$instance = DAO::getOne ( $this->model, $keyValues,false );
 		$this->operate_ ( $instance, function ($instance) {
 			return DAO::remove ( $instance );
 		}, "deleted", "Unable to delete the instance", $keyValues );

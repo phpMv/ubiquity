@@ -80,7 +80,7 @@ class SimpleRestController extends RestBaseController implements HasResourceInte
 	 * @route("methods"=>["patch"])
 	 */
 	public function update(...$keyValues) {
-		$this->_update ( $keyValues );
+		$this->_update ( ...$keyValues );
 	}
 
 	/**
@@ -104,6 +104,6 @@ class SimpleRestController extends RestBaseController implements HasResourceInte
 	 * @authorization
 	 */
 	public function delete(...$keyValues) {
-		$this->_delete ( $keyValues );
+		$this->_delete ( ...$keyValues );
 	}
 }

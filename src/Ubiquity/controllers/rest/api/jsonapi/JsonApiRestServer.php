@@ -10,14 +10,14 @@ use Ubiquity\controllers\rest\RestServer;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class JsonApiRestServer extends RestServer {
 
 	public function __construct(&$config) {
 		parent::__construct ( $config );
-		$this->headers ['Content-type'] = 'application/vnd.api+json; charset=utf8';
+		$this->headers ['Content-Type'] = 'application/vnd.api+json; charset=utf8';
 	}
 }
 

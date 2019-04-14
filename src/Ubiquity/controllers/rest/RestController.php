@@ -68,7 +68,7 @@ abstract class RestController extends RestBaseController implements HasResourceI
 	 * @route("methods"=>["patch"])
 	 */
 	public function update(...$keyValues) {
-		$this->_update ( $keyValues );
+		$this->_update ( ...$keyValues );
 	}
 
 	/**
@@ -92,6 +92,6 @@ abstract class RestController extends RestBaseController implements HasResourceI
 	 * @authorization
 	 */
 	public function delete(...$keyValues) {
-		$this->_delete ( $keyValues );
+		$this->_delete ( ...$keyValues );
 	}
 }

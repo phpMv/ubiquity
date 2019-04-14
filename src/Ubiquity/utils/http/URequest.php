@@ -86,6 +86,7 @@ class URequest {
 				if(self::getContentType()=='application/x-www-form-urlencoded'){
 					return $_POST;
 				}
+				break;
 			case 'get' :
 				return $_GET;
 			default :
