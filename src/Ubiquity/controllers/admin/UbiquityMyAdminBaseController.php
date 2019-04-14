@@ -807,7 +807,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$fields = $frm->addFields ();
 		$fields->addInput ( "name[]", \ucfirst ( $type ) . " name" )->getDataField ()->setIdentifier ( "name-" . $index )->setProperty ( "value", $name );
 		$input = $fields->addInput ( "value[]", \ucfirst ( $type ) . " value" );
-		$input->getDataField ()->setIdentifier ( "value-" . $index )->setProperty ( "value", $value );
+		$input->getDataField ()->setIdentifier ( "value-" . $index )->setProperty ( "value",htmlentities($value) );
 		$input->addAction ( "", true, "remove" )->addClass ( "icon basic _deleteParameter" );
 	}
 

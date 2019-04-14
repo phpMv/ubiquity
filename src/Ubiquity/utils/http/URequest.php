@@ -83,12 +83,15 @@ class URequest {
 		$method = \strtolower ( $_SERVER ['REQUEST_METHOD'] );
 		switch ($method) {
 			case 'post' :
-				return $_POST;
+				if(self::getContentType()=='application/x-www-form-urlencoded'){
+					return $_POST;
+				}
 			case 'get' :
 				return $_GET;
 			default :
 				return self::getInput ();
 		}
+		return self::getInput ();
 	}
 
 	/**
@@ -98,8 +101,8 @@ class URequest {
 	 */
 	public static function getContentType() {
 		$headers = getallheaders ();
-		if (isset ( $headers ["content-type"] )) {
-			return $headers ["content-type"];
+		if (isset ( $headers ["Content-Type"] )) {
+			return $headers ["Content-Type"];
 		}
 		return null;
 	}

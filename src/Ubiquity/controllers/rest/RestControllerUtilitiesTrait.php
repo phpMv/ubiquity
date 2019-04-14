@@ -135,7 +135,9 @@ trait RestControllerUtilitiesTrait {
 	 */
 	protected function _setValuesToObject($instance, $values = null) {
 		if (URequest::isJSON ()) {
-			$values = \json_decode ( $values, true );
+			if(is_string($values)){
+				$values = \json_decode ( $values, true );
+			}
 		}
 		URequest::setValuesToObject ( $instance, $values );
 	}

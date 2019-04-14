@@ -20,6 +20,7 @@ use Ubiquity\controllers\rest\HasResourceInterface;
 use Ubiquity\controllers\rest\RestController;
 use Ubiquity\controllers\rest\api\jsonapi\JsonApiRestController;
 use Ubiquity\controllers\rest\SimpleRestController;
+use Ubiquity\utils\base\UArray;
 
 /**
  *
@@ -99,7 +100,7 @@ trait RestTrait {
 		$frmHeaders = new HtmlForm ( "frm-headers-" . $path );
 		$frmParameters = new HtmlForm ( "frm-parameters-" . $path );
 
-		$this->jquery->postOnClick ( "#" . $btGo->getIdentifier (), $this->_getFiles ()->getAdminBaseRoute () . "/_runRestMethod", "{payload:$(\"[name='payload']\").val(),pathId: '" . $path . "',path: $('#" . $pathField->getIdentifier () . "').val(),method: $('#" . $methodField->getIdentifier () . "').val(),headers:$('#" . $frmHeaders->getIdentifier () . "').serialize(),params:$('#" . $frmParameters->getIdentifier () . "').serialize()}", "#" . $containerId . " ._runRestMethod", [ ] );
+		$this->jquery->postOnClick ( "#" . $btGo->getIdentifier (), $this->_getFiles ()->getAdminBaseRoute () . "/_runRestMethod", "{payload:$(\"#ck-payload-" . $pathId . "\").is(':checked'),pathId: '" . $path . "',path: $('#" . $pathField->getIdentifier () . "').val(),method: $('#" . $methodField->getIdentifier () . "').val(),headers:$('#" . $frmHeaders->getIdentifier () . "').serialize(),params:$('#" . $frmParameters->getIdentifier () . "').serialize()}", "#" . $containerId . " ._runRestMethod", [ ] );
 		$this->jquery->postOnClick ( "#" . $containerId . " ._requestWithParams", $this->_getFiles ()->getAdminBaseRoute () . "/_runPostWithParams/_/parameter/rest", "{actualParams:$('#" . $frmParameters->getIdentifier () . "').serialize(),model: '" . $resource . "',toUpdate:'" . $frmParameters->getIdentifier () . "',method:$('#" . $containerId . " ._method').val(),url:$('#" . $containerId . " ._path').val()}", "#modal", [
 																																																																																																											"attr" => "",
 																																																																																																											"hasLoader" => false ] );
@@ -196,7 +197,7 @@ trait RestTrait {
 		$headers = $this->getRestRequestHeaders ();
 		$method = $_POST ["method"];
 		$path = $_POST ["path"];
-		$payload = $_POST ["payload"] ?? null;
+		$payload = UString::isBooleanTrue ( $_POST ["payload"] ?? false);
 		$formId = "sub-tddtRest-tr-" . JString::cleanIdentifier ( $_POST ["pathId"] );
 		$parameters = [
 						"jsCallback" => "$('#" . $formId . " ._restResponse').html(JSON.stringify(data,null,2))",
@@ -223,8 +224,10 @@ trait RestTrait {
 						"dataType" => "json",
 						"headers" => $headers,
 						"params" => $this->getRestRequestParams () ];
-		if (isset ( $payload )) {
+		if ( $payload===true) {
 			$parameters ["contentType"] = "'application/json; charset=utf-8'";
+		}else{
+			$parameters ["contentType"] = "'application/x-www-form-urlencoded'";
 		}
 		$this->jquery->ajax ( $method, $path, "#" . $formId . " ._restResponse", $parameters );
 		echo '<div><h5 class="ui top block attached header">Response headers</h5><div class="ui attached segment"><pre style="font-size: 10px;" class="_responseHeaders"></pre></div></div>';
@@ -238,7 +241,6 @@ trait RestTrait {
 			\parse_str ( $headers, $output );
 			$this->_getParamsForJSON ( $result, $output );
 		}
-		$result ["content-type"] = "'application/json; charset=utf-8'";
 		return $result;
 	}
 
@@ -249,7 +251,10 @@ trait RestTrait {
 			\parse_str ( $headers, $output );
 			$this->_getParamsForJSON ( $result, $output );
 		}
-		return json_encode ( $result );
+		if(UArray::isAssociative($result)){
+			return json_encode ( $result );
+		}
+		return "{" . \implode ( ",", $result ) . "}";
 	}
 
 	protected function _getParamsForJSON(&$result, $params) {

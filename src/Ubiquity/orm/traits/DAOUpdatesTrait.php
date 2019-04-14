@@ -16,7 +16,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 trait DAOUpdatesTrait {
@@ -24,8 +24,7 @@ trait DAOUpdatesTrait {
 	/**
 	 * Deletes the object $instance from the database
 	 *
-	 * @param object $instance
-	 *        	instance à supprimer
+	 * @param object $instance instance à supprimer
 	 */
 	public static function remove($instance) {
 		$tableName = OrmUtils::getTableName ( get_class ( $instance ) );
@@ -109,10 +108,8 @@ trait DAOUpdatesTrait {
 	/**
 	 * Inserts a new instance $instance into the database
 	 *
-	 * @param object $instance
-	 *        	the instance to insert
-	 * @param boolean $insertMany
-	 *        	if true, save instances related to $instance by a ManyToMany association
+	 * @param object $instance the instance to insert
+	 * @param boolean $insertMany if true, save instances related to $instance by a ManyToMany association
 	 */
 	public static function insert($instance, $insertMany = false) {
 		EventsManager::trigger ( 'dao.before.insert', $instance );
@@ -129,10 +126,12 @@ trait DAOUpdatesTrait {
 		try {
 			$result = $statement->execute ();
 			if ($result) {
-				$accesseurId = "set" . ucfirst ( OrmUtils::getFirstKey ( get_class ( $instance ) ) );
+				$pk = OrmUtils::getFirstKey ( get_class ( $instance ) );
+				$accesseurId = "set" . ucfirst ( $pk );
 				$lastId = self::$db->lastInserId ();
 				if ($lastId != 0) {
 					$instance->$accesseurId ( $lastId );
+					$instance->_rest [$pk] = $lastId;
 				}
 				if ($insertMany) {
 					self::insertOrUpdateAllManyToMany ( $instance );
@@ -203,10 +202,8 @@ trait DAOUpdatesTrait {
 	 * Updates an existing $instance in the database.
 	 * Be careful not to modify the primary key
 	 *
-	 * @param object $instance
-	 *        	instance to modify
-	 * @param boolean $updateMany
-	 *        	Adds or updates ManyToMany members
+	 * @param object $instance instance to modify
+	 * @param boolean $updateMany Adds or updates ManyToMany members
 	 */
 	public static function update($instance, $updateMany = false) {
 		EventsManager::trigger ( "dao.before.update", $instance );

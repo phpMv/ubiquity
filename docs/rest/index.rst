@@ -103,10 +103,26 @@ Webtools provide an interface for querying datas:
 Getting one User
 ~~~~~~~~~~~~~~~~
 
+A user instance can be accessed by its primary key (**id**):
 
 .. image:: /_static/images/rest/getOneResource.png
    :class: bordered
 
+Inclusion of associated members: the organization of the user
+
+.. image:: /_static/images/rest/getOneResourceInclude.png
+   :class: bordered
+
+Inclusion of associated members: the organization, the connections and the groups of the user
+
+.. image:: /_static/images/rest/getOneResourceIncludeAll.png
+   :class: bordered
+
+Getting multiple users
+~~~~~~~~~~~~~~~~~~~~~~
+
+Adding a user
+~~~~~~~~~~~~
 
 .. |br| raw:: html
 
