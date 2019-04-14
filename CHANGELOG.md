@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 ### Added
 - `Transformer` module see in [documentation](https://micro-framework.readthedocs.io/en/latest/contents/transformers.html)
+- `SimpleRestController` + `SimpleApiRestController` classes for Rest part
 
 ### Changed
 - `Translation` module use default cache system (ArrayCache) and no more APC (performances ++)
+
+### Fixed
+- webtools Rest section
+  - `Authorization Bearer` pb in input field (no open issue)
+  - `POST` request for adding an instance with `RestController` (no open issue)
 
 ## [2.1.0] - 2019-04-01
 ### Added
