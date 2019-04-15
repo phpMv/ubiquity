@@ -100,8 +100,8 @@ Webtools provide an interface for querying datas:
 .. image:: /_static/images/rest/createdResource.png
    :class: bordered
 
-Getting one User
-~~~~~~~~~~~~~~~~
+Getting an instance
+~~~~~~~~~~~~~~~~~~~
 
 A user instance can be accessed by its primary key (**id**):
 
@@ -118,8 +118,8 @@ Inclusion of associated members: organization, connections and groups of the use
 .. image:: /_static/images/rest/getOneResourceIncludeAll.png
    :class: bordered
 
-Getting multiple users
-~~~~~~~~~~~~~~~~~~~~~~
+Getting multiple instances
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Getting all instances:
 
@@ -136,8 +136,8 @@ Including associated members:
 .. image:: /_static/images/rest/include-orgas.png
    :class: bordered
 
-Adding a user
-~~~~~~~~~~~~~
+Adding an instance
+~~~~~~~~~~~~~~~~~~
 
 The datas are sent by the **POST** method, with a content type defined at ``application/x-www-form-urlencoded``:
 
@@ -162,6 +162,31 @@ The record can then be inserted.
 .. image:: /_static/images/rest/added.png
    :class: bordered
 
+Updating an instance
+~~~~~~~~~~~~~~~~~~~~
+
+Deleting an instance
+~~~~~~~~~~~~~~~~~~~~
+
+Customizing
+-----------
+
+Response
+~~~~~~~~
+
+Server
+~~~~~~
+
+
+APIs
+----
+SimpleRestAPI
++++++++++++++
+
+JsonApi
++++++++
+
+see https://jsonapi.org/
 
 .. |br| raw:: html
 
