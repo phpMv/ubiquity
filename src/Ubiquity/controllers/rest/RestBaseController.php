@@ -65,6 +65,18 @@ abstract class RestBaseController extends Controller {
 		}
 		return true;
 	}
+	
+	/**
+	 * Returns true if $action require an authentification with token
+	 * @param string $action
+	 * @return boolean
+	 */
+	protected function requireAuth($action) {
+		if (isset ( $this->restCache ["authorizations"] )) {
+			return array_search ( $action, $this->restCache ["authorizations"] ) !== false;
+		}
+		return false;
+	}
 
 	public function onInvalidControl() {
 		throw new \Exception ( 'HTTP/1.1 401 Unauthorized, you need an access token for this request', 401 );
@@ -75,7 +87,8 @@ abstract class RestBaseController extends Controller {
 	 * To override in derived classes to define your own authentication
 	 */
 	public function connect() {
-		$this->server->connect ( $this );
+		$resp=$this->server->connect ( $this );
+		echo $this->_format($resp);
 	}
 
 	public function initialize() {

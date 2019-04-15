@@ -168,6 +168,89 @@ Updating an instance
 Deleting an instance
 ~~~~~~~~~~~~~~~~~~~~
 
+Authentification
+----------------
+Ubiquity REST implements an Oauth2 authentication with Bearer tokens. |br|
+Only methods with ``@authorization`` annotation require the authentication. |br|
+
+The **connect** method of a REST controller establishes the connection and returns a new token. |br|
+It is up to the developer to override this method to manage a possible authentication with login and password.
+
+.. image:: /_static/images/rest/token.png
+   :class: bordered
+   
+Simulation of a connection with login
++++++++++++++++++++++++++++++++++++++
+
+The connection consists simply in sending a user variable by the post method. |br|
+If the user is provided, the ``connect`` method of ``$server`` instance returns a valid token that is stored in session (the session acts as a database here).
+
+.. code-block:: php
+   :linenos:
+   :emphasize-lines: 18
+   :caption: app/controllers/RestOrgas.php
+   
+	namespace controllers;
+	
+	use Ubiquity\utils\http\URequest;
+	use Ubiquity\utils\http\USession;
+	
+	/**
+	 * Rest Controller RestOrgas
+	 * @route("/rest/orgas","inherited"=>true,"automated"=>true)
+	 * @rest("resource"=>"models\\Organization")
+	 */
+	class RestOrgas extends \Ubiquity\controllers\rest\RestController {
+		
+		public function connect(){
+			if(!URequest::isCrossSite()){
+				if(URequest::isPost()){
+					$user=URequest::post("user");
+					if(isset($user)){
+						$tokenInfos=$this->server->connect ();
+						USession::set($tokenInfos['access_token'], $user);
+						$tokenInfos['user']=$user;
+						echo $this->_format($tokenInfos);
+						return;
+					}
+				}
+			}
+			throw new \Exception('Unauthorized',401);
+		}
+	}
+
+For each request with authentication, it is possible to retrieve the connected user (it is added here in the response headers) :
+
+.. code-block:: php
+   :linenos:
+   :emphasize-lines: 18-20
+   :caption: app/controllers/RestOrgas.php
+   
+	namespace controllers;
+	
+	use Ubiquity\utils\http\URequest;
+	use Ubiquity\utils\http\USession;
+	
+	/**
+	 * Rest Controller RestOrgas
+	 * @route("/rest/orgas","inherited"=>true,"automated"=>true)
+	 * @rest("resource"=>"models\\Organization")
+	 */
+	class RestOrgas extends \Ubiquity\controllers\rest\RestController {
+		
+		...
+		
+		public function isValid($action){
+			$result=parent::isValid($action);
+			if($this->requireAuth($action)){
+				$key=$this->server->_getHeaderToken();
+				$user=USession::get($key);
+				$this->server->_header('active-user',$user,true);
+			}
+			return $result;
+		}
+	}
+
 Customizing
 -----------
 

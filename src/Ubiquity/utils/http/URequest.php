@@ -83,7 +83,7 @@ class URequest {
 		$method = \strtolower ( $_SERVER ['REQUEST_METHOD'] );
 		switch ($method) {
 			case 'post' :
-				if(self::getContentType()=='application/x-www-form-urlencoded'){
+				if (self::getContentType () == 'application/x-www-form-urlencoded') {
 					return $_POST;
 				}
 				break;
@@ -246,6 +246,25 @@ class URequest {
 	 */
 	public static function getMethod() {
 		return \strtolower ( $_SERVER ['REQUEST_METHOD'] );
+	}
+
+	/**
+	 * Returns the request origin
+	 *
+	 * @return string
+	 */
+	public static function getOrigin() {
+		$headers = getallheaders ();
+		if (isset ( $headers ['Origin'] )) {
+			return $headers ['Origin'];
+		}
+		if (isset ( $_SERVER ['HTTP_ORIGIN'] )) {
+			return $_SERVER ['HTTP_ORIGIN'];
+		} else if (isset ( $_SERVER ['HTTP_REFERER'] )) {
+			return $_SERVER ['HTTP_REFERER'];
+		} else {
+			return $_SERVER ['REMOTE_ADDR'];
+		}
 	}
 
 	public static function cleanUrl($url) {
