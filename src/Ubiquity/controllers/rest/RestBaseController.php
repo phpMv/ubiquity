@@ -108,7 +108,7 @@ abstract class RestBaseController extends Controller {
 	 */
 	public function _get($condition = "1=1", $include = false, $useCache = false) {
 		try {
-			$condition = \urldecode ( $condition );
+			$condition = $this->getCondition( $condition );
 			$include = $this->getInclude ( $include );
 			$useCache = UString::isBooleanTrue ( $useCache );
 			$datas = DAO::getAll ( $this->model, $condition, $include, null, $useCache );
@@ -127,7 +127,7 @@ abstract class RestBaseController extends Controller {
 	 * @param boolean $useCache if true then response is cached
 	 */
 	public function _getOne($keyValues, $include = false, $useCache = false) {
-		$keyValues = \urldecode ( $keyValues );
+		$keyValues = $this->getCondition( $keyValues );
 		$include = $this->getInclude ( $include );
 		$useCache = UString::isBooleanTrue ( $useCache );
 		$data = DAO::getOne ( $this->model, $keyValues, $include, null, $useCache );

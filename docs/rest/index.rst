@@ -113,7 +113,7 @@ Inclusion of associated members: the organization of the user
 .. image:: /_static/images/rest/getOneResourceInclude.png
    :class: bordered
 
-Inclusion of associated members: the organization, the connections and the groups of the user
+Inclusion of associated members: organization, connections and groups of the user
 
 .. image:: /_static/images/rest/getOneResourceIncludeAll.png
    :class: bordered
@@ -121,8 +121,47 @@ Inclusion of associated members: the organization, the connections and the group
 Getting multiple users
 ~~~~~~~~~~~~~~~~~~~~~~
 
+Getting all instances:
+
+.. image:: /_static/images/rest/getAllOrgas.png
+   :class: bordered
+
+Setting a condition:
+
+.. image:: /_static/images/rest/condition-orgas.png
+   :class: bordered
+
+Including associated members:
+
+.. image:: /_static/images/rest/include-orgas.png
+   :class: bordered
+
 Adding a user
-~~~~~~~~~~~~
+~~~~~~~~~~~~~
+
+The datas are sent by the **POST** method, with a content type defined at ``application/x-www-form-urlencoded``:
+
+Add name and domain parameters:
+
+.. image:: /_static/images/rest/post-parameters.png
+   :class: bordered
+
+The addition requires an authentication, so an error is generated, with the status 401:
+
+.. image:: /_static/images/rest/unauthorized-post.png
+   :class: bordered
+
+The administration interface allows you to simulate the default authentication and obtain a token, by requesting the **connect** method:
+
+.. image:: /_static/images/rest/connect.png
+   :class: bordered
+
+The token is then automatically sent in the following requests. |br|
+The record can then be inserted.
+
+.. image:: /_static/images/rest/added.png
+   :class: bordered
+
 
 .. |br| raw:: html
 

@@ -41,7 +41,7 @@ abstract class RestController extends RestBaseController implements HasResourceI
 	 * @param string $condition the sql Where part
 	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache
-	 *
+	 * @route("methods"=>["get"])
 	 */
 	public function get($condition = "1=1", $included = false, $useCache = false) {
 		$this->_get ( $condition, $included, $useCache );
@@ -53,6 +53,7 @@ abstract class RestController extends RestBaseController implements HasResourceI
 	 * @param string $keyValues primary key(s) value(s) or condition
 	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
 	 * @param boolean $useCache if true then response is cached
+	 * @route("methods"=>["get"])
 	 */
 	public function getOne($keyValues, $included = false, $useCache = false) {
 		$this->_getOne ( $keyValues, $included, $useCache );

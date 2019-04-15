@@ -46,7 +46,7 @@ trait RestControllerUtilitiesTrait {
 	protected function operate_($instance, $callback, $status, $exceptionMessage, $keyValues) {
 		if (isset ( $instance )) {
 			$result = $callback ( $instance );
-			if ($result === true) {
+			if ($result == true) {
 				$formatter = $this->_getResponseFormatter ();
 				echo $formatter->format ( [ "status" => $status,"data" => $formatter->cleanRestObject ( $instance ) ] );
 			} elseif ($result === null) {
@@ -230,6 +230,14 @@ trait RestControllerUtilitiesTrait {
 			}
 		}
 		return $result;
+	}
+	
+	protected function getCondition($condition){
+		$condition=urldecode($condition);
+		if(strpos($condition, 'like')!==false){
+			$condition=str_replace('*', '%', $condition);
+		}
+		return $condition;
 	}
 }
 
