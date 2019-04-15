@@ -171,7 +171,7 @@ Deleting an instance
 Authentification
 ----------------
 Ubiquity REST implements an Oauth2 authentication with Bearer tokens. |br|
-Only methods with ``@authorization`` annotation require the authentication. |br|
+Only methods with ``@authorization`` annotation require the authentication, these are the modification methods (add, modification & delete). |br|
 
 The **connect** method of a REST controller establishes the connection and returns a new token. |br|
 It is up to the developer to override this method to manage a possible authentication with login and password.
@@ -182,7 +182,7 @@ It is up to the developer to override this method to manage a possible authentic
 Simulation of a connection with login
 +++++++++++++++++++++++++++++++++++++
 
-The connection consists simply in sending a user variable by the post method. |br|
+In this example, the connection consists simply in sending a user variable by the post method. |br|
 If the user is provided, the ``connect`` method of ``$server`` instance returns a valid token that is stored in session (the session acts as a database here).
 
 .. code-block:: php
@@ -202,6 +202,11 @@ If the user is provided, the ``connect`` method of ``$server`` instance returns 
 	 */
 	class RestOrgas extends \Ubiquity\controllers\rest\RestController {
 		
+		/**
+		 * This method simulate a connection.
+		 * Send a <b>user</b> variable with <b>POST</b> method to retreive a valid access token
+		 * @route("methods"=>["post"])
+		 */
 		public function connect(){
 			if(!URequest::isCrossSite()){
 				if(URequest::isPost()){
@@ -251,8 +256,35 @@ For each request with authentication, it is possible to retrieve the connected u
 		}
 	}
 
+Use the webtools interface to test the connection:
+
+.. image:: /_static/images/rest/connected-user.png
+   :class: bordered
+   
+
 Customizing
 -----------
+Api tokens
+++++++++++
+
+It is possible to customize the token generation, by creating a class derived from ``ApiTokens``, and overriding the ``tokenGenerator`` method
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/rest/MyTokens.php
+   
+	namespace controllers\rest;
+	
+	use Ubiquity\controllers\rest\ApiTokens;
+	
+	class MyTokens extends ApiTokens {
+		protected function tokenGenerator() {
+			return sha1( \random_bytes ( $this->length ) );
+		}
+	}
+
+Allowed origins
++++++++++++++++
 
 Response
 ~~~~~~~~
