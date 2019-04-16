@@ -40,7 +40,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	}
 
 	protected function getDatas() {
-		$datas = URequest::getInput ();
+		$datas = URequest::getRealInput();
 		if (sizeof ( $datas ) > 0) {
 			$datas = current ( array_keys ( $datas ) );
 			$datas = json_decode ( $datas, true );
@@ -173,10 +173,11 @@ abstract class JsonApiRestController extends RestBaseController {
 
 	/**
 	 * Inserts a new instance of $resource.
-	 * Data attributes are send in data[attributes] request header
+	 * Data attributes are send in data[attributes] request body (in JSON format)
 	 *
 	 * @param string $resource The resource (model) to use
 	 * @route("{resource}/","methods"=>["post"],"priority"=>0)
+	 * @authorization
 	 */
 	public function add_($resource) {
 		$this->_checkResource ( $resource, function () {
@@ -186,11 +187,12 @@ abstract class JsonApiRestController extends RestBaseController {
 
 	/**
 	 * Updates an existing instance of $resource.
-	 * Data attributes are send in data[attributes] request header
+	 * Data attributes are send in data[attributes] request body (in JSON format)
 	 *
 	 * @param string $resource The resource (model) to use
 	 *
 	 * @route("{resource}/{id}","methods"=>["patch"],"priority"=>0)
+	 * @authorization
 	 */
 	public function update_($resource, ...$id) {
 		$this->_checkResource ( $resource, function () use ($id) {
@@ -209,6 +211,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 * @param string $ids The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
 	 *
 	 * @route("{resource}/{id}/","methods"=>["delete"],"priority"=>0)
+	 * @authorization
 	 */
 	public function delete_($resource, ...$id) {
 		$this->_checkResource ( $resource, function () use ($id) {

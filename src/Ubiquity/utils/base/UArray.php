@@ -236,4 +236,19 @@ class UArray {
 		}
 		return implode ( $glue, $res );
 	}
+	
+	public static function toJSON($array){
+		$result=[];
+		foreach ($array as $k=>$v){
+			if(is_array($v)){
+				$v=self::toJSON($v);
+			}elseif($v!=null && UString::startswith($v, 'js:')){
+					$v=substr($v, 3);
+			}else{
+				$v='"'.$v.'"';
+			}
+			$result[]='"'.$k.'": '.$v;
+		}
+		return '{'.implode(',', $result).'}';
+	}
 }

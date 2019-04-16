@@ -281,7 +281,7 @@ class URequest {
 	 * @see https://stackoverflow.com/questions/68651/can-i-get-php-to-stop-replacing-characters-in-get-or-post-arrays#68667
 	 */
 	public static function getRealInput($source = 'post') {
-		$pairs = explode ( "&", strtolower ( $source ) === 'post' ? file_get_contents ( "php://input" ) : $_SERVER ['QUERY_STRING'] );
+		$pairs = explode ( "&", strtolower ( $source ) === 'get' ? $_SERVER ['QUERY_STRING']:file_get_contents ( "php://input" )  );
 		$vars = array ();
 		foreach ( $pairs as $pair ) {
 			$nv = explode ( "=", $pair );

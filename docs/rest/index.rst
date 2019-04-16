@@ -386,7 +386,7 @@ We will take inspiration from **HAL**, and change the format of the responses by
 		}
 	}
 
-Then assign ``MyFormatter`` to the REST controller by overriding the ``getResponseFormatter`` method:
+Then assign ``MyResponseFormatter`` to the REST controller by overriding the ``getResponseFormatter`` method:
 
 .. code-block:: php
    :linenos:
@@ -509,6 +509,21 @@ you need to use the **page[number]** and **page[size]** parameters of the reques
 +----------------------------------------------------------+-----------------------------------------------------------+
 | ``/jsonapi/user?page[number]=1&&page[size]=10``          | Display the first page (page size is 10)                  |
 +----------------------------------------------------------+-----------------------------------------------------------+
+
+Adding an instance
+~~~~~~~~~~~~~~~~~~
+
+The datas, contained in ``data[attributes]``, are sent by the **POST** method, with a content type defined at ``application/json; charset=utf-8``. |br|
+
+Add your parameters by clicking on the **parameters** button:
+
+.. image:: /_static/images/rest/jsonapi/add-parameters.png
+   :class: bordered
+
+The addition requires an authentication, so an error is generated, with the status 401 if the token is absent or expired.
+
+.. image:: /_static/images/rest/jsonapi/add-response.png
+   :class: bordered
 
 .. |br| raw:: html
 

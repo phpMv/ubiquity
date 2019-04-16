@@ -229,19 +229,22 @@ trait RestTrait {
 		}else{
 			$parameters ["contentType"] = "'application/x-www-form-urlencoded'";
 		}
-		$this->jquery->ajax ( $method, $path, "#" . $formId . " ._restResponse", $parameters );
+		$this->jquery->ajax ( $method, addslashes($path), "#" . $formId . " ._restResponse", $parameters );
 		echo '<div><h5 class="ui top block attached header">Response headers</h5><div class="ui attached segment"><pre style="font-size: 10px;" class="_responseHeaders"></pre></div></div>';
 		echo $this->jquery->compile ( $this->view );
 	}
 
 	protected function getRestRequestHeaders() {
-		$result = [ "Authorization" => '"Bearer "+$("#access-token").val()' ];
+		$result = [ "Authorization" => "js:'Bearer '+$('#access-token').val()" ];
 		if (isset ( $_POST ["headers"] )) {
 			$headers = urldecode ( $_POST ["headers"] );
 			\parse_str ( $headers, $output );
 			$this->_getParamsForJSON ( $result, $output );
 		}
-		return $result;
+		if(UArray::isAssociative($result)){
+			return UArray::toJSON( $result );
+		}
+		return "{" . \implode ( ",", $result ) . "}";
 	}
 
 	protected function getRestRequestParams() {
