@@ -21,8 +21,8 @@ class ApiTokens {
 	protected static $cache;
 
 	public function __construct($length = 10, $duration = 3600, $tokens = []) {
-		$this->length = $length;
-		$this->duration = $duration;
+		$this->length = $length ?? 10;
+		$this->duration = $duration ?? 3600;
 		$this->tokens = $tokens;
 	}
 

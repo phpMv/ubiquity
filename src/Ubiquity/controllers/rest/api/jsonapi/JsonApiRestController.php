@@ -17,7 +17,7 @@ use Ubiquity\controllers\crud\CRUDHelper;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.2
+ * @version 1.1.3
  * @since Ubiquity 2.0.11
  *
  */
@@ -114,7 +114,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 */
 	public function getAll_($resource) {
 		$this->_checkResource ( $resource, function () {
-			$filter = $this->getRequestParam ( 'filter', '1=1' );
+			$filter = $this->getCondition ( $this->getRequestParam ( 'filter', '1=1' ) );
 			$pages = null;
 			if (isset ( $_GET ['page'] )) {
 				$pageNumber = $_GET ['page'] ['number'];

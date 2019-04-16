@@ -15,7 +15,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class RestServer {
@@ -26,6 +26,8 @@ class RestServer {
 	protected $config;
 	protected $headers;
 	protected $tokensFolder;
+	protected $tokenLength;
+	protected $tokenDuration;
 	protected $tokensCacheKey = "_apiTokens";
 	protected $allowedOrigins;
 
@@ -128,7 +130,7 @@ class RestServer {
 	 * @return ApiTokens
 	 */
 	protected function newApiTokens() {
-		return new ApiTokens ();
+		return new ApiTokens ( $this->tokenLength, $this->tokenDuration );
 	}
 
 	protected function getAllowedOrigin() {
@@ -144,9 +146,13 @@ class RestServer {
 
 	protected function setAccessControlAllowOriginHeader() {
 		$origin = $this->getAllowedOrigin ();
-		if (isset ( $origin )) {
-			$this->headers ['Access-Control-Allow-Origin'] = $origin;
-			\header ( 'Access-Control-Allow-Origin: ' . $origin, true );
+		unset ( $this->headers ['Access-Control-Allow-Origin'] );
+		\header ( 'Access-Control-Allow-Origin: ' . $origin, true );
+	}
+
+	protected function addOtherHeaders() {
+		foreach ( $this->headers as $k => $v ) {
+			$this->_header ( $k, $v );
 		}
 	}
 
@@ -160,6 +166,7 @@ class RestServer {
 		if (! isset ( $value )) {
 			if (isset ( $this->headers [$headerField] )) {
 				$value = $this->headers [$headerField];
+				unset ( $this->headers [$headerField] );
 			} else
 				return;
 		}
@@ -193,6 +200,7 @@ class RestServer {
 			}
 			Logger::info ( "Rest", "cors exit normally", "Cors" );
 		}
+		$this->addOtherHeaders ();
 	}
 
 	public static function getRestNamespace() {
@@ -234,5 +242,21 @@ class RestServer {
 	 */
 	public function addAllowedOrigin($address) {
 		$this->allowedOrigins = [ $address ];
+	}
+
+	/**
+	 *
+	 * @param int $tokenLength
+	 */
+	public function setTokenLength($tokenLength) {
+		$this->tokenLength = $tokenLength;
+	}
+
+	/**
+	 *
+	 * @param mixed $tokenDuration
+	 */
+	public function setTokenDuration($tokenDuration) {
+		$this->tokenDuration = $tokenDuration;
 	}
 }

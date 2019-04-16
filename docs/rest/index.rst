@@ -179,7 +179,23 @@ Deleting an instance
 Authentification
 ----------------
 Ubiquity REST implements an Oauth2 authentication with Bearer tokens. |br|
-Only methods with ``@authorization`` annotation require the authentication, these are the modification methods (add, modification & delete). |br|
+Only methods with ``@authorization`` annotation require the authentication, these are the modification methods (add, update & delete). |br|
+
+.. code-block:: php
+   :emphasize-lines: 7
+   
+		/**
+		 * Update an instance of $model selected by the primary key $keyValues
+		 * Require members values in $_POST array
+		 * Requires an authorization with access token
+		 *
+		 * @param array $keyValues
+		 * @authorization
+		 * @route("methods"=>["patch"])
+		 */
+		public function update(...$keyValues) {
+			$this->_update ( ...$keyValues );
+		}
 
 The **connect** method of a REST controller establishes the connection and returns a new token. |br|
 It is up to the developer to override this method to manage a possible authentication with login and password.
@@ -275,24 +291,7 @@ Customizing
 Api tokens
 ++++++++++
 
-It is possible to customize the token generation, by creating a new class derived from ``RestServer``, and overriding the ``newApiTokens`` method
-
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/rest/MyServer.php
-   
-	namespace controllers\rest;
-	
-	use Ubiquity\controllers\rest\RestServer;
-	use Ubiquity\controllers\rest\ApiTokens;
-	
-	class MyServer extends RestServer {
-		protected function newApiTokens() {
-			return new ApiTokens(64);
-		}
-	}
-
-Assign ``MyServer`` to the REST controller by overriding the ``getRestServer`` method:
+It is possible to customize the token generation, by overriding the ``getRestServer`` method:
 
 .. code-block:: php
    :linenos:
@@ -306,11 +305,12 @@ Assign ``MyServer`` to the REST controller by overriding the ``getRestServer`` m
 		...
 		
 		protected function getRestServer(): RestServer {
-			return new MyServer($this->config);
+			$srv= new RestServer($this->config);
+			$srv->setTokenLength(32);
+			$srv->setTokenDuration(4800);
+			return $srv;
 		}
 	}
-
-
 
 Allowed origins
 +++++++++++++++
@@ -325,7 +325,7 @@ Allowed origins allow to define the clients that can access the resource in case
 		...
 		
 		protected function getRestServer(): RestServer {
-			$srv= new MyServer($this->config);
+			$srv= new RestServer($this->config);
 			$srv->setAllowOrigin('http://mydomain/');
 			return $srv;
 		}
@@ -342,7 +342,7 @@ It is possible to authorize several origins:
 		...
 		
 		protected function getRestServer(): RestServer {
-			$srv= new MyServer($this->config);
+			$srv= new RestServer($this->config);
 			$srv->setAllowOrigins(['http://mydomain1/','http://mydomain2/']);
 			return $srv;
 		}
@@ -422,7 +422,8 @@ SimpleRestAPI
 JsonApi
 +++++++
 Ubiquity implements the jsonApi specification with the class ``JsonApiRestController``. |br|
-see https://jsonapi.org/
+JsonApi is used by  `EmberJS <https://api.emberjs.com/ember-data/release/classes/DS.JSONAPIAdapter>`_ and others. |br|
+see https://jsonapi.org/ for more.
 
 Creation
 ~~~~~~~~
@@ -431,7 +432,7 @@ With devtools:
 
 .. code-block:: bash
    
-   Ubiquity restapi RestApi -p=/jsonapi
+   Ubiquity restapi JsonApiTest -p=/jsonapi
 
 Or with webtools:
 
