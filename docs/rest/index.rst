@@ -55,6 +55,9 @@ Resource REST
 
 A REST controller can be directly associated with a resource (a model).
 
+.. note::
+   If you do not have a mysql database on hand, you can download this one: :download:`messagerie.sql </model/messagerie.sql>`
+
 Creation
 ++++++++
 
@@ -142,7 +145,7 @@ Adding an instance
 
 The datas are sent by the **POST** method, with a content type defined at ``application/x-www-form-urlencoded``:
 
-Add name and domain parameters:
+Add name and domain parameters by clicking on the **parameters** button:
 
 .. image:: /_static/images/rest/post-parameters.png
    :class: bordered
@@ -165,9 +168,13 @@ The record can then be inserted.
 
 Updating an instance
 ~~~~~~~~~~~~~~~~~~~~
+The update follows the same scheme as the insertion.
 
 Deleting an instance
 ~~~~~~~~~~~~~~~~~~~~
+
+.. image:: /_static/images/rest/delete-instance.png
+   :class: bordered
 
 Authentification
 ----------------
@@ -346,6 +353,7 @@ Response
 
 To change the response format, it is necessary to create a class inheriting from ``ResponseFormatter``. |br|
 We will take inspiration from **HAL**, and change the format of the responses by:
+
 - adding a link to self for each resource
 - adding an ``_embedded`` attribute for collections 
 - removing the ``data`` attribute for unique resources
@@ -393,11 +401,12 @@ Then assign ``MyFormatter`` to the REST controller by overriding the ``getRespon
 		}
 	}
 
-Test the result with the getOne and get methods:
+Test the results with the getOne and get methods:
 
 .. image:: /_static/images/rest/getOneFormatted.png
    :class: bordered
-   
+
+
 
 .. image:: /_static/images/rest/getFormatted.png
    :class: bordered
