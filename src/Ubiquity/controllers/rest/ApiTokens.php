@@ -94,30 +94,24 @@ class ApiTokens {
 	 *
 	 * @param $folder
 	 * @param string $key
-	 * @param number $length
-	 * @param number $duration
 	 * @return ApiTokens
 	 */
-	public function getFromCache($folder, $key = "_apiTokens", $length = 10, $duration = 3600) {
+	public function getFromCache($folder, $key = "_apiTokens") {
 		if (! isset ( self::$cache )) {
 			self::$cache = new ArrayCache ( $folder . "rest/tokens", ".rest" );
 		}
-		$tokens = [ ];
 		if (self::$cache->exists ( $key )) {
 			$filecontent = self::$cache->fetch ( $key );
 			if (isset ( $filecontent ["tokens"] )) {
-				$tokens = $filecontent ["tokens"];
+				$this->tokens = $filecontent ["tokens"];
 			}
 			if (isset ( $filecontent ["length"] )) {
-				$length = $filecontent ["length"];
+				$this->length = $filecontent ["length"];
 			}
 			if (isset ( $filecontent ["duration"] )) {
-				$duration = $filecontent ["duration"];
+				$this->duration = $filecontent ["duration"];
 			}
 		}
-		$this->length=$length;
-		$this->duration=$duration;
-		$this->tokens=$tokens;
 		return $this;
 	}
 }

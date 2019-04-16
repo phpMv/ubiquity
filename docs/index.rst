@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`REST module<rest>`
    - :ref:`Data transformers<transformers>`
    - :ref:`Dependency injection<di>`
    - :ref:`Events<events>`

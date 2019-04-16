@@ -1,3 +1,4 @@
+.. _rest:
 Rest
 ====
 
@@ -267,41 +268,179 @@ Customizing
 Api tokens
 ++++++++++
 
-It is possible to customize the token generation, by creating a class derived from ``ApiTokens``, and overriding the ``tokenGenerator`` method
+It is possible to customize the token generation, by creating a new class derived from ``RestServer``, and overriding the ``newApiTokens`` method
 
 .. code-block:: php
    :linenos:
-   :caption: app/controllers/rest/MyTokens.php
+   :caption: app/controllers/rest/MyServer.php
    
 	namespace controllers\rest;
 	
+	use Ubiquity\controllers\rest\RestServer;
 	use Ubiquity\controllers\rest\ApiTokens;
 	
-	class MyTokens extends ApiTokens {
-		protected function tokenGenerator() {
-			return sha1( \random_bytes ( $this->length ) );
+	class MyServer extends RestServer {
+		protected function newApiTokens() {
+			return new ApiTokens(64);
 		}
 	}
 
+Assign ``MyServer`` to the REST controller by overriding the ``getRestServer`` method:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/RestOrgas.php
+   
+	namespace controllers;
+	
+	use Ubiquity\controllers\rest\RestServer;
+	class RestOrgas extends \Ubiquity\controllers\rest\RestController {
+		
+		...
+		
+		protected function getRestServer(): RestServer {
+			return new MyServer($this->config);
+		}
+	}
+
+
+
 Allowed origins
 +++++++++++++++
+Allowed origins allow to define the clients that can access the resource in case of a cross domain request by defining The **Access-Control-Allow-Origin** response header.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/RestOrgas.php
+   
+	class RestOrgas extends \Ubiquity\controllers\rest\RestController {
+		
+		...
+		
+		protected function getRestServer(): RestServer {
+			$srv= new MyServer($this->config);
+			$srv->setAllowOrigin('http://mydomain/');
+			return $srv;
+		}
+	}
+
+It is possible to authorize several origins:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/RestOrgas.php
+   
+	class RestOrgas extends \Ubiquity\controllers\rest\RestController {
+		
+		...
+		
+		protected function getRestServer(): RestServer {
+			$srv= new MyServer($this->config);
+			$srv->setAllowOrigins(['http://mydomain1/','http://mydomain2/']);
+			return $srv;
+		}
+	}
 
 Response
-~~~~~~~~
+++++++++
 
-Server
-~~~~~~
+To change the response format, it is necessary to create a class inheriting from ``ResponseFormatter``. |br|
+We will take inspiration from **HAL**, and change the format of the responses by:
+- adding a link to self for each resource
+- adding an ``_embedded`` attribute for collections 
+- removing the ``data`` attribute for unique resources
 
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/RestOrgas.php
+   
+	namespace controllers\rest;
+	
+	use Ubiquity\controllers\rest\ResponseFormatter;
+	use Ubiquity\orm\OrmUtils;
+	
+	class MyResponseFormatter extends ResponseFormatter {
+		
+		public function cleanRestObject($o, &$classname = null) {
+			$pk = OrmUtils::getFirstKeyValue ( $o );
+			$r=parent::cleanRestObject($o);
+			$r["links"]=["self"=>"/rest/orgas/get/".$pk];
+			return $r;
+		}
+		
+		public function getOne($datas) {
+			return $this->format ( $this->cleanRestObject ( $datas ) );
+		}
+		
+		public function get($datas, $pages = null) {
+			$datas = $this->getDatas ( $datas );
+			return $this->format ( [ "_embedded" => $datas,"count" => \sizeof ( $datas ) ] );
+		}
+	}
+
+Then assign ``MyFormatter`` to the REST controller by overriding the ``getResponseFormatter`` method:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/RestOrgas.php
+   
+	class RestOrgas extends \Ubiquity\controllers\rest\RestController {
+		
+		...
+		
+		protected function getResponseFormatter(): ResponseFormatter {
+			return new MyResponseFormatter();
+		}
+	}
+
+Test the result with the getOne and get methods:
+
+.. image:: /_static/images/rest/getOneFormatted.png
+   :class: bordered
+   
+
+.. image:: /_static/images/rest/getFormatted.png
+   :class: bordered
+   
 
 APIs
 ----
+Unlike REST resources, APIs controllers are multi-resources.
+
 SimpleRestAPI
 +++++++++++++
 
 JsonApi
 +++++++
-
+Ubiquity implements the jsonApi specification with the class ``JsonApiRestController``. |br|
 see https://jsonapi.org/
+
+Creation
+~~~~~~~~
+
+With devtools:
+
+.. code-block:: bash
+   
+   Ubiquity restapi RestApi -p=/jsonapi
+
+Or with webtools:
+
+Go to the **REST** section and choose **Add a new resource**:
+
+.. image:: /_static/images/rest/jsonapi-creation.png
+   :class: bordered
+
+Test the api in webtools:
+
+.. image:: /_static/images/rest/jsonapi-admin.png
+   :class: bordered
+   
+
+The **links** route (index method) returns the list of available urls:
+
+.. image:: /_static/images/rest/jsonapi-links.png
+   :class: bordered
 
 .. |br| raw:: html
 
