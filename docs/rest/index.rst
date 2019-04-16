@@ -446,11 +446,69 @@ Test the api in webtools:
 .. image:: /_static/images/rest/jsonapi-admin.png
    :class: bordered
    
+Links
+~~~~~
 
 The **links** route (index method) returns the list of available urls:
 
 .. image:: /_static/images/rest/jsonapi-links.png
    :class: bordered
+
+Getting an array of objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+By default, all associated members are included:
+
+.. image:: /_static/images/rest/jsonapi/getAll.png
+   :class: bordered
+
+Including associated members
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+you need to use the **include** parameter of the request:
+
++-------------------------------------------------------+-----------------------------------------------------------+
+| URL                                                   | Description                                               |
++=======================================================+===========================================================+
+| ``/jsonapi/user?include=false``                       | No associated members are included                        |
++-------------------------------------------------------+-----------------------------------------------------------+
+| ``/jsonapi/user?include=organization``                | Include the organization                                  |
++-------------------------------------------------------+-----------------------------------------------------------+
+| ``/jsonapi/user?include=organization,connections``    | Include the organization and the connections              |
++-------------------------------------------------------+-----------------------------------------------------------+
+| ``/jsonapi/user?include=groupes.organization``        | Include the groups and their organization                 |
++-------------------------------------------------------+-----------------------------------------------------------+
+
+
+Filtering instances
+^^^^^^^^^^^^^^^^^^^
+you need to use the **filter** parameter of the request, |br|
+**filter** parameter corresponds to the **where** part of an SQL statement:
+
++--------------------------------------------------------------+-----------------------------------------------------------+
+| URL                                                          | Description                                               |
++==============================================================+===========================================================+
+| ``/jsonapi/user?1=1``                                        | No filtering                                              |
++--------------------------------------------------------------+-----------------------------------------------------------+
+| ``/jsonapi/user?firstname='Benjamin'``                       | Returns all users named Benjamin                          |
++--------------------------------------------------------------+-----------------------------------------------------------+
+| ``/jsonapi/user?filter=firstname like 'B*'``                 | Returns all users whose first name begins with a B        |
++--------------------------------------------------------------+-----------------------------------------------------------+
+| ``/jsonapi/user?filter=suspended=0 and lastname like 'ca*'`` | Returns all suspended users whose lastname begins with ca |
++--------------------------------------------------------------+-----------------------------------------------------------+
+
+
+Pagination
+^^^^^^^^^^
+you need to use the **page[number]** and **page[size]** parameters of the request:
+
++----------------------------------------------------------+-----------------------------------------------------------+
+| URL                                                      | Description                                               |
++==========================================================+===========================================================+
+| ``/jsonapi/user``                                        | No pagination                                             |
++----------------------------------------------------------+-----------------------------------------------------------+
+| ``/jsonapi/user?page[number]=1``                         | Display the first page (page size is 1)                   |
++----------------------------------------------------------+-----------------------------------------------------------+
+| ``/jsonapi/user?page[number]=1&&page[size]=10``          | Display the first page (page size is 10)                  |
++----------------------------------------------------------+-----------------------------------------------------------+
 
 .. |br| raw:: html
 
