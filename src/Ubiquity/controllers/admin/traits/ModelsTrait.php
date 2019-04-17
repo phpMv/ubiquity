@@ -166,7 +166,7 @@ trait ModelsTrait {
 		} else {
 			$this->jquery->exec ( "$('#modal-" . $formName . "').modal('show');", true );
 			$form = $form->asModal ( \get_class ( $instance ) );
-			$form->setActions ( [ "Okay","Cancel" ] );
+			$form->setActions ( [ "Okay_","Cancel" ] );
 			$btOkay = $form->getAction ( 0 );
 			$btOkay->addClass ( "green" )->setValue ( "Validate modifications" );
 			$form->onHidden ( "$('#modal-" . $formName . "').remove();" );

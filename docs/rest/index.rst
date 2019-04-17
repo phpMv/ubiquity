@@ -53,7 +53,7 @@ It is possible to start routing conditionally (this method will only be more eff
 Resource REST
 -------------
 
-A REST controller can be directly associated with a resource (a model).
+A REST controller can be directly associated with a model.
 
 .. note::
    If you do not have a mysql database on hand, you can download this one: :download:`messagerie.sql </model/messagerie.sql>`
