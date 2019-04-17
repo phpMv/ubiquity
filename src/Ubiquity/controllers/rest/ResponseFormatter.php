@@ -16,27 +16,42 @@ use Ubiquity\utils\base\UString;
 class ResponseFormatter {
 
 	/**
+	 * Returns a formated JSON response for an array of objects $objects
 	 *
-	 * @param array $datas
+	 * @param array $objects
 	 * @param array|null $pages
 	 * @return string
 	 */
-	public function get($datas, $pages = null) {
-		$datas = $this->getDatas ( $datas );
-		return $this->format ( [ "datas" => $datas,"count" => \sizeof ( $datas ) ] );
+	public function get($objects, $pages = null) {
+		$objects = $this->getDatas ( $objects );
+		return $this->format ( [ "datas" => $objects,"count" => \sizeof ( $objects ) ] );
 	}
 
-	public function getDatas($datas, &$classname = null) {
-		$datas = \array_map ( function ($o) use (&$classname) {
+	/**
+	 * Returns an array of datas from an array of objects
+	 *
+	 * @param array $objects
+	 * @param string $classname
+	 * @return array
+	 */
+	public function getDatas($objects, &$classname = null) {
+		$objects = \array_map ( function ($o) use (&$classname) {
 			return $this->cleanRestObject ( $o, $classname );
-		}, $datas );
-		return \array_values ( $datas );
+		}, $objects );
+		return \array_values ( $objects );
 	}
 
 	public function getJSONDatas($datas) {
 		return $this->toJson ( $this->getDatas ( $datas ) );
 	}
 
+	/**
+	 * Returns the array of attributes corresponding to an object $o
+	 *
+	 * @param object $o
+	 * @param string $classname
+	 * @return array
+	 */
 	public function cleanRestObject($o, &$classname = null) {
 		$o = $o->_rest;
 		foreach ( $o as $k => $v ) {
@@ -54,8 +69,14 @@ class ResponseFormatter {
 		return $o;
 	}
 
-	public function getOne($datas) {
-		return $this->format ( [ "data" => $this->cleanRestObject ( $datas ) ] );
+	/**
+	 * Returns a formated JSON response for an object $object
+	 *
+	 * @param object $object
+	 * @return string
+	 */
+	public function getOne($object) {
+		return $this->format ( [ "data" => $this->cleanRestObject ( $object ) ] );
 	}
 
 	/**
@@ -68,6 +89,12 @@ class ResponseFormatter {
 		return \json_encode ( $arrayResponse );
 	}
 
+	/**
+	 * Returns the model name corresponding to $controlleName
+	 *
+	 * @param string $controllerName
+	 * @return string
+	 */
 	public function getModel($controllerName) {
 		$array = \explode ( "\\", $controllerName );
 		$result = \ucfirst ( end ( $array ) );
@@ -77,10 +104,22 @@ class ResponseFormatter {
 		return $result;
 	}
 
+	/**
+	 * Formats an array of datas in JSON
+	 *
+	 * @param array $data
+	 * @return string
+	 */
 	public function toJson($data) {
 		return \json_encode ( $data );
 	}
 
+	/**
+	 * Returns a JSON representation of the exception $e
+	 *
+	 * @param \Exception $e
+	 * @return string
+	 */
 	public function formatException($e) {
 		$error = new RestError ( @$e->getCode (), \utf8_encode ( $e->getMessage () ), @$e->getTraceAsString (), @$e->getFile (), 500 );
 		return $this->format ( $error->asArray () );

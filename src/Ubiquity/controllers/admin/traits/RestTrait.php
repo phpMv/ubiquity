@@ -100,7 +100,7 @@ trait RestTrait {
 		$frmHeaders = new HtmlForm ( "frm-headers-" . $path );
 		$frmParameters = new HtmlForm ( "frm-parameters-" . $path );
 
-		$this->jquery->postOnClick ( "#" . $btGo->getIdentifier (), $this->_getFiles ()->getAdminBaseRoute () . "/_runRestMethod", "{payload:$(\"#ck-payload-" . $pathId . "\").is(':checked'),pathId: '" . $path . "',path: $('#" . $pathField->getIdentifier () . "').val(),method: $('#" . $methodField->getIdentifier () . "').val(),headers:$('#" . $frmHeaders->getIdentifier () . "').serialize(),params:$('#" . $frmParameters->getIdentifier () . "').serialize()}", "#" . $containerId . " ._runRestMethod", [ ] );
+		$this->jquery->postOnClick ( "#" . $btGo->getIdentifier (), $this->_getFiles ()->getAdminBaseRoute () . "/_runRestMethod", "{payload:$(\"#ck-payload-" . $pathId . "\").is(':checked'),pathId: '" . $path . "',path: $('#" . $pathField->getIdentifier () . "').val(),method: $('#" . $methodField->getIdentifier () . "').val(),headers:$('#" . $frmHeaders->getIdentifier () . "').serialize(),params:$('#" . $frmParameters->getIdentifier () . "').serialize()}", "#" . $containerId . " ._runRestMethod", ["hasLoader"=>"internal" ] );
 		$this->jquery->postOnClick ( "#" . $containerId . " ._requestWithParams", $this->_getFiles ()->getAdminBaseRoute () . "/_runPostWithParams/_/parameter/rest", "{actualParams:$('#" . $frmParameters->getIdentifier () . "').serialize(),model: '" . $resource . "',toUpdate:'" . $frmParameters->getIdentifier () . "',method:$('#" . $containerId . " ._method').val(),url:$('#" . $containerId . " ._path').val()}", "#modal", [
 																																																																																																											"attr" => "",
 																																																																																																											"hasLoader" => false ] );
@@ -223,14 +223,15 @@ trait RestTrait {
 						addToken(jqXHR);",
 						"dataType" => "json",
 						"headers" => $headers,
-						"params" => $this->getRestRequestParams () ];
+						"params" => $this->getRestRequestParams ()
+						];
 		if ( $payload===true) {
 			$parameters ["contentType"] = "'application/json; charset=utf-8'";
 		}else{
 			$parameters ["contentType"] = "'application/x-www-form-urlencoded'";
 		}
 		$this->jquery->ajax ( $method, addslashes($path), "#" . $formId . " ._restResponse", $parameters );
-		echo '<div><h5 class="ui top block attached header">Response headers</h5><div class="ui attached segment"><pre style="font-size: 10px;" class="_responseHeaders"></pre></div></div>';
+		echo '<div><h5 class="ui top block attached header">Response headers</h5><div class="ui attached segment"><pre style="font-size: 10px;overflow-x: auto;" class="_responseHeaders"></pre></div></div>';
 		echo $this->jquery->compile ( $this->view );
 	}
 

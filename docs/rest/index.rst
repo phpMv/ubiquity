@@ -525,6 +525,13 @@ The addition requires an authentication, so an error is generated, with the stat
 .. image:: /_static/images/rest/jsonapi/add-response.png
    :class: bordered
 
+Deleting an instance
+~~~~~~~~~~~~~~~~~~~~
+Deletion requires the **DELETE** method, and the use of the **id** of the object to be deleted:
+
+.. image:: /_static/images/rest/jsonapi/delete-response.png
+   :class: bordered
+
 .. |br| raw:: html
 
    <br />

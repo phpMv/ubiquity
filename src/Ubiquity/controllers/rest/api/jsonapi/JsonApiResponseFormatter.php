@@ -7,7 +7,7 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\cache\ClassUtils;
 
 /**
- * JsonAPI Formatter
+ * JsonAPI Formatter.
  * Ubiquity\controllers\rest\api\jsonapi$JsonApiResponseFormatter
  * This class is part of Ubiquity
  *
@@ -108,10 +108,10 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 	 * {@inheritdoc}
 	 * @see \Ubiquity\controllers\rest\ResponseFormatter::get()
 	 */
-	public function get($datas, $pages = null) {
-		$datas = $this->getDatas ( $datas, $classname );
-		$r = [ 'data' => $datas ];
-		if (isset ( $pages ) && sizeof ( $datas ) > 0) {
+	public function get($objects, $pages = null) {
+		$objects = $this->getDatas ( $objects, $classname );
+		$r = [ 'data' => $objects ];
+		if (isset ( $pages ) && sizeof ( $objects ) > 0) {
 			$this->addPageLinks ( $r, $this->getFrontClassname ( $classname ), $pages );
 		}
 		return $this->format ( $r );

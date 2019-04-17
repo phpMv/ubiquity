@@ -34,13 +34,14 @@ abstract class JsonApiRestController extends RestBaseController {
 		if (class_exists ( $this->model )) {
 			$callback ();
 		} else {
+			$this->_setResponseCode ( 404 );
 			$error = new RestError ( 404, "Not existing class", $this->model . " class does not exists!", Startup::getController () . "/" . Startup::getAction () );
 			echo $this->_format ( $error->asArray () );
 		}
 	}
 
 	protected function getDatas() {
-		$datas = URequest::getRealInput();
+		$datas = URequest::getRealInput ();
 		if (sizeof ( $datas ) > 0) {
 			$datas = current ( array_keys ( $datas ) );
 			$datas = json_decode ( $datas, true );
@@ -86,6 +87,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	}
 
 	/**
+	 * Route for CORS
 	 *
 	 * @route("{resource}","methods"=>["options"],"priority"=>3000)
 	 */
