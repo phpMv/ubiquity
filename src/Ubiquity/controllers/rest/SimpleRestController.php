@@ -6,13 +6,13 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\orm\DAO;
 
 /**
- * Abstract base class for Rest controllers.
+ * Abstract base class for Simple Rest controllers.
  * Ubiquity\controllers\rest$SimpleRestController
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
- *
+ * @version 1.0.1
+ * @since Ubiquity 2.1.1
  */
 class SimpleRestController extends RestBaseController implements HasResourceInterface {
 
@@ -28,11 +28,13 @@ class SimpleRestController extends RestBaseController implements HasResourceInte
 	}
 
 	/**
-	 * Returns all objects for the resource $model
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\controllers\rest\RestBaseController::index()
+	 * @route("/links","methods"=>["get"],"priority"=>3000)
 	 */
-	public function _index() {
-		$datas = DAO::getAll ( $this->model );
-		echo $this->_getResponseFormatter ()->get ( $datas );
+	public function index() {
+		parent::index ();
 	}
 
 	/**
@@ -77,19 +79,26 @@ class SimpleRestController extends RestBaseController implements HasResourceInte
 	 *
 	 * @param array $keyValues
 	 * @authorization
-	 * @route("methods"=>["patch"])
+	 * @route("/{keyValues}","methods"=>["patch"],"priority"=>0)
 	 */
 	public function update(...$keyValues) {
 		$this->_update ( ...$keyValues );
 	}
 
 	/**
+	 *
+	 * @route("/","methods"=>["options"],"priority"=>3000)
+	 */
+	public function options(...$resource) {
+	}
+	
+	/**
 	 * Insert a new instance of $model
 	 * Require members values in $_POST array
 	 * Requires an authorization with access token
 	 *
 	 * @authorization
-	 * @route("methods"=>["post"])
+	 * @route("/","methods"=>["post"],"priority"=>0)
 	 */
 	public function add() {
 		$this->_add ();
@@ -100,7 +109,7 @@ class SimpleRestController extends RestBaseController implements HasResourceInte
 	 * Requires an authorization with access token
 	 *
 	 * @param array $keyValues
-	 * @route("methods"=>["delete"],"priority"=>30)
+	 * @route("/{keyValues}","methods"=>["delete"],"priority"=>30)
 	 * @authorization
 	 */
 	public function delete(...$keyValues) {

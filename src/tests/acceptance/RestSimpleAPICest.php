@@ -79,4 +79,23 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see ( 'lecnam.net' );
 		$I->see ( '"count":1' );
 	}
+
+	// tests
+	public function tryToAddUpdateAndDelte(AcceptanceTester $I) {
+		$I->amOnPage ( "/restTester" );
+		$I->fillField ( '#url', '/rest/simple/orgas/' );
+		$I->fillField ( '#method', 'post' );
+		$I->fillField ( '#datas', "{name:'microsoft',domain:'microsoft.com'}" );
+		$I->click ( "#btSubmit" );
+		$I->waitForText ( 'inserted', self::TIMEOUT );
+		$id = $I->grabTextFrom ( "#id" );
+		$I->fillField ( '#url', '/rest/simple/orgas/' . $id );
+		$I->fillField ( '#method', 'patch' );
+		$I->fillField ( '#datas', "{name:'microsoft2',domain:'microsoft2.com'}" );
+		$I->click ( "#btSubmit" );
+		$I->waitForText ( 'updated', self::TIMEOUT );
+		$I->fillField ( '#method', 'delete' );
+		$I->click ( "#btSubmit" );
+		$I->waitForText ( 'deleted', self::TIMEOUT );
+	}
 }
