@@ -58,5 +58,25 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see ( 'lecnam.net' );
 		$I->see ( 'unicaen.fr' );
 		$I->see ( '"count":2' );
+		$I->amOnPage ( "/rest/simple/orgas/?page[number]=1&page[size]=10" );
+		$I->see ( 'lecnam.net' );
+		$I->see ( 'unicaen.fr' );
+		$I->see ( '"count":4' );
+		$I->amOnPage ( "/rest/simple/orgas/?page[number]=4" );
+		$I->see ( 'lycee-sainte-ursule.com' );
+		$I->see ( '"count":1' );
+		$I->amOnPage ( "/rest/simple/orgas/?page[number]=2&page[size]=2" );
+		$I->see ( 'lycee-sainte-ursule.com' );
+		$I->see ( 'IUT Campus III' );
+		$I->see ( '"count":2' );
+		$I->amOnPage ( "/rest/simple/orgas/?page[number]=4&page[size]=2" );
+		$I->see ( '"count":0' );
+	}
+
+	// tests
+	public function tryToGetAllAttributes(AcceptanceTester $I) {
+		$I->amOnPage ( "/rest/simple/orgas/?filter=name like 'C*'&page[number]=1" );
+		$I->see ( 'lecnam.net' );
+		$I->see ( '"count":1' );
 	}
 }
