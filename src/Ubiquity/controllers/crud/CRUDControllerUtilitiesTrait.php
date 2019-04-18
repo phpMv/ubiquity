@@ -109,11 +109,11 @@ trait CRUDControllerUtilitiesTrait {
 		} else {
 			$this->jquery->exec ( "$('#modal-frmEdit').modal('show');", true );
 			$form = $form->asModal ( \get_class ( $instance ) );
-			$form->setActions ( [ "Okay","Cancel" ] );
+			$form->setActions ( [ "Okay_","Cancel" ] );
 			$btOkay = $form->getAction ( 0 );
 			$btOkay->addClass ( "green" )->setValue ( "Validate modifications" );
 			$form->onHidden ( "$('#modal-frmEdit').remove();" );
-			echo $form->compile ( $this->jquery, $this->view );
+			echo $form->compile ( $this->jquery);
 			echo $this->jquery->compile ( $this->view );
 		}
 	}

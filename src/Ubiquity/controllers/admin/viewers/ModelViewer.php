@@ -54,8 +54,7 @@ class ModelViewer {
 	 * Returns the form for adding or modifying an object
 	 *
 	 * @param string $identifier
-	 * @param object $instance
-	 *        	the object to add or modify
+	 * @param object $instance the object to add or modify
 	 * @return \Ajax\semantic\widgets\dataform\DataForm
 	 */
 	public function getForm($identifier, $instance) {
@@ -174,8 +173,7 @@ class ModelViewer {
 	 * Sets the components for each field
 	 *
 	 * @param DataForm $form
-	 * @param array $fieldTypes
-	 *        	associative array of field names (keys) and types (values)
+	 * @param array $fieldTypes associative array of field names (keys) and types (values)
 	 */
 	public function setFormFieldsComponent(DataForm $form, $fieldTypes) {
 		$this->setFormFieldsComponent_ ( $form, $fieldTypes );
@@ -185,8 +183,7 @@ class ModelViewer {
 	 * Sets the components for each field
 	 *
 	 * @param DataForm $form
-	 * @param array $fieldTypes
-	 *        	associative array of field names (keys) and types (values)
+	 * @param array $fieldTypes associative array of field names (keys) and types (values)
 	 */
 	public function setMemberFormFieldsComponent(DataForm $form, $fieldTypes) {
 		$this->setFormFieldsComponent_ ( $form, $fieldTypes );
@@ -229,8 +226,7 @@ class ModelViewer {
 	 * in display route
 	 *
 	 * @param object $instance
-	 * @param string $model
-	 *        	The model class name (long name)
+	 * @param string $model The model class name (long name)
 	 * @param boolean $modal
 	 * @return \Ajax\semantic\widgets\dataelement\DataElement
 	 */
@@ -272,10 +268,8 @@ class ModelViewer {
 	/**
 	 * Returns the dataTable responsible for displaying instances of the model
 	 *
-	 * @param array $instances
-	 *        	objects to display
-	 * @param string $model
-	 *        	model class name (long name)
+	 * @param array $instances objects to display
+	 * @param string $model model class name (long name)
 	 * @return DataTable
 	 */
 	public function getModelDataTable($instances, $model, $totalCount, $page = 1) {
@@ -338,10 +332,8 @@ class ModelViewer {
 
 	/**
 	 *
-	 * @param string $model
-	 *        	The model class name (long name)
-	 * @param number $totalCount
-	 *        	The total count of objects
+	 * @param string $model The model class name (long name)
+	 * @param number $totalCount The total count of objects
 	 * @return void|number default : 6
 	 */
 	public function recordsPerPage($model, $totalCount = 0) {
@@ -362,11 +354,11 @@ class ModelViewer {
 	 *
 	 * @param mixed $field
 	 */
-	public function onGenerateFormField($field,$nb) {
-		if($field instanceof HtmlFormInput){
-			if($field->getDataField()->getProperty('type')=="datetime-local"){
-				$v=$field->getDataField()->getProperty('value');
-				$field->getDataField()->setValue(date("Y-m-d\TH:i:s", strtotime($v)));
+	public function onGenerateFormField($field, $nb) {
+		if ($field instanceof HtmlFormInput) {
+			if ($field->getDataField ()->getProperty ( 'type' ) == "datetime-local") {
+				$v = $field->getDataField ()->getProperty ( 'value' );
+				$field->getDataField ()->setValue ( date ( "Y-m-d\TH:i:s", strtotime ( $v ) ) );
 			}
 		}
 		return;
@@ -438,10 +430,8 @@ class ModelViewer {
 	/**
 	 * To override for modifying the showConfMessage dialog buttons
 	 *
-	 * @param HtmlButton $confirmBtn
-	 *        	The confirmation button
-	 * @param HtmlButton $cancelBtn
-	 *        	The cancellation button
+	 * @param HtmlButton $confirmBtn The confirmation button
+	 * @param HtmlButton $cancelBtn The cancellation button
 	 */
 	public function onConfirmButtons(HtmlButton $confirmBtn, HtmlButton $cancelBtn) {
 	}
