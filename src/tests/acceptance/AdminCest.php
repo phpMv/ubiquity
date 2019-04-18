@@ -139,7 +139,7 @@ class AdminCest extends BaseAcceptance {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$I->click ( "#generateRobots" );
 		$I->waitForText ( "Can not generate robots.txt if no SEO controller is selected.", self::TIMEOUT, "body" );
-		$this->waitAndclick ( $I, "#addNewSeo", "#main-content" );
+		$this->waitAndclick ( $I, "#addNewSeo", "body" );
 		$I->waitForText ( "Creating a new Seo controller", self::TIMEOUT, "body" );
 		$I->fillField ( "#controllerName", "TestSEOController" );
 		$this->waitAndclick ( $I, "#action-modalNewSeo-0" );

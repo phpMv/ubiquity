@@ -75,7 +75,7 @@ class RestSimpleAPICest extends BaseAcceptance {
 
 	// tests
 	public function tryToGetAllAttributes(AcceptanceTester $I) {
-		$I->amOnPage ( "/rest/simple/orgas/?filter=name like 'C*'&page[number]=1" );
+		$I->amOnPage ( "/rest/simple/orgas/?filter=name like 'C*'&page[number]=1&page[size]=1" );
 		$I->see ( 'lecnam.net' );
 		$I->see ( '"count":1' );
 	}
