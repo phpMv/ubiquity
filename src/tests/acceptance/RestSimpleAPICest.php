@@ -36,7 +36,7 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see ( 'Etudiants' );
 		$I->see ( 'Enseignants' );
 		$I->see ( 'Vacataires' );
-		$I->see ( '"count":6' );
+		$I->see ( '"count":4' );
 	}
 
 	// tests
