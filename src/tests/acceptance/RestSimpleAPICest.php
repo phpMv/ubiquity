@@ -31,6 +31,11 @@ class RestSimpleAPICest extends BaseAcceptance {
 	// tests
 	public function tryToGetMultiple(AcceptanceTester $I) {
 		$I->amOnPage ( "/rest/simple/orgas/" );
+		$I->see ( 'Personnels' );
+		$I->see ( 'Auditeurs' );
+		$I->see ( 'Etudiants' );
+		$I->see ( 'Enseignants' );
+		$I->see ( 'Vacataires' );
 		$I->see ( '"count": 6' );
 	}
 }
