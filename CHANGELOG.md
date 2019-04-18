@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - webtools Rest section
   - `Authorization Bearer` pb in input field (no open issue)
   - `POST` request for adding an instance with `RestController` (no open issue)
-- webtools Models section
+- webtools Models section, CRUDControllers
   - Model adding or updating in modal form fail see https://github.com/phpMv/ubiquity/issues/25
 
 ## [2.1.0] - 2019-04-01
