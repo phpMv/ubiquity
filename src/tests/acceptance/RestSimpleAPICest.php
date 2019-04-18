@@ -38,4 +38,25 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see ( 'Vacataires' );
 		$I->see ( '"count": 6' );
 	}
+
+	// tests
+	public function tryToGetFilter(AcceptanceTester $I) {
+		$I->amOnPage ( "/rest/simple/orgas/?filter=name='CONSERVATOIRE NATIONAL DES ARTS ET MéTIERS'" );
+		$I->see ( 'lecnam.net' );
+		$I->amOnPage ( "/rest/simple/orgas/?filter=name like 'C*'" );
+		$I->see ( 'lecnam.net' );
+	}
+
+	// tests
+	public function tryToGetPaginate(AcceptanceTester $I) {
+		$I->amOnPage ( "/rest/simple/orgas/?page[number]=1" );
+		$I->see ( 'lecnam.net' );
+		$I->amOnPage ( "/rest/simple/orgas/?page[number]=2" );
+		$I->see ( 'unicaen.fr' );
+		$I->see ( '"count": 1' );
+		$I->amOnPage ( "/rest/simple/orgas/?page[number]=1&page[size]=2" );
+		$I->see ( 'lecnam.net' );
+		$I->see ( 'unicaen.fr' );
+		$I->see ( '"count": 2' );
+	}
 }

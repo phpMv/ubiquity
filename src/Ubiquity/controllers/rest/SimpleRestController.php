@@ -46,7 +46,7 @@ class SimpleRestController extends RestBaseController implements HasResourceInte
 	 * @route("/","methods"=>["get"],"priority"=>0)
 	 */
 	public function getAll_() {
-		$filter = $this->getRequestParam ( 'filter', '1=1' );
+		$filter = $this->getCondition($this->getRequestParam ( 'filter', '1=1' ));
 		$pages = null;
 		if (isset ( $_GET ['page'] )) {
 			$pageNumber = $_GET ['page'] ['number'];
