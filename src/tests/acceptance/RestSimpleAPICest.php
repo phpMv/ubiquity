@@ -36,7 +36,7 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see ( 'Etudiants' );
 		$I->see ( 'Enseignants' );
 		$I->see ( 'Vacataires' );
-		$I->see ( '"count": 6' );
+		$I->see ( '"count":6' );
 	}
 
 	// tests
@@ -53,10 +53,10 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see ( 'lecnam.net' );
 		$I->amOnPage ( "/rest/simple/orgas/?page[number]=2" );
 		$I->see ( 'unicaen.fr' );
-		$I->see ( '"count": 1' );
+		$I->see ( '"count":1' );
 		$I->amOnPage ( "/rest/simple/orgas/?page[number]=1&page[size]=2" );
 		$I->see ( 'lecnam.net' );
 		$I->see ( 'unicaen.fr' );
-		$I->see ( '"count": 2' );
+		$I->see ( '"count":2' );
 	}
 }
