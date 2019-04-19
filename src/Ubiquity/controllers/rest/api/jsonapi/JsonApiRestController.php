@@ -217,7 +217,7 @@ abstract class JsonApiRestController extends RestBaseController {
 	 */
 	public function delete_($resource, ...$id) {
 		$this->_checkResource ( $resource, function () use ($id) {
-			$this->_delete ( $id );
+			$this->_delete ( ...$id );
 		} );
 	}
 
