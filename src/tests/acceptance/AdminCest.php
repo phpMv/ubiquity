@@ -126,6 +126,7 @@ class AdminCest extends BaseAcceptance {
 		$this->waitAndclick ( $I, "._setTheme[href='Admin/setTheme/foundation']" );
 		$I->amOnPage ( "/" );
 		$I->canSee ( "foundation" );
+		$this->gotoAdminModule ( "Admin/Themes", $I );
 		$this->waitAndclick ( $I, "._setTheme[href='Admin/setTheme/semantic']" );
 		$I->amOnPage ( "/" );
 		$I->canSee ( "semantic" );
