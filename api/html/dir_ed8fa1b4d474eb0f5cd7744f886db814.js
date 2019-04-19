@@ -24,6 +24,9 @@ var dir_ed8fa1b4d474eb0f5cd7744f886db814 =
     [ "ThemesException.php", "_themes_exception_8php.html", [
       [ "ThemesException", "class_ubiquity_1_1exceptions_1_1_themes_exception.html", "class_ubiquity_1_1exceptions_1_1_themes_exception" ]
     ] ],
+    [ "TransformerException.php", "_transformer_exception_8php.html", [
+      [ "TransformerException", "class_ubiquity_1_1exceptions_1_1_transformer_exception.html", "class_ubiquity_1_1exceptions_1_1_transformer_exception" ]
+    ] ],
     [ "UbiquityException.php", "_ubiquity_exception_8php.html", [
       [ "UbiquityException", "class_ubiquity_1_1exceptions_1_1_ubiquity_exception.html", "class_ubiquity_1_1exceptions_1_1_ubiquity_exception" ]
     ] ],

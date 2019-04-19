@@ -24,5 +24,8 @@ var dir_4193867d1b1809355284af1aafb90429 =
     ] ],
     [ "RestServer.php", "_rest_server_8php.html", [
       [ "RestServer", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server" ]
+    ] ],
+    [ "SimpleRestController.php", "_simple_rest_controller_8php.html", [
+      [ "SimpleRestController", "class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller.html", "class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller" ]
     ] ]
 ];

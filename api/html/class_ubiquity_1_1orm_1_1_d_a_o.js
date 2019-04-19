@@ -11,6 +11,9 @@ var class_ubiquity_1_1orm_1_1_d_a_o =
     [ "getRownum", "class_ubiquity_1_1orm_1_1_d_a_o.html#ac0fa7351394a79677854651452dfa31f", null ],
     [ "isConnected", "class_ubiquity_1_1orm_1_1_d_a_o.html#ae7f9fc68bf9bcc98ec93bfd1017b1818", null ],
     [ "paginate", "class_ubiquity_1_1orm_1_1_d_a_o.html#a24dcd7c727e2f65305713a7b90668926", null ],
+    [ "setTransformerOp", "class_ubiquity_1_1orm_1_1_d_a_o.html#adc1a442aba5ff0af67d9024d03c277d7", null ],
     [ "startDatabase", "class_ubiquity_1_1orm_1_1_d_a_o.html#aab6fd47d558266285ec62dc76ec7048c", null ],
-    [ "$db", "class_ubiquity_1_1orm_1_1_d_a_o.html#a1fa3127fc82f96b1436d871ef02be319", null ]
+    [ "$db", "class_ubiquity_1_1orm_1_1_d_a_o.html#a1fa3127fc82f96b1436d871ef02be319", null ],
+    [ "$transformerOp", "class_ubiquity_1_1orm_1_1_d_a_o.html#a4bd818b03aa10d8275f1a42bb7a5f6a5", null ],
+    [ "$useTransformers", "class_ubiquity_1_1orm_1_1_d_a_o.html#a5f322eb415441bc1ee23b18881a5e7d6", null ]
 ];

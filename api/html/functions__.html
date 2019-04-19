@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -143,7 +143,7 @@ $(document).ready(function(){initNavTree('functions__.html','');});
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a84a121e2280a0feb771928fd7f7da870">ApiTokens</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a095c5d389db211932136b53f25f39685">RestBaseController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_error.html#a3652d2e84b9c031f8a7fabe5ef6de2e9">RestError</a>
-, <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a7b103396d136b662e2d0e01de876c659">RestServer</a>
+, <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#abb96f5b60e4bdb880e0267d43061907a">RestServer</a>
 , <a class="el" href="class_ubiquity_1_1db_1_1_database.html#ac47161d682f3c98c368fcba62bcfbafa">Database</a>
 , <a class="el" href="class_ubiquity_1_1db_1_1export_1_1_data_export.html#a722017cb634497fe2b92c39cd38a7c56">DataExport</a>
 , <a class="el" href="class_ubiquity_1_1db_1_1export_1_1_db_export.html#a095c5d389db211932136b53f25f39685">DbExport</a>
@@ -158,6 +158,7 @@ $(document).ready(function(){initNavTree('functions__.html','');});
 , <a class="el" href="class_ubiquity_1_1exceptions_1_1_rest_exception.html#ab18bf0eb6d60fc92d87bd32e04068637">RestException</a>
 , <a class="el" href="class_ubiquity_1_1exceptions_1_1_router_exception.html#ab18bf0eb6d60fc92d87bd32e04068637">RouterException</a>
 , <a class="el" href="class_ubiquity_1_1exceptions_1_1_themes_exception.html#ab18bf0eb6d60fc92d87bd32e04068637">ThemesException</a>
+, <a class="el" href="class_ubiquity_1_1exceptions_1_1_transformer_exception.html#ab18bf0eb6d60fc92d87bd32e04068637">TransformerException</a>
 , <a class="el" href="class_ubiquity_1_1exceptions_1_1_ubiquity_exception.html#ab18bf0eb6d60fc92d87bd32e04068637">UbiquityException</a>
 , <a class="el" href="class_ubiquity_1_1exceptions_1_1_validator_exception.html#ab18bf0eb6d60fc92d87bd32e04068637">ValidatorException</a>
 , <a class="el" href="class_ubiquity_1_1log_1_1libraries_1_1_u_monolog.html#a471f95ff41d4a0da079b428ffbfec3e2">UMonolog</a>
@@ -466,9 +467,6 @@ $(document).ready(function(){initNavTree('functions__.html','');});
 , <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_trait.html#a2afe65f39e5ce2bec1dc079276164a50">DAORelationsTrait</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a2afe65f39e5ce2bec1dc079276164a50">DAOUQueries</a>
 </li>
-<li>_getApiTokens()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a39cde955fcb96e0dda2d4e74a74c5258">RestServer</a>
-</li>
 <li>_getApiVersion()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a9c5e87dd17e19fbded6af0fb28e55b13">JsonApiRestController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a9c5e87dd17e19fbded6af0fb28e55b13">RestBaseController</a>
@@ -676,6 +674,9 @@ $(document).ready(function(){initNavTree('functions__.html','');});
 <li>_isValidUser()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_override_trait.html#a817e64955e0fb4e87049a80088d577ee">AuthControllerOverrideTrait</a>
 </li>
+<li>_loadApiTokens()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a08c193ec78a66fe64eb0ac6680db70e9">RestServer</a>
+</li>
 <li>_loadModelStep()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html#a2f1699c223987efe87e1b018f6c910f5">ModelsConfigTrait</a>
 </li>
@@ -842,7 +843,7 @@ $(document).ready(function(){initNavTree('functions__.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Sun Mar 31 2019 20:36:09 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:55 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

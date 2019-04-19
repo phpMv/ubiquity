@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -85,6 +85,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1rest_
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">RestBaseController Class Reference</div>  </div>
@@ -101,10 +102,11 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1rest_
  <div class="center">
   <img src="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.png" usemap="#RestBaseController_map" alt=""/>
   <map id="RestBaseController_map" name="RestBaseController_map">
-<area href="class_ubiquity_1_1controllers_1_1_controller.html" title="Base class for controllers. " alt="Controller" shape="rect" coords="0,0,156,24"/>
-<area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html" alt="RestControllerUtilitiesTrait" shape="rect" coords="166,0,322,24"/>
+<area href="class_ubiquity_1_1controllers_1_1_controller.html" title="Base class for controllers. " alt="Controller" shape="rect" coords="83,0,239,24"/>
+<area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html" alt="RestControllerUtilitiesTrait" shape="rect" coords="249,0,405,24"/>
 <area href="class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html" title="Rest JsonAPI implementation. " alt="JsonApiRestController" shape="rect" coords="0,112,156,136"/>
 <area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html" title="Abstract base class for Rest controllers. " alt="RestController" shape="rect" coords="166,112,322,136"/>
+<area href="class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller.html" title="Abstract base class for Simple Rest controllers. " alt="SimpleRestController" shape="rect" coords="332,112,488,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -203,34 +205,16 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad45cce12cc81c077ecd0e580cec41d8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the template for creating this type of controller.  <a href="#ad45cce12cc81c077ecd0e580cec41d8e">More...</a><br /></td></tr>
 <tr class="separator:ad45cce12cc81c077ecd0e580cec41d8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a49c7011be9c979d9174c52a8b83e5d8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a49c7011be9c979d9174c52a8b83e5d8e">$config</a></td></tr>
-<tr class="separator:a49c7011be9c979d9174c52a8b83e5d8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08fdd91bde255dbe3e2d15a22d9663e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a08fdd91bde255dbe3e2d15a22d9663e8">$model</a></td></tr>
-<tr class="separator:a08fdd91bde255dbe3e2d15a22d9663e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8c052d0ddebb9f14151f8682916a587"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ab8c052d0ddebb9f14151f8682916a587">$contentType</a></td></tr>
-<tr class="separator:ab8c052d0ddebb9f14151f8682916a587"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a80472107c9754097ece7b69d77afba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a3a80472107c9754097ece7b69d77afba">$restCache</a></td></tr>
-<tr class="separator:a3a80472107c9754097ece7b69d77afba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8bc5ac889bfcfdded324ad962659b63"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ae8bc5ac889bfcfdded324ad962659b63">$useValidation</a> = true</td></tr>
-<tr class="separator:ae8bc5ac889bfcfdded324ad962659b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5958f6b8f0c17672446d6eabb40aedb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a5958f6b8f0c17672446d6eabb40aedb7">$responseFormatter</a></td></tr>
-<tr class="separator:a5958f6b8f0c17672446d6eabb40aedb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad135cc8a47e55f0829949cf62214170f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ad135cc8a47e55f0829949cf62214170f">$server</a></td></tr>
-<tr class="separator:ad135cc8a47e55f0829949cf62214170f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_ubiquity_1_1controllers_1_1_controller')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html">Controller</a></td></tr>
-<tr class="memitem:acccf2eac8663e0cebe8101e90fbab089 inherit pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#acccf2eac8663e0cebe8101e90fbab089">$view</a></td></tr>
-<tr class="separator:acccf2eac8663e0cebe8101e90fbab089 inherit pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html">RestControllerUtilitiesTrait</a></td></tr>
-<tr class="memitem:ab24faf4aa647cdcee494fc48524ad4ff inherit pro_attribs_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ab24faf4aa647cdcee494fc48524ad4ff">$errors</a></td></tr>
-<tr class="separator:ab24faf4aa647cdcee494fc48524ad4ff inherit pro_attribs_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:afd6236403f1de9747a9d1fd6410058d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#afd6236403f1de9747a9d1fd6410058d6">requireAuth</a> ($action)</td></tr>
+<tr class="memdesc:afd6236403f1de9747a9d1fd6410058d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if $action require an authentification with token.  <a href="#afd6236403f1de9747a9d1fd6410058d6">More...</a><br /></td></tr>
+<tr class="separator:afd6236403f1de9747a9d1fd6410058d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html">RestControllerUtilitiesTrait</a></td></tr>
 <tr class="memitem:a71a369e7ca4b76224f8c182002909016 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a71a369e7ca4b76224f8c182002909016">getDatas</a> ()</td></tr>
 <tr class="separator:a71a369e7ca4b76224f8c182002909016 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00473894482924b3fb3a2af9ad176ea1 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a00473894482924b3fb3a2af9ad176ea1">getRequestParam</a> ($param, $default)</td></tr>
+<tr class="separator:a00473894482924b3fb3a2af9ad176ea1 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc7017a1966a4c124c2084ce7d69afed inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#adc7017a1966a4c124c2084ce7d69afed">operate_</a> ($instance, $callback, $status, $exceptionMessage, $keyValues)</td></tr>
 <tr class="separator:adc7017a1966a4c124c2084ce7d69afed inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43422b810b606bd14c7d74924f8b3be9 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a43422b810b606bd14c7d74924f8b3be9">generatePagination</a> (&amp;$filter, $pageNumber, $pageSize)</td></tr>
@@ -268,6 +252,31 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:acd257072c9754ee08d01e1276fb4d26a inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37d38a114cc313677745e6c45d38fd41 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a37d38a114cc313677745e6c45d38fd41">getPrimaryKeysFromDatas</a> ($datas, $model)</td></tr>
 <tr class="separator:a37d38a114cc313677745e6c45d38fd41 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6b759d9a434ff803b7a2b7f515a57c5 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#aa6b759d9a434ff803b7a2b7f515a57c5">getCondition</a> ($condition)</td></tr>
+<tr class="separator:aa6b759d9a434ff803b7a2b7f515a57c5 inherit pro_methods_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a49c7011be9c979d9174c52a8b83e5d8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a49c7011be9c979d9174c52a8b83e5d8e">$config</a></td></tr>
+<tr class="separator:a49c7011be9c979d9174c52a8b83e5d8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08fdd91bde255dbe3e2d15a22d9663e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a08fdd91bde255dbe3e2d15a22d9663e8">$model</a></td></tr>
+<tr class="separator:a08fdd91bde255dbe3e2d15a22d9663e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8c052d0ddebb9f14151f8682916a587"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ab8c052d0ddebb9f14151f8682916a587">$contentType</a></td></tr>
+<tr class="separator:ab8c052d0ddebb9f14151f8682916a587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a80472107c9754097ece7b69d77afba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a3a80472107c9754097ece7b69d77afba">$restCache</a></td></tr>
+<tr class="separator:a3a80472107c9754097ece7b69d77afba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8bc5ac889bfcfdded324ad962659b63"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ae8bc5ac889bfcfdded324ad962659b63">$useValidation</a> = true</td></tr>
+<tr class="separator:ae8bc5ac889bfcfdded324ad962659b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5958f6b8f0c17672446d6eabb40aedb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a5958f6b8f0c17672446d6eabb40aedb7">$responseFormatter</a></td></tr>
+<tr class="separator:a5958f6b8f0c17672446d6eabb40aedb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad135cc8a47e55f0829949cf62214170f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ad135cc8a47e55f0829949cf62214170f">$server</a></td></tr>
+<tr class="separator:ad135cc8a47e55f0829949cf62214170f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_ubiquity_1_1controllers_1_1_controller')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html">Controller</a></td></tr>
+<tr class="memitem:acccf2eac8663e0cebe8101e90fbab089 inherit pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#acccf2eac8663e0cebe8101e90fbab089">$view</a></td></tr>
+<tr class="separator:acccf2eac8663e0cebe8101e90fbab089 inherit pro_attribs_class_ubiquity_1_1controllers_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html">RestControllerUtilitiesTrait</a></td></tr>
+<tr class="memitem:ab24faf4aa647cdcee494fc48524ad4ff inherit pro_attribs_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ab24faf4aa647cdcee494fc48524ad4ff">$errors</a></td></tr>
+<tr class="separator:ab24faf4aa647cdcee494fc48524ad4ff inherit pro_attribs_class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class for Rest controllers. </p>
@@ -314,7 +323,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Insert a new instance of $model Require members values in $_POST array. </p>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00209">209</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00223">223</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -342,7 +351,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00227">227</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00241">241</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -362,7 +371,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00089">89</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00103">103</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -382,7 +391,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00142">142</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00156">156</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -428,7 +437,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00108">108</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00122">122</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -455,7 +464,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00234">234</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00248">248</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -512,7 +521,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00181">181</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00195">195</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -563,7 +572,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00153">153</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00167">167</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -609,7 +618,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00128">128</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00142">142</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -666,7 +675,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00167">167</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00181">181</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -696,7 +705,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Returns the template for creating this type of controller. </p>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00242">242</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00257">257</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -716,7 +725,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00097">97</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00111">111</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -744,7 +753,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00193">193</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00207">207</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -765,7 +774,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Realize the connection to the server To override in derived classes to define your own authentication. </p>
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00076">76</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00089">89</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -784,7 +793,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00084">84</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00098">98</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -822,7 +831,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00080">80</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00094">94</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -861,7 +870,44 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00068">68</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00081">81</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
+
+</div>
+</div>
+<a id="afd6236403f1de9747a9d1fd6410058d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd6236403f1de9747a9d1fd6410058d6">&#9670;&nbsp;</a></span>requireAuth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">requireAuth </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$action</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if $action require an authentification with token. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$action</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_base_controller_8php_source.html#l00074">74</a> of file <a class="el" href="_rest_base_controller_8php_source.html">RestBaseController.php</a>.</p>
 
 </div>
 </div>
@@ -1044,7 +1090,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers.html">controllers</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers_1_1rest.html">rest</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html">RestBaseController</a></li>
-    <li class="footer"><small>Generated on Sun Mar 31 2019 20:36:04 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:50 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

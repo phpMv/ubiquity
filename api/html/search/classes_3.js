@@ -14,6 +14,7 @@ var searchData=
   ['databasereversor',['DatabaseReversor',['../class_ubiquity_1_1orm_1_1reverse_1_1_database_reversor.html',1,'Ubiquity::orm::reverse']]],
   ['databasetrait',['DatabaseTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_database_trait.html',1,'Ubiquity::controllers::admin::traits']]],
   ['dataexport',['DataExport',['../class_ubiquity_1_1db_1_1export_1_1_data_export.html',1,'Ubiquity::db::export']]],
+  ['datetime',['DateTime',['../class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_date_time.html',1,'Ubiquity::contents::transformation::transformers']]],
   ['datetimevalidator',['DateTimeValidator',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1dates_1_1_date_time_validator.html',1,'Ubiquity::contents::validation::validators::dates']]],
   ['datevalidator',['DateValidator',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1dates_1_1_date_validator.html',1,'Ubiquity::contents::validation::validators::dates']]],
   ['dbcache',['DbCache',['../class_ubiquity_1_1cache_1_1database_1_1_db_cache.html',1,'Ubiquity::cache::database']]],

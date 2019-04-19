@@ -1,7 +1,9 @@
 var class_ubiquity_1_1orm_1_1_orm_utils =
 [
     [ "_is", "class_ubiquity_1_1orm_1_1_orm_utils.html#ae7b054adf61ebb13802d62ffba5652fb", null ],
+    [ "clearMetaDatas", "class_ubiquity_1_1orm_1_1_orm_utils.html#af3237b61680d07484e519356787838d1", null ],
     [ "exists", "class_ubiquity_1_1orm_1_1_orm_utils.html#a637402c3080e65a7c780de8fd6b7d0f3", null ],
+    [ "getAccessors", "class_ubiquity_1_1orm_1_1_orm_utils.html#a42ccaf53987edef7e9c39f26f371535e", null ],
     [ "getAnnotationInfo", "class_ubiquity_1_1orm_1_1_orm_utils.html#a04c578ecc0d2de9d24702cacfa3096d4", null ],
     [ "getAnnotationInfoMember", "class_ubiquity_1_1orm_1_1_orm_utils.html#af181b9db9268d01f6097153345c6512c", null ],
     [ "getFieldName", "class_ubiquity_1_1orm_1_1_orm_utils.html#a95699659593fb841414238574bf4c822", null ],
@@ -17,6 +19,7 @@ var class_ubiquity_1_1orm_1_1_orm_utils =
     [ "getModelMetadata", "class_ubiquity_1_1orm_1_1_orm_utils.html#abed50222ca942aa8a1adefa4010f4ab6", null ],
     [ "getPropKeyValues", "class_ubiquity_1_1orm_1_1_orm_utils.html#a6c91db1c0a6ffec20c0e922371dc1f75", null ],
     [ "getTableName", "class_ubiquity_1_1orm_1_1_orm_utils.html#a2bee06da346de815972e178d0f643ee4", null ],
+    [ "getTransformers", "class_ubiquity_1_1orm_1_1_orm_utils.html#a6ddf7039934c76a1e5adcdfdd3a91cde", null ],
     [ "isNotNullOrNullAccepted", "class_ubiquity_1_1orm_1_1_orm_utils.html#a62392d8d3c6d77b9ab062d94e4851dc4", null ],
     [ "isNullable", "class_ubiquity_1_1orm_1_1_orm_utils.html#ace35022879b6011e5c6fce4e0f7b1d26", null ],
     [ "isSerializable", "class_ubiquity_1_1orm_1_1_orm_utils.html#a226f09d5c5d64cf36340328f5c4edc3a", null ],

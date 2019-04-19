@@ -11,7 +11,6 @@ var class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_co
     [ "getDatas", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a71a369e7ca4b76224f8c182002909016", null ],
     [ "getOne_", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a00862459ec1d266c47c66707eb9b7fe9", null ],
     [ "getRelationShip_", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#ab3fd05bd8faa23c92adcd4c8f3ef6d72", null ],
-    [ "getRequestParam", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a00473894482924b3fb3a2af9ad176ea1", null ],
     [ "getRestServer", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a71cae30db0e7245cc469c5977a8fd833", null ],
     [ "index", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a149eb92716c1084a935e04a8d95f7347", null ],
     [ "loadRelationshipsDatas", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#aebc72fa2fbc8a323bfec5c26b96d93c2", null ],

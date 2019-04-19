@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -119,7 +119,9 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 : <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#a15ea8c78d28d8d9b6023dedbe622c731">AbstractDataCache</a>
 </li>
 <li>$accessors
-: <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_fields_trait.html#af2a5c7931f51c95db786937292c398ab">OrmUtilsFieldsTrait</a>
+: <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_model_parser.html#af2a5c7931f51c95db786937292c398ab">ModelParser</a>
+, <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#af2a5c7931f51c95db786937292c398ab">DAOCoreTrait</a>
+, <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_orm_utils_fields_trait.html#af2a5c7931f51c95db786937292c398ab">OrmUtilsFieldsTrait</a>
 </li>
 <li>$action
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#aa698a3e72116e8e778be0e95d908ee30">ControllerAction</a>
@@ -159,6 +161,9 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </li>
 <li>$adminViewer
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html#a1d2c1aa3975fb0a5d1fa81f74382621a">UbiquityMyAdminBaseController</a>
+</li>
+<li>$allowedOrigins
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ad33cf09aacdaed7fc592a3443c5f44be">RestServer</a>
 </li>
 <li>$alterTableAddKey
 : <a class="el" href="class_ubiquity_1_1db_1_1reverse_1_1_db_generator.html#af4110452d547e759adc3c223ece69807">DbGenerator</a>
@@ -603,9 +608,11 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </li>
 <li>$key
 : <a class="el" href="class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#aa60b0284e0dfa2463495481cf11e3cf4">NormalizersManager</a>
+, <a class="el" href="class_ubiquity_1_1contents_1_1transformation_1_1_transformers_manager.html#af655ddb1b44c56d95000573c0f30d3dd">TransformersManager</a>
 , <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#aa60b0284e0dfa2463495481cf11e3cf4">ValidatorsManager</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1di_1_1_di_manager.html#aa60b0284e0dfa2463495481cf11e3cf4">DiManager</a>
 , <a class="el" href="class_ubiquity_1_1events_1_1_events_manager.html#aa60b0284e0dfa2463495481cf11e3cf4">EventsManager</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#aa60b0284e0dfa2463495481cf11e3cf4">ArrayLoader</a>
 </li>
 <li>$lastModified
 : <a class="el" href="class_ubiquity_1_1seo_1_1_url.html#a6ab0d97ce9c68912add86fba1acc87aa">Url</a>
@@ -752,6 +759,7 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 , <a class="el" href="class_ubiquity_1_1annotations_1_1_join_table_annotation.html#ab2fc40d43824ea3e1ce5d86dee0d763b">JoinTableAnnotation</a>
 , <a class="el" href="class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html#ab2fc40d43824ea3e1ce5d86dee0d763b">RouteAnnotation</a>
 , <a class="el" href="class_ubiquity_1_1annotations_1_1_table_annotation.html#ab2fc40d43824ea3e1ce5d86dee0d763b">TableAnnotation</a>
+, <a class="el" href="class_ubiquity_1_1annotations_1_1_transformer_annotation.html#ab2fc40d43824ea3e1ce5d86dee0d763b">TransformerAnnotation</a>
 , <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1_validation_model_generator.html#ab2fc40d43824ea3e1ce5d86dee0d763b">ValidationModelGenerator</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_cache_file.html#ab2fc40d43824ea3e1ce5d86dee0d763b">CacheFile</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html#ab2fc40d43824ea3e1ce5d86dee0d763b">ControllerSeo</a>
@@ -1081,6 +1089,12 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_error.html#ada57e7bb7c152edad18fe2f166188691">RestError</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html#ada57e7bb7c152edad18fe2f166188691">FlashMessage</a>
 </li>
+<li>$tokenDuration
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ac826e0bb08c612c27a3183cb9c19f874">RestServer</a>
+</li>
+<li>$tokenLength
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a6e14b2bb8e230358fa7f2b1ad927f20c">RestServer</a>
+</li>
 <li>$tokens
 : <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a72ead29e4317fbc4335fd3ba764e8b59">ApiTokens</a>
 </li>
@@ -1089,6 +1103,13 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </li>
 <li>$tokensFolder
 : <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a63484cecc3fc5526233ee0e96656a377">RestServer</a>
+</li>
+<li>$transformerOp
+: <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a4bd818b03aa10d8275f1a42bb7a5f6a5">DAO</a>
+</li>
+<li>$transformers
+: <a class="el" href="class_ubiquity_1_1contents_1_1transformation_1_1_transformers_manager.html#a4f8449c25b3a04780dc51ea4a64cce9a">TransformersManager</a>
+, <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_model_parser.html#a4f8449c25b3a04780dc51ea4a64cce9a">ModelParser</a>
 </li>
 <li>$twig
 : <a class="el" href="class_ubiquity_1_1views_1_1engine_1_1_twig.html#a95b22cf97ae99a402854f5f45a9871bf">Twig</a>
@@ -1128,6 +1149,9 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>$user
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#a598ca4e71b15a1313ec95f0df1027ca5">RepositoryGit</a>
 , <a class="el" href="class_ubiquity_1_1db_1_1_database.html#a598ca4e71b15a1313ec95f0df1027ca5">Database</a>
+</li>
+<li>$useTransformers
+: <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a5f322eb415441bc1ee23b18881a5e7d6">DAO</a>
 </li>
 <li>$useValidation
 : <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ae8bc5ac889bfcfdded324ad962659b63">RestBaseController</a>
@@ -1192,7 +1216,7 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Sun Mar 31 2019 20:36:10 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:56 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

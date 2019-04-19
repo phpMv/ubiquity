@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -164,8 +164,8 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <li>setAccept()
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a896e7ef89d482aa5a65f705596125f42">UResponse</a>
 </li>
-<li>setAccessAllowOrigin()
-: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ace7450a377e671c3d1a4f5e4dde72e6f">RestServer</a>
+<li>setAccessControlAllowOriginHeader()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#aceadc2c4e07fedaf0ae0efa3542c8fd4">RestServer</a>
 </li>
 <li>setAccessControlHeaders()
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a417b64296925e5cff93dd83478f2b5ae">UResponse</a>
@@ -188,6 +188,12 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 </li>
 <li>setActiveThemeFromTwig()
 : <a class="el" href="class_ubiquity_1_1themes_1_1_themes_manager.html#a5f17071de9ed61c8d902f2e7f271ea48">ThemesManager</a>
+</li>
+<li>setAllowedOrigin()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a303750a8294223c39ffa42a9fdf384b9">RestServer</a>
+</li>
+<li>setAllowedOrigins()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a7221a68152123fd43d511ad1a8c5c7da">RestServer</a>
 </li>
 <li>setAnnots()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html#a633ba9577f64e62fedcde45d5a09a073">ControllerAction</a>
@@ -542,8 +548,17 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <li>setTmp()
 : <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a17b9f23b03e534bee408abc5ec753098">USession</a>
 </li>
+<li>setTokenDuration()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a2a5fd0765076e8a7ce4564c538fae818">RestServer</a>
+</li>
+<li>setTokenLength()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ad3267a9836cbfbd6629f751ea87c85c5">RestServer</a>
+</li>
 <li>setToMember()
 : <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_relations_assignments_trait.html#afcae0716a4288453ca9f67dacd9f2842">DAORelationsAssignmentsTrait</a>
+</li>
+<li>setTransformerOp()
+: <a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#adc1a442aba5ff0af67d9024d03c277d7">DAO</a>
 </li>
 <li>setType()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_cache_file.html#ade096bf521b5d05dcaff2ba1a42e9f71">CacheFile</a>
@@ -660,6 +675,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 : <a class="el" href="class_ubiquity_1_1assets_1_1_assets_manager.html#a8995d16c88b039b595208294475c4325">AssetsManager</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1_cache_manager.html#a8995d16c88b039b595208294475c4325">CacheManager</a>
 , <a class="el" href="class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#a146085d0f3a9d17bdcd7f3d4081d8c0d">NormalizersManager</a>
+, <a class="el" href="class_ubiquity_1_1contents_1_1transformation_1_1_transformers_manager.html#a146085d0f3a9d17bdcd7f3d4081d8c0d">TransformersManager</a>
 , <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#a146085d0f3a9d17bdcd7f3d4081d8c0d">ValidatorsManager</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1_router.html#a146085d0f3a9d17bdcd7f3d4081d8c0d">Router</a>
 , <a class="el" href="class_ubiquity_1_1events_1_1_events_manager.html#a146085d0f3a9d17bdcd7f3d4081d8c0d">EventsManager</a>
@@ -674,6 +690,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 </li>
 <li>startProd()
 : <a class="el" href="class_ubiquity_1_1cache_1_1_cache_manager.html#a74752a2c30110e88312cdc26b887f6d5">CacheManager</a>
+, <a class="el" href="class_ubiquity_1_1contents_1_1transformation_1_1_transformers_manager.html#a7204a4fc0871b27e3b918531fff09f61">TransformersManager</a>
 </li>
 <li>startRest()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1_router.html#aec244f547413490d078f991a67ab7ad9">Router</a>
@@ -696,6 +713,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_apcu_cache.html#abb4d1a5e6e951eb533da34f8395d1e87">ApcuCache</a>
 , <a class="el" href="class_ubiquity_1_1cache_1_1system_1_1_php_fast_cache_driver.html#a42af565dba40b474c39aad09fbd26ac0">PhpFastCacheDriver</a>
 , <a class="el" href="class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html#a329e7409ded5676e45610da6fd20d826">NormalizersManager</a>
+, <a class="el" href="class_ubiquity_1_1contents_1_1transformation_1_1_transformers_manager.html#a329e7409ded5676e45610da6fd20d826">TransformersManager</a>
 , <a class="el" href="class_ubiquity_1_1contents_1_1validation_1_1_validators_manager.html#a3d0fe1dbdd35b3817cebc4b4d29c8467">ValidatorsManager</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1di_1_1_di_manager.html#a97a947b6f768c5b9884af1b1095e565e">DiManager</a>
 , <a class="el" href="class_ubiquity_1_1events_1_1_events_manager.html#a329e7409ded5676e45610da6fd20d826">EventsManager</a>
@@ -737,7 +755,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Sun Mar 31 2019 20:36:10 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:56 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

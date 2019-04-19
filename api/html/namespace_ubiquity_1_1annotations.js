@@ -13,6 +13,7 @@ var namespace_ubiquity_1_1annotations =
     [ "ManyToOneAnnotation", "class_ubiquity_1_1annotations_1_1_many_to_one_annotation.html", null ],
     [ "OneToManyAnnotation", "class_ubiquity_1_1annotations_1_1_one_to_many_annotation.html", "class_ubiquity_1_1annotations_1_1_one_to_many_annotation" ],
     [ "TableAnnotation", "class_ubiquity_1_1annotations_1_1_table_annotation.html", "class_ubiquity_1_1annotations_1_1_table_annotation" ],
+    [ "TransformerAnnotation", "class_ubiquity_1_1annotations_1_1_transformer_annotation.html", "class_ubiquity_1_1annotations_1_1_transformer_annotation" ],
     [ "TransientAnnotation", "class_ubiquity_1_1annotations_1_1_transient_annotation.html", null ],
     [ "ValidatorAnnotation", "class_ubiquity_1_1annotations_1_1_validator_annotation.html", "class_ubiquity_1_1annotations_1_1_validator_annotation" ],
     [ "YumlAnnotation", "class_ubiquity_1_1annotations_1_1_yuml_annotation.html", "class_ubiquity_1_1annotations_1_1_yuml_annotation" ]

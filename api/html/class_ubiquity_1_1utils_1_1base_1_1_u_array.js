@@ -19,5 +19,6 @@ var class_ubiquity_1_1utils_1_1base_1_1_u_array =
     [ "removeOne", "class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a03b0155bf02e536cf030550859c745bd", null ],
     [ "removeRecursive", "class_ubiquity_1_1utils_1_1base_1_1_u_array.html#abe0902b69c5d341ca6803ab20d92c2f5", null ],
     [ "save", "class_ubiquity_1_1utils_1_1base_1_1_u_array.html#ab94b5a5ac4761d3e676747d7b092f6d9", null ],
+    [ "toJSON", "class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a37b8bfa2544a37989a0ffc60956c1196", null ],
     [ "update", "class_ubiquity_1_1utils_1_1base_1_1_u_array.html#a35293ccca85d69cbd755d4ee90f00936", null ]
 ];

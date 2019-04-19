@@ -13,7 +13,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait =
     [ "editMember", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aa79caf3934e4b7fa0efe087357259e3d", null ],
     [ "getFKMethods", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a85c6ec9a247a2af03734b0c24cda6a1b", null ],
     [ "getInstances", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#af4fa9542d1d380682c359994f5ecd4c4", null ],
-    [ "getModelInstance", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a50add1041c8caad54c79af5994a71349", null ],
+    [ "getModelInstance", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a12af13cd42b326f0e9f79eaad63873aa", null ],
     [ "getModelsNS", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aabf70fcf5a14ea59a785ad7b447be9cd", null ],
     [ "newModel", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aecdbe3615973e0882335d16af111760c", null ],
     [ "refresh_", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#a8563034d9f1632d2f83ff49dd0104872", null ],

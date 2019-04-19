@@ -19,7 +19,7 @@ var searchData=
   ['loadmanytomanys',['loadManyToManys',['../class_ubiquity_1_1utils_1_1yuml_1_1traits_1_1_class_to_yuml_relations_trait.html#a19209e708c5c62f18f0949a88a2a2bc9',1,'Ubiquity::utils::yuml::traits::ClassToYumlRelationsTrait']]],
   ['loadmanytoone',['loadManyToOne',['../class_ubiquity_1_1utils_1_1yuml_1_1traits_1_1_class_to_yuml_relations_trait.html#a19af5568579534eec338d921bf38b256',1,'Ubiquity::utils::yuml::traits::ClassToYumlRelationsTrait']]],
   ['loadmodifiedfiles',['loadModifiedFiles',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#aff183410c1e30a768ccaa1355083b4a3',1,'Ubiquity::controllers::admin::popo::RepositoryGit']]],
-  ['loadobjectfromrow',['loadObjectFromRow',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a64e5a28492856098339dc8f3c4bcc5a2',1,'Ubiquity::orm::traits::DAOCoreTrait']]],
+  ['loadobjectfromrow',['loadObjectFromRow',['../class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a572d2dee0b2d888657ec031d65289346',1,'Ubiquity::orm::traits::DAOCoreTrait']]],
   ['loadonetomanys',['loadOneToManys',['../class_ubiquity_1_1utils_1_1yuml_1_1traits_1_1_class_to_yuml_relations_trait.html#a57073712d534343b5e982bc22a5c10ed',1,'Ubiquity::utils::yuml::traits::ClassToYumlRelationsTrait']]],
   ['loadrelationshipsdatas',['loadRelationshipsDatas',['../class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#aebc72fa2fbc8a323bfec5c26b96d93c2',1,'Ubiquity::controllers::rest::api::jsonapi::JsonApiRestController']]],
   ['loaduntrackedfiles',['loadUntrackedFiles',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#aeaf126ee8eb687cb49b1ef1f99dff231',1,'Ubiquity::controllers::admin::popo::RepositoryGit']]],
@@ -37,5 +37,7 @@ var searchData=
   ['logstrait',['LogsTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_logs_trait.html',1,'Ubiquity::controllers::admin::traits']]],
   ['logstrait_2ephp',['LogsTrait.php',['../_logs_trait_8php.html',1,'']]],
   ['longdate',['longDate',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#a61df175a355727b7e05db4284ad07110',1,'Ubiquity::utils::base::UDateTime']]],
-  ['longdatetime',['longDatetime',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#af8adf4772d4337edde8c5d623533e924',1,'Ubiquity::utils::base::UDateTime']]]
+  ['longdatetime',['longDatetime',['../class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html#af8adf4772d4337edde8c5d623533e924',1,'Ubiquity::utils::base::UDateTime']]],
+  ['lowercase',['LowerCase',['../class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_lower_case.html',1,'Ubiquity::contents::transformation::transformers']]],
+  ['lowercase_2ephp',['LowerCase.php',['../_lower_case_8php.html',1,'']]]
 ];

@@ -20,6 +20,7 @@ var class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller =
     [ "initialize", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a91098fa7d1917ce4833f284bbef12627", null ],
     [ "isValid", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ad1d410c5fc522dc8cc9ddbd5752b00ad", null ],
     [ "onInvalidControl", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ac2051a426b1e66a8f0124acc49d0d059", null ],
+    [ "requireAuth", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#afd6236403f1de9747a9d1fd6410058d6", null ],
     [ "$config", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a49c7011be9c979d9174c52a8b83e5d8e", null ],
     [ "$contentType", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#ab8c052d0ddebb9f14151f8682916a587", null ],
     [ "$model", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html#a08fdd91bde255dbe3e2d15a22d9663e8", null ],

@@ -5,7 +5,7 @@ var class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_respons
     [ "addRelationshipsLink", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#a50d1b2b18a1a2651095677e5612ff858", null ],
     [ "addSelfLink", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#a324548ad7173a8a6043d08a02599132f", null ],
     [ "cleanRestObject", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#acff5bad7999acdf387e455c394e53bf2", null ],
-    [ "get", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#ae889a7789555816b2036718b05bc77eb", null ],
+    [ "get", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#aab89af4b8eecc2a57560c3c863a5f61b", null ],
     [ "getFrontClassname", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#abdcd10b3e35dc2d9652e6da4ee7ce3fd", null ],
     [ "getLink", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#af1e4af80e21a066d1077978b9d6f8771", null ],
     [ "$baseRoute", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html#a7a8ddfac3b2b8acc9d950b2932c66d66", null ],

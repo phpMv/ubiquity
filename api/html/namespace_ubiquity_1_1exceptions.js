@@ -8,6 +8,7 @@ var namespace_ubiquity_1_1exceptions =
     [ "RestException", "class_ubiquity_1_1exceptions_1_1_rest_exception.html", "class_ubiquity_1_1exceptions_1_1_rest_exception" ],
     [ "RouterException", "class_ubiquity_1_1exceptions_1_1_router_exception.html", "class_ubiquity_1_1exceptions_1_1_router_exception" ],
     [ "ThemesException", "class_ubiquity_1_1exceptions_1_1_themes_exception.html", "class_ubiquity_1_1exceptions_1_1_themes_exception" ],
+    [ "TransformerException", "class_ubiquity_1_1exceptions_1_1_transformer_exception.html", "class_ubiquity_1_1exceptions_1_1_transformer_exception" ],
     [ "UbiquityException", "class_ubiquity_1_1exceptions_1_1_ubiquity_exception.html", "class_ubiquity_1_1exceptions_1_1_ubiquity_exception" ],
     [ "ValidatorException", "class_ubiquity_1_1exceptions_1_1_validator_exception.html", "class_ubiquity_1_1exceptions_1_1_validator_exception" ]
 ];

@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -85,6 +85,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1rest_
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">RestServer Class Reference</div>  </div>
@@ -107,10 +108,11 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1rest_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7b103396d136b662e2d0e01de876c659"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a7b103396d136b662e2d0e01de876c659">__construct</a> (&amp;$config)</td></tr>
-<tr class="separator:a7b103396d136b662e2d0e01de876c659"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1e177868564de0dbccade25742b64f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ad1e177868564de0dbccade25742b64f0">connect</a> (<a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html">RestBaseController</a> $controller)</td></tr>
-<tr class="separator:ad1e177868564de0dbccade25742b64f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb96f5b60e4bdb880e0267d43061907a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#abb96f5b60e4bdb880e0267d43061907a">__construct</a> (&amp;$config, $headers=null)</td></tr>
+<tr class="separator:abb96f5b60e4bdb880e0267d43061907a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78572828d11dcdf2a498497d9001d557"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a78572828d11dcdf2a498497d9001d557">connect</a> ()</td></tr>
+<tr class="memdesc:a78572828d11dcdf2a498497d9001d557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes the connection with the server, returns an added token in the Authorization header of the request.  <a href="#a78572828d11dcdf2a498497d9001d557">More...</a><br /></td></tr>
+<tr class="separator:a78572828d11dcdf2a498497d9001d557"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b37efab7473a1effc29f8be2421f6e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a7b37efab7473a1effc29f8be2421f6e3">isValid</a> ()</td></tr>
 <tr class="memdesc:a7b37efab7473a1effc29f8be2421f6e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if token is valid.  <a href="#a7b37efab7473a1effc29f8be2421f6e3">More...</a><br /></td></tr>
 <tr class="separator:a7b37efab7473a1effc29f8be2421f6e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -122,22 +124,46 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a35058f7fd8388739b627d59b4a6f36ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6275573a5647b8deb92eedeeee07e2d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a6275573a5647b8deb92eedeeee07e2d1">_addHeaderToken</a> ($token)</td></tr>
 <tr class="separator:a6275573a5647b8deb92eedeeee07e2d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39cde955fcb96e0dda2d4e74a74c5258"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a39cde955fcb96e0dda2d4e74a74c5258">_getApiTokens</a> ()</td></tr>
-<tr class="memdesc:a39cde955fcb96e0dda2d4e74a74c5258"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for defining another ApiToken type.  <a href="#a39cde955fcb96e0dda2d4e74a74c5258">More...</a><br /></td></tr>
-<tr class="separator:a39cde955fcb96e0dda2d4e74a74c5258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c193ec78a66fe64eb0ac6680db70e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a08c193ec78a66fe64eb0ac6680db70e9">_loadApiTokens</a> ()</td></tr>
+<tr class="separator:a08c193ec78a66fe64eb0ac6680db70e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23d71dfc419d9f8f70f6ca2bbbaa67c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a23d71dfc419d9f8f70f6ca2bbbaa67c0">_header</a> ($headerField, $value=null, $replace=null)</td></tr>
 <tr class="separator:a23d71dfc419d9f8f70f6ca2bbbaa67c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5abffad75db388859a9107ae67c8968"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#aa5abffad75db388859a9107ae67c8968">_setContentType</a> ($contentType=null, $charset=null)</td></tr>
 <tr class="separator:aa5abffad75db388859a9107ae67c8968"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a170a763f1d5f4bdf47fed3bd8d691d91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a170a763f1d5f4bdf47fed3bd8d691d91">cors</a> ()</td></tr>
 <tr class="separator:a170a763f1d5f4bdf47fed3bd8d691d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace7450a377e671c3d1a4f5e4dde72e6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ace7450a377e671c3d1a4f5e4dde72e6f">setAccessAllowOrigin</a> ($address=' *')</td></tr>
-<tr class="separator:ace7450a377e671c3d1a4f5e4dde72e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a303750a8294223c39ffa42a9fdf384b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a303750a8294223c39ffa42a9fdf384b9">setAllowedOrigin</a> ($address=' *')</td></tr>
+<tr class="memdesc:a303750a8294223c39ffa42a9fdf384b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an unique allowed origin for access control.  <a href="#a303750a8294223c39ffa42a9fdf384b9">More...</a><br /></td></tr>
+<tr class="separator:a303750a8294223c39ffa42a9fdf384b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7221a68152123fd43d511ad1a8c5c7da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a7221a68152123fd43d511ad1a8c5c7da">setAllowedOrigins</a> ($addresses)</td></tr>
+<tr class="memdesc:a7221a68152123fd43d511ad1a8c5c7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the allowed origins for access control.  <a href="#a7221a68152123fd43d511ad1a8c5c7da">More...</a><br /></td></tr>
+<tr class="separator:a7221a68152123fd43d511ad1a8c5c7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51a0289961d661288c9a45af6926c8ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a51a0289961d661288c9a45af6926c8ff">addAllowedOrigin</a> ($address)</td></tr>
+<tr class="memdesc:a51a0289961d661288c9a45af6926c8ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an allowed origin for access control.  <a href="#a51a0289961d661288c9a45af6926c8ff">More...</a><br /></td></tr>
+<tr class="separator:a51a0289961d661288c9a45af6926c8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3267a9836cbfbd6629f751ea87c85c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ad3267a9836cbfbd6629f751ea87c85c5">setTokenLength</a> ($tokenLength)</td></tr>
+<tr class="separator:ad3267a9836cbfbd6629f751ea87c85c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a5fd0765076e8a7ce4564c538fae818"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a2a5fd0765076e8a7ce4564c538fae818">setTokenDuration</a> ($tokenDuration)</td></tr>
+<tr class="separator:a2a5fd0765076e8a7ce4564c538fae818"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a81c41ea609e8ccc42247b8bce3a3a7f7"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a81c41ea609e8ccc42247b8bce3a3a7f7">getRestNamespace</a> ()</td></tr>
 <tr class="separator:a81c41ea609e8ccc42247b8bce3a3a7f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aed04daa6afff5d0a2aff57caeb8c0299"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#aed04daa6afff5d0a2aff57caeb8c0299">getApiTokens</a> ()</td></tr>
+<tr class="separator:aed04daa6afff5d0a2aff57caeb8c0299"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26550c4f808428df88786a3d4859d6c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a26550c4f808428df88786a3d4859d6c0">newApiTokens</a> ()</td></tr>
+<tr class="memdesc:a26550c4f808428df88786a3d4859d6c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">To override for defining another ApiToken type.  <a href="#a26550c4f808428df88786a3d4859d6c0">More...</a><br /></td></tr>
+<tr class="separator:a26550c4f808428df88786a3d4859d6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1317ed78f7575ad98effc2b3e30cd6d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a1317ed78f7575ad98effc2b3e30cd6d6">getAllowedOrigin</a> ()</td></tr>
+<tr class="separator:a1317ed78f7575ad98effc2b3e30cd6d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceadc2c4e07fedaf0ae0efa3542c8fd4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#aceadc2c4e07fedaf0ae0efa3542c8fd4">setAccessControlAllowOriginHeader</a> ()</td></tr>
+<tr class="separator:aceadc2c4e07fedaf0ae0efa3542c8fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d7a4d59da0134dd3fcb8403e8d31223"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a0d7a4d59da0134dd3fcb8403e8d31223">addOtherHeaders</a> ()</td></tr>
+<tr class="separator:a0d7a4d59da0134dd3fcb8403e8d31223"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -147,8 +173,14 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a52500036ee807241b8b4b7e2367c49ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63484cecc3fc5526233ee0e96656a377"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a63484cecc3fc5526233ee0e96656a377">$tokensFolder</a></td></tr>
 <tr class="separator:a63484cecc3fc5526233ee0e96656a377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e14b2bb8e230358fa7f2b1ad927f20c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a6e14b2bb8e230358fa7f2b1ad927f20c">$tokenLength</a></td></tr>
+<tr class="separator:a6e14b2bb8e230358fa7f2b1ad927f20c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac826e0bb08c612c27a3183cb9c19f874"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ac826e0bb08c612c27a3183cb9c19f874">$tokenDuration</a></td></tr>
+<tr class="separator:ac826e0bb08c612c27a3183cb9c19f874"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b5963901aaab0702d4603f546bc6a60"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a5b5963901aaab0702d4603f546bc6a60">$tokensCacheKey</a> = &quot;_apiTokens&quot;</td></tr>
 <tr class="separator:a5b5963901aaab0702d4603f546bc6a60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad33cf09aacdaed7fc592a3443c5f44be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#ad33cf09aacdaed7fc592a3443c5f44be">$allowedOrigins</a></td></tr>
+<tr class="separator:ad33cf09aacdaed7fc592a3443c5f44be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c34035157fc218f1f464943f9698865"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a0c34035157fc218f1f464943f9698865">$apiTokens</a></td></tr>
 <tr class="separator:a0c34035157fc218f1f464943f9698865"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -156,12 +188,12 @@ Protected Attributes</h2></td></tr>
 <div class="textblock"><p>Rest server base class. </p>
 <p><a class="el" href="namespace_ubiquity.html">Ubiquity</a>$RestServer This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a></p>
 <dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.0.3 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.6 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00020">20</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00021">21</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7b103396d136b662e2d0e01de876c659"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b103396d136b662e2d0e01de876c659">&#9670;&nbsp;</a></span>__construct()</h2>
+<a id="abb96f5b60e4bdb880e0267d43061907a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb96f5b60e4bdb880e0267d43061907a">&#9670;&nbsp;</a></span>__construct()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,13 +202,23 @@ Protected Attributes</h2></td></tr>
           <td class="memname">__construct </td>
           <td>(</td>
           <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$config</em></td><td>)</td>
+          <td class="paramname"><em>$config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$headers</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00036">36</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00040">40</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -197,29 +239,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00095">95</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
-
-</div>
-</div>
-<a id="a39cde955fcb96e0dda2d4e74a74c5258"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39cde955fcb96e0dda2d4e74a74c5258">&#9670;&nbsp;</a></span>_getApiTokens()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">_getApiTokens </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>To override for defining another ApiToken type. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html">ApiTokens</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00104">104</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00112">112</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -239,7 +259,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00087">87</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00104">104</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -258,7 +278,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00066">66</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00078">78</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -302,7 +322,26 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00114">114</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00165">165</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="a08c193ec78a66fe64eb0ac6680db70e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08c193ec78a66fe64eb0ac6680db70e9">&#9670;&nbsp;</a></span>_loadApiTokens()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_loadApiTokens </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00116">116</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -339,12 +378,67 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00129">129</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00181">181</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
-<a id="ad1e177868564de0dbccade25742b64f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1e177868564de0dbccade25742b64f0">&#9670;&nbsp;</a></span>connect()</h2>
+<a id="a51a0289961d661288c9a45af6926c8ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51a0289961d661288c9a45af6926c8ff">&#9670;&nbsp;</a></span>addAllowedOrigin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">addAllowedOrigin </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds an allowed origin for access control. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$address</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00243">243</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="a0d7a4d59da0134dd3fcb8403e8d31223"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d7a4d59da0134dd3fcb8403e8d31223">&#9670;&nbsp;</a></span>addOtherHeaders()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">addOtherHeaders </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00153">153</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="a78572828d11dcdf2a498497d9001d557"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78572828d11dcdf2a498497d9001d557">&#9670;&nbsp;</a></span>connect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -352,14 +446,16 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">connect </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html">RestBaseController</a>&#160;</td>
-          <td class="paramname"><em>$controller</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00041">41</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p>Establishes the connection with the server, returns an added token in the Authorization header of the request. </p>
+<dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00053">53</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -378,7 +474,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00136">136</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00188">188</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -397,7 +493,61 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00080">80</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00097">97</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="a1317ed78f7575ad98effc2b3e30cd6d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1317ed78f7575ad98effc2b3e30cd6d6">&#9670;&nbsp;</a></span>getAllowedOrigin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">getAllowedOrigin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00136">136</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="aed04daa6afff5d0a2aff57caeb8c0299"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed04daa6afff5d0a2aff57caeb8c0299">&#9670;&nbsp;</a></span>getApiTokens()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">getApiTokens </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00120">120</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -424,7 +574,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00153">153</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00206">206</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -446,18 +596,75 @@ Protected Attributes</h2></td></tr>
 <p>Check if token is valid. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00055">55</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00067">67</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
-<a id="ace7450a377e671c3d1a4f5e4dde72e6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace7450a377e671c3d1a4f5e4dde72e6f">&#9670;&nbsp;</a></span>setAccessAllowOrigin()</h2>
+<a id="a26550c4f808428df88786a3d4859d6c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26550c4f808428df88786a3d4859d6c0">&#9670;&nbsp;</a></span>newApiTokens()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">newApiTokens </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>To override for defining another ApiToken type. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html" title="Manage the token api for the Rest part. ">ApiTokens</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00132">132</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="aceadc2c4e07fedaf0ae0efa3542c8fd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aceadc2c4e07fedaf0ae0efa3542c8fd4">&#9670;&nbsp;</a></span>setAccessControlAllowOriginHeader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">setAccessControlAllowOriginHeader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00147">147</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="a303750a8294223c39ffa42a9fdf384b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a303750a8294223c39ffa42a9fdf384b9">&#9670;&nbsp;</a></span>setAllowedOrigin()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setAccessAllowOrigin </td>
+          <td class="memname">setAllowedOrigin </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$address</em> = <code>'*'</code></td><td>)</td>
@@ -466,11 +673,123 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00163">163</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p>Adds an unique allowed origin for access control. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$address</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00221">221</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="a7221a68152123fd43d511ad1a8c5c7da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7221a68152123fd43d511ad1a8c5c7da">&#9670;&nbsp;</a></span>setAllowedOrigins()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setAllowedOrigins </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$addresses</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the allowed origins for access control. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$addresses</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00234">234</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="a2a5fd0765076e8a7ce4564c538fae818"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5fd0765076e8a7ce4564c538fae818">&#9670;&nbsp;</a></span>setTokenDuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setTokenDuration </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$tokenDuration</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">mixed</td><td class="paramname">$tokenDuration</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00259">259</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="ad3267a9836cbfbd6629f751ea87c85c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3267a9836cbfbd6629f751ea87c85c5">&#9670;&nbsp;</a></span>setTokenLength()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setTokenLength </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$tokenLength</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$tokenLength</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00251">251</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a id="ad33cf09aacdaed7fc592a3443c5f44be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad33cf09aacdaed7fc592a3443c5f44be">&#9670;&nbsp;</a></span>$allowedOrigins</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$allowedOrigins</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00032">32</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
 <a id="a0c34035157fc218f1f464943f9698865"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0c34035157fc218f1f464943f9698865">&#9670;&nbsp;</a></span>$apiTokens</h2>
 
@@ -491,7 +810,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00034">34</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00038">38</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -515,7 +834,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00025">25</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00026">26</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -539,7 +858,55 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00026">26</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00027">27</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="ac826e0bb08c612c27a3183cb9c19f874"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac826e0bb08c612c27a3183cb9c19f874">&#9670;&nbsp;</a></span>$tokenDuration</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$tokenDuration</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00030">30</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+
+</div>
+</div>
+<a id="a6e14b2bb8e230358fa7f2b1ad927f20c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e14b2bb8e230358fa7f2b1ad927f20c">&#9670;&nbsp;</a></span>$tokenLength</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$tokenLength</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00029">29</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -563,7 +930,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00028">28</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00031">31</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -587,7 +954,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00027">27</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_server_8php_source.html#l00028">28</a> of file <a class="el" href="_rest_server_8php_source.html">RestServer.php</a>.</p>
 
 </div>
 </div>
@@ -601,7 +968,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers.html">controllers</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers_1_1rest.html">rest</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html">RestServer</a></li>
-    <li class="footer"><small>Generated on Sun Mar 31 2019 20:36:04 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:50 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

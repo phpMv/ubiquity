@@ -8,6 +8,7 @@ var class_ubiquity_1_1utils_1_1http_1_1_u_request =
     [ "getDefaultLanguage", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a54abc1e8880310a4c7c788b399f46893", null ],
     [ "getInput", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a9d9fdcf7c2d3532391ec3927bbeb64db", null ],
     [ "getMethod", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a15c21b4ee0a97ff64b2b1258bc405b08", null ],
+    [ "getOrigin", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#aef10b9fe9b4eea559a874d56142e1736", null ],
     [ "getPost", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a6eb8fdba3c59f2cf5e1fd8e0a9f87ba3", null ],
     [ "getRealGET", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a24c4ee953f645ca44e94e1cf245f76af", null ],
     [ "getRealInput", "class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a2f13135769c12089f9488483dfd38b30", null ],

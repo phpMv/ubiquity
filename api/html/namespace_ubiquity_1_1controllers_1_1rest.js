@@ -8,5 +8,6 @@ var namespace_ubiquity_1_1controllers_1_1rest =
     [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller" ],
     [ "RestControllerUtilitiesTrait", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait" ],
     [ "RestError", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_error.html", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_error" ],
-    [ "RestServer", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server" ]
+    [ "RestServer", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server" ],
+    [ "SimpleRestController", "class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller.html", "class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller" ]
 ];

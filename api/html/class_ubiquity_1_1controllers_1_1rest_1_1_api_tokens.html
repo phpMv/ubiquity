@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -84,14 +84,16 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1rest_
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
-<a href="#pri-static-attribs">Static Private Attributes</a>  </div>
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">ApiTokens Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Manage the token api for the Rest part.  
+ <a href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -115,19 +117,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a95483af4e2c07dc9893fe058b026bd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cfc50ccc1424177c02776a341a9c3ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a6cfc50ccc1424177c02776a341a9c3ce">storeToCache</a> ($key=&quot;_apiTokens&quot;)</td></tr>
 <tr class="separator:a6cfc50ccc1424177c02776a341a9c3ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae5bad7e671cd2785237ad8faa9e74038"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#ae5bad7e671cd2785237ad8faa9e74038">getFromCache</a> ($folder, $key=&quot;_apiTokens&quot;, $length=10, $duration=3600)</td></tr>
-<tr class="separator:ae5bad7e671cd2785237ad8faa9e74038"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a591dfaf6c58c7890a0c336e6c173c481"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a591dfaf6c58c7890a0c336e6c173c481">getFromCache</a> ($folder, $key=&quot;_apiTokens&quot;)</td></tr>
+<tr class="separator:a591dfaf6c58c7890a0c336e6c173c481"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a231d4fd8d99742848c95dce07ded3dc2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a231d4fd8d99742848c95dce07ded3dc2">generateToken</a> ()</td></tr>
 <tr class="separator:a231d4fd8d99742848c95dce07ded3dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7901d405fdce8c3b4f6e7cea7cf0c37"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#aa7901d405fdce8c3b4f6e7cea7cf0c37">tokenGenerator</a> ()</td></tr>
+<tr class="separator:aa7901d405fdce8c3b4f6e7cea7cf0c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
 <tr class="memitem:a72ead29e4317fbc4335fd3ba764e8b59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#a72ead29e4317fbc4335fd3ba764e8b59">$tokens</a></td></tr>
 <tr class="separator:a72ead29e4317fbc4335fd3ba764e8b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf14d8e29912c1855022dfa252aa4087"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#adf14d8e29912c1855022dfa252aa4087">$length</a></td></tr>
@@ -135,14 +136,18 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:acae43950182b63cd06434397298dad7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#acae43950182b63cd06434397298dad7d">$duration</a></td></tr>
 <tr class="separator:acae43950182b63cd06434397298dad7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
-Static Private Attributes</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
 <tr class="memitem:ac2dc76d756ec398393d4b1d23659276c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html#ac2dc76d756ec398393d4b1d23659276c">$cache</a></td></tr>
 <tr class="separator:ac2dc76d756ec398393d4b1d23659276c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00008">8</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<div class="textblock"><p>Manage the token api for the Rest part. </p>
+<p><a class="el" href="namespace_ubiquity.html">Ubiquity</a>$ApiTokens This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a></p>
+<dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.1 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00017">17</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a84a121e2280a0feb771928fd7f7da870"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a84a121e2280a0feb771928fd7f7da870">&#9670;&nbsp;</a></span>__construct()</h2>
@@ -176,7 +181,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00014">14</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00023">23</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -196,7 +201,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00048">48</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00061">61</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -215,7 +220,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00054">54</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00067">67</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -242,7 +247,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00020">20</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00029">29</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -261,21 +266,18 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00031">31</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00044">44</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
-<a id="ae5bad7e671cd2785237ad8faa9e74038"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5bad7e671cd2785237ad8faa9e74038">&#9670;&nbsp;</a></span>getFromCache()</h2>
+<a id="a591dfaf6c58c7890a0c336e6c173c481"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a591dfaf6c58c7890a0c336e6c173c481">&#9670;&nbsp;</a></span>getFromCache()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static getFromCache </td>
+          <td class="memname">getFromCache </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$folder</em>, </td>
@@ -284,19 +286,7 @@ Static Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$key</em> = <code>&quot;_apiTokens&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$length</em> = <code>10</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$duration</em> = <code>3600</code>&#160;</td>
+          <td class="paramname"><em>$key</em> = <code>&quot;_apiTokens&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -304,24 +294,17 @@ Static Private Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype"></td><td class="paramname">$folder</td><td></td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$key</td><td></td></tr>
-    <tr><td class="paramtype">number</td><td class="paramname">$length</td><td></td></tr>
-    <tr><td class="paramtype">number</td><td class="paramname">$duration</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html">ApiTokens</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html" title="Manage the token api for the Rest part. ">ApiTokens</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00087">87</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00099">99</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -341,7 +324,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00035">35</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00048">48</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -360,7 +343,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00027">27</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00040">40</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -380,7 +363,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00041">41</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00054">54</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -400,7 +383,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00067">67</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00080">80</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -419,7 +402,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00058">58</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00071">71</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -439,7 +422,34 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00075">75</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00088">88</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+
+</div>
+</div>
+<a id="aa7901d405fdce8c3b4f6e7cea7cf0c37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7901d405fdce8c3b4f6e7cea7cf0c37">&#9670;&nbsp;</a></span>tokenGenerator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tokenGenerator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00036">36</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -459,12 +469,12 @@ Static Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00012">12</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00021">21</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -483,12 +493,12 @@ Static Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00011">11</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00020">20</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -507,12 +517,12 @@ Static Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00010">10</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00019">19</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -531,12 +541,12 @@ Static Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00009">9</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_api_tokens_8php_source.html#l00018">18</a> of file <a class="el" href="_api_tokens_8php_source.html">ApiTokens.php</a>.</p>
 
 </div>
 </div>
@@ -550,7 +560,7 @@ Static Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers.html">controllers</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers_1_1rest.html">rest</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_api_tokens.html">ApiTokens</a></li>
-    <li class="footer"><small>Generated on Sun Mar 31 2019 20:36:04 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:49 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

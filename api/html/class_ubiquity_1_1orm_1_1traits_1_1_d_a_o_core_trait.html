@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1orm_1_1traits_1_1_d_
 <div class="header">
   <div class="summary">
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="#pri-static-methods">Static Private Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">DAOCoreTrait Class Reference</div>  </div>
@@ -128,22 +129,25 @@ Static Protected Member Functions</h2></td></tr>
 <tr class="memitem:a2afe65f39e5ce2bec1dc079276164a50"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a2afe65f39e5ce2bec1dc079276164a50">_getAll</a> ($className, <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a> $conditionParser, $included=true, $useCache=NULL)</td></tr>
 <tr class="separator:a2afe65f39e5ce2bec1dc079276164a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
+<tr class="memitem:af2a5c7931f51c95db786937292c398ab"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#af2a5c7931f51c95db786937292c398ab">$accessors</a> = [ ]</td></tr>
+<tr class="separator:af2a5c7931f51c95db786937292c398ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
 <tr class="memitem:a1cdb5318a4efbd46df2b50478d86a559"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a1cdb5318a4efbd46df2b50478d86a559">_getOneToManyFromArray</a> (&amp;$ret, $array, $fkv, $elementAccessor, $prop)</td></tr>
 <tr class="separator:a1cdb5318a4efbd46df2b50478d86a559"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b658915f6f4ad3f9a4a943b15864a46"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a1b658915f6f4ad3f9a4a943b15864a46">getManyToManyFromArray</a> ($instance, $array, $class, $parser)</td></tr>
 <tr class="separator:a1b658915f6f4ad3f9a4a943b15864a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34605f93378f55807be642852110bb3d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a34605f93378f55807be642852110bb3d">prepareAccessors</a> ($accessors, $fields, $row)</td></tr>
-<tr class="separator:a34605f93378f55807be642852110bb3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64e5a28492856098339dc8f3c4bcc5a2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a64e5a28492856098339dc8f3c4bcc5a2">loadObjectFromRow</a> ($row, $className, &amp;$invertedJoinColumns, &amp;$oneToManyFields, &amp;$manyToManyFields, &amp;$oneToManyQueries, &amp;$manyToOneQueries, &amp;$manyToManyParsers, &amp;$accessors, &amp;$fields, &amp;$types)</td></tr>
-<tr class="separator:a64e5a28492856098339dc8f3c4bcc5a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a572d2dee0b2d888657ec031d65289346"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a572d2dee0b2d888657ec031d65289346">loadObjectFromRow</a> ($row, $className, &amp;$invertedJoinColumns, &amp;$manyToOneQueries, &amp;$oneToManyFields, &amp;$manyToManyFields, &amp;$oneToManyQueries, &amp;$manyToManyParsers, &amp;$accessors, &amp;$transformers)</td></tr>
+<tr class="separator:a572d2dee0b2d888657ec031d65289346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bac3fc93366ffb953c227d0d4078e26"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a3bac3fc93366ffb953c227d0d4078e26">parseKey</a> (&amp;$keyValues, $className)</td></tr>
 <tr class="separator:a3bac3fc93366ffb953c227d0d4078e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00024">24</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00026">26</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af41c44382be642def03d2eba533b740f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af41c44382be642def03d2eba533b740f">&#9670;&nbsp;</a></span>_affectsRelationObjects()</h2>
@@ -273,7 +277,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00120">120</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00123">123</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -323,7 +327,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00101">101</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00104">104</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -379,7 +383,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00038">38</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00041">41</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -461,7 +465,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00073">73</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00076">76</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -489,7 +493,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00094">94</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00097">97</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -543,7 +547,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00080">80</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00083">83</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -593,7 +597,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00047">47</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00050">50</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -631,12 +635,12 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00087">87</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00090">90</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
-<a id="a64e5a28492856098339dc8f3c4bcc5a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64e5a28492856098339dc8f3c4bcc5a2">&#9670;&nbsp;</a></span>loadObjectFromRow()</h2>
+<a id="a572d2dee0b2d888657ec031d65289346"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a572d2dee0b2d888657ec031d65289346">&#9670;&nbsp;</a></span>loadObjectFromRow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -666,6 +670,12 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$manyToOneQueries</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
           <td class="paramname"><em>$oneToManyFields</em>, </td>
         </tr>
         <tr>
@@ -684,12 +694,6 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$manyToOneQueries</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&amp;&#160;</td>
           <td class="paramname"><em>$manyToManyParsers</em>, </td>
         </tr>
         <tr>
@@ -702,13 +706,7 @@ Static Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$fields</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$types</em>&#160;</td>
+          <td class="paramname"><em>$transformers</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -727,18 +725,14 @@ Static Private Member Functions</h2></td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$row</td><td></td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$className</td><td></td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$invertedJoinColumns</td><td></td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$oneToManyFields</td><td></td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$oneToManyQueries</td><td></td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$manyToOneQueries</td><td></td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$manyToManyParsers</td><td></td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$accessors</td><td></td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$fields</td><td></td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00183">183</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00167">167</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -776,51 +770,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00210">210</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
-
-</div>
-</div>
-<a id="a34605f93378f55807be642852110bb3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34605f93378f55807be642852110bb3d">&#9670;&nbsp;</a></span>prepareAccessors()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static prepareAccessors </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$accessors</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$fields</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$row</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00158">158</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00200">200</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
 
 </div>
 </div>
@@ -974,6 +924,31 @@ Static Private Member Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="af2a5c7931f51c95db786937292c398ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2a5c7931f51c95db786937292c398ab">&#9670;&nbsp;</a></span>$accessors</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$accessors = [ ]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_core_trait_8php_source.html#l00027">27</a> of file <a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/Ubiquity/orm/traits/<a class="el" href="_d_a_o_core_trait_8php_source.html">DAOCoreTrait.php</a></li>
 </ul>
@@ -984,7 +959,7 @@ Static Private Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm.html">orm</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm_1_1traits.html">traits</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html">DAOCoreTrait</a></li>
-    <li class="footer"><small>Generated on Sun Mar 31 2019 20:36:06 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:52 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

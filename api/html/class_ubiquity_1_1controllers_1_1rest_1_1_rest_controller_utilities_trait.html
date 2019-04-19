@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -98,9 +98,10 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1controllers_1_1rest_
  <div class="center">
   <img src="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.png" usemap="#RestControllerUtilitiesTrait_map" alt=""/>
   <map id="RestControllerUtilitiesTrait_map" name="RestControllerUtilitiesTrait_map">
-<area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html" title="Abstract base class for Rest controllers. " alt="RestBaseController" shape="rect" coords="83,56,239,80"/>
+<area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html" title="Abstract base class for Rest controllers. " alt="RestBaseController" shape="rect" coords="166,56,322,80"/>
 <area href="class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html" title="Rest JsonAPI implementation. " alt="JsonApiRestController" shape="rect" coords="0,112,156,136"/>
 <area href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html" title="Abstract base class for Rest controllers. " alt="RestController" shape="rect" coords="166,112,322,136"/>
+<area href="class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller.html" title="Abstract base class for Simple Rest controllers. " alt="SimpleRestController" shape="rect" coords="332,112,488,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -115,6 +116,8 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a71a369e7ca4b76224f8c182002909016"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a71a369e7ca4b76224f8c182002909016">getDatas</a> ()</td></tr>
 <tr class="separator:a71a369e7ca4b76224f8c182002909016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00473894482924b3fb3a2af9ad176ea1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a00473894482924b3fb3a2af9ad176ea1">getRequestParam</a> ($param, $default)</td></tr>
+<tr class="separator:a00473894482924b3fb3a2af9ad176ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc7017a1966a4c124c2084ce7d69afed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#adc7017a1966a4c124c2084ce7d69afed">operate_</a> ($instance, $callback, $status, $exceptionMessage, $keyValues)</td></tr>
 <tr class="separator:adc7017a1966a4c124c2084ce7d69afed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43422b810b606bd14c7d74924f8b3be9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a43422b810b606bd14c7d74924f8b3be9">generatePagination</a> (&amp;$filter, $pageNumber, $pageSize)</td></tr>
@@ -152,6 +155,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:acd257072c9754ee08d01e1276fb4d26a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37d38a114cc313677745e6c45d38fd41"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a37d38a114cc313677745e6c45d38fd41">getPrimaryKeysFromDatas</a> ($datas, $model)</td></tr>
 <tr class="separator:a37d38a114cc313677745e6c45d38fd41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6b759d9a434ff803b7a2b7f515a57c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#aa6b759d9a434ff803b7a2b7f515a57c5">getCondition</a> ($condition)</td></tr>
+<tr class="separator:aa6b759d9a434ff803b7a2b7f515a57c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -186,7 +191,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00077">77</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00090">90</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -213,7 +218,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00093">93</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00106">106</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -286,7 +291,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00123">123</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00136">136</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -316,7 +321,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00188">188</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00203">203</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -372,7 +377,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00142">142</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00157">157</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -416,7 +421,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00069">69</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00082">82</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -444,7 +449,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00203">203</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00218">218</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -472,7 +477,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00109">109</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00122">122</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -499,7 +504,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00150">150</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00165">165</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -543,7 +548,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00050">50</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00063">63</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -622,7 +627,35 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00177">177</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00192">192</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+
+</div>
+</div>
+<a id="aa6b759d9a434ff803b7a2b7f515a57c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6b759d9a434ff803b7a2b7f515a57c5">&#9670;&nbsp;</a></span>getCondition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">getCondition </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$condition</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00235">235</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -684,7 +717,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array|boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00135">135</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00150">150</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -722,7 +755,53 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00207">207</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00222">222</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+
+</div>
+</div>
+<a id="a00473894482924b3fb3a2af9ad176ea1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00473894482924b3fb3a2af9ad176ea1">&#9670;&nbsp;</a></span>getRequestParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">getRequestParam </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$default</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$param</td><td></td></tr>
+    <tr><td class="paramtype">string&#160;|&#160;boolean</td><td class="paramname">$default</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string|boolean </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00039">39</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -752,7 +831,7 @@ Protected Attributes</h2></td></tr>
 <p>To override, returns the active formatter for the response. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00089">89</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00102">102</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -782,7 +861,7 @@ Protected Attributes</h2></td></tr>
 <p>To override, returns the active <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html" title="Rest server base class. ">RestServer</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00105">105</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00118">118</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -809,7 +888,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00146">146</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00161">161</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -865,7 +944,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00033">33</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00046">46</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -909,7 +988,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00065">65</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_rest_controller_utilities_trait_8php_source.html#l00078">78</a> of file <a class="el" href="_rest_controller_utilities_trait_8php_source.html">RestControllerUtilitiesTrait.php</a>.</p>
 
 </div>
 </div>
@@ -948,7 +1027,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers.html">controllers</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1controllers_1_1rest.html">rest</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html">RestControllerUtilitiesTrait</a></li>
-    <li class="footer"><small>Generated on Sun Mar 31 2019 20:36:04 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:50 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

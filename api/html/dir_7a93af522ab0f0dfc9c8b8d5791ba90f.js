@@ -31,6 +31,9 @@ var dir_7a93af522ab0f0dfc9c8b8d5791ba90f =
     [ "TableAnnotation.php", "_table_annotation_8php.html", [
       [ "TableAnnotation", "class_ubiquity_1_1annotations_1_1_table_annotation.html", "class_ubiquity_1_1annotations_1_1_table_annotation" ]
     ] ],
+    [ "TransformerAnnotation.php", "_transformer_annotation_8php.html", [
+      [ "TransformerAnnotation", "class_ubiquity_1_1annotations_1_1_transformer_annotation.html", "class_ubiquity_1_1annotations_1_1_transformer_annotation" ]
+    ] ],
     [ "TransientAnnotation.php", "_transient_annotation_8php.html", [
       [ "TransientAnnotation", "class_ubiquity_1_1annotations_1_1_transient_annotation.html", null ]
     ] ],

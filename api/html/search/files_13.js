@@ -14,6 +14,7 @@ var searchData=
   ['ugitrepository_2ephp',['UGitRepository.php',['../_u_git_repository_8php.html',1,'']]],
   ['uintrospection_2ephp',['UIntrospection.php',['../_u_introspection_8php.html',1,'']]],
   ['umonolog_2ephp',['UMonolog.php',['../_u_monolog_8php.html',1,'']]],
+  ['uppercase_2ephp',['UpperCase.php',['../_upper_case_8php.html',1,'']]],
   ['urequest_2ephp',['URequest.php',['../_u_request_8php.html',1,'']]],
   ['uresponse_2ephp',['UResponse.php',['../_u_response_8php.html',1,'']]],
   ['url_2ephp',['Url.php',['../_url_8php.html',1,'']]],

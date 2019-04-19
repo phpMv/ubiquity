@@ -55,7 +55,8 @@ var hierarchy =
       ] ],
       [ "RestBaseController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_base_controller.html", [
         [ "JsonApiRestController", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html", null ],
-        [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", null ]
+        [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", null ],
+        [ "SimpleRestController", "class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller.html", null ]
       ] ],
       [ "SeoController", "class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html", null ]
     ] ],
@@ -132,6 +133,7 @@ var hierarchy =
         [ "RestException", "class_ubiquity_1_1exceptions_1_1_rest_exception.html", null ],
         [ "RouterException", "class_ubiquity_1_1exceptions_1_1_router_exception.html", null ],
         [ "ThemesException", "class_ubiquity_1_1exceptions_1_1_themes_exception.html", null ],
+        [ "TransformerException", "class_ubiquity_1_1exceptions_1_1_transformer_exception.html", null ],
         [ "ValidatorException", "class_ubiquity_1_1exceptions_1_1_validator_exception.html", null ]
       ] ]
     ] ],
@@ -178,7 +180,8 @@ var hierarchy =
       ] ]
     ] ],
     [ "HasResourceInterface", "interface_ubiquity_1_1controllers_1_1rest_1_1_has_resource_interface.html", [
-      [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", null ]
+      [ "RestController", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller.html", null ],
+      [ "SimpleRestController", "class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller.html", null ]
     ] ],
     [ "HtmlLogFormatter", "class_ubiquity_1_1log_1_1_html_log_formatter.html", null ],
     [ "InfoMessage", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_info_message.html", null ],
@@ -294,6 +297,21 @@ var hierarchy =
     [ "ThemesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait.html", [
       [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
     ] ],
+    [ "TransformerFormInterface", "interface_ubiquity_1_1contents_1_1transformation_1_1_transformer_form_interface.html", [
+      [ "DateTime", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_date_time.html", null ]
+    ] ],
+    [ "TransformerInterface", "interface_ubiquity_1_1contents_1_1transformation_1_1_transformer_interface.html", [
+      [ "DateTime", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_date_time.html", null ]
+    ] ],
+    [ "TransformersManager", "class_ubiquity_1_1contents_1_1transformation_1_1_transformers_manager.html", null ],
+    [ "TransformerViewInterface", "interface_ubiquity_1_1contents_1_1transformation_1_1_transformer_view_interface.html", [
+      [ "DateTime", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_date_time.html", null ],
+      [ "FirstUpperCase", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_first_upper_case.html", null ],
+      [ "LowerCase", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_lower_case.html", null ],
+      [ "Md5", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_md5.html", null ],
+      [ "Password", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_password.html", null ],
+      [ "UpperCase", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_upper_case.html", null ]
+    ] ],
     [ "Translator", "class_ubiquity_1_1translation_1_1_translator.html", null ],
     [ "TranslatorManager", "class_ubiquity_1_1translation_1_1_translator_manager.html", null ],
     [ "UArray", "class_ubiquity_1_1utils_1_1base_1_1_u_array.html", null ],
@@ -355,6 +373,7 @@ var hierarchy =
           [ "PostAnnotation", "class_ubiquity_1_1annotations_1_1router_1_1_post_annotation.html", null ]
         ] ],
         [ "TableAnnotation", "class_ubiquity_1_1annotations_1_1_table_annotation.html", null ],
+        [ "TransformerAnnotation", "class_ubiquity_1_1annotations_1_1_transformer_annotation.html", null ],
         [ "TransientAnnotation", "class_ubiquity_1_1annotations_1_1_transient_annotation.html", null ],
         [ "ValidatorAnnotation", "class_ubiquity_1_1annotations_1_1_validator_annotation.html", null ],
         [ "YumlAnnotation", "class_ubiquity_1_1annotations_1_1_yuml_annotation.html", null ]
