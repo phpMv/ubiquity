@@ -17,4 +17,8 @@ class TestRestJsonApi extends JsonApiRestController {
 	protected function getResponseFormatter(): ResponseFormatter {
 		return new JsonApiResponseFormatter ( '/jsonapi' );
 	}
+
+	public function isValid($action) {
+		return true;
+	}
 }

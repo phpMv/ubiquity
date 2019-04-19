@@ -81,7 +81,7 @@ class RestSimpleAPICest extends BaseAcceptance {
 	}
 
 	// tests
-	public function tryToAddUpdateAndDelte(AcceptanceTester $I) {
+	public function tryToAddUpdateAndDelete(AcceptanceTester $I) {
 		$I->amOnPage ( "/RestTester" );
 		$I->fillField ( '#url', '/rest/simple/orgas/' );
 		$I->fillField ( '#method', 'post' );

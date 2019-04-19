@@ -44,4 +44,24 @@ class JsonAPICest extends BaseAcceptance {
 		$I->amOnPage ( "/jsonapi/user/1/relationships/groupes/" );
 		$I->see ( 'Auditeurs' );
 	}
+
+	// tests
+	public function tryToAddUpdateAndDelete(AcceptanceTester $I) {
+		$I->amOnPage ( "/RestTester" );
+		$I->fillField ( '#url', '/jsonapi/organizations/' );
+		$I->fillField ( '#method', 'post' );
+		$I->fillField ( '#contentType', 'application/json; charset=utf-8' );
+		$I->fillField ( '#datas', "{data:{attributes:{name:'microsoftJSONAPI',domain:'microsoftJSONAPI.com'}}}" );
+		$this->waitAndclick ( $I, "#btSubmit" );
+		$I->waitForText ( 'inserted', self::TIMEOUT );
+		$id = $I->grabTextFrom ( "#newId" );
+		$I->fillField ( '#url', '/jsonapi/organizations/' . $id );
+		$I->fillField ( '#method', 'patch' );
+		$I->fillField ( '#datas', "{data:{attributes:{name:'microsoftJSONAPI2',domain:'microsoftJSONAPI2.com'}}}" );
+		$this->waitAndclick ( $I, "#btSubmit" );
+		$I->waitForText ( 'updated', self::TIMEOUT );
+		$I->fillField ( '#method', 'delete' );
+		$this->waitAndclick ( $I, "#btSubmit" );
+		$I->waitForText ( 'deleted', self::TIMEOUT );
+	}
 }
