@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+- nothing
+
+## [2.1.1] - 2019-04-19
 ### Added
 - `Transformer` module see in [documentation](https://micro-framework.readthedocs.io/en/latest/contents/transformers.html)
 - `SimpleRestController` + `SimpleApiRestController` classes for Rest part
@@ -18,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `POST` request for adding an instance with `RestController` (no open issue)
 - webtools Models section, CRUDControllers
   - Model adding or updating in modal form fail see https://github.com/phpMv/ubiquity/issues/25
+- JsonAPI finalization
+### Documentation
+- REST module [rest doc](https://micro-framework.readthedocs.io/en/latest/rest/index.html#rest)
+- Transformers module [Transformers doc](https://micro-framework.readthedocs.io/en/latest/contents/transformers.html#transformers)
 
 ## [2.1.0] - 2019-04-01
 ### Added
