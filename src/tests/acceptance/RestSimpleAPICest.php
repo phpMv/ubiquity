@@ -85,13 +85,13 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->amOnPage ( "/RestTester" );
 		$I->fillField ( '#url', '/rest/simple/orgas/' );
 		$I->fillField ( '#method', 'post' );
-		$I->fillField ( '#datas', "{name:'microsoft',domain:'microsoft.com'}" );
+		$I->fillField ( '#datas', "{name:'microsoftXX',domain:'microsoftXX.com'}" );
 		$this->waitAndclick ( $I, "#btSubmit" );
 		$I->waitForText ( 'inserted', self::TIMEOUT );
 		$id = $I->grabTextFrom ( "#newId" );
 		$I->fillField ( '#url', '/rest/simple/orgas/' . $id );
 		$I->fillField ( '#method', 'patch' );
-		$I->fillField ( '#datas', "{name:'microsoft2',domain:'microsoft2.com'}" );
+		$I->fillField ( '#datas', "{name:'microsoftYY',domain:'microsoftYY.com'}" );
 		$this->waitAndclick ( $I, "#btSubmit" );
 		$I->waitForText ( 'updated', self::TIMEOUT );
 		$I->fillField ( '#method', 'delete' );

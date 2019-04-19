@@ -32,7 +32,7 @@ class RestTester extends ControllerBase {
 			$datas = '{}';
 		}
 		$contentType = URequest::post ( 'contentType', 'application/x-www-form-urlencoded' );
-		$this->jquery->ajax ( $method, $url, '#response', [ 'complete' => "$('#status').html(jqXHR.status);",'jsCallback' => "if(data.data.id)$('#newId').html(data.data.id);$('#response').html(JSON.stringify(data,undefined,2));",'params' => $datas,'contentType' => "'" . $contentType . "'" ] );
+		$this->jquery->ajax ( $method, $url, '#response', [ 'complete' => "$('#status').html(jqXHR.status);$('#content').html(jqXHR.responseText);",'jsCallback' => "if(data.data.id)$('#newId').html(data.data.id);try{\$('#response').html(JSON.stringify(data,undefined,2));}catch(err){\$('#content').html(data);}",'params' => $datas,'contentType' => "'" . $contentType . "'" ] );
 		echo $this->jquery->compile ();
 	}
 }
