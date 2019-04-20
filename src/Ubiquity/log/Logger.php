@@ -106,4 +106,8 @@ abstract class Logger {
 	abstract public function _asObjects($reverse = true, $maxlines = 10, $contexts = null);
 
 	abstract public function _clearAll();
+
+	public static function isActive() {
+		return self::$test;
+	}
 }

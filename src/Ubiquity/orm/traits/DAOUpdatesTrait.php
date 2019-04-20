@@ -213,8 +213,10 @@ trait DAOUpdatesTrait {
 		$ColumnskeyAndValues = array_merge ( $ColumnskeyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
 		$sql = "UPDATE `" . $tableName . "` SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . " WHERE " . SqlUtils::getWhere ( $keyFieldsAndValues );
-		Logger::info ( "DAOUpdates", $sql, "update" );
-		Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
+		if (Logger::isActive ()) {
+			Logger::info ( "DAOUpdates", $sql, "update" );
+			Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
+		}
 		$statement = self::$db->prepareStatement ( $sql );
 		foreach ( $ColumnskeyAndValues as $key => $value ) {
 			self::$db->bindValueFromStatement ( $statement, $key, $value );
