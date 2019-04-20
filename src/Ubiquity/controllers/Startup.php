@@ -49,7 +49,7 @@ class Startup {
 		try {
 			if (isset ( $config ['templateEngine'] )) {
 				$templateEngine = $config ['templateEngine'];
-				$engineOptions = $config ['templateEngineOptions'] ?? array ('cache' => \ROOT . \DS . 'views/cache/' );
+				$engineOptions = $config ['templateEngineOptions'] ?? array ('cache' => false );
 				$engine = new $templateEngine ( $engineOptions );
 				if ($engine instanceof TemplateEngine) {
 					self::$templateEngine = $engine;
@@ -82,7 +82,7 @@ class Startup {
 	 */
 	public static function forward($url, $initialize = true, $finalize = true) {
 		$u = self::parseUrl ( $url );
-		if (($ru = Router::getRoute ( $url )) !== false) {
+		if (is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url )) !== false) {
 			if (\is_array ( $ru )) {
 				if (is_callable ( $ru [0] )) {
 					self::runCallable ( $ru );

@@ -8,7 +8,7 @@ namespace Ubiquity\utils\http;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class UResponse {
@@ -52,8 +52,8 @@ class UResponse {
 	public static function setContentType($contentType, $encoding = null) {
 		$value = $contentType;
 		if (isset ( $encoding ))
-			$value .= ' ;' . $encoding;
-		self::header ( 'content-type', $value );
+			$value .= ' ;charset=' . $encoding;
+		self::header ( 'Content-Type', $value );
 	}
 
 	/**
