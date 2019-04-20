@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
-- nothing
+### Fixed
+- Twig views caching : fix https://github.com/phpMv/ubiquity/issues/26
+- ORM : sync `$instance->_rest` array with `$instance` updates
 
 ## [2.1.1] - 2019-04-19
 ### Added
