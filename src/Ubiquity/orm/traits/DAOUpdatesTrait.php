@@ -16,7 +16,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 trait DAOUpdatesTrait {
@@ -131,6 +131,7 @@ trait DAOUpdatesTrait {
 				$lastId = self::$db->lastInserId ();
 				if ($lastId != 0) {
 					$instance->$accesseurId ( $lastId );
+					$instance->_rest = $keyAndValues;
 					$instance->_rest [$pk] = $lastId;
 				}
 				if ($insertMany) {
@@ -223,6 +224,7 @@ trait DAOUpdatesTrait {
 			if ($result && $updateMany)
 				self::insertOrUpdateAllManyToMany ( $instance );
 			EventsManager::trigger ( DAOEvents::AFTER_UPDATE, $instance, $result );
+			$instance->_rest = array_merge ( $instance->_rest, $ColumnskeyAndValues );
 			return $result;
 		} catch ( \PDOException $e ) {
 			Logger::warn ( "DAOUpdates", $e->getMessage (), "update" );

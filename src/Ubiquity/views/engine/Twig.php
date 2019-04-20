@@ -37,10 +37,12 @@ class Twig extends TemplateEngine {
 		$loader->addPath ( implode ( \DS, [ Startup::getFrameworkDir (),"..","core","views" ] ) . \DS, "framework" );
 		$this->loader = $loader;
 
-		$this->twig = new Environment ( $loader, $options );
 		if (isset ( $options ["cache"] ) && $options ["cache"] === true) {
 			$options ["cache"] = CacheManager::getCacheSubDirectory ( "views" );
 		}
+		
+		$this->twig = new Environment ( $loader, $options );
+
 		if (isset ( $options ["activeTheme"] )) {
 			ThemesManager::setActiveThemeFromTwig ( $options ["activeTheme"] );
 			$this->setTheme ( $options ["activeTheme"], ThemesManager::THEMES_FOLDER );
