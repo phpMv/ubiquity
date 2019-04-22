@@ -270,9 +270,10 @@ trait RestTrait {
 				$name = $names [$i];
 				if (UString::isNotNull ( $name )) {
 					if (isset ( $values [$i] )) {
-						if (UString::isJson ( $values [$i] )) {
-							$value = str_replace ( "'", '"', $values [$i] );
-							$result [$name] = json_decode ( $value, true );
+						$corrValue = str_replace ( "'", '"', $values [$i] );
+						$v=UString::isJson ( $corrValue );
+						if ($v) {
+							$result [$name] = json_decode ( $corrValue, true );
 						} else {
 							$result [] = '"' . $name . '": "' . \addslashes ( $values [$i] ) . '"';
 						}

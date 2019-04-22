@@ -121,8 +121,7 @@ class UString {
 	}
 	
 	public static function isJson($value) {
-		return preg_match('/[^,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]/',
-				preg_replace('/"(\\.|[^"\\\\])*"/', '', $value));
+		return is_object(json_decode($value));
 	}
 
 	/**
