@@ -5,7 +5,7 @@ namespace Ubiquity\annotations\di;
 use Ubiquity\annotations\BaseAnnotation;
 
 /**
- * Annotation for autowiring
+ * Annotation for autowiring.
  *
  * @author jc
  * @version 1.0.0

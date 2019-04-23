@@ -3,7 +3,12 @@
 namespace Ubiquity\annotations;
 
 /**
- * Annotation JoinTable
+ * Annotation JoinTable.
+ * usages :
+ * - joinTable("name"=>"tableName")
+ * - joinTable("name"=>"tableName","joinColumns"=>"fieldname")
+ * - joinTable("name"=>"tableName","joinColumns"=>"fieldname","inverseJoinColumns"=>"fieldname")
+ *
  * @author jc
  * @version 1.0.0.1
  */

@@ -3,7 +3,9 @@
 namespace Ubiquity\annotations;
 
 /**
- * Annotation ManyToOne
+ * Annotation ManyToOne.
+ * usage : manyToOne
+ *
  * @author jc
  * @version 1.0.0.2
  */

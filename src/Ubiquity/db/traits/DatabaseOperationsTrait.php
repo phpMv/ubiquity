@@ -176,8 +176,7 @@ trait DatabaseOperationsTrait {
 	 * Returns the number of records in $tableName that respects the condition passed as a parameter
 	 *
 	 * @param string $tableName
-	 * @param string $condition
-	 *        	Partie suivant le WHERE d'une instruction SQL
+	 * @param string $condition Part following the WHERE of an SQL statement
 	 */
 	public function count($tableName, $condition = '') {
 		if ($condition != '')

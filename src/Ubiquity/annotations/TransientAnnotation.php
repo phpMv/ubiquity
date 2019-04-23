@@ -3,7 +3,8 @@
 namespace Ubiquity\annotations;
 
 /**
- * Annotation Transient
+ * Annotation Transient.
+ * usage : transient
  *
  * @author jc
  * @version 1.0.0.2

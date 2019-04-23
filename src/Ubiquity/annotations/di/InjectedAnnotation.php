@@ -6,6 +6,10 @@ use Ubiquity\annotations\BaseAnnotation;
 
 /**
  * Annotation for dependency injection.
+ * usages :
+ * - injected
+ * - injected(name)
+ * - injected(name,code)
  *
  * @author jc
  * @version 1.0.0
@@ -27,6 +31,6 @@ class InjectedAnnotation extends BaseAnnotation {
 				unset ( $properties [1] );
 			}
 		}
-		parent::initAnnotation($properties);
+		parent::initAnnotation ( $properties );
 	}
 }

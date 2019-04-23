@@ -3,7 +3,10 @@
 namespace Ubiquity\annotations;
 
 /**
- * Annotation OneToMany
+ * Annotation OneToMany.
+ * usage :
+ * - oneToMany("mappedBy"=>"memberName","className"=>"classname")
+ *
  * @author jc
  * @version 1.0.0.2
  */

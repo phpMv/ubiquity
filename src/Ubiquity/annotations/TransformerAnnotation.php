@@ -4,6 +4,8 @@ namespace Ubiquity\annotations;
 
 /**
  * Annotation Transformer.
+ * usage :
+ * - transformer("name"=>"transformerName")
  *
  * @author jc
  * @version 1.0.1

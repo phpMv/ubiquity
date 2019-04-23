@@ -3,7 +3,11 @@
 namespace Ubiquity\annotations;
 
 /**
- * Annotation JoinColumn
+ * Annotation JoinColumn.
+ * usages :
+ * - joinColumn("className"=>"modelClassname")
+ * - joinColumn("className"=>"modelClassname","referencedColumnName"=>"columnName")
+ *
  * @author jc
  * @version 1.0.0.1
  */

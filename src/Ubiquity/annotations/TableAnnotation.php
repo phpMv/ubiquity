@@ -4,6 +4,9 @@ namespace Ubiquity\annotations;
 
 /**
  * Annotation Table.
+ * usages :
+ * - table("tableName")
+ * - table("name"=>"tableName")
  *
  * @author jc
  * @version 1.0.2
