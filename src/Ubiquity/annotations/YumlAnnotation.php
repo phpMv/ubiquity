@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\YumlAnnotation
+ * This class is part of Ubiquity
+ */
 namespace Ubiquity\annotations;
 
 /**

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\TransformerAnnotation
+ * This file is part of Ubiquity
+ */
 namespace Ubiquity\annotations;
 
 /**

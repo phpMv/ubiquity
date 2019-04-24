@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\JoinTableAnnotation
+ * file class is part of Ubiquity
+ */
 namespace Ubiquity\annotations;
 
 /**

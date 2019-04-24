@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\assets\AssetsManager
+ * This file is part of Ubiquity
+ */
 namespace Ubiquity\assets;
 
 use Ubiquity\themes\ThemesManager;

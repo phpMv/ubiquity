@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\rest\RestAnnotation
+ * This file is part of Ubiquity
+ */
 namespace Ubiquity\annotations\rest;
 
 use Ubiquity\annotations\BaseAnnotation;

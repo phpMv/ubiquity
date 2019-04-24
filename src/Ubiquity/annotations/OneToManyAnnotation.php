@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\OneToManyAnnotation
+ * This file is part of Ubiquity
+ */
 namespace Ubiquity\annotations;
 
 /**
@@ -8,7 +12,7 @@ namespace Ubiquity\annotations;
  * - oneToMany("mappedBy"=>"memberName","className"=>"classname")
  *
  * @author jc
- * @version 1.0.0.2
+ * @version 1.0.2
  */
 class OneToManyAnnotation extends BaseAnnotation {
 	public $mappedBy;

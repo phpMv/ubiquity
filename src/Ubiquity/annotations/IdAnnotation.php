@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\IdAnnotation
+ * This file is part of Ubiquity
+ */
 namespace Ubiquity\annotations;
 
 /**
@@ -7,7 +11,7 @@ namespace Ubiquity\annotations;
  * usage : id
  *
  * @author jc
- * @version 1.0.0.1
+ * @version 1.0.1
  */
 class IdAnnotation extends BaseAnnotation {
 }

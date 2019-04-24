@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\ValidatorAnnotation
+ * This class is part of Ubiquity
+ */
 namespace Ubiquity\annotations;
 
 use Ubiquity\contents\validation\ValidatorsManager;

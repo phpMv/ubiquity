@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\BaseAnnotation
+ * This file is part of Ubiquity
+ */
 namespace Ubiquity\annotations;
 
 use Ubiquity\utils\base\UArray;

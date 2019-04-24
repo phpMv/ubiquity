@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\cache\CacheManager
+ * This file is part of Ubiquity
+ */
 namespace Ubiquity\cache;
 
 use Ubiquity\cache\traits\ModelsCacheTrait;
@@ -29,6 +33,12 @@ class CacheManager {
 	public static $cache;
 	private static $cacheDirectory;
 
+	/**
+	 * Starts the cache in dev mode, for generating the other caches
+	 * Do not use in production
+	 *
+	 * @param array $config
+	 */
 	public static function start(&$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory ( $config );
 		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
@@ -67,18 +77,41 @@ class CacheManager {
 		return $config ["cache"] ["directory"] ?? ($config ["cache"] ["directory"] = "cache" . \DS);
 	}
 
+	/**
+	 * Returns the relative cache directory
+	 *
+	 * @return string
+	 */
 	public static function getCacheDirectory() {
 		return self::$cacheDirectory;
 	}
 
+	/**
+	 * Returns the absolute cache directory
+	 *
+	 * @return string
+	 */
 	public static function getAbsoluteCacheDirectory() {
 		return \ROOT . \DS . self::$cacheDirectory;
 	}
 
+	/**
+	 * Returns an absolute cache subdirectory
+	 *
+	 * @param string $subDirectory
+	 * @return string
+	 */
 	public static function getCacheSubDirectory($subDirectory) {
 		return \ROOT . \DS . self::$cacheDirectory . \DS . $subDirectory;
 	}
 
+	/**
+	 * Checks the existence of cache subdirectories and returns an array of cache folders
+	 *
+	 * @param array $config
+	 * @param boolean $silent
+	 * @return string[]
+	 */
 	public static function checkCache(&$config, $silent = false) {
 		$dirs = self::getCacheDirectories ( $config, $silent );
 		foreach ( $dirs as $dir ) {
@@ -87,6 +120,13 @@ class CacheManager {
 		return $dirs;
 	}
 
+	/**
+	 * Returns an associative array of cache folders (annotations, models, controllers, queries, views, seo, git, contents)
+	 *
+	 * @param array $config
+	 * @param boolean $silent
+	 * @return string[]
+	 */
 	public static function getCacheDirectories(&$config, $silent = false) {
 		$cacheDirectory = self::initialGetCacheDirectory ( $config );
 		$rootDS = \ROOT . \DS;
@@ -112,6 +152,12 @@ class CacheManager {
 			return mkdir ( $dir, 0777, true );
 	}
 
+	/**
+	 * Deletes files from a cache type
+	 *
+	 * @param array $config
+	 * @param string $type
+	 */
 	public static function clearCache(&$config, $type = "all") {
 		$cacheDirectories = self::checkCache ( $config );
 		$cacheDirs = [ "annotations","controllers","models","queries","views","contents" ];
@@ -125,6 +171,12 @@ class CacheManager {
 			UFileSystem::deleteAllFilesFromFolder ( $cacheDirectories [$typeRef] );
 	}
 
+	/**
+	 *
+	 * @param array $config
+	 * @param string $type
+	 * @param boolean $silent
+	 */
 	public static function initCache(&$config, $type = "all", $silent = false) {
 		self::checkCache ( $config, $silent );
 		self::start ( $config );
@@ -136,11 +188,24 @@ class CacheManager {
 			self::initRestCache ( $config, $silent );
 	}
 
+	/**
+	 * Returns an array of all defined routes, included REST routes
+	 *
+	 * @return array
+	 */
 	public static function getAllRoutes() {
 		$routes = self::getControllerCache ();
 		return array_merge ( $routes, self::getControllerCache ( true ) );
 	}
 
+	/**
+	 * Returns an array of files from type $type
+	 *
+	 * @param array $config
+	 * @param string $type
+	 * @param boolean $silent
+	 * @return array
+	 */
 	protected static function _getFiles(&$config, $type, $silent = false) {
 		$typeNS = $config ["mvcNS"] [$type];
 		$typeDir = \ROOT . \DS . str_replace ( "\\", \DS, $typeNS );

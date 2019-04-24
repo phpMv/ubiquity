@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ubiquity\annotations\ColumnAnnotation
+ * This file is part of Ubiquity
+ */
 namespace Ubiquity\annotations;
 
 /**
@@ -10,7 +14,7 @@ namespace Ubiquity\annotations;
  * - column("name"=>"columnName","dbType"=>"typeInDb")
  *
  * @author jc
- * @version 1.0.0.2
+ * @version 1.0.2
  * @package annotations
  */
 class ColumnAnnotation extends BaseAnnotation {
