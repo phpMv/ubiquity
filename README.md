@@ -135,6 +135,9 @@ ubiquity new firstProject -a
 ```
 ![Admin interface](https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
 
+# Graphic design
+- Logos and banner: @richardbmx
+
 # Donations
 You can tell us your pleasure in using Ubiquity, giving us a star,
 and you can do even better by [contributing](https://github.com/phpMv/ubiquity/blob/master/CONTRIBUTING.md)...
