@@ -1,5 +1,6 @@
 var NAVTREEINDEX13 =
 {
+"class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a8d94deb2c3327dfc1ac0dd2e35cdb398":[3,0,0,15,2,1,0],
 "class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a9d21636071f529e2154051d3ea6e5921":[3,0,0,15,2,1,2],
 "class_ubiquity_1_1utils_1_1git_1_1_git_file.html#ab2fc40d43824ea3e1ce5d86dee0d763b":[3,0,0,15,2,1,5],
 "class_ubiquity_1_1utils_1_1git_1_1_git_file_status.html":[3,0,0,15,2,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX13 =
 "dir_21b683703041edde56c52b034902c9cf.html":[4,0,0,0,10],
 "dir_25739ddf4fb79447f7b28fcaed3da811.html":[4,0,0,0,16],
 "dir_266486df2e8a0d6cc3948a0df14ff99c.html":[4,0,0,0,3,2,0,0],
-"dir_2755c5cc96fd1714059312892c65e90c.html":[4,0,0,0,14,0],
-"dir_2b385bfddd8b54f6747e948d02f78f59.html":[4,0,0,0,10,1,1]
+"dir_2755c5cc96fd1714059312892c65e90c.html":[4,0,0,0,14,0]
 };

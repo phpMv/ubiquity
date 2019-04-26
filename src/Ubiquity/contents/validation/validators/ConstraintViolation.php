@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Validators definition
+ */
 namespace Ubiquity\contents\validation\validators;
 
 /**

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Transformers managment
+ */
 namespace Ubiquity\contents\transformation;
 
 /**

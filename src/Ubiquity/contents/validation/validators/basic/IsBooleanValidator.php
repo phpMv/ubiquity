@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Basic validators
+ */
 namespace Ubiquity\contents\validation\validators\basic;
 
 use Ubiquity\utils\base\UString;

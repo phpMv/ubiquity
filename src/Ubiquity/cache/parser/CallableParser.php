@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Cache parsers
+ */
 namespace Ubiquity\cache\parser;
 
 use Ubiquity\utils\base\UString;

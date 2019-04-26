@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Ubiquity\annotations\router\RouteAnnotation
- * This file is part of Ubiquity
- */
 namespace Ubiquity\annotations\router;
 
 use Ubiquity\annotations\BaseAnnotation;

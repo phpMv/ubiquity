@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Ubiquity\annotations\router\PostAnnotation
- * This file is part of Ubiquity
- */
 namespace Ubiquity\annotations\router;
 
 /**

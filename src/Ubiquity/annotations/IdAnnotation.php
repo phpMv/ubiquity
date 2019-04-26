@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Ubiquity\annotations\IdAnnotation
- * This file is part of Ubiquity
- */
 namespace Ubiquity\annotations;
 
 /**

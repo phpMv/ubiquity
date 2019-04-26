@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Class Ubiquity\annotations\di\AutowiredAnnotation
- * This file is part of Ubiquity
+ * Dependency injection annotations
  */
 namespace Ubiquity\annotations\di;
 

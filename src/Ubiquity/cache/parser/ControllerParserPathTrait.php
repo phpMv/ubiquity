@@ -5,6 +5,14 @@ namespace Ubiquity\cache\parser;
 use Ubiquity\utils\base\UString;
 use Ubiquity\orm\parser\Reflexion;
 
+/**
+ * Ubiquity\cache\parser$ControllerParserPathTrait
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ *
+ */
 trait ControllerParserPathTrait {
 
 	protected static function getPathFromMethod(\ReflectionMethod $method) {

@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Ubiquity\annotations\router\GetAnnotation
- * This file is part of Ubiquity
- *
+ * Router annotations
  */
 namespace Ubiquity\annotations\router;
 

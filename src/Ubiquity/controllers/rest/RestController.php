@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Rest part
+ */
 namespace Ubiquity\controllers\rest;
 
 use Ubiquity\cache\CacheManager;

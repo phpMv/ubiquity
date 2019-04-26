@@ -12,6 +12,9 @@ use Ubiquity\controllers\di\DiManager;
 
 /**
  *
+ * Ubiquity\cache\traits$RouterCacheTrait
+ * This class is part of Ubiquity
+ *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
@@ -51,7 +54,7 @@ trait RouterCacheTrait {
 		}
 		self::$cache->store ( "controllers/routes.default", "return " . UArray::asPhpArray ( $routes ["default"], "array" ) . ";", 'controllers' );
 		self::$cache->store ( "controllers/routes.rest", "return " . UArray::asPhpArray ( $routes ["rest"], "array" ) . ";", 'controllers' );
-		DiManager::init($config);
+		DiManager::init ( $config );
 		if (! $silent) {
 			echo "Router cache reset\n";
 		}
@@ -178,7 +181,7 @@ trait RouterCacheTrait {
 		return self::_getFiles ( $config, "controllers", $silent );
 	}
 
-	public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false,$includeAbstract=false) {
+	public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false, $includeAbstract = false) {
 		$result = [ ];
 		if ($includeSubclass) {
 			$result [] = $subClass;

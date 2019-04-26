@@ -1,5 +1,6 @@
 var NAVTREEINDEX12 =
 {
+"class_ubiquity_1_1seo_1_1_url.html#a0c5d91946fd0cf263e30b551de02f16a":[3,0,0,12,0,1],
 "class_ubiquity_1_1seo_1_1_url.html#a0fe3e440a2c4901475e93723cd12de6f":[3,0,0,12,0,0],
 "class_ubiquity_1_1seo_1_1_url.html#a1a6a17ce6edf82ed09a5930da098e47c":[3,0,0,12,0,2],
 "class_ubiquity_1_1seo_1_1_url.html#a1e7a3c168dcd0901a0d2669c67575b55":[3,0,0,12,0,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX12 =
 "class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a2fe666694997d047711d7653eca2f132":[3,0,0,15,2,1,3],
 "class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a3d0963e68bb313b163a73f2803c64600":[3,0,0,15,2,1,1],
 "class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a58391ea75f2d29d5d708d7050b641c33":[3,0,0,15,2,1,6],
-"class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a7d02c100d684fe1dffc6cb3486a48511":[3,0,0,15,2,1,4],
-"class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a8d94deb2c3327dfc1ac0dd2e35cdb398":[3,0,0,15,2,1,0]
+"class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a7d02c100d684fe1dffc6cb3486a48511":[3,0,0,15,2,1,4]
 };

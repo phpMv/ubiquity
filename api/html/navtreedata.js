@@ -34,12 +34,12 @@ var NAVTREEINDEX =
 "class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html#a88496922366d4aff09feb81d21363564",
 "class_ubiquity_1_1controllers_1_1di_1_1_di_manager.html#a97a947b6f768c5b9884af1b1095e565e",
 "class_ubiquity_1_1core_1_1_framework.html#a265a39dcf2f0b7c6b96574362aa01ad9",
-"class_ubiquity_1_1log_1_1_logger_params.html#a3465de292d6c84645f23fca94bd98485",
-"class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#afa99fba34d71439e1f94d883b4663efb",
-"class_ubiquity_1_1seo_1_1_url.html#a0fe3e440a2c4901475e93723cd12de6f",
-"class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a9d21636071f529e2154051d3ea6e5921",
-"dir_2e15689ee9c3fdbeb087ee9ef0a67835.html",
-"namespace_ubiquity_1_1db_1_1export.html"
+"class_ubiquity_1_1log_1_1_logger_params.html#a2b64e36f00c1a413288f462acd24066f",
+"class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html#af4ea35848f6cedb5410b743956d1005d",
+"class_ubiquity_1_1seo_1_1_url.html#a0c5d91946fd0cf263e30b551de02f16a",
+"class_ubiquity_1_1utils_1_1git_1_1_git_file.html#a8d94deb2c3327dfc1ac0dd2e35cdb398",
+"dir_2b385bfddd8b54f6747e948d02f78f59.html",
+"namespace_ubiquity_1_1db.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

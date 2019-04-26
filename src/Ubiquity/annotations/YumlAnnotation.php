@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Ubiquity\annotations\YumlAnnotation
- * This class is part of Ubiquity
- */
 namespace Ubiquity\annotations;
 
 /**
@@ -11,7 +7,7 @@ namespace Ubiquity\annotations;
  * yuml("color"=>"color","note"=>"content")
  *
  * @author jc
- * @version 1.0.0.1
+ * @version 1.0.1
  * @usage('class'=>true, 'inherited'=>true)
  */
 class YumlAnnotation extends BaseAnnotation {

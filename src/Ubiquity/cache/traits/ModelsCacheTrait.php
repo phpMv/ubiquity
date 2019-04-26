@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Ubiquity\cache\traits\ModelsCacheTrait
- * This file is part of Ubiquity
+ * Cache traits
  */
 namespace Ubiquity\cache\traits;
 
@@ -12,8 +11,12 @@ use Ubiquity\contents\validation\ValidatorsManager;
 
 /**
  *
- * @author jc
- * @static array $cache
+ * Ubiquity\cache\traits$ModelsCacheTrait
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ * @property \Ubiquity\cache\system\AbstractDataCache $cache
  */
 trait ModelsCacheTrait {
 

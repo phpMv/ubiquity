@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Ubiquity\annotations\ManyToManyAnnotation
- * This file is part of Ubiquity
- */
 namespace Ubiquity\annotations;
 
 /**

@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1annotations_1_1route
 </div><!--header-->
 <div class="contents">
 
-<p>('method'=&gt;true,'class'=&gt;true,'multiple'=&gt;true, 'inherited'=&gt;true)  
+<p>Defines a route.  
  <a href="class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html#details">More...</a></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for RouteAnnotation:</div>
@@ -100,9 +100,9 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1annotations_1_1route
  <div class="center">
   <img src="class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.png" usemap="#RouteAnnotation_map" alt=""/>
   <map id="RouteAnnotation_map" name="RouteAnnotation_map">
-<area href="class_ubiquity_1_1annotations_1_1_base_annotation.html" title="(&#39;property&#39;=&gt;true, &#39;inherited&#39;=&gt;true) " alt="BaseAnnotation" shape="rect" coords="57,56,161,80"/>
-<area href="class_ubiquity_1_1annotations_1_1router_1_1_get_annotation.html" alt="GetAnnotation" shape="rect" coords="0,168,104,192"/>
-<area href="class_ubiquity_1_1annotations_1_1router_1_1_post_annotation.html" alt="PostAnnotation" shape="rect" coords="114,168,218,192"/>
+<area href="class_ubiquity_1_1annotations_1_1_base_annotation.html" title="Base class for annotations. " alt="BaseAnnotation" shape="rect" coords="57,56,161,80"/>
+<area href="class_ubiquity_1_1annotations_1_1router_1_1_get_annotation.html" title="Defines a route with the get method Ubiquity$GetAnnotation This class is part of Ubiquity. " alt="GetAnnotation" shape="rect" coords="0,168,104,192"/>
+<area href="class_ubiquity_1_1annotations_1_1router_1_1_post_annotation.html" title="Defines a route with the post method Ubiquity$PostAnnotation This class is part of Ubiquity..." alt="PostAnnotation" shape="rect" coords="114,168,218,192"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -151,9 +151,21 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a4b9b9fed46c4b4ca1c62de8d3635755f inherit pro_methods_class_ubiquity_1_1annotations_1_1_base_annotation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>('method'=&gt;true,'class'=&gt;true,'multiple'=&gt;true, 'inherited'=&gt;true) </p>
+<div class="textblock"><p>Defines a route. </p>
+<p>usages :</p><ul>
+<li>route("routePath") default path: ""</li>
+<li>route("path"=&gt;"routePath")</li>
+<li>route("routePath","methods"=&gt;["routeMethods"])</li>
+<li>route("routePath","cache"=&gt;true,"duration"=&gt;intValue)</li>
+<li>route("routePath","inherited"=&gt;true)</li>
+<li>route("routePath","automated"=&gt;true)</li>
+<li>route("routePath","requirements"=&gt;["member"=&gt;"regExpr"])</li>
+<li>route("routePath","priority"=&gt;intValue)</li>
+<li>route("routePath","name"=&gt;"routeName") default routeName: controllerName_actionName</li>
+</ul>
+<p>('method'=&gt;true,'class'=&gt;true,'multiple'=&gt;true, 'inherited'=&gt;true) </p>
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00010">10</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00022">22</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a33d4564dcd62c7891955cf6f83e06e34"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a33d4564dcd62c7891955cf6f83e06e34">&#9670;&nbsp;</a></span>initAnnotation()</h2>
@@ -173,7 +185,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Initialize the annotation. </p>
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00024">24</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00036">36</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -190,7 +202,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00017">17</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00029">29</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -206,7 +218,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00014">14</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00026">26</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -222,7 +234,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00015">15</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00027">27</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -238,7 +250,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00016">16</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00028">28</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -254,7 +266,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00012">12</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00024">24</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -270,7 +282,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00013">13</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00025">25</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -286,7 +298,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00011">11</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00023">23</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -302,7 +314,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00019">19</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00031">31</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -318,7 +330,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00018">18</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_route_annotation_8php_source.html#l00030">30</a> of file <a class="el" href="_route_annotation_8php_source.html">RouteAnnotation.php</a>.</p>
 
 </div>
 </div>
@@ -332,7 +344,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1annotations.html">annotations</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1annotations_1_1router.html">router</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1annotations_1_1router_1_1_route_annotation.html">RouteAnnotation</a></li>
-    <li class="footer"><small>Generated on Fri Apr 19 2019 12:17:46 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Apr 25 2019 00:57:26 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

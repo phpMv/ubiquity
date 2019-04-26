@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Ubiquity\annotations\BaseAnnotation
- * This file is part of Ubiquity
+ * Annotations
  */
 namespace Ubiquity\annotations;
 
@@ -10,6 +9,7 @@ use Ubiquity\utils\base\UArray;
 use mindplay\annotations\Annotation;
 
 /**
+ * Base class for annotations.
  *
  * @usage('property'=>true, 'inherited'=>true)
  */

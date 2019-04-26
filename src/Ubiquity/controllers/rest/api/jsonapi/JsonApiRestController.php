@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * JsonApi implementation
+ */
 namespace Ubiquity\controllers\rest\api\jsonapi;
 
 use Ubiquity\orm\DAO;

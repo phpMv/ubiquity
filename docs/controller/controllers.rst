@@ -279,8 +279,7 @@ Access control to a controller can be performed manually, using the `isValid` an
 
 The `isValid` method must return a boolean wich determine if access to the `action` passed as a parameter is possible:
 
-Dans l'exemple suivant, l'accès aux actions du contrôleur **IndexController** n'est possible que si une variable de session **activeUser** existe:
-
+In the following example, access to the actions of the **IndexController** controller is only possible if an **activeUser** session variable exists:
 .. code-block:: php
    :caption: app/controllers/IndexController.php
    :emphasize-lines: 3-5

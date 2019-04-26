@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Class Ubiquity\annotations\di\InjectedAnnotation
- * This file is part of Ubiquity
- */
 namespace Ubiquity\annotations\di;
 
 use Ubiquity\annotations\BaseAnnotation;

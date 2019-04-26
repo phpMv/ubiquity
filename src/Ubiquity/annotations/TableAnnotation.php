@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Ubiquity\annotations\TableAnnotation
- * This class is part of Ubiquity
- */
 namespace Ubiquity\annotations;
 
 /**

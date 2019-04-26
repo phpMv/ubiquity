@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Ubiquity\assets\AssetsManager
- * This file is part of Ubiquity
+ * Assets managment
  */
 namespace Ubiquity\assets;
 

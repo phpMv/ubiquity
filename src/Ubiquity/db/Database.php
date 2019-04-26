@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Database implementation
+ */
 namespace Ubiquity\db;
 
 use Ubiquity\exceptions\CacheException;

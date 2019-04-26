@@ -135,11 +135,20 @@ trait RestControllerUtilitiesTrait {
 	 */
 	protected function _setValuesToObject($instance, $values = null) {
 		if (URequest::isJSON ()) {
-			if(is_string($values)){
+			if (is_string ( $values )) {
 				$values = \json_decode ( $values, true );
 			}
 		}
+		$className = \get_class ( $instance );
+		$fieldsInRelationForUpdate = OrmUtils::getFieldsInRelationsForUpdate_ ( $className );
+		$manyToOneRelations = $fieldsInRelationForUpdate ["manyToOne"];
+
+		$members = array_keys ( $values );
+		OrmUtils::setFieldToMemberNames ( $members, $fieldsInRelationForUpdate ["relations"] );
 		URequest::setValuesToObject ( $instance, $values );
+		if ($manyToOneRelations) {
+			self::updateManyToOne ( $manyToOneRelations, $members, $className, $instance, $values );
+		}
 	}
 
 	/**
@@ -231,11 +240,11 @@ trait RestControllerUtilitiesTrait {
 		}
 		return $result;
 	}
-	
-	protected function getCondition($condition){
-		$condition=urldecode($condition);
-		if(strpos($condition, 'like')!==false){
-			$condition=str_replace('*', '%', $condition);
+
+	protected function getCondition($condition) {
+		$condition = urldecode ( $condition );
+		if (strpos ( $condition, 'like' ) !== false) {
+			$condition = str_replace ( '*', '%', $condition );
 		}
 		return $condition;
 	}

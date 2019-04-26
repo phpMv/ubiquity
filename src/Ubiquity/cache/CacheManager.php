@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Ubiquity\cache\CacheManager
- * This file is part of Ubiquity
+ * Cache managment
  */
 namespace Ubiquity\cache;
 

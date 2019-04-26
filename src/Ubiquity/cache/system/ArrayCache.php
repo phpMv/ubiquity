@@ -8,6 +8,12 @@ use Ubiquity\exceptions\CacheException;
 
 /**
  * This class is responsible for storing Arrays in PHP files.
+ * Ubiquity\cache\system$ArrayCache
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ *
  */
 class ArrayCache extends AbstractDataCache {
 	/**
@@ -19,12 +25,9 @@ class ArrayCache extends AbstractDataCache {
 	/**
 	 * Initializes the file cache-provider
 	 *
-	 * @param string $root
-	 *        	absolute path to the root-folder where cache-files will be stored
-	 * @param string $postfix
-	 *        	Termination of file names
-	 * @param array $cacheParams
-	 *        	defaults to ["fileMode"=>"0755"]
+	 * @param string $root absolute path to the root-folder where cache-files will be stored
+	 * @param string $postfix Termination of file names
+	 * @param array $cacheParams defaults to ["fileMode"=>"0755"]
 	 */
 	public function __construct($root, $postfix = "", $cacheParams = []) {
 		parent::__construct ( $root, $postfix );
@@ -36,8 +39,7 @@ class ArrayCache extends AbstractDataCache {
 	/**
 	 * Check if annotation-data for the key has been stored.
 	 *
-	 * @param string $key
-	 *        	cache key
+	 * @param string $key cache key
 	 * @return boolean true if data with the given key has been stored; otherwise false
 	 */
 	public function exists($key) {
@@ -47,10 +49,8 @@ class ArrayCache extends AbstractDataCache {
 	/**
 	 * Caches the given data with the given key.
 	 *
-	 * @param string $key
-	 *        	cache key
-	 * @param string $content
-	 *        	the source-code to be cached
+	 * @param string $key cache key
+	 * @param string $content the source-code to be cached
 	 * @throws CacheException if file could not be written
 	 */
 	protected function storeContent($key, $content, $tag) {
@@ -71,8 +71,7 @@ class ArrayCache extends AbstractDataCache {
 	/**
 	 * Fetches data stored for the given key.
 	 *
-	 * @param string $key
-	 *        	cache key
+	 * @param string $key cache key
 	 * @return mixed the cached data
 	 */
 	public function fetch($key) {
@@ -82,8 +81,7 @@ class ArrayCache extends AbstractDataCache {
 	/**
 	 * return data stored for the given key.
 	 *
-	 * @param string $key
-	 *        	cache key
+	 * @param string $key cache key
 	 * @return mixed the cached data
 	 */
 	public function file_get_contents($key) {
@@ -93,8 +91,7 @@ class ArrayCache extends AbstractDataCache {
 	/**
 	 * Returns the timestamp of the last cache update for the given key.
 	 *
-	 * @param string $key
-	 *        	cache key
+	 * @param string $key cache key
 	 * @return int unix timestamp
 	 */
 	public function getTimestamp($key) {
@@ -104,8 +101,7 @@ class ArrayCache extends AbstractDataCache {
 	/**
 	 * Maps a cache-key to the absolute path of a PHP file
 	 *
-	 * @param string $key
-	 *        	cache key
+	 * @param string $key cache key
 	 * @return string absolute path of the PHP file
 	 */
 	private function _getPath($key) {

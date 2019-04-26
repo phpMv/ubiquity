@@ -18,6 +18,7 @@ var class_ubiquity_1_1log_1_1_logger =
     [ "inContext", "class_ubiquity_1_1log_1_1_logger.html#a24f5ae49c0bfa3b640f3208fa13985d1", null ],
     [ "info", "class_ubiquity_1_1log_1_1_logger.html#af5c8d434f89e5ce783d6a0e754474e60", null ],
     [ "init", "class_ubiquity_1_1log_1_1_logger.html#a9b67ac7179398e39bf909d067e38c1bf", null ],
+    [ "isActive", "class_ubiquity_1_1log_1_1_logger.html#ad4046a3f867bfe5fb530650863884194", null ],
     [ "log", "class_ubiquity_1_1log_1_1_logger.html#af3208ccc7b9a6076b7a34a216610e4e7", null ],
     [ "registerError", "class_ubiquity_1_1log_1_1_logger.html#a0df09aea3ec889ba23fa459d44f439e9", null ],
     [ "warn", "class_ubiquity_1_1log_1_1_logger.html#a21db795c7dc2847d428e499b841a34c6", null ],
