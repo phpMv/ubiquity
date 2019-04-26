@@ -136,7 +136,7 @@ ubiquity new firstProject -a
 ![Admin interface](https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
 
 # Graphic design
-- Logos and banner: [@richardbmx](https://github.com/richardbmx)
+- Ubiquity logos and banner: [@richardbmx](https://github.com/richardbmx)
 
 # Donations
 You can tell us your pleasure in using Ubiquity, giving us a star,
