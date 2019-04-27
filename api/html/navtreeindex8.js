@@ -73,6 +73,7 @@ var NAVTREEINDEX8 =
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html":[3,0,0,4,5,6],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a00473894482924b3fb3a2af9ad176ea1":[3,0,0,4,5,6,16],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a0ac3756c797eaac82f7372f212d5dfa9":[3,0,0,4,5,6,8],
+"class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a162c4d9e550d6fefcc320e53809d4cdb":[3,0,0,4,5,6,21],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a2737cbcc675dbe506a3856a26a3b2818":[3,0,0,4,5,6,3],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a37d38a114cc313677745e6c45d38fd41":[3,0,0,4,5,6,15],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a43422b810b606bd14c7d74924f8b3be9":[3,0,0,4,5,6,10],
@@ -82,11 +83,11 @@ var NAVTREEINDEX8 =
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a71cae30db0e7245cc469c5977a8fd833":[3,0,0,4,5,6,18],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a72aea31052d8af79752d5afe4af98065":[3,0,0,4,5,6,2],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a8a5843612b790f4588cd7f2b790d7613":[3,0,0,4,5,6,9],
-"class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a8ce78d2aefbd0ff8453d7c5eba9d42f5":[3,0,0,4,5,6,21],
+"class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a8ce78d2aefbd0ff8453d7c5eba9d42f5":[3,0,0,4,5,6,22],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a8df39ca0b66c6926616ed16cc64b5616":[3,0,0,4,5,6,0],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#aa6b759d9a434ff803b7a2b7f515a57c5":[3,0,0,4,5,6,12],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#aada71735dcc56f4cae3b82c55e090e8d":[3,0,0,4,5,6,19],
-"class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ab24faf4aa647cdcee494fc48524ad4ff":[3,0,0,4,5,6,22],
+"class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ab24faf4aa647cdcee494fc48524ad4ff":[3,0,0,4,5,6,23],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ab7441ff3f0f00d97e211f453100e2ffe":[3,0,0,4,5,6,1],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#aba28cfdfce823ab36f4ac5c48a033051":[3,0,0,4,5,6,14],
 "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#abdb7f4cf3ef35e6fe52624b4e7b040f4":[3,0,0,4,5,6,17],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#af5591a485f38e547259d373f1ebbd816":[3,0,0,4,8,3,12],
 "class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#afe037f0c1e42e5ac505260cdd29e5c69":[3,0,0,4,8,3,5],
 "class_ubiquity_1_1core_1_1_framework.html":[3,0,0,5,1],
-"class_ubiquity_1_1core_1_1_framework.html#a0c5216068060ca9253dbad31e5895a2b":[3,0,0,5,1,4],
-"class_ubiquity_1_1core_1_1_framework.html#a173368ef6c164eee16c7cf59f5e83510":[3,0,0,5,1,13]
+"class_ubiquity_1_1core_1_1_framework.html#a0c5216068060ca9253dbad31e5895a2b":[3,0,0,5,1,4]
 };

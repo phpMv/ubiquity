@@ -21,6 +21,7 @@ var class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait =
     [ "getRestServer", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a71cae30db0e7245cc469c5977a8fd833", null ],
     [ "hasErrors", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#aada71735dcc56f4cae3b82c55e090e8d", null ],
     [ "operate_", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#adc7017a1966a4c124c2084ce7d69afed", null ],
+    [ "updateManyToOne", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a162c4d9e550d6fefcc320e53809d4cdb", null ],
     [ "updateOperation", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a8ce78d2aefbd0ff8453d7c5eba9d42f5", null ],
     [ "$errors", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ab24faf4aa647cdcee494fc48524ad4ff", null ]
 ];

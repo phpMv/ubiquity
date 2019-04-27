@@ -1,5 +1,6 @@
 var NAVTREEINDEX9 =
 {
+"class_ubiquity_1_1core_1_1_framework.html#a173368ef6c164eee16c7cf59f5e83510":[3,0,0,5,1,13],
 "class_ubiquity_1_1core_1_1_framework.html#a265a39dcf2f0b7c6b96574362aa01ad9":[3,0,0,5,1,15],
 "class_ubiquity_1_1core_1_1_framework.html#a345946b5a3226effb36c8857104d16c5":[3,0,0,5,1,5],
 "class_ubiquity_1_1core_1_1_framework.html#a3ee320eac4473b3ebe4352620ea86273":[3,0,0,5,1,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX9 =
 "class_ubiquity_1_1log_1_1_logger.html#af3208ccc7b9a6076b7a34a216610e4e7":[3,0,0,9,2,19],
 "class_ubiquity_1_1log_1_1_logger.html#af43fdd328dfcb0a52286a6086292c211":[3,0,0,9,2,14],
 "class_ubiquity_1_1log_1_1_logger.html#af5c8d434f89e5ce783d6a0e754474e60":[3,0,0,9,2,16],
-"class_ubiquity_1_1log_1_1_logger_params.html":[3,0,0,9,3],
-"class_ubiquity_1_1log_1_1_logger_params.html#a1273e4f6dfecad5cc711360770b7d784":[3,0,0,9,3,4]
+"class_ubiquity_1_1log_1_1_logger_params.html":[3,0,0,9,3]
 };
