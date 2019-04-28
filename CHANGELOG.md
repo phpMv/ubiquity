@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Logging :fix https://github.com/phpMv/ubiquity/issues/31
 ### Documentation
-- DAO (querying, updates)[https://micro-framework.readthedocs.io/en/latest/model/dao.html#loading-data]
+- DAO [querying, updates](https://micro-framework.readthedocs.io/en/latest/model/dao.html#loading-data)
 
 ## [2.1.2] - 2019-04-27
 ### Fixed
