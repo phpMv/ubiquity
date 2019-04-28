@@ -90,3 +90,61 @@ On Nginx, the following directive in your site configuration will allow "pretty"
    location /{
          rewrite ^/(.*)$ /index.php?c=$1 last;
    }
+
+Laravel Valet Driver
+^^^^^
+
+Create UbiquityValetDriver.php under `~/.config/valet/Drivers/` add below php code and save it.
+
+.. code-block:: php
+
+    <?php
+
+    class UbiquityValetDriver extends BasicValetDriver
+    {
+
+        /**
+        * Determine if the driver serves the request.
+        *
+        * @param  string  $sitePath
+        * @param  string  $siteName
+        * @param  string  $uri
+        * @return bool
+        */
+        public function serves($sitePath, $siteName, $uri)
+        {
+            if(is_dir($sitePath . DIRECTORY_SEPARATOR . '.ubiquity')) {
+                return true;
+            }
+            return false;
+        }
+
+        public function isStaticFile($sitePath, $siteName, $uri)
+        {
+            if(is_file($sitePath . $uri)) {
+                return $$sitePath . $uri;
+            }
+            return false;
+        }
+
+        /**
+        * Get the fully resolved path to the application's front controller.
+        *
+        * @param  string  $sitePath
+        * @param  string  $siteName
+        * @param  string  $uri
+        * @return string
+        */
+        public function frontControllerPath($sitePath, $siteName, $uri)
+        {
+            $_SERVER['SERVER_NAME']     = $_SERVER['HTTP_HOST'];
+            $_SERVER['SCRIPT_NAME']     = '/index.php';
+            $_GET['c']                 = isset($_GET['c']) ? $_GET['c'] : '';
+
+            $indexPath = $sitePath . '/index.php';
+
+            if(file_exists($indexPath)) {
+                return $indexPath;
+            }
+        }
+    }
