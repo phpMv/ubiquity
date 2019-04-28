@@ -8,7 +8,7 @@ namespace Ubiquity\log;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 abstract class Logger {
@@ -44,7 +44,7 @@ abstract class Logger {
 	}
 
 	public static function init(&$config) {
-		if ((self::$test = isset ( $config ["logger"] )) && $config ["debug"] === true) {
+		if ($config ["debug"] === true && (self::$test = isset ( $config ["logger"] ))) {
 			self::createLogger ( $config );
 		}
 	}
