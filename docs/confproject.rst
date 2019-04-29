@@ -90,3 +90,77 @@ On Nginx, the following directive in your site configuration will allow "pretty"
    location /{
          rewrite ^/(.*)$ /index.php?c=$1 last;
    }
+
+Laravel Valet Driver
+^^^^^
+
+Valet is a php development environment for Mac minimalists. No ``Vagrant``, no ``/etc/hosts`` file. You can even share your sites publicly using local tunnels.
+
+Laravel Valet configures your Mac to always run ``Nginx`` in the background when your machine starts. Then, using ``DnsMasq``, Valet proxies all requests on the ``*.test`` domain to point to sites installed on your local machine.
+
+Get more info about `Laravel Valet <https://laravel.com/docs/5.8/valet>`
+
+Create ``UbiquityValetDriver.php`` under ``~/.config/valet/Drivers/`` add below php code and save it.
+
+.. code-block:: php
+
+	<?php
+
+	class UbiquityValetDriver extends BasicValetDriver
+	{
+
+		/**
+		* Determine if the driver serves the request.
+		*
+		* @param  string  $sitePath
+		* @param  string  $siteName
+		* @param  string  $uri
+		* @return bool
+		*/
+		public function serves($sitePath, $siteName, $uri)
+		{
+			if(is_dir($sitePath . DIRECTORY_SEPARATOR . '.ubiquity')) {
+				return true;
+			}
+			return false;
+		}
+
+		public function isStaticFile($sitePath, $siteName, $uri)
+		{
+			if(is_file($sitePath . $uri)) {
+				return $$sitePath . $uri;
+			}
+			return false;
+		}
+
+		/**
+		* Get the fully resolved path to the application's front controller.
+		*
+		* @param  string  $sitePath
+		* @param  string  $siteName
+		* @param  string  $uri
+		* @return string
+		*/
+		public function frontControllerPath($sitePath, $siteName, $uri)
+		{
+			$_SERVER['DOCUMENT_ROOT'] = $sitePath;
+			$_SERVER['SCRIPT_NAME'] = '/index.php';
+			$_SERVER['SCRIPT_FILENAME'] = $sitePath . '/index.php';
+			$_SERVER['DOCUMENT_URI'] = $sitePath . '/index.php';
+			$_SERVER['PHP_SELF'] = '/index.php';
+			
+			$_GET['c'] = '';
+			
+			if($uri) {
+				$_GET['c'] = ltrim($uri, '/');
+				$_SERVER['PHP_SELF'] = $_SERVER['PHP_SELF']. $uri;
+				$_SERVER['PATH_INFO'] = $uri;
+			}
+
+			$indexPath = $sitePath . '/index.php';
+
+			if(file_exists($indexPath)) {
+				return $indexPath;
+			}
+		}
+	}
