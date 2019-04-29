@@ -70,7 +70,7 @@ class Startup {
 		self::startTemplateEngine ( $config );
 		if (isset ( $config ['sessionName'] ))
 			USession::start ( $config ['sessionName'] );
-		self::forward ( $_GET ['c'] );
+		self::forward ( $_GET ['c'] ?? null );
 	}
 
 	/**
