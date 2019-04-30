@@ -98,7 +98,7 @@ Valet is a php development environment for Mac minimalists. No ``Vagrant``, no `
 
 Laravel Valet configures your Mac to always run ``Nginx`` in the background when your machine starts. Then, using ``DnsMasq``, Valet proxies all requests on the ``*.test`` domain to point to sites installed on your local machine.
 
-Get more info about `Laravel Valet <https://laravel.com/docs/5.8/valet>`
+Get more info about `Laravel Valet <https://laravel.com/docs/5.8/valet>`_ 
 
 Create ``UbiquityValetDriver.php`` under ``~/.config/valet/Drivers/`` add below php code and save it.
 
@@ -106,8 +106,7 @@ Create ``UbiquityValetDriver.php`` under ``~/.config/valet/Drivers/`` add below 
 
 	<?php
 
-	class UbiquityValetDriver extends BasicValetDriver
-	{
+	class UbiquityValetDriver extends BasicValetDriver{
 
 		/**
 		* Determine if the driver serves the request.
@@ -117,16 +116,14 @@ Create ``UbiquityValetDriver.php`` under ``~/.config/valet/Drivers/`` add below 
 		* @param  string  $uri
 		* @return bool
 		*/
-		public function serves($sitePath, $siteName, $uri)
-		{
+		public function serves($sitePath, $siteName, $uri){
 			if(is_dir($sitePath . DIRECTORY_SEPARATOR . '.ubiquity')) {
 				return true;
 			}
 			return false;
 		}
 
-		public function isStaticFile($sitePath, $siteName, $uri)
-		{
+		public function isStaticFile($sitePath, $siteName, $uri){
 			if(is_file($sitePath . $uri)) {
 				return $$sitePath . $uri;
 			}
@@ -141,8 +138,7 @@ Create ``UbiquityValetDriver.php`` under ``~/.config/valet/Drivers/`` add below 
 		* @param  string  $uri
 		* @return string
 		*/
-		public function frontControllerPath($sitePath, $siteName, $uri)
-		{
+		public function frontControllerPath($sitePath, $siteName, $uri){
 			$_SERVER['DOCUMENT_ROOT'] = $sitePath;
 			$_SERVER['SCRIPT_NAME'] = '/index.php';
 			$_SERVER['SCRIPT_FILENAME'] = $sitePath . '/index.php';
