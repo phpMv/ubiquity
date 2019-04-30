@@ -125,7 +125,7 @@ Create ``UbiquityValetDriver.php`` under ``~/.config/valet/Drivers/`` add below 
 
 		public function isStaticFile($sitePath, $siteName, $uri){
 			if(is_file($sitePath . $uri)) {
-				return $$sitePath . $uri;
+				return $sitePath . $uri;
 			}
 			return false;
 		}
