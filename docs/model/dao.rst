@@ -5,8 +5,41 @@ DAO
 
    <br />
 
-
 The **DAO** class is responsible for loading and persistence operations on models :
+
+Connecting to the database
+==========================
+
+Check that the database connection parameters are correctly entered in the configuration file:
+
+.. code-block:: bash
+    
+    Ubiquity config -f=database
+
+If the database is to be used in all http requests, the connection can be located in the ``app/config/services.php`` file:
+
+.. code-block:: php
+    
+    try{
+    	\Ubiquity\orm\DAO::startDatabase($config);
+    }catch(Exception $e){
+    	echo $e->getMessage();
+    }
+
+If the database is only used on a part of the application, it is better to create a base controller for that part,
+ and implement the connection in its override initialize method:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/ControllerWithDb.php
+   
+    namespace controllers;
+    class ControllerWithDb{
+    	public function initialize(){
+    		$config=\Ubiquity\controllers\Startup::getConfig();
+    		\Ubiquity\orm\DAO::startDatabase($config);
+    	}
+    }
 
 Loading data
 ============
