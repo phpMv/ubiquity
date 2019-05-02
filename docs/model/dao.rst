@@ -26,15 +26,14 @@ If the database is to be used in all http requests, the connection can be locate
     	echo $e->getMessage();
     }
 
-If the database is only used on a part of the application, it is better to create a base controller for that part,
- and implement the connection in its override initialize method:
+If the database is only used on a part of the application, it is better to create a base controller for that part, and implement the connection in its override initialize method:
 
 .. code-block:: php
    :linenos:
    :caption: app/controllers/ControllerWithDb.php
    
     namespace controllers;
-    class ControllerWithDb{
+    class ControllerWithDb extends ControllerBase{
     	public function initialize(){
     		$config=\Ubiquity\controllers\Startup::getConfig();
     		\Ubiquity\orm\DAO::startDatabase($config);
