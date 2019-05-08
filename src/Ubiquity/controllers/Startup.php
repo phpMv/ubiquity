@@ -14,7 +14,7 @@ use Ubiquity\controllers\di\DiManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 class Startup {
@@ -29,7 +29,7 @@ class Startup {
 		if (\class_exists ( $u [0] )) {
 			self::runAction ( $u, $initialize, $finalize );
 		} else {
-			\header ( 'HTTP/1.0 404 Not Found', true, 404 );
+			self::$httpInstance->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
 			Logger::warn ( "Startup", "The controller `" . $u [0] . "` doesn't exists! <br/>", "forward" );
 		}
 	}
