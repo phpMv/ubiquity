@@ -241,7 +241,7 @@ In ``app/config/config.php``, create the **@exec** key in **di** part.
 				}
 			]
 
-With this declaration, the **$rService** member, instance of **RuntimeService**, is injected into all the controllers. [br|
+With this declaration, the **$rService** member, instance of **RuntimeService**, is injected into all the controllers. |br|
 It is then advisable to use the javadoc comments to declare **$rService** in the controllers that use it (to get the code completion on **$rService** in your IDE).
 
 .. code-block:: php
