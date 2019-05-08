@@ -4,16 +4,17 @@ namespace Ubiquity\utils\http;
 
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\http\session\SessionObject;
+use Ubiquity\controllers\Startup;
 
 /**
  * Http Session utilities
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.1.0
  */
 class USession {
-	private static $name;
+	protected static $sessionInstance;
 
 	/**
 	 * Returns an array stored in session variable as $arrayKey
@@ -23,9 +24,8 @@ class USession {
 	 * @return array
 	 */
 	public static function getArray($arrayKey) {
-		self::start ();
-		if (isset ( $_SESSION [$arrayKey] )) {
-			$array = $_SESSION [$arrayKey];
+		if (self::$sessionInstance->exists($arrayKey)) {
+			$array =self::$sessionInstance->get($arrayKey);
 			if (! is_array ( $array ))
 				$array = [ ];
 		} else
@@ -49,11 +49,12 @@ class USession {
 		$_SESSION [$arrayKey] = $array;
 		$search = array_search ( $value, $array );
 		if ($search === FALSE && $add) {
-			$_SESSION [$arrayKey] [] = $value;
+			$array[]=$value;
+			self::$sessionInstance->set($arrayKey, $array);
 			return true;
 		} else if ($add !== true) {
-			unset ( $_SESSION [$arrayKey] [$search] );
-			$_SESSION [$arrayKey] = array_values ( $_SESSION [$arrayKey] );
+			unset ( $array[$search] );
+			self::$sessionInstance->set($arrayKey, $array );
 			return false;
 		}
 	}
@@ -94,8 +95,7 @@ class USession {
 	 * @return boolean
 	 */
 	public static function setBoolean($key, $value) {
-		$_SESSION [$key] = UString::isBooleanTrue ( $value );
-		return $_SESSION [$key];
+		return self::$sessionInstance->set($key,UString::isBooleanTrue ( $value ));
 	}
 
 	/**
@@ -106,12 +106,8 @@ class USession {
 	 * @return boolean
 	 */
 	public static function getBoolean($key) {
-		self::start ();
-		$ret = false;
-		if (isset ( $_SESSION [$key] )) {
-			$ret = UString::isBooleanTrue ( $_SESSION [$key] );
-		}
-		return $ret;
+		$v= self::$sessionInstance->get($key,false);
+		return UString::isBooleanTrue ( $v);
 	}
 
 	/**
@@ -124,8 +120,7 @@ class USession {
 	 * @return mixed
 	 */
 	public static function session($key, $default = NULL) {
-		self::start ();
-		return isset ( $_SESSION [$key] ) ? $_SESSION [$key] : $default;
+		return self::$sessionInstance->get($key,$default);
 	}
 
 	/**
@@ -138,8 +133,7 @@ class USession {
 	 * @return mixed
 	 */
 	public static function get($key, $default = NULL) {
-		self::start ();
-		return isset ( $_SESSION [$key] ) ? $_SESSION [$key] : $default;
+		return self::$sessionInstance->get($key,$default);
 	}
 
 	/**
@@ -150,24 +144,23 @@ class USession {
 	 * @param mixed $value
 	 */
 	public static function set($key, $value) {
-		$_SESSION [$key] = $value;
-		return $value;
+		return self::$sessionInstance->set($key,$value);
 	}
 
 	public static function setTmp($key, $value, $duration) {
-		if (isset ( $_SESSION [$key] )) {
-			$object = $_SESSION [$key];
+		if (self::$sessionInstance->exists($key)) {
+			$object = self::$sessionInstance->get($key);
 			if ($object instanceof SessionObject) {
 				return $object->setValue ( $value );
 			}
 		}
 		$object = new SessionObject ( $value, $duration );
-		return $_SESSION [$key] = $object;
+		return self::$sessionInstance->set($key, $object);
 	}
 
 	public static function getTmp($key, $default = null) {
-		if (isset ( $_SESSION [$key] )) {
-			$object = $_SESSION [$key];
+		if (self::$sessionInstance->exists($key)) {
+			$object = self::$sessionInstance->get($key);
 			if ($object instanceof SessionObject) {
 				$value = $object->getValue ();
 				if (isset ( $value ))
@@ -181,8 +174,8 @@ class USession {
 	}
 
 	public static function getTimeout($key) {
-		if (isset ( $_SESSION [$key] )) {
-			$object = $_SESSION [$key];
+		if (self::$sessionInstance->exists($key)) {
+			$object = self::$sessionInstance->get($key);
 			if ($object instanceof SessionObject) {
 				$value = $object->getTimeout ();
 				if ($value < 0) {
@@ -202,8 +195,7 @@ class USession {
 	 *        	the key to delete
 	 */
 	public static function delete($key) {
-		self::start ();
-		unset ( $_SESSION [$key] );
+		self::$sessionInstance->delete($key);
 	}
 
 	/**
@@ -266,9 +258,11 @@ class USession {
 	 * @return array
 	 */
 	public static function Walk($callback, $userData = null) {
-		self::start ();
-		array_walk ( $_SESSION, $callback, $userData );
-		return $_SESSION;
+		$all=self::$sessionInstance->getAll();
+		foreach ($all as $k=>$v){
+			self::$sessionInstance->set($k, $callback($k,$v,$userData));
+		}
+		return self::$sessionInstance->getAll();
 	}
 
 	/**
@@ -278,9 +272,10 @@ class USession {
 	 * @return array
 	 */
 	public static function replace($keyAndValues) {
-		self::start ();
-		$_SESSION = array_replace ( $_SESSION, $keyAndValues );
-		return $_SESSION;
+		foreach ($keyAndValues as $k=>$v){
+			self::$sessionInstance->set($k, $v);
+		}
+		return self::$sessionInstance->getAll();
 	}
 
 	/**
@@ -289,8 +284,7 @@ class USession {
 	 * @return array
 	 */
 	public static function getAll() {
-		self::start ();
-		return $_SESSION;
+		return self::$sessionInstance->getAll();
 	}
 
 	/**
@@ -300,15 +294,10 @@ class USession {
 	 *        	the name of the session
 	 */
 	public static function start($name = null) {
-		if (! self::isStarted ()) {
-			if (isset ( $name ) && $name !== "") {
-				self::$name = $name;
-			}
-			if (isset ( self::$name )) {
-				\session_name ( self::$name );
-			}
-			\session_start ();
+		if(!isset(self::$sessionInstance)){
+			self::$sessionInstance=Startup::getSessionInstance();
 		}
+		self::$sessionInstance->start($name);
 	}
 
 	/**
@@ -317,7 +306,7 @@ class USession {
 	 * @return boolean
 	 */
 	public static function isStarted() {
-		return session_status () == PHP_SESSION_ACTIVE;
+		return self::$sessionInstance->isStarted();
 	}
 
 	/**
@@ -328,8 +317,7 @@ class USession {
 	 * @return boolean
 	 */
 	public static function exists($key) {
-		self::start ();
-		return isset ( $_SESSION [$key] );
+		return self::$sessionInstance->exists($key);
 	}
 
 	/**
@@ -340,25 +328,16 @@ class USession {
 	 * @return mixed
 	 */
 	public static function init($key, $value) {
-		if (! isset ( $_SESSION [$key] )) {
-			$_SESSION [$key] = $value;
+		if (! self::$sessionInstance->exists($key)) {
+			self::$sessionInstance->set($key, $value);
 		}
-		return $_SESSION [$key];
+		return self::$sessionInstance->get($key);
 	}
 
 	/**
 	 * Terminates the active session
 	 */
 	public static function terminate() {
-		if (! self::isStarted ())
-			return;
-		self::start ();
-		$_SESSION = array ();
-
-		if (\ini_get ( "session.use_cookies" )) {
-			$params = \session_get_cookie_params ();
-			\setcookie ( \session_name (), '', \time () - 42000, $params ["path"], $params ["domain"], $params ["secure"], $params ["httponly"] );
-		}
-		\session_destroy ();
+		self::$sessionInstance->terminate();
 	}
 }

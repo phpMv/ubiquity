@@ -2,13 +2,15 @@
 
 namespace Ubiquity\utils\http;
 
+use Ubiquity\controllers\Startup;
+
 /**
  * Http Response utilities
  * Ubiquity\utils\http$UResponse
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.1.0
  *
  */
 class UResponse {
@@ -17,18 +19,14 @@ class UResponse {
 	/**
 	 * Send a raw HTTP header
 	 *
-	 * @param string $headerField
-	 *        	the header field
-	 * @param string $value
-	 *        	the header value
-	 * @param boolean $replace
-	 *        	The optional replace parameter indicates whether the header should replace a previous similar header
-	 * @param int $responseCode
-	 *        	Forces the HTTP response code to the specified value
+	 * @param string $headerField the header field
+	 * @param string $value the header value
+	 * @param boolean $replace The optional replace parameter indicates whether the header should replace a previous similar header
+	 * @param int $responseCode Forces the HTTP response code to the specified value
 	 */
 	public static function header($headerField, $value, $replace = null, $responseCode = null) {
 		self::$headers [trim ( $headerField )] = trim ( $value );
-		\header ( trim ( $headerField ) . ": " . trim ( $value ), $replace, $responseCode );
+		Startup::getHttpInstance ()->header ( trim ( $headerField ), trim ( $value ), $replace, $responseCode );
 	}
 
 	/**
@@ -67,14 +65,12 @@ class UResponse {
 	/**
 	 * Checks if or where headers have been sent
 	 *
-	 * @param string $file
-	 *        	If the optional file and line parameters are set,headers_sent will put the PHP source file nameand line number where output started in the fileand line variables.
-	 * @param int $line
-	 *        	The line number where the output started.
+	 * @param string $file If the optional file and line parameters are set,headers_sent will put the PHP source file nameand line number where output started in the fileand line variables.
+	 * @param int $line The line number where the output started.
 	 * @return boolean
 	 */
 	public static function isSent(&$file = null, &$line = null) {
-		return \headers_sent ( $file, $line );
+		return Startup::getHttpInstance ()->headersSent ( $file, $line );
 	}
 
 	/**
@@ -97,8 +93,7 @@ class UResponse {
 	/**
 	 * Sets the response content-type to text/html
 	 *
-	 * @param string $encoding
-	 *        	default: utf-8
+	 * @param string $encoding default: utf-8
 	 */
 	public static function asHtml($encoding = 'utf-8') {
 		self::setContentType ( 'text/html', $encoding );
@@ -107,8 +102,7 @@ class UResponse {
 	/**
 	 * Sets the response content-type to application/xml
 	 *
-	 * @param string $encoding
-	 *        	default: utf-8
+	 * @param string $encoding default: utf-8
 	 */
 	public static function asXml($encoding = 'utf-8') {
 		self::setContentType ( 'application/xml', $encoding );
@@ -117,8 +111,7 @@ class UResponse {
 	/**
 	 * Sets the response content-type to plain/text
 	 *
-	 * @param string $encoding
-	 *        	default: utf-8
+	 * @param string $encoding default: utf-8
 	 */
 	public static function asText($encoding = 'utf-8') {
 		self::setContentType ( 'plain/text', $encoding );
@@ -127,8 +120,7 @@ class UResponse {
 	/**
 	 * Sets the Accept header
 	 *
-	 * @param string $value
-	 *        	one of Http accept values
+	 * @param string $value one of Http accept values
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation/List_of_default_Accept_values
 	 */
 	public static function setAccept($value) {
@@ -138,12 +130,9 @@ class UResponse {
 	/**
 	 * Enables CORS
 	 *
-	 * @param string $origin
-	 *        	The allowed origin (default: '*')
-	 * @param string $methods
-	 *        	The allowed methods (default: 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
-	 * @param string $headers
-	 *        	The allowed headers (default: 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+	 * @param string $origin The allowed origin (default: '*')
+	 * @param string $methods The allowed methods (default: 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+	 * @param string $headers The allowed headers (default: 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
 	 * @since Ubiquity 2.0.11
 	 */
 	public static function enableCors($origin = '*', $methods = 'GET, POST, PUT, DELETE, PATCH, OPTIONS', $headers = 'X-Requested-With, Content-Type, Accept, Origin, Authorization') {

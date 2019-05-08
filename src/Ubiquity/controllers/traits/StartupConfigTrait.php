@@ -4,10 +4,16 @@ namespace Ubiquity\controllers\traits;
 
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\utils\http\foundation\PhpHttp;
+use Ubiquity\utils\http\foundation\AbstractHttp;
+use Ubiquity\utils\http\session\PhpSession;
+use Ubiquity\utils\http\session\AbstractSession;
 
 trait StartupConfigTrait {
 	protected static $config;
 	protected static $ctrlNS;
+	protected static $httpInstance;
+	protected static $sessionInstance;
 	
 	public static function getConfig() {
 		return self::$config;
@@ -87,5 +93,28 @@ trait StartupConfigTrait {
 		}
 		return false;
 	}
+	
+	public static function getHttpInstance(){
+		if(!isset(self::$httpInstance)){
+			self::$httpInstance=new PhpHttp();
+		}
+		return self::$httpInstance;
+	}
+	
+	public static function setHttpInstance(AbstractHttp $httpInstance) {
+		self::$httpInstance = $httpInstance;
+	}
+	
+	public static function getSessionInstance(){
+		if(!isset(self::$sessionInstance)){
+			self::$sessionInstance=new PhpSession();
+		}
+		return self::$sessionInstance;
+	}
+	
+	public static function setSessionInstance(AbstractSession $sessionInstance) {
+		self::$sessionInstance = $sessionInstance;
+	}
+
 }
 
