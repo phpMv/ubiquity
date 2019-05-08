@@ -166,6 +166,7 @@ In ``app/config/config.php``, create a new key for **serviceToInit** property to
 		"di"=>["ClientController.serviceToInit"=>function(){
 					$service=new \services\ServiceWithInit();
 					$service->init();
+					return $service;
 				}
 			]
 
@@ -185,6 +186,7 @@ Check that the service is injected by going to the address ``/ClientController``
    		"di"=>["*.serviceToInit"=>function(){
    					$service=new \services\ServiceWithInit();
    					$service->init();
+   					return $service;
    				}
    			]
 
@@ -200,6 +202,7 @@ In ``app/config/config.php``, create a new key for **serviceToInit** property to
 		"di"=>["*.service"=>function(){
 					$service=new \services\ServiceWithInit();
 					$service->init();
+					return $service;
 				}
 			]
 
@@ -235,7 +238,6 @@ In ``app/config/config.php``, create the **@exec** key in **di** part.
    
 		"di"=>["@exec"=>"rService"=>function($ctrl){
 					return new \services\RuntimeService($ctrl);
-					$service->init();
 				}
 			]
 
