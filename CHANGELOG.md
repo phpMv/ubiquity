@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 
 ### Fixed
-- ORM :fix https://github.com/phpMv/ubiquity/issues/39
+- [ORM] model Table annotation : fix [#39](https://github.com/phpMv/ubiquity/issues/39)
 ### Fixed
-- Logging :fix https://github.com/phpMv/ubiquity/issues/31
+- [Logging] init logger fails if debug=false : fix [#31](https://github.com/phpMv/ubiquity/issues/31)
 ### Documentation
 - DAO [querying, updates](https://micro-framework.readthedocs.io/en/latest/model/dao.html#loading-data)
+- In doc for di : fix [#41](https://github.com/phpMv/ubiquity/issues/41)
 
 ## [2.1.2] - 2019-04-27
 ### Fixed
