@@ -50,7 +50,7 @@ class UResponse {
 	public static function setContentType($contentType, $encoding = null) {
 		$value = $contentType;
 		if (isset ( $encoding ))
-			$value .= ' ;charset=' . $encoding;
+			$value .= '; charset=' . $encoding;
 		self::header ( 'Content-Type', $value );
 	}
 
