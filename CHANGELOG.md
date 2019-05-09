@@ -5,7 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+- nothing
 
+## [2.1.3] - 2019-05-09
+### Added
+- Support for Http methods customization (for URequest & Uresponse) via ``Ubiquity\utils\http\foundation\AbstractHttp`` class.
+- Support for session customization via ``Ubiquity\utils\http\session\AbstractSession``
+- multisites session ``Ubiquity\utils\http\session\MultisiteSession``(1.0.0-beta)
+- ``ReactPHP`` server available from the devtools with ``Ubiquity serve -t=react`` command
 ### Fixed
 - [ORM] model Table annotation : fix [#39](https://github.com/phpMv/ubiquity/issues/39)
 ### Fixed
