@@ -29,7 +29,7 @@ class Startup {
 		if (\class_exists ( $u [0] )) {
 			self::runAction ( $u, $initialize, $finalize );
 		} else {
-			self::$httpInstance->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+			self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
 			Logger::warn ( "Startup", "The controller `" . $u [0] . "` doesn't exists! <br/>", "forward" );
 		}
 	}
