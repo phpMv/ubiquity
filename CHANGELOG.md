@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 ### Fixed
 - Fatal error in startup (not 404) fix [#43](https://github.com/phpMv/ubiquity/issues/43)
+- Version 2.1.4 displays the number of version 2.1.3
 
 ## [2.1.3] - 2019-05-09
 ### Added
