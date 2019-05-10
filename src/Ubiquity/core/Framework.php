@@ -22,7 +22,7 @@ use Ubiquity\assets\AssetsManager;
 use Ubiquity\controllers\Controller;
 
 class Framework {
-	public const version = '2.1.2';
+	public const version = '2.1.3';
 
 	public static function getVersion() {
 		return self::version;
