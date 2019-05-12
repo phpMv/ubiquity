@@ -15,7 +15,7 @@ use Ubiquity\exceptions\DBException;
  * @property string $dbType
  */
 trait DatabaseTransactionsTrait {
-	protected static $savepointsDrivers = [ 'pgsql','mysql','sqlite' ];
+	protected static $savepointsDrivers = [ 'pgsql' => true,'mysql' => true,'sqlite' => true ];
 	protected $transactionLevel = 0;
 
 	protected function nestable() {
