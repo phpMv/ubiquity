@@ -8,6 +8,7 @@ namespace Ubiquity\db;
 use Ubiquity\exceptions\CacheException;
 use Ubiquity\db\traits\DatabaseOperationsTrait;
 use Ubiquity\exceptions\DBException;
+use Ubiquity\db\traits\DatabaseTransactionsTrait;
 
 /**
  * Ubiquity PDO database class.
@@ -19,7 +20,7 @@ use Ubiquity\exceptions\DBException;
  *
  */
 class Database {
-	use DatabaseOperationsTrait;
+	use DatabaseOperationsTrait,DatabaseTransactionsTrait;
 	private $dbType;
 	private $serverName;
 	private $port;

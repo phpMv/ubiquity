@@ -5,6 +5,7 @@ namespace Ubiquity\db\traits;
 use Ubiquity\exceptions\DBException;
 
 /**
+ * Manages database transactions.
  * Ubiquity\db\traits$DatabaseTransactionsTrait
  * This class is part of Ubiquity
  *
@@ -21,6 +22,11 @@ trait DatabaseTransactionsTrait {
 		return isset ( self::$savepointsDrivers [$this->dbType] );
 	}
 
+	/**
+	 * Initiates a transaction
+	 *
+	 * @return boolean true on success or false on failure
+	 */
 	public function beginTransaction() {
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
 			$ret = $this->pdoObject->beginTransaction ();
@@ -32,6 +38,11 @@ trait DatabaseTransactionsTrait {
 		return true;
 	}
 
+	/**
+	 * Commits a transaction
+	 *
+	 * @return boolean true on success or false on failure
+	 */
 	public function commit() {
 		$this->transactionLevel --;
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
@@ -41,6 +52,29 @@ trait DatabaseTransactionsTrait {
 		return true;
 	}
 
+	/**
+	 * Commits nested transactions up to level $transactionLevel
+	 *
+	 * @param int $transactionLevel
+	 */
+	public function commitToLevel($transactionLevel) {
+		while ( $this->transactionLevel > $transactionLevel ) {
+			$this->commit ();
+		}
+	}
+
+	/**
+	 * Commits all nested transactions (up to level 0)
+	 */
+	public function commitAll() {
+		$this->commitToLevel ( 0 );
+	}
+
+	/**
+	 * Rolls back a transaction
+	 *
+	 * @return boolean true on success or false on failure
+	 */
 	public function rollBack() {
 		$this->transactionLevel --;
 
@@ -51,6 +85,32 @@ trait DatabaseTransactionsTrait {
 		return true;
 	}
 
+	/**
+	 * Rolls back nested transactions up to level $transactionLevel
+	 *
+	 * @param int $transactionLevel
+	 */
+	public function rollBackToLevel($transactionLevel) {
+		while ( $this->transactionLevel > $transactionLevel ) {
+			$this->rollBack ();
+		}
+	}
+
+	/**
+	 * Rolls back all nested transactions (up to level 0)
+	 */
+	public function rollBackAll() {
+		$this->rollBackToLevel ( 0 );
+	}
+
+	/**
+	 * Call a callback with an array of parameters in a transaction
+	 *
+	 * @param callable $callback
+	 * @param mixed ...$parameters
+	 * @throws \Exception
+	 * @return mixed
+	 */
 	function callInTransaction($callback, ...$parameters) {
 		if ($this->beginTransaction ()) {
 			try {
