@@ -30,6 +30,12 @@ class Database {
 	private $options;
 
 	/**
+	 *
+	 * @var \PDO
+	 */
+	protected $pdoObject;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $dbName

@@ -13,16 +13,11 @@ use Ubiquity\db\SqlUtils;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
+ * @property \PDO $pdoObject
  * @property mixed $cache
  * @property array $options
  */
 trait DatabaseOperationsTrait {
-
-	/**
-	 *
-	 * @var \PDO
-	 */
-	protected $pdoObject;
 	private $statements = [ ];
 
 	abstract public function getDSN();
