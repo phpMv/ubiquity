@@ -3,6 +3,7 @@
 namespace Ubiquity\orm\traits;
 
 /**
+ * Adds transactions in DAO class.
  * Ubiquity\orm\traits$DAOTransactionsTrait
  * This class is part of Ubiquity
  *
@@ -18,7 +19,7 @@ trait DAOTransactionsTrait {
 	 *
 	 * @return boolean true on success or false on failure
 	 */
-	public function beginTransaction() {
+	public static function beginTransaction() {
 		return self::$db->beginTransaction ();
 	}
 
@@ -27,7 +28,7 @@ trait DAOTransactionsTrait {
 	 *
 	 * @return boolean true on success or false on failure
 	 */
-	public function commit() {
+	public static function commit() {
 		return self::$db->commit ();
 	}
 
@@ -36,14 +37,14 @@ trait DAOTransactionsTrait {
 	 *
 	 * @param int $transactionLevel
 	 */
-	public function commitToLevel($transactionLevel) {
+	public static function commitToLevel($transactionLevel) {
 		return self::$db->commitToLevel ( $transactionLevel );
 	}
 
 	/**
 	 * Commits all nested transactions (up to level 0)
 	 */
-	public function commitAll() {
+	public static function commitAll() {
 		return self::$db->commitAll ();
 	}
 
@@ -52,7 +53,7 @@ trait DAOTransactionsTrait {
 	 *
 	 * @return boolean true on success or false on failure
 	 */
-	public function rollBack() {
+	public static function rollBack() {
 		return self::$db->rollBack ();
 	}
 
@@ -61,14 +62,14 @@ trait DAOTransactionsTrait {
 	 *
 	 * @param int $transactionLevel
 	 */
-	public function rollBackToLevel($transactionLevel) {
+	public static function rollBackToLevel($transactionLevel) {
 		return self::$db->rollBackToLevel ( $transactionLevel );
 	}
 
 	/**
 	 * Rolls back all nested transactions (up to level 0)
 	 */
-	public function rollBackAll() {
+	public static function rollBackAll() {
 		return self::$db->rollBackAll ();
 	}
 
@@ -80,7 +81,7 @@ trait DAOTransactionsTrait {
 	 * @throws \Exception
 	 * @return mixed
 	 */
-	function callInTransaction($callback, ...$parameters) {
+	public static function callInTransaction($callback, ...$parameters) {
 		return self::$db->callInTransaction ( $callback, ...$parameters );
 	}
 }
