@@ -15,17 +15,19 @@ use Ubiquity\orm\traits\DAORelationsPrepareTrait;
 use Ubiquity\exceptions\DAOException;
 use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\db\TransactionsInterface;
+use Ubiquity\orm\traits\DAOTransactionsTrait;
 
 /**
  * Gateway class between database and object model.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.7
+ * @version 1.1.8
  *
  */
-class DAO {
-	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,DAOUQueries;
+class DAO implements TransactionsInterface {
+	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,DAOUQueries,DAOTransactionsTrait;
 
 	/**
 	 *
