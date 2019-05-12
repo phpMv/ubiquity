@@ -104,6 +104,15 @@ trait DatabaseTransactionsTrait {
 	}
 
 	/**
+	 * Checks if inside a transaction
+	 *
+	 * @return boolean
+	 */
+	public function inTransaction() {
+		return $this->pdoObject->inTransaction ();
+	}
+
+	/**
 	 * Call a callback with an array of parameters in a transaction
 	 *
 	 * @param callable $callback

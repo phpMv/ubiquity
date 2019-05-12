@@ -204,4 +204,11 @@ class Database {
 	public function setOptions($options) {
 		$this->options = $options;
 	}
+
+	/**
+	 * Closes the active pdo connection
+	 */
+	public function close() {
+		$this->pdoObject = null;
+	}
 }

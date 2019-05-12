@@ -257,7 +257,19 @@ class DAO {
 		return self::$db !== null && (self::$db instanceof Database) && self::$db->isConnected ();
 	}
 
+	/**
+	 * Sets the transformer operation
+	 *
+	 * @param string $op
+	 */
 	public static function setTransformerOp($op) {
 		self::$transformerOp = $op;
+	}
+
+	/**
+	 * Closes the active pdo connection to the database
+	 */
+	public static function closeDb() {
+		self::$db->close ();
 	}
 }
