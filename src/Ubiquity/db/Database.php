@@ -19,7 +19,7 @@ use Ubiquity\db\traits\DatabaseTransactionsTrait;
  * @version 1.0.4
  *
  */
-class Database implements TransactionsInterface {
+class Database {
 	use DatabaseOperationsTrait,DatabaseTransactionsTrait;
 	private $dbType;
 	private $serverName;

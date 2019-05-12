@@ -15,7 +15,6 @@ use Ubiquity\orm\traits\DAORelationsPrepareTrait;
 use Ubiquity\exceptions\DAOException;
 use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
 use Ubiquity\orm\parser\Reflexion;
-use Ubiquity\db\TransactionsInterface;
 use Ubiquity\orm\traits\DAOTransactionsTrait;
 
 /**
@@ -26,7 +25,7 @@ use Ubiquity\orm\traits\DAOTransactionsTrait;
  * @version 1.1.8
  *
  */
-class DAO implements TransactionsInterface {
+class DAO {
 	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,DAOUQueries,DAOTransactionsTrait;
 
 	/**
