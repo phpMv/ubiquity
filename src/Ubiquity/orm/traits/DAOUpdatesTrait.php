@@ -16,7 +16,8 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
+ * @property \Ubiquity\db\Database $db
  *
  */
 trait DAOUpdatesTrait {
@@ -42,11 +43,8 @@ trait DAOUpdatesTrait {
 		$sql = "DELETE FROM " . $tableName . " WHERE " . SqlUtils::getWhere ( $keyAndValues );
 		Logger::info ( "DAOUpdates", $sql, "delete" );
 		$statement = self::$db->prepareStatement ( $sql );
-		foreach ( $keyAndValues as $key => $value ) {
-			self::$db->bindValueFromStatement ( $statement, $key, $value );
-		}
 		try {
-			if ($statement->execute ()) {
+			if ($statement->execute ( $keyAndValues )) {
 				return $statement->rowCount ();
 			}
 		} catch ( \PDOException $e ) {
@@ -117,14 +115,13 @@ trait DAOUpdatesTrait {
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 		$sql = "INSERT INTO `" . $tableName . "`(" . SqlUtils::getInsertFields ( $keyAndValues ) . ") VALUES(" . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ")";
-		Logger::info ( "DAOUpdates", $sql, "insert" );
-		Logger::info ( "DAOUpdates", json_encode ( $keyAndValues ), "Key and values" );
-		$statement = self::$db->prepareStatement ( $sql );
-		foreach ( $keyAndValues as $key => $value ) {
-			self::$db->bindValueFromStatement ( $statement, $key, $value );
+		if (Logger::isActive ()) {
+			Logger::info ( "DAOUpdates", $sql, "insert" );
+			Logger::info ( "DAOUpdates", json_encode ( $keyAndValues ), "Key and values" );
 		}
+		$statement = self::$db->prepareStatement ( $sql );
 		try {
-			$result = $statement->execute ();
+			$result = $statement->execute ( $keyAndValues );
 			if ($result) {
 				$pk = OrmUtils::getFirstKey ( get_class ( $instance ) );
 				$accesseurId = "set" . ucfirst ( $pk );
@@ -218,11 +215,8 @@ trait DAOUpdatesTrait {
 			Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
 		}
 		$statement = self::$db->prepareStatement ( $sql );
-		foreach ( $ColumnskeyAndValues as $key => $value ) {
-			self::$db->bindValueFromStatement ( $statement, $key, $value );
-		}
 		try {
-			$result = $statement->execute ();
+			$result = $statement->execute ( $ColumnskeyAndValues );
 			if ($result && $updateMany)
 				self::insertOrUpdateAllManyToMany ( $instance );
 			EventsManager::trigger ( DAOEvents::AFTER_UPDATE, $instance, $result );
