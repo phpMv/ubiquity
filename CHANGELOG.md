@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+### Added
+- Transactions and nested transactions in `Database` and `DAO` classes see [#42](https://github.com/phpMv/ubiquity/issues/42)
 ### Fixed
 - Fatal error in startup (not 404) fix [#43](https://github.com/phpMv/ubiquity/issues/43)
 - Version 2.1.3 displays the number of version 2.1.2
