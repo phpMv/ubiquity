@@ -367,7 +367,7 @@ class DAOTest extends BaseTest {
 	/**
 	 * Tests DAO::nested commitAll
 	 */
-	public function testNestedTransactions() {
+	public function testNestedCommitAll() {
 		$countOrgas = $this->dao->count ( Organization::class );
 		$countUsers = $this->dao->count ( User::class );
 
