@@ -31,7 +31,7 @@ class DAOTest extends BaseTest {
 	 * Cleans up the environment after running a test.
 	 */
 	protected function _after() {
-		$this->dao = null;
+		$this->dao->closeDb ();
 	}
 
 	/**
@@ -189,6 +189,238 @@ class DAOTest extends BaseTest {
 		$this->assertEquals ( $count + 1, DAO::count ( Organization::class ) );
 		DAO::remove ( $orga );
 		$this->assertEquals ( $count, DAO::count ( Organization::class ) );
+	}
+
+	/**
+	 * Tests DAO::beginTransaction
+	 */
+	public function testBeginTransaction() {
+		$count = $this->dao->count ( Organization::class );
+		$this->dao->beginTransaction ();
+		$orga = new Organization ();
+		$orga->setName ( "orga test" );
+		$orga->setDomain ( "dom.com" );
+		$orga->setAliases ( "orga alias" );
+		$this->dao->insert ( $orga );
+		$this->assertEquals ( $count + 1, DAO::count ( Organization::class ) );
+		$this->dao->closeDb ();
+		$this->dao = new DAO ();
+		$this->_startDatabase ( $this->dao );
+		$this->assertEquals ( $count, $this->dao->count ( Organization::class ) );
+	}
+
+	/**
+	 * Tests DAO::Transaction
+	 */
+	public function testTransaction() {
+		$count = $this->dao->count ( Organization::class );
+		$this->dao->beginTransaction ();
+		$orga = new Organization ();
+		$orga->setName ( "orga test" );
+		$orga->setDomain ( "dom.com" );
+		$orga->setAliases ( "orga alias" );
+		$this->dao->insert ( $orga );
+		$this->assertEquals ( $count + 1, DAO::count ( Organization::class ) );
+		$this->dao->commit ();
+		$this->dao->closeDb ();
+		$this->dao = new DAO ();
+		$this->_startDatabase ( $this->dao );
+		$this->assertEquals ( $count + 1, $this->dao->count ( Organization::class ) );
+
+		$this->dao->beginTransaction ();
+		DAO::remove ( $orga );
+		$this->dao->commit ();
+		$this->assertEquals ( $count, DAO::count ( Organization::class ) );
+	}
+
+	/**
+	 * Tests DAO::rollback
+	 */
+	public function testRollback() {
+		$count = $this->dao->count ( Organization::class );
+		$this->dao->beginTransaction ();
+		$orga = new Organization ();
+		$orga->setName ( "orga test" );
+		$orga->setDomain ( "dom.com" );
+		$orga->setAliases ( "orga alias" );
+		$this->dao->insert ( $orga );
+		$this->assertEquals ( $count + 1, DAO::count ( Organization::class ) );
+		$this->dao->rollBack ();
+		$this->assertEquals ( $count, DAO::count ( Organization::class ) );
+		$this->dao->closeDb ();
+		$this->dao = new DAO ();
+		$this->_startDatabase ( $this->dao );
+		$this->assertEquals ( $count, $this->dao->count ( Organization::class ) );
+	}
+
+	/**
+	 * Tests DAO::multipleTransactions
+	 */
+	public function testMultipleTransactions() {
+		$count = $this->dao->count ( Organization::class );
+		$this->dao->beginTransaction ();
+
+		$orga = new Organization ();
+		$orga->setName ( "orga test" );
+		$orga->setDomain ( "dom.com" );
+		$orga->setAliases ( "orga alias" );
+		$this->dao->insert ( $orga );
+
+		$orga2 = new Organization ();
+		$orga2->setName ( "orga2 test" );
+		$orga2->setDomain ( "dom2.com" );
+		$orga2->setAliases ( "orga2 alias" );
+		$this->dao->insert ( $orga2 );
+		$this->assertEquals ( $count + 2, DAO::count ( Organization::class ) );
+		$this->dao->commit ();
+		$this->assertEquals ( $count + 2, DAO::count ( Organization::class ) );
+
+		$this->dao->closeDb ();
+		$this->dao = new DAO ();
+		$this->_startDatabase ( $this->dao );
+		$this->assertEquals ( $count + 2, $this->dao->count ( Organization::class ) );
+
+		$this->dao->beginTransaction ();
+		DAO::remove ( $orga );
+		DAO::remove ( $orga2 );
+		$this->dao->commit ();
+		$this->assertEquals ( $count, DAO::count ( Organization::class ) );
+	}
+
+	private function addUser($orga) {
+		$user = new User ();
+		$user->setFirstname ( 'DOE' );
+		$user->setLastname ( 'John' );
+		$user->setEmail ( 'john.doe@local.fr' );
+		$user->setPassword ( '0000' );
+		$user->setOrganization ( $orga );
+		$this->dao->insert ( $user );
+		return $user;
+	}
+
+	private function addOrga() {
+		$orga = new Organization ();
+		$orga->setName ( "orga test" );
+		$orga->setDomain ( "dom.com" );
+		$orga->setAliases ( "orga alias" );
+		$this->dao->insert ( $orga );
+		return $orga;
+	}
+
+	/**
+	 * Tests DAO::nested
+	 */
+	public function testNestedTransactions() {
+		$countOrgas = $this->dao->count ( Organization::class );
+		$countUsers = $this->dao->count ( User::class );
+
+		$this->dao->beginTransaction ();
+
+		$orga = $this->addOrga ();
+		$this->dao->beginTransaction ();
+		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$user = $this->addUser ( $oOrga );
+		$this->dao->commit ();
+		$this->dao->commit ();
+
+		$this->assertEquals ( $countOrgas + 1, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers + 1, DAO::count ( User::class ) );
+
+		$this->dao->closeDb ();
+		$this->dao = new DAO ();
+		$this->_startDatabase ( $this->dao );
+		$this->assertEquals ( $countOrgas + 1, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers + 1, DAO::count ( User::class ) );
+
+		$this->dao->beginTransaction ();
+		DAO::remove ( $orga );
+		DAO::remove ( $user );
+		$this->dao->commit ();
+		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
+	}
+
+	/**
+	 * Tests DAO::nested rollback
+	 */
+	public function testNestedRollbackTransactions() {
+		$countOrgas = $this->dao->count ( Organization::class );
+		$countUsers = $this->dao->count ( User::class );
+
+		$this->dao->beginTransaction ();
+
+		$this->addOrga ();
+		$this->dao->beginTransaction ();
+		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$this->addUser ( $oOrga );
+		$this->dao->rollBack ();
+		$this->dao->rollBack ();
+
+		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
+
+		$this->dao->closeDb ();
+		$this->dao = new DAO ();
+		$this->_startDatabase ( $this->dao );
+		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
+	}
+
+	/**
+	 * Tests DAO::nested commitAll
+	 */
+	public function testNestedCommitAll() {
+		$countOrgas = $this->dao->count ( Organization::class );
+		$countUsers = $this->dao->count ( User::class );
+
+		$this->dao->beginTransaction ();
+
+		$orga = $this->addOrga ();
+		$this->dao->beginTransaction ();
+		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$user = $this->addUser ( $oOrga );
+		$this->dao->commitAll ();
+
+		$this->assertEquals ( $countOrgas + 1, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers + 1, DAO::count ( User::class ) );
+
+		$this->dao->closeDb ();
+		$this->dao = new DAO ();
+		$this->_startDatabase ( $this->dao );
+		$this->assertEquals ( $countOrgas + 1, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers + 1, DAO::count ( User::class ) );
+
+		$this->dao->beginTransaction ();
+		DAO::remove ( $orga );
+		DAO::remove ( $user );
+		$this->dao->commit ();
+		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
+	}
+
+	/**
+	 * Tests DAO::nested rollbackAll
+	 */
+	public function testNestedRollbackAllTransactions() {
+		$countOrgas = $this->dao->count ( Organization::class );
+		$countUsers = $this->dao->count ( User::class );
+
+		$this->dao->beginTransaction ();
+
+		$this->addOrga ();
+		$this->dao->beginTransaction ();
+		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$this->addUser ( $oOrga );
+		$this->dao->rollBackAll ();
+
+		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
+
+		$this->dao->closeDb ();
+		$this->dao = new DAO ();
+		$this->_startDatabase ( $this->dao );
+		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
+		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
 	}
 }
 

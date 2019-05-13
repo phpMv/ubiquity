@@ -8,6 +8,7 @@ namespace Ubiquity\db;
 use Ubiquity\exceptions\CacheException;
 use Ubiquity\db\traits\DatabaseOperationsTrait;
 use Ubiquity\exceptions\DBException;
+use Ubiquity\db\traits\DatabaseTransactionsTrait;
 
 /**
  * Ubiquity PDO database class.
@@ -19,7 +20,7 @@ use Ubiquity\exceptions\DBException;
  *
  */
 class Database {
-	use DatabaseOperationsTrait;
+	use DatabaseOperationsTrait,DatabaseTransactionsTrait;
 	private $dbType;
 	private $serverName;
 	private $port;
@@ -28,6 +29,12 @@ class Database {
 	private $password;
 	private $cache;
 	private $options;
+
+	/**
+	 *
+	 * @var \PDO
+	 */
+	protected $pdoObject;
 
 	/**
 	 * Constructor
@@ -196,5 +203,12 @@ class Database {
 	 */
 	public function setOptions($options) {
 		$this->options = $options;
+	}
+
+	/**
+	 * Closes the active pdo connection
+	 */
+	public function close() {
+		$this->pdoObject = null;
 	}
 }

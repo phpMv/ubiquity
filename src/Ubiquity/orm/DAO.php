@@ -15,17 +15,18 @@ use Ubiquity\orm\traits\DAORelationsPrepareTrait;
 use Ubiquity\exceptions\DAOException;
 use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\orm\traits\DAOTransactionsTrait;
 
 /**
  * Gateway class between database and object model.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.7
+ * @version 1.1.8
  *
  */
 class DAO {
-	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,DAOUQueries;
+	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,DAOUQueries,DAOTransactionsTrait;
 
 	/**
 	 *
@@ -256,7 +257,19 @@ class DAO {
 		return self::$db !== null && (self::$db instanceof Database) && self::$db->isConnected ();
 	}
 
+	/**
+	 * Sets the transformer operation
+	 *
+	 * @param string $op
+	 */
 	public static function setTransformerOp($op) {
 		self::$transformerOp = $op;
+	}
+
+	/**
+	 * Closes the active pdo connection to the database
+	 */
+	public static function closeDb() {
+		self::$db->close ();
 	}
 }
