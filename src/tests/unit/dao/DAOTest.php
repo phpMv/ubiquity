@@ -318,7 +318,8 @@ class DAOTest extends BaseTest {
 
 		$orga = $this->addOrga ();
 		$this->dao->beginTransaction ();
-		$user = $this->addUser ( $orga );
+		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$user = $this->addUser ( $oOrga );
 		$this->dao->commit ();
 		$this->dao->commit ();
 
@@ -348,9 +349,10 @@ class DAOTest extends BaseTest {
 
 		$this->dao->beginTransaction ();
 
-		$orga = $this->addOrga ();
+		$this->addOrga ();
 		$this->dao->beginTransaction ();
-		$this->addUser ( $orga );
+		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$this->addUser ( $oOrga );
 		$this->dao->rollBack ();
 		$this->dao->rollBack ();
 
@@ -375,7 +377,8 @@ class DAOTest extends BaseTest {
 
 		$orga = $this->addOrga ();
 		$this->dao->beginTransaction ();
-		$user = $this->addUser ( $orga );
+		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$user = $this->addUser ( $oOrga );
 		$this->dao->commitAll ();
 
 		$this->assertEquals ( $countOrgas + 1, DAO::count ( Organization::class ) );
@@ -404,9 +407,10 @@ class DAOTest extends BaseTest {
 
 		$this->dao->beginTransaction ();
 
-		$orga = $this->addOrga ();
+		$this->addOrga ();
 		$this->dao->beginTransaction ();
-		$this->addUser ( $orga );
+		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$this->addUser ( $oOrga );
 		$this->dao->rollBackAll ();
 
 		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );

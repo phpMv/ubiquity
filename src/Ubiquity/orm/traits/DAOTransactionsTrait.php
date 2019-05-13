@@ -36,6 +36,7 @@ trait DAOTransactionsTrait {
 	 * Commits nested transactions up to level $transactionLevel
 	 *
 	 * @param int $transactionLevel
+	 * @return boolean true on success or false on failure
 	 */
 	public static function commitToLevel($transactionLevel) {
 		return self::$db->commitToLevel ( $transactionLevel );
@@ -43,6 +44,8 @@ trait DAOTransactionsTrait {
 
 	/**
 	 * Commits all nested transactions (up to level 0)
+	 *
+	 * @return boolean true on success or false on failure
 	 */
 	public static function commitAll() {
 		return self::$db->commitAll ();
@@ -61,6 +64,7 @@ trait DAOTransactionsTrait {
 	 * Rolls back nested transactions up to level $transactionLevel
 	 *
 	 * @param int $transactionLevel
+	 * @return boolean true on success or false on failure
 	 */
 	public static function rollBackToLevel($transactionLevel) {
 		return self::$db->rollBackToLevel ( $transactionLevel );
@@ -68,6 +72,8 @@ trait DAOTransactionsTrait {
 
 	/**
 	 * Rolls back all nested transactions (up to level 0)
+	 *
+	 * @return boolean true on success or false on failure
 	 */
 	public static function rollBackAll() {
 		return self::$db->rollBackAll ();

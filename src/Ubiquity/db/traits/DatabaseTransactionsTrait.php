@@ -56,18 +56,23 @@ trait DatabaseTransactionsTrait {
 	 * Commits nested transactions up to level $transactionLevel
 	 *
 	 * @param int $transactionLevel
+	 * @return boolean true on success or false on failure
 	 */
 	public function commitToLevel($transactionLevel) {
-		while ( $this->transactionLevel > $transactionLevel ) {
-			$this->commit ();
+		$res = true;
+		while ( $res && $this->transactionLevel > $transactionLevel ) {
+			$res = $this->commit ();
 		}
+		return $res;
 	}
 
 	/**
 	 * Commits all nested transactions (up to level 0)
+	 *
+	 * @return boolean true on success or false on failure
 	 */
 	public function commitAll() {
-		$this->commitToLevel ( 0 );
+		return $this->commitToLevel ( 0 );
 	}
 
 	/**
@@ -89,18 +94,23 @@ trait DatabaseTransactionsTrait {
 	 * Rolls back nested transactions up to level $transactionLevel
 	 *
 	 * @param int $transactionLevel
+	 * @return boolean true on success or false on failure
 	 */
 	public function rollBackToLevel($transactionLevel) {
-		while ( $this->transactionLevel > $transactionLevel ) {
-			$this->rollBack ();
+		$res = true;
+		while ( $res && $this->transactionLevel > $transactionLevel ) {
+			$res = $this->rollBack ();
 		}
+		return $res;
 	}
 
 	/**
 	 * Rolls back all nested transactions (up to level 0)
+	 *
+	 * @return boolean true on success or false on failure
 	 */
 	public function rollBackAll() {
-		$this->rollBackToLevel ( 0 );
+		return $this->rollBackToLevel ( 0 );
 	}
 
 	/**
@@ -120,7 +130,7 @@ trait DatabaseTransactionsTrait {
 	 * @throws \Exception
 	 * @return mixed
 	 */
-	function callInTransaction($callback, ...$parameters) {
+	public function callInTransaction($callback, ...$parameters) {
 		if ($this->beginTransaction ()) {
 			try {
 				$ret = call_user_func_array ( $callback, $parameters );
