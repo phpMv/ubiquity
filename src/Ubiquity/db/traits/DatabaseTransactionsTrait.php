@@ -3,6 +3,7 @@
 namespace Ubiquity\db\traits;
 
 use Ubiquity\exceptions\DBException;
+use Ubiquity\log\Logger;
 
 /**
  * Manages database transactions.
@@ -30,10 +31,12 @@ trait DatabaseTransactionsTrait {
 	public function beginTransaction() {
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
 			$ret = $this->pdoObject->beginTransaction ();
+			Logger::info ( 'Transactions', 'Start transaction', 'beginTransaction' );
 			$this->transactionLevel ++;
 			return $ret;
 		}
 		$this->pdoObject->exec ( 'SAVEPOINT LEVEL' . $this->transactionLevel );
+		Logger::info ( 'Transactions', 'Savepoint level', 'beginTransaction', $this->transactionLevel );
 		$this->transactionLevel ++;
 		return true;
 	}
@@ -46,9 +49,11 @@ trait DatabaseTransactionsTrait {
 	public function commit() {
 		$this->transactionLevel --;
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
+			Logger::info ( 'Transactions', 'Commit transaction', 'commit' );
 			return $this->pdoObject->commit ();
 		}
 		$this->pdoObject->exec ( 'RELEASE SAVEPOINT LEVEL' . $this->transactionLevel );
+		Logger::info ( 'Transactions', 'Release savepoint level', 'commit', $this->transactionLevel );
 		return true;
 	}
 
@@ -84,9 +89,11 @@ trait DatabaseTransactionsTrait {
 		$this->transactionLevel --;
 
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
+			Logger::info ( 'Transactions', 'Rollback transaction', 'rollBack' );
 			return $this->pdoObject->rollBack ();
 		}
 		$this->pdoObject->exec ( 'ROLLBACK TO SAVEPOINT LEVEL' . $this->transactionLevel );
+		Logger::info ( 'Transactions', 'Rollback to savepoint level', 'rollBack', $this->transactionLevel );
 		return true;
 	}
 
@@ -140,8 +147,9 @@ trait DatabaseTransactionsTrait {
 			}
 
 			if ($ret) {
-				if (! $this->commit ())
+				if (! $this->commit ()) {
 					throw new DBException ( 'Transaction was not committed.' );
+				}
 			} else {
 				$this->rollBack ();
 			}
