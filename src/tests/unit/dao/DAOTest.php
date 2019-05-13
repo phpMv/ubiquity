@@ -398,7 +398,7 @@ class DAOTest extends BaseTest {
 	/**
 	 * Tests DAO::nested rollbackAll
 	 */
-	public function testNestedRollbackTransactions() {
+	public function testNestedRollbackAllTransactions() {
 		$countOrgas = $this->dao->count ( Organization::class );
 		$countUsers = $this->dao->count ( User::class );
 
