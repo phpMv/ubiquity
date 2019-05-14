@@ -136,14 +136,14 @@ trait RestControllerUtilitiesTrait {
 	 */
 	protected function _setValuesToObject($instance, $values = null) {
 		if (URequest::isJSON ()) {
-			if(is_string($values)){
+			if (is_string ( $values )) {
 				$values = \json_decode ( $values, true );
 			}
 		}
 		$className = \get_class ( $instance );
 		$fieldsInRelationForUpdate = OrmUtils::getFieldsInRelationsForUpdate_ ( $className );
 		$manyToOneRelations = $fieldsInRelationForUpdate ["manyToOne"];
-		
+
 		$members = array_keys ( $values );
 		OrmUtils::setFieldToMemberNames ( $members, $fieldsInRelationForUpdate ["relations"] );
 		URequest::setValuesToObject ( $instance, $values );
@@ -151,17 +151,17 @@ trait RestControllerUtilitiesTrait {
 			$this->updateManyToOne ( $manyToOneRelations, $members, $className, $instance, $values );
 		}
 	}
-	
-	protected function updateManyToOne($manyToOneRelations,$members,$className,$instance,$values){
+
+	protected function updateManyToOne($manyToOneRelations, $members, $className, $instance, $values) {
 		foreach ( $manyToOneRelations as $member ) {
-			if (array_search($member, $members)!==false) {
-				$joinColumn=OrmUtils::getAnnotationInfoMember($className, "#joinColumn", $member);
+			if (array_search ( $member, $members ) !== false) {
+				$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, "#joinColumn", $member );
 				if ($joinColumn) {
-					$fkClass=$joinColumn["className"];
-					$fkField=$joinColumn["name"];
-					if (isset($values[$fkField])) {
-						$fkObject=DAO::getOne($fkClass, $values["$fkField"]);
-						Reflexion::setMemberValue($instance, $member, $fkObject);
+					$fkClass = $joinColumn ["className"];
+					$fkField = $joinColumn ["name"];
+					if (isset ( $values [$fkField] )) {
+						$fkObject = DAO::getById ( $fkClass, $values ["$fkField"] );
+						Reflexion::setMemberValue ( $instance, $member, $fkObject );
 					}
 				}
 			}
@@ -257,11 +257,11 @@ trait RestControllerUtilitiesTrait {
 		}
 		return $result;
 	}
-	
-	protected function getCondition($condition){
-		$condition=urldecode($condition);
-		if(strpos($condition, 'like')!==false){
-			$condition=str_replace('*', '%', $condition);
+
+	protected function getCondition($condition) {
+		$condition = urldecode ( $condition );
+		if (strpos ( $condition, 'like' ) !== false) {
+			$condition = str_replace ( '*', '%', $condition );
 		}
 		return $condition;
 	}

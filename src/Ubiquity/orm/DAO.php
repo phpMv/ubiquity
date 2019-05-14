@@ -47,7 +47,7 @@ class DAO {
 	public static function getManyToOne($instance, $member, $included = false, $useCache = NULL) {
 		$classname = self::getClass_ ( $instance );
 		if (is_array ( $instance )) {
-			$instance = self::getOne ( $classname, $instance [1], false, null, $useCache );
+			$instance = self::getById ( $classname, $instance [1], false, $useCache );
 		}
 		$fieldAnnot = OrmUtils::getMemberJoinColumns ( $classname, $member );
 		if ($fieldAnnot !== null) {
@@ -192,6 +192,29 @@ class DAO {
 	}
 
 	/**
+	 * Returns an instance of $className from the database, from $keyvalues values of the primary key or with a condition
+	 *
+	 * @param String $className complete classname of the model to load
+	 * @param Array|string $condition condition or primary key values
+	 * @param boolean|array $included if true, charges associate members with association
+	 * @param array|null $parameters the request parameters
+	 * @param boolean|null $useCache use cache if true
+	 * @return object the instance loaded or null if not found
+	 */
+	public static function getOne($className, $condition, $included = true, $parameters = null, $useCache = NULL) {
+		$conditionParser = new ConditionParser ();
+		if (! isset ( $parameters )) {
+			$conditionParser->addKeyValues ( $condition, $className );
+		} elseif (! is_array ( $condition )) {
+			$conditionParser->setCondition ( $condition );
+			$conditionParser->setParams ( $parameters );
+		} else {
+			throw new DAOException ( "The \$keyValues parameter should not be an array if \$parameters is not null" );
+		}
+		return self::_getOne ( $className, $conditionParser, $included, $useCache );
+	}
+
+	/**
 	 * Returns an instance of $className from the database, from $keyvalues values of the primary key
 	 *
 	 * @param String $className complete classname of the model to load
@@ -201,16 +224,9 @@ class DAO {
 	 * @param boolean|null $useCache use cache if true
 	 * @return object the instance loaded or null if not found
 	 */
-	public static function getOne($className, $keyValues, $included = true, $parameters = null, $useCache = NULL) {
+	public static function getById($className, $keyValues, $included = true, $useCache = NULL) {
 		$conditionParser = new ConditionParser ();
-		if (! isset ( $parameters )) {
-			$conditionParser->addKeyValues ( $keyValues, $className );
-		} elseif (! is_array ( $keyValues )) {
-			$conditionParser->setCondition ( $keyValues );
-			$conditionParser->setParams ( $parameters );
-		} else {
-			throw new DAOException ( "The \$keyValues parameter should not be an array if \$parameters is not null" );
-		}
+		$conditionParser->addKeyValues ( $keyValues, $className );
 		return self::_getOne ( $className, $conditionParser, $included, $useCache );
 	}
 

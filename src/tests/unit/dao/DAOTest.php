@@ -144,6 +144,14 @@ class DAOTest extends BaseTest {
 	}
 
 	/**
+	 * Tests DAO::getById()
+	 */
+	public function testGetById() {
+		$user = $this->dao->getById ( User::class, 1 );
+		$this->assertInstanceOf ( User::class, $user );
+	}
+
+	/**
 	 * Tests DAO::uCount()
 	 */
 	public function testUCount() {

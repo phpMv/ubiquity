@@ -144,7 +144,7 @@ abstract class RestBaseController extends Controller {
 		$keyValues = $this->getCondition ( $keyValues );
 		$include = $this->getInclude ( $include );
 		$useCache = UString::isBooleanTrue ( $useCache );
-		$data = DAO::getOne ( $this->model, $keyValues, $include, null, $useCache );
+		$data = DAO::getById ( $this->model, $keyValues, $include, $useCache );
 		if (isset ( $data )) {
 			$_SESSION ["_restInstance"] = $data;
 			echo $this->_getResponseFormatter ()->getOne ( $data );
@@ -206,7 +206,7 @@ abstract class RestBaseController extends Controller {
 	 * @param array $keyValues
 	 */
 	public function _update(...$keyValues) {
-		$instance = DAO::getOne ( $this->model, $keyValues, false );
+		$instance = DAO::getById ( $this->model, $keyValues, false );
 		$this->operate_ ( $instance, function ($instance) {
 			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
@@ -240,7 +240,7 @@ abstract class RestBaseController extends Controller {
 	 * @param array $keyValues
 	 */
 	public function _delete(...$keyValues) {
-		$instance = DAO::getOne ( $this->model, $keyValues, false );
+		$instance = DAO::getById ( $this->model, $keyValues, false );
 		$this->operate_ ( $instance, function ($instance) {
 			return DAO::remove ( $instance );
 		}, "deleted", "Unable to delete the instance", $keyValues );

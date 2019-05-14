@@ -113,6 +113,14 @@ class DAOTableCacheTest extends BaseTest {
 	}
 
 	/**
+	 * Tests DAO::getById()
+	 */
+	public function testGetById() {
+		$user = $this->dao->getById ( User::class, 1, true, true );
+		$this->assertInstanceOf ( User::class, $user );
+	}
+
+	/**
 	 * Tests DAO::uGetAll()
 	 */
 	public function testuGetAll() {

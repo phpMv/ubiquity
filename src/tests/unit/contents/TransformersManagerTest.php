@@ -64,24 +64,24 @@ class TransformersManagerTest extends BaseTest {
 	 * Tests DateTime transformer
 	 */
 	public function testDateTime() {
-		$co = DAO::getOne ( Connection::class, 3 );
+		$co = DAO::getById ( Connection::class, 3 );
 		$dt = $co->getDateCo ();
 		$this->assertInstanceOf ( DateTime::class, $dt );
 		DAO::$transformerOp = 'toView';
-		$co = DAO::getOne ( Connection::class, 3 );
+		$co = DAO::getById ( Connection::class, 3 );
 		$this->assertEquals ( $dt->format ( 'Y-m-d H:i:s' ), $co->getDateCo () );
 		DAO::$transformerOp = 'toForm';
-		$co = DAO::getOne ( Connection::class, 3 );
+		$co = DAO::getById ( Connection::class, 3 );
 		$this->assertEquals ( $dt->format ( 'Y-m-d\TH:i:s' ), $co->getDateCo () );
 	}
 
 	public function testTransformFunctions() {
 		DAO::$useTransformers = false;
-		$co = DAO::getOne ( Connection::class, 3 );
+		$co = DAO::getById ( Connection::class, 3 );
 		TransformersManager::transformInstance ( $co );
 		$dt = $co->getDateCo ();
 		$this->assertInstanceOf ( DateTime::class, $dt );
-		$co = DAO::getOne ( Connection::class, 3 );
+		$co = DAO::getById ( Connection::class, 3 );
 		$val = TransformersManager::transform ( $co, 'dateCo' );
 		$this->assertInstanceOf ( DateTime::class, $val );
 		$val = TransformersManager::transform ( $co, 'dateCo', 'toView' );
@@ -95,9 +95,9 @@ class TransformersManagerTest extends BaseTest {
 	}
 
 	public function testOtherTransformers() {
-		$groupe = DAO::getOne ( Groupe::class, 1 );
+		$groupe = DAO::getById ( Groupe::class, 1 );
 		TransformersManager::startProd ( 'toView' );
-		$groupeU = DAO::getOne ( Groupe::class, 1 );
+		$groupeU = DAO::getById ( Groupe::class, 1 );
 		$this->assertEquals ( ucfirst ( $groupe->getName () ), $groupeU->getName () );
 		$this->assertEquals ( strtolower ( $groupe->getEmail () ), $groupeU->getEmail () );
 		$this->assertEquals ( strtoupper ( $groupe->getAliases () ), $groupeU->getAliases () );
