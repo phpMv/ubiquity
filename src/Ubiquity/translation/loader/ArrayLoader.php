@@ -8,7 +8,7 @@ use Ubiquity\log\Logger;
 use Ubiquity\cache\CacheManager;
 
 /**
- * ArrayLoader for TranslatorManager
+ * ArrayLoader for TranslatorManager.
  * Ubiquity\translation\loader$ArrayLoader
  * This class is part of Ubiquity
  *
@@ -18,7 +18,7 @@ use Ubiquity\cache\CacheManager;
  */
 class ArrayLoader implements LoaderInterface {
 	private $rootDir;
-	private $key="translations/";
+	private $key = "translations/";
 
 	private function getRootKey($locale = null, $domain = null) {
 		return $this->key . $locale ?? '' . $domain ?? '';
@@ -28,10 +28,22 @@ class ArrayLoader implements LoaderInterface {
 		$this->rootDir = $rootDir;
 	}
 
+	public function loadDomain($locale, $domain) {
+		$messages = [ ];
+		$rootDirectory = $this->getRootDirectory ( $locale );
+		if (file_exists ( $rootDirectory )) {
+			$filename = $rootDirectory . \DS . $domain . '.php';
+			if (file_exists ( $filename )) {
+				$messages = $this->loadFile ( $filename );
+			}
+		}
+		return $messages;
+	}
+
 	public function load($locale, $domain = '*') {
 		$key = $this->getRootKey ( $locale, $domain );
-		if(CacheManager::$cache->exists($key)){
-			return CacheManager::$cache->fetch($key);
+		if (CacheManager::$cache->exists ( $key )) {
+			return CacheManager::$cache->fetch ( $key );
 		}
 		$messages = [ ];
 		$rootDirectory = $this->getRootDirectory ( $locale );
@@ -45,7 +57,7 @@ class ArrayLoader implements LoaderInterface {
 				}
 			}
 			$this->flatten ( $messages );
-			CacheManager::$cache->store($key, "return ".UArray::asPhpArray($messages,'array').';');
+			CacheManager::$cache->store ( $key, "return " . UArray::asPhpArray ( $messages, 'array' ) . ';' );
 		} else {
 			return false;
 		}
@@ -54,7 +66,7 @@ class ArrayLoader implements LoaderInterface {
 	}
 
 	public function clearCache($locale = null, $domain = null) {
-		CacheManager::$cache->clearCache($this->getRootKey($locale,$domain));
+		CacheManager::$cache->clearCache ( $this->getRootKey ( $locale, $domain ) );
 	}
 
 	protected function loadFile($filename) {
@@ -81,12 +93,9 @@ class ArrayLoader implements LoaderInterface {
 	 *
 	 * This function takes an array by reference and will modify it
 	 *
-	 * @param
-	 *        	array &$messages The array that will be flattened
-	 * @param array $subnode
-	 *        	Current subnode being parsed, used internally for recursive calls
-	 * @param string $path
-	 *        	Current path being parsed, used internally for recursive calls
+	 * @param array &$messages The array that will be flattened
+	 * @param array $subnode Current subnode being parsed, used internally for recursive calls
+	 * @param string $path Current path being parsed, used internally for recursive calls
 	 */
 	private function flatten(array &$messages, array $subnode = null, $path = null) {
 		if (null === $subnode) {
@@ -116,5 +125,25 @@ class ArrayLoader implements LoaderInterface {
 		} else {
 			throw new \Exception ( "Unable to create folder : {$path}" );
 		}
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getRootDir() {
+		return $this->rootDir;
+	}
+
+	public function getDomains($locale) {
+		$domains = [ ];
+		$rootDirectory = $this->getRootDirectory ( $locale );
+		if (file_exists ( $rootDirectory )) {
+			$files = UFileSystem::glob_recursive ( $rootDirectory . '*.php' );
+			foreach ( $files as $file ) {
+				$domains [] = basename ( $file, '.php' );
+			}
+		}
+		return $domains;
 	}
 }

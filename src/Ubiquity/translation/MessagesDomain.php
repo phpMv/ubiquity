@@ -4,16 +4,29 @@ namespace Ubiquity\translation;
 
 use Ubiquity\translation\loader\LoaderInterface;
 
+/**
+ * Represents a list of messages in a domain for a locale.
+ * Ubiquity\translation$MessagesDomain
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ *
+ */
 class MessagesDomain {
 	protected $messages;
 	protected $loader;
 	protected $locale;
-	
-	public function __construct($locale,LoaderInterface $loader){
-		$this->locale=$locale;
-		$this->loader=$loader;
+	protected $domain;
+
+	public function __construct($locale, LoaderInterface $loader, $domain) {
+		$this->locale = $locale;
+		$this->loader = $loader;
+		$this->domain = $domain;
 	}
+
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getMessages() {
@@ -21,6 +34,7 @@ class MessagesDomain {
 	}
 
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getLoader() {
@@ -28,6 +42,7 @@ class MessagesDomain {
 	}
 
 	/**
+	 *
 	 * @return mixed
 	 */
 	public function getLocale() {
@@ -35,6 +50,7 @@ class MessagesDomain {
 	}
 
 	/**
+	 *
 	 * @param mixed $messages
 	 */
 	public function setMessages($messages) {
@@ -42,6 +58,7 @@ class MessagesDomain {
 	}
 
 	/**
+	 *
 	 * @param mixed $loader
 	 */
 	public function setLoader($loader) {
@@ -49,15 +66,19 @@ class MessagesDomain {
 	}
 
 	/**
+	 *
 	 * @param mixed $locale
 	 */
 	public function setLocale($locale) {
 		$this->locale = $locale;
 	}
-	
-	public function store($domain){
-		$this->loader->save($this->messages, $this->locale, $domain);
+
+	public function store() {
+		$this->loader->save ( $this->messages, $this->locale, $this->domain );
 	}
 
+	public function load() {
+		$this->messages = $this->loader->loadDomain ( $this->locale, $this->domain );
+	}
 }
 

@@ -75,7 +75,7 @@ class TranslatorManager {
 
 	public static function setRootDir($rootDir = null) {
 		if (! isset ( $rootDir )) {
-			$rootDir = \ROOT . \DS . "translations";
+			$rootDir = \ROOT . \DS . 'translations';
 		}
 		self::$loader = new ArrayLoader ( $rootDir );
 	}

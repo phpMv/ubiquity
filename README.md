@@ -94,6 +94,9 @@ Ubiquity wants to keep the essence of PHP and what it does best, for example:
   - By using php (packed) arrays because they are effective in php (with php7 optimization)
   - By not creating instances of classes to inject for the core part of the framework, to prefer the use of classes with static methods
 
+In this perspective, Ubiquity chooses not to respect certain standards:
+For example, by not creating a Response object implementing an interface (see [PSR-7 HTTP message interfaces](https://www.php-fig.org/psr/psr-7/) ) in response to an Http request.
+
 >Not multiplying the ways of doing things.
 
 If a method or technique is optimal, there's no reason to implement an alternative version, especially if there is a risk of degrading the performance or complicating the handling of the framework.

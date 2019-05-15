@@ -73,12 +73,13 @@ It is also important to maintain an acceptable coverage, which may drop if a new
 
 Code Documentation
 ------------------
-//TODO
+The current code is not yet fully documented, feel free to contribute in order to fill this gap.
 
 Coding standards
 ----------------
 
-Ubiquity coding standards are based on the `PSR-1 <https://www.php-fig.org/psr/psr-1/>`_ , `PSR-2 <https://www.php-fig.org/psr/psr-2/>`_ and `PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ standards, so you may already know most of them.
+Ubiquity coding standards are mainly based on the `PSR-1 <https://www.php-fig.org/psr/psr-1/>`_ , `PSR-2 <https://www.php-fig.org/psr/psr-2/>`_ and `PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ standards, so you may already know most of them. |br|
+The few intentional exceptions to the standards are normally reported in this guide.
 
 Naming Conventions
 ^^^^^^^^^^^^^^^^^^
@@ -89,10 +90,10 @@ Naming Conventions
 - Suffix interfaces with ``Interface``;
 - Suffix traits with ``Trait``;
 - Suffix exceptions with ``Exception``;
-- Suffix core classes manager with ``Manager`` (e.g. CacheManager, TanslatorManager);
+- Suffix core classes manager with ``Manager`` (e.g. CacheManager, TranslatorManager);
 - Prefix Utility classes with ``U`` (e.g. UString, URequest);
 - Use UpperCamelCase for naming PHP files (e.g. CacheManager.php);
-- Use uppercase for constants (e.g. const SESSION_NAME='Ubiquity'
+- Use uppercase for constants (e.g. const SESSION_NAME='Ubiquity')
 
 Indentation, tabs, braces
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -131,7 +132,7 @@ Example
 	 * Ubiquity\namespace$Example
 	 * This class is part of Ubiquity
 	 *
-	 * @author jcheron <myaddressmail@gmail.com>
+	 * @author authorName <authorMail>
 	 * @version 1.0.0
 	 * @since Ubiquity x.x.x
 	 */
