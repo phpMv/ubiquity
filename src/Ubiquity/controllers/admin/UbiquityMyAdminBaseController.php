@@ -2,6 +2,8 @@
 
 namespace Ubiquity\controllers\admin;
 
+use Ajax\php\ubiquity\JsUtils;
+use Ajax\semantic\components\validation\Rule;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\semantic\html\base\constants\Direction;
 use Ajax\semantic\html\collections\HtmlMessage;
@@ -36,33 +38,32 @@ use Ubiquity\controllers\admin\traits\ModelsTrait;
 use Ubiquity\controllers\admin\traits\RestTrait;
 use Ubiquity\controllers\admin\traits\RoutesTrait;
 use Ubiquity\controllers\admin\traits\SeoTrait;
+use Ubiquity\controllers\admin\traits\ThemesTrait;
+use Ubiquity\controllers\admin\traits\TranslateTrait;
 use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ubiquity\controllers\crud\CRUDDatas;
+use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ubiquity\controllers\semantic\MessagesTrait;
 use Ubiquity\log\LoggerParams;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\scaffolding\AdminScaffoldController;
-use Ubiquity\translation\Translator;
+use Ubiquity\themes\ThemesManager;
+use Ubiquity\translation\TranslatorManager;
 use Ubiquity\utils\UbiquityUtils;
+use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\yuml\ClassToYuml;
 use Ubiquity\utils\yuml\ClassesToYuml;
-use Ajax\php\ubiquity\JsUtils;
-use Ubiquity\controllers\semantic\InsertJqueryTrait;
-use Ubiquity\themes\ThemesManager;
-use Ubiquity\controllers\admin\traits\ThemesTrait;
-use Ajax\semantic\components\validation\Rule;
-use Ubiquity\utils\base\UArray;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
 	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait,
-	LogsTrait,InsertJqueryTrait,ThemesTrait;
+	LogsTrait,InsertJqueryTrait,ThemesTrait,TranslateTrait;
 
 	/**
 	 *
@@ -382,14 +383,25 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	public function translate() {
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "translate" );
-		setlocale ( LC_ALL, 'en_EN' );
+		//setlocale ( LC_ALL, 'en_EN' );
 		$loc = URequest::getDefaultLanguage ();
-		$trans = new Translator ( $loc );
-		$trans->setFallbackLocale ( 'en_EN' );
-		$catalog = $trans->getCatalogue ();
-		$world = $trans->trans ( "buttons.Okays", [ ], "messages" );
+		//$trans = new Translator ( $loc );
+		//$trans->setFallbackLocale ( 'en_EN' );
+		//$catalog = $trans->getCatalogue ();
+		//$world = $trans->trans ( "buttons.Okayss", [ ], "messages" );
+		TranslatorManager::start();
+		$locales=TranslatorManager::getLocales();
+		if(sizeof($locales)==0){
+			$locales=TranslatorManager::initialize();
+		}
+		$tabs=$this->jquery->semantic()->htmlTab("locales");
+		foreach ($locales as $locale){
+			$tabs->addTab($locale, $this->loadLocale($locale));
+		}
+		$tabs->activate(array_search($loc, $locales));
+		
 		$message = $this->showSimpleMessage ( "This part is under development, and will be available in the next version.", "info", "Translate","info circle", null, "msg" );
-		$this->jquery->renderView ( $this->_getFiles ()->getViewTranslateIndex (), compact ( "loc", "catalog", "world", "message" ) );
+		$this->jquery->renderView ( $this->_getFiles ()->getViewTranslateIndex (), compact ("message" ) );
 	}
 
 	protected function _seo() {

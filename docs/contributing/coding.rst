@@ -19,15 +19,15 @@ Dependency injection is a resource-intensive mechanism:
 - to finally assign it to a member of a class.
 
 In addition to this problematic resource consumption, the dependency injection poses another problem during development. |br|
-Access to injected resources returns an element without type, not easy to handle for the developer.
+Access to injected resources without using di mecanism returns an element without type, not easy to handle for the developer.
 
 For example,
-It's hard to manipulate the untyped return of ``$this->serviceContainer->get('translator')``,
+It's hard to manipulate the untyped return of ``$this->serviceContainer->get('translator')``, as some frameworks allow,
 and know which methods to call on it.
 
 The use of classes with static methods avoids all the disadvantages mentioned above:
 
-For a developer, the ``TranslatorManager`` class is accessible from an entire project. |br|
+For a developer, the ``TranslatorManager`` class is accessible from an entire project without any object instantiation. |br|
 It exposes its public interface and allows code completion.
 
 
@@ -93,13 +93,13 @@ Naming Conventions
 - Suffix core classes manager with ``Manager`` (e.g. CacheManager, TranslatorManager);
 - Prefix Utility classes with ``U`` (e.g. UString, URequest);
 - Use UpperCamelCase for naming PHP files (e.g. CacheManager.php);
-- Use uppercase for constants (e.g. const SESSION_NAME='Ubiquity')
+- Use uppercase for constants (e.g. const SESSION_NAME='Ubiquity').
 
 Indentation, tabs, braces
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Use Tabs, not spaces;
-- Use brace always on the same line;
+- Use Tabs, not spaces; (!PSR-2)
+- Use brace always on the same line; (!PSR-2)
 - Use braces to indicate control structure body regardless of the number of statements it contains;
 
 Classes
@@ -174,8 +174,9 @@ Example
 
 .. important::
    
-   If you work with Eclipse, you can import this standardization file that integrates all these rules:
-   :download:`phpMv-coding-standards.xml </contributing/phpMv-coding-standards.xml>`
+   You can import this standardization files that integrates all these rules in your IDE:
+     - Eclipse: download:`phpMv-coding-standards.xml </contributing/phpMv-coding-standards.xml>`
+     - PhpStorm: download:`phpMv-coding-standards.xml </contributing/phpMv-coding-standards-storm.xml>`
 
 
 .. |br| raw:: html

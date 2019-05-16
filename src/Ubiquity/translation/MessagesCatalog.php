@@ -41,5 +41,12 @@ class MessagesCatalog {
 	public function getDomains() {
 		return $this->loader->getDomains ( $this->locale );
 	}
+	/**
+	 * @return MessagesDomain[]
+	 */
+	public function getMessagesDomains() {
+		return $this->messagesDomains;
+	}
+
 }
 

@@ -4,6 +4,8 @@ namespace Ubiquity\translation;
 
 use Ubiquity\translation\loader\ArrayLoader;
 use Ubiquity\log\Logger;
+use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\utils\http\URequest;
 
 /**
  * Manages translations
@@ -84,6 +86,15 @@ class TranslatorManager {
 		return self::$locale;
 	}
 
+	/**
+	 * Returns a translation corresponding to an id, using eventually some parameters
+	 *
+	 * @param string $id
+	 * @param array $parameters
+	 * @param string $domain
+	 * @param string $locale
+	 * @return string
+	 */
 	public static function trans($id, array $parameters = array(), $domain = null, $locale = null) {
 		return self::transCallable ( function ($catalog, $parameters) {
 			return self::replaceParams ( $catalog, $parameters );
@@ -124,5 +135,57 @@ class TranslatorManager {
 
 	public static function clearCache() {
 		self::$loader->clearCache ( '*' );
+	}
+
+	/**
+	 * Returns the available locales
+	 *
+	 * @return string[]
+	 */
+	public static function getLocales() {
+		$locales = [ ];
+		$dirs = \glob ( self::getRootDir () . \DS . '*', GLOB_ONLYDIR );
+		foreach ( $dirs as $dir ) {
+			$locales [] = basename ( $dir );
+		}
+		return $locales;
+	}
+
+	/**
+	 * Returns translations root dir
+	 *
+	 * @return string
+	 */
+	public static function getRootDir() {
+		return self::$loader->getRootDir ();
+	}
+
+	/**
+	 *
+	 * @return \Ubiquity\translation\loader\ArrayLoader
+	 */
+	public static function getLoader() {
+		return self::$loader;
+	}
+
+	/**
+	 *
+	 * @return mixed
+	 */
+	public static function getCatalogues() {
+		return self::$catalogues;
+	}
+
+	/**
+	 * Creates default translations root directory
+	 *
+	 * @param string $rootDir
+	 * @return string[]
+	 */
+	public static function initialize($rootDir = null) {
+		self::setRootDir ( $rootDir );
+		$locale = URequest::getDefaultLanguage ();
+		UFileSystem::safeMkdir ( self::getRootDir () . \DS . $locale );
+		return self::getLocales ();
 	}
 }

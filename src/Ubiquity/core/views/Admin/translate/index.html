@@ -6,11 +6,15 @@
 {% endif %}
 {{ message | raw }}
 </div>
-<div class="ui label">{{loc}}</div>
-<ul>
-{%for k,cat in catalog %}
-<li>{{ k }} => {{ cat }}</li>
-{% endfor %}
-</ul>
-{{world}}
+<div class="ui input left labeled action">
+		<input name="name" value="" type="text" placeholder="Locale name">
+		<button class="ui button left labeled icon teal" type="submit" data-ajax="{{locale}}">
+			<i class="icon plus"></i> Add locale
+		</button>
+</div>
+<div class="ui divider"></div>
+{{ q["locales"] | raw }}
+<div id='domain'></div>
+{{ q['mn'] | raw }}
+
 {{ script_foot | raw }}
