@@ -175,8 +175,8 @@ Example
 .. important::
    
    You can import this standardization files that integrates all these rules in your IDE:
-     - Eclipse: download:`phpMv-coding-standards.xml </contributing/phpMv-coding-standards.xml>`
-     - PhpStorm: download:`phpMv-coding-standards.xml </contributing/phpMv-coding-standards-storm.xml>`
+     - :download:`Eclipse </contributing/phpMv-coding-standards.xml>`
+     - :download:`PhpStorm </contributing/phpMv-coding-standards-storm.xml>`
 
 
 .. |br| raw:: html
