@@ -32,8 +32,9 @@ and know which methods to call on it.
 When possible, and when it does not reduce flexibility too much, the use of static classes is suggested:
 
 For a developer, the ``TranslatorManager`` class is accessible from an entire project without any object instantiation. |br|
-It exposes its public interface and allows code completion.
-- The translator does not need to be injected to be used.
+It exposes its public interface and allows code completion:
+
+- The translator does not need to be injected to be used;
 - It does not need to be retrieved from a service container.
 
 
