@@ -9,27 +9,32 @@ Coding guide
 
 Design choices
 --------------
+Fetching and using Services
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Dependency injections
-^^^^^^^^^^^^^^^^^^^^^
+*********************
 Avoid using dependency injection for all parts of the framework, internally. |br|
 Dependency injection is a resource-intensive mechanism:
 
 - it needs to identify the element to instantiate ;
 - then to proceed to its instantiation ;
-- to finally assign it to a member of a class.
+- to finally assign it to a variable.
 
-In addition to this problematic resource consumption, the dependency injection poses another problem during development. |br|
-Access to injected resources without using di mecanism returns an element without type, not easy to handle for the developer.
+Getting services from a container
+*********************************
+Also avoid public access to services registered in a service container. |br|
+This type of access involves manipulating objects whose return type is unknown, not easy to handle for the developer.
 
 For example,
 It's hard to manipulate the untyped return of ``$this->serviceContainer->get('translator')``, as some frameworks allow,
 and know which methods to call on it.
 
-The use of classes with static methods avoids all the disadvantages mentioned above:
+When possible, and when it does not reduce flexibility too much, the use of static classes is suggested:
 
 For a developer, the ``TranslatorManager`` class is accessible from an entire project without any object instantiation. |br|
 It exposes its public interface and allows code completion.
-
+- The translator does not need to be injected to be used.
+- It does not need to be retrieved from a service container.
 
 
 Optimization
@@ -177,7 +182,7 @@ Example
    You can import this standardization files that integrates all these rules in your IDE:
      - :download:`Eclipse </contributing/phpMv-coding-standards.xml>`
      - :download:`PhpStorm </contributing/phpMv-coding-standards-storm.xml>`
-
+    If your preferred IDE is not listed, you can submit the associated standardization file by creating a new PR.
 
 .. |br| raw:: html
 
