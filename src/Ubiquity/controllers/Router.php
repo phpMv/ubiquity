@@ -3,12 +3,12 @@
 namespace Ubiquity\controllers;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\http\URequest;
-use Ubiquity\utils\base\UString;
-use Ubiquity\log\Logger;
-use Ubiquity\controllers\traits\RouterModifierTrait;
 use Ubiquity\controllers\traits\RouterAdminTrait;
+use Ubiquity\controllers\traits\RouterModifierTrait;
 use Ubiquity\controllers\traits\RouterTestTrait;
+use Ubiquity\log\Logger;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\http\URequest;
 
 /**
  * Router manager.

@@ -2,12 +2,12 @@
 
 namespace Ubiquity\controllers;
 
-use Ubiquity\utils\base\UString;
-use Ubiquity\views\engine\TemplateEngine;
-use Ubiquity\utils\http\USession;
-use Ubiquity\log\Logger;
-use Ubiquity\controllers\traits\StartupConfigTrait;
 use Ubiquity\controllers\di\DiManager;
+use Ubiquity\controllers\traits\StartupConfigTrait;
+use Ubiquity\log\Logger;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\http\USession;
+use Ubiquity\views\engine\TemplateEngine;
 
 /**
  * Starts the framework.

@@ -37,6 +37,9 @@ It exposes its public interface and allows code completion:
 - The translator does not need to be injected to be used;
 - It does not need to be retrieved from a service container.
 
+The use of static classes inevitably creates a strong dependency and affects flexibility. |br|
+But to come back to the Translator example, there is no reason to change it if it is satisfying. |br|
+It is not desirable to want to provide flexibility at all costs when it is not necessary, and then for the user to see that its application is a little slow.
 
 Optimization
 ------------
