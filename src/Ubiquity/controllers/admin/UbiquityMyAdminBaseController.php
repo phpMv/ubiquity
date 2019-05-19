@@ -100,7 +100,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function __construct() {
 		parent::__construct ();
-		DAO::$transformerOp='toView';
+		DAO::$transformerOp = 'toView';
 		$this->insertJquerySemantic ();
 		if (file_exists ( $this->configFile )) {
 			$this->config = include ($this->configFile);
@@ -381,27 +381,23 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function translate() {
-		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
+		// $baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "translate" );
-		//setlocale ( LC_ALL, 'en_EN' );
 		$loc = URequest::getDefaultLanguage ();
-		//$trans = new Translator ( $loc );
-		//$trans->setFallbackLocale ( 'en_EN' );
-		//$catalog = $trans->getCatalogue ();
-		//$world = $trans->trans ( "buttons.Okayss", [ ], "messages" );
-		TranslatorManager::start();
-		$locales=TranslatorManager::getLocales();
-		if(sizeof($locales)==0){
-			$locales=TranslatorManager::initialize();
+
+		TranslatorManager::start ();
+		$locales = TranslatorManager::getLocales ();
+		if (sizeof ( $locales ) == 0) {
+			$locales = TranslatorManager::initialize ();
 		}
-		$tabs=$this->jquery->semantic()->htmlTab("locales");
-		foreach ($locales as $locale){
-			$tabs->addTab($locale, $this->loadLocale($locale));
+		$tabs = $this->jquery->semantic ()->htmlTab ( "locales" );
+		foreach ( $locales as $locale ) {
+			$tabs->addTab ( $locale, $this->loadLocale ( $locale ) );
 		}
-		$tabs->activate(array_search($loc, $locales));
-		
-		$message = $this->showSimpleMessage ( "This part is under development, and will be available in the next version.", "info", "Translate","info circle", null, "msg" );
-		$this->jquery->renderView ( $this->_getFiles ()->getViewTranslateIndex (), compact ("message" ) );
+		$tabs->activate ( array_search ( $loc, $locales ) );
+
+		$message = $this->showSimpleMessage ( "This part is under development, and will be available in the next version.", "info", "Translate", "info circle", null, "msg" );
+		$this->jquery->renderView ( $this->_getFiles ()->getViewTranslateIndex (), compact ( "message" ) );
 	}
 
 	protected function _seo() {
@@ -819,7 +815,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$fields = $frm->addFields ();
 		$fields->addInput ( "name[]", \ucfirst ( $type ) . " name" )->getDataField ()->setIdentifier ( "name-" . $index )->setProperty ( "value", $name );
 		$input = $fields->addInput ( "value[]", \ucfirst ( $type ) . " value" );
-		$input->getDataField ()->setIdentifier ( "value-" . $index )->setProperty ( "value",htmlentities($value) );
+		$input->getDataField ()->setIdentifier ( "value-" . $index )->setProperty ( "value", htmlentities ( $value ) );
 		$input->addAction ( "", true, "remove" )->addClass ( "icon basic _deleteParameter" );
 	}
 

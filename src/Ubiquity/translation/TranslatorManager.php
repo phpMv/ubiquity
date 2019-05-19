@@ -8,10 +8,14 @@ use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\http\URequest;
 
 /**
- * Manages translations
+ * Manage translations.
+ * Use the start method to start the Manager, after starting the cache manager
+ * Ubiquity\translation$TranslatorManager
+ * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
+ *
  */
 class TranslatorManager {
 	protected static $locale;
@@ -19,6 +23,15 @@ class TranslatorManager {
 	protected static $catalogues;
 	protected static $fallbackLocale;
 
+	/**
+	 *
+	 * @param callable $callback
+	 * @param string $id
+	 * @param array $parameters
+	 * @param string $domain
+	 * @param string $locale
+	 * @return string
+	 */
 	protected static function transCallable($callback, $id, array $parameters = array(), $domain = null, $locale = null) {
 		if (null === $domain) {
 			$domain = 'messages';
@@ -28,10 +41,10 @@ class TranslatorManager {
 		if ($catalogue === false) {
 			if (isset ( self::$fallbackLocale ) && $locale !== self::$fallbackLocale) {
 				self::setLocale ( self::$fallbackLocale );
-				Logger::warn ( "Translation", "Locale " . $locale . " not found, set active locale to " . self::$locale );
+				Logger::warn ( 'Translation', 'Locale ' . $locale . ' not found, set active locale to ' . self::$locale );
 				return self::trans ( $id, $parameters, $domain, self::$locale );
 			} else {
-				Logger::error ( "Translation", "Locale not found, no valid fallbackLocale specified" );
+				Logger::error ( 'Translation', 'Locale not found, no valid fallbackLocale specified' );
 				return $id;
 			}
 		}
@@ -39,10 +52,10 @@ class TranslatorManager {
 		if (isset ( $catalogue [$transId] )) {
 			return $callback ( $catalogue [$transId], $parameters );
 		} elseif (self::$fallbackLocale !== null && $locale !== self::$fallbackLocale) {
-			Logger::warn ( "Translation", "Translation not found for " . $id . ". Switch to fallbackLocale " . self::$fallbackLocale );
+			Logger::warn ( 'Translation', 'Translation not found for ' . $id . '. Switch to fallbackLocale ' . self::$fallbackLocale );
 			return self::trans ( $id, $parameters, $domain, self::$fallbackLocale );
 		} else {
-			Logger::warn ( "Translation", "Translation not found for " . $id . ". in locales." );
+			Logger::warn ( 'Translation', 'Translation not found for ' . $id . '. in locales.' );
 			return $id;
 		}
 	}
@@ -55,7 +68,7 @@ class TranslatorManager {
 	}
 
 	protected static function getTransId($id, $domain) {
-		return $domain . "." . $id;
+		return $domain . '.' . $id;
 	}
 
 	protected static function assertValidLocale($locale) {
@@ -64,17 +77,36 @@ class TranslatorManager {
 		}
 	}
 
-	public static function start($locale = "en_EN", $fallbackLocale = null, $rootDir = null) {
+	/**
+	 * Starts the translator manager.
+	 * This operation must be performed after the CacheManager has been started
+	 *
+	 * @param string $locale The active locale
+	 * @param string $fallbackLocale The fallback locale
+	 * @param string $rootDir The root dir for translation (default: appRoot/translations)
+	 */
+	public static function start($locale = 'en_EN', $fallbackLocale = null, $rootDir = null) {
 		self::$locale = $locale;
 		self::$fallbackLocale = $fallbackLocale;
 		self::setRootDir ( $rootDir );
 	}
 
+	/**
+	 * Defines the active locale
+	 *
+	 * @param string $locale
+	 */
 	public static function setLocale($locale) {
 		self::assertValidLocale ( $locale );
 		self::$locale = $locale;
 	}
 
+	/**
+	 * Sets the complete directory for translations.
+	 * Default: appRoot/translations
+	 *
+	 * @param string $rootDir
+	 */
 	public static function setRootDir($rootDir = null) {
 		if (! isset ( $rootDir )) {
 			$rootDir = \ROOT . \DS . 'translations';
@@ -82,6 +114,11 @@ class TranslatorManager {
 		self::$loader = new ArrayLoader ( $rootDir );
 	}
 
+	/**
+	 * Returns the active locale
+	 *
+	 * @return string
+	 */
 	public static function getLocale() {
 		return self::$locale;
 	}
@@ -101,6 +138,12 @@ class TranslatorManager {
 		}, $id, $parameters, $domain, $locale );
 	}
 
+	/**
+	 * Returns the translations catalog of the locale
+	 *
+	 * @param string $locale
+	 * @return array
+	 */
 	public static function getCatalogue(&$locale = null) {
 		if (null === $locale) {
 			$locale = self::getLocale ();
@@ -113,26 +156,36 @@ class TranslatorManager {
 		return self::$catalogues [$locale];
 	}
 
+	/**
+	 * Loads a catalog for a locale
+	 *
+	 * @param string $locale
+	 */
 	public static function loadCatalogue($locale = null) {
 		self::$catalogues [$locale] = self::$loader->load ( $locale );
 	}
 
 	/**
+	 * Returns the fallbackLocale
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public static function getFallbackLocale() {
 		return self::$fallbackLocale;
 	}
 
 	/**
+	 * Sets the fallbackLocale
 	 *
-	 * @param mixed $fallbackLocale
+	 * @param string $fallbackLocale
 	 */
 	public static function setFallbackLocale($fallbackLocale) {
 		self::$fallbackLocale = $fallbackLocale;
 	}
 
+	/**
+	 * Clears the translations cache
+	 */
 	public static function clearCache() {
 		self::$loader->clearCache ( '*' );
 	}
@@ -161,6 +214,7 @@ class TranslatorManager {
 	}
 
 	/**
+	 * Returns the active loader
 	 *
 	 * @return \Ubiquity\translation\loader\ArrayLoader
 	 */
@@ -169,6 +223,7 @@ class TranslatorManager {
 	}
 
 	/**
+	 * Returns all catalogs
 	 *
 	 * @return mixed
 	 */
