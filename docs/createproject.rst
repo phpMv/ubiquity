@@ -31,23 +31,23 @@ Installer arguments
 +============+=============+=================================+================================+===============================+================+
 |      b     | dbName      | Sets the database name.         |                                |                               |                |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
-|      s     | serverName  | Defines the db server address.  |                      127.0.0.1 |                               |                |
+|      s     | serverName  | Defines the db server address.  |                    `127.0.0.1` |                               |                |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
-|      p     | port        | Defines the db server port.     |                           3306 |                               |                |
+|      p     | port        | Defines the db server port.     |                         `3306` |                               |                |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
-|      u     | user        | Defines the db server user.     |                           root |                               |                |
+|      u     | user        | Defines the db server user.     |                         `root` |                               |                |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
-|      w     | password    | Defines the db server password. |                             '' |                               |                |
+|      w     | password    | Defines the db server password. |                           `''` |                               |                |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
 |      h     | themes      | Install themes.                 |                                | semantic,bootstrap,foundation |                |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
-|      m     | all-models  | Creates all models from db.     |                          false |                               |                |
+|      m     | all-models  | Creates all models from db.     |                        `false` |                               |                |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
-|      a     | admin       | Adds UbiquityMyAdmin interface. |                          false |                               |                |
+|      a     | admin       | Adds UbiquityMyAdmin interface. |                        `false` |                               |                |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
-|      i     | siteUrl     | Defines the site URL.           | http://127.0.0.1/{projectname} |                               | 1.2.6          |
+|      i     | siteUrl     | Defines the site URL.           |`http://127.0.0.1/{projectname}`|                               | 1.2.6          |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
-|      e     | rewriteBase | Sets the base for rewriting.    |                /{projectname}/ |                               | 1.2.6          |
+|      e     | rewriteBase | Sets the base for rewriting.    |              `/{projectname}/` |                               | 1.2.6          |
 +------------+-------------+---------------------------------+--------------------------------+-------------------------------+----------------+
 
 Arguments usage
@@ -69,7 +69,7 @@ Example of creation of the **blog** project, connected to the **bogDb** database
    
    Ubiquity new blog --dbName=blogDb --all-models=true --themes=semantic 
 
-Testing
+Running
 -------
 
 To start the embedded web server and test your pages, run from the application root folder:
