@@ -6,15 +6,12 @@
 {% endif %}
 {{ message | raw }}
 </div>
-<div class="ui input left labeled action">
-		<input name="name" value="" type="text" placeholder="Locale name">
-		<button class="ui button left labeled icon teal" type="submit" data-ajax="{{locale}}">
-			<i class="icon plus"></i> Add locale
-		</button>
-</div>
+<div id="translations-refresh">
+{{ q["frmLocale"] | raw }}
 <div class="ui divider"></div>
 {{ q["locales"] | raw }}
 <div id='domain'></div>
 {{ q['mn'] | raw }}
 
 {{ script_foot | raw }}
+</div>

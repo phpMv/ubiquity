@@ -2,8 +2,8 @@
 
 namespace Ubiquity\translation;
 
-use Ubiquity\translation\loader\ArrayLoader;
 use Ubiquity\log\Logger;
+use Ubiquity\translation\loader\ArrayLoader;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\http\URequest;
 
@@ -14,8 +14,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
- *
+ * @version 1.0.4
  */
 class TranslatorManager {
 	protected static $locale;
@@ -75,6 +74,10 @@ class TranslatorManager {
 		if (1 !== preg_match ( '/^[a-z0-9@_\\.\\-]*$/i', $locale )) {
 			throw new \InvalidArgumentException ( sprintf ( 'Invalid "%s" locale.', $locale ) );
 		}
+	}
+
+	public static function isValidLocale($locale) {
+		return (1 === preg_match ( '/^[a-z0-9@_\\.\\-]*$/i', $locale ));
 	}
 
 	/**
@@ -238,9 +241,19 @@ class TranslatorManager {
 	 * @return string[]
 	 */
 	public static function initialize($rootDir = null) {
-		self::setRootDir ( $rootDir );
 		$locale = URequest::getDefaultLanguage ();
-		UFileSystem::safeMkdir ( self::getRootDir () . \DS . $locale );
+		self::createLocale ( $locale, $rootDir );
 		return self::getLocales ();
+	}
+
+	/**
+	 * Creates the locale folder in translations root directory
+	 *
+	 * @param string $locale
+	 * @param string $rootDir
+	 */
+	public static function createLocale($locale, $rootDir = null) {
+		self::setRootDir ( $rootDir );
+		UFileSystem::safeMkdir ( self::getRootDir () . \DS . $locale );
 	}
 }

@@ -49,7 +49,6 @@ use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\scaffolding\AdminScaffoldController;
 use Ubiquity\themes\ThemesManager;
-use Ubiquity\translation\TranslatorManager;
 use Ubiquity\utils\UbiquityUtils;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\base\UFileSystem;
@@ -381,23 +380,11 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function translate() {
-		// $baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
+		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "translate" );
 		$loc = URequest::getDefaultLanguage ();
-
-		TranslatorManager::start ();
-		$locales = TranslatorManager::getLocales ();
-		if (sizeof ( $locales ) == 0) {
-			$locales = TranslatorManager::initialize ();
-		}
-		$tabs = $this->jquery->semantic ()->htmlTab ( "locales" );
-		foreach ( $locales as $locale ) {
-			$tabs->addTab ( $locale, $this->loadLocale ( $locale ) );
-		}
-		$tabs->activate ( array_search ( $loc, $locales ) );
-
-		$message = $this->showSimpleMessage ( "This part is under development, and will be available in the next version.", "info", "Translate", "info circle", null, "msg" );
-		$this->jquery->renderView ( $this->_getFiles ()->getViewTranslateIndex (), compact ( "message" ) );
+		$this->showSimpleMessage ( "This part is under development, and will be available in the next version.", "info", "Translate", "info circle", null, "msgGlobal" );
+		$this->_translate ( $loc, $baseRoute );
 	}
 
 	protected function _seo() {
