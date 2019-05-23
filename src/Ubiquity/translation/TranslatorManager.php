@@ -2,6 +2,7 @@
 
 namespace Ubiquity\translation;
 
+use Ubiquity\exceptions\CacheException;
 use Ubiquity\log\Logger;
 use Ubiquity\translation\loader\ArrayLoader;
 use Ubiquity\utils\base\UFileSystem;
@@ -14,7 +15,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  */
 class TranslatorManager {
 	protected static $locale;
@@ -208,6 +209,17 @@ class TranslatorManager {
 	}
 
 	/**
+	 * Returns the existing domains in $locale
+	 *
+	 * @param string $locale
+	 * @return array
+	 */
+	public static function getDomains($locale) {
+		$catalog = new MessagesCatalog ( $locale, self::$loader );
+		return $catalog->getDomains ();
+	}
+
+	/**
 	 * Returns translations root dir
 	 *
 	 * @return string
@@ -255,5 +267,31 @@ class TranslatorManager {
 	public static function createLocale($locale, $rootDir = null) {
 		self::setRootDir ( $rootDir );
 		UFileSystem::safeMkdir ( self::getRootDir () . \DS . $locale );
+	}
+
+	/**
+	 * Creates a new domain in $locale.
+	 * throws a CacheException if TranslatorManager is not started
+	 *
+	 * @param string $locale
+	 * @param string $domain
+	 * @param array|null $defaultValues
+	 * @throws CacheException
+	 * @return \Ubiquity\translation\MessagesDomain|boolean
+	 */
+	public static function createDomain($locale, $domain, $defaultValues = null) {
+		if (isset ( self::$loader )) {
+			$domains = self::getDomains ( $locale );
+			if (array_search ( $domain, $domains ) === false) {
+				$dom = new MessagesDomain ( $locale, self::$loader, $domain );
+				if (is_array ( $defaultValues )) {
+					$dom->setMessages ( $defaultValues );
+				}
+				$dom->store ();
+				return $domain;
+			}
+			return false;
+		}
+		throw new CacheException ( 'TranslatorManager is not started!' );
 	}
 }

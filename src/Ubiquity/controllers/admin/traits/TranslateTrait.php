@@ -2,6 +2,7 @@
 namespace Ubiquity\controllers\admin\traits;
 
 use Ajax\semantic\components\validation\Rule;
+use Ajax\semantic\html\base\constants\Direction;
 use Ajax\semantic\html\elements\HtmlLabel;
 use Ubiquity\translation\MessagesCatalog;
 use Ubiquity\translation\MessagesDomain;
@@ -64,12 +65,37 @@ trait TranslateTrait {
 	}
 
 	public function loadLocale($locale) {
+		$baseRoute = $this->_getFiles()->getAdminBaseRoute();
+
 		$messagesCatalog = new MessagesCatalog($locale, TranslatorManager::getLoader());
 		$messagesCatalog->load();
 		$msgDomains = $messagesCatalog->getMessagesDomains();
+
+		$frm = $this->jquery->semantic()->htmlForm("frmDomain-" . $locale);
+		$frm->setValidationParams([
+			"on" => "blur",
+			"inline" => true
+		]);
+		$fields = $frm->addFields();
+		$input = $fields->addInput("name-" . $locale, null, "text", "", "Domain name")
+			->addRules([
+			[
+				"empty",
+				"Domain name must have a value"
+			],
+			"regExp[/^[A-Za-z]\w*$/]"
+		])
+			->setWidth(8);
+		$input->setName('domainName');
+		$ck = $input->labeledCheckbox(Direction::LEFT, "Add in all locales", "all-locales");
+		$ck->getField()->setProperty('name', 'ck-all-locales');
+		$input->addAction("Add domain", true, "plus", true)
+			->addClass("teal")
+			->asSubmit();
+		$frm->setSubmitParams($baseRoute . "/addDomain/" . $locale, "#translations-refresh");
+
 		$dt = $this->jquery->semantic()->dataTable('dt-' . $locale, MessagesDomain::class, $msgDomains);
 		$dt->setFields([
-			'locale',
 			'domain',
 			'messages'
 		]);
@@ -86,12 +112,13 @@ trait TranslateTrait {
 		});
 		$dt->setActiveRowSelector();
 
-		$this->jquery->getOnClick('._edit.' . $locale, "/Admin/loadDomain/" . $locale . "/", '#domain', [
+		$this->jquery->getOnClick('._edit.' . $locale, "/Admin/loadDomain/" . $locale . "/", '#domain-' . $locale, [
 			'attr' => 'data-ajax'
 		]);
 		return $this->loadView('@framework/Admin/translate/locale.html', [
 			'locale' => $locale,
-			'dt' => $dt
+			'dt' => $dt,
+			'frm' => $frm
 		], true);
 	}
 
@@ -133,6 +160,29 @@ trait TranslateTrait {
 			echo json_encode([
 				'result' => $result
 			]);
+		}
+	}
+
+	public function addDomain($locale) {
+		if (URequest::isPost()) {
+			TranslatorManager::start();
+			if (isset($_POST["domainName"]) && $_POST["domainName"] != null) {
+				$domainName = $_POST["domainName"];
+				if (isset($_POST["ck-all-locales"])) {
+					$locales = TranslatorManager::getLocales();
+					foreach ($locales as $loc) {
+						TranslatorManager::createDomain($loc, $domainName, [
+							'newKey' => 'New key for translations'
+						]);
+					}
+				} else {
+					TranslatorManager::createDomain($locale, $domainName, [
+						'newKey' => 'New key for translations'
+					]);
+				}
+			}
+			$this->_translate($locale, $this->_getFiles()
+				->getAdminBaseRoute());
 		}
 	}
 }
