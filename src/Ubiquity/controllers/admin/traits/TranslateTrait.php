@@ -3,7 +3,9 @@ namespace Ubiquity\controllers\admin\traits;
 
 use Ajax\semantic\components\validation\Rule;
 use Ajax\semantic\html\base\constants\Direction;
+use Ajax\semantic\html\collections\form\HtmlFormTextarea;
 use Ajax\semantic\html\elements\HtmlLabel;
+use Ubiquity\controllers\admin\popo\TranslateMessage;
 use Ubiquity\translation\MessagesCatalog;
 use Ubiquity\translation\MessagesDomain;
 use Ubiquity\translation\TranslatorManager;
@@ -113,7 +115,8 @@ trait TranslateTrait {
 		$dt->setActiveRowSelector();
 
 		$this->jquery->getOnClick('._edit.' . $locale, "/Admin/loadDomain/" . $locale . "/", '#domain-' . $locale, [
-			'attr' => 'data-ajax'
+			'attr' => 'data-ajax',
+			'hasLoader' => 'internal'
 		]);
 		return $this->loadView('@framework/Admin/translate/locale.html', [
 			'locale' => $locale,
@@ -127,9 +130,22 @@ trait TranslateTrait {
 		$msgDomain = new MessagesDomain($locale, TranslatorManager::getLoader(), $domain);
 		$msgDomain->load();
 		$messages = $msgDomain->getMessages();
-		$this->loadView('@framework/Admin/translate/domain.html', [
-			'messages' => $messages
+		$messages = TranslateMessage::load($messages);
+		$dt = $this->jquery->semantic()->dataTable('dtDomain', TranslateMessage::class, $messages);
+		$dt->setFields([
+			'mkey',
+			'mvalue'
 		]);
+		$dt->setValueFunction('mvalue', function ($value) {
+			$txt = new HtmlFormTextarea('', null, $value);
+			$txt->setRows(1);
+			return $txt;
+		});
+		$dt->fieldAsInput('mkey');
+		$dt->setEdition(true);
+		$dt->asForm();
+		$dt->addClass('definition selectable');
+		$this->jquery->renderView('@framework/Admin/translate/domain.html');
 	}
 
 	public function createLocale() {
