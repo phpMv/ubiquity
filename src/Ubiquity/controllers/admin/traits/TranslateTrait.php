@@ -7,6 +7,7 @@ use Ajax\semantic\html\base\constants\Direction;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
 use Ajax\semantic\html\collections\form\HtmlFormTextarea;
 use Ajax\semantic\html\elements\HtmlLabel;
+use Ajax\semantic\widgets\datatable\PositionInTable;
 use Ubiquity\controllers\admin\popo\TranslateMessage;
 use Ubiquity\translation\MessagesCatalog;
 use Ubiquity\translation\MessagesDomain;
@@ -84,16 +85,15 @@ trait TranslateTrait {
 
 	/**
 	 *
+	 * @param array $messages
 	 * @param string $locale
 	 * @param string $domain
 	 * @param string $localeCompare
 	 * @return \Ajax\semantic\widgets\datatable\DataTable
 	 */
-	private function getDtDomain($locale, $domain, $localeCompare = null) {
+	private function getDtDomain($messages, $locale, $domain, $localeCompare = null) {
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
-		$msgDomain = new MessagesDomain ( $locale, TranslatorManager::getLoader (), $domain );
-		$msgDomain->load ();
-		$messages = $msgDomain->getMessages ();
+
 		if (isset ( $localeCompare )) {
 			$msgDomainCompare = new MessagesDomain ( $localeCompare, TranslatorManager::getLoader (), $domain );
 			$msgDomainCompare->load ();
@@ -102,26 +102,34 @@ trait TranslateTrait {
 			$messages = TranslateMessage::load ( $messages );
 		}
 		$dt = $this->jquery->semantic ()->dataTable ( 'dtDomain-' . $locale . '-' . $domain, TranslateMessage::class, $messages );
+		$dtId = $dt->getIdentifier ();
 		$dt->setFields ( [ 'mkey','mvalue' ] );
 		if (isset ( $localeCompare )) {
-			$dt->setValueFunction ( 'mvalue', function ($value, $instance) {
+			$dt->setValueFunction ( 'mvalue', function ($value, $instance) use ($locale, $domain) {
 				$txt = new HtmlFormTextarea ( '', '', $value );
 				$txt->wrap ( new HtmlLabel ( '', $instance->getCompare () ) );
 				$txt->setRows ( 1 );
+				$this->addDatasAttr ( $txt, $locale, $domain, $instance->getMkey () );
 				return $txt;
 			} );
-			$dt->setValueFunction ( 'mkey', function ($value) use ($localeCompare) {
+			$dt->setValueFunction ( 'mkey', function ($value) use ($localeCompare, $locale, $domain) {
 				$txt = new HtmlFormInput ( '', null, 'text', $value );
 				$txt->wrap ( new HtmlLabel ( '', $localeCompare ) );
+				$this->addDatasAttr ( $txt, $locale, $domain, $value, 'key' );
 				return $txt;
 			} );
 		} else {
-			$dt->setValueFunction ( 'mvalue', function ($value) {
+			$dt->setValueFunction ( 'mvalue', function ($value, $instance) use ($domain, $locale) {
 				$txt = new HtmlFormTextarea ( '', null, $value );
+				$this->addDatasAttr ( $txt, $locale, $domain, $instance->getMkey () );
 				$txt->setRows ( 1 );
 				return $txt;
 			} );
-			$dt->fieldAsInput ( 'mkey' );
+			$dt->setValueFunction ( 'mkey', function ($value) use ($domain, $locale) {
+				$txt = new HtmlFormInput ( '', null, 'text', $value );
+				$this->addDatasAttr ( $txt, $locale, $domain, $value, 'key' );
+				return $txt;
+			} );
 		}
 
 		$dt->addDeleteButton ();
@@ -129,10 +137,30 @@ trait TranslateTrait {
 		$dt->setUrls ( [ 'refresh' => $baseRoute . '/refreshDomain/' . $locale . '/' . $domain ] );
 		$dt->addClass ( 'selectable' );
 		$dt->setLibraryId ( 'dtDomain' );
+		$lbl = new HtmlLabel ( "search-query-" . $locale . $domain, "<span id='search-query-content-" . $locale . $domain . "'></span>" );
+		$icon = $lbl->addIcon ( "delete", false );
+		$lbl->wrap ( "<span>", "</span>" );
+		$lbl->setProperty ( "style", "display: none;" );
+		$icon->getOnClick ( $baseRoute . '/refreshDomainAll/' . $locale . '/' . $domain, '#' . $dtId, [ "jqueryDone" => "replaceWith","hasLoader" => "internal" ] );
+		$this->jquery->change ( '#' . $dtId . ' textarea,#' . $dtId . ' input', '$("#domain-name-' . $locale . $domain . '").html($("#domain-name-' . $locale . $domain . '").attr("data-value")+"*");' );
+		$dt->addItemInToolbar ( $lbl );
+		$dt->addSearchInToolbar ();
+		$dt->setToolbarPosition ( PositionInTable::FOOTER );
+		$dt->getToolbar ()->setSecondary ();
 		return $dt;
 	}
 
-	public function loadDomain($locale, $domain) {
+	private function addDatasAttr($elm, $locale, $domain, $key, $type = 'value') {
+		$elm->getDataField ()->setProperty ( 'data-key', $type . ':' . $locale . '|' . $domain . '|' . $key );
+	}
+
+	private function getMessagesDomain($locale, $domain) {
+		$msgDomain = new MessagesDomain ( $locale, TranslatorManager::getLoader (), $domain );
+		$msgDomain->load ();
+		return $msgDomain->getMessages ();
+	}
+
+	private function _loadDomain($locale, $domain) {
 		USession::delete ( 'ol' );
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		TranslatorManager::start ();
@@ -143,14 +171,27 @@ trait TranslateTrait {
 		$dd->asButton ();
 		$dd->addClass ( 'basic' );
 		$dd->setLibraryId ( 'dd-locales' );
-		$dt = $this->getDtDomain ( $locale, $domain );
+		$messages = $this->getMessagesDomain ( $locale, $domain );
+		$dt = $this->getDtDomain ( $messages, $locale, $domain );
 		$dt->asForm ();
-		$dt->autoPaginate ( 1, 10 );
+		$dt->autoPaginate ( 1, 50, 9 );
 		$dtId = '#' . $dt->getIdentifier ();
 		$this->jquery->postOnClick ( '#compare-to-' . $locale, $baseRoute . '/compareToLocale/' . $domain . '/' . $locale, '{p: $("' . $dtId . ' .item.active").first().attr("data-page"),ol: $("#input-dd-locales-' . $locale . '").val()}', $dtId . ' tbody', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
+
 		$this->jquery->exec ( '$("#locale-' . $locale . '").hide();', true );
 		$this->jquery->click ( '#return-' . $locale, '$("#locale-' . $locale . '").show();$("#domain-' . $locale . '").html("");' );
-		$this->jquery->renderView ( '@framework/Admin/translate/domain.html', [ 'locale' => $locale ] );
+		return $dt;
+	}
+
+	public function loadDomain($locale, $domain) {
+		$this->_loadDomain ( $locale, $domain );
+		$this->jquery->renderView ( '@framework/Admin/translate/domain.html', [ 'locale' => $locale,'domain' => $domain ] );
+	}
+
+	public function refreshDomainAll($locale, $domain) {
+		$dt = $this->_loadDomain ( $locale, $domain );
+		$dt->setLibraryId ( "_compo_" );
+		$this->jquery->renderView ( "@framework/main/component.html" );
 	}
 
 	public function compareToLocale($domain, $locale) {
@@ -164,11 +205,24 @@ trait TranslateTrait {
 		if (USession::exists ( 'ol' )) {
 			$otherLocale = USession::get ( 'ol' );
 		}
-		$dt = $this->getDtDomain ( $locale, $domain, $otherLocale );
+		$messages = $this->getMessagesDomain ( $locale, $domain );
+		if (isset ( $_POST ['s'] )) {
+			$rep = [ ];
+			$s = $_POST ['s'];
+			foreach ( $messages as $k => $v ) {
+				if (strpos ( $k, $s ) !== false || strpos ( $v, $s ) !== false) {
+					$rep [$k] = $v;
+				}
+			}
+			$messages = $rep;
+			$this->jquery->execAtLast ( '$("#search-query-content-' . $locale . $domain . '").html("' . $_POST ["s"] . '");$("#search-query-' . $locale . $domain . '").show();' );
+		}
+		$dt = $this->getDtDomain ( $messages, $locale, $domain, $otherLocale );
 		$p = URequest::post ( 'p', 1 );
-		$dt->autoPaginate ( is_numeric ( $p ) ? $p : 1, 10 );
-		echo $dt->refresh ();
-		// $this->jquery->renderView('@framework/Admin/translate/domain.html');
+		$dt->autoPaginate ( is_numeric ( $p ) ? $p : 1, 50, 9 );
+		$dt->refresh ();
+		$dt->setLibraryId ( "_compo_" );
+		$this->jquery->renderView ( "@framework/main/component.html" );
 	}
 
 	public function createLocale() {
