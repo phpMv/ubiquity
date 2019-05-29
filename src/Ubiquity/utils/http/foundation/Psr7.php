@@ -15,7 +15,6 @@ namespace Ubiquity\utils\http\foundation;
 class Psr7 {
 
 	public static function requestToGlobal(\Psr\Http\Message\ServerRequestInterface $request) {
-		$_GET = [ ];
 		$method = $request->getMethod ();
 		$parameters = $request->getQueryParams ();
 		$parsedBody = $request->getParsedBody ();
