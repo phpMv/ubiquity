@@ -16,10 +16,12 @@ class Psr7 {
 
 	public static function requestToGlobal(\Psr\Http\Message\ServerRequestInterface $request) {
 		$method = $request->getMethod ();
-		$uri = $request->getUri ()->getPath ();
+		$uri = $request->getUri ();
 		$parameters = $request->getQueryParams ();
 		$parsedBody = $request->getParsedBody ();
 		$headers = $request->getHeaders ();
+
+		list ( $host, $port, $scheme, $userInfo, $path, $uQuery ) = [ $uri->getHost (),$uri->getPort (),$uri->getScheme (),$uri->getUserInfo (),$uri->getPath (),$uri->getQuery () ];
 		$server = array_replace ( [
 									'SERVER_NAME' => 'localhost',
 									'SERVER_PORT' => 80,
@@ -35,13 +37,13 @@ class Psr7 {
 									'REQUEST_TIME' => time () ], $request->getServerParams () );
 		$server ['PATH_INFO'] = '';
 		$server ['REQUEST_METHOD'] = strtoupper ( $method );
-		$components = parse_url ( $uri );
-		if (isset ( $components ['host'] )) {
-			$server ['SERVER_NAME'] = $components ['host'];
-			$server ['HTTP_HOST'] = $components ['host'];
+
+		if ($host != null) {
+			$server ['SERVER_NAME'] = $host;
+			$server ['HTTP_HOST'] = $host;
 		}
-		if (isset ( $components ['scheme'] )) {
-			if ('https' === $components ['scheme']) {
+		if ($scheme != null) {
+			if ('https' === $scheme) {
 				$server ['HTTPS'] = 'on';
 				$server ['SERVER_PORT'] = 443;
 			} else {
@@ -49,19 +51,18 @@ class Psr7 {
 				$server ['SERVER_PORT'] = 80;
 			}
 		}
-		if (isset ( $components ['port'] )) {
-			$server ['SERVER_PORT'] = $components ['port'];
-			$server ['HTTP_HOST'] .= ':' . $components ['port'];
+		if ($port != null) {
+			$server ['SERVER_PORT'] = $port;
+			$server ['HTTP_HOST'] .= ':' . $port;
 		}
-		if (isset ( $components ['user'] )) {
-			$server ['PHP_AUTH_USER'] = $components ['user'];
+		if ($userInfo != null) {
+			$userInfo = explode ( ':', $userInfo );
+			$server ['PHP_AUTH_USER'] = $userInfo [0];
+			if (sizeof ( $userInfo ) > 1) {
+				$server ['PHP_AUTH_PW'] = $userInfo [1];
+			}
 		}
-		if (isset ( $components ['pass'] )) {
-			$server ['PHP_AUTH_PW'] = $components ['pass'];
-		}
-		if (! isset ( $components ['path'] )) {
-			$components ['path'] = '/';
-		}
+		$path = $path ?? '/';
 		switch (strtoupper ( $method )) {
 			case 'POST' :
 			case 'PUT' :
@@ -78,19 +79,19 @@ class Psr7 {
 				break;
 		}
 		$queryString = '';
-		if (isset ( $components ['query'] )) {
-			parse_str ( html_entity_decode ( $components ['query'] ), $qs );
+		if ($uQuery != null) {
+			parse_str ( html_entity_decode ( $uQuery ), $qs );
 			if ($query) {
 				$query = array_replace ( $qs, $query );
 				$queryString = http_build_query ( $query, '', '&' );
 			} else {
 				$query = $qs;
-				$queryString = $components ['query'];
+				$queryString = $uQuery;
 			}
 		} elseif ($query) {
 			$queryString = http_build_query ( $query, '', '&' );
 		}
-		$server ['REQUEST_URI'] = $components ['path'] . ('' !== $queryString ? '?' . $queryString : '');
+		$server ['REQUEST_URI'] = $path . ('' !== $queryString ? '?' . $queryString : '');
 		$server ['QUERY_STRING'] = $queryString;
 		if (isset ( $headers ['X-Requested-With'] ) && array_search ( 'XMLHttpRequest', $headers ['X-Requested-With'] ) !== false) {
 			$server ['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
@@ -100,9 +101,8 @@ class Psr7 {
 		}
 		if (sizeof ( $parameters ) > 0) {
 			$_GET = array_merge ( $_GET, $parameters );
-			$_GET = $parameters;
 		}
-		$_SERVER = $request->getServerParams ();
+		$_SERVER = $server;
 		// To ADD $_FILES
 	}
 }
