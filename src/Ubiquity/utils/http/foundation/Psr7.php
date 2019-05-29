@@ -23,7 +23,7 @@ class Psr7 {
 			$_POST = $parsedBody;
 		}
 		if (sizeof ( $parameters ) > 0) {
-			$_GET = $parameters;
+			$_GET = array_merge ( $_GET, $parameters );
 		}
 		$_SERVER = $request->getServerParams ();
 		// To ADD $_FILES
