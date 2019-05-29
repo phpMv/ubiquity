@@ -102,7 +102,7 @@ class Psr7 {
 			$_GET = array_merge ( $_GET, $parameters );
 			$_GET = $parameters;
 		}
-		$_SERVER = $request->getServerParams ();
+		$_SERVER = $server;
 		// To ADD $_FILES
 	}
 }
