@@ -6,20 +6,24 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\utils\base\UArray;
 
 /**
+ * Store translation updates.
  * Ubiquity\translation$MessagesUpdates
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
+ * @since Ubiquity 2.1.4
  *
  */
 class MessagesUpdates {
 	protected $locale;
 	protected $domain;
 	protected $key = "tmp/translations/";
-	protected $values;
+	protected $toUpdate;
+	protected $toAdd;
 	protected $toDelete;
 	protected $dirty;
+	protected $newKeys;
 
 	protected function getKey() {
 		return md5 ( $this->locale . '.' . $this->domain );
@@ -36,7 +40,9 @@ class MessagesUpdates {
 		if (CacheManager::$cache->exists ( $this->key . $key )) {
 			$array = CacheManager::$cache->fetch ( $this->key . $key );
 		}
-		$this->values = $array ['values'] ?? [ ];
+		$this->newKeys = $array ['newKeys'] ?? [ ];
+		$this->toAdd = $array ['toAdd'] ?? [ ];
+		$this->toUpdate = $array ['toUpdate'] ?? [ ];
 		$this->toDelete = $array ['toDelete'] ?? [ ];
 	}
 
@@ -46,7 +52,7 @@ class MessagesUpdates {
 	}
 
 	public function hasUpdates() {
-		return sizeof ( $this->values ) > 0 || sizeof ( $this->toDelete ) > 0;
+		return sizeof ( $this->toUpdate ) > 0 || sizeof ( $this->toDelete ) > 0 || sizeof ( $this->toAdd ) > 0;
 	}
 
 	public function mergeMessages($messages) {
@@ -55,42 +61,69 @@ class MessagesUpdates {
 				unset ( $messages [$k] );
 			}
 		}
-		foreach ( $this->values as $k => $v ) {
+		foreach ( $this->toUpdate as $k => $v ) {
 			$messages [$k] = $v;
+		}
+		foreach ( $this->toAdd as $k => $v ) {
+			$messages [$k] = [ $v,$this->newKeys [$k] ];
 		}
 		return $messages;
 	}
 
 	public function addToDelete($key) {
 		$this->toDelete [] = $key;
-		if (isset ( $this->values [$key] )) {
-			unset ( $this->values [$key] );
+		if (isset ( $this->toUpdate [$key] )) {
+			unset ( $this->toUpdate [$key] );
 		}
 		$this->dirty = true;
 	}
 
-	public function addValue($key, $value) {
-		$this->values [$key] = $value;
+	public function updateValue($key, $value) {
+		$this->toUpdate [$key] = $value;
 		if (($index = array_search ( $key, $this->toDelete )) !== false) {
 			unset ( $this->toDelete [$index] );
 		}
 		$this->dirty = true;
 	}
 
+	public function addValue($key, $value, $keyId = null) {
+		$this->toAdd [$key] = $value;
+		if (isset ( $keyId )) {
+			if (($id = array_search ( $keyId, $this->newKeys )) !== false) {
+				unset ( $this->toAdd [$id] );
+				unset ( $this->newKeys [$id] );
+			}
+			$this->newKeys [$key] = $keyId;
+		}
+
+		$this->dirty = true;
+	}
+
+	public function removeAddValue($key) {
+		if (isset ( $this->toAdd [$key] )) {
+			unset ( $this->toAdd [$key] );
+		}
+	}
+
 	public function replaceKey($key, $newKey, $value) {
 		$this->addToDelete ( $key );
-		$this->addValue ( $newKey, $value );
+		$this->updateValue ( $newKey, $value );
 	}
 
 	public function removeNewKey($key) {
-		unset ( $this->values [$key] );
-		$this->dirty = true;
+		if (($k = array_search ( $key, $this->newKeys )) !== false) {
+			if (isset ( $this->toAdd [$k] )) {
+				unset ( $this->toAdd [$k] );
+			}
+			unset ( $this->newKeys [$k] );
+			$this->dirty = true;
+		}
 	}
 
 	public function save() {
 		if ($this->dirty) {
 			$key = self::getKey ();
-			CacheManager::$cache->store ( $this->key . $key, 'return array' . UArray::asPhpArray ( [ 'values' => $this->values,'toDelete' => $this->toDelete ] ) . ';' );
+			CacheManager::$cache->store ( $this->key . $key, 'return array' . UArray::asPhpArray ( [ 'newKeys' => $this->newKeys,'toAdd' => $this->toAdd,'toUpdate' => $this->toUpdate,'toDelete' => $this->toDelete ] ) . ';' );
 			$this->dirty = false;
 			return true;
 		}
@@ -108,11 +141,14 @@ class MessagesUpdates {
 
 	public function __toString() {
 		$res = [ ];
-		if (($nb = sizeof ( $this->values )) > 0) {
-			$res [] = $nb . ' updates ';
+		if (($nb = sizeof ( $this->toAdd )) > 0) {
+			$res [] = $nb . ' insert(s) ';
+		}
+		if (($nb = sizeof ( $this->toUpdate )) > 0) {
+			$res [] = $nb . ' update(s) ';
 		}
 		if (($nb = sizeof ( $this->toDelete )) > 0) {
-			$res [] = $nb . ' deletions ';
+			$res [] = $nb . ' deletion(s) ';
 		}
 		return implode ( ', ', $res );
 	}

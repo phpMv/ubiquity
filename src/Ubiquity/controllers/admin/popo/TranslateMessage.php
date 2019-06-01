@@ -1,17 +1,21 @@
 <?php
+
 namespace Ubiquity\controllers\admin\popo;
 
 class TranslateMessage {
-
 	private $mkey;
-
 	private $mvalue;
-
 	private $compare;
+	private $newKey;
 
 	public function __construct($key = '', $value = '', $compare = null) {
 		$this->mkey = $key;
-		$this->mvalue = $value;
+		if (is_array ( $value )) {
+			$this->mvalue = $value [0];
+			$this->newKey = $value [1];
+		} else {
+			$this->mvalue = $value;
+		}
 		$this->compare = $compare;
 	}
 
@@ -67,10 +71,13 @@ class TranslateMessage {
 	 *
 	 * @param array $messages
 	 */
-	public static function load($messages) {
-		$result = [];
-		foreach ($messages as $key => $value) {
-			$result[$key] = new TranslateMessage($key, $value);
+	public static function load($messages, $addNew = true) {
+		$result = [ ];
+		foreach ( $messages as $key => $value ) {
+			$result [$key] = new TranslateMessage ( $key, $value );
+		}
+		if ($addNew) {
+			$result [''] = new TranslateMessage ( '', '' );
 		}
 		return $result;
 	}
@@ -79,23 +86,35 @@ class TranslateMessage {
 	 *
 	 * @param array $messages
 	 * @param array $compareTo
+	 * @param boolean $addNew
 	 * @param boolean $addInexisting
 	 */
-	public static function loadAndCompare($messages, $compareTo, $addInexisting = true) {
-		$result = [];
-		foreach ($messages as $key => $value) {
-			$result[$key] = new TranslateMessage($key, $value);
-			if (isset($compareTo[$key])) {
-				$result[$key]->setCompare($compareTo[$key]);
-				unset($compareTo[$key]);
+	public static function loadAndCompare($messages, $compareTo, $addNew = true, $addInexisting = true) {
+		$result = [ ];
+		foreach ( $messages as $key => $value ) {
+			$result [$key] = new TranslateMessage ( $key, $value );
+			if (isset ( $compareTo [$key] )) {
+				$result [$key]->setCompare ( $compareTo [$key] );
+				unset ( $compareTo [$key] );
 			}
 		}
 		if ($addInexisting) {
-			foreach ($compareTo as $key => $value) {
-				$result[$key] = new TranslateMessage($key, '', $value);
+			foreach ( $compareTo as $key => $value ) {
+				$result [$key] = new TranslateMessage ( $key, '', $value );
 			}
 		}
+		if ($addNew) {
+			$result [''] = new TranslateMessage ( '', '' );
+		}
 		return $result;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getNewKey() {
+		return $this->newKey;
 	}
 }
 
