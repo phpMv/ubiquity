@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrelease]
 ### Added
+- `Translate` module in webtools
 - Transactions and nested transactions in `Database` and `DAO` classes see [#42](https://github.com/phpMv/ubiquity/issues/42)
 - `getById` method in `DAO` class (optimization)
 ### Fixed
