@@ -55,7 +55,7 @@ class MessagesUpdates {
 		return sizeof ( $this->toUpdate ) > 0 || sizeof ( $this->toDelete ) > 0 || sizeof ( $this->toAdd ) > 0;
 	}
 
-	public function mergeMessages($messages) {
+	public function mergeMessages($messages, $beforeSave = false) {
 		foreach ( $this->toDelete as $k ) {
 			if (isset ( $messages [$k] )) {
 				unset ( $messages [$k] );
@@ -65,7 +65,13 @@ class MessagesUpdates {
 			$messages [$k] = $v;
 		}
 		foreach ( $this->toAdd as $k => $v ) {
-			$messages [$k] = [ $v,$this->newKeys [$k] ];
+			if (isset ( $this->newKeys [$k] )) {
+				if ($beforeSave) {
+					$messages [$k] = $v;
+				} else {
+					$messages [$k] = [ $v,$this->newKeys [$k] ];
+				}
+			}
 		}
 		return $messages;
 	}

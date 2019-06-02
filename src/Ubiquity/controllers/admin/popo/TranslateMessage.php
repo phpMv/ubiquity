@@ -15,6 +15,7 @@ class TranslateMessage {
 			$this->newKey = $value [1];
 		} else {
 			$this->mvalue = $value;
+			$this->newKey = null;
 		}
 		$this->compare = $compare;
 	}

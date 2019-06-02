@@ -150,6 +150,7 @@ trait TranslateTrait {
 																																																																																															'hasLoader' => false,
 																																																																																															'attr' => 'data-key' ] );
 		$this->jquery->postOnClick ( '#' . $dtId . ' ._delete', $baseRoute . '/deleteTranslation/' . $locale . '/' . $domain, '{n:$(this).closest("tr").find("input").first().attr("data-new") || 0,k:$(this).closest("tr").find("input").first().attr("data-key")}', '#update-' . $locale . $domain, [ 'hasLoader' => false ] );
+		$this->jquery->execAtLast ( '$("._ddAddMessages").dropdown();' );
 		$dt->addItemInToolbar ( $lbl );
 		$dt->addSearchInToolbar ();
 		$dt->setToolbarPosition ( PositionInTable::FOOTER );
@@ -179,7 +180,7 @@ trait TranslateTrait {
 			$messagesUpdates->load ();
 			if ($messagesUpdates->hasUpdates () && $display) {
 				$messages = $messagesUpdates->mergeMessages ( $messages );
-				$this->displayTranslationUpdates ( $messagesUpdates );
+				$this->displayTranslationUpdates ( $messagesUpdates, $locale, $domain );
 			}
 		}
 		return $messages;
@@ -201,19 +202,25 @@ trait TranslateTrait {
 		$dt->asForm ();
 		$dt->autoPaginate ( 1, 50, 9 );
 		$dtId = '#' . $dt->getIdentifier ();
-		$this->jquery->postOnClick ( '#compare-to-' . $locale, $baseRoute . '/compareToLocale/' . $domain . '/' . $locale, '{p: $("' . $dtId . ' .item.active").first().attr("data-page"),ol: $("#input-dd-locales-' . $locale . '").val()}', $dtId . ' tbody', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
+		$this->jquery->postOnClick ( '#compare-to-' . $locale, $baseRoute . '/compareToLocale/' . $domain . '/' . $locale, '{p: $("' . $dtId . ' .item.active").first().attr("data-page"),ol: $("#input-' . $dd->getIdentifier () . '").val()}', $dtId . ' tbody', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
+
+		$this->jquery->getOnClick ( '._addMessages', $baseRoute . '/frmMultipleMessages/' . $locale . '/' . $domain, '#form-' . $locale . $domain, [ 'hasLoader' => 'internal' ] );
 
 		$this->jquery->exec ( '$("#locale-' . $locale . '").hide();', true );
 		$this->jquery->click ( '#return-' . $locale, '$("#locale-' . $locale . '").show();$("#domain-' . $locale . '").html("");' );
 		return $dt;
 	}
 
-	private function displayTranslationUpdates(MessagesUpdates $messagesUpdates) {
+	private function displayTranslationUpdates(MessagesUpdates $messagesUpdates, $locale, $domain) {
+		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$bt = $this->jquery->semantic ()->htmlButton ( 'bt-save', 'Save' );
 		$bt->addIcon ( 'save' );
 		$bt->addLabel ( $messagesUpdates, true )->setPointing ( 'right' );
-		$bt->getContent () [1]->addClass ( 'orange' );
-		return $bt;
+		$bt->getContent () [1]->addClass ( 'green' )->getOnClick ( $baseRoute . '/saveTranslationsUpdates/' . $locale . '/' . $domain, '#domain-' . $locale, [ 'hasLoader' => 'internal' ] );
+		$btDelete = $this->jquery->semantic ()->htmlButton ( 'bt-cancel-updates', 'Cancel updates', 'red' );
+		$btDelete->addIcon ( 'remove' );
+		$btDelete->getOnClick ( $baseRoute . '/cancelTranslationsUpdates/' . $locale . '/' . $domain, '#domain-' . $locale, [ 'hasLoader' => 'internal' ] );
+		return $bt . $btDelete;
 	}
 
 	public function loadDomain($locale, $domain) {
@@ -329,7 +336,7 @@ trait TranslateTrait {
 		}
 		$messagesUpdates->save ();
 		if ($messagesUpdates->hasUpdates ()) {
-			echo $this->displayTranslationUpdates ( $messagesUpdates );
+			echo $this->displayTranslationUpdates ( $messagesUpdates, $locale, $domain );
 			if ($new) {
 				$this->jquery->exec ( "
 									var selector='#dtDomain-" . $locale . "-" . $domain . " tbody tr';
@@ -340,8 +347,8 @@ trait TranslateTrait {
 									input.val('');textarea.val('');
 									\$('[data-new]').removeAttr('data-new');
 									\$(selector).last().after(clone);", true );
-				echo $this->jquery->compile ();
 			}
+			echo $this->jquery->compile ( $this->view );
 		}
 	}
 
@@ -360,11 +367,61 @@ trait TranslateTrait {
 			}
 			$messagesUpdates->save ();
 			$this->jquery->execAtLast ( '$("[data-key=\'' . $key . '\']").closest("tr").remove();' );
-			echo $this->jquery->compile ();
 		}
 		if ($messagesUpdates->hasUpdates ()) {
-			echo $this->displayTranslationUpdates ( $messagesUpdates );
+			echo $this->displayTranslationUpdates ( $messagesUpdates, $locale, $domain );
 		}
+		echo $this->jquery->compile ();
+	}
+
+	public function saveTranslationsUpdates($locale, $domain) {
+		TranslatorManager::start ();
+		$msgDomain = new MessagesDomain ( $locale, TranslatorManager::getLoader (), $domain );
+		$msgDomain->load ();
+		$messages = $msgDomain->getMessages ();
+		$messagesUpdates = new MessagesUpdates ( $locale, $domain );
+		if ($messagesUpdates->exists ()) {
+			$messagesUpdates->load ();
+			$messages = $messagesUpdates->mergeMessages ( $messages, true );
+			$msgDomain->setMessages ( $messages );
+			try {
+				$msgDomain->store ();
+				$messagesUpdates->delete ();
+			} catch ( \Exception $e ) {
+			}
+		}
+		$this->loadDomain ( $locale, $domain );
+	}
+
+	public function cancelTranslationsUpdates($locale, $domain) {
+		$messagesUpdates = new MessagesUpdates ( $locale, $domain );
+		if ($messagesUpdates->exists ()) {
+			$messagesUpdates->delete ();
+		}
+		$this->loadDomain ( $locale, $domain );
+	}
+
+	public function frmMultipleMessages($locale, $domain) {
+		$this->jquery->execOn ( "click", "#cancel-multiple-messages-" . $locale . $domain, '$("#form-' . $locale . $domain . '").html("");' );
+		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
+		$this->jquery->postFormOnClick ( "#validate-multiple-messages-" . $locale . $domain, $baseRoute . '/addMultipleMessages/' . $locale . '/' . $domain, 'frm-multiple-' . $locale . $domain, '#domain-' . $locale, [ 'hasLoader' => 'internal' ] );
+		$this->jquery->renderView ( '@framework/Admin/translate/frmMultipleMessages.html', [ 'locale' => $locale,'domain' => $domain ] );
+	}
+
+	public function addMultipleMessages($locale, $domain) {
+		$messagesUpdates = new MessagesUpdates ( $locale, $domain );
+		$messagesUpdates->load ();
+		$sep = $_POST ["separator"] ?? '=';
+		$inlineMessages = $_POST ['messages'];
+		$splitMessages = explode ( PHP_EOL, $inlineMessages );
+		foreach ( $splitMessages as $msg ) {
+			$kv = explode ( $sep, $msg );
+			if (isset ( $kv [0] ) && $kv [0] != null) {
+				$messagesUpdates->addValue ( $kv [0], $kv [1] ?? '', uniqid ( 'key' ) );
+			}
+		}
+		$messagesUpdates->save ();
+		$this->loadDomain ( $locale, $domain );
 	}
 }
 
