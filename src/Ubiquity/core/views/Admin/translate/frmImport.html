@@ -1,0 +1,16 @@
+	<div class="ui top attached secondary segment">Import messages from file</div>
+	<div class="ui attached segment">
+			{{q['frmImport'] | raw }}
+	</div>
+<div class="ui segment">
+  <button id="validate-import-messages-{{locale}}{{domain}}" class="ui button positive">
+  	<i class="icon check circle"></i>
+  	 Validate
+  </button>
+  &nbsp;
+  <button id="cancel-import-messages-{{locale}}{{domain}}" class="ui button">
+  	<i class="icon remove circle outline"></i>
+  	 Cancel
+  </button>
+</div>
+{{ script_foot | raw }}

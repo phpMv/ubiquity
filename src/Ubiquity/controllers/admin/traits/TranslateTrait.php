@@ -16,6 +16,10 @@ use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 use Ubiquity\translation\MessagesUpdates;
+use Ubiquity\controllers\admin\popo\CacheFile;
+use Ubiquity\cache\CacheManager;
+use Ajax\semantic\html\collections\HtmlMessage;
+use Ajax\semantic\html\elements\HtmlList;
 
 /**
  *
@@ -24,6 +28,8 @@ use Ubiquity\translation\MessagesUpdates;
  *
  */
 trait TranslateTrait {
+
+	abstract public function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null): HtmlMessage;
 	protected $newTransRowId;
 
 	protected function _translate($loc, $baseRoute) {
@@ -43,6 +49,12 @@ trait TranslateTrait {
 		$fields = $frm->addFields ();
 		$input = $fields->addInput ( "localeName", null, "text", "", "Locale name" )->addRules ( [ [ "empty","Locale name must have a value" ],"regExp[/^[A-Za-z]\w*$/]",[ "checkLocale","Locale {value} is not a valid name!" ] ] )->setWidth ( 8 );
 		$input->addAction ( "Add locale", true, "plus", true )->addClass ( "teal" )->asSubmit ();
+		$bt = $fields->addButton ( 'bt-delete-translations-cache', 'Remove cache', 'basic red' );
+		$bt->setTagName ( 'div' )->addIcon ( 'remove' );
+		$bt->getOnClick ( $baseRoute . '/deleteTranslationCache', '#translations-refresh', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
+		$bt = $fields->addButton ( 'bt-load-translations-cache', 'Load all translations cache', 'basic blue' );
+		$bt->setTagName ( 'div' )->addIcon ( 'refresh' );
+		$bt->getOnClick ( $baseRoute . '/loadTranslationCache', '#translations-refresh', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
 		$frm->setSubmitParams ( $baseRoute . '/createLocale', '#translations-refresh', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
 
 		$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkLocale", $this->_getFiles ()->getAdminBaseRoute () . "/_checkLocale", "{}", "result=data.result;", "postForm", [ "form" => "frmLocale" ] ), true );
@@ -51,7 +63,7 @@ trait TranslateTrait {
 
 	public function loadLocale($locale) {
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
-
+		TranslatorManager::start ( $locale );
 		$messagesCatalog = new MessagesCatalog ( $locale, TranslatorManager::getLoader () );
 		$messagesCatalog->load ();
 		$msgDomains = $messagesCatalog->getMessagesDomains ();
@@ -65,7 +77,16 @@ trait TranslateTrait {
 		$ck->getField ()->setProperty ( 'name', 'ck-all-locales' );
 		$input->addAction ( "Add domain", true, "plus", true )->addClass ( "teal" )->asSubmit ();
 		$frm->setSubmitParams ( $baseRoute . "/addDomain/" . $locale, "#translations-refresh" );
-
+		if (TranslatorManager::cacheExist ( $locale )) {
+			$bt = $fields->addButton ( 'bt-delete-translations-cache-' . $locale, null, 'basic red' );
+			$bt->setTagName ( 'div' )->asIcon ( 'remove' );
+			$bt->setProperty ( 'title', "Delete {$locale} cache" );
+			$bt->getOnClick ( $baseRoute . '/deleteTranslationLocaleCache/' . $locale, '#translations-refresh', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
+		}
+		$bt = $fields->addButton ( 'bt-load-translations-cache-' . $locale, null, 'basic blue' );
+		$bt->setTagName ( 'div' )->asIcon ( 'refresh' );
+		$bt->setProperty ( 'title', "Load {$locale} cache" );
+		$bt->getOnClick ( $baseRoute . '/loadTranslationLocaleCache/' . $locale, '#translations-refresh', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
 		$dt = $this->jquery->semantic ()->dataTable ( 'dt-' . $locale, MessagesDomain::class, $msgDomains );
 		$dt->setFields ( [ 'domain','messages' ] );
 		$dt->setValueFunction ( 'messages', function ($value) {
@@ -146,9 +167,9 @@ trait TranslateTrait {
 		$lbl->setProperty ( "style", "display: none;" );
 		$icon->getOnClick ( $baseRoute . '/refreshDomainAll/' . $locale . '/' . $domain, '#' . $dtId, [ "jqueryDone" => "replaceWith","hasLoader" => "internal" ] );
 		$this->jquery->change ( '#' . $dtId . ' tbody textarea,#' . $dtId . ' input', '$("#domain-name-' . $locale . $domain . '").html($("#domain-name-' . $locale . $domain . '").attr("data-value")+"*");' );
-		$this->jquery->postOn ( 'change', '#' . $dtId . ' tbody textarea,#' . $dtId . ' tbody input', $baseRoute . '/updateTranslation/' . $locale . '/' . $domain, '{n:$(this).closest("tr").find("input").first().attr("data-new") || 0,v:$(this).closest("tr").find("textarea").first().val(),k:$(this).closest("tr").find("input").first().val()}', '#update-' . $locale . $domain, [
-																																																																																															'hasLoader' => false,
-																																																																																															'attr' => 'data-key' ] );
+		$this->jquery->postOn ( 'change', '#' . $dtId . ' tbody textarea,#' . $dtId . ' tbody input', $baseRoute . '/updateTranslation/' . $locale . '/' . $domain, '{n:$(this).closest("tr").find("input").first().attr("data-new") || 0,v:encodeURIComponent($(this).closest("tr").find("textarea").first().val()),k:$(this).closest("tr").find("input").first().val()}', '#update-' . $locale . $domain, [
+																																																																																																				'hasLoader' => false,
+																																																																																																				'attr' => 'data-key' ] );
 		$this->jquery->postOnClick ( '#' . $dtId . ' ._delete', $baseRoute . '/deleteTranslation/' . $locale . '/' . $domain, '{n:$(this).closest("tr").find("input").first().attr("data-new") || 0,k:$(this).closest("tr").find("input").first().attr("data-key")}', '#update-' . $locale . $domain, [ 'hasLoader' => false ] );
 		$this->jquery->execAtLast ( '$("._ddAddMessages").dropdown();' );
 		$dt->addItemInToolbar ( $lbl );
@@ -168,7 +189,7 @@ trait TranslateTrait {
 			$key = '_new_';
 			$value = $newKey;
 		}
-		$elm->getDataField ()->setProperty ( 'data-key', $type . '|' . $key . '|' . $value );
+		$elm->getDataField ()->setProperty ( 'data-key', $type . '||' . $key . '||' . urlencode ( $value ) );
 	}
 
 	private function getMessagesDomain($locale, $domain, $display = true) {
@@ -196,6 +217,7 @@ trait TranslateTrait {
 		$dd->addInput ( 'compareTo' );
 		$dd->asButton ();
 		$dd->addClass ( 'basic' );
+		$dd->onClick ( '$("#compare-to-' . $locale . '").removeClass("disabled");' );
 		$dd->setLibraryId ( 'dd-locales' );
 		$messages = $this->getMessagesDomain ( $locale, $domain );
 		$dt = $this->getDtDomain ( $messages, $locale, $domain );
@@ -203,8 +225,9 @@ trait TranslateTrait {
 		$dt->autoPaginate ( 1, 50, 9 );
 		$dtId = '#' . $dt->getIdentifier ();
 		$this->jquery->postOnClick ( '#compare-to-' . $locale, $baseRoute . '/compareToLocale/' . $domain . '/' . $locale, '{p: $("' . $dtId . ' .item.active").first().attr("data-page"),ol: $("#input-' . $dd->getIdentifier () . '").val()}', $dtId . ' tbody', [ 'jqueryDone' => 'replaceWith','hasLoader' => 'internal' ] );
-
 		$this->jquery->getOnClick ( '._addMessages', $baseRoute . '/frmMultipleMessages/' . $locale . '/' . $domain, '#form-' . $locale . $domain, [ 'hasLoader' => 'internal' ] );
+
+		$this->jquery->getOnClick ( '._fromFile', $baseRoute . '/frmImportMessages/' . $locale . '/' . $domain, '#form-' . $locale . $domain, [ 'hasLoader' => 'internal' ] );
 
 		$this->jquery->exec ( '$("#locale-' . $locale . '").hide();', true );
 		$this->jquery->click ( '#return-' . $locale, '$("#locale-' . $locale . '").show();$("#domain-' . $locale . '").html("");' );
@@ -313,9 +336,10 @@ trait TranslateTrait {
 	}
 
 	public function updateTranslation($locale, $domain, $key) {
-		list ( $type, $oldKey, $oldValue ) = explode ( '|', $key );
+		list ( $type, $oldKey, $oldValue ) = explode ( '||', $key );
+		$oldValue = urldecode ( $oldValue );
 		$newKey = $_POST ['k'];
-		$newValue = $_POST ['v'];
+		$newValue = urldecode ( $_POST ['v'] );
 		$new = URequest::getBoolean ( 'n' );
 		$messagesUpdates = new MessagesUpdates ( $locale, $domain );
 		$messagesUpdates->load ();
@@ -343,7 +367,7 @@ trait TranslateTrait {
 									var clone=\$(selector).last().clone(true);
 									var uuid=\$.create_UUID();\$('[data-new]').removeAttr('data-new');
 									var input=clone.find('input').first();var textarea=clone.find('textarea').first();
-									input.attr('data-key','key|_new_|key'+uuid);textarea.attr('data-key','value|_new_|key'+uuid);
+									input.attr('data-key','key||_new_||key'+uuid);textarea.attr('data-key','value||_new_||key'+uuid);
 									input.val('');textarea.val('');
 									\$('[data-new]').removeAttr('data-new');
 									\$(selector).last().after(clone);", true );
@@ -358,7 +382,7 @@ trait TranslateTrait {
 		$messagesUpdates = new MessagesUpdates ( $locale, $domain );
 		$messagesUpdates->load ();
 		if (! $new) {
-			list ( $type, $oldKey, $oldValue ) = explode ( '|', $key );
+			list ( $type, $oldKey, $oldValue ) = explode ( '||', $key );
 
 			if ($oldKey === '_new_') {
 				$messagesUpdates->removeNewKey ( $oldValue );
@@ -371,7 +395,7 @@ trait TranslateTrait {
 		if ($messagesUpdates->hasUpdates ()) {
 			echo $this->displayTranslationUpdates ( $messagesUpdates, $locale, $domain );
 		}
-		echo $this->jquery->compile ();
+		echo $this->jquery->compile ( $this->view );
 	}
 
 	public function saveTranslationsUpdates($locale, $domain) {
@@ -408,6 +432,19 @@ trait TranslateTrait {
 		$this->jquery->renderView ( '@framework/Admin/translate/frmMultipleMessages.html', [ 'locale' => $locale,'domain' => $domain ] );
 	}
 
+	public function frmImportMessages($locale, $domain) {
+		$frm = $this->jquery->semantic ()->htmlForm ( 'frm-import-' . $locale . $domain );
+		$dd = $frm->addDropdown ( 'types', [ 'php' => 'PHP array','json' => 'JSON' ], 'Type of import', 'php' );
+		$dd->asSelect ( 'type' );
+		$frm->addDivider ();
+		$frm->addInput ( 'file', 'Select a file', 'file' );
+		$frm->setLibraryId ( 'frmImport' );
+		$this->jquery->execOn ( "click", "#cancel-import-messages-" . $locale . $domain, '$("#form-' . $locale . $domain . '").html("");' );
+		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
+		$this->jquery->postFormOnClick ( "#validate-import-messages-" . $locale . $domain, $baseRoute . '/importMessages/' . $locale . '/' . $domain, 'frm-import-' . $locale . $domain, '#domain-' . $locale, [ 'hasLoader' => 'internal' ] );
+		$this->jquery->renderView ( '@framework/Admin/translate/frmImport.html', [ 'locale' => $locale,'domain' => $domain ] );
+	}
+
 	public function addMultipleMessages($locale, $domain) {
 		$messagesUpdates = new MessagesUpdates ( $locale, $domain );
 		$messagesUpdates->load ();
@@ -422,6 +459,38 @@ trait TranslateTrait {
 		}
 		$messagesUpdates->save ();
 		$this->loadDomain ( $locale, $domain );
+	}
+
+	public function loadTranslationCache() {
+		CacheFile::delete ( \ROOT . \DS . CacheManager::getCacheDirectory () . 'translations' );
+		TranslatorManager::start ();
+		$locales = TranslatorManager::getLocales ();
+		foreach ( $locales as $locale ) {
+			TranslatorManager::getCatalogue ( $locale );
+		}
+		self::showSimpleMessage ( "Cache loaded for locales:" . new HtmlList ( '', $locales ), 'success', 'CacheManager', 'refresh', null, 'msgGlobal' );
+		$this->_translate ( URequest::getDefaultLanguage (), $this->_getFiles ()->getAdminBaseRoute () );
+	}
+
+	public function deleteTranslationCache() {
+		CacheFile::delete ( \ROOT . \DS . CacheManager::getCacheDirectory () . 'translations' );
+		self::showSimpleMessage ( "Cache deleted for all locales", 'success', 'CacheManager', 'remove', null, 'msgGlobal' );
+		$this->_translate ( URequest::getDefaultLanguage (), $this->_getFiles ()->getAdminBaseRoute () );
+	}
+
+	public function loadTranslationLocaleCache($locale) {
+		TranslatorManager::start ();
+		TranslatorManager::clearLocaleCache ( $locale );
+		TranslatorManager::getCatalogue ( $locale );
+		self::showSimpleMessage ( "Cache loaded for locale <b>{$locale}</b>", 'success', 'CacheManager', 'refresh', null, 'msgGlobal' );
+		$this->_translate ( $locale, $this->_getFiles ()->getAdminBaseRoute () );
+	}
+
+	public function deleteTranslationLocaleCache($locale) {
+		TranslatorManager::start ();
+		TranslatorManager::clearLocaleCache ( $locale );
+		self::showSimpleMessage ( "Cache deleted for locale <b>{$locale}</b>", 'success', 'CacheManager', 'remove', null, 'msgGlobal' );
+		$this->_translate ( $locale, $this->_getFiles ()->getAdminBaseRoute () );
 	}
 }
 

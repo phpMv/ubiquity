@@ -22,5 +22,7 @@ interface LoaderInterface {
 	public function loadDomain($locale, $domain);
 
 	public function getDomains($locale);
+
+	public function cacheExists($locale, $domain = '*');
 }
 

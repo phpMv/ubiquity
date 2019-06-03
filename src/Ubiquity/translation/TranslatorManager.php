@@ -60,6 +60,62 @@ class TranslatorManager {
 		}
 	}
 
+	/**
+	 * Inspired by \Symfony\Contracts\Translation\TranslatorTrait$trans
+	 *
+	 * @param string $message
+	 * @param array $choice
+	 * @param array $parameters
+	 * @return string
+	 */
+	protected static function doChoice($message, array $choice, array $parameters = []) {
+		$message = ( string ) $message;
+
+		$number = ( float ) current ( $choice );
+		$parameters = $parameters + $choice;
+		$parts = [ ];
+		if (preg_match ( '/^\|++$/', $message )) {
+			$parts = explode ( '|', $message );
+		} elseif (preg_match_all ( '/(?:\|\||[^\|])++/', $message, $matches )) {
+			$parts = $matches [0];
+		}
+		$intervalRegexp = <<<'EOF'
+/^(?P<interval>
+    ({\s*
+        (\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)
+    \s*})
+        |
+    (?P<left_delimiter>[\[\]])
+        \s*
+        (?P<left>-Inf|\-?\d+(\.\d+)?)
+        \s*,\s*
+        (?P<right>\+?Inf|\-?\d+(\.\d+)?)
+        \s*
+    (?P<right_delimiter>[\[\]])
+)\s*(?P<message>.*?)$/xs
+EOF;
+		foreach ( $parts as $part ) {
+			$part = trim ( str_replace ( '||', '|', $part ) );
+			if (preg_match ( $intervalRegexp, $part, $matches )) {
+				if ($matches [2]) {
+					foreach ( explode ( ',', $matches [3] ) as $n ) {
+						if ($number == $n) {
+							return self::replaceParams ( $matches ['message'], $parameters );
+						}
+					}
+				} else {
+					$leftNumber = '-Inf' === $matches ['left'] ? - INF : ( float ) $matches ['left'];
+					$rightNumber = \is_numeric ( $matches ['right'] ) ? ( float ) $matches ['right'] : INF;
+					if (('[' === $matches ['left_delimiter'] ? $number >= $leftNumber : $number > $leftNumber) && (']' === $matches ['right_delimiter'] ? $number <= $rightNumber : $number < $rightNumber)) {
+						return self::replaceParams ( $matches ['message'], $parameters );
+					}
+				}
+			} else {
+				return self::replaceParams ( $message, $parameters );
+			}
+		}
+	}
+
 	protected static function replaceParams($trans, array $parameters = array()) {
 		foreach ( $parameters as $k => $v ) {
 			$trans = str_replace ( '%' . $k . '%', $v, $trans );
@@ -137,8 +193,24 @@ class TranslatorManager {
 	 * @return string
 	 */
 	public static function trans($id, array $parameters = array(), $domain = null, $locale = null) {
-		return self::transCallable ( function ($catalog, $parameters) {
-			return self::replaceParams ( $catalog, $parameters );
+		return self::transCallable ( function ($trans, $parameters) {
+			return self::replaceParams ( $trans, $parameters );
+		}, $id, $parameters, $domain, $locale );
+	}
+
+	/**
+	 * Returns a translation with choices corresponding to an id, using eventually some parameters
+	 *
+	 * @param string $id
+	 * @param array $choice
+	 * @param array $parameters
+	 * @param string $domain
+	 * @param string $locale
+	 * @return string
+	 */
+	public static function transChoice($id, array $choice, array $parameters = array(), $domain = null, $locale = null) {
+		return self::transCallable ( function ($message, $parameters) use ($choice) {
+			return self::doChoice ( $message, $choice, $parameters );
 		}, $id, $parameters, $domain, $locale );
 	}
 
@@ -192,6 +264,13 @@ class TranslatorManager {
 	 */
 	public static function clearCache() {
 		self::$loader->clearCache ( '*' );
+	}
+
+	/**
+	 * Clears the $locale translations cache
+	 */
+	public static function clearLocaleCache($locale) {
+		self::$loader->clearCache ( $locale );
 	}
 
 	/**
@@ -293,5 +372,16 @@ class TranslatorManager {
 			return false;
 		}
 		throw new CacheException ( 'TranslatorManager is not started!' );
+	}
+
+	/**
+	 * Check if the cache exists for a $domain in $locale
+	 *
+	 * @param string $locale
+	 * @param string $domain
+	 * @return boolean
+	 */
+	public static function cacheExist($locale, $domain = '*') {
+		return self::$loader->cacheExists ( $locale, $domain );
 	}
 }

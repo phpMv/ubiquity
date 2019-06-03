@@ -66,7 +66,11 @@ class ArrayLoader implements LoaderInterface {
 	}
 
 	public function clearCache($locale = null, $domain = null) {
-		CacheManager::$cache->clearCache ( $this->getRootKey ( $locale, $domain ) );
+		if (isset ( $locale )) {
+			CacheManager::$cache->remove ( $this->getRootKey ( $locale, $domain ) );
+		} else {
+			CacheManager::$cache->clearCache ( $this->getRootKey ( $locale, $domain ) );
+		}
 	}
 
 	protected function loadFile($filename) {
@@ -145,5 +149,10 @@ class ArrayLoader implements LoaderInterface {
 			}
 		}
 		return $domains;
+	}
+
+	public function cacheExists($locale, $domain = '*') {
+		$key = $this->getRootKey ( $locale, $domain );
+		return CacheManager::$cache->exists ( $key );
 	}
 }

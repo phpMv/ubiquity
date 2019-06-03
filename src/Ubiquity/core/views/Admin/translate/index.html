@@ -1,11 +1,12 @@
 {{ q["header"] | raw }}
 
-<div style="padding: 10px 0px;" id="messages">
 {% if q["msgGlobal"] is defined %}
+<div style="padding: 10px 0px;" id="messages">
 	{{ q["msgGlobal"] | raw }}
+</div>
 {% endif %}
 {{ message | raw }}
-</div>
+
 <div id="translations-refresh">
 {{ q["frmLocale"] | raw }}
 <div class="ui divider"></div>
