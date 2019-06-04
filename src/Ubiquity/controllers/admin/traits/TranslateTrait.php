@@ -433,16 +433,28 @@ trait TranslateTrait {
 	}
 
 	public function frmImportMessages($locale, $domain) {
-		$frm = $this->jquery->semantic ()->htmlForm ( 'frm-import-' . $locale . $domain );
-		$dd = $frm->addDropdown ( 'types', [ 'php' => 'PHP array','json' => 'JSON' ], 'Type of import', 'php' );
-		$dd->asSelect ( 'type' );
-		$frm->addDivider ();
-		$frm->addInput ( 'file', 'Select a file', 'file' );
-		$frm->setLibraryId ( 'frmImport' );
-		$this->jquery->execOn ( "click", "#cancel-import-messages-" . $locale . $domain, '$("#form-' . $locale . $domain . '").html("");' );
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
-		$this->jquery->postFormOnClick ( "#validate-import-messages-" . $locale . $domain, $baseRoute . '/importMessages/' . $locale . '/' . $domain, 'frm-import-' . $locale . $domain, '#domain-' . $locale, [ 'hasLoader' => 'internal' ] );
+		$this->jquery->exec ( '$("#dd-type").dropdown();', true );
+		$this->jquery->execOn ( 'click', '#cancel-import-messages-' . $locale . $domain, '$("#form-' . $locale . $domain . '").html("");' );
+		$this->jquery->postFormOnClick ( '#validate-import-messages-' . $locale . $domain, $baseRoute . '/importTranslationFile/' . $locale . '/' . $domain, 'frm-import-' . $locale . $domain, '#domain-' . $locale, [ 'hasFiles' => true,'hasLoader' => 'internal' ] );
+		$this->jquery->change ( '#file', '$("#lbl-file").html($(this).val() || "No file selected");' );
 		$this->jquery->renderView ( '@framework/Admin/translate/frmImport.html', [ 'locale' => $locale,'domain' => $domain ] );
+	}
+
+	public function importTranslationFile($locale, $domain) {
+		$target_dir = sys_get_temp_dir () . "/";
+		$target_file = $target_dir . basename ( $_FILES ["file"] ["name"] );
+		if (move_uploaded_file ( $_FILES ["file"] ["tmp_name"], $target_file )) {
+			$class = "\\Ubiquity\\translation\\import\\" . $_POST ["type"] . 'Importation';
+			if (class_exists ( $class )) {
+				TranslatorManager::start ( $locale );
+				$import = new $class ( $target_file );
+				$import->import ( $locale, $domain );
+			}
+			$this->loadDomain ( $locale, $domain );
+		} else {
+			echo "Sorry, there was an error uploading your file.";
+		}
 	}
 
 	public function addMultipleMessages($locale, $domain) {
