@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Translate` module in webtools
 - Transactions and nested transactions in `Database` and `DAO` classes see [#42](https://github.com/phpMv/ubiquity/issues/42)
 - `getById` method in `DAO` class (optimization)
+- `Ubiquity-swoole` server (``Ubiquity serve --type=swoole``)
 ### Fixed
 - Fatal error in startup (not 404) fix [#43](https://github.com/phpMv/ubiquity/issues/43)
 - Version 2.1.3 displays the number of version 2.1.2
