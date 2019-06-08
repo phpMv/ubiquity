@@ -30,7 +30,7 @@ class Startup {
 			self::runAction ( $u, $initialize, $finalize );
 		} else {
 			self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-			Logger::warn ( "Startup", "The controller `" . $u [0] . "` doesn't exists! <br/>", "forward" );
+			Logger::warn ( 'Startup', 'The controller `' . $u [0] . '` doesn\'t exists! <br/>', '_preRunAction' );
 		}
 	}
 
@@ -82,9 +82,9 @@ class Startup {
 	 */
 	public static function forward($url, $initialize = true, $finalize = true) {
 		$u = self::parseUrl ( $url );
-		if (is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url )) !== false) {
+		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url )) !== false) {
 			if (\is_array ( $ru )) {
-				if (is_callable ( $ru [0] )) {
+				if (\is_callable ( $ru [0] )) {
 					self::runCallable ( $ru );
 				} else {
 					self::_preRunAction ( $ru, $initialize, $finalize );
@@ -155,15 +155,15 @@ class Startup {
 	public static function runCallable(array &$u) {
 		self::$actionParams = [ ];
 		if (\sizeof ( $u ) > 1) {
-			self::$actionParams = array_slice ( $u, 1 );
+			self::$actionParams = \array_slice ( $u, 1 );
 		}
 		if (isset ( self::$config ['di'] )) {
 			$di = self::$config ['di'];
 			if (\is_array ( $di )) {
-				self::$actionParams = array_merge ( self::$actionParams, $di );
+				self::$actionParams = \array_merge ( self::$actionParams, $di );
 			}
 		}
-		call_user_func_array ( $u [0], self::$actionParams );
+		\call_user_func_array ( $u [0], self::$actionParams );
 	}
 
 	/**
@@ -176,7 +176,7 @@ class Startup {
 		if ($di !== false) {
 			foreach ( $di as $k => $v ) {
 				$setter = 'set' . ucfirst ( $k );
-				if (method_exists ( $controller, $setter )) {
+				if (\method_exists ( $controller, $setter )) {
 					$controller->$setter ( $v ( $controller ) );
 				} else {
 					$controller->$k = $v ( $controller );
@@ -207,22 +207,22 @@ class Startup {
 	}
 
 	private static function callController(Controller $controller, array &$u) {
-		$urlSize = sizeof ( $u );
+		$urlSize = \sizeof ( $u );
 		switch ($urlSize) {
 			case 1 :
 				$controller->index ();
 				break;
 			case 2 :
 				$action = $u [1];
-				// Appel de la méthode (2ème élément du tableau)
+				// action without parameters
 				if (\method_exists ( $controller, $action )) {
 					$controller->$action ();
 				} else {
-					Logger::warn ( "Startup", "The method `{$action}` doesn't exists on controller `" . $u [0] . "`", "callController" );
+					Logger::warn ( "Startup", "The method `{$action}` doesn't exists on controller `{$u [0]}`", "callController" );
 				}
 				break;
 			default :
-				// Appel de la méthode en lui passant en paramètre le reste du tableau
+				// action with parameters
 				\call_user_func_array ( array ($controller,$u [1] ), self::$actionParams );
 				break;
 		}
@@ -306,6 +306,6 @@ class Startup {
 	 * @return string
 	 */
 	public static function getApplicationName() {
-		return basename ( \dirname ( \ROOT ) );
+		return \basename ( \dirname ( \ROOT ) );
 	}
 }
