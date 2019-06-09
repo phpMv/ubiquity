@@ -24,7 +24,7 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 Read [Contributing to Ubiquity documentation](https://micro-framework.readthedocs.io/en/latest/contributing/doc.html)
 
 ### Coding of demo applications
-//TODO
+See [Ubiquity demos](https://github.com/phpMv/ubiquity-demos)
 ### Writing a patch that fixes a bug
 - Open a new GitHub [pull request](https://github.com/phpMv/ubiquity/blob/master/CONTRIBUTING.md#pull-requests) with the patch
 - Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable
