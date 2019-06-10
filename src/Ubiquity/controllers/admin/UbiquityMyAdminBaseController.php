@@ -382,7 +382,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "translate" );
 		$loc = URequest::getDefaultLanguage ();
-		$this->showSimpleMessage ( "This part is under development, and will be available in the next version.", "info", "Translate", "info circle", null, "msgGlobal" );
+		$this->showSimpleMessage ( "This part is very recent, do not hesitate to submit your feedback in case of problems.", "info", "Translate", "info circle", null, "msgGlobal" );
 		$this->jquery->execAtLast ( "\$.create_UUID=function(){
 				var dt = new Date().getTime();
 				var uuid = 'xxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
