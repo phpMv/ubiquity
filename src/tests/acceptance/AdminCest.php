@@ -176,8 +176,6 @@ class AdminCest extends BaseAcceptance {
 		$I->waitForText ( 'Back to domains' );
 		$I->fillField ( '#dtDomain-tuTU-messages input:nth-of-type(1)', 'bt.okay' );
 		$I->waitForText ( 'Save' );
-		$I->fillField ( '#dtDomain-tuTU-messages input:nth-of-type(2)', 'bt.cancel' );
-		$I->waitForText ( '+1' );
 
 		$this->waitAndclick ( $I, '#button-bt-save' );
 		$I->waitForText ( 'Modifications saved for domain messages of locale tu_TU.' );
