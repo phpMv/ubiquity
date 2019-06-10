@@ -178,5 +178,28 @@ class AdminCest extends BaseAcceptance {
 		$I->fillField ( '#dtDomain-tuTU-messages textarea:nth-child(1)', 'Okay' );
 		$this->waitAndclick ( $I, '#button-bt-save' );
 		$I->waitForText ( 'Modifications saved for domain messages of locale tu_TU.' );
+
+		$I->fillField ( "#frmLocale [name='localeName']", 'ta_TA' );
+		$this->waitAndclick ( $I, "#action-field-localeName", "body" );
+		$I->waitForText ( 'ta_TA', self::TIMEOUT, '#menulocales' );
+		$I->fillField ( "#name-taTA", 'messages' );
+		$this->waitAndclick ( $I, "#action-field-name-taTA", "body" );
+		$I->waitForText ( 'messages', self::TIMEOUT, '#dtDomain-taTA-messages' );
+		$this->waitAndclick ( $I, "button._edit.ta_TA[data-ajax='messages']", 'body' );
+		$I->waitForText ( 'Back to domains' );
+		$this->waitAndclick ( $I, "._ddAddMessages" );
+		$this->waitAndclick ( $I, "._addMessages" );
+		$I->waitForText ( "key-value separator" );
+		$I->fillField ( "#form-ta_TAmessages textarea", "a=one A\nb=one B\nc=one C" );
+		$this->waitAndclick ( $I, "#validate-multiple-messages-ta_TAmessages" );
+		$I->waitForText ( "+3" );
+		$I->waitForText ( "one A" );
+		$I->waitForText ( "one B" );
+		$I->waitForText ( "one C" );
+
+		$this->waitAndclick ( $I, "#dd-locales-taTA" );
+		$this->waitAndclick ( $I, ".item[data-value='tu_TU']" );
+		$this->waitAndclick ( $I, "#compare-to-ta_TA" );
+		$I->waitForText ( "bt.okay" );
 	}
 }
