@@ -206,7 +206,7 @@ class AdminCest extends BaseAcceptance {
 		$this->waitAndclick ( $I, "#bt-load-translations-cache" );
 		$I->waitForText ( "Cache loaded for locales" );
 
-		$this->waitAndclick ( $I, "#bt-delete-translations-cache-taTA" );
+		$this->waitAndclick ( $I, "#bt-delete-translations-cache-en" );
 		$I->waitForText ( "Cache deleted for locale" );
 
 		$this->waitAndclick ( $I, "#bt-delete-translations-cache" );
