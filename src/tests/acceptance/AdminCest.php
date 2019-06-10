@@ -169,12 +169,12 @@ class AdminCest extends BaseAcceptance {
 		$I->fillField ( "#frmLocale [name='localeName']", 'tu_TU' );
 		$this->waitAndclick ( $I, "#action-field-localeName", "body" );
 		$I->waitForText ( 'tu_TU', self::TIMEOUT, '#menulocales' );
-		$I->fillField ( "#name-enEN", 'messages' );
-		$this->waitAndclick ( $I, "#action-field-name-enEN", "body" );
-		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-enEN' );
-		$this->waitAndclick ( $I, "button._edit.enEN[data-ajax='messages']", 'body' );
-		$I->fillField ( '#dt-enEN input:nth-child(1)', 'bt.okay' );
-		$I->fillField ( '#dt-enEN textarea:nth-child(1)', 'Okay' );
+		$I->fillField ( "#name-tuTU", 'messages' );
+		$this->waitAndclick ( $I, "#action-field-name-tuTU", "body" );
+		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-tuTU' );
+		$this->waitAndclick ( $I, "button._edit.tuTU[data-ajax='messages']", 'body' );
+		$I->fillField ( '#dt-tuTU input:nth-child(1)', 'bt.okay' );
+		$I->fillField ( '#dt-tuTU textarea:nth-child(1)', 'Okay' );
 		$this->waitAndclick ( $I, '#button-bt-save' );
 	}
 }
