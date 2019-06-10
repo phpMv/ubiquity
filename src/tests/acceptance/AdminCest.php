@@ -184,7 +184,7 @@ class AdminCest extends BaseAcceptance {
 		$I->waitForText ( 'ta_TA', self::TIMEOUT, '#menulocales' );
 		$I->fillField ( "#name-taTA", 'messages' );
 		$this->waitAndclick ( $I, "#action-field-name-taTA", "body" );
-		$I->waitForText ( 'messages', self::TIMEOUT, '#dtDomain-taTA-messages' );
+		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-taTA' );
 		$this->waitAndclick ( $I, "button._edit.ta_TA[data-ajax='messages']", 'body' );
 		$I->waitForText ( 'Back to domains' );
 		$this->waitAndclick ( $I, "._ddAddMessages" );
