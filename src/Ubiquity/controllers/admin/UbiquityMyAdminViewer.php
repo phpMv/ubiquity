@@ -48,6 +48,7 @@ use Ubiquity\utils\http\USession;
  *
  */
 class UbiquityMyAdminViewer {
+
 	/**
 	 *
 	 * @var \Ajax\php\ubiquity\JsUtils
@@ -77,8 +78,7 @@ class UbiquityMyAdminViewer {
 				"seo" => [ "Seo","google","Search Engine Optimization" ],
 				"logs" => [ "Logs","bug","Log files" ],
 				"translate" => [ "Translate","language","Translation module" ],
-				"themes" => ["Themes","paint brush","Themes module"]
-		];
+				"themes" => [ "Themes","paint brush","Themes module" ] ];
 	}
 
 	public function getRoutesDataTable($routes, $dtName = "dtRoutes") {
@@ -784,7 +784,7 @@ class UbiquityMyAdminViewer {
 			$item->setProperty ( "data-ajax", $e [0] );
 			return $item;
 		} );
-		$items->getOnClick ( $this->controller->_getFiles ()->getAdminBaseRoute (), "#main-content", [ "attr" => "data-ajax","historize" => true ] );
+		$items->getOnClick ( $this->controller->_getFiles ()->getAdminBaseRoute (), "#main-content", [ "attr" => "data-ajax","historize" => true,"jsCallback" => '$("#mainMenu [href]").removeClass("active");$("#mainMenu [data-ajax=\'"+$(self).attr("data-ajax")+"\']").addClass("active");' ] );
 		return $items->addClass ( "divided relaxed link" );
 	}
 

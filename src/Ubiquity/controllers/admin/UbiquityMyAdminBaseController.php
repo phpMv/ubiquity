@@ -125,6 +125,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			$mn->setActiveItem ( 0 );
 			$mn->setSecondary ();
 			$mn->getOnClick ( "Admin", "#main-content", [ "attr" => "data-ajax","historize" => true ] );
+			$this->jquery->activateLink ( "#mainMenu" );
 			$this->jquery->compile ( $this->view );
 			$this->loadView ( $this->_getFiles ()->getViewHeader () );
 		}
