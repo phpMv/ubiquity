@@ -227,7 +227,6 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 			echo "<div id='models-main'>";
 			$this->_loadModelStep ();
 			echo "</div>";
-			echo $this->jquery->compile ( $this->view );
 		}
 	}
 

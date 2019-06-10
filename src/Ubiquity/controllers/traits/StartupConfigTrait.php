@@ -83,6 +83,11 @@ trait StartupConfigTrait {
 		return self::$config;
 	}
 
+	public static function reloadServices() {
+		$config = self::$config; // used in services.php
+		include \ROOT . 'config/services.php';
+	}
+
 	public static function saveConfig($content) {
 		$appDir = \dirname ( \ROOT );
 		$filename = $appDir . "/app/config/config.php";

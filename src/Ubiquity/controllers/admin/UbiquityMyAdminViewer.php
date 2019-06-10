@@ -562,7 +562,7 @@ class UbiquityMyAdminViewer {
 		return $value;
 	}
 
-	public function getConfigDataForm($config) {
+	public function getConfigDataForm($config, $origin = "all") {
 		$de = $this->jquery->semantic ()->dataElement ( "frmDeConfig", $config );
 		$keys = array_keys ( $config );
 
@@ -737,15 +737,17 @@ class UbiquityMyAdminViewer {
 		$this->jquery->exec ( $js, true );
 		$form = $de->getForm ();
 		$form->setValidationParams ( [ "inline" => true,"on" => "blur" ] );
-
-		$de->addSubmitInToolbar ( "save-config-btn", "Save configuration", "basic inverted", $this->controller->_getFiles ()->getAdminBaseRoute () . "/submitConfig/all", "#action-response" );
+		$responseElement = "#action-response";
+		if ($origin == "check") {
+			$responseElement = "#main-content";
+		}
+		$de->addSubmitInToolbar ( "save-config-btn", "Save configuration", "basic inverted", $this->controller->_getFiles ()->getAdminBaseRoute () . "/submitConfig/" . $origin, $responseElement );
 		$de->addButtonInToolbar ( "Cancel edition" )->onClick ( '$("#config-div").show();$("#action-response").html("");' );
 		$de->getToolbar ()->setSecondary ()->wrap ( '<div class="ui inverted top attached segment">', '</div>' );
 		$de->setAttached ();
 
 		$form->addExtraFieldRules ( "siteUrl", [ "empty","url" ] );
 		$form->addExtraFieldRule ( "siteUrl", "regExp", "siteUrl must ends with /", "/^.*?\/$/" );
-		$form->addExtraFieldRule ( "database-dbName", "empty" );
 		$form->addExtraFieldRule ( "database-options", "regExp", "Expression must be an array", "/^array\(.*?\)$/" );
 		$form->addExtraFieldRule ( "database-options", "checkArray", "Expression is not a valid php array" );
 		$form->addExtraFieldRule ( "database-cache", "checkClass[Ubiquity\\cache\\database\\DbCache]", "Class {value} does not exists or is not a subclass of {ruleValue}" );
