@@ -333,9 +333,12 @@ EOF;
 	 */
 	public static function initialize($rootDir = null) {
 		$locale = URequest::getDefaultLanguage ();
-		$locale = str_replace ( '-', '_', $locale );
-		self::createLocale ( $locale, $rootDir );
+		self::createLocale ( self::correctLocale ( $locale ), $rootDir );
 		return self::getLocales ();
+	}
+
+	public static function correctLocale($language) {
+		return str_replace ( [ '-','.' ], '_', $language );
 	}
 
 	/**

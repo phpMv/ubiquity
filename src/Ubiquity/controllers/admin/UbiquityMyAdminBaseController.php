@@ -57,6 +57,7 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\yuml\ClassToYuml;
 use Ubiquity\utils\yuml\ClassesToYuml;
+use Ubiquity\translation\TranslatorManager;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
@@ -381,7 +382,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	public function translate() {
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "translate" );
-		$loc = URequest::getDefaultLanguage ();
+		$loc = TranslatorManager::fixLocale ( URequest::getDefaultLanguage () );
 		$this->showSimpleMessage ( "This part is very recent, do not hesitate to submit your feedback in case of problems.", "info", "Translate", "info circle", null, "msgGlobal" );
 		$this->jquery->execAtLast ( "\$.create_UUID=function(){
 				var dt = new Date().getTime();
