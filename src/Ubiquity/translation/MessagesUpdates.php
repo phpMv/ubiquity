@@ -148,13 +148,13 @@ class MessagesUpdates {
 	public function __toString() {
 		$res = [ ];
 		if (($nb = sizeof ( $this->toAdd )) > 0) {
-			$res [] = $nb . ' insert(s) ';
+			$res [] = '+' . $nb;
 		}
 		if (($nb = sizeof ( $this->toUpdate )) > 0) {
-			$res [] = $nb . ' update(s) ';
+			$res [] = '±' . $nb;
 		}
 		if (($nb = sizeof ( $this->toDelete )) > 0) {
-			$res [] = $nb . ' deletion(s) ';
+			$res [] = '-' . $nb;
 		}
 		return implode ( ', ', $res );
 	}

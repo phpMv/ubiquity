@@ -20,6 +20,7 @@ use Ubiquity\controllers\admin\popo\CacheFile;
 use Ubiquity\cache\CacheManager;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\semantic\html\elements\HtmlList;
+use Ajax\service\JString;
 
 /**
  *
@@ -97,7 +98,7 @@ trait TranslateTrait {
 			return new HtmlLabel ( '', $nb, 'mail' );
 		} );
 		$dt->setIdentifierFunction ( 'getDomain' );
-		$dt->addEditButton ( true, [ ], function ($bt) use ($locale) {
+		$dt->addEditButton ( false, [ ], function ($bt) use ($locale) {
 			$bt->addClass ( $locale );
 		} );
 		$dt->setActiveRowSelector ();
@@ -362,8 +363,9 @@ trait TranslateTrait {
 		if ($messagesUpdates->hasUpdates ()) {
 			echo $this->displayTranslationUpdates ( $messagesUpdates, $locale, $domain );
 			if ($new) {
+				$dtId = JString::cleanIdentifier ( "dtDomain-" . $locale . "-" . $domain );
 				$this->jquery->exec ( "
-									var selector='#dtDomain-" . $locale . "-" . $domain . " tbody tr';
+									var selector='#" . $dtId . " tbody tr';
 									var clone=\$(selector).last().clone(true);
 									var uuid=\$.create_UUID();\$('[data-new]').removeAttr('data-new');
 									var input=clone.find('input').first();var textarea=clone.find('textarea').first();
