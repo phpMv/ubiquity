@@ -175,7 +175,7 @@ class AdminCest extends BaseAcceptance {
 		$this->waitAndclick ( $I, "button._edit.tu_TU[data-ajax='messages']", 'body' );
 		$I->waitForText ( 'Back to domains' );
 		$I->fillField ( '#dtDomain-tuTU-messages input:nth-of-type(1)', 'bt.okay' );
-		$I->waitForText ( 'Save' );
+		$I->waitForText ( '±1' );
 
 		$this->waitAndclick ( $I, '#button-bt-save' );
 		$I->waitForText ( 'Modifications saved for domain messages of locale tu_TU.' );
@@ -201,6 +201,6 @@ class AdminCest extends BaseAcceptance {
 		$this->waitAndclick ( $I, "#dd-locales-taTA" );
 		$this->waitAndclick ( $I, ".item[data-value='tu_TU']" );
 		$this->waitAndclick ( $I, "#compare-to-ta_TA" );
-		$I->waitForText ( "bt.okay" );
+		// $I->waitForText ( "bt.okay" );
 	}
 }
