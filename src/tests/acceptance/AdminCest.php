@@ -172,9 +172,10 @@ class AdminCest extends BaseAcceptance {
 		$I->fillField ( "#name-tuTU", 'messages' );
 		$this->waitAndclick ( $I, "#action-field-name-tuTU", "body" );
 		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-tuTU' );
-		$this->waitAndclick ( $I, "button._edit.tuTU[data-ajax='messages']", 'body' );
-		$I->fillField ( '#dt-tuTU input:nth-child(1)', 'bt.okay' );
-		$I->fillField ( '#dt-tuTU textarea:nth-child(1)', 'Okay' );
+		$this->waitAndclick ( $I, "button._edit.tu_TU[data-ajax='messages']", 'body' );
+		$I->fillField ( '#dtDomain-tuTU-messages input:nth-child(1)', 'bt.okay' );
+		$I->fillField ( '#dtDomain-tuTU-messages textarea:nth-child(1)', 'Okay' );
 		$this->waitAndclick ( $I, '#button-bt-save' );
+		$I->waitForText ( 'Modifications saved for domain messages of locale tu_TU.' );
 	}
 }

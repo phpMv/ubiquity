@@ -416,6 +416,7 @@ trait TranslateTrait {
 			} catch ( \Exception $e ) {
 			}
 		}
+		$this->jquery->html ( '#messages', $this->showSimpleMessage ( "Modifications saved for domain {$domain} of locale {$locale}.", 'success', 'Saving modifications', 'save' ), true );
 		$this->loadDomain ( $locale, $domain );
 	}
 
