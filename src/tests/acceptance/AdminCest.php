@@ -174,9 +174,9 @@ class AdminCest extends BaseAcceptance {
 		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-tuTU' );
 		$this->waitAndclick ( $I, "button._edit.tu_TU[data-ajax='messages']", 'body' );
 		$I->waitForText ( 'Back to domains' );
-		$I->fillField ( '#dtDomain-tuTU-messages input:nth-child(1)', 'bt.okay' );
+		$I->fillField ( '#dtDomain-tuTU-messages input:nth-of-type(1)', 'bt.okay' );
 		$I->waitForText ( 'Save' );
-		$I->fillField ( '#dtDomain-tuTU-messages input:nth-child(2)', 'bt.cancel' );
+		$I->fillField ( '#dtDomain-tuTU-messages input:nth-of-type(2)', 'bt.cancel' );
 		$I->waitForText ( '+1' );
 
 		$this->waitAndclick ( $I, '#button-bt-save' );
