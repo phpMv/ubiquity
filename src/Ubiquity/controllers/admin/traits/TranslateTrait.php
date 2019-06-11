@@ -158,15 +158,20 @@ trait TranslateTrait {
 		}
 
 		$dt->addDeleteButton ();
+		$dt->insertDefaultButtonIn ( 2, 'list', 'basic _multi' );
 		$dt->setEdition ( true );
 		$dt->setUrls ( [ 'refresh' => $baseRoute . '/refreshDomain/' . $locale . '/' . $domain ] );
 		$dt->addClass ( 'selectable' );
 		$dt->setLibraryId ( 'dtDomain' );
+		$dt->onPreCompile ( function () use (&$dt) {
+			$dt->getHtmlComponent ()->colRightFromRight ( 0 );
+		} );
 		$lbl = new HtmlLabel ( "search-query-" . $locale . $domain, "<span id='search-query-content-" . $locale . $domain . "'></span>" );
 		$icon = $lbl->addIcon ( "delete", false );
 		$lbl->wrap ( "<span>", "</span>" );
 		$lbl->setProperty ( "style", "display: none;" );
 		$icon->getOnClick ( $baseRoute . '/refreshDomainAll/' . $locale . '/' . $domain, '#' . $dtId, [ "jqueryDone" => "replaceWith","hasLoader" => "internal" ] );
+		$this->jquery->click ( '._multi', '$(this).closest("tr").find("textarea").html("{0} zero|{1} one |]1,Inf[ %count%").trigger("change");' );
 		$this->jquery->change ( '#' . $dtId . ' tbody textarea,#' . $dtId . ' input', '$("#domain-name-' . $locale . $domain . '").html($("#domain-name-' . $locale . $domain . '").attr("data-value")+"*");' );
 		$this->jquery->postOn ( 'change', '#' . $dtId . ' tbody textarea,#' . $dtId . ' tbody input', $baseRoute . '/updateTranslation/' . $locale . '/' . $domain, '{n:$(this).closest("tr").find("input").first().attr("data-new") || 0,v:encodeURIComponent($(this).closest("tr").find("textarea").first().val()),k:$(this).closest("tr").find("input").first().val()}', '#update-' . $locale . $domain, [
 																																																																																																				'hasLoader' => false,
@@ -407,6 +412,7 @@ trait TranslateTrait {
 		$messages = $msgDomain->getMessages ();
 		$messagesUpdates = new MessagesUpdates ( $locale, $domain );
 		if ($messagesUpdates->exists ()) {
+			TranslatorManager::clearLocaleCache ( $locale );
 			$messagesUpdates->load ();
 			$messages = $messagesUpdates->mergeMessages ( $messages, true );
 			$msgDomain->setMessages ( $messages );
