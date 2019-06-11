@@ -11,7 +11,7 @@ use Ubiquity\utils\http\URequest;
 class TestTranslations extends ControllerBase {
 
 	public function index() {
-		TranslatorManager::start ();
+		TranslatorManager::start ( 'en_GB' );
 		$this->_index ( TranslatorManager::fixLocale ( URequest::getDefaultLanguage () ) );
 	}
 
@@ -19,7 +19,7 @@ class TestTranslations extends ControllerBase {
 		$this->loadView ( "TestTranslations/index.html", compact ( 'nb' ) );
 	}
 
-	public function changeLocale($locale = 'en_EN', $nb = 0) {
+	public function changeLocale($locale = 'en_GB', $nb = 0) {
 		TranslatorManager::start ( $locale );
 		$this->_index ( $nb );
 	}
