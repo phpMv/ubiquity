@@ -218,7 +218,7 @@ EOF;
 	 * Returns the translations catalog of the locale
 	 *
 	 * @param string $locale
-	 * @return array
+	 * @return array|boolean
 	 */
 	public static function getCatalogue(&$locale = null) {
 		if (null === $locale) {
@@ -229,7 +229,7 @@ EOF;
 		if (! isset ( self::$catalogues [$locale] )) {
 			self::loadCatalogue ( $locale );
 		}
-		return self::$catalogues [$locale];
+		return self::$catalogues [$locale] ?? false;
 	}
 
 	/**
@@ -371,7 +371,7 @@ EOF;
 					$dom->setMessages ( $defaultValues );
 				}
 				$dom->store ();
-				return $domain;
+				return $dom;
 			}
 			return false;
 		}

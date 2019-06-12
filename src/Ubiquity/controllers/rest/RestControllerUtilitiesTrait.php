@@ -132,9 +132,9 @@ trait RestControllerUtilitiesTrait {
 	 * To eventually be redefined in derived classes
 	 *
 	 * @param object $instance the instance to update
-	 * @param array|null $values
+	 * @param array $values
 	 */
-	protected function _setValuesToObject($instance, $values = null) {
+	protected function _setValuesToObject($instance, $values = []) {
 		if (URequest::isJSON ()) {
 			if (is_string ( $values )) {
 				$values = \json_decode ( $values, true );

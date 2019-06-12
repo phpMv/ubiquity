@@ -85,7 +85,6 @@ class Psr7 {
 				$query = array_replace ( $qs, $query );
 				$queryString = http_build_query ( $query, '', '&' );
 			} else {
-				$query = $qs;
 				$queryString = $uQuery;
 			}
 		} elseif ($query) {

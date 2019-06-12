@@ -36,7 +36,7 @@ class MessagesUpdates {
 	}
 
 	public function load() {
-		$key = self::getKey ();
+		$key = $this->getKey ();
 		if (CacheManager::$cache->exists ( $this->key . $key )) {
 			$array = CacheManager::$cache->fetch ( $this->key . $key );
 		}
@@ -47,7 +47,7 @@ class MessagesUpdates {
 	}
 
 	public function exists() {
-		$key = self::getKey ();
+		$key = $this->getKey ();
 		return CacheManager::$cache->exists ( $this->key . $key );
 	}
 
@@ -128,7 +128,7 @@ class MessagesUpdates {
 
 	public function save() {
 		if ($this->dirty) {
-			$key = self::getKey ();
+			$key = $this->getKey ();
 			CacheManager::$cache->store ( $this->key . $key, 'return array' . UArray::asPhpArray ( [ 'newKeys' => $this->newKeys,'toAdd' => $this->toAdd,'toUpdate' => $this->toUpdate,'toDelete' => $this->toDelete ] ) . ';' );
 			$this->dirty = false;
 			return true;
@@ -137,7 +137,7 @@ class MessagesUpdates {
 	}
 
 	public function delete() {
-		$key = self::getKey ();
+		$key = $this->getKey ();
 		CacheManager::$cache->remove ( $this->key . $key );
 	}
 
