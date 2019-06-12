@@ -1,6 +1,6 @@
 <?php
 class BaseAcceptance {
-	const TIMEOUT = 30;
+	const TIMEOUT = 50;
 
 	protected function waitAndclick(AcceptanceTester $I, $link, $context = null) {
 		$element = $link;
