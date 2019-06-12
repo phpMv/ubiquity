@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 ### Added
 - `Translate` module in webtools
+- `transChoice` method for translations with pluralization (`tc` in twig templates)
 - Transactions and nested transactions in `Database` and `DAO` classes see [#42](https://github.com/phpMv/ubiquity/issues/42)
 - `getById` method in `DAO` class (optimization)
 - `Ubiquity-swoole` server (``Ubiquity serve --type=swoole``)
