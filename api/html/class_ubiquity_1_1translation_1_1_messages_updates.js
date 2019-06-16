@@ -1,0 +1,27 @@
+var class_ubiquity_1_1translation_1_1_messages_updates =
+[
+    [ "__construct", "class_ubiquity_1_1translation_1_1_messages_updates.html#a543370e859b80c9f74bebd485b6bb428", null ],
+    [ "__toString", "class_ubiquity_1_1translation_1_1_messages_updates.html#a7516ca30af0db3cdbf9a7739b48ce91d", null ],
+    [ "addToDelete", "class_ubiquity_1_1translation_1_1_messages_updates.html#ade58ee67da4c0f456be2c1f8bcb2d74b", null ],
+    [ "addValue", "class_ubiquity_1_1translation_1_1_messages_updates.html#a42dafad05815fa8431db20fa32248891", null ],
+    [ "delete", "class_ubiquity_1_1translation_1_1_messages_updates.html#a13bdffdd926f26b825ea57066334ff01", null ],
+    [ "exists", "class_ubiquity_1_1translation_1_1_messages_updates.html#ac2f864b72dc2f778e68ad96364c48c5e", null ],
+    [ "getKey", "class_ubiquity_1_1translation_1_1_messages_updates.html#ad40c766ec8aced9770fe6ae269a1e781", null ],
+    [ "hasUpdates", "class_ubiquity_1_1translation_1_1_messages_updates.html#ae2d4d75ba4ea42ed00bb37826ebf4223", null ],
+    [ "isDirty", "class_ubiquity_1_1translation_1_1_messages_updates.html#a5f16771bbc33743d0eba257646ce88c4", null ],
+    [ "load", "class_ubiquity_1_1translation_1_1_messages_updates.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4", null ],
+    [ "mergeMessages", "class_ubiquity_1_1translation_1_1_messages_updates.html#a063b2e9ce7c8bde1adb03c24e0e2b94d", null ],
+    [ "removeAddValue", "class_ubiquity_1_1translation_1_1_messages_updates.html#a4139eb3b78c65482e994ec52bfc994ae", null ],
+    [ "removeNewKey", "class_ubiquity_1_1translation_1_1_messages_updates.html#a5ef516d373e07013f718d98446dca8e2", null ],
+    [ "replaceKey", "class_ubiquity_1_1translation_1_1_messages_updates.html#a84631dc9b93f1545187a00e6cba0c972", null ],
+    [ "save", "class_ubiquity_1_1translation_1_1_messages_updates.html#afc8a3c62679cf00ade9f15fb2a6d6132", null ],
+    [ "updateValue", "class_ubiquity_1_1translation_1_1_messages_updates.html#ac32f097f847d66a79703802f4ed2088d", null ],
+    [ "$dirty", "class_ubiquity_1_1translation_1_1_messages_updates.html#a48c01c8cae9e7c683f03899c087d010c", null ],
+    [ "$domain", "class_ubiquity_1_1translation_1_1_messages_updates.html#aef9cf198312d2f89238a8e8e2f0f67f3", null ],
+    [ "$key", "class_ubiquity_1_1translation_1_1_messages_updates.html#aa60b0284e0dfa2463495481cf11e3cf4", null ],
+    [ "$locale", "class_ubiquity_1_1translation_1_1_messages_updates.html#a3b392f5a691b803e728f1fb42b35f6e1", null ],
+    [ "$newKeys", "class_ubiquity_1_1translation_1_1_messages_updates.html#acc0f1ac770816d35eca226ff40ddf5b8", null ],
+    [ "$toAdd", "class_ubiquity_1_1translation_1_1_messages_updates.html#afb67ccb71ed1f2c1bc939bbc985c6ef7", null ],
+    [ "$toDelete", "class_ubiquity_1_1translation_1_1_messages_updates.html#a87466211765f061560932edfa8817e11", null ],
+    [ "$toUpdate", "class_ubiquity_1_1translation_1_1_messages_updates.html#a50ae06acd05d6330127ef3582f5d6c7b", null ]
+];

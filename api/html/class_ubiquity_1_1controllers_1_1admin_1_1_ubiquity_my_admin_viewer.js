@@ -14,7 +14,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer =
     [ "getCacheDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a67c6c960449e393f8d9c9227c0905c8f", null ],
     [ "getCaptionToggleButton", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a5ad398ec6cd6f85a1747c0e2ddec1897", null ],
     [ "getConfigDataElement", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a685714c24ec41aea540d1236db0bacf2", null ],
-    [ "getConfigDataForm", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a9e05d67dd7f33db8215cda3a4adac122", null ],
+    [ "getConfigDataForm", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ab795b6ec01a6358f83ff29a6912b13d2", null ],
     [ "getControllersDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a3f7d75e45a82cd789e853924841de262", null ],
     [ "getFilterControllers", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#aad9b1660664fb8ecf9cf004e8b2f87fa", null ],
     [ "getGitCommitsDataTable", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#a8026c2a05da757ef82b636ad90b0db6f", null ],

@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.2</span>
+   &#160;<span id="projectnumber">2.1.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -88,6 +88,9 @@ $(document).ready(function(){initNavTree('interface_ubiquity_1_1translation_1_1l
 <div class="title">LoaderInterface Interface Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Translations loader interface.  
+ <a href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html#details">More...</a></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for LoaderInterface:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -96,7 +99,7 @@ $(document).ready(function(){initNavTree('interface_ubiquity_1_1translation_1_1l
  <div class="center">
   <img src="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.png" usemap="#LoaderInterface_map" alt=""/>
   <map id="LoaderInterface_map" name="LoaderInterface_map">
-<area href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html" title="ArrayLoader for TranslatorManager Ubiquity$ArrayLoader This class is part of Ubiquity. " alt="ArrayLoader" shape="rect" coords="0,56,102,80"/>
+<area href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html" title="ArrayLoader for TranslatorManager. " alt="ArrayLoader" shape="rect" coords="0,56,102,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -108,11 +111,51 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a496ec08c1227750e6eef85eb6a6e5cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a404d892cd89e7c0b16348161cc4a8ec5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html#a404d892cd89e7c0b16348161cc4a8ec5">clearCache</a> ($locale=null, $domain=null)</td></tr>
 <tr class="separator:a404d892cd89e7c0b16348161cc4a8ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2d115cab307a5fe9756e1663037f009"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html#aa2d115cab307a5fe9756e1663037f009">loadDomain</a> ($locale, $domain)</td></tr>
+<tr class="separator:aa2d115cab307a5fe9756e1663037f009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5974ae89eac0f9381539d58b100557b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html#aa5974ae89eac0f9381539d58b100557b">getDomains</a> ($locale)</td></tr>
+<tr class="separator:aa5974ae89eac0f9381539d58b100557b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba6819284976c66affa26739ff153a12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html#aba6819284976c66affa26739ff153a12">cacheExists</a> ($locale, $domain=' *')</td></tr>
+<tr class="separator:aba6819284976c66affa26739ff153a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_loader_interface_8php_source.html#l00005">5</a> of file <a class="el" href="_loader_interface_8php_source.html">LoaderInterface.php</a>.</p>
+<div class="textblock"><p>Translations loader interface. </p>
+<p><a class="el" href="namespace_ubiquity.html">Ubiquity</a>$LoaderInterface This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a></p>
+<dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_loader_interface_8php_source.html#l00014">14</a> of file <a class="el" href="_loader_interface_8php_source.html">LoaderInterface.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aba6819284976c66affa26739ff153a12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba6819284976c66affa26739ff153a12">&#9670;&nbsp;</a></span>cacheExists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cacheExists </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$domain</em> = <code>'&#160;*'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#aba6819284976c66affa26739ff153a12">ArrayLoader</a>.</p>
+
+</div>
+</div>
 <a id="a404d892cd89e7c0b16348161cc4a8ec5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a404d892cd89e7c0b16348161cc4a8ec5">&#9670;&nbsp;</a></span>clearCache()</h2>
 
@@ -143,6 +186,26 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aa5974ae89eac0f9381539d58b100557b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5974ae89eac0f9381539d58b100557b">&#9670;&nbsp;</a></span>getDomains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getDomains </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#aa5974ae89eac0f9381539d58b100557b">ArrayLoader</a>.</p>
+
+</div>
+</div>
 <a id="a9e76f4e254c0b64d0ca4827e281f25f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9e76f4e254c0b64d0ca4827e281f25f6">&#9670;&nbsp;</a></span>load()</h2>
 
@@ -170,6 +233,36 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implemented in <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#a6b86b51c78571a5fec353c3e9d9aca88">ArrayLoader</a>.</p>
+
+</div>
+</div>
+<a id="aa2d115cab307a5fe9756e1663037f009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2d115cab307a5fe9756e1663037f009">&#9670;&nbsp;</a></span>loadDomain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">loadDomain </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$domain</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#aa2d115cab307a5fe9756e1663037f009">ArrayLoader</a>.</p>
 
 </div>
 </div>
@@ -219,7 +312,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1translation.html">translation</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1translation_1_1loader.html">loader</a></li><li class="navelem"><a class="el" href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html">LoaderInterface</a></li>
-    <li class="footer"><small>Generated on Sat Apr 27 2019 02:13:07 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Jun 13 2019 11:13:59 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

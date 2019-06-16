@@ -17,6 +17,8 @@ var searchData=
   ['transformersmanager_2ephp',['TransformersManager.php',['../_transformers_manager_8php.html',1,'']]],
   ['transformerviewinterface_2ephp',['TransformerViewInterface.php',['../_transformer_view_interface_8php.html',1,'']]],
   ['transientannotation_2ephp',['TransientAnnotation.php',['../_transient_annotation_8php.html',1,'']]],
+  ['translatemessage_2ephp',['TranslateMessage.php',['../_translate_message_8php.html',1,'']]],
+  ['translatetrait_2ephp',['TranslateTrait.php',['../_translate_trait_8php.html',1,'']]],
   ['translator_2ephp',['Translator.php',['../_translator_8php.html',1,'']]],
   ['translatormanager_2ephp',['TranslatorManager.php',['../_translator_manager_8php.html',1,'']]],
   ['twig_2ephp',['Twig.php',['../_twig_8php.html',1,'']]],

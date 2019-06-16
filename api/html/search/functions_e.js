@@ -1,6 +1,7 @@
 var searchData=
 [
   ['needskeyinconfigarray',['needsKeyInConfigArray',['../class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#ade3d149ffd74f83c46308a62e85999db',1,'Ubiquity::controllers::traits::StartupConfigTrait']]],
+  ['nestable',['nestable',['../class_ubiquity_1_1db_1_1traits_1_1_database_transactions_trait.html#a8079e2b820824635195923cf46bc571e',1,'Ubiquity::db::traits::DatabaseTransactionsTrait']]],
   ['newapitokens',['newApiTokens',['../class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html#a26550c4f808428df88786a3d4859d6c0',1,'Ubiquity::controllers::rest::RestServer']]],
   ['newmodel',['newModel',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html#aecdbe3615973e0882335d16af111760c',1,'Ubiquity\controllers\admin\traits\ModelsTrait\newModel()'],['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#aecdbe3615973e0882335d16af111760c',1,'Ubiquity\controllers\crud\CRUDController\newModel()']]],
   ['next',['next',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#acea62048bfee7b3cd80ed446c86fb78a',1,'Ubiquity::utils::flash::FlashBag']]],

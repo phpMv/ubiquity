@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.2</span>
+   &#160;<span id="projectnumber">2.1.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -91,36 +91,86 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1translation_1_1_tran
 </div><!--header-->
 <div class="contents">
 
-<p>Manages translations.  
+<p>Manage translations.  
  <a href="class_ubiquity_1_1translation_1_1_translator_manager.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a7231c005a80e1c0ffe90d40aec7ea309"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a7231c005a80e1c0ffe90d40aec7ea309">start</a> ($locale=&quot;en_EN&quot;, $fallbackLocale=null, $rootDir=null)</td></tr>
-<tr class="separator:a7231c005a80e1c0ffe90d40aec7ea309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc60ec35a0c97219511f4e93c0ffb24f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#acc60ec35a0c97219511f4e93c0ffb24f">isValidLocale</a> ($locale)</td></tr>
+<tr class="separator:acc60ec35a0c97219511f4e93c0ffb24f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00345bf3c63bf19e6374af7e188704de"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a00345bf3c63bf19e6374af7e188704de">start</a> ($locale='en_EN', $fallbackLocale=null, $rootDir=null)</td></tr>
+<tr class="memdesc:a00345bf3c63bf19e6374af7e188704de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the translator manager.  <a href="#a00345bf3c63bf19e6374af7e188704de">More...</a><br /></td></tr>
+<tr class="separator:a00345bf3c63bf19e6374af7e188704de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a574fbee8eeddfd6d2f7f694177aa684e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a574fbee8eeddfd6d2f7f694177aa684e">setLocale</a> ($locale)</td></tr>
+<tr class="memdesc:a574fbee8eeddfd6d2f7f694177aa684e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the active locale.  <a href="#a574fbee8eeddfd6d2f7f694177aa684e">More...</a><br /></td></tr>
 <tr class="separator:a574fbee8eeddfd6d2f7f694177aa684e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad20791d4614f4be0fd04ebb828387f5b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#ad20791d4614f4be0fd04ebb828387f5b">setRootDir</a> ($rootDir=null)</td></tr>
+<tr class="memdesc:ad20791d4614f4be0fd04ebb828387f5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the complete directory for translations.  <a href="#ad20791d4614f4be0fd04ebb828387f5b">More...</a><br /></td></tr>
 <tr class="separator:ad20791d4614f4be0fd04ebb828387f5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7166a1dbef39ee5a6bcabf6bca93a654"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a7166a1dbef39ee5a6bcabf6bca93a654">getLocale</a> ()</td></tr>
+<tr class="memdesc:a7166a1dbef39ee5a6bcabf6bca93a654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the active locale.  <a href="#a7166a1dbef39ee5a6bcabf6bca93a654">More...</a><br /></td></tr>
 <tr class="separator:a7166a1dbef39ee5a6bcabf6bca93a654"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7244cd5a67f00559a2adecf7752c7069"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a7244cd5a67f00559a2adecf7752c7069">trans</a> ($id, array $parameters=array(), $domain=null, $locale=null)</td></tr>
+<tr class="memdesc:a7244cd5a67f00559a2adecf7752c7069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a translation corresponding to an id, using eventually some parameters.  <a href="#a7244cd5a67f00559a2adecf7752c7069">More...</a><br /></td></tr>
 <tr class="separator:a7244cd5a67f00559a2adecf7752c7069"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd62868ac25fc9fd8e757a91030bf15e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#afd62868ac25fc9fd8e757a91030bf15e">transChoice</a> ($id, array $choice, array $parameters=array(), $domain=null, $locale=null)</td></tr>
+<tr class="memdesc:afd62868ac25fc9fd8e757a91030bf15e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a translation with choices corresponding to an id, using eventually some parameters.  <a href="#afd62868ac25fc9fd8e757a91030bf15e">More...</a><br /></td></tr>
+<tr class="separator:afd62868ac25fc9fd8e757a91030bf15e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af14d322c62f568a733eb211f0191ddb7"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#af14d322c62f568a733eb211f0191ddb7">getCatalogue</a> (&amp;$locale=null)</td></tr>
+<tr class="memdesc:af14d322c62f568a733eb211f0191ddb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the translations catalog of the locale.  <a href="#af14d322c62f568a733eb211f0191ddb7">More...</a><br /></td></tr>
 <tr class="separator:af14d322c62f568a733eb211f0191ddb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b49b1aa65e7dc95b11336c78968aad5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a8b49b1aa65e7dc95b11336c78968aad5">loadCatalogue</a> ($locale=null)</td></tr>
+<tr class="memdesc:a8b49b1aa65e7dc95b11336c78968aad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a catalog for a locale.  <a href="#a8b49b1aa65e7dc95b11336c78968aad5">More...</a><br /></td></tr>
 <tr class="separator:a8b49b1aa65e7dc95b11336c78968aad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a721a33eb4f90438b0a0ef3f794fe1523"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a721a33eb4f90438b0a0ef3f794fe1523">getFallbackLocale</a> ()</td></tr>
+<tr class="memdesc:a721a33eb4f90438b0a0ef3f794fe1523"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the fallbackLocale.  <a href="#a721a33eb4f90438b0a0ef3f794fe1523">More...</a><br /></td></tr>
 <tr class="separator:a721a33eb4f90438b0a0ef3f794fe1523"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc23622882226e603a7ebe298abb0ec9"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#abc23622882226e603a7ebe298abb0ec9">setFallbackLocale</a> ($fallbackLocale)</td></tr>
+<tr class="memdesc:abc23622882226e603a7ebe298abb0ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the fallbackLocale.  <a href="#abc23622882226e603a7ebe298abb0ec9">More...</a><br /></td></tr>
 <tr class="separator:abc23622882226e603a7ebe298abb0ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5b55597bf6435397d8a7f6f6b3a2fbc"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#af5b55597bf6435397d8a7f6f6b3a2fbc">clearCache</a> ()</td></tr>
+<tr class="memdesc:af5b55597bf6435397d8a7f6f6b3a2fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the translations cache.  <a href="#af5b55597bf6435397d8a7f6f6b3a2fbc">More...</a><br /></td></tr>
 <tr class="separator:af5b55597bf6435397d8a7f6f6b3a2fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2df83ef0bf0ce2314624d466b6021aeb"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a2df83ef0bf0ce2314624d466b6021aeb">clearLocaleCache</a> ($locale)</td></tr>
+<tr class="memdesc:a2df83ef0bf0ce2314624d466b6021aeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the $locale translations cache.  <a href="#a2df83ef0bf0ce2314624d466b6021aeb">More...</a><br /></td></tr>
+<tr class="separator:a2df83ef0bf0ce2314624d466b6021aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6000ca91e94ebfe9c4333c07b71decbe"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a6000ca91e94ebfe9c4333c07b71decbe">getLocales</a> ()</td></tr>
+<tr class="memdesc:a6000ca91e94ebfe9c4333c07b71decbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the available locales.  <a href="#a6000ca91e94ebfe9c4333c07b71decbe">More...</a><br /></td></tr>
+<tr class="separator:a6000ca91e94ebfe9c4333c07b71decbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2df417d2af5160a7a31b52bc6410b7c1"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a2df417d2af5160a7a31b52bc6410b7c1">getDomains</a> ($locale)</td></tr>
+<tr class="memdesc:a2df417d2af5160a7a31b52bc6410b7c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the existing domains in $locale.  <a href="#a2df417d2af5160a7a31b52bc6410b7c1">More...</a><br /></td></tr>
+<tr class="separator:a2df417d2af5160a7a31b52bc6410b7c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3a6e1a87acb58c453b5c92b17e26de8"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#ae3a6e1a87acb58c453b5c92b17e26de8">getRootDir</a> ()</td></tr>
+<tr class="memdesc:ae3a6e1a87acb58c453b5c92b17e26de8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns translations root dir.  <a href="#ae3a6e1a87acb58c453b5c92b17e26de8">More...</a><br /></td></tr>
+<tr class="separator:ae3a6e1a87acb58c453b5c92b17e26de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f29c9e935451ce6ea4e4b9821ba6280"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a4f29c9e935451ce6ea4e4b9821ba6280">getLoader</a> ()</td></tr>
+<tr class="memdesc:a4f29c9e935451ce6ea4e4b9821ba6280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the active loader.  <a href="#a4f29c9e935451ce6ea4e4b9821ba6280">More...</a><br /></td></tr>
+<tr class="separator:a4f29c9e935451ce6ea4e4b9821ba6280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94993c0405d708acb8e84d0cb91eceef"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a94993c0405d708acb8e84d0cb91eceef">getCatalogues</a> ()</td></tr>
+<tr class="memdesc:a94993c0405d708acb8e84d0cb91eceef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all catalogs.  <a href="#a94993c0405d708acb8e84d0cb91eceef">More...</a><br /></td></tr>
+<tr class="separator:a94993c0405d708acb8e84d0cb91eceef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a264149e90ce2b4036fa11050c85117ee"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a264149e90ce2b4036fa11050c85117ee">initialize</a> ($rootDir=null)</td></tr>
+<tr class="memdesc:a264149e90ce2b4036fa11050c85117ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates default translations root directory.  <a href="#a264149e90ce2b4036fa11050c85117ee">More...</a><br /></td></tr>
+<tr class="separator:a264149e90ce2b4036fa11050c85117ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf5a297331cfff0c9c1cadd8891a65ef"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#aaf5a297331cfff0c9c1cadd8891a65ef">fixLocale</a> ($language)</td></tr>
+<tr class="separator:aaf5a297331cfff0c9c1cadd8891a65ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f64777bce7fb7f57584c33fc4cdc536"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a9f64777bce7fb7f57584c33fc4cdc536">createLocale</a> ($locale, $rootDir=null)</td></tr>
+<tr class="memdesc:a9f64777bce7fb7f57584c33fc4cdc536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the locale folder in translations root directory.  <a href="#a9f64777bce7fb7f57584c33fc4cdc536">More...</a><br /></td></tr>
+<tr class="separator:a9f64777bce7fb7f57584c33fc4cdc536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a55827e04a955ac9975545b5495c1fc"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a6a55827e04a955ac9975545b5495c1fc">createDomain</a> ($locale, $domain, $defaultValues=null)</td></tr>
+<tr class="memdesc:a6a55827e04a955ac9975545b5495c1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new domain in $locale.  <a href="#a6a55827e04a955ac9975545b5495c1fc">More...</a><br /></td></tr>
+<tr class="separator:a6a55827e04a955ac9975545b5495c1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84c76047c6741f25a83549197791990c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a84c76047c6741f25a83549197791990c">cacheExist</a> ($locale, $domain=' *')</td></tr>
+<tr class="memdesc:a84c76047c6741f25a83549197791990c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the cache exists for a $domain in $locale.  <a href="#a84c76047c6741f25a83549197791990c">More...</a><br /></td></tr>
+<tr class="separator:a84c76047c6741f25a83549197791990c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
 <tr class="memitem:a3ae87ffdf1d93f1a62ae4f315d36380f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a3ae87ffdf1d93f1a62ae4f315d36380f">transCallable</a> ($callback, $id, array $parameters=array(), $domain=null, $locale=null)</td></tr>
 <tr class="separator:a3ae87ffdf1d93f1a62ae4f315d36380f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a588f50c102da6e9f48fb036b3aaa68dc"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a588f50c102da6e9f48fb036b3aaa68dc">doChoice</a> ($message, array $choice, array $parameters=[])</td></tr>
+<tr class="memdesc:a588f50c102da6e9f48fb036b3aaa68dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inspired by $trans.  <a href="#a588f50c102da6e9f48fb036b3aaa68dc">More...</a><br /></td></tr>
+<tr class="separator:a588f50c102da6e9f48fb036b3aaa68dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade1244f91cbb3159ee2cac1f6877cb79"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#ade1244f91cbb3159ee2cac1f6877cb79">replaceParams</a> ($<a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a7244cd5a67f00559a2adecf7752c7069">trans</a>, array $parameters=array())</td></tr>
 <tr class="separator:ade1244f91cbb3159ee2cac1f6877cb79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6196db1c1af5dd137cf651ba5df1e8a3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a6196db1c1af5dd137cf651ba5df1e8a3">getTransId</a> ($id, $domain)</td></tr>
@@ -140,11 +190,12 @@ Static Protected Attributes</h2></td></tr>
 <tr class="separator:aa7ae91d6e70a2fd9440d4a121d8db5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Manages translations. </p>
+<div class="textblock"><p>Manage translations. </p>
+<p>Use the start method to start the Manager, after starting the cache manager <a class="el" href="namespace_ubiquity.html">Ubiquity</a>$TranslatorManager This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a></p>
 <dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.0.3 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.5 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00014">14</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00020">20</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a511c7f17fe33e3fe2e8cbc8b594a4ce5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a511c7f17fe33e3fe2e8cbc8b594a4ce5">&#9670;&nbsp;</a></span>assertValidLocale()</h2>
@@ -170,7 +221,55 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00059">59</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00130">130</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a84c76047c6741f25a83549197791990c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84c76047c6741f25a83549197791990c">&#9670;&nbsp;</a></span>cacheExist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static cacheExist </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$domain</em> = <code>'*'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if the cache exists for a $domain in $locale. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$domain</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00388">388</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -197,7 +296,231 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00125">125</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Clears the translations cache. </p>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00265">265</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a2df83ef0bf0ce2314624d466b6021aeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2df83ef0bf0ce2314624d466b6021aeb">&#9670;&nbsp;</a></span>clearLocaleCache()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static clearLocaleCache </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clears the $locale translations cache. </p>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00272">272</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a6a55827e04a955ac9975545b5495c1fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a55827e04a955ac9975545b5495c1fc">&#9670;&nbsp;</a></span>createDomain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static createDomain </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$domain</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$defaultValues</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new domain in $locale. </p>
+<p>throws a CacheException if <a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html" title="Manage translations. ">TranslatorManager</a> is not started</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$domain</td><td></td></tr>
+    <tr><td class="paramtype">array&#160;|&#160;null</td><td class="paramname">$defaultValues</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">CacheException</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>|boolean </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00365">365</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a9f64777bce7fb7f57584c33fc4cdc536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f64777bce7fb7f57584c33fc4cdc536">&#9670;&nbsp;</a></span>createLocale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static createLocale </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$rootDir</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates the locale folder in translations root directory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$rootDir</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00350">350</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a588f50c102da6e9f48fb036b3aaa68dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a588f50c102da6e9f48fb036b3aaa68dc">&#9670;&nbsp;</a></span>doChoice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static doChoice </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array&#160;</td>
+          <td class="paramname"><em>$choice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array&#160;</td>
+          <td class="paramname"><em>$parameters</em> = <code>[]</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Inspired by $trans. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$message</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$choice</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$parameters</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00071">71</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="aaf5a297331cfff0c9c1cadd8891a65ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf5a297331cfff0c9c1cadd8891a65ef">&#9670;&nbsp;</a></span>fixLocale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static fixLocale </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$language</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00340">340</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -225,7 +548,83 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00093">93</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Returns the translations catalog of the locale. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array|boolean </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00223">223</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a94993c0405d708acb8e84d0cb91eceef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94993c0405d708acb8e84d0cb91eceef">&#9670;&nbsp;</a></span>getCatalogues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getCatalogues </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns all catalogs. </p>
+<dl class="section return"><dt>Returns</dt><dd>mixed </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00324">324</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a2df417d2af5160a7a31b52bc6410b7c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2df417d2af5160a7a31b52bc6410b7c1">&#9670;&nbsp;</a></span>getDomains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getDomains </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the existing domains in $locale. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00296">296</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -251,9 +650,41 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>mixed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00113">113</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Returns the fallbackLocale. </p>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00249">249</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a4f29c9e935451ce6ea4e4b9821ba6280"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f29c9e935451ce6ea4e4b9821ba6280">&#9670;&nbsp;</a></span>getLoader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getLoader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the active loader. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00315">315</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -280,7 +711,70 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00083">83</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Returns the active locale. </p>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00182">182</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a6000ca91e94ebfe9c4333c07b71decbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6000ca91e94ebfe9c4333c07b71decbe">&#9670;&nbsp;</a></span>getLocales()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getLocales </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the available locales. </p>
+<dl class="section return"><dt>Returns</dt><dd>string[] </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00281">281</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="ae3a6e1a87acb58c453b5c92b17e26de8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3a6e1a87acb58c453b5c92b17e26de8">&#9670;&nbsp;</a></span>getRootDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getRootDir </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns translations root dir. </p>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00306">306</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -318,7 +812,72 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00055">55</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00126">126</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a264149e90ce2b4036fa11050c85117ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a264149e90ce2b4036fa11050c85117ee">&#9670;&nbsp;</a></span>initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static initialize </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$rootDir</em> = <code>null</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates default translations root directory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$rootDir</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string[] </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00334">334</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="acc60ec35a0c97219511f4e93c0ffb24f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc60ec35a0c97219511f4e93c0ffb24f">&#9670;&nbsp;</a></span>isValidLocale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static isValidLocale </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00136">136</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -346,7 +905,15 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00105">105</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Loads a catalog for a locale. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00240">240</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -384,7 +951,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00048">48</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00119">119</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -411,14 +978,16 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the fallbackLocale. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">mixed</td><td class="paramname">$fallbackLocale</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$fallbackLocale</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00121">121</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00258">258</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -446,7 +1015,15 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00071">71</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Defines the active locale. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00159">159</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -474,12 +1051,21 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00076">76</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Sets the complete directory for translations. </p>
+<p>Default: appRoot/translations</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$rootDir</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00170">170</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
-<a id="a7231c005a80e1c0ffe90d40aec7ea309"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7231c005a80e1c0ffe90d40aec7ea309">&#9670;&nbsp;</a></span>start()</h2>
+<a id="a00345bf3c63bf19e6374af7e188704de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00345bf3c63bf19e6374af7e188704de">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -491,7 +1077,7 @@ Static Protected Attributes</h2></td></tr>
           <td class="memname">static start </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$locale</em> = <code>&quot;en_EN&quot;</code>, </td>
+          <td class="paramname"><em>$locale</em> = <code>'en_EN'</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -518,7 +1104,18 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00065">65</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Starts the translator manager. </p>
+<p>This operation must be performed after the CacheManager has been started</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td>The active locale </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$fallbackLocale</td><td>The fallback locale </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$rootDir</td><td>The root dir for translation (default: appRoot/translations) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00148">148</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -568,7 +1165,19 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00087">87</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p>Returns a translation corresponding to an id, using eventually some parameters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$id</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$parameters</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$domain</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00195">195</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -623,8 +1232,88 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">callable</td><td class="paramname">$callback</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$id</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$parameters</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$domain</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00020">20</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00035">35</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+
+</div>
+</div>
+<a id="afd62868ac25fc9fd8e757a91030bf15e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd62868ac25fc9fd8e757a91030bf15e">&#9670;&nbsp;</a></span>transChoice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static transChoice </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array&#160;</td>
+          <td class="paramname"><em>$choice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array&#160;</td>
+          <td class="paramname"><em>$parameters</em> = <code>array()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$domain</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$locale</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a translation with choices corresponding to an id, using eventually some parameters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$id</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$choice</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$parameters</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$domain</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$locale</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00211">211</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -649,7 +1338,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00017">17</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00023">23</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -673,7 +1362,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00018">18</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00024">24</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -697,7 +1386,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00016">16</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00022">22</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -721,7 +1410,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00015">15</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_translator_manager_8php_source.html#l00021">21</a> of file <a class="el" href="_translator_manager_8php_source.html">TranslatorManager.php</a>.</p>
 
 </div>
 </div>
@@ -735,7 +1424,7 @@ Static Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1translation.html">translation</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html">TranslatorManager</a></li>
-    <li class="footer"><small>Generated on Sat Apr 27 2019 02:13:07 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Jun 13 2019 11:13:59 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

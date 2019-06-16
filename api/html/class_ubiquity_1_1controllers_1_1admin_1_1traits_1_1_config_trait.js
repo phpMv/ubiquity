@@ -13,6 +13,7 @@ var class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait =
     [ "convert_smart_quotes", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html#aa309d0caf1d36a3319de8d504067d4a2", null ],
     [ "formConfig", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html#a5eacda017eaf0382e332c6b9f9501fc7", null ],
     [ "loadView", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html#a80a71e60aa536de9b98b7b773fb54bec", null ],
+    [ "models", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html#aaede950e31c49610ddbc5686563590d7", null ],
     [ "showConfMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html#a4b79eb8dc929a4fca7da4c8e2f17dd1b", null ],
     [ "showSimpleMessage", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html#a4f264bde41669e90f8df8627b7444788", null ],
     [ "submitConfig", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html#ad935faf6f246deb21748834459d388e3", null ]

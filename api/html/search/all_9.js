@@ -15,8 +15,10 @@ var searchData=
   ['hasresourceinterface',['HasResourceInterface',['../interface_ubiquity_1_1controllers_1_1rest_1_1_has_resource_interface.html',1,'Ubiquity::controllers::rest']]],
   ['hasresourceinterface_2ephp',['HasResourceInterface.php',['../_has_resource_interface_8php.html',1,'']]],
   ['hasthemeresource',['hasThemeResource',['../class_ubiquity_1_1views_1_1engine_1_1_twig.html#a0fc748647c0873ca7441479c5309758d',1,'Ubiquity::views::engine::Twig']]],
+  ['hasupdates',['hasUpdates',['../class_ubiquity_1_1translation_1_1_messages_updates.html#ae2d4d75ba4ea42ed00bb37826ebf4223',1,'Ubiquity::translation::MessagesUpdates']]],
   ['haswarnings',['hasWarnings',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1dates_1_1_abstract_date_time_validator.html#ae541ee8a8d20f2b41fe3efbcd0b05c0d',1,'Ubiquity::contents::validation::validators::dates::AbstractDateTimeValidator']]],
-  ['header',['header',['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#aa6aa9621d5c6597cf808b8bbf97057c8',1,'Ubiquity::utils::http::UResponse']]],
+  ['header',['header',['../class_ubiquity_1_1utils_1_1http_1_1foundation_1_1_abstract_http.html#a41627e5f030e39c9b67a1e8005e17952',1,'Ubiquity\utils\http\foundation\AbstractHttp\header()'],['../class_ubiquity_1_1utils_1_1http_1_1foundation_1_1_php_http.html#a41627e5f030e39c9b67a1e8005e17952',1,'Ubiquity\utils\http\foundation\PhpHttp\header()'],['../class_ubiquity_1_1utils_1_1http_1_1_u_response.html#aa6aa9621d5c6597cf808b8bbf97057c8',1,'Ubiquity\utils\http\UResponse\header()']]],
+  ['headerssent',['headersSent',['../class_ubiquity_1_1utils_1_1http_1_1foundation_1_1_abstract_http.html#a65d82c9a2c9e4e74ee87674dfd16e2a9',1,'Ubiquity\utils\http\foundation\AbstractHttp\headersSent()'],['../class_ubiquity_1_1utils_1_1http_1_1foundation_1_1_php_http.html#a65d82c9a2c9e4e74ee87674dfd16e2a9',1,'Ubiquity\utils\http\foundation\PhpHttp\headersSent()']]],
   ['htmllogformatter',['HtmlLogFormatter',['../class_ubiquity_1_1log_1_1_html_log_formatter.html',1,'Ubiquity::log']]],
   ['htmllogformatter_2ephp',['HtmlLogFormatter.php',['../_html_log_formatter_8php.html',1,'']]]
 ];

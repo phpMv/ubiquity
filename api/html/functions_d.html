@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.2</span>
+   &#160;<span id="projectnumber">2.1.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -120,6 +120,10 @@ $(document).ready(function(){initNavTree('functions_d.html','');});
 , <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller.html#ae7af88574629cfe075f37a2fa6681ad1">SimpleRestController</a>
 , <a class="el" href="class_ubiquity_1_1controllers_1_1traits_1_1_router_modifier_trait.html#aff2fa1c1774dbf6aabd1afd346c5c16e">RouterModifierTrait</a>
 , <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a43051d671cf48325266d37fd89304847">DAOUpdatesTrait</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1_messages_updates.html#a13bdffdd926f26b825ea57066334ff01">MessagesUpdates</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1session_1_1_abstract_session.html#aa74a2edd6f3cbb5c5353f7faa97b6d70">AbstractSession</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1session_1_1_multisite_session.html#aa74a2edd6f3cbb5c5353f7faa97b6d70">MultisiteSession</a>
+, <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1session_1_1_php_session.html#aa74a2edd6f3cbb5c5353f7faa97b6d70">PhpSession</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_cookie.html#a4e2470cc5ef9652359fe5834548075c4">UCookie</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a891f08cef3dc72caf9cdd0412ff15d2e">USession</a>
 </li>
@@ -147,6 +151,15 @@ $(document).ready(function(){initNavTree('functions_d.html','');});
 </li>
 <li>deleteSeoController()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#a751f4f3adc3530a2d5e521c63c2736eb">SeoTrait</a>
+</li>
+<li>deleteTranslation()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#af875ef9b5d5ff6a00b70682fe7972077">TranslateTrait</a>
+</li>
+<li>deleteTranslationCache()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#aa5a3e4d9a7cbd9db344fa76530246d1e">TranslateTrait</a>
+</li>
+<li>deleteTranslationLocaleCache()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#aa6b579c5f4a6625d205f7a730a214564">TranslateTrait</a>
 </li>
 <li>delTree()
 : <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a78cb10996a32b7cac911a07422d1a63e">UFileSystem</a>
@@ -185,11 +198,17 @@ $(document).ready(function(){initNavTree('functions_d.html','');});
 <li>displaySiteMap()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html#a10d8b300fae35149f5230ebba89e3eaf">SeoTrait</a>
 </li>
+<li>displayTranslationUpdates()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#a26e313a13ecb0900896467166b8415f5">TranslateTrait</a>
+</li>
 <li>displayViolations()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html#ab2d309243659a1c5dcbb3012bb7706b2">UbiquityMyAdminViewer</a>
 </li>
 <li>docClassParser()
 : <a class="el" href="class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#ae13563df9f86f5a88fa64bb03b9de320">DocParser</a>
+</li>
+<li>doChoice()
+: <a class="el" href="class_ubiquity_1_1translation_1_1_translator_manager.html#a588f50c102da6e9f48fb036b3aaa68dc">TranslatorManager</a>
 </li>
 <li>docMethodParser()
 : <a class="el" href="class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#af9b45119c75854168a43ea9d73248387">DocParser</a>
@@ -205,7 +224,7 @@ $(document).ready(function(){initNavTree('functions_d.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Sat Apr 27 2019 02:13:09 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Jun 13 2019 11:14:01 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

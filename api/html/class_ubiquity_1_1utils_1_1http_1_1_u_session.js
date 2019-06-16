@@ -25,5 +25,5 @@ var class_ubiquity_1_1utils_1_1http_1_1_u_session =
     [ "start", "class_ubiquity_1_1utils_1_1http_1_1_u_session.html#ad380f42cbce7f41eb07e250656c048c0", null ],
     [ "terminate", "class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a191e26bc789af7f3dc38b138fb7bef12", null ],
     [ "Walk", "class_ubiquity_1_1utils_1_1http_1_1_u_session.html#a75ebc841e05bf883e13d16b8f32f9c87", null ],
-    [ "$name", "class_ubiquity_1_1utils_1_1http_1_1_u_session.html#ab2fc40d43824ea3e1ce5d86dee0d763b", null ]
+    [ "$sessionInstance", "class_ubiquity_1_1utils_1_1http_1_1_u_session.html#acb64257b549fcdc4cfea7ee2ab0c105f", null ]
 ];

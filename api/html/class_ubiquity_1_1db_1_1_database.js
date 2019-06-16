@@ -1,6 +1,7 @@
 var class_ubiquity_1_1db_1_1_database =
 [
     [ "__construct", "class_ubiquity_1_1db_1_1_database.html#ac47161d682f3c98c368fcba62bcfbafa", null ],
+    [ "close", "class_ubiquity_1_1db_1_1_database.html#aa69c8bf1f1dcf4e72552efff1fe3e87e", null ],
     [ "connect", "class_ubiquity_1_1db_1_1_database.html#a78572828d11dcdf2a498497d9001d557", null ],
     [ "getAvailableDrivers", "class_ubiquity_1_1db_1_1_database.html#ad9bdac1c5dfa2d96210795e7711b8b93", null ],
     [ "getDbName", "class_ubiquity_1_1db_1_1_database.html#a4949c3e4d80c0d275c80e0c1c3b5b280", null ],
@@ -23,6 +24,7 @@ var class_ubiquity_1_1db_1_1_database =
     [ "$dbType", "class_ubiquity_1_1db_1_1_database.html#a63b68daf124fa00e6bcfce64fabbdbe1", null ],
     [ "$options", "class_ubiquity_1_1db_1_1_database.html#a011800c63ece4cbbfa77136a20607023", null ],
     [ "$password", "class_ubiquity_1_1db_1_1_database.html#a607686ef9f99ea7c42f4f3dd3dbb2b0d", null ],
+    [ "$pdoObject", "class_ubiquity_1_1db_1_1_database.html#aad460a35bb43d05330deb7edc3373634", null ],
     [ "$port", "class_ubiquity_1_1db_1_1_database.html#aa0787efab4b22e8a212882f3409d4c77", null ],
     [ "$serverName", "class_ubiquity_1_1db_1_1_database.html#ab05851c38639d62e5eb8c069a7f033df", null ],
     [ "$user", "class_ubiquity_1_1db_1_1_database.html#a598ca4e71b15a1313ec95f0df1027ca5", null ]

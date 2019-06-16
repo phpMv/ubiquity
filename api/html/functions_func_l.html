@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.2</span>
+   &#160;<span id="projectnumber">2.1.4</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -98,10 +98,20 @@ $(document).ready(function(){initNavTree('functions_func_l.html','');});
 : <a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#aa54322ebfbfa4527ee789df5bfc20e31">ConditionParser</a>
 </li>
 <li>load()
-: <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#a6b86b51c78571a5fec353c3e9d9aca88">ArrayLoader</a>
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_translate_message.html#a1c7899e9ced63bba87cf815808c9ed4a">TranslateMessage</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1import_1_1_abstract_importation.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4">AbstractImportation</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1import_1_1_json_importation.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4">JsonImportation</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1import_1_1_php_array_importation.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4">PhpArrayImportation</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1import_1_1_yaml_importation.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4">YamlImportation</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#a6b86b51c78571a5fec353c3e9d9aca88">ArrayLoader</a>
 , <a class="el" href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html#a9e76f4e254c0b64d0ca4827e281f25f6">LoaderInterface</a>
 , <a class="el" href="class_ubiquity_1_1translation_1_1_messages_catalog.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4">MessagesCatalog</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1_messages_domain.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4">MessagesDomain</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1_messages_updates.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4">MessagesUpdates</a>
 , <a class="el" href="class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a276901c86c421cd1f52662cb0f0b7a14">UFileSystem</a>
+</li>
+<li>loadAndCompare()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_translate_message.html#a1972e389f4178b160fd9a8870d56c30b">TranslateMessage</a>
 </li>
 <li>loadCatalogue()
 : <a class="el" href="class_ubiquity_1_1translation_1_1_translator.html#a9978758107e6b5a1f62837c7b24ff983">Translator</a>
@@ -110,8 +120,16 @@ $(document).ready(function(){initNavTree('functions_func_l.html','');});
 <li>loadDefaultView()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1_controller.html#a185d3ac21b5e9e328c09e1824885e253">Controller</a>
 </li>
+<li>loadDomain()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#aa2d115cab307a5fe9756e1663037f009">TranslateTrait</a>
+, <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#aa2d115cab307a5fe9756e1663037f009">ArrayLoader</a>
+, <a class="el" href="interface_ubiquity_1_1translation_1_1loader_1_1_loader_interface.html#aa2d115cab307a5fe9756e1663037f009">LoaderInterface</a>
+</li>
 <li>loadFile()
 : <a class="el" href="class_ubiquity_1_1translation_1_1loader_1_1_array_loader.html#a64d6ef0b5dd542185ab771b9d169a0da">ArrayLoader</a>
+</li>
+<li>loadLocale()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#a7e2080da1dd0f65bda2d5171ded89e73">TranslateTrait</a>
 </li>
 <li>loadManyToManys()
 : <a class="el" href="class_ubiquity_1_1utils_1_1yuml_1_1traits_1_1_class_to_yuml_relations_trait.html#a19209e708c5c62f18f0949a88a2a2bc9">ClassToYumlRelationsTrait</a>
@@ -130,6 +148,12 @@ $(document).ready(function(){initNavTree('functions_func_l.html','');});
 </li>
 <li>loadRelationshipsDatas()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#aebc72fa2fbc8a323bfec5c26b96d93c2">JsonApiRestController</a>
+</li>
+<li>loadTranslationCache()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#aaebcd18346546e13ae2a2749641e6bb9">TranslateTrait</a>
+</li>
+<li>loadTranslationLocaleCache()
+: <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#a37a58f46490d575ff03b328dcbc02d4d">TranslateTrait</a>
 </li>
 <li>loadUntrackedFiles()
 : <a class="el" href="class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html#aeaf126ee8eb687cb49b1ef1f99dff231">RepositoryGit</a>
@@ -170,7 +194,7 @@ $(document).ready(function(){initNavTree('functions_func_l.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><small>Generated on Sat Apr 27 2019 02:13:10 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Jun 13 2019 11:14:02 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

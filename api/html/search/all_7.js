@@ -10,6 +10,7 @@ var searchData=
   ['firstreplace',['firstReplace',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#af33e36f0039621c50a3efad91d7703cd',1,'Ubiquity::utils::base::UString']]],
   ['firstuppercase',['FirstUpperCase',['../class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_first_upper_case.html',1,'Ubiquity::contents::transformation::transformers']]],
   ['firstuppercase_2ephp',['FirstUpperCase.php',['../_first_upper_case_8php.html',1,'']]],
+  ['fixlocale',['fixLocale',['../class_ubiquity_1_1translation_1_1_translator_manager.html#aaf5a297331cfff0c9c1cadd8891a65ef',1,'Ubiquity::translation::TranslatorManager']]],
   ['flags',['FLAGS',['../class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_ip_validator.html#a5b4ede44ff5f199f153bb54fe3c7e8b3',1,'Ubiquity::contents::validation::validators::strings::IpValidator']]],
   ['flash_5fbag_5fkey',['FLASH_BAG_KEY',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html#aabc4d1e1ba6fce60f6294ea4276a04ad',1,'Ubiquity::utils::flash::FlashBag']]],
   ['flashbag',['FlashBag',['../class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html',1,'Ubiquity::utils::flash']]],
@@ -30,6 +31,8 @@ var searchData=
   ['frmaddauthcontroller',['frmAddAuthController',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a05e588e868df91956b7da432be61d100',1,'Ubiquity::controllers::admin::traits::CreateControllersTrait']]],
   ['frmaddcrudcontroller',['frmAddCrudController',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html#a6d8edb00ab90fd3425eed25420daa3d2',1,'Ubiquity::controllers::admin::traits::CreateControllersTrait']]],
   ['frmfiltercontrollers',['frmFilterControllers',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html#a8dca6363bcea2df8d6958053af8793c5',1,'Ubiquity::controllers::admin::traits::ControllersTrait']]],
+  ['frmimportmessages',['frmImportMessages',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#aba73b5b9924b7cd12fd14d0534860c51',1,'Ubiquity::controllers::admin::traits::TranslateTrait']]],
+  ['frmmultiplemessages',['frmMultipleMessages',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html#a7794c133d085e0f3ce0c5978bb3c99ab',1,'Ubiquity::controllers::admin::traits::TranslateTrait']]],
   ['frmsettings',['frmSettings',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html#a66363b5e076d7767acd36cbdecaae230',1,'Ubiquity::controllers::admin::traits::GitTrait']]],
   ['fromarray',['fromArray',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html#a66a6c502659b138934bf1b3aa629a3ca',1,'Ubiquity\controllers\admin\popo\Route\fromArray()'],['../class_ubiquity_1_1seo_1_1_url.html#a0c5d91946fd0cf263e30b551de02f16a',1,'Ubiquity\seo\Url\fromArray()']]],
   ['fromcookie',['fromCookie',['../class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller_override_trait.html#aa7200c987ff86bf5577e1e692a635a59',1,'Ubiquity::controllers::auth::AuthControllerOverrideTrait']]]

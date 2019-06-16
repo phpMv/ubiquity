@@ -19,6 +19,5 @@ var class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait =
     [ "prepareStatement", "class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a6d3ef255f671ba13598b6df13a21112b", null ],
     [ "query", "class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a6b251c8058230359b2922377699c4f29", null ],
     [ "queryColumn", "class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a32c94e3077ebbd70badea6c915032d67", null ],
-    [ "$pdoObject", "class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#aad460a35bb43d05330deb7edc3373634", null ],
     [ "$statements", "class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a2cfdd68df93aed5b0f9c3fb70c56b359", null ]
 ];

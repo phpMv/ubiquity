@@ -17,6 +17,8 @@ var searchData=
   ['transformersmanager',['TransformersManager',['../class_ubiquity_1_1contents_1_1transformation_1_1_transformers_manager.html',1,'Ubiquity::contents::transformation']]],
   ['transformerviewinterface',['TransformerViewInterface',['../interface_ubiquity_1_1contents_1_1transformation_1_1_transformer_view_interface.html',1,'Ubiquity::contents::transformation']]],
   ['transientannotation',['TransientAnnotation',['../class_ubiquity_1_1annotations_1_1_transient_annotation.html',1,'Ubiquity::annotations']]],
+  ['translatemessage',['TranslateMessage',['../class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_translate_message.html',1,'Ubiquity::controllers::admin::popo']]],
+  ['translatetrait',['TranslateTrait',['../class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html',1,'Ubiquity::controllers::admin::traits']]],
   ['translator',['Translator',['../class_ubiquity_1_1translation_1_1_translator.html',1,'Ubiquity::translation']]],
   ['translatormanager',['TranslatorManager',['../class_ubiquity_1_1translation_1_1_translator_manager.html',1,'Ubiquity::translation']]],
   ['twig',['Twig',['../class_ubiquity_1_1views_1_1engine_1_1_twig.html',1,'Ubiquity::views::engine']]],

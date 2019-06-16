@@ -11,5 +11,7 @@ var searchData=
   ['jsonapirestcontroller',['JsonApiRestController',['../class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html',1,'Ubiquity::controllers::rest::api::jsonapi']]],
   ['jsonapirestcontroller_2ephp',['JsonApiRestController.php',['../_json_api_rest_controller_8php.html',1,'']]],
   ['jsonapirestserver',['JsonApiRestServer',['../class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_server.html',1,'Ubiquity::controllers::rest::api::jsonapi']]],
-  ['jsonapirestserver_2ephp',['JsonApiRestServer.php',['../_json_api_rest_server_8php.html',1,'']]]
+  ['jsonapirestserver_2ephp',['JsonApiRestServer.php',['../_json_api_rest_server_8php.html',1,'']]],
+  ['jsonimportation',['JsonImportation',['../class_ubiquity_1_1translation_1_1import_1_1_json_importation.html',1,'Ubiquity::translation::import']]],
+  ['jsonimportation_2ephp',['JsonImportation.php',['../_json_importation_8php.html',1,'']]]
 ];

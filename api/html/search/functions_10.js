@@ -32,7 +32,6 @@ var searchData=
   ['path',['path',['../class_ubiquity_1_1controllers_1_1_router.html#a5e67f063c95cd06fdf6d461cb602f14e',1,'Ubiquity::controllers::Router']]],
   ['ping',['ping',['../class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a6dad377f74b0ce6f21b485ba11052746',1,'Ubiquity::db::traits::DatabaseOperationsTrait']]],
   ['pluralize',['pluralize',['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#ae9b7fa40c4125034cf9cad403cea42f2',1,'Ubiquity::utils::base::UString']]],
-  ['pluriel',['pluriel',['../class_ubiquity_1_1views_1_1_gui.html#afaa37ba935e8dab3706f8228cd5a1e8d',1,'Ubiquity::views::Gui']]],
   ['post',['post',['../class_ubiquity_1_1controllers_1_1traits_1_1_router_modifier_trait.html#ab6d1c52496ccebd951490310649825ca',1,'Ubiquity\controllers\traits\RouterModifierTrait\post()'],['../class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a9b79df46c695b9a1418515618a8e5de9',1,'Ubiquity\utils\http\URequest\post()']]],
   ['prepareandexecute',['prepareAndExecute',['../class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#aa87ef3c430a0c88c2bf372a01ff6b186',1,'Ubiquity::db::traits::DatabaseOperationsTrait']]],
   ['prepareandfetchall',['prepareAndFetchAll',['../class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a1472c9ddeda44de31e4cfe3297cd48de',1,'Ubiquity::db::traits::DatabaseOperationsTrait']]],
