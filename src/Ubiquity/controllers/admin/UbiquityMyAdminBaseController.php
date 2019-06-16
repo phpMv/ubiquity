@@ -108,10 +108,11 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function initialize() {
 		ob_start ( array (__class__,'_error_handler' ) );
-		if (URequest::isAjax () === false) {
+		if (URequest::isAjax () === false || ($_GET ["_refresh"] ?? false)) {
 			$semantic = $this->jquery->semantic ();
 			$mainMenuElements = $this->_getAdminViewer ()->getMainMenuElements ();
-			$elements = [ "UbiquityMyAdmin" ];
+			$mainMenuElements = $this->getMenuElements ( $mainMenuElements );
+			$elements = [ "UbiquityMyadmin" ];
 			$dataAjax = [ "index" ];
 			$hrefs = [ $this->_getFiles ()->getAdminBaseRoute () . "/index" ];
 			foreach ( $mainMenuElements as $elm => $values ) {
@@ -186,11 +187,90 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function index() {
+		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$array = $this->_getAdminViewer ()->getMainMenuElements ();
-		$this->_getAdminViewer ()->getMainIndexItems ( "part1", \array_slice ( $array, 0, 6 ) );
-		$this->_getAdminViewer ()->getMainIndexItems ( "part2", \array_slice ( $array, 6, 5 ) );
+		$this->_getAdminViewer ()->getMainIndexItems ( "part1", $this->getMenuElements ( $array, 'part1' ) );
+		$this->_getAdminViewer ()->getMainIndexItems ( "part2", $this->getMenuElements ( $array, 'part2' ) );
+		$this->jquery->getOnClick ( "#bt-customize", $baseRoute . "/indexCustomizing", "#dialog", [ 'hasLoader' => 'internal','jsCallback' => '$("#admin-elements").hide();$("#bt-customize").addClass("active");' ] );
+		$this->jquery->mouseenter ( "#admin-elements .item", '$(this).children("i").addClass("green").removeClass("circular");$(this).find(".description").css("color","#21ba45");$(this).transition("pulse","400ms");' );
+		$this->jquery->mouseleave ( "#admin-elements .item", '$(this).children("i").removeClass("green").addClass("circular");$(this).find(".description").css("color","");' );
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewIndex () );
+	}
+
+	private function getMenuElements($array, $part = null) {
+		if (isset ( $part )) {
+			if ($part == 'part1') {
+				if (isset ( $this->config [$part] )) {
+					return UArray::extractKeys ( $array, $this->config [$part] );
+				} else {
+					return \array_slice ( $array, 0, 6 );
+				}
+			} elseif ($part == 'part2') {
+				if (isset ( $this->config [$part] )) {
+					return UArray::extractKeys ( $array, $this->config [$part] );
+				} else {
+					return \array_slice ( $array, 6, 5 );
+				}
+			}
+		} else {
+			if (isset ( $this->config ['part1'] ) && isset ( $this->config ['part2'] )) {
+				$keys = array_merge ( $this->config ['part1'], $this->config ['part2'] );
+				return UArray::extractKeys ( $array, $keys );
+			} else {
+				return $array;
+			}
+		}
+	}
+
+	public function indexCustomizing() {
+		$array = $this->_getAdminViewer ()->getMainMenuElements ();
+		$keys = array_keys ( $array );
+
+		$selectedElements1 = array_keys ( $this->getMenuElements ( $array, 'part1' ) );
+		$selectedElements2 = array_keys ( $this->getMenuElements ( $array, 'part2' ) );
+		$elements1 = array_diff ( $keys, $selectedElements2 );
+		$elements2 = array_diff ( $keys, $selectedElements1 );
+		$selectedValue1 = implode ( ",", $selectedElements1 );
+		$dd1 = $this->jquery->semantic ()->htmlDropdown ( 'part1', $selectedValue1, $this->_preserveArraySort ( $selectedElements1, $elements1 ) );
+		$dd1->asSearch ( 't-part1', true );
+
+		$selectedValue2 = implode ( ",", $selectedElements2 );
+		$dd2 = $this->jquery->semantic ()->htmlDropdown ( 'part2', $selectedValue2, $this->_preserveArraySort ( $selectedElements2, $elements2 ) );
+		$dd2->asSearch ( 't-part2', true );
+
+		$dd1->setOnAdd ( "$('#" . $dd2->getIdentifier () . " .item[data-value='+addedText+']').remove();" );
+		$dd1->setOnRemove ( $dd2->jsAddItem ( "removedText", "removedText" ) );
+		$dd2->setOnAdd ( "$('#" . $dd1->getIdentifier () . " .item[data-value='+addedText+']').remove();" );
+		$dd2->setOnRemove ( $dd1->jsAddItem ( "removedText", "removedText" ) );
+		$this->jquery->click ( '#cancel-btn', '$("#dialog").html("");$("#admin-elements").show();$("#bt-customize").removeClass("active");' );
+		$this->jquery->postFormOnClick ( '#validate-btn', $this->_getFiles ()->getAdminBaseRoute () . '/indexCustomizingSubmit', 'customize-frm', 'body', [ 'hasLoader' => 'internal' ] );
+		$this->jquery->renderView ( $this->_getFiles ()->getViewIndexCustomizing () );
+	}
+
+	private function _preserveArraySort($model, $array) {
+		$result = [ ];
+		foreach ( $model as $v ) {
+			$result [$v] = $v;
+			$index = array_search ( $v, $array );
+			if ($index !== false) {
+				unset ( $array [$index] );
+			}
+		}
+		foreach ( $array as $k => $v ) {
+			$result [$v] = $v;
+		}
+		return $result;
+	}
+
+	public function indexCustomizingSubmit() {
+		$part1Str = URequest::post ( 't-part1', [ ] );
+		$part2Str = URequest::post ( 't-part2', [ ] );
+		$this->config ["part1"] = explode ( ',', $part1Str );
+		$this->config ["part2"] = explode ( ',', $part2Str );
+		$this->saveConfig ();
+		$_GET ["_refresh"] = true;
+		$this->forward ( self::class, 'index', [ ], true, true );
 	}
 
 	public function models($hasHeader = true) {

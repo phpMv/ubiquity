@@ -72,6 +72,10 @@ class UbiquityMyAdminFiles {
 		return $this->viewBase . "/index.html";
 	}
 
+	public function getViewIndexCustomizing() {
+		return $this->viewBase . "/customize.html";
+	}
+
 	public function getViewShowTable() {
 		return $this->viewBase . "/data/showTable.html";
 	}
@@ -119,8 +123,8 @@ class UbiquityMyAdminFiles {
 	public function getViewGitIgnore() {
 		return $this->viewBase . "/git/formGitIgnore.html";
 	}
-	
-	public function getViewThemesIndex(){
+
+	public function getViewThemesIndex() {
 		return $this->viewBase . "/themes/index.html";
 	}
 }

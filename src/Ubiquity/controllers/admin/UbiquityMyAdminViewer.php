@@ -780,13 +780,13 @@ class UbiquityMyAdminViewer {
 		$items = $this->jquery->semantic ()->htmlItems ( $identifier );
 
 		$items->fromDatabaseObjects ( $array, function ($e) {
-			$item = new HtmlItem ( "" );
+			$item = new HtmlItem ( "item-" . $e [0] );
 			$item->addIcon ( $e [1] . " bordered circular" )->setSize ( "big" );
 			$item->addItemHeaderContent ( $e [0], [ ], $e [2] );
 			$item->setProperty ( "data-ajax", $e [0] );
 			return $item;
 		} );
-		$items->getOnClick ( $this->controller->_getFiles ()->getAdminBaseRoute (), "#main-content", [ "attr" => "data-ajax","historize" => true,"jsCallback" => '$("#mainMenu [href]").removeClass("active");$("#mainMenu [data-ajax=\'"+$(self).attr("data-ajax")+"\']").addClass("active");' ] );
+		$items->getOnClick ( $this->controller->_getFiles ()->getAdminBaseRoute (), "#main-content", [ "preventDefault" => false,"attr" => "data-ajax","historize" => true,"jsCallback" => '$("#mainMenu [href]").removeClass("active");$("#mainMenu [data-ajax=\'"+$(self).attr("data-ajax")+"\']").addClass("active");' ] );
 		return $items->addClass ( "divided relaxed link" );
 	}
 

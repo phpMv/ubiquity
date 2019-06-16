@@ -1,11 +1,21 @@
-	<h3 class="ui block header inverted">
-		<i class="settings icon"></i>
-		<div class="content">
-			  UbiquityMyAdmin
-			  <div class="sub header">Ubiquity framework administration web-tools</div>
+	<div class ="ui grey inverted segment">
+		<div class="ui grid">
+			<div class="twelve wide column">
+				<h3 class="ui inverted header">
+					<i class="settings icon"></i>
+					<div class="content">
+						  web-tools
+						  <div class="sub header">Ubiquity framework administration</div>
+					</div>
+				</h3>
+			</div>
+			<div class="four wide right floated right aligned column">
+				<div id="bt-customize" class='ui inverted icon button'><i class='ui list ul icon'></i> Customize...</div>
+			</div>
 		</div>
-	</h3>
-	<div class="ui two column grid">
+	</div>
+	<div id="dialog"></div>
+	<div id="admin-elements" class="ui two column grid">
 		<div class="row">
 			<div class="column">{{q["part1"] | raw}}</div>
 			<div class="column">{{q["part2"] | raw}}</div>
