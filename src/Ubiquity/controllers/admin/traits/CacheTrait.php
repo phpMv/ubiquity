@@ -13,8 +13,9 @@ use Ubiquity\contents\validation\ValidatorsManager;
  *
  * @author jc
  * @property \Ajax\JsUtils\JsUtils $jquery
+ * @property array $config
  */
-trait CacheTrait{
+trait CacheTrait {
 
 	abstract public function _getAdminData();
 
@@ -22,11 +23,23 @@ trait CacheTrait{
 
 	abstract public function _getFiles();
 
+	abstract public function saveConfig();
+
 	public function setCacheTypes() {
-		if (isset ( $_POST ["cacheTypes"] ))
+		if (isset ( $_POST ["cacheTypes"] )) {
 			$caches = $_POST ["cacheTypes"];
-		else
+			$this->config ['display-cache-types'] = $caches;
+			$this->saveConfig ();
+		} else {
 			$caches = [ ];
+		}
+		$cacheFiles = $this->getCacheFiles ( $caches );
+		$dt = $this->_getAdminViewer ()->getCacheDataTable ( $cacheFiles );
+		echo $dt->refresh ();
+		echo $this->jquery->compile ( $this->view );
+	}
+
+	private function getCacheFiles(array $caches) {
 		$cacheFiles = [ ];
 		foreach ( $caches as $cache ) {
 			if ($cache == 'models' || $cache == 'controllers') {
@@ -35,9 +48,7 @@ trait CacheTrait{
 				$cacheFiles = \array_merge ( $cacheFiles, CacheFile::initFromFiles ( \ROOT . \DS . CacheManager::getCacheDirectory () . $cache, \ucfirst ( $cache ) ) );
 			}
 		}
-		$dt = $this->_getAdminViewer ()->getCacheDataTable ( $cacheFiles );
-		echo $dt->refresh ();
-		echo $this->jquery->compile ( $this->view );
+		return $cacheFiles;
 	}
 
 	public function deleteCacheFile() {
@@ -102,8 +113,8 @@ trait CacheTrait{
 					CacheManager::initCache ( $config, "controllers" );
 					break;
 				case "Contents" :
-					CacheManager::start($config);
-					ValidatorsManager::initModelsValidators($config);
+					CacheManager::start ( $config );
+					ValidatorsManager::initModelsValidators ( $config );
 					break;
 			}
 		}
