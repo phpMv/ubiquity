@@ -35,7 +35,7 @@ trait RouterCacheTrait {
 		return [ ];
 	}
 
-	private static function initRouterCache(&$config, $silent = false) {
+	private static function parseControllerFiles(&$config, $silent = false) {
 		$routes = [ "rest" => [ ],"default" => [ ] ];
 		$files = self::getControllersFiles ( $config, $silent );
 		foreach ( $files as $file ) {
@@ -52,12 +52,31 @@ trait RouterCacheTrait {
 				}
 			}
 		}
+		return $routes;
+	}
+
+	private static function initRouterCache(&$config, $silent = false) {
+		$routes = self::parseControllerFiles ( $config, $silent );
 		self::$cache->store ( "controllers/routes.default", "return " . UArray::asPhpArray ( $routes ["default"], "array" ) . ";", 'controllers' );
 		self::$cache->store ( "controllers/routes.rest", "return " . UArray::asPhpArray ( $routes ["rest"], "array" ) . ";", 'controllers' );
 		DiManager::init ( $config );
 		if (! $silent) {
 			echo "Router cache reset\n";
 		}
+	}
+
+	public static function controllerCacheUpdated(&$config) {
+		$result = false;
+		$newRoutes = self::parseControllerFiles ( $config, true );
+		$ctrls = self::getControllerCache ();
+		if ($newRoutes ['default'] != $ctrls) {
+			$result ['default'] = true;
+		}
+		$ctrls = self::getControllerCache ( true );
+		if ($newRoutes ['rest'] != $ctrls) {
+			$result ['rest'] = true;
+		}
+		return $result;
 	}
 
 	public static function storeDynamicRoutes($isRest = false) {

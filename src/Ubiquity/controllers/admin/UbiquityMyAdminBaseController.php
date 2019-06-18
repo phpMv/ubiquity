@@ -167,6 +167,34 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		ob_end_flush ();
 	}
 
+	protected function _checkModelsUpdates(&$config, $onMainPage) {
+		$models = CacheManager::modelsCacheUpdated ( $config );
+		if (is_array ( $models ) && sizeof ( $models ) > 0) {
+			$this->_smallUpdateMessageCache ( $onMainPage, 'models', 'sticky note inverted', 'Updated models files (<b>' . count ( $models ) . '</b>)&nbsp;', 'small inverted compact', $onMainPage ? '_initCache/models' : '_initCache/models/models', $onMainPage ? '#models-refresh' : '#main-content' );
+		}
+	}
+
+	protected function _checkRouterUpdates(&$config, $onMainPage) {
+		$caches = CacheManager::controllerCacheUpdated ( $config );
+		if (is_array ( $caches ) && sizeof ( $caches ) > 0) {
+			$this->_smallUpdateMessageCache ( $onMainPage, 'router', 'car', 'Updated controller files ', 'small compact', $onMainPage ? '_initCache/controllers' : 'initCacheRouter', $onMainPage ? '#router-refresh' : '#divRoutes' );
+		}
+	}
+
+	protected function _smallUpdateMessageCache($onMainPage, $type, $icon, $message, $messageType, $url, $target) {
+		$js = [ ];
+		if (! $onMainPage) {
+			$js = [ 'jsCallback' => '$("#' . $type . '-refresh").html("");' ];
+		}
+		$bt = $this->jquery->semantic ()->htmlButton ( "bt-mini-init-{$type}-cache", null, 'orange small' );
+		$bt->setProperty ( 'title', "Re-init {$type} cache" );
+		$bt->asIcon ( 'refresh' );
+		echo "<div class='ui container' id='{$type}-refresh' style='display:inline;'>";
+		echo $this->showSimpleMessage ( '<i class="ui icon ' . $icon . '"></i>&nbsp;' . $message . $bt, $messageType, null, null, '' );
+		echo "&nbsp;</div>";
+		$this->jquery->getOnClick ( "#bt-mini-init-{$type}-cache", $this->_getFiles ()->getAdminBaseRoute () . "/" . $url, $target, [ "dataType" => "html","attr" => "","hasLoader" => "internal" ] + $js );
+	}
+
 	protected function initializeJs() {
 		$js = 'var setAceEditor=function(elementId,readOnly,mode,maxLines){
 			mode=mode || "sql";readOnly=readOnly || false;maxLines=maxLines || 100;
@@ -193,6 +221,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$array = $this->_getAdminViewer ()->getMainMenuElements ();
 		$this->_getAdminViewer ()->getMainIndexItems ( "part1", $this->getMenuElements ( $array, 'part1' ) );
 		$this->_getAdminViewer ()->getMainIndexItems ( "part2", $this->getMenuElements ( $array, 'part2' ) );
+		$config = Startup::getConfig ();
+		CacheManager::start ( $config );
+		$this->_checkModelsUpdates ( $config, true );
+		$this->_checkRouterUpdates ( $config, true );
 		$this->jquery->getOnClick ( "#bt-customize", $baseRoute . "/indexCustomizing", "#dialog", [ 'hasLoader' => 'internal','jsCallback' => '$("#admin-elements").hide();$("#bt-customize").addClass("active");' ] );
 		$this->jquery->mouseenter ( "#admin-elements .item", '$(this).children("i").addClass("green").removeClass("circular");$(this).find(".description").css("color","#21ba45");$(this).transition("pulse","400ms");' );
 		$this->jquery->mouseleave ( "#admin-elements .item", '$(this).children("i").removeClass("green").addClass("circular");$(this).find(".description").css("color","");' );
@@ -316,6 +348,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 				throw $e;
 				$this->showSimpleMessage ( "Models cache is not created!&nbsp;", "error", "Exception", "warning circle", null, "errorMsg" );
 			}
+			$config = Startup::getConfig ();
+			CacheManager::start ( $config );
+			$this->_checkModelsUpdates ( $config, false );
+
 			$this->jquery->compile ( $this->view );
 			$this->loadView ( $this->_getFiles ()->getViewDataIndex () );
 		} else {
@@ -387,6 +423,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		if (isset ( $_POST ["filter"] ))
 			$this->jquery->exec ( "$(\"tr:contains('" . $_POST ["filter"] . "')\").addClass('warning');", true );
 		$this->addNavigationTesting ();
+		$config = Startup::getConfig ();
+		CacheManager::start ( $config );
+		$this->_checkRouterUpdates ( $config, false );
+
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( $this->_getFiles ()->getViewRoutesIndex (), [ "url" => Startup::getConfig () ["siteUrl"] ] );
 	}

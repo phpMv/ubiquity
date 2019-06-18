@@ -66,6 +66,28 @@ trait ModelsCacheTrait {
 	}
 
 	/**
+	 * Checks if the models cache is up to date
+	 *
+	 * @param array $config
+	 * @return boolean|array
+	 */
+	public static function modelsCacheUpdated(&$config) {
+		$result = false;
+		$files = self::getModelsFiles ( $config, true );
+		foreach ( $files as $file ) {
+			if (is_file ( $file )) {
+				$model = ClassUtils::getClassFullNameFromFile ( $file );
+				$p = new ModelParser ();
+				$p->parse ( $model );
+				if (self::getOrmModelCache ( $model ) != $p->asArray ()) {
+					$result [$model] = true;
+				}
+			}
+		}
+		return $result;
+	}
+
+	/**
 	 * Returns an array of files corresponding to models
 	 *
 	 * @param array $config
