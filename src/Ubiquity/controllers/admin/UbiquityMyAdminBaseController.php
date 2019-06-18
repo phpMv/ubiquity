@@ -366,9 +366,9 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	public function controllers() {
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "controllers" );
-		$controllersNS = Startup::getNS ( 'controllers' );
-		$controllersDir = \ROOT . str_replace ( "\\", \DS, $controllersNS );
 		if (array_search ( 'controllers', $this->config ['info'] ) === false) {
+			$controllersNS = Startup::getNS ( 'controllers' );
+			$controllersDir = \ROOT . str_replace ( "\\", \DS, $controllersNS );
 			$this->showSimpleMessage ( "Controllers directory is <b>" . UFileSystem::cleanPathname ( $controllersDir ) . "</b>", "info", null, "info circle", null, "msgControllers", "controllers" );
 		}
 		$frm = $this->jquery->semantic ()->htmlForm ( "frmCtrl" );

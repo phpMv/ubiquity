@@ -10,7 +10,7 @@ class MicroTemplateEngine extends TemplateEngine {
 	private $viewsFolder;
 
 	public function __construct() {
-		$this->viewsFolder=\ROOT . \DS . "views" . \DS;
+		$this->viewsFolder = \ROOT . \DS . "views" . \DS;
 	}
 
 	/*
@@ -18,25 +18,30 @@ class MicroTemplateEngine extends TemplateEngine {
 	 * @see TemplateEngine::render()
 	 */
 	public function render($viewName, $pData, $asString) {
-		$config=Startup::getConfig();
-		$fileName=$this->viewsFolder . $viewName;
-		if (is_array($pData)) {
-			extract($pData);
+		$config = Startup::getConfig (); // eventually used in template code
+		$fileName = $this->viewsFolder . $viewName;
+		if (\is_array ( $pData )) {
+			\extract ( $pData );
 		}
-		$tpl=new TemplateParser($fileName);
-		$content=eval('?>' . $tpl->__toString());
+		$tpl = new TemplateParser ( $fileName );
+		$content = eval ( '?>' . $tpl->__toString () );
 		if ($asString)
 			return $content;
 		else
 			echo $content;
 	}
+
 	public function getBlockNames($templateName) {
-		return [];
-	}
-	
-	public function getCode($templateName){
-		$fileName=$this->viewsFolder . $templateName;
-		return UFileSystem::load($fileName);
+		return [ ];
 	}
 
+	public function getCode($templateName) {
+		$fileName = $this->viewsFolder . $templateName;
+		return UFileSystem::load ( $fileName );
+	}
+
+	public function exists($name) {
+		$filename = $this->viewsFolder . $name;
+		return \file_exists ( $filename );
+	}
 }
