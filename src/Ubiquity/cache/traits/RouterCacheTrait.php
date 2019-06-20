@@ -16,7 +16,7 @@ use Ubiquity\controllers\di\DiManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
@@ -172,10 +172,10 @@ trait RouterCacheTrait {
 		return $result;
 	}
 
-	public static function addRoute($path, $controller, $action = "index", $methods = null, $name = "") {
-		$controllerCache = self::getControllerCache ();
-		Router::addRouteToRoutes ( $controllerCache, $path, $controller, $action, $methods, $name );
-		self::$cache->store ( "controllers/routes.default", "return " . UArray::asPhpArray ( $controllerCache, "array" ) . ";", 'controllers' );
+	public static function addRoute($path, $controller, $action = "index", $methods = null, $name = "", $isRest = false, $priority = 0, $callback = null) {
+		$controllerCache = self::getControllerCache ( $isRest );
+		Router::addRouteToRoutes ( $controllerCache, $path, $controller, $action, $methods, $name, false, null, [ ], $priority, $callback );
+		self::$cache->store ( 'controllers/routes.' . ($isRest ? 'rest' : 'default'), "return " . UArray::asPhpArray ( $controllerCache, "array" ) . ";", 'controllers' );
 	}
 
 	public static function addRoutes($pathArray, $controller, $action = "index", $methods = null, $name = "") {

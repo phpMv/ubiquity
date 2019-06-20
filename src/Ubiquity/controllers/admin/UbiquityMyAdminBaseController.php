@@ -58,11 +58,13 @@ use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\yuml\ClassToYuml;
 use Ubiquity\utils\yuml\ClassesToYuml;
 use Ubiquity\translation\TranslatorManager;
+use Ubiquity\controllers\admin\popo\MaintenanceMode;
+use Ubiquity\controllers\admin\traits\MaintenanceTrait;
 
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
 	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait,
-	LogsTrait,InsertJqueryTrait,ThemesTrait,TranslateTrait;
+	LogsTrait,InsertJqueryTrait,ThemesTrait,TranslateTrait,MaintenanceTrait;
 
 	/**
 	 *
@@ -94,18 +96,35 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	 */
 	private $scaffold;
 	private $globalMessage;
-	protected $config = [ 'devtools-path' => 'Ubiquity' ];
-	protected $configFile = ROOT . DS . 'config' . DS . 'adminConfig.php';
+	protected $config;
+	protected static $configFile = ROOT . DS . 'config' . DS . 'adminConfig.php';
+
+	public static function getConfigFile() {
+		$defaultConfig = [
+							'devtools-path' => 'Ubiquity',
+							'info' => [ ],
+							'display-cache-types' => [ 'controllers','models' ],
+							'maintenance' => [
+												'on' => 'maintenance',
+												'modes' => [
+															'maintenance' => [
+																				'excluded' => [ 'urls' => [ 'admin','Admin' ],'ports' => [ 8080,8090 ],'hosts' => [ '127.0.0.1' ] ],
+																				'controller' => "controllers\\MaintenanceController",
+																				'action' => 'index',
+																				'title' => 'Maintenance mode',
+																				'message' => 'Our application is currently undergoing shedeled maintenance.<br>Thank you for your understanding.' ] ] ] ];
+		if (file_exists ( self::$configFile )) {
+			$config = include (self::$configFile);
+			return \array_replace ( $defaultConfig, $config );
+		}
+		return $defaultConfig;
+	}
 
 	public function __construct() {
 		parent::__construct ();
 		DAO::$transformerOp = 'toView';
 		$this->insertJquerySemantic ();
-		if (file_exists ( $this->configFile )) {
-			$this->config = include ($this->configFile);
-			$this->config ['info'] = $this->config ['info'] ?? [ ];
-			$this->config ['display-cache-types'] = $this->config ['display-cache-types'] ?? [ 'controllers','models' ];
-		}
+		$this->config = self::getConfigFile ();
 	}
 
 	public function initialize() {
@@ -1186,6 +1205,23 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 
 	public function saveConfig() {
 		$content = "<?php\nreturn " . UArray::asPhpArray ( $this->config, "array", 1, true ) . ";";
-		return UFileSystem::save ( $this->configFile, $content );
+		return UFileSystem::save ( self::$configFile, $content );
+	}
+
+	public function maintenance() {
+		$this->getHeader ( "maintenance" );
+		$maintenance = $this->config ['maintenance'];
+		$active = MaintenanceMode::getActiveMaintenance ( $maintenance );
+		$dt = $this->jquery->semantic ()->dataTable ( 'dtMaintenance', MaintenanceMode::class, MaintenanceMode::manyFromArray ( $maintenance ) );
+		$dt->setFields ( [ 'id','title','active' ] );
+		$dt->fieldAsCheckbox ( 'active' );
+		$dt->setIdentifierFunction ( 'getId' );
+		$dt->setActiveRowSelector ();
+		$dt->getOnRow ( 'click', $this->_getFiles ()->getAdminBaseRoute () . '/_displayMaintenance/', '#maintenance', [ 'attr' => 'data-ajax' ] );
+		$display = "";
+		if (isset ( $active )) {
+			$display = $this->_displayActiveMaintenance ( $active );
+		}
+		$this->jquery->renderView ( $this->_getFiles ()->getViewMaintenanceIndex (), [ 'active' => $display ] );
 	}
 }

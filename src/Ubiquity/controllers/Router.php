@@ -16,7 +16,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class Router {
@@ -186,6 +186,12 @@ class Router {
 		}
 		if (! $cached || ! $cachedResponse) {
 			Logger::info ( 'Router', sprintf ( 'Route found for %s : %s', $routeArray ["path"], $resultStr ), 'getRouteUrlParts' );
+			if (isset ( $routeDetails ['callback'] )) {
+				// Used for maintenance mode
+				if (is_callable ( $routeDetails ['callback'] )) {
+					return $routeDetails ['callback'] ( $result );
+				}
+			}
 			return $result;
 		}
 		Logger::info ( 'Router', sprintf ( 'Route found for %s (from cache) : %s', $routeArray ["path"], $resultStr ), 'getRouteUrlParts' );

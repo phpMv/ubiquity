@@ -5,6 +5,14 @@ namespace Ubiquity\controllers\traits;
 use Ubiquity\cache\parser\ControllerParser;
 use Ubiquity\cache\parser\CallableParser;
 
+/**
+ * Ubiquity\controllers\traits$RouterModifierTrait
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.1
+ *
+ */
 trait RouterModifierTrait {
 
 	/**
@@ -22,16 +30,16 @@ trait RouterModifierTrait {
 		self::addRouteToRoutes ( self::$routes, $path, $controller, $action, $methods, $name, $cache, $duration, $requirements, $priority );
 	}
 
-	public static function addRouteToRoutes(&$routesArray, $path, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = [], $priority = 0) {
+	public static function addRouteToRoutes(&$routesArray, $path, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = [], $priority = 0, $callback = null) {
 		if (\class_exists ( $controller )) {
 			$method = new \ReflectionMethod ( $controller, $action );
-			self::_addRoute ( $method, $routesArray, $path, $controller, $action, $methods, $name, $cache, $duration, $requirements, $priority );
+			self::_addRoute ( $method, $routesArray, $path, $controller, $action, $methods, $name, $cache, $duration, $requirements, $priority, $callback );
 		}
 	}
 
-	private static function _addRoute(\ReflectionMethod $method, &$routesArray, $path, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = [], $priority = 0) {
+	private static function _addRoute(\ReflectionMethod $method, &$routesArray, $path, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = [], $priority = 0, $callback = null) {
 		$result = [ ];
-		ControllerParser::parseRouteArray ( $result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration,"requirements" => $requirements,"priority" => $priority ], $method, $action );
+		ControllerParser::parseRouteArray ( $result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration,"requirements" => $requirements,"priority" => $priority,"callback" => $callback ], $method, $action );
 		foreach ( $result as $k => $v ) {
 			$routesArray [$k] = $v;
 		}

@@ -14,7 +14,7 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class ControllerParser {
@@ -40,7 +40,7 @@ class ControllerParser {
 				// When controllerClass generates an exception
 			}
 			$this->rest = \sizeof ( $restAnnotsClass ) > 0;
-			if (isset($annotsClass) && \sizeof ( $annotsClass ) > 0) {
+			if (isset ( $annotsClass ) && \sizeof ( $annotsClass ) > 0) {
 				$this->mainRouteClass = $annotsClass [0];
 				$inherited = $this->mainRouteClass->inherited;
 				$automated = $this->mainRouteClass->automated;
@@ -132,19 +132,28 @@ class ControllerParser {
 		$path = $pathParameters ["path"];
 		$parameters = $pathParameters ["parameters"];
 		$priority = $routeArray ["priority"];
+		$callback = $routeArray ["callback"] ?? null;
 		$path = self::cleanpath ( $prefix, $path );
 		if (isset ( $routeArray ["methods"] ) && \is_array ( $routeArray ["methods"] )) {
-			self::createRouteMethod ( $result, $controllerClass, $path, $routeArray ["methods"], $methodName, $parameters, $name, $cache, $duration, $priority );
+			self::createRouteMethod ( $result, $controllerClass, $path, $routeArray ["methods"], $methodName, $parameters, $name, $cache, $duration, $priority, $callback );
 		} elseif (\is_array ( $httpMethods )) {
-			self::createRouteMethod ( $result, $controllerClass, $path, $httpMethods, $methodName, $parameters, $name, $cache, $duration, $priority );
+			self::createRouteMethod ( $result, $controllerClass, $path, $httpMethods, $methodName, $parameters, $name, $cache, $duration, $priority, $callback );
 		} else {
-			$result [$path] = [ "controller" => $controllerClass,"action" => $methodName,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration,"priority" => $priority ];
+			$v = [ "controller" => $controllerClass,"action" => $methodName,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration,"priority" => $priority ];
+			if (isset ( $callback )) {
+				$v ['callback'] = $callback;
+			}
+			$result [$path] = $v;
 		}
 	}
 
-	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority) {
+	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority, $callback = null) {
 		foreach ( $httpMethods as $httpMethod ) {
-			$result [$path] [$httpMethod] = [ "controller" => $controllerClass,"action" => $method,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration,"priority" => $priority ];
+			$v = [ "controller" => $controllerClass,"action" => $method,"parameters" => $parameters,"name" => $name,"cache" => $cache,"duration" => $duration,"priority" => $priority ];
+			if (isset ( $callback )) {
+				$v ['callback'] = $callback;
+			}
+			$result [$path] [$httpMethod] = $v;
 		}
 	}
 

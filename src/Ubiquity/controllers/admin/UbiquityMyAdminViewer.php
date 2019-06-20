@@ -78,7 +78,8 @@ class UbiquityMyAdminViewer {
 				"seo" => [ "Seo","google","Search Engine Optimization" ],
 				"logs" => [ "Logs","bug","Log files" ],
 				"translate" => [ "Translate","language","Translation module" ],
-				"themes" => [ "Themes","paint brush","Themes module" ] ];
+				"themes" => [ "Themes","paint brush","Themes module" ],
+				"maintenance" => [ "Maintenance","recycle","Manages maintenance modes" ] ];
 	}
 
 	public function getRoutesDataTable($routes, $dtName = "dtRoutes") {
@@ -193,29 +194,32 @@ class UbiquityMyAdminViewer {
 	public function getActionViews($controllerFullname, $controller, $action, \ReflectionMethod $r, $lines) {
 		$result = [ ];
 		$loadedViews = UIntrospection::getLoadedViews ( $r, $lines );
+		$templateEngine = Startup::getTempateEngineInstance ();
 		foreach ( $loadedViews as $view ) {
-			if (\file_exists ( \ROOT . \DS . "views" . \DS . $view )) {
-				$lbl = new HtmlLabel ( "lbl-view-" . $controller . $action . $view, $view, "browser", "span" );
-				$lbl->addClass ( "violet" );
-				$lbl->addPopupHtml ( "<i class='icon info circle green'></i>&nbsp;<b>" . $view . "</b> is ok." );
+			if ($templateEngine->exists ( $view )) {
+				$lbl = new HtmlLabel ( "lbl-view-" . $controller . $action . $view, null, "browser", "span" );
+				$lbl->addClass ( "violet tag" );
+				$lbl->addPopupHtml ( "<i class='icon info circle green'></i>&nbsp;<b>" . $view . "</b> is ok.", "wide" );
 			} else {
-				$lbl = new HtmlLabel ( "lbl-view-" . $controller . $action . $view, $view, "warning", "span" );
-				$lbl->addClass ( "orange" );
-				$lbl->addPopupHtml ( "<i class='icon warning circle'></i>&nbsp;<b>" . $view . "</b> file is missing." );
+				$lbl = new HtmlLabel ( "lbl-view-" . $controller . $action . $view, null, "warning", "span" );
+				$lbl->addClass ( "orange tag" );
+				$lbl->addPopupHtml ( "<i class='icon red warning circle'></i>&nbsp;<b>" . $view . "</b> file is missing.", 'very wide' );
 			}
 			$result [] = $lbl;
 		}
 		$viewname = $controller . "/" . $action . ".html";
 		if (! \file_exists ( \ROOT . \DS . "views" . \DS . $viewname )) {
-			$bt = new HtmlButton ( "", "Create view " . $viewname );
+			$bt = new HtmlButton ( "" );
 			$bt->setProperty ( "data-action", $action );
 			$bt->setProperty ( "data-controller", $controller );
 			$bt->setProperty ( "data-controllerFullname", $controllerFullname );
-			$bt->addClass ( "_create-view visibleover basic violet mini" )->setProperty ( "style", "visibility: hidden;" )->addIcon ( "plus" );
+			$bt->addClass ( "_create-view visibleover circular violet mini" )->setProperty ( "style", "visibility: hidden;" )->asIcon ( "plus" );
+			$bt->setProperty ( 'title', 'Create view ' . $viewname );
 			$result [] = $bt;
 		} elseif (\array_search ( $viewname, $loadedViews ) === false) {
-			$lbl = new HtmlLabel ( "lbl-view-" . $controller . $action . $viewname, $viewname, "browser", "span" );
-			$lbl->addPopupHtml ( "<i class='icon warning circle'></i>&nbsp;<b>" . $viewname . "</b> exists but is never loaded in action <b>" . $action . "</b>." );
+			$lbl = new HtmlLabel ( "lbl-view-" . $controller . $action . $viewname, null, "browser", "span" );
+			$lbl->addClass ( 'tag' );
+			$lbl->addPopupHtml ( "<i class='icon orange warning circle'></i>&nbsp;<b>" . $viewname . "</b> exists but is never loaded in action <b>" . $action . "</b>.", 'very wide' );
 			$result [] = $lbl;
 		}
 		return $result;

@@ -127,4 +127,8 @@ class UbiquityMyAdminFiles {
 	public function getViewThemesIndex() {
 		return $this->viewBase . "/themes/index.html";
 	}
+
+	public function getViewMaintenanceIndex() {
+		return $this->viewBase . "/maintenance/index.html";
+	}
 }
