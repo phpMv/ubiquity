@@ -109,9 +109,10 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 												'modes' => [
 															'maintenance' => [
 																				'excluded' => [ 'urls' => [ 'admin','Admin' ],'ports' => [ 8080,8090 ],'hosts' => [ '127.0.0.1' ] ],
-																				'controller' => "controllers\\MaintenanceController",
+																				'controller' => "\\controllers\\MaintenanceController",
 																				'action' => 'index',
 																				'title' => 'Maintenance mode',
+																				'icon' => 'recycle',
 																				'message' => 'Our application is currently undergoing shedeled maintenance.<br>Thank you for your understanding.' ] ] ] ];
 		if (file_exists ( self::$configFile )) {
 			$config = include (self::$configFile);
@@ -196,7 +197,9 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	protected function _checkRouterUpdates(&$config, $onMainPage) {
 		$caches = CacheManager::controllerCacheUpdated ( $config );
 		if (is_array ( $caches ) && sizeof ( $caches ) > 0) {
-			$this->_smallUpdateMessageCache ( $onMainPage, 'router', 'car', 'Updated controller files ', 'small compact', $onMainPage ? '_initCache/controllers' : 'initCacheRouter', $onMainPage ? '#router-refresh' : '#divRoutes' );
+			if (! $this->hasMaintenance ()) {
+				$this->_smallUpdateMessageCache ( $onMainPage, 'router', 'car', 'Updated controller files ', 'small compact', $onMainPage ? '_initCache/controllers' : 'initCacheRouter', $onMainPage ? '#router-refresh' : '#divRoutes' );
+			}
 		}
 	}
 
@@ -1209,19 +1212,35 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	}
 
 	public function maintenance() {
+		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "maintenance" );
 		$maintenance = $this->config ['maintenance'];
 		$active = MaintenanceMode::getActiveMaintenance ( $maintenance );
 		$dt = $this->jquery->semantic ()->dataTable ( 'dtMaintenance', MaintenanceMode::class, MaintenanceMode::manyFromArray ( $maintenance ) );
-		$dt->setFields ( [ 'id','title','active' ] );
-		$dt->fieldAsCheckbox ( 'active' );
+		$dt->setFields ( [ 'icon','id','title','active' ] );
+		$dt->fieldAsCheckbox ( 'active', [ 'type' => 'slider' ] );
+		$dt->fieldAsIcon ( 'icon' );
 		$dt->setIdentifierFunction ( 'getId' );
 		$dt->setActiveRowSelector ();
-		$dt->getOnRow ( 'click', $this->_getFiles ()->getAdminBaseRoute () . '/_displayMaintenance/', '#maintenance', [ 'attr' => 'data-ajax' ] );
+		$dt->getOnRow ( 'click', $baseRoute . '/_displayMaintenance/', '#maintenance', [ 'attr' => 'data-ajax' ] );
+		$dt->addDeleteButton ( true, [ 'hasLoader' => 'internal' ], function ($bt, $instance) {
+			if ($instance->getActive ()) {
+				$bt->setProperty ( 'disabled', 'disabled' );
+			} else {
+				$bt->setClass ( 'ui button visibleover icon _delete red' );
+				$bt->setProperty ( 'title', 'Delete the maintenance type' );
+			}
+		} );
+		$dt->setTargetSelector ( [ 'delete' => '#main-content' ] );
+		$dt->setUrls ( [ 'delete' => $baseRoute . '/_deleteMaintenanceById' ] );
+		$dt->onPreCompile ( function () use (&$dt) {
+			$dt->getHtmlComponent ()->colRightFromRight ( 0 );
+		} );
 		$display = "";
 		if (isset ( $active )) {
 			$display = $this->_displayActiveMaintenance ( $active );
 		}
+		$this->jquery->getOnClick ( '#add-maintenance-btn', $baseRoute . '/_addNewMaintenanceType', '#maintenance', [ 'hasLoader' => 'internal' ] );
 		$this->jquery->renderView ( $this->_getFiles ()->getViewMaintenanceIndex (), [ 'active' => $display ] );
 	}
 }
