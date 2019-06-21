@@ -289,7 +289,7 @@ trait CheckTrait {
 					$bt->addClass ( "disabled" );
 				break;
 			case "Cache" :
-				$buttons->addItem ( "(Re-)Init all models cache" )->getOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/_initModelsCache", "#main-content" )->addIcon ( "lightning" );
+				$buttons->addItem ( "(Re-)Init all models cache" )->getOnClick ( $this->_getFiles ()->getAdminBaseRoute () . "/_initCache/models/models", "#main-content" )->addIcon ( "lightning" );
 				break;
 		}
 		$nextStep = $this->getNextModelStep ();
