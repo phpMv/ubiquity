@@ -69,21 +69,25 @@ class ControllerAction {
 		foreach ( $files as $file ) {
 			if (is_file ( $file )) {
 				$controllerClass = ClassUtils::getClassFullNameFromFile ( $file );
-				if (class_exists ( $controllerClass, true ) && isset ( $restCtrls [$controllerClass] ) === false) {
-					self::$controllers [] = $controllerClass;
-					$reflect = new \ReflectionClass ( $controllerClass );
-					if (! $reflect->isAbstract () && $reflect->isSubclassOf ( Controller::class ) && ! $reflect->isSubclassOf ( SeoController::class )) {
-						$methods = $reflect->getMethods ( \ReflectionMethod::IS_PUBLIC );
-						foreach ( $methods as $method ) {
-							$r = self::scanMethod ( $controllerClass, $method );
-							if (isset ( $r ))
-								$result [] = $r;
-						}
-					}
-				}
+				self::initFromClassname ( $result, $controllerClass, $restCtrls );
 			}
 		}
 		return $result;
+	}
+
+	public static function initFromClassname(&$result, $controllerClass, $restCtrls = []) {
+		if (class_exists ( $controllerClass, true ) && isset ( $restCtrls [$controllerClass] ) === false) {
+			self::$controllers [] = $controllerClass;
+			$reflect = new \ReflectionClass ( $controllerClass );
+			if (! $reflect->isAbstract () && $reflect->isSubclassOf ( Controller::class ) && ! $reflect->isSubclassOf ( SeoController::class )) {
+				$methods = $reflect->getMethods ( \ReflectionMethod::IS_PUBLIC );
+				foreach ( $methods as $method ) {
+					$r = self::scanMethod ( $controllerClass, $method );
+					if (isset ( $r ))
+						$result [] = $r;
+				}
+			}
+		}
 	}
 
 	private static function scanMethod($controllerClass, \ReflectionMethod $method) {

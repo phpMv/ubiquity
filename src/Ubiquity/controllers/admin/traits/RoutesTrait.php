@@ -10,6 +10,7 @@ use Ubiquity\controllers\admin\popo\Route;
 use Ubiquity\controllers\Startup;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\exceptions\RestException;
+use Ubiquity\controllers\admin\popo\MaintenanceMode;
 
 /**
  *
@@ -33,6 +34,12 @@ trait RoutesTrait {
 		\ob_start ();
 		try {
 			CacheManager::initCache ( $config, "controllers" );
+			if ($this->hasMaintenance ()) {
+				$maintenance = MaintenanceMode::getActiveMaintenance ( $this->config ['maintenance'] );
+				if (isset ( $maintenance )) {
+					$maintenance->activate ();
+				}
+			}
 		} catch ( RestException $e ) {
 		}
 		$message = \ob_get_clean ();

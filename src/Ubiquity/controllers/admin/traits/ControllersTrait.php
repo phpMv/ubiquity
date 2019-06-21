@@ -11,8 +11,6 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\admin\utils\CodeUtils;
 use Ubiquity\controllers\admin\utils\Constants;
 use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\utils\base\UIntrospection;
-use Ubiquity\utils\base\UString;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 
@@ -79,6 +77,7 @@ trait ControllersTrait {
 
 	public function _newActionFrm() {
 		if (URequest::isPost ()) {
+			$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 			$controllers = CacheManager::getControllers ();
 			$controller = $_POST ["controller"];
 			$modal = $this->jquery->semantic ()->htmlModal ( "modalNewAction", "Creating a new action in controller" );
@@ -104,16 +103,16 @@ trait ControllersTrait {
 			$frm->addContent ( "</div>" );
 
 			$frm->setValidationParams ( [ "on" => "blur","inline" => true ] );
-			$frm->setSubmitParams ( $this->_getFiles ()->getAdminBaseRoute () . "/_newAction", "#messages" );
+			$frm->setSubmitParams ( $baseRoute . "/_newAction", "#messages" );
 			$modal->setContent ( $frm );
 			$modal->addAction ( "Validate" );
 			$this->jquery->click ( "#action-modalNewAction-0", "$('#frmNewAction').form('submit');", false, false );
 			$modal->addAction ( "Close" );
 			$this->jquery->exec ( "$('.dimmer.modals.page').html('');$('#modalNewAction').modal('show');", true );
-			$this->jquery->jsonOn ( "change", "#ck-add-route", $this->_getFiles ()->getAdminBaseRoute () . "/_addRouteWithNewAction", "post", [ "context" => "$('#frmNewAction')","params" => "$('#frmNewAction').serialize()","jsCondition" => "$('#ck-add-route').is(':checked')" ] );
-			$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkAction", $this->_getFiles ()->getAdminBaseRoute () . "/_methodExists", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ] ), true );
-			$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkContent", $this->_getFiles ()->getAdminBaseRoute () . "/_checkContent", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ] ), true );
-			$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkRoute", $this->_getFiles ()->getAdminBaseRoute () . "/_checkRoute", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ] ), true );
+			$this->jquery->jsonOn ( "change", "#ck-add-route", $baseRoute . "/_addRouteWithNewAction", "post", [ "context" => "$('#frmNewAction')","params" => "$('#frmNewAction').serialize()","jsCondition" => "$('#ck-add-route').is(':checked')" ] );
+			$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkAction", $baseRoute . "/_methodExists", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ] ), true );
+			$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkContent", $baseRoute . "/_checkContent", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ] ), true );
+			$this->jquery->exec ( Rule::ajax ( $this->jquery, "checkRoute", $baseRoute . "/_checkRoute", "{}", "result=data.result;", "postForm", [ "form" => "frmNewAction" ] ), true );
 			$this->jquery->change ( "#ck-add-route", "$('#div-new-route').toggle($(this).is(':checked'));" );
 			echo $modal;
 			echo $this->jquery->compile ( $this->view );

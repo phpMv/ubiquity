@@ -1,22 +1,17 @@
 <?php
+
 namespace Ubiquity\controllers\admin\popo;
 
 use Ubiquity\cache\CacheManager;
 
 class MaintenanceMode {
-
 	private $id;
-
 	private $excluded;
-
 	private $controller;
-
 	private $action;
-
 	private $title;
-
+	private $icon;
 	private $message;
-
 	private $active;
 
 	/**
@@ -84,51 +79,53 @@ class MaintenanceMode {
 	}
 
 	public static function fromArray($id, array $array) {
-		$maintenance = new MaintenanceMode();
-		$maintenance->setId($id);
-		foreach ($array as $k => $v) {
-			$accessor = 'set' . ucfirst($k);
-			$maintenance->$accessor($v);
+		$maintenance = new MaintenanceMode ();
+		$maintenance->setId ( $id );
+		foreach ( $array as $k => $v ) {
+			$accessor = 'set' . ucfirst ( $k );
+			if (method_exists ( $maintenance, $accessor )) {
+				$maintenance->$accessor ( $v );
+			}
 		}
 		return $maintenance;
 	}
 
 	public static function getActiveMaintenance(array $array) {
-		$modes = $array["modes"];
-		$active = $array["on"];
-		if (isset($modes[$active])) {
-			$m = self::fromArray($active, $modes[$active]);
-			$m->setActive(true);
+		$modes = $array ["modes"];
+		$active = $array ["on"];
+		if (isset ( $modes [$active] )) {
+			$m = self::fromArray ( $active, $modes [$active] );
+			$m->setActive ( true );
 			return $m;
 		}
 		return null;
 	}
 
 	public static function manyFromArray(array $array) {
-		$result = [];
-		$modes = $array["modes"];
-		$active = $array["on"];
-		foreach ($modes as $k => $maintArray) {
-			$maint = self::fromArray($k, $maintArray);
+		$result = [ ];
+		$modes = $array ["modes"];
+		$active = $array ["on"];
+		foreach ( $modes as $k => $maintArray ) {
+			$maint = self::fromArray ( $k, $maintArray );
 			if ($active == $k) {
-				$maint->setActive(true);
+				$maint->setActive ( true );
 			}
-			$result[$k] = $maint;
+			$result [$k] = $maint;
 		}
 		return $result;
 	}
 
 	public function activate() {
-		$urls = $this->excluded['urls'] ?? '';
+		$urls = $this->excluded ['urls'] ?? '';
 		$excluded = '';
-		if (is_array($urls)) {
-			$excluded = '(?!' . implode('|', $urls) . ')';
+		if (is_array ( $urls )) {
+			$excluded = '(?!' . implode ( '|', $urls ) . ')';
 		}
-		$servers = $this->excluded['hosts'] ?? [];
-		$ports = $this->excluded['ports'] ?? [];
-		CacheManager::addRoute('/(' . $excluded . '.*?)', $this->controller, $this->action, null, '', false, 10000, function ($r) use ($servers, $ports) {
-			return (array_search($_SERVER['SERVER_NAME'], $servers) !== false || array_search($_SERVER['SERVER_PORT'], $ports) !== false) ? false : $r;
-		});
+		$servers = $this->excluded ['hosts'] ?? [ ];
+		$ports = $this->excluded ['ports'] ?? [ ];
+		CacheManager::addRoute ( '/(' . $excluded . '.*?)', $this->controller, $this->action, null, $this->getId () . '-mode', false, 10000, function ($r) use ($servers, $ports) {
+			return (array_search ( $_SERVER ['SERVER_NAME'], $servers ) !== false || array_search ( $_SERVER ['SERVER_PORT'], $ports ) !== false) ? false : $r;
+		} );
 	}
 
 	/**
@@ -177,6 +174,34 @@ class MaintenanceMode {
 	 */
 	public function setAction($action) {
 		$this->action = $action;
+	}
+
+	public function getHosts() {
+		return $this->excluded ['hosts'] ?? [ ];
+	}
+
+	public function getUrls() {
+		return $this->excluded ['urls'] ?? [ ];
+	}
+
+	public function getPorts() {
+		return $this->excluded ['ports'] ?? [ ];
+	}
+
+	/**
+	 *
+	 * @return mixed
+	 */
+	public function getIcon() {
+		return $this->icon;
+	}
+
+	/**
+	 *
+	 * @param mixed $icon
+	 */
+	public function setIcon($icon) {
+		$this->icon = $icon;
 	}
 }
 
