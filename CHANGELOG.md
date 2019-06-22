@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 ### Added
 - Web-tools
+  - Maintenance mode (see https://github.com/phpMv/ubiquity/issues/49)
   - Updates checking for caches
   - Customization (tools)
 
