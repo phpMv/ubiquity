@@ -61,6 +61,10 @@ use Ubiquity\translation\TranslatorManager;
 use Ubiquity\controllers\admin\popo\MaintenanceMode;
 use Ubiquity\controllers\admin\traits\MaintenanceTrait;
 
+/**
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ */
 class UbiquityMyAdminBaseController extends Controller implements HasModelViewerInterface {
 	use MessagesTrait,ModelsTrait,ModelsConfigTrait,RestTrait,CacheTrait,ConfigTrait,
 	ControllersTrait,RoutesTrait,DatabaseTrait,SeoTrait,GitTrait,CreateControllersTrait,
@@ -247,6 +251,9 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		CacheManager::start ( $config );
 		$this->_checkModelsUpdates ( $config, true );
 		$this->_checkRouterUpdates ( $config, true );
+		if ($this->hasMaintenance ()) {
+			$this->_smallMaintenanceActive ( true, MaintenanceMode::getActiveMaintenance ( $this->config ["maintenance"] ) );
+		}
 		$this->jquery->getOnClick ( "#bt-customize", $baseRoute . "/indexCustomizing", "#dialog", [ 'hasLoader' => 'internal','jsCallback' => '$("#admin-elements").hide();$("#bt-customize").addClass("active");' ] );
 		$this->jquery->mouseenter ( "#admin-elements .item", '$(this).children("i").addClass("green").removeClass("circular");$(this).find(".description").css("color","#21ba45");$(this).transition("pulse","400ms");' );
 		$this->jquery->mouseleave ( "#admin-elements .item", '$(this).children("i").removeClass("green").addClass("circular");$(this).find(".description").css("color","");' );
@@ -1214,6 +1221,8 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 	public function maintenance() {
 		$baseRoute = $this->_getFiles ()->getAdminBaseRoute ();
 		$this->getHeader ( "maintenance" );
+		$this->showSimpleMessage ( "This part is very recent, do not hesitate to submit your feedback in this <a target='_blank' href='https://github.com/phpMv/ubiquity/issues/49'>github issue</a> in case of problems.", "info", "Maintenance", "info circle", null, "msgGlobal" );
+
 		$maintenance = $this->config ['maintenance'];
 		$active = MaintenanceMode::getActiveMaintenance ( $maintenance );
 		$dt = $this->jquery->semantic ()->dataTable ( 'dtMaintenance', MaintenanceMode::class, MaintenanceMode::manyFromArray ( $maintenance ) );
@@ -1223,7 +1232,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 		$dt->setIdentifierFunction ( 'getId' );
 		$dt->setActiveRowSelector ();
 		$dt->getOnRow ( 'click', $baseRoute . '/_displayMaintenance/', '#maintenance', [ 'attr' => 'data-ajax' ] );
-		$dt->addDeleteButton ( true, [ 'hasLoader' => 'internal' ], function ($bt, $instance) {
+		$dt->addDeleteButton ( true, [ 'hasLoader' => 'internal','jqueryDone' => 'prepend' ], function ($bt, $instance) {
 			if ($instance->getActive ()) {
 				$bt->setProperty ( 'disabled', 'disabled' );
 			} else {
@@ -1231,10 +1240,15 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 				$bt->setProperty ( 'title', 'Delete the maintenance type' );
 			}
 		} );
-		$dt->setTargetSelector ( [ 'delete' => '#main-content' ] );
+		$dt->setTargetSelector ( [ 'delete' => '#maintenance' ] );
 		$dt->setUrls ( [ 'delete' => $baseRoute . '/_deleteMaintenanceById' ] );
 		$dt->onPreCompile ( function () use (&$dt) {
 			$dt->getHtmlComponent ()->colRightFromRight ( 0 );
+		} );
+		$dt->onNewRow ( function ($tr, $instance) {
+			if ($instance->getActive ()) {
+				$tr->addClass ( 'positive' );
+			}
 		} );
 		$display = "";
 		if (isset ( $active )) {

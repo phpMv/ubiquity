@@ -42,6 +42,8 @@ trait ModelsTrait {
 
 	abstract protected function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null): HtmlMessage;
 
+	abstract public function showConfMessage($content, $type, $title, $icon, $url, $responseElement, $data, $attributes = NULL): HtmlMessage;
+
 	public function showModel($model, $id = null) {
 		$model = str_replace ( ".", "\\", $model );
 		$adminRoute = $this->_getFiles ()->getAdminBaseRoute ();
