@@ -117,7 +117,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 																				'action' => 'index',
 																				'title' => 'Maintenance mode',
 																				'icon' => 'recycle',
-																				'message' => 'Our application is currently undergoing shedeled maintenance.<br>Thank you for your understanding.' ] ] ] ];
+																				'message' => 'Our application is currently undergoing sheduled maintenance.<br>Thank you for your understanding.' ] ] ] ];
 		if (file_exists ( self::$configFile )) {
 			$config = include (self::$configFile);
 			return \array_replace ( $defaultConfig, $config );
