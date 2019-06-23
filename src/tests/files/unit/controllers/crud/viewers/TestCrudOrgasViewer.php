@@ -1,18 +1,20 @@
 <?php
+
 namespace controllers\crud\viewers;
 
-use Ubiquity\controllers\admin\viewers\ModelViewer;
- /**
+use Ubiquity\controllers\crud\viewers\ModelViewer;
+
+/**
  * Class TestCrudOrgasViewer
- **/
-class TestCrudOrgasViewer extends ModelViewer{
+ */
+class TestCrudOrgasViewer extends ModelViewer {
+
 	/**
-	 * {@inheritDoc}
-	 * @see \Ubiquity\controllers\admin\viewers\ModelViewer::getDataTableRowButtons()
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\controllers\crud\viewers\ModelViewer::getDataTableRowButtons()
 	 */
 	protected function getDataTableRowButtons() {
-		return ["display","edit","delete"];
+		return [ "display","edit","delete" ];
 	}
-
-
 }
