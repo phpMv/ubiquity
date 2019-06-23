@@ -4,6 +4,7 @@
 		"twig\/twig": "^2.0",
 		"mindplay\/annotations": "^1.3",
 		"phpmv\/php-mv-ui": "dev-master",
+		"phpmv\/ubiquity": "dev-master",
 		"codeception/c3": "^2.4",
 		"codeception/codeception": "^2.5",
 		"phpmv/ubiquity-codeception": "1.0.x-dev"
