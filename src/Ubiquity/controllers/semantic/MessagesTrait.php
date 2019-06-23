@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\controllers\semantic;
 
 use Ajax\semantic\html\elements\HtmlButton;
@@ -7,7 +8,7 @@ use Ajax\semantic\html\elements\HtmlDivider;
 use Ajax\semantic\html\base\HtmlSemDoubleElement;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ubiquity\controllers\crud\CRUDMessage;
-use Ubiquity\controllers\admin\viewers\ModelViewer;
+use Ubiquity\controllers\crud\viewers\ModelViewer;
 
 /**
  *
@@ -24,52 +25,45 @@ trait MessagesTrait {
 	abstract public function _getModelViewer();
 
 	protected function _showSimpleMessage(CRUDMessage $message, $staticName = null): HtmlMessage {
-		return $this->showSimpleMessage($message->getMessage(), $message->getType(), $message->getTitle(), $message->getIcon(), $message->getTimeout(), $staticName);
+		return $this->showSimpleMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $message->getTimeout (), $staticName );
 	}
 
 	public function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null, $closeAction = null): HtmlMessage {
-		$semantic = $this->jquery->semantic();
-		if (! isset($staticName))
-			$staticName = "msg-" . rand(0, 50);
-		$message = $semantic->htmlMessage($staticName, $content, $type);
-		if (isset($title)) {
-			$message->addHeader($title);
+		$semantic = $this->jquery->semantic ();
+		if (! isset ( $staticName ))
+			$staticName = "msg-" . rand ( 0, 50 );
+		$message = $semantic->htmlMessage ( $staticName, $content, $type );
+		if (isset ( $title )) {
+			$message->addHeader ( $title );
 		}
-		if (isset($icon)) {
-			$message->setIcon($icon);
+		if (isset ( $icon )) {
+			$message->setIcon ( $icon );
 		}
 		if ($timeout !== '') {
-			$message->setDismissable();
+			$message->setDismissable ();
 		}
 		if ($timeout != null) {
-			$message->setTimeout(3000);
-		} elseif (isset($closeAction)) {
-			$message->getOnClose($this->_getFiles()
-				->getAdminBaseRoute() . "/_closeMessage/" . $closeAction);
+			$message->setTimeout ( 3000 );
+		} elseif (isset ( $closeAction )) {
+			$message->getOnClose ( $this->_getFiles ()->getAdminBaseRoute () . "/_closeMessage/" . $closeAction );
 		}
 		return $message;
 	}
 
 	protected function _showConfMessage(CRUDMessage $message, $url, $responseElement, $data, $attributes = NULL): HtmlMessage {
-		return $this->showConfMessage($message->getMessage(), $message->getType(), $message->getTitle(), $message->getIcon(), $url, $responseElement, $data, $attributes);
+		return $this->showConfMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $url, $responseElement, $data, $attributes );
 	}
 
 	public function showConfMessage($content, $type, $title, $icon, $url, $responseElement, $data, $attributes = NULL): HtmlMessage {
-		$messageDlg = $this->showSimpleMessage($content, $type, $title, $icon);
-		$btOkay = new HtmlButton("bt-okay", "Confirm", "negative");
-		$btOkay->addIcon("check circle");
-		$btOkay->postOnClick($url, "{data:'" . $data . "'}", $responseElement, $attributes);
-		$btCancel = new HtmlButton("bt-cancel-" . UString::cleanAttribute($url), "Cancel");
-		$btCancel->addIcon("remove circle outline");
-		$btCancel->onClick($messageDlg->jsHide());
-		$messageDlg->addContent([
-			new HtmlDivider(""),
-			new HtmlSemDoubleElement("", "div", "", [
-				$btOkay->floatRight(),
-				$btCancel->floatRight()
-			])
-		]);
-		$this->_getModelViewer()->onConfirmButtons($btOkay, $btCancel);
+		$messageDlg = $this->showSimpleMessage ( $content, $type, $title, $icon );
+		$btOkay = new HtmlButton ( "bt-okay", "Confirm", "negative" );
+		$btOkay->addIcon ( "check circle" );
+		$btOkay->postOnClick ( $url, "{data:'" . $data . "'}", $responseElement, $attributes );
+		$btCancel = new HtmlButton ( "bt-cancel-" . UString::cleanAttribute ( $url ), "Cancel" );
+		$btCancel->addIcon ( "remove circle outline" );
+		$btCancel->onClick ( $messageDlg->jsHide () );
+		$messageDlg->addContent ( [ new HtmlDivider ( "" ),new HtmlSemDoubleElement ( "", "div", "", [ $btOkay->floatRight (),$btCancel->floatRight () ] ) ] );
+		$this->_getModelViewer ()->onConfirmButtons ( $btOkay, $btCancel );
 		return $messageDlg;
 	}
 }

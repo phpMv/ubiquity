@@ -34,7 +34,7 @@ trait ModelsTrait {
 
 	/**
 	 *
-	 * @return \Ubiquity\controllers\admin\viewers\ModelViewer
+	 * @return \Ubiquity\controllers\crud\viewers\ModelViewer
 	 */
 	abstract public function _getModelViewer();
 

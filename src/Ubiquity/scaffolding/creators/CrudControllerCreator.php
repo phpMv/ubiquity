@@ -50,7 +50,7 @@ class CrudControllerCreator extends BaseControllerCreator {
 
 		if (isset ( $this->crudViewer )) {
 			$uses [] = "use controllers\\crud\\viewers\\{$crudControllerName}Viewer;";
-			$uses [] = "use Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
+			$uses [] = "use Ubiquity\\controllers\\crud\\viewers\\ModelViewer;";
 
 			$classContent .= $scaffoldController->_createMethod ( "protected", "getModelViewer", "", ": ModelViewer", "\t\treturn new {$crudControllerName}Viewer(\$this);" );
 			$messages [] = $this->createModelViewerClass ();
@@ -101,7 +101,7 @@ class CrudControllerCreator extends BaseControllerCreator {
 
 	protected function createModelViewerClass() {
 		$ns = $this->controllerNS . "crud\\viewers";
-		$uses = "\nuse Ubiquity\\controllers\\admin\\viewers\\ModelViewer;";
+		$uses = "\nuse Ubiquity\\controllers\\crud\\viewers\\ModelViewer;";
 		return $this->scaffoldController->_createClass ( "class.tpl", $this->controllerName . "Viewer", $ns, $uses, "extends ModelViewer", "\t//use override/implement Methods" );
 	}
 
