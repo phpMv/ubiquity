@@ -308,7 +308,7 @@ class ModelViewer {
 	 * @param mixed $objectFK
 	 * @param string $fkClass
 	 * @param string $fkTable
-	 * @return string|NULL
+	 * @return \Ajax\semantic\html\elements\HtmlHeader[]|\Ajax\common\html\BaseHtml[]|NULL
 	 */
 	public function getFkMemberElementDetails($memberFK, $objectFK, $fkClass, $fkTable) {
 		$_fkClass = str_replace ( "\\", ".", $fkClass );

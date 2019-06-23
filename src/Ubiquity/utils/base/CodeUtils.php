@@ -130,8 +130,8 @@ class CodeUtils {
 						return $response;
 					}
 				} else if (substr ( $path, strlen ( $path ) - strlen ( 'php.exe' ) ) == 'php.exe') {
-					if (is_file ( $response )) {
-						return $response;
+					if (is_file ( $path )) {
+						return $path;
 					}
 				}
 			}
