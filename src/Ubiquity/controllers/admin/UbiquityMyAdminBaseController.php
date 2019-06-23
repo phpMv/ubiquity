@@ -109,7 +109,7 @@ class UbiquityMyAdminBaseController extends Controller implements HasModelViewer
 							'info' => [ ],
 							'display-cache-types' => [ 'controllers','models' ],
 							'maintenance' => [
-												'on' => 'maintenance',
+												'on' => false,
 												'modes' => [
 															'maintenance' => [
 																				'excluded' => [ 'urls' => [ 'admin','Admin' ],'ports' => [ 8080,8090 ],'hosts' => [ '127.0.0.1' ] ],

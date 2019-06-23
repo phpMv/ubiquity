@@ -14,6 +14,7 @@ use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\base\UFileSystem;
 use Ajax\semantic\html\elements\HtmlSegment;
 use Ajax\semantic\html\elements\HtmlLabel;
+use Ubiquity\controllers\semantic\InsertJqueryTrait;
 
 /**
  *
@@ -22,6 +23,7 @@ use Ajax\semantic\html\elements\HtmlLabel;
  *
  */
 abstract class DefaultMaintenance extends ControllerBase {
+	use InsertJqueryTrait;
 	protected $activeMaintenance;
 	protected $savedir = 'database';
 	protected $hasTimer;
@@ -81,6 +83,7 @@ abstract class DefaultMaintenance extends ControllerBase {
 
 	public function __construct() {
 		parent::__construct ();
+		$this->insertJquerySemantic ();
 		$config = Admin::getConfigFile () ['maintenance'];
 		$this->activeMaintenance = MaintenanceMode::getActiveMaintenance ( $config );
 	}
