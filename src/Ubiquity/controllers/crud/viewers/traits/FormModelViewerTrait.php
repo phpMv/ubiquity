@@ -7,8 +7,11 @@ use Ajax\semantic\html\collections\form\HtmlFormInput;
 use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\HtmlIconGroups;
 use Ajax\semantic\widgets\dataform\DataForm;
-use Ubiquity\orm\OrmUtils;
+use Ajax\service\JArray;
 use Ubiquity\controllers\crud\EditMemberParams;
+use Ubiquity\orm\DAO;
+use Ubiquity\orm\OrmUtils;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
  * Associated with a CRUDController class (part of ModelViewer)

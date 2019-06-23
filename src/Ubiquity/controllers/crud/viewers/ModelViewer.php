@@ -5,17 +5,12 @@ namespace Ubiquity\controllers\crud\viewers;
 use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\HtmlHeader;
 use Ajax\semantic\html\elements\HtmlLabel;
-use Ajax\semantic\widgets\dataform\DataForm;
 use Ajax\semantic\widgets\datatable\DataTable;
 use Ajax\semantic\widgets\datatable\PositionInTable;
-use Ajax\service\JArray;
 use Ubiquity\controllers\crud\CRUDHelper;
-use Ubiquity\controllers\crud\EditMemberParams;
 use Ubiquity\controllers\crud\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\crud\viewers\traits\FormModelViewerTrait;
-use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UString;
 
 /**
