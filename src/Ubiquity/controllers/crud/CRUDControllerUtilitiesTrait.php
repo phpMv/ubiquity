@@ -4,11 +4,11 @@ namespace Ubiquity\controllers\crud;
 
 use Ubiquity\utils\http\URequest;
 use Ubiquity\orm\DAO;
-use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ajax\semantic\widgets\datatable\Pagination;
 use Ajax\common\html\HtmlContentOnly;
 use Ubiquity\orm\OrmUtils;
 use Ajax\semantic\html\collections\HtmlMessage;
+use Ubiquity\controllers\crud\viewers\ModelViewer;
 
 /**
  *

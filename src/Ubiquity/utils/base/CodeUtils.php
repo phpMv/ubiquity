@@ -1,9 +1,15 @@
 <?php
 
-namespace Ubiquity\controllers\admin\utils;
+namespace Ubiquity\utils\base;
 
-use Ubiquity\utils\base\UString;
-
+/**
+ * Ubiquity\utils\base$CodeUtils
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ *
+ */
 class CodeUtils {
 
 	public static function cleanParameters($parameters) {
@@ -13,11 +19,11 @@ class CodeUtils {
 		foreach ( $params as $param ) {
 			$param = \trim ( $param );
 			$list = \explode ( "=", $param );
-			if(isset($list[0])){
-				$var=$list[0];
+			if (isset ( $list [0] )) {
+				$var = $list [0];
 			}
-			if(isset($list[1])){
-				$value=$list[1];
+			if (isset ( $list [1] )) {
+				$value = $list [1];
 			}
 			if (isset ( $var ) && isset ( $value )) {
 				$value = \trim ( $value );
@@ -41,11 +47,11 @@ class CodeUtils {
 		foreach ( $params as $param ) {
 			$param = \trim ( $param );
 			$list = \explode ( "=", $param );
-			if(isset($list[0])){
-				$var=$list[0];
+			if (isset ( $list [0] )) {
+				$var = $list [0];
 			}
-			if(isset($list[1])){
-				$value=$list[1];
+			if (isset ( $list [1] )) {
+				$value = $list [1];
 			}
 			if (isset ( $var ) && isset ( $value )) {
 				break;

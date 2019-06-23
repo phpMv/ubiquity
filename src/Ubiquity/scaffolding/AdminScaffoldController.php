@@ -16,6 +16,7 @@ use Ubiquity\controllers\admin\UbiquityMyAdminBaseController;
  *
  */
 class AdminScaffoldController extends ScaffoldController {
+
 	/**
 	 *
 	 * @var UbiquityMyAdminBaseController

@@ -22,7 +22,6 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\Router;
 use Ubiquity\controllers\Startup;
-use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\admin\popo\ControllerAction;
 use Ubiquity\controllers\admin\popo\ControllerSeo;
 use Ubiquity\controllers\admin\popo\Route;
@@ -40,7 +39,6 @@ use Ubiquity\controllers\admin\traits\RoutesTrait;
 use Ubiquity\controllers\admin\traits\SeoTrait;
 use Ubiquity\controllers\admin\traits\ThemesTrait;
 use Ubiquity\controllers\admin\traits\TranslateTrait;
-use Ubiquity\controllers\admin\viewers\ModelViewer;
 use Ubiquity\controllers\crud\CRUDDatas;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ubiquity\controllers\semantic\MessagesTrait;
@@ -60,6 +58,8 @@ use Ubiquity\utils\yuml\ClassesToYuml;
 use Ubiquity\translation\TranslatorManager;
 use Ubiquity\controllers\admin\popo\MaintenanceMode;
 use Ubiquity\controllers\admin\traits\MaintenanceTrait;
+use Ubiquity\controllers\crud\interfaces\HasModelViewerInterface;
+use Ubiquity\controllers\crud\viewers\ModelViewer;
 
 /**
  *

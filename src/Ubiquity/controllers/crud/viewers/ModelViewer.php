@@ -1,28 +1,26 @@
 <?php
 
-namespace Ubiquity\controllers\admin\viewers;
+namespace Ubiquity\controllers\crud\viewers;
 
-use Ajax\common\html\HtmlCollection;
-use Ajax\common\html\BaseHtml;
+use Ajax\semantic\html\collections\form\HtmlFormField;
+use Ajax\semantic\html\collections\form\HtmlFormInput;
+use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\HtmlHeader;
 use Ajax\semantic\html\elements\HtmlIconGroups;
-use Ajax\semantic\widgets\dataform\DataForm;
-use Ubiquity\orm\OrmUtils;
-use Ajax\semantic\widgets\datatable\DataTable;
-use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
-use Ajax\JsUtils;
-use Ajax\service\JArray;
-use Ubiquity\orm\parser\Reflexion;
-use Ubiquity\orm\DAO;
-use Ubiquity\controllers\crud\CRUDHelper;
-use Ajax\common\html\HtmlDoubleElement;
-use Ajax\semantic\html\elements\HtmlButton;
-use Ajax\semantic\widgets\datatable\PositionInTable;
 use Ajax\semantic\html\elements\HtmlLabel;
-use Ubiquity\utils\base\UString;
-use Ajax\semantic\html\collections\form\HtmlFormField;
+use Ajax\semantic\widgets\dataform\DataForm;
+use Ajax\semantic\widgets\datatable\DataTable;
+use Ajax\semantic\widgets\datatable\PositionInTable;
+use Ajax\service\JArray;
+use Ubiquity\controllers\crud\CRUDHelper;
 use Ubiquity\controllers\crud\EditMemberParams;
-use Ajax\semantic\html\collections\form\HtmlFormInput;
+use Ubiquity\orm\DAO;
+use Ubiquity\orm\OrmUtils;
+use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\utils\base\UString;
+use Ajax\common\html\HtmlCollection;
+use Ajax\common\html\HtmlDoubleElement;
+use Ubiquity\controllers\crud\interfaces\HasModelViewerInterface;
 
 /**
  * Associated with a CRUDController class
@@ -35,7 +33,7 @@ class ModelViewer {
 
 	/**
 	 *
-	 * @var JsUtils
+	 * @var \Ajax\JsUtils
 	 */
 	private $jquery;
 
@@ -497,7 +495,7 @@ class ModelViewer {
 	 * @param string $member
 	 * @param string $className
 	 * @param object $object
-	 * @return BaseHtml
+	 * @return \Ajax\common\html\BaseHtml
 	 */
 	public function getFkElementDetails($member, $className, $object) {
 		return $this->jquery->semantic ()->htmlLabel ( "element-" . $className . "." . $member, $object . "" );
@@ -631,7 +629,7 @@ class ModelViewer {
 	 * @param string $member
 	 * @param string $className
 	 * @param object $object
-	 * @return BaseHtml
+	 * @return \Ajax\common\html\BaseHtml
 	 */
 	public function getFkElement($member, $className, $object) {
 		return $this->jquery->semantic ()->htmlLabel ( "element-" . $className . "." . $member, $object . "" );

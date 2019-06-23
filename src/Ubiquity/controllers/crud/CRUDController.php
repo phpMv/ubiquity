@@ -4,7 +4,7 @@ namespace Ubiquity\controllers\crud;
 
 use Ubiquity\orm\DAO;
 use Ubiquity\controllers\ControllerBase;
-use Ubiquity\controllers\admin\interfaces\HasModelViewerInterface;
+use Ubiquity\controllers\crud\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\semantic\MessagesTrait;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
@@ -22,7 +22,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 
 	public function __construct() {
 		parent::__construct ();
-		DAO::$transformerOp='toView';
+		DAO::$transformerOp = 'toView';
 		$this->insertJquerySemantic ();
 	}
 
