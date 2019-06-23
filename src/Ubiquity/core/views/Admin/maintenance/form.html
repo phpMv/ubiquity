@@ -70,7 +70,12 @@
 		</div>
 		
 		<div class='ui divider'></div>
+		<div class="field">
+			<label for='until'>Maintenance until</label>
+			<input name="until" id="until" class="ui input" type="datetime-local" value="{{maintenance.until}}">
+		</div>
 		{{ q['ck-active'] | raw }}
+		
 	</div>
 	<div class="ui segment">
 		<button id="validate-btn" class="ui button positive">

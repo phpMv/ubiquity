@@ -190,6 +190,8 @@ trait MaintenanceTrait {
 
 	public function _addNewMaintenanceType() {
 		$maintenance = new MaintenanceMode ();
+		$maintenance->setAction ( 'index' );
+		$maintenance->setUntil ( ((new \DateTime ())->add ( new \DateInterval ( 'PT1H' ) ))->format ( 'Y-m-d\TH:i:s' ) );
 		$this->_createFrmMaintenance ( $maintenance );
 	}
 

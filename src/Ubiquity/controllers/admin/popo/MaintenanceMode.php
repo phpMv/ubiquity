@@ -12,6 +12,7 @@ class MaintenanceMode {
 	private $title;
 	private $icon;
 	private $message;
+	private $until;
 	private $active;
 
 	/**
@@ -202,6 +203,24 @@ class MaintenanceMode {
 	 */
 	public function setIcon($icon) {
 		$this->icon = $icon;
+	}
+
+	public function getUntil() {
+		return $this->until;
+	}
+
+	public function setUntil($until) {
+		$this->until = $until;
+	}
+
+	public function getDuration() {
+		if (isset ( $this->until )) {
+			$d = new \DateTime ( $this->until );
+			$value = $d->getTimestamp () - (new \DateTime ())->getTimestamp ();
+			if ($value > 0)
+				return $value;
+		}
+		return null;
 	}
 }
 
