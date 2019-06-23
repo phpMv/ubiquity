@@ -9,3 +9,4 @@ if ($db ["dbName"] !== "") {
 }
 Router::startAll ();
 Router::addRoute ( "_default", "controllers\\IndexController" );
+\Ubiquity\assets\AssetsManager::start ( $config );

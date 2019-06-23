@@ -14,7 +14,7 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class ControllerParser {
@@ -32,7 +32,6 @@ class ControllerParser {
 		$restAnnotsClass = [ ];
 		$reflect = new \ReflectionClass ( $controllerClass );
 		if (! $reflect->isAbstract () && $reflect->isSubclassOf ( "Ubiquity\controllers\Controller" )) {
-			$instance = new $controllerClass ();
 			try {
 				$annotsClass = Reflexion::getAnnotationClass ( $controllerClass, "@route" );
 				$restAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, "@rest" );
@@ -45,7 +44,7 @@ class ControllerParser {
 				$inherited = $this->mainRouteClass->inherited;
 				$automated = $this->mainRouteClass->automated;
 			}
-			$methods = Reflexion::getMethods ( $instance, \ReflectionMethod::IS_PUBLIC );
+			$methods = Reflexion::getMethods ( $controllerClass, \ReflectionMethod::IS_PUBLIC );
 			$this->parseMethods ( $methods, $controllerClass, $inherited, $automated );
 		}
 	}
