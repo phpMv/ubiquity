@@ -24,6 +24,8 @@ trait MessagesTrait {
 	 */
 	abstract public function _getModelViewer();
 
+	abstract public function _getFiles();
+
 	protected function _showSimpleMessage(CRUDMessage $message, $staticName = null): HtmlMessage {
 		return $this->showSimpleMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $message->getTimeout (), $staticName );
 	}
