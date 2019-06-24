@@ -10,7 +10,7 @@ use Ubiquity\cache\parser\CallableParser;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 trait RouterModifierTrait {
@@ -40,8 +40,28 @@ trait RouterModifierTrait {
 	private static function _addRoute(\ReflectionMethod $method, &$routesArray, $path, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = [], $priority = 0, $callback = null) {
 		$result = [ ];
 		ControllerParser::parseRouteArray ( $result, $controller, [ "path" => $path,"methods" => $methods,"name" => $name,"cache" => $cache,"duration" => $duration,"requirements" => $requirements,"priority" => $priority,"callback" => $callback ], $method, $action );
-		foreach ( $result as $k => $v ) {
-			$routesArray [$k] = $v;
+		if ($priority <= 0) {
+			foreach ( $result as $k => $v ) {
+				$routesArray [$k] = $v;
+			}
+		} else {
+			$count = \count ( $routesArray );
+			$newArray = [ ];
+			foreach ( $routesArray as $k => $v ) {
+				if ($priority < $count --) {
+					$newArray [$k] = $v;
+				} else {
+					break;
+				}
+			}
+			$routesArray = array_diff_key ( $routesArray, $newArray );
+			foreach ( $result as $k => $v ) {
+				$newArray [$k] = $v;
+			}
+			foreach ( $routesArray as $k => $v ) {
+				$newArray [$k] = $v;
+			}
+			$routesArray = $newArray;
 		}
 	}
 
