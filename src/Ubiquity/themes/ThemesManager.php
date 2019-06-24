@@ -15,7 +15,7 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.1.0
  * @since Ubiquity 2.1.0
  *
  */
@@ -47,8 +47,7 @@ class ThemesManager {
 	public static function saveActiveTheme($theme) {
 		$config = Startup::getConfig ();
 		$config ['templateEngineOptions'] ['activeTheme'] = $theme;
-		$content = "<?php\nreturn " . UArray::asPhpArray ( $config, "array", 1, true ) . ";";
-		Startup::saveConfig ( $content );
+		Startup::saveConfig ( $config );
 		return $config;
 	}
 

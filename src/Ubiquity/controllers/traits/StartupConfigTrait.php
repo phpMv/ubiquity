@@ -8,7 +8,17 @@ use Ubiquity\utils\http\foundation\PhpHttp;
 use Ubiquity\utils\http\foundation\AbstractHttp;
 use Ubiquity\utils\http\session\PhpSession;
 use Ubiquity\utils\http\session\AbstractSession;
+use Ubiquity\utils\base\UArray;
+use Ubiquity\utils\base\CodeUtils;
 
+/**
+ * Ubiquity\controllers\traits$StartupConfigTrait
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.1.0
+ *
+ */
 trait StartupConfigTrait {
 	protected static $config;
 	protected static $ctrlNS;
@@ -88,14 +98,26 @@ trait StartupConfigTrait {
 		include \ROOT . 'config/services.php';
 	}
 
-	public static function saveConfig($content) {
+	public static function saveConfig(array $contentArray) {
 		$appDir = \dirname ( \ROOT );
 		$filename = $appDir . "/app/config/config.php";
 		$oldFilename = $appDir . "/app/config/config.old.php";
-		if (! file_exists ( $filename ) || copy ( $filename, $oldFilename )) {
-			return UFileSystem::save ( $filename, $content );
+		$content = "<?php\nreturn " . UArray::asPhpArray ( $contentArray, "array", 1, true ) . ";";
+		if (CodeUtils::isValidCode ( $content )) {
+			if (! file_exists ( $filename ) || copy ( $filename, $oldFilename )) {
+				return UFileSystem::save ( $filename, $content );
+			}
+		} else {
+			throw new \RuntimeException ( 'Config contains invalid code' );
 		}
 		return false;
+	}
+
+	public static function updateConfig(array $content) {
+		foreach ( $content as $k => $v ) {
+			self::$config [$k] = $v;
+		}
+		return self::saveConfig ( self::$config );
 	}
 
 	public static function getHttpInstance() {
