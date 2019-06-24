@@ -15,7 +15,7 @@ use Ubiquity\contents\validation\ValidatorsManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  */
 trait ModelsCacheTrait {
@@ -79,7 +79,7 @@ trait ModelsCacheTrait {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
 				$p = new ModelParser ();
 				$p->parse ( $model );
-				if (self::getOrmModelCache ( $model ) != $p->asArray ()) {
+				if (! self::modelCacheExists ( $model ) || self::getOrmModelCache ( $model ) != $p->asArray ()) {
 					$result [$model] = true;
 				}
 			}
