@@ -14,7 +14,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.1
+ * @version 1.1.2
  *
  */
 class Startup {
@@ -82,7 +82,7 @@ class Startup {
 	 */
 	public static function forward($url, $initialize = true, $finalize = true) {
 		$u = self::parseUrl ( $url );
-		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url )) !== false) {
+		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, true, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
 				if (\is_callable ( $ru [0] )) {
 					self::runCallable ( $ru );

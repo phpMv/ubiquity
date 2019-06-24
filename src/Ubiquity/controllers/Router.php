@@ -16,7 +16,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.0.7
  *
  */
 class Router {
@@ -111,9 +111,9 @@ class Router {
 	 * @param boolean $cachedResponse
 	 * @return boolean|mixed[]|string
 	 */
-	public static function getRoute($path, $cachedResponse = true) {
+	public static function getRoute($path, $cachedResponse = true, $debug = false) {
 		$path = self::slashPath ( $path );
-		if (isset ( self::$routes [$path] )) {
+		if (isset ( self::$routes [$path] ) && ! $debug) { // No direct access to route in debug mode (for maintenance mode activation)
 			return self::getRoute_ ( self::$routes [$path], $path, [ $path ], $cachedResponse );
 		}
 		foreach ( self::$routes as $routePath => $routeDetails ) {
