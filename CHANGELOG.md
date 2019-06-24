@@ -23,8 +23,8 @@ Classes relocation
 - ``Ubiquity\controllers\admin\viewers\ModelViewer``->``Ubiquity\controllers\crud\viewers\ModelViewer``
   
 #### Migration 
-``composer global update``for devtools update
-In existing projects:
+- For new projects, update devtools: ``composer global update``
+- In existing projects:
 ``composer require phpmv/ubiquity-webtools`` for webtools installation.
 
 ## [2.1.4] - 2019-06-13
