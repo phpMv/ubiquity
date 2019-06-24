@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updates checking for caches
   - Customization (tools)
 
+### Deleted/updated
+- Webtools removed from Ubiquity main repository and are in there own repo
+
+Use ``composer require phpmv/ubiquity-webtools`` to install them.
+
+#### Breaking change possible:
+Classes relocation
+- ``Ubiquity\controllers\admin\utils\CodeUtils``->``Ubiquity\utils\base\CodeUtils``
+- ``Ubiquity\controllers\admin\interfaces\HasModelViewerInterface``->``Ubiquity\controllers\crud\interfaces\HasModelViewerInterface``
+- ``Ubiquity\controllers\admin\viewers\ModelViewer``->``Ubiquity\controllers\crud\viewers\ModelViewer``
+  
+#### Migration 
+``composer global update``for devtools update
+In existing projects:
+``composer require phpmv/ubiquity-webtools`` for webtools installation.
+
 ## [2.1.4] - 2019-06-13
 ### Added
 - `Translate` module in webtools
