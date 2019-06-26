@@ -10,7 +10,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 class UResponse {
@@ -24,7 +24,7 @@ class UResponse {
 	 * @param boolean $replace The optional replace parameter indicates whether the header should replace a previous similar header
 	 * @param int $responseCode Forces the HTTP response code to the specified value
 	 */
-	public static function header($headerField, $value, $replace = null, $responseCode = null) {
+	public static function header($headerField, $value, bool $replace = true, int $responseCode = null) {
 		self::$headers [trim ( $headerField )] = trim ( $value );
 		Startup::getHttpInstance ()->header ( trim ( $headerField ), trim ( $value ), $replace, $responseCode );
 	}
