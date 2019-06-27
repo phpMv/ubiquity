@@ -30,7 +30,6 @@
 	},
 	"require-dev" : {
 		"phpmv/ubiquity-devtools": "^1.2",
-		"phpmv/ubiquity-webtools": "^2.1",
 		"phpmv/ubiquity-codeception": "^1.0",
 		"phpmv/php-mv-ui": "^2.2"
 	}
