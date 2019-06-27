@@ -5,14 +5,13 @@ namespace Ubiquity\db\traits;
 use Ubiquity\log\Logger;
 use Ubiquity\cache\database\DbCache;
 use Ubiquity\exceptions\CacheException;
-use Ubiquity\db\SqlUtils;
 
 /**
  * Ubiquity\db\traits$DatabaseOperationsTrait
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @property \PDO $pdoObject
  * @property mixed $cache
  * @property array $options
@@ -66,36 +65,30 @@ trait DatabaseOperationsTrait {
 			}
 		}
 		if ($result === false) {
-			if ($fields = SqlUtils::getFieldList ( $fields, $tableName )) {
-				$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM `" . $tableName . "`" . $condition, $parameters );
-				if ($cache) {
-					$this->cache->store ( $tableName, $cKey, $result );
-				}
+			$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM `" . $tableName . "`" . $condition, $parameters );
+			if ($cache) {
+				$this->cache->store ( $tableName, $cKey, $result );
 			}
 		}
 		return $result;
 	}
 
 	public function prepareAndFetchAll($sql, $parameters = null) {
-		$result = false;
 		$statement = $this->getStatement ( $sql );
 		if ($statement->execute ( $parameters )) {
 			Logger::info ( "Database", $sql, "prepareAndFetchAll", $parameters );
-			$result = $statement->fetchAll ();
+			return $statement->fetchAll ();
 		}
-		$statement->closeCursor ();
-		return $result;
+		return false;
 	}
 
 	public function prepareAndFetchAllColumn($sql, $parameters = null, $column = null) {
-		$result = false;
 		$statement = $this->getStatement ( $sql );
 		if ($statement->execute ( $parameters )) {
 			Logger::info ( "Database", $sql, "prepareAndFetchAllColumn", $parameters );
-			$result = $statement->fetchAll ( \PDO::FETCH_COLUMN, $column );
+			return $statement->fetchAll ( \PDO::FETCH_COLUMN, $column );
 		}
-		$statement->closeCursor ();
-		return $result;
+		return false;
 	}
 
 	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = null) {
