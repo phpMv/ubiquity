@@ -3,6 +3,7 @@ use Ubiquity\db\Database;
 use Ubiquity\cache\database\TableCache;
 use Ubiquity\exceptions\CacheException;
 use Ubiquity\exceptions\DBException;
+use Ubiquity\db\SqlUtils;
 
 /**
  * Database test case.
@@ -126,7 +127,8 @@ class DatabaseTest extends BaseTest {
 	 */
 	public function testPrepareAndExecute() {
 		$this->beforeQuery ();
-		$response = $this->database->prepareAndExecute ( "User", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ] );
+		$fields = SqlUtils::getFieldList ( [ "email","firstname" ], 'User' );
+		$response = $this->database->prepareAndExecute ( "User", "WHERE `email`='benjamin.sherman@gmail.com'", $fields );
 		$this->assertEquals ( sizeof ( $response ), 1 );
 		$row = current ( $response );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
@@ -134,17 +136,17 @@ class DatabaseTest extends BaseTest {
 		$this->assertArrayNotHasKey ( 'lastname', $row );
 		$this->expectException ( Error::class );
 		try {
-			$this->database->prepareAndExecute ( "users", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
+			$this->database->prepareAndExecute ( "users", "WHERE `email`='benjamin.sherman@gmail.com'", $fields, null, true );
 		} catch ( Exception $e ) {
 			// Nothing
 		}
 		$db = new Database ( $this->dbType, $this->dbName, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], TableCache::class );
 		$db->connect ();
-		$response = $db->prepareAndExecute ( "User", "WHERE `email`='benjamin.sherman@gmail.com'", [ "email","firstname" ], null, true );
+		$response = $db->prepareAndExecute ( "User", "WHERE `email`='benjamin.sherman@gmail.com'", $fields, null, true );
 		$this->assertEquals ( sizeof ( $response ), 1 );
 		$row = current ( $response );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
-		$response = $db->prepareAndExecute ( "User", "WHERE `email`= ?", [ "email","firstname" ], [ 'benjamin.sherman@gmail.com' ], true );
+		$response = $db->prepareAndExecute ( "User", "WHERE `email`= ?", $fields, [ 'benjamin.sherman@gmail.com' ], true );
 		$this->assertEquals ( sizeof ( $response ), 1 );
 		$row = current ( $response );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row ['email'] );
