@@ -22,7 +22,7 @@ use Ubiquity\orm\traits\DAOTransactionsTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.8
+ * @version 1.1.9
  *
  */
 class DAO {

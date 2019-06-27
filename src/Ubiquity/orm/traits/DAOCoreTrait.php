@@ -16,7 +16,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  * @property \Ubiquity\db\Database $db
  * @property boolean $useTransformers
@@ -25,6 +25,7 @@ use Ubiquity\orm\parser\Reflexion;
  */
 trait DAOCoreTrait {
 	protected static $accessors = [ ];
+	protected static $fields = [ ];
 
 	abstract protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
 
@@ -103,13 +104,32 @@ trait DAOCoreTrait {
 
 	protected static function _getOne($className, ConditionParser $conditionParser, $included, $useCache) {
 		$conditionParser->limitOne ();
-		$retour = self::_getAll ( $className, $conditionParser, $included, $useCache );
-		if (sizeof ( $retour ) < 1) {
-			return null;
+		$included = self::getIncludedForStep ( $included );
+		$object = null;
+		$invertedJoinColumns = null;
+		$oneToManyFields = null;
+		$manyToManyFields = null;
+
+		$metaDatas = OrmUtils::getModelMetadata ( $className );
+		$tableName = $metaDatas ["#tableName"];
+		$hasIncluded = $included || (\is_array ( $included ) && \sizeof ( $included ) > 0);
+		if ($hasIncluded) {
+			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
-		$result = \current ( $retour );
-		EventsManager::trigger ( DAOEvents::GET_ONE, $result, $className );
-		return $result;
+		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
+		$query = self::$db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		if ($query && \sizeof ( $query ) > 0) {
+			$oneToManyQueries = [ ];
+			$manyToOneQueries = [ ];
+			$manyToManyParsers = [ ];
+			$accessors = $metaDatas ["#accessors"];
+			$object = self::loadObjectFromRow ( \current ( $query ), $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
+			if ($hasIncluded) {
+				self::_affectsRelationObjects ( $className, OrmUtils::getFirstPropKey ( $className ), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $included, $useCache );
+			}
+			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
+		}
+		return $object;
 	}
 
 	/**
@@ -129,14 +149,12 @@ trait DAOCoreTrait {
 
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ["#tableName"];
-		$hasIncluded = $included || (is_array ( $included ) && sizeof ( $included ) > 0);
+		$hasIncluded = $included || (\is_array ( $included ) && \sizeof ( $included ) > 0);
 		if ($hasIncluded) {
 			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
-		$condition = SqlUtils::checkWhere ( $conditionParser->getCondition () );
-		$members = \array_diff ( $metaDatas ["#fieldNames"], $metaDatas ["#notSerializable"] );
 		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
-		$query = self::$db->prepareAndExecute ( $tableName, $condition, $members, $conditionParser->getParams (), $useCache );
+		$query = self::$db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
@@ -148,11 +166,18 @@ trait DAOCoreTrait {
 			$objects [$key] = $object;
 		}
 		if ($hasIncluded) {
-			$classPropKey = OrmUtils::getFirstPropKey ( $className );
-			self::_affectsRelationObjects ( $className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache );
+			self::_affectsRelationObjects ( $className, OrmUtils::getFirstPropKey ( $className ), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache );
 		}
 		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
 		return $objects;
+	}
+
+	protected static function getFieldList($tableName, $metaDatas) {
+		if (! isset ( self::$fields [$tableName] )) {
+			$members = \array_diff ( $metaDatas ["#fieldNames"], $metaDatas ["#notSerializable"] );
+			self::$fields = SqlUtils::getFieldList ( $members, $tableName );
+		}
+		return self::$fields;
 	}
 
 	/**
