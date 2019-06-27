@@ -35,6 +35,7 @@ class DAO {
 	public static $db;
 	public static $useTransformers = false;
 	public static $transformerOp = 'transform';
+	private static $conditionParsers = [ ];
 
 	/**
 	 * Loads member associated with $instance by a ManyToOne relationship
@@ -225,9 +226,18 @@ class DAO {
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getById($className, $keyValues, $included = true, $useCache = NULL) {
-		$conditionParser = new ConditionParser ();
-		$conditionParser->addKeyValues ( $keyValues, $className );
-		return self::_getOne ( $className, $conditionParser, $included, $useCache );
+		return self::_getOne ( $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
+	}
+
+	protected static function getConditionParser($className, $keyValues) {
+		if (! isset ( self::$conditionParsers [$className] )) {
+			$conditionParser = new ConditionParser ();
+			$conditionParser->addKeyValues ( $keyValues, $className );
+			self::$conditionParsers [$className] = $conditionParser;
+		} else {
+			self::$conditionParsers [$className]->setKeyValues ( $keyValues );
+		}
+		return self::$conditionParsers [$className];
 	}
 
 	/**
