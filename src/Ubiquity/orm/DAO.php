@@ -57,7 +57,7 @@ class DAO {
 			$value = Reflexion::getMemberValue ( $instance, $member );
 			$key = OrmUtils::getFirstKey ( $annotationArray ["className"] );
 			$kv = array ($key => $value );
-			$obj = self::getOne ( $annotationArray ["className"], $kv, $included, null, $useCache );
+			$obj = self::getById ( $annotationArray ["className"], $kv, $included, null, $useCache );
 			if ($obj !== null) {
 				Logger::info ( "DAO", "Loading the member " . $member . " for the object " . $classname, "getManyToOne" );
 				$accesseur = "set" . ucfirst ( $member );

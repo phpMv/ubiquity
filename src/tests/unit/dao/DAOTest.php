@@ -326,7 +326,7 @@ class DAOTest extends BaseTest {
 
 		$orga = $this->addOrga ();
 		$this->dao->beginTransaction ();
-		$oOrga = $this->dao->getOne ( Organization::class, 1 );
+		$oOrga = $this->dao->getById ( Organization::class, 1 );
 		$user = $this->addUser ( $oOrga );
 		$this->dao->commit ();
 		$this->dao->commit ();

@@ -48,7 +48,7 @@ class EventsManagerTest extends BaseTest {
 	 */
 	public function testTrigger() {
 		ob_start ();
-		DAO::getOne ( User::class, 1, false );
+		DAO::getById ( User::class, 1, false );
 		$res = ob_get_flush ();
 		$this->assertTrue ( UString::contains ( User::class, $res ) );
 		$this->assertTrue ( UString::contains ( "benjamin.sherman@gmail.com", $res ) );
