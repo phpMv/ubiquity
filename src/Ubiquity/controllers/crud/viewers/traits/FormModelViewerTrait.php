@@ -20,7 +20,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @property \Ajax\JsUtils $jquery
  */
 trait FormModelViewerTrait {
@@ -131,7 +131,7 @@ trait FormModelViewerTrait {
 		$form = $this->jquery->semantic ()->dataForm ( $identifier, $instance );
 		$form->setLibraryId ( "frmEdit" );
 		$className = \get_class ( $instance );
-		$fields = $this->controller->_getAdminData ()->getFormFieldNames ( $className, $instance );
+		$fields = array_unique ( $this->controller->_getAdminData ()->getFormFieldNames ( $className, $instance ) );
 		$relFields = OrmUtils::getFieldsInRelations_ ( $className );
 
 		$this->setFormFields_ ( $fields, $relFields );
