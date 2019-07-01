@@ -9,6 +9,15 @@ use Ubiquity\controllers\Router;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\utils\base\UString;
 
+/**
+ * Base class for SEO controllers
+ * Ubiquity\seo$ControllerSeo
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.1
+ *
+ */
 class ControllerSeo {
 	private $name;
 	private $urlsFile;
@@ -129,7 +138,7 @@ class ControllerSeo {
 						if (! $reflect->isAbstract () && $reflect->isSubclassOf ( 'Ubiquity\controllers\seo\SeoController' )) {
 							$ctrlSeo = new ControllerSeo ( $controllerClass );
 							$path = $ctrlSeo->getPath ();
-							$ctrlSeo->setInRobots ( \strpos ( $robotsContent, $path ) !== false );
+							$ctrlSeo->setInRobots ( $robotsContent !== false && (\strpos ( $robotsContent, $path ) !== false) );
 							$result [] = $ctrlSeo;
 						}
 					}
