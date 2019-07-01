@@ -212,4 +212,34 @@ class AdminCest extends BaseAcceptance {
 		$this->waitAndclick ( $I, "#bt-delete-translations-cache" );
 		$I->waitForText ( "Cache deleted for all locales" );
 	}
+
+	// tests
+	public function tryGotoAdminMaintenance(AcceptanceTester $I) {
+		$this->gotoAdminModule ( "Admin/Maintenance", $I );
+		$I->waitForText ( "Maintenance mode", self::TIMEOUT );
+		$this->waitAndclick ( $I, "#add-maintenance-btn", "body" );
+		$I->waitForText ( 'Maintenance modifier' );
+		$I->fillField ( "#maintenance-frm [name='id']", 'newMaintenance' );
+		$I->fillField ( "#maintenance-frm [name='action']", 'comingSoon' );
+		$I->fillField ( "#maintenance-frm [name='title']", 'Coming soon' );
+		$I->fillField ( "#maintenance-frm [name='message']", 'Soon available' );
+		$I->fillField ( "#maintenance-frm [name='message']", 'Soon available' );
+		$this->waitAndclick ( $I, "#ck-ck-active", "body" );
+		$this->waitAndclick ( $I, "#validate-btn", "body" );
+		$I->waitForText ( 'newMaintenance' );
+		$I->waitForElement ( "#bt-de-activate" );
+
+		$I->amOnPage ( "/TestCrudOrgas" );
+		$I->waitForText ( "Coming soon" );
+		$I->waitForText ( "Soon available" );
+		$I->waitForElement ( "#remind" );
+		$I->waitForElement ( "#action-field-mail" );
+
+		$this->gotoAdminModule ( "Admin/Maintenance", $I );
+		$I->waitForText ( "Maintenance mode", self::TIMEOUT );
+		$this->waitAndclick ( $I, "#bt-de-activate", "body" );
+
+		$I->amOnPage ( "/TestCrudOrgas" );
+		$I->see ( "lecnam.net" );
+	}
 }
