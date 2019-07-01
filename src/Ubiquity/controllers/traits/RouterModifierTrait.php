@@ -10,7 +10,7 @@ use Ubiquity\cache\parser\CallableParser;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 trait RouterModifierTrait {
@@ -33,6 +33,7 @@ trait RouterModifierTrait {
 	public static function addRouteToRoutes(&$routesArray, $path, $controller, $action = "index", $methods = null, $name = "", $cache = false, $duration = null, $requirements = [], $priority = 0, $callback = null) {
 		if (\class_exists ( $controller )) {
 			$method = new \ReflectionMethod ( $controller, $action );
+			$path = ControllerParser::parseMethodPath ( $method, $path );
 			self::_addRoute ( $method, $routesArray, $path, $controller, $action, $methods, $name, $cache, $duration, $requirements, $priority, $callback );
 		}
 	}
@@ -68,6 +69,7 @@ trait RouterModifierTrait {
 	public static function addCallableRoute($path, $callable, $methods = null, $name = "", $cache = false, $duration = null, $requirements = [], $priority = 0) {
 		if (is_callable ( $callable )) {
 			$reflectionFunction = new \ReflectionFunction ( $callable );
+			$path = ControllerParser::parseMethodPath ( $reflectionFunction, $path );
 			self::_addCallableRoute ( $reflectionFunction, self::$routes, $path, $callable, $methods, $name, $cache, $duration, $requirements, $priority );
 		}
 	}

@@ -7,7 +7,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class UIntrospection {
@@ -73,17 +73,17 @@ class UIntrospection {
 		$sLine = $r->getStartLine ();
 		$eLine = $r->getEndLine ();
 		if ($eLine === $sLine) {
-			$str .= strstr ( strstr ( $lines [$sLine - 1], "{" ), "}", true ) . "}";
+			$str .= \strstr ( \strstr ( $lines [$sLine - 1], "{" ), "}", true ) . "}";
 		} else {
-			$str .= strstr ( $lines [$sLine - 1], "{" );
+			$str .= \strrchr ( $lines [$sLine - 1], "{" );
 			for($l = $sLine; $l < $eLine - 1; $l ++) {
 				$str .= $lines [$l];
 			}
-			$str .= strstr ( $lines [$eLine - 1], "}", true ) . "}";
+			$str .= \strstr ( $lines [$eLine - 1], "}", true ) . "}";
 		}
 		$vars = $r->getStaticVariables ();
 		foreach ( $vars as $k => $v ) {
-			$str = str_replace ( '$' . $k, \var_export ( $v, true ), $str );
+			$str = \str_replace ( '$' . $k, \var_export ( $v, true ), $str );
 		}
 		return $str;
 	}

@@ -10,7 +10,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 trait ControllerParserPathTrait {
@@ -37,7 +37,7 @@ trait ControllerParserPathTrait {
 		return "/" . \implode ( "/", $pathParts );
 	}
 
-	protected static function parseMethodPath(\ReflectionMethod $method, $path) {
+	public static function parseMethodPath(\ReflectionFunctionAbstract $method, $path) {
 		if (! isset ( $path ) || $path === '')
 			return;
 		$parameters = $method->getParameters ();
@@ -70,7 +70,8 @@ trait ControllerParserPathTrait {
 		return $path;
 	}
 
-	public static function addParamsPath($path, \ReflectionMethod $method, $requirements) {
+	// TODO check
+	public static function addParamsPath($path, \ReflectionFunctionAbstract $method, $requirements) {
 		$parameters = [ ];
 		$hasOptional = false;
 		preg_match_all ( '@\{(\.\.\.|\~)?(.+?)\}@s', $path, $matches );
