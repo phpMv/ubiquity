@@ -240,6 +240,7 @@ class AdminCest extends BaseAcceptance {
 		$I->seeInCurrentUrl ( "Admin/Maintenance" );
 		$I->waitForText ( "Maintenance mode", self::TIMEOUT );
 		$this->waitAndclick ( $I, "#bt-de-activate", "body" );
+		$I->waitForText ( 'successfully deactivated!' );
 
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->see ( "lecnam.net" );
