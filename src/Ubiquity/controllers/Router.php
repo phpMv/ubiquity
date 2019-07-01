@@ -16,7 +16,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.7
+ * @version 1.0.8
  *
  */
 class Router {
@@ -55,7 +55,7 @@ class Router {
 	protected static function checkRouteName($routeDetails, $name) {
 		if (! isset ( $routeDetails ["name"] )) {
 			foreach ( $routeDetails as $methodRouteDetail ) {
-				if (isset ( $methodRouteDetail ["name"] ) && $methodRouteDetail == $name)
+				if (isset ( $methodRouteDetail ["name"] ) && $methodRouteDetail ["name"] == $name)
 					return true;
 			}
 		}
