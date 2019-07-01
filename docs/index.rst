@@ -80,6 +80,13 @@ Ubiquity User guide
 
 .. toctree::
    :maxdepth: 1
+   :caption: RichClient
+   
+   richClient/phpMv
+   richClient/vueJs
+
+.. toctree::
+   :maxdepth: 1
    :caption: Contents
    
    contents/normalizers
@@ -93,6 +100,11 @@ Ubiquity User guide
    
    rest/index
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Webtools
+   
+   webtools/index
 
 .. toctree::
    :maxdepth: 1
