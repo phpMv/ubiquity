@@ -3,7 +3,7 @@
 namespace Ubiquity\cache\system;
 
 use Ubiquity\utils\base\UString;
-use Ubiquity\controllers\admin\popo\CacheFile;
+use Ubiquity\cache\CacheFile;
 
 /**
  * APCU cache implementation
@@ -11,7 +11,7 @@ use Ubiquity\controllers\admin\popo\CacheFile;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class ApcuCache extends AbstractDataCache {

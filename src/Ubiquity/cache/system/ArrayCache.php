@@ -2,9 +2,9 @@
 
 namespace Ubiquity\cache\system;
 
-use Ubiquity\controllers\admin\popo\CacheFile;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\exceptions\CacheException;
+use Ubiquity\cache\CacheFile;
 
 /**
  * This class is responsible for storing Arrays in PHP files.
@@ -12,7 +12,7 @@ use Ubiquity\exceptions\CacheException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class ArrayCache extends AbstractDataCache {

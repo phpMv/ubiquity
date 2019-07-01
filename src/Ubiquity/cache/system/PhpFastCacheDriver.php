@@ -2,9 +2,9 @@
 
 namespace Ubiquity\cache\system;
 
-use Ubiquity\controllers\admin\popo\CacheFile;
 use phpFastCache\CacheManager;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
+use Ubiquity\cache\CacheFile;
 
 /**
  * This class is responsible for storing values with PhpFastCache.
