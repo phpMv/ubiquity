@@ -215,7 +215,8 @@ class AdminCest extends BaseAcceptance {
 
 	// tests
 	public function tryGotoAdminMaintenance(AcceptanceTester $I) {
-		$this->gotoAdminModule ( "Admin/Maintenance", $I );
+		$I->amOnPage ( "/Admin/Maintenance" );
+		$I->seeInCurrentUrl ( "Admin/Maintenance" );
 		$I->waitForText ( "Maintenance mode", self::TIMEOUT );
 		$this->waitAndclick ( $I, "#add-maintenance-btn", "body" );
 		$I->waitForText ( 'Maintenance modifier' );
@@ -235,7 +236,8 @@ class AdminCest extends BaseAcceptance {
 		$I->waitForElement ( "#remind" );
 		$I->waitForElement ( "#action-field-mail" );
 
-		$this->gotoAdminModule ( "Admin/Maintenance", $I );
+		$I->amOnPage ( "/Admin/Maintenance" );
+		$I->seeInCurrentUrl ( "Admin/Maintenance" );
 		$I->waitForText ( "Maintenance mode", self::TIMEOUT );
 		$this->waitAndclick ( $I, "#bt-de-activate", "body" );
 
