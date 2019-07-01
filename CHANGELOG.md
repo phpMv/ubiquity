@@ -27,6 +27,9 @@ Classes relocation
 - In existing projects:
 ``composer require phpmv/ubiquity-webtools`` for webtools installation.
 
+### Fixed
+- Router: pb with route priority attribute see [#54](https://github.com/phpMv/ubiquity/issues/54)
+
 ## [2.1.4] - 2019-06-13
 ### Added
 - `Translate` module in webtools
