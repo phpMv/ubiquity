@@ -22,13 +22,13 @@ This operation is done using dependency injection, in ``app/config.php``:
    :caption: app/config.php
    
    ...
-	"di"=>array(
-			"@exec"=>array(
-					"jquery"=>function ($controller){
-						return \Ubiquity\core\Framework::diSemantic($controller);
-						}
-					)
-			)
+   "di"=>array(
+   		"@exec"=>array(
+   				"jquery"=>function ($controller){
+   					return \Ubiquity\core\Framework::diSemantic($controller);
+   					}
+   				)
+   		)
    ...
 
 So there's nothing to do, |br|
@@ -49,7 +49,7 @@ but to facilitate its use and allow code completion in a controller, it is recom
 jQuery
 ------
 Href to ajax requests
-*********************
++++++++++++++++++++++
 
 Create a new Controller and its associated view, define the folowing routes:
 
@@ -96,7 +96,8 @@ Initialize router cache and test this page in your browser at ``http://127.0.0.1
    Ubiquity init:cache -t=controllers
 
 transformation of requests into Ajax requests
-+++++++++++++++++++++++++++++++++++++++++++++
+#############################################
+
 The result of each ajax request should be displayed in an area of the page defined by its jQuery selector (``.result span``)
 
 .. code-block:: php
@@ -185,7 +186,10 @@ The associated view:
 
 Definition of the attributes of the ajax request:
 
-In the folowing example, the parameters passed to the **attributes** variable of the **getHref** method remove the history of the navigation, and make the ajax loader internal to the clicked button.
+In the folowing example, the parameters passed to the **attributes** variable of the ``getHref`` method:
+- remove the history of the navigation,
+- make the ajax loader internal to the clicked button.
+
 .. code-block:: php
    :linenos:
    :emphasize-lines: 10-11
@@ -208,7 +212,7 @@ In the folowing example, the parameters passed to the **attributes** variable of
    	...
    }
 
-.. note:: It is possible to use the ``postHref`` method to use the POST method.
+.. note:: It is possible to use the ``postHref`` method to use the http **POST** method.
 
 
 Semantic components
