@@ -16,7 +16,7 @@ use Ubiquity\controllers\di\DiManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
@@ -52,7 +52,16 @@ trait RouterCacheTrait {
 				}
 			}
 		}
+		self::sortByPriority ( $routes ['default'] );
+		self::sortByPriority ( $routes ['rest'] );
 		return $routes;
+	}
+
+	protected static function sortByPriority(&$array) {
+		uasort ( $array, function ($item1, $item2) {
+			return UArray::getRecursive ( $item2, "priority", 0 ) <=> UArray::getRecursive ( $item1, "priority", 0 );
+		} );
+		UArray::removeRecursive ( $array, "priority" );
 	}
 
 	private static function initRouterCache(&$config, $silent = false) {

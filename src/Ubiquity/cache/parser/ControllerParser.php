@@ -6,7 +6,6 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UString;
 use Ubiquity\annotations\router\RouteAnnotation;
 use Ubiquity\cache\ClassUtils;
-use Ubiquity\utils\base\UArray;
 
 /**
  * Scans a controller to detect routes defined by annotations.
@@ -14,7 +13,7 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.0.7
  *
  */
 class ControllerParser {
@@ -110,10 +109,6 @@ class ControllerParser {
 				self::parseRouteArray ( $result, $this->controllerClass, $params, $arrayAnnotsMethod ["method"], $method, $prefix, $httpMethods );
 			}
 		}
-		uasort ( $result, function ($item1, $item2) {
-			return UArray::getRecursive ( $item2, "priority", 0 ) <=> UArray::getRecursive ( $item1, "priority", 0 );
-		} );
-		UArray::removeRecursive ( $result, "priority" );
 		return $result;
 	}
 
