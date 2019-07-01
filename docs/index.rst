@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Rich client<richclient>`
    - :ref:`REST module<rest>`
    - :ref:`Data transformers<transformers>`
    - :ref:`Dependency injection<di>`
@@ -82,8 +83,8 @@ Ubiquity User guide
    :maxdepth: 1
    :caption: RichClient
    
-   richClient/phpMv
-   richClient/vueJs
+   richClient/semantic
+   richClient/vuejs
 
 .. toctree::
    :maxdepth: 1

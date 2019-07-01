@@ -1,3 +1,4 @@
+.. _richclient:
 jQuery Semantic-UI
 ******************
 
@@ -42,8 +43,7 @@ but to facilitate its use and allow code completion in a controller, it is recom
     **/
    class FooController extends ControllerBase{
    
-   	public function index(){
-   	}
+   	public function index(){}
    }
 
 jQuery
@@ -51,17 +51,14 @@ jQuery
 Href to ajax requests
 *********************
 
-Create a new Controller and it's associated view, define the folowing routes:
+Create a new Controller and its associated view, define the folowing routes:
 
 .. code-block:: php
+   :linenos:
    :caption: app/controllers/FooController.php
    
    namespace controllers;
 
-   /**
-    *
-    * @property \Ajax\php\ubiquity\JsUtils $jquery
-    */
    class FooController extends ControllerBase {
    
    	public function index() {
@@ -108,26 +105,26 @@ The result of each ajax request should be displayed in an area of the page defin
    namespace controllers;
 
    /**
-    *
     * @property \Ajax\php\ubiquity\JsUtils $jquery
     */
    class FooController extends ControllerBase {
    
    	public function index() {
-   		$this->jquery->getHref('a');
+   		$this->jquery->getHref('a','.result span');
    		$this->jquery->renderView("FooController/index.html");
    	}
    	...
    }
 
-In the folowing view, the **data-targer** attribute define the target of the ajax request (the span element in the element with the **result** css class). |br|
-The ``script_foot`` is the generated jquery script produced by the renderView method.
+.. note:: The ``script_foot`` variable contains the generated jquery script produced by the **renderView** method.
+   The **raw** filter marks the value as being "safe", which means that in an environment with automatic escaping enabled this variable will not be escaped.
 
 .. code-block:: html
+   :emphasize-lines: 7
    :caption: app/views/FooController/index.html
    
-   	<a href="{{path('action.a')}}" data-target=".result span">Action a</a>
-   	<a href="{{path('action.b')}}" data-target=".result span">Action b</a>
+   	<a href="{{path('action.a')}}">Action a</a>
+   	<a href="{{path('action.b')}}">Action b</a>
    <div class='result'>
    	Action choisie :
    	<span>No One</span>
@@ -140,8 +137,8 @@ Let's add a little css to make it more professional:
    :caption: app/views/FooController/index.html
    
    <div class="ui buttons">
-   	<a class="ui button" href="{{path('action.a')}}" data-target=".result span">Action a</a>
-   	<a class="ui button" href="{{path('action.b')}}" data-target=".result span">Action b</a>
+   	<a class="ui button" href="{{path('action.a')}}">Action a</a>
+   	<a class="ui button" href="{{path('action.b')}}">Action b</a>
    </div>
    <div class='ui segment result'>
    	Action choisie :
@@ -149,6 +146,70 @@ Let's add a little css to make it more professional:
    </div>
    {{ script_foot | raw }}
    
+
+If we want to add a new link whose result should be displayed in another area, it is possible to specify it via the **data-target** attribute
+
+The new action:
+
+.. code-block:: php
+   :caption: app/controllers/FooController.php
+   
+   namespace controllers;
+
+   class FooController extends ControllerBase {
+   	...
+   	/**
+   	 *@get("c","name"=>"action.c")
+   	 */
+   	public function cAction() {
+   		echo \rand(0, 1000);
+   	}
+   }
+The associated view:
+
+.. code-block:: html
+   :emphasize-lines: 4,9
+   :caption: app/views/FooController/index.html
+   
+   <div class="ui buttons">
+   	<a class="ui button" href="{{path('action.a')}}">Action a</a>
+   	<a class="ui button" href="{{path('action.b')}}">Action b</a>
+   	<a class="ui button" href="{{path('action.c')}}" data-target=".result p">Action c</a>
+   </div>
+   <div class='ui segment result'>
+   	Action choisie :
+   	<span class="ui label">No One</span>
+   	<p></p>
+   </div>
+   {{ script_foot | raw }}
+
+Definition of the attributes of the ajax request:
+
+In the folowing example, the parameters passed to the **attributes** variable of the **getHref** method remove the history of the navigation, and make the ajax loader internal to the clicked button.
+.. code-block:: php
+   :linenos:
+   :emphasize-lines: 10-11
+   :caption: app/controllers/FooController.php
+   
+   namespace controllers;
+
+   /**
+    * @property \Ajax\php\ubiquity\JsUtils $jquery
+    */
+   class FooController extends ControllerBase {
+   
+   	public function index() {
+   		$this->jquery->getHref('a','.result span', [
+   			'hasLoader' => 'internal',
+   			'historize' => false
+   		]);
+   		$this->jquery->renderView("FooController/index.html");
+   	}
+   	...
+   }
+
+.. note:: It is possible to use the ``postHref`` method to use the POST method.
+
 
 Semantic components
 -------------------
