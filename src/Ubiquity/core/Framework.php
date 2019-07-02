@@ -5,7 +5,7 @@
  * Ubiquity\core
  * This class is part of Ubiquity
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 namespace Ubiquity\core;
@@ -21,7 +21,7 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 
 class Framework {
-	public const version = '2.1.5';
+	public const version = '2.2.0';
 
 	public static function getVersion() {
 		return self::version;

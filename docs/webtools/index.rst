@@ -87,7 +87,7 @@ Models
 ******
 .. image:: /_static/images/webtools/headers/models.png
 
-Displays the metadatas of the models, allows to browse the instances of entities.
+Displays the metadatas of the models, allows to browse the entities.
 
 
 **Operations:**
@@ -97,9 +97,37 @@ Displays the metadatas of the models, allows to browse the instances of entities
  - Generate database script from existing models
  - Performs CRUD operations on models
 
+Rest
+****
+.. image:: /_static/images/webtools/headers/rest.png
+
+Displays an manage REST services.
+
+
+**Operations:**
+
+ - Re-initialize Rest cache and routes
+ - Create a new Service (using an api)
+ - Create a new resource (associated to a model)
+ - Test and query a web service using http methods 
+ - Performs CRUD operations on models
+ 
+Cache
+******
+.. image:: /_static/images/webtools/headers/cache.png
+
+Displays cache files.
+
+**Operations:**
+
+ - Delete or re-initialize models cache
+ - Delete or re-initialize controllers cache
+ - Delete other cache files
 
 Maintenance
 ***********
+.. image:: /_static/images/webtools/headers/maintenance.png
+
 Allows to manage maintenance modes.
 
 **Operations:**
@@ -116,6 +144,7 @@ Allows the display and modification of the app configuration.
 
 Git
 ***
+.. image:: /_static/images/webtools/headers/git.png
 
 Synchronizes the project using git.
 
@@ -128,8 +157,9 @@ Synchronizes the project using git.
  
  Themes
  ******
- 
- Manages Css themes.
+ .. image:: /_static/images/webtools/headers/themes.png
+
+Manages Css themes.
  
  **Operations:**
 
