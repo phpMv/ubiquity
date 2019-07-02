@@ -89,13 +89,15 @@ The associated view:
    	<a href="{{path('action.a')}}">Action a</a>
    	<a href="{{path('action.b')}}">Action b</a>
 
-Initialize router cache and test this page in your browser at ``http://127.0.0.1:8090/FooController``:
+Initialize router cache:
 
 .. code-block:: bash
    
    Ubiquity init:cache -t=controllers
 
-transformation of requests into Ajax requests
+Test this page in your browser at ``http://127.0.0.1:8090/FooController``.
+
+Transformation of requests into Ajax requests
 #############################################
 
 The result of each ajax request should be displayed in an area of the page defined by its jQuery selector (``.result span``)
@@ -117,8 +119,6 @@ The result of each ajax request should be displayed in an area of the page defin
    	...
    }
 
-.. note:: The ``script_foot`` variable contains the generated jquery script produced by the **renderView** method.
-   The **raw** filter marks the value as being "safe", which means that in an environment with automatic escaping enabled this variable will not be escaped.
 
 .. code-block:: html
    :emphasize-lines: 7
@@ -127,10 +127,13 @@ The result of each ajax request should be displayed in an area of the page defin
    	<a href="{{path('action.a')}}">Action a</a>
    	<a href="{{path('action.b')}}">Action b</a>
    <div class='result'>
-   	Action choisie :
+   	Selected action:
    	<span>No One</span>
    </div>
    {{ script_foot | raw }}
+
+.. note:: The ``script_foot`` variable contains the generated jquery script produced by the **renderView** method.
+   The **raw** filter marks the value as being "safe", which means that in an environment with automatic escaping enabled this variable will not be escaped.
 
 Let's add a little css to make it more professional:
 
@@ -142,7 +145,7 @@ Let's add a little css to make it more professional:
    	<a class="ui button" href="{{path('action.b')}}">Action b</a>
    </div>
    <div class='ui segment result'>
-   	Action choisie :
+   	Selected action:
    	<span class="ui label">No One</span>
    </div>
    {{ script_foot | raw }}
@@ -178,17 +181,22 @@ The associated view:
    	<a class="ui button" href="{{path('action.c')}}" data-target=".result p">Action c</a>
    </div>
    <div class='ui segment result'>
-   	Action choisie :
+   	Selected action:
    	<span class="ui label">No One</span>
    	<p></p>
    </div>
    {{ script_foot | raw }}
 
+.. image:: /_static/images/richclient/semantic/fooController.png
+   :class: bordered
+
 Definition of the attributes of the ajax request:
+################################################
 
 In the folowing example, the parameters passed to the **attributes** variable of the ``getHref`` method:
-- remove the history of the navigation,
-- make the ajax loader internal to the clicked button.
+
+ - remove the history of the navigation,
+ - make the ajax loader internal to the clicked button.
 
 .. code-block:: php
    :linenos:
@@ -212,8 +220,18 @@ In the folowing example, the parameters passed to the **attributes** variable of
    	...
    }
 
-.. note:: It is possible to use the ``postHref`` method to use the http **POST** method.
+.. note:: It is possible to use the ``postHref`` method to use the **POST** http method.
+
+Classical ajax requests
++++++++++++++++++++++++
+
 
 
 Semantic components
 -------------------
+
+HtmlButton sample
++++++++++++++++++
+
+
+
