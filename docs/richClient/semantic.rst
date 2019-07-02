@@ -51,7 +51,7 @@ jQuery
 Href to ajax requests
 +++++++++++++++++++++
 
-Create a new Controller and its associated view, define the folowing routes:
+Create a new Controller and its associated view, then define the folowing routes:
 
 .. code-block:: php
    :linenos:
