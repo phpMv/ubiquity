@@ -33,9 +33,7 @@ In a console, go to the project folder and execute:
 Starting
 --------
 
-Start the embedded web server:
-
-In the project folder,
+Start the embedded web server, from the project folder:
 
 .. code-block:: bash
    
@@ -59,18 +57,21 @@ Click on **customize** to display only the tools you use:
 
 Webtools modules
 ----------------
+
 Routes
-++++++
+******
+
 Displays default (non REST) routes.
 
 **Operations:**
 
  - Filter routes
  - Test routes (GET, POST...)
- - Init router cache
+ - Initialize router cache
  
 Controllers
-+++++++++++
+***********
+
 Displays non REST controllers.
 
 **Operations:**
@@ -81,6 +82,49 @@ Displays non REST controllers.
  - Test an action (GET, POST...)
 
 Models
-++++++
+******
+Displays the metadatas of the models, allows to browse the instances of entities.
+
+
+**Operations:**
+
+ - Create models from database
+ - Generate models cache
+ - Generate database script from existing models
+ - Performs CRUD operations on models
+
+
 Maintenance
-+++++++++++
+***********
+Allows to manage maintenance modes.
+
+**Operations:**
+
+ - Create or update a maintenance mode
+ - De/Activate a maintenance mode
+ - Delete a maintenance mode
+
+Config
+******
+Allows the display and modification of the app configuration.
+
+Git
+***
+Synchronizes the project using git.
+
+**Operations:**
+
+ - Configuration with external repositories
+ - Commit
+ - Push
+ - Pull
+ 
+ Themes
+ ******
+ Manages Css themes.
+ 
+ **Operations:**
+
+ - Install an existing theme
+ - Activate a theme
+ - Create a new theme (eventually base on an existing theme)

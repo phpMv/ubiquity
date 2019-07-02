@@ -7,7 +7,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class UIntrospection {
@@ -27,6 +27,10 @@ class UIntrospection {
 		$matches = [ ];
 		$code = self::getMethodCode ( $r, $lines );
 		\preg_match_all ( '@(?:.*?)\$this\-\>loadView\([\'\"](.+?)[\'\"](?:.*?)@s', $code, $matches );
+		if (isset ( $matches [1] ) && \sizeof ( $matches [1] ) > 0) {
+			return $matches [1];
+		}
+		\preg_match_all ( '@(?:.*?)\$this\-\>jquery\-\>renderView\([\'\"](.+?)[\'\"](?:.*?)@s', $code, $matches );
 		if (isset ( $matches [1] )) {
 			return $matches [1];
 		}
