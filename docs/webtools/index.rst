@@ -60,6 +60,7 @@ Webtools modules
 
 Routes
 ******
+.. image:: /_static/images/webtools/headers/routes.png
 
 Displays default (non REST) routes.
 
@@ -71,6 +72,7 @@ Displays default (non REST) routes.
  
 Controllers
 ***********
+.. image:: /_static/images/webtools/headers/controllers.png
 
 Displays non REST controllers.
 
@@ -83,6 +85,8 @@ Displays non REST controllers.
 
 Models
 ******
+.. image:: /_static/images/webtools/headers/models.png
+
 Displays the metadatas of the models, allows to browse the instances of entities.
 
 
@@ -106,10 +110,13 @@ Allows to manage maintenance modes.
 
 Config
 ******
+.. image:: /_static/images/webtools/headers/config.png
+
 Allows the display and modification of the app configuration.
 
 Git
 ***
+
 Synchronizes the project using git.
 
 **Operations:**
@@ -121,6 +128,7 @@ Synchronizes the project using git.
  
  Themes
  ******
+ 
  Manages Css themes.
  
  **Operations:**
