@@ -136,7 +136,7 @@ When creating a project, it can be installed with the **-a** option.
 ```bash
 ubiquity new firstProject -a
 ```
-![Admin interface](https://static.kobject.net/ubiquity/images/admin-interface.png "Admin interface")
+![Admin interface](https://github.com/phpmv/ubiquity-webtools/blob/master/.github/images/webtools-interface.png "Admin interface")
 
 # Graphic design
 - Ubiquity logos and banner: [@richardbmx](https://github.com/richardbmx)
