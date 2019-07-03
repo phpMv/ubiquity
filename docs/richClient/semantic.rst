@@ -190,8 +190,8 @@ The associated view:
 .. image:: /_static/images/richclient/semantic/fooController.png
    :class: bordered
 
-Definition of the attributes of the ajax request:
-################################################
+Definition of the ajax request attributes:
+##########################################
 
 In the folowing example, the parameters passed to the **attributes** variable of the ``getHref`` method:
 

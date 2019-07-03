@@ -14,6 +14,7 @@ var class_ubiquity_1_1orm_1_1parser_1_1_condition_parser =
     [ "parseKey", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a83b9e7443572d2ddc6aab1e47711e580", null ],
     [ "refactorParts", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#aa21e255817703a8a499e2c953c18330f", null ],
     [ "setCondition", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#aa078896c866d7e222f9e9f3d44962418", null ],
+    [ "setKeyValues", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a218899540db609667779c06d719b6d59", null ],
     [ "setParams", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a99452a2ee9dfa3243a205c61d8f728cc", null ],
     [ "simple", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a401c936f793706adb65311603d9da26d", null ],
     [ "$condition", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a16bc4b377f5da473f62957e96700bc8f", null ],

@@ -36,31 +36,18 @@ var hierarchy =
       [ "CrudControllerCreator", "class_ubiquity_1_1scaffolding_1_1creators_1_1_crud_controller_creator.html", null ],
       [ "RestControllerCreator", "class_ubiquity_1_1scaffolding_1_1creators_1_1_rest_controller_creator.html", null ]
     ] ],
-    [ "CacheFile", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_cache_file.html", null ],
-    [ "CacheTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_cache_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
+    [ "CacheFile", "class_ubiquity_1_1cache_1_1_cache_file.html", null ],
     [ "CallableParser", "class_ubiquity_1_1cache_1_1parser_1_1_callable_parser.html", null ],
-    [ "CheckTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_check_trait.html", [
-      [ "ModelsConfigTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_config_trait.html", [
-        [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-      ] ]
-    ] ],
     [ "ClassesToYuml", "class_ubiquity_1_1utils_1_1yuml_1_1_classes_to_yuml.html", null ],
     [ "ClassToYumlRelationsTrait", "class_ubiquity_1_1utils_1_1yuml_1_1traits_1_1_class_to_yuml_relations_trait.html", [
       [ "ClassToYuml", "class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html", null ]
     ] ],
     [ "ClassUtils", "class_ubiquity_1_1cache_1_1_class_utils.html", null ],
-    [ "CodeUtils", "class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_code_utils.html", null ],
+    [ "CodeUtils", "class_ubiquity_1_1utils_1_1base_1_1_code_utils.html", null ],
     [ "ConditionParser", "class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html", null ],
-    [ "ConfigTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_config_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
-    [ "Constants", "class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_constants.html", null ],
     [ "ConstraintViolation", "class_ubiquity_1_1contents_1_1validation_1_1validators_1_1_constraint_violation.html", null ],
     [ "ConstraintViolationViewer", "class_ubiquity_1_1contents_1_1validation_1_1validators_1_1_constraint_violation_viewer.html", null ],
     [ "Controller", "class_ubiquity_1_1controllers_1_1_controller.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ],
       [ "ControllerBase", "class_ubiquity_1_1controllers_1_1_controller_base.html", [
         [ "AuthController", "class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html", null ],
         [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", null ]
@@ -72,17 +59,10 @@ var hierarchy =
       ] ],
       [ "SeoController", "class_ubiquity_1_1controllers_1_1seo_1_1_seo_controller.html", null ]
     ] ],
-    [ "ControllerAction", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_action.html", null ],
     [ "ControllerParserPathTrait", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser_path_trait.html", [
       [ "ControllerParser", "class_ubiquity_1_1cache_1_1parser_1_1_controller_parser.html", null ]
     ] ],
-    [ "ControllerSeo", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_controller_seo.html", null ],
-    [ "ControllersTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_controllers_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
-    [ "CreateControllersTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_create_controllers_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
+    [ "ControllerSeo", "class_ubiquity_1_1seo_1_1_controller_seo.html", null ],
     [ "CRUDControllerUtilitiesTrait", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller_utilities_trait.html", [
       [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", null ]
     ] ],
@@ -116,9 +96,6 @@ var hierarchy =
       [ "Database", "class_ubiquity_1_1db_1_1_database.html", null ]
     ] ],
     [ "DatabaseReversor", "class_ubiquity_1_1orm_1_1reverse_1_1_database_reversor.html", null ],
-    [ "DatabaseTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_database_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
     [ "DatabaseTransactionsTrait", "class_ubiquity_1_1db_1_1traits_1_1_database_transactions_trait.html", [
       [ "Database", "class_ubiquity_1_1db_1_1_database.html", null ]
     ] ],
@@ -156,15 +133,14 @@ var hierarchy =
       ] ]
     ] ],
     [ "FlashMessage", "class_ubiquity_1_1utils_1_1flash_1_1_flash_message.html", null ],
+    [ "FormModelViewerTrait", "class_ubiquity_1_1controllers_1_1crud_1_1viewers_1_1traits_1_1_form_model_viewer_trait.html", [
+      [ "ModelViewer", "class_ubiquity_1_1controllers_1_1crud_1_1viewers_1_1_model_viewer.html", null ]
+    ] ],
     [ "Framework", "class_ubiquity_1_1core_1_1_framework.html", null ],
     [ "GitCommit", "class_ubiquity_1_1utils_1_1git_1_1_git_commit.html", null ],
     [ "GitFile", "class_ubiquity_1_1utils_1_1git_1_1_git_file.html", null ],
     [ "GitFileStatus", "class_ubiquity_1_1utils_1_1git_1_1_git_file_status.html", null ],
-    [ "GitTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_git_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
-    [ "HasModelViewerInterface", "interface_ubiquity_1_1controllers_1_1admin_1_1interfaces_1_1_has_model_viewer_interface.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ],
+    [ "HasModelViewerInterface", "interface_ubiquity_1_1controllers_1_1crud_1_1interfaces_1_1_has_model_viewer_interface.html", [
       [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", null ]
     ] ],
     [ "HasNotNullInterface", "interface_ubiquity_1_1contents_1_1validation_1_1validators_1_1_has_not_null_interface.html", [
@@ -201,13 +177,10 @@ var hierarchy =
       [ "SimpleRestController", "class_ubiquity_1_1controllers_1_1rest_1_1_simple_rest_controller.html", null ]
     ] ],
     [ "HtmlLogFormatter", "class_ubiquity_1_1log_1_1_html_log_formatter.html", null ],
-    [ "InfoMessage", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_info_message.html", null ],
     [ "InsertJqueryTrait", "class_ubiquity_1_1controllers_1_1semantic_1_1_insert_jquery_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ],
       [ "AuthController", "class_ubiquity_1_1controllers_1_1auth_1_1_auth_controller.html", null ],
       [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", null ]
     ] ],
-    [ "InstanceViolations", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_instance_violations.html", null ],
     [ "Ip", "class_ubiquity_1_1contents_1_1validation_1_1validators_1_1strings_1_1_ip.html", null ],
     [ "Iterator", null, [
       [ "FlashBag", "class_ubiquity_1_1utils_1_1flash_1_1_flash_bag.html", null ]
@@ -220,16 +193,11 @@ var hierarchy =
     ] ],
     [ "LoggerParams", "class_ubiquity_1_1log_1_1_logger_params.html", null ],
     [ "LogMessage", "class_ubiquity_1_1log_1_1_log_message.html", null ],
-    [ "LogsTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_logs_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
-    [ "Maker", "class_ubiquity_1_1controllers_1_1admin_1_1utils_1_1_maker.html", null ],
     [ "ManyToManyParser", "class_ubiquity_1_1orm_1_1parser_1_1_many_to_many_parser.html", null ],
     [ "Member", "class_ubiquity_1_1orm_1_1creator_1_1_member.html", null ],
     [ "MessagesCatalog", "class_ubiquity_1_1translation_1_1_messages_catalog.html", null ],
     [ "MessagesDomain", "class_ubiquity_1_1translation_1_1_messages_domain.html", null ],
     [ "MessagesTrait", "class_ubiquity_1_1controllers_1_1semantic_1_1_messages_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ],
       [ "CRUDController", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html", null ]
     ] ],
     [ "MessagesUpdates", "class_ubiquity_1_1translation_1_1_messages_updates.html", null ],
@@ -242,10 +210,6 @@ var hierarchy =
       [ "DbModelsCreator", "class_ubiquity_1_1orm_1_1creator_1_1database_1_1_db_models_creator.html", null ],
       [ "YumlModelsCreator", "class_ubiquity_1_1orm_1_1creator_1_1yuml_1_1_yuml_models_creator.html", null ]
     ] ],
-    [ "ModelsTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_models_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
-    [ "ModelViewer", "class_ubiquity_1_1controllers_1_1admin_1_1viewers_1_1_model_viewer.html", null ],
     [ "NormalizerInterface", "interface_ubiquity_1_1contents_1_1normalizers_1_1_normalizer_interface.html", null ],
     [ "NormalizersManager", "class_ubiquity_1_1contents_1_1normalizers_1_1_normalizers_manager.html", null ],
     [ "ObjectsConditionParser", "class_ubiquity_1_1orm_1_1core_1_1_objects_condition_parser.html", null ],
@@ -260,7 +224,6 @@ var hierarchy =
     [ "ReflexionFieldsTrait", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion_fields_trait.html", [
       [ "Reflexion", "class_ubiquity_1_1orm_1_1parser_1_1_reflexion.html", null ]
     ] ],
-    [ "RepositoryGit", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_repository_git.html", null ],
     [ "ResponseFormatter", "class_ubiquity_1_1controllers_1_1rest_1_1_response_formatter.html", [
       [ "JsonApiResponseFormatter", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_response_formatter.html", null ]
     ] ],
@@ -275,10 +238,6 @@ var hierarchy =
     [ "RestServer", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_server.html", [
       [ "JsonApiRestServer", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_server.html", null ]
     ] ],
-    [ "RestTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_rest_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
-    [ "Route", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_route.html", null ],
     [ "RouterAdminTrait", "class_ubiquity_1_1controllers_1_1traits_1_1_router_admin_trait.html", [
       [ "Router", "class_ubiquity_1_1controllers_1_1_router.html", null ]
     ] ],
@@ -291,15 +250,7 @@ var hierarchy =
     [ "RouterTestTrait", "class_ubiquity_1_1controllers_1_1traits_1_1_router_test_trait.html", [
       [ "Router", "class_ubiquity_1_1controllers_1_1_router.html", null ]
     ] ],
-    [ "RoutesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_routes_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
-    [ "ScaffoldController", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html", [
-      [ "AdminScaffoldController", "class_ubiquity_1_1scaffolding_1_1_admin_scaffold_controller.html", null ]
-    ] ],
-    [ "SeoTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_seo_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
+    [ "ScaffoldController", "class_ubiquity_1_1scaffolding_1_1_scaffold_controller.html", null ],
     [ "SessionCache", "class_ubiquity_1_1cache_1_1objects_1_1_session_cache.html", null ],
     [ "SessionObject", "class_ubiquity_1_1utils_1_1http_1_1session_1_1_session_object.html", null ],
     [ "SqlUtils", "class_ubiquity_1_1db_1_1_sql_utils.html", null ],
@@ -313,9 +264,6 @@ var hierarchy =
     ] ],
     [ "TemplateParser", "class_ubiquity_1_1views_1_1engine_1_1micro_1_1_template_parser.html", null ],
     [ "ThemesManager", "class_ubiquity_1_1themes_1_1_themes_manager.html", null ],
-    [ "ThemesTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_themes_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
     [ "TransformerFormInterface", "interface_ubiquity_1_1contents_1_1transformation_1_1_transformer_form_interface.html", [
       [ "DateTime", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_date_time.html", null ]
     ] ],
@@ -331,15 +279,9 @@ var hierarchy =
       [ "Password", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_password.html", null ],
       [ "UpperCase", "class_ubiquity_1_1contents_1_1transformation_1_1transformers_1_1_upper_case.html", null ]
     ] ],
-    [ "TranslateMessage", "class_ubiquity_1_1controllers_1_1admin_1_1popo_1_1_translate_message.html", null ],
-    [ "TranslateTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_translate_trait.html", [
-      [ "UbiquityMyAdminBaseController", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_base_controller.html", null ]
-    ] ],
     [ "Translator", "class_ubiquity_1_1translation_1_1_translator.html", null ],
     [ "TranslatorManager", "class_ubiquity_1_1translation_1_1_translator_manager.html", null ],
     [ "UArray", "class_ubiquity_1_1utils_1_1base_1_1_u_array.html", null ],
-    [ "UbiquityMyAdminData", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_data.html", null ],
-    [ "UbiquityMyAdminViewer", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_viewer.html", null ],
     [ "UbiquityUtils", "class_ubiquity_1_1utils_1_1_ubiquity_utils.html", null ],
     [ "UCookie", "class_ubiquity_1_1utils_1_1http_1_1_u_cookie.html", null ],
     [ "UDateTime", "class_ubiquity_1_1utils_1_1base_1_1_u_date_time.html", null ],
@@ -351,8 +293,7 @@ var hierarchy =
     [ "UResponse", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html", null ],
     [ "Url", "class_ubiquity_1_1seo_1_1_url.html", null ],
     [ "UrlParser", "class_ubiquity_1_1seo_1_1_url_parser.html", null ],
-    [ "UrlsTrait", "class_ubiquity_1_1controllers_1_1admin_1_1traits_1_1_urls_trait.html", [
-      [ "UbiquityMyAdminFiles", "class_ubiquity_1_1controllers_1_1admin_1_1_ubiquity_my_admin_files.html", null ],
+    [ "UrlsTrait", "class_ubiquity_1_1controllers_1_1crud_1_1traits_1_1_urls_trait.html", [
       [ "CRUDFiles", "class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_files.html", null ]
     ] ],
     [ "USession", "class_ubiquity_1_1utils_1_1http_1_1_u_session.html", null ],

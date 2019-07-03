@@ -13,7 +13,6 @@ var searchData=
   ['database_2ephp',['Database.php',['../_database_8php.html',1,'']]],
   ['databaseoperationstrait_2ephp',['DatabaseOperationsTrait.php',['../_database_operations_trait_8php.html',1,'']]],
   ['databasereversor_2ephp',['DatabaseReversor.php',['../_database_reversor_8php.html',1,'']]],
-  ['databasetrait_2ephp',['DatabaseTrait.php',['../_database_trait_8php.html',1,'']]],
   ['databasetransactionstrait_2ephp',['DatabaseTransactionsTrait.php',['../_database_transactions_trait_8php.html',1,'']]],
   ['dataexport_2ephp',['DataExport.php',['../_data_export_8php.html',1,'']]],
   ['datetime_2ephp',['DateTime.php',['../_date_time_8php.html',1,'']]],

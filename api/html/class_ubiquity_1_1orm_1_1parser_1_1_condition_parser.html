@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.4</span>
+   &#160;<span id="projectnumber">2.2.0</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -91,6 +91,9 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1orm_1_1parser_1_1_co
 <div class="title">ConditionParser Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents a query condition.  
+ <a href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -98,6 +101,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a32b5a527a5674c79a1e83630def086d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b255bf910a69a7053dc7b3db5199bb2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a0b255bf910a69a7053dc7b3db5199bb2">addKeyValues</a> ($keyValues, $classname, $separator=&quot; AND &quot;)</td></tr>
 <tr class="separator:a0b255bf910a69a7053dc7b3db5199bb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a218899540db609667779c06d719b6d59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a218899540db609667779c06d719b6d59">setKeyValues</a> ($values)</td></tr>
+<tr class="separator:a218899540db609667779c06d719b6d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1664ecaef095ba473094e28f8876a0e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a1664ecaef095ba473094e28f8876a0e2">addPart</a> ($condition, $value)</td></tr>
 <tr class="separator:a1664ecaef095ba473094e28f8876a0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a432c26b482e05b1cf04f9e5cd90dd4bc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a432c26b482e05b1cf04f9e5cd90dd4bc">addParts</a> ($condition, $values)</td></tr>
@@ -139,16 +144,20 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a91a9af10d8a7cd6832511e6f02c3c636"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16bc4b377f5da473f62957e96700bc8f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a16bc4b377f5da473f62957e96700bc8f">$condition</a></td></tr>
 <tr class="separator:a16bc4b377f5da473f62957e96700bc8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8dfa90e1feaffe49fc70696cc75c2f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#aa8dfa90e1feaffe49fc70696cc75c2f3">$parts</a> =[]</td></tr>
+<tr class="memitem:aa8dfa90e1feaffe49fc70696cc75c2f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#aa8dfa90e1feaffe49fc70696cc75c2f3">$parts</a> = [ ]</td></tr>
 <tr class="separator:aa8dfa90e1feaffe49fc70696cc75c2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe68e6fbe7acfbffc0af0c84a1996466"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#afe68e6fbe7acfbffc0af0c84a1996466">$params</a></td></tr>
 <tr class="separator:afe68e6fbe7acfbffc0af0c84a1996466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25f5a1f31268c8c40ace79710abcccea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a25f5a1f31268c8c40ace79710abcccea">$invertedParams</a> =true</td></tr>
+<tr class="memitem:a25f5a1f31268c8c40ace79710abcccea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html#a25f5a1f31268c8c40ace79710abcccea">$invertedParams</a> = true</td></tr>
 <tr class="separator:a25f5a1f31268c8c40ace79710abcccea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00009">9</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<div class="textblock"><p>Represents a query condition. </p>
+<p><a class="el" href="namespace_ubiquity.html">Ubiquity</a>$ConditionParser This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a></p>
+<dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.1 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00019">19</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a32b5a527a5674c79a1e83630def086d7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a32b5a527a5674c79a1e83630def086d7">&#9670;&nbsp;</a></span>__construct()</h2>
@@ -182,7 +191,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00016">16</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00026">26</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -219,7 +228,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00024">24</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00034">34</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -247,7 +256,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00046">46</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00067">67</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -277,7 +286,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00053">53</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00074">74</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -307,7 +316,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00061">61</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00082">82</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -327,7 +336,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00069">69</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00090">90</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -346,7 +355,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00141">141</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00165">165</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -366,7 +375,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00105">105</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00127">127</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -386,7 +395,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>mixed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00118">118</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00141">141</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -407,7 +416,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>mixed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00131">131</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00155">155</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -426,7 +435,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00164">164</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00190">190</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -464,7 +473,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00092">92</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00113">113</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -491,7 +500,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00083">83</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00104">104</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -517,7 +526,27 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00150">150</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00175">175</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a218899540db609667779c06d719b6d59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a218899540db609667779c06d719b6d59">&#9670;&nbsp;</a></span>setKeyValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setKeyValues </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$values</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00056">56</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -543,7 +572,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00158">158</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00184">184</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -581,7 +610,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00172">172</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00198">198</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -606,7 +635,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00011">11</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00021">21</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -630,7 +659,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00010">10</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00020">20</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -644,7 +673,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$invertedParams =true</td>
+          <td class="memname">$invertedParams = true</td>
         </tr>
       </table>
   </td>
@@ -654,7 +683,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00014">14</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00024">24</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -678,7 +707,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00013">13</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00023">23</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -692,7 +721,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$parts =[]</td>
+          <td class="memname">$parts = [ ]</td>
         </tr>
       </table>
   </td>
@@ -702,7 +731,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00012">12</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_condition_parser_8php_source.html#l00022">22</a> of file <a class="el" href="_condition_parser_8php_source.html">ConditionParser.php</a>.</p>
 
 </div>
 </div>
@@ -716,7 +745,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm.html">orm</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm_1_1parser.html">parser</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1orm_1_1parser_1_1_condition_parser.html">ConditionParser</a></li>
-    <li class="footer"><small>Generated on Thu Jun 13 2019 11:13:58 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Wed Jul 3 2019 17:55:37 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

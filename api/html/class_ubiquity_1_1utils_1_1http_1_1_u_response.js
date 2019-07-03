@@ -7,7 +7,7 @@ var class_ubiquity_1_1utils_1_1http_1_1_u_response =
     [ "asXml", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#ab93ec40575cba783fd80b2ed5dcf41c0", null ],
     [ "enableCors", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a0bf09609e1ad3b157e76b9da54051815", null ],
     [ "getResponseCode", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a758dc824e039c375aceb42c30e69fc81", null ],
-    [ "header", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#aa6aa9621d5c6597cf808b8bbf97057c8", null ],
+    [ "header", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#af6b56565ded02230c6cfd69c482aef12", null ],
     [ "isJSON", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a00f299982df69fd390bb7d0bd1969d5e", null ],
     [ "isSent", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#a29553b4c7672d5c39f6b7b617c1be1ff", null ],
     [ "noCache", "class_ubiquity_1_1utils_1_1http_1_1_u_response.html#acc985c9913ba5e6a2341aa49ba486293", null ],

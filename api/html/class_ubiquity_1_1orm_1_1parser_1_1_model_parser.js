@@ -1,6 +1,7 @@
 var class_ubiquity_1_1orm_1_1parser_1_1_model_parser =
 [
     [ "__toString", "class_ubiquity_1_1orm_1_1parser_1_1_model_parser.html#a7516ca30af0db3cdbf9a7739b48ce91d", null ],
+    [ "asArray", "class_ubiquity_1_1orm_1_1parser_1_1_model_parser.html#a12b8efb717cb31322bfa4d1d75146979", null ],
     [ "parse", "class_ubiquity_1_1orm_1_1parser_1_1_model_parser.html#a046cffea18732b624abb89bf8501d9ce", null ],
     [ "$accessors", "class_ubiquity_1_1orm_1_1parser_1_1_model_parser.html#af2a5c7931f51c95db786937292c398ab", null ],
     [ "$fieldNames", "class_ubiquity_1_1orm_1_1parser_1_1_model_parser.html#ad42c49dda04bb42ec41e55cba8f8814b", null ],

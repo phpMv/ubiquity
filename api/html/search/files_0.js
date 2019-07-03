@@ -5,7 +5,6 @@ var searchData=
   ['abstracthttp_2ephp',['AbstractHttp.php',['../_abstract_http_8php.html',1,'']]],
   ['abstractimportation_2ephp',['AbstractImportation.php',['../_abstract_importation_8php.html',1,'']]],
   ['abstractsession_2ephp',['AbstractSession.php',['../_abstract_session_8php.html',1,'']]],
-  ['adminscaffoldcontroller_2ephp',['AdminScaffoldController.php',['../_admin_scaffold_controller_8php.html',1,'']]],
   ['apcucache_2ephp',['ApcuCache.php',['../_apcu_cache_8php.html',1,'']]],
   ['api_2emd',['api.md',['../api_8md.html',1,'']]],
   ['apitokens_2ephp',['ApiTokens.php',['../_api_tokens_8php.html',1,'']]],

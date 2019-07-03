@@ -6,6 +6,7 @@ var class_ubiquity_1_1orm_1_1_d_a_o =
     [ "count", "class_ubiquity_1_1orm_1_1_d_a_o.html#a1eab6a63d6d9d1a0b526179756adb34b", null ],
     [ "getAll", "class_ubiquity_1_1orm_1_1_d_a_o.html#af87c07e78e13e9f1d5ddaf11245fd029", null ],
     [ "getById", "class_ubiquity_1_1orm_1_1_d_a_o.html#a8b016f0dc89d73fc569bf2318e384b2d", null ],
+    [ "getConditionParser", "class_ubiquity_1_1orm_1_1_d_a_o.html#a1188ef1824c74fe4060e050c08fe4327", null ],
     [ "getManyToMany", "class_ubiquity_1_1orm_1_1_d_a_o.html#af99cff2b7541830f2d09b3578fc530dd", null ],
     [ "getManyToOne", "class_ubiquity_1_1orm_1_1_d_a_o.html#a2932683a0376280f1bbd4d67e686d223", null ],
     [ "getOne", "class_ubiquity_1_1orm_1_1_d_a_o.html#a449309169ca3c735db65d2089d935615", null ],
@@ -15,6 +16,7 @@ var class_ubiquity_1_1orm_1_1_d_a_o =
     [ "paginate", "class_ubiquity_1_1orm_1_1_d_a_o.html#a24dcd7c727e2f65305713a7b90668926", null ],
     [ "setTransformerOp", "class_ubiquity_1_1orm_1_1_d_a_o.html#adc1a442aba5ff0af67d9024d03c277d7", null ],
     [ "startDatabase", "class_ubiquity_1_1orm_1_1_d_a_o.html#aab6fd47d558266285ec62dc76ec7048c", null ],
+    [ "$conditionParsers", "class_ubiquity_1_1orm_1_1_d_a_o.html#a0a645d47a332ca442ac611a821d910d5", null ],
     [ "$db", "class_ubiquity_1_1orm_1_1_d_a_o.html#a1fa3127fc82f96b1436d871ef02be319", null ],
     [ "$transformerOp", "class_ubiquity_1_1orm_1_1_d_a_o.html#a4bd818b03aa10d8275f1a42bb7a5f6a5", null ],
     [ "$useTransformers", "class_ubiquity_1_1orm_1_1_d_a_o.html#a5f322eb415441bc1ee23b18881a5e7d6", null ]

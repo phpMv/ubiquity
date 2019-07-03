@@ -1,6 +1,5 @@
 var dir_c1a162a682241892726ae1c868c4afa0 =
 [
-    [ "admin", "dir_af2382da2bfd92befa51fd89a2589f2e.html", "dir_af2382da2bfd92befa51fd89a2589f2e" ],
     [ "auth", "dir_51687aa5c41cfe4c307e3050919b95c4.html", "dir_51687aa5c41cfe4c307e3050919b95c4" ],
     [ "crud", "dir_87d7285d18ead109d5d0a78f677ac43b.html", "dir_87d7285d18ead109d5d0a78f677ac43b" ],
     [ "di", "dir_9fd8dabb285ce0abfacfec3f65a980c0.html", "dir_9fd8dabb285ce0abfacfec3f65a980c0" ],

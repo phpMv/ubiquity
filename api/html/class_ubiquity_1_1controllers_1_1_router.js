@@ -3,7 +3,7 @@ var class_ubiquity_1_1controllers_1_1_router =
     [ "_getURL", "class_ubiquity_1_1controllers_1_1_router.html#a212ed5ead9041c60e628e613657ea8dc", null ],
     [ "checkRouteName", "class_ubiquity_1_1controllers_1_1_router.html#ab7b67abf3119d9e5480beee52e6f0371", null ],
     [ "cleanParam", "class_ubiquity_1_1controllers_1_1_router.html#a1f84be176878ae7a52b3019c6698a660", null ],
-    [ "getRoute", "class_ubiquity_1_1controllers_1_1_router.html#ae76a7d38673a1f6f4c1c00f3b112e822", null ],
+    [ "getRoute", "class_ubiquity_1_1controllers_1_1_router.html#a377f7d2df57503ca8c07668a08c3cfdc", null ],
     [ "getRoute_", "class_ubiquity_1_1controllers_1_1_router.html#af9e338839e85e10ce9a6f3795d3db025", null ],
     [ "getRouteByName", "class_ubiquity_1_1controllers_1_1_router.html#a97a6be67a3be78d02bbc1f47fdc1ee39", null ],
     [ "getRoutes", "class_ubiquity_1_1controllers_1_1_router.html#a5ee75c365fa519c6bf61c9ae28672a7d", null ],

@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.1.4</span>
+   &#160;<span id="projectnumber">2.2.0</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -96,9 +96,9 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1utils_1_1http_1_1_u_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aa6aa9621d5c6597cf808b8bbf97057c8"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#aa6aa9621d5c6597cf808b8bbf97057c8">header</a> ($headerField, $value, $replace=null, $responseCode=null)</td></tr>
-<tr class="memdesc:aa6aa9621d5c6597cf808b8bbf97057c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a raw HTTP header.  <a href="#aa6aa9621d5c6597cf808b8bbf97057c8">More...</a><br /></td></tr>
-<tr class="separator:aa6aa9621d5c6597cf808b8bbf97057c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6b56565ded02230c6cfd69c482aef12"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#af6b56565ded02230c6cfd69c482aef12">header</a> ($headerField, $value, bool $replace=true, int $responseCode=null)</td></tr>
+<tr class="memdesc:af6b56565ded02230c6cfd69c482aef12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a raw HTTP header.  <a href="#af6b56565ded02230c6cfd69c482aef12">More...</a><br /></td></tr>
+<tr class="separator:af6b56565ded02230c6cfd69c482aef12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb866a1773066402777e37c857439be0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html#acb866a1773066402777e37c857439be0">setContentType</a> ($contentType, $encoding=null)</td></tr>
 <tr class="memdesc:acb866a1773066402777e37c857439be0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets header content-type.  <a href="#acb866a1773066402777e37c857439be0">More...</a><br /></td></tr>
 <tr class="separator:acb866a1773066402777e37c857439be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,7 +161,7 @@ Static Private Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Http Response utilities <a class="el" href="namespace_ubiquity.html">Ubiquity</a>$UResponse This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a>. </p>
 <dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.1.0 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.1.1 </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_u_response_8php_source.html#l00016">16</a> of file <a class="el" href="_u_response_8php_source.html">UResponse.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -486,8 +486,8 @@ Static Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa6aa9621d5c6597cf808b8bbf97057c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6aa9621d5c6597cf808b8bbf97057c8">&#9670;&nbsp;</a></span>header()</h2>
+<a id="af6b56565ded02230c6cfd69c482aef12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6b56565ded02230c6cfd69c482aef12">&#9670;&nbsp;</a></span>header()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -510,13 +510,13 @@ Static Private Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$replace</em> = <code>null</code>, </td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>$replace</em> = <code>true</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>$responseCode</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
@@ -953,7 +953,7 @@ Static Private Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1utils.html">utils</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1utils_1_1http.html">http</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_response.html">UResponse</a></li>
-    <li class="footer"><small>Generated on Thu Jun 13 2019 11:13:59 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Wed Jul 3 2019 17:55:39 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

@@ -1,6 +1,5 @@
 var namespace_ubiquity_1_1controllers =
 [
-    [ "admin", "namespace_ubiquity_1_1controllers_1_1admin.html", "namespace_ubiquity_1_1controllers_1_1admin" ],
     [ "Auth", "namespace_ubiquity_1_1controllers_1_1_auth.html", "namespace_ubiquity_1_1controllers_1_1_auth" ],
     [ "auth", "namespace_ubiquity_1_1controllers_1_1auth.html", "namespace_ubiquity_1_1controllers_1_1auth" ],
     [ "crud", "namespace_ubiquity_1_1controllers_1_1crud.html", "namespace_ubiquity_1_1controllers_1_1crud" ],
