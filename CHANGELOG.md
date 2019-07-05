@@ -29,7 +29,7 @@ Classes relocation
 - ``Ubiquity\controllers\admin\traits\UrlsTrait`` -> ``Ubiquity\controllers\crud\traits\UrlsTrait``
   
 #### Migration 
-- For new projects, update devtools: ``composer global update``
+- Update devtools: ``composer global update``
 - In existing projects:
 ``composer require phpmv/ubiquity-webtools`` for webtools installation.
 
