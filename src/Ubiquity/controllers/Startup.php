@@ -130,7 +130,7 @@ class Startup {
 			try {
 				\call_user_func_array ( [ $controller,self::$action ], self::$actionParams );
 			} catch ( \Error $e ) {
-				Logger::warn ( "Startup", sprintf ( "The method `%s` doesn't exists on controller `%s`", self::$action, $ctrl ), "runAction" );
+				Logger::warn ( "Startup", \sprintf ( "The method `%s` doesn't exists on controller `%s`", self::$action, $ctrl ), "runAction" );
 			}
 			if ($finalize) {
 				$controller->finalize ();
