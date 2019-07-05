@@ -16,11 +16,11 @@ use Ubiquity\utils\base\CodeUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 trait StartupConfigTrait {
-	protected static $config;
+	public static $config;
 	protected static $ctrlNS;
 	protected static $httpInstance;
 	protected static $sessionInstance;
@@ -50,16 +50,12 @@ trait StartupConfigTrait {
 	}
 
 	public static function getNS($part = 'controllers') {
-		$config = self::$config;
-		$ns = $config ['mvcNS'] [$part];
-		if ($ns !== "" && $ns !== null) {
-			$ns .= "\\";
-		}
-		return $ns;
+		$ns = self::$config ['mvcNS'] [$part];
+		return ($ns != null) ? $ns .= "\\" : $ns;
 	}
 
 	protected static function setCtrlNS() {
-		self::$ctrlNS = self::getNS ();
+		return self::$ctrlNS = self::getNS ();
 	}
 
 	public static function checkDbConfig() {
