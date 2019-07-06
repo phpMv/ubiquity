@@ -25,7 +25,9 @@ class Startup {
 	private static $actionParams;
 
 	private static function parseUrl(&$url) {
-		$url = $url ?? "_default";
+		if (! $url) {
+			$url = "_default";
+		}
 		return self::$urlParts = \explode ( "/", \rtrim ( $url, '/' ) );
 	}
 
