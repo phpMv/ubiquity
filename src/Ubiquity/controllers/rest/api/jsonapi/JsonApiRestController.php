@@ -108,6 +108,16 @@ abstract class JsonApiRestController extends RestBaseController {
 	}
 
 	/**
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\controllers\rest\RestBaseController::connect()
+	 * @route("connect/","priority"=>2500)
+	 */
+	public function connect() {
+		parent::connect ();
+	}
+
+	/**
 	 * Returns all the instances from the model $resource.
 	 * Query parameters:
 	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
