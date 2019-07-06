@@ -69,10 +69,10 @@ class Startup {
 		$u = self::parseUrl ( $url );
 		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, true, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
-				if (\is_callable ( $ru [0] )) {
-					self::runCallable ( $ru );
-				} else {
+				if (\is_string ( $ru [0] )) {
 					self::runAction ( $ru, $initialize, $finalize );
+				} else {
+					self::runCallable ( $ru );
 				}
 			} else {
 				echo $ru; // Displays route response from cache
