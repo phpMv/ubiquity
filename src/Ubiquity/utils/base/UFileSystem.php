@@ -10,7 +10,7 @@ use Ubiquity\utils\base\traits\UFileSystemWriter;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class UFileSystem {
@@ -152,7 +152,7 @@ class UFileSystem {
 	 * @return string
 	 */
 	public static function getDirFromNamespace($ns) {
-		return \ROOT . \DS . str_replace ( "\\", \DS, $ns );
+		return \ROOT . \DS . \str_replace ( "\\", \DS, $ns );
 	}
 
 	/**
@@ -162,11 +162,11 @@ class UFileSystem {
 	 * @return boolean
 	 */
 	public static function delTree($dir) {
-		$files = array_diff ( scandir ( $dir ), array ('.','..' ) );
+		$files = \array_diff ( scandir ( $dir ), array ('.','..' ) );
 		foreach ( $files as $file ) {
-			(is_dir ( "$dir/$file" )) ? self::delTree ( "$dir/$file" ) : unlink ( "$dir/$file" );
+			(\is_dir ( "$dir/$file" )) ? self::delTree ( "$dir/$file" ) : \unlink ( "$dir/$file" );
 		}
-		return rmdir ( $dir );
+		return \rmdir ( $dir );
 	}
 
 	/**
@@ -179,28 +179,28 @@ class UFileSystem {
 	 * @return array
 	 */
 	public static function getLines($filename, $reverse = false, $maxLines = null, $lineCallback = null) {
-		if (file_exists ( $filename )) {
+		if (\file_exists ( $filename )) {
 			if ($reverse && isset ( $maxLines )) {
 				$result = [ ];
-				$fl = fopen ( $filename, "r" );
-				for($x_pos = 0, $ln = 0, $lines = [ ]; fseek ( $fl, $x_pos, SEEK_END ) !== - 1; $x_pos --) {
-					$char = fgetc ( $fl );
+				$fl = \fopen ( $filename, "r" );
+				for($x_pos = 0, $ln = 0, $lines = [ ]; \fseek ( $fl, $x_pos, SEEK_END ) !== - 1; $x_pos --) {
+					$char = \fgetc ( $fl );
 					if ($char === "\n") {
-						if (is_callable ( $lineCallback )) {
+						if (\is_callable ( $lineCallback )) {
 							$lineCallback ( $result, $lines [$ln] );
 						} else {
 							$result [] = $lines [$ln];
 						}
-						if (isset ( $maxLines ) && sizeof ( $result ) >= $maxLines) {
-							fclose ( $fl );
+						if (isset ( $maxLines ) && \sizeof ( $result ) >= $maxLines) {
+							\fclose ( $fl );
 							return $result;
 						}
 						$ln ++;
 						continue;
 					}
-					$lines [$ln] = $char . ((array_key_exists ( $ln, $lines )) ? $lines [$ln] : '');
+					$lines [$ln] = $char . ($lines [$ln] ?? '');
 				}
-				fclose ( $fl );
+				\fclose ( $fl );
 				return $result;
 			} else {
 				return self::getLinesByLine ( $filename, $reverse, $maxLines, $lineCallback );
@@ -211,28 +211,28 @@ class UFileSystem {
 
 	protected static function getLinesByLine($filename, $reverse, $maxLines, $lineCallback) {
 		$result = [ ];
-		$handle = fopen ( $filename, "r" );
+		$handle = \fopen ( $filename, "r" );
 		if ($handle) {
-			while ( ($line = fgets ( $handle )) !== false ) {
-				if (is_callable ( $lineCallback )) {
+			while ( ($line = \fgets ( $handle )) !== false ) {
+				if (\is_callable ( $lineCallback )) {
 					$lineCallback ( $result, $line );
 				} else {
 					$result [] = $line;
 				}
-				if (isset ( $maxLines ) && sizeof ( $result ) >= $maxLines) {
-					fclose ( $handle );
+				if (isset ( $maxLines ) && \sizeof ( $result ) >= $maxLines) {
+					\fclose ( $handle );
 					if (is_array ( $result ) && $reverse) {
-						$result = array_reverse ( $result );
+						$result = \array_reverse ( $result );
 					}
 					return $result;
 				}
 			}
-			fclose ( $handle );
+			\fclose ( $handle );
 		} else {
 			// error opening the file.
 		}
 		if ($reverse) {
-			$result = array_reverse ( $result );
+			$result = \array_reverse ( $result );
 		}
 		return $result;
 	}

@@ -134,7 +134,7 @@ trait CRUDControllerUtilitiesTrait {
 	 */
 	protected function _deleteMultiple($data, $action, $target, $condition) {
 		if (URequest::isPost ()) {
-			if (is_callable ( $condition )) {
+			if (\is_callable ( $condition )) {
 				$condition = $condition ( $data );
 			}
 			$rep = DAO::deleteAll ( $this->model, $condition );

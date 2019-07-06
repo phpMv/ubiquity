@@ -174,7 +174,7 @@ class Router {
 	public static function getRouteUrlParts($routeArray, $params, $cached = false, $duration = NULL, $cachedResponse = true) {
 		\array_shift ( $params );
 		$routeDetails = $routeArray ["details"];
-		if (is_callable ( $routeDetails ["controller"] )) {
+		if ($routeDetails ["controller"] instanceof \Closure) {
 			$result = [ $routeDetails ["controller"] ];
 			$resultStr = "callable function";
 		} else {
@@ -188,7 +188,7 @@ class Router {
 			Logger::info ( 'Router', sprintf ( 'Route found for %s : %s', $routeArray ["path"], $resultStr ), 'getRouteUrlParts' );
 			if (isset ( $routeDetails ['callback'] )) {
 				// Used for maintenance mode
-				if (is_callable ( $routeDetails ['callback'] )) {
+				if ($routeDetails ['callback'] instanceof \Closure) {
 					return $routeDetails ['callback'] ( $result );
 				}
 			}

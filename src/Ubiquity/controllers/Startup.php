@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.3
+ * @version 1.1.4
  *
  */
 class Startup {
@@ -112,29 +112,28 @@ class Startup {
 
 		try {
 			$controller = new $ctrl ();
+			// Dependency injection
+			if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
+				self::injectDependences ( $controller );
+			}
+			if (! $controller->isValid ( self::$action )) {
+				$controller->onInvalidControl ();
+			} else {
+				if ($initialize) {
+					$controller->initialize ();
+				}
+				try {
+					\call_user_func_array ( [ $controller,self::$action ], self::$actionParams );
+				} catch ( \Error $e ) {
+					Logger::warn ( "Startup", \sprintf ( "The method `%s` doesn't exists on controller `%s`", self::$action, $ctrl ), "runAction" );
+				}
+				if ($finalize) {
+					$controller->finalize ();
+				}
+			}
 		} catch ( \Error $e ) {
 			self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
 			Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
-		}
-
-		// Dependency injection
-		if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
-			self::injectDependences ( $controller );
-		}
-		if (! $controller->isValid ( self::$action )) {
-			$controller->onInvalidControl ();
-		} else {
-			if ($initialize) {
-				$controller->initialize ();
-			}
-			try {
-				\call_user_func_array ( [ $controller,self::$action ], self::$actionParams );
-			} catch ( \Error $e ) {
-				Logger::warn ( "Startup", \sprintf ( "The method `%s` doesn't exists on controller `%s`", self::$action, $ctrl ), "runAction" );
-			}
-			if ($finalize) {
-				$controller->finalize ();
-			}
 		}
 	}
 

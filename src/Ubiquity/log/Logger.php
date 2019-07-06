@@ -20,7 +20,7 @@ abstract class Logger {
 	private static $test;
 
 	private static function createLogger(&$config) {
-		if (is_callable ( $logger = $config ["logger"] )) {
+		if (\is_callable ( $logger = $config ["logger"] )) {
 			$instance = $logger ();
 		} else {
 			$instance = $config ["logger"];

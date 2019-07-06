@@ -16,7 +16,7 @@ use Ubiquity\db\traits\DatabaseTransactionsTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class Database {
@@ -58,7 +58,7 @@ class Database {
 			SqlUtils::$quote = $options ["quote"];
 		$this->options = $options;
 		if ($cache !== false) {
-			if (\is_callable ( $cache )) {
+			if ($cache instanceof \Closure) {
 				$this->cache = $cache ();
 			} else {
 				if (\class_exists ( $cache )) {
