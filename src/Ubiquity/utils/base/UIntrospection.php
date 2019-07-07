@@ -7,7 +7,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class UIntrospection {
@@ -24,17 +24,20 @@ class UIntrospection {
 	}
 
 	public static function getLoadedViews(\ReflectionMethod $r, $lines) {
-		$matches = [ ];
+		$result = [ ];
 		$code = self::getMethodCode ( $r, $lines );
 		\preg_match_all ( '@(?:.*?)\$this\-\>loadView\([\'\"](.+?)[\'\"](?:.*?)@s', $code, $matches );
 		if (isset ( $matches [1] ) && \sizeof ( $matches [1] ) > 0) {
-			return $matches [1];
+			$result = array_merge ( $result, $matches [1] );
 		}
 		\preg_match_all ( '@(?:.*?)\$this\-\>jquery\-\>renderView\([\'\"](.+?)[\'\"](?:.*?)@s', $code, $matches );
 		if (isset ( $matches [1] )) {
-			return $matches [1];
+			$result = array_merge ( $result, $matches [1] );
 		}
-		return [ ];
+		if (strpos ( $code, '$this->loadDefaultView' ) !== false || strpos ( $code, '$this->jquery->renderDefaultView' ) !== false) {
+			$result [] = $r->getDeclaringClass ()->getShortName () . '/' . $r->getName () . '.html';
+		}
+		return $result;
 	}
 
 	public static function getMethodCode(\ReflectionMethod $r, $lines) {
