@@ -16,7 +16,7 @@ use Ubiquity\controllers\di\DiManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
@@ -95,7 +95,6 @@ trait RouterCacheTrait {
 	}
 
 	private static function storeRouteResponse($key, $response) {
-		self::setKeyExpired ( $key, false );
 		self::$cache->store ( "controllers/" . $key, $response, 'controllers', false );
 		return $response;
 	}
