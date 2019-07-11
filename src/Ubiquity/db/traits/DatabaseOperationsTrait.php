@@ -11,13 +11,14 @@ use Ubiquity\exceptions\CacheException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  * @property \PDO $pdoObject
  * @property mixed $cache
  * @property array $options
  */
 trait DatabaseOperationsTrait {
 	private $statements = [ ];
+	private $updateStatements = [ ];
 
 	abstract public function getDSN();
 
@@ -111,6 +112,30 @@ trait DatabaseOperationsTrait {
 			$this->statements [$sql]->setFetchMode ( \PDO::FETCH_ASSOC );
 		}
 		return $this->statements [$sql];
+	}
+
+	/**
+	 *
+	 * @param string $sql
+	 * @return \PDOStatement
+	 */
+	private function getUpdateStatement($sql) {
+		if (! isset ( $this->updateStatements [$sql] )) {
+			$this->updateStatements [$sql] = $this->pdoObject->prepare ( $sql );
+		}
+		return $this->updateStatements [$sql];
+	}
+
+	/**
+	 * Prepares a statement and execute a query for update (INSERT, UPDATE, DELETE...)
+	 *
+	 * @param string $sql
+	 * @param array|null $parameters
+	 * @return boolean
+	 */
+	public function prepareAndExecuteUpdate($sql, $parameters = null) {
+		$statement = $this->getUpdateStatement ( $sql );
+		return $statement->execute ( $parameters );
 	}
 
 	/**
