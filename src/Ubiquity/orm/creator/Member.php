@@ -16,6 +16,7 @@ class Member {
 	private $primary;
 	private $manyToOne;
 	private $annotations;
+    private $isEmail;
 
 	public function __construct($name) {
 		$this->name=$name;
@@ -56,6 +57,14 @@ class Member {
 		$annot->nullable=(\strtolower($infos["Nullable"])==="yes");
 		$this->annotations["column"]=$annot;
 	}
+
+	public function setIsEmail($info){
+        $this->isEmail = $info['Email'];
+    }
+
+    public function isEmail(){
+	    return $this->isEmail;
+    }
 
 	public function addManyToOne($name, $className, $nullable=false) {
 		$this->annotations[]=new ManyToOneAnnotation();

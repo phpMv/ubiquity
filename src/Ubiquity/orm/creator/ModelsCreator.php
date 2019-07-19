@@ -48,6 +48,7 @@ abstract class ModelsCreator {
 					if (in_array ( $field, $keys )) {
 						$member->setPrimary ();
 					}
+					$member->setIsEmail( $info );
 					$member->setDbType ( $info );
 					$member->addValidators ();
 					$class->addMember ( $member );
