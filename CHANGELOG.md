@@ -44,6 +44,10 @@ Classes relocation
 ### Fixed
 - Router: pb with route priority attribute see [#54](https://github.com/phpMv/ubiquity/issues/54)
 
+### Changes
+- Models generation (Engineering-Forward) by UbiquityMyadmin interface was updated to avoid wrong outputs from `__toString()` function. [#58](https://github.com/phpMv/ubiquity/issues/58)
+    - Field name will be checked on different values which could be a hint for an email.
+    
 ## [2.1.4] - 2019-06-13
 ### Added
 - `Translate` module in webtools
