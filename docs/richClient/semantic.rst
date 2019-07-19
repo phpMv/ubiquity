@@ -224,7 +224,89 @@ In the folowing example, the parameters passed to the **attributes** variable of
 
 Classical ajax requests
 +++++++++++++++++++++++
+For this example, create the following database:
 
+.. code-block:: sql
+   
+   CREATE DATABASE `uguide` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+   USE `uguide`;
+   
+   CREATE TABLE `user` (
+     `id` int(11) NOT NULL,
+     `firstname` varchar(30) NOT NULL,
+     `lastname` varchar(30) NOT NULL
+   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+   
+   INSERT INTO `user` (`id`, `firstname`, `lastname`) VALUES
+   (1, 'You', 'Evan'),
+   (2, 'Potencier', 'Fabien'),
+   (3, 'Otwell', 'Taylor');
+
+Connect the application to the database, and generate the `User` class:
+
+With devtools:
+
+.. code-block:: bash
+   
+   Ubiquity config:set --database.dbName=uguide
+   Ubiquity all-models
+
+Create a new Controller `UsersJqueryController`
+
+.. code-block:: bash
+   
+   Ubiquity controller UsersJqueryController -v
+
+Index action
+############
+
+The `index` action must display a button to obtain the list of users, loaded via an ajax request:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/UsersJqueryController.php
+   
+   namespace controllers;
+   
+   /**
+    * Controller UsersJqueryController
+    *
+    * @property \Ajax\php\ubiquity\JsUtils $jquery
+    * @route("users")
+    */
+   class UsersJqueryController extends ControllerBase {
+   
+   	/**
+   	 *
+   	 * {@inheritdoc}
+   	 * @see \Ubiquity\controllers\Controller::index()
+   	 * @get
+   	 */
+   	public function index() {
+   		$this->jquery->getOnClick('#users-bt', Router::path('display.users'), '#users', [
+   			'hasLoader' => 'internal'
+   		]);
+   		$this->jquery->renderDefaultView();
+   	}
+   }
+
+.. code-block:: html
+   :caption: app/views/UsersJqueryController/index.html
+   
+   <div class="ui container">
+   	<div id="users-bt" class="ui button">
+   		<i class="ui users icon"></i>
+   		Display <b>users</b>
+   	</div>
+   	<p></p>
+   	<div id="users">
+   	</div>
+   </div>
+   {{ script_foot | raw }}
+
+
+displayUsers action
+###################
 
 
 Semantic components

@@ -7,7 +7,6 @@ use Ubiquity\views\engine\Twig;
 use Ubiquity\exceptions\ThemesException;
 use Ubiquity\events\EventsManager;
 use Ubiquity\events\ViewEvents;
-use Ubiquity\utils\base\UArray;
 
 /**
  * Themes manager.
