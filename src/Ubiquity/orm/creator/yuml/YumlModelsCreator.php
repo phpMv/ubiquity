@@ -27,10 +27,21 @@ class YumlModelsCreator extends ModelsCreator{
 		$fieldsInfos=array();
 		$fields = $this->yumlParser->getFields($tableName);
 		foreach ($fields as $field) {
-			$fieldsInfos[$field['name']] = ["Type"=>$field['type'],"Nullable"=>(isset($field["null"]) && $field["null"])];
+			$fieldsInfos[$field['name']] = ["Type"=>$field['type'],"Nullable"=>(isset($field["null"]) && $field["null"]),"Email" => $this->fieldIsEmail($field['Field'])];
 		}
 		return $fieldsInfos;
 	}
+
+    protected function fieldIsEmail($field)
+    {
+        $possibleColumnNames = array("email", "mail", "courrierelectronique", "ecourrier", "mailaddresse", "mailaddresse", "mailadress", "mailadresse");
+        $res = false;
+
+        if (in_array($field, $possibleColumnNames)) {
+            $res = true;
+        }
+        return $res;
+    }
 
 	protected function getPrimaryKeys($tableName){
 		return $this->yumlParser->getPrimaryKeys($tableName);
