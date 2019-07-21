@@ -374,12 +374,68 @@ The view associated to `displayUsers` action:
 displayOneUser action
 ###################
 
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/UsersJqueryController.php
+   :emphasize-lines: 11-27
+   
+   namespace controllers;
+   
+   /**
+    * Controller UsersJqueryController
+    *
+    * @property \Ajax\php\ubiquity\JsUtils $jquery
+    * @route("users")
+    */
+   class UsersJqueryController extends ControllerBase {
+   ...
+   	/**
+   	 *
+   	 * @post("{userId}","name"=>"display.one.user","cache"=>true,"duration"=>3600)
+   	 */
+   	public function displayOneUser($userId) {
+   		$user = DAO::getById(User::class, $userId);
+   		$this->jquery->hide('#users-content', '', '', true);
+   		$this->jquery->click('#close-user-bt', '$("#user-detail").html("");$("#users-content").show();');
+   		$this->jquery->renderDefaultView([
+   			'user' => $user
+   		]);
+   	}
+
+The view associated to `displayOneUser` action:
+
+.. code-block:: html
+   :caption: app/views/UsersJqueryController/displayUsers.html
+   
+   <div class="ui label">
+   	<i class="ui user icon"></i>
+   	Id
+   	<div class="detail">{{user.id}}</div>
+   </div>
+   <div class="ui label">
+   	Firstname
+   	<div class="detail">{{user.firstname}}</div>
+   </div>
+   <div class="ui label">
+   	Lastname
+   	<div class="detail">{{user.lastname}}</div>
+   </div>
+   <p></p>
+   <div id="close-user-bt" class="ui black button">
+   	<i class="ui users icon"></i>
+   	Return to users
+   </div>
+   {{ script_foot | raw }}
 
 Semantic components
 -------------------
 
+//todo
 HtmlButton sample
 +++++++++++++++++
 
+//todo
+DataTable sample
++++++++++++++++++
 
 
