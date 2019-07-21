@@ -256,6 +256,10 @@ Create a new Controller `UsersJqueryController`
 .. code-block:: bash
    
    Ubiquity controller UsersJqueryController -v
+   
+Create the folowing actions in `UsersJqueryController`:
+
+.. image:: /_static/images/richclient/semantic/UsersJqueryControllerStructure.png
 
 Index action
 ############
@@ -290,6 +294,8 @@ The `index` action must display a button to obtain the list of users, loaded via
    	}
    }
 
+The default view associated to `index` action:
+
 .. code-block:: html
    :caption: app/views/UsersJqueryController/index.html
    
@@ -306,6 +312,66 @@ The `index` action must display a button to obtain the list of users, loaded via
 
 
 displayUsers action
+###################
+All users are displayed, and a click on a user must display the user details via a posted ajax request:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/UsersJqueryController.php
+   :emphasize-lines: 11-27
+   
+   namespace controllers;
+   
+   /**
+    * Controller UsersJqueryController
+    *
+    * @property \Ajax\php\ubiquity\JsUtils $jquery
+    * @route("users")
+    */
+   class UsersJqueryController extends ControllerBase {
+   ...
+	/**
+	 *
+	 * @get("all","name"=>"display.users","cache"=>true)
+	 */
+	public function displayUsers() {
+		$users = DAO::getAll(User::class);
+		$this->jquery->click('#close-bt', '$("#users").html("");');
+		$this->jquery->postOnClick('li[data-ajax]', Router::path('display.one.user', [
+			""
+		]), '{}', '#user-detail', [
+			'attr' => 'data-ajax',
+			'hasLoader' => false
+		]);
+		$this->jquery->renderDefaultView([
+			'users' => $users
+		]);
+	}
+
+The view associated to `displayUsers` action:
+
+.. code-block:: html
+   :caption: app/views/UsersJqueryController/displayUsers.html
+   
+   <div class="ui top attached header">
+   	<i class="users circular icon"></i>
+   	<div class="content">Users</div>
+   </div>
+   <div class="ui attached segment">
+   	<ul id='users-content'>
+   	{% for user in users %}
+   		<li data-ajax="{{user.id}}">{{user.firstname }} {{user.lastname}}</li>
+   	{% endfor %}
+   	</ul>
+   	<div id='user-detail'></div>
+   </div>
+   <div class="ui bottom attached inverted segment">
+   <div id="close-bt" class="ui inverted button">Close</div>
+   </div>
+   {{ script_foot | raw }}
+
+
+displayOneUser action
 ###################
 
 
