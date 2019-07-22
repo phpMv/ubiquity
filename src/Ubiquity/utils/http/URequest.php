@@ -99,8 +99,7 @@ class URequest {
 	 * @param string $key
 	 */
 	public static function filled($key) {
-		$datas = self::getDatas ();
-		return isset ( $datas [$key] ) && $datas [$key] != null;
+		return isset ( $_REQUEST [$key] ) && $_REQUEST [$key] != null;
 	}
 
 	/**
@@ -109,8 +108,7 @@ class URequest {
 	 * @param string $key
 	 */
 	public static function has($key) {
-		$datas = self::getDatas ();
-		return isset ( $datas [$key] );
+		return isset ( $_REQUEST [$key] );
 	}
 
 	/**
