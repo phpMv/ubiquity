@@ -94,6 +94,26 @@ class URequest {
 	}
 
 	/**
+	 * Tests if a value is present on the request and is not empty
+	 *
+	 * @param string $key
+	 */
+	public static function filled($key) {
+		$datas = self::getDatas ();
+		return isset ( $datas [$key] ) && $datas [$key] != null;
+	}
+
+	/**
+	 * Tests if a value is present on the request
+	 *
+	 * @param string $key
+	 */
+	public static function has($key) {
+		$datas = self::getDatas ();
+		return isset ( $datas [$key] );
+	}
+
+	/**
 	 * Returns the request content-type header
 	 *
 	 * @return string
