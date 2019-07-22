@@ -119,9 +119,9 @@ class Model {
 	private function getToStringField(){
 		$result=null;
 		foreach ( $this->members as $member ) {
-            if ($member->isEmail()) {
-                $result = $member->getName();
-            }
+			if ($member->getDbType()!=="mixed" && $member->isNullable()!==true && !$member->isPrimary()) {
+				$result=$member->getName();
+			}
 		}
 		return $result;
 	}

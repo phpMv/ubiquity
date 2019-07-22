@@ -40,21 +40,10 @@ class DbModelsCreator extends ModelsCreator{
 		$recordset = $this->pdoObject->query("SHOW COLUMNS FROM `{$tableName}`");
 		$fields = $recordset->fetchAll(\PDO::FETCH_ASSOC);
 		foreach ($fields as $field) {
-            $fieldsInfos[$field['Field']] = ["Type" => $field['Type'], "Nullable" => $field["Null"], "Email" => $this->fieldIsEmail($field['Field'])];
+			$fieldsInfos[$field['Field']] = ["Type"=>$field['Type'],"Nullable"=>$field["Null"]];
 		}
 		return $fieldsInfos;
 	}
-
-    protected function fieldIsEmail($field)
-    {
-        $possibleColumnNames = array("email", "mail", "courrierelectronique", "ecourrier", "mailaddresse", "mailaddresse", "mailadress", "mailadresse");
-        $res = false;
-
-        if (in_array($field, $possibleColumnNames)) {
-            $res = true;
-        }
-        return $res;
-    }
 
 	protected function getPrimaryKeys($tableName){
 		$fieldkeys=array();
