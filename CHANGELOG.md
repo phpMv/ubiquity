@@ -46,7 +46,29 @@ Classes relocation
 
 ### Changes
 - Models generation (Engineering-Forward) by UbiquityMyadmin interface was updated to avoid wrong outputs from `__toString()` function. [#58](https://github.com/phpMv/ubiquity/issues/58)
-    - Field name will be checked on different values which could be a hint for an email.
+    - Field name is checked on different names which could be a hint for a password field.
+    - The following field names are supported:
+        - American English: password 
+        - Brazilian Portuguese: senha 
+        - Croatian: lozinka 
+        - Czech: heslotajne OR helslo_tajne
+        - Danish: password 
+        - Dutch: wachtwoord 
+        - European Spanish: contrasena
+        - Finnish: salasana 
+        - French: motdepasse OR mot_de_passe
+        - German: passwort
+        - Italian: password 
+        - Norwegian: passord 
+        - Polish: haslo
+        - European Portuguese: senha 
+        - Romanian: parola
+        - Russian: naponb
+        - Latin American Spanish: contrasena
+        - Swedish: loesenord OR losenord
+        - Turkish: sifre
+        - Ukrainian: naponb
+        - Vietnamese: matkhau OR mat_khau
     
 ## [2.1.4] - 2019-06-13
 ### Added
