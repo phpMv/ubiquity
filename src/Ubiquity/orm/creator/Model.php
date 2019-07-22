@@ -118,9 +118,14 @@ class Model {
 
 	private function getToStringField(){
 		$result=null;
+		// Array of multiple translations of the word "password" which could be taken as name of the table field in database
+		$pwArray=array('password','senha','lozinka','heslotajne','helslo_tajne','wachtwoord','contrasena','salasana','motdepasse','mot_de_passe','passwort','passord','haslo','senha','parola','naponb','contrasena','loesenord','losenord','sifre','naponb','matkhau','mat_khau');
 		foreach ( $this->members as $member ) {
 			if ($member->getDbType()!=="mixed" && $member->isNullable()!==true && !$member->isPrimary()) {
-				$result=$member->getName();
+			    $memberName=$member->getName();
+			    if(!in_array($memberName,$pwArray)){
+			        $result=$memberName;
+			    }
 			}
 		}
 		return $result;
