@@ -94,6 +94,24 @@ class URequest {
 	}
 
 	/**
+	 * Tests if a value is present on the request and is not empty
+	 *
+	 * @param string $key
+	 */
+	public static function filled($key) {
+		return isset ( $_REQUEST [$key] ) && $_REQUEST [$key] != null;
+	}
+
+	/**
+	 * Tests if a value is present on the request
+	 *
+	 * @param string $key
+	 */
+	public static function has($key) {
+		return isset ( $_REQUEST [$key] );
+	}
+
+	/**
 	 * Returns the request content-type header
 	 *
 	 * @return string
