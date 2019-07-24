@@ -40,11 +40,7 @@ class DAO {
 	protected static $modelsDatabase = [ ];
 
 	protected static function getDb($model) {
-		$connection = self::$modelsDatabase [$model] ?? 'default';
-		if (! isset ( self::$db [$connection] )) {
-			self::startDatabase ( Startup::$config, $connection );
-		}
-		return self::$db [$connection];
+		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
 	}
 
 	/**
@@ -312,5 +308,28 @@ class DAO {
 		if ($db !== false) {
 			self::$db->close ();
 		}
+	}
+
+	/**
+	 * Defines the database connection to use for $model class
+	 *
+	 * @param string $model a model class
+	 * @param string $database a database connection defined in config.php
+	 */
+	public static function setModelDatabase($model, $database = 'default') {
+		self::$modelsDatabase [$model] = $database;
+	}
+
+	/**
+	 * Returns the database instance defined at $offset key in config
+	 *
+	 * @param string $offset
+	 * @return \Ubiquity\db\Database
+	 */
+	public static function getDatabase($offset = 'default') {
+		if (! isset ( self::$db [$offset] )) {
+			self::startDatabase ( Startup::$config, $offset );
+		}
+		return self::$db [$offset];
 	}
 }
