@@ -16,13 +16,14 @@ use Ubiquity\exceptions\DAOException;
 use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\traits\DAOTransactionsTrait;
+use Ubiquity\controllers\Startup;
 
 /**
  * Gateway class between database and object model.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.9
+ * @version 1.2.0
  *
  */
 class DAO {
@@ -36,6 +37,15 @@ class DAO {
 	public static $useTransformers = false;
 	public static $transformerOp = 'transform';
 	private static $conditionParsers = [ ];
+	protected static $modelsDatabase = [ ];
+
+	protected static function getDb($model) {
+		$connection = self::$modelsDatabase [$model] ?? 'default';
+		if (! isset ( self::$db [$connection] )) {
+			self::startDatabase ( Startup::$config, $connection );
+		}
+		return self::$db [$connection];
+	}
 
 	/**
 	 * Loads member associated with $instance by a ManyToOne relationship
@@ -174,7 +184,7 @@ class DAO {
 		} else {
 			$keys = "1";
 		}
-		return self::$db->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM `{$tableName}`, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
+		return self::getDb ( $className )->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM `{$tableName}`, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
 	}
 
 	/**
@@ -187,9 +197,10 @@ class DAO {
 	 */
 	public static function count($className, $condition = '', $parameters = null) {
 		$tableName = OrmUtils::getTableName ( $className );
-		if ($condition != '')
+		if ($condition != '') {
 			$condition = " WHERE " . $condition;
-		return self::$db->prepareAndFetchColumn ( "SELECT COUNT(*) FROM `" . $tableName . "`" . $condition, $parameters );
+		}
+		return self::getDb ( $className )->prepareAndFetchColumn ( "SELECT COUNT(*) FROM `" . $tableName . "`" . $condition, $parameters );
 	}
 
 	/**
@@ -252,10 +263,10 @@ class DAO {
 	 * @param array $options
 	 * @param boolean $cache
 	 */
-	public static function connect($dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
-		self::$db = new Database ( $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache );
+	public static function connect($offset, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
+		self::$db [$offset] = new Database ( $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache );
 		try {
-			self::$db->connect ();
+			self::$db [$offset]->connect ();
 		} catch ( \Exception $e ) {
 			Logger::error ( "DAO", $e->getMessage () );
 			throw new DAOException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
@@ -267,10 +278,10 @@ class DAO {
 	 *
 	 * @param array $config the config array (Startup::getConfig())
 	 */
-	public static function startDatabase(&$config) {
-		$db = $config ['database'] ?? [ ];
+	public static function startDatabase(&$config, $offset = null) {
+		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
 		if ($db ['dbName'] !== '') {
-			self::connect ( $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			self::connect ( $offset ?? 'default', $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 		}
 	}
 
@@ -279,8 +290,9 @@ class DAO {
 	 *
 	 * @return boolean
 	 */
-	public static function isConnected() {
-		return self::$db !== null && (self::$db instanceof Database) && self::$db->isConnected ();
+	public static function isConnected($offset = 'default') {
+		$db = self::$db [$offset] ?? false;
+		return $db && ($db instanceof Database) && $db->isConnected ();
 	}
 
 	/**
@@ -295,7 +307,10 @@ class DAO {
 	/**
 	 * Closes the active pdo connection to the database
 	 */
-	public static function closeDb() {
-		self::$db->close ();
+	public static function closeDb($offset = 'default') {
+		$db = self::$db [$offset] ?? false;
+		if ($db !== false) {
+			self::$db->close ();
+		}
 	}
 }
