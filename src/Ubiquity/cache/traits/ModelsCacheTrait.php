@@ -10,6 +10,7 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\contents\validation\ValidatorsManager;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UArray;
+use Ubiquity\exceptions\UbiquityException;
 
 /**
  *
@@ -17,7 +18,7 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  */
 trait ModelsCacheTrait {
@@ -61,6 +62,9 @@ trait ModelsCacheTrait {
 					$ret = Reflexion::getAnnotationClass ( $model, "@database" );
 					if (\sizeof ( $ret ) === 0) {
 						$db = $ret [0]->name;
+						if (! isset ( $config ['database'] [$db] )) {
+							throw new UbiquityException ( $db . " connection is not defined in config array" );
+						}
 					}
 					$modelsDb [$model] = $db;
 				}
