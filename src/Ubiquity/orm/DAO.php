@@ -17,6 +17,7 @@ use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\traits\DAOTransactionsTrait;
 use Ubiquity\controllers\Startup;
+use Ubiquity\cache\CacheManager;
 
 /**
  * Gateway class between database and object model.
@@ -306,7 +307,7 @@ class DAO {
 	public static function closeDb($offset = 'default') {
 		$db = self::$db [$offset] ?? false;
 		if ($db !== false) {
-			self::$db->close ();
+			$db->close ();
 		}
 	}
 
@@ -321,6 +322,15 @@ class DAO {
 	}
 
 	/**
+	 * Defines the database connections to use for models classes
+	 *
+	 * @param array $modelsDatabase
+	 */
+	public static function setModelsDatabases($modelsDatabase) {
+		self::$modelsDatabase = $modelsDatabase;
+	}
+
+	/**
 	 * Returns the database instance defined at $offset key in config
 	 *
 	 * @param string $offset
@@ -331,5 +341,9 @@ class DAO {
 			self::startDatabase ( Startup::$config, $offset );
 		}
 		return self::$db [$offset];
+	}
+
+	public static function start() {
+		self::$modelsDatabase = CacheManager::getModelsDatabases () ?? [ ];
 	}
 }

@@ -51,6 +51,7 @@ class ArrayCache extends AbstractDataCache {
 	 *
 	 * @param string $key cache key
 	 * @param string $content the source-code to be cached
+	 * @param string $tag
 	 * @throws CacheException if file could not be written
 	 */
 	protected function storeContent($key, $content, $tag) {

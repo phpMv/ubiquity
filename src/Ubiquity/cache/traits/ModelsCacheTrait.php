@@ -8,6 +8,8 @@ namespace Ubiquity\cache\traits;
 use Ubiquity\orm\parser\ModelParser;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\contents\validation\ValidatorsManager;
+use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\utils\base\UArray;
 
 /**
  *
@@ -48,17 +50,25 @@ trait ModelsCacheTrait {
 	}
 
 	public static function initModelsCache(&$config, $forChecking = false, $silent = false) {
+		$modelsDb = [ ];
 		$files = self::getModelsFiles ( $config, $silent );
 		foreach ( $files as $file ) {
 			if (is_file ( $file )) {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
 				if (! $forChecking) {
 					self::createOrmModelCache ( $model );
+					$db = 'default';
+					$ret = Reflexion::getAnnotationClass ( $model, "@database" );
+					if (\sizeof ( $ret ) === 0) {
+						$db = $ret [0]->name;
+					}
+					$modelsDb [$model] = $db;
 				}
 			}
 		}
 		if (! $forChecking) {
 			ValidatorsManager::initModelsValidators ( $config );
+			self::$cache->store ( 'models\_modelsDatabases', "return " . UArray::asPhpArray ( $modelsDb, "array" ) . ";", 'models' );
 		}
 		if (! $silent) {
 			echo "Models cache reset\n";
@@ -112,5 +122,9 @@ trait ModelsCacheTrait {
 			$result [] = ClassUtils::getClassFullNameFromFile ( $file );
 		}
 		return $result;
+	}
+
+	public static function getModelsDatabases() {
+		return self::$cache->fetch ( 'models\_modelsDatabases' );
 	}
 }

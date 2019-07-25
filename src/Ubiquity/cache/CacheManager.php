@@ -221,6 +221,7 @@ class CacheManager {
 																						'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
 																						'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
 																						'table' => 'Ubiquity\annotations\TableAnnotation',
+																						'database' => 'Ubiquity\annotations\DatabaseAnnotation',
 																						'transient' => 'Ubiquity\annotations\TransientAnnotation',
 																						'column' => 'Ubiquity\annotations\ColumnAnnotation',
 																						'validator' => 'Ubiquity\annotations\ValidatorAnnotation',

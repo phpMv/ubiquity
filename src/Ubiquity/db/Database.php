@@ -9,6 +9,7 @@ use Ubiquity\exceptions\CacheException;
 use Ubiquity\db\traits\DatabaseOperationsTrait;
 use Ubiquity\exceptions\DBException;
 use Ubiquity\db\traits\DatabaseTransactionsTrait;
+use Ubiquity\controllers\Startup;
 
 /**
  * Ubiquity PDO database class.
@@ -210,5 +211,22 @@ class Database {
 	 */
 	public function close() {
 		$this->pdoObject = null;
+	}
+
+	/**
+	 * Starts and returns a database instance corresponding to an offset in config
+	 *
+	 * @param string $offset
+	 * @return \Ubiquity\db\Database|NULL
+	 */
+	public static function start($offset = null) {
+		$config = Startup::$config;
+		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
+		if ($db ['dbName'] !== '') {
+			$database = new Database ( $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			$database->connect ();
+			return $database;
+		}
+		return null;
 	}
 }
