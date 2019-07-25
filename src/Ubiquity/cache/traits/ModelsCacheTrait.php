@@ -129,6 +129,9 @@ trait ModelsCacheTrait {
 	}
 
 	public static function getModelsDatabases() {
-		return self::$cache->fetch ( 'models\_modelsDatabases' );
+		if (self::$cache->exists ( 'models\_modelsDatabases' )) {
+			return self::$cache->fetch ( 'models\_modelsDatabases' );
+		}
+		return [ ];
 	}
 }

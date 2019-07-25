@@ -344,6 +344,6 @@ class DAO {
 	}
 
 	public static function start() {
-		self::$modelsDatabase = CacheManager::getModelsDatabases () ?? [ ];
+		self::$modelsDatabase = CacheManager::getModelsDatabases ();
 	}
 }
