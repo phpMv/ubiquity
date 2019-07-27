@@ -6,13 +6,15 @@ use Ubiquity\annotations\JoinColumnAnnotation;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\orm\DAO;
 
 /**
+ * Generates models classes.
  * Ubiquity\orm\creator$ModelsCreator
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.2
  *
  */
 abstract class ModelsCreator {
@@ -28,24 +30,31 @@ abstract class ModelsCreator {
 
 	abstract protected function getForeignKeys($tableName, $pkName);
 
-	protected function init($config) {
-		$this->config = $config ["database"];
+	protected function init($config, $offset = 'default') {
+		$this->config = DAO::getDbOffset ( $config, $offset );
 	}
 
-	public function create($config, $initCache = true, $singleTable = null) {
-		$this->init ( $config );
-		$modelsDir = Startup::getModelsCompletePath ();
+	public function create($config, $initCache = true, $singleTable = null, $offset = 'default') {
+		$this->init ( $config, $offset );
+		$dirPostfix = "";
+		$nsPostfix = "";
+		if ($offset !== 'default') {
+			$dirPostfix = \DS . $offset;
+			$nsPostfix = "\\" . $offset;
+		}
+		$modelsDir = Startup::getModelsCompletePath () . $dirPostfix;
 		if (UFileSystem::safeMkdir ( $modelsDir )) {
 			$this->tables = $this->getTablesName ();
 			CacheManager::checkCache ( $config );
 
 			foreach ( $this->tables as $table ) {
-				$class = new Model ( $table, $config ["mvcNS"] ["models"] );
+				$class = new Model ( $table, $config ["mvcNS"] ["models"] . $nsPostfix );
+				$class->setDatabase ( $offset );
 				$fieldsInfos = $this->getFieldsInfos ( $table );
 				$keys = $this->getPrimaryKeys ( $table );
 				foreach ( $fieldsInfos as $field => $info ) {
 					$member = new Member ( $field );
-					if (in_array ( $field, $keys )) {
+					if (\in_array ( $field, $keys )) {
 						$member->setPrimary ();
 					}
 					$member->setDbType ( $info );
