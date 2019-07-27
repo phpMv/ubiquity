@@ -10,7 +10,7 @@ use Ubiquity\utils\base\traits\UFileSystemWriter;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class UFileSystem {
@@ -207,6 +207,27 @@ class UFileSystem {
 			}
 		}
 		return [ ];
+	}
+
+	/**
+	 * Returns relative path between two sources
+	 *
+	 * @param $from
+	 * @param $to
+	 * @param string $separator
+	 * @return string
+	 */
+	public static function relativePath($from, $to, $separator = DIRECTORY_SEPARATOR) {
+		$from = self::cleanPathname ( $from );
+		$to = self::cleanPathname ( $to );
+
+		$arFrom = \explode ( $separator, \rtrim ( $from, $separator ) );
+		$arTo = \explode ( $separator, \rtrim ( $to, $separator ) );
+		while ( \count ( $arFrom ) && \count ( $arTo ) && ($arFrom [0] == $arTo [0]) ) {
+			\array_shift ( $arFrom );
+			\array_shift ( $arTo );
+		}
+		return str_pad ( "", \count ( $arTo ) * 3, '..' . $separator ) . \implode ( $separator, $arFrom );
 	}
 
 	protected static function getLinesByLine($filename, $reverse, $maxLines, $lineCallback) {
