@@ -24,7 +24,7 @@ use Ubiquity\cache\CacheManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.0
+ * @version 1.2.1
  *
  */
 class DAO {
@@ -276,10 +276,14 @@ class DAO {
 	 * @param array $config the config array (Startup::getConfig())
 	 */
 	public static function startDatabase(&$config, $offset = null) {
-		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
+		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
 		if ($db ['dbName'] !== '') {
 			self::connect ( $offset ?? 'default', $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 		}
+	}
+
+	public static function getDbOffset(&$config, $offset = null) {
+		return $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
 	}
 
 	/**
@@ -341,6 +345,18 @@ class DAO {
 			self::startDatabase ( Startup::$config, $offset );
 		}
 		return self::$db [$offset];
+	}
+
+	public static function getDatabases() {
+		$config = Startup::getConfig ();
+		if (isset ( $config ['database'] )) {
+			if (isset ( $config ['database'] ['dbName'] )) {
+				return [ 'default' ];
+			} else {
+				return \array_keys ( $config ['database'] );
+			}
+		}
+		return [ ];
 	}
 
 	public static function start() {
