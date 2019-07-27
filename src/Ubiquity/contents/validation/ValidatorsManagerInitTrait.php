@@ -17,9 +17,10 @@ trait ValidatorsManagerInitTrait {
 	 * to use in dev only
 	 *
 	 * @param array $config
+	 * @param array $databaseOffset
 	 */
-	public static function initModelsValidators(&$config) {
-		$models = CacheManager::getModels ( $config, true );
+	public static function initModelsValidators(&$config,$databaseOffset='default') {
+		$models = CacheManager::getModels ( $config, true ,$databaseOffset);
 		foreach ( $models as $model ) {
 			self::initClassValidators ( $model );
 		}
