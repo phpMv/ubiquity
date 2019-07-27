@@ -4,9 +4,17 @@ namespace Ubiquity\utils\yuml;
 
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
-use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\base\UString;
 
+/**
+ * Generates Yuml code from models.
+ * Ubiquity\utils\yuml$ClassesToYuml
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.0
+ *
+ */
 class ClassesToYuml {
 	private $displayProperties;
 	private $displayAssociations;
@@ -14,8 +22,10 @@ class ClassesToYuml {
 	private $displayMethodsParams;
 	private $displayPropertiesTypes;
 	private $manyToManys;
+	private $database;
 
-	public function __construct($displayProperties = true, $displayAssociations = true, $displayMethods = false, $displayMethodsParams = false, $displayPropertiesTypes = false) {
+	public function __construct($databaseOffset = 'default', $displayProperties = true, $displayAssociations = true, $displayMethods = false, $displayMethodsParams = false, $displayPropertiesTypes = false) {
+		$this->database = $databaseOffset;
 		$this->displayProperties = $displayProperties;
 		$this->displayAssociations = $displayAssociations;
 		$this->displayMethods = $displayMethods;
@@ -31,16 +41,16 @@ class ClassesToYuml {
 	public function parse() {
 		$yumlResult = [ ];
 		$config = Startup::getConfig ();
-		$files = CacheManager::getModelsFiles ( $config, true );
-		if (\sizeof ( $files ) !== 0) {
-			foreach ( $files as $file ) {
-				$completeName = ClassUtils::getClassFullNameFromFile ( $file );
-				$yumlR = new ClassToYuml ( $completeName, $this->displayProperties, false, $this->displayMethods, $this->displayMethodsParams, $this->displayPropertiesTypes, false );
-				$yumlR->loadManyToManys();
+		CacheManager::start ( $config );
+		$models = CacheManager::getModels ( $config, true, $this->database );
+		if (\sizeof ( $models ) !== 0) {
+			foreach ( $models as $model ) {
+				$yumlR = new ClassToYuml ( $model, $this->displayProperties, false, $this->displayMethods, $this->displayMethodsParams, $this->displayPropertiesTypes, false );
+				$yumlR->loadManyToManys ();
 				$yumlResult [] = $yumlR;
 			}
 			if ($this->displayAssociations) {
-				$count = \sizeof ( $files );
+				$count = \sizeof ( $models );
 				for($i = 0; $i < $count; $i ++) {
 					$this->checkManyToManys ( $yumlResult [$i]->getExtManyToManys (), $yumlResult [$i] );
 				}
@@ -49,23 +59,23 @@ class ClassesToYuml {
 					if (UString::isNotNull ( $result )) {
 						$yumlResult [] = $result;
 					}
-					$result = $yumlResult [$i]->manyToManyTostring (false);
+					$result = $yumlResult [$i]->manyToManyTostring ( false );
 					if (UString::isNotNull ( $result )) {
 						$yumlResult [] = $result;
 					}
 				}
 			}
 		}
-		$this->manyToManys=[];
+		$this->manyToManys = [ ];
 		return $yumlResult;
 	}
 
 	private function checkManyToManys($manyToManys, ClassToYuml $classToYuml) {
 		foreach ( $manyToManys as $targetClass => $class ) {
-			if (array_search ( md5 ( $class . '_' . $targetClass ), $this->manyToManys ) !== false || array_search ( md5 ( $targetClass . '_' . $class ), $this->manyToManys ) !== false) {
+			if (\array_search ( \md5 ( $class . '_' . $targetClass ), $this->manyToManys ) !== false || \array_search ( \md5 ( $targetClass . '_' . $class ), $this->manyToManys ) !== false) {
 				$classToYuml->removeManyToManyExt ( $targetClass );
 			} else {
-				$this->manyToManys [] = md5 ( $class . '_' . $targetClass );
+				$this->manyToManys [] = \md5 ( $class . '_' . $targetClass );
 			}
 		}
 	}
