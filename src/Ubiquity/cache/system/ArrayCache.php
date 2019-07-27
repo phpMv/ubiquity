@@ -12,7 +12,7 @@ use Ubiquity\cache\CacheFile;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class ArrayCache extends AbstractDataCache {
@@ -141,8 +141,9 @@ class ArrayCache extends AbstractDataCache {
 	 */
 	public function getCacheFiles($type) {
 		return CacheFile::initFromFiles ( $this->_root . $type, \ucfirst ( $type ), function ($file) use ($type) {
+			$path = UFileSystem::relativePath ( dirname ( $file ), $this->_root );
 			$file = \basename ( $file );
-			return $type . \DS . substr ( $file, 0, strpos ( $file, $this->postfix . '.php' ) );
+			return $path . \DS . substr ( $file, 0, strpos ( $file, $this->postfix . '.php' ) );
 		} );
 	}
 
@@ -162,7 +163,7 @@ class ArrayCache extends AbstractDataCache {
 	 */
 	public function getCacheInfo() {
 		$result = parent::getCacheInfo ();
-		$result .= "<br>Root cache directory is <b>" . UFileSystem::cleanPathname ( $this->_root ) . "</b>.";
+		$result .= "\nRoot cache directory is <b>" . UFileSystem::cleanPathname ( $this->_root ) . "</b>.";
 		return $result;
 	}
 

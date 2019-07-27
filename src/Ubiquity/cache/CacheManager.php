@@ -19,7 +19,7 @@ use mindplay\annotations\Annotations;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class CacheManager {
@@ -210,7 +210,7 @@ class CacheManager {
 		$typeDir = \ROOT . \DS . str_replace ( "\\", \DS, $typeNS );
 		if (! $silent)
 			echo \ucfirst ( $type ) . " directory is " . \ROOT . $typeNS . "\n";
-		return UFileSystem::glob_recursive ( $typeDir . \DS . '*' );
+		return UFileSystem::glob_recursive ( $typeDir . \DS . '*.php' );
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
