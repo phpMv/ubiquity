@@ -2,7 +2,6 @@
 use Ubiquity\orm\DAO;
 use models\User;
 use models\Organization;
-use Ubiquity\db\Database;
 use models\Groupe;
 use Ubiquity\cache\database\TableCache;
 

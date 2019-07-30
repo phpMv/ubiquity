@@ -8,6 +8,9 @@ namespace Ubiquity\cache\traits;
 use Ubiquity\orm\parser\ModelParser;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\contents\validation\ValidatorsManager;
+use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\utils\base\UArray;
+use Ubiquity\exceptions\UbiquityException;
 
 /**
  *
@@ -15,7 +18,7 @@ use Ubiquity\contents\validation\ValidatorsManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.3
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  */
 trait ModelsCacheTrait {
@@ -48,17 +51,28 @@ trait ModelsCacheTrait {
 	}
 
 	public static function initModelsCache(&$config, $forChecking = false, $silent = false) {
+		$modelsDb = [ ];
 		$files = self::getModelsFiles ( $config, $silent );
 		foreach ( $files as $file ) {
 			if (is_file ( $file )) {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
 				if (! $forChecking) {
 					self::createOrmModelCache ( $model );
+					$db = 'default';
+					$ret = Reflexion::getAnnotationClass ( $model, "@database" );
+					if (\sizeof ( $ret ) > 0) {
+						$db = $ret [0]->name;
+						if (! isset ( $config ['database'] [$db] )) {
+							throw new UbiquityException ( $db . " connection is not defined in config array" );
+						}
+					}
+					$modelsDb [$model] = $db;
+					ValidatorsManager::initClassValidators ( $model );
 				}
 			}
 		}
 		if (! $forChecking) {
-			ValidatorsManager::initModelsValidators ( $config );
+			self::$cache->store ( 'models\_modelsDatabases', "return " . UArray::asPhpArray ( $modelsDb, "array" ) . ";", 'models' );
 		}
 		if (! $silent) {
 			echo "Models cache reset\n";
@@ -105,12 +119,27 @@ trait ModelsCacheTrait {
 	 * @param boolean $silent
 	 * @return string[]
 	 */
-	public static function getModels(&$config, $silent = false) {
+	public static function getModels(&$config, $silent = false, $databaseOffset = 'default') {
 		$result = [ ];
 		$files = self::getModelsFiles ( $config, $silent );
 		foreach ( $files as $file ) {
-			$result [] = ClassUtils::getClassFullNameFromFile ( $file );
+			$className = ClassUtils::getClassFullNameFromFile ( $file );
+			$db = 'default';
+			$ret = Reflexion::getAnnotationClass ( $className, "@database" );
+			if (\sizeof ( $ret ) > 0) {
+				$db = $ret [0]->name;
+			}
+			if ($db === $databaseOffset) {
+				$result [] = $className;
+			}
 		}
 		return $result;
+	}
+
+	public static function getModelsDatabases() {
+		if (self::$cache->exists ( 'models\_modelsDatabases' )) {
+			return self::$cache->fetch ( 'models\_modelsDatabases' );
+		}
+		return [ ];
 	}
 }

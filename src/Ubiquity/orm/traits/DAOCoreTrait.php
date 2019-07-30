@@ -16,9 +16,9 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.1.0
  *
- * @property \Ubiquity\db\Database $db
+ * @property array $db
  * @property boolean $useTransformers
  * @property string $transformerOp
  *
@@ -38,6 +38,8 @@ trait DAOCoreTrait {
 	abstract protected static function _initRelationFields($included, $metaDatas, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields);
 
 	abstract protected static function getIncludedForStep($included);
+
+	abstract protected static function getDb($model);
 
 	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $elementAccessor, $prop) {
 		foreach ( $array as $element ) {
@@ -117,7 +119,7 @@ trait DAOCoreTrait {
 			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
 		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
-		$query = self::$db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		$query = self::getDb ( $className )->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		if ($query && \sizeof ( $query ) > 0) {
 			$oneToManyQueries = [ ];
 			$manyToOneQueries = [ ];
@@ -154,7 +156,7 @@ trait DAOCoreTrait {
 			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
 		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
-		$query = self::$db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		$query = self::getDb ( $className )->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
