@@ -10,6 +10,7 @@ class BaseTest extends BaseUnitTest {
 	}
 
 	protected function getDatabase() {
+		return 'default';
 	}
 
 	protected function getCacheDirectory() {

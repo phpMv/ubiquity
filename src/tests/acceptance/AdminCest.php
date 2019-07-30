@@ -256,7 +256,7 @@ class AdminCest extends BaseAcceptance {
 		$I->fillField ( "#connection-name", 'projectx' );
 		$I->fillField ( "#database-dbName", 'projects' );
 		$this->waitAndclick ( $I, "#validate-btn", "body" );
-		$I->waitForText ( 'Attempt to connect to the database projects', self::TIMEOUT );
+		$I->waitForText ( 'Attempt to connect to the database', self::TIMEOUT );
 		$this->waitAndclick ( $I, '#htmlbuttongroups-step-actions-1', "body" );
 		$I->waitForText ( 'Creating the Developer class', self::TIMEOUT );
 		$this->waitAndclick ( $I, '#htmlbuttongroups-step-actions-0', "body" );
