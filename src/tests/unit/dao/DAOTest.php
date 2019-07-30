@@ -24,7 +24,7 @@ class DAOTest extends BaseTest {
 		$this->dao = new DAO ();
 		$this->_loadConfig ();
 		$this->_startCache ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 	}
 
 	/**
@@ -213,7 +213,7 @@ class DAOTest extends BaseTest {
 		$this->assertEquals ( $count + 1, DAO::count ( Organization::class ) );
 		$this->dao->closeDb ();
 		$this->dao = new DAO ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $count, $this->dao->count ( Organization::class ) );
 	}
 
@@ -232,7 +232,7 @@ class DAOTest extends BaseTest {
 		$this->dao->commit ();
 		$this->dao->closeDb ();
 		$this->dao = new DAO ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $count + 1, $this->dao->count ( Organization::class ) );
 
 		$this->dao->beginTransaction ();
@@ -257,7 +257,7 @@ class DAOTest extends BaseTest {
 		$this->assertEquals ( $count, DAO::count ( Organization::class ) );
 		$this->dao->closeDb ();
 		$this->dao = new DAO ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $count, $this->dao->count ( Organization::class ) );
 	}
 
@@ -285,7 +285,7 @@ class DAOTest extends BaseTest {
 
 		$this->dao->closeDb ();
 		$this->dao = new DAO ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $count + 2, $this->dao->count ( Organization::class ) );
 
 		$this->dao->beginTransaction ();
@@ -336,7 +336,7 @@ class DAOTest extends BaseTest {
 
 		$this->dao->closeDb ();
 		$this->dao = new DAO ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $countOrgas + 1, DAO::count ( Organization::class ) );
 		$this->assertEquals ( $countUsers + 1, DAO::count ( User::class ) );
 
@@ -369,7 +369,7 @@ class DAOTest extends BaseTest {
 
 		$this->dao->closeDb ();
 		$this->dao = new DAO ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
 		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
 	}
@@ -394,7 +394,7 @@ class DAOTest extends BaseTest {
 
 		$this->dao->closeDb ();
 		$this->dao = new DAO ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $countOrgas + 1, DAO::count ( Organization::class ) );
 		$this->assertEquals ( $countUsers + 1, DAO::count ( User::class ) );
 
@@ -426,7 +426,7 @@ class DAOTest extends BaseTest {
 
 		$this->dao->closeDb ();
 		$this->dao = new DAO ();
-		// $this->_startDatabase ( $this->dao );
+		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
 		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
 	}
