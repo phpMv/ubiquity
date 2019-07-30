@@ -25,7 +25,7 @@ class DAOTableCacheTest extends BaseTest {
 		$this->_loadConfig ();
 		$this->config ["database"] ["cache"] = TableCache::class;
 		$this->_startCache ();
-		$this->_startDatabase ( $this->dao );
+		// $this->_startDatabase ( $this->dao );
 	}
 
 	/**

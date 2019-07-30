@@ -30,7 +30,7 @@ class EventsManagerTest extends BaseTest {
 		$this->dao = new DAO ();
 		$this->_loadConfig ();
 		$this->_startCache ();
-		$this->_startDatabase ( $this->dao );
+		// $this->_startDatabase ( $this->dao );
 		$this->eventsManager = new EventsManager ();
 		$this->eventsManager->addListener ( DAOEvents::GET_ONE, GetOneEventListener::class );
 		$this->eventsManager->store ();

@@ -25,7 +25,7 @@ class DAOQueryCacheTest extends BaseTest {
 		$this->_loadConfig ();
 		$this->config ["database"] ["cache"] = QueryCache::class;
 		$this->_startCache ();
-		$this->_startDatabase ( $this->dao );
+		// $this->_startDatabase ( $this->dao );
 	}
 
 	/**
