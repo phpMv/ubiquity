@@ -129,10 +129,10 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::startDatabase()
 	 */
 	public function testStartDatabase() {
-		DAO::startDatabase ( $this->config );
+		DAO::startDatabase ( $this->config, 'default' );
 		$this->assertTrue ( DAO::isConnected () );
-		$this->assertInstanceOf ( Database::class, DAO::$db );
-		$this->assertInstanceOf ( PDO::class, DAO::$db->getPdoObject () );
+		$this->assertInstanceOf ( Database::class, DAO::$db ['default'] );
+		$this->assertInstanceOf ( PDO::class, DAO::$db ['default']->getPdoObject () );
 	}
 
 	/**

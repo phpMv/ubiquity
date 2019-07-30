@@ -24,7 +24,7 @@ class ClassesToYumlTest extends BaseTest {
 	 * Tests ClassesToYuml->__toString()
 	 */
 	public function test__toString() {
-		$this->classesToYuml = new ClassesToYuml ( true, true, true, true, true );
+		$this->classesToYuml = new ClassesToYuml ( 'default', true, true, true, true, true );
 		$ret = $this->classesToYuml->__toString ();
 		$models = CacheManager::getModels ( $this->config );
 		foreach ( $models as $model ) {
