@@ -245,4 +245,25 @@ class AdminCest extends BaseAcceptance {
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->see ( "lecnam.net" );
 	}
+
+	// tests
+	public function tryGotoModelsMultiDb(AcceptanceTester $I) {
+		$I->amOnPage ( "/Admin/Models" );
+		$I->seeInCurrentUrl ( "Admin/Models" );
+		$I->waitForText ( "Used to perform CRUD operations on data.", self::TIMEOUT );
+		$this->waitAndclick ( $I, "#btNewConnection", "body" );
+		$I->waitForText ( "Adding a new DB connection" );
+		$I->fillField ( "#connection-name", 'projectx' );
+		$I->fillField ( "#database-dbName", 'projects' );
+		$this->waitAndclick ( $I, "#validate-btn", "body" );
+		$I->waitForText ( 'Attempt to connect to the database projects', self::TIMEOUT );
+		$this->waitAndclick ( $I, '#htmlbuttongroups-step-actions-1', "body" );
+		$I->waitForText ( 'Creating the Developer class', self::TIMEOUT );
+		$this->waitAndclick ( $I, '#htmlbuttongroups-step-actions-0', "body" );
+		$I->waitForText ( 'projectx Models', self::TIMEOUT );
+		$this->waitAndclick ( $I, "#menuDbs-item-0", "body" );
+		$I->waitForText ( 'Evan YOU', self::TIMEOUT );
+		$this->waitAndclick ( $I, '#menu-db-item-0' );
+		$I->waitForText ( 'default Models', self::TIMEOUT );
+	}
 }

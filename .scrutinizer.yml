@@ -37,6 +37,7 @@ build:
         before:
           - sudo cp src/tests/files/xdebug.ini /home/scrutinizer/.phpenv/versions/7.2.13/etc/conf.d/xdebug.ini
           - mysql -u root mysql < src/tests/unit/db/messagerie.sql
+          - mysql -u root mysql < src/tests/unit/db/projects.sql
           - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -m -a -h=semantic,foundation,bootstrap)
           - cp -f src/tests/files/composer.json src/composer.json
           - (cd src/ && composer update)
