@@ -93,7 +93,7 @@ abstract class RestBaseController extends Controller {
 	}
 
 	public function initialize() {
-		$this->connectDb ( $this->config );
+		// $this->connectDb ( $this->config );//To check
 	}
 
 	public function finalize() {

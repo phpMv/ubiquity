@@ -120,12 +120,14 @@ trait RestControllerUtilitiesTrait {
 		return new RestServer ( $this->config );
 	}
 
-	protected function connectDb($config) {
-		$db = $config ["database"];
-		if ($db ["dbName"] !== "") {
-			DAO::connect ( $db ["type"], $db ["dbName"], $db ["serverName"] ?? '127.0.0.1', $db ["port"] ?? 3306, $db ["user"] ?? 'root', $db ["password"] ?? '', $db ["options"] ?? [ ], $db ["cache"] ?? false);
-		}
-	}
+	/*
+	 * protected function connectDb($config) {
+	 * $db = $config ["database"];
+	 * if ($db ["dbName"] !== "") {
+	 * DAO::connect ( $db ["type"], $db ["dbName"], $db ["serverName"] ?? '127.0.0.1', $db ["port"] ?? 3306, $db ["user"] ?? 'root', $db ["password"] ?? '', $db ["options"] ?? [ ], $db ["cache"] ?? false);
+	 * }
+	 * }
+	 */
 
 	/**
 	 * Updates $instance with $values
