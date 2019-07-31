@@ -209,8 +209,8 @@ trait DatabaseOperationsTrait {
 		return $this->query ( $query )->fetchColumn ( $columnNumber );
 	}
 
-	public function fetchAll($query) {
-		return $this->query ( $query )->fetchAll ();
+	public function fetchAll($query, $mode = null) {
+		return $this->query ( $query )->fetchAll ( $mode );
 	}
 
 	public function isConnected() {
