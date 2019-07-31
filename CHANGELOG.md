@@ -5,15 +5,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+- Nothing
+
+## [2.3.0] 2019-08-01
 ### Added
 - `multi databases` feature on a [proposal](https://github.com/phpMv/ubiquity/issues/60) from [@Gildonei](https://github.com/gildonei)
 ### Changed
 - `Startup` class optimization
 
 #### Breaking change possible
-- Database startup with `DAO::startDatabase($config)` in `services.php` file is useless.
+Induced by multi database functionality:
+- Database startup with `DAO::startDatabase($config)` in `services.php` file is useless, no need to start the database, the connection is made automatically at the first request.
 - Use `DAO::start()` in `services.php` file when using several databases (with `multi db` feature)
-- For optimization reasons, the classes used only in development (common to devtools and webtools) have been relocated in the `phpmv/ubiquity-dev` package.
+
+For optimization reasons:
+- the classes used only in development (common to devtools and webtools) have been relocated in the [phpmv/ubiquity-dev](https://github.com/phpMv/ubiquity-dev) package.
+
+#### Migration 
+- Update devtools: ``composer global update``
 
 ### Fixed
 - route caching pb for routes with variables (no open issue)
