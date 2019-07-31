@@ -140,7 +140,7 @@ class ArrayCache extends AbstractDataCache {
 	 * @see \Ubiquity\cache\system\AbstractDataCache::getCacheFiles()
 	 */
 	public function getCacheFiles($type) {
-		return CacheFile::initFromFiles ( $this->_root . $type, \ucfirst ( $type ), function ($file) use ($type) {
+		return CacheFile::initFromFiles ( $this->_root . $type, \ucfirst ( $type ), function ($file) {
 			$path = UFileSystem::relativePath ( dirname ( $file ), $this->_root );
 			$file = \basename ( $file );
 			return $path . \DS . substr ( $file, 0, strpos ( $file, $this->postfix . '.php' ) );

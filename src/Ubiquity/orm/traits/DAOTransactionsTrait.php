@@ -17,6 +17,7 @@ trait DAOTransactionsTrait {
 	/**
 	 * Initiates a transaction
 	 *
+	 * @param string $offset the database offset to use
 	 * @return boolean true on success or false on failure
 	 */
 	public static function beginTransaction($offset = 'default') {
@@ -26,6 +27,7 @@ trait DAOTransactionsTrait {
 	/**
 	 * Commits a transaction
 	 *
+	 * @param string $offset the database offset to use
 	 * @return boolean true on success or false on failure
 	 */
 	public static function commit($offset = 'default') {
@@ -36,6 +38,7 @@ trait DAOTransactionsTrait {
 	 * Commits nested transactions up to level $transactionLevel
 	 *
 	 * @param int $transactionLevel
+	 * @param string $offset the database offset to use
 	 * @return boolean true on success or false on failure
 	 */
 	public static function commitToLevel($transactionLevel, $offset = 'default') {
@@ -44,6 +47,8 @@ trait DAOTransactionsTrait {
 
 	/**
 	 * Commits all nested transactions (up to level 0)
+	 *
+	 * @param string $offset the database offset to use
 	 *
 	 * @return boolean true on success or false on failure
 	 */
@@ -54,6 +59,7 @@ trait DAOTransactionsTrait {
 	/**
 	 * Rolls back a transaction
 	 *
+	 * @param string $offset the database offset to use
 	 * @return boolean true on success or false on failure
 	 */
 	public static function rollBack($offset = 'default') {
@@ -64,15 +70,17 @@ trait DAOTransactionsTrait {
 	 * Rolls back nested transactions up to level $transactionLevel
 	 *
 	 * @param int $transactionLevel
+	 * @param string $offset the database offset to use
 	 * @return boolean true on success or false on failure
 	 */
 	public static function rollBackToLevel($transactionLevel, $offset = 'default') {
-		return self::$db->rollBackToLevel ( $transactionLevel, $offset );
+		return self::$db [$offset]->rollBackToLevel ( $transactionLevel );
 	}
 
 	/**
 	 * Rolls back all nested transactions (up to level 0)
 	 *
+	 * @param string $offset the database offset to use
 	 * @return boolean true on success or false on failure
 	 */
 	public static function rollBackAll($offset = 'default') {
@@ -83,6 +91,7 @@ trait DAOTransactionsTrait {
 	 * Call a callback with an array of parameters in a transaction
 	 *
 	 * @param callable $callback
+	 * @param string $offset the database offset to use
 	 * @param mixed ...$parameters
 	 * @throws \Exception
 	 * @return mixed
