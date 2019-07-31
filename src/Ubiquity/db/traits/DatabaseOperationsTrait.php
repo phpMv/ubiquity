@@ -51,9 +51,19 @@ trait DatabaseOperationsTrait {
 	 * @return array
 	 */
 	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = NULL) {
+		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
-		if ($cache = $this->useCache ( $useCache )) {
-			$cKey = $this->loadFromCache ( $result, $tableName, $condition, $parameters );
+		if ($cache) {
+			$cKey = $condition;
+			if (is_array ( $parameters )) {
+				$cKey .= implode ( ",", $parameters );
+			}
+			try {
+				$result = $this->cache->fetch ( $tableName, $cKey );
+				Logger::info ( "Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters );
+			} catch ( \Exception $e ) {
+				throw new CacheException ( "Cache is not created in Database constructor" );
+			}
 		}
 		if ($result === false) {
 			$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM `" . $tableName . "`" . $condition, $parameters );
@@ -64,34 +74,11 @@ trait DatabaseOperationsTrait {
 		return $result;
 	}
 
-	/**
-	 *
-	 * @param string $tableName
-	 * @param string $condition
-	 * @param array|string $fields
-	 * @param array $parameters
-	 * @param boolean|null $useCache
-	 * @return array
-	 */
-	public function prepareAndExecuteOne($tableName, $condition, $fields, $parameters = null, $useCache = NULL) {
-		$result = false;
-		if ($cache = $this->useCache ( $useCache )) {
-			$cKey = $this->loadFromCache ( $result, $tableName, $condition, $parameters );
-		}
-		if ($result === false) {
-			$result = $this->prepareAndFetchOne ( "SELECT {$fields} FROM `" . $tableName . "`" . $condition, $parameters );
-			if ($cache) {
-				$this->cache->store ( $tableName, $cKey, $result );
-			}
-		}
-		return $result;
-	}
-
-	public function prepareAndFetchAll($sql, $parameters = null) {
+	public function prepareAndFetchAll($sql, $parameters = null, $mode = null) {
 		$statement = $this->getStatement ( $sql );
 		if ($statement->execute ( $parameters )) {
 			Logger::info ( "Database", $sql, "prepareAndFetchAll", $parameters );
-			return $statement->fetchAll ();
+			return $statement->fetchAll ( $mode );
 		}
 		return false;
 	}
@@ -121,24 +108,6 @@ trait DatabaseOperationsTrait {
 			return $statement->fetchColumn ( $columnNumber );
 		}
 		return false;
-	}
-
-	private function loadFromCache(&$result, $tableName, $condition, $parameters = null) {
-		$cKey = $condition;
-		if (is_array ( $parameters )) {
-			$cKey .= implode ( ",", $parameters );
-		}
-		try {
-			$result = $this->cache->fetch ( $tableName, $cKey );
-			Logger::info ( "Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters );
-			return $cKey;
-		} catch ( \Exception $e ) {
-			throw new CacheException ( "Cache is not created in Database constructor" );
-		}
-	}
-
-	private function useCache($useCache) {
-		return (($useCache === true && ! DbCache::$active) || (DbCache::$active && $useCache !== false));
 	}
 
 	/**
