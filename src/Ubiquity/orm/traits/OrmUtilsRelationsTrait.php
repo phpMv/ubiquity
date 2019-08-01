@@ -10,7 +10,7 @@ use Ubiquity\orm\parser\ManyToManyParser;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 trait OrmUtilsRelationsTrait {
@@ -143,7 +143,7 @@ trait OrmUtilsRelationsTrait {
 			$fkField = $annot ["name"];
 			$pkField = self::getFirstKey ( $fkClass );
 			$alias = self::getJoinAlias ( $table, $fkTable );
-			$result = "INNER JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$fkField}`=`{$alias}`.`{$pkField}`";
+			$result = "LEFT JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$fkField}`=`{$alias}`.`{$pkField}`";
 		} elseif ($type === "oneToMany") {
 			$fkClass = $annot ["className"];
 			$fkAnnot = self::getAnnotationInfoMember ( $fkClass, "#joinColumn", $annot ["mappedBy"] );
@@ -151,7 +151,7 @@ trait OrmUtilsRelationsTrait {
 			$fkField = $fkAnnot ["name"];
 			$pkField = self::getFirstKey ( $model );
 			$alias = self::getJoinAlias ( $table, $fkTable );
-			$result = "INNER JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$pkField}`=`{$alias}`.`{$fkField}`";
+			$result = "LEFT JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$pkField}`=`{$alias}`.`{$fkField}`";
 		} else {
 			$parser = new ManyToManyParser ( $model, $field );
 			$parser->init ( $annot );
