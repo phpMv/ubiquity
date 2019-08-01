@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.2.0</span>
+   &#160;<span id="projectnumber">2.3.0</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -113,6 +113,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a6e25bc29c1307ebb0b91e9d65eb22ec2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a6e25bc29c1307ebb0b91e9d65eb22ec2">getDatas</a> ()</td></tr>
 <tr class="memdesc:a6e25bc29c1307ebb0b91e9d65eb22ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the query data, regardless of the method.  <a href="#a6e25bc29c1307ebb0b91e9d65eb22ec2">More...</a><br /></td></tr>
 <tr class="separator:a6e25bc29c1307ebb0b91e9d65eb22ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92f3ad5dbd85a08f7bfab8a9fa109d3f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a92f3ad5dbd85a08f7bfab8a9fa109d3f">filled</a> ($key)</td></tr>
+<tr class="memdesc:a92f3ad5dbd85a08f7bfab8a9fa109d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if a value is present on the request and is not empty.  <a href="#a92f3ad5dbd85a08f7bfab8a9fa109d3f">More...</a><br /></td></tr>
+<tr class="separator:a92f3ad5dbd85a08f7bfab8a9fa109d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f660283f72e0f3c5f00b4f98563a79b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a8f660283f72e0f3c5f00b4f98563a79b">has</a> ($key)</td></tr>
+<tr class="memdesc:a8f660283f72e0f3c5f00b4f98563a79b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if a value is present on the request.  <a href="#a8f660283f72e0f3c5f00b4f98563a79b">More...</a><br /></td></tr>
+<tr class="separator:a8f660283f72e0f3c5f00b4f98563a79b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06587cb9f0c3b6590d8794eb96c7dde2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_request.html#a06587cb9f0c3b6590d8794eb96c7dde2">getContentType</a> ()</td></tr>
 <tr class="memdesc:a06587cb9f0c3b6590d8794eb96c7dde2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the request content-type header.  <a href="#a06587cb9f0c3b6590d8794eb96c7dde2">More...</a><br /></td></tr>
 <tr class="separator:a06587cb9f0c3b6590d8794eb96c7dde2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -199,7 +205,43 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00268">268</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00286">286</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+
+</div>
+</div>
+<a id="a92f3ad5dbd85a08f7bfab8a9fa109d3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92f3ad5dbd85a08f7bfab8a9fa109d3f">&#9670;&nbsp;</a></span>filled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static filled </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tests if a value is present on the request and is not empty. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00101">101</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -247,7 +289,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00198">198</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00216">216</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -284,7 +326,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00208">208</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00226">226</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -314,7 +356,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Returns the request content-type header. </p>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00101">101</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00119">119</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -374,7 +416,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Copyright © 2008 Darrin Yeager <a href="https://www.dyeager.org/">https://www.dyeager.org/</a> Licensed under BSD license. </p>
 <p><a href="https://www.dyeager.org/downloads/license-bsd.txt">https://www.dyeager.org/downloads/license-bsd.txt</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00115">115</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00133">133</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -433,7 +475,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Returns the http method. </p>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00245">245</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00263">263</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -463,7 +505,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Returns the request origin. </p>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00254">254</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00272">272</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -527,7 +569,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00293">293</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00311">311</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -566,7 +608,7 @@ Static Private Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>string[] </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://stackoverflow.com/questions/68651/can-i-get-php-to-stop-replacing-characters-in-get-or-post-arrays#68667">https://stackoverflow.com/questions/68651/can-i-get-php-to-stop-replacing-characters-in-get-or-post-arrays#68667</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00281">281</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00299">299</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -593,7 +635,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00297">297</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00315">315</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -621,7 +663,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00227">227</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00245">245</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -648,7 +690,43 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00236">236</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00254">254</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+
+</div>
+</div>
+<a id="a8f660283f72e0f3c5f00b4f98563a79b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f660283f72e0f3c5f00b4f98563a79b">&#9670;&nbsp;</a></span>has()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static has </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tests if a value is present on the request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00110">110</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -678,7 +756,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Returns true if the request is an Ajax request. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00159">159</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00177">177</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -708,7 +786,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Returns true if the request is cross site. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00177">177</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00195">195</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -738,7 +816,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Returns true if request contentType is set to json. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00186">186</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00204">204</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -768,7 +846,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Returns true if the request is sent by the POST method. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00168">168</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00186">186</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -806,7 +884,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00122">122</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00140">140</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -854,7 +932,7 @@ Static Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00223">223</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00241">241</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -918,7 +996,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00144">144</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_u_request_8php_source.html#l00162">162</a> of file <a class="el" href="_u_request_8php_source.html">URequest.php</a>.</p>
 
 </div>
 </div>
@@ -1015,7 +1093,7 @@ Static Private Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1utils.html">utils</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1utils_1_1http.html">http</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1utils_1_1http_1_1_u_request.html">URequest</a></li>
-    <li class="footer"><small>Generated on Wed Jul 3 2019 17:55:39 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Aug 1 2019 02:50:09 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

@@ -17,8 +17,6 @@ var searchData=
   ['display',['display',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_controller.html#aee7a0b7c039b4e7b1e9b6369c72497c3',1,'Ubiquity::controllers::crud::CRUDController']]],
   ['displayerrors',['displayErrors',['../class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a8a5843612b790f4588cd7f2b790d7613',1,'Ubiquity::controllers::rest::RestControllerUtilitiesTrait']]],
   ['displayfkelementlist',['displayFkElementList',['../class_ubiquity_1_1controllers_1_1crud_1_1viewers_1_1_model_viewer.html#a99b9e6e959856a79f8a729b604061473',1,'Ubiquity::controllers::crud::viewers::ModelViewer']]],
-  ['docclassparser',['docClassParser',['../class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#ae13563df9f86f5a88fa64bb03b9de320',1,'Ubiquity::annotations::parser::DocParser']]],
   ['dochoice',['doChoice',['../class_ubiquity_1_1translation_1_1_translator_manager.html#a588f50c102da6e9f48fb036b3aaa68dc',1,'Ubiquity::translation::TranslatorManager']]],
-  ['docmethodparser',['docMethodParser',['../class_ubiquity_1_1annotations_1_1parser_1_1_doc_parser.html#af9b45119c75854168a43ea9d73248387',1,'Ubiquity::annotations::parser::DocParser']]],
   ['doublebackslashes',['doubleBackSlashes',['../class_ubiquity_1_1utils_1_1base_1_1_u_array.html#ab01657c1786d64178a8a7887cc58411c',1,'Ubiquity\utils\base\UArray\doubleBackSlashes()'],['../class_ubiquity_1_1utils_1_1base_1_1_u_string.html#a6dc706a614f58fb01fd7f1379194fbde',1,'Ubiquity\utils\base\UString\doubleBackSlashes()']]]
 ];

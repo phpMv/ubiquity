@@ -1,6 +1,6 @@
 var class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait =
 [
-    [ "checkDbConfig", "class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#ae030d4f74a5a9309f4a15f34ff764fdd", null ],
+    [ "checkDbConfig", "class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#a91f9a5a6dfd84f2acd451eb5082d53a5", null ],
     [ "checkModelsConfig", "class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#a3eeb55d883b765a67436c373e7dc645f", null ],
     [ "getConfig", "class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#ab402833ec5328f4157f81902000af368", null ],
     [ "getHttpInstance", "class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#a27ccc0b043d04c6b35815098e1e00bea", null ],

@@ -1,7 +1,5 @@
 var class_ubiquity_1_1controllers_1_1_startup =
 [
-    [ "_preRunAction", "class_ubiquity_1_1controllers_1_1_startup.html#abbc92ab78f23921d866adaaa5c966db8", null ],
-    [ "callController", "class_ubiquity_1_1controllers_1_1_startup.html#a1b0e539b1921e70122f336d9f32be8ba", null ],
     [ "errorHandler", "class_ubiquity_1_1controllers_1_1_startup.html#a42a5590067959bc0b2736a4a9b46c34b", null ],
     [ "forward", "class_ubiquity_1_1controllers_1_1_startup.html#a9b46641b37bafe372aee9e3d9b9ec059", null ],
     [ "getAction", "class_ubiquity_1_1controllers_1_1_startup.html#af8b331d3ac442a1071aa9f7db3b60637", null ],

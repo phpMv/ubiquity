@@ -19,6 +19,7 @@ var class_ubiquity_1_1db_1_1_database =
     [ "setPort", "class_ubiquity_1_1db_1_1_database.html#a000ce1ff20433f6ac9297e01c31d0678", null ],
     [ "setServerName", "class_ubiquity_1_1db_1_1_database.html#a146501775d8513fd0633992c7ac86d86", null ],
     [ "setUser", "class_ubiquity_1_1db_1_1_database.html#a45c268861653a20ab9677bbba15ec075", null ],
+    [ "start", "class_ubiquity_1_1db_1_1_database.html#ae10d3615a001022dc08a916b6efafc0a", null ],
     [ "$cache", "class_ubiquity_1_1db_1_1_database.html#ac2dc76d756ec398393d4b1d23659276c", null ],
     [ "$dbName", "class_ubiquity_1_1db_1_1_database.html#a68f39949e76b64662a06cb56579d91c3", null ],
     [ "$dbType", "class_ubiquity_1_1db_1_1_database.html#a63b68daf124fa00e6bcfce64fabbdbe1", null ],

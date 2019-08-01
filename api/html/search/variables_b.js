@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['php_5ftag',['PHP_TAG',['../class_ubiquity_1_1cache_1_1system_1_1_abstract_data_cache.html#aaa05fcdb15becd9b40f2d841e0c0e6b1',1,'Ubiquity::cache::system::AbstractDataCache']]]
+  ['rest',['REST',['../class_ubiquity_1_1log_1_1_logger_params.html#a1273e4f6dfecad5cc711360770b7d784',1,'Ubiquity::log::LoggerParams']]],
+  ['router',['ROUTER',['../class_ubiquity_1_1log_1_1_logger_params.html#ac8c67f1796228f249bd2f6cdb2e19b1d',1,'Ubiquity::log::LoggerParams']]]
 ];

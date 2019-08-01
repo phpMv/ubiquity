@@ -11,6 +11,7 @@ var class_ubiquity_1_1utils_1_1base_1_1_u_file_system =
     [ "glob_recursive", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a4bd012f319eac6be8d053119a60cc21e", null ],
     [ "lastModified", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#accc909e8f11a92a5cb72f3595ab9d5a8", null ],
     [ "load", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a276901c86c421cd1f52662cb0f0b7a14", null ],
+    [ "relativePath", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#af9169e6cb27cd3da25a1f9a4dfb7ae41", null ],
     [ "safeMkdir", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a943d335101f7ec00874c6b34eb497000", null ],
     [ "tryToRequire", "class_ubiquity_1_1utils_1_1base_1_1_u_file_system.html#a2367e98e8644fe50f4e72391ad136829", null ]
 ];

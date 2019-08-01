@@ -6,6 +6,7 @@ var class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait =
     [ "_getOneToManyFromArray", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a1cdb5318a4efbd46df2b50478d86a559", null ],
     [ "_initRelationFields", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a439ab82faaf19dab0d39ee2dfbeded5a", null ],
     [ "getClass_", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a7125cf4c96864d716475a5beafbf7cb4", null ],
+    [ "getDb", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#acceb84fb4c9cac30677a3e4240bc23ce", null ],
     [ "getFieldList", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#aa5f736b3d9c56d365eea51a277ba6b16", null ],
     [ "getFirstKeyValue_", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a676c30ed2c9d47a2a72963e1657e7d51", null ],
     [ "getIncludedForStep", "class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a9983b36b8f795fde9f2ee72ce8924c24", null ],

@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.2.0</span>
+   &#160;<span id="projectnumber">2.3.0</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -86,6 +86,7 @@ $(document).ready(function(){initNavTree('class_ubiquity_1_1orm_1_1_d_a_o.html',
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">DAO Class Reference</div>  </div>
@@ -141,21 +142,36 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a8b016f0dc89d73fc569bf2318e384b2d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a8b016f0dc89d73fc569bf2318e384b2d">getById</a> ($className, $keyValues, $included=true, $useCache=NULL)</td></tr>
 <tr class="memdesc:a8b016f0dc89d73fc569bf2318e384b2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an instance of $className from the database, from $keyvalues values of the primary key.  <a href="#a8b016f0dc89d73fc569bf2318e384b2d">More...</a><br /></td></tr>
 <tr class="separator:a8b016f0dc89d73fc569bf2318e384b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7df7b1ae9c85c48c1f9a8c7e90465433"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a7df7b1ae9c85c48c1f9a8c7e90465433">connect</a> ($dbType, $dbName, $serverName='127.0.0.1', $port='3306', $user='root', $password='', $options=[], $cache=false)</td></tr>
-<tr class="memdesc:a7df7b1ae9c85c48c1f9a8c7e90465433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes the connection to the database using the past parameters.  <a href="#a7df7b1ae9c85c48c1f9a8c7e90465433">More...</a><br /></td></tr>
-<tr class="separator:a7df7b1ae9c85c48c1f9a8c7e90465433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab6fd47d558266285ec62dc76ec7048c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#aab6fd47d558266285ec62dc76ec7048c">startDatabase</a> (&amp;$config)</td></tr>
-<tr class="memdesc:aab6fd47d558266285ec62dc76ec7048c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes the connection to the database using the $config array.  <a href="#aab6fd47d558266285ec62dc76ec7048c">More...</a><br /></td></tr>
-<tr class="separator:aab6fd47d558266285ec62dc76ec7048c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7f9fc68bf9bcc98ec93bfd1017b1818"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#ae7f9fc68bf9bcc98ec93bfd1017b1818">isConnected</a> ()</td></tr>
-<tr class="memdesc:ae7f9fc68bf9bcc98ec93bfd1017b1818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the connection to the database is established.  <a href="#ae7f9fc68bf9bcc98ec93bfd1017b1818">More...</a><br /></td></tr>
-<tr class="separator:ae7f9fc68bf9bcc98ec93bfd1017b1818"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5928df89a1379e0cc491d914a5c398ac"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a5928df89a1379e0cc491d914a5c398ac">connect</a> ($offset, $dbType, $dbName, $serverName='127.0.0.1', $port='3306', $user='root', $password='', $options=[], $cache=false)</td></tr>
+<tr class="memdesc:a5928df89a1379e0cc491d914a5c398ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes the connection to the database using the past parameters.  <a href="#a5928df89a1379e0cc491d914a5c398ac">More...</a><br /></td></tr>
+<tr class="separator:a5928df89a1379e0cc491d914a5c398ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85b106616a4d41d78aa34999cdfc2d70"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a85b106616a4d41d78aa34999cdfc2d70">startDatabase</a> (&amp;$config, $offset=null)</td></tr>
+<tr class="memdesc:a85b106616a4d41d78aa34999cdfc2d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes the connection to the database using the $config array.  <a href="#a85b106616a4d41d78aa34999cdfc2d70">More...</a><br /></td></tr>
+<tr class="separator:a85b106616a4d41d78aa34999cdfc2d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e21dd34038c5cc57afc782eee01aa9f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a3e21dd34038c5cc57afc782eee01aa9f">getDbOffset</a> (&amp;$config, $offset=null)</td></tr>
+<tr class="separator:a3e21dd34038c5cc57afc782eee01aa9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad51a58629e16337da6fad7aa5b050532"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#ad51a58629e16337da6fad7aa5b050532">isConnected</a> ($offset='default')</td></tr>
+<tr class="memdesc:ad51a58629e16337da6fad7aa5b050532"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the connection to the database is established.  <a href="#ad51a58629e16337da6fad7aa5b050532">More...</a><br /></td></tr>
+<tr class="separator:ad51a58629e16337da6fad7aa5b050532"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc1a442aba5ff0af67d9024d03c277d7"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#adc1a442aba5ff0af67d9024d03c277d7">setTransformerOp</a> ($op)</td></tr>
 <tr class="memdesc:adc1a442aba5ff0af67d9024d03c277d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the transformer operation.  <a href="#adc1a442aba5ff0af67d9024d03c277d7">More...</a><br /></td></tr>
 <tr class="separator:adc1a442aba5ff0af67d9024d03c277d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c08641b1120ac8743ecb0177ee3cd63"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a3c08641b1120ac8743ecb0177ee3cd63">closeDb</a> ()</td></tr>
-<tr class="memdesc:a3c08641b1120ac8743ecb0177ee3cd63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the active pdo connection to the database.  <a href="#a3c08641b1120ac8743ecb0177ee3cd63">More...</a><br /></td></tr>
-<tr class="separator:a3c08641b1120ac8743ecb0177ee3cd63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44fa3948bb0f5dc4475a4be61abc7d8b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a44fa3948bb0f5dc4475a4be61abc7d8b">closeDb</a> ($offset='default')</td></tr>
+<tr class="memdesc:a44fa3948bb0f5dc4475a4be61abc7d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the active pdo connection to the database.  <a href="#a44fa3948bb0f5dc4475a4be61abc7d8b">More...</a><br /></td></tr>
+<tr class="separator:a44fa3948bb0f5dc4475a4be61abc7d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa2aad59646f1d585df67b8b3e716180"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#aaa2aad59646f1d585df67b8b3e716180">setModelDatabase</a> ($model, $database='default')</td></tr>
+<tr class="memdesc:aaa2aad59646f1d585df67b8b3e716180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the database connection to use for $model class.  <a href="#aaa2aad59646f1d585df67b8b3e716180">More...</a><br /></td></tr>
+<tr class="separator:aaa2aad59646f1d585df67b8b3e716180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abddc959653db5556af50828135469246"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#abddc959653db5556af50828135469246">setModelsDatabases</a> ($modelsDatabase)</td></tr>
+<tr class="memdesc:abddc959653db5556af50828135469246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the database connections to use for models classes.  <a href="#abddc959653db5556af50828135469246">More...</a><br /></td></tr>
+<tr class="separator:abddc959653db5556af50828135469246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e02bd30be7a78741f6eb017c078bb7b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a8e02bd30be7a78741f6eb017c078bb7b">getDatabase</a> ($offset='default')</td></tr>
+<tr class="memdesc:a8e02bd30be7a78741f6eb017c078bb7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the database instance defined at $offset key in config.  <a href="#a8e02bd30be7a78741f6eb017c078bb7b">More...</a><br /></td></tr>
+<tr class="separator:a8e02bd30be7a78741f6eb017c078bb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8559fa72000d5474d69bf6cd8c9605b3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a8559fa72000d5474d69bf6cd8c9605b3">getDatabases</a> ()</td></tr>
+<tr class="separator:a8559fa72000d5474d69bf6cd8c9605b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a146085d0f3a9d17bdcd7f3d4081d8c0d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a146085d0f3a9d17bdcd7f3d4081d8c0d">start</a> ()</td></tr>
+<tr class="separator:a146085d0f3a9d17bdcd7f3d4081d8c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html">DAOUpdatesTrait</a></td></tr>
 <tr class="memitem:a51f3b41ecc14ae0bf5c55a6a3440bec8 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a51f3b41ecc14ae0bf5c55a6a3440bec8">remove</a> ($instance)</td></tr>
 <tr class="memdesc:a51f3b41ecc14ae0bf5c55a6a3440bec8 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the object $instance from the database.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_updates_trait.html#a51f3b41ecc14ae0bf5c55a6a3440bec8">More...</a><br /></td></tr>
@@ -191,30 +207,30 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae15aa33653345ba3779c2d3ba1c161de inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an instance of $className from the database, from $keyvalues values of the primary key.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#ae15aa33653345ba3779c2d3ba1c161de">More...</a><br /></td></tr>
 <tr class="separator:ae15aa33653345ba3779c2d3ba1c161de inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html">DAOTransactionsTrait</a></td></tr>
-<tr class="memitem:acede846ed83753b53f6b99ad1c4df87c inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#acede846ed83753b53f6b99ad1c4df87c">beginTransaction</a> ()</td></tr>
-<tr class="memdesc:acede846ed83753b53f6b99ad1c4df87c inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates a transaction.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#acede846ed83753b53f6b99ad1c4df87c">More...</a><br /></td></tr>
-<tr class="separator:acede846ed83753b53f6b99ad1c4df87c inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af657076a4e4db3e3aec5d4a1a7494310 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#af657076a4e4db3e3aec5d4a1a7494310">commit</a> ()</td></tr>
-<tr class="memdesc:af657076a4e4db3e3aec5d4a1a7494310 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits a transaction.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#af657076a4e4db3e3aec5d4a1a7494310">More...</a><br /></td></tr>
-<tr class="separator:af657076a4e4db3e3aec5d4a1a7494310 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63ccf83e37afa8db75bed69b1fe3801c inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a63ccf83e37afa8db75bed69b1fe3801c">commitToLevel</a> ($transactionLevel)</td></tr>
-<tr class="memdesc:a63ccf83e37afa8db75bed69b1fe3801c inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits nested transactions up to level $transactionLevel.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a63ccf83e37afa8db75bed69b1fe3801c">More...</a><br /></td></tr>
-<tr class="separator:a63ccf83e37afa8db75bed69b1fe3801c inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4920d330ba6988be7d849f45b352450 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#ab4920d330ba6988be7d849f45b352450">commitAll</a> ()</td></tr>
-<tr class="memdesc:ab4920d330ba6988be7d849f45b352450 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits all nested transactions (up to level 0)  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#ab4920d330ba6988be7d849f45b352450">More...</a><br /></td></tr>
-<tr class="separator:ab4920d330ba6988be7d849f45b352450 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a7792c3bfcee5ac7122ff9bd1d80b62 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a0a7792c3bfcee5ac7122ff9bd1d80b62">rollBack</a> ()</td></tr>
-<tr class="memdesc:a0a7792c3bfcee5ac7122ff9bd1d80b62 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls back a transaction.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a0a7792c3bfcee5ac7122ff9bd1d80b62">More...</a><br /></td></tr>
-<tr class="separator:a0a7792c3bfcee5ac7122ff9bd1d80b62 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a400967f2891fafd2dbcfa6fbf892c7d6 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a400967f2891fafd2dbcfa6fbf892c7d6">rollBackToLevel</a> ($transactionLevel)</td></tr>
-<tr class="memdesc:a400967f2891fafd2dbcfa6fbf892c7d6 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls back nested transactions up to level $transactionLevel.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a400967f2891fafd2dbcfa6fbf892c7d6">More...</a><br /></td></tr>
-<tr class="separator:a400967f2891fafd2dbcfa6fbf892c7d6 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af10c75045ef84279e985d9a39cde30fd inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#af10c75045ef84279e985d9a39cde30fd">rollBackAll</a> ()</td></tr>
-<tr class="memdesc:af10c75045ef84279e985d9a39cde30fd inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls back all nested transactions (up to level 0)  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#af10c75045ef84279e985d9a39cde30fd">More...</a><br /></td></tr>
-<tr class="separator:af10c75045ef84279e985d9a39cde30fd inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99efb982cd5c952d4cb456b440263579 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a99efb982cd5c952d4cb456b440263579">callInTransaction</a> ($callback,... $parameters)</td></tr>
-<tr class="memdesc:a99efb982cd5c952d4cb456b440263579 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call a callback with an array of parameters in a transaction.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a99efb982cd5c952d4cb456b440263579">More...</a><br /></td></tr>
-<tr class="separator:a99efb982cd5c952d4cb456b440263579 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b61f3879a04ba497b9389d30b86b3f0 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a5b61f3879a04ba497b9389d30b86b3f0">beginTransaction</a> ($offset='default')</td></tr>
+<tr class="memdesc:a5b61f3879a04ba497b9389d30b86b3f0 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates a transaction.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a5b61f3879a04ba497b9389d30b86b3f0">More...</a><br /></td></tr>
+<tr class="separator:a5b61f3879a04ba497b9389d30b86b3f0 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cc87be06c58ad66408c4eff462b09a0 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a4cc87be06c58ad66408c4eff462b09a0">commit</a> ($offset='default')</td></tr>
+<tr class="memdesc:a4cc87be06c58ad66408c4eff462b09a0 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits a transaction.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a4cc87be06c58ad66408c4eff462b09a0">More...</a><br /></td></tr>
+<tr class="separator:a4cc87be06c58ad66408c4eff462b09a0 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea2016b1acc3fdb3654523adcd80bc81 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#aea2016b1acc3fdb3654523adcd80bc81">commitToLevel</a> ($transactionLevel, $offset='default')</td></tr>
+<tr class="memdesc:aea2016b1acc3fdb3654523adcd80bc81 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits nested transactions up to level $transactionLevel.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#aea2016b1acc3fdb3654523adcd80bc81">More...</a><br /></td></tr>
+<tr class="separator:aea2016b1acc3fdb3654523adcd80bc81 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b7580716695fe5d3a02c34957871f88 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a8b7580716695fe5d3a02c34957871f88">commitAll</a> ($offset='default')</td></tr>
+<tr class="memdesc:a8b7580716695fe5d3a02c34957871f88 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commits all nested transactions (up to level 0)  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a8b7580716695fe5d3a02c34957871f88">More...</a><br /></td></tr>
+<tr class="separator:a8b7580716695fe5d3a02c34957871f88 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b9f8e96448c4c8958e013598805753f inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a4b9f8e96448c4c8958e013598805753f">rollBack</a> ($offset='default')</td></tr>
+<tr class="memdesc:a4b9f8e96448c4c8958e013598805753f inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls back a transaction.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a4b9f8e96448c4c8958e013598805753f">More...</a><br /></td></tr>
+<tr class="separator:a4b9f8e96448c4c8958e013598805753f inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc739b69154db2493ebe4d716557bd25 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#afc739b69154db2493ebe4d716557bd25">rollBackToLevel</a> ($transactionLevel, $offset='default')</td></tr>
+<tr class="memdesc:afc739b69154db2493ebe4d716557bd25 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls back nested transactions up to level $transactionLevel.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#afc739b69154db2493ebe4d716557bd25">More...</a><br /></td></tr>
+<tr class="separator:afc739b69154db2493ebe4d716557bd25 inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c476dc9a96f3de8fb2a22fe34e5a31b inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a6c476dc9a96f3de8fb2a22fe34e5a31b">rollBackAll</a> ($offset='default')</td></tr>
+<tr class="memdesc:a6c476dc9a96f3de8fb2a22fe34e5a31b inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls back all nested transactions (up to level 0)  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#a6c476dc9a96f3de8fb2a22fe34e5a31b">More...</a><br /></td></tr>
+<tr class="separator:a6c476dc9a96f3de8fb2a22fe34e5a31b inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa70ed3050dd26f0a8539ed1e5a6a9bf inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#afa70ed3050dd26f0a8539ed1e5a6a9bf">callInTransaction</a> ($callback, $offset,... $parameters)</td></tr>
+<tr class="memdesc:afa70ed3050dd26f0a8539ed1e5a6a9bf inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call a callback with an array of parameters in a transaction.  <a href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait.html#afa70ed3050dd26f0a8539ed1e5a6a9bf">More...</a><br /></td></tr>
+<tr class="separator:afa70ed3050dd26f0a8539ed1e5a6a9bf inherit pub_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_transactions_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -227,6 +243,8 @@ Static Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:acceb84fb4c9cac30677a3e4240bc23ce"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#acceb84fb4c9cac30677a3e4240bc23ce">getDb</a> ($model)</td></tr>
+<tr class="separator:acceb84fb4c9cac30677a3e4240bc23ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1188ef1824c74fe4060e050c08fe4327"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a1188ef1824c74fe4060e050c08fe4327">getConditionParser</a> ($className, $keyValues)</td></tr>
 <tr class="separator:a1188ef1824c74fe4060e050c08fe4327"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html">DAOCoreTrait</a></td></tr>
@@ -242,6 +260,8 @@ Static Protected Member Functions</h2></td></tr>
 <tr class="separator:a439ab82faaf19dab0d39ee2dfbeded5a inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9983b36b8f795fde9f2ee72ce8924c24 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a9983b36b8f795fde9f2ee72ce8924c24">getIncludedForStep</a> ($included)</td></tr>
 <tr class="separator:a9983b36b8f795fde9f2ee72ce8924c24 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acceb84fb4c9cac30677a3e4240bc23ce inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#acceb84fb4c9cac30677a3e4240bc23ce">getDb</a> ($model)</td></tr>
+<tr class="separator:acceb84fb4c9cac30677a3e4240bc23ce inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7125cf4c96864d716475a5beafbf7cb4 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a7125cf4c96864d716475a5beafbf7cb4">getClass_</a> ($instance)</td></tr>
 <tr class="separator:a7125cf4c96864d716475a5beafbf7cb4 inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a863139fd7a6045823f0d989321a7862c inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#a863139fd7a6045823f0d989321a7862c">getInstance_</a> ($instance)</td></tr>
@@ -294,29 +314,31 @@ Static Protected Member Functions</h2></td></tr>
 <tr class="memitem:a88619b1ae55cdf390f5271fc97764a1a inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a88619b1ae55cdf390f5271fc97764a1a">uGetExpressions</a> ($condition)</td></tr>
 <tr class="separator:a88619b1ae55cdf390f5271fc97764a1a inherit pro_static_methods_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
-Static Private Attributes</h2></td></tr>
-<tr class="memitem:a0a645d47a332ca442ac611a821d910d5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a0a645d47a332ca442ac611a821d910d5">$conditionParsers</a> = [ ]</td></tr>
-<tr class="separator:a0a645d47a332ca442ac611a821d910d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
+<tr class="memitem:a528b00b224933276e5259f95c78a93d0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a528b00b224933276e5259f95c78a93d0">$modelsDatabase</a> = [ ]</td></tr>
+<tr class="separator:a528b00b224933276e5259f95c78a93d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html">DAOCoreTrait</a></td></tr>
 <tr class="memitem:af2a5c7931f51c95db786937292c398ab inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#af2a5c7931f51c95db786937292c398ab">$accessors</a> = [ ]</td></tr>
 <tr class="separator:af2a5c7931f51c95db786937292c398ab inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2303c817e3b402b77b7f99627b9c319 inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait.html#ab2303c817e3b402b77b7f99627b9c319">$fields</a> = [ ]</td></tr>
 <tr class="separator:ab2303c817e3b402b77b7f99627b9c319 inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_core_trait"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html">DAOUQueries</a></td></tr>
-<tr class="memitem:a403d04bc3fa6e3595fbdb748d931d4fa inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a403d04bc3fa6e3595fbdb748d931d4fa">$annotFieldsInRelations</a> =[]</td></tr>
+<tr class="memitem:a403d04bc3fa6e3595fbdb748d931d4fa inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries.html#a403d04bc3fa6e3595fbdb748d931d4fa">$annotFieldsInRelations</a> = [ ]</td></tr>
 <tr class="separator:a403d04bc3fa6e3595fbdb748d931d4fa inherit pro_static_attribs_class_ubiquity_1_1orm_1_1traits_1_1_d_a_o_u_queries"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a0a645d47a332ca442ac611a821d910d5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html#a0a645d47a332ca442ac611a821d910d5">$conditionParsers</a> = [ ]</td></tr>
+<tr class="separator:a0a645d47a332ca442ac611a821d910d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Gateway class between database and object model. </p>
 <p>This class is part of <a class="el" href="namespace_ubiquity.html">Ubiquity</a></p>
 <dl class="section author"><dt>Author</dt><dd>jcheron <a href="#" onclick="location.href='mai'+'lto:'+'mya'+'dd'+'res'+'sm'+'ail'+'@g'+'mai'+'l.'+'com'; return false;">myadd<span style="display: none;">.nosp@m.</span>ress<span style="display: none;">.nosp@m.</span>mail@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.1.9 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.2.1 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00028">28</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00030">30</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a264632fa509d595d6e92ebf19d33a82c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a264632fa509d595d6e92ebf19d33a82c">&#9670;&nbsp;</a></span>affectsManyToManys()</h2>
@@ -366,12 +388,12 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00135">135</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00142">142</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="a3c08641b1120ac8743ecb0177ee3cd63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c08641b1120ac8743ecb0177ee3cd63">&#9670;&nbsp;</a></span>closeDb()</h2>
+<a id="a44fa3948bb0f5dc4475a4be61abc7d8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44fa3948bb0f5dc4475a4be61abc7d8b">&#9670;&nbsp;</a></span>closeDb()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -382,7 +404,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">static closeDb </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$offset</em> = <code>'default'</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -395,12 +418,12 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Closes the active pdo connection to the database. </p>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00297">297</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00310">310</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="a7df7b1ae9c85c48c1f9a8c7e90465433"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7df7b1ae9c85c48c1f9a8c7e90465433">&#9670;&nbsp;</a></span>connect()</h2>
+<a id="a5928df89a1379e0cc491d914a5c398ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5928df89a1379e0cc491d914a5c398ac">&#9670;&nbsp;</a></span>connect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -411,6 +434,12 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">static connect </td>
           <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$dbType</em>, </td>
         </tr>
@@ -484,7 +513,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00254">254</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00262">262</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -539,7 +568,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int|false count of objects </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00187">187</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00194">194</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -608,7 +637,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00155">155</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00162">162</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -671,7 +700,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object the instance loaded or null if not found </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00227">227</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00235">235</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -709,7 +738,137 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00231">231</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00239">239</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="a8e02bd30be7a78741f6eb017c078bb7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e02bd30be7a78741f6eb017c078bb7b">&#9670;&nbsp;</a></span>getDatabase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getDatabase </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$offset</em> = <code>'default'</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the database instance defined at $offset key in config. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$offset</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00342">342</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="a8559fa72000d5474d69bf6cd8c9605b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8559fa72000d5474d69bf6cd8c9605b3">&#9670;&nbsp;</a></span>getDatabases()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getDatabases </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00349">349</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="acceb84fb4c9cac30677a3e4240bc23ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acceb84fb4c9cac30677a3e4240bc23ce">&#9670;&nbsp;</a></span>getDb()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getDb </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00042">42</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="a3e21dd34038c5cc57afc782eee01aa9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e21dd34038c5cc57afc782eee01aa9f">&#9670;&nbsp;</a></span>getDbOffset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static getDbOffset </td>
+          <td>(</td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$offset</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00284">284</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -778,7 +937,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00110">110</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00117">117</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -839,7 +998,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00047">47</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00054">54</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -908,7 +1067,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object the instance loaded or null if not found </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00204">204</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00212">212</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -976,7 +1135,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00081">81</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00088">88</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1014,12 +1173,12 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00166">166</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00173">173</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="ae7f9fc68bf9bcc98ec93bfd1017b1818"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7f9fc68bf9bcc98ec93bfd1017b1818">&#9670;&nbsp;</a></span>isConnected()</h2>
+<a id="ad51a58629e16337da6fad7aa5b050532"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad51a58629e16337da6fad7aa5b050532">&#9670;&nbsp;</a></span>isConnected()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1030,7 +1189,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">static isConnected </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$offset</em> = <code>'default'</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1044,7 +1204,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Returns true if the connection to the database is established. </p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00281">281</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00293">293</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1100,7 +1260,90 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00159">159</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00166">166</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="aaa2aad59646f1d585df67b8b3e716180"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa2aad59646f1d585df67b8b3e716180">&#9670;&nbsp;</a></span>setModelDatabase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static setModelDatabase </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$database</em> = <code>'default'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Defines the database connection to use for $model class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$model</td><td>a model class </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$database</td><td>a database connection defined in config.php </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00323">323</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="abddc959653db5556af50828135469246"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abddc959653db5556af50828135469246">&#9670;&nbsp;</a></span>setModelsDatabases()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static setModelsDatabases </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$modelsDatabase</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Defines the database connections to use for models classes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$modelsDatabase</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00332">332</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1136,12 +1379,39 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00290">290</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00303">303</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
-<a id="aab6fd47d558266285ec62dc76ec7048c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab6fd47d558266285ec62dc76ec7048c">&#9670;&nbsp;</a></span>startDatabase()</h2>
+<a id="a146085d0f3a9d17bdcd7f3d4081d8c0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a146085d0f3a9d17bdcd7f3d4081d8c0d">&#9670;&nbsp;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00361">361</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="a85b106616a4d41d78aa34999cdfc2d70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85b106616a4d41d78aa34999cdfc2d70">&#9670;&nbsp;</a></span>startDatabase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1153,8 +1423,18 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">static startDatabase </td>
           <td>(</td>
           <td class="paramtype">&amp;&#160;</td>
-          <td class="paramname"><em>$config</em></td><td>)</td>
+          <td class="paramname"><em>$config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$offset</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -1167,12 +1447,12 @@ Additional Inherited Members</h2></td></tr>
 <p>Establishes the connection to the database using the $config array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">array</td><td class="paramname">$config</td><td>the config array (Startup::getConfig()) </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$config</td><td>the config array (<a class="el" href="class_ubiquity_1_1controllers_1_1traits_1_1_startup_config_trait.html#ab402833ec5328f4157f81902000af368">Startup::getConfig()</a>) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00269">269</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00277">277</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1197,7 +1477,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00037">37</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00039">39</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1221,7 +1501,31 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00034">34</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00036">36</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+
+</div>
+</div>
+<a id="a528b00b224933276e5259f95c78a93d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a528b00b224933276e5259f95c78a93d0">&#9670;&nbsp;</a></span>$modelsDatabase</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$modelsDatabase = [ ]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00040">40</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1245,7 +1549,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00036">36</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00038">38</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1269,7 +1573,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00035">35</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_d_a_o_8php_source.html#l00037">37</a> of file <a class="el" href="_d_a_o_8php_source.html">DAO.php</a>.</p>
 
 </div>
 </div>
@@ -1283,7 +1587,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1orm.html">orm</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1orm_1_1_d_a_o.html">DAO</a></li>
-    <li class="footer"><small>Generated on Wed Jul 3 2019 17:55:37 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Aug 1 2019 02:50:08 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

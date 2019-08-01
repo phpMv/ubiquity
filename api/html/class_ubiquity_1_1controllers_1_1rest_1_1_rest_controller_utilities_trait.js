@@ -8,7 +8,6 @@ var class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait =
     [ "addError", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ae35438feaa5e67b5e79dfb8db7c99f15", null ],
     [ "AddOperation", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a5d9cf0b3bb97df954f7dd6100d38b0c1", null ],
     [ "addViolation", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#acd257072c9754ee08d01e1276fb4d26a", null ],
-    [ "connectDb", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a0ac3756c797eaac82f7372f212d5dfa9", null ],
     [ "displayErrors", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a8a5843612b790f4588cd7f2b790d7613", null ],
     [ "generatePagination", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#a43422b810b606bd14c7d74924f8b3be9", null ],
     [ "getAssociatedMemberValues_", "class_ubiquity_1_1controllers_1_1rest_1_1_rest_controller_utilities_trait.html#ae25461e4cf3b6d4be2122ccdb4ef896e", null ],

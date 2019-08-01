@@ -6,6 +6,7 @@ var class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_co
     [ "_setResource", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a0b5f346265d89ad8ca02a6b822739f1f", null ],
     [ "add_", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a75f15df6e6e8c04e9f8f08df9ddb3c59", null ],
     [ "AddOperation", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a5d9cf0b3bb97df954f7dd6100d38b0c1", null ],
+    [ "connect", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a78572828d11dcdf2a498497d9001d557", null ],
     [ "delete_", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#aa51d60ff442f2271fbac7623affac437", null ],
     [ "getAll_", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a3d834b16a271a937fb1134127419778c", null ],
     [ "getDatas", "class_ubiquity_1_1controllers_1_1rest_1_1api_1_1jsonapi_1_1_json_api_rest_controller.html#a71a369e7ca4b76224f8c182002909016", null ],

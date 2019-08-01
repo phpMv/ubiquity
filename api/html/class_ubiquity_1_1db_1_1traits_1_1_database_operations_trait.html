@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Ubiquity
-   &#160;<span id="projectnumber">2.2.0</span>
+   &#160;<span id="projectnumber">2.3.0</span>
    </div>
    <div id="projectbrief">php rapid development framework</div>
   </td>
@@ -115,12 +115,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6b251c8058230359b2922377699c4f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa87ef3c430a0c88c2bf372a01ff6b186"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#aa87ef3c430a0c88c2bf372a01ff6b186">prepareAndExecute</a> ($tableName, $condition, $fields, $parameters=null, $useCache=NULL)</td></tr>
 <tr class="separator:aa87ef3c430a0c88c2bf372a01ff6b186"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1472c9ddeda44de31e4cfe3297cd48de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a1472c9ddeda44de31e4cfe3297cd48de">prepareAndFetchAll</a> ($sql, $parameters=null)</td></tr>
-<tr class="separator:a1472c9ddeda44de31e4cfe3297cd48de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7cab21b1c3cd5770bebec37fa5ee82c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#ad7cab21b1c3cd5770bebec37fa5ee82c">prepareAndFetchAll</a> ($sql, $parameters=null, $mode=null)</td></tr>
+<tr class="separator:ad7cab21b1c3cd5770bebec37fa5ee82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af357c97c5e4a1ddcc9b726158d09858d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#af357c97c5e4a1ddcc9b726158d09858d">prepareAndFetchOne</a> ($sql, $parameters=null, $mode=null)</td></tr>
+<tr class="separator:af357c97c5e4a1ddcc9b726158d09858d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff4564cb603a37a17b23b8eac39b554c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#aff4564cb603a37a17b23b8eac39b554c">prepareAndFetchAllColumn</a> ($sql, $parameters=null, $column=null)</td></tr>
 <tr class="separator:aff4564cb603a37a17b23b8eac39b554c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96a0df818722ed5ff9d82fc4299bc875"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a96a0df818722ed5ff9d82fc4299bc875">prepareAndFetchColumn</a> ($sql, $parameters=null, $columnNumber=null)</td></tr>
 <tr class="separator:a96a0df818722ed5ff9d82fc4299bc875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a251d7235c1947ea39bc3ec9154179897"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a251d7235c1947ea39bc3ec9154179897">prepareAndExecuteUpdate</a> ($sql, $parameters=null)</td></tr>
+<tr class="memdesc:a251d7235c1947ea39bc3ec9154179897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares a statement and execute a query for update (INSERT, UPDATE, DELETE...)  <a href="#a251d7235c1947ea39bc3ec9154179897">More...</a><br /></td></tr>
+<tr class="separator:a251d7235c1947ea39bc3ec9154179897"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24bba973a1b68c97d2e04175fb4a344b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a24bba973a1b68c97d2e04175fb4a344b">execute</a> ($sql)</td></tr>
 <tr class="memdesc:a24bba973a1b68c97d2e04175fb4a344b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute an SQL statement and return the number of affected rows (INSERT, UPDATE or DELETE)  <a href="#a24bba973a1b68c97d2e04175fb4a344b">More...</a><br /></td></tr>
 <tr class="separator:a24bba973a1b68c97d2e04175fb4a344b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,8 +145,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaaedbcc5fda1af124303f22783c74c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32c94e3077ebbd70badea6c915032d67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a32c94e3077ebbd70badea6c915032d67">queryColumn</a> ($<a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a6b251c8058230359b2922377699c4f29">query</a>, $columnNumber=null)</td></tr>
 <tr class="separator:a32c94e3077ebbd70badea6c915032d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a380bcbf9c2b12d508609656e6306ad35"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a380bcbf9c2b12d508609656e6306ad35">fetchAll</a> ($<a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a6b251c8058230359b2922377699c4f29">query</a>)</td></tr>
-<tr class="separator:a380bcbf9c2b12d508609656e6306ad35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acccfcf2068aa68f2b7e0a7167f6277cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#acccfcf2068aa68f2b7e0a7167f6277cd">fetchAll</a> ($<a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a6b251c8058230359b2922377699c4f29">query</a>, $mode=null)</td></tr>
+<tr class="separator:acccfcf2068aa68f2b7e0a7167f6277cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af160f7fbbf281d018ae3162521b8267d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#af160f7fbbf281d018ae3162521b8267d">isConnected</a> ()</td></tr>
 <tr class="separator:af160f7fbbf281d018ae3162521b8267d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6dad377f74b0ce6f21b485ba11052746"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a6dad377f74b0ce6f21b485ba11052746">ping</a> ()</td></tr>
@@ -151,11 +156,15 @@ Public Member Functions</h2></td></tr>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a774f7234370bd21f8c5d1b7405feabc5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a774f7234370bd21f8c5d1b7405feabc5">getStatement</a> ($sql)</td></tr>
 <tr class="separator:a774f7234370bd21f8c5d1b7405feabc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35a3bb8c96f90c28ce932058f67b8991"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a35a3bb8c96f90c28ce932058f67b8991">getUpdateStatement</a> ($sql)</td></tr>
+<tr class="separator:a35a3bb8c96f90c28ce932058f67b8991"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a2cfdd68df93aed5b0f9c3fb70c56b359"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#a2cfdd68df93aed5b0f9c3fb70c56b359">$statements</a> = [ ]</td></tr>
 <tr class="separator:a2cfdd68df93aed5b0f9c3fb70c56b359"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5a755296f870601d904dae5b7e08d45"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html#ae5a755296f870601d904dae5b7e08d45">$updateStatements</a> = [ ]</td></tr>
+<tr class="separator:ae5a755296f870601d904dae5b7e08d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -176,7 +185,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00028">28</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00029">29</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -223,7 +232,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00144">144</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00177">177</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -262,7 +271,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00169">169</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00202">202</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -291,12 +300,12 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int the number of rows that were modified or deleted by the SQL statement you issued </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00122">122</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00155">155</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
-<a id="a380bcbf9c2b12d508609656e6306ad35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a380bcbf9c2b12d508609656e6306ad35">&#9670;&nbsp;</a></span>fetchAll()</h2>
+<a id="acccfcf2068aa68f2b7e0a7167f6277cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acccfcf2068aa68f2b7e0a7167f6277cd">&#9670;&nbsp;</a></span>fetchAll()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -305,13 +314,23 @@ Private Attributes</h2></td></tr>
           <td class="memname">fetchAll </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$query</em></td><td>)</td>
+          <td class="paramname"><em>$query</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$mode</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00179">179</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00212">212</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -355,7 +374,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00024">24</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00025">25</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -390,7 +409,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00108">108</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00118">118</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -409,7 +428,42 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00157">157</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00190">190</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+
+</div>
+</div>
+<a id="a35a3bb8c96f90c28ce932058f67b8991"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35a3bb8c96f90c28ce932058f67b8991">&#9670;&nbsp;</a></span>getUpdateStatement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">getUpdateStatement </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$sql</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$sql</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00131">131</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -428,7 +482,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00183">183</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00216">216</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -450,7 +504,7 @@ Private Attributes</h2></td></tr>
 <p>Returns the last insert id. </p>
 <dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00153">153</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00186">186</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -469,7 +523,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00187">187</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00220">220</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -528,18 +582,18 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00052">52</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00053">53</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
-<a id="a1472c9ddeda44de31e4cfe3297cd48de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1472c9ddeda44de31e4cfe3297cd48de">&#9670;&nbsp;</a></span>prepareAndFetchAll()</h2>
+<a id="a251d7235c1947ea39bc3ec9154179897"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a251d7235c1947ea39bc3ec9154179897">&#9670;&nbsp;</a></span>prepareAndExecuteUpdate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">prepareAndFetchAll </td>
+          <td class="memname">prepareAndExecuteUpdate </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$sql</em>, </td>
@@ -558,7 +612,53 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00076">76</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p>Prepares a statement and execute a query for update (INSERT, UPDATE, DELETE...) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$sql</td><td></td></tr>
+    <tr><td class="paramtype">array&#160;|&#160;null</td><td class="paramname">$parameters</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00145">145</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+
+</div>
+</div>
+<a id="ad7cab21b1c3cd5770bebec37fa5ee82c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7cab21b1c3cd5770bebec37fa5ee82c">&#9670;&nbsp;</a></span>prepareAndFetchAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">prepareAndFetchAll </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$sql</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$parameters</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$mode</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00077">77</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -594,7 +694,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00085">85</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00095">95</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -630,7 +730,43 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00094">94</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00104">104</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+
+</div>
+</div>
+<a id="af357c97c5e4a1ddcc9b726158d09858d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af357c97c5e4a1ddcc9b726158d09858d">&#9670;&nbsp;</a></span>prepareAndFetchOne()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">prepareAndFetchOne </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$sql</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$parameters</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$mode</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00086">86</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -659,7 +795,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>|boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00132">132</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00165">165</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -688,7 +824,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>|boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00039">39</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00040">40</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -718,7 +854,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00175">175</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00208">208</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
 
 </div>
 </div>
@@ -747,6 +883,30 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ae5a755296f870601d904dae5b7e08d45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5a755296f870601d904dae5b7e08d45">&#9670;&nbsp;</a></span>$updateStatements</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$updateStatements = [ ]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_database_operations_trait_8php_source.html#l00021">21</a> of file <a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/Ubiquity/db/traits/<a class="el" href="_database_operations_trait_8php_source.html">DatabaseOperationsTrait.php</a></li>
 </ul>
@@ -757,7 +917,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_ubiquity.html">Ubiquity</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1db.html">db</a></li><li class="navelem"><a class="el" href="namespace_ubiquity_1_1db_1_1traits.html">traits</a></li><li class="navelem"><a class="el" href="class_ubiquity_1_1db_1_1traits_1_1_database_operations_trait.html">DatabaseOperationsTrait</a></li>
-    <li class="footer"><small>Generated on Wed Jul 3 2019 17:55:36 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
+    <li class="footer"><small>Generated on Thu Aug 1 2019 02:50:07 for <a href="https://ubiquity.kobject.net/">Ubiquity</a>
  by <a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.13
 </small></li>
   </ul>

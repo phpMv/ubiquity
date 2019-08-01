@@ -17,8 +17,6 @@ var searchData=
   ['onerrordeletemessage',['onErrorDeleteMessage',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_events.html#aee26c90e98915fe0d439d0b7b36ebcda',1,'Ubiquity::controllers::crud::CRUDEvents']]],
   ['onerrordeletemultiplemessage',['onErrorDeleteMultipleMessage',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_events.html#a886c2faa88b039cef1624fded0705eb5',1,'Ubiquity::controllers::crud::CRUDEvents']]],
   ['onerrorupdatemessage',['onErrorUpdateMessage',['../class_ubiquity_1_1controllers_1_1crud_1_1_c_r_u_d_events.html#ada6b93ec6ebf72cb3ecae2093aa2f84c',1,'Ubiquity::controllers::crud::CRUDEvents']]],
-  ['onetomanyannotation',['OneToManyAnnotation',['../class_ubiquity_1_1annotations_1_1_one_to_many_annotation.html',1,'Ubiquity::annotations']]],
-  ['onetomanyannotation_2ephp',['OneToManyAnnotation.php',['../_one_to_many_annotation_8php.html',1,'']]],
   ['onetomanyformfield',['oneToManyFormField',['../class_ubiquity_1_1controllers_1_1crud_1_1viewers_1_1traits_1_1_form_model_viewer_trait.html#aa5b245d511c36babc236e452ea80d268',1,'Ubiquity::controllers::crud::viewers::traits::FormModelViewerTrait']]],
   ['onetomanytostring',['oneToManyTostring',['../class_ubiquity_1_1utils_1_1yuml_1_1_class_to_yuml.html#a016a3a3264ba20e310e93c15e27374fb',1,'Ubiquity::utils::yuml::ClassToYuml']]],
   ['ongenerateformfield',['onGenerateFormField',['../class_ubiquity_1_1controllers_1_1crud_1_1viewers_1_1traits_1_1_form_model_viewer_trait.html#ac379fd65123791590e708a17b5df6cbc',1,'Ubiquity::controllers::crud::viewers::traits::FormModelViewerTrait']]],

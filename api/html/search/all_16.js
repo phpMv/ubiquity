@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['annotations',['annotations',['../namespace_ubiquity_1_1annotations.html',1,'Ubiquity']]],
   ['api',['api',['../namespace_ubiquity_1_1controllers_1_1rest_1_1api.html',1,'Ubiquity::controllers::rest']]],
   ['assets',['assets',['../namespace_ubiquity_1_1assets.html',1,'Ubiquity']]],
   ['auth',['Auth',['../namespace_ubiquity_1_1controllers_1_1_auth.html',1,'Ubiquity\controllers\Auth'],['../namespace_ubiquity_1_1controllers_1_1auth.html',1,'Ubiquity\controllers\auth']]],
@@ -11,17 +10,14 @@ var searchData=
   ['contents',['contents',['../namespace_ubiquity_1_1contents.html',1,'Ubiquity']]],
   ['controllers',['controllers',['../namespace_ubiquity_1_1controllers.html',1,'Ubiquity']]],
   ['core',['core',['../namespace_ubiquity_1_1core.html',1,'Ubiquity\core'],['../namespace_ubiquity_1_1orm_1_1core.html',1,'Ubiquity\orm\core']]],
-  ['creator',['creator',['../namespace_ubiquity_1_1orm_1_1creator.html',1,'Ubiquity::orm']]],
-  ['creators',['creators',['../namespace_ubiquity_1_1scaffolding_1_1creators.html',1,'Ubiquity::scaffolding']]],
   ['crud',['crud',['../namespace_ubiquity_1_1controllers_1_1crud.html',1,'Ubiquity::controllers']]],
-  ['database',['database',['../namespace_ubiquity_1_1cache_1_1database.html',1,'Ubiquity\cache\database'],['../namespace_ubiquity_1_1orm_1_1creator_1_1database.html',1,'Ubiquity\orm\creator\database']]],
+  ['database',['database',['../namespace_ubiquity_1_1cache_1_1database.html',1,'Ubiquity::cache']]],
   ['dates',['dates',['../namespace_ubiquity_1_1contents_1_1validation_1_1validators_1_1dates.html',1,'Ubiquity::contents::validation::validators']]],
   ['db',['db',['../namespace_ubiquity_1_1db.html',1,'Ubiquity']]],
-  ['di',['di',['../namespace_ubiquity_1_1annotations_1_1di.html',1,'Ubiquity\annotations\di'],['../namespace_ubiquity_1_1controllers_1_1di.html',1,'Ubiquity\controllers\di']]],
+  ['di',['di',['../namespace_ubiquity_1_1controllers_1_1di.html',1,'Ubiquity::controllers']]],
   ['engine',['engine',['../namespace_ubiquity_1_1views_1_1engine.html',1,'Ubiquity::views']]],
   ['events',['events',['../namespace_ubiquity_1_1events.html',1,'Ubiquity']]],
   ['exceptions',['exceptions',['../namespace_ubiquity_1_1exceptions.html',1,'Ubiquity']]],
-  ['export',['export',['../namespace_ubiquity_1_1db_1_1export.html',1,'Ubiquity::db']]],
   ['flash',['flash',['../namespace_ubiquity_1_1utils_1_1flash.html',1,'Ubiquity::utils']]],
   ['foundation',['foundation',['../namespace_ubiquity_1_1utils_1_1http_1_1foundation.html',1,'Ubiquity::utils::http']]],
   ['git',['git',['../namespace_ubiquity_1_1utils_1_1git.html',1,'Ubiquity::utils']]],
@@ -38,12 +34,9 @@ var searchData=
   ['normalizers',['normalizers',['../namespace_ubiquity_1_1contents_1_1normalizers.html',1,'Ubiquity::contents']]],
   ['objects',['objects',['../namespace_ubiquity_1_1cache_1_1objects.html',1,'Ubiquity::cache']]],
   ['orm',['orm',['../namespace_ubiquity_1_1orm.html',1,'Ubiquity']]],
-  ['parser',['parser',['../namespace_ubiquity_1_1annotations_1_1parser.html',1,'Ubiquity\annotations\parser'],['../namespace_ubiquity_1_1cache_1_1parser.html',1,'Ubiquity\cache\parser'],['../namespace_ubiquity_1_1orm_1_1parser.html',1,'Ubiquity\orm\parser']]],
+  ['parser',['parser',['../namespace_ubiquity_1_1cache_1_1parser.html',1,'Ubiquity\cache\parser'],['../namespace_ubiquity_1_1orm_1_1parser.html',1,'Ubiquity\orm\parser']]],
   ['postinstall',['postinstall',['../namespace_ubiquity_1_1core_1_1postinstall.html',1,'Ubiquity::core']]],
-  ['rest',['rest',['../namespace_ubiquity_1_1annotations_1_1rest.html',1,'Ubiquity\annotations\rest'],['../namespace_ubiquity_1_1controllers_1_1rest.html',1,'Ubiquity\controllers\rest']]],
-  ['reverse',['reverse',['../namespace_ubiquity_1_1db_1_1reverse.html',1,'Ubiquity\db\reverse'],['../namespace_ubiquity_1_1orm_1_1reverse.html',1,'Ubiquity\orm\reverse']]],
-  ['router',['router',['../namespace_ubiquity_1_1annotations_1_1router.html',1,'Ubiquity::annotations']]],
-  ['scaffolding',['scaffolding',['../namespace_ubiquity_1_1scaffolding.html',1,'Ubiquity']]],
+  ['rest',['rest',['../namespace_ubiquity_1_1controllers_1_1rest.html',1,'Ubiquity::controllers']]],
   ['semantic',['semantic',['../namespace_ubiquity_1_1controllers_1_1semantic.html',1,'Ubiquity::controllers']]],
   ['seo',['seo',['../namespace_ubiquity_1_1controllers_1_1seo.html',1,'Ubiquity\controllers\seo'],['../namespace_ubiquity_1_1seo.html',1,'Ubiquity\seo']]],
   ['session',['session',['../namespace_ubiquity_1_1utils_1_1http_1_1session.html',1,'Ubiquity::utils::http']]],
@@ -116,5 +109,5 @@ var searchData=
   ['validators',['validators',['../namespace_ubiquity_1_1contents_1_1validation_1_1validators.html',1,'Ubiquity::contents::validation']]],
   ['viewers',['viewers',['../namespace_ubiquity_1_1controllers_1_1crud_1_1viewers.html',1,'Ubiquity::controllers::crud']]],
   ['views',['views',['../namespace_ubiquity_1_1views.html',1,'Ubiquity']]],
-  ['yuml',['yuml',['../namespace_ubiquity_1_1orm_1_1creator_1_1yuml.html',1,'Ubiquity\orm\creator\yuml'],['../namespace_ubiquity_1_1utils_1_1yuml.html',1,'Ubiquity\utils\yuml']]]
+  ['yuml',['yuml',['../namespace_ubiquity_1_1utils_1_1yuml.html',1,'Ubiquity::utils']]]
 ];
