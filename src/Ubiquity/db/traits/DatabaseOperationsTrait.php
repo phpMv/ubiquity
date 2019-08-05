@@ -15,6 +15,7 @@ use Ubiquity\exceptions\CacheException;
  * @property \PDO $pdoObject
  * @property mixed $cache
  * @property array $options
+ * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
  */
 trait DatabaseOperationsTrait {
 	private $statements = [ ];
@@ -22,23 +23,22 @@ trait DatabaseOperationsTrait {
 
 	abstract public function getDSN();
 
-	public function getPdoObject() {
-		return $this->pdoObject;
+	public function getDbObject() {
+		return $this->wrapperObject->getDbInstance ();
 	}
 
 	public function _connect() {
-		$this->options [\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
-		$this->pdoObject = new \PDO ( $this->getDSN (), $this->user, $this->password, $this->options );
+		$this->wrapperObject->connect ( $this->dbType, $this->dbName, $this->serverName, $this->port, $this->user, $this->password, $this->options );
 	}
 
 	/**
-	 * Executes an SQL statement, returning a result set as a PDOStatement object
+	 * Executes an SQL statement, returning a result set as a statement object
 	 *
 	 * @param string $sql
-	 * @return \PDOStatement|boolean
+	 * @return object|boolean
 	 */
 	public function query($sql) {
-		return $this->pdoObject->query ( $sql );
+		return $this->wrapperObject->query ( $sql );
 	}
 
 	/**
@@ -75,30 +75,15 @@ trait DatabaseOperationsTrait {
 	}
 
 	public function prepareAndFetchAll($sql, $parameters = null, $mode = null) {
-		$statement = $this->getStatement ( $sql );
-		if ($statement->execute ( $parameters )) {
-			Logger::info ( "Database", $sql, "prepareAndFetchAll", $parameters );
-			return $statement->fetchAll ( $mode );
-		}
-		return false;
+		return $this->wrapperObject->fetchAll ( $this->getStatement ( $sql ), $parameters, $mode );
 	}
 
 	public function prepareAndFetchOne($sql, $parameters = null, $mode = null) {
-		$statement = $this->getStatement ( $sql );
-		if ($statement->execute ( $parameters )) {
-			Logger::info ( "Database", $sql, "prepareAndFetchOne", $parameters );
-			return $statement->fetch ( $mode );
-		}
-		return false;
+		return $this->wrapperObject->fetchOne ( $this->getStatement ( $sql ), $parameters, $mode );
 	}
 
 	public function prepareAndFetchAllColumn($sql, $parameters = null, $column = null) {
-		$statement = $this->getStatement ( $sql );
-		if ($statement->execute ( $parameters )) {
-			Logger::info ( "Database", $sql, "prepareAndFetchAllColumn", $parameters );
-			return $statement->fetchAll ( \PDO::FETCH_COLUMN, $column );
-		}
-		return false;
+		return $this->wrapperObject->fetchColumn ( $this->getStatement ( $sql ), $parameters, $column );
 	}
 
 	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = null) {
@@ -117,8 +102,7 @@ trait DatabaseOperationsTrait {
 	 */
 	private function getStatement($sql) {
 		if (! isset ( $this->statements [$sql] )) {
-			$this->statements [$sql] = $this->pdoObject->prepare ( $sql );
-			$this->statements [$sql]->setFetchMode ( \PDO::FETCH_ASSOC );
+			$this->statements [$sql] = $this->wrapperObject->getStatement ( $sql );
 		}
 		return $this->statements [$sql];
 	}
@@ -130,7 +114,7 @@ trait DatabaseOperationsTrait {
 	 */
 	private function getUpdateStatement($sql) {
 		if (! isset ( $this->updateStatements [$sql] )) {
-			$this->updateStatements [$sql] = $this->pdoObject->prepare ( $sql );
+			$this->updateStatements [$sql] = $this->wrapperObject->getStatement ( $sql );
 		}
 		return $this->updateStatements [$sql];
 	}
@@ -153,7 +137,7 @@ trait DatabaseOperationsTrait {
 	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
 	public function execute($sql) {
-		return $this->pdoObject->exec ( $sql );
+		return $this->wrapperObject->execute ( $sql );
 	}
 
 	/**
@@ -163,7 +147,7 @@ trait DatabaseOperationsTrait {
 	 * @return \PDOStatement|boolean
 	 */
 	public function prepareStatement($sql) {
-		return $this->pdoObject->prepare ( $sql );
+		return $this->wrapperObject->prepareStatement ( $sql );
 	}
 
 	/**
@@ -175,7 +159,7 @@ trait DatabaseOperationsTrait {
 	 * @return boolean
 	 */
 	public function bindValueFromStatement(\PDOStatement $statement, $parameter, $value) {
-		return $statement->bindValue ( ":" . $parameter, $value );
+		return $this->wrapperObject->bindValueFromStatement ( $statement, $parameter, $value );
 	}
 
 	/**
@@ -184,13 +168,11 @@ trait DatabaseOperationsTrait {
 	 * @return string
 	 */
 	public function lastInserId() {
-		return $this->pdoObject->lastInsertId ();
+		return $this->wrapperObject->lastInsertId ();
 	}
 
 	public function getTablesName() {
-		$sql = 'SHOW TABLES';
-		$query = $this->pdoObject->query ( $sql );
-		return $query->fetchAll ( \PDO::FETCH_COLUMN );
+		return $this->wrapperObject->getTablesName ();
 	}
 
 	/**
@@ -202,23 +184,23 @@ trait DatabaseOperationsTrait {
 	public function count($tableName, $condition = '') {
 		if ($condition != '')
 			$condition = " WHERE " . $condition;
-		return $this->query ( "SELECT COUNT(*) FROM " . $tableName . $condition )->fetchColumn ();
+		return $this->wrapperObject->queryColumn ( "SELECT COUNT(*) FROM " . $tableName . $condition );
 	}
 
 	public function queryColumn($query, $columnNumber = null) {
-		return $this->query ( $query )->fetchColumn ( $columnNumber );
+		return $this->wrapperObject->queryColumn ( $query, $columnNumber );
 	}
 
 	public function fetchAll($query, $mode = null) {
-		return $this->query ( $query )->fetchAll ( $mode );
+		return $this->wrapperObject->queryAll ( $query );
 	}
 
 	public function isConnected() {
-		return ($this->pdoObject !== null && $this->pdoObject instanceof \PDO && $this->ping ());
+		return ($this->wrapperObject !== null && $this->ping ());
 	}
 
 	public function ping() {
-		return ($this->pdoObject && 1 === intval ( $this->pdoObject->query ( 'SELECT 1' )->fetchColumn ( 0 ) ));
+		return ($this->wrapperObject && 1 === intval ( $this->wrapperObject->queryColumn ( 'SELECT 1', 0 ) ));
 	}
 }
 

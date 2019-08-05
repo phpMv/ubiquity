@@ -17,7 +17,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.1.0
  *
  */
 class Database {
@@ -30,16 +30,16 @@ class Database {
 	private $password;
 	private $cache;
 	private $options;
-
 	/**
 	 *
-	 * @var \PDO
+	 * @var \Ubiquity\db\providers\AbstractDbWrapper
 	 */
-	protected $pdoObject;
+	protected $wrapperObject;
 
 	/**
 	 * Constructor
 	 *
+	 * @param string $dbWrapperClass
 	 * @param string $dbName
 	 * @param string $serverName
 	 * @param string $port
@@ -48,7 +48,8 @@ class Database {
 	 * @param array $options
 	 * @param boolean|string $cache
 	 */
-	public function __construct($dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false) {
+	public function __construct($dbWrapperClass, $dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false) {
+		$this->setDbWrapperClass ( $dbWrapperClass );
 		$this->dbType = $dbType;
 		$this->dbName = $dbName;
 		$this->serverName = $serverName;
@@ -71,8 +72,12 @@ class Database {
 		}
 	}
 
+	private function setDbWrapperClass($dbWrapperClass) {
+		$this->wrapperObject = new $dbWrapperClass ();
+	}
+
 	/**
-	 * Creates the PDO instance and realize a safe connection.
+	 * Creates the Db instance and realize a safe connection.
 	 *
 	 * @throws DBException
 	 * @return boolean
@@ -87,7 +92,7 @@ class Database {
 	}
 
 	public function getDSN() {
-		return $this->dbType . ':dbname=' . $this->dbName . ';host=' . $this->serverName . ';charset=UTF8;port=' . $this->port;
+		return $this->wrapperObject->getDSN ( $this->serverName, $this->port, $this->dbName, $this->dbType );
 	}
 
 	/**
@@ -135,8 +140,8 @@ class Database {
 		return $this->user;
 	}
 
-	public static function getAvailableDrivers() {
-		return \PDO::getAvailableDrivers ();
+	public static function getAvailableDrivers($dbWrapperClass = \Ubiquity\db\providers\PDOWrapper::class) {
+		return call_user_func ( $dbWrapperClass . '::getAvailableDrivers' );
 	}
 
 	/**
@@ -207,23 +212,24 @@ class Database {
 	}
 
 	/**
-	 * Closes the active pdo connection
+	 * Closes the active connection
 	 */
 	public function close() {
-		$this->pdoObject = null;
+		$this->wrapperObject->close ();
 	}
 
 	/**
 	 * Starts and returns a database instance corresponding to an offset in config
 	 *
 	 * @param string $offset
+	 * @param string $dbWrapperClass
 	 * @return \Ubiquity\db\Database|NULL
 	 */
-	public static function start($offset = null) {
+	public static function start($offset = null, $dbWrapperClass = \Ubiquity\db\providers\PDOWrapper::class) {
 		$config = Startup::$config;
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
 		if ($db ['dbName'] !== '') {
-			$database = new Database ( $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			$database = new Database ( $dbWrapperClass, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 			$database->connect ();
 			return $database;
 		}
