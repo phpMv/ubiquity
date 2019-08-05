@@ -280,7 +280,7 @@ class DAO {
 	public static function startDatabase(&$config, $offset = null) {
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
 		if ($db ['dbName'] !== '') {
-			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\AbstractDbWrapper, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 		}
 	}
 
