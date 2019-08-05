@@ -22,6 +22,7 @@ use Ubiquity\controllers\Startup;
  */
 class Database {
 	use DatabaseOperationsTrait,DatabaseTransactionsTrait;
+	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\PDOWrapper::class ];
 	private $dbType;
 	private $serverName;
 	private $port;
