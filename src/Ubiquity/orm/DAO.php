@@ -360,6 +360,26 @@ class DAO {
 		}
 		return [ ];
 	}
+	
+	public static function updateDatabaseParams(array &$config,array $parameters,$offset='default'){
+		if($offset==='default'){
+			if(isset($config['database'][$offset])){
+				foreach ($parameters as $k=>$param){
+					$config['database'][$offset][$k]=$param;
+				}
+			}else{
+				foreach ($parameters as $k=>$param){
+					$config['database'][$k]=$param;
+				}
+			}
+		}else{
+			if(isset($config['database'][$offset])){
+				foreach ($parameters as $k=>$param){
+					$config['database'][$offset][$k]=$param;
+				}
+			}
+		}
+	}
 
 	public static function start() {
 		self::$modelsDatabase = CacheManager::getModelsDatabases ();
