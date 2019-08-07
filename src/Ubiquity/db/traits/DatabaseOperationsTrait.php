@@ -200,7 +200,7 @@ trait DatabaseOperationsTrait {
 	}
 
 	public function ping() {
-		return ($this->wrapperObject && 1 === intval ( $this->wrapperObject->queryColumn ( 'SELECT 1', 0 ) ));
+		return ($this->wrapperObject && $this->wrapperObject->ping ());
 	}
 }
 

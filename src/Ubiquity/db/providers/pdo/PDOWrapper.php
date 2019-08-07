@@ -142,4 +142,8 @@ class PDOWrapper extends AbstractDbWrapper {
 	public function nestable() {
 		return isset ( self::$savepointsDrivers [$this->dbType] );
 	}
+
+	public function ping() {
+		return 1 === \intval ( $this->wrapperObject->queryColumn ( 'SELECT 1', 0 ) );
+	}
 }

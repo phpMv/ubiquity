@@ -65,6 +65,8 @@ abstract class AbstractDbWrapper {
 
 	abstract public function rollbackPoint($level);
 
+	abstract public function ping();
+
 	public function close() {
 		$this->dbInstance = null;
 	}
