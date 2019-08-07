@@ -7,114 +7,115 @@ use Ubiquity\orm\OrmUtils;
 
 /**
  * SQL utilities
+ *
  * @author jc
  * @version 1.0.1
  */
 class SqlUtils {
-	
-	public static $quote='`';
+	public static $quote = '`';
 
 	private static function getParameters($keyAndValues) {
-		$ret=array ();
+		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret[]=":" . $key;
+			$ret [] = ":" . $key;
 		}
 		return $ret;
 	}
 
 	private static function getQuotedKeys($keyAndValues) {
-		$ret=array ();
+		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret[]=self::$quote . $key . self::$quote;
+			$ret [] = self::$quote . $key . self::$quote;
 		}
 		return $ret;
 	}
 
 	public static function getWhere($keyAndValues) {
-		$ret=array ();
+		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret[]=self::$quote . $key . self::$quote . "= :" . $key;
+			$ret [] = self::$quote . $key . self::$quote . "= :" . $key;
 		}
-		return implode(" AND ", $ret);
+		return \implode ( " AND ", $ret );
 	}
 
 	public static function getMultiWhere($values, $field) {
-		$ret=array ();
+		$ret = array ();
 		foreach ( $values as $value ) {
-			$ret[]=self::$quote . $field . self::$quote . "='" . $value . "'";
+			$ret [] = self::$quote . $field . self::$quote . "='" . $value . "'";
 		}
-		return implode(" OR ", $ret);
+		return \implode ( " OR ", $ret );
 	}
-	
-	public static function getSearchWhere($fields, $value,$jokerBefore="%",$jokerAfter="%") {
-		$ret=array ();
+
+	public static function getSearchWhere($fields, $value, $jokerBefore = "%", $jokerAfter = "%") {
+		$ret = array ();
 		foreach ( $fields as $field ) {
-			$ret[]=self::$quote . $field . self::$quote . " LIKE '".$jokerBefore . $value . $jokerAfter."'";
+			$ret [] = self::$quote . $field . self::$quote . " LIKE '" . $jokerBefore . $value . $jokerAfter . "'";
 		}
-		return implode(" OR ", $ret);
+		return \implode ( " OR ", $ret );
 	}
 
 	public static function getInsertFields($keyAndValues) {
-		return implode(",", self::getQuotedKeys($keyAndValues));
+		return \implode ( ",", self::getQuotedKeys ( $keyAndValues ) );
 	}
 
 	public static function getInsertFieldsValues($keyAndValues) {
-		return implode(",", self::getParameters($keyAndValues));
+		return \implode ( ",", self::getParameters ( $keyAndValues ) );
 	}
 
 	public static function getUpdateFieldsKeyAndValues($keyAndValues) {
-		$ret=array ();
+		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret[]=self::$quote . $key . self::$quote . "= :" . $key;
+			$ret [] = self::$quote . $key . self::$quote . "= :" . $key;
 		}
-		return implode(",", $ret);
+		return \implode ( ",", $ret );
 	}
 
-	public static function checkWhere($condition){
-		$c=\strtolower($condition);
-		if ($condition != '' && \strstr($c, " join ")===false){
-			$condition=" WHERE " . $condition;
+	public static function checkWhere($condition) {
+		$c = \strtolower ( $condition );
+		if ($condition != '' && \strstr ( $c, " join " ) === false) {
+			$condition = " WHERE " . $condition;
 		}
 		return $condition;
 	}
 
-	public static function getCondition($keyValues,$classname=NULL,$separator=" AND ") {
-		if(!is_array($keyValues)){
+	public static function getCondition($keyValues, $classname = NULL, $separator = " AND ") {
+		if (! \is_array ( $keyValues )) {
 			return $keyValues;
-		}else{
-			if(!UArray::isAssociative($keyValues)){
-				if(isset($classname)){
-					$keys=OrmUtils::getKeyFields($classname);
-					if(is_array($keys)){
-						$keyValues=\array_combine($keys, $keyValues);
+		} else {
+			if (! UArray::isAssociative ( $keyValues )) {
+				if (isset ( $classname )) {
+					$keys = OrmUtils::getKeyFields ( $classname );
+					if (\is_array ( $keys )) {
+						$keyValues = \array_combine ( $keys, $keyValues );
 					}
 				}
 			}
-			$retArray=array ();
+			$retArray = array ();
 			foreach ( $keyValues as $key => $value ) {
-				$retArray[]=self::$quote . $key . self::$quote . " = '" . $value . "'";
+				$retArray [] = self::$quote . $key . self::$quote . " = '" . $value . "'";
 			}
-			return implode($separator, $retArray);
+			return \implode ( $separator, $retArray );
 		}
 	}
 
 	/**
+	 *
 	 * @param array|string $fields
 	 * @param boolean|string $tableName
 	 * @return string
 	 */
-	public static function getFieldList($fields,$tableName=false){
-		if(!\is_array($fields)){
+	public static function getFieldList($fields, $tableName = false) {
+		if (! \is_array ( $fields )) {
 			return $fields;
 		}
-		$result=[];
-		$prefix='';
-		if(is_string($tableName)){
-			$prefix=self::$quote.$tableName.self::$quote.'.';
+		$result = [ ];
+		$prefix = '';
+		if (is_string ( $tableName )) {
+			$prefix = self::$quote . $tableName . self::$quote . '.';
 		}
-		foreach ($fields as $field) {
-			$result[]= $prefix.self::$quote.$field.self::$quote;
+		foreach ( $fields as $field ) {
+			$result [] = $prefix . self::$quote . $field . self::$quote;
 		}
-		return \implode(',', $result);
+		return \implode ( ',', $result );
 	}
 }

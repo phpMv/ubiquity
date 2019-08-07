@@ -142,7 +142,7 @@ trait DAOUpdatesTrait {
 			}
 			EventsManager::trigger ( DAOEvents::AFTER_INSERT, $instance, $result );
 			return $result;
-		} catch ( \PDOException $e ) {
+		} catch ( \Exception $e ) {
 			Logger::warn ( "DAOUpdates", $e->getMessage (), "insert" );
 		}
 		return false;

@@ -280,7 +280,7 @@ class DAO {
 	public static function startDatabase(&$config, $offset = null) {
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
 		if ($db ['dbName'] !== '') {
-			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 		}
 	}
 
@@ -360,22 +360,22 @@ class DAO {
 		}
 		return [ ];
 	}
-	
-	public static function updateDatabaseParams(array &$config,array $parameters,$offset='default'){
-		if($offset==='default'){
-			if(isset($config['database'][$offset])){
-				foreach ($parameters as $k=>$param){
-					$config['database'][$offset][$k]=$param;
+
+	public static function updateDatabaseParams(array &$config, array $parameters, $offset = 'default') {
+		if ($offset === 'default') {
+			if (isset ( $config ['database'] [$offset] )) {
+				foreach ( $parameters as $k => $param ) {
+					$config ['database'] [$offset] [$k] = $param;
 				}
-			}else{
-				foreach ($parameters as $k=>$param){
-					$config['database'][$k]=$param;
+			} else {
+				foreach ( $parameters as $k => $param ) {
+					$config ['database'] [$k] = $param;
 				}
 			}
-		}else{
-			if(isset($config['database'][$offset])){
-				foreach ($parameters as $k=>$param){
-					$config['database'][$offset][$k]=$param;
+		} else {
+			if (isset ( $config ['database'] [$offset] )) {
+				foreach ( $parameters as $k => $param ) {
+					$config ['database'] [$offset] [$k] = $param;
 				}
 			}
 		}

@@ -1,6 +1,8 @@
 <?php
 
-namespace Ubiquity\db\providers;
+namespace Ubiquity\db\providers\pdo;
+
+use Ubiquity\db\providers\AbstractDbWrapper;
 
 /**
  * Ubiquity\db\providers$PDOWrapper
@@ -8,6 +10,7 @@ namespace Ubiquity\db\providers;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
+ * @property \PDO $dbInstance
  *
  */
 class PDOWrapper extends AbstractDbWrapper {
@@ -113,12 +116,15 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function commit() {
+		return $this->dbInstance->commit ();
 	}
 
 	public function rollBack() {
+		return $this->dbInstance->rollBack ();
 	}
 
 	public function beginTransaction() {
+		return $this->dbInstance->beginTransaction ();
 	}
 
 	public function savePoint($level) {

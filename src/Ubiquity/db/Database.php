@@ -22,7 +22,7 @@ use Ubiquity\controllers\Startup;
  */
 class Database {
 	use DatabaseOperationsTrait,DatabaseTransactionsTrait;
-	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\PDOWrapper::class ];
+	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\pdo\PDOWrapper::class ];
 	private $dbType;
 	private $serverName;
 	private $port;
@@ -57,8 +57,10 @@ class Database {
 		$this->port = $port;
 		$this->user = $user;
 		$this->password = $password;
-		if (isset ( $options ["quote"] ))
-			SqlUtils::$quote = $options ["quote"];
+		if (isset ( $options ['quote'] )) {
+			SqlUtils::$quote = $options ['quote'];
+			unset ( $options ['quote'] );
+		}
 		$this->options = $options;
 		if ($cache !== false) {
 			if ($cache instanceof \Closure) {
@@ -141,7 +143,7 @@ class Database {
 		return $this->user;
 	}
 
-	public static function getAvailableDrivers($dbWrapperClass = \Ubiquity\db\providers\PDOWrapper::class) {
+	public static function getAvailableDrivers($dbWrapperClass = \Ubiquity\db\providers\pdo\PDOWrapper::class) {
 		return call_user_func ( $dbWrapperClass . '::getAvailableDrivers' );
 	}
 
@@ -226,7 +228,7 @@ class Database {
 	 * @param string $dbWrapperClass
 	 * @return \Ubiquity\db\Database|NULL
 	 */
-	public static function start($offset = null, $dbWrapperClass = \Ubiquity\db\providers\PDOWrapper::class) {
+	public static function start($offset = null, $dbWrapperClass = \Ubiquity\db\providers\pdo\PDOWrapper::class) {
 		$config = Startup::$config;
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
 		if ($db ['dbName'] !== '') {
