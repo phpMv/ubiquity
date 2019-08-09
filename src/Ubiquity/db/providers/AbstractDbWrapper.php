@@ -67,6 +67,10 @@ abstract class AbstractDbWrapper {
 
 	abstract public function ping();
 
+	abstract public function getPrimaryKeys($tableName);
+
+	abstract public function getFieldsInfos($tableName);
+
 	public function close() {
 		$this->dbInstance = null;
 	}

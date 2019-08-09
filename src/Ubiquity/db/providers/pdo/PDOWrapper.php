@@ -146,4 +146,24 @@ class PDOWrapper extends AbstractDbWrapper {
 	public function ping() {
 		return 1 === \intval ( $this->wrapperObject->queryColumn ( 'SELECT 1', 0 ) );
 	}
+
+	public function getPrimaryKeys($tableName) {
+		$fieldkeys = array ();
+		$recordset = $this->dbInstance->query ( "SHOW KEYS FROM `{$tableName}` WHERE Key_name = 'PRIMARY'" );
+		$keys = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
+		foreach ( $keys as $key ) {
+			$fieldkeys [] = $key ['Column_name'];
+		}
+		return $fieldkeys;
+	}
+
+	public function getFieldsInfos($tableName) {
+		$fieldsInfos = array ();
+		$recordset = $this->dbInstance->query ( "SHOW COLUMNS FROM `{$tableName}`" );
+		$fields = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
+		foreach ( $fields as $field ) {
+			$fieldsInfos [$field ['Field']] = [ "Type" => $field ['Type'],"Nullable" => $field ["Null"] ];
+		}
+		return $fieldsInfos;
+	}
 }
