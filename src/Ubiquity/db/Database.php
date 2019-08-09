@@ -10,9 +10,10 @@ use Ubiquity\db\traits\DatabaseOperationsTrait;
 use Ubiquity\exceptions\DBException;
 use Ubiquity\db\traits\DatabaseTransactionsTrait;
 use Ubiquity\controllers\Startup;
+use Ubiquity\db\traits\DatabaseMetadatas;
 
 /**
- * Ubiquity PDO database class.
+ * Ubiquity Generic database class.
  * Ubiquity\db$Database
  * This class is part of Ubiquity
  *
@@ -21,7 +22,7 @@ use Ubiquity\controllers\Startup;
  *
  */
 class Database {
-	use DatabaseOperationsTrait,DatabaseTransactionsTrait;
+	use DatabaseOperationsTrait,DatabaseTransactionsTrait,DatabaseMetadatas;
 	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\pdo\PDOWrapper::class ];
 	private $dbType;
 	private $serverName;
@@ -89,7 +90,7 @@ class Database {
 		try {
 			$this->_connect ();
 			return true;
-		} catch ( \PDOException $e ) {
+		} catch ( \Exception $e ) {
 			throw new DBException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
 		}
 	}

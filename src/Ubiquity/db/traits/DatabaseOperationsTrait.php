@@ -12,7 +12,6 @@ use Ubiquity\exceptions\CacheException;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.2
- * @property \PDO $pdoObject
  * @property mixed $cache
  * @property array $options
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
@@ -98,7 +97,7 @@ trait DatabaseOperationsTrait {
 	/**
 	 *
 	 * @param string $sql
-	 * @return \PDOStatement
+	 * @return object statement
 	 */
 	private function getStatement($sql) {
 		if (! isset ( $this->statements [$sql] )) {
@@ -110,7 +109,7 @@ trait DatabaseOperationsTrait {
 	/**
 	 *
 	 * @param string $sql
-	 * @return \PDOStatement
+	 * @return object statement
 	 */
 	private function getUpdateStatement($sql) {
 		if (! isset ( $this->updateStatements [$sql] )) {
@@ -144,7 +143,7 @@ trait DatabaseOperationsTrait {
 	 * Prepares a statement for execution and returns a statement object
 	 *
 	 * @param String $sql
-	 * @return \PDOStatement|boolean
+	 * @return object|boolean
 	 */
 	public function prepareStatement($sql) {
 		return $this->wrapperObject->prepareStatement ( $sql );
@@ -153,12 +152,12 @@ trait DatabaseOperationsTrait {
 	/**
 	 * Sets $value to $parameter
 	 *
-	 * @param \PDOStatement $statement
+	 * @param mixed $statement
 	 * @param String $parameter
 	 * @param mixed $value
 	 * @return boolean
 	 */
-	public function bindValueFromStatement(\PDOStatement $statement, $parameter, $value) {
+	public function bindValueFromStatement($statement, $parameter, $value) {
 		return $this->wrapperObject->bindValueFromStatement ( $statement, $parameter, $value );
 	}
 
