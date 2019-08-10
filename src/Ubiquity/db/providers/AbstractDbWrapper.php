@@ -72,6 +72,8 @@ abstract class AbstractDbWrapper {
 
 	abstract public function getFieldsInfos($tableName);
 
+	abstract public function getForeignKeys($tableName, $pkName, $dbName = null);
+
 	public function close() {
 		$this->dbInstance = null;
 	}

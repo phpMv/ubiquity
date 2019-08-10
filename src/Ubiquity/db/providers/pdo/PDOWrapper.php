@@ -162,6 +162,17 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $fieldkeys;
 	}
 
+	public function getForeignKeys($tableName, $pkName, $dbName = null) {
+		$recordset = $this->dbInstance->query ( "SELECT *
+												FROM
+												 information_schema.KEY_COLUMN_USAGE
+												WHERE
+												 REFERENCED_TABLE_NAME = '" . $tableName . "'
+												 AND REFERENCED_COLUMN_NAME = '" . $pkName . "'
+												 AND TABLE_SCHEMA = '" . $dbName . "';" );
+		return $recordset->fetchAll ( \PDO::FETCH_ASSOC );
+	}
+
 	public function getFieldsInfos($tableName) {
 		$fieldsInfos = array ();
 		$recordset = $this->dbInstance->query ( "SHOW COLUMNS FROM `{$tableName}`" );
