@@ -12,6 +12,7 @@ namespace Ubiquity\db\providers;
  */
 abstract class AbstractDbWrapper {
 	protected $dbInstance;
+	public $quote;
 
 	abstract public function query(string $sql);
 

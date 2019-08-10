@@ -5,6 +5,7 @@ namespace Ubiquity\db\traits;
 use Ubiquity\log\Logger;
 use Ubiquity\cache\database\DbCache;
 use Ubiquity\exceptions\CacheException;
+use Ubiquity\db\SqlUtils;
 
 /**
  * Ubiquity\db\traits$DatabaseOperationsTrait
@@ -65,7 +66,8 @@ trait DatabaseOperationsTrait {
 			}
 		}
 		if ($result === false) {
-			$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM `" . $tableName . "`" . $condition, $parameters );
+			$quote = SqlUtils::$quote;
+			$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters );
 			if ($cache) {
 				$this->cache->store ( $tableName, $cKey, $result );
 			}

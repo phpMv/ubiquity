@@ -32,6 +32,8 @@ class Database {
 	private $password;
 	private $cache;
 	private $options;
+	public $quote;
+
 	/**
 	 *
 	 * @var \Ubiquity\db\providers\AbstractDbWrapper
@@ -58,10 +60,6 @@ class Database {
 		$this->port = $port;
 		$this->user = $user;
 		$this->password = $password;
-		if (isset ( $options ['quote'] )) {
-			SqlUtils::$quote = $options ['quote'];
-			unset ( $options ['quote'] );
-		}
 		$this->options = $options;
 		if ($cache !== false) {
 			if ($cache instanceof \Closure) {
@@ -77,7 +75,8 @@ class Database {
 	}
 
 	private function setDbWrapperClass($dbWrapperClass) {
-		$this->wrapperObject = new $dbWrapperClass ();
+		$this->wrapperObject = new $dbWrapperClass ( $this->dbType );
+		$this->quote = $this->wrapperObject->quote;
 	}
 
 	/**

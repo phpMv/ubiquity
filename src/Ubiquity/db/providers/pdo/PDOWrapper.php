@@ -15,7 +15,12 @@ use Ubiquity\db\providers\AbstractDbWrapper;
  */
 class PDOWrapper extends AbstractDbWrapper {
 	protected static $savepointsDrivers = [ 'pgsql' => true,'mysql' => true,'sqlite' => true ];
+	private static $quotes = [ 'mysql' => '`','sqlite' => '"','pgsql' => '"' ];
 	protected $transactionLevel = 0;
+
+	public function __construct($dbType = 'mysql') {
+		$this->quote = self::$quotes [$dbType] ?? '';
+	}
 
 	public function fetchAllColumn($statement, array $values = null, string $column = null) {
 		$result = false;

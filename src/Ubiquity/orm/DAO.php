@@ -122,7 +122,8 @@ class DAO {
 		if ($parser->init ()) {
 			if (is_null ( $array )) {
 				$pk = self::getFirstKeyValue_ ( $instance );
-				$condition = " INNER JOIN `" . $parser->getJoinTable () . "` on `" . $parser->getJoinTable () . "`.`" . $parser->getFkField () . "`=`" . $parser->getTargetEntityTable () . "`.`" . $parser->getPk () . "` WHERE `" . $parser->getJoinTable () . "`.`" . $parser->getMyFkField () . "`= ?";
+				$quote = SqlUtils::$quote;
+				$condition = " INNER JOIN " . $quote . $parser->getJoinTable () . $quote . " on " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getFkField () . $quote . "=" . $quote . $parser->getTargetEntityTable () . $quote . "." . $quote . $parser->getPk () . $quote . " WHERE " . $quote . $parser->getJoinTable () . $quote . "." . $parser->getMyFkField () . $quote . "= ?";
 				$ret = self::_getAll ( $parser->getTargetEntityClass (), ConditionParser::simple ( $condition, $pk ), $included, $useCache );
 			} else {
 				$ret = self::getManyToManyFromArray ( $instance, $array, $class, $parser );
@@ -181,7 +182,9 @@ class DAO {
 		} else {
 			$keys = "1";
 		}
-		return self::getDb ( $className )->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM `{$tableName}`, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
+		$db = self::getDb ( $className );
+		$quote = $db->quote;
+		return $db->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$quote}{$tableName}{$quote}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
 	}
 
 	/**
@@ -197,7 +200,9 @@ class DAO {
 		if ($condition != '') {
 			$condition = " WHERE " . $condition;
 		}
-		return self::getDb ( $className )->prepareAndFetchColumn ( "SELECT COUNT(*) FROM `" . $tableName . "`" . $condition, $parameters );
+		$db = self::getDb ( $className );
+		$quote = $db->quote;
+		return $db->prepareAndFetchColumn ( "SELECT COUNT(*) FROM " . $quote . $tableName . $quote . $condition, $parameters );
 	}
 
 	/**
@@ -346,6 +351,7 @@ class DAO {
 		if (! isset ( self::$db [$offset] )) {
 			self::startDatabase ( Startup::$config, $offset );
 		}
+		SqlUtils::$quote = self::$db [$offset]->quote;
 		return self::$db [$offset];
 	}
 
