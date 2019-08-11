@@ -26,5 +26,9 @@ trait DatabaseMetadatas {
 	public function getFieldsInfos($tableName) {
 		return $this->wrapperObject->getFieldsInfos ( $tableName );
 	}
+
+	public function getForeignKeys($tableName, $pkName, $dbName = null) {
+		return $this->wrapperObject->getForeignKeys ( $tableName, $pkName, $dbName );
+	}
 }
 
