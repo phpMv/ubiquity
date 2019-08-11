@@ -172,9 +172,6 @@ trait DatabaseOperationsTrait {
 		return $this->wrapperObject->lastInsertId ();
 	}
 
-	public function getTablesName() {
-		return $this->wrapperObject->getTablesName ();
-	}
 
 	/**
 	 * Returns the number of records in $tableName that respects the condition passed as a parameter
