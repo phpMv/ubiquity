@@ -219,7 +219,7 @@ trait DAOUpdatesTrait {
 		EventsManager::trigger ( "dao.before.update", $instance );
 		$className = \get_class ( $instance );
 		$db = self::getDb ( $className );
-		$quote = $b->quote;
+		$quote = $db->quote;
 		$tableName = OrmUtils::getTableName ( $className );
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$ColumnskeyAndValues = array_merge ( $ColumnskeyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
