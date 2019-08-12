@@ -6,6 +6,7 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\db\Database;
 
 /**
  *
@@ -14,7 +15,7 @@ use Ubiquity\orm\parser\Reflexion;
  */
 trait DAORelationsTrait {
 
-	abstract protected static function _getAll($className, ConditionParser $conditionParser, $included = true, $useCache = NULL);
+	abstract protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL);
 
 	private static function generateManyToManyParser(ManyToManyParser $parser, &$myPkValues) {
 		$sql = $parser->generateConcatSQL ();

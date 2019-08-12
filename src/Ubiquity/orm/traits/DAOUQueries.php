@@ -4,6 +4,7 @@ namespace Ubiquity\orm\traits;
 
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ConditionParser;
+use Ubiquity\db\Database;
 
 /**
  *
@@ -13,9 +14,9 @@ use Ubiquity\orm\parser\ConditionParser;
 trait DAOUQueries {
 	protected static $annotFieldsInRelations = [ ];
 
-	abstract protected static function _getAll($className, ConditionParser $conditionParser, $included = true, $useCache = NULL);
+	abstract protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL);
 
-	abstract protected static function _getOne($className, ConditionParser $conditionParser, $included, $useCache);
+	abstract protected static function _getOne(Database $db, $className, ConditionParser $conditionParser, $included, $useCache);
 
 	protected static function uParse($className, &$ucondition, $quote) {
 		$expressions = self::uGetExpressions ( $ucondition );
