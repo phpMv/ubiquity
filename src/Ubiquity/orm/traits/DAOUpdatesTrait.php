@@ -42,9 +42,10 @@ trait DAOUpdatesTrait {
 	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
 	private static function removeByKey_($className, $tableName, $keyAndValues) {
-		$sql = "DELETE FROM " . $tableName . " WHERE " . SqlUtils::getWhere ( $keyAndValues );
+		$db = self::getDb ( $className );
+		$sql = "DELETE FROM " . $db->quote . $tableName . $db->quote . " WHERE " . SqlUtils::getWhere ( $keyAndValues );
 		Logger::info ( "DAOUpdates", $sql, "delete" );
-		$statement = self::getDb ( $className )->prepareStatement ( $sql );
+		$statement = $db->prepareStatement ( $sql );
 		try {
 			if ($statement->execute ( $keyAndValues )) {
 				return $statement->rowCount ();
@@ -64,9 +65,10 @@ trait DAOUpdatesTrait {
 	 * @return boolean|int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
 	private static function remove_($className, $tableName, $where) {
-		$sql = "DELETE FROM `" . $tableName . "` " . SqlUtils::checkWhere ( $where );
+		$db = self::getDb ( $className );
+		$sql = "DELETE FROM " . $db->quote . $tableName . $db->quote . " " . SqlUtils::checkWhere ( $where );
 		Logger::info ( "DAOUpdates", $sql, "delete" );
-		$statement = self::getDb ( $className )->prepareStatement ( $sql );
+		$statement = $db->prepareStatement ( $sql );
 		try {
 			if ($statement->execute ()) {
 				return $statement->rowCount ();
@@ -115,15 +117,17 @@ trait DAOUpdatesTrait {
 	public static function insert($instance, $insertMany = false) {
 		EventsManager::trigger ( 'dao.before.insert', $instance );
 		$className = \get_class ( $instance );
+		$db = self::getDb ( $className );
+		$quote = $db->quote;
 		$tableName = OrmUtils::getTableName ( $className );
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
-		$sql = "INSERT INTO `" . $tableName . "`(" . SqlUtils::getInsertFields ( $keyAndValues ) . ") VALUES(" . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ")";
+		$sql = "INSERT INTO " . $quote . $tableName . $quote . " (" . SqlUtils::getInsertFields ( $keyAndValues ) . ") VALUES(" . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ")";
 		if (Logger::isActive ()) {
 			Logger::info ( "DAOUpdates", $sql, "insert" );
 			Logger::info ( "DAOUpdates", \json_encode ( $keyAndValues ), "Key and values" );
 		}
-		$db = self::getDb ( $className );
+
 		$statement = $db->prepareStatement ( $sql );
 		try {
 			$result = $statement->execute ( $keyAndValues );
@@ -174,9 +178,10 @@ trait DAOUpdatesTrait {
 		if ($parser->init ()) {
 			$className = $parser->getTargetEntityClass ();
 			$db = self::getDb ( $className );
+			$quote = $db->quote;
 			$myField = $parser->getMyFkField ();
 			$field = $parser->getFkField ();
-			$sql = "INSERT INTO `" . $parser->getJoinTable () . "`(`" . $myField . "`,`" . $field . "`) VALUES (:" . $myField . ",:" . $field . ");";
+			$sql = "INSERT INTO {$quote}" . $parser->getJoinTable () . "{$quote}({$quote}" . $myField . "{$quote},{$quote}" . $field . "{$quote}) VALUES (:" . $myField . ",:" . $field . ");";
 			$memberAccessor = "get" . ucfirst ( $member );
 			$memberValues = $instance->$memberAccessor ();
 			$myKey = $parser->getMyPk ();
@@ -184,11 +189,11 @@ trait DAOUpdatesTrait {
 			$accessorId = "get" . ucfirst ( $parser->getPk () );
 			$id = $instance->$myAccessorId ();
 			if (! is_null ( $memberValues )) {
-				$db->execute ( "DELETE FROM `" . $parser->getJoinTable () . "` WHERE `" . $myField . "`='" . $id . "'" );
+				$db->execute ( "DELETE FROM {$quote}" . $parser->getJoinTable () . "{$quote} WHERE {$quote}{$myField}{$quote}='{$id}'" );
 				$statement = $db->prepareStatement ( $sql );
 				foreach ( $memberValues as $targetInstance ) {
 					$foreignId = $targetInstance->$accessorId ();
-					$foreignInstances = self::getAll ( $parser->getTargetEntity (), "`" . $parser->getPk () . "`" . "='" . $foreignId . "'" );
+					$foreignInstances = self::getAll ( $parser->getTargetEntity (), $quote . $parser->getPk () . $quote . "='{$foreignId}'" );
 					if (! OrmUtils::exists ( $targetInstance, $parser->getPk (), $foreignInstances )) {
 						self::insert ( $targetInstance, false );
 						$foreignId = $targetInstance->$accessorId ();
@@ -213,16 +218,18 @@ trait DAOUpdatesTrait {
 	public static function update($instance, $updateMany = false) {
 		EventsManager::trigger ( "dao.before.update", $instance );
 		$className = \get_class ( $instance );
+		$db = self::getDb ( $className );
+		$quote = $b->quote;
 		$tableName = OrmUtils::getTableName ( $className );
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$ColumnskeyAndValues = array_merge ( $ColumnskeyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
-		$sql = "UPDATE `" . $tableName . "` SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . " WHERE " . SqlUtils::getWhere ( $keyFieldsAndValues );
+		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . " WHERE " . SqlUtils::getWhere ( $keyFieldsAndValues );
 		if (Logger::isActive ()) {
 			Logger::info ( "DAOUpdates", $sql, "update" );
 			Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
 		}
-		$statement = self::getDb ( $className )->prepareStatement ( $sql );
+		$statement = $db->prepareStatement ( $sql );
 		try {
 			$result = $statement->execute ( $ColumnskeyAndValues );
 			if ($result && $updateMany)

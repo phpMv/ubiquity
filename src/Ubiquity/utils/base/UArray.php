@@ -20,7 +20,7 @@ class UArray {
 	 * @return boolean
 	 */
 	public static function isAssociative($array) {
-		return (array_keys ( $array ) !== range ( 0, count ( $array ) - 1 ));
+		return (\array_keys ( $array ) !== \range ( 0, \count ( $array ) - 1 ));
 	}
 
 	/**
@@ -236,19 +236,19 @@ class UArray {
 		}
 		return implode ( $glue, $res );
 	}
-	
-	public static function toJSON($array){
-		$result=[];
-		foreach ($array as $k=>$v){
-			if(is_array($v)){
-				$v=self::toJSON($v);
-			}elseif($v!=null && UString::startswith($v, 'js:')){
-					$v=substr($v, 3);
-			}else{
-				$v='"'.$v.'"';
+
+	public static function toJSON($array) {
+		$result = [ ];
+		foreach ( $array as $k => $v ) {
+			if (is_array ( $v )) {
+				$v = self::toJSON ( $v );
+			} elseif ($v != null && UString::startswith ( $v, 'js:' )) {
+				$v = substr ( $v, 3 );
+			} else {
+				$v = '"' . $v . '"';
 			}
-			$result[]='"'.$k.'": '.$v;
+			$result [] = '"' . $k . '": ' . $v;
 		}
-		return '{'.implode(',', $result).'}';
+		return '{' . implode ( ',', $result ) . '}';
 	}
 }
