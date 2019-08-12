@@ -96,7 +96,7 @@ class DAO {
 			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
 			if ($fkAnnot !== false) {
 				$fkv = self::getFirstKeyValue_ ( $instance );
-				$ret = self::_getAll ( $annot ["className"], ConditionParser::simple ( $fkAnnot ["name"] . "= ?", $fkv ), $included, $useCache );
+				$ret = self::_getAll ( self::getDb ( $annot ["className"] ), $annot ["className"], ConditionParser::simple ( $fkAnnot ["name"] . "= ?", $fkv ), $included, $useCache );
 				if (is_object ( $instance ) && $modifier = self::getAccessor ( $member, $instance, 'getOneToMany' )) {
 					self::setToMember ( $member, $instance, $ret, $modifier );
 				}
@@ -124,7 +124,8 @@ class DAO {
 				$pk = self::getFirstKeyValue_ ( $instance );
 				$quote = SqlUtils::$quote;
 				$condition = " INNER JOIN " . $quote . $parser->getJoinTable () . $quote . " on " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getFkField () . $quote . "=" . $quote . $parser->getTargetEntityTable () . $quote . "." . $quote . $parser->getPk () . $quote . " WHERE " . $quote . $parser->getJoinTable () . $quote . "." . $parser->getMyFkField () . $quote . "= ?";
-				$ret = self::_getAll ( $parser->getTargetEntityClass (), ConditionParser::simple ( $condition, $pk ), $included, $useCache );
+				$targetEntityClass = $parser->getTargetEntityClass ();
+				$ret = self::_getAll ( self::getDb ( $targetEntityClass ), $targetEntityClass, ConditionParser::simple ( $condition, $pk ), $included, $useCache );
 			} else {
 				$ret = self::getManyToManyFromArray ( $instance, $array, $class, $parser );
 			}
@@ -162,7 +163,7 @@ class DAO {
 	 * @return array
 	 */
 	public static function getAll($className, $condition = '', $included = true, $parameters = null, $useCache = NULL) {
-		return self::_getAll ( $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
+		return self::_getAll ( self::getDb ( $className ), $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
 	}
 
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {
@@ -174,7 +175,9 @@ class DAO {
 
 	public static function getRownum($className, $ids) {
 		$tableName = OrmUtils::getTableName ( $className );
-		self::parseKey ( $ids, $className );
+		$db = self::getDb ( $className );
+		$quote = $db->quote;
+		self::parseKey ( $ids, $className, $quote );
 		$condition = SqlUtils::getCondition ( $ids, $className );
 		$keyFields = OrmUtils::getKeyFields ( $className );
 		if (is_array ( $keyFields )) {
@@ -182,8 +185,7 @@ class DAO {
 		} else {
 			$keys = "1";
 		}
-		$db = self::getDb ( $className );
-		$quote = $db->quote;
+
 		return $db->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$quote}{$tableName}{$quote}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
 	}
 
@@ -225,7 +227,7 @@ class DAO {
 		} else {
 			throw new DAOException ( "The \$keyValues parameter should not be an array if \$parameters is not null" );
 		}
-		return self::_getOne ( $className, $conditionParser, $included, $useCache );
+		return self::_getOne ( self::getDb ( $className ), $className, $conditionParser, $included, $useCache );
 	}
 
 	/**
@@ -239,7 +241,7 @@ class DAO {
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getById($className, $keyValues, $included = true, $useCache = NULL) {
-		return self::_getOne ( $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
+		return self::_getOne ( self::getDb ( $className ), $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
 	}
 
 	protected static function getConditionParser($className, $keyValues) {
