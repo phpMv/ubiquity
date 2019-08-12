@@ -54,12 +54,12 @@ trait DAOCoreTrait {
 	private static function getManyToManyFromArray($instance, $array, $class, $parser) {
 		$ret = [ ];
 		$continue = true;
-		$accessorToMember = "get" . ucfirst ( $parser->getInversedBy () );
-		$myPkAccessor = "get" . ucfirst ( $parser->getMyPk () );
+		$accessorToMember = "get" . \ucfirst ( $parser->getInversedBy () );
+		$myPkAccessor = "get" . \ucfirst ( $parser->getMyPk () );
 		$pk = self::getFirstKeyValue_ ( $instance );
 
 		if (sizeof ( $array ) > 0) {
-			$continue = method_exists ( current ( $array ), $accessorToMember );
+			$continue = \method_exists ( current ( $array ), $accessorToMember );
 		}
 		if ($continue) {
 			foreach ( $array as $targetEntityInstance ) {
@@ -67,7 +67,7 @@ trait DAOCoreTrait {
 				if (is_array ( $instances )) {
 					foreach ( $instances as $inst ) {
 						if ($inst->$myPkAccessor () == $pk)
-							array_push ( $ret, $targetEntityInstance );
+							\array_push ( $ret, $targetEntityInstance );
 					}
 				}
 			}
@@ -85,21 +85,21 @@ trait DAOCoreTrait {
 	}
 
 	protected static function getInstance_($instance) {
-		if (is_object ( $instance )) {
+		if (\is_object ( $instance )) {
 			return $instance;
 		}
 		return $instance [0];
 	}
 
 	protected static function getValue_($instance, $member) {
-		if (is_object ( $instance )) {
+		if (\is_object ( $instance )) {
 			return Reflexion::getMemberValue ( $instance, $member );
 		}
 		return $instance [1];
 	}
 
 	protected static function getFirstKeyValue_($instance) {
-		if (is_object ( $instance )) {
+		if (\is_object ( $instance )) {
 			return OrmUtils::getFirstKeyValue ( $instance );
 		}
 		return $instance [1];
