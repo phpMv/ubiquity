@@ -96,7 +96,8 @@ class DAO {
 			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
 			if ($fkAnnot !== false) {
 				$fkv = self::getFirstKeyValue_ ( $instance );
-				$ret = self::_getAll ( self::getDb ( $annot ["className"] ), $annot ["className"], ConditionParser::simple ( $fkAnnot ["name"] . "= ?", $fkv ), $included, $useCache );
+				$db = self::getDb ( $annot ["className"] );
+				$ret = self::_getAll ( $db, $annot ["className"], ConditionParser::simple ( $db->quote . $fkAnnot ["name"] . $db->quote . "= ?", $fkv ), $included, $useCache );
 				if (is_object ( $instance ) && $modifier = self::getAccessor ( $member, $instance, 'getOneToMany' )) {
 					self::setToMember ( $member, $instance, $ret, $modifier );
 				}
