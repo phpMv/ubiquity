@@ -227,7 +227,7 @@ trait DAOUpdatesTrait {
 		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . " WHERE " . SqlUtils::getWhere ( $keyFieldsAndValues );
 		if (Logger::isActive ()) {
 			Logger::info ( "DAOUpdates", $sql, "update" );
-			Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
+			Logger::info ( "DAOUpdates", \json_encode ( $ColumnskeyAndValues ), "Key and values" );
 		}
 		$statement = $db->prepareStatement ( $sql );
 		try {

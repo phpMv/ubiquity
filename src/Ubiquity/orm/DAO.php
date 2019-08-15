@@ -124,7 +124,7 @@ class DAO {
 			if (is_null ( $array )) {
 				$pk = self::getFirstKeyValue_ ( $instance );
 				$quote = SqlUtils::$quote;
-				$condition = " INNER JOIN " . $quote . $parser->getJoinTable () . $quote . " on " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getFkField () . $quote . "=" . $quote . $parser->getTargetEntityTable () . $quote . "." . $quote . $parser->getPk () . $quote . " WHERE " . $quote . $parser->getJoinTable () . $quote . "." . $parser->getMyFkField () . $quote . "= ?";
+				$condition = " INNER JOIN " . $quote . $parser->getJoinTable () . $quote . " on " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getFkField () . $quote . "=" . $quote . $parser->getTargetEntityTable () . $quote . "." . $quote . $parser->getPk () . $quote . " WHERE " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getMyFkField () . $quote . "= ?";
 				$targetEntityClass = $parser->getTargetEntityClass ();
 				$ret = self::_getAll ( self::getDb ( $targetEntityClass ), $targetEntityClass, ConditionParser::simple ( $condition, $pk ), $included, $useCache );
 			} else {
