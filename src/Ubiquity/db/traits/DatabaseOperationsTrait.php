@@ -113,7 +113,7 @@ trait DatabaseOperationsTrait {
 	 * @param string $sql
 	 * @return object statement
 	 */
-	private function getUpdateStatement($sql) {
+	public function getUpdateStatement($sql) {
 		if (! isset ( $this->updateStatements [$sql] )) {
 			$this->updateStatements [$sql] = $this->wrapperObject->getStatement ( $sql );
 		}
