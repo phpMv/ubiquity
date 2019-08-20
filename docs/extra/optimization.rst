@@ -127,7 +127,7 @@ If the dependencies used have already been removed and you only want to update t
    
    composer dump-autoload -o  --classmap-authoritative
 
-.. note:: The ``--no-dev`` parameter removes the ``ubiquity-dev`` dependency required by `**webtools**.
+.. note:: The ``--no-dev`` parameter removes the ``ubiquity-dev`` dependency required by **webtools**.
    If you use webtools in production, add the ``phpmv/ubiquity-dev`` dependency:
    
    .. code-block:: bash
