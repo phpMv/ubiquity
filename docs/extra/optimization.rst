@@ -21,7 +21,7 @@ Remove the line defining error reporting at runtime, and make sure that error di
 .. code-block:: php
    :caption: index.php
    
-   error_reporting(\E_ALL);
+   error_reporting(\E_ALL);//To be removed
 
 
 Config optimization
@@ -30,33 +30,34 @@ Config optimization
 The configuration is accessible from the ``app/config/config.php`` file.
 
 Keep only those items that are essential to your application.
-+-----+------+--------------+
-| key | role | Optimization |
-+=====+======+==============+
-| siteUrl | Used by Ajax methods, and by Twig's ``url`` and ``path`` functions | To be removed if these functions are not used |
-+-----+------+--------------+
-| database | Used by Ubiquity ORM | To be removed if the ORM is not used |
-+-----+------+--------------+
-| sessionName | If assigned, starts or retrieves the php session for each request | To be removed if the session is useless |
-+-----+------+--------------+
-| templateEngine | If assigned, instanciates a new Engine object for each request | To be removed if the views are not used |
-+-----+------+--------------+
-| templateEngineOptions | Options assigned to the template engine instance | set the cache option to ``true`` if Twig is used |
-+-----+------+--------------+
-| test | To remove (deprecated) | |
-+-----+------+--------------+
-| debug | Enables or disables logs | Set to ``false`` in production |
-+-----+------+--------------+
-| logger | Defines the logger instance | To remove in production |
-+-----+------+--------------+
-| di | Defines the services to be injected | Only the ``@exec`` key is read at runtime |
-+-----+------+--------------+
-| cache | Defines the cache path and base class of the cache, used by models, router, dependency injection | |
-+-----+------+--------------+
-| mvcNS | Defines the paths or namespaces used by Rest controllers, models and controllers | |
-+-----+------+--------------+
-| isRest | Defines the condition to detect if a path corresponds to a controller Rest | To be removed if you do not explicitly use this condition in your code |
-+-----+------+--------------+
+
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| key                   | role                                                                             | Optimization                                                               |
++=======================+==================================================================================+============================================================================+
+| siteUrl               | Used by Ajax methods, and by Twig's ``url`` and ``path`` functions               | To be removed if these functions are not used                              |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| database              | Used by Ubiquity ORM                                                             | To be removed if the ORM is not used                                       |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| sessionName           | If assigned, starts or retrieves the php session for each request                | To be removed if the session is useless                                    |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| templateEngine        | If assigned, instanciates a new Engine object for each request                   | To be removed if the views are not used                                    |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| templateEngineOptions | Options assigned to the template engine instance                                 | set the cache option to ``true`` if Twig is used                           |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| test                  | To remove (deprecated)                                                           |                                                                            |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| debug                 | Enables or disables logs                                                         | Set to ``false`` in production                                             |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| logger                | Defines the logger instance                                                      | To remove in production                                                    |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| di                    | Defines the services to be injected                                              | Only the ``@exec`` key is read at runtime                                  |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| cache                 | Defines the cache path and base class of the cache, used by models, router, dependency injection |                                                            |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| mvcNS                 | Defines the paths or namespaces used by Rest controllers, models and controllers |                                                                            |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| isRest                | Defines the condition to detect if a path corresponds to a controller Rest       | To be removed if you do not explicitly use this condition in your code     |
++-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
 
 Example of configuration without session, and without dependency injection:
 
@@ -109,16 +110,20 @@ Autoloader optimization
 In production, remove dependencies used only in development, and generate the optimized class map file:
 
 .. code-block:: bash
+   
    composer install --no-dev --classmap-authoritative
 
 If the dependencies used have already been removed and you only want to update the map file (after adding or removing a class):
 
 .. code-block:: bash
+   
    composer dump-autoload -o  --classmap-authoritative
 
-.. note:: The ``--no-dev`` parameter removes the ``ubiquity-dev`` dependency required by `**webtools**. |br|
+.. note:: The ``--no-dev`` parameter removes the ``ubiquity-dev`` dependency required by `**webtools**.
    If you use webtools in production, add the ``phpmv/ubiquity-dev`` dependency:
+   
    .. code-block:: bash
+      
       composer require phpmv/ubiquity-dev
 
 PHP optimization
@@ -130,6 +135,7 @@ OPcache improves PHP performance by storing precompiled script bytecode in share
 
 .. code-block:: ini
    :caption: php.ini
+   
    [opcache]
    ; Determines if Zend OPCache is enabled
    opcache.enable=1
