@@ -31,35 +31,35 @@ The configuration is accessible from the ``app/config/config.php`` file.
 
 Keep only those items that are essential to your application.
 
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| key                   | role                                                                             | Optimization                                                               |
-+=======================+==================================================================================+============================================================================+
-| siteUrl               | Used by Ajax methods, and by Twig's ``url`` and ``path`` functions               | To be removed if these functions are not used                              |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| database              | Used by Ubiquity ORM                                                             | To be removed if the ORM is not used                                       |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| sessionName           | If assigned, starts or retrieves the php session for each request                | To be removed if the session is useless                                    |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| templateEngine        | If assigned, instanciates a new Engine object for each request                   | To be removed if the views are not used                                    |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| templateEngineOptions | Options assigned to the template engine instance                                 | set the cache option to ``true`` if Twig is used                           |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| test                  | To remove (deprecated)                                                           |                                                                            |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| debug                 | Enables or disables logs                                                         | Set to ``false`` in production                                             |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| logger                | Defines the logger instance                                                      | To remove in production                                                    |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| di                    | Defines the services to be injected                                              | Only the ``@exec`` key is read at runtime                                  |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| cache                 | Defines the cache path and base class of the cache, used by models, router, dependency injection |                                                            |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| mvcNS                 | Defines the paths or namespaces used by Rest controllers, models and controllers |                                                                            |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
-| isRest                | Defines the condition to detect if a path corresponds to a controller Rest       | To be removed if you do not explicitly use this condition in your code     |
-+-----------------------+----------------------------------------------------------------------------------+----------------------------------------------------------------------------+
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| key                   | role                                                                                             | Optimization                                                               |
++=======================+==================================================================================================+============================================================================+
+| siteUrl               | Used by Ajax methods, and by Twig's ``url`` and ``path`` functions                               | To be removed if these functions are not used                              |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| database              | Used by Ubiquity ORM                                                                             | To be removed if the ORM is not used                                       |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| sessionName           | If assigned, starts or retrieves the php session for each request                                | To be removed if the session is useless                                    |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| templateEngine        | If assigned, instanciates a new Engine object for each request                                   | To be removed if the views are not used                                    |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| templateEngineOptions | Options assigned to the template engine instance                                                 | set the cache option to ``true`` if Twig is used                           |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| test                  | To remove (deprecated)                                                                           |                                                                            |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| debug                 | Enables or disables logs                                                                         | Set to ``false`` in production                                             |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| logger                | Defines the logger instance                                                                      | To remove in production                                                    |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| di                    | Defines the services to be injected                                                              | Only the ``@exec`` key is read at runtime                                  |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| cache                 | Defines the cache path and base class of the cache, used by models, router, dependency injection |                                                                            |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| mvcNS                 | Defines the paths or namespaces used by Rest controllers, models and controllers                 |                                                                            |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| isRest                | Defines the condition to detect if a path corresponds to a controller Rest                       | To be removed if you do not explicitly use this condition in your code     |
++-----------------------+--------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+
 
-Example of configuration without session, and without dependency injection:
+**Example of configuration without session, and without dependency injection:**
 
 .. code-block:: php
    :linenos:
@@ -81,21 +81,21 @@ The loaded services are accessibles from the ``app/config/services.php`` file.
 
 As for the configuration file, keep only those items that are essential to your application.
 
-+-------+------+
-| Lines | Role |
-+=======+======+
-| ``\Ubiquity\cache\CacheManager::startProd($config)`` | Starts the cache for ORM, database, router, dependency injection |
-+-------+------+
-| ``\Ubiquity\orm\DAO::start()`` | To be used only with multiple databases |
-+-------+------+
-| ``Router::start()`` | To be used only if the routes are defined with annotations |
-+-------+------+
-| ``Router::addRoute("_default", "controllers\\IndexController")`` | Defines the default route (to remove in production) |
-+-------+------+
++------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+
+| Lines                                                            | Role                                                                                                     |
++==================================================================+==========================================================================================================+
+| ``\Ubiquity\cache\CacheManager::startProd($config)``             | Starts the cache for ORM, database, router, dependency injection                                         |
++------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+
+| ``\Ubiquity\orm\DAO::start()``                                   | To be used only with multiple databases                                                                  |
++------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+
+| ``Router::start()``                                              | To be used only if the routes are defined with annotations                                               |
++------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+
+| ``Router::addRoute("_default", "controllers\\IndexController")`` | Defines the default route (to remove in production)                                                      |
++------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+
 | ``\Ubiquity\assets\AssetsManager::start($config)`` | Assign the variable siteUrl to the ThemeManager, to be used only if the ``css`` and ``js`` functions of twig are used. |
-+-------+------+
++------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+
 
-Example of a Services file with a database and starting the router :
+**Example of a Services file with a database and starting the router :**
 
 .. code-block:: php
    :linenos:
@@ -131,7 +131,7 @@ PHP optimization
 
 OP-Cache
 ********
-OPcache improves PHP performance by storing precompiled script bytecode in shared memory, thereby removing the need for PHP to load and parse scripts on each request.
+**OPcache** improves PHP performance by storing precompiled script bytecode in shared memory, thereby removing the need for PHP to load and parse scripts on each request.
 
 .. code-block:: ini
    :caption: php.ini
@@ -163,7 +163,7 @@ OPcache improves PHP performance by storing precompiled script bytecode in share
    opcache.huge_code_pages=1
 
 
-If you use ubiquity-swoole web server:
+If you use **ubiquity-swoole** web server:
 
 .. code-block:: ini
    :caption: php.ini
