@@ -8,11 +8,11 @@ Ubiquity optimization
 Ubiquity is fast, but can be even faster by optimizing a few elements.
 
 
-.. note:: The integrated test server (accessible by ``Ubiquity serve``) uses its own configuration and launch files (in the **.ubiquity** folder of your project). |br|
+.. note:: The integrated test server (accessible by **Ubiquity serve**) uses its own configuration and launch files (in the **.ubiquity** folder of your project). |br|
    It should therefore not be used to assess the results of the changes made.
-
-.. note:: Test your pages using a software and hardware configuration similar to the one used in production. |br|
-   Use a benchmark tool to assess your changes as they happen (Apache bench for example).
+   
+   Test your pages using a software and hardware configuration similar to the one used in production. |br|
+   Use a benchmark tool to assess your changes as they happen (**Apache bench** for example).
 
 index file
 ----------
@@ -92,7 +92,7 @@ As for the configuration file, keep only those items that are essential to your 
 +------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
 | **Router::addRoute("_default", "controllers\\IndexController")** | Defines the default route (to remove in production)                                                                    |
 +------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| **\Ubiquity\assets\AssetsManager::start($config)**               | Assigns the variable siteUrl to the ThemeManager, to be used only if the ``css`` and ``js`` functions of twig are used. |
+| **\Ubiquity\assets\AssetsManager::start($config)**               | Assigns the variable siteUrl to the ThemeManager, to be used only if the ``css`` and ``js`` functions of twig are used |
 +------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
 
 **Example of a Services file with a database and starting the router :**
