@@ -14,6 +14,14 @@ Ubiquity is fast, but can be even faster by optimizing a few elements.
    Test your pages using a software and hardware configuration similar to the one used in production. |br|
    Use a benchmark tool to assess your changes as they happen (**Apache bench** for example).
 
+Cache
+-----
+Generate the router and ORM cache (Think that annotations are never used at runtime):
+
+.. code-block:: bash
+   
+   Ubiquity init-cache
+
 index file
 ----------
 Remove the line defining error reporting at runtime, and make sure that error display is disabled in **php.ini**.
@@ -128,6 +136,7 @@ If the dependencies used have already been removed and you only want to update t
 
 PHP optimization
 ----------------
+Please note that other applications can use the modified values on the same server.
 
 OP-Cache
 ********
@@ -170,3 +179,9 @@ If you use **ubiquity-swoole** web server:
    
    ; Determines if Zend OPCache is enabled for the CLI version of PHP
    opcache.enable_cli=1
+   
+
+To complete
+-----------
+
+Remember that the framework used does not do everything. You also need to optimize your own code.
