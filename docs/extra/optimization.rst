@@ -1,3 +1,4 @@
+.. _optimization:
 Ubiquity optimization
 =====================
 .. |br| raw:: html

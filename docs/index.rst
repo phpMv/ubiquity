@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Optimization<optimization>`
    - :ref:`Rich client<richclient>`
    - :ref:`REST module<rest>`
    - :ref:`Data transformers<transformers>`
