@@ -114,7 +114,9 @@ class MemCachedDriver extends AbstractDataCache {
 
 		foreach ( $keys as $key ) {
 			$entry = $this->cacheInstance->get ( $key );
-			$result [] = new CacheFile ( \ucfirst ( $type ), $key, $entry [self::TIME], "", $key );
+			if ($entry [self::TAG] === $type) {
+				$result [] = new CacheFile ( \ucfirst ( $type ), $key, $entry [self::TIME], "", $key );
+			}
 		}
 		if (\sizeof ( $result ) === 0)
 			$result [] = new CacheFile ( \ucfirst ( $type ), "", "", "" );
