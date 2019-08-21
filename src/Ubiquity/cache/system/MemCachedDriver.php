@@ -59,7 +59,7 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	protected function storeContent($key, $content, $tag) {
 		$key = $this->getRealKey ( $key );
-		$this->cacheInstance->$this->cacheInstance->set ( $key, [ self::CONTENT => $content,self::TAG => $tag,self::TIME => \time () ] );
+		$this->cacheInstance->set ( $key, [ self::CONTENT => $content,self::TAG => $tag,self::TIME => \time () ] );
 	}
 
 	protected function getRealKey($key) {
