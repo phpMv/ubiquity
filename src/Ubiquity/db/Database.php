@@ -238,4 +238,13 @@ class Database {
 		}
 		return null;
 	}
+
+	/**
+	 * Returns a new native connection to the database (\PDO, \Mysqli...)
+	 *
+	 * @return mixed
+	 */
+	public function getNewDbInstance() {
+		return $this->wrapperObject->getNewDbInstance ( $this->dbType, $this->dbName, $this->serverName, $this->port, $this->user, $this->password, $this->options );
+	}
 }

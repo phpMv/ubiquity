@@ -3,6 +3,7 @@
 namespace Ubiquity\db\providers\pdo;
 
 use Ubiquity\db\providers\AbstractDbWrapper;
+use Ubiquity\exceptions\DBException;
 
 /**
  * Ubiquity\db\providers$PDOWrapper
@@ -181,5 +182,9 @@ class PDOWrapper extends AbstractDbWrapper {
 			$fieldsInfos [$field ['Field']] = [ "Type" => $field ['Type'],"Nullable" => $field ["Null"] ];
 		}
 		return $fieldsInfos;
+	}
+
+	public function getNewDbInstance(string $dbType, $dbName, $serverName, string $port, string $user, string $password, array $options) {
+		throw new DBException ( 'PDO does not accept multiple database instances' );
 	}
 }
