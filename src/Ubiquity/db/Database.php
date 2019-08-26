@@ -240,11 +240,9 @@ class Database {
 	}
 
 	/**
-	 * Returns a new native connection to the database (\PDO, \Mysqli...)
-	 *
-	 * @return mixed
+	 * For databases with Connection pool (retrieve a new dbInstance in wrapper)
 	 */
-	public function getNewDbInstance() {
-		return $this->wrapperObject->getNewDbInstance ( $this->dbType, $this->dbName, $this->serverName, $this->port, $this->user, $this->password, $this->options );
+	public function pool() {
+		$this->wrapperObject->pool ();
 	}
 }

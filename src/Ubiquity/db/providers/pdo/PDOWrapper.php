@@ -184,7 +184,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $fieldsInfos;
 	}
 
-	public function getNewDbInstance(string $dbType, $dbName, $serverName, string $port, string $user, string $password, array $options) {
-		throw new DBException ( 'PDO does not accept multiple database instances' );
+	public function pool() {
+		throw new DBException ( 'PDO does not accept connection pooling' );
 	}
 }
