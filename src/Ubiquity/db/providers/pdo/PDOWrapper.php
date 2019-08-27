@@ -150,7 +150,7 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function ping() {
-		return 1 === \intval ( $this->wrapperObject->queryColumn ( 'SELECT 1', 0 ) );
+		return 1 === \intval ( $this->queryColumn ( 'SELECT 1', 0 ) );
 	}
 
 	public function getPrimaryKeys($tableName) {

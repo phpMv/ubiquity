@@ -40,6 +40,13 @@ abstract class AbstractDbWrapper {
 
 	abstract public function lastInsertId();
 
+	/**
+	 * Used by DAO
+	 *
+	 * @param mixed $statement
+	 * @param string $parameter
+	 * @param mixed $value
+	 */
 	abstract public function bindValueFromStatement($statement, $parameter, $value);
 
 	abstract public function fetchColumn($statement, array $values = null, int $columnNumber = null);
