@@ -20,6 +20,7 @@ class Startup {
 	use StartupConfigTrait;
 	public static $urlParts;
 	public static $templateEngine;
+	public static $pool;
 	private static $controller;
 	private static $action;
 	private static $actionParams;
