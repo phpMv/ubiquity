@@ -172,9 +172,8 @@ trait DatabaseOperationsTrait {
 		return $this->wrapperObject->lastInsertId ();
 	}
 
-
 	/**
-	 * Returns the number of records in $tableName that respects the condition passed as a parameter
+	 * Returns the number of records in $tableName matching with the condition passed as a parameter
 	 *
 	 * @param string $tableName
 	 * @param string $condition Part following the WHERE of an SQL statement

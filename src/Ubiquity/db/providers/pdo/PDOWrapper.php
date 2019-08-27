@@ -187,4 +187,8 @@ class PDOWrapper extends AbstractDbWrapper {
 	public function pool() {
 		throw new DBException ( 'PDO does not accept connection pooling' );
 	}
+
+	public function freePool($db) {
+		throw new DBException ( 'PDO does not accept connection pooling' );
+	}
 }

@@ -240,9 +240,16 @@ class Database {
 	}
 
 	/**
-	 * For databases with Connection pool (retrieve a new dbInstance in wrapper)
+	 * For databases with Connection pool (retrieve a new dbInstance from pool wrapper)
 	 */
 	public function pool() {
-		$this->wrapperObject->pool ();
+		return $this->wrapperObject->pool ();
+	}
+
+	/**
+	 * For databases with Connection pool (put a dbInstance in pool wrapper)
+	 */
+	public function freePool($db) {
+		$this->wrapperObject->freePool ( $db );
 	}
 }
