@@ -358,6 +358,20 @@ class DAO {
 		return self::$db [$offset];
 	}
 
+	/**
+	 * gets a new DbConnection from pool
+	 *
+	 * @param string $offset
+	 * @return mixed
+	 */
+	public static function pool($offset = 'default') {
+		if (! isset ( self::$db [$offset] )) {
+			self::startDatabase ( Startup::$config, $offset );
+		}
+		SqlUtils::$quote = self::$db [$offset]->quote;
+		return self::$db [$offset]->pool ();
+	}
+
 	public static function getDatabases() {
 		$config = Startup::getConfig ();
 		if (isset ( $config ['database'] )) {
