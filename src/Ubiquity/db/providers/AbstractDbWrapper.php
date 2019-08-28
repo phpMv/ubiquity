@@ -12,6 +12,7 @@ namespace Ubiquity\db\providers;
  */
 abstract class AbstractDbWrapper {
 	protected $dbInstance;
+	protected $statements;
 	public $quote;
 
 	abstract public function query(string $sql);
@@ -21,6 +22,13 @@ abstract class AbstractDbWrapper {
 	abstract public function queryColumn(string $sql, int $columnNumber = null);
 
 	abstract public static function getAvailableDrivers();
+
+	public function _getStatement(string $sql) {
+		if (! isset ( $this->statements [$sql] )) {
+			$this->statements [$sql] = $this->getStatement ( $sql );
+		}
+		return $this->statements [$sql];
+	}
 
 	abstract public function getStatement(string $sql);
 

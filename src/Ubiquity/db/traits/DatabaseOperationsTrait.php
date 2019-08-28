@@ -18,8 +18,6 @@ use Ubiquity\db\SqlUtils;
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
  */
 trait DatabaseOperationsTrait {
-	private $statements = [ ];
-	private $updateStatements = [ ];
 
 	abstract public function getDSN();
 
@@ -102,11 +100,7 @@ trait DatabaseOperationsTrait {
 	 * @return object statement
 	 */
 	private function getStatement($sql) {
-		$uid = $this->pool ? $this->pool->getUid ( $sql ) : $sql;
-		if (! isset ( $this->statements [$uid] )) {
-			$this->statements [$uid] = $this->wrapperObject->getStatement ( $sql );
-		}
-		return $this->statements [$uid];
+		return $this->wrapperObject->_getStatement ( $sql );
 	}
 
 	/**
@@ -115,11 +109,7 @@ trait DatabaseOperationsTrait {
 	 * @return object statement
 	 */
 	public function getUpdateStatement($sql) {
-		$uid = $this->pool ? $this->pool->getUid ( $sql ) : $sql;
-		if (! isset ( $this->updateStatements [$uid] )) {
-			$this->updateStatements [$uid] = $this->wrapperObject->getStatement ( $sql );
-		}
-		return $this->updateStatements [$uid];
+		return $this->wrapperObject->_getStatement ( $sql );
 	}
 
 	/**
