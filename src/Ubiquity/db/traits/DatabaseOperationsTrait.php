@@ -74,19 +74,19 @@ trait DatabaseOperationsTrait {
 	}
 
 	public function prepareAndFetchAll($sql, $parameters = null, $mode = null) {
-		return $this->wrapperObject->fetchAll ( $this->getStatement ( $sql ), $parameters, $mode );
+		return $this->wrapperObject->fetchAll ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $mode );
 	}
 
 	public function prepareAndFetchOne($sql, $parameters = null, $mode = null) {
-		return $this->wrapperObject->fetchOne ( $this->getStatement ( $sql ), $parameters, $mode );
+		return $this->wrapperObject->fetchOne ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $mode );
 	}
 
 	public function prepareAndFetchAllColumn($sql, $parameters = null, $column = null) {
-		return $this->wrapperObject->fetchColumn ( $this->getStatement ( $sql ), $parameters, $column );
+		return $this->wrapperObject->fetchColumn ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $column );
 	}
 
 	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = null) {
-		$statement = $this->getStatement ( $sql );
+		$statement = $this->wrapperObject->_getStatement ( $sql );
 		if ($statement->execute ( $parameters )) {
 			Logger::info ( "Database", $sql, "prepareAndFetchColumn", $parameters );
 			return $statement->fetchColumn ( $columnNumber );

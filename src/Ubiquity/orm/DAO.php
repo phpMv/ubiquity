@@ -42,7 +42,7 @@ class DAO {
 	protected static $modelsDatabase = [ ];
 
 	protected static function getDb($model) {
-		return static::getDatabase ( static::$modelsDatabase [$model] ?? 'default');
+		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
 	}
 
 	public static function initPooling(&$config, $offset = null) {
