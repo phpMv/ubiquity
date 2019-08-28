@@ -358,7 +358,8 @@ class DAO {
 	 * @return \Ubiquity\db\Database
 	 */
 	public static function getDatabase($offset = 'default') {
-		$dbOffset = self::$uidCallback ? (self::$uidCallback) ( $offset ) : $offset;
+		$call = self::$uidCallback;
+		$dbOffset = $call ? $call ( $offset ) : $offset;
 		if (! isset ( self::$db [$dbOffset] )) {
 			self::startDatabase ( Startup::$config, $offset, $dbOffset );
 		}

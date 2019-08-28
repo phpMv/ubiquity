@@ -102,7 +102,8 @@ trait DatabaseOperationsTrait {
 	 * @return object statement
 	 */
 	private function getStatement($sql) {
-		$uid = $this->uiCallback ? ($this->uiCallback) ( $sql ) : $sql;
+		$call = $this->uidCallback;
+		$uid = $call ? $call ( $sql ) : $sql;
 		if (! isset ( $this->statements [$uid] )) {
 			$this->statements [$uid] = $this->wrapperObject->getStatement ( $sql );
 		}
@@ -115,7 +116,8 @@ trait DatabaseOperationsTrait {
 	 * @return object statement
 	 */
 	public function getUpdateStatement($sql) {
-		$uid = $this->uiCallback ? ($this->uiCallback) ( $sql ) : $sql;
+		$call = $this->uidCallback;
+		$uid = $call ? $call ( $sql ) : $sql;
 		if (! isset ( $this->updateStatements [$uid] )) {
 			$this->updateStatements [$uid] = $this->wrapperObject->getStatement ( $sql );
 		}

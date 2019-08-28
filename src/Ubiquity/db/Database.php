@@ -53,7 +53,7 @@ class Database {
 	 * @param array $options
 	 * @param boolean|string $cache
 	 */
-	public function __construct($dbWrapperClass, $dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false, $uiCallback = null) {
+	public function __construct($dbWrapperClass, $dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false, $uidCallback = null) {
 		$this->setDbWrapperClass ( $dbWrapperClass );
 		$this->dbType = $dbType;
 		$this->dbName = $dbName;
@@ -73,7 +73,7 @@ class Database {
 				}
 			}
 		}
-		$this->uidCallback = null;
+		$this->uidCallback = $uidCallback;
 	}
 
 	private function setDbWrapperClass($dbWrapperClass) {
