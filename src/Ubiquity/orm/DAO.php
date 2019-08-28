@@ -37,11 +37,18 @@ class DAO {
 	public static $db;
 	public static $useTransformers = false;
 	public static $transformerOp = 'transform';
+	public static $uidCallback;
 	private static $conditionParsers = [ ];
+	private static $pool;
 	protected static $modelsDatabase = [ ];
 
 	protected static function getDb($model) {
-		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
+		return static::getDatabase ( static::$modelsDatabase [$model] ?? 'default');
+	}
+
+	public static function initPooling(&$config, $offset = null) {
+		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
+		self::$pool = new \Ubiquity\db\providers\swoole\ConnectionPool ( $db ['type'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['dbName'] );
 	}
 
 	/**
@@ -271,7 +278,7 @@ class DAO {
 	 * @param boolean $cache
 	 */
 	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
-		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache );
+		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$uidCallback );
 		try {
 			self::$db [$offset]->connect ();
 		} catch ( \Exception $e ) {
@@ -285,10 +292,10 @@ class DAO {
 	 *
 	 * @param array $config the config array (Startup::getConfig())
 	 */
-	public static function startDatabase(&$config, $offset = null) {
+	public static function startDatabase(&$config, $offset = null, $dbOffset = null) {
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
 		if ($db ['dbName'] !== '') {
-			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			self::connect ( $dbOffset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 		}
 	}
 
@@ -351,11 +358,12 @@ class DAO {
 	 * @return \Ubiquity\db\Database
 	 */
 	public static function getDatabase($offset = 'default') {
-		if (! isset ( self::$db [$offset] )) {
-			self::startDatabase ( Startup::$config, $offset );
+		$dbOffset = self::$uidCallback ? (self::$uidCallback) ( $offset ) : $offset;
+		if (! isset ( self::$db [$dbOffset] )) {
+			self::startDatabase ( Startup::$config, $offset, $dbOffset );
 		}
-		SqlUtils::$quote = self::$db [$offset]->quote;
-		return self::$db [$offset];
+		SqlUtils::$quote = self::$db [$dbOffset]->quote;
+		return self::$db [$dbOffset];
 	}
 
 	public static function getDatabases() {
@@ -392,5 +400,23 @@ class DAO {
 
 	public static function start() {
 		self::$modelsDatabase = CacheManager::getModelsDatabases ();
+	}
+
+	/**
+	 * gets a new DbConnection from pool
+	 *
+	 * @param string $offset
+	 * @return mixed
+	 */
+	public static function pool($offset = 'default') {
+		$uid = self::uid ();
+		if (! isset ( self::$db [$offset] [$uid] )) {
+			self::startDatabase ( Startup::$config, $offset );
+		}
+		return self::$db [$offset] [$uid]->pool ();
+	}
+
+	public static function freePool($db) {
+		self::$pool->put ( $db );
 	}
 }
