@@ -24,7 +24,7 @@ use Ubiquity\db\traits\DatabaseMetadatas;
 class Database {
 	use DatabaseOperationsTrait,DatabaseTransactionsTrait,DatabaseMetadatas;
 	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\pdo\PDOWrapper::class,'tarantool' => '\Ubiquity\db\providers\tarantool\TarantoolWrapper' ];
-	protected $uidCallback;
+	protected $pool;
 	private $dbType;
 	private $serverName;
 	private $port;
@@ -53,7 +53,7 @@ class Database {
 	 * @param array $options
 	 * @param boolean|string $cache
 	 */
-	public function __construct($dbWrapperClass, $dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false, $uidCallback = null) {
+	public function __construct($dbWrapperClass, $dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false, $pool = null) {
 		$this->setDbWrapperClass ( $dbWrapperClass );
 		$this->dbType = $dbType;
 		$this->dbName = $dbName;
@@ -73,7 +73,10 @@ class Database {
 				}
 			}
 		}
-		$this->uidCallback = $uidCallback;
+		if ($pool) {
+			$this->pool = $pool;
+			$this->wrapperObject->setPool ( $pool );
+		}
 	}
 
 	private function setDbWrapperClass($dbWrapperClass) {

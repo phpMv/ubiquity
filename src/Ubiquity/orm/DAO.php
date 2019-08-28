@@ -37,7 +37,6 @@ class DAO {
 	public static $db;
 	public static $useTransformers = false;
 	public static $transformerOp = 'transform';
-	public static $uidCallback;
 	private static $conditionParsers = [ ];
 	private static $pool;
 	protected static $modelsDatabase = [ ];
@@ -278,9 +277,9 @@ class DAO {
 	 * @param boolean $cache
 	 */
 	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
-		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$uidCallback );
+		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$pool );
 		try {
-			self::$db [$offset]->connect ( self::$pool );
+			self::$db [$offset]->connect ();
 		} catch ( \Exception $e ) {
 			Logger::error ( "DAO", $e->getMessage () );
 			throw new DAOException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
@@ -358,8 +357,7 @@ class DAO {
 	 * @return \Ubiquity\db\Database
 	 */
 	public static function getDatabase($offset = 'default') {
-		$call = self::$uidCallback;
-		$dbOffset = $call ? $call ( $offset ) : $offset;
+		$dbOffset = self::$pool ? self::$pool->getUid ( $offset ) : $offset;
 		if (! isset ( self::$db [$dbOffset] )) {
 			self::startDatabase ( Startup::$config, $offset, $dbOffset );
 		}
@@ -410,8 +408,7 @@ class DAO {
 	 * @return mixed
 	 */
 	public static function pool($offset = 'default') {
-		$call = self::$uidCallback;
-		$dbOffset = $call ? $call ( $offset ) : $offset;
+		$dbOffset = self::$pool->getUid ( $offset );
 		if (! isset ( self::$db [$dbOffset] )) {
 			self::startDatabase ( Startup::$config, $offset, $dbOffset );
 		}

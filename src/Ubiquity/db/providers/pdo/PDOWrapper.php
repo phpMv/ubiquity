@@ -79,7 +79,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $this->dbInstance->exec ( $sql );
 	}
 
-	public function connect(string $dbType, $dbName, $serverName, string $port, string $user, string $password, array $options, $pool = null) {
+	public function connect(string $dbType, $dbName, $serverName, string $port, string $user, string $password, array $options) {
 		$options [\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 		$this->dbInstance = new \PDO ( $this->getDSN ( $serverName, $port, $dbName, $dbType ), $user, $password, $options );
 	}
@@ -189,6 +189,10 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function freePool($db) {
+		throw new DBException ( 'PDO does not accept connection pooling' );
+	}
+
+	public function setPool($pool) {
 		throw new DBException ( 'PDO does not accept connection pooling' );
 	}
 }

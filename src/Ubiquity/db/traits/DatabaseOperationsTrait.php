@@ -27,8 +27,8 @@ trait DatabaseOperationsTrait {
 		return $this->wrapperObject->getDbInstance ();
 	}
 
-	public function _connect($pool = null) {
-		$this->wrapperObject->connect ( $this->dbType, $this->dbName, $this->serverName, $this->port, $this->user, $this->password, $this->options, $pool );
+	public function _connect() {
+		$this->wrapperObject->connect ( $this->dbType, $this->dbName, $this->serverName, $this->port, $this->user, $this->password, $this->options );
 	}
 
 	/**
@@ -102,8 +102,7 @@ trait DatabaseOperationsTrait {
 	 * @return object statement
 	 */
 	private function getStatement($sql) {
-		$call = $this->uidCallback;
-		$uid = $call ? $call ( $sql ) : $sql;
+		$uid = $this->pool ? $this->pool->getUid ( $sql ) : $sql;
 		if (! isset ( $this->statements [$uid] )) {
 			$this->statements [$uid] = $this->wrapperObject->getStatement ( $sql );
 		}
@@ -116,8 +115,7 @@ trait DatabaseOperationsTrait {
 	 * @return object statement
 	 */
 	public function getUpdateStatement($sql) {
-		$call = $this->uidCallback;
-		$uid = $call ? $call ( $sql ) : $sql;
+		$uid = $this->pool ? $this->pool->getUid ( $sql ) : $sql;
 		if (! isset ( $this->updateStatements [$uid] )) {
 			$this->updateStatements [$uid] = $this->wrapperObject->getStatement ( $sql );
 		}
