@@ -280,7 +280,7 @@ class DAO {
 	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
 		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$uidCallback );
 		try {
-			self::$db [$offset]->connect ();
+			self::$db [$offset]->connect ( self::$pool );
 		} catch ( \Exception $e ) {
 			Logger::error ( "DAO", $e->getMessage () );
 			throw new DAOException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
@@ -410,11 +410,12 @@ class DAO {
 	 * @return mixed
 	 */
 	public static function pool($offset = 'default') {
-		$uid = self::uid ();
-		if (! isset ( self::$db [$offset] [$uid] )) {
-			self::startDatabase ( Startup::$config, $offset );
+		$call = self::$uidCallback;
+		$dbOffset = $call ? $call ( $offset ) : $offset;
+		if (! isset ( self::$db [$dbOffset] )) {
+			self::startDatabase ( Startup::$config, $offset, $dbOffset );
 		}
-		return self::$db [$offset] [$uid]->pool ();
+		return self::$db [$dbOffset]->pool ();
 	}
 
 	public static function freePool($db) {
