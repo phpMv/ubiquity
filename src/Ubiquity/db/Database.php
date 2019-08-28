@@ -252,4 +252,8 @@ class Database {
 	public function freePool($db) {
 		$this->wrapperObject->freePool ( $db );
 	}
+
+	public function setPool($pool) {
+		$this->wrapperObject->setPool ( $pool );
+	}
 }
