@@ -195,4 +195,14 @@ class PDOWrapper extends AbstractDbWrapper {
 	public function setPool($pool) {
 		throw new DBException ( 'PDO does not accept connection pooling' );
 	}
+
+	public function _optPrepareAndExecute($sql, array $values = null) {
+		$statement = $this->_getStatement ( $sql );
+		$result = false;
+		if ($statement->execute ( $values )) {
+			$result = $statement->fetchAll ( \PDO::FETCH_ASSOC );
+		}
+		$statement->closeCursor ();
+		return $result;
+	}
 }

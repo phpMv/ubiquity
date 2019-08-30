@@ -46,8 +46,8 @@ class DAO {
 	}
 
 	public static function initPooling(&$config, $offset = null) {
-		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
-		self::$pool = new \Ubiquity\db\providers\swoole\ConnectionPool ( $db ['type'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['dbName'] );
+		self::$pool = new \Ubiquity\db\providers\swoole\ConnectionPool ( $config, $offset );
+		self::$db [$offset] = self::startDatabase ( $config, $offset );
 	}
 
 	/**
@@ -291,10 +291,10 @@ class DAO {
 	 *
 	 * @param array $config the config array (Startup::getConfig())
 	 */
-	public static function startDatabase(&$config, $offset = null, $dbOffset = null) {
+	public static function startDatabase(&$config, $offset = null) {
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
 		if ($db ['dbName'] !== '') {
-			self::connect ( $dbOffset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 		}
 	}
 
@@ -357,12 +357,11 @@ class DAO {
 	 * @return \Ubiquity\db\Database
 	 */
 	public static function getDatabase($offset = 'default') {
-		$dbOffset = self::$pool ? self::$pool->getUid ( $offset ) : $offset;
-		if (! isset ( self::$db [$dbOffset] )) {
-			self::startDatabase ( Startup::$config, $offset, $dbOffset );
+		if (! isset ( self::$db [$offset] )) {
+			self::startDatabase ( Startup::$config, $offset );
 		}
-		SqlUtils::$quote = self::$db [$dbOffset]->quote;
-		return self::$db [$dbOffset];
+		SqlUtils::$quote = self::$db [$offset]->quote;
+		return self::$db [$offset];
 	}
 
 	public static function getDatabases() {
@@ -408,11 +407,10 @@ class DAO {
 	 * @return mixed
 	 */
 	public static function pool($offset = 'default') {
-		$dbOffset = self::$pool->getUid ( $offset );
-		if (! isset ( self::$db [$dbOffset] )) {
-			self::startDatabase ( Startup::$config, $offset, $dbOffset );
+		if (! isset ( self::$db [$offset] )) {
+			self::startDatabase ( Startup::$config, $offset );
 		}
-		return self::$db [$dbOffset]->pool ();
+		return self::$db [$offset]->pool ();
 	}
 
 	public static function freePool($db) {
