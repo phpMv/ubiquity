@@ -95,6 +95,8 @@ abstract class AbstractDbWrapper {
 
 	abstract public function getForeignKeys($tableName, $pkName, $dbName = null);
 
+	abstract public function _optPrepareAndExecute($sql, array $values = null);
+
 	public function close() {
 		$this->dbInstance = null;
 	}

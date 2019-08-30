@@ -65,7 +65,7 @@ trait DatabaseOperationsTrait {
 		}
 		if ($result === false) {
 			$quote = SqlUtils::$quote;
-			$result = $this->prepareAndFetchAll ( "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters );
+			$result = $this->wrapperObject->_optPrepareAndExecute ( "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters );
 			if ($cache) {
 				$this->cache->store ( $tableName, $cKey, $result );
 			}

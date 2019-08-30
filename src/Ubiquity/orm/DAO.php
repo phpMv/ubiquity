@@ -47,6 +47,7 @@ class DAO {
 
 	public static function initPooling(&$config, $offset = null) {
 		self::$pool = new \Ubiquity\db\providers\swoole\ConnectionPool ( $config, $offset );
+		self::$db [$offset] = self::startDatabase ( $config, $offset );
 	}
 
 	/**
