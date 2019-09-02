@@ -434,7 +434,7 @@ class DAO {
 		self::$pool->put ( $db );
 	}
 
-	public function go() {
+	public static function go() {
 		self::$pool->go ();
 	}
 }
