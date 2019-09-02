@@ -45,8 +45,25 @@ class DAO {
 		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
 	}
 
+	/**
+	 * Initialize pooling (To invoke during Swoole startup)
+	 *
+	 * @param array $config
+	 * @param ?string $offset
+	 */
 	public static function initPooling(&$config, $offset = null) {
-		self::$pool = new \Ubiquity\db\providers\swoole\ConnectionPool ( $config, $offset );
+		$dbConfig = self::getDbOffset ( $config, $offset );
+		$wrapperClass = $dbConfig ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class;
+		if (\method_exists ( $wrapperClass, 'getPoolClass' )) {
+			$poolClass = \call_user_func ( $wrapperClass . '::getPoolClass' );
+			if (\class_exists ( $poolClass, true )) {
+				self::$pool = new $poolClass ( $config, $offset );
+			} else {
+				throw new DAOException ( $poolClass . ' class does not exists!' );
+			}
+		} else {
+			throw new DAOException ( $wrapperClass . ' does not support connection pooling!' );
+		}
 		self::$db [$offset] = self::startDatabase ( $config, $offset );
 	}
 
@@ -415,5 +432,9 @@ class DAO {
 
 	public static function freePool($db) {
 		self::$pool->put ( $db );
+	}
+
+	public function go() {
+		self::$pool->go ();
 	}
 }
