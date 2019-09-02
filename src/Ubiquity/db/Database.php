@@ -23,7 +23,7 @@ use Ubiquity\db\traits\DatabaseMetadatas;
  */
 class Database {
 	use DatabaseOperationsTrait,DatabaseTransactionsTrait,DatabaseMetadatas;
-	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\pdo\PDOWrapper::class,'tarantool' => '\Ubiquity\db\providers\tarantool\TarantoolWrapper' ];
+	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\pdo\PDOWrapper::class,'tarantool' => '\Ubiquity\db\providers\tarantool\TarantoolWrapper','mysqli' => '\Ubiquity\db\providers\mysqli\MysqliWrapper','swoole' => '\Ubiquity\db\providers\swoole\SwooleWrapper' ];
 	private $dbType;
 	private $serverName;
 	private $port;
