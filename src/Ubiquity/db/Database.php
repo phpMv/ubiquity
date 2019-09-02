@@ -260,4 +260,14 @@ class Database {
 	public function setPool($pool) {
 		$this->wrapperObject->setPool ( $pool );
 	}
+
+	public static function getAvailableWrappers() {
+		$wrappers = [ ];
+		foreach ( self::$wrappers as $k => $wrapper ) {
+			if (\class_exists ( $wrapper, true )) {
+				$wrappers [$k] = $wrapper;
+			}
+		}
+		return $wrappers;
+	}
 }
