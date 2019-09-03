@@ -434,7 +434,12 @@ class DAO {
 		self::$pool->put ( $db );
 	}
 
-	public static function go() {
-		self::$pool->go ();
+	public static function go($asyncCallable, $offset = 'default') {
+		$vars = \get_defined_vars ();
+		\Swoole\Coroutine::create ( function () use ($vars, $asyncCallable, $offset) {
+			$db = self::pool ( $offset );
+			\call_user_func_array ( $asyncCallable, $vars );
+			self::freePool ( $db );
+		} );
 	}
 }
