@@ -5,6 +5,7 @@ namespace Ubiquity\orm\traits;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\core\PendingRelationsRequest;
 use Ubiquity\orm\parser\ManyToManyParser;
+use Ubiquity\db\SqlUtils;
 
 /**
  * Used by DAO class, prepare relations for loading.
@@ -34,6 +35,7 @@ trait DAORelationsPrepareTrait {
 			$key = $annot ["targetEntity"] . "|" . $member . "|" . $annot ["inversedBy"] . "|";
 			if (! isset ( $ret [$key] )) {
 				$parser = new ManyToManyParser ( $instance, $member );
+
 				$parser->init ( $annot );
 				$ret [$key] = $parser;
 			}
@@ -65,7 +67,8 @@ trait DAORelationsPrepareTrait {
 				if (! isset ( $ret [$key] )) {
 					$ret [$key] = new PendingRelationsRequest ();
 				}
-				$ret [$key]->addPartObject ( $instance, $fkAnnot ["name"] . "= ?", $fkv );
+				$quote = SqlUtils::$quote;
+				$ret [$key]->addPartObject ( $instance, $quote . $fkAnnot ["name"] . $quote . "= ?", $fkv );
 			}
 		}
 	}
@@ -86,6 +89,6 @@ trait DAORelationsPrepareTrait {
 		if (! isset ( $ret [$key] )) {
 			$ret [$key] = new PendingRelationsRequest ();
 		}
-		$ret [$key]->addPartObject ( $instance, $fk . "= ?", $value );
+		$ret [$key]->addPartObject ( $instance, SqlUtils::$quote . $fk . SqlUtils::$quote . "= ?", $value );
 	}
 }

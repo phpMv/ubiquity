@@ -9,6 +9,7 @@ use Ubiquity\log\Logger;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\db\Database;
 
 /**
  * Core Trait for DAO class.
@@ -53,12 +54,12 @@ trait DAOCoreTrait {
 	private static function getManyToManyFromArray($instance, $array, $class, $parser) {
 		$ret = [ ];
 		$continue = true;
-		$accessorToMember = "get" . ucfirst ( $parser->getInversedBy () );
-		$myPkAccessor = "get" . ucfirst ( $parser->getMyPk () );
+		$accessorToMember = "get" . \ucfirst ( $parser->getInversedBy () );
+		$myPkAccessor = "get" . \ucfirst ( $parser->getMyPk () );
 		$pk = self::getFirstKeyValue_ ( $instance );
 
 		if (sizeof ( $array ) > 0) {
-			$continue = method_exists ( current ( $array ), $accessorToMember );
+			$continue = \method_exists ( current ( $array ), $accessorToMember );
 		}
 		if ($continue) {
 			foreach ( $array as $targetEntityInstance ) {
@@ -66,7 +67,7 @@ trait DAOCoreTrait {
 				if (is_array ( $instances )) {
 					foreach ( $instances as $inst ) {
 						if ($inst->$myPkAccessor () == $pk)
-							array_push ( $ret, $targetEntityInstance );
+							\array_push ( $ret, $targetEntityInstance );
 					}
 				}
 			}
@@ -84,27 +85,27 @@ trait DAOCoreTrait {
 	}
 
 	protected static function getInstance_($instance) {
-		if (is_object ( $instance )) {
+		if (\is_object ( $instance )) {
 			return $instance;
 		}
 		return $instance [0];
 	}
 
 	protected static function getValue_($instance, $member) {
-		if (is_object ( $instance )) {
+		if (\is_object ( $instance )) {
 			return Reflexion::getMemberValue ( $instance, $member );
 		}
 		return $instance [1];
 	}
 
 	protected static function getFirstKeyValue_($instance) {
-		if (is_object ( $instance )) {
+		if (\is_object ( $instance )) {
 			return OrmUtils::getFirstKeyValue ( $instance );
 		}
 		return $instance [1];
 	}
 
-	protected static function _getOne($className, ConditionParser $conditionParser, $included, $useCache) {
+	protected static function _getOne(Database $db, $className, ConditionParser $conditionParser, $included, $useCache) {
 		$conditionParser->limitOne ();
 		$included = self::getIncludedForStep ( $included );
 		$object = null;
@@ -119,7 +120,7 @@ trait DAOCoreTrait {
 			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
 		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
-		$query = self::getDb ( $className )->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		if ($query && \sizeof ( $query ) > 0) {
 			$oneToManyQueries = [ ];
 			$manyToOneQueries = [ ];
@@ -136,13 +137,14 @@ trait DAOCoreTrait {
 
 	/**
 	 *
+	 * @param Database $db
 	 * @param string $className
 	 * @param ConditionParser $conditionParser
 	 * @param boolean|array $included
 	 * @param boolean|null $useCache
 	 * @return array
 	 */
-	protected static function _getAll($className, ConditionParser $conditionParser, $included = true, $useCache = NULL) {
+	protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL) {
 		$included = self::getIncludedForStep ( $included );
 		$objects = array ();
 		$invertedJoinColumns = null;
@@ -156,7 +158,7 @@ trait DAOCoreTrait {
 			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
 		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
-		$query = self::getDb ( $className )->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
@@ -224,10 +226,10 @@ trait DAOCoreTrait {
 		return $o;
 	}
 
-	private static function parseKey(&$keyValues, $className) {
+	private static function parseKey(&$keyValues, $className, $quote) {
 		if (! is_array ( $keyValues )) {
 			if (strrpos ( $keyValues, "=" ) === false && strrpos ( $keyValues, ">" ) === false && strrpos ( $keyValues, "<" ) === false) {
-				$keyValues = "`" . OrmUtils::getFirstKey ( $className ) . "`='" . $keyValues . "'";
+				$keyValues = $quote . OrmUtils::getFirstKey ( $className ) . $quote . "='" . $keyValues . "'";
 			}
 		}
 	}

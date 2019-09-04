@@ -11,16 +11,15 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
- * @property \PDO $pdoObject
+ * @version 1.1.0
+ * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
  * @property string $dbType
  */
 trait DatabaseTransactionsTrait {
-	protected static $savepointsDrivers = [ 'pgsql' => true,'mysql' => true,'sqlite' => true ];
 	protected $transactionLevel = 0;
 
 	protected function nestable() {
-		return isset ( self::$savepointsDrivers [$this->dbType] );
+		return $this->wrapperObject->nestable ();
 	}
 
 	/**
@@ -30,12 +29,12 @@ trait DatabaseTransactionsTrait {
 	 */
 	public function beginTransaction() {
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
-			$ret = $this->pdoObject->beginTransaction ();
+			$ret = $this->wrapperObject->beginTransaction ();
 			Logger::info ( 'Transactions', 'Start transaction', 'beginTransaction' );
 			$this->transactionLevel ++;
 			return $ret;
 		}
-		$this->pdoObject->exec ( 'SAVEPOINT LEVEL' . $this->transactionLevel );
+		$this->wrapperObject->savePoint ( $this->transactionLevel );
 		Logger::info ( 'Transactions', 'Savepoint level', 'beginTransaction', $this->transactionLevel );
 		$this->transactionLevel ++;
 		return true;
@@ -50,9 +49,9 @@ trait DatabaseTransactionsTrait {
 		$this->transactionLevel --;
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
 			Logger::info ( 'Transactions', 'Commit transaction', 'commit' );
-			return $this->pdoObject->commit ();
+			return $this->wrapperObject->commit ();
 		}
-		$this->pdoObject->exec ( 'RELEASE SAVEPOINT LEVEL' . $this->transactionLevel );
+		$this->wrapperObject->releasePoint ( $this->transactionLevel );
 		Logger::info ( 'Transactions', 'Release savepoint level', 'commit', $this->transactionLevel );
 		return true;
 	}
@@ -66,7 +65,7 @@ trait DatabaseTransactionsTrait {
 	public function commitToLevel($transactionLevel) {
 		$res = true;
 		while ( $res && $this->transactionLevel > $transactionLevel ) {
-			$res = $this->commit ();
+			$res = $this->wrapperObject->commit ();
 		}
 		return $res;
 	}
@@ -90,9 +89,9 @@ trait DatabaseTransactionsTrait {
 
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
 			Logger::info ( 'Transactions', 'Rollback transaction', 'rollBack' );
-			return $this->pdoObject->rollBack ();
+			return $this->wrapperObject->rollBack ();
 		}
-		$this->pdoObject->exec ( 'ROLLBACK TO SAVEPOINT LEVEL' . $this->transactionLevel );
+		$this->wrapperObject->rollbackPoint ( $this->transactionLevel );
 		Logger::info ( 'Transactions', 'Rollback to savepoint level', 'rollBack', $this->transactionLevel );
 		return true;
 	}
@@ -106,7 +105,7 @@ trait DatabaseTransactionsTrait {
 	public function rollBackToLevel($transactionLevel) {
 		$res = true;
 		while ( $res && $this->transactionLevel > $transactionLevel ) {
-			$res = $this->rollBack ();
+			$res = $this->wrapperObject->rollBack ();
 		}
 		return $res;
 	}
@@ -126,7 +125,7 @@ trait DatabaseTransactionsTrait {
 	 * @return boolean
 	 */
 	public function inTransaction() {
-		return $this->pdoObject->inTransaction ();
+		return $this->wrapperObject->inTransaction ();
 	}
 
 	/**
@@ -142,7 +141,7 @@ trait DatabaseTransactionsTrait {
 			try {
 				$ret = call_user_func_array ( $callback, $parameters );
 			} catch ( \Exception $e ) {
-				$this->rollBack ();
+				$this->wrapperObject->rollBack ();
 				throw $e;
 			}
 

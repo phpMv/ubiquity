@@ -38,10 +38,33 @@ class DAO {
 	public static $useTransformers = false;
 	public static $transformerOp = 'transform';
 	private static $conditionParsers = [ ];
+	private static $pool;
 	protected static $modelsDatabase = [ ];
 
 	protected static function getDb($model) {
 		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
+	}
+
+	/**
+	 * Initialize pooling (To invoke during Swoole startup)
+	 *
+	 * @param array $config
+	 * @param ?string $offset
+	 */
+	public static function initPooling(&$config, $offset = null) {
+		$dbConfig = self::getDbOffset ( $config, $offset );
+		$wrapperClass = $dbConfig ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class;
+		if (\method_exists ( $wrapperClass, 'getPoolClass' )) {
+			$poolClass = \call_user_func ( $wrapperClass . '::getPoolClass' );
+			if (\class_exists ( $poolClass, true )) {
+				self::$pool = new $poolClass ( $config, $offset );
+			} else {
+				throw new DAOException ( $poolClass . ' class does not exists!' );
+			}
+		} else {
+			throw new DAOException ( $wrapperClass . ' does not support connection pooling!' );
+		}
+		self::$db [$offset] = self::startDatabase ( $config, $offset );
 	}
 
 	/**
@@ -96,7 +119,8 @@ class DAO {
 			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
 			if ($fkAnnot !== false) {
 				$fkv = self::getFirstKeyValue_ ( $instance );
-				$ret = self::_getAll ( $annot ["className"], ConditionParser::simple ( $fkAnnot ["name"] . "= ?", $fkv ), $included, $useCache );
+				$db = self::getDb ( $annot ["className"] );
+				$ret = self::_getAll ( $db, $annot ["className"], ConditionParser::simple ( $db->quote . $fkAnnot ["name"] . $db->quote . "= ?", $fkv ), $included, $useCache );
 				if (is_object ( $instance ) && $modifier = self::getAccessor ( $member, $instance, 'getOneToMany' )) {
 					self::setToMember ( $member, $instance, $ret, $modifier );
 				}
@@ -122,8 +146,10 @@ class DAO {
 		if ($parser->init ()) {
 			if (is_null ( $array )) {
 				$pk = self::getFirstKeyValue_ ( $instance );
-				$condition = " INNER JOIN `" . $parser->getJoinTable () . "` on `" . $parser->getJoinTable () . "`.`" . $parser->getFkField () . "`=`" . $parser->getTargetEntityTable () . "`.`" . $parser->getPk () . "` WHERE `" . $parser->getJoinTable () . "`.`" . $parser->getMyFkField () . "`= ?";
-				$ret = self::_getAll ( $parser->getTargetEntityClass (), ConditionParser::simple ( $condition, $pk ), $included, $useCache );
+				$quote = SqlUtils::$quote;
+				$condition = " INNER JOIN " . $quote . $parser->getJoinTable () . $quote . " on " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getFkField () . $quote . "=" . $quote . $parser->getTargetEntityTable () . $quote . "." . $quote . $parser->getPk () . $quote . " WHERE " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getMyFkField () . $quote . "= ?";
+				$targetEntityClass = $parser->getTargetEntityClass ();
+				$ret = self::_getAll ( self::getDb ( $targetEntityClass ), $targetEntityClass, ConditionParser::simple ( $condition, $pk ), $included, $useCache );
 			} else {
 				$ret = self::getManyToManyFromArray ( $instance, $array, $class, $parser );
 			}
@@ -161,7 +187,7 @@ class DAO {
 	 * @return array
 	 */
 	public static function getAll($className, $condition = '', $included = true, $parameters = null, $useCache = NULL) {
-		return self::_getAll ( $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
+		return self::_getAll ( self::getDb ( $className ), $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
 	}
 
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {
@@ -173,7 +199,9 @@ class DAO {
 
 	public static function getRownum($className, $ids) {
 		$tableName = OrmUtils::getTableName ( $className );
-		self::parseKey ( $ids, $className );
+		$db = self::getDb ( $className );
+		$quote = $db->quote;
+		self::parseKey ( $ids, $className, $quote );
 		$condition = SqlUtils::getCondition ( $ids, $className );
 		$keyFields = OrmUtils::getKeyFields ( $className );
 		if (is_array ( $keyFields )) {
@@ -181,7 +209,8 @@ class DAO {
 		} else {
 			$keys = "1";
 		}
-		return self::getDb ( $className )->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM `{$tableName}`, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
+
+		return $db->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$quote}{$tableName}{$quote}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
 	}
 
 	/**
@@ -197,7 +226,9 @@ class DAO {
 		if ($condition != '') {
 			$condition = " WHERE " . $condition;
 		}
-		return self::getDb ( $className )->prepareAndFetchColumn ( "SELECT COUNT(*) FROM `" . $tableName . "`" . $condition, $parameters );
+		$db = self::getDb ( $className );
+		$quote = $db->quote;
+		return $db->prepareAndFetchColumn ( "SELECT COUNT(*) FROM " . $quote . $tableName . $quote . $condition, $parameters );
 	}
 
 	/**
@@ -220,7 +251,7 @@ class DAO {
 		} else {
 			throw new DAOException ( "The \$keyValues parameter should not be an array if \$parameters is not null" );
 		}
-		return self::_getOne ( $className, $conditionParser, $included, $useCache );
+		return self::_getOne ( self::getDb ( $className ), $className, $conditionParser, $included, $useCache );
 	}
 
 	/**
@@ -234,7 +265,7 @@ class DAO {
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getById($className, $keyValues, $included = true, $useCache = NULL) {
-		return self::_getOne ( $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
+		return self::_getOne ( self::getDb ( $className ), $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
 	}
 
 	protected static function getConditionParser($className, $keyValues) {
@@ -251,6 +282,8 @@ class DAO {
 	/**
 	 * Establishes the connection to the database using the past parameters
 	 *
+	 * @param string $offset
+	 * @param string $wrapper
 	 * @param string $dbType
 	 * @param string $dbName
 	 * @param string $serverName
@@ -260,8 +293,8 @@ class DAO {
 	 * @param array $options
 	 * @param boolean $cache
 	 */
-	public static function connect($offset, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
-		self::$db [$offset] = new Database ( $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache );
+	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
+		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$pool );
 		try {
 			self::$db [$offset]->connect ();
 		} catch ( \Exception $e ) {
@@ -278,7 +311,7 @@ class DAO {
 	public static function startDatabase(&$config, $offset = null) {
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
 		if ($db ['dbName'] !== '') {
-			self::connect ( $offset ?? 'default', $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 		}
 	}
 
@@ -344,6 +377,7 @@ class DAO {
 		if (! isset ( self::$db [$offset] )) {
 			self::startDatabase ( Startup::$config, $offset );
 		}
+		SqlUtils::$quote = self::$db [$offset]->quote;
 		return self::$db [$offset];
 	}
 
@@ -359,7 +393,53 @@ class DAO {
 		return [ ];
 	}
 
+	public static function updateDatabaseParams(array &$config, array $parameters, $offset = 'default') {
+		if ($offset === 'default') {
+			if (isset ( $config ['database'] [$offset] )) {
+				foreach ( $parameters as $k => $param ) {
+					$config ['database'] [$offset] [$k] = $param;
+				}
+			} else {
+				foreach ( $parameters as $k => $param ) {
+					$config ['database'] [$k] = $param;
+				}
+			}
+		} else {
+			if (isset ( $config ['database'] [$offset] )) {
+				foreach ( $parameters as $k => $param ) {
+					$config ['database'] [$offset] [$k] = $param;
+				}
+			}
+		}
+	}
+
 	public static function start() {
 		self::$modelsDatabase = CacheManager::getModelsDatabases ();
+	}
+
+	/**
+	 * gets a new DbConnection from pool
+	 *
+	 * @param string $offset
+	 * @return mixed
+	 */
+	public static function pool($offset = 'default') {
+		if (! isset ( self::$db [$offset] )) {
+			self::startDatabase ( Startup::$config, $offset );
+		}
+		return self::$db [$offset]->pool ();
+	}
+
+	public static function freePool($db) {
+		self::$pool->put ( $db );
+	}
+
+	public static function go($asyncCallable, $offset = 'default') {
+		$vars = \get_defined_vars ();
+		\Swoole\Coroutine::create ( function () use ($vars, $asyncCallable, $offset) {
+			$db = self::pool ( $offset );
+			\call_user_func_array ( $asyncCallable, $vars );
+			self::freePool ( $db );
+		} );
 	}
 }

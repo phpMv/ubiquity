@@ -85,7 +85,7 @@ trait DAORelationsAssignmentsTrait {
 			}
 			foreach ( $objectsParsers as $objectsConditionParser ) {
 				$objectsConditionParser->compileParts ();
-				$relationObjects = self::_getAll ( $class, $objectsConditionParser->getConditionParser (), $includedNext, $useCache );
+				$relationObjects = self::_getAll ( self::getDb ( $class ), $class, $objectsConditionParser->getConditionParser (), $includedNext, $useCache );
 				$objects = $objectsConditionParser->getObjects ();
 				if ($accessor = self::getAccessor ( $member, current ( $objects ), $part )) {
 					foreach ( $objects as $object ) {
@@ -106,7 +106,7 @@ trait DAORelationsAssignmentsTrait {
 			}
 			$myPkValues = [ ];
 			$cParser = self::generateManyToManyParser ( $parser, $myPkValues );
-			$relationObjects = self::_getAll ( $class, $cParser, $includedNext, $useCache );
+			$relationObjects = self::_getAll ( self::getDb ( $class ), $class, $cParser, $includedNext, $useCache );
 			if ($accessor = self::getAccessor ( $member, current ( $objects ), 'getManyToMany' )) {
 				foreach ( $objects as $object ) {
 					$pkV = Reflexion::getPropValue ( $object, $prop );

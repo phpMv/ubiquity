@@ -6,6 +6,7 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\db\Database;
 
 /**
  *
@@ -14,7 +15,7 @@ use Ubiquity\orm\parser\Reflexion;
  */
 trait DAORelationsTrait {
 
-	abstract protected static function _getAll($className, ConditionParser $conditionParser, $included = true, $useCache = NULL);
+	abstract protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL);
 
 	private static function generateManyToManyParser(ManyToManyParser $parser, &$myPkValues) {
 		$sql = $parser->generateConcatSQL ();
@@ -31,7 +32,7 @@ trait DAORelationsTrait {
 	}
 
 	private static function _getIncludedNext($included, $member) {
-		return (isset ( $included [$member] )) ? (is_bool ( $included [$member] ) ? $included [$member] : [ $included [$member] ]) : false;
+		return (isset ( $included [$member] )) ? (\is_bool ( $included [$member] ) ? $included [$member] : [ $included [$member] ]) : false;
 	}
 
 	private static function getManyToManyFromArrayIds($objectClass, $relationObjects, $ids) {
@@ -39,21 +40,21 @@ trait DAORelationsTrait {
 		$prop = OrmUtils::getFirstPropKey ( $objectClass );
 		foreach ( $relationObjects as $targetEntityInstance ) {
 			$id = Reflexion::getPropValue ( $targetEntityInstance, $prop );
-			if (array_search ( $id, $ids ) !== false) {
-				array_push ( $ret, $targetEntityInstance );
+			if (\array_search ( $id, $ids ) !== false) {
+				\array_push ( $ret, $targetEntityInstance );
 			}
 		}
 		return $ret;
 	}
 
 	protected static function getIncludedForStep($included) {
-		if (is_bool ( $included )) {
+		if (\is_bool ( $included )) {
 			return $included;
 		}
 		$ret = [ ];
-		if (is_array ( $included )) {
+		if (\is_array ( $included )) {
 			foreach ( $included as &$includedMember ) {
-				if (is_array ( $includedMember )) {
+				if (\is_array ( $includedMember )) {
 					foreach ( $includedMember as $iMember ) {
 						self::parseEncludeMember ( $ret, $iMember );
 					}
@@ -66,15 +67,15 @@ trait DAORelationsTrait {
 	}
 
 	private static function parseEncludeMember(&$ret, $includedMember) {
-		$array = explode ( ".", $includedMember );
-		$member = array_shift ( $array );
-		if (sizeof ( $array ) > 0) {
-			$newValue = implode ( ".", $array );
+		$array = \explode ( ".", $includedMember );
+		$member = \array_shift ( $array );
+		if (\sizeof ( $array ) > 0) {
+			$newValue = \implode ( ".", $array );
 			if ($newValue === '*') {
 				$newValue = true;
 			}
 			if (isset ( $ret [$member] )) {
-				if (! is_array ( $ret [$member] )) {
+				if (! \is_array ( $ret [$member] )) {
 					$ret [$member] = [ $ret [$member] ];
 				}
 				$ret [$member] [] = $newValue;
@@ -117,7 +118,7 @@ trait DAORelationsTrait {
 		if (isset ( $metaDatas ["#manyToMany"] )) {
 			$manyToManyFields = $metaDatas ["#manyToMany"];
 		}
-		if (is_array ( $included )) {
+		if (\is_array ( $included )) {
 			if (isset ( $invertedJoinColumns )) {
 				self::getInvertedJoinColumns ( $included, $invertedJoinColumns );
 			}

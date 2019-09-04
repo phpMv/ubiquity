@@ -132,7 +132,7 @@ trait OrmUtilsRelationsTrait {
 		return $result;
 	}
 
-	public static function getUJoinSQL($model, $arrayAnnot, $field, &$aliases) {
+	public static function getUJoinSQL($model, $arrayAnnot, $field, &$aliases, $quote) {
 		$type = $arrayAnnot ["type"];
 		$annot = $arrayAnnot ["value"];
 		$table = self::getTableName ( $model );
@@ -143,7 +143,7 @@ trait OrmUtilsRelationsTrait {
 			$fkField = $annot ["name"];
 			$pkField = self::getFirstKey ( $fkClass );
 			$alias = self::getJoinAlias ( $table, $fkTable );
-			$result = "LEFT JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$fkField}`=`{$alias}`.`{$pkField}`";
+			$result = "LEFT JOIN {$quote}{$fkTable}{$quote} {$quote}{$alias}{$quote} ON {$quote}{$tableAlias}{$quote}.{$quote}{$fkField}{$quote}={$quote}{$alias}{$quote}.{$quote}{$pkField}{$quote}";
 		} elseif ($type === "oneToMany") {
 			$fkClass = $annot ["className"];
 			$fkAnnot = self::getAnnotationInfoMember ( $fkClass, "#joinColumn", $annot ["mappedBy"] );
@@ -151,7 +151,7 @@ trait OrmUtilsRelationsTrait {
 			$fkField = $fkAnnot ["name"];
 			$pkField = self::getFirstKey ( $model );
 			$alias = self::getJoinAlias ( $table, $fkTable );
-			$result = "LEFT JOIN `{$fkTable}` `{$alias}` ON `{$tableAlias}`.`{$pkField}`=`{$alias}`.`{$fkField}`";
+			$result = "LEFT JOIN {$quote}{$fkTable}{$quote} {$quote}{$alias}{$quote} ON {$quote}{$tableAlias}{$quote}.{$quote}{$pkField}{$quote}={$quote}{$alias}{$quote}.{$quote}{$fkField}{$quote}";
 		} else {
 			$parser = new ManyToManyParser ( $model, $field );
 			$parser->init ( $annot );

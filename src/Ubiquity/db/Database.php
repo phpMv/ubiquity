@@ -10,18 +10,20 @@ use Ubiquity\db\traits\DatabaseOperationsTrait;
 use Ubiquity\exceptions\DBException;
 use Ubiquity\db\traits\DatabaseTransactionsTrait;
 use Ubiquity\controllers\Startup;
+use Ubiquity\db\traits\DatabaseMetadatas;
 
 /**
- * Ubiquity PDO database class.
+ * Ubiquity Generic database class.
  * Ubiquity\db$Database
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.1.0
  *
  */
 class Database {
-	use DatabaseOperationsTrait,DatabaseTransactionsTrait;
+	use DatabaseOperationsTrait,DatabaseTransactionsTrait,DatabaseMetadatas;
+	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\pdo\PDOWrapper::class,'tarantool' => '\Ubiquity\db\providers\tarantool\TarantoolWrapper','mysqli' => '\Ubiquity\db\providers\mysqli\MysqliWrapper','swoole' => '\Ubiquity\db\providers\swoole\SwooleWrapper' ];
 	private $dbType;
 	private $serverName;
 	private $port;
@@ -30,16 +32,18 @@ class Database {
 	private $password;
 	private $cache;
 	private $options;
+	public $quote;
 
 	/**
 	 *
-	 * @var \PDO
+	 * @var \Ubiquity\db\providers\AbstractDbWrapper
 	 */
-	protected $pdoObject;
+	protected $wrapperObject;
 
 	/**
 	 * Constructor
 	 *
+	 * @param string $dbWrapperClass
 	 * @param string $dbName
 	 * @param string $serverName
 	 * @param string $port
@@ -47,16 +51,16 @@ class Database {
 	 * @param string $password
 	 * @param array $options
 	 * @param boolean|string $cache
+	 * @param mixed $pool
 	 */
-	public function __construct($dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false) {
+	public function __construct($dbWrapperClass, $dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [], $cache = false, $pool = null) {
+		$this->setDbWrapperClass ( $dbWrapperClass );
 		$this->dbType = $dbType;
 		$this->dbName = $dbName;
 		$this->serverName = $serverName;
 		$this->port = $port;
 		$this->user = $user;
 		$this->password = $password;
-		if (isset ( $options ["quote"] ))
-			SqlUtils::$quote = $options ["quote"];
 		$this->options = $options;
 		if ($cache !== false) {
 			if ($cache instanceof \Closure) {
@@ -69,10 +73,18 @@ class Database {
 				}
 			}
 		}
+		if ($pool) {
+			$this->wrapperObject->setPool ( $pool );
+		}
+	}
+
+	private function setDbWrapperClass($dbWrapperClass) {
+		$this->wrapperObject = new $dbWrapperClass ( $this->dbType );
+		$this->quote = $this->wrapperObject->quote;
 	}
 
 	/**
-	 * Creates the PDO instance and realize a safe connection.
+	 * Creates the Db instance and realize a safe connection.
 	 *
 	 * @throws DBException
 	 * @return boolean
@@ -81,13 +93,13 @@ class Database {
 		try {
 			$this->_connect ();
 			return true;
-		} catch ( \PDOException $e ) {
+		} catch ( \Exception $e ) {
 			throw new DBException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
 		}
 	}
 
 	public function getDSN() {
-		return $this->dbType . ':dbname=' . $this->dbName . ';host=' . $this->serverName . ';charset=UTF8;port=' . $this->port;
+		return $this->wrapperObject->getDSN ( $this->serverName, $this->port, $this->dbName, $this->dbType );
 	}
 
 	/**
@@ -135,8 +147,8 @@ class Database {
 		return $this->user;
 	}
 
-	public static function getAvailableDrivers() {
-		return \PDO::getAvailableDrivers ();
+	public static function getAvailableDrivers($dbWrapperClass = \Ubiquity\db\providers\pdo\PDOWrapper::class) {
+		return call_user_func ( $dbWrapperClass . '::getAvailableDrivers' );
 	}
 
 	/**
@@ -207,26 +219,55 @@ class Database {
 	}
 
 	/**
-	 * Closes the active pdo connection
+	 * Closes the active connection
 	 */
 	public function close() {
-		$this->pdoObject = null;
+		$this->wrapperObject->close ();
 	}
 
 	/**
 	 * Starts and returns a database instance corresponding to an offset in config
 	 *
 	 * @param string $offset
+	 * @param string $dbWrapperClass
 	 * @return \Ubiquity\db\Database|NULL
 	 */
-	public static function start($offset = null) {
+	public static function start($offset = null, $dbWrapperClass = \Ubiquity\db\providers\pdo\PDOWrapper::class) {
 		$config = Startup::$config;
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
 		if ($db ['dbName'] !== '') {
-			$database = new Database ( $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			$database = new Database ( $dbWrapperClass, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 			$database->connect ();
 			return $database;
 		}
 		return null;
+	}
+
+	/**
+	 * For databases with Connection pool (retrieve a new dbInstance from pool wrapper)
+	 */
+	public function pool() {
+		return $this->wrapperObject->pool ();
+	}
+
+	/**
+	 * For databases with Connection pool (put a dbInstance in pool wrapper)
+	 */
+	public function freePool($db) {
+		$this->wrapperObject->freePool ( $db );
+	}
+
+	public function setPool($pool) {
+		$this->wrapperObject->setPool ( $pool );
+	}
+
+	public static function getAvailableWrappers() {
+		$wrappers = [ ];
+		foreach ( self::$wrappers as $k => $wrapper ) {
+			if (\class_exists ( $wrapper, true )) {
+				$wrappers [$k] = $wrapper;
+			}
+		}
+		return $wrappers;
 	}
 }

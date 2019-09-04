@@ -329,12 +329,12 @@ class DatabaseTest extends BaseTest {
 	}
 
 	/**
-	 * Tests Database->getPdoObject()
+	 * Tests Database->getDbObject()
 	 */
-	public function testGetPdoObject() {
-		$this->assertNull ( $this->database->getPdoObject () );
+	public function testGetDbObject() {
+		$this->assertNull ( $this->database->getDbObject () );
 		$this->beforeQuery ();
-		$pdoo = $this->database->getPdoObject ();
+		$pdoo = $this->database->getDbObject ();
 		$this->assertNotNull ( $pdoo );
 		$this->assertInstanceOf ( PDO::class, $pdoo );
 	}
