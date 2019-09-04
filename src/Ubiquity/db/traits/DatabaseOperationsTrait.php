@@ -181,7 +181,7 @@ trait DatabaseOperationsTrait {
 	}
 
 	public function fetchAll($query, $mode = null) {
-		return $this->wrapperObject->queryAll ( $query );
+		return $this->wrapperObject->queryAll ( $query, $mode );
 	}
 
 	public function isConnected() {
