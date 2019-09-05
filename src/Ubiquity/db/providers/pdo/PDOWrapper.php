@@ -146,7 +146,7 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function nestable() {
-		return isset ( self::$savepointsDrivers [$this->dbType] );
+		return isset ( self::$savepointsDrivers [$this->dbInstance->getAttribute ( \PDO::ATTR_DRIVER_NAME )] );
 	}
 
 	public function ping() {
