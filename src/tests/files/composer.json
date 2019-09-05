@@ -13,12 +13,14 @@
 		"monolog\/monolog": "^1.24",
 		"czproject\/git-php" : "^3.13",
 		"phpmv\/ubiquity-webtools": "dev-master",
-		"phpmv\/ubiquity-dev":"^0.0"
+		"phpmv\/ubiquity-dev":"dev-master"
 	},
 	"autoload": {
 		"psr-4": {
 			"": "app\/",
 			"Ubiquity\\": "Ubiquity/"
 		}
-	}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
 }
