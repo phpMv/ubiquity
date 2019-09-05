@@ -6,6 +6,7 @@ use Ubiquity\orm\DAO;
 use Ubiquity\controllers\Startup;
 use Ubiquity\orm\OrmUtils;
 use models\Groupe;
+use Ubiquity\db\providers\pdo\PDOWrapper;
 
 /**
  * TransformersManager test case.
@@ -21,9 +22,9 @@ class TransformersManagerTest extends BaseTest {
 		$this->_loadConfig ();
 		Startup::setConfig ( $this->config );
 		$this->_startCache ();
-		$db = $this->config ["database"] ?? [ ];
+		$db = DAO::getDbOffset ( $this->config ["database"] ) ?? [ ];
 		if ($db ["dbName"] !== "") {
-			DAO::connect ( 'default', $db ["type"] ?? 'mysql', $db ["dbName"], $db ["serverName"] ?? '127.0.0.1', $db ["port"] ?? 3306, $db ["user"] ?? 'root', $db ["password"] ?? '', $db ["options"] ?? [ ], $db ["cache"] ?? false);
+			DAO::connect ( PDOWrapper::class, 'default', $db ["type"] ?? 'mysql', $db ["dbName"], $db ["serverName"] ?? '127.0.0.1', $db ["port"] ?? 3306, $db ["user"] ?? 'root', $db ["password"] ?? '', $db ["options"] ?? [ ], $db ["cache"] ?? false);
 		}
 		TransformersManager::startProd ();
 		DAO::$transformerOp = 'transform';
