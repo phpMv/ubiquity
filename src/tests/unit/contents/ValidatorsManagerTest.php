@@ -31,6 +31,7 @@ use services\TestClassComparison;
 use services\TestClassString;
 use services\TestClassToValidate;
 use Ubiquity\contents\validation\validators\strings\UrlValidator;
+use Ubiquity\db\providers\pdo\PDOWrapper;
 
 /**
  * ValidatorsManager test case.
@@ -55,10 +56,10 @@ class ValidatorsManagerTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
-		$db = $this->config ["database"];
+		$db = DAO::getDbOffset ( $this->config );
 		$this->dbType = $db ['type'];
 		$this->dbName = $db ['dbName'];
-		$this->database = new Database ( $this->dbType, $this->dbName, $this->db_server );
+		$this->database = new Database ( PDOWrapper::class, $this->dbType, $this->dbName, $this->db_server );
 		ValidatorsManager::start ();
 	}
 

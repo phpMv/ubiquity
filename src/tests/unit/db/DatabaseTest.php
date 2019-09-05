@@ -5,6 +5,7 @@ use Ubiquity\exceptions\CacheException;
 use Ubiquity\exceptions\DBException;
 use Ubiquity\db\SqlUtils;
 use Ubiquity\db\providers\pdo\PDOWrapper;
+use Ubiquity\orm\DAO;
 
 /**
  * Database test case.
@@ -26,7 +27,7 @@ class DatabaseTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
-		$db = $this->config ["database"];
+		$db = DAO::getDbOffset ( $this->config );
 		$this->dbType = $db ['type'];
 		$this->dbName = $db ['dbName'];
 		$this->database = new Database ( $this->getWrapper (), $this->dbType, $this->dbName, $this->db_server );
