@@ -24,7 +24,7 @@ class TransformersManagerTest extends BaseTest {
 		$this->_startCache ();
 		$db = DAO::getDbOffset ( $this->config ["database"] ) ?? [ ];
 		if ($db ["dbName"] !== "") {
-			DAO::connect ( PDOWrapper::class, 'default', $db ["type"] ?? 'mysql', $db ["dbName"], $db ["serverName"] ?? '127.0.0.1', $db ["port"] ?? 3306, $db ["user"] ?? 'root', $db ["password"] ?? '', $db ["options"] ?? [ ], $db ["cache"] ?? false);
+			DAO::connect ( 'default', $db ['wrapper'] ?? PDOWrapper::class, $db ["type"] ?? 'mysql', $db ["dbName"], $db ["serverName"] ?? '127.0.0.1', $db ["port"] ?? 3306, $db ["user"] ?? 'root', $db ["password"] ?? '', $db ["options"] ?? [ ], $db ["cache"] ?? false);
 		}
 		TransformersManager::startProd ();
 		DAO::$transformerOp = 'transform';

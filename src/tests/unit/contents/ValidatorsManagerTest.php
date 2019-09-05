@@ -59,7 +59,7 @@ class ValidatorsManagerTest extends BaseTest {
 		$db = DAO::getDbOffset ( $this->config );
 		$this->dbType = $db ['type'];
 		$this->dbName = $db ['dbName'];
-		$this->database = new Database ( PDOWrapper::class, $this->dbType, $this->dbName, $this->db_server );
+		$this->database = new Database ( $db ['wrapper'] ?? PDOWrapper::class, $this->dbType, $this->dbName, $this->db_server );
 		ValidatorsManager::start ();
 	}
 
