@@ -8,9 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `Memcached` support
 - multi db types support (Db Wrapper)
-- `Tarantool` database support on a [proposal](https://github.com/phpMv/ubiquity/issues/64) from [@zilveer](https://github.com/zilveer)
-- `Swoole coroutine Mysql` database support
-- `Mysqli` database support
+  - `Tarantool` database support on a [proposal](https://github.com/phpMv/ubiquity/issues/64) from [@zilveer](https://github.com/zilveer)
+  - `Swoole coroutine Mysql` database support
+  - `Mysqli` database support
+  - `PDO` default wrapper (updated)
 ### Updated
 - `PhpFastCache` to ^7.0
 ### Fixed
