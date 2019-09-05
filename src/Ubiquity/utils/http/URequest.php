@@ -93,20 +93,24 @@ class URequest {
 		return self::getInput ();
 	}
 
-	/**
-	 * Tests if a value is present on the request and is not empty
-	 *
-	 * @param string $key
-	 */
+    /**
+     * Tests if a value is present on the request and is not empty
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
 	public static function filled($key) {
 		return isset ( $_REQUEST [$key] ) && $_REQUEST [$key] != null;
 	}
 
-	/**
-	 * Tests if a value is present on the request
-	 *
-	 * @param string $key
-	 */
+    /**
+     * Tests if a value is present on the request
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
 	public static function has($key) {
 		return isset ( $_REQUEST [$key] );
 	}
