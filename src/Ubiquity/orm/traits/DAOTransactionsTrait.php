@@ -14,6 +14,8 @@ namespace Ubiquity\orm\traits;
  */
 trait DAOTransactionsTrait {
 
+	abstract public static function getDatabase($offset = 'default');
+
 	/**
 	 * Initiates a transaction
 	 *
@@ -21,7 +23,7 @@ trait DAOTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public static function beginTransaction($offset = 'default') {
-		return self::$db [$offset]->beginTransaction ();
+		self::getDatabase ( $offset )->beginTransaction ();
 	}
 
 	/**
@@ -31,7 +33,7 @@ trait DAOTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public static function commit($offset = 'default') {
-		return self::$db [$offset]->commit ();
+		return self::getDatabase ( $offset )->commit ();
 	}
 
 	/**
@@ -42,7 +44,7 @@ trait DAOTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public static function commitToLevel($transactionLevel, $offset = 'default') {
-		return self::$db [$offset]->commitToLevel ( $transactionLevel );
+		return self::getDatabase ( $offset )->commitToLevel ( $transactionLevel );
 	}
 
 	/**
@@ -53,7 +55,7 @@ trait DAOTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public static function commitAll($offset = 'default') {
-		return self::$db [$offset]->commitAll ();
+		return self::getDatabase ( $offset )->commitAll ();
 	}
 
 	/**
@@ -63,7 +65,7 @@ trait DAOTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public static function rollBack($offset = 'default') {
-		return self::$db [$offset]->rollBack ();
+		return self::getDatabase ( $offset )->rollBack ();
 	}
 
 	/**
@@ -74,7 +76,7 @@ trait DAOTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public static function rollBackToLevel($transactionLevel, $offset = 'default') {
-		return self::$db [$offset]->rollBackToLevel ( $transactionLevel );
+		return self::getDatabase ( $offset )->rollBackToLevel ( $transactionLevel );
 	}
 
 	/**
@@ -84,7 +86,7 @@ trait DAOTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public static function rollBackAll($offset = 'default') {
-		return self::$db [$offset]->rollBackAll ();
+		return self::getDatabase ( $offset )->rollBackAll ();
 	}
 
 	/**
@@ -97,7 +99,7 @@ trait DAOTransactionsTrait {
 	 * @return mixed
 	 */
 	public static function callInTransaction($callback, $offset, ...$parameters) {
-		return self::$db->callInTransaction ( $callback, $offset, ...$parameters );
+		return self::getDatabase ( $offset )->callInTransaction ( $callback, $offset, ...$parameters );
 	}
 }
 
