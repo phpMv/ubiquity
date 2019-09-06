@@ -46,13 +46,14 @@ trait DatabaseTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public function commit() {
-		$this->transactionLevel --;
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
 			Logger::info ( 'Transactions', 'Commit transaction', 'commit' );
+			$this->transactionLevel --;
 			return $this->wrapperObject->commit ();
 		}
 		$this->wrapperObject->releasePoint ( $this->transactionLevel );
 		Logger::info ( 'Transactions', 'Release savepoint level', 'commit', $this->transactionLevel );
+		$this->transactionLevel --;
 		return true;
 	}
 
