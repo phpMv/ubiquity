@@ -66,7 +66,7 @@ trait DatabaseTransactionsTrait {
 		$res = true;
 		while ( $res && $this->transactionLevel > $transactionLevel ) {
 			$res = $this->wrapperObject->commit ();
-			-- $this->transactionLevel;
+			$this->transactionLevel --;
 		}
 		return $res;
 	}
@@ -86,14 +86,14 @@ trait DatabaseTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public function rollBack() {
-		-- $this->transactionLevel;
-
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
 			Logger::info ( 'Transactions', 'Rollback transaction', 'rollBack' );
+			$this->transactionLevel --;
 			return $this->wrapperObject->rollBack ();
 		}
 		$this->wrapperObject->rollbackPoint ( $this->transactionLevel );
 		Logger::info ( 'Transactions', 'Rollback to savepoint level', 'rollBack', $this->transactionLevel );
+		$this->transactionLevel --;
 		return true;
 	}
 
@@ -106,8 +106,7 @@ trait DatabaseTransactionsTrait {
 	public function rollBackToLevel($transactionLevel) {
 		$res = true;
 		while ( $res && $this->transactionLevel > $transactionLevel ) {
-			$res = $this->wrapperObject->rollBack ();
-			-- $this->transactionLevel;
+			$res = $this->rollBack ();
 		}
 		return $res;
 	}
