@@ -66,6 +66,7 @@ trait DatabaseTransactionsTrait {
 		$res = true;
 		while ( $res && $this->transactionLevel > $transactionLevel ) {
 			$res = $this->wrapperObject->commit ();
+			-- $this->transactionLevel;
 		}
 		return $res;
 	}
