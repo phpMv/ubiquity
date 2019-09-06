@@ -71,7 +71,8 @@ trait DAOUQueries {
 	 */
 	public static function uGetAll($className, $ucondition = '', $included = true, $parameters = null, $useCache = NULL) {
 		$db = self::getDb ( $className );
-		return self::_getAll ( $db, $className, new ConditionParser ( $ucondition, self::uParse ( $className, $ucondition, $db->quote ), $parameters ), $included, $useCache );
+		$firstPart = self::uParse ( $className, $ucondition, $db->quote );
+		return self::_getAll ( $db, $className, new ConditionParser ( $ucondition, $firstPart, $parameters ), $included, $useCache );
 	}
 
 	/**
