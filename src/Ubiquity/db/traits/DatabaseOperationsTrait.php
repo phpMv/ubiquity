@@ -82,7 +82,7 @@ trait DatabaseOperationsTrait {
 	}
 
 	public function prepareAndFetchAllColumn($sql, $parameters = null, $column = null) {
-		return $this->wrapperObject->fetchColumn ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $column );
+		return $this->wrapperObject->fetchAllColumn ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $column );
 	}
 
 	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = null) {

@@ -18,9 +18,11 @@ class PDOWrapper extends AbstractDbWrapper {
 	protected static $savepointsDrivers = [ 'pgsql' => true,'mysql' => true,'sqlite' => true ];
 	private static $quotes = [ 'mysql' => '`','sqlite' => '"','pgsql' => '"' ];
 	protected $transactionLevel = 0;
+	protected $dbType;
 
 	public function __construct($dbType = 'mysql') {
 		$this->quote = self::$quotes [$dbType] ?? '';
+		$this->dbType = $dbType;
 	}
 
 	public function fetchAllColumn($statement, array $values = null, string $column = null) {
@@ -146,7 +148,7 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function nestable() {
-		return isset ( self::$savepointsDrivers [$this->dbInstance->getAttribute ( \PDO::ATTR_DRIVER_NAME )] );
+		return isset ( self::$savepointsDrivers [$this->dbType] );
 	}
 
 	public function ping() {
