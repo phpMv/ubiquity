@@ -21,7 +21,7 @@ class PhpHttp extends AbstractHttp {
 	}
 
 	public function headersSent(string &$file = null, int &$line = null) {
-		return headers_sent ( $file, $line );
+		return \headers_sent ( $file, $line );
 	}
 
 	public function getInput() {
