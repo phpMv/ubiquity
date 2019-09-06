@@ -9,7 +9,9 @@
 		"orm"
 	],
 	"require" : {
-		"php" : ">7.0"
+		"php" : ">7.0",
+		"ext-pdo": "*",
+		"ext-apache": "*"
 	},
 	"license" : "Apache-2.0",
 	"authors" : [{
