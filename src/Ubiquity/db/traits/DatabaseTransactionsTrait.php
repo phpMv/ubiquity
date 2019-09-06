@@ -85,7 +85,7 @@ trait DatabaseTransactionsTrait {
 	 * @return boolean true on success or false on failure
 	 */
 	public function rollBack() {
-		$this->transactionLevel --;
+		-- $this->transactionLevel;
 
 		if ($this->transactionLevel == 0 || ! $this->nestable ()) {
 			Logger::info ( 'Transactions', 'Rollback transaction', 'rollBack' );
@@ -106,6 +106,7 @@ trait DatabaseTransactionsTrait {
 		$res = true;
 		while ( $res && $this->transactionLevel > $transactionLevel ) {
 			$res = $this->wrapperObject->rollBack ();
+			-- $this->transactionLevel;
 		}
 		return $res;
 	}
