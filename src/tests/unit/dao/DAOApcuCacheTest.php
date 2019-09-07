@@ -9,7 +9,7 @@ use Ubiquity\cache\system\ApcuCache;
 /**
  * DAO test case.
  */
-class DAOTableCacheTest extends BaseTest {
+class DAOApcuCacheTest extends BaseTest {
 
 	/**
 	 *
