@@ -165,7 +165,7 @@ class DatabaseTest extends BaseTest {
 		$this->beforeQuery ();
 		$this->assertNotFalse ( $this->database->prepareAndFetchAll ( "SELECT 1" ) );
 		$resp = $this->database->prepareAndFetchAll ( "select * from `User`" );
-		$this->assertEquals ( 102, sizeof ( $resp ) );
+		$this->assertEquals ( 101, sizeof ( $resp ) );
 		$row = current ( $resp );
 		$this->assertEquals ( 7, sizeof ( $row ) );
 		$resp = $this->database->prepareAndFetchAll ( "select * from `User` where email= ?", [ "benjamin.sherman@gmail.com" ] );
@@ -185,7 +185,7 @@ class DatabaseTest extends BaseTest {
 		$this->beforeQuery ();
 		$this->assertNotFalse ( $this->database->prepareAndFetchAllColumn ( "SELECT 1" ) );
 		$resp = $this->database->prepareAndFetchAllColumn ( "select * from `User`" );
-		$this->assertEquals ( 102, sizeof ( $resp ) );
+		$this->assertEquals ( 101, sizeof ( $resp ) );
 		$resp = $this->database->prepareAndFetchAllColumn ( "select email from `User` where email= ?", [ "benjamin.sherman@gmail.com" ] );
 		$row = current ( $resp );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", $row );
@@ -275,10 +275,10 @@ class DatabaseTest extends BaseTest {
 	 */
 	public function testCount() {
 		$this->beforeQuery ();
-		$this->assertEquals ( 102, $this->database->count ( "User" ) );
+		$this->assertEquals ( 101, $this->database->count ( "User" ) );
 		$this->assertEquals ( 1, $this->database->count ( "User", "`email`='benjamin.sherman@gmail.com'" ) );
 		$this->assertEquals ( 0, $this->database->count ( "User", "1=2" ) );
-		$this->assertEquals ( 102, $this->database->count ( "User", "1=1" ) );
+		$this->assertEquals ( 101, $this->database->count ( "User", "1=1" ) );
 	}
 
 	/**
@@ -300,7 +300,7 @@ class DatabaseTest extends BaseTest {
 	public function testFetchAll() {
 		$this->beforeQuery ();
 		$result = $this->database->fetchAll ( "select * from `User`" );
-		$this->assertEquals ( 102, sizeof ( $result ) );
+		$this->assertEquals ( 101, sizeof ( $result ) );
 		$row = current ( $result );
 		$this->assertEquals ( $row ['email'], 'benjamin.sherman@gmail.com' );
 	}
