@@ -22,7 +22,6 @@ class DAOTest extends BaseTest {
 	protected function _before() {
 		parent::_before ();
 		$this->dao = new DAO ();
-		$this->_loadConfig ();
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
 	}

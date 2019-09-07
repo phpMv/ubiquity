@@ -23,7 +23,6 @@ class DAOApcuCacheTest extends BaseTest {
 	protected function _before() {
 		parent::_before ();
 		$this->dao = new DAO ();
-		$this->_loadConfig ();
 		$this->config ["database"] ["cache"] = TableCache::class;
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
@@ -36,7 +35,7 @@ class DAOApcuCacheTest extends BaseTest {
 		$this->dao = null;
 	}
 
-	public function getCacheSystem() {
+	protected function getCacheSystem() {
 		return ApcuCache::class;
 	}
 
