@@ -3,6 +3,8 @@ use Ubiquity\utils\yuml\ClassesToYuml;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\base\UString;
+use Ubiquity\controllers\Startup;
+use Ubiquity\cache\system\ArrayCache;
 
 /**
  * ClassesToYuml test case.
@@ -24,6 +26,8 @@ class ClassesToYumlTest extends BaseTest {
 	 * Tests ClassesToYuml->__toString()
 	 */
 	public function test__toString() {
+		$config = Startup::getConfig ();
+		$this->assertEquals ( ArrayCache::class, $config ['cache'] ['system'] );
 		$this->classesToYuml = new ClassesToYuml ( 'default', true, true, true, true, true );
 		$ret = $this->classesToYuml->__toString ();
 		$models = CacheManager::getModels ( $this->config );
