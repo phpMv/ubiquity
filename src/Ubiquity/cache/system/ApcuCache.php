@@ -33,7 +33,7 @@ class ApcuCache extends AbstractDataCache {
 		return \apcu_exists ( $this->getRealKey ( $key ) );
 	}
 
-	public function store($key, $code, $tag, $php = true) {
+	public function store($key, $code, $tag = null, $php = true) {
 		$this->storeContent ( $key, $code, $tag );
 	}
 
