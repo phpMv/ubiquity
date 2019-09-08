@@ -43,7 +43,13 @@ class DAOApcuCacheTest extends BaseTest {
 	}
 
 	protected function getDi() {
-		return null;
+		return array ("*.allS" => function ($controller) {
+			return new \services\IAllService ();
+		},"*.inj" => function ($ctrl) {
+			return new \services\IAllService ();
+		},"@exec" => array ("jquery" => function ($controller) {
+			return \Ubiquity\core\Framework::diSemantic ( $controller );
+		} ) );
 	}
 
 	/**
