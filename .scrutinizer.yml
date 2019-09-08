@@ -18,7 +18,7 @@ build:
     coverage:
       dependencies:
         before:
-#          - sudo apt-get install -y zip
+          - sudo apt-get install -y zip
 
       environment:
         php:
@@ -28,7 +28,7 @@ build:
         hosts:
           dev.local: '127.0.0.1'
         apache2:
-          modules: ['rewrite']
+          modules: ['rewrite','zip']
           sites:
             ubiquity:
               host: 'dev.local'
