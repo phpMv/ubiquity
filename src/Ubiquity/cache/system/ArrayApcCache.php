@@ -3,12 +3,12 @@
 namespace Ubiquity\cache\system;
 
 /**
- * This class is responsible for storing Arrays in PHP files, and require php APCu.
+ * This class is responsible for storing Arrays in PHP files, and require php apc.
  * Ubiquity\cache\system$ArrayApcCache
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class ArrayApcCache extends ArrayCache {
@@ -21,15 +21,15 @@ class ArrayApcCache extends ArrayCache {
 	protected function storeContent($key, $content, $tag) {
 		parent::storeContent ( $key, $content, $tag );
 		$apcK = $this->getApcKey ( $key );
-		if (apcu_exists ( $apcK )) {
-			apcu_delete ( $apcK );
+		if (\apc_exists ( $apcK )) {
+			\apc_delete ( $apcK );
 		}
 	}
 
 	protected function apcDelete($key) {
 		$apcK = $this->getApcKey ( $key );
-		if (apcu_exists ( $apcK )) {
-			return apcu_delete ( $apcK );
+		if (\apc_exists ( $apcK )) {
+			return \apc_delete ( $apcK );
 		}
 		return false;
 	}
@@ -45,11 +45,11 @@ class ArrayApcCache extends ArrayCache {
 	 */
 	public function fetch($key) {
 		$apcK = $this->getApcKey ( $key );
-		if (apcu_exists ( $apcK )) {
-			return apcu_fetch ( $apcK );
+		if (\apc_exists ( $apcK )) {
+			return \apc_fetch ( $apcK );
 		}
 		$content = parent::fetch ( $key );
-		apcu_store ( $apcK, $content );
+		\apc_store ( $apcK, $content );
 		return $content;
 	}
 
