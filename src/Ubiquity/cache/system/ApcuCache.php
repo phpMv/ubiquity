@@ -14,7 +14,7 @@ use Ubiquity\cache\CacheFile;
  * @version 1.0.2
  *
  */
-class ApcCache extends AbstractDataCache {
+class ApcuCache extends AbstractDataCache {
 
 	/**
 	 * Initializes the apc cache-provider
