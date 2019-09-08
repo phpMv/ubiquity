@@ -3,13 +3,13 @@ use Ubiquity\orm\DAO;
 use models\User;
 use models\Organization;
 use models\Groupe;
-use Ubiquity\cache\system\ApcuCache;
 use Ubiquity\cache\CacheManager;
+use Ubiquity\cache\system\MemCachedDriver;
 
 /**
  * DAO test case.
  */
-class DAOApcuCacheTest extends BaseTest {
+class DAOMemCacheTest extends BaseTest {
 
 	/**
 	 *
@@ -38,7 +38,7 @@ class DAOApcuCacheTest extends BaseTest {
 	}
 
 	protected function getCacheSystem() {
-		return ApcuCache::class;
+		return MemCachedDriver::class;
 	}
 
 	protected function getDi() {
@@ -52,8 +52,8 @@ class DAOApcuCacheTest extends BaseTest {
 	}
 
 	public function testCacheSystem() {
-		$this->assertEquals ( ApcuCache::class, $this->config ['cache'] ['system'] );
-		$this->assertInstanceOf ( ApcuCache::class, CacheManager::$cache );
+		$this->assertEquals ( MemCachedDriver::class, $this->config ['cache'] ['system'] );
+		$this->assertInstanceOf ( MemCachedDriver::class, CacheManager::$cache );
 	}
 
 	/**

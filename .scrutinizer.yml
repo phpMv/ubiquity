@@ -9,11 +9,8 @@ build:
       environment:
         php:
           version: 7.2
-          ini:
-            apc.enabled: "1"
           pecl_extensions:
             - memcached
-            - apc
       tests:
         override:
           - php-scrutinizer-run
@@ -26,11 +23,8 @@ build:
       environment:
         php:
           version: 7.2
-          ini:
-            apc.enabled: "1"
           pecl_extensions:
             - memcached
-            - apc
         hosts:
           dev.local: '127.0.0.1'
         apache2:
