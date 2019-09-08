@@ -3,6 +3,7 @@
 namespace Ubiquity\orm\traits;
 
 use Ubiquity\controllers\Startup;
+use Ubiquity\exceptions\DAOException;
 
 /**
  * Ubiquity\orm\traits$DAOPooling
@@ -17,7 +18,31 @@ use Ubiquity\controllers\Startup;
 trait DAOPooling {
 
 	abstract public static function startDatabase(&$config, $offset = null);
+
+	abstract public static function getDbOffset(&$config, $offset = null);
 	protected static $pool;
+
+	/**
+	 * Initialize pooling (To invoke during Swoole startup)
+	 *
+	 * @param array $config
+	 * @param ?string $offset
+	 */
+	public static function initPooling(&$config, $offset = null) {
+		$dbConfig = self::getDbOffset ( $config, $offset );
+		$wrapperClass = $dbConfig ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class;
+		if (\method_exists ( $wrapperClass, 'getPoolClass' )) {
+			$poolClass = \call_user_func ( $wrapperClass . '::getPoolClass' );
+			if (\class_exists ( $poolClass, true )) {
+				self::$pool = new $poolClass ( $config, $offset );
+			} else {
+				throw new DAOException ( $poolClass . ' class does not exists!' );
+			}
+		} else {
+			throw new DAOException ( $wrapperClass . ' does not support connection pooling!' );
+		}
+		self::startDatabase ( $config, $offset );
+	}
 
 	/**
 	 * gets a new DbConnection from pool

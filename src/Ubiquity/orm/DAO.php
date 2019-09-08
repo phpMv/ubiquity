@@ -18,6 +18,7 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\traits\DAOTransactionsTrait;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
+use Ubiquity\orm\traits\DAOPooling;
 
 /**
  * Gateway class between database and object model.
@@ -28,7 +29,8 @@ use Ubiquity\cache\CacheManager;
  *
  */
 class DAO {
-	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,DAOUQueries,DAOTransactionsTrait;
+	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,
+	DAOUQueries,DAOTransactionsTrait,DAOPooling;
 
 	/**
 	 *
@@ -42,28 +44,6 @@ class DAO {
 
 	protected static function getDb($model) {
 		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
-	}
-
-	/**
-	 * Initialize pooling (To invoke during Swoole startup)
-	 *
-	 * @param array $config
-	 * @param ?string $offset
-	 */
-	public static function initPooling(&$config, $offset = null) {
-		$dbConfig = self::getDbOffset ( $config, $offset );
-		$wrapperClass = $dbConfig ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class;
-		if (\method_exists ( $wrapperClass, 'getPoolClass' )) {
-			$poolClass = \call_user_func ( $wrapperClass . '::getPoolClass' );
-			if (\class_exists ( $poolClass, true )) {
-				self::$pool = new $poolClass ( $config, $offset );
-			} else {
-				throw new DAOException ( $poolClass . ' class does not exists!' );
-			}
-		} else {
-			throw new DAOException ( $wrapperClass . ' does not support connection pooling!' );
-		}
-		self::startDatabase ( $config, $offset );
 	}
 
 	/**
