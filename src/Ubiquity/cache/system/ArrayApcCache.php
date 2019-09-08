@@ -21,14 +21,20 @@ class ArrayApcCache extends ArrayCache {
 	protected function storeContent($key, $content, $tag) {
 		parent::storeContent ( $key, $content, $tag );
 		$apcK = $this->getApcKey ( $key );
-		if (\apc_exists ( $apcK )) {
+		if ($this->apcExists ( $apcK )) {
 			\apc_delete ( $apcK );
 		}
 	}
 
+	public function apcExists($key) {
+		$success = false;
+		\apc_fetch ( $key, $success );
+		return $success;
+	}
+
 	protected function apcDelete($key) {
 		$apcK = $this->getApcKey ( $key );
-		if (\apc_exists ( $apcK )) {
+		if ($this->apcExists ( $apcK )) {
 			return \apc_delete ( $apcK );
 		}
 		return false;
@@ -45,7 +51,7 @@ class ArrayApcCache extends ArrayCache {
 	 */
 	public function fetch($key) {
 		$apcK = $this->getApcKey ( $key );
-		if (\apc_exists ( $apcK )) {
+		if ($this->apcExists ( $apcK )) {
 			return \apc_fetch ( $apcK );
 		}
 		$content = parent::fetch ( $key );

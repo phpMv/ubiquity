@@ -30,7 +30,9 @@ class ApcuCache extends AbstractDataCache {
 	 * @return string[]|boolean true if data with the given key has been stored; otherwise false
 	 */
 	public function exists($key) {
-		return \apc_exists ( $this->getRealKey ( $key ) );
+		$success = false;
+		\apc_fetch ( $this->getRealKey ( $key ), $success );
+		return $success;
 	}
 
 	public function store($key, $code, $tag = null, $php = true) {
@@ -81,7 +83,7 @@ class ApcuCache extends AbstractDataCache {
 	 */
 	public function getTimestamp($key) {
 		$key = $this->getRealKey ( $key );
-		$cache = \apc_cache_info ();
+		$cache = \apc_cache_info ( 'user' );
 		if (empty ( $cache ['cache_list'] )) {
 			return false;
 		}
@@ -100,7 +102,7 @@ class ApcuCache extends AbstractDataCache {
 	}
 
 	public function clear() {
-		\apc_clear_cache ();
+		\apc_clear_cache ( 'user' );
 	}
 
 	protected function getCacheEntries($type) {
@@ -112,7 +114,7 @@ class ApcuCache extends AbstractDataCache {
 
 	protected function getAllEntries() {
 		$entries = [ ];
-		$cache = \apc_cache_info ();
+		$cache = \apc_cache_info ( 'user' );
 		if (! empty ( $cache ['cache_list'] )) {
 			$entries = $cache ['cache_list'];
 		}
