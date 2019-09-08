@@ -35,9 +35,11 @@ class DAOApcuCacheTest extends BaseTest {
 		$this->dao = null;
 	}
 
-	protected function getCacheSystem() {
-		return ApcuCache::class;
-	}
+	/*
+	 * protected function getCacheSystem() {
+	 * return ApcuCache::class;
+	 * }
+	 */
 
 	/**
 	 * Tests DAO::getManyToOne()
