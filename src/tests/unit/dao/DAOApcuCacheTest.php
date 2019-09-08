@@ -51,6 +51,11 @@ class DAOApcuCacheTest extends BaseTest {
 		} ) );
 	}
 
+	public function testCacheSystem() {
+		$this->assertEquals ( ApcuCache::class, $this->config ['cache'] ['system'] );
+		$this->assertInstanceOf ( ApcuCache::class, CacheManager::$cache );
+	}
+
 	/**
 	 * Tests DAO::getManyToOne()
 	 */
