@@ -22,7 +22,7 @@ class DAOApcuCacheTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
-		CacheManager::start ( $this->config );
+		CacheManager::$cache = null;
 		CacheManager::initCache ( $this->config, 'all', true );
 		$this->dao = new DAO ();
 		$this->_startCache ();
