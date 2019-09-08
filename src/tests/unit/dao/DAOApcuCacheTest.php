@@ -5,6 +5,7 @@ use models\Organization;
 use models\Groupe;
 use Ubiquity\cache\database\TableCache;
 use Ubiquity\cache\system\ApcuCache;
+use Ubiquity\cache\CacheManager;
 
 /**
  * DAO test case.
@@ -22,6 +23,8 @@ class DAOApcuCacheTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
+		CacheManager::start ( $this->config );
+		CacheManager::initCache ( $this->config, 'all', true );
 		$this->dao = new DAO ();
 		$this->config ["database"] ["cache"] = TableCache::class;
 		$this->_startCache ();
@@ -35,11 +38,9 @@ class DAOApcuCacheTest extends BaseTest {
 		$this->dao = null;
 	}
 
-	/*
-	 * protected function getCacheSystem() {
-	 * return ApcuCache::class;
-	 * }
-	 */
+	protected function getCacheSystem() {
+		return ApcuCache::class;
+	}
 
 	/**
 	 * Tests DAO::getManyToOne()
