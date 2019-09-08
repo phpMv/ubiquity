@@ -8,7 +8,7 @@ build:
           - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
         php:
-          version: 7.3
+          version: 7.2
           ini:
             apc.enabled: "1"
       tests:
@@ -18,17 +18,17 @@ build:
     coverage:
       dependencies:
         before:
-          - sudo apt-get install -y zip
+#          - sudo apt-get install -y zip
 
       environment:
         php:
-          version: 7.3
+          version: 7.2
           ini:
             apc.enabled: "1"
         hosts:
           dev.local: '127.0.0.1'
         apache2:
-          modules: ['rewrite','zip']
+          modules: ['rewrite']
           sites:
             ubiquity:
               host: 'dev.local'
