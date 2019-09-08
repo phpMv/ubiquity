@@ -3,7 +3,6 @@ use Ubiquity\orm\DAO;
 use models\User;
 use models\Organization;
 use models\Groupe;
-use Ubiquity\cache\database\TableCache;
 use Ubiquity\cache\system\ApcuCache;
 use Ubiquity\cache\CacheManager;
 
@@ -26,7 +25,6 @@ class DAOApcuCacheTest extends BaseTest {
 		CacheManager::start ( $this->config );
 		CacheManager::initCache ( $this->config, 'all', true );
 		$this->dao = new DAO ();
-		$this->config ["database"] ["cache"] = TableCache::class;
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
 	}
