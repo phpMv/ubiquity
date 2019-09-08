@@ -1,6 +1,5 @@
 <?php
-class CrudOrgaCest {
-	const TIMEOUT = 30;
+class CrudOrgaCest extends BaseAcceptance {
 
 	public function _before(AcceptanceTester $I) {
 	}
@@ -59,7 +58,7 @@ class CrudOrgaCest {
 		$I->doubleClick ( "table._element td[data-field='aliases']" );
 		$I->waitForElement ( "#frm-member-aliases", self::TIMEOUT );
 		$I->fillField ( "[name='aliases']", "cnam-basse-normandie.fr;cnam.fr;theCnam.org" );
-		$I->click ( "#btO" );
+		$this->waitAndclick ( $I, "#btO" );
 		$I->waitForText ( "cnam-basse-normandie.fr;cnam.fr;theCnam.org", self::TIMEOUT );
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->see ( "cnam-basse-normandie.fr;cnam.fr;theCnam.org" );
