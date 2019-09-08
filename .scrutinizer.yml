@@ -8,9 +8,7 @@ build:
           - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
         php:
-          version: 7.3
-          pecl_extensions:
-            - zip
+          version: 7.2
       tests:
         override:
           - php-scrutinizer-run
@@ -22,9 +20,7 @@ build:
 
       environment:
         php:
-          version: 7.3
-          pecl_extensions:
-            - zip
+          version: 7.2
         hosts:
           dev.local: '127.0.0.1'
         apache2:

@@ -64,7 +64,7 @@ class DAO {
 		} else {
 			throw new DAOException ( $wrapperClass . ' does not support connection pooling!' );
 		}
-		self::$db [$offset] = self::startDatabase ( $config, $offset );
+		self::startDatabase ( $config, $offset );
 	}
 
 	/**

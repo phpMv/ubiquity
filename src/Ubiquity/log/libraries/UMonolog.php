@@ -18,6 +18,10 @@ use Ubiquity\utils\base\UFileSystem;
  *
  */
 class UMonolog extends Logger {
+	/**
+	 *
+	 * @var \Monolog\Logger
+	 */
 	private $loggerInstance;
 	private $handler;
 
@@ -37,27 +41,27 @@ class UMonolog extends Logger {
 	}
 
 	public function _log($level, $context, $message, $part, $extra) {
-		return $this->loggerInstance->log ( $level, $message, $this->createContext ( $context, $part, $extra ) );
+		$this->loggerInstance->log ( $level, $message, $this->createContext ( $context, $part, $extra ) );
 	}
 
 	public function _info($context, $message, $part, $extra) {
-		return $this->loggerInstance->info ( $message, $this->createContext ( $context, $part, $extra ) );
+		$this->loggerInstance->info ( $message, $this->createContext ( $context, $part, $extra ) );
 	}
 
 	public function _warn($context, $message, $part, $extra) {
-		return $this->loggerInstance->warn ( $message, $this->createContext ( $context, $part, $extra ) );
+		$this->loggerInstance->warn ( $message, $this->createContext ( $context, $part, $extra ) );
 	}
 
 	public function _error($context, $message, $part, $extra) {
-		return $this->loggerInstance->error ( $message, $this->createContext ( $context, $part, $extra ) );
+		$this->loggerInstance->error ( $message, $this->createContext ( $context, $part, $extra ) );
 	}
 
 	public function _alert($context, $message, $part, $extra) {
-		return $this->loggerInstance->alert ( $message, $this->createContext ( $context, $part, $extra ) );
+		$this->loggerInstance->alert ( $message, $this->createContext ( $context, $part, $extra ) );
 	}
 
 	public function _critical($context, $message, $part, $extra) {
-		return $this->loggerInstance->critical ( $message, $this->createContext ( $context, $part, $extra ) );
+		$this->loggerInstance->critical ( $message, $this->createContext ( $context, $part, $extra ) );
 	}
 
 	public function _asObjects($reverse = true, $maxlines = 10, $contexts = null) {
