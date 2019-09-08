@@ -8,9 +8,8 @@ build:
           - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
         php:
-          version: 7.2
+          version: 7.3
           pecl_extensions:
-            - memcached
             - zip
       tests:
         override:
@@ -23,9 +22,8 @@ build:
 
       environment:
         php:
-          version: 7.2
+          version: 7.3
           pecl_extensions:
-            - memcached
             - zip
         hosts:
           dev.local: '127.0.0.1'
