@@ -11,6 +11,7 @@ build:
           version: 7.2
           pecl_extensions:
             - memcached
+            - zip
       tests:
         override:
           - php-scrutinizer-run
@@ -25,6 +26,7 @@ build:
           version: 7.2
           pecl_extensions:
             - memcached
+            - zip
         hosts:
           dev.local: '127.0.0.1'
         apache2:
