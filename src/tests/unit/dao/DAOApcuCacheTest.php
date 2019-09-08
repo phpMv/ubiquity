@@ -55,8 +55,8 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::getManyToOne()
 	 */
 	public function testGetManyToOne() {
-		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false, null, true );
-		$orga = DAO::getManyToOne ( $user, 'organization', false, true );
+		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false, null );
+		$orga = DAO::getManyToOne ( $user, 'organization', false );
 		$this->assertInstanceOf ( Organization::class, $orga );
 	}
 
@@ -64,10 +64,10 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::getOneToMany()
 	 */
 	public function testGetOneToMany() {
-		$orga = DAO::getOne ( Organization::class, 'domain="lecnam.net"', false, null, false );
+		$orga = DAO::getOne ( Organization::class, 'domain="lecnam.net"', false );
 		$this->assertEquals ( "Conservatoire National des Arts et Métiers", $orga->getName () );
 		$this->assertEquals ( 1, $orga->getId () );
-		$users = DAO::getOneToMany ( $orga, 'users', true, true );
+		$users = DAO::getOneToMany ( $orga, 'users', true );
 		$this->assertTrue ( is_array ( $users ) );
 
 		$this->assertTrue ( sizeof ( $users ) > 0 );
@@ -79,8 +79,8 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::getManyToMany()
 	 */
 	public function testGetManyToMany() {
-		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false, null, true );
-		$groupes = DAO::getManyToMany ( $user, 'groupes', false, null, true );
+		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false );
+		$groupes = DAO::getManyToMany ( $user, 'groupes', false );
 		$this->assertTrue ( is_array ( $groupes ) );
 		$this->assertTrue ( sizeof ( $groupes ) > 0 );
 		$groupe = current ( $groupes );
@@ -101,7 +101,7 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::getAll()
 	 */
 	public function testGetAll() {
-		$users = $this->dao->getAll ( User::class, '', true, null, true );
+		$users = $this->dao->getAll ( User::class, '', true );
 		$this->assertEquals ( 101, sizeof ( $users ) );
 		$user = current ( $users );
 		$this->assertInstanceOf ( User::class, $user );
@@ -113,7 +113,7 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::getRownum()
 	 */
 	public function testGetRownum() {
-		$users = $this->dao->getAll ( User::class, '', false, null, true );
+		$users = $this->dao->getAll ( User::class, '', false );
 		$users = array_values ( $users );
 		$index = rand ( 0, sizeof ( $users ) - 1 );
 		$this->assertEquals ( $index + 1, $this->dao->getRownum ( User::class, $users [$index]->getId () ) );
@@ -123,7 +123,7 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::getOne()
 	 */
 	public function testGetOne() {
-		$user = $this->dao->getOne ( User::class, 'firstname="Benjamin"', true, null, true );
+		$user = $this->dao->getOne ( User::class, 'firstname="Benjamin"', true );
 		$this->assertInstanceOf ( User::class, $user );
 	}
 
@@ -131,7 +131,7 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::getById()
 	 */
 	public function testGetById() {
-		$user = $this->dao->getById ( User::class, 1, true, true );
+		$user = $this->dao->getById ( User::class, 1, true );
 		$this->assertInstanceOf ( User::class, $user );
 	}
 
@@ -139,7 +139,7 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::uGetAll()
 	 */
 	public function testuGetAll() {
-		$res = DAO::uGetAll ( User::class, "firstname like ? or lastname like ?", false, [ "b%","a%" ], true );
+		$res = DAO::uGetAll ( User::class, "firstname like ? or lastname like ?", false, [ "b%","a%" ] );
 		$this->assertEquals ( 8, sizeof ( $res ) );
 		$this->assertEquals ( "benjamin.sherman@gmail.com", current ( $res ) . "" );
 	}
@@ -148,7 +148,7 @@ class DAOApcuCacheTest extends BaseTest {
 	 * Tests DAO::UGetAllWithQuery()
 	 */
 	public function testUGetAllWithQuery() {
-		$users = DAO::uGetAll ( User::class, "groupes.name = ?", [ "groupes" ], [ "Etudiants" ], true );
+		$users = DAO::uGetAll ( User::class, "groupes.name = ?", [ "groupes" ], [ "Etudiants" ] );
 		$this->assertEquals ( "jeremy.bryan", current ( $users ) . "" );
 		$this->assertEquals ( 8, sizeof ( $users ) . "" );
 	}
