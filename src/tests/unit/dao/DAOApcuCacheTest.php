@@ -27,13 +27,14 @@ class DAOApcuCacheTest extends BaseTest {
 		$this->dao = new DAO ();
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
+		DAO::setModelsDatabases ( [ ] );
 	}
 
 	/**
 	 * Cleans up the environment after running a test.
 	 */
 	protected function _after() {
-		$this->dao = null;
+		$this->dao->closeDb ();
 	}
 
 	protected function getCacheSystem() {
