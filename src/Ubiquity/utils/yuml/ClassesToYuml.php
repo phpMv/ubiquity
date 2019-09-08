@@ -81,6 +81,10 @@ class ClassesToYuml {
 	}
 
 	public function __toString() {
-		return \implode ( Yuml::$groupeSeparator, $this->parse () );
+		$parse = $this->parse ();
+		if (\is_array ( $parse )) {
+			return \implode ( Yuml::$groupeSeparator, $parse );
+		}
+		return '';
 	}
 }
