@@ -42,6 +42,10 @@ class DAOApcuCacheTest extends BaseTest {
 		return ApcuCache::class;
 	}
 
+	protected function getDi() {
+		return null;
+	}
+
 	/**
 	 * Tests DAO::getManyToOne()
 	 */
