@@ -38,7 +38,6 @@ class DAO {
 	public static $useTransformers = false;
 	public static $transformerOp = 'transform';
 	private static $conditionParsers = [ ];
-	private static $pool;
 	protected static $modelsDatabase = [ ];
 
 	protected static function getDb($model) {
@@ -415,31 +414,5 @@ class DAO {
 
 	public static function start() {
 		self::$modelsDatabase = CacheManager::getModelsDatabases ();
-	}
-
-	/**
-	 * gets a new DbConnection from pool
-	 *
-	 * @param string $offset
-	 * @return mixed
-	 */
-	public static function pool($offset = 'default') {
-		if (! isset ( self::$db [$offset] )) {
-			self::startDatabase ( Startup::$config, $offset );
-		}
-		return self::$db [$offset]->pool ();
-	}
-
-	public static function freePool($db) {
-		self::$pool->put ( $db );
-	}
-
-	public static function go($asyncCallable, $offset = 'default') {
-		$vars = \get_defined_vars ();
-		\Swoole\Coroutine::create ( function () use ($vars, $asyncCallable, $offset) {
-			$db = self::pool ( $offset );
-			\call_user_func_array ( $asyncCallable, $vars );
-			self::freePool ( $db );
-		} );
 	}
 }

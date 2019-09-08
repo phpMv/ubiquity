@@ -49,7 +49,7 @@ class UMonolog extends Logger {
 	}
 
 	public function _warn($context, $message, $part, $extra) {
-		$this->loggerInstance->warn ( $message, $this->createContext ( $context, $part, $extra ) );
+		$this->loggerInstance->warning ( $message, $this->createContext ( $context, $part, $extra ) );
 	}
 
 	public function _error($context, $message, $part, $extra) {
