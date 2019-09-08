@@ -23,8 +23,7 @@ class DiControllerParser {
 	protected $injections = [ ];
 
 	public function parse($controllerClass, $config) {
-		$instance = new $controllerClass ();
-		$properties = Reflexion::getProperties ( $instance );
+		$properties = Reflexion::getProperties ( $controllerClass );
 		foreach ( $properties as $property ) {
 			$propName = $property->getName ();
 			$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@injected" );
@@ -53,8 +52,8 @@ class DiControllerParser {
 	protected function getInjectableAutowired($type, $propName) {
 		$typeR = new \ReflectionClass ( $type );
 		if ($typeR->isInstantiable ()) {
-			$constructor= $typeR->getConstructor ();
-			$nbParams = $constructor==null?0:$typeR->getConstructor ()->getNumberOfRequiredParameters ();
+			$constructor = $typeR->getConstructor ();
+			$nbParams = $constructor == null ? 0 : $typeR->getConstructor ()->getNumberOfRequiredParameters ();
 			if ($nbParams == 0) {
 				$this->injections [$propName] = "function(){return new " . $type . "();}";
 			} elseif ($nbParams == 1) {
