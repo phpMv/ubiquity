@@ -54,6 +54,7 @@ class JsonAPICest extends BaseAcceptance {
 		$I->fillField ( '#datas', "{data:{attributes:{name:'microsoftJSONAPI',domain:'microsoftJSONAPI.com'}}}" );
 		$this->waitAndclick ( $I, "#btSubmit" );
 		$I->waitForText ( 'inserted', self::TIMEOUT );
+		$I->waitForElement ( "#newId span", self::TIMEOUT );
 		$id = $I->grabTextFrom ( "#newId" );
 		$I->fillField ( '#url', '/jsonapi/organizations/' . trim ( $id ) );
 		$I->fillField ( '#method', 'patch' );

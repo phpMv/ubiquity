@@ -19,7 +19,7 @@ class RestTester extends ControllerBase {
 		$fields = $form->addFields ();
 		$fields->addInput ( 'datas' );
 		$fields->addInput ( 'contentType', null, 'text', 'application/x-www-form-urlencoded' );
-		$form->addSubmit ( 'btSubmit', 'Valider', 'green', "RestTester/submit", "#request" );
+		$form->addSubmit ( 'btSubmit', 'Valider', 'green', "RestTester/submit", "#request", [ 'before' => '$("#newId").html("");' ] );
 		$this->jquery->compile ( $this->view );
 		$this->loadView ( 'RestTester/index.html' );
 	}
@@ -32,7 +32,12 @@ class RestTester extends ControllerBase {
 			$datas = '{}';
 		}
 		$contentType = URequest::post ( 'contentType', 'application/x-www-form-urlencoded' );
-		$this->jquery->ajax ( $method, $url, '#response', [ 'dataType'=>'json','complete' => "$('#status').html(jqXHR.status);$('#content').html(jqXHR.responseText);",'jsCallback' => "if(data.data.id)$('#newId').html(data.data.id);try{\$('#response').html(JSON.stringify(data,undefined,2));}catch(err){\$('#content').html(data);}",'params' => $datas,'contentType' => "'" . $contentType . "'" ] );
+		$this->jquery->ajax ( $method, $url, '#response', [
+															'dataType' => 'json',
+															'complete' => "$('#status').html(jqXHR.status);$('#content').html(jqXHR.responseText);",
+															'jsCallback' => "if(data.data.id)$('#newId').html('<span>'+data.data.id+'</span>');try{\$('#response').html(JSON.stringify(data,undefined,2));}catch(err){\$('#content').html(data);}",
+															'params' => $datas,
+															'contentType' => "'" . $contentType . "'" ] );
 		echo $this->jquery->compile ();
 	}
 }
