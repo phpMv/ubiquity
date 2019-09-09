@@ -406,9 +406,9 @@ ALTER TABLE `groupeusers`
 -- Index pour la table `Organization`
 --
 ALTER TABLE `Organization`
-  ADD PRIMARY KEY (`id`);
---  ADD UNIQUE KEY `name_UNIQUE` (`name`),
---  ADD UNIQUE KEY `domain_UNIQUE` (`domain`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name_UNIQUE` (`name`),
+  ADD UNIQUE KEY `domain_UNIQUE` (`domain`);
 
 --
 -- Index pour la table `Organizationsettings`
