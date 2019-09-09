@@ -64,14 +64,3 @@ checks:
     php:
         code_rating: true
         duplication: true
-        verify_property_names: true
-        use_self_instead_of_fqcn: true
-        unused_parameters: true
-        unreachable_code: true
-        too_many_arguments: true
-        simplify_boolean_return: true
-        remove_extra_empty_lines: true
-        no_debug_code: true
-        encourage_single_quotes: true
-        encourage_shallow_comparison: true
-        deprecated_code_usage: true
