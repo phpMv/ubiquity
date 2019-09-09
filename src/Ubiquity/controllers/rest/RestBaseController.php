@@ -102,10 +102,7 @@ abstract class RestBaseController extends Controller {
 	}
 
 	public function _errorHandler($e) {
-		$code = 500;
-		if ($e->getCode () !== 0)
-			$code = $e->getCode ();
-		$this->_setResponseCode ( $code );
+		$this->_setResponseCode ( 200 );
 		echo $this->_getResponseFormatter ()->formatException ( $e );
 	}
 
