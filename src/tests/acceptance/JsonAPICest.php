@@ -56,10 +56,12 @@ class JsonAPICest extends BaseAcceptance {
 		$I->waitForText ( 'inserted', self::TIMEOUT );
 		$id = $I->grabTextFrom ( "#newId" );
 		$I->fillField ( '#url', '/jsonapi/organizations/' . trim ( $id ) );
-		$I->fillField ( '#method', 'patch' );
-		$I->fillField ( '#datas', "{data:{attributes:{name:'microsoftJSONAPI2',domain:'microsoftJSONAPI2.com'}}}" );
-		$this->waitAndclick ( $I, "#btSubmit" );
-		$I->waitForText ( 'updated', self::TIMEOUT );
+		/*
+		 * $I->fillField ( '#method', 'patch' );
+		 * $I->fillField ( '#datas', "{data:{attributes:{name:'microsoftJSONAPI2',domain:'microsoftJSONAPI2.com'}}}" );
+		 * $this->waitAndclick ( $I, "#btSubmit" );
+		 * $I->waitForText ( 'updated', self::TIMEOUT );
+		 */
 		$I->fillField ( '#method', 'delete' );
 		$this->waitAndclick ( $I, "#btSubmit" );
 		$I->waitForText ( 'deleted', self::TIMEOUT );
