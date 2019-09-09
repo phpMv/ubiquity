@@ -1,6 +1,6 @@
 <?php
 class JsonAPICest extends BaseAcceptance {
-	const TIMEOUT = 30;
+	const TIMEOUT = 50;
 
 	public function _before(AcceptanceTester $I) {
 	}
