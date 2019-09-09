@@ -7,7 +7,7 @@ return array (
 			"templateEngine" => "Ubiquity\\views\\engine\\Twig",
 			"templateEngineOptions" => array ("cache" => false,"activeTheme" => "semantic" ),
 			"test" => false,
-			"debug" => false,
+			"debug" => true,
 			"logger" => function () {
 				return new \Ubiquity\log\libraries\UMonolog ( "verif", \Monolog\Logger::INFO );
 			},

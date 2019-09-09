@@ -128,14 +128,21 @@ class Startup {
 					\call_user_func_array ( [ $controller,self::$action ], self::$actionParams );
 				} catch ( \Error $e ) {
 					Logger::warn ( "Startup", \sprintf ( "The method `%s` doesn't exists on controller `%s`", self::$action, $ctrl ), "runAction" );
+					if (self::$config ['debug']) {
+						throw $e;
+					}
 				}
 				if ($finalize) {
 					$controller->finalize ();
 				}
 			}
 		} catch ( \Error $e ) {
-			self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
 			Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
+			if (self::$config ['debug']) {
+				throw $e;
+			} else {
+				self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+			}
 		}
 	}
 
