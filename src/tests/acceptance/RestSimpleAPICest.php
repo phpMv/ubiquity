@@ -83,16 +83,18 @@ class RestSimpleAPICest extends BaseAcceptance {
 	// tests
 	public function tryToAddUpdateAndDelete(AcceptanceTester $I) {
 		$I->amOnPage ( "/RestTester" );
+		$uuid = uniqid ();
 		$I->fillField ( '#url', '/rest/simple/orgas/' );
 		$I->fillField ( '#method', 'post' );
-		$I->fillField ( '#datas', "{name:'microsoftXX',domain:'microsoftXX.com'}" );
+		$I->fillField ( '#datas', "{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . ".com'}" );
 		$I->click ( "#btSubmitJSON" );
 		$I->waitForText ( 'inserted', self::TIMEOUT );
 		$I->waitForElement ( "#newId span", self::TIMEOUT );
 		$id = $I->grabTextFrom ( "#newId span" );
+		$uuid = uniqid ();
 		$I->fillField ( '#url', '/rest/simple/orgas/' . $id );
 		$I->fillField ( '#method', 'patch' );
-		$I->fillField ( '#datas', "{name:'microsoftYY',domain:'microsoftYY.com'}" );
+		$I->fillField ( '#datas', "{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . ".com'}" );
 		$I->click ( "#btSubmitJSON" );
 		$I->waitForText ( 'updated', self::TIMEOUT );
 		$I->fillField ( '#method', 'delete' );

@@ -48,17 +48,19 @@ class JsonAPICest extends BaseAcceptance {
 	// tests
 	public function tryToAddUpdateAndDelete(AcceptanceTester $I) {
 		$I->amOnPage ( "/RestTester" );
+		$uuid = uniqid ();
 		$I->fillField ( '#url', '/jsonapi/organizations/' );
 		$I->fillField ( '#method', 'post' );
 		$I->fillField ( '#contentType', 'application/json; charset=utf-8' );
-		$I->fillField ( '#datas', "{data:{attributes:{name:'microsoftJSONAPIxx',domain:'microsoftJSONAPIxx.com'}}}" );
+		$I->fillField ( '#datas', "{data:{attributes:{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . ".com'}}}" );
 		$I->click ( "#btSubmitJSON" );
 		$I->waitForText ( 'inserted', self::TIMEOUT );
 		$I->waitForElement ( "#newId span", self::TIMEOUT );
+		$uuid = uniqid ();
 		$id = $I->grabTextFrom ( "#newId span" );
 		$I->fillField ( '#url', '/jsonapi/organizations/' . trim ( $id ) );
 		$I->fillField ( '#method', 'patch' );
-		$I->fillField ( '#datas', "{data:{attributes:{name:'microsoftJSONAPIx2',domain:'microsoftJSONAPIx2.com'}}}" );
+		$I->fillField ( '#datas', "{data:{attributes:{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . "'}}}" );
 		$I->click ( "#btSubmitJSON" );
 		$I->waitForText ( 'updated', self::TIMEOUT );
 		$I->fillField ( '#method', 'delete' );
