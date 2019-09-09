@@ -9,6 +9,7 @@ use Ubiquity\log\Logger;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\controllers\Startup;
 
 /**
  * Trait for DAO Updates (Create, Update, Delete)
@@ -148,6 +149,9 @@ trait DAOUpdatesTrait {
 			return $result;
 		} catch ( \Exception $e ) {
 			Logger::warn ( "DAOUpdates", $e->getMessage (), "insert" );
+			if (Startup::$config ['debug']) {
+				throw $e;
+			}
 		}
 		return false;
 	}
