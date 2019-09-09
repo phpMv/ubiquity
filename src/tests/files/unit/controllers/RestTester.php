@@ -34,8 +34,8 @@ class RestTester extends ControllerBase {
 		$contentType = URequest::post ( 'contentType', 'application/x-www-form-urlencoded' );
 		$this->jquery->ajax ( $method, $url, '#response', [
 															'dataType' => 'json',
-															'complete' => "$('#status').html(jqXHR.status);$('#content').html(jqXHR.responseText);",
-															'jsCallback' => "if(data.data.id)$('#newId').html('<span>'+data.data.id+'</span>');try{\$('#response').html(JSON.stringify(data,undefined,2));}catch(err){\$('#content').html(data);}",
+															'async' => false,
+															'jsCallback' => "$('#status').html(jqXHR.status);$('#content').html(jqXHR.responseText);if(data.data.id)$('#newId').html('<span>'+data.data.id+'</span>');try{\$('#response').html(JSON.stringify(data,undefined,2));}catch(err){\$('#content').html(data);}",
 															'params' => $datas,
 															'contentType' => "'" . $contentType . "'" ] );
 		$this->jquery->renderView ( 'RestTester/submit.html' );
