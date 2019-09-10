@@ -1,5 +1,6 @@
 <?php
 use Ubiquity\utils\base\UArray;
+use Ubiquity\utils\base\UString;
 
 /**
  * UArray test case.
@@ -96,30 +97,25 @@ class UArrayTest extends \Codeception\Test\Unit {
 	 * Tests UArray::asJSON()
 	 */
 	public function testAsJSON() {
-		// TODO Auto-generated UArrayTest::testAsJSON()
-		$this->markTestIncomplete ( "asJSON test not implemented" );
-
-		UArray::asJSON(/* parameters */);
+		$this->assertTrue ( UString::isJson ( Uarray::asJSON ( $this->assoArray ) ) );
 	}
 
 	/**
 	 * Tests UArray::remove()
 	 */
 	public function testRemove() {
-		// TODO Auto-generated UArrayTest::testRemove()
-		$this->markTestIncomplete ( "remove test not implemented" );
-
-		UArray::remove(/* parameters */);
+		$this->assertNotFalse ( \array_search ( 1, $this->assoArray ) );
+		UArray::remove ( $this->assoArray, 1 );
+		$this->assertFalse ( \array_search ( 1, $this->assoArray ) );
 	}
 
 	/**
 	 * Tests UArray::removeByKey()
 	 */
 	public function testRemoveByKey() {
-		// TODO Auto-generated UArrayTest::testRemoveByKey()
-		$this->markTestIncomplete ( "removeByKey test not implemented" );
-
-		UArray::removeByKey(/* parameters */);
+		$this->assertTrue( isset ($this->assoArray['a']);
+		UArray::removeByKey ( $this->assoArray, 'a' );
+		$this->assertFalse ( isset ( $this->assoArray ['a'] ) );
 	}
 
 	/**

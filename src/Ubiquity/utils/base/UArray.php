@@ -118,7 +118,7 @@ class UArray {
 	}
 
 	public static function asJSON($array) {
-		return json_encode ( $array, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
+		return \json_encode ( $array, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
 	}
 
 	public static function remove($array, $search) {
