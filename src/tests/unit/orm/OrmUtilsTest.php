@@ -3,8 +3,6 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\DAO;
 use models\Organization;
 
-require_once 'src/Ubiquity/orm/OrmUtils.php';
-
 /**
  * OrmUtils test case.
  */
