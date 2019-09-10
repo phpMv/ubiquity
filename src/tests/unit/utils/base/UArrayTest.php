@@ -113,7 +113,7 @@ class UArrayTest extends \Codeception\Test\Unit {
 	 * Tests UArray::removeByKey()
 	 */
 	public function testRemoveByKey() {
-		$this->assertTrue( isset ($this->assoArray['a']);
+		$this->assertTrue ( isset ( $this->assoArray ['a'] ) );
 		UArray::removeByKey ( $this->assoArray, 'a' );
 		$this->assertFalse ( isset ( $this->assoArray ['a'] ) );
 	}

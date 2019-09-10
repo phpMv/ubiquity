@@ -148,9 +148,9 @@ class UArray {
 
 	public static function removeRecursive(&$array, $key) {
 		foreach ( $array as &$item ) {
-			if (array_key_exists ( $key, $item )) {
+			if (\array_key_exists ( $key, $item )) {
 				unset ( $item [$key] );
-			} elseif (is_array ( $item )) {
+			} elseif (\is_array ( $item )) {
 				self::removeRecursive ( $item, $key );
 			}
 		}
@@ -208,7 +208,7 @@ class UArray {
 	}
 
 	public static function iSearch($needle, $haystack, $strict = null) {
-		return array_search ( strtolower ( $needle ), array_map ( 'strtolower', $haystack ), $strict );
+		return \array_search ( strtolower ( $needle ), array_map ( 'strtolower', $haystack ), $strict );
 	}
 
 	public static function iRemove($array, $search) {
@@ -219,7 +219,7 @@ class UArray {
 		} else {
 			$array = self::iRemoveOne ( $array, $search );
 		}
-		return array_values ( $array );
+		return \array_values ( $array );
 	}
 
 	public static function iRemoveOne($array, $search) {
@@ -234,7 +234,7 @@ class UArray {
 		foreach ( $array as $k => $v ) {
 			$res [] = "{$quoteKey}{$k}{$quoteKey}{$op}{$quoteValue}{$v}{$quoteValue}";
 		}
-		return implode ( $glue, $res );
+		return \implode ( $glue, $res );
 	}
 
 	public static function toJSON($array) {
@@ -249,6 +249,6 @@ class UArray {
 			}
 			$result [] = '"' . $k . '": ' . $v;
 		}
-		return '{' . implode ( ',', $result ) . '}';
+		return '{' . \implode ( ',', $result ) . '}';
 	}
 }
