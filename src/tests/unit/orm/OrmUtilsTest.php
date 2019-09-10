@@ -40,7 +40,8 @@ class OrmUtilsTest extends BaseTest {
 	 */
 	public function testGetKeyPropsAndValues_() {
 		$orga = $this->dao->getById ( Organization::class, 1 );
-		$ids = OrmUtils::getKeyPropsAndValues_ ( $orga, [ 'id' ] );
+
+		$ids = OrmUtils::getKeyPropsAndValues_ ( $orga, [ new ReflectionProperty ( Organization::class, 'id' ) ] );
 		self::assertArrayCompare ( $ids, [ 'id' => 1 ] );
 	}
 

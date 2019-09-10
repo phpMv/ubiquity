@@ -105,7 +105,7 @@ class UArrayTest extends \Codeception\Test\Unit {
 	 */
 	public function testRemove() {
 		$this->assertNotFalse ( \array_search ( 1, $this->assoArray ) );
-		UArray::remove ( $this->assoArray, 1 );
+		$this->assoArray = UArray::remove ( $this->assoArray, 1 );
 		$this->assertFalse ( \array_search ( 1, $this->assoArray ) );
 	}
 
@@ -114,7 +114,7 @@ class UArrayTest extends \Codeception\Test\Unit {
 	 */
 	public function testRemoveByKey() {
 		$this->assertTrue ( isset ( $this->assoArray ['a'] ) );
-		UArray::removeByKey ( $this->assoArray, 'a' );
+		$this->assoArray = UArray::removeByKey ( $this->assoArray, 'a' );
 		$this->assertFalse ( isset ( $this->assoArray ['a'] ) );
 	}
 
