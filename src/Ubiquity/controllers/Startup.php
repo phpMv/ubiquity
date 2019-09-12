@@ -23,12 +23,30 @@ class Startup {
 	private static $controller;
 	private static $action;
 	private static $actionParams;
+	private static $controllers = [ ];
 
 	private static function parseUrl(&$url) {
 		if (! $url) {
 			$url = "_default";
 		}
 		return self::$urlParts = \explode ( "/", \rtrim ( $url, '/' ) );
+	}
+
+	public static function getControllerInstance($controllerName) {
+		if (! isset ( self::$controllers [$controllerName] )) {
+			try {
+				$controller = new $controllerName ();
+				// Dependency injection
+				if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
+					self::injectDependences ( $controller );
+				}
+				self::$controllers [$controllerName] = $controller;
+			} catch ( \Exception $e ) {
+				Logger::warn ( 'Startup', 'The controller `' . $controllerName . '` doesn\'t exists! <br/>', 'runAction' );
+				self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+			}
+		}
+		return self::$controllers [$controllerName];
 	}
 
 	private static function startTemplateEngine(&$config) {
@@ -50,6 +68,16 @@ class Startup {
 	 * @param array $config The loaded config array
 	 */
 	public static function run(array &$config) {
+		self::init ( $config );
+		self::forward ( $_GET ['c'] );
+	}
+
+	/**
+	 * Initialize the app with $config array
+	 *
+	 * @param array $config
+	 */
+	public static function init(array &$config) {
 		self::$config = $config;
 		if (isset ( $config ['templateEngine'] )) {
 			self::startTemplateEngine ( $config );
@@ -57,7 +85,6 @@ class Startup {
 		if (isset ( $config ['sessionName'] )) {
 			USession::start ( $config ['sessionName'] );
 		}
-		self::forward ( $_GET ['c'] );
 	}
 
 	/**
@@ -106,42 +133,31 @@ class Startup {
 	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 */
 	public static function runAction(array &$u, $initialize = true, $finalize = true) {
-		$ctrl = $u [0];
+		self::$controller = $ctrl = $u [0];
 		$uSize = \sizeof ( $u );
-		self::$controller = $ctrl;
 		self::$action = ($uSize > 1) ? $u [1] : 'index';
 		self::$actionParams = ($uSize > 2) ? \array_slice ( $u, 2 ) : [ ];
 
-		try {
-			$controller = new $ctrl ();
-			// Dependency injection
-			if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
-				self::injectDependences ( $controller );
+		$controller = self::getControllerInstance ( $ctrl );
+		if (! $controller->isValid ( self::$action )) {
+			$controller->onInvalidControl ();
+		} else {
+			if ($initialize) {
+				$controller->initialize ();
 			}
-			if (! $controller->isValid ( self::$action )) {
-				$controller->onInvalidControl ();
-			} else {
-				if ($initialize) {
-					$controller->initialize ();
+			try {
+				if (\call_user_func_array ( [ $controller,self::$action ], self::$actionParams ) === false) {
+					Logger::warn ( 'Startup', "The action " . self::$action . " does not exists on controller `{$ctrl}`", 'runAction' );
+					self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
 				}
-				try {
-					\call_user_func_array ( [ $controller,self::$action ], self::$actionParams );
-				} catch ( \Error $e ) {
-					Logger::warn ( "Startup", \sprintf ( "The method `%s` doesn't exists on controller `%s`", self::$action, $ctrl ), "runAction" );
-					if (self::$config ['debug']) {
-						throw $e;
-					}
-				}
-				if ($finalize) {
-					$controller->finalize ();
+			} catch ( \Error $e ) {
+				Logger::warn ( "Startup", $e->getTraceAsString (), "runAction" );
+				if (self::$config ['debug']) {
+					throw $e;
 				}
 			}
-		} catch ( \Error $e ) {
-			Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
-			if (self::$config ['debug']) {
-				throw $e;
-			} else {
-				self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+			if ($finalize) {
+				$controller->finalize ();
 			}
 		}
 	}
