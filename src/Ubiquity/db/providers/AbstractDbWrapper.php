@@ -34,12 +34,6 @@ abstract class AbstractDbWrapper {
 
 	abstract public function connect(string $dbType, $dbName, $serverName, string $port, string $user, string $password, array $options);
 
-	abstract public function pool();
-
-	abstract public function freePool($db);
-
-	abstract public function setPool($pool);
-
 	abstract public function getDSN(string $serverName, string $port, string $dbName, string $dbType = 'mysql');
 
 	abstract public function execute(string $sql);
