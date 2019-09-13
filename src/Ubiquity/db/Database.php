@@ -72,7 +72,7 @@ class Database {
 				}
 			}
 		}
-		if ($pool && (\method_exists ( $pool, 'setPool' ))) {
+		if ($pool && (\method_exists ( $pool, 'pool' ))) {
 			$this->wrapperObject->setPool ( $pool );
 		}
 	}
