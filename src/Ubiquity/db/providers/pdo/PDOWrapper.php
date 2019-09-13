@@ -3,7 +3,6 @@
 namespace Ubiquity\db\providers\pdo;
 
 use Ubiquity\db\providers\AbstractDbWrapper;
-use Ubiquity\exceptions\DBException;
 
 /**
  * Ubiquity\db\providers$PDOWrapper
@@ -184,18 +183,6 @@ class PDOWrapper extends AbstractDbWrapper {
 			$fieldsInfos [$field ['Field']] = [ "Type" => $field ['Type'],"Nullable" => $field ["Null"] ];
 		}
 		return $fieldsInfos;
-	}
-
-	public function pool() {
-		throw new DBException ( 'PDO does not accept connection pooling' );
-	}
-
-	public function freePool($db) {
-		throw new DBException ( 'PDO does not accept connection pooling' );
-	}
-
-	public function setPool($pool) {
-		throw new DBException ( 'PDO does not accept connection pooling' );
 	}
 
 	public function _optPrepareAndExecute($sql, array $values = null) {
