@@ -15,9 +15,18 @@ if (! defined ( 'DB_SERVER' )) {
 	define ( 'DB_SERVER', $ip );
 }
 $_GET ["c"] = "TestController";
-return array ("siteUrl" => "http://127.0.0.1/","database" => array ("type" => "mysql","dbName" => "messagerie","serverName" => DB_SERVER,"port" => 3306,"user" => "root","password" => "","options" => array (),"cache" => false ),"namespaces" => array (),"sessionName" => "messagerie","test" => false,"debug" => true,
-		"di" => array ("injected" => function ($controller) {
-			return new Service ( $controller );
-		} ),"cache" => array ("directory" => "cache/","system" => "Ubiquity\\cache\\system\\ArrayCache","params" => array () ),"mvcNS" => array ("models" => "models","controllers" => "tests\\unit\\controllers\\controllers","rest" => "rest" ),"isRest" => function () {
-			return \Ubiquity\utils\http\URequest::getUrlParts () [0] === "rest";
-		} );
+return array (
+			"siteUrl" => "http://127.0.0.1/",
+			"database" => array ("type" => "mysql","dbName" => "messagerie","serverName" => DB_SERVER,"port" => 3306,"user" => "root","password" => "","options" => array (),"cache" => false ),
+			"namespaces" => array (),
+			"sessionName" => "messagerie",
+			"test" => false,
+			"debug" => true,
+			"di" => array ("injected" => function ($controller) {
+				return new Service ( $controller );
+			} ),
+			"cache" => array ("directory" => "cache/","system" => "Ubiquity\\cache\\system\\ArrayCache","params" => array () ),
+			"mvcNS" => array ("models" => "models","controllers" => "tests\\unit\\controllers\\controllers","rest" => "rest" ),
+			"isRest" => function () {
+				return \Ubiquity\utils\http\URequest::getUrlParts () [0] === "rest";
+			} );
