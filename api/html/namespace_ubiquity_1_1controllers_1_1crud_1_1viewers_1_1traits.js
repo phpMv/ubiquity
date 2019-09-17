@@ -1,4 +1,0 @@
-var namespace_ubiquity_1_1controllers_1_1crud_1_1viewers_1_1traits =
-[
-    [ "FormModelViewerTrait", "class_ubiquity_1_1controllers_1_1crud_1_1viewers_1_1traits_1_1_form_model_viewer_trait.html", "class_ubiquity_1_1controllers_1_1crud_1_1viewers_1_1traits_1_1_form_model_viewer_trait" ]
-];

@@ -1,4 +1,0 @@
-var namespace_ubiquity_1_1controllers_1_1crud_1_1interfaces =
-[
-    [ "HasModelViewerInterface", "interface_ubiquity_1_1controllers_1_1crud_1_1interfaces_1_1_has_model_viewer_interface.html", "interface_ubiquity_1_1controllers_1_1crud_1_1interfaces_1_1_has_model_viewer_interface" ]
-];
