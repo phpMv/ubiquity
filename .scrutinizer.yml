@@ -47,6 +47,9 @@ build:
           - sudo /usr/share/locales/install-language-pack fr_FR
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
+          - sudo chmod 0777 vendor/bin/ppm
+          - sudo ./vendor/bin/ppm --bridge='\PHPPM\Ubiquity' --bootstrap='\PHPPM\Ubiquity' start --debug 0 --logging 0 --workers 16 --max-requests 1024 --host=dev.local --port=8801
+          - sudo curl -v http://dev.local:8801/Admin
 
         override:
           - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v)
