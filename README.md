@@ -24,7 +24,7 @@
   - Managed servers: fpm/fastcgi with Apache or nginX, Swoole, PHP-PM with ReactPHP (Dev only)
 
 # Upgrade
-If Ubiquity devtools are already globally installed, and you want to upgrade to the last stable version:
+If Ubiquity devtools are already globally installed, and you want to upgrade to the lastest stable version:
 ```bash
 composer global update
 ```
@@ -66,8 +66,7 @@ Approximately 6000 objects are loaded, in this intuitive line with Ubiquity:
 ```php
 $hosts=DAO::getAll(Host::class,"",["user.virtualhosts","servers.stype"]);
 ```
-In regards to this type of related object loading that can be very time consuming with an ORM,
-Ubiquity is twice as fast as Doctrine based solutions,and more efficient than the others tested.
+In regards to this type of related object loading that can be very time consuming with an ORM, Ubiquity is twice as fast as Doctrine based solutions,and more efficient than the others tested.
 
 For equity reasons, all ORMs are using an Eager loading approach.
 
