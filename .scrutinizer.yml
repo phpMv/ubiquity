@@ -47,7 +47,7 @@ build:
           - sudo /usr/share/locales/install-language-pack fr_FR
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
-          - (cd src/ && ./../vendor/bin/Ubiquity serve -t=react -p=8801 -h=127.0.0.1)
+          - command: (cd src/ && ./../vendor/bin/Ubiquity serve -t=react -p=8801 -h=127.0.0.1)
             background: true
           - sudo curl -v http://dev.local:8801/Admin
 
