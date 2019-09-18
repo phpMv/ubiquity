@@ -80,7 +80,7 @@ class StartupTest extends BaseTest {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'index', $this->startup->getAction () );
-		}, 'service init!initialize!-Hello world!-finalize!' );
+		}, 'initialize!-Hello world!-finalize!' );
 		$_GET ["c"] = "route/test/ctrl";
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
@@ -142,17 +142,17 @@ class StartupTest extends BaseTest {
 		}, 'service init!initialize!-forward!-finalize!' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestControllerWithControl/validAction" );
-		}, 'service init!initialize!-valid action!-finalize!' );
+		}, 'initialize!-valid action!-finalize!' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestControllerWithControl/validAction" );
-		}, 'service init!initialize!-valid action!-finalize!' );
+		}, 'initialize!-valid action!-finalize!' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestControllerWithControl/actionWithControl" );
-		}, 'service init!invalid!' );
+		}, 'invalid!' );
 		USession::set ( 'user', 'user' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestControllerWithControl/actionWithControl" );
-		}, 'service init!initialize!-authorized!-finalize!' );
+		}, 'initialize!-authorized!-finalize!' );
 	}
 
 	/**
@@ -170,9 +170,9 @@ class StartupTest extends BaseTest {
 	 */
 	public function testRunAsString() {
 		$u = [ TestControllerInitialize::class,"index" ];
-		$this->assertEquals ( 'service init!initialize!-Hello world!-finalize!', $this->startup->runAsString ( $u ) );
+		$this->assertEquals ( 'initialize!-Hello world!-finalize!', $this->startup->runAsString ( $u ) );
 		$this->assertEquals ( 'initialize!-Hello world!', $this->startup->runAsString ( $u, true, false ) );
-		$this->assertEquals ( 'service init!Hello world!', $this->startup->runAsString ( $u, false, false ) );
+		$this->assertEquals ( 'Hello world!', $this->startup->runAsString ( $u, false, false ) );
 	}
 
 	/**
