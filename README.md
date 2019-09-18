@@ -67,11 +67,12 @@ Approximately 6000 objects are loaded, in this intuitive line with Ubiquity:
 $hosts=DAO::getAll(Host::class,"",["user.virtualhosts","servers.stype"]);
 ```
 In regards to this type of related object loading that can be very time consuming with an ORM,
-Ubiquity is **3,1 times** faster than Codeigniter associated with Doctrine, **3,6 times** faster than Symfony, **20 times** more than Laravel-Eloquent!
+Ubiquity is twice as fast as Doctrine based solutions,and more efficient than the others tested.
+For equity reasons, all ORMs are using an Eager loading approach.
 
-Unlike Doctrine, for this data loading, Ubiquity:
+Unlike the others,Ubiquity:
 - does not perform any SQL joins
-- executes only 123 queries, against 3190 for Doctrine
+- executes only 90 queries, against 870 for Doctrine (3190 if the eager loading is not used).
 
 ![ORM benchmarks](https://static.kobject.net/ubiquity/images/orm-benchmarks-3.png "ORM benchmarks")
 
