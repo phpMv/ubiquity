@@ -7,7 +7,8 @@
 		"phpmv\/ubiquity": "dev-master",
 		"codeception/c3": "^2.4",
 		"codeception/codeception": "^2.5",
-		"phpmv/ubiquity-codeception": "1.0.x-dev"
+		"phpmv/ubiquity-codeception": "1.0.x-dev",
+		"phpmv/ubiquity-react": "dev-master"
 	},
 	"require-dev": {
 		"monolog\/monolog": "^1.24",
