@@ -86,14 +86,14 @@ class StartupTest extends BaseTest {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
-		}, 'service init!invalid!' );
+		}, 'invalid!' );
 		$_GET ["c"] = "route/test/ctrl/";
 		USession::set ( 'user', 'user' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
-		}, 'service init!initialize!-authorized!-finalize!' );
+		}, 'initialize!-authorized!-finalize!' );
 		// Route with params
 		$_GET ["c"] = "route/test/params/aa/bb";
 		$this->_assertDisplayEquals ( function () {
@@ -101,14 +101,14 @@ class StartupTest extends BaseTest {
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'withParams', $this->startup->getAction () );
 			$this->assertEquals ( [ 'aa','bb' ], $this->startup->getActionParams () );
-		}, 'service init!initialize!-aa-bb!-finalize!' );
+		}, 'initialize!-aa-bb!-finalize!' );
 		$_GET ["c"] = "route/test/params/aa/";
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'withParams', $this->startup->getAction () );
 			$this->assertEquals ( [ 'aa' ], $this->startup->getActionParams () );
-		}, 'service init!initialize!-aa-default!-finalize!' );
+		}, 'initialize!-aa-default!-finalize!' );
 		// Rest
 		$this->_startServices ( 'rest' );
 		$_GET ["c"] = "rest/test";
