@@ -68,15 +68,14 @@ $hosts=DAO::getAll(Host::class,"",["user.virtualhosts","servers.stype"]);
 ```
 In regards to this type of related object loading that can be very time consuming with an ORM,
 Ubiquity is twice as fast as Doctrine based solutions,and more efficient than the others tested.
+
 For equity reasons, all ORMs are using an Eager loading approach.
 
 Unlike the others,Ubiquity:
 - does not perform any SQL joins
 - executes only 90 queries, against 870 for Doctrine (3190 if the eager loading is not used).
 
-![ORM benchmarks](https://static.kobject.net/ubiquity/images/orm-benchmarks-3.png "ORM benchmarks")
-
-see for yourself [orm-benchmarks](https://orm-benchmarks.kobject.net)
+![ORM benchmarks](https://static.kobject.net/ubiquity/images/orm-benchmarks-4.png "ORM benchmarks")
 
 These excellent results have been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
 
