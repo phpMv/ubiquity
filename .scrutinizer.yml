@@ -49,7 +49,7 @@ build:
           - sudo /usr/share/locales/install-language-pack fr_FR
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
-          - cp -f src/tests/files/_react.php src/.ubiquity/_react.php && cp -f src/tests/files/react_config.php src/.ubiquity/react_config.php
+          - cp -f src/tests/files/_react.php src/.ubiquity/_react.php && cp -f src/tests/files/react-config.php src/.ubiquity/react-config.php
           - command: ./run-react.sh
             background: true
           - sudo curl -v http://dev.local:8801/Admin
