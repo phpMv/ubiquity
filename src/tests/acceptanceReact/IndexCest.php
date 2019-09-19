@@ -16,9 +16,17 @@ class IndexCest {
 	}
 
 	// tests
-	public function tryToGotoAdminIndex(AcceptanceTester $I) {
-		$I->amOnPage ( "/Admin/index" );
-		$I->seeInCurrentUrl ( "Admin/index" );
-		$I->see ( 'Used to perform CRUD operations on data', [ 'css' => 'body' ] );
+	public function tryToGotoReactIndex(AcceptanceTester $I) {
+		$I->amOnPage ( "/react/test/index" );
+		$I->seeInCurrentUrl ( "/react/test/index" );
+		$I->see ( 'Hello react!', [ 'css' => 'body' ] );
+	}
+
+	// tests
+	public function tryToGotoReactGet(AcceptanceTester $I) {
+		$I->amOnPage ( "/react/get" );
+		$I->see ( '500', [ 'css' => 'body' ] );
+		$I->amOnPage ( "/react/get?p=555" );
+		$I->see ( '555', [ 'css' => 'body' ] );
 	}
 }
