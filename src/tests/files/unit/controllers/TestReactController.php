@@ -31,7 +31,7 @@ class TestReactController extends Controller {
 	 *
 	 * @route("/react/set/session")
 	 */
-	public function testSession() {
+	public function testSetSession() {
 		USession::set ( 'user', 'me' );
 		echo 'me';
 	}
@@ -40,7 +40,7 @@ class TestReactController extends Controller {
 	 *
 	 * @route("/react/get/session")
 	 */
-	public function testSession() {
+	public function testGetSession() {
 		$v = USession::get ( 'user', 'not me' );
 		echo $v;
 	}
