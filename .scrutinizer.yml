@@ -52,7 +52,7 @@ build:
           - cp -f src/tests/files/_react.php src/.ubiquity/_react.php && cp -f src/tests/files/react-config.php src/.ubiquity/react-config.php
           - command: ./run-react.sh
             background: true
-          - sudo curl -v http://dev.local:8801/Admin
+          - sudo curl -v http://127.0.0.1:8801
 
         override:
           - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v)
