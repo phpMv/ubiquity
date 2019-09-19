@@ -4,6 +4,7 @@ namespace controllers;
 
 use Ubiquity\controllers\Controller;
 use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\USession;
 
 class TestReactController extends Controller {
 
@@ -24,6 +25,24 @@ class TestReactController extends Controller {
 	public function testGet() {
 		$p = URequest::get ( 'p', 500 );
 		echo $p;
+	}
+
+	/**
+	 *
+	 * @route("/react/set/session")
+	 */
+	public function testSession() {
+		USession::set ( 'user', 'me' );
+		echo 'me';
+	}
+
+	/**
+	 *
+	 * @route("/react/get/session")
+	 */
+	public function testSession() {
+		$v = USession::get ( 'user', 'not me' );
+		echo $v;
 	}
 }
 

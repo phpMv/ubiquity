@@ -29,4 +29,12 @@ class IndexCest {
 		$I->amOnPage ( "/react/get?p=555" );
 		$I->see ( '555', [ 'css' => 'body' ] );
 	}
+
+	// tests
+	public function tryToGotoReactGetSetSession(AcceptanceTester $I) {
+		$I->amOnPage ( "/react/set/session" );
+		$I->see ( 'me', [ 'css' => 'body' ] );
+		$I->amOnPage ( "/react/get/session" );
+		$I->see ( 'me', [ 'css' => 'body' ] );
+	}
 }
