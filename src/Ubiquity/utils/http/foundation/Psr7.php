@@ -36,7 +36,7 @@ class Psr7 {
 									'SERVER_PROTOCOL' => 'HTTP/1.1',
 									'REQUEST_TIME' => time () ], $request->getServerParams () );
 		$server ['PATH_INFO'] = '';
-		$server ['REQUEST_METHOD'] = strtoupper ( $method );
+		$server ['REQUEST_METHOD'] = \strtoupper ( $method );
 
 		if ($host != null) {
 			$server ['SERVER_NAME'] = $host;
@@ -58,12 +58,12 @@ class Psr7 {
 		if ($userInfo != null) {
 			$userInfo = explode ( ':', $userInfo );
 			$server ['PHP_AUTH_USER'] = $userInfo [0];
-			if (sizeof ( $userInfo ) > 1) {
+			if (\sizeof ( $userInfo ) > 1) {
 				$server ['PHP_AUTH_PW'] = $userInfo [1];
 			}
 		}
 		$path = $path ?? '/';
-		switch (strtoupper ( $method )) {
+		switch (\strtoupper ( $method )) {
 			case 'POST' :
 			case 'PUT' :
 			case 'DELETE' :
@@ -80,15 +80,15 @@ class Psr7 {
 		}
 		$queryString = '';
 		if ($uQuery != null) {
-			parse_str ( html_entity_decode ( $uQuery ), $qs );
+			parse_str ( \html_entity_decode ( $uQuery ), $qs );
 			if ($query) {
-				$query = array_replace ( $qs, $query );
-				$queryString = http_build_query ( $query, '', '&' );
+				$query = \array_replace ( $qs, $query );
+				$queryString = \http_build_query ( $query, '', '&' );
 			} else {
 				$queryString = $uQuery;
 			}
 		} elseif ($query) {
-			$queryString = http_build_query ( $query, '', '&' );
+			$queryString = \http_build_query ( $query, '', '&' );
 		}
 		$server ['REQUEST_URI'] = $path . ('' !== $queryString ? '?' . $queryString : '');
 		$server ['QUERY_STRING'] = $queryString;
@@ -99,7 +99,7 @@ class Psr7 {
 			$_POST = $parsedBody;
 		}
 		if (sizeof ( $parameters ) > 0) {
-			$_GET = array_merge ( $_GET, $parameters );
+			$_GET = \array_merge ( $_GET, $parameters );
 		}
 		$_SERVER = $server;
 		// To ADD $_FILES

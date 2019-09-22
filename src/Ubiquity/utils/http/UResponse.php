@@ -36,7 +36,7 @@ class UResponse {
 	 */
 	private static function _headerArray($headerField, $values) {
 		if (\is_array ( $values )) {
-			$values = \implode ( ", ", $values );
+			$values = \implode ( ', ', $values );
 		}
 		self::header ( $headerField, $values );
 	}
@@ -87,7 +87,7 @@ class UResponse {
 	 * @return boolean
 	 */
 	public static function isJSON() {
-		return isset ( self::$headers ["Content-Type"] ) && self::$headers ["Content-Type"] === 'application/json';
+		return isset ( self::$headers ['Content-Type'] ) && self::$headers ['Content-Type'] === 'application/json';
 	}
 
 	/**

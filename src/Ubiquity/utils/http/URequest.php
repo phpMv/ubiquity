@@ -27,8 +27,8 @@ class URequest {
 		if (! isset ( $values ))
 			$values = $_POST;
 		foreach ( $values as $key => $value ) {
-			$accessor = "set" . ucfirst ( $key );
-			if (method_exists ( $object, $accessor )) {
+			$accessor = 'set' . \ucfirst ( $key );
+			if (\method_exists ( $object, $accessor )) {
 				$object->$accessor ( $value );
 				$object->_rest [$key] = $value;
 			}
@@ -61,7 +61,7 @@ class URequest {
 	 * @param string $function the cleaning function, default htmlentities
 	 * @return array
 	 */
-	public static function getPost($function = "htmlentities") {
+	public static function getPost($function = 'htmlentities') {
 		return array_map ( $function, $_POST );
 	}
 
@@ -93,24 +93,24 @@ class URequest {
 		return self::getInput ();
 	}
 
-    /**
-     * Tests if a value is present on the request and is not empty
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
+	/**
+	 * Tests if a value is present on the request and is not empty
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
 	public static function filled($key) {
 		return isset ( $_REQUEST [$key] ) && $_REQUEST [$key] != null;
 	}
 
-    /**
-     * Tests if a value is present on the request
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
+	/**
+	 * Tests if a value is present on the request
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
 	public static function has($key) {
 		return isset ( $_REQUEST [$key] );
 	}
@@ -122,8 +122,8 @@ class URequest {
 	 */
 	public static function getContentType() {
 		$headers = Startup::getHttpInstance ()->getAllHeaders ();
-		if (isset ( $headers ["Content-Type"] )) {
-			return $headers ["Content-Type"];
+		if (isset ( $headers ['Content-Type'] )) {
+			return $headers ['Content-Type'];
 		}
 		return null;
 	}
@@ -135,18 +135,18 @@ class URequest {
 	 * https://www.dyeager.org/downloads/license-bsd.txt
 	 */
 	public static function getDefaultLanguage() {
-		if (isset ( $_SERVER ["HTTP_ACCEPT_LANGUAGE"] ))
-			return self::parseDefaultLanguage ( $_SERVER ["HTTP_ACCEPT_LANGUAGE"] );
+		if (isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] ))
+			return self::parseDefaultLanguage ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] );
 		else
 			return self::parseDefaultLanguage ( NULL );
 	}
 
 	private static function parseDefaultLanguage($http_accept, $deflang = "en") {
-		if (isset ( $http_accept ) && strlen ( $http_accept ) > 1) {
-			$x = explode ( ",", $http_accept );
+		if (isset ( $http_accept ) && \strlen ( $http_accept ) > 1) {
+			$x = \explode ( ",", $http_accept );
 			$lang = [ ];
 			foreach ( $x as $val ) {
-				if (preg_match ( "/(.*);q=([0-1]{0,1}.\d{0,4})/i", $val, $matches ))
+				if (\preg_match ( "/(.*);q=([0-1]{0,1}.\d{0,4})/i", $val, $matches ))
 					$lang [$matches [1]] = ( float ) $matches [2];
 				else
 					$lang [$val] = 1.0;
@@ -165,7 +165,7 @@ class URequest {
 
 	public static function setLocale(string $locale) {
 		try {
-			if (class_exists ( 'Locale', false )) {
+			if (\class_exists ( 'Locale', false )) {
 				\Locale::setDefault ( $locale );
 			}
 		} catch ( \Exception $e ) {
@@ -207,7 +207,7 @@ class URequest {
 	 */
 	public static function isJSON() {
 		$contentType = self::getContentType ();
-		return \stripos ( $contentType, "json" ) !== false;
+		return \stripos ( $contentType, 'json' ) !== false;
 	}
 
 	/**
@@ -248,15 +248,15 @@ class URequest {
 
 	public static function getUrl($url) {
 		$config = Startup::getConfig ();
-		$siteUrl = \rtrim ( $config ["siteUrl"], '/' );
-		if (UString::startswith ( $url, "/" ) === false) {
-			$url = "/" . $url;
+		$siteUrl = \rtrim ( $config ['siteUrl'], '/' );
+		if (UString::startswith ( $url, '/' ) === false) {
+			$url = '/' . $url;
 		}
 		return $siteUrl . $url;
 	}
 
 	public static function getUrlParts() {
-		return \explode ( "/", $_GET ["c"] );
+		return \explode ( '/', $_GET ['c'] );
 	}
 
 	/**
@@ -301,12 +301,12 @@ class URequest {
 	 * @see https://stackoverflow.com/questions/68651/can-i-get-php-to-stop-replacing-characters-in-get-or-post-arrays#68667
 	 */
 	public static function getRealInput($source = 'post') {
-		$pairs = explode ( "&", strtolower ( $source ) === 'get' ? $_SERVER ['QUERY_STRING'] : file_get_contents ( "php://input" ) );
+		$pairs = \explode ( '&', \strtolower ( $source ) === 'get' ? $_SERVER ['QUERY_STRING'] : file_get_contents ( 'php://input' ) );
 		$vars = array ();
 		foreach ( $pairs as $pair ) {
-			$nv = explode ( "=", $pair );
-			$name = urldecode ( $nv [0] );
-			$value = urldecode ( $nv [1] ?? '');
+			$nv = \explode ( "=", $pair );
+			$name = \urldecode ( $nv [0] );
+			$value = \urldecode ( $nv [1] ?? '');
 			$vars [$name] = $value;
 		}
 		return $vars;

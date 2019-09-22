@@ -21,7 +21,7 @@ class MultisiteSession extends AbstractSession {
 	const SESSION_ID = 'multi_session_id';
 
 	private function getKey($key) {
-		return md5 ( $key );
+		return \md5 ( $key );
 	}
 
 	private function getFilename($key) {
@@ -33,10 +33,10 @@ class MultisiteSession extends AbstractSession {
 	}
 
 	public function set($key, $value) {
-		$val = serialize ( $value );
-		$tmp = "/tmp/$key." . uniqid ( '', true ) . '.tmp';
-		file_put_contents ( $tmp, $val, LOCK_EX );
-		rename ( $tmp, $this->getFilename ( $key ) );
+		$val = \serialize ( $value );
+		$tmp = "/tmp/$key." . \uniqid ( '', true ) . '.tmp';
+		\file_put_contents ( $tmp, $val, LOCK_EX );
+		\rename ( $tmp, $this->getFilename ( $key ) );
 	}
 
 	public function getAll() {
@@ -50,9 +50,9 @@ class MultisiteSession extends AbstractSession {
 
 	public function get($key, $default = null) {
 		$filename = $this->getFilename ( $key );
-		if (file_exists ( $filename )) {
-			$f = file_get_contents ( $filename );
-			$val = unserialize ( $f );
+		if (\file_exists ( $filename )) {
+			$f = \file_get_contents ( $filename );
+			$val = \unserialize ( $f );
 		}
 		return isset ( $val ) ? $val : $default;
 	}
@@ -90,7 +90,7 @@ class MultisiteSession extends AbstractSession {
 	}
 
 	public function delete($key) {
-		unlink ( $this->getFilename ( $key ) );
+		\unlink ( $this->getFilename ( $key ) );
 	}
 }
 

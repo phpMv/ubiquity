@@ -25,7 +25,7 @@ class USession {
 	public static function getArray($arrayKey) {
 		if (self::$sessionInstance->exists ( $arrayKey )) {
 			$array = self::$sessionInstance->get ( $arrayKey );
-			if (! is_array ( $array ))
+			if (! \is_array ( $array ))
 				$array = [ ];
 		} else
 			$array = [ ];
@@ -43,7 +43,7 @@ class USession {
 	public static function addOrRemoveValueFromArray($arrayKey, $value, $add = null) {
 		$array = self::getArray ( $arrayKey );
 		$_SESSION [$arrayKey] = $array;
-		$search = array_search ( $value, $array );
+		$search = \array_search ( $value, $array );
 		if ($search === FALSE && $add) {
 			$array [] = $value;
 			self::$sessionInstance->set ( $arrayKey, $array );

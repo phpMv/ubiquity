@@ -23,7 +23,7 @@ class PhpSession extends AbstractSession {
 
 	public function start($name = null) {
 		if (! $this->isStarted ()) {
-			if (isset ( $name ) && $name !== "") {
+			if (isset ( $name ) && $name !== '') {
 				$this->name = $name;
 			}
 			if (isset ( $this->name )) {
@@ -39,15 +39,15 @@ class PhpSession extends AbstractSession {
 		$this->start ();
 		$_SESSION = array ();
 
-		if (\ini_get ( "session.use_cookies" )) {
+		if (\ini_get ( 'session.use_cookies' )) {
 			$params = \session_get_cookie_params ();
-			\setcookie ( \session_name (), '', \time () - 42000, $params ["path"], $params ["domain"], $params ["secure"], $params ["httponly"] );
+			\setcookie ( \session_name (), '', \time () - 42000, $params ['path'], $params ['domain'], $params ['secure'], $params ['httponly'] );
 		}
 		\session_destroy ();
 	}
 
 	public function isStarted() {
-		return session_status () == PHP_SESSION_ACTIVE;
+		return \session_status () == PHP_SESSION_ACTIVE;
 	}
 
 	public function exists($key) {
