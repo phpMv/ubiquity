@@ -138,6 +138,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::startDatabaseMysqli()
 	 */
 	public function testStartDatabaseMysqli() {
+		$this->config = include ROOT . 'config/config.php';
 		DAO::startDatabase ( $this->config, 'mysqli' );
 		$this->assertTrue ( DAO::isConnected () );
 		$this->assertInstanceOf ( Database::class, DAO::$db ['mysqli'] );
@@ -449,7 +450,7 @@ class DAOTest extends BaseTest {
 		$this->assertTrue ( $db1->isConnected () );
 		$db1->close ();
 		$this->assertFalse ( $db1->isConnected () );
-		$this->assertEquals ( $db2 = $this->dao->getDatabase ( 'mysqli' ), $this->dao->getDatabase ( 'mysqli' ) );
+		$db2 = $this->dao->getDatabase ( 'mysqli' );
 		$this->assertTrue ( $db2->isConnected () );
 		$db2->close ();
 		$this->assertFalse ( $db2->isConnected () );
@@ -471,6 +472,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::GetDatabases
 	 */
 	public function testGetDatabases() {
+		$this->config = include ROOT . 'config/config.php';
 		$dbs = $this->dao->getDatabases ();
 		$this->assertEquals ( 2, sizeof ( $dbs ) );
 	}
