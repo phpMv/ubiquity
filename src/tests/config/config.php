@@ -17,7 +17,9 @@ if (! defined ( 'DB_SERVER' )) {
 $_GET ["c"] = "TestController";
 return array (
 			"siteUrl" => "http://127.0.0.1/",
-			"database" => array ("type" => "mysql","dbName" => "messagerie","serverName" => DB_SERVER,"port" => 3306,"user" => "root","password" => "","options" => array (),"cache" => false ),
+			"database" => [
+							'default' => array ("type" => "mysql","dbName" => "messagerie","serverName" => DB_SERVER,"port" => 3306,"user" => "root","password" => "","options" => array (),"cache" => false ),
+							'mysqli' => array ("wrapper" => "\\Ubiquity\\db\\provider\\mysqli\\MysqliWrapper","type" => "mysql","dbName" => "messagerie","serverName" => DB_SERVER,"port" => 3306,"user" => "root","password" => "","options" => array (),"cache" => false ) ],
 			"namespaces" => array (),
 			"sessionName" => "messagerie",
 			"test" => false,
