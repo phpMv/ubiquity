@@ -8,7 +8,7 @@ namespace Ubiquity\utils\http;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class UCookie {
@@ -24,8 +24,8 @@ class UCookie {
 	 * @param boolean $httpOnly When true the cookie will be made accessible only through the HTTPprotocol
 	 * @return boolean
 	 */
-	public static function set($name, $value, $duration = 60*60*24, $path = '/', $secure = false, $httpOnly = false) {
-		\setcookie ( $name, $value, \time () + $duration, $path, $secure, $httpOnly );
+	public static function set($name, $value, $duration = 60*60*24, $path = '/', $secure = false, $httpOnly = false): bool {
+		return \setcookie ( $name, $value, \time () + $duration, $path, $secure, $httpOnly );
 	}
 
 	/**
@@ -33,9 +33,9 @@ class UCookie {
 	 *
 	 * @param string $name
 	 * @param string $default
-	 * @return null|string
+	 * @return ?string
 	 */
-	public static function get($name, $default = null) {
+	public static function get($name, $default = null): ?string {
 		return isset ( $_COOKIE [$name] ) ? $_COOKIE [$name] : $default;
 	}
 
@@ -45,17 +45,17 @@ class UCookie {
 	 * @param string $name
 	 * @param string $path
 	 */
-	public static function delete($name, $path = '/') {
+	public static function delete($name, $path = '/'): bool {
 		if (isset ( $_COOKIE [$name] )) {
 			unset ( $_COOKIE [$name] );
 		}
-		\setcookie ( $name, '', \time () - 3600, $path );
+		return \setcookie ( $name, '', \time () - 3600, $path );
 	}
 
 	/**
 	 * Deletes all cookies
 	 */
-	public static function deleteAll($path = '/') {
+	public static function deleteAll($path = '/'): void {
 		foreach ( $_COOKIE as $name => $value ) {
 			self::delete ( $name, $path );
 		}
@@ -68,7 +68,7 @@ class UCookie {
 	 * @return boolean
 	 * @since Ubiquity 2.0.11
 	 */
-	public static function exists($name) {
+	public static function exists($name): bool {
 		return isset ( $_COOKIE [$name] );
 	}
 
@@ -84,7 +84,7 @@ class UCookie {
 	 * @return boolean
 	 * @since Ubiquity 2.0.11
 	 */
-	public static function setRaw($name, $value, $duration = 60*60*24, $path = '/', $secure = false, $httpOnly = false) {
+	public static function setRaw($name, $value, $duration = 60*60*24, $path = '/', $secure = false, $httpOnly = false): bool {
 		return \setrawcookie ( $name, $value, \time () + $duration, $path, $secure, $httpOnly );
 	}
 }
