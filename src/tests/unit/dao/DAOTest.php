@@ -135,6 +135,16 @@ class DAOTest extends BaseTest {
 	}
 
 	/**
+	 * Tests DAO::startDatabaseMysqli()
+	 */
+	public function testStartDatabaseMysqli() {
+		DAO::startDatabase ( $this->config, 'mysqli' );
+		$this->assertTrue ( DAO::isConnected () );
+		$this->assertInstanceOf ( Database::class, DAO::$db ['mysqli'] );
+		$this->assertInstanceOf ( mysqli::class, DAO::$db ['mysqli']->getDbObject () );
+	}
+
+	/**
 	 * Tests DAO::getOne()
 	 */
 	public function testGetOne() {
@@ -428,6 +438,39 @@ class DAOTest extends BaseTest {
 		$this->_startDatabase ( $this->dao );
 		$this->assertEquals ( $countOrgas, DAO::count ( Organization::class ) );
 		$this->assertEquals ( $countUsers, DAO::count ( User::class ) );
+	}
+
+	/**
+	 * Tests DAO::GetDatabase
+	 */
+	public function testGetDatabase() {
+		$this->assertEquals ( $db1 = $this->dao->getDatabase (), $this->dao->getDatabase ( 'default' ) );
+		$this->assertTrue ( $db1->isConnected () );
+		$db1->close ();
+		$this->assertFalse ( $db1->isConnected () );
+		$this->assertEquals ( $db2 = $this->dao->getDatabase ( 'mysqli' ), $this->dao->getDatabase ( 'mysqli' ) );
+		$this->assertTrue ( $db2->isConnected () );
+		$db2->close ();
+		$this->assertFalse ( $db2->isConnected () );
+	}
+
+	/**
+	 * Tests DAO::GetDbOffset
+	 */
+	public function testGetDbOffset() {
+		$dbConfig1 = $this->dao->getDbOffset ( $this->config );
+		$this->assertEquals ( $dbConfig1 ['dbName'], 'messagerie' );
+		$dbConfig2 = $this->dao->getDbOffset ( $this->config, 'mysqli' );
+		$this->assertEquals ( $dbConfig2 ['dbName'], 'messagerie' );
+		$this->assertEquals ( $dbConfig2 ['wrapper'], "\\Ubiquity\\db\\provider\\mysqli\\MysqliWrapper" );
+	}
+
+	/**
+	 * Tests DAO::GetDatabases
+	 */
+	public function testGetDatabases() {
+		$dbs = $this->dao->getDatabases ();
+		$this->assertEquals ( 2, sizeof ( $dbs ) );
 	}
 }
 
