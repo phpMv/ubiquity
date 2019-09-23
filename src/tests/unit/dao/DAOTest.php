@@ -444,6 +444,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::GetDatabase
 	 */
 	public function testGetDatabase() {
+		$this->config = include ROOT . 'config/config.php';
 		$this->assertEquals ( $db1 = $this->dao->getDatabase (), $this->dao->getDatabase ( 'default' ) );
 		$this->assertTrue ( $db1->isConnected () );
 		$db1->close ();
@@ -458,6 +459,7 @@ class DAOTest extends BaseTest {
 	 * Tests DAO::GetDbOffset
 	 */
 	public function testGetDbOffset() {
+		$this->config = include ROOT . 'config/config.php';
 		$dbConfig1 = $this->dao->getDbOffset ( $this->config );
 		$this->assertEquals ( $dbConfig1 ['dbName'], 'messagerie' );
 		$dbConfig2 = $this->dao->getDbOffset ( $this->config, 'mysqli' );
