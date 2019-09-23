@@ -9,38 +9,38 @@ use Ubiquity\utils\base\UString;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  * @property array $routes
  *
  */
 trait RouterTestTrait {
 
-	public static function testRoutes($path, $method = null) {
+	public static function testRoutes($path, $method = null): array {
 		$response = [ ];
-		if(isset($path)){
-				$path = self::slashPath ( $path );
+		if (isset ( $path )) {
+			$path = self::slashPath ( $path );
 			if (isset ( self::$routes [$path] )) {
 				self::addTestRoute ( $response, $path, $method );
 			}
 		}
 		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if (preg_match ( "@^" . $routePath . "$@s", $path ) || $path == null) {
+			if (\preg_match ( "@^{$routePath}\$@s", $path ) || $path == null) {
 				self::addTestRoute ( $response, $routePath, $method );
 			}
 		}
 		return $response;
 	}
 
-	private static function addTestRoute(&$response, $path, $method = null) {
+	private static function addTestRoute(&$response, $path, $method = null): void {
 		if (isset ( $method )) {
 			$restrict = false;
 			if (UString::startswith ( $method, '-' )) {
 				$restrict = true;
-				$method = ltrim ( $method, '-' );
+				$method = \ltrim ( $method, '-' );
 			}
 			$routeMethod = self::getMethod ( self::$routes [$path] );
-			if ((sizeof($routeMethod)==0 && ! $restrict) || array_search( strtolower ( $method ),$routeMethod)!==false) {
+			if ((sizeof ( $routeMethod ) == 0 && ! $restrict) || \array_search ( \strtolower ( $method ), $routeMethod ) !== false) {
 				$response [$path] = self::$routes [$path];
 			}
 		} else {
@@ -48,11 +48,11 @@ trait RouterTestTrait {
 		}
 	}
 
-	private static function getMethod($routeDetails) {
-		if (! isset ( $routeDetails ["controller"] )) {
-			return array_keys($routeDetails);
+	private static function getMethod($routeDetails): array {
+		if (! isset ( $routeDetails ['controller'] )) {
+			return \array_keys ( $routeDetails );
 		}
-		return [];
+		return [ ];
 	}
 }
 
