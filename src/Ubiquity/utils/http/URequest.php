@@ -240,9 +240,9 @@ class URequest {
 	 *
 	 * @param string $key
 	 * @param string $default return value by default
-	 * @return string
+	 * @return mixed
 	 */
-	public static function post($key, $default = NULL): ?string {
+	public static function post($key, $default = NULL) {
 		return isset ( $_POST [$key] ) ? $_POST [$key] : $default;
 	}
 
@@ -301,7 +301,7 @@ class URequest {
 	 * @see https://stackoverflow.com/questions/68651/can-i-get-php-to-stop-replacing-characters-in-get-or-post-arrays#68667
 	 */
 	public static function getRealInput($source = 'post'): array {
-		$pairs = \explode ( '&', \strtolower ( $source ) === 'get' ? $_SERVER ['QUERY_STRING'] : file_get_contents ( 'php://input' ) );
+		$pairs = \explode ( '&', \strtolower ( $source ) === 'get' ? $_SERVER ['QUERY_STRING'] : \file_get_contents ( 'php://input' ) );
 		$vars = array ();
 		foreach ( $pairs as $pair ) {
 			$nv = \explode ( "=", $pair );
