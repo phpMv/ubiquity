@@ -3,7 +3,7 @@ return array (
 			"siteUrl" => "http://dev.local/",
 			"database" => [
 							'default' => array ("type" => "mysql","dbName" => "messagerie","serverName" => "127.0.0.1","port" => 3306,"user" => "root","password" => "","options" => array (),"cache" => false ),
-							'mysqli' => array ("wrapper" => "\\Ubiquity\\db\\provider\\mysqli\\MysqliWrapper","type" => "mysql","dbName" => "messagerie","serverName" => "127.0.0.1","port" => 3306,"user" => "root","password" => "","options" => array (),"cache" => false ) ],
+							'mysqli' => array ("wrapper" => "\\Ubiquity\\db\\providers\\mysqli\\MysqliWrapper","type" => "mysql","dbName" => "messagerie","serverName" => "127.0.0.1","port" => 3306,"user" => "root","password" => "","options" => array (),"cache" => false ) ],
 			"sessionName" => "verif",
 			"namespaces" => array (),
 			"templateEngine" => "Ubiquity\\views\\engine\\Twig",
