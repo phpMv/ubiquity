@@ -12,7 +12,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 trait DAORelationsAssignmentsTrait {
@@ -115,6 +115,15 @@ trait DAORelationsAssignmentsTrait {
 						self::setToMember ( $member, $object, $ret, $accessor );
 					}
 				}
+			}
+		}
+	}
+
+	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $elementAccessor, $prop) {
+		foreach ( $array as $element ) {
+			$elementRef = $element->$elementAccessor ();
+			if (($elementRef == $fkv) || (\is_object ( $elementRef ) && Reflexion::getPropValue ( $elementRef, $prop ) == $fkv)) {
+				$ret [] = $element;
 			}
 		}
 	}

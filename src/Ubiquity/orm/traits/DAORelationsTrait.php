@@ -133,6 +133,32 @@ trait DAORelationsTrait {
 		}
 	}
 
+	private static function getManyToManyFromArray($instance, $array, $class, $parser) {
+		$ret = [ ];
+		$continue = true;
+		$accessorToMember = "get" . \ucfirst ( $parser->getInversedBy () );
+		$myPkAccessor = "get" . \ucfirst ( $parser->getMyPk () );
+		$pk = self::getFirstKeyValue_ ( $instance );
+
+		if (sizeof ( $array ) > 0) {
+			$continue = \method_exists ( current ( $array ), $accessorToMember );
+		}
+		if ($continue) {
+			foreach ( $array as $targetEntityInstance ) {
+				$instances = $targetEntityInstance->$accessorToMember ();
+				if (is_array ( $instances )) {
+					foreach ( $instances as $inst ) {
+						if ($inst->$myPkAccessor () == $pk)
+							\array_push ( $ret, $targetEntityInstance );
+					}
+				}
+			}
+		} else {
+			Logger::warn ( "DAO", "L'accesseur au membre " . $parser->getInversedBy () . " est manquant pour " . $parser->getTargetEntity (), "ManyToMany" );
+		}
+		return $ret;
+	}
+
 	/**
 	 * Loads member associated with $instance by a ManyToOne relationship
 	 *

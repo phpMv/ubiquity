@@ -42,41 +42,6 @@ trait DAOCoreTrait {
 
 	abstract protected static function getDb($model);
 
-	private static function _getOneToManyFromArray(&$ret, $array, $fkv, $elementAccessor, $prop) {
-		foreach ( $array as $element ) {
-			$elementRef = $element->$elementAccessor ();
-			if (($elementRef == $fkv) || (is_object ( $elementRef ) && Reflexion::getPropValue ( $elementRef, $prop ) == $fkv)) {
-				$ret [] = $element;
-			}
-		}
-	}
-
-	private static function getManyToManyFromArray($instance, $array, $class, $parser) {
-		$ret = [ ];
-		$continue = true;
-		$accessorToMember = "get" . \ucfirst ( $parser->getInversedBy () );
-		$myPkAccessor = "get" . \ucfirst ( $parser->getMyPk () );
-		$pk = self::getFirstKeyValue_ ( $instance );
-
-		if (sizeof ( $array ) > 0) {
-			$continue = \method_exists ( current ( $array ), $accessorToMember );
-		}
-		if ($continue) {
-			foreach ( $array as $targetEntityInstance ) {
-				$instances = $targetEntityInstance->$accessorToMember ();
-				if (is_array ( $instances )) {
-					foreach ( $instances as $inst ) {
-						if ($inst->$myPkAccessor () == $pk)
-							\array_push ( $ret, $targetEntityInstance );
-					}
-				}
-			}
-		} else {
-			Logger::warn ( "DAO", "L'accesseur au membre " . $parser->getInversedBy () . " est manquant pour " . $parser->getTargetEntity (), "ManyToMany" );
-		}
-		return $ret;
-	}
-
 	protected static function getClass_($instance) {
 		if (is_object ( $instance )) {
 			return get_class ( $instance );
