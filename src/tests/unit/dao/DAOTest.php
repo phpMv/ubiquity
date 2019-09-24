@@ -4,6 +4,7 @@ use models\User;
 use models\Organization;
 use Ubiquity\db\Database;
 use models\Groupe;
+use Ubiquity\controllers\Startup;
 
 /**
  * DAO test case.
@@ -473,6 +474,7 @@ class DAOTest extends BaseTest {
 	 */
 	public function testGetDatabases() {
 		$this->config = include ROOT . 'config/config.php';
+		Startup::$config = $this->config;
 		$dbs = $this->dao->getDatabases ();
 		$this->assertEquals ( 2, sizeof ( $dbs ) );
 	}
