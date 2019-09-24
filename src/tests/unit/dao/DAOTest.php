@@ -454,7 +454,7 @@ class DAOTest extends BaseTest {
 		$db2 = $this->dao->getDatabase ( 'mysqli' );
 		$this->assertTrue ( $db2->isConnected () );
 		$db2->close ();
-		$this->assertFalse ( $db2->isConnected () );
+		$this->assertNull ( $db2 );
 	}
 
 	/**
