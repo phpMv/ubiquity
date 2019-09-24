@@ -7,6 +7,8 @@ use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\db\Database;
+use Ubiquity\log\Logger;
+use Ubiquity\db\SqlUtils;
 
 /**
  *
@@ -127,6 +129,115 @@ trait DAORelationsTrait {
 			}
 			if (isset ( $manyToManyFields )) {
 				self::getToManyFields ( $included, $manyToManyFields );
+			}
+		}
+	}
+
+	/**
+	 * Loads member associated with $instance by a ManyToOne relationship
+	 *
+	 * @param object|array $instance The instance object or an array with [classname,id]
+	 * @param string $member The member to load
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param boolean|null $useCache
+	 */
+	public static function getManyToOne($instance, $member, $included = false, $useCache = NULL) {
+		$classname = self::getClass_ ( $instance );
+		if (is_array ( $instance )) {
+			$instance = self::getById ( $classname, $instance [1], false, $useCache );
+		}
+		$fieldAnnot = OrmUtils::getMemberJoinColumns ( $classname, $member );
+		if ($fieldAnnot !== null) {
+			$annotationArray = $fieldAnnot [1];
+			$member = $annotationArray ["member"];
+			$value = Reflexion::getMemberValue ( $instance, $member );
+			$key = OrmUtils::getFirstKey ( $annotationArray ["className"] );
+			$kv = array ($key => $value );
+			$obj = self::getById ( $annotationArray ["className"], $kv, $included, $useCache );
+			if ($obj !== null) {
+				Logger::info ( "DAO", "Loading the member " . $member . " for the object " . $classname, "getManyToOne" );
+				$accesseur = "set" . ucfirst ( $member );
+				if (\is_object ( $instance ) && \method_exists ( $instance, $accesseur )) {
+					$instance->$accesseur ( $obj );
+					$instance->_rest [$member] = $obj->_rest;
+				}
+				return $obj;
+			}
+		}
+	}
+
+	/**
+	 * Assign / load the child records in the $member member of $instance.
+	 *
+	 * @param object|array $instance The instance object or an array with [classname,id]
+	 * @param string $member Member on which a oneToMany annotation must be present
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param boolean $useCache
+	 * @param array $annot used internally
+	 */
+	public static function getOneToMany($instance, $member, $included = true, $useCache = NULL, $annot = null) {
+		$ret = array ();
+		$class = self::getClass_ ( $instance );
+		if (! isset ( $annot )) {
+			$annot = OrmUtils::getAnnotationInfoMember ( $class, "#oneToMany", $member );
+		}
+		if ($annot !== false) {
+			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
+			if ($fkAnnot !== false) {
+				$fkv = self::getFirstKeyValue_ ( $instance );
+				$db = self::getDb ( $annot ["className"] );
+				$ret = self::_getAll ( $db, $annot ["className"], ConditionParser::simple ( $db->quote . $fkAnnot ["name"] . $db->quote . "= ?", $fkv ), $included, $useCache );
+				if (is_object ( $instance ) && $modifier = self::getAccessor ( $member, $instance, 'getOneToMany' )) {
+					self::setToMember ( $member, $instance, $ret, $modifier );
+				}
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 * Assigns / loads the child records in the $member member of $instance.
+	 * If $array is null, the records are loaded from the database
+	 *
+	 * @param object|array $instance The instance object or an array with [classname,id]
+	 * @param string $member Member on which a ManyToMany annotation must be present
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param array $array optional parameter containing the list of possible child records
+	 * @param boolean $useCache
+	 */
+	public static function getManyToMany($instance, $member, $included = false, $array = null, $useCache = NULL) {
+		$ret = [ ];
+		$class = self::getClass_ ( $instance );
+		$parser = new ManyToManyParser ( $class, $member );
+		if ($parser->init ()) {
+			if (\is_null ( $array )) {
+				$pk = self::getFirstKeyValue_ ( $instance );
+				$quote = SqlUtils::$quote;
+				$condition = " INNER JOIN " . $quote . $parser->getJoinTable () . $quote . " on " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getFkField () . $quote . "=" . $quote . $parser->getTargetEntityTable () . $quote . "." . $quote . $parser->getPk () . $quote . " WHERE " . $quote . $parser->getJoinTable () . $quote . "." . $quote . $parser->getMyFkField () . $quote . "= ?";
+				$targetEntityClass = $parser->getTargetEntityClass ();
+				$ret = self::_getAll ( self::getDb ( $targetEntityClass ), $targetEntityClass, ConditionParser::simple ( $condition, $pk ), $included, $useCache );
+			} else {
+				$ret = self::getManyToManyFromArray ( $instance, $array, $class, $parser );
+			}
+			if (\is_object ( $instance ) && $modifier = self::getAccessor ( $member, $instance, 'getManyToMany' )) {
+				self::setToMember ( $member, $instance, $ret, $modifier );
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 *
+	 * @param object $instance
+	 * @param array $array
+	 * @param boolean $useCache
+	 */
+	public static function affectsManyToManys($instance, $array = NULL, $useCache = NULL) {
+		$metaDatas = OrmUtils::getModelMetadata ( \get_class ( $instance ) );
+		$manyToManyFields = $metaDatas ["#manyToMany"];
+		if (\sizeof ( $manyToManyFields ) > 0) {
+			foreach ( $manyToManyFields as $member ) {
+				self::getManyToMany ( $instance, $member, false, $array, $useCache );
 			}
 		}
 	}

@@ -17,7 +17,7 @@ use Ubiquity\orm\DAO;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.2
+ * @version 1.1.3
  *
  */
 trait StartupConfigTrait {
@@ -26,23 +26,23 @@ trait StartupConfigTrait {
 	protected static $httpInstance;
 	protected static $sessionInstance;
 
-	public static function getConfig() {
+	public static function getConfig(): array {
 		return self::$config;
 	}
 
-	public static function setConfig($config) {
+	public static function setConfig($config): void {
 		self::$config = $config;
 	}
 
-	public static function getModelsDir() {
+	public static function getModelsDir(): string {
 		return self::$config ['mvcNS'] ['models'];
 	}
 
-	public static function getModelsCompletePath() {
+	public static function getModelsCompletePath(): string {
 		return \ROOT . \DS . self::getModelsDir ();
 	}
 
-	protected static function needsKeyInConfigArray(&$result, $array, $needs) {
+	protected static function needsKeyInConfigArray(&$result, $array, $needs): void {
 		foreach ( $needs as $need ) {
 			if (! isset ( $array [$need] ) || UString::isNull ( $array [$need] )) {
 				$result [] = $need;
@@ -50,16 +50,16 @@ trait StartupConfigTrait {
 		}
 	}
 
-	public static function getNS($part = 'controllers') {
+	public static function getNS($part = 'controllers'): string {
 		$ns = self::$config ['mvcNS'] [$part];
 		return ($ns != null) ? $ns .= "\\" : $ns;
 	}
 
-	protected static function setCtrlNS() {
+	protected static function setCtrlNS(): string {
 		return self::$ctrlNS = self::getNS ();
 	}
 
-	public static function checkDbConfig($offset = 'default') {
+	public static function checkDbConfig($offset = 'default'): array {
 		$config = self::$config;
 		$result = [ ];
 		$needs = [ "type","dbName","serverName" ];
@@ -71,7 +71,7 @@ trait StartupConfigTrait {
 		return $result;
 	}
 
-	public static function checkModelsConfig() {
+	public static function checkModelsConfig(): array {
 		$config = self::$config;
 		$result = [ ];
 		if (! isset ( $config ['mvcNS'] )) {
@@ -82,7 +82,7 @@ trait StartupConfigTrait {
 		return $result;
 	}
 
-	public static function reloadConfig() {
+	public static function reloadConfig(): array {
 		$appDir = \dirname ( \ROOT );
 		$filename = $appDir . "/app/config/config.php";
 		self::$config = include ($filename);
@@ -90,7 +90,7 @@ trait StartupConfigTrait {
 		return self::$config;
 	}
 
-	public static function reloadServices() {
+	public static function reloadServices(): void {
 		$config = self::$config; // used in services.php
 		include \ROOT . 'config/services.php';
 	}
@@ -117,25 +117,25 @@ trait StartupConfigTrait {
 		return self::saveConfig ( self::$config );
 	}
 
-	public static function getHttpInstance() {
+	public static function getHttpInstance(): AbstractHttp {
 		if (! isset ( self::$httpInstance )) {
 			self::$httpInstance = new PhpHttp ();
 		}
 		return self::$httpInstance;
 	}
 
-	public static function setHttpInstance(AbstractHttp $httpInstance) {
+	public static function setHttpInstance(AbstractHttp $httpInstance): void {
 		self::$httpInstance = $httpInstance;
 	}
 
-	public static function getSessionInstance() {
+	public static function getSessionInstance(): AbstractSession {
 		if (! isset ( self::$sessionInstance )) {
 			self::$sessionInstance = new PhpSession ();
 		}
 		return self::$sessionInstance;
 	}
 
-	public static function setSessionInstance(AbstractSession $sessionInstance) {
+	public static function setSessionInstance(AbstractSession $sessionInstance): void {
 		self::$sessionInstance = $sessionInstance;
 	}
 }
