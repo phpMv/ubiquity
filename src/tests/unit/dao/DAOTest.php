@@ -465,7 +465,7 @@ class DAOTest extends BaseTest {
 		$this->assertEquals ( $dbConfig1 ['dbName'], 'messagerie' );
 		$dbConfig2 = $this->dao->getDbOffset ( $this->config, 'mysqli' );
 		$this->assertEquals ( $dbConfig2 ['dbName'], 'messagerie' );
-		$this->assertEquals ( $dbConfig2 ['wrapper'], "\\Ubiquity\\db\\provider\\mysqli\\MysqliWrapper" );
+		$this->assertEquals ( $dbConfig2 ['wrapper'], "\\Ubiquity\\db\\providers\\mysqli\\MysqliWrapper" );
 	}
 
 	/**
