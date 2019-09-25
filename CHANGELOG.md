@@ -5,7 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+- Nothing
+## [2.3.1] 2019-09-25
 ### Added
+- `workerman` server
+Usage:
+```
+Ubiquity serve -t=workerman -p=8091
+```
 - `Memcached` support
 - multi db types support (Db Wrapper)
   - `Tarantool` database support on a [proposal](https://github.com/phpMv/ubiquity/issues/64) from [@zilveer](https://github.com/zilveer)
