@@ -28,7 +28,7 @@ trait DAOCoreTrait {
 	protected static $accessors = [ ];
 	protected static $fields = [ ];
 
-	abstract protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
+	abstract protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache): void;
 
 	abstract protected static function prepareManyToMany(&$ret, $instance, $member, $annot = null);
 
@@ -36,7 +36,7 @@ trait DAOCoreTrait {
 
 	abstract protected static function prepareOneToMany(&$ret, $instance, $member, $annot = null);
 
-	abstract protected static function _initRelationFields($included, $metaDatas, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields);
+	abstract protected static function _initRelationFields($included, $metaDatas, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields): void;
 
 	abstract protected static function getIncludedForStep($included);
 

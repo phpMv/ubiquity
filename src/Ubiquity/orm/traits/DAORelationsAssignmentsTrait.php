@@ -5,6 +5,8 @@ namespace Ubiquity\orm\traits;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\log\Logger;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\orm\parser\ConditionParser;
+use Ubiquity\orm\parser\ManyToManyParser;
 
 /**
  * Used by DAO class, realize relations assignments.
@@ -32,7 +34,7 @@ trait DAORelationsAssignmentsTrait {
 		return false;
 	}
 
-	protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache) {
+	protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache): void {
 		if (\sizeof ( $manyToOneQueries ) > 0) {
 			self::_affectsObjectsFromArray ( $manyToOneQueries, $included, function ($object, $member, $manyToOneObjects, $fkField, $accessor) {
 				self::affectsManyToOneFromArray ( $object, $member, $manyToOneObjects, $fkField, $accessor );
@@ -126,6 +128,36 @@ trait DAORelationsAssignmentsTrait {
 				$ret [] = $element;
 			}
 		}
+	}
+
+	private static function generateManyToManyParser(ManyToManyParser $parser, &$myPkValues): ConditionParser {
+		$sql = $parser->generateConcatSQL ();
+		$result = self::getDb ( $parser->getTargetEntityClass () )->prepareAndFetchAll ( $sql, $parser->getWhereValues () );
+		$condition = $parser->getParserWhereMask ( ' ?' );
+		$cParser = new ConditionParser ();
+		foreach ( $result as $row ) {
+			$values = explode ( ',', $row ['_concat'] );
+			$myPkValues [$row ['_field']] = $values;
+			$cParser->addParts ( $condition, $values );
+		}
+		$cParser->compileParts ();
+		return $cParser;
+	}
+
+	private static function _getIncludedNext($included, $member) {
+		return (isset ( $included [$member] )) ? (\is_bool ( $included [$member] ) ? $included [$member] : [ $included [$member] ]) : false;
+	}
+
+	private static function getManyToManyFromArrayIds($objectClass, $relationObjects, $ids): array {
+		$ret = [ ];
+		$prop = OrmUtils::getFirstPropKey ( $objectClass );
+		foreach ( $relationObjects as $targetEntityInstance ) {
+			$id = Reflexion::getPropValue ( $targetEntityInstance, $prop );
+			if (\array_search ( $id, $ids ) !== false) {
+				\array_push ( $ret, $targetEntityInstance );
+			}
+		}
+		return $ret;
 	}
 }
 
