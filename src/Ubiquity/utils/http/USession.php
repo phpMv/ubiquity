@@ -71,9 +71,9 @@ class USession {
 	 *
 	 * @param string $arrayKey the key of the array to add in
 	 * @param mixed $value the value to add
-	 * @return boolean
+	 * @return boolean|null
 	 */
-	public static function addValueToArray($arrayKey, $value): bool {
+	public static function addValueToArray($arrayKey, $value): ?bool {
 		return self::addOrRemoveValueFromArray ( $arrayKey, $value, true );
 	}
 
