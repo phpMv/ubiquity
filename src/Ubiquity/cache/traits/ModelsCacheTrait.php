@@ -59,11 +59,11 @@ trait ModelsCacheTrait {
 				if (! $forChecking) {
 					self::createOrmModelCache ( $model );
 					$db = 'default';
-					$ret = Reflexion::getAnnotationClass ( $model, "@database" );
+					$ret = Reflexion::getAnnotationClass ( $model, '@database' );
 					if (\sizeof ( $ret ) > 0) {
 						$db = $ret [0]->name;
 						if (! isset ( $config ['database'] [$db] )) {
-							throw new UbiquityException ( $db . " connection is not defined in config array" );
+							throw new UbiquityException ( $db . ' connection is not defined in config array' );
 						}
 					}
 					$modelsDb [$model] = $db;
@@ -72,7 +72,7 @@ trait ModelsCacheTrait {
 			}
 		}
 		if (! $forChecking) {
-			self::$cache->store ( 'models\_modelsDatabases', "return " . UArray::asPhpArray ( $modelsDb, "array" ) . ";", 'models' );
+			self::$cache->store ( 'models\_modelsDatabases', 'return ' . UArray::asPhpArray ( $modelsDb, 'array' ) . ';', 'models' );
 		}
 		if (! $silent) {
 			echo "Models cache reset\n";
@@ -109,7 +109,7 @@ trait ModelsCacheTrait {
 	 * @return array
 	 */
 	public static function getModelsFiles(&$config, $silent = false) {
-		return self::_getFiles ( $config, "models", $silent );
+		return self::_getFiles ( $config, 'models', $silent );
 	}
 
 	/**
@@ -125,7 +125,7 @@ trait ModelsCacheTrait {
 		foreach ( $files as $file ) {
 			$className = ClassUtils::getClassFullNameFromFile ( $file );
 			$db = 'default';
-			$ret = Reflexion::getAnnotationClass ( $className, "@database" );
+			$ret = Reflexion::getAnnotationClass ( $className, '@database' );
 			if (\sizeof ( $ret ) > 0) {
 				$db = $ret [0]->name;
 			}

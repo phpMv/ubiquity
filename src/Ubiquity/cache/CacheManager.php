@@ -19,7 +19,7 @@ use mindplay\annotations\Annotations;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class CacheManager {
@@ -43,7 +43,7 @@ class CacheManager {
 		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
 		Annotations::$config ['cache'] = new AnnotationCache ( $cacheDirectory . '/annotations' );
 		self::register ( Annotations::getManager () );
-		self::getCacheInstance ( $config, $cacheDirectory, ".cache" );
+		self::getCacheInstance ( $config, $cacheDirectory, '.cache' );
 	}
 
 	/**
@@ -58,22 +58,17 @@ class CacheManager {
 	}
 
 	protected static function getCacheInstance(&$config, $cacheDirectory, $postfix) {
-		$cacheSystem = 'Ubiquity\cache\system\ArrayCache';
-		$cacheParams = [ ];
 		if (! isset ( self::$cache )) {
-			if (isset ( $config ["cache"] ["system"] )) {
-				$cacheSystem = $config ["cache"] ["system"];
-			}
-			if (isset ( $config ["cache"] ["params"] )) {
-				$cacheParams = $config ["cache"] ["params"];
-			}
+			$cacheSystem = $config ['cache'] ['system'] ?? 'Ubiquity\cache\system\ArrayCache';
+			$cacheParams = $config ['cache'] ['params'] ?? [ ];
+
 			self::$cache = new $cacheSystem ( $cacheDirectory, $postfix, $cacheParams );
 		}
 		return self::$cache;
 	}
 
 	private static function initialGetCacheDirectory(&$config) {
-		return $config ["cache"] ["directory"] ?? ($config ["cache"] ["directory"] = "cache" . \DS);
+		return $config ['cache'] ['directory'] ?? ($config ['cache'] ['directory'] = 'cache' . \DS);
 	}
 
 	/**
@@ -133,22 +128,22 @@ class CacheManager {
 			echo "cache directory is " . UFileSystem::cleanPathname ( $rootDS . $cacheDirectory ) . "\n";
 		}
 		$cacheDirectory = $rootDS . $cacheDirectory . \DS;
-		$modelsDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["models"] );
-		$controllersDir = str_replace ( "\\", \DS, $config ["mvcNS"] ["controllers"] );
-		$annotationCacheDir = $cacheDirectory . "annotations";
+		$modelsDir = str_replace ( "\\", \DS, $config ['mvcNS'] ['models'] );
+		$controllersDir = str_replace ( "\\", \DS, $config ['mvcNS'] ['controllers'] );
+		$annotationCacheDir = $cacheDirectory . 'annotations';
 		$modelsCacheDir = $cacheDirectory . $modelsDir;
-		$queriesCacheDir = $cacheDirectory . "queries";
+		$queriesCacheDir = $cacheDirectory . 'queries';
 		$controllersCacheDir = $cacheDirectory . $controllersDir;
-		$viewsCacheDir = $cacheDirectory . "views";
-		$seoCacheDir = $cacheDirectory . "seo";
-		$gitCacheDir = $cacheDirectory . "git";
-		$contentsCacheDir = $cacheDirectory . "contents";
-		return [ "annotations" => $annotationCacheDir,"models" => $modelsCacheDir,"controllers" => $controllersCacheDir,"queries" => $queriesCacheDir,"views" => $viewsCacheDir,"seo" => $seoCacheDir,"git" => $gitCacheDir,"contents" => $contentsCacheDir ];
+		$viewsCacheDir = $cacheDirectory . 'views';
+		$seoCacheDir = $cacheDirectory . 'seo';
+		$gitCacheDir = $cacheDirectory . 'git';
+		$contentsCacheDir = $cacheDirectory . 'contents';
+		return [ 'annotations' => $annotationCacheDir,'models' => $modelsCacheDir,'controllers' => $controllersCacheDir,'queries' => $queriesCacheDir,'views' => $viewsCacheDir,'seo' => $seoCacheDir,'git' => $gitCacheDir,'contents' => $contentsCacheDir ];
 	}
 
 	private static function safeMkdir($dir) {
-		if (! is_dir ( $dir ))
-			return mkdir ( $dir, 0777, true );
+		if (! \is_dir ( $dir ))
+			return \mkdir ( $dir, 0777, true );
 	}
 
 	/**
@@ -157,16 +152,16 @@ class CacheManager {
 	 * @param array $config
 	 * @param string $type
 	 */
-	public static function clearCache(&$config, $type = "all") {
+	public static function clearCache(&$config, $type = 'all') {
 		$cacheDirectories = self::checkCache ( $config );
-		$cacheDirs = [ "annotations","controllers","models","queries","views","contents" ];
+		$cacheDirs = [ 'annotations','controllers','models','queries','views','contents' ];
 		foreach ( $cacheDirs as $typeRef ) {
 			self::_clearCache ( $cacheDirectories, $type, $typeRef );
 		}
 	}
 
 	private static function _clearCache($cacheDirectories, $type, $typeRef) {
-		if ($type === "all" || $type === $typeRef)
+		if ($type === 'all' || $type === $typeRef)
 			UFileSystem::deleteAllFilesFromFolder ( $cacheDirectories [$typeRef] );
 	}
 
@@ -176,14 +171,14 @@ class CacheManager {
 	 * @param string $type
 	 * @param boolean $silent
 	 */
-	public static function initCache(&$config, $type = "all", $silent = false) {
+	public static function initCache(&$config, $type = 'all', $silent = false) {
 		self::checkCache ( $config, $silent );
 		self::start ( $config );
-		if ($type === "all" || $type === "models")
+		if ($type === 'all' || $type === 'models')
 			self::initModelsCache ( $config, false, $silent );
-		if ($type === "all" || $type === "controllers")
+		if ($type === 'all' || $type === 'controllers')
 			self::initRouterCache ( $config, $silent );
-		if ($type === "all" || $type === "rest")
+		if ($type === 'all' || $type === 'rest')
 			self::initRestCache ( $config, $silent );
 	}
 
@@ -194,7 +189,7 @@ class CacheManager {
 	 */
 	public static function getAllRoutes() {
 		$routes = self::getControllerCache ();
-		return array_merge ( $routes, self::getControllerCache ( true ) );
+		return \array_merge ( $routes, self::getControllerCache ( true ) );
 	}
 
 	/**
@@ -206,15 +201,15 @@ class CacheManager {
 	 * @return array
 	 */
 	protected static function _getFiles(&$config, $type, $silent = false) {
-		$typeNS = $config ["mvcNS"] [$type];
-		$typeDir = \ROOT . \DS . str_replace ( "\\", \DS, $typeNS );
+		$typeNS = $config ['mvcNS'] [$type];
+		$typeDir = \ROOT . \DS . \str_replace ( "\\", \DS, $typeNS );
 		if (! $silent)
-			echo \ucfirst ( $type ) . " directory is " . \ROOT . $typeNS . "\n";
+			echo \ucfirst ( $type ) . ' directory is ' . \ROOT . $typeNS . "\n";
 		return UFileSystem::glob_recursive ( $typeDir . \DS . '*.php' );
 	}
 
 	private static function register(AnnotationManager $annotationManager) {
-		$annotationManager->registry = array_merge ( $annotationManager->registry, [
+		$annotationManager->registry = \array_merge ( $annotationManager->registry, [
 																						'id' => 'Ubiquity\annotations\IdAnnotation',
 																						'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
 																						'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
