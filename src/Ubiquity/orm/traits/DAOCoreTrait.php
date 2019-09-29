@@ -5,7 +5,6 @@ namespace Ubiquity\orm\traits;
 use Ubiquity\db\SqlUtils;
 use Ubiquity\events\DAOEvents;
 use Ubiquity\events\EventsManager;
-use Ubiquity\log\Logger;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\Reflexion;
