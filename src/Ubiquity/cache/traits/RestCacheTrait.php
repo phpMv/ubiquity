@@ -30,7 +30,7 @@ trait RestCacheTrait {
 					$restCache = \array_merge ( $restCache, $parser->asArray () );
 			}
 		}
-		self::$cache->store ( "controllers/rest", "return " . UArray::asPhpArray ( $restCache, "array" ) . ";", 'controllers' );
+		self::$cache->store ( 'controllers/rest', 'return ' . UArray::asPhpArray ( $restCache, 'array' ) . ';', 'controllers' );
 		if (! $silent) {
 			echo "Rest cache reset\n";
 		}
@@ -41,22 +41,22 @@ trait RestCacheTrait {
 		$restCache = self::getRestCache ();
 		foreach ( $restCache as $controllerClass => $restAttributes ) {
 			if (isset ( $restCache [$controllerClass] )) {
-				$result [$controllerClass] = [ "restAttributes" => $restAttributes,"routes" => self::getControllerRoutes ( $controllerClass, true ) ];
+				$result [$controllerClass] = [ 'restAttributes' => $restAttributes,'routes' => self::getControllerRoutes ( $controllerClass, true ) ];
 			}
 		}
 		return $result;
 	}
 
 	public static function getRestCache() {
-		if (self::$cache->exists ( "controllers/rest" ))
-			return self::$cache->fetch ( "controllers/rest" );
-		throw new RestException ( "Rest cache entry `" . self::$cache->getEntryKey ( "controllers/rest" ) . "` is missing.\nTry to Re-init Rest cache." );
+		if (self::$cache->exists ( 'controllers/rest' ))
+			return self::$cache->fetch ( 'controllers/rest' );
+		throw new RestException ( 'Rest cache entry `' . self::$cache->getEntryKey ( 'controllers/rest' ) . '` is missing.\nTry to Re-init Rest cache.' );
 	}
 
 	public static function getRestResource($controllerClass) {
 		$cacheControllerClass = self::getRestCacheController ( $controllerClass );
 		if (isset ( $cacheControllerClass ))
-			return $cacheControllerClass ["resource"];
+			return $cacheControllerClass ['resource'];
 		return null;
 	}
 

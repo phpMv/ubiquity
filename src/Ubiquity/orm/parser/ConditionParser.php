@@ -2,7 +2,6 @@
 
 namespace Ubiquity\orm\parser;
 
-use Ubiquity\utils\base\UArray;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\db\SqlUtils;
 
@@ -13,7 +12,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class ConditionParser {
@@ -26,19 +25,19 @@ class ConditionParser {
 	public function __construct($condition = null, $firstPart = null, $params = null) {
 		$this->condition = $condition;
 		$this->firstPart = $firstPart;
-		if (is_array ( $params )) {
+		if (\is_array ( $params )) {
 			$this->setParams ( $params );
 		}
 	}
 
-	public function addKeyValues($keyValues, $classname, $separator = " AND ") {
-		if (! is_array ( $keyValues )) {
+	public function addKeyValues($keyValues, $classname, $separator = ' AND ') {
+		if (! \is_array ( $keyValues )) {
 			$this->condition = $this->parseKey ( $keyValues, $classname );
 		} else {
-			if (! UArray::isAssociative ( $keyValues )) {
+			if ((\array_keys ( $keyValues ) === \range ( 0, \count ( $keyValues ) - 1 ))) { // Not associative array
 				if (isset ( $classname )) {
 					$keys = OrmUtils::getKeyFields ( $classname );
-					if (is_array ( $keys )) {
+					if (\is_array ( $keys )) {
 						$keyValues = \array_combine ( $keys, $keyValues );
 					}
 				}
@@ -46,15 +45,15 @@ class ConditionParser {
 			$retArray = array ();
 			foreach ( $keyValues as $key => $value ) {
 				if ($this->addParams ( $value )) {
-					$retArray [] = SqlUtils::$quote . $key . SqlUtils::$quote . " = ?";
+					$retArray [] = SqlUtils::$quote . $key . SqlUtils::$quote . ' = ?';
 				}
 			}
-			$this->condition = implode ( $separator, $retArray );
+			$this->condition = \implode ( $separator, $retArray );
 		}
 	}
 
 	public function setKeyValues($values) {
-		if (! is_array ( $values )) {
+		if (! \is_array ( $values )) {
 			$this->params = [ $values => true ];
 		} else {
 			$this->params = [ ];
@@ -87,24 +86,24 @@ class ConditionParser {
 		}
 	}
 
-	public function compileParts($separator = " OR ") {
-		if ($separator == " OR " && sizeof ( $this->parts ) > 3) {
+	public function compileParts($separator = ' OR ') {
+		if ($separator == ' OR ' && \sizeof ( $this->parts ) > 3) {
 			$parts = $this->refactorParts ();
 			$conditions = [ ];
 			foreach ( $parts as $part => $values ) {
-				$values [0] = "SELECT ? as _id";
-				$conditions [] = " INNER JOIN (" . implode ( " UNION ALL SELECT ", $values ) . ") as _tmp ON " . $part . "=_tmp._id";
+				$values [0] = 'SELECT ? as _id';
+				$conditions [] = ' INNER JOIN (' . \implode ( ' UNION ALL SELECT ', $values ) . ') as _tmp ON ' . $part . '=_tmp._id';
 			}
-			$this->condition = implode ( " ", $conditions );
+			$this->condition = \implode ( ' ', $conditions );
 		} else {
-			$this->condition = implode ( $separator, $this->parts );
+			$this->condition = \implode ( $separator, $this->parts );
 		}
 	}
 
 	private function refactorParts() {
 		$result = [ ];
 		foreach ( $this->parts as $part ) {
-			$part = str_replace ( "= ?", "", $part );
+			$part = \str_replace ( '= ?', '', $part );
 			$result [$part] [] = '?';
 		}
 		return $result;
@@ -112,9 +111,9 @@ class ConditionParser {
 
 	private function parseKey($keyValues, $className) {
 		$condition = $keyValues;
-		if (strrpos ( $keyValues, "=" ) === false && strrpos ( $keyValues, ">" ) === false && strrpos ( $keyValues, "<" ) === false) {
+		if (\strrpos ( $keyValues, '=' ) === false && \strrpos ( $keyValues, '>' ) === false && \strrpos ( $keyValues, '<' ) === false) {
 			if ($this->addParams ( $keyValues )) {
-				$condition = SqlUtils::$quote . OrmUtils::getFirstKey ( $className ) . SqlUtils::$quote . "= ?";
+				$condition = SqlUtils::$quote . OrmUtils::getFirstKey ( $className ) . SqlUtils::$quote . '= ?';
 			}
 		}
 		return $condition;
@@ -129,7 +128,7 @@ class ConditionParser {
 			return $this->condition;
 		$ret = $this->firstPart;
 		if (isset ( $this->condition )) {
-			$ret .= " WHERE " . $this->condition;
+			$ret .= ' WHERE ' . $this->condition;
 		}
 		return $ret;
 	}
@@ -139,9 +138,9 @@ class ConditionParser {
 	 * @return mixed
 	 */
 	public function getParams() {
-		if (is_array ( $this->params )) {
+		if (\is_array ( $this->params )) {
 			if ($this->invertedParams) {
-				return array_keys ( $this->params );
+				return \array_keys ( $this->params );
 			}
 			return $this->params;
 		}
@@ -153,18 +152,18 @@ class ConditionParser {
 	 * @return mixed
 	 */
 	public function hasParam($value) {
-		if (is_array ( $this->params )) {
+		if (\is_array ( $this->params )) {
 			if ($this->invertedParams) {
 				return isset ( $this->params [$value] );
 			}
-			return array_search ( $value, $this->params ) !== false;
+			return \array_search ( $value, $this->params ) !== false;
 		}
 		return false;
 	}
 
 	public function countParts() {
-		if (is_array ( $this->params ))
-			return sizeof ( $this->params );
+		if (\is_array ( $this->params ))
+			return \sizeof ( $this->params );
 		return 0;
 	}
 
@@ -188,9 +187,9 @@ class ConditionParser {
 	}
 
 	public function limitOne() {
-		$limit = "";
-		if (\stripos ( $this->condition, " limit " ) === false) {
-			$limit = " limit 1";
+		$limit = '';
+		if (\stripos ( $this->condition, ' limit ' ) === false) {
+			$limit = ' limit 1';
 		}
 		$this->condition .= $limit;
 	}

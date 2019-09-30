@@ -4,7 +4,6 @@ namespace Ubiquity\orm;
 
 use Ubiquity\db\Database;
 use Ubiquity\log\Logger;
-use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\db\SqlUtils;
 use Ubiquity\orm\traits\DAOUpdatesTrait;
 use Ubiquity\orm\traits\DAORelationsTrait;
@@ -14,7 +13,6 @@ use Ubiquity\orm\traits\DAOCoreTrait;
 use Ubiquity\orm\traits\DAORelationsPrepareTrait;
 use Ubiquity\exceptions\DAOException;
 use Ubiquity\orm\traits\DAORelationsAssignmentsTrait;
-use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\orm\traits\DAOTransactionsTrait;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
@@ -25,7 +23,7 @@ use Ubiquity\orm\traits\DAOPooling;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.1
+ * @version 1.2.2
  *
  */
 class DAO {
@@ -51,7 +49,7 @@ class DAO {
 	 *
 	 * @param string $className class name of the model to load
 	 * @param string $condition Part following the WHERE of an SQL statement
-	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ["client.*","commands"]
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ['client.*','commands']
 	 * @param array|null $parameters
 	 * @param boolean $useCache use the active cache if true
 	 * @return array
@@ -62,9 +60,9 @@ class DAO {
 
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {
 		if (! isset ( $condition )) {
-			$condition = "1=1";
+			$condition = '1=1';
 		}
-		return self::getAll ( $className, $condition . " LIMIT " . $rowsPerPage . " OFFSET " . (($page - 1) * $rowsPerPage), $included );
+		return self::getAll ( $className, $condition . ' LIMIT ' . $rowsPerPage . ' OFFSET ' . (($page - 1) * $rowsPerPage), $included );
 	}
 
 	public static function getRownum($className, $ids) {
@@ -75,9 +73,9 @@ class DAO {
 		$condition = SqlUtils::getCondition ( $ids, $className );
 		$keyFields = OrmUtils::getKeyFields ( $className );
 		if (is_array ( $keyFields )) {
-			$keys = implode ( ",", $keyFields );
+			$keys = implode ( ',', $keyFields );
 		} else {
-			$keys = "1";
+			$keys = '1';
 		}
 
 		return $db->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$quote}{$tableName}{$quote}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
@@ -94,11 +92,11 @@ class DAO {
 	public static function count($className, $condition = '', $parameters = null) {
 		$tableName = OrmUtils::getTableName ( $className );
 		if ($condition != '') {
-			$condition = " WHERE " . $condition;
+			$condition = ' WHERE ' . $condition;
 		}
 		$db = self::getDb ( $className );
 		$quote = $db->quote;
-		return $db->prepareAndFetchColumn ( "SELECT COUNT(*) FROM " . $quote . $tableName . $quote . $condition, $parameters );
+		return $db->prepareAndFetchColumn ( 'SELECT COUNT(*) FROM ' . $quote . $tableName . $quote . $condition, $parameters );
 	}
 
 	/**
@@ -138,7 +136,7 @@ class DAO {
 		return self::_getOne ( self::getDb ( $className ), $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
 	}
 
-	protected static function getConditionParser($className, $keyValues) {
+	protected static function getConditionParser($className, $keyValues): ConditionParser {
 		if (! isset ( self::$conditionParsers [$className] )) {
 			$conditionParser = new ConditionParser ();
 			$conditionParser->addKeyValues ( $keyValues, $className );
