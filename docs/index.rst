@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Database connexions<db>`
    - :ref:`Optimization<optimization>`
    - :ref:`Rich client<richclient>`
    - :ref:`REST module<rest>`
@@ -61,6 +62,7 @@ Ubiquity User guide
    :maxdepth: 1
    :caption: Models and ORM
    
+   Database connexion <model/db>
    Generation <model/generation>
    model/models
    model/dao
