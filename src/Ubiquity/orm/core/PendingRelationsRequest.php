@@ -22,7 +22,7 @@ class PendingRelationsRequest {
 	public function addPartObject($object, $condition, $value) {
 		$inserted = false;
 		$i = 0;
-		$count = sizeof ( $this->objectsConditionParsers );
+		$count = \sizeof ( $this->objectsConditionParsers );
 		while ( ! $inserted && $i < $count ) {
 			$objectsConditionParser = $this->objectsConditionParsers [$i];
 			if ($objectsConditionParser->hasParam ( $value )) {
@@ -36,12 +36,12 @@ class PendingRelationsRequest {
 		}
 	}
 
-	protected function addNewParser() {
+	protected function addNewParser(): ObjectsConditionParser {
 		$this->activeObjectsParser = new ObjectsConditionParser ();
 		return $this->objectsConditionParsers [] = $this->activeObjectsParser;
 	}
 
-	protected function getActiveParser() {
+	protected function getActiveParser(): ObjectsConditionParser {
 		if ($this->activeObjectsParser->isFull ()) {
 			return $this->addNewParser ();
 		}
@@ -52,7 +52,7 @@ class PendingRelationsRequest {
 	 *
 	 * @return \Ubiquity\orm\core\ObjectsConditionParser[]
 	 */
-	public function getObjectsConditionParsers() {
+	public function getObjectsConditionParsers(): array {
 		return $this->objectsConditionParsers;
 	}
 }
