@@ -63,12 +63,12 @@ With Webtools
 
 In the **Models** part, choose **Add new connexion** button:
 
-.. image:: /_static/images/model/add-new-co-btn.png
+.. image:: /_static/images/dao/add-new-co-btn.png
    :class: bordered
 
 Define the connection configuration parameters:
 
-.. image:: /_static/images/model/new-co.png
+.. image:: /_static/images/dao/new-co.png
    :class: bordered
 
 Generate models for the new connection:
