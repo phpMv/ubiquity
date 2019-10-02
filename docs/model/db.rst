@@ -61,7 +61,7 @@ Ubiquity allows you to manage several connections to databases.
 With Webtools
 ^^^^^^^^^^^^^^
 
-In the **Models** part, choose **Add new connexion** button:
+In the **Models** part, choose **Add new connection** button:
 
 .. image:: /_static/images/dao/add-new-co-btn.png
    :class: bordered
@@ -71,15 +71,28 @@ Define the connection configuration parameters:
 .. image:: /_static/images/dao/new-co.png
    :class: bordered
 
-Generate models for the new connection:
+Generate models for the new connection:|br|
+The generated models include the ``@database`` annotation mentioning their link to the connection.
 
-Models are geenerated in a sub-folder of `models`.
+.. code-block:: php
+    
+    <?php
+    namespace models\tests;
+    /**
+     * @database('tests')
+     * @table('groupe')
+    */
+    class Groupe{
+    	...
+    }
 
-With several connections, do not forget to add the following line to the `services.php` file:
+Models are generated in a sub-folder of ``models``.
+
+With several connections, do not forget to add the following line to the ``services.php`` file:
 
 .. code-block:: php
     
     \Ubiquity\orm\DAO::start();
     
 
-The `start` method performs the match between each model and its associated connection.
+The ``start`` method performs the match between each model and its associated connection.
