@@ -27,14 +27,15 @@ trait DAOPooling {
 	 *
 	 * @param array $config
 	 * @param ?string $offset
+	 * @param int $size
 	 */
-	public static function initPooling(&$config, $offset = null) {
+	public static function initPooling(&$config, $offset = null, int $size = 16) {
 		$dbConfig = self::getDbOffset ( $config, $offset );
 		$wrapperClass = $dbConfig ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class;
 		if (\method_exists ( $wrapperClass, 'getPoolClass' )) {
 			$poolClass = \call_user_func ( $wrapperClass . '::getPoolClass' );
 			if (\class_exists ( $poolClass, true )) {
-				self::$pool = new $poolClass ( $config, $offset );
+				self::$pool = new $poolClass ( $config, $offset, $size );
 			} else {
 				throw new DAOException ( $poolClass . ' class does not exists!' );
 			}

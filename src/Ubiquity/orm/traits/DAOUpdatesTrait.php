@@ -53,9 +53,9 @@ trait DAOUpdatesTrait {
 			}
 		} catch ( \PDOException $e ) {
 			Logger::warn ( 'DAOUpdates', $e->getMessage (), 'delete' );
-			return;
+			return null;
 		}
-		return;
+		return 0;
 	}
 
 	/**
