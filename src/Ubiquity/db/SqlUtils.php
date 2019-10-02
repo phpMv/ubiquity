@@ -9,7 +9,7 @@ use Ubiquity\orm\OrmUtils;
  * SQL utilities
  *
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  */
 class SqlUtils {
 	public static $quote = '`';
@@ -17,7 +17,7 @@ class SqlUtils {
 	private static function getParameters($keyAndValues) {
 		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret [] = ":" . $key;
+			$ret [] = ':' . $key;
 		}
 		return $ret;
 	}
@@ -33,9 +33,9 @@ class SqlUtils {
 	public static function getWhere($keyAndValues) {
 		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret [] = self::$quote . $key . self::$quote . "= :" . $key;
+			$ret [] = self::$quote . $key . self::$quote . '= :' . $key;
 		}
-		return \implode ( " AND ", $ret );
+		return \implode ( ' AND ', $ret );
 	}
 
 	public static function getMultiWhere($values, $field) {
@@ -43,42 +43,42 @@ class SqlUtils {
 		foreach ( $values as $value ) {
 			$ret [] = self::$quote . $field . self::$quote . "='" . $value . "'";
 		}
-		return \implode ( " OR ", $ret );
+		return \implode ( ' OR ', $ret );
 	}
 
-	public static function getSearchWhere($fields, $value, $jokerBefore = "%", $jokerAfter = "%") {
+	public static function getSearchWhere($fields, $value, $jokerBefore = '%', $jokerAfter = '%') {
 		$ret = array ();
 		foreach ( $fields as $field ) {
 			$ret [] = self::$quote . $field . self::$quote . " LIKE '" . $jokerBefore . $value . $jokerAfter . "'";
 		}
-		return \implode ( " OR ", $ret );
+		return \implode ( ' OR ', $ret );
 	}
 
 	public static function getInsertFields($keyAndValues) {
-		return \implode ( ",", self::getQuotedKeys ( $keyAndValues ) );
+		return \implode ( ',', self::getQuotedKeys ( $keyAndValues ) );
 	}
 
 	public static function getInsertFieldsValues($keyAndValues) {
-		return \implode ( ",", self::getParameters ( $keyAndValues ) );
+		return \implode ( ',', self::getParameters ( $keyAndValues ) );
 	}
 
 	public static function getUpdateFieldsKeyAndValues($keyAndValues) {
 		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {
-			$ret [] = self::$quote . $key . self::$quote . "= :" . $key;
+			$ret [] = self::$quote . $key . self::$quote . '= :' . $key;
 		}
-		return \implode ( ",", $ret );
+		return \implode ( ',', $ret );
 	}
 
 	public static function checkWhere($condition) {
 		$c = \strtolower ( $condition );
-		if ($condition != '' && \strstr ( $c, " join " ) === false) {
-			$condition = " WHERE " . $condition;
+		if ($condition != '' && \strstr ( $c, ' join ' ) === false) {
+			$condition = ' WHERE ' . $condition;
 		}
 		return $condition;
 	}
 
-	public static function getCondition($keyValues, $classname = NULL, $separator = " AND ") {
+	public static function getCondition($keyValues, $classname = NULL, $separator = ' AND ') {
 		if (! \is_array ( $keyValues )) {
 			return $keyValues;
 		} else {
