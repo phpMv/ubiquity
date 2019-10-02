@@ -123,6 +123,7 @@ class Startup {
 			$templateEngine = $config ['templateEngine'];
 			return new $templateEngine ( [ ] );
 		}
+		return null;
 	}
 
 	/**

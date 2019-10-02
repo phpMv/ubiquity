@@ -139,7 +139,7 @@ trait DAORelationsTrait {
 	 */
 	public static function getManyToOne($instance, $member, $included = false, $useCache = NULL): ?object {
 		$classname = self::getClass_ ( $instance );
-		if (is_array ( $instance )) {
+		if (\is_array ( $instance )) {
 			$instance = self::getById ( $classname, $instance [1], false, $useCache );
 		}
 		$fieldAnnot = OrmUtils::getMemberJoinColumns ( $classname, $member );
@@ -160,6 +160,7 @@ trait DAORelationsTrait {
 				return $obj;
 			}
 		}
+		return null;
 	}
 
 	/**

@@ -53,6 +53,7 @@ class USession {
 			self::$sessionInstance->set ( $arrayKey, $array );
 			return false;
 		}
+		return null;
 	}
 
 	/**
