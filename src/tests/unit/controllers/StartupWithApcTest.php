@@ -8,6 +8,7 @@ use controllers\TestRestController;
 use controllers\TestControllerInitialize;
 use services\Service;
 use Ubiquity\cache\system\ArrayApcCache;
+use Ubiquity\cache\CacheManager;
 
 /**
  * Startup test case.
@@ -35,6 +36,7 @@ class StartupWithApcTest extends BaseTest {
 	}
 
 	protected function _startServices($what = false) {
+		CacheManager::start ( $this->config );
 		$this->_startCache ();
 		$this->_startRouter ( $what );
 	}
