@@ -51,5 +51,15 @@ class DAOWithApcTest extends BaseTest {
 		$orga = DAO::getManyToOne ( $user, 'organization' );
 		$this->assertInstanceOf ( Organization::class, $orga );
 	}
+
+	protected function getDi() {
+		return array ("*.allS" => function ($controller) {
+			return new \services\IAllService ();
+		},"*.inj" => function ($ctrl) {
+			return new \services\IAllService ();
+		},"@exec" => array ("jquery" => function ($controller) {
+			return \Ubiquity\core\Framework::diSemantic ( $controller );
+		} ) );
+	}
 }
 
