@@ -36,7 +36,7 @@ class StartupWithApcTest extends BaseTest {
 	}
 
 	protected function _startServices($what = false) {
-		CacheManager::start ( $this->config );
+		CacheManager::initCache ( $this->config );
 		$this->_startCache ();
 		$this->_startRouter ( $what );
 	}
