@@ -22,6 +22,7 @@ build:
       environment:
         php:
           version: 7.2
+          compile_options: '--enable-sigchild --without-pear'
           ini:
             apc.enabled: "1"
           pecl_extensions:
