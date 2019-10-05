@@ -17,6 +17,7 @@ build:
       dependencies:
         before:
 #          - sudo apt-get install -y zip
+#          - sudo install libpcre3-dev
 
       environment:
         php:
@@ -24,7 +25,6 @@ build:
           ini:
             apc.enabled: "1"
           pecl_extensions:
-            - memcached
             - apc
         hosts:
           dev.local: '127.0.0.1'
