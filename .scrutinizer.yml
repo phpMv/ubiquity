@@ -6,6 +6,7 @@ build:
           - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception --dev
           - composer require phpmv/ubiquity-devtools:dev-master --dev
+          - sudo apt-get install libpcre3-dev php7.2-dev
       environment:
         php:
           version: 7.2
