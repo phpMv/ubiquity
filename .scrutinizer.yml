@@ -17,7 +17,7 @@ build:
       dependencies:
         before:
 #          - sudo apt-get install -y zip
-          - sudo apt-get install libpcre3-dev
+          - sudo apt-get install libpcre3-dev php7.2-dev
 
       environment:
         php:
