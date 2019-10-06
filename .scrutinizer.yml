@@ -16,7 +16,7 @@ build:
     coverage:
       dependencies:
         before:
-          - sudo apt-get install libpcre3-dev
+          - sudo apt-get install -y libpcre3-dev
           - sudo pecl install apc
 
       environment:
