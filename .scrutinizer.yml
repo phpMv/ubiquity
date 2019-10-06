@@ -6,7 +6,6 @@ build:
           - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception --dev
           - composer require phpmv/ubiquity-devtools:dev-master --dev
-          - sudo apt-get install libpcre3-dev php-dev
       environment:
         php:
           version: 7.2
@@ -17,16 +16,14 @@ build:
     coverage:
       dependencies:
         before:
-          - sudo apt-get install libpcre3-dev php-dev
+          - sudo apt-get install libpcre3-dev
+          - sudo pecl install apc
 
       environment:
         php:
           version: 7.2
-          compile_options: '--enable-sigchild --without-pear'
           ini:
             apc.enabled: "1"
-          pecl_extensions:
-            - apc
         hosts:
           dev.local: '127.0.0.1'
         apache2:
