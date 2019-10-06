@@ -87,7 +87,7 @@ class PDOWrapper extends AbstractDbWrapper {
 
 	public function getDSN(string $serverName, string $port, string $dbName, string $dbType = 'mysql') {
 		$charsetString = [ 'mysql' => 'charset=UTF8','pgsql' => 'options=\'--client_encoding=UTF8\'','sqlite' => 'charset=UTF8' ] [$dbType] ?? 'charset=UTF8';
-		return $dbType . ':dbname=' . $dbName . ';host=' . $serverName; // . ";$charsetString;port=" . $port;
+		return $dbType . ':dbname=' . $dbName . ';host=' . $serverName . ";$charsetString;port=" . $port;
 	}
 
 	public function bindValueFromStatement($statement, $parameter, $value) {
