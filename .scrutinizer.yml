@@ -17,7 +17,7 @@ build:
       dependencies:
         before:
           - sudo apt-get install -y libpcre3-dev
-          - sudo pecl install apc
+          - pecl install apc
 
       environment:
         php:
