@@ -28,7 +28,7 @@ class PhpFastCacheDriver extends AbstractDataCache {
 	 */
 	public function __construct($root, $postfix = "", $cacheParams = []) {
 		parent::__construct ( $root, $postfix );
-		$cacheType = $cacheParams ['type'];
+		$cacheType = $cacheParams ['type']??'Files';
 		unset ( $cacheParams ['type'] );
 		$defaultParams = [ 'defaultTtl' => 86400,'itemDetailedDate' => true ];
 		$cacheParams = \array_merge ( $cacheParams, $defaultParams );

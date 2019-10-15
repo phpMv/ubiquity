@@ -74,7 +74,7 @@ class ValidatorsManager {
 	protected static $key = "contents/validators/";
 
 	protected static function store($model, $validators) {
-		CacheManager::$cache->store ( self::getModelCacheKey ( $model ), $validators );
+		CacheManager::$cache->store ( self::getModelCacheKey ( $model ), $validators,'validators' );
 	}
 
 	protected static function fetch($model) {
