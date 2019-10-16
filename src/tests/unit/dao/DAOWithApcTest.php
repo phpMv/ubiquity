@@ -1,9 +1,9 @@
 <?php
 use Ubiquity\cache\CacheManager;
-use Ubiquity\cache\system\ArrayApcCache;
 use Ubiquity\orm\DAO;
 use models\Organization;
 use models\User;
+use Ubiquity\cache\system\ArrayCache;
 
 /**
  * Startup test case.
@@ -27,7 +27,7 @@ class DAOWithApcTest extends BaseTest {
 	}
 
 	protected function getCacheSystem() {
-		return ArrayApcCache::class;
+		return ArrayCache::class;
 	}
 
 	protected function _startServices($what = false) {
