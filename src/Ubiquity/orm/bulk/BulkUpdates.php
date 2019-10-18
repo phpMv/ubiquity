@@ -73,7 +73,7 @@ class BulkUpdates extends AbstractBulks {
 		}
 		$duplicateKey = [ ];
 		foreach ( $this->fields as $field ) {
-			$duplicateKey = "{$quote}{$field}{$quote} = VALUES({$quote}{$field}{$quote})";
+			$duplicateKey [] = "{$quote}{$field}{$quote} = VALUES({$quote}{$field}{$quote})";
 		}
 		$this->parameters = $parameters;
 		return "INSERT INTO {$quote}{$tableName}{$quote} (" . $this->insertFields . ') VALUES ' . \implode ( ',', $values ) . ' ON DUPLICATE KEY UPDATE ' . \implode ( ',', $duplicateKey );

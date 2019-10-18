@@ -34,6 +34,12 @@ trait DAOBulkUpdatesTrait {
 		}
 	}
 
+	/**
+	 * Adds an instance in the bulk list of objects to insert.
+	 * Call flush to commit the operation
+	 *
+	 * @param object $instance
+	 */
 	public static function toInsert(object $instance): void {
 		self::toOperation ( $instance, 'insert' );
 	}
