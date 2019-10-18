@@ -45,7 +45,7 @@ class BulkUpdates extends AbstractBulks {
 		}
 		$parameters = \array_merge ( $parameters, $keys );
 		$this->parameters = $parameters;
-		return "UPDATE {$quote}{$tableName}{$quote} SET " . \implode ( ',', $caseFields ) . " WHERE {$quote}{$pk}{$quote} IN (" . \implode ( ',', \array_fill ( 0, $count, '?' ) ) . ")";
+		return "UPDATE {$quote}{$tableName}{$quote} SET " . \implode ( ',', $caseFields ) . " WHERE {$quote}{$pk}{$quote} IN (" . \implode ( ',', \array_fill ( 0, $count, '?' ) ) . ')';
 	}
 }
 

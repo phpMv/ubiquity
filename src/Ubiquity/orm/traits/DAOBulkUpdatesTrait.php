@@ -64,6 +64,21 @@ trait DAOBulkUpdatesTrait {
 		}
 	}
 
+	public static function toDelete(object $instance): void {
+		self::toOperation ( $instance, 'delete' );
+	}
+
+	public static function toDeletes(array $instances): void {
+		self::toOperations ( $instances, 'delete' );
+	}
+
+	public static function flushDeletes(): void {
+		$bulks = self::$bulks ['delete'];
+		foreach ( $bulks as $bulk ) {
+			$bulk->flush ();
+		}
+	}
+
 	public static function flush(): void {
 		foreach ( self::$bulks as $bulks ) {
 			foreach ( $bulks as $bulk ) {
