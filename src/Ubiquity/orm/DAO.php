@@ -17,6 +17,7 @@ use Ubiquity\orm\traits\DAOTransactionsTrait;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\orm\traits\DAOPooling;
+use Ubiquity\orm\traits\DAOBulkUpdatesTrait;
 
 /**
  * Gateway class between database and object model.
@@ -28,7 +29,7 @@ use Ubiquity\orm\traits\DAOPooling;
  */
 class DAO {
 	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,
-	DAOUQueries,DAOTransactionsTrait,DAOPooling;
+	DAOUQueries,DAOTransactionsTrait,DAOPooling,DAOBulkUpdatesTrait;
 
 	/**
 	 *

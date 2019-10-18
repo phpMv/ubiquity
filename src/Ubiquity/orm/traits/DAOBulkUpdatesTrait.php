@@ -2,8 +2,6 @@
 
 namespace Ubiquity\orm\traits;
 
-use Ubiquity\orm\bulk\BulkUpdates;
-
 /**
  * Ubiquity\orm\traits$DAOBulkUpdatesTrait
  * This class is part of Ubiquity
@@ -17,7 +15,8 @@ trait DAOBulkUpdatesTrait {
 
 	protected static function getBulk($instance, $class, $operation = 'update') {
 		if (! isset ( self::$bulks [$operation] [$class] )) {
-			self::$bulks [$operation] [$class] = new BulkUpdates ( $class );
+			$bulkClass = '\\Ubiquity\\orm\\bulk\\Bulk' . \ucfirst ( $operation ) . 's';
+			self::$bulks [$operation] [$class] = new $bulkClass ( $class );
 		}
 		return self::$bulks [$operation] [$class];
 	}

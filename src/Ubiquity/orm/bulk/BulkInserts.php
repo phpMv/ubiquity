@@ -3,7 +3,6 @@
 namespace Ubiquity\orm\bulk;
 
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\db\SqlUtils;
 
 /**
  * Ubiquity\orm\bulk$BulkInserts
@@ -26,11 +25,15 @@ class BulkInserts extends AbstractBulks {
 
 	public function __construct($className) {
 		parent::__construct ( $className );
+		if (($key = \array_search ( $this->pkName, $this->fields )) !== false) {
+			unset ( $this->fields [$key] );
+		}
 		$this->insertFields = \implode ( ',', $this->getQuotedKeys ( $this->fields, $this->db->quote ) );
 	}
 
 	public function addInstance($instance, $id = null) {
 		$this->updateInstanceRest ( $instance );
+		unset ( $instance->_rest [$this->pkName] );
 		$this->instances [] = $instance;
 	}
 
@@ -42,7 +45,7 @@ class BulkInserts extends AbstractBulks {
 		$values = [ ];
 		$modelFields = '(' . \implode ( ',', \array_fill ( 0, $fieldCount, '?' ) ) . ')';
 		foreach ( $this->instances as $instance ) {
-			$parameters += $instance->_rest;
+			$parameters = \array_merge ( $parameters, \array_values ( $instance->_rest ) );
 			$values [] = $modelFields;
 		}
 		$this->parameters = $parameters;
