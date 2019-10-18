@@ -13,7 +13,7 @@ use Ubiquity\orm\bulk\BulkUpdates;
  *
  */
 trait DAOBulkUpdatesTrait {
-	protected static $bulks = [ 'update' => [ ] ];
+	protected static $bulks = [ 'insert' => [ ],'update' => [ ] ];
 
 	protected static function getBulk($instance, $class, $operation = 'update') {
 		if (! isset ( self::$bulks [$operation] [$class] )) {
@@ -32,6 +32,21 @@ trait DAOBulkUpdatesTrait {
 		if (isset ( $instance )) {
 			$class = \get_class ( $instance );
 			self::getBulk ( $instance, $class, $operation )->addInstances ( $instances );
+		}
+	}
+
+	public static function toInsert(object $instance): void {
+		self::toOperation ( $instance, 'insert' );
+	}
+
+	public static function toInserts(array $instances): void {
+		self::toOperations ( $instances, 'insert' );
+	}
+
+	public static function flushInserts(): void {
+		$bulks = self::$bulks ['insert'];
+		foreach ( $bulks as $bulk ) {
+			$bulk->flush ();
 		}
 	}
 

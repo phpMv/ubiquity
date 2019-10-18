@@ -3,7 +3,6 @@
 namespace Ubiquity\orm\bulk;
 
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\orm\parser\Reflexion;
 
 /**
  * Ubiquity\orm\bulk$BulkUpdates
