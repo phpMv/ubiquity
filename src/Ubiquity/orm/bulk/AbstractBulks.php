@@ -22,6 +22,15 @@ abstract class AbstractBulks {
 	protected $instances = [ ];
 	protected $parameters;
 	protected $dbType;
+	protected $insertFields;
+
+	private function getQuotedKeys($fields, $quote) {
+		$ret = array ();
+		foreach ( $fields as $field ) {
+			$ret [] = $quote . $field . $quote;
+		}
+		return $ret;
+	}
 
 	protected function updateInstanceRest($instance) {
 		foreach ( $this->fields as $field ) {

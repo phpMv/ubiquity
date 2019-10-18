@@ -15,6 +15,11 @@ use Ubiquity\orm\OrmUtils;
 class BulkUpdates extends AbstractBulks {
 	private $sql;
 
+	public function __construct($className) {
+		parent::__construct ( $className );
+		$this->insertFields = \implode ( ',', $this->getQuotedKeys ( $this->fields, $this->db->quote ) );
+	}
+
 	public function addInstance($instance, $id = null) {
 		$id = $id ?? OrmUtils::getFirstKeyValue ( $instance );
 		$this->updateInstanceRest ( $instance );
