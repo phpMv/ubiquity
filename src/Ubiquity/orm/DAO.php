@@ -40,7 +40,7 @@ class DAO {
 	private static $conditionParsers = [ ];
 	protected static $modelsDatabase = [ ];
 
-	protected static function getDb($model) {
+	public static function getDb($model) {
 		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
 	}
 
