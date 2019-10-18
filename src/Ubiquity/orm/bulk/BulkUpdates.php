@@ -22,6 +22,17 @@ class BulkUpdates extends AbstractBulks {
 	}
 
 	public function createSQL() {
+		switch ($this->dbType) {
+			case 'mysql' :
+				return $this->mysqlCreate ();
+			case 'pgsql' :
+				return $this->pgCreate ();
+			default :
+				throw new \RuntimeException ( $this->dbType . ' does not support bulk updates!' );
+		}
+	}
+
+	private function pgCreate() {
 		$quote = $this->db->quote;
 		$tableName = OrmUtils::getTableName ( $this->class );
 
@@ -47,6 +58,25 @@ class BulkUpdates extends AbstractBulks {
 		$parameters = \array_merge ( $parameters, $keys );
 		$this->parameters = $parameters;
 		return "UPDATE {$quote}{$tableName}{$quote} SET " . \implode ( ',', $caseFields ) . " WHERE {$quote}{$pk}{$quote} IN (" . \implode ( ',', \array_fill ( 0, $count, '?' ) ) . ')';
+	}
+
+	private function mysqlCreate() {
+		$quote = $this->db->quote;
+		$tableName = OrmUtils::getTableName ( $this->class );
+		$fieldCount = \count ( $this->fields );
+		$parameters = [ ];
+		$values = [ ];
+		$modelFields = '(' . \implode ( ',', \array_fill ( 0, $fieldCount, '?' ) ) . ')';
+		foreach ( $this->instances as $instance ) {
+			$parameters = \array_merge ( $parameters, \array_values ( $instance->_rest ) );
+			$values [] = $modelFields;
+		}
+		$duplicateKey = [ ];
+		foreach ( $this->fields as $field ) {
+			$duplicateKey = "{$quote}{$field}{$quote} = VALUES({$quote}{$field}{$quote})";
+		}
+		$this->parameters = $parameters;
+		return "INSERT INTO {$quote}{$tableName}{$quote} (" . $this->insertFields . ') VALUES ' . \implode ( ',', $values ) . ' ON DUPLICATE KEY UPDATE ' . \implode ( ',', $duplicateKey );
 	}
 }
 

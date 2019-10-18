@@ -21,6 +21,7 @@ abstract class AbstractBulks {
 	protected $db;
 	protected $instances = [ ];
 	protected $parameters;
+	protected $dbType;
 
 	protected function updateInstanceRest($instance) {
 		foreach ( $this->fields as $field ) {
@@ -34,6 +35,7 @@ abstract class AbstractBulks {
 		$this->pkName = OrmUtils::getFirstKey ( $className );
 		$this->fields = OrmUtils::getSerializableFields ( $className );
 		$this->db = DAO::getDb ( $className );
+		$this->dbType = $this->db->getDbType ();
 	}
 
 	public function addInstances($instances) {
