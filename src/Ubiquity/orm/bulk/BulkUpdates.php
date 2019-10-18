@@ -13,6 +13,7 @@ use Ubiquity\orm\OrmUtils;
  *
  */
 class BulkUpdates extends AbstractBulks {
+	private $sql;
 
 	public function addInstance($instance, $id = null) {
 		$id = $id ?? OrmUtils::getFirstKeyValue ( $instance );
@@ -37,7 +38,7 @@ class BulkUpdates extends AbstractBulks {
 		$caseFields = [ ];
 		$pk = $this->pkName;
 		foreach ( $this->fields as $field ) {
-			$caseFields [] = "{$quote}{$field}{$quote} = CASE {$quote}{$pk}{$quote} {$modelField} ELSE {$quote}{$field}{$quote} END";
+			$caseFields [] = "{$quote}{$field}{$quote} = (CASE {$quote}{$pk}{$quote} {$modelField} ELSE {$quote}{$field}{$quote} END)";
 			foreach ( $_rest as $pkv => $_restInstance ) {
 				$parameters [] = $pkv;
 				$parameters [] = $_restInstance [$field];
