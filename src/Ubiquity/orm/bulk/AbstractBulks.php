@@ -50,6 +50,8 @@ abstract class AbstractBulks {
 		$statement = $this->db->getUpdateStatement ( $this->createSQL () );
 		try {
 			$result = $statement->execute ( $this->parameters );
+			$this->instances = [ ];
+			$this->parameters = [ ];
 			return $result;
 		} catch ( \Exception $e ) {
 			Logger::warn ( "DAOBulkUpdates", $e->getMessage (), \get_class ( $this ) );

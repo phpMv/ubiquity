@@ -15,7 +15,8 @@ use Ubiquity\orm\OrmUtils;
 class BulkDeletes extends AbstractBulks {
 
 	public function addInstance($instance, $id = null) {
-		$this->instances [] = $instance;
+		$id = $id ?? OrmUtils::getFirstKeyValue ( $instance );
+		$this->instances [$id] = $instance;
 	}
 
 	public function createSQL() {

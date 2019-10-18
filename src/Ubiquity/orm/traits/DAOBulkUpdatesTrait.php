@@ -11,7 +11,7 @@ namespace Ubiquity\orm\traits;
  *
  */
 trait DAOBulkUpdatesTrait {
-	protected static $bulks = [ 'insert' => [ ],'update' => [ ] ];
+	protected static $bulks = [ 'insert' => [ ],'update' => [ ],'delete' => [ ] ];
 
 	protected static function getBulk($instance, $class, $operation = 'update') {
 		if (! isset ( self::$bulks [$operation] [$class] )) {
