@@ -13,14 +13,13 @@ use Ubiquity\orm\bulk\BulkUpdates;
  *
  */
 trait DAOBulkUpdatesTrait {
-	protected static $bulks = [ ];
+	protected static $bulks = [ 'update' => [ ] ];
 
 	protected static function getBulk($instance, $class, $operation = 'update') {
-		self::bulks [$operation] = self::bulks [$operation] ?? [ ];
-		if (! isset ( self::bulks [$operation] [$class] )) {
-			self::bulks [$operation] [$class] = new BulkUpdates ( $class );
+		if (! isset ( self::$bulks [$operation] [$class] )) {
+			self::$bulks [$operation] [$class] = new BulkUpdates ( $class );
 		}
-		return self::bulks [$operation] [$class];
+		return self::$bulks [$operation] [$class];
 	}
 
 	protected static function toOperation($instance, string $operation): void {
@@ -36,11 +35,11 @@ trait DAOBulkUpdatesTrait {
 		}
 	}
 
-	public function toUpdate(object $instance): void {
+	public static function toUpdate(object $instance): void {
 		self::toOperation ( $instance, 'update' );
 	}
 
-	public function toUpdates(array $instances): void {
+	public static function toUpdates(array $instances): void {
 		self::toOperations ( $instances, 'update' );
 	}
 

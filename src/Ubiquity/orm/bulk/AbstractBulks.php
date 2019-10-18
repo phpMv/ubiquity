@@ -22,6 +22,13 @@ abstract class AbstractBulks {
 	protected $instances = [ ];
 	protected $parameters;
 
+	protected function updateInstanceRest($instance) {
+		foreach ( $this->fields as $field ) {
+			$accessor = "get" . \ucfirst ( $field );
+			$instance->_rest [$field] = $instance->$accessor ();
+		}
+	}
+
 	public function __construct($className) {
 		$this->class = $className;
 		$this->pkName = OrmUtils::getFirstKey ( $className );
@@ -30,7 +37,9 @@ abstract class AbstractBulks {
 	}
 
 	public function addInstances($instances) {
-		$this->instances += $instances;
+		foreach ( $instances as $instance ) {
+			$this->addInstance ( $instance );
+		}
 	}
 
 	public abstract function addInstance($instance);

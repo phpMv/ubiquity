@@ -241,7 +241,7 @@ trait DAOUpdatesTrait {
 			EventsManager::trigger ( DAOEvents::AFTER_UPDATE, $instance, $result );
 			$instance->_rest = array_merge ( $instance->_rest, $ColumnskeyAndValues );
 			return $result;
-		} catch ( \PDOException $e ) {
+		} catch ( \Exception $e ) {
 			Logger::warn ( "DAOUpdates", $e->getMessage (), "update" );
 		}
 		return false;

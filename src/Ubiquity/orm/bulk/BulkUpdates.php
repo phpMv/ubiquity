@@ -3,6 +3,7 @@
 namespace Ubiquity\orm\bulk;
 
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
  * Ubiquity\orm\bulk$BulkUpdates
@@ -16,6 +17,7 @@ class BulkUpdates extends AbstractBulks {
 
 	public function addInstance($instance, $id = null) {
 		$id = $id ?? OrmUtils::getFirstKeyValue ( $instance );
+		$this->updateInstanceRest ( $instance );
 		$this->instances [$id] = $instance;
 	}
 
@@ -24,7 +26,7 @@ class BulkUpdates extends AbstractBulks {
 		$tableName = OrmUtils::getTableName ( $this->class );
 
 		$count = \count ( $this->instances );
-		$modelField = \array_fill ( 0, $count, ' WHEN ? THEN ? ' );
+		$modelField = implode ( '', \array_fill ( 0, $count, ' WHEN ? THEN ? ' ) );
 
 		$keys = \array_keys ( $this->instances );
 		$parameters = [ ];
@@ -36,15 +38,15 @@ class BulkUpdates extends AbstractBulks {
 		$caseFields = [ ];
 		$pk = $this->pkName;
 		foreach ( $this->fields as $field ) {
-			$caseFields [] = "{$quote}{$field}{$quote} = CASE {$quote}{$pk}{$quote} {$modelField} ELSE {$field} END";
+			$caseFields [] = "{$quote}{$field}{$quote} = CASE {$quote}{$pk}{$quote} {$modelField} ELSE {$quote}{$field}{$quote} END";
 			foreach ( $_rest as $pkv => $_restInstance ) {
 				$parameters [] = $pkv;
 				$parameters [] = $_restInstance [$field];
 			}
 		}
 		$parameters = \array_merge ( $parameters, $keys );
-
-		return "UPDATE {$quote}{$tableName}{$quote} SET " . \implode ( ',', $caseFields . " WHERE {$quote}{$pk}{$quote} IN (" . \implode ( ',', \array_fill ( 0, $count, '?' ) ) . ")" );
+		$this->parameters = $parameters;
+		return "UPDATE {$quote}{$tableName}{$quote} SET " . \implode ( ',', $caseFields ) . " WHERE {$quote}{$pk}{$quote} IN (" . \implode ( ',', \array_fill ( 0, $count, '?' ) ) . ")";
 	}
 }
 
