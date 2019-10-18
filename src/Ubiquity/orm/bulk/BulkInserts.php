@@ -13,15 +13,6 @@ use Ubiquity\orm\OrmUtils;
  *
  */
 class BulkInserts extends AbstractBulks {
-	protected $insertFields;
-
-	private function getQuotedKeys($fields, $quote) {
-		$ret = array ();
-		foreach ( $fields as $field ) {
-			$ret [] = $quote . $field . $quote;
-		}
-		return $ret;
-	}
 
 	public function __construct($className) {
 		parent::__construct ( $className );
