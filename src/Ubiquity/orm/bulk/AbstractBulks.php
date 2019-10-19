@@ -60,20 +60,17 @@ abstract class AbstractBulks {
 
 	public function flush() {
 		$statement = $this->db->getUpdateStatement ( $this->createSQL () );
-		try {
-			$result = $statement->execute ( $this->parameters );
-			$this->instances = [ ];
-			$this->parameters = [ ];
-			return $result;
-		} catch ( \Exception $e ) {
-			Logger::warn ( "DAOBulkUpdates", $e->getMessage (), \get_class ( $this ) );
-			if ($e instanceof \PDOException) {
-				try {
-					$result = $statement->execute ( $this->parameters );
-					$this->instances = [ ];
-					$this->parameters = [ ];
-					return $result;
-				} catch ( \Exception $e ) {
+		while ( true ) {
+			try {
+				$result = $statement->execute ( $this->parameters );
+				$this->instances = [ ];
+				$this->parameters = [ ];
+				return $result;
+			} catch ( \Exception $e ) {
+				Logger::warn ( "DAOBulkUpdates", $e->getMessage (), \get_class ( $this ) );
+				if ($e->errorInfo [0] == 40001 && $this->db->getDbType () == 'mysql' && $e->errorInfo [1] == 1213) {
+					echo "deadlock";
+				} else {
 					if (Startup::$config ['debug']) {
 						throw $e;
 					}
