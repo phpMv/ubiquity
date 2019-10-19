@@ -63,7 +63,7 @@ abstract class AbstractBulks {
 		while ( true ) {
 			try {
 				$result = $statement->execute ( $this->parameters );
-				if ($result != false) {
+				if ($result !== false) {
 					$this->instances = [ ];
 					$this->parameters = [ ];
 					return $result;
