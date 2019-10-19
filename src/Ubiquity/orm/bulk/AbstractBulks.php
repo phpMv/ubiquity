@@ -67,8 +67,17 @@ abstract class AbstractBulks {
 			return $result;
 		} catch ( \Exception $e ) {
 			Logger::warn ( "DAOBulkUpdates", $e->getMessage (), \get_class ( $this ) );
-			if (Startup::$config ['debug']) {
-				throw $e;
+			if ($e instanceof \PDOException) {
+				try {
+					$result = $statement->execute ( $this->parameters );
+					$this->instances = [ ];
+					$this->parameters = [ ];
+					return $result;
+				} catch ( \Exception $e ) {
+					if (Startup::$config ['debug']) {
+						throw $e;
+					}
+				}
 			}
 		}
 		return false;
