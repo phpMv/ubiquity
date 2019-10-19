@@ -5,6 +5,7 @@ namespace Ubiquity\orm\bulk;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\DAO;
 use Ubiquity\log\Logger;
+use Ubiquity\controllers\Startup;
 
 /**
  * Ubiquity\orm\bulk$AbstractBulks
@@ -66,6 +67,9 @@ abstract class AbstractBulks {
 			return $result;
 		} catch ( \Exception $e ) {
 			Logger::warn ( "DAOBulkUpdates", $e->getMessage (), \get_class ( $this ) );
+			if (Startup::$config ['debug']) {
+				throw $e;
+			}
 		}
 		return false;
 	}
