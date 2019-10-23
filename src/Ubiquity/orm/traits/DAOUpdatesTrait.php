@@ -123,7 +123,7 @@ trait DAOUpdatesTrait {
 		$tableName = OrmUtils::getTableName ( $className );
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
-		$sql = 'INSERT INTO ' . $quote . $tableName . $quote . ' (' . SqlUtils::getInsertFields ( $keyAndValues ) . ') VALUES(' . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ')';
+		$sql = "INSERT INTO {$quote}{$tableName}{$quote} (" . SqlUtils::getInsertFields ( $keyAndValues ) . ') VALUES(' . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ')';
 		if (Logger::isActive ()) {
 			Logger::info ( 'DAOUpdates', $sql, 'insert' );
 			Logger::info ( 'DAOUpdates', \json_encode ( $keyAndValues ), 'Key and values' );
@@ -241,7 +241,7 @@ trait DAOUpdatesTrait {
 			EventsManager::trigger ( DAOEvents::AFTER_UPDATE, $instance, $result );
 			$instance->_rest = array_merge ( $instance->_rest, $ColumnskeyAndValues );
 			return $result;
-		} catch ( \PDOException $e ) {
+		} catch ( \Exception $e ) {
 			Logger::warn ( "DAOUpdates", $e->getMessage (), "update" );
 		}
 		return false;

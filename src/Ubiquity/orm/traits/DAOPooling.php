@@ -36,7 +36,7 @@ trait DAOPooling {
 			$poolClass = \call_user_func ( $wrapperClass . '::getPoolClass' );
 			if (\class_exists ( $poolClass, true )) {
 				$reflection_class = new \ReflectionClass ( $poolClass );
-				self::$pool = $reflection_class->newInstanceArgs ( [ $config,$offset,$size ] );
+				self::$pool = $reflection_class->newInstanceArgs ( [ &$config,$offset,$size ] );
 			} else {
 				throw new DAOException ( $poolClass . ' class does not exists!' );
 			}
