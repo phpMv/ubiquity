@@ -25,10 +25,10 @@ class MicroTemplateEngine extends TemplateEngine {
 	 * @see TemplateEngine::render()
 	 */
 	public function render($viewName, $pData, $asString) {
-		$content = eval ( '?>' . $this->getTemplateParser ( $viewName )->__toString () );
 		if (\is_array ( $pData )) {
 			\extract ( $pData );
 		}
+		$content = eval ( '?>' . $this->getTemplateParser ( $viewName )->__toString () );
 		if ($asString)
 			return $content;
 		else
