@@ -15,7 +15,7 @@ class TemplateParser {
 	private $fileContent;
 
 	public function __construct($fileName) {
-		$this->fileContent = \file_get_contents ( $fileName );
+		$this->fileContent = $this->parse ( \file_get_contents ( $fileName ) );
 	}
 
 	private function parse($html) {
@@ -26,6 +26,6 @@ class TemplateParser {
 	}
 
 	public function __toString() {
-		return $this->parse ( $this->fileContent );
+		return $this->fileContent;
 	}
 }
