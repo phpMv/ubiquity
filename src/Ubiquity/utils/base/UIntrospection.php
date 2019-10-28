@@ -7,7 +7,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class UIntrospection {
@@ -34,7 +34,7 @@ class UIntrospection {
 		if (isset ( $matches [1] )) {
 			$result = array_merge ( $result, $matches [1] );
 		}
-		if (strpos ( $code, '$this->loadDefaultView' ) !== false || strpos ( $code, '$this->jquery->renderDefaultView' ) !== false) {
+		if (\strpos ( $code, '$this->loadDefaultView' ) !== false || strpos ( $code, '$this->jquery->renderDefaultView' ) !== false) {
 			$result [] = $r->getDeclaringClass ()->getShortName () . '/' . $r->getName () . '.html';
 		}
 		return $result;
@@ -80,7 +80,8 @@ class UIntrospection {
 		$sLine = $r->getStartLine ();
 		$eLine = $r->getEndLine ();
 		if ($eLine === $sLine) {
-			$str .= \strstr ( \strstr ( $lines [$sLine - 1], "{" ), "}", true ) . "}";
+			$match = \strstr ( $lines [$sLine - 1], "function" );
+			$str .= \strstr ( \strstr ( $match, "{" ), "}", true ) . "}";
 		} else {
 			$str .= \strrchr ( $lines [$sLine - 1], "{" );
 			for($l = $sLine; $l < $eLine - 1; $l ++) {

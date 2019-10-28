@@ -3,14 +3,21 @@
 namespace Ubiquity\views\engine\micro;
 
 use Ubiquity\views\engine\TemplateEngine;
-use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UFileSystem;
 
 class MicroTemplateEngine extends TemplateEngine {
 	private $viewsFolder;
+	private $parsers = [ ];
+
+	private function getTemplateParser(string $viewName): TemplateParser {
+		if (! isset ( $this->parsers [$viewName] )) {
+			$this->parsers [$viewName] = new TemplateParser ( $this->viewsFolder . $viewName );
+		}
+		return $this->parsers [$viewName];
+	}
 
 	public function __construct() {
-		$this->viewsFolder = \ROOT . \DS . "views" . \DS;
+		$this->viewsFolder = \ROOT . \DS . 'views' . \DS;
 	}
 
 	/*
@@ -18,13 +25,10 @@ class MicroTemplateEngine extends TemplateEngine {
 	 * @see TemplateEngine::render()
 	 */
 	public function render($viewName, $pData, $asString) {
-		$config = Startup::getConfig (); // eventually used in template code
-		$fileName = $this->viewsFolder . $viewName;
 		if (\is_array ( $pData )) {
 			\extract ( $pData );
 		}
-		$tpl = new TemplateParser ( $fileName );
-		$content = eval ( '?>' . $tpl->__toString () );
+		$content = eval ( '?>' . $this->getTemplateParser ( $viewName )->__toString () );
 		if ($asString)
 			return $content;
 		else

@@ -21,7 +21,7 @@
   - Scaffolding
   - Console Admin interface (Devtools)
   - Assets & themes management (since 2.1.0, on a [proposal](https://github.com/phpMv/ubiquity/issues/11) from [@Gildonei](https://github.com/gildonei))
-  - Managed servers: fpm/fastcgi with Apache or nginX, Swoole, PHP-PM with ReactPHP (Dev only)
+  - Managed servers: fpm/fastcgi with Apache or nginX, [Workerman](https://github.com/walkor/Workerman), [Swoole](https://github.com/swoole/swoole-src), [PHP-PM](https://github.com/php-pm/php-pm) with ReactPHP (Dev only)
 
 # Upgrade
 If Ubiquity devtools are already globally installed, and you want to upgrade to the lastest stable version:
