@@ -58,7 +58,7 @@ class ConditionParser {
 		} else {
 			$this->params = [ ];
 			foreach ( $values as $val ) {
-				$this->addParams ( $val );
+				$this->params [$val] = true;
 			}
 		}
 	}

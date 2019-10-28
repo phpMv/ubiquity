@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrelease]
 - Nothing
+## [2.3.2] 2019-10-28
+### Added
+- bulk queries in `DAO` class
+  - `DAO::toAdd($instance)`
+  - `DAO::toUpdate($instance)`
+  - `DAO::toDelete($instance)`
+  - `DAO::flush()`
+- Composer create-project
+```
+composer create-project phpmv/ubiquity-project {projectName}
+```
+### Changed
+- `MicroTemplateEngine` optimization (cache) 
+### Added
 ## [2.3.1] 2019-09-25
 ### Added
 - `workerman` server

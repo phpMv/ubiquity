@@ -134,7 +134,7 @@ class DAO {
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getById($className, $keyValues, $included = true, $useCache = NULL) {
-		return self::_getOne ( self::getDb ( $className ), $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
+		return self::_getOne ( self::getDatabase ( self::$modelsDatabase [$className] ?? 'default'), $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
 	}
 
 	protected static function getConditionParser($className, $keyValues): ConditionParser {
