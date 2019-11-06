@@ -42,7 +42,7 @@ class BulkUpdates extends AbstractBulks {
 		$tableName = OrmUtils::getTableName ( $this->class );
 
 		$count = \count ( $this->instances );
-		$modelField = implode ( '', \array_fill ( 0, $count, ' WHEN ? THEN ? ' ) );
+		$modelField = \implode ( '', \array_fill ( 0, $count, ' WHEN ? THEN ? ' ) );
 
 		$keys = \array_keys ( $this->instances );
 		$parameters = [ ];
