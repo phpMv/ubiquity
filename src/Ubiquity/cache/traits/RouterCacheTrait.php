@@ -233,4 +233,17 @@ trait RouterCacheTrait {
 		}
 		return $result;
 	}
+
+	/**
+	 * Preloads controllers.
+	 * To use only with async servers (Swoole, Workerman)
+	 *
+	 * @param ?array $controllers
+	 */
+	public static function warmUpControllers($controllers = null) {
+		$controllers = $controllers ?? self::getControllers ();
+		foreach ( $controllers as $ctrl ) {
+			Startup::getControllerInstance ( $ctrl );
+		}
+	}
 }
