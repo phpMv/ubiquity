@@ -141,11 +141,7 @@ trait DAOCoreTrait {
 	}
 
 	protected static function getFieldList($tableName, $metaDatas) {
-		if (! isset ( self::$fields [$tableName] )) {
-			$members = \array_diff ( $metaDatas ['#fieldNames'], $metaDatas ['#notSerializable'] );
-			self::$fields = SqlUtils::getFieldList ( $members, $tableName );
-		}
-		return self::$fields;
+		return self::$fields [$tableName] ?? (self::$fields [$tableName] = SqlUtils::getFieldList ( \array_diff ( $metaDatas ['#fieldNames'], $metaDatas ['#notSerializable'] ), $tableName ));
 	}
 
 	/**

@@ -110,7 +110,7 @@ class SqlUtils {
 		}
 		$result = [ ];
 		$prefix = '';
-		if (is_string ( $tableName )) {
+		if (\is_string ( $tableName )) {
 			$prefix = self::$quote . $tableName . self::$quote . '.';
 		}
 		foreach ( $fields as $field ) {

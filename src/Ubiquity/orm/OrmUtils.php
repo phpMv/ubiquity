@@ -4,7 +4,6 @@ namespace Ubiquity\orm;
 
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\base\UArray;
 use Ubiquity\controllers\rest\ResponseFormatter;
 use Ubiquity\orm\traits\OrmUtilsRelationsTrait;
 use Ubiquity\orm\traits\OrmUtilsFieldsTrait;
@@ -50,7 +49,7 @@ class OrmUtils {
 	}
 
 	public static function getKeyFieldsAndValues($instance) {
-		$class = get_class ( $instance );
+		$class = \get_class ( $instance );
 		$kf = self::getAnnotationInfo ( $class, '#primaryKeys' );
 		return self::getFieldsAndValues_ ( $instance, $kf );
 	}
@@ -150,14 +149,13 @@ class OrmUtils {
 	}
 
 	public static function getAnnotationInfo($class, $keyAnnotation) {
-		$metas = self::getModelMetadata ( $class );
-		return $metas [$keyAnnotation] ?? false;
+		return self::getModelMetadata ( $class ) [$keyAnnotation] ?? false;
 	}
 
 	public static function getAnnotationInfoMember($class, $keyAnnotation, $member) {
 		$info = self::getAnnotationInfo ( $class, $keyAnnotation );
 		if ($info !== false) {
-			if (UArray::isAssociative ( $info )) {
+			if (! isset ( $info [0] )) { // isAssociative
 				if (isset ( $info [$member] )) {
 					return $info [$member];
 				}
