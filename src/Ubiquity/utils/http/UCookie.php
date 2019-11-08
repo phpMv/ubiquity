@@ -8,7 +8,7 @@ namespace Ubiquity\utils\http;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class UCookie {
@@ -36,7 +36,7 @@ class UCookie {
 	 * @return ?string
 	 */
 	public static function get($name, $default = null): ?string {
-		return isset ( $_COOKIE [$name] ) ? $_COOKIE [$name] : $default;
+		return $_COOKIE [$name] ?? $default;
 	}
 
 	/**

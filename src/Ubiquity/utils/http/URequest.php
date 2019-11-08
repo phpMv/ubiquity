@@ -11,7 +11,7 @@ use Ubiquity\utils\base\UString;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 class URequest {
@@ -218,7 +218,7 @@ class URequest {
 	 * @return string
 	 */
 	public static function get($key, $default = NULL): ?string {
-		return isset ( $_GET [$key] ) ? $_GET [$key] : $default;
+		return $_GET [$key] ?? $default;
 	}
 
 	/**
@@ -243,7 +243,7 @@ class URequest {
 	 * @return mixed
 	 */
 	public static function post($key, $default = NULL) {
-		return isset ( $_POST [$key] ) ? $_POST [$key] : $default;
+		return $_POST [$key] ?? $default;
 	}
 
 	public static function getUrl($url): string {

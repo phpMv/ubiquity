@@ -47,10 +47,10 @@ class View {
 	}
 
 	/**
-	 * affiche la vue $viewName
+	 * Renders the view $viewName.
 	 *
-	 * @param string $viewName nom de la vue à charger
-	 * @param boolean $asString Si vrai, la vue n'est pas affichée mais retournée sous forme de chaîne (utilisable dans une variable)
+	 * @param string $viewName The view name
+	 * @param boolean $asString If true, the view is not displayed but returned as a string (usable in a variable)
 	 * @throws \Exception
 	 * @return string
 	 */

@@ -11,6 +11,7 @@ use Ubiquity\contents\validation\ValidatorsManager;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\exceptions\UbiquityException;
+use Ubiquity\orm\OrmUtils;
 
 /**
  *
@@ -141,5 +142,20 @@ trait ModelsCacheTrait {
 			return self::$cache->fetch ( 'models\_modelsDatabases' );
 		}
 		return [ ];
+	}
+
+	/**
+	 * Preloads models metadatas.
+	 * To use only with async servers (Swoole, Workerman)
+	 *
+	 * @param array $config
+	 * @param string $offset
+	 * @param ?array $models
+	 */
+	public static function warmUpModels(&$config, $offset = 'default', $models = null) {
+		$models = $models ?? self::getModels ( $config, true, $offset );
+		foreach ( $models as $model ) {
+			OrmUtils::getModelMetadata ( $model );
+		}
 	}
 }

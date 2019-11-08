@@ -16,7 +16,7 @@ use Ubiquity\db\Database;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  * @property array $db
  * @property boolean $useTransformers
@@ -78,18 +78,18 @@ trait DAOCoreTrait {
 		$manyToManyFields = null;
 
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
-		$tableName = $metaDatas ["#tableName"];
+		$tableName = $metaDatas ['#tableName'];
 		$hasIncluded = $included || (\is_array ( $included ) && \sizeof ( $included ) > 0);
 		if ($hasIncluded) {
 			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
-		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
+		$transformers = $metaDatas ['#transformers'] [self::$transformerOp] ?? [ ];
 		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		if ($query && \sizeof ( $query ) > 0) {
 			$oneToManyQueries = [ ];
 			$manyToOneQueries = [ ];
 			$manyToManyParsers = [ ];
-			$accessors = $metaDatas ["#accessors"];
+			$accessors = $metaDatas ['#accessors'];
 			$object = self::loadObjectFromRow ( \current ( $query ), $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
 			if ($hasIncluded) {
 				self::_affectsRelationObjects ( $className, OrmUtils::getFirstPropKey ( $className ), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $included, $useCache );
@@ -116,18 +116,18 @@ trait DAOCoreTrait {
 		$manyToManyFields = null;
 
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
-		$tableName = $metaDatas ["#tableName"];
+		$tableName = $metaDatas ['#tableName'];
 		$hasIncluded = $included || (\is_array ( $included ) && \sizeof ( $included ) > 0);
 		if ($hasIncluded) {
 			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
-		$transformers = $metaDatas ["#transformers"] [self::$transformerOp] ?? [ ];
+		$transformers = $metaDatas ['#transformers'] [self::$transformerOp] ?? [ ];
 		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
 		$propsKeys = OrmUtils::getPropKeys ( $className );
-		$accessors = $metaDatas ["#accessors"];
+		$accessors = $metaDatas ['#accessors'];
 		foreach ( $query as $row ) {
 			$object = self::loadObjectFromRow ( $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
 			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
@@ -141,11 +141,7 @@ trait DAOCoreTrait {
 	}
 
 	protected static function getFieldList($tableName, $metaDatas) {
-		if (! isset ( self::$fields [$tableName] )) {
-			$members = \array_diff ( $metaDatas ["#fieldNames"], $metaDatas ["#notSerializable"] );
-			self::$fields = SqlUtils::getFieldList ( $members, $tableName );
-		}
-		return self::$fields;
+		return self::$fields [$tableName] ?? (self::$fields [$tableName] = SqlUtils::getFieldList ( \array_diff ( $metaDatas ['#fieldNames'], $metaDatas ['#notSerializable'] ), $tableName ));
 	}
 
 	/**
@@ -172,7 +168,7 @@ trait DAOCoreTrait {
 			}
 			$o->_rest [$k] = $v;
 			if (isset ( $invertedJoinColumns ) && isset ( $invertedJoinColumns [$k] )) {
-				$fk = "_" . $k;
+				$fk = '_' . $k;
 				$o->$fk = $v;
 				self::prepareManyToOne ( $manyToOneQueries, $o, $v, $fk, $invertedJoinColumns [$k] );
 			}
@@ -191,8 +187,8 @@ trait DAOCoreTrait {
 	}
 
 	private static function parseKey(&$keyValues, $className, $quote) {
-		if (! is_array ( $keyValues )) {
-			if (strrpos ( $keyValues, "=" ) === false && strrpos ( $keyValues, ">" ) === false && strrpos ( $keyValues, "<" ) === false) {
+		if (! \is_array ( $keyValues )) {
+			if (\strrpos ( $keyValues, '=' ) === false && \strrpos ( $keyValues, '>' ) === false && \strrpos ( $keyValues, '<' ) === false) {
 				$keyValues = $quote . OrmUtils::getFirstKey ( $className ) . $quote . "='" . $keyValues . "'";
 			}
 		}

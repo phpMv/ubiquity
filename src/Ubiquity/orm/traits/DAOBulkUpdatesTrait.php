@@ -44,10 +44,19 @@ trait DAOBulkUpdatesTrait {
 		self::toOperation ( $instance, 'insert' );
 	}
 
+	/**
+	 * Adds an array of instances in the bulk list of objects to insert.
+	 * Call flush to commit the operation
+	 *
+	 * @param array $instances
+	 */
 	public static function toInserts(array $instances): void {
 		self::toOperations ( $instances, 'insert' );
 	}
 
+	/**
+	 * Executes all waiting insert operations
+	 */
 	public static function flushInserts(): void {
 		$bulks = self::$bulks ['insert'];
 		foreach ( $bulks as $bulk ) {
@@ -55,14 +64,29 @@ trait DAOBulkUpdatesTrait {
 		}
 	}
 
+	/**
+	 * Adds an instance in the bulk list of objects to update.
+	 * Call flush to commit the operation
+	 *
+	 * @param object $instance
+	 */
 	public static function toUpdate(object $instance): void {
 		self::toOperation ( $instance, 'update' );
 	}
 
+	/**
+	 * Adds an array of instances in the bulk list of objects to update.
+	 * Call flush to commit the operation
+	 *
+	 * @param array $instances
+	 */
 	public static function toUpdates(array $instances): void {
 		self::toOperations ( $instances, 'update' );
 	}
 
+	/**
+	 * Executes all waiting update operations
+	 */
 	public static function flushUpdates(): void {
 		$bulks = self::$bulks ['update'];
 		foreach ( $bulks as $bulk ) {
@@ -70,14 +94,29 @@ trait DAOBulkUpdatesTrait {
 		}
 	}
 
+	/**
+	 * Adds an instance in the bulk list of objects to delete.
+	 * Call flush to commit the operation
+	 *
+	 * @param object $instance
+	 */
 	public static function toDelete(object $instance): void {
 		self::toOperation ( $instance, 'delete' );
 	}
 
+	/**
+	 * Adds an array of instances in the bulk list of objects to delete.
+	 * Call flush to commit the operation
+	 *
+	 * @param array $instances
+	 */
 	public static function toDeletes(array $instances): void {
 		self::toOperations ( $instances, 'delete' );
 	}
 
+	/**
+	 * Executes all waiting delete operations
+	 */
 	public static function flushDeletes(): void {
 		$bulks = self::$bulks ['delete'];
 		foreach ( $bulks as $bulk ) {
@@ -85,6 +124,9 @@ trait DAOBulkUpdatesTrait {
 		}
 	}
 
+	/**
+	 * Executes all waiting operations (inserts, updates, deletes)
+	 */
 	public static function flush(): void {
 		foreach ( self::$bulks as $bulks ) {
 			foreach ( $bulks as $bulk ) {
