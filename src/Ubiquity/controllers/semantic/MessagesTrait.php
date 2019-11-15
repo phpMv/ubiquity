@@ -26,11 +26,11 @@ trait MessagesTrait {
 
 	abstract public function _getFiles();
 
-	protected function _showSimpleMessage(CRUDMessage $message, $staticName = null): HtmlMessage {
-		return $this->showSimpleMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $message->getTimeout (), $staticName );
+	protected function _showSimpleMessage(CRUDMessage $message, $staticName = null, $toast = false): HtmlMessage {
+		return $this->showSimpleMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $message->getTimeout (), $staticName, null, $toast );
 	}
 
-	public function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null, $closeAction = null): HtmlMessage {
+	public function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null, $closeAction = null, $toast = false): HtmlMessage {
 		$semantic = $this->jquery->semantic ();
 		if (! isset ( $staticName ))
 			$staticName = "msg-" . rand ( 0, 50 );
@@ -48,6 +48,9 @@ trait MessagesTrait {
 			$message->setTimeout ( 3000 );
 		} elseif (isset ( $closeAction )) {
 			$message->getOnClose ( $this->_getFiles ()->getAdminBaseRoute () . "/_closeMessage/" . $closeAction );
+		}
+		if ($toast) {
+			$message->asToast ();
 		}
 		return $message;
 	}
