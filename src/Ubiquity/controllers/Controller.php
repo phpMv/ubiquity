@@ -167,4 +167,12 @@ abstract class Controller {
 	public function getView() {
 		return $this->view;
 	}
+
+	public function renderPhp($phpFile, $vars = Null) {
+		if (isset ( $vars )) {
+			\extract ( $vars );
+		}
+		$fileName = \ROOT . \DS . 'views' . \DS . $phpFile;
+		include $fileName;
+	}
 }
