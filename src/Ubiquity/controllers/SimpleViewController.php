@@ -11,8 +11,7 @@ namespace Ubiquity\controllers;
  * @version 1.0.0
  *
  */
-abstract class ControllerView extends Controller {
-	protected static $views = [ ];
+abstract class SimpleViewController extends Controller {
 
 	public function __construct() {
 	}
@@ -21,12 +20,9 @@ abstract class ControllerView extends Controller {
 		if (isset ( $pData )) {
 			\extract ( $pData );
 		}
-		if (! isset ( self::$views [$filename] )) {
-			\ob_start ();
-			include ($filename);
-			return self::$views [$filename] = \ob_get_clean ();
-		}
-		return eval ( '?>' . self::$views [$filename] );
+		\ob_start ();
+		include ($filename);
+		return \ob_get_clean ();
 	}
 
 	/**
@@ -45,6 +41,9 @@ abstract class ControllerView extends Controller {
 		if ($asString) {
 			return $this->_includeFileAsString ( $filename, $pData );
 		}
-		echo $this->_includeFileAsString ( $filename, $pData );
+		if (isset ( $pData )) {
+			\extract ( $pData );
+		}
+		include ($filename);
 	}
 }
