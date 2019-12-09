@@ -27,7 +27,7 @@ class UString {
 	}
 
 	public static function getBooleanStr($value) {
-		return ($value === true || $value == 'true') ? 'true' : 'false';
+		return ($value === true || $value == 'true' || $value == 1) ? 'true' : 'false';
 	}
 
 	public static function isNull($s) {

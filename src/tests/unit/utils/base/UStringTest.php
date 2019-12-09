@@ -48,7 +48,7 @@ class UStringTest extends \Codeception\Test\Unit {
 	public function testGetBooleanStr() {
 		$this->assertEquals ( 'true', UString::getBooleanStr ( true ) );
 		$this->assertEquals ( 'true', UString::getBooleanStr ( 1 ) );
-		$this->assertEquals ( 'true', UString::getBooleanStr ( 'a' ) );
+		$this->assertEquals ( 'true', UString::getBooleanStr ( 'true' ) );
 		$this->assertEquals ( 'false', UString::getBooleanStr ( false ) );
 		$this->assertEquals ( 'false', UString::getBooleanStr ( null ) );
 		$this->assertEquals ( 'false', UString::getBooleanStr ( 0 ) );
