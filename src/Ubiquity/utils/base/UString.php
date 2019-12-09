@@ -9,7 +9,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class UString {
@@ -19,7 +19,7 @@ class UString {
 	}
 
 	public static function contains($needle, $haystack) {
-		return strpos ( $haystack, $needle ) !== false;
+		return \strpos ( $haystack, $needle ) !== false;
 	}
 
 	public static function endswith($hay, $needle) {
@@ -27,7 +27,7 @@ class UString {
 	}
 
 	public static function getBooleanStr($value) {
-		return $value ? 'true' : 'false';
+		return ($value === true || $value == 'true') ? 'true' : 'false';
 	}
 
 	public static function isNull($s) {
@@ -43,7 +43,7 @@ class UString {
 	}
 
 	public static function isBooleanFalse($s) {
-		return filter_var ( $s, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE ) === false;
+		return \filter_var ( $s, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE ) === false;
 	}
 
 	public static function isBoolean($value) {
