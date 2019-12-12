@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.5
+ * @version 1.1.6
  *
  */
 class Startup {
@@ -32,18 +32,19 @@ class Startup {
 		return self::$urlParts = \explode ( '/', \rtrim ( $url, '/' ) );
 	}
 
-	public static function getControllerInstance($controllerName): object {
+	public static function getControllerInstance($controllerName): ?object {
 		if (! isset ( self::$controllers [$controllerName] )) {
-			try {
+			if (\class_exists ( $controllerName, true )) {
 				$controller = new $controllerName ();
 				// Dependency injection
 				if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
 					self::injectDependences ( $controller );
 				}
 				self::$controllers [$controllerName] = $controller;
-			} catch ( \Exception $e ) {
+			} else {
 				Logger::warn ( 'Startup', 'The controller `' . $controllerName . '` doesn\'t exists! <br/>', 'runAction' );
 				self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+				return null;
 			}
 		}
 		return self::$controllers [$controllerName];
@@ -139,26 +140,34 @@ class Startup {
 		self::$action = $u [1] ?? 'index';
 		self::$actionParams = ($uSize > 2) ? \array_slice ( $u, 2 ) : [ ];
 
-		$controller = self::getControllerInstance ( $ctrl );
-		if (! $controller->isValid ( self::$action )) {
-			$controller->onInvalidControl ();
-		} else {
-			if ($initialize) {
-				$controller->initialize ();
-			}
-			try {
-				if (\call_user_func_array ( [ $controller,self::$action ], self::$actionParams ) === false) {
-					Logger::warn ( 'Startup', 'The action ' . self::$action . " does not exists on controller `{$ctrl}`", 'runAction' );
-					self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+		try {
+			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
+				if (! $controller->isValid ( self::$action )) {
+					$controller->onInvalidControl ();
+				} else {
+					if ($initialize) {
+						$controller->initialize ();
+					}
+					try {
+						if (\call_user_func_array ( [ $controller,self::$action ], self::$actionParams ) === false) {
+							Logger::warn ( 'Startup', 'The action ' . self::$action . " does not exists on controller `{$ctrl}`", 'runAction' );
+							self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+						}
+					} catch ( \Error $e ) {
+						Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
+						if (self::$config ['debug']) {
+							throw $e;
+						}
+					}
+					if ($finalize) {
+						$controller->finalize ();
+					}
 				}
-			} catch ( \Error $e ) {
-				Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
-				if (self::$config ['debug']) {
-					throw $e;
-				}
 			}
-			if ($finalize) {
-				$controller->finalize ();
+		} catch ( \Error $eC ) {
+			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
+			if (self::$config ['debug']) {
+				throw $eC;
 			}
 		}
 	}
