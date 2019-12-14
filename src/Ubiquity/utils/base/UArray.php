@@ -203,8 +203,8 @@ class UArray {
 		} elseif ($v instanceof \DateTime) {
 			$result = "\DateTime::createFromFormat('Y-m-d H:i:s','" . $v->format ( 'Y-m-d H:i:s' ) . "')";
 		} else {
-			$result = "\"" . \str_replace ( '$', '\$', $v ) . "\"";
-			$result = UString::doubleBackSlashes ( $result );
+			$result = UString::doubleBackSlashes ( $v );
+			$result = "\"" . \str_replace ( [ '$','"' ], [ '\$','\"' ], $result ) . "\"";
 		}
 		return $result;
 	}
