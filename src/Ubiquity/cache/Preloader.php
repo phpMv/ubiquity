@@ -131,7 +131,7 @@ class Preloader {
 			$array = include $filename;
 		}
 		$array ['classes-files'] = $this->generateClassesFiles ();
-		$content = "<?php\nreturn " . \var_export ( $array, true ) . ";";
+		$content = "<?php\nreturn " . $this->asPhpArray ( $array, 'array', 1, true ) . ";";
 		return \file_put_contents ( $filename, $content );
 	}
 
@@ -466,7 +466,8 @@ class Preloader {
 		$tokens = \token_get_all ( $phpCode );
 		$count = count ( $tokens );
 		for($i = 2; $i < $count; $i ++) {
-			if ($tokens [$i - 2] [0] == T_CLASS && $tokens [$i - 1] [0] == T_WHITESPACE && $tokens [$i] [0] == T_STRING) {
+			$elm = $tokens [$i - 2] [0];
+			if (($elm == T_CLASS || $elm == T_INTERFACE || $elm == T_TRAIT) && $tokens [$i - 1] [0] == T_WHITESPACE && $tokens [$i] [0] == T_STRING) {
 				$class_name = $tokens [$i] [1];
 				$classes [] = $class_name;
 			}
@@ -474,6 +475,91 @@ class Preloader {
 		if (isset ( $classes [0] ))
 			return $classes [0];
 		return null;
+	}
+
+	private function asPhpArray($array, $prefix = "", $depth = 1, $format = false) {
+		$exts = array ();
+		$extsStr = "";
+		$tab = "";
+		$nl = "";
+		if ($format) {
+			$tab = \str_repeat ( "\t", $depth );
+			$nl = PHP_EOL;
+		}
+		foreach ( $array as $k => $v ) {
+			if (\is_string ( $k )) {
+				$exts [] = "\"" . $this->doubleBackSlashes ( $k ) . "\"=>" . $this->parseValue ( $v, 'array', $depth + 1, $format );
+			} else {
+				$exts [] = $this->parseValue ( $v, $prefix, $depth + 1, $format );
+			}
+		}
+		if (\sizeof ( $exts ) > 0 || $prefix !== "") {
+			$extsStr = "(" . \implode ( "," . $nl . $tab, $exts ) . ")";
+			if (\sizeof ( $exts ) > 0) {
+				$extsStr = "(" . $nl . $tab . \implode ( "," . $nl . $tab, $exts ) . $nl . $tab . ")";
+			}
+		}
+		return $prefix . $extsStr;
+	}
+
+	private function parseValue($v, $prefix = "", $depth = 1, $format = false) {
+		if (\is_array ( $v )) {
+			$result = $this->asPhpArray ( $v, $prefix, $depth + 1, $format );
+		} elseif ($v instanceof \Closure) {
+			$result = $this->closure_dump ( $v );
+		} else {
+			$result = $this->doubleBackSlashes ( $v );
+			$result = "\"" . \str_replace ( [ '$','"' ], [ '\$','\"' ], $result ) . "\"";
+		}
+		return $result;
+	}
+
+	private function closure_dump(\Closure $c) {
+		$str = 'function (';
+		$r = new \ReflectionFunction ( $c );
+		$params = array ();
+		foreach ( $r->getParameters () as $p ) {
+			$s = '';
+			if ($p->isArray ()) {
+				$s .= 'array ';
+			} else if ($p->getClass ()) {
+				$s .= $p->getClass ()->name . ' ';
+			}
+			if ($p->isPassedByReference ()) {
+				$s .= '&';
+			}
+			$s .= '$' . $p->name;
+			if ($p->isOptional ()) {
+				$s .= ' = ' . \var_export ( $p->getDefaultValue (), TRUE );
+			}
+			$params [] = $s;
+		}
+		$str .= \implode ( ', ', $params );
+		$str .= ')';
+		$lines = file ( $r->getFileName () );
+		$sLine = $r->getStartLine ();
+		$eLine = $r->getEndLine ();
+		if ($eLine === $sLine) {
+			$match = \strstr ( $lines [$sLine - 1], "function" );
+			$str .= \strstr ( \strstr ( $match, "{" ), "}", true ) . "}";
+		} else {
+			$str .= \strrchr ( $lines [$sLine - 1], "{" );
+			for($l = $sLine; $l < $eLine - 1; $l ++) {
+				$str .= $lines [$l];
+			}
+			$str .= \strstr ( $lines [$eLine - 1], "}", true ) . "}";
+		}
+		$vars = $r->getStaticVariables ();
+		foreach ( $vars as $k => $v ) {
+			$str = \str_replace ( '$' . $k, \var_export ( $v, true ), $str );
+		}
+		return $str;
+	}
+
+	private function doubleBackSlashes($value) {
+		if (\is_string ( $value ))
+			return \str_replace ( "\\", "\\\\", $value );
+		return $value;
 	}
 }
 
