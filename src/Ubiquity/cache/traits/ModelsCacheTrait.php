@@ -73,7 +73,7 @@ trait ModelsCacheTrait {
 			}
 		}
 		if (! $forChecking) {
-			self::$cache->store ( 'models\_modelsDatabases', 'return ' . UArray::asPhpArray ( $modelsDb, 'array' ) . ';', 'models' );
+			self::$cache->store ( '_modelsDatabases', 'return ' . UArray::asPhpArray ( $modelsDb, 'array' ) . ';', 'models' );
 		}
 		if (! $silent) {
 			echo "Models cache reset\n";
@@ -138,8 +138,8 @@ trait ModelsCacheTrait {
 	}
 
 	public static function getModelsDatabases() {
-		if (self::$cache->exists ( 'models\_modelsDatabases' )) {
-			return self::$cache->fetch ( 'models\_modelsDatabases' );
+		if (self::$cache->exists ( '_modelsDatabases' )) {
+			return self::$cache->fetch ( '_modelsDatabases' );
 		}
 		return [ ];
 	}
