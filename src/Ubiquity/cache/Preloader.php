@@ -178,6 +178,7 @@ class Preloader {
 	 */
 	public function addUbiquityControllers() {
 		$this->addLibraryPart ( 'ubiquity', 'controllers' );
+		$this->exclude ( 'Ubiquity\\controllers\\crud', 'Ubiquity\\controllers\\rest', 'Ubiquity\\controllers\\seo', 'Ubiquity\\controllers\\auth' );
 		return $this;
 	}
 
@@ -403,7 +404,7 @@ class Preloader {
 	}
 
 	private function loadFile(string $file): void {
-		require_once $file;
+		require_once ($file);
 		self::$count ++;
 	}
 
