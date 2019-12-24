@@ -189,6 +189,7 @@ class Preloader {
 	 */
 	public function addUbiquityCache() {
 		$this->addLibraryPart ( 'ubiquity', 'cache' );
+		$this->exclude ( '' );
 		return $this;
 	}
 
@@ -427,11 +428,15 @@ class Preloader {
 
 	private function getClassFullNameFromFile($filePathName, $backSlash = false) {
 		$phpCode = \file_get_contents ( $filePathName );
-		$ns = $this->getClassNamespaceFromPhpCode ( $phpCode );
-		if ($backSlash && $ns != null) {
-			$ns = "\\" . $ns;
+		$class = $this->getClassNameFromPhpCode ( $phpCode );
+		if (isset ( $class )) {
+			$ns = $this->getClassNamespaceFromPhpCode ( $phpCode );
+			if ($backSlash && $ns != null) {
+				$ns = "\\" . $ns;
+			}
+			return $ns . '\\' . $class;
 		}
-		return $ns . '\\' . $this->getClassNameFromPhpCode ( $phpCode );
+		return null;
 	}
 
 	private function getClassNamespaceFromPhpCode($phpCode) {
