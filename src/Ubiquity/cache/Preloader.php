@@ -188,8 +188,8 @@ class Preloader {
 	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquityCache() {
-		$this->addLibraryPart ( 'ubiquity', 'cache' );
-		$this->exclude ( '' );
+		$this->addClass ( 'Ubiquity\\cache\\CacheManager' );
+		$this->addClass ( 'Ubiquity\\cache\\system\\ArrayCache' );
 		return $this;
 	}
 
@@ -220,7 +220,8 @@ class Preloader {
 	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquityHttpUtils() {
-		$this->addLibraryPart ( 'ubiquity', 'utils/http' );
+		$this->addClass ( 'Ubiquity\\utitls\\http\\URequest' );
+		$this->addClass ( 'Ubiquity\\utitls\\http\\UResponse' );
 		return $this;
 	}
 
@@ -279,7 +280,18 @@ class Preloader {
 	 * @return boolean
 	 */
 	public function addApplicationControllers($dir = 'controllers') {
-		return $this->addLibraryPart ( 'application', $dir );
+		$this->addLibraryPart ( 'application', $dir );
+		$this->exclude ( $dir . '\\MaintenanceController', $dir . '\\Admin' );
+		return $this;
+	}
+
+	public function addUbiquityBasics($hasDatabase = true) {
+		$this->addUbiquityCache ();
+		$this->addUbiquityControllers ();
+		if ($hasDatabase) {
+			$this->addUbiquityPdo ();
+			$this->addUbiquityORM ();
+		}
 	}
 
 	/**
