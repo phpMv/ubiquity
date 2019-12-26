@@ -220,8 +220,8 @@ class Preloader {
 	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquityHttpUtils() {
-		$this->addClass ( 'Ubiquity\\utitls\\http\\URequest' );
-		$this->addClass ( 'Ubiquity\\utitls\\http\\UResponse' );
+		$this->addClass ( 'Ubiquity\\utils\\http\\URequest' );
+		$this->addClass ( 'Ubiquity\\utils\\http\\UResponse' );
 		return $this;
 	}
 
