@@ -306,7 +306,7 @@ class Preloader {
 	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquityTwig() {
-		$this->addClasses ( [ 'Ubiquity\\views\\engine\\Twig','Twig\Cache\FilesystemCache','Twig\Extension\CoreExtension','Twig\Extension\EscaperExtension','Twig\Extension\OptimizerExtension','Twig\Extension\StagingExtension','Twig\ExtensionSet','Twig\Template','Twig\TemplateWrapper' ] );
+		$this->addClasses ( [ 'Ubiquity\\views\\engine\\Twig','Twig\\Cache\\FilesystemCache','Twig\\Extension\\CoreExtension','Twig\\Extension\\EscaperExtension','Twig\\Extension\\OptimizerExtension','Twig\\Extension\\StagingExtension','Twig\\ExtensionSet','Twig\\Template','Twig\\TemplateWrapper' ] );
 		return $this;
 	}
 
