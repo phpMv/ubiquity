@@ -285,6 +285,11 @@ class Preloader {
 		return $this;
 	}
 
+	/**
+	 * Add Ubiquity hot classes for preloading
+	 *
+	 * @param boolean $hasDatabase
+	 */
 	public function addUbiquityBasics($hasDatabase = true) {
 		$this->addUbiquityCache ();
 		$this->addUbiquityControllers ();
@@ -404,7 +409,7 @@ class Preloader {
 			}
 		}
 		if (\class_exists ( $class, false )) {
-			echo "$class loaded !<br>";
+			echo "$class loaded !\n";
 		}
 	}
 
