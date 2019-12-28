@@ -178,6 +178,8 @@ class Preloader {
 	 */
 	public function addUbiquityControllers() {
 		$this->addLibraryPart ( 'ubiquity', 'controllers' );
+		$this->addClass ( 'Ubiquity\\events\\EventManager' );
+		$this->addClass ( 'Ubiquity\\log\\Logger' );
 		$this->exclude ( 'Ubiquity\\controllers\\crud', 'Ubiquity\\controllers\\rest', 'Ubiquity\\controllers\\seo', 'Ubiquity\\controllers\\auth' );
 		return $this;
 	}
@@ -200,6 +202,8 @@ class Preloader {
 	 */
 	public function addUbiquityPdo() {
 		$this->addClass ( 'Ubiquity\\db\\Database' );
+		$this->addClass ( 'Ubiquity\\cache\\database\\DbCache' );
+		$this->addClass ( 'Ubiquity\\db\\SqlUtils' );
 		$this->addLibraryPart ( 'ubiquity', 'db/providers' );
 		return $this;
 	}
@@ -211,6 +215,7 @@ class Preloader {
 	 */
 	public function addUbiquityORM() {
 		$this->addLibraryPart ( 'ubiquity', 'orm' );
+		$this->addClass ( 'Ubiquity\\events\\DAOEvents' );
 		return $this;
 	}
 
@@ -222,6 +227,7 @@ class Preloader {
 	public function addUbiquityHttpUtils() {
 		$this->addClass ( 'Ubiquity\\utils\\http\\URequest' );
 		$this->addClass ( 'Ubiquity\\utils\\http\\UResponse' );
+		$this->addClass ( 'Ubiquity\\utils\\http\\foundation\\PhpHttp' );
 		return $this;
 	}
 
@@ -231,6 +237,7 @@ class Preloader {
 	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquityViews() {
+		$this->addClass ( 'Ubiquity\\views\\View' );
 		$this->addClass ( 'Ubiquity\\views\\engine\\micro\\MicroTemplateEngine' );
 		return $this;
 	}
