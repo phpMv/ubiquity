@@ -286,6 +286,15 @@ class Preloader {
 	 * @param string $dir
 	 * @return boolean
 	 */
+	public function addApplicationCache($dir = 'cache') {
+		return $this->addLibraryPart ( 'application', $dir );
+	}
+
+	/**
+	 *
+	 * @param string $dir
+	 * @return boolean
+	 */
 	public function addApplicationControllers($dir = 'controllers') {
 		$this->addLibraryPart ( 'application', $dir );
 		$this->exclude ( $dir . '\\MaintenanceController', $dir . '\\Admin' );
