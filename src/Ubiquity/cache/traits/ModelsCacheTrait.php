@@ -73,7 +73,7 @@ trait ModelsCacheTrait {
 			}
 		}
 		if (! $forChecking) {
-			self::$cache->store ( 'models/_modelsDatabases', 'return ' . UArray::asPhpArray ( $modelsDb, 'array' ) . ';', 'models' );
+			self::$cache->store ( 'models' . \DS . '_modelsDatabases', 'return ' . UArray::asPhpArray ( $modelsDb, 'array' ) . ';', 'models' );
 		}
 		if (! $silent) {
 			echo "Models cache reset\n";

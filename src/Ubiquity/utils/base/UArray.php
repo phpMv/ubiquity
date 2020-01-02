@@ -8,7 +8,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class UArray {
@@ -115,6 +115,20 @@ class UArray {
 			}
 		}
 		return $prefix . $extsStr;
+	}
+
+	public static function asPhpClass($array, $name, $namespace = '', $format = false) {
+		$tab = "";
+		$nl = "";
+		if ($format) {
+			$tab = "\t";
+			$nl = PHP_EOL;
+		}
+		$content = 'public static $value=' . self::asPhpArray ( $array, 'array', 1, true ) . ';';
+		if ($namespace != null) {
+			$namespace = "namespace {$namespace};{$nl}";
+		}
+		return "{$namespace}class {$name} {" . $nl . $tab . $content . $nl . $tab . "}";
 	}
 
 	public static function asJSON($array) {
