@@ -167,6 +167,9 @@ class ClassUtils {
 	 * @return string
 	 */
 	public static function getClassSimpleName($classnameWithNamespace) {
-		return substr ( $classnameWithNamespace, strrpos ( $classnameWithNamespace, '\\' ) + 1 );
+		if (($pos = \strrpos ( $classnameWithNamespace, '\\' )) !== false) {
+			return \substr ( $classnameWithNamespace, $pos + 1 );
+		}
+		return $classnameWithNamespace;
 	}
 }
