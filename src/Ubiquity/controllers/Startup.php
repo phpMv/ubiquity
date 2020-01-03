@@ -86,6 +86,7 @@ class Startup {
 		if (isset ( $config ['sessionName'] )) {
 			USession::start ( $config ['sessionName'] );
 		}
+		self::$ctrlNS = self::getNS ();
 	}
 
 	/**
@@ -108,7 +109,7 @@ class Startup {
 				echo $ru; // Displays route response from cache
 			}
 		} else {
-			$u [0] = self::setCtrlNS () . $u [0];
+			$u [0] = self::$ctrlNS . $u [0];
 			self::runAction ( $u, $initialize, $finalize );
 		}
 	}
