@@ -47,8 +47,8 @@ class Reflexion {
 
 	public static function getPropertiesAndValues($instance, $props = NULL) {
 		$ret = array ();
-		$className = get_class ( $instance );
-		if (is_null ( $props ))
+		$className = \get_class ( $instance );
+		if (\is_null ( $props ))
 			$props = self::getProperties ( $instance );
 		foreach ( $props as $prop ) {
 			$prop->setAccessible ( true );

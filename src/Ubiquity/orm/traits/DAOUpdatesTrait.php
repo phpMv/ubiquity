@@ -225,8 +225,7 @@ trait DAOUpdatesTrait {
 		$db = self::getDb ( $className );
 		$quote = $db->quote;
 		$tableName = OrmUtils::getTableName ( $className );
-		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
-		$ColumnskeyAndValues = array_merge ( $ColumnskeyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
+		$ColumnskeyAndValues = \array_merge ( Reflexion::getPropertiesAndValues ( $instance ), OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
 		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
 		if (Logger::isActive ()) {
@@ -236,10 +235,10 @@ trait DAOUpdatesTrait {
 		$statement = $db->getUpdateStatement ( $sql );
 		try {
 			$result = $statement->execute ( $ColumnskeyAndValues );
-			if ($result && $updateMany)
+			if ($updateMany && $result)
 				self::insertOrUpdateAllManyToMany ( $instance );
 			EventsManager::trigger ( DAOEvents::AFTER_UPDATE, $instance, $result );
-			$instance->_rest = array_merge ( $instance->_rest, $ColumnskeyAndValues );
+			$instance->_rest = \array_merge ( $instance->_rest, $ColumnskeyAndValues );
 			return $result;
 		} catch ( \Exception $e ) {
 			Logger::warn ( "DAOUpdates", $e->getMessage (), "update" );
