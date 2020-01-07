@@ -14,6 +14,7 @@ use Ubiquity\orm\OrmUtils;
  */
 class Reflexion {
 	use ReflexionFieldsTrait;
+	protected static $classProperties = [ ];
 
 	public static function getMethods($instance, $filter = null) {
 		$reflect = new \ReflectionClass ( $instance );
@@ -48,6 +49,12 @@ class Reflexion {
 	public static function getPropertiesAndValues($instance, $props = NULL) {
 		$ret = array ();
 		$className = \get_class ( $instance );
+		if (isset ( self::$classProperties [$className] )) {
+			foreach ( self::$classProperties [$className] as $prop ) {
+				$ret [$prop->getName ()] = $prop->getValue ();
+			}
+			return $ret;
+		}
 		if (\is_null ( $props ))
 			$props = self::getProperties ( $instance );
 		foreach ( $props as $prop ) {
@@ -57,6 +64,7 @@ class Reflexion {
 				if (OrmUtils::isNotNullOrNullAccepted ( $v, $className, $prop->getName () )) {
 					$name = OrmUtils::getFieldName ( $className, $prop->getName () );
 					$ret [$name] = $v;
+					self::$classProperties [$className] [] = $prop;
 				}
 			}
 		}

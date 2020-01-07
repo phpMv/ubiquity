@@ -40,8 +40,7 @@ class OrmUtils {
 	}
 
 	public static function getFieldName($class, $member) {
-		$ret = self::getAnnotationInfo ( $class, '#fieldNames' );
-		return $ret [$member] ?? $member;
+		return (self::getAnnotationInfo ( $class, '#fieldNames' ) [$member]) ?? $member;
 	}
 
 	public static function getTableName($class) {
@@ -103,12 +102,11 @@ class OrmUtils {
 
 	public static function getFirstKeyValue($instance) {
 		$prop = OrmUtils::getFirstPropKey ( \get_class ( $instance ) );
-		return Reflexion::getPropValue ( $instance, $prop );
+		return $prop->getValue ( $instance );
 	}
 
 	public static function getFirstKeyValue_($instance, $members) {
-		$fkv = self::getFieldsAndValues_ ( $instance, $members );
-		return \current ( $fkv );
+		return \current ( self::getFieldsAndValues_ ( $instance, $members ) );
 	}
 
 	public static function getKeyValues($instance) {
@@ -119,15 +117,13 @@ class OrmUtils {
 	public static function getPropKeyValues($instance, $props) {
 		$values = [ ];
 		foreach ( $props as $prop ) {
-			$values [] = Reflexion::getPropValue ( $instance, $prop );
+			$values [] = $prop->getValue ( $instance );
 		}
 		return \implode ( '_', $values );
 	}
 
 	public static function getMembersWithAnnotation($class, $annotation) {
-		if (isset ( self::getModelMetadata ( $class ) [$annotation] ))
-			return self::getModelMetadata ( $class ) [$annotation];
-		return [ ];
+		return (self::getModelMetadata ( $class ) [$annotation]) ?? [ ];
 	}
 
 	/**
