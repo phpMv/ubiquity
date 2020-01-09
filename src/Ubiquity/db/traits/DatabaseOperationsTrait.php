@@ -54,7 +54,7 @@ trait DatabaseOperationsTrait {
 		if ($cache) {
 			$cKey = $condition;
 			if (is_array ( $parameters )) {
-				$cKey .= implode ( ",", $parameters );
+				$cKey .= \implode ( ",", $parameters );
 			}
 			try {
 				$result = $this->cache->fetch ( $tableName, $cKey );
