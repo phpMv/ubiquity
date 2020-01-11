@@ -51,7 +51,7 @@ class Reflexion {
 		$className = \get_class ( $instance );
 		if (isset ( self::$classProperties [$className] )) {
 			foreach ( self::$classProperties [$className] as $prop ) {
-				$ret [$prop->getName ()] = $prop->getValue ();
+				$ret [$prop->getName ()] = $prop->getValue ( $instance );
 			}
 			return $ret;
 		}

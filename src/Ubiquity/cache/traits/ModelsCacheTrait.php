@@ -156,6 +156,7 @@ trait ModelsCacheTrait {
 		$models = $models ?? self::getModels ( $config, true, $offset );
 		foreach ( $models as $model ) {
 			OrmUtils::getModelMetadata ( $model );
+			Reflexion::getPropertiesAndValues ( new $model () );
 		}
 	}
 }
