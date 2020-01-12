@@ -305,6 +305,7 @@ class Preloader {
 	 * Add Ubiquity hot classes for preloading
 	 *
 	 * @param boolean $hasDatabase
+	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquityBasics($hasDatabase = true) {
 		$this->addUbiquityCache ();
@@ -314,6 +315,7 @@ class Preloader {
 			$this->addUbiquityPdo ();
 			$this->addUbiquityORM ();
 		}
+		return $this;
 	}
 
 	/**
