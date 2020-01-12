@@ -245,7 +245,7 @@ class Preloader {
 	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquityWorkerman() {
-		$this->addLibraryPart ( 'ubiquity-workerman' );
+		$this->addClasses ( [ '\\Ubiquity\\servers\\swoole\\SwooleServer','\\Ubiquity\\utils\\http\\foundation\\SwooleHttp' ] );
 		return $this;
 	}
 
@@ -255,7 +255,7 @@ class Preloader {
 	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquitySwoole() {
-		$this->addLibraryPart ( 'ubiquity-swoole' );
+		$this->addClasses ( [ '\\Ubiquity\\servers\\workerman\\WorkermanServer','\\Ubiquity\\utils\\http\\foundation\\WorkermanHttp' ] );
 		return $this;
 	}
 
