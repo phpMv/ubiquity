@@ -245,7 +245,7 @@ class Preloader {
 	 * @return \Ubiquity\cache\Preloader
 	 */
 	public function addUbiquityWorkerman() {
-		$this->addClasses ( [ 'Workerman\\Protocols\\Http','Workerman\\Protocols\\HttpCache','Workerman\\Worker','Ubiquity\\servers\\workerman\\WorkermanServer','Ubiquity\\utils\\http\\foundation\\WorkermanHttp' ] );
+		$this->addClasses ( [ 'Workerman\\Protocols\\Http','Workerman\\Protocols\\HttpCache','Ubiquity\\servers\\workerman\\WorkermanServer','Ubiquity\\utils\\http\\foundation\\WorkermanHttp' ] );
 		return $this;
 	}
 
