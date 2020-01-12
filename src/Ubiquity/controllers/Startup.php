@@ -138,20 +138,19 @@ class Startup {
 	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
 		self::$controller = $ctrl = $u [0];
 		$uSize = \sizeof ( $u );
-		self::$action = $u [1] ?? 'index';
+		self::$action = $action = $u [1] ?? 'index';
 		self::$actionParams = ($uSize > 2) ? \array_slice ( $u, 2 ) : [ ];
 
 		try {
 			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
-				if (! $controller->isValid ( self::$action )) {
+				if (! $controller->isValid ( $action )) {
 					$controller->onInvalidControl ();
 				} else {
 					if ($initialize) {
 						$controller->initialize ();
 					}
 					try {
-						$action = self::$action;
-						$controller->$action ( ...self::$actionParams );
+						$controller->$action ( ...(self::$actionParams) );
 					} catch ( \Error $e ) {
 						Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
 						if (self::$config ['debug']) {
