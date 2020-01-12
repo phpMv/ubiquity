@@ -250,6 +250,16 @@ class Preloader {
 	}
 
 	/**
+	 * Adds Ubiquity-swoole classes to preload.
+	 *
+	 * @return \Ubiquity\cache\Preloader
+	 */
+	public function addUbiquitySwoole() {
+		$this->addLibraryPart ( 'ubiquity-swoole' );
+		return $this;
+	}
+
+	/**
 	 * Adds classes from an application part (app folder) to preload.
 	 *
 	 * @param string $part
