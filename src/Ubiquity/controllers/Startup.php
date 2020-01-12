@@ -150,10 +150,8 @@ class Startup {
 						$controller->initialize ();
 					}
 					try {
-						if (\call_user_func_array ( [ $controller,self::$action ], self::$actionParams ) === false) {
-							Logger::warn ( 'Startup', 'The action ' . self::$action . " does not exists on controller `{$ctrl}`", 'runAction' );
-							self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-						}
+						$action = self::$action;
+						$controller->$action ( ...self::$actionParams );
 					} catch ( \Error $e ) {
 						Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
 						if (self::$config ['debug']) {
