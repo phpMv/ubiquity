@@ -137,9 +137,8 @@ class Startup {
 	 */
 	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
 		self::$controller = $ctrl = $u [0];
-		$uSize = \sizeof ( $u );
 		self::$action = $action = $u [1] ?? 'index';
-		self::$actionParams = ($uSize > 2) ? \array_slice ( $u, 2 ) : [ ];
+		self::$actionParams = \array_slice ( $u, 2 );
 
 		try {
 			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
