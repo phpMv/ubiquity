@@ -48,8 +48,8 @@ trait DatabaseOperationsTrait {
 	 * @param boolean|null $useCache
 	 * @return array
 	 */
-	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = NULL) {
-		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
+	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = false) {
+		$cache = (($useCache !== false && DbCache::$active) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
 			$cKey = $condition;
