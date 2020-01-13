@@ -49,7 +49,7 @@ trait DatabaseOperationsTrait {
 	 * @return array
 	 */
 	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = false) {
-		$cache = (($useCache !== false && DbCache::$active) || (! DbCache::$active && $useCache === true));
+		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
 			$cKey = $condition;
