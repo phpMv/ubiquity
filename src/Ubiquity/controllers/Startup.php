@@ -175,17 +175,15 @@ class Startup {
 	 * @param array $u An array containing a callback, and some parameters
 	 */
 	public static function runCallable(array &$u): void {
-		self::$actionParams = [ ];
-		if (\sizeof ( $u ) > 1) {
-			self::$actionParams = \array_slice ( $u, 1 );
-		}
+		self::$actionParams = \array_slice ( $u, 1 );
 		if (isset ( self::$config ['di'] )) {
 			$di = self::$config ['di'];
 			if (\is_array ( $di )) {
-				self::$actionParams = \array_merge ( self::$actionParams, $di );
+				self::$actionParams += $di;
 			}
 		}
-		\call_user_func_array ( $u [0], self::$actionParams );
+		$func = $u [0];
+		$func ( ...(self::$actionParams) );
 	}
 
 	/**
