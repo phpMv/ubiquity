@@ -14,9 +14,9 @@ use Ubiquity\log\Logger;
  *
  */
 class StartupAsync extends Startup {
-	private static const IS_VALID = 1;
-	private static const INITIALIZE = 2;
-	private static const FINALIZE = 4;
+	private const IS_VALID = 1;
+	private const INITIALIZE = 2;
+	private const FINALIZE = 4;
 	private static $controllers = [ ];
 
 	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
