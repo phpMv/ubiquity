@@ -7,7 +7,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.0.7
  *
  */
 class UIntrospection {
@@ -52,6 +52,11 @@ class UIntrospection {
 			$str .= $lines [$l];
 		}
 		return $str;
+	}
+
+	public static function implementsMethod($object, $methodName, $baseDeclaringClass) {
+		$m = new \ReflectionMethod ( $object, $methodName );
+		return $m->getDeclaringClass ()->getName () !== $baseDeclaringClass;
 	}
 
 	public static function closure_dump(\Closure $c) {

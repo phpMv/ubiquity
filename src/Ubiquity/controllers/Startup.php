@@ -20,37 +20,33 @@ class Startup {
 	use StartupConfigTrait;
 	public static $urlParts;
 	public static $templateEngine;
-	private static $controller;
-	private static $action;
-	private static $actionParams;
-	private static $controllers = [ ];
+	protected static $controller;
+	protected static $action;
+	protected static $actionParams;
 
-	private static function parseUrl(&$url): array {
+	protected static function parseUrl(&$url): array {
 		if (! $url) {
 			$url = '_default';
 		}
 		return self::$urlParts = \explode ( '/', \rtrim ( $url, '/' ) );
 	}
 
-	public static function getControllerInstance($controllerName): ?object {
-		if (! isset ( self::$controllers [$controllerName] )) {
-			if (\class_exists ( $controllerName, true )) {
-				$controller = new $controllerName ();
-				// Dependency injection
-				if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
-					self::injectDependences ( $controller );
-				}
-				self::$controllers [$controllerName] = $controller;
-			} else {
-				Logger::warn ( 'Startup', 'The controller `' . $controllerName . '` doesn\'t exists! <br/>', 'runAction' );
-				self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-				return null;
+	protected static function _getControllerInstance($controllerName): ?object {
+		if (\class_exists ( $controllerName, true )) {
+			$controller = new $controllerName ();
+			// Dependency injection
+			if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
+				self::injectDependences ( $controller );
 			}
+			return $controller;
+		} else {
+			Logger::warn ( 'Startup', 'The controller `' . $controllerName . '` doesn\'t exists! <br/>', 'runAction' );
+			self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+			return null;
 		}
-		return self::$controllers [$controllerName];
 	}
 
-	private static function startTemplateEngine(&$config): void {
+	protected static function startTemplateEngine(&$config): void {
 		try {
 			$templateEngine = $config ['templateEngine'];
 			$engineOptions = $config ['templateEngineOptions'] ?? array ('cache' => false );
@@ -141,7 +137,7 @@ class Startup {
 		self::$actionParams = \array_slice ( $u, 2 );
 
 		try {
-			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
+			if (null !== $controller = self::_getControllerInstance ( $ctrl )) {
 				if (! $controller->isValid ( $action )) {
 					$controller->onInvalidControl ();
 				} else {
