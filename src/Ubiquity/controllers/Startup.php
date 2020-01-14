@@ -97,7 +97,7 @@ class Startup {
 		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, true, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
 				if (\is_string ( $ru [0] )) {
-					self::runAction ( $ru, $initialize, $finalize );
+					static::runAction ( $ru, $initialize, $finalize );
 				} else {
 					self::runCallable ( $ru );
 				}
@@ -106,7 +106,7 @@ class Startup {
 			}
 		} else {
 			$u [0] = self::$ctrlNS . $u [0];
-			self::runAction ( $u, $initialize, $finalize );
+			static::runAction ( $u, $initialize, $finalize );
 		}
 	}
 
