@@ -201,6 +201,7 @@ class PDOWrapper extends AbstractDbWrapper {
 
 	public function _optPrepareObjectAndExecute($classname, $sql, array $values = null) {
 		$statement = $this->_getStatement ( $sql );
+		$statement->setFetchMode ( \PDO::FETCH_OBJ );
 		$result = false;
 		if ($statement->execute ( $values )) {
 			$result = $statement->fetchObject ( $classname );

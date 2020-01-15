@@ -20,14 +20,16 @@ class SDAO extends DAO {
 
 	protected static function _getOne(Database $db, $className, ConditionParser $conditionParser, $included, $useCache) {
 		$conditionParser->limitOne ();
-		$object = null;
 
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
 
 		$object = $db->prepareObjectAndExecute ( $className, $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
-		EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
-		return $object;
+		if ($object) {
+			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
+			return $object;
+		}
+		return null;
 	}
 
 	/**
@@ -40,7 +42,7 @@ class SDAO extends DAO {
 	 * @return array
 	 */
 	protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL) {
-		$objects = array ();
+		$result = array ();
 
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
@@ -50,10 +52,10 @@ class SDAO extends DAO {
 		$propsKeys = OrmUtils::getPropKeys ( $className );
 		foreach ( $objects as $object ) {
 			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
-			$objects [$key] = $object;
+			$result [$key] = $object;
 		}
 		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
-		return $objects;
+		return $result;
 	}
 }
 
