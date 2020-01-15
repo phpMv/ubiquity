@@ -20,16 +20,17 @@ class SDAO extends DAO {
 
 	protected static function _getOne(Database $db, $className, ConditionParser $conditionParser, $included, $useCache) {
 		$conditionParser->limitOne ();
+		$object = null;
 
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
 
-		$object = $db->prepareObjectAndExecute ( $className, $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
-		if ($object) {
+		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		if ($query && \sizeof ( $query ) > 0) {
+			$object = self::sloadObjectFromRow ( \current ( $query ), $className );
 			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
-			return \current ( $object );
 		}
-		return null;
+		return $object;
 	}
 
 	/**
@@ -42,15 +43,24 @@ class SDAO extends DAO {
 	 * @return array
 	 */
 	protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL) {
+		$objects = array ();
+
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
 
-		$objects = $db->prepareObjectAndExecute ( $className, $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
-		if ($objects) {
-			EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
-			return $objects;
+		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+
+		foreach ( $query as $row ) {
+			$objects [] = self::sloadObjectFromRow ( $row, $className );
 		}
-		return [ ];
+		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
+		return $objects;
+	}
+
+	private static function sloadObjectFromRow($array, $final_class) {
+		$o = \unserialize ( \sprintf ( 'O:%d:"%s"%s', \strlen ( $final_class ), $final_class, \strstr ( \strstr ( \serialize ( ( object ) $array ), '"' ), ':' ) ) );
+		$o->_rest = $array;
+		return $o;
 	}
 }
 
