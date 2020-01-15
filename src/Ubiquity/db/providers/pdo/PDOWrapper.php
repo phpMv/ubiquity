@@ -190,7 +190,7 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function _optPrepareAndExecute($sql, array $values = null) {
-		$statement = $this->getStatement ( $sql );
+		$statement = $this->_getStatement ( $sql );
 		$result = false;
 		if ($statement->execute ( $values )) {
 			$result = $statement->fetchAll ( \PDO::FETCH_ASSOC );
