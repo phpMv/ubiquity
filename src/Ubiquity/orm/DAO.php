@@ -56,7 +56,7 @@ class DAO {
 	 * @return array
 	 */
 	public static function getAll($className, $condition = '', $included = true, $parameters = null, $useCache = NULL) {
-		return self::_getAll ( self::getDb ( $className ), $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
+		return static::_getAll ( self::getDb ( $className ), $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
 	}
 
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {
@@ -120,7 +120,7 @@ class DAO {
 		} else {
 			throw new DAOException ( "The \$keyValues parameter should not be an array if \$parameters is not null" );
 		}
-		return self::_getOne ( self::getDb ( $className ), $className, $conditionParser, $included, $useCache );
+		return static::_getOne ( self::getDb ( $className ), $className, $conditionParser, $included, $useCache );
 	}
 
 	/**
@@ -134,7 +134,7 @@ class DAO {
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getById($className, $keyValues, $included = true, $useCache = NULL) {
-		return self::_getOne ( self::getDatabase ( self::$modelsDatabase [$className] ?? 'default'), $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
+		return static::_getOne ( self::getDatabase ( self::$modelsDatabase [$className] ?? 'default'), $className, self::getConditionParser ( $className, $keyValues ), $included, $useCache );
 	}
 
 	protected static function getConditionParser($className, $keyValues): ConditionParser {
