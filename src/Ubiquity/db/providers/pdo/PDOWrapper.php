@@ -204,7 +204,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		$statement->setFetchMode ( \PDO::FETCH_OBJ );
 		$result = false;
 		if ($statement->execute ( $values )) {
-			$result = $statement->fetchObject ( $classname );
+			$result = $statement->fetchAll ( \PDO::FETCH_CLASS, $classname );
 		}
 		$statement->closeCursor ();
 		return $result;

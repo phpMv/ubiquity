@@ -27,7 +27,7 @@ class SDAO extends DAO {
 		$object = $db->prepareObjectAndExecute ( $className, $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		if ($object) {
 			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
-			return $object;
+			return \current ( $object );
 		}
 		return null;
 	}
