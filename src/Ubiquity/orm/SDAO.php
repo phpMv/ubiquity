@@ -42,20 +42,15 @@ class SDAO extends DAO {
 	 * @return array
 	 */
 	protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL) {
-		$result = array ();
-
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
 
 		$objects = $db->prepareObjectAndExecute ( $className, $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
-
-		$propsKeys = OrmUtils::getPropKeys ( $className );
-		foreach ( $objects as $object ) {
-			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
-			$result [$key] = $object;
+		if ($objects) {
+			EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
+			return $objects;
 		}
-		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
-		return $result;
+		return [ ];
 	}
 }
 
