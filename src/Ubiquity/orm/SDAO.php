@@ -6,7 +6,9 @@ use Ubiquity\db\Database;
 use Ubiquity\db\SqlUtils;
 use Ubiquity\events\DAOEvents;
 use Ubiquity\events\EventsManager;
+use Ubiquity\log\Logger;
 use Ubiquity\orm\parser\ConditionParser;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
  * Ubiquity\orm$SDAO
@@ -62,7 +64,40 @@ class SDAO extends DAO {
 		foreach ( $row as $k => $v ) {
 			$o->$k = $v;
 		}
+		$o->_rest = $row;
 		return $o;
+	}
+
+	/**
+	 * Updates an existing $instance in the database.
+	 * Be careful not to modify the primary key
+	 *
+	 * @param object $instance instance to modify
+	 * @param boolean $updateMany Adds or updates ManyToMany members
+	 */
+	public static function update($instance, $updateMany = false) {
+		EventsManager::trigger ( 'dao.before.update', $instance );
+		$className = \get_class ( $instance );
+		$db = self::getDb ( $className );
+		$quote = $db->quote;
+		$tableName = OrmUtils::getTableName ( $className );
+		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
+		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
+		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
+		if (Logger::isActive ()) {
+			Logger::info ( "DAOUpdates", $sql, "update" );
+			Logger::info ( "DAOUpdates", \json_encode ( $ColumnskeyAndValues ), "Key and values" );
+		}
+		$statement = $db->getUpdateStatement ( $sql );
+		try {
+			$result = $statement->execute ( $ColumnskeyAndValues );
+			EventsManager::trigger ( DAOEvents::AFTER_UPDATE, $instance, $result );
+			$instance->_rest = \array_merge ( $instance->_rest, $ColumnskeyAndValues );
+			return $result;
+		} catch ( \Exception $e ) {
+			Logger::warn ( "DAOUpdates", $e->getMessage (), "update" );
+		}
+		return false;
 	}
 }
 
