@@ -91,6 +91,8 @@ abstract class AbstractDbWrapper {
 
 	abstract public function _optPrepareAndExecute($sql, array $values = null);
 
+	abstract public function _optPrepareObjectAndExecute($classname, $sql, array $values = null);
+
 	public function close() {
 		$this->dbInstance = null;
 	}

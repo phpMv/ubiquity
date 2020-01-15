@@ -73,6 +73,31 @@ trait DatabaseOperationsTrait {
 		return $result;
 	}
 
+	public function prepareObjectAndExecute($classname, $tableName, $condition, $fields, $parameters = null, $useCache = false) {
+		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
+		$result = false;
+		if ($cache) {
+			$cKey = $condition;
+			if (is_array ( $parameters )) {
+				$cKey .= \implode ( ",", $parameters );
+			}
+			try {
+				$result = $this->cache->fetch ( $tableName, $cKey );
+				Logger::info ( "Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters );
+			} catch ( \Exception $e ) {
+				throw new CacheException ( "Cache is not created in Database constructor" );
+			}
+		}
+		if ($result === false) {
+			$quote = SqlUtils::$quote;
+			$result = $this->wrapperObject->_optPrepareObjectAndExecute ( $classname, "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters );
+			if ($cache) {
+				$this->cache->store ( $tableName, $cKey, $result );
+			}
+		}
+		return $result;
+	}
+
 	public function prepareAndFetchAll($sql, $parameters = null, $mode = null) {
 		return $this->wrapperObject->fetchAll ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $mode );
 	}

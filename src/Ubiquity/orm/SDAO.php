@@ -25,14 +25,8 @@ class SDAO extends DAO {
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
 
-		$transformers = $metaDatas ['#transformers'] [self::$transformerOp] ?? [ ];
-		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
-		if ($query && \sizeof ( $query ) > 0) {
-			$accessors = $metaDatas ['#accessors'];
-			$object = self::sloadObjectFromRow ( \current ( $query ), $className, $accessors, $transformers );
-
-			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
-		}
+		$object = $db->prepareObjectAndExecute ( $className, $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
 		return $object;
 	}
 
@@ -51,43 +45,15 @@ class SDAO extends DAO {
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
 
-		$transformers = $metaDatas ['#transformers'] [self::$transformerOp] ?? [ ];
-		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		$objects = $db->prepareObjectAndExecute ( $className, $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 
 		$propsKeys = OrmUtils::getPropKeys ( $className );
-		$accessors = $metaDatas ['#accessors'];
-		foreach ( $query as $row ) {
-			$object = self::sloadObjectFromRow ( $row, $className, $accessors, $transformers );
+		foreach ( $objects as $object ) {
 			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
 			$objects [$key] = $object;
 		}
 		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
 		return $objects;
-	}
-
-	/**
-	 *
-	 * @param array $row
-	 * @param string $className
-	 * @param array $accessors
-	 * @return object
-	 */
-	private static function sloadObjectFromRow($row, $className, &$accessors, &$transformers) {
-		$o = new $className ();
-		if (self::$useTransformers) {
-			foreach ( $transformers as $field => $transformer ) {
-				$transform = self::$transformerOp;
-				$row [$field] = $transformer::$transform ( $row [$field] );
-			}
-		}
-		foreach ( $row as $k => $v ) {
-			if (isset ( $accessors [$k] )) {
-				$accesseur = $accessors [$k];
-				$o->$accesseur ( $v );
-			}
-			$o->_rest [$k] = $v;
-		}
-		return $o;
 	}
 }
 

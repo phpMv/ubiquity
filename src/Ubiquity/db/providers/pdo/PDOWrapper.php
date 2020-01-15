@@ -198,4 +198,14 @@ class PDOWrapper extends AbstractDbWrapper {
 		$statement->closeCursor ();
 		return $result;
 	}
+
+	public function _optPrepareObjectAndExecute($classname, $sql, array $values = null) {
+		$statement = $this->_getStatement ( $sql );
+		$result = false;
+		if ($statement->execute ( $values )) {
+			$result = $statement->fetchObject ( $classname );
+		}
+		$statement->closeCursor ();
+		return $result;
+	}
 }
