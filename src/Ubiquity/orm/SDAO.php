@@ -57,9 +57,11 @@ class SDAO extends DAO {
 		return $objects;
 	}
 
-	private static function sloadObjectFromRow($array, $final_class) {
-		$o = \unserialize ( \sprintf ( 'O:%d:"%s"%s', \strlen ( $final_class ), $final_class, \strstr ( \strstr ( \serialize ( ( object ) $array ), '"' ), ':' ) ) );
-		$o->_rest = $array;
+	private static function sloadObjectFromRow($row, $className) {
+		$o = new $className ();
+		foreach ( $row as $k => $v ) {
+			$o->$k = $v;
+		}
 		return $o;
 	}
 }
