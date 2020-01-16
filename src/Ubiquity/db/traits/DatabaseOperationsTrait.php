@@ -48,13 +48,13 @@ trait DatabaseOperationsTrait {
 	 * @param boolean|null $useCache
 	 * @return array
 	 */
-	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = NULL) {
+	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = false) {
 		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
 			$cKey = $condition;
 			if (is_array ( $parameters )) {
-				$cKey .= \implode ( ",", $parameters );
+				$cKey .= \implode ( ',', $parameters );
 			}
 			try {
 				$result = $this->cache->fetch ( $tableName, $cKey );

@@ -20,37 +20,33 @@ class Startup {
 	use StartupConfigTrait;
 	public static $urlParts;
 	public static $templateEngine;
-	private static $controller;
-	private static $action;
-	private static $actionParams;
-	private static $controllers = [ ];
+	protected static $controller;
+	protected static $action;
+	protected static $actionParams;
 
-	private static function parseUrl(&$url): array {
+	protected static function parseUrl(&$url): array {
 		if (! $url) {
 			$url = '_default';
 		}
 		return self::$urlParts = \explode ( '/', \rtrim ( $url, '/' ) );
 	}
 
-	public static function getControllerInstance($controllerName): ?object {
-		if (! isset ( self::$controllers [$controllerName] )) {
-			if (\class_exists ( $controllerName, true )) {
-				$controller = new $controllerName ();
-				// Dependency injection
-				if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
-					self::injectDependences ( $controller );
-				}
-				self::$controllers [$controllerName] = $controller;
-			} else {
-				Logger::warn ( 'Startup', 'The controller `' . $controllerName . '` doesn\'t exists! <br/>', 'runAction' );
-				self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-				return null;
+	protected static function _getControllerInstance($controllerName): ?object {
+		if (\class_exists ( $controllerName, true )) {
+			$controller = new $controllerName ();
+			// Dependency injection
+			if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
+				self::injectDependences ( $controller );
 			}
+			return $controller;
+		} else {
+			Logger::warn ( 'Startup', 'The controller `' . $controllerName . '` doesn\'t exists! <br/>', 'runAction' );
+			self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+			return null;
 		}
-		return self::$controllers [$controllerName];
 	}
 
-	private static function startTemplateEngine(&$config): void {
+	protected static function startTemplateEngine(&$config): void {
 		try {
 			$templateEngine = $config ['templateEngine'];
 			$engineOptions = $config ['templateEngineOptions'] ?? array ('cache' => false );
@@ -101,7 +97,7 @@ class Startup {
 		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, true, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
 				if (\is_string ( $ru [0] )) {
-					self::runAction ( $ru, $initialize, $finalize );
+					static::runAction ( $ru, $initialize, $finalize );
 				} else {
 					self::runCallable ( $ru );
 				}
@@ -110,7 +106,7 @@ class Startup {
 			}
 		} else {
 			$u [0] = self::$ctrlNS . $u [0];
-			self::runAction ( $u, $initialize, $finalize );
+			static::runAction ( $u, $initialize, $finalize );
 		}
 	}
 
@@ -137,23 +133,19 @@ class Startup {
 	 */
 	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
 		self::$controller = $ctrl = $u [0];
-		$uSize = \sizeof ( $u );
-		self::$action = $u [1] ?? 'index';
-		self::$actionParams = ($uSize > 2) ? \array_slice ( $u, 2 ) : [ ];
+		self::$action = $action = $u [1] ?? 'index';
+		self::$actionParams = \array_slice ( $u, 2 );
 
 		try {
-			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
-				if (! $controller->isValid ( self::$action )) {
+			if (null !== $controller = self::_getControllerInstance ( $ctrl )) {
+				if (! $controller->isValid ( $action )) {
 					$controller->onInvalidControl ();
 				} else {
 					if ($initialize) {
 						$controller->initialize ();
 					}
 					try {
-						if (\call_user_func_array ( [ $controller,self::$action ], self::$actionParams ) === false) {
-							Logger::warn ( 'Startup', 'The action ' . self::$action . " does not exists on controller `{$ctrl}`", 'runAction' );
-							self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-						}
+						$controller->$action ( ...(self::$actionParams) );
 					} catch ( \Error $e ) {
 						Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
 						if (self::$config ['debug']) {
@@ -179,17 +171,15 @@ class Startup {
 	 * @param array $u An array containing a callback, and some parameters
 	 */
 	public static function runCallable(array &$u): void {
-		self::$actionParams = [ ];
-		if (\sizeof ( $u ) > 1) {
-			self::$actionParams = \array_slice ( $u, 1 );
-		}
+		self::$actionParams = \array_slice ( $u, 1 );
 		if (isset ( self::$config ['di'] )) {
 			$di = self::$config ['di'];
 			if (\is_array ( $di )) {
-				self::$actionParams = \array_merge ( self::$actionParams, $di );
+				self::$actionParams += $di;
 			}
 		}
-		\call_user_func_array ( $u [0], self::$actionParams );
+		$func = $u [0];
+		$func ( ...(self::$actionParams) );
 	}
 
 	/**

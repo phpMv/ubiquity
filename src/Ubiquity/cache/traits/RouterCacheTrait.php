@@ -9,6 +9,9 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\di\DiManager;
+use Ubiquity\utils\base\UIntrospection;
+use Ubiquity\controllers\Controller;
+use Ubiquity\controllers\StartupAsync;
 
 /**
  *
@@ -16,7 +19,7 @@ use Ubiquity\controllers\di\DiManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.7
+ * @version 1.0.8
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
@@ -243,7 +246,11 @@ trait RouterCacheTrait {
 	public static function warmUpControllers($controllers = null) {
 		$controllers = $controllers ?? self::getControllers ();
 		foreach ( $controllers as $ctrl ) {
-			Startup::getControllerInstance ( $ctrl );
+			$controller = StartupAsync::getControllerInstance ( $ctrl );
+			$binary = UIntrospection::implementsMethod ( $controller, 'isValid', Controller::class ) ? 1 : 0;
+			$binary += UIntrospection::implementsMethod ( $controller, 'initialize', Controller::class ) ? 2 : 0;
+			$binary += UIntrospection::implementsMethod ( $controller, 'finalize', Controller::class ) ? 4 : 0;
+			$controller->_binaryCalls = $binary;
 		}
 	}
 }
