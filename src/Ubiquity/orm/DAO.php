@@ -18,18 +18,19 @@ use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\orm\traits\DAOPooling;
 use Ubiquity\orm\traits\DAOBulkUpdatesTrait;
+use Ubiquity\orm\traits\DAOPreparedTrait;
 
 /**
  * Gateway class between database and object model.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.2
+ * @version 1.2.3
  *
  */
 class DAO {
 	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,
-	DAOUQueries,DAOTransactionsTrait,DAOPooling,DAOBulkUpdatesTrait;
+	DAOUQueries,DAOTransactionsTrait,DAOPooling,DAOBulkUpdatesTrait,DAOPreparedTrait;
 
 	/**
 	 *
@@ -118,7 +119,7 @@ class DAO {
 			$conditionParser->setCondition ( $condition );
 			$conditionParser->setParams ( $parameters );
 		} else {
-			throw new DAOException ( "The \$keyValues parameter should not be an array if \$parameters is not null" );
+			throw new DAOException ( "The \$condition parameter should not be an array if \$parameters is not null" );
 		}
 		return static::_getOne ( self::getDb ( $className ), $className, $conditionParser, $included, $useCache );
 	}

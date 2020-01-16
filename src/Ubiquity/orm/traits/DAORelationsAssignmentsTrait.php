@@ -34,7 +34,7 @@ trait DAORelationsAssignmentsTrait {
 		return false;
 	}
 
-	protected static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache): void {
+	public static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache): void {
 		if (\sizeof ( $manyToOneQueries ) > 0) {
 			self::_affectsObjectsFromArray ( $manyToOneQueries, $included, function ($object, $member, $manyToOneObjects, $fkField, $accessor) {
 				self::affectsManyToOneFromArray ( $object, $member, $manyToOneObjects, $fkField, $accessor );
