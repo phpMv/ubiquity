@@ -35,11 +35,11 @@ abstract class DAOPreparedQuery {
 	 */
 	protected $db;
 
-	public function __construct($className, $condition = '', $included = false) {
+	public function __construct($className, $condition = null, $included = false) {
 		$this->className = $className;
 		$this->included = $included;
 		$this->condition = $condition;
-		$this->conditionParser = new ConditionParser ();
+		$this->conditionParser = new ConditionParser ( $condition );
 		$this->prepare ();
 	}
 

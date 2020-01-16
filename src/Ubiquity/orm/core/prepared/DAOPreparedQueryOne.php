@@ -12,8 +12,11 @@ namespace Ubiquity\orm\core\prepared;
  */
 class DAOPreparedQueryOne extends DAOPreparedQueryById {
 
+	public function __construct($className, $condition = '', $included = false) {
+		DAOPreparedQuery::__construct ( $className, $condition, $included );
+	}
+
 	protected function prepare() {
-		$this->conditionParser->setCondition ( $this->condition );
 		$this->conditionParser->limitOne ();
 		DAOPreparedQuery::prepare ();
 	}
