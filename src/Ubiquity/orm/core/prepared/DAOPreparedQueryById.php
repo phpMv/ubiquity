@@ -6,7 +6,6 @@ use Ubiquity\db\SqlUtils;
 use Ubiquity\events\DAOEvents;
 use Ubiquity\events\EventsManager;
 use Ubiquity\orm\DAO;
-use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\OrmUtils;
 
 /**
@@ -32,14 +31,14 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 
 	public function execute($params = [], $useCache = false) {
 		$cp = $this->conditionParser;
-		$cp->setParams ( $params );
+		$cp->setKeyValues ( $params );
 		$query = $this->db->prepareAndExecute ( $this->tableName, SqlUtils::checkWhere ( $cp->getCondition () ), $this->fieldList, $cp->getParams (), $useCache );
 		if ($query && \sizeof ( $query ) > 0) {
 			$oneToManyQueries = [ ];
 			$manyToOneQueries = [ ];
 			$manyToManyParsers = [ ];
 			$className = $this->className;
-			$object = self::_loadObjectFromRow ( \current ( $query ), $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->accessors, $this->transformers );
+			$object = DAO::_loadObjectFromRow ( \current ( $query ), $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->accessors, $this->transformers );
 			if ($this->hasIncluded) {
 				DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $this->included, $useCache );
 			}

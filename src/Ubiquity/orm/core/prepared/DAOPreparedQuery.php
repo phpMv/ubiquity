@@ -156,7 +156,7 @@ abstract class DAOPreparedQuery {
 	}
 
 	protected function prepare() {
-		$this->included = DAO::getIncludedForStep ( $this->included );
+		$this->included = DAO::_getIncludedForStep ( $this->included );
 
 		$metaDatas = OrmUtils::getModelMetadata ( $this->className );
 		$this->tableName = $metaDatas ['#tableName'];
@@ -164,7 +164,7 @@ abstract class DAOPreparedQuery {
 		if ($this->hasIncluded) {
 			self::_initRelationFields ( $this->included, $metaDatas, $this->invertedJoinColumns, $this->oneToManyFields, $this->manyToManyFields );
 		}
-		$this->transformers = $metaDatas ['#transformers'] [self::$transformerOp] ?? [ ];
+		$this->transformers = $metaDatas ['#transformers'] [DAO::$transformerOp] ?? [ ];
 		$this->fieldList = DAO::_getFieldList ( $this->tableName, $metaDatas );
 		$this->propsKeys = OrmUtils::getPropKeys ( $this->className );
 		$this->accessors = $metaDatas ['#accessors'];
