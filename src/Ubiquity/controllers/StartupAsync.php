@@ -26,7 +26,7 @@ class StartupAsync extends Startup {
 
 		try {
 			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
-				$binaryCalls = $controller->_binaryCalls ?? (self::IS_VALID & self::INITIALIZE & self::FINALIZE);
+				$binaryCalls = $controller->_binaryCalls ?? (self::IS_VALID + self::INITIALIZE + self::FINALIZE);
 				if (($binaryCalls & self::IS_VALID) && ! $controller->isValid ( $action )) {
 					$controller->onInvalidControl ();
 				} else {
