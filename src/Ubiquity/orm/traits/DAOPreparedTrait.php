@@ -17,15 +17,15 @@ use Ubiquity\orm\core\prepared\DAOPreparedQueryAll;
 trait DAOPreparedTrait {
 	protected static $preparedDAOQueries = [ ];
 
-	public function prepareGetById($name, $className, $included = false) {
+	public static function prepareGetById($name, $className, $included = false) {
 		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryById ( $className, $included );
 	}
 
-	public function prepareGetOne($name, $className, $condition = '', $included = false) {
+	public static function prepareGetOne($name, $className, $condition = '', $included = false) {
 		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryOne ( $className, $condition, $included );
 	}
 
-	public function prepareGetAll($name, $className, $condition = '', $included = false) {
+	public static function prepareGetAll($name, $className, $condition = '', $included = false) {
 		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryAll ( $className, $condition, $included );
 	}
 
