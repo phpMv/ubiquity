@@ -19,7 +19,7 @@ trait DAORelationsTrait {
 
 	abstract protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL);
 
-	protected static function getIncludedForStep($included) {
+	public static function _getIncludedForStep($included) {
 		if (\is_bool ( $included )) {
 			return $included;
 		}
@@ -80,7 +80,7 @@ trait DAORelationsTrait {
 		}
 	}
 
-	protected static function _initRelationFields($included, $metaDatas, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields): void {
+	public static function _initRelationFields($included, $metaDatas, &$invertedJoinColumns, &$oneToManyFields, &$manyToManyFields): void {
 		if (isset ( $metaDatas ['#invertedJoinColumn'] )) {
 			$invertedJoinColumns = $metaDatas ['#invertedJoinColumn'];
 		}

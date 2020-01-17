@@ -27,7 +27,7 @@ class SDAO extends DAO {
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
 
-		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::_getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 		if ($query && \sizeof ( $query ) > 0) {
 			$object = self::sloadObjectFromRow ( \current ( $query ), $className );
 			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
@@ -50,7 +50,7 @@ class SDAO extends DAO {
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
 
-		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::_getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
 
 		foreach ( $query as $row ) {
 			$objects [] = self::sloadObjectFromRow ( $row, $className );
