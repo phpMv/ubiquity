@@ -4,8 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## [Unrelease]
 - Nothing
+## [2.3.3 Unrelease]
+### Added
+- mailer module see https://github.com/phpMv/ubiquity-mailer
+- `SimpleViewController`, `SimpleViewAsyncController` for php views (without template engine)
+- PHP 7.4 preloading see https://github.com/phpMv/ubiquity/issues/88
+- `ObjectCache` cache system
+- `SDAO` class for simple objects loading (popo with public members)
+- Prepared DAO queries for getOne, getById & getAll (async)
+### Improved
+- Add warmup methods for controllers & models metas
+- `StartupAsync` for asynchronous platforms (Swoole, Workerman)
+- unpack replace cufa in `Startup::runAction`
+
 ## [2.3.2] 2019-10-28
 ### Added
 - bulk queries in `DAO` class
