@@ -23,10 +23,10 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 	}
 
 	protected function prepare() {
+		parent::prepare ();
 		$keys = OrmUtils::getKeyFields ( $this->className );
 		$this->conditionParser->addKeyValues ( \array_fill ( 0, \count ( $keys ), '' ), $this->className );
 		$this->conditionParser->limitOne ();
-		parent::prepare ();
 	}
 
 	public function execute($params = [], $useCache = false) {
