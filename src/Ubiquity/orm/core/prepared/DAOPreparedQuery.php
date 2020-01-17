@@ -158,7 +158,6 @@ abstract class DAOPreparedQuery {
 
 	protected function prepare() {
 		$this->db = DAO::getDb ( $this->className );
-		SqlUtils::$quote = $this->db->quote;
 		$this->included = DAO::_getIncludedForStep ( $this->included );
 
 		$metaDatas = OrmUtils::getModelMetadata ( $this->className );
