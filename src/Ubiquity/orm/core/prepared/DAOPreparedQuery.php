@@ -6,6 +6,7 @@ use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\db\Database;
+use Ubiquity\db\SqlUtils;
 
 abstract class DAOPreparedQuery {
 	protected $databaseOffset;
@@ -156,6 +157,8 @@ abstract class DAOPreparedQuery {
 	}
 
 	protected function prepare() {
+		$this->db = DAO::getDb ( $this->className );
+		SqlUtils::$quote = $this->db->quote;
 		$this->included = DAO::_getIncludedForStep ( $this->included );
 
 		$metaDatas = OrmUtils::getModelMetadata ( $this->className );
@@ -168,7 +171,6 @@ abstract class DAOPreparedQuery {
 		$this->fieldList = DAO::_getFieldList ( $this->tableName, $metaDatas );
 		$this->propsKeys = OrmUtils::getPropKeys ( $this->className );
 		$this->accessors = $metaDatas ['#accessors'];
-		$this->db = DAO::getDb ( $this->className );
 		$this->firstPropKey = OrmUtils::getFirstPropKey ( $this->className );
 	}
 
