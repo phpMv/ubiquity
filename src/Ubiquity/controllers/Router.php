@@ -69,7 +69,7 @@ class Router {
 					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( '/', $params [$index] ), [ '' ] ) );
 				break;
 			}
-			if ($order [0] === '~') {
+			if (($order [0] ?? '') === '~') {
 				$order = \intval ( \substr ( $order, 1, 1 ) );
 				if (isset ( $params [$order] )) {
 					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( '/', $params [$order] ), [ '' ] ) );
