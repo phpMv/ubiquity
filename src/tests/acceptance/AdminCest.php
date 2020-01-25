@@ -169,12 +169,12 @@ class AdminCest extends BaseAcceptance {
 		$I->fillField ( "#frmLocale [name='localeName']", 'tu_TU' );
 		$this->waitAndclick ( $I, "#action-field-localeName", "body" );
 		$I->waitForText ( 'tu_TU', self::TIMEOUT, '#menulocales' );
-		$I->fillField ( "#name-tuTU", 'messages' );
-		$this->waitAndclick ( $I, "#action-field-name-tuTU", "body" );
-		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-tuTU' );
+		$I->fillField ( "#name-tu_TU", 'messages' );
+		$this->waitAndclick ( $I, "#action-field-name-tu_TU", "body" );
+		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-tu_TU' );
 		$this->waitAndclick ( $I, "button._edit.tu_TU[data-ajax='messages']", 'body' );
 		$I->waitForText ( 'Back to domains' );
-		$I->fillField ( '#dtDomain-tuTU-messages input:nth-of-type(1)', 'bt.okay' );
+		$I->fillField ( '#dtDomain-tu_TU-messages input:nth-of-type(1)', 'bt.okay' );
 		$I->waitForText ( '±1' );
 
 		$this->waitAndclick ( $I, '#button-bt-save' );
@@ -183,9 +183,9 @@ class AdminCest extends BaseAcceptance {
 		$I->fillField ( "#frmLocale [name='localeName']", 'ta_TA' );
 		$this->waitAndclick ( $I, "#action-field-localeName", "body" );
 		$I->waitForText ( 'ta_TA', self::TIMEOUT, '#menulocales' );
-		$I->fillField ( "#name-taTA", 'messages' );
-		$this->waitAndclick ( $I, "#action-field-name-taTA", "body" );
-		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-taTA' );
+		$I->fillField ( "#name-ta_TA", 'messages' );
+		$this->waitAndclick ( $I, "#action-field-name-ta_TA", "body" );
+		$I->waitForText ( 'messages', self::TIMEOUT, '#dt-ta_TA' );
 		$this->waitAndclick ( $I, "button._edit.ta_TA[data-ajax='messages']", 'body' );
 		$I->waitForText ( 'Back to domains' );
 		$this->waitAndclick ( $I, "._ddAddMessages" );
@@ -198,7 +198,7 @@ class AdminCest extends BaseAcceptance {
 		$I->waitForText ( "one B" );
 		$I->waitForText ( "one C" );
 
-		$this->waitAndclick ( $I, "#dd-locales-taTA" );
+		$this->waitAndclick ( $I, "#dd-locales-ta_TA" );
 		$this->waitAndclick ( $I, ".item[data-value='tu_TU']" );
 		$this->waitAndclick ( $I, "#compare-to-ta_TA" );
 		// $I->waitForText ( "bt.okay" );
