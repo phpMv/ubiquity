@@ -163,7 +163,7 @@ abstract class DAOPreparedQuery {
 		$this->tableName = $metaDatas ['#tableName'];
 		$this->hasIncluded = $this->included || (\is_array ( $this->included ) && \sizeof ( $this->included ) > 0);
 		if ($this->hasIncluded) {
-			self::_initRelationFields ( $this->included, $metaDatas, $this->invertedJoinColumns, $this->oneToManyFields, $this->manyToManyFields );
+			DAO::_initRelationFields ( $this->included, $metaDatas, $this->invertedJoinColumns, $this->oneToManyFields, $this->manyToManyFields );
 		}
 		$this->transformers = $metaDatas ['#transformers'] [DAO::$transformerOp] ?? [ ];
 		$this->fieldList = DAO::_getFieldList ( $this->tableName, $metaDatas );

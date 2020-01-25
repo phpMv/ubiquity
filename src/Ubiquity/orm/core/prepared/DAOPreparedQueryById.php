@@ -43,8 +43,9 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 				DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $this->included, $useCache );
 			}
 			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
+			return $object;
 		}
-		return $object;
+		return null;
 	}
 }
 

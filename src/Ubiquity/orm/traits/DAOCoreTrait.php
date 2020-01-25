@@ -9,7 +9,6 @@ use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\db\Database;
-use Ubiquity\orm\core\DAOPreparedQuery;
 
 /**
  * Core Trait for DAO class.

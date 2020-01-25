@@ -86,14 +86,14 @@ class StartupTest extends BaseTest {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
-		}, 'invalid!' );
+		}, 'service init!invalid!' );
 		$_GET ["c"] = "route/test/ctrl/";
 		USession::set ( 'user', 'user' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'actionWithControl', $this->startup->getAction () );
-		}, 'initialize!-authorized!-finalize!' );
+		}, 'service init!initialize!-authorized!-finalize!' );
 		// Route with params
 		$_GET ["c"] = "route/test/params/aa/bb";
 		$this->_assertDisplayEquals ( function () {
@@ -101,14 +101,14 @@ class StartupTest extends BaseTest {
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'withParams', $this->startup->getAction () );
 			$this->assertEquals ( [ 'aa','bb' ], $this->startup->getActionParams () );
-		}, 'initialize!-aa-bb!-finalize!' );
+		}, 'service init!initialize!-aa-bb!-finalize!' );
 		$_GET ["c"] = "route/test/params/aa/";
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'withParams', $this->startup->getAction () );
 			$this->assertEquals ( [ 'aa' ], $this->startup->getActionParams () );
-		}, 'initialize!-aa-default!-finalize!' );
+		}, 'service init!initialize!-aa-default!-finalize!' );
 		// Rest
 		$this->_startServices ( 'rest' );
 		$_GET ["c"] = "rest/test";
@@ -145,14 +145,14 @@ class StartupTest extends BaseTest {
 		}, 'service init!initialize!-valid action!-finalize!' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestControllerWithControl/validAction" );
-		}, 'initialize!-valid action!-finalize!' );
+		}, 'service init!initialize!-valid action!-finalize!' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestControllerWithControl/actionWithControl" );
-		}, 'invalid!' );
+		}, 'service init!invalid!' );
 		USession::set ( 'user', 'user' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestControllerWithControl/actionWithControl" );
-		}, 'initialize!-authorized!-finalize!' );
+		}, 'service init!initialize!-authorized!-finalize!' );
 	}
 
 	/**
