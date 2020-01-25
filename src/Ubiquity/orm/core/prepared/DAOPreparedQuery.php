@@ -6,7 +6,6 @@ use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\db\Database;
-use Ubiquity\db\SqlUtils;
 
 abstract class DAOPreparedQuery {
 	protected $databaseOffset;

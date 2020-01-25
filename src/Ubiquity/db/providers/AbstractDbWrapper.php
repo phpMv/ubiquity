@@ -24,10 +24,11 @@ abstract class AbstractDbWrapper {
 	abstract public static function getAvailableDrivers();
 
 	public function _getStatement(string $sql) {
-		if (! isset ( $this->statements [$sql] )) {
-			$this->statements [$sql] = $this->getStatement ( $sql );
+		$key = \md5 ( $sql );
+		if (! isset ( $this->statements [$key] )) {
+			$this->statements [$key] = $this->getStatement ( $sql );
 		}
-		return $this->statements [$sql];
+		return $this->statements [$key];
 	}
 
 	abstract public function getStatement(string $sql);

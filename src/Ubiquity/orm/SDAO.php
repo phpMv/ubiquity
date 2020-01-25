@@ -84,14 +84,14 @@ class SDAO extends DAO {
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
 		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
-		if (Logger::isActive ()) {
-			Logger::info ( "DAOUpdates", $sql, "update" );
-			Logger::info ( "DAOUpdates", \json_encode ( $ColumnskeyAndValues ), "Key and values" );
-		}
 		$statement = $db->getUpdateStatement ( $sql );
 		try {
 			$result = $statement->execute ( $ColumnskeyAndValues );
 			EventsManager::trigger ( DAOEvents::AFTER_UPDATE, $instance, $result );
+			if (Logger::isActive ()) {
+				Logger::info ( "DAOUpdates", $sql, "update" );
+				Logger::info ( "DAOUpdates", \json_encode ( $ColumnskeyAndValues ), "Key and values" );
+			}
 			$instance->_rest = \array_merge ( $instance->_rest, $ColumnskeyAndValues );
 			return $result;
 		} catch ( \Exception $e ) {
