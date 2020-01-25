@@ -7,13 +7,13 @@ namespace Ubiquity\orm\traits;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 trait DAOBulkUpdatesTrait {
 	protected static $bulks = [ 'insert' => [ ],'update' => [ ],'delete' => [ ] ];
 
-	protected static function getBulk($instance, $class, $operation = 'update') {
+	protected static function getBulk($class, $operation = 'update') {
 		if (! isset ( self::$bulks [$operation] [$class] )) {
 			$bulkClass = '\\Ubiquity\\orm\\bulk\\Bulk' . \ucfirst ( $operation ) . 's';
 			self::$bulks [$operation] [$class] = new $bulkClass ( $class );
@@ -23,14 +23,14 @@ trait DAOBulkUpdatesTrait {
 
 	protected static function toOperation($instance, string $operation): void {
 		$class = \get_class ( $instance );
-		self::getBulk ( $instance, $class, $operation )->addInstance ( $instance );
+		self::getBulk ( $class, $operation )->addInstance ( $instance );
 	}
 
 	protected static function toOperations(array $instances, string $operation): void {
 		$instance = \current ( $instances );
 		if (isset ( $instance )) {
 			$class = \get_class ( $instance );
-			self::getBulk ( $instance, $class, $operation )->addInstances ( $instances );
+			self::getBulk ( $class, $operation )->addInstances ( $instances );
 		}
 	}
 

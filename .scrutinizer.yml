@@ -66,6 +66,8 @@ filter:
         - src/Ubiquity/controllers/admin/
         - src/Ubiquity/annotations/
         - src/Ubiquity/utils/git/UGitRepository.php
+        - src/Ubiquity/cache/Preloader.php
+        - src/Ubiquity/cache/preloading/
 checks:
     php:
         code_rating: true

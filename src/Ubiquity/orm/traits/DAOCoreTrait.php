@@ -117,7 +117,7 @@ trait DAOCoreTrait {
 
 		$metaDatas = OrmUtils::getModelMetadata ( $className );
 		$tableName = $metaDatas ['#tableName'];
-		if ($hasIncluded = $included || (\is_array ( $included ) && \sizeof ( $included ) > 0)) {
+		if ($hasIncluded = ($included || (\is_array ( $included ) && \sizeof ( $included ) > 0))) {
 			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
 		$transformers = $metaDatas ['#transformers'] [self::$transformerOp] ?? [ ];

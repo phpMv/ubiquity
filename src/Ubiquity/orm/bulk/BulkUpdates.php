@@ -13,7 +13,6 @@ use Ubiquity\orm\OrmUtils;
  *
  */
 class BulkUpdates extends AbstractBulks {
-	private $sql;
 
 	public function __construct($className) {
 		parent::__construct ( $className );
