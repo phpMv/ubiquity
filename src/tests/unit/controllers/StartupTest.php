@@ -74,7 +74,7 @@ class StartupTest extends BaseTest {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestControllerWithControl::class, $this->startup->getController () );
 			$this->assertEquals ( 'index', $this->startup->getAction () );
-		}, 'initialize!-Hello world!-finalize!' );
+		}, 'service init!initialize!-Hello world!-finalize!' );
 		$_GET ["c"] = "route/test";
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
@@ -136,7 +136,7 @@ class StartupTest extends BaseTest {
 	public function testForward() {
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestController/doForward" );
-		}, 'forward!' );
+		}, 'service init!forward!' );
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->forward ( "TestControllerInitialize/doForward" );
 		}, 'service init!initialize!-forward!-finalize!' );
@@ -170,7 +170,7 @@ class StartupTest extends BaseTest {
 	 */
 	public function testRunAsString() {
 		$u = [ TestControllerInitialize::class,"index" ];
-		$this->assertEquals ( 'initialize!-Hello world!-finalize!', $this->startup->runAsString ( $u ) );
+		$this->assertEquals ( 'service init!initialize!-Hello world!-finalize!', $this->startup->runAsString ( $u ) );
 		$this->assertEquals ( 'initialize!-Hello world!', $this->startup->runAsString ( $u, true, false ) );
 		$this->assertEquals ( 'Hello world!', $this->startup->runAsString ( $u, false, false ) );
 	}
