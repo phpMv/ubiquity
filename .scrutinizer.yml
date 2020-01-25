@@ -20,7 +20,7 @@ build:
 
       environment:
         php:
-          version: 7.2
+          version: 7.4
         hosts:
           dev.local: '127.0.0.1'
         apache2:
