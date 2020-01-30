@@ -12,6 +12,7 @@ use Ubiquity\utils\base\UFileSystem;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 use mindplay\annotations\Annotations;
+use Ubiquity\controllers\Startup;
 
 /**
  * Manager for caches (Router, Rest, models).
@@ -54,7 +55,13 @@ class CacheManager {
 	public static function startProd(&$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory ( $config );
 		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
-		self::getCacheInstance ( $config, $cacheDirectory, ".cache" );
+		self::getCacheInstance ( $config, $cacheDirectory, '.cache' );
+	}
+
+	public static function startProdFromCtrl() {
+		$config = &Startup::$config;
+		$cacheD=($config ['cache'] ['directory']??= 'cache' . \DS);
+		self::getCacheInstance ( $config, \ROOT . \DS . $cacheD, '.cache' );
 	}
 
 	protected static function getCacheInstance(&$config, $cacheDirectory, $postfix) {
