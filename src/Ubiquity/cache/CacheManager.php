@@ -60,13 +60,14 @@ class CacheManager {
 
 	public static function startProdFromCtrl() {
 		$config = &Startup::$config;
-		$cacheD=($config ['cache'] ['directory']??= 'cache' . \DS);
-		self::getCacheInstance ( $config, \ROOT . \DS . $cacheD, '.cache' );
+		$cacheD = \ROOT . \DS .($config ['cache'] ['directory'] ??= 'cache' . \DS);
+		$cacheSystem = $config ['cache'] ['system'] ?? 'Ubiquity\\cache\\system\\ArrayCache';
+		self::$cache = new $cacheSystem ( $cacheD, '.cache', $config ['cache'] ['params'] ?? [ ]);
 	}
 
 	protected static function getCacheInstance(&$config, $cacheDirectory, $postfix) {
 		if (! isset ( self::$cache )) {
-			$cacheSystem = $config ['cache'] ['system'] ?? 'Ubiquity\cache\system\ArrayCache';
+			$cacheSystem = $config ['cache'] ['system'] ?? 'Ubiquity\\cache\\system\\ArrayCache';
 			$cacheParams = $config ['cache'] ['params'] ?? [ ];
 
 			self::$cache = new $cacheSystem ( $cacheDirectory, $postfix, $cacheParams );
