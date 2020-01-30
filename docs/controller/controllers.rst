@@ -170,7 +170,7 @@ Variables can also be passed before the view is loaded:
 .. code-block:: php
    
    //passing one variable
-   $this->view->setVar("title"=>"Message");
+   $this->view->setVar("title","Message");
    //passing an array of 2 variables
    $this->view->setVars(["message"=>$message,"recipient"=>$name]);
    //loading the view that now contains 3 variables
