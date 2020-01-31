@@ -100,7 +100,13 @@ class BulkUpdates extends AbstractBulks {
 			$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
 			$sql .= "UPDATE {$quote}{$tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
 		}
-		return $this->db->execute ( $sql );
+		try {
+			$this->db->beginTransaction ();
+			$this->db->execute ( $sql );
+			$this->db->commit ();
+		} catch ( \Exception $e ) {
+			$this->db->rollBack ();
+		}
 	}
 }
 
