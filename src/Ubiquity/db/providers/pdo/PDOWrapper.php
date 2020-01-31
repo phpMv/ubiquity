@@ -198,4 +198,8 @@ class PDOWrapper extends AbstractDbWrapper {
 		$statement->closeCursor ();
 		return $result;
 	}
+
+	public function quoteValue($value, $type = null) {
+		return $this->dbInstance->quote ( $value, $type );
+	}
 }

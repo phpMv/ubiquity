@@ -242,6 +242,26 @@ class Database {
 		return null;
 	}
 
+	public function quoteValue($value, $type = null) {
+		return $this->wrapperObject->quoteValue ( $value, $type );
+	}
+
+	public function getUpdateFieldsKeyAndValues($keyAndValues) {
+		$ret = array ();
+		foreach ( $keyAndValues as $key => $value ) {
+			$ret [] = $this->quote . $key . $this->quote . ' = ' . $this->quoteValue ( $value );
+		}
+		return \implode ( ',', $ret );
+	}
+
+	public function getCondition(array $keyValues, $separator = ' AND ') {
+		$retArray = array ();
+		foreach ( $keyValues as $key => $value ) {
+			$retArray [] = $this->quote . $key . $this->quote . " = " . $this->quoteValue ( $value );
+		}
+		return \implode ( $separator, $retArray );
+	}
+
 	/**
 	 * For databases with Connection pool (retrieve a new dbInstance from pool wrapper)
 	 */

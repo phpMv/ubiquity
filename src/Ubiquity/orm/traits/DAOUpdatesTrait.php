@@ -227,7 +227,7 @@ trait DAOUpdatesTrait {
 		$tableName = OrmUtils::getTableName ( $className );
 		$ColumnskeyAndValues = \array_merge ( Reflexion::getPropertiesAndValues ( $instance ), OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
-		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
+		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
 		if (Logger::isActive ()) {
 			Logger::info ( "DAOUpdates", $sql, "update" );
 			Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
@@ -263,11 +263,11 @@ trait DAOUpdatesTrait {
 			$tableName = OrmUtils::getTableName ( $className );
 			$ColumnskeyAndValues = \array_merge ( Reflexion::getPropertiesAndValues ( $instance ), OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 			$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
-			$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
+			$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
 
 			$statement = $db->getUpdateStatement ( $sql );
 			try {
-				// $db->beginTransaction ();
+				$db->beginTransaction ();
 				foreach ( $instances as $instance ) {
 					EventsManager::trigger ( 'dao.before.update', $instance );
 					$ColumnskeyAndValues = \array_merge ( Reflexion::getPropertiesAndValues ( $instance ), OrmUtils::getManyToOneMembersAndValues ( $instance ) );
@@ -281,11 +281,11 @@ trait DAOUpdatesTrait {
 						Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
 					}
 				}
-				// $db->commit ();
+				$db->commit ();
 				return true;
 			} catch ( \Exception $e ) {
 				Logger::warn ( "DAOUpdates", $e->getMessage (), "update" );
-				// $db->rollBack ();
+				$db->rollBack ();
 			}
 		}
 		return false;

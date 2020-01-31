@@ -62,6 +62,14 @@ class SqlUtils {
 		return \implode ( ',', self::getParameters ( $keyAndValues ) );
 	}
 
+	public static function getUpdateFieldsKeyAndParams($keyAndValues) {
+		$ret = array ();
+		foreach ( $keyAndValues as $key => $value ) {
+			$ret [] = self::$quote . $key . self::$quote . '= :' . $key;
+		}
+		return \implode ( ',', $ret );
+	}
+
 	public static function getUpdateFieldsKeyAndValues($keyAndValues) {
 		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {

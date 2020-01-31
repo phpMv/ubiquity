@@ -83,7 +83,7 @@ class SDAO extends DAO {
 		$tableName = OrmUtils::getTableName ( $className );
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
-		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
+		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
 		$statement = $db->getUpdateStatement ( $sql );
 		try {
 			$result = $statement->execute ( $ColumnskeyAndValues );

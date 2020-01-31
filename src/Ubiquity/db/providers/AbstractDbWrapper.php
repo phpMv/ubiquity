@@ -111,4 +111,8 @@ abstract class AbstractDbWrapper {
 	public function setDbInstance($dbInstance) {
 		$this->dbInstance = $dbInstance;
 	}
+
+	public function quoteValue($value, $type = null) {
+		return "'" . \addslashes ( $value ) . "'";
+	}
 }
