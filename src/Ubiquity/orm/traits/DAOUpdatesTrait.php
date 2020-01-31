@@ -267,7 +267,7 @@ trait DAOUpdatesTrait {
 
 			$statement = $db->getUpdateStatement ( $sql );
 			try {
-				$db->beginTransaction ();
+				// $db->beginTransaction ();
 				foreach ( $instances as $instance ) {
 					EventsManager::trigger ( 'dao.before.update', $instance );
 					$ColumnskeyAndValues = \array_merge ( Reflexion::getPropertiesAndValues ( $instance ), OrmUtils::getManyToOneMembersAndValues ( $instance ) );
@@ -281,11 +281,11 @@ trait DAOUpdatesTrait {
 						Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
 					}
 				}
-				$db->commit ();
+				// $db->commit ();
 				return true;
 			} catch ( \Exception $e ) {
 				Logger::warn ( "DAOUpdates", $e->getMessage (), "update" );
-				$db->rollBack ();
+				// $db->rollBack ();
 			}
 		}
 		return false;
