@@ -9,7 +9,7 @@ use Ubiquity\orm\OrmUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class BulkUpdates extends AbstractBulks {
@@ -28,6 +28,7 @@ class BulkUpdates extends AbstractBulks {
 	public function createSQL() {
 		switch ($this->dbType) {
 			case 'mysql' :
+				return $this->mysqlCreate ();
 			case 'pgsql' :
 				return $this->pgCreate ();
 			default :
@@ -80,6 +81,26 @@ class BulkUpdates extends AbstractBulks {
 		}
 		$this->parameters = $parameters;
 		return "INSERT INTO {$quote}{$tableName}{$quote} (" . $this->insertFields . ') VALUES ' . \implode ( ',', $values ) . ' ON DUPLICATE KEY UPDATE ' . \implode ( ',', $duplicateKey );
+	}
+
+	private function getUpdateFields() {
+		$ret = array ();
+		$quote = $this->db->quote;
+		foreach ( $this->insertFields as $field ) {
+			$ret [] = $quote . $field . $quote . '= :' . $field;
+		}
+		return \implode ( ',', $ret );
+	}
+
+	public function updateGroup() {
+		$quote = $this->db->quote;
+		$tableName = OrmUtils::getTableName ( $this->class );
+		$sql = '';
+		foreach ( $this->instances as $instance ) {
+			$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
+			$sql .= "UPDATE {$quote}{$tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
+		}
+		return $this->db->execute ( $sql );
 	}
 }
 
