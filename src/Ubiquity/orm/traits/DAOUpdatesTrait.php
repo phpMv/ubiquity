@@ -247,6 +247,51 @@ trait DAOUpdatesTrait {
 	}
 
 	/**
+	 * Updates an array of $instances in the database.
+	 * Be careful not to modify the primary key
+	 *
+	 * @param array $instances instances to modify
+	 * @param boolean $updateMany Adds or updates ManyToMany members
+	 * @return boolean
+	 */
+	public static function updateGroup($instances, $updateMany = false) {
+		if (\count ( $instances ) > 0) {
+			$instance = \current ( $instances );
+			$className = \get_class ( $instance );
+			$db = self::getDb ( $className );
+			$quote = $db->quote;
+			$tableName = OrmUtils::getTableName ( $className );
+			$ColumnskeyAndValues = \array_merge ( Reflexion::getPropertiesAndValues ( $instance ), OrmUtils::getManyToOneMembersAndValues ( $instance ) );
+			$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
+			$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndValues ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
+
+			$statement = $db->getUpdateStatement ( $sql );
+			try {
+				$db->beginTransaction ();
+				foreach ( $instances as $instance ) {
+					EventsManager::trigger ( 'dao.before.update', $instance );
+					$ColumnskeyAndValues = \array_merge ( Reflexion::getPropertiesAndValues ( $instance ), OrmUtils::getManyToOneMembersAndValues ( $instance ) );
+					$result = $statement->execute ( $ColumnskeyAndValues );
+					if ($updateMany && $result)
+						self::insertOrUpdateAllManyToMany ( $instance );
+					EventsManager::trigger ( DAOEvents::AFTER_UPDATE, $instance, $result );
+					$instance->_rest = \array_merge ( $instance->_rest, $ColumnskeyAndValues );
+					if (Logger::isActive ()) {
+						Logger::info ( "DAOUpdates", $sql, "update" );
+						Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
+					}
+				}
+				$db->commit ();
+				return true;
+			} catch ( \Exception $e ) {
+				Logger::warn ( "DAOUpdates", $e->getMessage (), "update" );
+				$db->rollBack ();
+			}
+		}
+		return false;
+	}
+
+	/**
 	 *
 	 * @param object $instance
 	 * @param boolean $updateMany
