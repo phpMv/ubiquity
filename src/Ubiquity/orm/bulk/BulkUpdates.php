@@ -9,7 +9,7 @@ use Ubiquity\orm\OrmUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class BulkUpdates extends AbstractBulks {
@@ -28,7 +28,6 @@ class BulkUpdates extends AbstractBulks {
 	public function createSQL() {
 		switch ($this->dbType) {
 			case 'mysql' :
-				return $this->mysqlCreate ();
 			case 'pgsql' :
 				return $this->pgCreate ();
 			default :
