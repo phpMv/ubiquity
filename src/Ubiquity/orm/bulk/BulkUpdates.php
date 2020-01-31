@@ -96,7 +96,6 @@ class BulkUpdates extends AbstractBulks {
 		$quote = $this->db->quote;
 		$tableName = OrmUtils::getTableName ( $this->class );
 		$sql = '';
-		$count = \count ( $this->instances );
 		foreach ( $this->instances as $instance ) {
 			$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
 			$sql .= "UPDATE {$quote}{$tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
@@ -104,7 +103,7 @@ class BulkUpdates extends AbstractBulks {
 		while ( true ) {
 			try {
 				if ($this->db->beginTransaction ()) {
-					if ($count == $this->db->execute ( $sql )) {
+					if ($this->db->execute ( $sql )) {
 						if ($this->db->commit ()) {
 							return true;
 						}
