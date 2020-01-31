@@ -102,13 +102,10 @@ class BulkUpdates extends AbstractBulks {
 		}
 		while ( true ) {
 			try {
-				if ($this->db->beginTransaction ()) {
-					if ($this->db->execute ( $sql )) {
-						if ($this->db->commit ()) {
-							return true;
-						}
-					}
-				}
+				$this->db->beginTransaction ();
+				$this->db->execute ( $sql );
+				$this->db->commit ();
+				return true;
 			} catch ( \Exception $e ) {
 				$this->db->rollBack ();
 			}
