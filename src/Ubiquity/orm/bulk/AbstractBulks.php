@@ -40,6 +40,20 @@ abstract class AbstractBulks {
 		}
 	}
 
+	protected function execGroupTrans($sql) {
+		while ( true ) {
+			try {
+				$this->db->beginTransaction ();
+				$this->db->execute ( $sql );
+				$this->db->commit ();
+				return true;
+			} catch ( \Exception $e ) {
+				$this->db->rollBack ();
+			}
+		}
+		return false;
+	}
+
 	public function __construct($className) {
 		$this->class = $className;
 		$this->pkName = OrmUtils::getFirstKey ( $className );

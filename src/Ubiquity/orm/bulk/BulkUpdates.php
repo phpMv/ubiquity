@@ -92,20 +92,6 @@ class BulkUpdates extends AbstractBulks {
 		return \implode ( ',', $ret );
 	}
 
-	private function execGroupTrans($sql) {
-		while ( true ) {
-			try {
-				$this->db->beginTransaction ();
-				$this->db->execute ( $sql );
-				$this->db->commit ();
-				return true;
-			} catch ( \Exception $e ) {
-				$this->db->rollBack ();
-			}
-		}
-		return false;
-	}
-
 	public function updateGroup($count = 5) {
 		$quote = $this->db->quote;
 		$tableName = OrmUtils::getTableName ( $this->class );
