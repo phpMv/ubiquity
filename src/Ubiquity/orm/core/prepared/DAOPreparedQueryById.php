@@ -2,6 +2,7 @@
 
 namespace Ubiquity\orm\core\prepared;
 
+use Ubiquity\db\SqlUtils;
 use Ubiquity\events\DAOEvents;
 use Ubiquity\events\EventsManager;
 use Ubiquity\orm\DAO;
@@ -28,10 +29,10 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		$this->conditionParser->limitOne ();
 	}
 
-	public function execute($params = [ ], $useCache = false) {
+	public function execute($params = [], $useCache = false) {
 		$cp = $this->conditionParser;
 		$cp->setKeyValues ( $params );
-		$query = $this->db->prepareAndExecute ( $this->tableName, $this->generatedCondition, $this->fieldList, $cp->getParams (), $useCache );
+		$query = $this->db->prepareAndExecute ( $this->tableName, SqlUtils::checkWhere ( $cp->getCondition () ), $this->fieldList, $cp->getParams (), $useCache );
 		if ($query && \sizeof ( $query ) > 0) {
 			$oneToManyQueries = [ ];
 			$manyToOneQueries = [ ];
