@@ -2,11 +2,19 @@
 
 namespace Ubiquity\orm\core\prepared;
 
-use Ubiquity\orm\parser\ConditionParser;
+use Ubiquity\db\SqlUtils;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\db\Database;
+use Ubiquity\orm\parser\ConditionParser;
 
+/**
+ * Ubiquity\orm\core\prepared$DAOPreparedQuery
+ * This class is part of Ubiquity
+ *
+ * @author jcheron <myaddressmail@gmail.com>
+ * @version 1.0.1
+ *
+ */
 abstract class DAOPreparedQuery {
 	protected $databaseOffset;
 
@@ -29,9 +37,10 @@ abstract class DAOPreparedQuery {
 	protected $fieldList;
 	protected $firstPropKey;
 	protected $condition;
+	protected $preparedCondition;
 	/**
 	 *
-	 * @var Database
+	 * @var \Ubiquity\db\Database
 	 */
 	protected $db;
 
@@ -41,6 +50,7 @@ abstract class DAOPreparedQuery {
 		$this->condition = $condition;
 		$this->conditionParser = new ConditionParser ( $condition );
 		$this->prepare ();
+		$this->preparedCondition = SqlUtils::checkWhere ( $this->conditionParser->getCondition () );
 	}
 
 	public function getFirstPropKey() {
@@ -172,6 +182,6 @@ abstract class DAOPreparedQuery {
 		$this->firstPropKey = OrmUtils::getFirstPropKey ( $this->className );
 	}
 
-	abstract public function execute($params = [], $useCache = false);
+	abstract public function execute($params = [ ], $useCache = false);
 }
 
