@@ -12,10 +12,10 @@
 		"phpmv/ubiquity-mysqli": "dev-master"
 	},
 	"require-dev": {
-		"monolog\/monolog": "^1.24",
+		"monolog\/monolog": "^2.0",
 		"czproject\/git-php" : "^3.13",
 		"phpmv\/ubiquity-webtools": "dev-master",
-		"phpmv\/ubiquity-dev":"dev-master"
+		"phpmv\/ubiquity-dev":"^0.0"
 	},
 	"autoload": {
 		"psr-4": {
