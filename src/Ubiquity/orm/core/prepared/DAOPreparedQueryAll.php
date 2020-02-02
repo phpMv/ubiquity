@@ -2,7 +2,6 @@
 
 namespace Ubiquity\orm\core\prepared;
 
-use Ubiquity\db\SqlUtils;
 use Ubiquity\events\DAOEvents;
 use Ubiquity\events\EventsManager;
 use Ubiquity\orm\OrmUtils;
@@ -13,7 +12,7 @@ use Ubiquity\orm\DAO;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class DAOPreparedQueryAll extends DAOPreparedQuery {
@@ -23,14 +22,14 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		parent::prepare ();
 	}
 
-	public function execute($params = [], $useCache = false) {
+	public function execute($params = [ ], $useCache = false) {
 		$objects = array ();
 		$invertedJoinColumns = null;
 
 		$cp = $this->conditionParser;
 		$cp->setParams ( $params );
 		$className = $this->className;
-		$query = $this->db->prepareAndExecute ( $this->tableName, SqlUtils::checkWhere ( $cp->getCondition () ), $this->fieldList, $cp->getParams (), $useCache );
+		$query = $this->db->prepareAndExecute ( $this->tableName, $this->generatedCondition, $this->fieldList, $cp->getParams (), $useCache );
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
