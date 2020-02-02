@@ -76,7 +76,7 @@ class CacheManager {
 	}
 
 	private static function initialGetCacheDirectory(&$config) {
-		return $config ['cache'] ['directory'] ?? ($config ['cache'] ['directory'] = 'cache' . \DS);
+		return $config ['cache'] ['directory'] ??= 'cache' . \DS;
 	}
 
 	/**
