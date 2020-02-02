@@ -41,7 +41,7 @@ class BulkUpdates extends AbstractBulks {
 		$tableName = OrmUtils::getTableName ( $this->class );
 
 		$count = \count ( $this->instances );
-		$modelField = \implode ( '', \array_fill ( 0, $count, ' WHEN ? THEN ? ' ) );
+		$modelField = \str_repeat ( ' WHEN ? THEN ? ', $count );
 
 		$keys = \array_keys ( $this->instances );
 		$parameters = [ ];
@@ -59,9 +59,9 @@ class BulkUpdates extends AbstractBulks {
 				$parameters [] = $_restInstance [$field];
 			}
 		}
-		$parameters = \array_merge ( $parameters, $keys );
+		$parameters = [ ...$parameters,...$keys ];
 		$this->parameters = $parameters;
-		return "UPDATE {$quote}{$tableName}{$quote} SET " . \implode ( ',', $caseFields ) . " WHERE {$quote}{$pk}{$quote} IN (" . \implode ( ',', \array_fill ( 0, $count, '?' ) ) . ')';
+		return "UPDATE {$quote}{$tableName}{$quote} SET " . \implode ( ',', $caseFields ) . " WHERE {$quote}{$pk}{$quote} IN (" . \str_repeat ( '?,', $count - 1 ) . '?)';
 	}
 
 	private function mysqlCreate() {

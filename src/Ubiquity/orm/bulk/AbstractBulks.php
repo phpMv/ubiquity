@@ -35,7 +35,7 @@ abstract class AbstractBulks {
 
 	protected function updateInstanceRest($instance) {
 		foreach ( $this->fields as $field ) {
-			$accessor = "get" . \ucfirst ( $field );
+			$accessor = 'get' . \ucfirst ( $field );
 			$instance->_rest [$field] = $instance->$accessor ();
 		}
 	}
