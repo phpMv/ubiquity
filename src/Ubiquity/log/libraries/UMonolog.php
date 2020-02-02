@@ -14,7 +14,7 @@ use Ubiquity\utils\base\UFileSystem;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class UMonolog extends Logger {
@@ -69,7 +69,7 @@ class UMonolog extends Logger {
 			$jso = json_decode ( $line );
 			if ($jso !== null) {
 				if ($contexts === null || self::inContext ( $contexts, $jso->context->context )) {
-					LogMessage::addMessage ( $objects, new LogMessage ( $jso->message, $jso->context->context, $jso->context->part, $jso->level, $jso->datetime->date, $jso->context->extra ) );
+					LogMessage::addMessage ( $objects, new LogMessage ( $jso->message, $jso->context->context, $jso->context->part, $jso->level, $jso->datetime, $jso->context->extra ) );
 				}
 			}
 		} );
