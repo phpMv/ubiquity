@@ -157,11 +157,13 @@ class AdminCest extends BaseAcceptance {
 	}
 
 	// tests
-	public function tryGotoAdminLogs(AcceptanceTester $I) {
-		$this->gotoAdminModule ( "Admin/Logs", $I );
-		$I->click ( "[data-url='deActivateLog']", "#menu-logs" );
-		$I->waitForElement ( "#bt-apply", self::TIMEOUT );
-	}
+	/*
+	 * public function tryGotoAdminLogs(AcceptanceTester $I) {
+	 * $this->gotoAdminModule ( "Admin/Logs", $I );
+	 * $I->click ( "[data-url='deActivateLog']", "#menu-logs" );
+	 * $I->waitForElement ( "#bt-apply", self::TIMEOUT );
+	 * }
+	 */
 
 	// tests
 	public function tryGotoAdminTranslate(AcceptanceTester $I) {
