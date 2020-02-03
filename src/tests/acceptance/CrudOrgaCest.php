@@ -81,8 +81,8 @@ class CrudOrgaCest extends BaseAcceptance {
 	public function tryToDeleteOne(AcceptanceTester $I) {
 		$I->amOnPage ( "TestCrudOrgas/display/no/1" );
 		$I->waitForText ( "Organizationsettingss", self::TIMEOUT, "body" );
-		$I->waitForElementClickable ( "#table-details #buttons a._delete._element", self::TIMEOUT );
-		$I->click ( "a._delete._element", "#table-details #buttons" );
+		$I->waitForElementClickable ( "#table-details #buttons a._delete", self::TIMEOUT );
+		$I->click ( "a._delete", "#table-details" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
 		$I->click ( "#bt-okay.negative" );
 		$I->waitForText ( "Can not delete `lecnam.net`", self::TIMEOUT, "body" );
