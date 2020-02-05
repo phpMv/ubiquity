@@ -199,7 +199,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $result;
 	}
 
-	public function quoteValue($value, $type = null) {
+	public function quoteValue($value, $type = 2) {
 		return $this->dbInstance->quote ( $value, $type );
 	}
 }
