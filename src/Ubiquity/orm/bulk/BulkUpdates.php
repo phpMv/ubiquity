@@ -28,7 +28,6 @@ class BulkUpdates extends AbstractBulks {
 	public function createSQL() {
 		switch ($this->dbType) {
 			case 'mysql' :
-				return $this->mysqlCreate ();
 			case 'pgsql' :
 				return $this->pgCreate ();
 			default :
@@ -105,7 +104,10 @@ class BulkUpdates extends AbstractBulks {
 			if ($inTransaction) {
 				$this->execGroupTrans ( $sql );
 			} else {
-				$this->db->execute ( $sql );
+				$sqls = \explode ( ';', $sql );
+				foreach ( $sqls as $s ) {
+					$this->db->execute ( $s );
+				}
 			}
 		}
 	}
