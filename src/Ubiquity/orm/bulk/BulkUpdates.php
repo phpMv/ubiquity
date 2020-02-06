@@ -92,7 +92,7 @@ class BulkUpdates extends AbstractBulks {
 		return \implode ( ',', $ret );
 	}
 
-	public function updateGroup($count = 5) {
+	public function updateGroup($count = 5, $inTransaction = true) {
 		$quote = $this->db->quote;
 		$tableName = OrmUtils::getTableName ( $this->class );
 		$sql = '';
@@ -102,7 +102,11 @@ class BulkUpdates extends AbstractBulks {
 				$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
 				$sql .= "UPDATE {$quote}{$tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
 			}
-			$this->execGroupTrans ( $sql );
+			if ($inTransaction) {
+				$this->execGroupTrans ( $sql );
+			} else {
+				$this->db->execute ( $sql );
+			}
 			$sql = '';
 		}
 	}
