@@ -15,6 +15,7 @@ use Ubiquity\orm\parser\Reflexion;
  *
  */
 class BulkUpdates extends AbstractBulks {
+	private $sqlUpdate = [ ];
 
 	public function __construct($className) {
 		parent::__construct ( $className );
@@ -105,20 +106,24 @@ class BulkUpdates extends AbstractBulks {
 			} else {
 				$instance = \current ( $group );
 				$propKeys = OrmUtils::getPropKeys ( $this->class );
-				$statement = $this->db->getUpdateStatement ( $this->getSQLUpdate ( $instance, $quote ) );
+				$sql = $this->getSQLUpdate ( $instance, $quote );
 				foreach ( $group as $instance ) {
-					$this->updateOne ( $instance, $statement, $propKeys );
+					$this->updateOne ( $instance, $sql, $propKeys );
 				}
 			}
 		}
 	}
 
 	protected function getSQLUpdate($instance, $quote) {
-		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
-		return "UPDATE {$quote}{$this->tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $instance->_rest ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
+		if ($this->sqlUpdate == null) {
+			$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
+			$this->sqlUpdate = "UPDATE {$quote}{$this->tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $instance->_rest ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
+		}
+		return $this->sqlUpdate;
 	}
 
-	protected function updateOne($instance, $statement, $propKeys) {
+	protected function updateOne($instance, $sql, $propKeys) {
+		$statement = $this->db->getUpdateStatement ( $sql );
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance, $propKeys );
 		try {
 			$result = $statement->execute ( $ColumnskeyAndValues );
