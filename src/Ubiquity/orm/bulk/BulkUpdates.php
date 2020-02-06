@@ -123,7 +123,7 @@ class BulkUpdates extends AbstractBulks {
 	}
 
 	protected function updateOne($instance, $sql, $propKeys) {
-		$statement = $this->db->getUpdateStatement ( $sql );
+		$statement = $this->db->prepareStatement ( $sql );
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance, $propKeys );
 		$result = false;
 		try {
