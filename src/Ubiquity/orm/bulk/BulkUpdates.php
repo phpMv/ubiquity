@@ -2,16 +2,14 @@
 
 namespace Ubiquity\orm\bulk;
 
-use Ubiquity\db\SqlUtils;
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\orm\parser\Reflexion;
 
 /**
  * Ubiquity\orm\bulk$BulkUpdates
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class BulkUpdates extends AbstractBulks {
@@ -96,45 +94,16 @@ class BulkUpdates extends AbstractBulks {
 		$quote = $this->db->quote;
 		$groups = \array_chunk ( $this->instances, $count );
 
-		if ($inTransaction) {
-			foreach ( $groups as $group ) {
-				$sql = '';
-				foreach ( $group as $instance ) {
-					$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
-					$sql .= "UPDATE {$quote}{$this->tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
-				}
-				$this->execGroupTrans ( $sql );
+		foreach ( $groups as $group ) {
+			$sql = '';
+			foreach ( $group as $instance ) {
+				$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
+				$sql .= "UPDATE {$quote}{$this->tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
 			}
-		} else {
-			foreach ( $groups as $group ) {
-				$instance = \current ( $group );
-				$st = $this->db->getUpdateStatement ( $this->getSQLUpdate ( $instance, $quote ) );
-				foreach ( $group as $instance ) {
-					$this->updateOne ( $instance, $st );
-				}
-			}
+			$this->execGroupTrans ( $sql );
 		}
 		$this->instances = [ ];
 		$this->parameters = [ ];
-	}
-
-	protected function getSQLUpdate($instance, $quote) {
-		if ($this->sqlUpdate == null) {
-			$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
-			$this->sqlUpdate = "UPDATE {$quote}{$this->tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $instance->_rest ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
-		}
-		return $this->sqlUpdate;
-	}
-
-	protected function updateOne($instance, $statement) {
-		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
-		$result = false;
-		try {
-			$result = $statement->execute ( $ColumnskeyAndValues );
-		} catch ( \Exception $e ) {
-			$result = false;
-		}
-		return $result;
 	}
 }
 
