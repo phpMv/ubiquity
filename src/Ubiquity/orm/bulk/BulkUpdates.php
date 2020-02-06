@@ -5,8 +5,6 @@ namespace Ubiquity\orm\bulk;
 use Ubiquity\db\SqlUtils;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\Reflexion;
-use Ubiquity\orm\DAO;
-use Ubiquity\db\Database;
 
 /**
  * Ubiquity\orm\bulk$BulkUpdates
@@ -97,23 +95,27 @@ class BulkUpdates extends AbstractBulks {
 	public function updateGroup($count = 5, $inTransaction = true) {
 		$quote = $this->db->quote;
 		$groups = \array_chunk ( $this->instances, $count );
-		foreach ( $groups as $group ) {
-			if ($inTransaction) {
+
+		if ($inTransaction) {
+			foreach ( $groups as $group ) {
 				$sql = '';
 				foreach ( $group as $instance ) {
 					$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
 					$sql .= "UPDATE {$quote}{$this->tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
 				}
 				$this->execGroupTrans ( $sql );
-			} else {
+			}
+		} else {
+			foreach ( $groups as $group ) {
 				$instance = \current ( $group );
-				$props = Reflexion::getProperties ( $this->class );
 				$st = $this->db->getUpdateStatement ( $this->getSQLUpdate ( $instance, $quote ) );
 				foreach ( $group as $instance ) {
-					$this->updateOne ( $instance, $st, $props );
+					$this->updateOne ( $instance, $st );
 				}
 			}
 		}
+		$this->instances = [ ];
+		$this->parameters = [ ];
 	}
 
 	protected function getSQLUpdate($instance, $quote) {
@@ -124,8 +126,8 @@ class BulkUpdates extends AbstractBulks {
 		return $this->sqlUpdate;
 	}
 
-	protected function updateOne($instance, $statement, $props) {
-		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance, $props );
+	protected function updateOne($instance, $statement) {
+		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$result = false;
 		try {
 			$result = $statement->execute ( $ColumnskeyAndValues );
