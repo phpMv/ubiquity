@@ -40,7 +40,7 @@ trait DAOBulkUpdatesTrait {
 	 *
 	 * @param object $instance
 	 */
-	public static function toInsert(object $instance): void {
+	public static function toInsert($instance): void {
 		self::toOperation ( $instance, 'insert' );
 	}
 
@@ -70,7 +70,7 @@ trait DAOBulkUpdatesTrait {
 	 *
 	 * @param object $instance
 	 */
-	public static function toUpdate(object $instance): void {
+	public static function toUpdate($instance): void {
 		self::toOperation ( $instance, 'update' );
 	}
 
@@ -107,7 +107,7 @@ trait DAOBulkUpdatesTrait {
 	 *
 	 * @param object $instance
 	 */
-	public static function toDelete(object $instance): void {
+	public static function toDelete($instance): void {
 		self::toOperation ( $instance, 'delete' );
 	}
 
