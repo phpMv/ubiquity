@@ -30,7 +30,6 @@ class BulkInserts extends AbstractBulks {
 
 	public function createSQL() {
 		$quote = $this->db->quote;
-		$tableName = OrmUtils::getTableName ( $this->class );
 		$fieldCount = \count ( $this->fields );
 		$parameters = [ ];
 		$values = [ ];
@@ -40,7 +39,7 @@ class BulkInserts extends AbstractBulks {
 			$values [] = $modelFields;
 		}
 		$this->parameters = $parameters;
-		return "INSERT INTO {$quote}{$tableName}{$quote} (" . $this->insertFields . ') VALUES ' . \implode ( ',', $values );
+		return "INSERT INTO {$quote}{$this->tableName}{$quote} (" . $this->insertFields . ') VALUES ' . \implode ( ',', $values );
 	}
 }
 

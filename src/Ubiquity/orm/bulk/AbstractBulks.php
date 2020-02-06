@@ -19,6 +19,7 @@ abstract class AbstractBulks {
 	protected $class;
 	protected $pkName;
 	protected $fields;
+	protected $tableName;
 	protected $db;
 	protected $instances = [ ];
 	protected $parameters;
@@ -60,6 +61,7 @@ abstract class AbstractBulks {
 		$this->fields = OrmUtils::getSerializableFields ( $className );
 		$this->db = DAO::getDb ( $className );
 		$this->dbType = $this->db->getDbType ();
+		$this->tableName = OrmUtils::getTableName ( $className );
 	}
 
 	public function addInstances($instances) {

@@ -2,7 +2,9 @@
 
 namespace Ubiquity\orm\bulk;
 
+use Ubiquity\db\SqlUtils;
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\orm\parser\Reflexion;
 
 /**
  * Ubiquity\orm\bulk$BulkUpdates
@@ -37,7 +39,6 @@ class BulkUpdates extends AbstractBulks {
 
 	private function pgCreate() {
 		$quote = $this->db->quote;
-		$tableName = OrmUtils::getTableName ( $this->class );
 
 		$count = \count ( $this->instances );
 		$modelField = \str_repeat ( ' WHEN ? THEN ? ', $count );
@@ -60,12 +61,11 @@ class BulkUpdates extends AbstractBulks {
 		}
 		$parameters = [ ...$parameters,...$keys ];
 		$this->parameters = $parameters;
-		return "UPDATE {$quote}{$tableName}{$quote} SET " . \implode ( ',', $caseFields ) . " WHERE {$quote}{$pk}{$quote} IN (" . \str_repeat ( '?,', $count - 1 ) . '?)';
+		return "UPDATE {$quote}{$this->tableName}{$quote} SET " . \implode ( ',', $caseFields ) . " WHERE {$quote}{$pk}{$quote} IN (" . \str_repeat ( '?,', $count - 1 ) . '?)';
 	}
 
 	private function mysqlCreate() {
 		$quote = $this->db->quote;
-		$tableName = OrmUtils::getTableName ( $this->class );
 		$fieldCount = \count ( $this->fields );
 		$parameters = [ ];
 		$values = [ ];
@@ -79,7 +79,7 @@ class BulkUpdates extends AbstractBulks {
 			$duplicateKey [] = "{$quote}{$field}{$quote} = VALUES({$quote}{$field}{$quote})";
 		}
 		$this->parameters = $parameters;
-		return "INSERT INTO {$quote}{$tableName}{$quote} (" . $this->insertFields . ') VALUES ' . \implode ( ',', $values ) . ' ON DUPLICATE KEY UPDATE ' . \implode ( ',', $duplicateKey );
+		return "INSERT INTO {$quote}{$this->tableName}{$quote} (" . $this->insertFields . ') VALUES ' . \implode ( ',', $values ) . ' ON DUPLICATE KEY UPDATE ' . \implode ( ',', $duplicateKey );
 	}
 
 	private function getUpdateFields() {
@@ -93,25 +93,38 @@ class BulkUpdates extends AbstractBulks {
 
 	public function updateGroup($count = 5, $inTransaction = true) {
 		$quote = $this->db->quote;
-		$tableName = OrmUtils::getTableName ( $this->class );
 		$groups = \array_chunk ( $this->instances, $count );
 		foreach ( $groups as $group ) {
-			$sql = '';
-			foreach ( $group as $instance ) {
-				$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
-				$sql .= "UPDATE {$quote}{$tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
-			}
 			if ($inTransaction) {
+				$sql = '';
+				foreach ( $group as $instance ) {
+					$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
+					$sql .= "UPDATE {$quote}{$this->tableName}{$quote} SET " . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
+				}
 				$this->execGroupTrans ( $sql );
 			} else {
-				$sqls = \explode ( ';', $sql );
-				foreach ( $sqls as $s ) {
-					if ($s != '') {
-						$this->db->execute ( $s );
-					}
+				$instance = \current ( $group );
+				$propKeys = OrmUtils::getPropKeys ( $this->class );
+				$statement = $this->db->getUpdateStatement ( $this->getSQLUpdate ( $instance, $quote ) );
+				foreach ( $group as $instance ) {
+					$this->updateOne ( $instance, $statement, $propKeys );
 				}
 			}
 		}
+	}
+
+	protected function getSQLUpdate($instance, $quote) {
+		$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
+		return "UPDATE {$quote}{$this->tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $instance->_rest ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
+	}
+
+	protected function updateOne($instance, $statement, $propKeys) {
+		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance, $propKeys );
+		try {
+			$result = $statement->execute ( $ColumnskeyAndValues );
+		} catch ( \Exception $e ) {
+		}
+		return $result;
 	}
 }
 

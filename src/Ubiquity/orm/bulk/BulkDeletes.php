@@ -21,11 +21,10 @@ class BulkDeletes extends AbstractBulks {
 
 	public function createSQL() {
 		$quote = $this->db->quote;
-		$tableName = OrmUtils::getTableName ( $this->class );
 		$this->parameters = \array_keys ( $this->instances );
 		$count = \count ( $this->parameters );
 
-		return "DELETE FROM {$quote}{$tableName}{$quote} WHERE {$quote}{$this->pkName}{$quote} IN (" . \implode ( ',', \array_fill ( 0, $count, '?' ) ) . ')';
+		return "DELETE FROM {$quote}{$this->tableName}{$quote} WHERE {$quote}{$this->pkName}{$quote} IN (" . \implode ( ',', \array_fill ( 0, $count, '?' ) ) . ')';
 	}
 }
 
