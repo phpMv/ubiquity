@@ -243,7 +243,7 @@ class Database {
 	}
 
 	public function quoteValue($value, $type = 2) {
-		return $this->wrapperObject->quoteValue ( $value, $type );
+		return $this->wrapperObject->quoteValue ( ( string ) $value, $type );
 	}
 
 	public function getUpdateFieldsKeyAndValues($keyAndValues) {
