@@ -84,10 +84,10 @@ trait DAOBulkUpdatesTrait {
 		self::toOperations ( $instances, 'update' );
 	}
 
-	public static function updateGroups($count = 5) {
+	public static function updateGroups($count = 5, $inTransaction = true) {
 		$bulks = self::$bulks ['update'];
 		foreach ( $bulks as $bulk ) {
-			$bulk->updateGroup ( $count );
+			$bulk->updateGroup ( $count, $inTransaction );
 		}
 	}
 
