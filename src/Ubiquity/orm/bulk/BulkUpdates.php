@@ -107,10 +107,10 @@ class BulkUpdates extends AbstractBulks {
 				$this->execGroupTrans ( $sql );
 			} else {
 				$instance = \current ( $group );
-				$propKeys = Reflexion::getProperties ( $this->class );
-				$sql = $this->getSQLUpdate ( $instance, $quote );
+				$props = Reflexion::getProperties ( $this->class );
+				$st = $this->db->getUpdateStatement ( $this->getSQLUpdate ( $instance, $quote ) );
 				foreach ( $group as $instance ) {
-					$this->updateOne ( $instance, $sql, $propKeys );
+					$this->updateOne ( $instance, $st, $props );
 				}
 			}
 		}
@@ -124,9 +124,8 @@ class BulkUpdates extends AbstractBulks {
 		return $this->sqlUpdate;
 	}
 
-	protected function updateOne($instance, $sql, $propKeys) {
-		$statement = $this->db->getUpdateStatement ( $sql );
-		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance, $propKeys );
+	protected function updateOne($instance, $statement, $props) {
+		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance, $props );
 		$result = false;
 		try {
 			$result = $statement->execute ( $ColumnskeyAndValues );
