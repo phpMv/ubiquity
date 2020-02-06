@@ -5,6 +5,8 @@ namespace Ubiquity\orm\bulk;
 use Ubiquity\db\SqlUtils;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\orm\DAO;
+use Ubiquity\db\Database;
 
 /**
  * Ubiquity\orm\bulk$BulkUpdates
@@ -106,9 +108,10 @@ class BulkUpdates extends AbstractBulks {
 			} else {
 				$instance = \current ( $group );
 				$propKeys = OrmUtils::getPropKeys ( $this->class );
+				$db = DAO::getDb ( $this->class );
 				$sql = $this->getSQLUpdate ( $instance, $quote );
 				foreach ( $group as $instance ) {
-					$this->updateOne ( $instance, $sql, $propKeys );
+					$this->updateOne ( $db, $instance, $sql, $propKeys );
 				}
 			}
 		}
@@ -122,8 +125,8 @@ class BulkUpdates extends AbstractBulks {
 		return $this->sqlUpdate;
 	}
 
-	protected function updateOne($instance, $sql, $propKeys) {
-		$statement = $this->db->prepareStatement ( $sql );
+	protected function updateOne(Database $db, $instance, $sql, $propKeys) {
+		$statement = $db->getUpdateStatement ( $sql );
 		$ColumnskeyAndValues = Reflexion::getPropertiesAndValues ( $instance, $propKeys );
 		$result = false;
 		try {
