@@ -106,7 +106,9 @@ class BulkUpdates extends AbstractBulks {
 			} else {
 				$sqls = \explode ( ';', $sql );
 				foreach ( $sqls as $s ) {
-					$this->db->execute ( $s );
+					if ($s != '') {
+						$this->db->execute ( $s );
+					}
 				}
 			}
 		}
