@@ -90,7 +90,7 @@ class BulkUpdates extends AbstractBulks {
 		return \implode ( ',', $ret );
 	}
 
-	public function updateGroup($count = 5, $inTransaction = true) {
+	public function updateGroup($count = 5) {
 		$quote = $this->db->quote;
 		$groups = \array_chunk ( $this->instances, $count );
 
