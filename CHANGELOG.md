@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unrelease]
-- Nothing
+### Added
+- `updateGroups` method for batch updates (mysql bulks)
 ## [2.3.3 Unrelease]
 ### Added
 - mailer module see https://github.com/phpMv/ubiquity-mailer
