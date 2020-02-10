@@ -43,7 +43,7 @@ abstract class AbstractDriverMetaDatas {
 	abstract public function getForeignKeys(string $tableName, string $pkName, ?string $dbName = null): array;
 
 	/**
-	 * Returns metadata related to a field.
+	 * Returns metadata related to the fields of the specified table.
 	 *
 	 * @param string $tableName
 	 * @return array
