@@ -134,8 +134,7 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function getTablesName() {
-		$query = $this->dbInstance->query ( 'SHOW TABLES' );
-		return $query->fetchAll ( \PDO::FETCH_COLUMN );
+		return $this->getDriverMetaDatas ()->getTablesName ();
 	}
 
 	public function statementRowCount($statement) {
