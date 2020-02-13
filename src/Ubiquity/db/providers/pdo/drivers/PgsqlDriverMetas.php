@@ -68,7 +68,7 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 			    ELSE ''
 			END AS \"Key\",
 			CASE
-			    WHEN f.atthasdef = 't' THEN pg_get_expr(adbin, adrelid)
+			    WHEN f.atthasdef = 't' THEN d.adsrc
 			END AS \"Default\"  ,
 			CASE WHEN pg_get_expr(adbin, adrelid) LIKE 'nextval(%' THEN 'auto_increment' ELSE '' END AS \"Extra\" 
 			FROM pg_attribute f  
