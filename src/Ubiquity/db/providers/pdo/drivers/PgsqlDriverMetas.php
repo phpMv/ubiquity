@@ -13,28 +13,26 @@ namespace Ubiquity\db\providers\pdo\drivers;
 class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 
 	public function getForeignKeys($tableName, $pkName, $dbName = null): array {
-		$recordset = $this->dbInstance->query ( '
-			SELECT k1.constraint_catalog as "CONSTRAINT_CATALOG",
-			k1.constraint_schema as "CONSTRAINT_SCHEMA",
-			k1.constraint_name as "CONSTRAINT_NAME",
-			k1.table_catalog  as "TABLE_CATALOG",
-			k1.table_schema  as "TABLE_SCHEMA",
-	        k1.table_name  as "TABLE_NAME",
-	        k1.column_name as "COLUMN_NAME",
-	  	    k1.ordinal_position as "ORDINAL_POSITION" ,
-	  	    k1.position_in_unique_constraint as "POSITION_IN_UNIQUE_CONSTRAINT",
-	        k2.table_schema AS "REFERENCED_TABLE_SCHEMA",
-	        k2.table_name AS "REFERENCED_TABLE_NAME",
-	        k2.column_name AS "REFERENCED_COLUMN_NAME"
-			FROM information_schema.key_column_usage k1
-			JOIN information_schema.referential_constraints fk USING (constraint_schema, constraint_name)
-			JOIN information_schema.key_column_usage k2
-			  ON k2.constraint_schema = fk.unique_constraint_schema
-			AND k2.constraint_name = fk.unique_constraint_name
-			AND k2.ordinal_position = k1.position_in_unique_constraint
-		 		WHERE k1.table_schema = \'public\'
-		 		and k2.column_name=\'' . $pkName . '\'
-		   		AND k1.table_name   = \'' . $tableName . '\';' );
+		$recordset = $this->dbInstance->query ( 'SELECT k1.constraint_catalog as "CONSTRAINT_CATALOG", k1.constraint_schema as "CONSTRAINT_SCHEMA",
+												k1.constraint_name as "CONSTRAINT_NAME",
+												k1.table_catalog  as "TABLE_CATALOG",
+												k1.table_schema  as "TABLE_SCHEMA",
+												k1.table_name  as "TABLE_NAME",
+												k1.column_name as "COLUMN_NAME",
+												k1.ordinal_position as "ORDINAL_POSITION" ,
+												k1.position_in_unique_constraint as "POSITION_IN_UNIQUE_CONSTRAINT",
+												k2.table_schema AS "REFERENCED_TABLE_SCHEMA",
+												k2.table_name AS "REFERENCED_TABLE_NAME",
+												k2.column_name AS "REFERENCED_COLUMN_NAME"
+												FROM information_schema.key_column_usage k1
+													JOIN information_schema.referential_constraints fk USING (constraint_schema, constraint_name)
+													JOIN information_schema.key_column_usage k2
+													ON k2.constraint_schema = fk.unique_constraint_schema
+												AND k2.constraint_name = fk.unique_constraint_name
+												AND k2.ordinal_position = k1.position_in_unique_constraint
+												WHERE k1.table_schema = \'public\'
+												and k2.column_name=\'{$pkName}\'
+												AND k1.table_name   = \'{$tableName}\';' );
 		return $recordset->fetchAll ( \PDO::FETCH_ASSOC );		
 	}
 
@@ -72,7 +70,7 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 			CASE
 			    WHEN f.atthasdef = 't' THEN d.adsrc
 			END AS \"Default\"  ,
-			CASE WHEN d.adsrc LIKE 'nextval(%' THEN 'auto_increment' ELSE '' END AS \"Extra\" 
+			CASE WHEN pg_get_expr(adbin, adrelid) LIKE 'nextval(%' THEN 'auto_increment' ELSE '' END AS \"Extra\" 
 			FROM pg_attribute f  
 			JOIN pg_class c ON c.oid = f.attrelid  
 			JOIN pg_type t ON t.oid = f.atttypid  
@@ -85,7 +83,7 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 
 			WHERE c.relkind = 'r'::char 
 			AND n.nspname = 'public'  
-			and c.relname='" . $tableName . "'
+			and c.relname='{$tableName}'
 			AND f.attnum > 0
 			ORDER BY f.attnum;");		
 		$fields = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
