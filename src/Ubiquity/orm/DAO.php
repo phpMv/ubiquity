@@ -79,7 +79,7 @@ class DAO {
 		} else {
 			$keys = '1';
 		}
-
+		// TOFIX specific to DB driver
 		return $db->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$quote}{$tableName}{$quote}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
 	}
 
@@ -163,7 +163,7 @@ class DAO {
 	 * @param array $options
 	 * @param boolean $cache
 	 */
-	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
+	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [ ], $cache = false) {
 		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$pool );
 		try {
 			self::$db [$offset]->connect ();
