@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `updateGroups` method for batch updates (mysql bulks)
 ## [2.3.3 Unrelease]
 ### Added
+- PostgreSQL PDO Driver created for PostgreSQL Database Support
 - mailer module see https://github.com/phpMv/ubiquity-mailer
 - `SimpleViewController`, `SimpleViewAsyncController` for php views (without template engine)
 - PHP 7.4 preloading see https://github.com/phpMv/ubiquity/issues/88
