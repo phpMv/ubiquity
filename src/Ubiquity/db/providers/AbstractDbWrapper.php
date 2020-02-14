@@ -92,6 +92,8 @@ abstract class AbstractDbWrapper {
 
 	abstract public function _optPrepareAndExecute($sql, array $values = null);
 
+	abstract public function getRowNum(string $tableName, string $pkName, string $condition): int;
+
 	public function close() {
 		$this->dbInstance = null;
 	}
