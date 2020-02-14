@@ -7,7 +7,7 @@ namespace Ubiquity\db\providers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class AbstractDbWrapper {
@@ -45,7 +45,7 @@ abstract class AbstractDbWrapper {
 
 	abstract public function statementRowCount($statement);
 
-	abstract public function lastInsertId();
+	abstract public function lastInsertId($name = null);
 
 	/**
 	 * Used by DAO

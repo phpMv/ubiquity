@@ -10,7 +10,7 @@ use Ubiquity\exceptions\DBException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @property \PDO $dbInstance
  *
  */
@@ -53,8 +53,8 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $result;
 	}
 
-	public function lastInsertId() {
-		return $this->dbInstance->lastInsertId ();
+	public function lastInsertId($name = null) {
+		return $this->dbInstance->lastInsertId ( $name );
 	}
 
 	public function fetchAll($statement, array $values = null, $mode = null) {
