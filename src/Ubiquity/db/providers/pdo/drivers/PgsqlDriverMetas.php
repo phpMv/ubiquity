@@ -31,8 +31,8 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 												AND k2.constraint_name = fk.unique_constraint_name
 												AND k2.ordinal_position = k1.position_in_unique_constraint
 												WHERE k1.table_schema = \'public\'
-												and k2.column_name=\'{$pkName}\'
-												AND k1.table_name   = \'{$tableName}\';' );
+												and k2.column_name=\'' . $pkName . '\'
+												AND k1.table_name   = \'' . $tableName . '\';' );
 		return $recordset->fetchAll ( \PDO::FETCH_ASSOC );
 	}
 
@@ -43,7 +43,7 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 
 	public function getPrimaryKeys($tableName): array {
 		$fieldkeys = array ();
-		$recordset = $this->dbInstance->query ( "SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type FROM   pg_index i JOIN   pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '{$tableName}'::regclass AND    i.indisprimary;" );
+		$recordset = $this->dbInstance->query ( "SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '{$tableName}'::regclass AND i.indisprimary;" );
 		$keys = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
 		foreach ( $keys as $key ) {
 			$fieldkeys [] = $key ['attname'];
