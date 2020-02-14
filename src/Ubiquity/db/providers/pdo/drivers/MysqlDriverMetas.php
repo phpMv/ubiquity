@@ -39,5 +39,12 @@ class MysqlDriverMetas extends AbstractDriverMetaDatas {
 		}
 		return $fieldsInfos;
 	}
-}
 
+	public function getRowNum(string $tableName, string $pkName, string $condition): int {
+		$query = $this->dbInstance->query ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM `{$tableName}`, (SELECT @rownum:=0) r ORDER BY {$pkName}) d WHERE " . $condition );
+		if ($query) {
+			return $query->fetchColumn ( 0 );
+		}
+		return 0;
+	}
+}

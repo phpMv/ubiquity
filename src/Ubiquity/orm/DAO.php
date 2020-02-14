@@ -25,7 +25,7 @@ use Ubiquity\orm\traits\DAOPreparedTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.3
+ * @version 1.2.4
  *
  */
 class DAO {
@@ -79,9 +79,7 @@ class DAO {
 		} else {
 			$keys = '1';
 		}
-		// TOFIX specific to DB driver
-		// pgsql: SELECT num FROM (SELECT *,row_number() OVER (ORDER BY {$keys}) AS num FROM {$quote}{$tableName}{$quote}) x where ".$condition;
-		return $db->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$quote}{$tableName}{$quote}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
+		return $db->getRowNum ( $tableName, $keys, $condition );
 	}
 
 	/**

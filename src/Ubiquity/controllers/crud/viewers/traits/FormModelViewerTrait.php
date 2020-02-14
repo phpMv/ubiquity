@@ -147,7 +147,7 @@ trait FormModelViewerTrait {
 		$form->setCaption ( "_message", $message ["subMessage"] );
 		$form->fieldAsMessage ( "_message", [ "icon" => $message ["icon"] ] );
 		$instance->_message = $message ["message"];
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/update", "#frm-add-update" );
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/_updateModel", "#frm-add-update" );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
 		return $form;
 	}
@@ -198,7 +198,7 @@ trait FormModelViewerTrait {
 				$f->setProperty ( "style", "display: none;" );
 			}
 		} );
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/updateMember/" . $member . "/" . $editMemberParams->getUpdateCallback (), "#" . $td, [ "attr" => "","hasLoader" => false,"jsCallback" => "$(self).remove();","jqueryDone" => "html" ] );
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/_updateMember/" . $member . "/" . $editMemberParams->getUpdateCallback (), "#" . $td, [ "attr" => "","hasLoader" => false,"jsCallback" => "$(self).remove();","jqueryDone" => "html" ] );
 		if ($editMemberParams->getHasPopup ()) {
 			$endEdit = "\$('#" . $identifier . "').html();\$('.popup').hide();\$('#" . $td . "').popup('destroy');";
 			$validate = $endEdit;
