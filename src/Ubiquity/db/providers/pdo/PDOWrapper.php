@@ -202,4 +202,8 @@ class PDOWrapper extends AbstractDbWrapper {
 	public function quoteValue($value, $type = 2) {
 		return $this->dbInstance->quote ( $value, $type );
 	}
+
+	public function getRowNum(string $tableName, string $pkName, string $condition): int {
+		return $this->getDriverMetaDatas ()->getRowNum ( $tableName, $pkName, $condition );
+	}
 }
