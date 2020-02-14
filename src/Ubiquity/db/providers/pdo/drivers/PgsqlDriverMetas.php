@@ -32,7 +32,7 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 												AND k2.ordinal_position = k1.position_in_unique_constraint
 												WHERE k1.table_schema = \'public\'
 												and k2.column_name=\'' . $pkName . '\'
-												AND k1.table_name   = \'' . $tableName . '\';' );
+												AND k2.table_name   = \'' . $tableName . '\';' );
 		return $recordset->fetchAll ( \PDO::FETCH_ASSOC );
 	}
 
