@@ -10,7 +10,7 @@ use Ubiquity\exceptions\DBException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  * @property \PDO $dbInstance
  *
  */
@@ -205,5 +205,9 @@ class PDOWrapper extends AbstractDbWrapper {
 
 	public function getRowNum(string $tableName, string $pkName, string $condition): int {
 		return $this->getDriverMetaDatas ()->getRowNum ( $tableName, $pkName, $condition );
+	}
+
+	public function groupConcat(string $fields, string $separator): string {
+		return $this->getDriverMetaDatas ()->groupConcat ( $fields, $separator );
 	}
 }

@@ -7,7 +7,7 @@ namespace Ubiquity\db\providers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 abstract class AbstractDbWrapper {
@@ -93,6 +93,8 @@ abstract class AbstractDbWrapper {
 	abstract public function _optPrepareAndExecute($sql, array $values = null);
 
 	abstract public function getRowNum(string $tableName, string $pkName, string $condition): int;
+
+	abstract public function groupConcat(string $fields, string $separator): string;
 
 	public function close() {
 		$this->dbInstance = null;

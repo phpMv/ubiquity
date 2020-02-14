@@ -9,7 +9,7 @@ use Ubiquity\db\SqlUtils;
  * ManyToManyParser
  *
  * @author jc
- * @version 1.1.1
+ * @version 1.1.2
  */
 class ManyToManyParser {
 	private $table;
@@ -26,10 +26,17 @@ class ManyToManyParser {
 	private $instance;
 	private $whereValues;
 
-	public function __construct($instance, $member = null) {
+	/**
+	 *
+	 * @var \Ubiquity\db\Database
+	 */
+	private $db;
+
+	public function __construct($db, $instance, $member = null) {
 		$this->instance = $instance;
 		$this->member = $member;
 		$this->whereValues = [ ];
+		$this->db = $db;
 	}
 
 	public function init($annot = false) {
@@ -197,8 +204,9 @@ class ManyToManyParser {
 	}
 
 	public function getConcatSQL() {
-		$quote = SqlUtils::$quote;
-		return "SELECT {$quote}" . $this->myFkField . "{$quote} as '_field' ,GROUP_CONCAT({$quote}" . $this->fkField . "{$quote} SEPARATOR ',') as '_concat' FROM {$quote}" . $this->joinTable . "{$quote} {condition} GROUP BY 1";
+		$quote = $this->db->quote;
+		$concat = $this->db->getSpecificSQL ( 'groupconcat', [ $quote . $this->fkField . $quote,',' ] );
+		return "SELECT {$quote}" . $this->myFkField . "{$quote} as _field ,{$concat} as _concat FROM {$quote}" . $this->joinTable . "{$quote} {condition} GROUP BY 1";
 	}
 
 	public function getParserWhereMask($mask = "'{value}'") {

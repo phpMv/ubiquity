@@ -17,7 +17,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.3
+ * @version 1.1.4
  * @property \Ubiquity\db\Database $db
  *
  */
@@ -186,10 +186,9 @@ trait DAOUpdatesTrait {
 	 * @param String $member
 	 */
 	public static function insertOrUpdateManyToMany($instance, $member) {
-		$parser = new ManyToManyParser ( $instance, $member );
+		$db = self::getDb ( \get_class ( $instance ) );
+		$parser = new ManyToManyParser ( $db, $instance, $member );
 		if ($parser->init ()) {
-			$className = $parser->getTargetEntityClass ();
-			$db = self::getDb ( $className );
 			$quote = $db->quote;
 			$myField = $parser->getMyFkField ();
 			$field = $parser->getFkField ();

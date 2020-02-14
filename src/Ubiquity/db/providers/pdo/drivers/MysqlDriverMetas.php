@@ -2,6 +2,14 @@
 
 namespace Ubiquity\db\providers\pdo\drivers;
 
+/**
+ * Ubiquity\db\providers\pdo\drivers$MysqlDriverMetas
+ * This class is part of Ubiquity
+ *
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 class MysqlDriverMetas extends AbstractDriverMetaDatas {
 
 	public function getTablesName(): array {
@@ -46,5 +54,9 @@ class MysqlDriverMetas extends AbstractDriverMetaDatas {
 			return $query->fetchColumn ( 0 );
 		}
 		return 0;
+	}
+
+	public function groupConcat(string $fields, string $separator): string {
+		return "GROUP_CONCAT({$fields} SEPARATOR '{$separator}')";
 	}
 }

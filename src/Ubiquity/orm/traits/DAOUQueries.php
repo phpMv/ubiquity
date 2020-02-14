@@ -7,9 +7,12 @@ use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\db\Database;
 
 /**
+ * Ubiquity\orm\traits$DAOUQueries
+ * This class is part of Ubiquity
  *
  * @author jc
- * @property \Ubiquity\db\Database $db
+ * @version 1.0.1
+ *
  */
 trait DAOUQueries {
 	protected static $annotFieldsInRelations = [ ];
@@ -18,27 +21,27 @@ trait DAOUQueries {
 
 	abstract protected static function _getOne(Database $db, $className, ConditionParser $conditionParser, $included, $useCache);
 
-	protected static function uParse($className, &$ucondition, $quote) {
+	protected static function uParse($db, $className, &$ucondition, $quote) {
 		$expressions = self::uGetExpressions ( $ucondition );
 		$condition = "";
 		$aliases = [ ];
 		foreach ( $expressions as $expression ) {
 			$expressionArray = explode ( ".", $expression );
-			self::uParseExpression ( $className, $expression, $expressionArray, $condition, $ucondition, $aliases, $quote );
+			self::uParseExpression ( $db, $className, $expression, $expressionArray, $condition, $ucondition, $aliases, $quote );
 		}
 		return $condition;
 	}
 
-	protected static function uParseExpression($className, $expression, &$expressionArray, &$condition, &$ucondition, &$aliases, $quote) {
+	protected static function uParseExpression($db, $className, $expression, &$expressionArray, &$condition, &$ucondition, &$aliases, $quote) {
 		$relations = self::getAnnotFieldsInRelations ( $className );
 		$field = array_shift ( $expressionArray );
 		if (isset ( $relations [$field] )) {
-			$jSQL = OrmUtils::getUJoinSQL ( $className, $relations [$field], $field, $aliases, $quote );
+			$jSQL = OrmUtils::getUJoinSQL ( $db, $className, $relations [$field], $field, $aliases, $quote );
 			$condition .= " " . $jSQL ["sql"];
 			if (sizeof ( $expressionArray ) === 1) {
 				$ucondition = preg_replace ( '/(^|\s)' . $expression . '/', " {$jSQL["alias"]}." . $expressionArray [0], $ucondition );
 			} else {
-				self::uParseExpression ( $jSQL ["class"], $expression, $expressionArray, $condition, $ucondition, $aliases, $quote );
+				self::uParseExpression ( $db, $jSQL ["class"], $expression, $expressionArray, $condition, $ucondition, $aliases, $quote );
 			}
 		}
 	}
@@ -71,7 +74,7 @@ trait DAOUQueries {
 	 */
 	public static function uGetAll($className, $ucondition = '', $included = true, $parameters = null, $useCache = NULL) {
 		$db = self::getDb ( $className );
-		$firstPart = self::uParse ( $className, $ucondition, $db->quote );
+		$firstPart = self::uParse ( $db, $className, $ucondition, $db->quote );
 		return self::_getAll ( $db, $className, new ConditionParser ( $ucondition, $firstPart, $parameters ), $included, $useCache );
 	}
 
@@ -86,7 +89,7 @@ trait DAOUQueries {
 	public static function uCount($className, $ucondition = '', $parameters = null) {
 		$db = self::getDb ( $className );
 		$quote = $db->quote;
-		$condition = self::uParse ( $className, $ucondition, $quote );
+		$condition = self::uParse ( $db, $className, $ucondition, $quote );
 		$tableName = OrmUtils::getTableName ( $className );
 		if ($ucondition != '') {
 			$ucondition = " WHERE " . $ucondition;
@@ -106,7 +109,7 @@ trait DAOUQueries {
 	 */
 	public static function uGetOne($className, $ucondition, $included = true, $parameters = null, $useCache = NULL) {
 		$db = self::getDb ( $className );
-		$condition = self::uParse ( $className, $ucondition, $db->quote );
+		$condition = self::uParse ( $db, $className, $ucondition, $db->quote );
 		$conditionParser = new ConditionParser ( $ucondition, $condition );
 		if (is_array ( $parameters )) {
 			$conditionParser->setParams ( $parameters );

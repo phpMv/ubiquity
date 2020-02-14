@@ -6,8 +6,8 @@ namespace Ubiquity\db\providers\pdo\drivers;
  * Ubiquity\db\providers\pdo\drivers$PgsqlDriverMetas
  * This class is part of Ubiquity
  *
- * @author
- * @version 1.0.0
+ * @author Ulaş SAYGIN
+ * @version 1.0.1
  *
  */
 class PgsqlDriverMetas extends AbstractDriverMetaDatas {
@@ -43,7 +43,7 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 
 	public function getPrimaryKeys($tableName): array {
 		$fieldkeys = array ();
-		$recordset = $this->dbInstance->query ( "SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '{$tableName}'::regclass AND i.indisprimary;" );
+		$recordset = $this->dbInstance->query ( "SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type FROM   pg_index i JOIN   pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '{$tableName}'::regclass AND    i.indisprimary;" );
 		$keys = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
 		foreach ( $keys as $key ) {
 			$fieldkeys [] = $key ['attname'];
@@ -98,5 +98,9 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 			return $query->fetchColumn ( 0 );
 		}
 		return 0;
+	}
+
+	public function groupConcat(string $fields, string $separator): string {
+		return "array_to_string(array_agg({$fields}), '{$separator}')";
 	}
 }
