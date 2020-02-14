@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\db\providers\pdo\drivers;
 
 /**
@@ -10,7 +11,6 @@ namespace Ubiquity\db\providers\pdo\drivers;
  *
  */
 abstract class AbstractDriverMetaDatas {
-
 	protected $dbInstance;
 
 	public function __construct($dbInstance) {
