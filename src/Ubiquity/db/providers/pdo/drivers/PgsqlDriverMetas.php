@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\db\providers\pdo\drivers;
 
 /**
@@ -12,7 +13,7 @@ namespace Ubiquity\db\providers\pdo\drivers;
 class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 
 	public function getForeignKeys($tableName, $pkName, $dbName = null): array {
-		$recordset = $this->dbInstance->query('SELECT k1.constraint_catalog as "CONSTRAINT_CATALOG", k1.constraint_schema as "CONSTRAINT_SCHEMA",
+		$recordset = $this->dbInstance->query ( 'SELECT k1.constraint_catalog as "CONSTRAINT_CATALOG", k1.constraint_schema as "CONSTRAINT_SCHEMA",
 												k1.constraint_name as "CONSTRAINT_NAME",
 												k1.table_catalog  as "TABLE_CATALOG",
 												k1.table_schema  as "TABLE_SCHEMA",
@@ -31,28 +32,28 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 												AND k2.ordinal_position = k1.position_in_unique_constraint
 												WHERE k1.table_schema = \'public\'
 												and k2.column_name=\'{$pkName}\'
-												AND k1.table_name   = \'{$tableName}\';');
-		return $recordset->fetchAll(\PDO::FETCH_ASSOC);
+												AND k1.table_name   = \'{$tableName}\';' );
+		return $recordset->fetchAll ( \PDO::FETCH_ASSOC );
 	}
 
 	public function getTablesName(): array {
-		$query = $this->dbInstance->query('SELECT tablename as schemaname FROM pg_catalog.pg_tables WHERE schemaname != \'pg_catalog\' AND schemaname != \'information_schema\';');
-		return $query->fetchAll(\PDO::FETCH_COLUMN);
+		$query = $this->dbInstance->query ( 'SELECT tablename as schemaname FROM pg_catalog.pg_tables WHERE schemaname != \'pg_catalog\' AND schemaname != \'information_schema\';' );
+		return $query->fetchAll ( \PDO::FETCH_COLUMN );
 	}
 
 	public function getPrimaryKeys($tableName): array {
-		$fieldkeys = array();
-		$recordset = $this->dbInstance->query("SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type FROM   pg_index i JOIN   pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '{$tableName}'::regclass AND    i.indisprimary;");
-		$keys = $recordset->fetchAll(\PDO::FETCH_ASSOC);
-		foreach ($keys as $key) {
-			$fieldkeys[] = $key['attname'];
+		$fieldkeys = array ();
+		$recordset = $this->dbInstance->query ( "SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type FROM   pg_index i JOIN   pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '{$tableName}'::regclass AND    i.indisprimary;" );
+		$keys = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
+		foreach ( $keys as $key ) {
+			$fieldkeys [] = $key ['attname'];
 		}
 		return $fieldkeys;
 	}
 
 	public function getFieldsInfos($tableName): array {
-		$fieldsInfos = array();
-		$recordset = $this->dbInstance->query("SELECT
+		$fieldsInfos = array ();
+		$recordset = $this->dbInstance->query ( "SELECT
 			f.attname AS \"Field\",
 			pg_catalog.format_type(f.atttypid,f.atttypmod) AS \"Type\",
 			CASE
@@ -83,23 +84,19 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 			AND n.nspname = 'public'
 			and c.relname='{$tableName}'
 			AND f.attnum > 0
-			ORDER BY f.attnum;");
-		$fields = $recordset->fetchAll(\PDO::FETCH_ASSOC);
-		foreach ($fields as $field) {
-			$fieldsInfos[$field['Field']] = [
-				"Type" => $field['Type'],
-				"Nullable" => $field["Null"]
-			];
+			ORDER BY f.attnum;" );
+		$fields = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
+		foreach ( $fields as $field ) {
+			$fieldsInfos [$field ['Field']] = [ "Type" => $field ['Type'],"Nullable" => $field ["Null"] ];
 		}
 		return $fieldsInfos;
 	}
 
 	public function getRowNum(string $tableName, string $pkName, string $condition): int {
-		$query = $this->dbInstance->query("SELECT num FROM (SELECT *,row_number() OVER (ORDER BY {$pkName}) AS num FROM \"{$tableName}\") x where " . $condition);
+		$query = $this->dbInstance->query ( "SELECT num FROM (SELECT *,row_number() OVER (ORDER BY {$pkName}) AS num FROM \"{$tableName}\") x where " . $condition );
 		if ($query) {
-			return $query->fetchColumn(0);
+			return $query->fetchColumn ( 0 );
 		}
 		return 0;
 	}
 }
-
