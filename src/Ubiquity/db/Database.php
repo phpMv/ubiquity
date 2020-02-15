@@ -294,6 +294,8 @@ class Database {
 		switch ($key) {
 			case 'groupconcat' :
 				return $this->wrapperObject->groupConcat ( $params [0], $params [1] ?? ',');
+			case 'like' :
+				return $this->wrapperObject->likeOperator ();
 		}
 	}
 }

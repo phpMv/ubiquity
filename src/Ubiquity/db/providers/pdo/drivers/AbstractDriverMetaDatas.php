@@ -67,5 +67,9 @@ abstract class AbstractDriverMetaDatas {
 	 * @return string
 	 */
 	abstract public function groupConcat(string $fields, string $separator): string;
+
+	public function likeOperator() {
+		return ' LIKE ';
+	}
 }
 

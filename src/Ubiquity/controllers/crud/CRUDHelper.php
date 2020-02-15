@@ -8,7 +8,6 @@ use Ubiquity\orm\DAO;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\database\DbCache;
 use Ubiquity\db\SqlUtils;
-use Ubiquity\utils\base\UString;
 
 class CRUDHelper {
 
@@ -28,12 +27,17 @@ class CRUDHelper {
 
 	public static function search($model, $search, $fields, $initialCondition = "1=1") {
 		$words = preg_split ( "@(\s*?(\(|\)|\|\||\&\&)\s*?)@", $search );
+		$params = [ ];
+		$count = \count ( $fields );
+		$db = DAO::getDb ( $model );
+		$like = $db->getSpecificSQL ( 'like' );
+		SqlUtils::$quote = $db->quote;
 		if ($words !== false) {
 			$words = array_filter ( $words, 'strlen' );
-			$condition = $search;
+			$condition = "(" . SqlUtils::getSearchWhere ( $like, $fields, '?', '', '' ) . ")";
 			foreach ( $words as $word ) {
 				$word = trim ( $word );
-				$condition = UString::replaceFirstOccurrence ( $word, "(" . SqlUtils::getSearchWhere ( $fields, $word ) . ")", $condition );
+				$params = [ ...$params,...(\array_fill ( 0, $count, "%{$word}%" )) ];
 			}
 
 			$condition = str_replace ( "||", " OR ", $condition );
@@ -42,7 +46,7 @@ class CRUDHelper {
 		} else {
 			$condition = $initialCondition;
 		}
-		return DAO::getAll ( $model, $condition );
+		return DAO::getAll ( $model, $condition, false, $params );
 	}
 
 	public static function update($instance, $values, $setValues = true, $updateMany = true) {

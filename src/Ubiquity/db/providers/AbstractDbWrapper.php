@@ -96,6 +96,10 @@ abstract class AbstractDbWrapper {
 
 	abstract public function groupConcat(string $fields, string $separator): string;
 
+	public function likeOperator() {
+		return ' LIKE ';
+	}
+
 	public function close() {
 		$this->dbInstance = null;
 	}

@@ -210,4 +210,8 @@ class PDOWrapper extends AbstractDbWrapper {
 	public function groupConcat(string $fields, string $separator): string {
 		return $this->getDriverMetaDatas ()->groupConcat ( $fields, $separator );
 	}
+
+	public function likeOperator() {
+		return $this->getDriverMetaDatas ()->likeOperator ();
+	}
 }
