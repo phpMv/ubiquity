@@ -10,7 +10,7 @@ use Ubiquity\exceptions\DBException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  * @property \PDO $dbInstance
  *
  */
@@ -211,7 +211,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $this->getDriverMetaDatas ()->groupConcat ( $fields, $separator );
 	}
 
-	public function likeOperator() {
-		return $this->getDriverMetaDatas ()->likeOperator ();
+	public function toStringOperator() {
+		return $this->getDriverMetaDatas ()->toStringOperator ();
 	}
 }

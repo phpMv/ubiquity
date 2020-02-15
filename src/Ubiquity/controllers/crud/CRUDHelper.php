@@ -9,6 +9,14 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\database\DbCache;
 use Ubiquity\db\SqlUtils;
 
+/**
+ * Ubiquity\controllers\crud$CRUDHelper
+ * This class is part of Ubiquity
+ *
+ * @author jc
+ * @version 1.0.1
+ *
+ */
 class CRUDHelper {
 
 	public static function getIdentifierFunction($model) {
@@ -30,7 +38,7 @@ class CRUDHelper {
 		$params = [ ];
 		$count = \count ( $fields );
 		$db = DAO::getDb ( $model );
-		$like = $db->getSpecificSQL ( 'like' );
+		$like = $db->getSpecificSQL ( 'tostring' ) . ' LIKE ';
 		SqlUtils::$quote = $db->quote;
 		if ($words !== false) {
 			$words = array_filter ( $words, 'strlen' );

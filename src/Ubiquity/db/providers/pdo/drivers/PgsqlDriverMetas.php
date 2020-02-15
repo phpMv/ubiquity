@@ -104,7 +104,7 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 		return "array_to_string(array_agg({$fields}), '{$separator}')";
 	}
 
-	public function likeOperator() {
-		return '::TEXT LIKE ';
+	public function toStringOperator() {
+		return '::TEXT ';
 	}
 }

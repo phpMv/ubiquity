@@ -7,7 +7,7 @@ namespace Ubiquity\db\providers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 abstract class AbstractDbWrapper {
@@ -96,8 +96,8 @@ abstract class AbstractDbWrapper {
 
 	abstract public function groupConcat(string $fields, string $separator): string;
 
-	public function likeOperator() {
-		return ' LIKE ';
+	public function toStringOperator() {
+		return '';
 	}
 
 	public function close() {

@@ -3,13 +3,12 @@
 namespace Ubiquity\orm\parser;
 
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\db\SqlUtils;
 
 /**
  * ManyToManyParser
  *
  * @author jc
- * @version 1.1.2
+ * @version 1.1.3
  */
 class ManyToManyParser {
 	private $table;
@@ -187,7 +186,7 @@ class ManyToManyParser {
 	}
 
 	public function getSQL($alias = "", $aliases = null) {
-		$quote = SqlUtils::$quote;
+		$quote = $this->db->quote;
 		if ($alias !== "") {
 			$targetEntityTable = $alias;
 			$alias = $quote . $alias . $quote;
@@ -210,17 +209,18 @@ class ManyToManyParser {
 	}
 
 	public function getParserWhereMask($mask = "'{value}'") {
-		$quote = SqlUtils::$quote;
-		return $quote . $this->getTargetEntityTable () . "{$quote}.{$quote}" . $this->getPk () . "{$quote}=" . $mask;
+		$quote = $this->db->quote;
+		$toString = $this->db->getSpecificSQL ( 'tostring' );
+		return $quote . $this->getTargetEntityTable () . "{$quote}.{$quote}" . $this->getPk () . "{$quote}{$toString}=" . $mask;
 	}
 
 	private function getParserConcatWhereMask($mask = "'{value}'") {
-		$quote = SqlUtils::$quote;
+		$quote = $this->db->quote;
 		return $quote . $this->myFkField . "{$quote}=" . $mask;
 	}
 
 	private function getParserConcatWhereInMask($mask = "'{values}'") {
-		$quote = SqlUtils::$quote;
+		$quote = $this->db->quote;
 		return " INNER JOIN (" . $mask . ") as _tmp ON {$quote}" . $this->myFkField . "{$quote}=_tmp._id";
 	}
 

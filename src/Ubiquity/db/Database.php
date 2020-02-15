@@ -18,7 +18,7 @@ use Ubiquity\db\traits\DatabaseMetadatas;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.1
+ * @version 1.1.2
  *
  */
 class Database {
@@ -294,8 +294,8 @@ class Database {
 		switch ($key) {
 			case 'groupconcat' :
 				return $this->wrapperObject->groupConcat ( $params [0], $params [1] ?? ',');
-			case 'like' :
-				return $this->wrapperObject->likeOperator ();
+			case 'tostring' :
+				return $this->wrapperObject->toStringOperator ();
 		}
 	}
 }
