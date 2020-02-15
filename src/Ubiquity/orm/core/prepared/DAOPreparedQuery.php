@@ -183,5 +183,24 @@ abstract class DAOPreparedQuery {
 	}
 
 	abstract public function execute($params = [ ], $useCache = false);
+
+	/**
+	 * Adds a new expression and associates it with a new member of the class added at runtime.
+	 *
+	 * @param string $sqlExpression The SQL expression (part of the SQL SELECT)
+	 * @param string $memberName The new associated member name
+	 */
+	public function addMember(string $sqlExpression, string $memberName): void {
+		// TODO
+	}
+
+	/**
+	 * Adds new expressions and their associated members added at runtime.
+	 *
+	 * @param array $expressionsNames An associative array of [memberName=>sqlExpression]
+	 */
+	public function addMembers(array $expressionsNames): void {
+		// TODO
+	}
 }
 
