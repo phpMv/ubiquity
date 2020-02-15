@@ -195,9 +195,9 @@ abstract class DAOPreparedQuery {
 	}
 
 	/**
-	 * Adds new expressions and their associated members added at runtime.
+	 * Adds new expressions and their associated members at runtime.
 	 *
-	 * @param array $expressionsNames An associative array of [memberName=>sqlExpression]
+	 * @param array $expressionsNames An associative array of [memberName=>sqlExpression,...]
 	 */
 	public function addMembers(array $expressionsNames): void {
 		// TODO
