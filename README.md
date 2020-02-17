@@ -59,7 +59,7 @@ Ubiquity is very fast and performs well.
 ### In the PHP world
 The various results of the [Techempower benchmarks](https://www.techempower.com/benchmarks) show this conclusively.
 
-#### TechEmpower Fortune test (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=79d56671-150b-4653-9513-337cade8b1e1&hw=ph&test=fortune&l=zik073-1r&c=4&o=c))
+#### TechEmpower Fortune test(*) (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=79d56671-150b-4653-9513-337cade8b1e1&hw=ph&test=fortune&l=zik073-1r&c=4&o=c))
 ![TechEmpower benchmarks Fortune](https://static.kobject.net/ubiquity/images/techempower-1.png "PHP Frameworks")
 
 These excellent results have also been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
@@ -67,9 +67,10 @@ These excellent results have also been confirmed by an independent benchmark sit
 ### In the world of web frameworks
 **Ubiquity** is optimized for use with asynchronous platforms (**Workerman** and **Swoole**). It takes advantage of the recent PHP evolutions (opCache management and preloading). In this context, it performs against the fastest Frameworks written in C, C++, Rust or java:
 
-#### TechEmpower 20 updates test (see [All frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=79d56671-150b-4653-9513-337cade8b1e1&hw=ph&test=update&c=4&o=c))
+#### TechEmpower 20 updates test (*) (see [All frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=79d56671-150b-4653-9513-337cade8b1e1&hw=ph&test=update&c=4&o=c))
 ![TechEmpower benchmarks Update](https://static.kobject.net/ubiquity/images/techempower-2.png "All Frameworks")
 
+(*) Only tests with Framework and ORM are considered.
 # About design choices
 Ubiquity was created in April 2017.
 
