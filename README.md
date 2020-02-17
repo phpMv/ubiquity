@@ -52,7 +52,7 @@ In the meantime, you can consult:
 
 For further assistance please feel free to : 
  - ask your questions directly using [gitter](https://gitter.im/ubiquity-framework/community)
- - create an [issue](https://github.com/phpMv/ubiquity/issues/new) if you notice a bug or suspicious behavior
+ - create an [issue](https://github.com/phpMv/ubiquity/issues/new?assignees=jcheron&labels=&template=bug_report.md&title=%5Bpart%5D+Element+should+do+X) if you notice a bug or suspicious behavior
 
 # Performances
 Ubiquity is very fast and performs well.
