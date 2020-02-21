@@ -12,7 +12,7 @@ use Ubiquity\orm\DAO;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class DAOPreparedQueryAll extends DAOPreparedQuery {
@@ -34,7 +34,7 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
 		foreach ( $query as $row ) {
-			$object = DAO::_loadObjectFromRow ( $row, $className, $invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->accessors, $this->transformers );
+			$object = DAO::_loadObjectFromRow ( $this->db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->accessors, $this->transformers );
 			$key = OrmUtils::getPropKeyValues ( $object, $this->propsKeys );
 			$objects [$key] = $object;
 		}

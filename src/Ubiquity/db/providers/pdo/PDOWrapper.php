@@ -10,7 +10,7 @@ use Ubiquity\exceptions\DBException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.3
  * @property \PDO $dbInstance
  *
  */
@@ -53,8 +53,8 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $result;
 	}
 
-	public function lastInsertId() {
-		return $this->dbInstance->lastInsertId ();
+	public function lastInsertId($name = null) {
+		return $this->dbInstance->lastInsertId ( $name );
 	}
 
 	public function fetchAll($statement, array $values = null, $mode = null) {
@@ -201,5 +201,17 @@ class PDOWrapper extends AbstractDbWrapper {
 
 	public function quoteValue($value, $type = 2) {
 		return $this->dbInstance->quote ( $value, $type );
+	}
+
+	public function getRowNum(string $tableName, string $pkName, string $condition): int {
+		return $this->getDriverMetaDatas ()->getRowNum ( $tableName, $pkName, $condition );
+	}
+
+	public function groupConcat(string $fields, string $separator): string {
+		return $this->getDriverMetaDatas ()->groupConcat ( $fields, $separator );
+	}
+
+	public function toStringOperator() {
+		return $this->getDriverMetaDatas ()->toStringOperator ();
 	}
 }

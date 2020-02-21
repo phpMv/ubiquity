@@ -6,8 +6,8 @@ namespace Ubiquity\db\providers\pdo\drivers;
  * Ubiquity\db\providers\pdo\drivers$PgsqlDriverMetas
  * This class is part of Ubiquity
  *
- * @author
- * @version 1.0.0
+ * @author Ulaş SAYGIN
+ * @version 1.0.1
  *
  */
 class PgsqlDriverMetas extends AbstractDriverMetaDatas {
@@ -31,13 +31,13 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 												AND k2.constraint_name = fk.unique_constraint_name
 												AND k2.ordinal_position = k1.position_in_unique_constraint
 												WHERE k1.table_schema = \'public\'
-												and k2.column_name=\'{$pkName}\'
-												AND k1.table_name   = \'{$tableName}\';' );
-		return $recordset->fetchAll ( \PDO::FETCH_ASSOC );		
+												and k2.column_name=\'' . $pkName . '\'
+												AND k2.table_name   = \'' . $tableName . '\';' );
+		return $recordset->fetchAll ( \PDO::FETCH_ASSOC );
 	}
 
 	public function getTablesName(): array {
-		$query = $this->dbInstance->query ( 'SELECT tablename as schemaname FROM pg_catalog.pg_tables WHERE schemaname != \'pg_catalog\' AND schemaname != \'information_schema\';'  );
+		$query = $this->dbInstance->query ( 'SELECT tablename as schemaname FROM pg_catalog.pg_tables WHERE schemaname != \'pg_catalog\' AND schemaname != \'information_schema\';' );
 		return $query->fetchAll ( \PDO::FETCH_COLUMN );
 	}
 
@@ -53,44 +53,58 @@ class PgsqlDriverMetas extends AbstractDriverMetaDatas {
 
 	public function getFieldsInfos($tableName): array {
 		$fieldsInfos = array ();
-		$recordset = $this->dbInstance->query ( 
-					"SELECT  
-			f.attname AS \"Field\",  
+		$recordset = $this->dbInstance->query ( "SELECT
+			f.attname AS \"Field\",
 			pg_catalog.format_type(f.atttypid,f.atttypmod) AS \"Type\",
-			CASE  
-			    WHEN f.attnotnull=true THEN 'YES' 
-			    WHEN f.attnotnull=false THEN 'NO' 
+			CASE
+			    WHEN f.attnotnull=true THEN 'YES'
+			    WHEN f.attnotnull=false THEN 'NO'
 			    ELSE ''
 			END AS \"Null\",
-			CASE  
-			    WHEN p.contype = 'u' THEN 'MUL' 
-			    WHEN p.contype = 'p' THEN 'PRI' 
+			CASE
+			    WHEN p.contype = 'u' THEN 'MUL'
+			    WHEN p.contype = 'p' THEN 'PRI'
 			    ELSE ''
 			END AS \"Key\",
 			CASE
 			    WHEN f.atthasdef = 't' THEN pg_get_expr(adbin, adrelid)
 			END AS \"Default\"  ,
-			CASE WHEN pg_get_expr(adbin, adrelid) LIKE 'nextval(%' THEN 'auto_increment' ELSE '' END AS \"Extra\" 
-			FROM pg_attribute f  
-			JOIN pg_class c ON c.oid = f.attrelid  
-			JOIN pg_type t ON t.oid = f.atttypid  
-			LEFT JOIN pg_attrdef d ON d.adrelid = c.oid AND d.adnum = f.attnum  
-			LEFT JOIN pg_namespace n ON n.oid = c.relnamespace  
-			LEFT JOIN pg_constraint p ON p.conrelid = c.oid AND f.attnum = ANY (p.conkey)  
+			CASE WHEN pg_get_expr(adbin, adrelid) LIKE 'nextval(%' THEN 'auto_increment' ELSE '' END AS \"Extra\"
+			FROM pg_attribute f
+			JOIN pg_class c ON c.oid = f.attrelid
+			JOIN pg_type t ON t.oid = f.atttypid
+			LEFT JOIN pg_attrdef d ON d.adrelid = c.oid AND d.adnum = f.attnum
+			LEFT JOIN pg_namespace n ON n.oid = c.relnamespace
+			LEFT JOIN pg_constraint p ON p.conrelid = c.oid AND f.attnum = ANY (p.conkey)
 			LEFT JOIN pg_class AS g ON p.confrelid = g.oid
-			LEFT JOIN pg_index AS ix ON f.attnum = ANY(ix.indkey) and c.oid = f.attrelid and c.oid = ix.indrelid 
-			LEFT JOIN pg_class AS i ON ix.indexrelid = i.oid 
+			LEFT JOIN pg_index AS ix ON f.attnum = ANY(ix.indkey) and c.oid = f.attrelid and c.oid = ix.indrelid
+			LEFT JOIN pg_class AS i ON ix.indexrelid = i.oid
 
-			WHERE c.relkind = 'r'::char 
-			AND n.nspname = 'public'  
+			WHERE c.relkind = 'r'::char
+			AND n.nspname = 'public'
 			and c.relname='{$tableName}'
 			AND f.attnum > 0
-			ORDER BY f.attnum;");		
+			ORDER BY f.attnum;" );
 		$fields = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
 		foreach ( $fields as $field ) {
 			$fieldsInfos [$field ['Field']] = [ "Type" => $field ['Type'],"Nullable" => $field ["Null"] ];
 		}
 		return $fieldsInfos;
 	}
-}
 
+	public function getRowNum(string $tableName, string $pkName, string $condition): int {
+		$query = $this->dbInstance->query ( "SELECT num FROM (SELECT *,row_number() OVER (ORDER BY {$pkName}) AS num FROM \"{$tableName}\") x where " . $condition );
+		if ($query) {
+			return $query->fetchColumn ( 0 );
+		}
+		return 0;
+	}
+
+	public function groupConcat(string $fields, string $separator): string {
+		return "array_to_string(array_agg({$fields}), '{$separator}')";
+	}
+
+	public function toStringOperator() {
+		return '::TEXT ';
+	}
+}

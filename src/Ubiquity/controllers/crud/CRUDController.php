@@ -43,7 +43,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		} ) ] );
 	}
 
-	public function updateMember($member, $callback = false) {
+	public function _updateMember($member, $callback = false) {
 		$instance = $_SESSION ["instance"] ?? null;
 		if (isset ( $instance )) {
 			$updated = CRUDHelper::update ( $instance, $_POST );
@@ -214,7 +214,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 *
 	 * @return object The updated instance
 	 */
-	public function update() {
+	public function _updateModel() {
 		$message = new CRUDMessage ( "Modifications were successfully saved", "Updating" );
 		$instance = $_SESSION ["instance"] ?? null;
 		if (isset ( $instance )) {

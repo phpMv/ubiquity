@@ -7,7 +7,7 @@ namespace Ubiquity\db\providers\pdo\drivers;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class AbstractDriverMetaDatas {
@@ -49,5 +49,27 @@ abstract class AbstractDriverMetaDatas {
 	 * @return array
 	 */
 	abstract public function getFieldsInfos(string $tableName): array;
+
+	/**
+	 * Returns the line number of a data record.
+	 *
+	 * @param string $tableName
+	 * @param string $pkName
+	 * @param string $condition
+	 * @return int
+	 */
+	abstract public function getRowNum(string $tableName, string $pkName, string $condition): int;
+
+	/**
+	 * Returns the SQL callback for fields concatenation
+	 *
+	 * @param string $fields
+	 * @return string
+	 */
+	abstract public function groupConcat(string $fields, string $separator): string;
+
+	public function toStringOperator() {
+		return '';
+	}
 }
 

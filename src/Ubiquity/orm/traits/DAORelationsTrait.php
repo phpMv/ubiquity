@@ -1,20 +1,21 @@
 <?php
 
+/**
+ * Ubiquity\orm\traits
+ * This class is part of Ubiquity
+ * @author jc
+ * @version 1.0.1
+ *
+ */
 namespace Ubiquity\orm\traits;
 
 use Ubiquity\db\Database;
-use Ubiquity\db\SqlUtils;
 use Ubiquity\log\Logger;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\ManyToManyParser;
 use Ubiquity\orm\parser\Reflexion;
 
-/**
- *
- * @author jc
- * @property \Ubiquity\db\Database $db
- */
 trait DAORelationsTrait {
 
 	abstract protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL);
@@ -205,14 +206,17 @@ trait DAORelationsTrait {
 	public static function getManyToMany($instance, $member, $included = false, $array = null, $useCache = NULL): array {
 		$ret = [ ];
 		$class = self::getClass_ ( $instance );
-		$parser = new ManyToManyParser ( $class, $member );
+		$db = self::getDb ( $class );
+		$parser = new ManyToManyParser ( $db, $class, $member );
 		if ($parser->init ()) {
 			if (\is_null ( $array )) {
-				$pk = self::getFirstKeyValue_ ( $instance );
-				$quote = SqlUtils::$quote;
-				$condition = ' INNER JOIN ' . $quote . $parser->getJoinTable () . $quote . ' on ' . $quote . $parser->getJoinTable () . $quote . '.' . $quote . $parser->getFkField () . $quote . '=' . $quote . $parser->getTargetEntityTable () . $quote . '.' . $quote . $parser->getPk () . $quote . ' WHERE ' . $quote . $parser->getJoinTable () . $quote . '.' . $quote . $parser->getMyFkField () . $quote . '= ?';
 				$targetEntityClass = $parser->getTargetEntityClass ();
-				$ret = self::_getAll ( self::getDb ( $targetEntityClass ), $targetEntityClass, ConditionParser::simple ( $condition, $pk ), $included, $useCache );
+				$pk = self::getFirstKeyValue_ ( $instance );
+				if ($pk != null) {
+					$quote = $db->quote;
+					$condition = ' INNER JOIN ' . $quote . $parser->getJoinTable () . $quote . ' on ' . $quote . $parser->getJoinTable () . $quote . '.' . $quote . $parser->getFkField () . $quote . '=' . $quote . $parser->getTargetEntityTable () . $quote . '.' . $quote . $parser->getPk () . $quote . ' WHERE ' . $quote . $parser->getJoinTable () . $quote . '.' . $quote . $parser->getMyFkField () . $quote . '= ?';
+					$ret = self::_getAll ( $db, $targetEntityClass, ConditionParser::simple ( $condition, $pk ), $included, $useCache );
+				}
 			} else {
 				$ret = self::getManyToManyFromArray ( $instance, $array, $class, $parser );
 			}

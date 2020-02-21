@@ -17,7 +17,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.2
+ * @version 1.1.4
  * @property \Ubiquity\db\Database $db
  *
  */
@@ -130,6 +130,8 @@ trait DAOUpdatesTrait {
 		$tableName = OrmUtils::getTableName ( $className );
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
+		$pk = OrmUtils::getFirstKey ( $className );
+		unset ( $keyAndValues [$pk] );
 		$sql = "INSERT INTO {$quote}{$tableName}{$quote} (" . SqlUtils::getInsertFields ( $keyAndValues ) . ') VALUES(' . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ')';
 		if (Logger::isActive ()) {
 			Logger::info ( 'DAOUpdates', $sql, 'insert' );
@@ -140,9 +142,8 @@ trait DAOUpdatesTrait {
 		try {
 			$result = $statement->execute ( $keyAndValues );
 			if ($result) {
-				$pk = OrmUtils::getFirstKey ( $className );
 				$accesseurId = 'set' . \ucfirst ( $pk );
-				$lastId = $db->lastInserId ();
+				$lastId = $db->lastInserId ( "{$tableName}_{$pk}_seq" );
 				if ($lastId != 0) {
 					$instance->$accesseurId ( $lastId );
 					$instance->_rest = $keyAndValues;
@@ -185,10 +186,9 @@ trait DAOUpdatesTrait {
 	 * @param String $member
 	 */
 	public static function insertOrUpdateManyToMany($instance, $member) {
-		$parser = new ManyToManyParser ( $instance, $member );
+		$db = self::getDb ( \get_class ( $instance ) );
+		$parser = new ManyToManyParser ( $db, $instance, $member );
 		if ($parser->init ()) {
-			$className = $parser->getTargetEntityClass ();
-			$db = self::getDb ( $className );
 			$quote = $db->quote;
 			$myField = $parser->getMyFkField ();
 			$field = $parser->getFkField ();
