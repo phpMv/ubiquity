@@ -187,7 +187,7 @@ trait CRUDControllerUtilitiesTrait {
 		return new ModelViewer ( $this );
 	}
 
-	private function _getModelViewer(): ModelViewer {
+	public function _getModelViewer(): ModelViewer {
 		return $this->getSingleton ( $this->modelViewer, "getModelViewer" );
 	}
 
