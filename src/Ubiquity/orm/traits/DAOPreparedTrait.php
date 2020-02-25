@@ -44,7 +44,7 @@ trait DAOPreparedTrait {
 	 * @return DAOPreparedQuery
 	 */
 	public function getPrepared(string $name): DAOPreparedQuery {
-		// TODO
+		return self::$preparedDAOQueries [$name];
 	}
 }
 
