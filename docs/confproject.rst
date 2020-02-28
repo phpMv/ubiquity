@@ -81,6 +81,8 @@ The framework ships with an **.htaccess** file that is used to allow URLs withou
    	RewriteRule ^(.*)$ index.php?c=$1 [L,QSA]
    </IfModule>
 
+See :doc:`Apache configuration</config/server>` for more.
+
 Nginx
 ^^^^^
 On Nginx, the following directive in your site configuration will allow "pretty" URLs:
@@ -90,6 +92,8 @@ On Nginx, the following directive in your site configuration will allow "pretty"
    location /{
          rewrite ^/(.*)$ /index.php?c=$1 last;
    }
+
+See :doc:`NginX configuration</config/server>` for more.
 
 Laravel Valet Driver
 ^^^^^
