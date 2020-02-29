@@ -112,10 +112,10 @@ class Router {
 	 * @return boolean|mixed[]|string
 	 */
 	public static function getRoute($path, $cachedResponse = true, $debug = false) {
-	    $index = $path;
-	    if (isset(self::$routesIndex[$index])) {
-	        return self::$routesIndex[$index];
-        }
+		$index = $path;
+		if (isset(self::$routesIndex[$index])) {
+			return self::$routesIndex[$index];
+		}
 
 		$path = self::slashPath ( $path );
 		if (isset ( self::$routes [$path] ) && ! $debug) { // No direct access to route in debug mode (for maintenance mode activation)
