@@ -21,6 +21,7 @@ use Ubiquity\utils\http\URequest;
 class Router {
 	use RouterModifierTrait,RouterAdminTrait,RouterTestTrait;
 	protected static $routes;
+	protected static $routesIndex;
 
 	private static function cleanParam(string $param): string {
 		if (\substr ( $param, - 1 ) === '/')
@@ -111,6 +112,11 @@ class Router {
 	 * @return boolean|mixed[]|string
 	 */
 	public static function getRoute($path, $cachedResponse = true, $debug = false) {
+	    $index = $path;
+	    if (isset(self::$routesIndex[$index])) {
+	        return self::$routesIndex[$index];
+        }
+
 		$path = self::slashPath ( $path );
 		if (isset ( self::$routes [$path] ) && ! $debug) { // No direct access to route in debug mode (for maintenance mode activation)
 			return self::getRoute_ ( self::$routes [$path], $path, [ $path ], $cachedResponse );
@@ -118,12 +124,12 @@ class Router {
 		foreach ( self::$routes as $routePath => $routeDetails ) {
 			if (\preg_match ( "@^{$routePath}\$@s", $path, $matches )) {
 				if (($r = self::getRoute_ ( $routeDetails, $routePath, $matches, $cachedResponse )) !== false) {
-					return $r;
+					return self::$routesIndex[$index] = $r;
 				}
 			}
 		}
 		Logger::warn ( 'Router', "No route found for {$path}", 'getRoute' );
-		return false;
+		return self::$routesIndex[$index] = false;
 	}
 
 	/**
