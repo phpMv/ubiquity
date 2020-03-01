@@ -151,12 +151,6 @@ nginX
            # try to serve file directly, fallback to index.php
            rewrite ^/(.*)$ /index.php?c=$1 last;
        }
-       
-       # optionally disable falling back to PHP script for the asset directories;
-       # nginx will return a 404 error when files are not found instead of passing the request
-       # location /bundles {
-       #     try_files $uri =404;
-       # }
 
        location = /index.php{
            fastcgi_pass fastcgi_backend;
@@ -222,3 +216,30 @@ Workerman
            "reuseport" =>true
        ]
    );
+
+RoadRunner
+----------
+
+**RoadRunner** configuration:
+
+.. code-block:: yml
+   :caption: .ubiquity/.rr.yml
+   
+   http:
+     address:         ":8090"
+     workers.command: "php-cgi ./.ubiquity/rr-worker.php"
+     workers:
+       pool:
+         # Set numWorkers to 1 while debugging
+         numWorkers: 10
+         maxJobs:    1000
+   
+   # static file serving. remove this section to disable static file serving.
+   static:
+     # root directory for static file (http would not serve .php and .htaccess files).
+     dir:   "."
+   
+     # list of extensions for forbid for serving.
+     forbid: [".php", ".htaccess", ".yml"]
+   
+     always: [".ico", ".html", ".css", ".js"] 
