@@ -35,7 +35,7 @@ class AdminCest extends BaseAcceptance {
 		$this->gotoAdminModule ( "Admin/Models", $I );
 		$I->click ( "a[data-model='models.Connection']" );
 		$I->waitForElementVisible ( "#btAddNew", self::TIMEOUT );
-		$I->canSeeInCurrentUrl ( "/Admin/showModel/models.Connection" );
+		$I->canSeeInCurrentUrl ( "/Admin/_showModel/models.Connection" );
 		$I->see ( 'organizations/display/4', "#lv td" );
 		$I->click ( "button._edit[data-ajax='8']" );
 		$I->waitForElementVisible ( "#modal-frmEdit-models-Connection", self::TIMEOUT );
