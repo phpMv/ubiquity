@@ -16,7 +16,7 @@ use Ubiquity\db\Database;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.1
+ * @version 1.1.2
  *
  * @property array $db
  * @property boolean $useTransformers
@@ -29,7 +29,7 @@ trait DAOCoreTrait {
 
 	abstract public static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache): void;
 
-	abstract protected static function prepareManyToMany(&$ret, $instance, $member, $annot = null);
+	abstract protected static function prepareManyToMany($db, &$ret, $instance, $member, $annot = null);
 
 	abstract protected static function prepareManyToOne(&$ret, $instance, $value, $fkField, $annotationArray);
 
@@ -90,7 +90,7 @@ trait DAOCoreTrait {
 			$manyToOneQueries = [ ];
 			$manyToManyParsers = [ ];
 			$accessors = $metaDatas ['#accessors'];
-			$object = self::_loadObjectFromRow ( \current ( $query ), $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
+			$object = self::_loadObjectFromRow ( $db, \current ( $query ), $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
 			if ($hasIncluded) {
 				self::_affectsRelationObjects ( $className, OrmUtils::getFirstPropKey ( $className ), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $included, $useCache );
 			}
@@ -128,7 +128,7 @@ trait DAOCoreTrait {
 		$propsKeys = OrmUtils::getPropKeys ( $className );
 		$accessors = $metaDatas ['#accessors'];
 		foreach ( $query as $row ) {
-			$object = self::_loadObjectFromRow ( $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
+			$object = self::_loadObjectFromRow ( $db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
 			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
 			$objects [$key] = $object;
 		}
@@ -145,6 +145,7 @@ trait DAOCoreTrait {
 
 	/**
 	 *
+	 * @param Database $db
 	 * @param array $row
 	 * @param string $className
 	 * @param array $invertedJoinColumns
@@ -152,7 +153,7 @@ trait DAOCoreTrait {
 	 * @param array $accessors
 	 * @return object
 	 */
-	public static function _loadObjectFromRow($row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers, &$accessors, &$transformers) {
+	public static function _loadObjectFromRow(Database $db, $row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers, &$accessors, &$transformers) {
 		$o = new $className ();
 		if (self::$useTransformers) {
 			foreach ( $transformers as $field => $transformer ) {
@@ -179,7 +180,7 @@ trait DAOCoreTrait {
 		}
 		if (isset ( $manyToManyFields )) {
 			foreach ( $manyToManyFields as $k => $annot ) {
-				self::prepareManyToMany ( $manyToManyParsers, $o, $k, $annot );
+				self::prepareManyToMany ( $db, $manyToManyParsers, $o, $k, $annot );
 			}
 		}
 		return $o;

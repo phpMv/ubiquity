@@ -17,7 +17,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.1
+ * @version 1.1.4
  * @property \Ubiquity\db\Database $db
  *
  */
@@ -60,18 +60,19 @@ trait DAOUpdatesTrait {
 
 	/**
 	 *
+	 * @param \Ubiquity\db\Database $db
 	 * @param string $className
 	 * @param string $tableName
 	 * @param string $where
+	 * @param array $params
 	 * @return boolean|int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
-	private static function remove_($className, $tableName, $where) {
-		$db = self::getDb ( $className );
-		$sql = 'DELETE FROM ' . $db->quote . $tableName . $db->quote . ' ' . SqlUtils::checkWhere ( $where );
+	private static function remove_($db, $tableName, $where, $params) {
+		$sql = 'DELETE FROM ' . $tableName . ' ' . SqlUtils::checkWhere ( $where );
 		Logger::info ( 'DAOUpdates', $sql, 'delete' );
 		$statement = $db->prepareStatement ( $sql );
 		try {
-			if ($statement->execute ()) {
+			if ($statement->execute ( $params )) {
 				return $statement->rowCount ();
 			}
 		} catch ( \PDOException $e ) {
@@ -85,11 +86,14 @@ trait DAOUpdatesTrait {
 	 *
 	 * @param string $modelName
 	 * @param string $where
+	 * @param array $params
 	 * @return int|boolean
 	 */
-	public static function deleteAll($modelName, $where) {
+	public static function deleteAll($modelName, $where, $params = [ ]) {
+		$db = self::getDb ( $modelName );
+		$quote = $db->quote;
 		$tableName = OrmUtils::getTableName ( $modelName );
-		return self::remove_ ( $modelName, $tableName, $where );
+		return self::remove_ ( $db, $quote . $tableName . $quote, $where, $params );
 	}
 
 	/**
@@ -101,12 +105,15 @@ trait DAOUpdatesTrait {
 	 */
 	public static function delete($modelName, $ids) {
 		$tableName = OrmUtils::getTableName ( $modelName );
+		$db = self::getDb ( $modelName );
 		$pk = OrmUtils::getFirstKey ( $modelName );
 		if (! \is_array ( $ids )) {
 			$ids = [ $ids ];
 		}
-		$where = SqlUtils::getMultiWhere ( $ids, $pk );
-		return self::remove_ ( $modelName, $tableName, $where );
+		$quote = $db->quote;
+		$count = \count ( $ids );
+		$r = $quote . $pk . $quote . "= ?";
+		return self::remove_ ( $db, $quote . $tableName . $quote, \str_repeat ( "$r OR", $count - 1 ) . $r, $ids );
 	}
 
 	/**
@@ -123,6 +130,8 @@ trait DAOUpdatesTrait {
 		$tableName = OrmUtils::getTableName ( $className );
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
+		$pk = OrmUtils::getFirstKey ( $className );
+		unset ( $keyAndValues [$pk] );
 		$sql = "INSERT INTO {$quote}{$tableName}{$quote} (" . SqlUtils::getInsertFields ( $keyAndValues ) . ') VALUES(' . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ')';
 		if (Logger::isActive ()) {
 			Logger::info ( 'DAOUpdates', $sql, 'insert' );
@@ -133,9 +142,8 @@ trait DAOUpdatesTrait {
 		try {
 			$result = $statement->execute ( $keyAndValues );
 			if ($result) {
-				$pk = OrmUtils::getFirstKey ( $className );
 				$accesseurId = 'set' . \ucfirst ( $pk );
-				$lastId = $db->lastInserId ();
+				$lastId = $db->lastInserId ( "{$tableName}_{$pk}_seq" );
 				if ($lastId != 0) {
 					$instance->$accesseurId ( $lastId );
 					$instance->_rest = $keyAndValues;
@@ -178,10 +186,9 @@ trait DAOUpdatesTrait {
 	 * @param String $member
 	 */
 	public static function insertOrUpdateManyToMany($instance, $member) {
-		$parser = new ManyToManyParser ( $instance, $member );
+		$db = self::getDb ( \get_class ( $instance ) );
+		$parser = new ManyToManyParser ( $db, $instance, $member );
 		if ($parser->init ()) {
-			$className = $parser->getTargetEntityClass ();
-			$db = self::getDb ( $className );
 			$quote = $db->quote;
 			$myField = $parser->getMyFkField ();
 			$field = $parser->getFkField ();

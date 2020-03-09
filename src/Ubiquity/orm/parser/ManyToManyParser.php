@@ -3,13 +3,12 @@
 namespace Ubiquity\orm\parser;
 
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\db\SqlUtils;
 
 /**
  * ManyToManyParser
  *
  * @author jc
- * @version 1.1.1
+ * @version 1.1.3
  */
 class ManyToManyParser {
 	private $table;
@@ -26,10 +25,17 @@ class ManyToManyParser {
 	private $instance;
 	private $whereValues;
 
-	public function __construct($instance, $member = null) {
+	/**
+	 *
+	 * @var \Ubiquity\db\Database
+	 */
+	private $db;
+
+	public function __construct($db, $instance, $member = null) {
 		$this->instance = $instance;
 		$this->member = $member;
 		$this->whereValues = [ ];
+		$this->db = $db;
 	}
 
 	public function init($annot = false) {
@@ -180,7 +186,7 @@ class ManyToManyParser {
 	}
 
 	public function getSQL($alias = "", $aliases = null) {
-		$quote = SqlUtils::$quote;
+		$quote = $this->db->quote;
 		if ($alias !== "") {
 			$targetEntityTable = $alias;
 			$alias = $quote . $alias . $quote;
@@ -197,22 +203,24 @@ class ManyToManyParser {
 	}
 
 	public function getConcatSQL() {
-		$quote = SqlUtils::$quote;
-		return "SELECT {$quote}" . $this->myFkField . "{$quote} as '_field' ,GROUP_CONCAT({$quote}" . $this->fkField . "{$quote} SEPARATOR ',') as '_concat' FROM {$quote}" . $this->joinTable . "{$quote} {condition} GROUP BY 1";
+		$quote = $this->db->quote;
+		$concat = $this->db->getSpecificSQL ( 'groupconcat', [ $quote . $this->fkField . $quote,',' ] );
+		return "SELECT {$quote}" . $this->myFkField . "{$quote} as _field ,{$concat} as _concat FROM {$quote}" . $this->joinTable . "{$quote} {condition} GROUP BY 1";
 	}
 
 	public function getParserWhereMask($mask = "'{value}'") {
-		$quote = SqlUtils::$quote;
-		return $quote . $this->getTargetEntityTable () . "{$quote}.{$quote}" . $this->getPk () . "{$quote}=" . $mask;
+		$quote = $this->db->quote;
+		$toString = $this->db->getSpecificSQL ( 'tostring' );
+		return $quote . $this->getTargetEntityTable () . "{$quote}.{$quote}" . $this->getPk () . "{$quote}{$toString}=" . $mask;
 	}
 
 	private function getParserConcatWhereMask($mask = "'{value}'") {
-		$quote = SqlUtils::$quote;
+		$quote = $this->db->quote;
 		return $quote . $this->myFkField . "{$quote}=" . $mask;
 	}
 
 	private function getParserConcatWhereInMask($mask = "'{values}'") {
-		$quote = SqlUtils::$quote;
+		$quote = $this->db->quote;
 		return " INNER JOIN (" . $mask . ") as _tmp ON {$quote}" . $this->myFkField . "{$quote}=_tmp._id";
 	}
 
