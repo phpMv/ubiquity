@@ -30,6 +30,7 @@ class BulkUpdates extends AbstractBulks {
 		switch ($this->dbType) {
 			case 'mysql' :
 			case 'pgsql' :
+			case 'tarantool' :
 				return $this->pgCreate ();
 			default :
 				throw new \RuntimeException ( $this->dbType . ' does not support bulk updates!' );

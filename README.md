@@ -52,32 +52,25 @@ In the meantime, you can consult:
 
 For further assistance please feel free to : 
  - ask your questions directly using [gitter](https://gitter.im/ubiquity-framework/community)
- - create an [issue](https://github.com/phpMv/ubiquity/issues/new) if you notice a bug or suspicious behavior
+ - create an [issue](https://github.com/phpMv/ubiquity/issues/new?assignees=jcheron&labels=&template=bug_report.md&title=%5Bpart%5D+Element+should+do+X) if you notice a bug or suspicious behavior
 
 # Performances
-Ubiquity executes its own benchmarks, especially for the ORM part:
+Ubiquity is very fast and performs well.
+### In the PHP world
+The various results of the [Techempower benchmarks](https://www.techempower.com/benchmarks) show this conclusively.
 
-This test involves loading from a Mysql database:
-- 2100 instances of the **Host** class
-  - each host is associated with 1 **user**, who can have configured some **virtualhosts**
-  - each host has multiple **servers**, of a certain **type**.
-  
-Approximately 6000 objects are loaded, in this intuitive line with Ubiquity:
-```php
-$hosts=DAO::getAll(Host::class,"",["user.virtualhosts","servers.stype"]);
-```
-In regards to this type of related object loading that can be very time consuming with an ORM, Ubiquity is twice as fast as Doctrine based solutions,and more efficient than the others tested.
+#### TechEmpower Fortune test(*) (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=79d56671-150b-4653-9513-337cade8b1e1&hw=ph&test=fortune&l=zik073-1r&c=4&o=c))
+![TechEmpower benchmarks Fortune](https://static.kobject.net/ubiquity/images/techempower-1.png "PHP Frameworks")
 
-For equity reasons, all ORMs are using an Eager loading approach.
+These excellent results have also been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
 
-Unlike the others,Ubiquity:
-- does not perform any SQL joins
-- executes only 90 queries, against 870 for Doctrine (3190 if the eager loading is not used).
+### In the world of web frameworks
+**Ubiquity** is optimized for use with asynchronous platforms (**Workerman** and **Swoole**). It takes advantage of the recent PHP evolutions (opCache management and preloading). In this context, it performs against the fastest Frameworks written in C, C++, Rust or java:
 
-![ORM benchmarks](https://static.kobject.net/ubiquity/images/orm-benchmarks-4.png "ORM benchmarks")
+#### TechEmpower 20 updates test (*) (see [All frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=79d56671-150b-4653-9513-337cade8b1e1&hw=ph&test=update&c=4&o=c))
+![TechEmpower benchmarks Update](https://static.kobject.net/ubiquity/images/techempower-2.png "All Frameworks")
 
-These excellent results have been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
-
+(*) Only tests with Framework and ORM are considered.
 # About design choices
 Ubiquity was created in April 2017.
 
