@@ -38,6 +38,7 @@ abstract class DAOPreparedQuery {
 	protected $firstPropKey;
 	protected $condition;
 	protected $preparedCondition;
+	protected $additionalMembers = [ ];
 	/**
 	 *
 	 * @var \Ubiquity\db\Database
@@ -177,11 +178,46 @@ abstract class DAOPreparedQuery {
 		}
 		$this->transformers = $metaDatas ['#transformers'] [DAO::$transformerOp] ?? [ ];
 		$this->fieldList = DAO::_getFieldList ( $this->tableName, $metaDatas );
+		if (\count ( $this->additionalMembers ) > 0) {
+			$this->fieldList .= ',' . $this->parseExpressions ();
+		}
 		$this->propsKeys = OrmUtils::getPropKeys ( $this->className );
 		$this->accessors = $metaDatas ['#accessors'];
 		$this->firstPropKey = OrmUtils::getFirstPropKey ( $this->className );
 	}
 
+	protected function parseExpressions() {
+		return \explode ( ',', $this->additionalMembers );
+	}
+
+	protected function addAditionnalMembers($object, $row) {
+		foreach ( $this->additionalMembers as $member => $_ ) {
+			$object->{$member} = $row [$member] ?? null;
+			$object->_rest [$member] = $row [$member] ?? null;
+		}
+	}
+
 	abstract public function execute($params = [ ], $useCache = false);
+
+	/**
+	 * Adds a new expression and associates it with a new member of the class added at runtime.
+	 *
+	 * @param string $sqlExpression The SQL expression (part of the SQL SELECT)
+	 * @param string $memberName The new associated member name
+	 */
+	public function addMember(string $sqlExpression, string $memberName): void {
+		$this->additionalMembers [$memberName] = $sqlExpression . " AS '{$memberName}'";
+	}
+
+	/**
+	 * Adds new expressions and their associated members at runtime.
+	 *
+	 * @param array $expressionsNames An associative array of [memberName=>sqlExpression,...]
+	 */
+	public function addMembers(array $expressionsNames): void {
+		foreach ( $expressionsNames as $member => $expression ) {
+			$this->additionalMembers [$member] = $expression . " AS '{$member}'";
+		}
+	}
 }
 

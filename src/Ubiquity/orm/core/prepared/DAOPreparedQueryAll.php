@@ -36,6 +36,7 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		foreach ( $query as $row ) {
 			$object = DAO::_loadObjectFromRow ( $this->db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->accessors, $this->transformers );
 			$key = OrmUtils::getPropKeyValues ( $object, $this->propsKeys );
+			$this->additionalMembers ( $object, $row );
 			$objects [$key] = $object;
 		}
 		if ($this->hasIncluded) {

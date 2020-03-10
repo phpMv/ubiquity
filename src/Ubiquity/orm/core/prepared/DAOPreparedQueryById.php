@@ -37,7 +37,9 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 			$manyToOneQueries = [ ];
 			$manyToManyParsers = [ ];
 			$className = $this->className;
-			$object = DAO::_loadObjectFromRow ( $this->db, \current ( $query ), $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->accessors, $this->transformers );
+			$row = \current ( $query );
+			$object = DAO::_loadObjectFromRow ( $row, $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->accessors, $this->transformers );
+			$this->addAditionnalMembers ( $object, $row );
 			if ($this->hasIncluded) {
 				DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $this->included, $useCache );
 			}
@@ -47,4 +49,3 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		return null;
 	}
 }
-
