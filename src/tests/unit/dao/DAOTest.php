@@ -25,6 +25,7 @@ class DAOTest extends BaseTest {
 		$this->dao = new DAO ();
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
+		$this->dao->prepareGetById ( "orga", Organization::class );
 	}
 
 	/**
@@ -32,6 +33,13 @@ class DAOTest extends BaseTest {
 	 */
 	protected function _after() {
 		$this->dao->closeDb ();
+	}
+
+	public function testGetPrepared() {
+		$this->dao->getPrepared ( 'orga' )->addMember ( 'CONCAT(name,":",domain)', 'fullname' );
+		$orga = $this->dao->executePrepared ( 'orga', 1 );
+		$this->assertInstanceOf ( Organization::class, $orga );
+		$this->assertEquals ( "Conservatoire National des Arts et Métiers:lecnam.net", $orga->fullname );
 	}
 
 	/**
