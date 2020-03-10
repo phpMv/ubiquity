@@ -46,10 +46,10 @@ class SqlUtils {
 		return \implode ( ' OR ', $ret );
 	}
 
-	public static function getSearchWhere($fields, $value, $jokerBefore = '%', $jokerAfter = '%') {
+	public static function getSearchWhere($likeOp, $fields, $value, $jokerBefore = '%', $jokerAfter = '%') {
 		$ret = array ();
 		foreach ( $fields as $field ) {
-			$ret [] = self::$quote . $field . self::$quote . " LIKE '" . $jokerBefore . $value . $jokerAfter . "'";
+			$ret [] = self::$quote . $field . self::$quote . $likeOp . $jokerBefore . $value . $jokerAfter;
 		}
 		return \implode ( ' OR ', $ret );
 	}

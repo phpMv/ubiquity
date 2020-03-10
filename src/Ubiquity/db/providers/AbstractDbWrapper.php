@@ -7,7 +7,7 @@ namespace Ubiquity\db\providers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.3
  *
  */
 abstract class AbstractDbWrapper {
@@ -45,7 +45,7 @@ abstract class AbstractDbWrapper {
 
 	abstract public function statementRowCount($statement);
 
-	abstract public function lastInsertId();
+	abstract public function lastInsertId($name = null);
 
 	/**
 	 * Used by DAO
@@ -91,6 +91,14 @@ abstract class AbstractDbWrapper {
 	abstract public function getForeignKeys($tableName, $pkName, $dbName = null);
 
 	abstract public function _optPrepareAndExecute($sql, array $values = null);
+
+	abstract public function getRowNum(string $tableName, string $pkName, string $condition): int;
+
+	abstract public function groupConcat(string $fields, string $separator): string;
+
+	public function toStringOperator() {
+		return '';
+	}
 
 	public function close() {
 		$this->dbInstance = null;

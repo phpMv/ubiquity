@@ -10,7 +10,7 @@ use Ubiquity\orm\parser\ManyToManyParser;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 trait OrmUtilsRelationsTrait {
@@ -132,7 +132,7 @@ trait OrmUtilsRelationsTrait {
 		return $result;
 	}
 
-	public static function getUJoinSQL($model, $arrayAnnot, $field, &$aliases, $quote) {
+	public static function getUJoinSQL($db, $model, $arrayAnnot, $field, &$aliases, $quote) {
 		$type = $arrayAnnot ['type'];
 		$annot = $arrayAnnot ['value'];
 		$table = self::getTableName ( $model );
@@ -153,7 +153,7 @@ trait OrmUtilsRelationsTrait {
 			$alias = self::getJoinAlias ( $table, $fkTable );
 			$result = "LEFT JOIN {$quote}{$fkTable}{$quote} {$quote}{$alias}{$quote} ON {$quote}{$tableAlias}{$quote}.{$quote}{$pkField}{$quote}={$quote}{$alias}{$quote}.{$quote}{$fkField}{$quote}";
 		} else {
-			$parser = new ManyToManyParser ( $model, $field );
+			$parser = new ManyToManyParser ( $db, $model, $field );
 			$parser->init ( $annot );
 			$fkTable = $parser->getTargetEntityTable ();
 			$fkClass = $parser->getTargetEntityClass ();

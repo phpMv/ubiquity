@@ -13,7 +13,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.3
  *
  */
 trait DAORelationsPrepareTrait {
@@ -21,12 +21,13 @@ trait DAORelationsPrepareTrait {
 	/**
 	 * Prepares members associated with $instance with a ManyToMany type relationship
 	 *
+	 * @param $db
 	 * @param $ret array of sql conditions
 	 * @param object $instance
 	 * @param string $member Member on which a ManyToMany annotation must be present
 	 * @param array $annot used internally
 	 */
-	protected static function prepareManyToMany(&$ret, $instance, $member, $annot = null) {
+	protected static function prepareManyToMany($db, &$ret, $instance, $member, $annot = null) {
 		$class = get_class ( $instance );
 		if (! isset ( $annot )) {
 			$annot = OrmUtils::getAnnotationInfoMember ( $class, "#ManyToMany", $member );
@@ -34,7 +35,7 @@ trait DAORelationsPrepareTrait {
 		if ($annot !== false) {
 			$key = $annot ["targetEntity"] . "|" . $member . "|" . $annot ["inversedBy"] . "|";
 			if (! isset ( $ret [$key] )) {
-				$parser = new ManyToManyParser ( $instance, $member );
+				$parser = new ManyToManyParser ( $db, $instance, $member );
 
 				$parser->init ( $annot );
 				$ret [$key] = $parser;

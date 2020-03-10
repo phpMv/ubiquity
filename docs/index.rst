@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Servers configuration<servers>`
    - :ref:`Database connexions<db>`
    - :ref:`Optimization<optimization>`
    - :ref:`Rich client<richclient>`

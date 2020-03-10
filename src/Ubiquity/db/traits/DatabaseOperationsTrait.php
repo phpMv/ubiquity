@@ -12,7 +12,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  * @property mixed $cache
  * @property array $options
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
@@ -160,8 +160,8 @@ trait DatabaseOperationsTrait {
 	 *
 	 * @return string
 	 */
-	public function lastInserId() {
-		return $this->wrapperObject->lastInsertId ();
+	public function lastInserId($name = null) {
+		return $this->wrapperObject->lastInsertId ( $name );
 	}
 
 	/**

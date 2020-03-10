@@ -3,21 +3,41 @@
 namespace Ubiquity\db\providers\pdo;
 
 use Ubiquity\db\providers\AbstractDbWrapper;
+use Ubiquity\exceptions\DBException;
 
 /**
  * Ubiquity\db\providers$PDOWrapper
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.3
  * @property \PDO $dbInstance
  *
  */
 class PDOWrapper extends AbstractDbWrapper {
 	protected static $savepointsDrivers = [ 'pgsql' => true,'mysql' => true,'sqlite' => true ];
-	private static $quotes = [ 'mysql' => '`','sqlite' => '"','pgsql' => '' ];
+	private static $quotes = [ 'mysql' => '`','sqlite' => '"','pgsql' => '"' ];
+	protected $driversMetasClasses = [ 'mysql' => '\\Ubiquity\\db\\providers\\pdo\\drivers\\MysqlDriverMetas','pgsql' => '\\Ubiquity\\db\\providers\\pdo\\drivers\\PgsqlDriverMetas','sqlite' => '\\Ubiquity\\db\\providers\\pdo\\drivers\\SqliteDriverMetas' ];
 	protected $transactionLevel = 0;
 	protected $dbType;
+	protected $driverMetaDatas;
+
+	/**
+	 *
+	 * @throws DBException
+	 * @return \Ubiquity\db\providers\pdo\drivers\AbstractDriverMetaDatas
+	 */
+	protected function getDriverMetaDatas() {
+		if (! isset ( $this->driverMetaDatas )) {
+			if (isset ( $this->driversMetasClasses [$this->dbType] )) {
+				$metaClass = $this->driversMetasClasses [$this->dbType];
+				$this->driverMetaDatas = new $metaClass ( $this->dbInstance );
+			} else {
+				throw new DBException ( "{$this->dbType} driver is not yet implemented!" );
+			}
+		}
+		return $this->driverMetaDatas;
+	}
 
 	public function __construct($dbType = 'mysql') {
 		$this->quote = self::$quotes [$dbType] ?? '';
@@ -33,8 +53,8 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $result;
 	}
 
-	public function lastInsertId() {
-		return $this->dbInstance->lastInsertId ();
+	public function lastInsertId($name = null) {
+		return $this->dbInstance->lastInsertId ( $name );
 	}
 
 	public function fetchAll($statement, array $values = null, $mode = null) {
@@ -114,8 +134,7 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function getTablesName() {
-		$query = $this->dbInstance->query ( 'SHOW TABLES' );
-		return $query->fetchAll ( \PDO::FETCH_COLUMN );
+		return $this->getDriverMetaDatas ()->getTablesName ();
 	}
 
 	public function statementRowCount($statement) {
@@ -159,34 +178,15 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function getPrimaryKeys($tableName) {
-		$fieldkeys = array ();
-		$recordset = $this->dbInstance->query ( "SHOW KEYS FROM `{$tableName}` WHERE Key_name = 'PRIMARY'" );
-		$keys = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
-		foreach ( $keys as $key ) {
-			$fieldkeys [] = $key ['Column_name'];
-		}
-		return $fieldkeys;
+		return $this->getDriverMetaDatas ()->getPrimaryKeys ( $tableName );
 	}
 
 	public function getForeignKeys($tableName, $pkName, $dbName = null) {
-		$recordset = $this->dbInstance->query ( "SELECT *
-												FROM
-												 information_schema.KEY_COLUMN_USAGE
-												WHERE
-												 REFERENCED_TABLE_NAME = '" . $tableName . "'
-												 AND REFERENCED_COLUMN_NAME = '" . $pkName . "'
-												 AND TABLE_SCHEMA = '" . $dbName . "';" );
-		return $recordset->fetchAll ( \PDO::FETCH_ASSOC );
+		return $this->getDriverMetaDatas ()->getForeignKeys ( $tableName, $pkName, $dbName );
 	}
 
 	public function getFieldsInfos($tableName) {
-		$fieldsInfos = array ();
-		$recordset = $this->dbInstance->query ( "SHOW COLUMNS FROM `{$tableName}`" );
-		$fields = $recordset->fetchAll ( \PDO::FETCH_ASSOC );
-		foreach ( $fields as $field ) {
-			$fieldsInfos [$field ['Field']] = [ "Type" => $field ['Type'],"Nullable" => $field ["Null"] ];
-		}
-		return $fieldsInfos;
+		return $this->getDriverMetaDatas ()->getFieldsInfos ( $tableName );
 	}
 
 	public function _optPrepareAndExecute($sql, array $values = null) {
@@ -201,5 +201,17 @@ class PDOWrapper extends AbstractDbWrapper {
 
 	public function quoteValue($value, $type = 2) {
 		return $this->dbInstance->quote ( $value, $type );
+	}
+
+	public function getRowNum(string $tableName, string $pkName, string $condition): int {
+		return $this->getDriverMetaDatas ()->getRowNum ( $tableName, $pkName, $condition );
+	}
+
+	public function groupConcat(string $fields, string $separator): string {
+		return $this->getDriverMetaDatas ()->groupConcat ( $fields, $separator );
+	}
+
+	public function toStringOperator() {
+		return $this->getDriverMetaDatas ()->toStringOperator ();
 	}
 }

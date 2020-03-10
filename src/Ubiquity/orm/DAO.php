@@ -25,7 +25,7 @@ use Ubiquity\orm\traits\DAOPreparedTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.3
+ * @version 1.2.4
  *
  */
 class DAO {
@@ -57,7 +57,8 @@ class DAO {
 	 * @return array
 	 */
 	public static function getAll($className, $condition = '', $included = true, $parameters = null, $useCache = NULL) {
-		return static::_getAll ( self::getDb ( $className ), $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
+		$db = self::getDb ( $className );
+		return static::_getAll ( $db, $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
 	}
 
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {
@@ -79,8 +80,7 @@ class DAO {
 		} else {
 			$keys = '1';
 		}
-
-		return $db->queryColumn ( "SELECT num FROM (SELECT *, @rownum:=@rownum + 1 AS num FROM {$quote}{$tableName}{$quote}, (SELECT @rownum:=0) r ORDER BY {$keys}) d WHERE " . $condition );
+		return $db->getRowNum ( $tableName, $keys, $condition );
 	}
 
 	/**
@@ -112,6 +112,7 @@ class DAO {
 	 * @return object the instance loaded or null if not found
 	 */
 	public static function getOne($className, $condition, $included = true, $parameters = null, $useCache = NULL) {
+		$db = self::getDb ( $className );
 		$conditionParser = new ConditionParser ();
 		if (! isset ( $parameters )) {
 			$conditionParser->addKeyValues ( $condition, $className );
@@ -121,7 +122,7 @@ class DAO {
 		} else {
 			throw new DAOException ( "The \$condition parameter should not be an array if \$parameters is not null" );
 		}
-		return static::_getOne ( self::getDb ( $className ), $className, $conditionParser, $included, $useCache );
+		return static::_getOne ( $db, $className, $conditionParser, $included, $useCache );
 	}
 
 	/**
@@ -163,7 +164,7 @@ class DAO {
 	 * @param array $options
 	 * @param boolean $cache
 	 */
-	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [], $cache = false) {
+	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [ ], $cache = false) {
 		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$pool );
 		try {
 			self::$db [$offset]->connect ();

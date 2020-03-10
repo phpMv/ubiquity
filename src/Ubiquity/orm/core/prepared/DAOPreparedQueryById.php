@@ -12,7 +12,7 @@ use Ubiquity\orm\OrmUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class DAOPreparedQueryById extends DAOPreparedQuery {
@@ -49,4 +49,3 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		return null;
 	}
 }
-

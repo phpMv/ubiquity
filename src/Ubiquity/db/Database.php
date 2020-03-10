@@ -18,7 +18,7 @@ use Ubiquity\db\traits\DatabaseMetadatas;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.2
  *
  */
 class Database {
@@ -288,5 +288,14 @@ class Database {
 			}
 		}
 		return $wrappers;
+	}
+
+	public function getSpecificSQL($key, ?array $params = null) {
+		switch ($key) {
+			case 'groupconcat' :
+				return $this->wrapperObject->groupConcat ( $params [0], $params [1] ?? ',');
+			case 'tostring' :
+				return $this->wrapperObject->toStringOperator ();
+		}
 	}
 }
