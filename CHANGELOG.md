@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `updateGroups` method for batch updates (mysql bulks)
 ### Updated
 - PostgreSQL PDO Driver created for PostgreSQL Database Support
-
+- Sqlite PDO Driver created for SQLite Database Support
 ## [2.3.3] 2020-01-25
 ### Added
 - mailer module see https://github.com/phpMv/ubiquity-mailer
