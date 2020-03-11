@@ -187,7 +187,7 @@ abstract class DAOPreparedQuery {
 	}
 
 	protected function parseExpressions() {
-		return \explode ( ',', $this->additionalMembers );
+		return \implode ( ',', $this->additionalMembers );
 	}
 
 	protected function addAditionnalMembers($object, $row) {
