@@ -39,6 +39,7 @@ abstract class DAOPreparedQuery {
 	protected $condition;
 	protected $preparedCondition;
 	protected $additionalMembers = [ ];
+	protected $sqlAdditionalMembers = "";
 	/**
 	 *
 	 * @var \Ubiquity\db\Database
@@ -178,12 +179,15 @@ abstract class DAOPreparedQuery {
 		}
 		$this->transformers = $metaDatas ['#transformers'] [DAO::$transformerOp] ?? [ ];
 		$this->fieldList = DAO::_getFieldList ( $this->tableName, $metaDatas );
-		if (\count ( $this->additionalMembers ) > 0) {
-			$this->fieldList .= ',' . $this->parseExpressions ();
-		}
 		$this->propsKeys = OrmUtils::getPropKeys ( $this->className );
 		$this->accessors = $metaDatas ['#accessors'];
 		$this->firstPropKey = OrmUtils::getFirstPropKey ( $this->className );
+	}
+
+	protected function updateSqlAdditionalMembers() {
+		if (\count ( $this->additionalMembers ) > 0) {
+			$this->sqlAdditionalMembers = ',' . $this->parseExpressions ();
+		}
 	}
 
 	protected function parseExpressions() {
@@ -207,6 +211,7 @@ abstract class DAOPreparedQuery {
 	 */
 	public function addMember(string $sqlExpression, string $memberName): void {
 		$this->additionalMembers [$memberName] = $sqlExpression . " AS '{$memberName}'";
+		$this->updateSqlAdditionalMembers ();
 	}
 
 	/**
@@ -218,6 +223,7 @@ abstract class DAOPreparedQuery {
 		foreach ( $expressionsNames as $member => $expression ) {
 			$this->additionalMembers [$member] = $expression . " AS '{$member}'";
 		}
+		$this->updateSqlAdditionalMembers ();
 	}
 }
 

@@ -29,7 +29,7 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		$cp = $this->conditionParser;
 		$cp->setParams ( $params );
 		$className = $this->className;
-		$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList, $cp->getParams (), $useCache );
+		$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];

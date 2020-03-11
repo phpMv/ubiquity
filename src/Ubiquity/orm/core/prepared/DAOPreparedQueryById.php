@@ -31,7 +31,7 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 	public function execute($params = [ ], $useCache = false) {
 		$cp = $this->conditionParser;
 		$cp->setKeyValues ( $params );
-		$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList, $cp->getParams (), $useCache );
+		$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
 		if ($query && \sizeof ( $query ) > 0) {
 			$oneToManyQueries = [ ];
 			$manyToOneQueries = [ ];
