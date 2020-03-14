@@ -8,6 +8,8 @@ Views
 Ubiquity uses Twig as the default template engine (see `Twig documentation <https://twig.symfony.com/doc/2.x/>`_). |br|
 The views are located in the **app/views** folder. They must have the **.html** extension for being interpreted by Twig.
 
+Ubiquity can also be used with a PHP view system, to get better performance, or simply to allow the use of php in the views.
+
 Loading
 -------
 Views are loaded from controllers:
@@ -147,6 +149,34 @@ For session :
     {{ app.getSession().get('homePage','index') }}
     
 see `Framework class in API <https://api.kobject.net/ubiquity/class_ubiquity_1_1core_1_1_framework.html>`_ for more.
+
+PHP view loading
+----------------
+
+Disable if necessary Twig in the configuration file by deleting the **templateEngine** key. 
+
+Then create a controller that inherits from ``SimpleViewController``, or ``SimpleViewAsyncController`` if you use **Swoole** or **Workerman**:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/Users.php
+   :emphasize-lines: 5
+      
+    namespace controllers;
+    
+    use Ubiquiy\controllers\SimpleViewController;
+    
+    class Users extends SimpleViewController{
+    	...
+    	public function display($message,$type){
+    			$this->loadView("users/display.php",compact("message","type"));
+    		}
+    	}
+    }
+
+.. note::
+   In this case, the functions for loading assets and themes are not supported.
+
 
 Assets
 ======

@@ -4,11 +4,6 @@ Translation module
 .. note::
    The Translation module uses the static class **TranslatorManager** to manage translations.
 
-.. important::
-   This module is under development. |br|
-   It is operational for the use of existing translation files. |br|
-   It still lacks the module to manage the translation files in the administration part (devtools or webtools).
-
 Module structure
 ----------------
 Translations are grouped by **domain**, within a **locale** :
