@@ -280,6 +280,7 @@ Access control to a controller can be performed manually, using the `isValid` an
 The `isValid` method must return a boolean wich determine if access to the `action` passed as a parameter is possible:
 
 In the following example, access to the actions of the **IndexController** controller is only possible if an **activeUser** session variable exists:
+
 .. code-block:: php
    :caption: app/controllers/IndexController.php
    :emphasize-lines: 3-5
@@ -367,3 +368,15 @@ Super class
 The use of inheritance can be used to factorize controller behavior. |br|
 The `BaseController` class created with a new project is present for this purpose.
 
+Specific controller base classes
+--------------------------------
+
++----------------------------+----------------------------------------------------------------------------------+
+| Controller class           | role                                                                             |
++============================+==================================================================================+
+| Controller                 | Base class for all controllers                                                   |
++----------------------------+----------------------------------------------------------------------------------+
+| SimpleViewController       | Base class associated with a php template engine (for using with micro-services) |
++----------------------------+----------------------------------------------------------------------------------+
+| SimpleViewAsyncController  | Base class associated with a php template engine for async servers               |
++----------------------------+----------------------------------------------------------------------------------+

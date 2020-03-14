@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Mailer module<mailer>`
    - :ref:`Servers configuration<servers>`
    - :ref:`Database connexions<db>`
    - :ref:`Optimization<optimization>`

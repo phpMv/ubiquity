@@ -1,3 +1,4 @@
+.. _mailer:
 Mailer module
 =============
 
