@@ -8,9 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 ### Added
 - `updateGroups` method for batch updates (mysql bulks)
+- Aditional fields in queries Fixes [#83](https://github.com/phpMv/ubiquity/issues/83)
+- **Composer** part in webTools
 ### Updated
-- PostgreSQL PDO Driver created for PostgreSQL Database Support
-- Sqlite PDO Driver created for SQLite Database Support
+- PostgreSQL PDO Driver created for PostgreSQL Database Support Fixes [#98](https://github.com/phpMv/ubiquity/issues/98)
+- Sqlite PDO Driver created for SQLite Database Support Fixes [#90](https://github.com/phpMv/ubiquity/issues/90)
 ## [2.3.3] 2020-01-25
 ### Added
 - mailer module see https://github.com/phpMv/ubiquity-mailer
