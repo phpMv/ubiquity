@@ -11,6 +11,8 @@ use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\orm\parser\Reflexion;
 
 /**
+ * DAO class for models without relationships
+ * Model classes must declare public members only
  * Ubiquity\orm$SDAO
  * This class is part of Ubiquity
  *
