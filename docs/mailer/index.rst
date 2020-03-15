@@ -153,3 +153,4 @@ This message will be visible in the Mailer section of the webtools:
 
 .. image:: /_static/images/mailer/mailerClasses.png
    :class: bordered
+
