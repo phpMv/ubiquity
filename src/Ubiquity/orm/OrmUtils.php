@@ -55,7 +55,7 @@ class OrmUtils {
 
 	public static function getFieldsAndValues_($instance, $members) {
 		$ret = [ ];
-		$fieldnames = self::getAnnotationInfo ( $instance, '#fieldNames' );
+		$fieldnames = self::getAnnotationInfo ( \get_class ( $instance ), '#fieldNames' );
 		foreach ( $members as $member ) {
 			$v = Reflexion::getMemberValue ( $instance, $member );
 			$ret [$fieldnames [$member] ?? $member] = $v;
