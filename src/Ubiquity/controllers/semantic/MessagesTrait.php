@@ -22,7 +22,7 @@ trait MessagesTrait {
 	 *
 	 * @return ModelViewer
 	 */
-	abstract public function _getModelViewer();
+	abstract protected function _getModelViewer();
 
 	abstract public function _getFiles();
 
