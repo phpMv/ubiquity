@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## [Unrelease]
+- Nothing
+
+## [2.3.4] 2020-03-23
 ### Added
 - `updateGroups` method for batch updates (mysql bulks)
 - Aditional fields in queries Fixes [#83](https://github.com/phpMv/ubiquity/issues/83)
@@ -13,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - PostgreSQL PDO Driver created for PostgreSQL Database Support Fixes [#98](https://github.com/phpMv/ubiquity/issues/98)
 - Sqlite PDO Driver created for SQLite Database Support Fixes [#90](https://github.com/phpMv/ubiquity/issues/90)
+### Fixed
+- `@id`column name pb [#107](https://github.com/phpMv/ubiquity/issues/107)
+- [REST] with POST method returns 500 error, and 'controllers/rest' class not found [#89](https://github.com/phpMv/ubiquity/issues/89)
 ## [2.3.3] 2020-01-25
 ### Added
 - mailer module see https://github.com/phpMv/ubiquity-mailer
