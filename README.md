@@ -30,7 +30,16 @@ composer global update
 ```
 # Installation
 
-The easiest way to install **Ubiquity** is to use [devtools](https://github.com/phpMv/ubiquity-devtools)
+The easiest way to install **Ubiquity** is to use composer **create-project** command:
+
+Creation of the project **firstProject**
+```bash
+composer create-project phpmv/ubiquity-project firstProject
+```
+This installation adds [devtools](https://github.com/phpMv/ubiquity-devtools) and [webtools](https://github.com/phpMv/ubiquity-webtools) to the project.
+## Devtools
+It is also possible to install [devtools](https://github.com/phpMv/ubiquity-devtools) globally, to share their use between different projects, and to get more options for a project creation.
+
 * Install Ubiquity-devtools:
 ```bash
 composer global require phpmv/ubiquity-devtools
@@ -87,6 +96,8 @@ But java is not PHP : the environments and languages are completely different (t
 Ubiquity wants to keep the essence of PHP and what it does best, for example:
   - By using php (packed) arrays because they are effective in php (with php7 optimization)
   - By not creating instances of classes to inject for the core part of the framework, to prefer the use of classes with static methods
+
+Overall, Ubiquity wants to keep and use what PHP is good at.
 
 In this perspective, Ubiquity chooses not to respect certain standards:
 For example, by not creating a Response object implementing an interface (see [PSR-7 HTTP message interfaces](https://www.php-fig.org/psr/psr-7/) ) in response to an Http request.
