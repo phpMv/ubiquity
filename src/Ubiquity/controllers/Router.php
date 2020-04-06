@@ -15,7 +15,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.11
+ * @version 1.0.12
  *
  */
 class Router {
@@ -146,6 +146,15 @@ class Router {
 					return \ltrim ( $routePath, '/' );
 				else
 					return $routePath;
+			}
+		}
+		return false;
+	}
+
+	public static function getRouteInfoByName($name) {
+		foreach ( self::$routes as $routeDetails ) {
+			if (self::checkRouteName ( $routeDetails, $name )) {
+				return $routeDetails;
 			}
 		}
 		return false;

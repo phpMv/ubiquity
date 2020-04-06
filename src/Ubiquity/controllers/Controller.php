@@ -12,10 +12,11 @@ use Ubiquity\themes\ThemesManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 abstract class Controller {
+
 	/**
 	 * The view
 	 *
@@ -126,7 +127,7 @@ abstract class Controller {
 	 * @param boolean $finalize If true, the controller's finalize method is called after $action
 	 * @throws \Exception
 	 */
-	public function forward($controller, $action = "index", $params = array(), $initialize = false, $finalize = false) {
+	public function forward($controller, $action = "index", $params = array (), $initialize = false, $finalize = false) {
 		$u = array ($controller,$action );
 		if (\is_array ( $params )) {
 			$u = \array_merge ( $u, $params );
@@ -145,14 +146,19 @@ abstract class Controller {
 	 * @param boolean $finalize Call the **finalize** method if true
 	 * @throws RouterException
 	 */
-	public function redirectToRoute($routeName, $parameters = [], $initialize = false, $finalize = false) {
-		$path = Router::getRouteByName ( $routeName, $parameters );
-		if ($path !== false) {
-			$route = Router::getRoute ( $path, false );
-			if ($route !== false) {
-				$this->forward ( $route [0], $route [1], \array_slice ( $route, 2 ), $initialize, $finalize );
+	public function redirectToRoute($routeName, $parameters = [ ], $initialize = false, $finalize = false) {
+		$infos = Router::getRouteInfoByName ( $routeName );
+		if ($infos !== false) {
+			if (isset ( $infos ['controller'] )) {
+				$this->forward ( $infos ['controller'], $infos ['action'] ?? 'index', $parameters, $initialize, $finalize );
 			} else {
-				throw new RouterException ( "Route {$routeName} not found", 404 );
+				$method = \strtolower ( $_SERVER ['REQUEST_METHOD'] );
+				if (isset ( $infos [$method] )) {
+					$infos = $infos [$method];
+					$this->forward ( $infos ['controller'], $infos ['action'] ?? 'index', $parameters, $initialize, $finalize );
+				} else {
+					throw new RouterException ( "Route {$routeName} not found for method {$method}", 404 );
+				}
 			}
 		} else {
 			throw new RouterException ( "Route {$routeName} not found", 404 );
