@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 
+## [2.3.5] 2020-04-08
+### Fixed
+- Fix persistent `/_default/` for default url (twig path) (no open issue)
+- Fix redirectToRoute pb (with `_default` route) (no open issue)
 ## [2.3.4] 2020-03-23
 ### Added
 - `updateGroups` method for batch updates (mysql bulks)
