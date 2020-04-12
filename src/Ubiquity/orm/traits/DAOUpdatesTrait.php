@@ -17,7 +17,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.4
+ * @version 1.1.5
  * @property \Ubiquity\db\Database $db
  *
  */
@@ -131,7 +131,9 @@ trait DAOUpdatesTrait {
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
 		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 		$pk = OrmUtils::getFirstKey ( $className );
-		unset ( $keyAndValues [$pk] );
+		if (! isset ( $keyAndValues [$pk] )) {
+			unset ( $keyAndValues [$pk] );
+		}
 		$sql = "INSERT INTO {$quote}{$tableName}{$quote} (" . SqlUtils::getInsertFields ( $keyAndValues ) . ') VALUES(' . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ')';
 		if (Logger::isActive ()) {
 			Logger::info ( 'DAOUpdates', $sql, 'insert' );
