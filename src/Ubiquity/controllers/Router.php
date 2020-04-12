@@ -23,8 +23,9 @@ class Router {
 	protected static $routes;
 
 	private static function cleanParam(string $param): string {
-		if (\substr ( $param, - 1 ) === '/')
+		if (\substr ( $param, - 1 ) === '/') {
 			return \substr ( $param, 0, - 1 );
+		}
 		return $param;
 	}
 
@@ -54,8 +55,9 @@ class Router {
 	protected static function checkRouteName($routeDetails, $name) {
 		if (! isset ( $routeDetails ['name'] )) {
 			foreach ( $routeDetails as $methodRouteDetail ) {
-				if (isset ( $methodRouteDetail ['name'] ) && $methodRouteDetail ['name'] == $name)
+				if (isset ( $methodRouteDetail ['name'] ) && $methodRouteDetail ['name'] == $name) {
 					return true;
+				}
 			}
 		}
 		return isset ( $routeDetails ['name'] ) && $routeDetails ['name'] == $name;
@@ -65,8 +67,9 @@ class Router {
 		$index = 0;
 		foreach ( $paramsOrder as $order ) {
 			if ($order === '*') {
-				if (isset ( $params [$index] ))
+				if (isset ( $params [$index] )) {
 					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( '/', $params [$index] ), [ '' ] ) );
+				}
 				break;
 			}
 			if (($order [0] ?? '') === '~') {
@@ -142,10 +145,11 @@ class Router {
 				if (trim ( $routePath, '/' ) == '_default') {
 					$routePath = "/";
 				}
-				if (! $absolute)
+				if (! $absolute) {
 					return \ltrim ( $routePath, '/' );
-				else
+				} else {
 					return $routePath;
+				}
 			}
 		}
 		return false;

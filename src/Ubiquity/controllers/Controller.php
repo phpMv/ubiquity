@@ -63,8 +63,9 @@ abstract class Controller {
 	 * @return string null or the view content if **$asString** parameter is true
 	 */
 	public function loadView($viewName, $pData = NULL, $asString = false) {
-		if (isset ( $pData ))
+		if (isset ( $pData )) {
 			$this->view->setVars ( $pData );
+		}
 		return $this->view->render ( $viewName, $asString );
 	}
 
@@ -113,8 +114,9 @@ abstract class Controller {
 	 * To be override in sub classes
 	 */
 	public function onInvalidControl() {
-		if (! headers_sent ())
+		if (! headers_sent ()) {
 			\header ( 'HTTP/1.1 401 Unauthorized', true, 401 );
+		}
 	}
 
 	/**

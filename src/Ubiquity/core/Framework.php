@@ -1,11 +1,10 @@
 <?php
 
 /**
- * This class gives access to useful methods or objects of the framework.
  * Ubiquity\core
  * This class is part of Ubiquity
- * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @author jc
+ * @version 1.0.0
  *
  */
 namespace Ubiquity\core;
@@ -82,7 +81,7 @@ class Framework {
 	 * @param array $options
 	 * @return \Ajax\php\ubiquity\JsUtils
 	 */
-	public static function diSemantic($controller, $options = ["defer"=>true,"gc"=>true]) {
+	public static function diSemantic($controller, $options = [ "defer" => true,"gc" => true ]) {
 		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
 		$jquery->semantic ( new \Ajax\Semantic () );
 		$jquery->setAjaxLoader ( "<div class=\"ui active centered inline text loader\">Loading</div>" );
@@ -96,7 +95,7 @@ class Framework {
 	 * @param array $options
 	 * @return \Ajax\php\ubiquity\JsUtils
 	 */
-	public static function diBootstrap($controller, $options = ["defer"=>true,"gc"=>true]) {
+	public static function diBootstrap($controller, $options = [ "defer" => true,"gc" => true ]) {
 		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
 		$jquery->bootstrap ( new \Ajax\Bootstrap () );
 		$jquery->setAjaxLoader ( "<div class=\"ui active centered inline text loader\">Loading</div>" );
