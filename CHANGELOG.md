@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrelease]
 - Nothing
-
+## [2.3.6] 2020-04-13
+### Fixed
+- Fix `require php7.4` in composer.json file [#111](https://github.com/phpMv/ubiquity/issues/111)
+- Fix `@transient` annotation pb [#113](https://github.com/phpMv/ubiquity/issues/113)
+- Fix non autoinc pk not affected on insert [#114](https://github.com/phpMv/ubiquity/issues/114)
 ## [2.3.5] 2020-04-08
 ### Fixed
 - Fix persistent `/_default/` for default url (twig path) (no open issue)
