@@ -37,6 +37,10 @@ Creation of the project **firstProject**
 composer create-project phpmv/ubiquity-project firstProject
 ```
 This installation adds [devtools](https://github.com/phpMv/ubiquity-devtools) and [webtools](https://github.com/phpMv/ubiquity-webtools) to the project.
+
+- Running the server with `vendor/bin/Ubiquity serve`
+- **webtools** available at `http://127.0.0.1:8090/Admin`
+
 ## Devtools
 It is also possible to install [devtools](https://github.com/phpMv/ubiquity-devtools) globally, to share their use between different projects, and to get more options for a project creation.
 
@@ -53,7 +57,7 @@ Ubiquity new firstProject -a
 Ubiquity serve
 ```
 # Need some help?
-Ubiquity is a recent project and does not yet have a community.
+Ubiquity is a recent project and does not yet have a large community.
 In the meantime, you can consult:
  - [Quick-start guide](https://micro-framework.readthedocs.io/en/latest/quickstart/quickstart.html) to discover the framework
  - [Documentation](https://micro-framework.readthedocs.io/en/latest/) to go deeper
@@ -61,7 +65,7 @@ In the meantime, you can consult:
 
 For further assistance please feel free to : 
  - ask your questions directly using [gitter](https://gitter.im/ubiquity-framework/community)
- - create an [issue](https://github.com/phpMv/ubiquity/issues/new?assignees=jcheron&labels=&template=bug_report.md&title=%5Bpart%5D+Element+should+do+X) if you notice a bug or suspicious behavior
+ - create an [issue](https://github.com/phpMv/ubiquity/issues/new?assignees=jcheron&labels=&template=bug_report.md&title=%5Bpart%5D+Element+should+do+X) if you notice a bug or a suspicious behavior
 
 # Performances
 Ubiquity is very fast and performs well.
