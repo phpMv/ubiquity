@@ -24,8 +24,9 @@ class URequest {
 	 * @param associative array $values
 	 */
 	public static function setValuesToObject($object, $values = null): void {
-		if (! isset ( $values ))
+		if (! isset ( $values )) {
 			$values = $_POST;
+		}
 		foreach ( $values as $key => $value ) {
 			$accessor = 'set' . \ucfirst ( $key );
 			if (\method_exists ( $object, $accessor )) {
@@ -135,10 +136,10 @@ class URequest {
 	 * https://www.dyeager.org/downloads/license-bsd.txt
 	 */
 	public static function getDefaultLanguage(): string {
-		if (isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] ))
+		if (isset ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] )) {
 			return self::parseDefaultLanguage ( $_SERVER ['HTTP_ACCEPT_LANGUAGE'] );
-		else
-			return self::parseDefaultLanguage ( NULL );
+		}
+		return self::parseDefaultLanguage ( NULL );
 	}
 
 	private static function parseDefaultLanguage($http_accept, $deflang = 'en'): string {
@@ -318,5 +319,19 @@ class URequest {
 
 	public static function getRealPOST(): array {
 		return self::getRealInput ( 'post' );
+	}
+
+	/**
+	 * Creates a password hash for a posted value at $key position
+	 *
+	 * @param string $key
+	 * @param string $algo
+	 * @return string|boolean
+	 */
+	public static function password_hash(string $key, string $algo = PASSWORD_DEFAULT) {
+		if (isset ( $_POST [$key] )) {
+			return $_POST [$key] = password_hash ( $_POST [$key], $algo );
+		}
+		return false;
 	}
 }
