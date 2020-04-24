@@ -62,7 +62,7 @@ abstract class AuthController extends ControllerBase {
 	/**
 	 *
 	 * {@inheritdoc}
-	 * @see \controllers\ControllerBase::isValid()
+	 * @see \Ubiquity\controllers\Controller::isValid()
 	 */
 	public final function isValid($action) {
 		return true;
@@ -81,12 +81,11 @@ abstract class AuthController extends ControllerBase {
 		$fMessage = $this->_noAccessMsg;
 		$this->noAccessMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage->parseContent ( [ "url" => implode ( "/", $urlParts ) ] ) );
-		/*
-		 * if(URequest::isAjax()){
-		 * $this->jquery->get($this->_getBaseRoute()."/info/f","#_userInfo",["historize"=>false,"jqueryDone"=>"replaceWith","hasLoader"=>false,"attr"=>""]);
-		 * $this->jquery->compile($this->view);
-		 * }
-		 */
+		if (URequest::isAjax ()) {
+			$this->jquery->get ( $this->_getBaseRoute () . "/info/f", "#_userInfo", [ "historize" => false,"jqueryDone" => "replaceWith","hasLoader" => false,"attr" => "" ] );
+			$this->jquery->compile ( $this->view );
+		}
+
 		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
 	}
 
