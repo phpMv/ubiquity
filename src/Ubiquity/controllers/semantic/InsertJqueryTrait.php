@@ -11,7 +11,7 @@ trait InsertJqueryTrait {
 	 */
 	public $jquery;
 
-	public function insertJquerySemantic() {
+	public function _insertJquerySemantic() {
 		$this->jquery = new \Ajax\php\ubiquity\JsUtils ( [ "defer" => true ], $this );
 		$this->jquery->semantic ( new \Ajax\Semantic () );
 	}

@@ -77,9 +77,9 @@ trait WithAuthTrait {
 			]);
 			echo $this->jquery->compile($this->view);
 		} else {
-			parent::initialize();
+			$this->initialize();
 			$auth->noAccess(Startup::$urlParts);
-			parent::finalize();
+			$this->finalize();
 		}
 		exit();
 	}

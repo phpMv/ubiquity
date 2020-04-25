@@ -5,7 +5,7 @@ namespace Ubiquity\controllers\auth;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\flash\FlashMessage;
-use Ubiquity\controllers\ControllerBase;
+use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\Auth\AuthFiles;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\base\UString;
@@ -19,7 +19,7 @@ use Ubiquity\controllers\semantic\InsertJqueryTrait;
  *
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  */
-abstract class AuthController extends ControllerBase {
+abstract class AuthController extends Controller {
 	use AuthControllerCoreTrait,AuthControllerVariablesTrait,AuthControllerOverrideTrait,InsertJqueryTrait;
 
 	/**
@@ -34,10 +34,11 @@ abstract class AuthController extends ControllerBase {
 	protected $_loginCaption;
 	protected $_attemptsSessionKey = "_attempts";
 	protected $_controllerInstance;
+	protected $_compileJS = true;
 
 	public function __construct($instance = null) {
 		parent::__construct ();
-		$this->insertJquerySemantic ();
+		$this->_insertJquerySemantic ();
 		$this->_controller = Startup::getController ();
 		$this->_action = Startup::getAction ();
 		$this->_actionParams = Startup::getActionParams ();
@@ -225,16 +226,15 @@ abstract class AuthController extends ControllerBase {
 	 */
 	public function finalize() {
 		if (! UResponse::isJSON ()) {
-			if (! URequest::isAjax ()) {
-				if (isset ( $this->_controllerInstance )) {
-					call_user_func_array ( array ($this->_controllerInstance,'parent::finalize' ), [ ] );
-				} else {
-					parent::finalize ();
-				}
-			}
+			$this->finalizeAuth ();
 			$this->jquery->execAtLast ( "if($('#_userInfo').length){\$('#_userInfo').html(" . preg_replace ( "/$\R?^/m", "", Javascript::prep_element ( $this->info () ) ) . ");}" );
-			echo $this->jquery->compile ();
+			if ($this->_compileJS) {
+				echo $this->jquery->compile ();
+			}
 		}
+	}
+
+	protected function finalizeAuth() {
 	}
 
 	/**
@@ -243,24 +243,23 @@ abstract class AuthController extends ControllerBase {
 	 * @see \Ubiquity\controllers\ControllerBase::initialize()
 	 */
 	public function initialize() {
-		if (! URequest::isAjax ()) {
-			if (isset ( $this->_controllerInstance )) {
-				call_user_func_array ( array ($this->_controllerInstance,'parent::initialize' ), [ ] );
-			} else {
-				parent::initialize ();
-			}
-		}
+		$this->initializeAuth ();
+	}
+
+	protected function initializeAuth() {
 	}
 
 	/**
 	 *
 	 * @param string $url
 	 */
-	public function _forward($url) {
-		$initFinalize = true;
-		if (isset ( $this->_controllerInstance ) && ! URequest::isAjax ()) {
-			$initFinalize = false;
+	public function _forward($url, $initialize = null, $finalize = null) {
+		if (! isset ( $initialize )) {
+			$initialize = (! isset ( $this->_controllerInstance ) || URequest::isAjax ());
 		}
-		Startup::forward ( $url, $initFinalize, $initFinalize );
+		if (! isset ( $finalize )) {
+			$finalize = $initialize;
+		}
+		Startup::forward ( $url, $initialize, $finalize );
 	}
 }

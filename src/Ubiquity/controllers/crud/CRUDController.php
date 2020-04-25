@@ -23,7 +23,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	public function __construct() {
 		parent::__construct ();
 		DAO::$transformerOp = 'toView';
-		$this->insertJquerySemantic ();
+		$this->_insertJquerySemantic ();
 	}
 
 	/**
