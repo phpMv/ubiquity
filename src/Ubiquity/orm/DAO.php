@@ -102,6 +102,24 @@ class DAO {
 	}
 
 	/**
+	 * Tests the existence of objects of $className from the database respecting the condition possibly passed as parameter
+	 *
+	 * @param string $className complete classname of the model to load
+	 * @param string $condition Part following the WHERE of an SQL statement
+	 * @param array|null $parameters The query parameters
+	 * @return boolean
+	 */
+	public static function exists($className, $condition = '', $parameters = null) {
+		$tableName = OrmUtils::getTableName ( $className );
+		if ($condition != '') {
+			$condition = ' WHERE ' . $condition;
+		}
+		$db = self::getDb ( $className );
+		$quote = $db->quote;
+		return (1 == $db->prepareAndFetchColumn ( "SELECT EXISTS(SELECT 1 FROM {$quote}{$tableName}{$quote}{$condition})", $parameters ));
+	}
+
+	/**
 	 * Returns an instance of $className from the database, from $keyvalues values of the primary key or with a condition
 	 *
 	 * @param String $className complete classname of the model to load
