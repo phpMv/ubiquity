@@ -69,6 +69,18 @@ class UMonolog extends Logger {
 			$jso = json_decode ( $line );
 			if ($jso !== null) {
 				if ($contexts === null || self::inContext ( $contexts, $jso->context->context )) {
+					if (isset ( $jso->context->extra )) {
+						if (is_object ( $jso->context->extra )) {
+							$extra = [ ];
+							foreach ( $jso->context->extra as $k => $v ) {
+								if (is_object ( $v )) {
+									$v = json_encode ( $v );
+								}
+								$extra [] = "$k: $v";
+							}
+							$jso->context->extra = $extra;
+						}
+					}
 					LogMessage::addMessage ( $objects, new LogMessage ( $jso->message, $jso->context->context, $jso->context->part, $jso->level, $jso->datetime, $jso->context->extra ) );
 				}
 			}
