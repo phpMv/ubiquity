@@ -8,7 +8,7 @@ namespace Ubiquity\utils\http\session;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class PhpSession extends AbstractSession {
@@ -30,6 +30,7 @@ class PhpSession extends AbstractSession {
 				\session_name ( $this->name );
 			}
 			\session_start ();
+			$this->verifyCsrf->start ();
 		}
 	}
 
@@ -37,6 +38,7 @@ class PhpSession extends AbstractSession {
 		if (! $this->isStarted ())
 			return;
 		$this->start ();
+		$this->verifyCsrf->clear ();
 		$_SESSION = array ();
 
 		if (\ini_get ( 'session.use_cookies' )) {
