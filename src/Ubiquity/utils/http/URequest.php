@@ -11,7 +11,7 @@ use Ubiquity\utils\base\UString;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.1
+ * @version 1.1.2
  *
  */
 class URequest {
@@ -114,6 +114,17 @@ class URequest {
 	 */
 	public static function has($key): bool {
 		return isset ( $_REQUEST [$key] );
+	}
+
+	/**
+	 * Adds a value in request at $key position
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	public static function set(string $key, $value = true) {
+		return $_REQUEST [$key] = $value;
 	}
 
 	/**

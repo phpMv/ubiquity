@@ -8,7 +8,7 @@ namespace Ubiquity\utils\http;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class UCookie {
@@ -24,8 +24,8 @@ class UCookie {
 	 * @param boolean $httpOnly When true the cookie will be made accessible only through the HTTPprotocol
 	 * @return boolean
 	 */
-	public static function set($name, $value, $duration = 60*60*24, $path = '/', $secure = false, $httpOnly = false): bool {
-		return \setcookie ( $name, $value, \time () + $duration, $path, $secure, $httpOnly );
+	public static function set($name, $value, $duration = 60 * 60 * 24, $path = '/', $secure = false, $httpOnly = false): bool {
+		return \setcookie ( $name, $value, $duration ? (\time () + $duration) : null, $path, $secure, $httpOnly );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class UCookie {
 	 * Deletes all cookies
 	 */
 	public static function deleteAll($path = '/'): void {
-		foreach ( $_COOKIE as $name => $value ) {
+		foreach ( $_COOKIE as $name => $_ ) {
 			self::delete ( $name, $path );
 		}
 	}
@@ -84,7 +84,7 @@ class UCookie {
 	 * @return boolean
 	 * @since Ubiquity 2.0.11
 	 */
-	public static function setRaw($name, $value, $duration = 60*60*24, $path = '/', $secure = false, $httpOnly = false): bool {
+	public static function setRaw($name, $value, $duration = 60 * 60 * 24, $path = '/', $secure = false, $httpOnly = false): bool {
 		return \setrawcookie ( $name, $value, \time () + $duration, $path, $secure, $httpOnly );
 	}
 }
