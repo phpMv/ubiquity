@@ -224,9 +224,9 @@ trait RouterCacheTrait {
 			$restCtrls = [ ];
 		}
 		foreach ( $files as $file ) {
-			if (is_file ( $file )) {
+			if (\is_file ( $file )) {
 				$controllerClass = ClassUtils::getClassFullNameFromFile ( $file, $backslash );
-				if (isset ( $restCtrls [$controllerClass] ) === false) {
+				if (\class_exists ( $controllerClass ) && isset ( $restCtrls [$controllerClass] ) === false) {
 					$r = new \ReflectionClass ( $controllerClass );
 					if ($r->isSubclassOf ( $subClass ) && ($includeAbstract || ! $r->isAbstract ())) {
 						$result [] = $controllerClass;
