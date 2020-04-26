@@ -28,7 +28,7 @@ If Ubiquity devtools are already globally installed, and you want to upgrade to 
 ```bash
 composer global update
 ```
-# Installation
+# Project creation
 
 The easiest way to install **Ubiquity** is to use composer **create-project** command:
 
@@ -41,7 +41,7 @@ This installation adds [devtools](https://github.com/phpMv/ubiquity-devtools) an
 - Running the server with `vendor/bin/Ubiquity serve`
 - **webtools** available at `http://127.0.0.1:8090/Admin`
 
-## Devtools
+## Devtools installation
 It is also possible to install [devtools](https://github.com/phpMv/ubiquity-devtools) globally, to share their use between different projects, and to get more options for a project creation.
 
 * Install Ubiquity-devtools:
