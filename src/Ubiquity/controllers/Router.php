@@ -125,7 +125,6 @@ class Router {
 				}
 			}
 		}
-		Logger::warn ( 'Router', "No route found for {$path}", 'getRoute' );
 		return false;
 	}
 
