@@ -20,7 +20,7 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 
 class Framework {
-	public const version = '2.3.6';
+	public const version = '2.3.7';
 
 	public static function getVersion() {
 		return self::version;
