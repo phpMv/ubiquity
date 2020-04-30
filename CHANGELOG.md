@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrelease]
 - Nothing
+
+## [2.3.7] 2020-04-30
+### Added
+- add `password_hash` to URequest
+- add `exists` method in DAO
+- Add Csrf protection to session
+### Updated
+- AuthController simplification
+- remove unnecessary "No route found log"
 ## [2.3.6] 2020-04-13
 ### Fixed
 - Fix `require php7.4` in composer.json file [#111](https://github.com/phpMv/ubiquity/issues/111)
