@@ -6,7 +6,7 @@
  [![Latest Stable Version](https://poser.pugx.org/phpmv/ubiquity/v/stable)](https://packagist.org/packages/phpmv/ubiquity)
  [![License](https://poser.pugx.org/phpmv/ubiquity/license)](https://packagist.org/packages/phpmv/ubiquity) [![Join the chat at https://gitter.im/ubiquity-framework/community](https://badges.gitter.im/ubiquity-framework/community.svg)](https://gitter.im/ubiquity-framework/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[Ubiquity](https://ubiquity.kobject.net), one of the fastest frameworks, with the main features of the bests
+[Ubiquity](https://ubiquity.kobject.net), one of the fastest Frameworks, with some interesting features.
 
 # Main features
   - MVC
@@ -30,7 +30,7 @@ composer global update
 ```
 # Project creation
 
-The easiest way to install **Ubiquity** is to use composer **create-project** command:
+The easiest way to create a project is to use composer **create-project** command:
 
 Creation of the project **firstProject**
 ```bash
@@ -115,6 +115,8 @@ If a method or technique is optimal, there's no reason to implement an alternati
 - In some applications, the dependency loading time is more expensive than running the application code.
 
 The framework used must give the developer the means to optimize his application and not the other way around.
+
+Ubiquity aspires to never become another labyrinthine system.
 
 # Preview of some features
 ## Devtools console program
