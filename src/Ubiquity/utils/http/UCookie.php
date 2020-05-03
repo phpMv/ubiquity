@@ -33,9 +33,9 @@ class UCookie {
 	 *
 	 * @param string $name
 	 * @param string $default
-	 * @return ?string
+	 * @return string|array|null
 	 */
-	public static function get($name, $default = null): ?string {
+	public static function get($name, $default = null) {
 		return $_COOKIE [$name] ?? $default;
 	}
 
