@@ -2,8 +2,6 @@
 
 namespace Ubiquity\orm\bulk;
 
-use Ubiquity\orm\OrmUtils;
-
 /**
  * Ubiquity\orm\bulk$BulkInserts
  * This class is part of Ubiquity

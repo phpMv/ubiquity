@@ -35,7 +35,7 @@ class LengthValidator extends ValidatorMultiple implements HasNotNullInterface {
 		return $this->validateValue ( ( string ) $value );
 	}
 
-	private function validateValue($stringValue) {
+	protected function validateValue($stringValue) {
 		if (@mb_check_encoding ( $stringValue, $this->charset )) {
 			$length = mb_strlen ( $stringValue, $this->charset );
 			if ($this->min === $this->max && $this->min !== null && $length !== $this->max) {
