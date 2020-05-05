@@ -15,7 +15,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.12
+ * @version 1.0.13
  *
  */
 class Router {
@@ -31,7 +31,7 @@ class Router {
 
 	private static function getRoute_(&$routeDetails, $routePath, $matches, $cachedResponse) {
 		if (! isset ( $routeDetails ['controller'] )) {
-			$method = URequest::getMethod ();
+			$method = \strtolower ( $_SERVER ['REQUEST_METHOD'] );
 			if (isset ( $routeDetails [$method] )) {
 				$routeDetailsMethod = $routeDetails [$method];
 				return self::getRouteUrlParts ( [ 'path' => $routePath,'details' => $routeDetailsMethod ], $matches, $routeDetailsMethod ['cache'] ?? false, $routeDetailsMethod ['duration'] ?? null, $cachedResponse );
