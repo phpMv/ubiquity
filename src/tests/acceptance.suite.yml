@@ -9,8 +9,10 @@ modules:
     enabled:
         - WebDriver:
             url: 'http://dev.local/'
-            browser: firefox
-            window_size: 1024x768
+            window_size: false
+            browser: chrome
+            version: 75.0.3770.140
             capabilities:
-              unexpectedAlertBehaviour: 'accept'
+              "goog:chromeOptions":
+                w3c: false
         - \Helper\Acceptance
