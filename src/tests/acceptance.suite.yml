@@ -10,8 +10,5 @@ modules:
         - WebDriver:
             url: 'http://dev.local/'
             window_size: false
-            browser: chrome
-            capabilities:
-              "goog:chromeOptions":
-                w3c: false
+            browser: firefox
         - \Helper\Acceptance
