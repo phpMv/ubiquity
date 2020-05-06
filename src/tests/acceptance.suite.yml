@@ -11,6 +11,6 @@ modules:
             url: 'http://dev.local/'
             browser: chrome
             capabilities:
-              "goog:chromeOptions":
+              "chromeOptions":
                 w3c: false
         - \Helper\Acceptance
