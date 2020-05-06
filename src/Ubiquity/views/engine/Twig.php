@@ -32,7 +32,7 @@ class Twig extends TemplateEngine {
 	private $twig;
 	private $loader;
 
-	public function __construct($options = array()) {
+	public function __construct($options = array ()) {
 		$loader = new FilesystemLoader ( \ROOT . \DS . "views" . \DS );
 		$loader->addPath ( implode ( \DS, [ Startup::getFrameworkDir (),"..","core","views" ] ) . \DS, "framework" );
 		$this->loader = $loader;
@@ -51,7 +51,7 @@ class Twig extends TemplateEngine {
 			$this->loader->setPaths ( [ \ROOT . \DS . 'views' ], "activeTheme" );
 		}
 
-		$this->addFunction ( 'path', function ($name, $params = [], $absolute = false) {
+		$this->addFunction ( 'path', function ($name, $params = [ ], $absolute = false) {
 			return Router::path ( $name, $params, $absolute );
 		} );
 
@@ -59,26 +59,35 @@ class Twig extends TemplateEngine {
 			return Router::url ( $name, $params );
 		} );
 
-		$this->addFunction ( 'css', function ($resource, $parameters = [], $absolute = false) {
+		if (\class_exists ( '\\Ubiquity\\security\\csrf\\UCsrfHttp' )) {
+			$this->addFunction ( 'csrfMeta', function ($name) {
+				return \Ubiquity\security\csrf\UCsrfHttp::getTokenMeta ( $name );
+			}, true );
+			$this->addFunction ( 'csrf', function ($name) {
+				return \Ubiquity\security\csrf\UCsrfHttp::getTokenField ( $name );
+			}, true );
+		}
+
+		$this->addFunction ( 'css', function ($resource, $parameters = [ ], $absolute = false) {
 			if ($this->hasThemeResource ( $resource )) {
 				return AssetsManager::css_ ( $resource, $parameters, $absolute );
 			}
 			return AssetsManager::css ( $resource, $parameters, $absolute );
 		}, true );
 
-		$this->addFunction ( 'js', function ($resource, $parameters = [], $absolute = false) {
+		$this->addFunction ( 'js', function ($resource, $parameters = [ ], $absolute = false) {
 			if ($this->hasThemeResource ( $resource )) {
 				return AssetsManager::js_ ( $resource, $parameters, $absolute );
 			}
 			return AssetsManager::js ( $resource, $parameters, $absolute );
 		}, true );
 
-		$t = new TwigFunction ( 't', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
+		$t = new TwigFunction ( 't', function ($context, $id, array $parameters = array (), $domain = null, $locale = null) {
 			$trans = TranslatorManager::trans ( $id, $parameters, $domain, $locale );
 			return $this->twig->createTemplate ( $trans )->render ( $context );
 		}, [ 'needs_context' => true ] );
 
-		$tc = new TwigFunction ( 'tc', function ($context, $id, array $choice, array $parameters = array(), $domain = null, $locale = null) {
+		$tc = new TwigFunction ( 'tc', function ($context, $id, array $choice, array $parameters = array (), $domain = null, $locale = null) {
 			$trans = TranslatorManager::transChoice ( $id, $choice, $parameters, $domain, $locale );
 			return $this->twig->createTemplate ( $trans )->render ( $context );
 		}, [ 'needs_context' => true ] );
