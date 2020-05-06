@@ -9,8 +9,10 @@ modules:
     enabled:
         - WebDriver:
             url: 'http://dev.local/'
-            browser: chrome
+             window_size: false # disabled in ChromeDriver
+             port: 9515
+             browser: chrome
             capabilities:
-              "chromeOptions":
+              "goog:chromeOptions":
                 w3c: false
         - \Helper\Acceptance
