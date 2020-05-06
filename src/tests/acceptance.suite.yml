@@ -13,4 +13,5 @@ modules:
             capabilities:
               "goog:chromeOptions":
                 w3c: false
+                version: 75
         - \Helper\Acceptance
