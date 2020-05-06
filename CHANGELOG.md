@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrelease]
 - Nothing
-
+## [2.3.8] 2020-05-06
+### Added
+- Add csrf functions to twig templates
+### Updated
+- Update client libraries for new projects (Fomantic 2.8.4, jQuery 3.5.1)
+- Update to Twig 3.0
 ## [2.3.7] 2020-04-30
 ### Added
 - add `password_hash` to URequest
