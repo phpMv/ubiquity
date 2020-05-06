@@ -11,7 +11,6 @@ modules:
             url: 'http://dev.local/'
             window_size: false
             browser: chrome
-            version: 75.0.3770.140
             capabilities:
               "goog:chromeOptions":
                 w3c: false

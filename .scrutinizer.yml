@@ -30,6 +30,8 @@ build:
               host: 'dev.local'
               web_root: 'src/'
         selenium: true
+        google_chrome:
+          use_latest: true
       services:
           # For available tags, see https://hub.docker.com/_/mysql/
           mysql: 5.7
