@@ -232,7 +232,9 @@ class AdminCest extends BaseAcceptance {
 		$I->waitForText ( 'newMaintenance' );
 		$I->waitForElement ( "#bt-de-activate" );
 
-		$I->amOnPage ( "/TestCrudOrgas" );
+		$I->wait ( self::TIMEOUT );
+
+		$I->amOnPage ( "/" );
 		$I->waitForText ( "Coming soon" );
 		$I->waitForText ( "Soon available" );
 		$I->waitForElement ( "#remind" );

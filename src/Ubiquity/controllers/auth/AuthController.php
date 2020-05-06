@@ -6,7 +6,6 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\flash\FlashMessage;
 use Ubiquity\controllers\Controller;
-use Ubiquity\controllers\Auth\AuthFiles;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\Startup;
