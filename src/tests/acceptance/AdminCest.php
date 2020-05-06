@@ -26,13 +26,14 @@ class AdminCest extends BaseAcceptance {
 	private function gotoAdminModule(string $url, AcceptanceTester $I) {
 		$I->amOnPage ( "/Admin/index" );
 		$I->seeInCurrentUrl ( "Admin/index" );
-		$this->waitAndclick ( $I, "a[href='" . $url . "']" );
+		// $this->waitAndclick ( $I, "a[href='" . $url . "']" );
+		$I->amOnPage ( $url );
 		$I->waitForElementVisible ( "#content-header", self::TIMEOUT );
 		$I->canSeeInCurrentUrl ( $url );
 	}
 
 	public function tryToGotoAdminModels(AcceptanceTester $I) {
-		$this->gotoAdminModule ( "Admin/Models", $I );
+		$this->gotoAdminModule ( "Admin/models", $I );
 		$I->click ( "a[data-model='models.Connection']" );
 		$I->waitForElementVisible ( "#btAddNew", self::TIMEOUT );
 		$I->canSeeInCurrentUrl ( "/Admin/_showModel/models.Connection" );
