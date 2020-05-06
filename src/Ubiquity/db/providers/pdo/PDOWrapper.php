@@ -16,7 +16,7 @@ use Ubiquity\exceptions\DBException;
  */
 class PDOWrapper extends AbstractDbWrapper {
 	protected static $savepointsDrivers = [ 'pgsql' => true,'mysql' => true,'sqlite' => true ];
-	private static $quotes = [ 'mysql' => '`','sqlite' => '"','pgsql' => '' ];
+	private static $quotes = [ 'mysql' => '`','sqlite' => '"','pgsql' => '"' ];
 	protected $driversMetasClasses = [ 'mysql' => '\\Ubiquity\\db\\providers\\pdo\\drivers\\MysqlDriverMetas','pgsql' => '\\Ubiquity\\db\\providers\\pdo\\drivers\\PgsqlDriverMetas','sqlite' => '\\Ubiquity\\db\\providers\\pdo\\drivers\\SqliteDriverMetas' ];
 	protected $transactionLevel = 0;
 	protected $dbType;
