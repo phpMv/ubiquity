@@ -10,7 +10,6 @@ modules:
         - WebDriver:
             url: 'http://dev.local/'
             window_size: false
-            port: 9515
             browser: chrome
             capabilities:
               "goog:chromeOptions":
