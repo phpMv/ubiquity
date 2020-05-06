@@ -27,7 +27,7 @@ class AdminCest extends BaseAcceptance {
 		$I->amOnPage ( "/Admin/index" );
 		$I->seeInCurrentUrl ( "Admin/index" );
 		// $this->waitAndclick ( $I, "a[href='" . $url . "']" );
-		$I->amOnPage ( $url );
+		$I->amOnPage ( '/' . $url );
 		$I->waitForElementVisible ( "#content-header", self::TIMEOUT );
 		$I->canSeeInCurrentUrl ( $url );
 	}
