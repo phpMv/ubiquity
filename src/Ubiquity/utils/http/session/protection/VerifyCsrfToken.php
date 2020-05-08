@@ -48,7 +48,7 @@ class VerifyCsrfToken implements VerifySessionCsrfInterface {
 	public function start() {
 		$token = $this->sessionInstance->get ( self::TOKEN_KEY );
 		if (isset ( $token )) {
-			if (! hash_equals ( $token->getValue (), UCookie::get ( $token->getName () ) )) {
+			if (! $token instanceof CsrfToken || ! hash_equals ( $token->getValue (), UCookie::get ( $token->getName () ) )) {
 				if (Logger::isActive ()) {
 					$this->csrfErrorLog ();
 				}
