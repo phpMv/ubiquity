@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\orm\traits;
 
 use Ubiquity\db\SqlUtils;
@@ -23,10 +24,8 @@ use Ubiquity\db\Database;
  *
  */
 trait DAOCoreTrait {
-
-	protected static $accessors = [];
-
-	protected static $fields = [];
+	protected static $accessors = [ ];
+	protected static $fields = [ ];
 
 	abstract public static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache): void;
 
@@ -43,60 +42,58 @@ trait DAOCoreTrait {
 	abstract protected static function getDb($model);
 
 	protected static function getClass_($instance) {
-		if (is_object($instance)) {
-			return get_class($instance);
+		if (is_object ( $instance )) {
+			return get_class ( $instance );
 		}
-		return $instance[0];
+		return $instance [0];
 	}
 
 	protected static function getInstance_($instance) {
-		if (\is_object($instance)) {
+		if (\is_object ( $instance )) {
 			return $instance;
 		}
-		return $instance[0];
+		return $instance [0];
 	}
 
 	protected static function getValue_($instance, $member) {
-		if (\is_object($instance)) {
-			return Reflexion::getMemberValue($instance, $member);
+		if (\is_object ( $instance )) {
+			return Reflexion::getMemberValue ( $instance, $member );
 		}
-		return $instance[1];
+		return $instance [1];
 	}
 
 	protected static function getFirstKeyValue_($instance) {
-		if (\is_object($instance)) {
-			return OrmUtils::getFirstKeyValue($instance);
+		if (\is_object ( $instance )) {
+			return OrmUtils::getFirstKeyValue ( $instance );
 		}
-		return $instance[1];
+		return $instance [1];
 	}
 
 	protected static function _getOne(Database $db, $className, ConditionParser $conditionParser, $included, $useCache) {
-		$conditionParser->limitOne();
-		$included = self::_getIncludedForStep($included);
+		$conditionParser->limitOne ();
+		$included = self::_getIncludedForStep ( $included );
 		$object = null;
 		$invertedJoinColumns = null;
 		$oneToManyFields = null;
 		$manyToManyFields = null;
 
-		$metaDatas = OrmUtils::getModelMetadata($className);
-		$tableName = $metaDatas['#tableName'];
-		$hasIncluded = $included || (\is_array($included) && \sizeof($included) > 0);
+		$metaDatas = OrmUtils::getModelMetadata ( $className );
+		$tableName = $metaDatas ['#tableName'];
+		$hasIncluded = $included || (\is_array ( $included ) && \sizeof ( $included ) > 0);
 		if ($hasIncluded) {
-			self::_initRelationFields($included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields);
+			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
-		$transformers = $metaDatas['#transformers'][self::$transformerOp] ?? [];
-		$query = $db->prepareAndExecute($tableName, SqlUtils::checkWhere($conditionParser->getCondition()), self::_getFieldList($tableName, $metaDatas), $conditionParser->getParams(), $useCache);
-		if ($query && \sizeof($query) > 0) {
-			$oneToManyQueries = [];
-			$manyToOneQueries = [];
-			$manyToManyParsers = [];
-			$object = self::_loadObjectFromRow($db, \current($query), $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $metaDatas['#memberNames'], $metaDatas['#accessors'], $transformers);
+		$transformers = $metaDatas ['#transformers'] [self::$transformerOp] ?? [ ];
+		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::_getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		if ($query && \sizeof ( $query ) > 0) {
+			$oneToManyQueries = [ ];
+			$manyToOneQueries = [ ];
+			$manyToManyParsers = [ ];
+			$object = self::_loadObjectFromRow ( $db, \current ( $query ), $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $metaDatas ['#memberNames'] ?? null, $metaDatas ['#accessors'], $transformers );
 			if ($hasIncluded) {
-				self::_affectsRelationObjects($className, OrmUtils::getFirstPropKey($className), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [
-					$object
-				], $included, $useCache);
+				self::_affectsRelationObjects ( $className, OrmUtils::getFirstPropKey ( $className ), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $included, $useCache );
 			}
-			EventsManager::trigger(DAOEvents::GET_ONE, $object, $className);
+			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
 		}
 		return $object;
 	}
@@ -111,36 +108,36 @@ trait DAOCoreTrait {
 	 * @return array
 	 */
 	protected static function _getAll(Database $db, $className, ConditionParser $conditionParser, $included = true, $useCache = NULL) {
-		$included = self::_getIncludedForStep($included);
-		$objects = array();
+		$included = self::_getIncludedForStep ( $included );
+		$objects = array ();
 		$invertedJoinColumns = null;
 		$oneToManyFields = null;
 		$manyToManyFields = null;
 
-		$metaDatas = OrmUtils::getModelMetadata($className);
-		$tableName = $metaDatas['#tableName'];
-		if ($hasIncluded = ($included || (\is_array($included) && \sizeof($included) > 0))) {
-			self::_initRelationFields($included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields);
+		$metaDatas = OrmUtils::getModelMetadata ( $className );
+		$tableName = $metaDatas ['#tableName'];
+		if ($hasIncluded = ($included || (\is_array ( $included ) && \sizeof ( $included ) > 0))) {
+			self::_initRelationFields ( $included, $metaDatas, $invertedJoinColumns, $oneToManyFields, $manyToManyFields );
 		}
-		$transformers = $metaDatas['#transformers'][self::$transformerOp] ?? [];
-		$query = $db->prepareAndExecute($tableName, SqlUtils::checkWhere($conditionParser->getCondition()), self::_getFieldList($tableName, $metaDatas), $conditionParser->getParams(), $useCache);
-		$oneToManyQueries = [];
-		$manyToOneQueries = [];
-		$manyToManyParsers = [];
-		$propsKeys = OrmUtils::getPropKeys($className);
-		foreach ($query as $row) {
-			$object = self::_loadObjectFromRow($db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $metaDatas['#memberNames'], $metaDatas['#accessors'], $transformers);
-			$objects[OrmUtils::getPropKeyValues($object, $propsKeys)] = $object;
+		$transformers = $metaDatas ['#transformers'] [self::$transformerOp] ?? [ ];
+		$query = $db->prepareAndExecute ( $tableName, SqlUtils::checkWhere ( $conditionParser->getCondition () ), self::_getFieldList ( $tableName, $metaDatas ), $conditionParser->getParams (), $useCache );
+		$oneToManyQueries = [ ];
+		$manyToOneQueries = [ ];
+		$manyToManyParsers = [ ];
+		$propsKeys = OrmUtils::getPropKeys ( $className );
+		foreach ( $query as $row ) {
+			$object = self::_loadObjectFromRow ( $db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $metaDatas ['#memberNames'] ?? null, $metaDatas ['#accessors'], $transformers );
+			$objects [OrmUtils::getPropKeyValues ( $object, $propsKeys )] = $object;
 		}
 		if ($hasIncluded) {
-			self::_affectsRelationObjects($className, OrmUtils::getFirstPropKey($className), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache);
+			self::_affectsRelationObjects ( $className, OrmUtils::getFirstPropKey ( $className ), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache );
 		}
-		EventsManager::trigger(DAOEvents::GET_ALL, $objects, $className);
+		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
 		return $objects;
 	}
 
 	public static function _getFieldList($tableName, $metaDatas) {
-		return self::$fields[$tableName] ?? (self::$fields[$tableName] = SqlUtils::getFieldList(\array_diff($metaDatas['#fieldNames'], $metaDatas['#notSerializable']), $tableName));
+		return self::$fields [$tableName] ?? (self::$fields [$tableName] = SqlUtils::getFieldList ( \array_diff ( $metaDatas ['#fieldNames'], $metaDatas ['#notSerializable'] ), $tableName ));
 	}
 
 	/**
@@ -154,43 +151,43 @@ trait DAOCoreTrait {
 	 * @return object
 	 */
 	public static function _loadObjectFromRow(Database $db, $row, $className, $invertedJoinColumns, &$manyToOneQueries, $oneToManyFields, $manyToManyFields, &$oneToManyQueries, &$manyToManyParsers, $memberNames, $accessors, $transformers) {
-		$o = new $className();
-		if (self::$useTransformers) {
-			foreach ($transformers as $member => $transformer) {
-				$field = \array_search($member, $memberNames);
+		$o = new $className ();
+		if ($memberNames && self::$useTransformers) { // TOTO to remove
+			foreach ( $transformers as $member => $transformer ) {
+				$field = \array_search ( $member, $memberNames );
 				$transform = self::$transformerOp;
-				$row[$field] = $transformer::{$transform}($row[$field]);
+				$row [$field] = $transformer::{$transform} ( $row [$field] );
 			}
 		}
-		foreach ($row as $k => $v) {
-			if (isset($accessors[$k])) {
-				$accesseur = $accessors[$k];
-				$o->$accesseur($v);
+		foreach ( $row as $k => $v ) {
+			if (isset ( $accessors [$k] )) {
+				$accesseur = $accessors [$k];
+				$o->$accesseur ( $v );
 			}
-			$o->_rest[$memberNames[$k]] = $v;
-			if (isset($invertedJoinColumns) && isset($invertedJoinColumns[$k])) {
+			$o->_rest [$memberNames [$k] ?? $k] = $v;
+			if (isset ( $invertedJoinColumns ) && isset ( $invertedJoinColumns [$k] )) {
 				$fk = '_' . $k;
 				$o->$fk = $v;
-				self::prepareManyToOne($manyToOneQueries, $o, $v, $fk, $invertedJoinColumns[$k]);
+				self::prepareManyToOne ( $manyToOneQueries, $o, $v, $fk, $invertedJoinColumns [$k] );
 			}
 		}
-		if (isset($oneToManyFields)) {
-			foreach ($oneToManyFields as $k => $annot) {
-				self::prepareOneToMany($oneToManyQueries, $o, $k, $annot);
+		if (isset ( $oneToManyFields )) {
+			foreach ( $oneToManyFields as $k => $annot ) {
+				self::prepareOneToMany ( $oneToManyQueries, $o, $k, $annot );
 			}
 		}
-		if (isset($manyToManyFields)) {
-			foreach ($manyToManyFields as $k => $annot) {
-				self::prepareManyToMany($db, $manyToManyParsers, $o, $k, $annot);
+		if (isset ( $manyToManyFields )) {
+			foreach ( $manyToManyFields as $k => $annot ) {
+				self::prepareManyToMany ( $db, $manyToManyParsers, $o, $k, $annot );
 			}
 		}
 		return $o;
 	}
 
 	private static function parseKey(&$keyValues, $className, $quote) {
-		if (! \is_array($keyValues)) {
-			if (\strrpos($keyValues, '=') === false && \strrpos($keyValues, '>') === false && \strrpos($keyValues, '<') === false) {
-				$keyValues = $quote . OrmUtils::getFirstKey($className) . $quote . "='" . $keyValues . "'";
+		if (! \is_array ( $keyValues )) {
+			if (\strrpos ( $keyValues, '=' ) === false && \strrpos ( $keyValues, '>' ) === false && \strrpos ( $keyValues, '<' ) === false) {
+				$keyValues = $quote . OrmUtils::getFirstKey ( $className ) . $quote . "='" . $keyValues . "'";
 			}
 		}
 	}
