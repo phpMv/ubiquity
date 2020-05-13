@@ -20,7 +20,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class CacheManager {
@@ -60,7 +60,7 @@ class CacheManager {
 
 	public static function startProdFromCtrl() {
 		$config = &Startup::$config;
-		$cacheD = \ROOT . \DS .($config ['cache'] ['directory'] ??= 'cache' . \DS);
+		$cacheD = \ROOT . \DS . ($config ['cache'] ['directory'] ??= 'cache' . \DS);
 		$cacheSystem = $config ['cache'] ['system'] ?? 'Ubiquity\\cache\\system\\ArrayCache';
 		self::$cache = new $cacheSystem ( $cacheD, '.cache', $config ['cache'] ['params'] ?? [ ]);
 	}
@@ -236,6 +236,14 @@ class CacheManager {
 																						'getMapping' => 'Ubiquity\annotations\router\GetAnnotation',
 																						'post' => 'Ubiquity\annotations\router\PostAnnotation',
 																						'postMapping' => 'Ubiquity\annotations\router\PostAnnotation',
+																						'put' => 'Ubiquity\annotations\router\PutAnnotation',
+																						'putMapping' => 'Ubiquity\annotations\router\PutAnnotation',
+																						'patch' => 'Ubiquity\annotations\router\PatchAnnotation',
+																						'patchMapping' => 'Ubiquity\annotations\router\PatchAnnotation',
+																						'delete' => 'Ubiquity\annotations\router\DeleteAnnotation',
+																						'deleteMapping' => 'Ubiquity\annotations\router\DeleteAnnotation',
+																						'options' => 'Ubiquity\annotations\router\OptionsAnnotation',
+																						'optionsMapping' => 'Ubiquity\annotations\router\OptionsAnnotation',
 																						'var' => 'mindplay\annotations\standard\VarAnnotation',
 																						'yuml' => 'Ubiquity\annotations\YumlAnnotation',
 																						'rest' => 'Ubiquity\annotations\rest\RestAnnotation',

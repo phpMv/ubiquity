@@ -107,10 +107,10 @@ Creation
    namespace controllers;
     /**
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ControllerBase{
    
-   	/**
+    	/**
     	* @route("products")
     	*/
    	public function index(){}
@@ -131,7 +131,7 @@ A route can have parameters:
    namespace controllers;
     /**
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ControllerBase{
    	...
     	/**
@@ -157,7 +157,7 @@ A route can define optional parameters, if the associated method has optional ar
    namespace controllers;
     /**
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ControllerBase{
    	...
     	/**
@@ -184,7 +184,7 @@ Route requirements
    namespace controllers;
     /**
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ControllerBase{
    	...
     	/**
@@ -218,10 +218,10 @@ It is possible to specify the http method or methods associated with a route:
    namespace controllers;
     /**
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ControllerBase{
    
-   	/**
+    /**
     * @route("products","methods"=>["get"])
     */
    	public function index(){}
@@ -250,11 +250,11 @@ If the **name** attribute is not specified, each route has a default name, based
     **/
    class ProductsController extends ControllerBase{
    
-   	/**
+    	/**
     	* @route("products","name"=>"products_index")
     	*/
-   	public function index(){}
-   
+    	public function index(){}
+    
    }
 
 URL or path generation
@@ -281,15 +281,15 @@ The **@route** annotation can be used on a controller class :
     /**
     * @route("/product")
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ControllerBase{
    
     ...
-   	/**
-    * @route("/all")
-    **/
-   	public function display(){}
-   
+    	/**
+    	* @route("/all")
+    	*/
+    	public function display(){}
+    
    }
 
 In this case, the route defined on the controller is used as a prefix for all controller routes : |br|
@@ -309,12 +309,12 @@ If a global route is defined, it is possible to add all controller actions as ro
     /**
     * @route("/product","automated"=>true)
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ControllerBase{
    
-   	public function generate(){}
-   	
-   	public function display(){}
+    	public function generate(){}
+    
+    	public function display(){}
    
    }
    
@@ -334,17 +334,17 @@ The base class:
    namespace controllers;
     /**
     * Controller ProductsBase
-    **/
+    */
    abstract class ProductsBase extends ControllerBase{
    
    	/**
    	*@route("(index/)?")
-   	**/   	
+   	*/
    	public function index(){}
 
    	/**
    	*@route("sort/{name}")
-   	**/   	
+   	*/
    	public function sortBy($name){}
    
    }
@@ -360,7 +360,7 @@ The derived class using inherited attribute:
     /**
     * @route("/product","inherited"=>true)
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ProductsBase{
    
    	public function display(){}
@@ -391,19 +391,19 @@ In the example below, the **products/all** route will be defined before the **/p
    namespace controllers;
     /**
     * Controller ProductsController
-    **/
+    */
    class ProductsController extends ControllerBase{
    
-   	/**
-    * @route("products","priority"=>1)
-    */
-   	public function index(){}
-   	
-   	/**
-    * @route("products/all","priority"=>10)
-    */
-   	public function all(){}
-   
+    	/**
+    	* @route("products","priority"=>1)
+    	*/
+    	public function index(){}
+    	
+    	/**
+    	* @route("products/all","priority"=>10)
+    	*/
+    	public function all(){}
+    
    }
 
 Routes response caching
