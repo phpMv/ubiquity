@@ -1,6 +1,7 @@
 Ubiquity dependencies
 =====================
-- ``^php 7.1``
+- ``^php 7.4``
+- ``phpmv/ubiquity`` => Ubiquity core
 In production
 -------------
 Templating

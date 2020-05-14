@@ -365,7 +365,7 @@ The controller namespace is defined by default to `controllers` in the `app/conf
 Super class
 -----------
 
-The use of inheritance can be used to factorize controller behavior. |br|
+Inheritance can be used to factorize controller behavior. |br|
 The `BaseController` class created with a new project is present for this purpose.
 
 Specific controller base classes

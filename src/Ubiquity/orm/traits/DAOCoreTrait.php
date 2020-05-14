@@ -89,8 +89,7 @@ trait DAOCoreTrait {
 			$oneToManyQueries = [ ];
 			$manyToOneQueries = [ ];
 			$manyToManyParsers = [ ];
-			$accessors = $metaDatas ['#accessors'];
-			$object = self::_loadObjectFromRow ( $db, \current ( $query ), $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
+			$object = self::_loadObjectFromRow ( $db, \current ( $query ), $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $metaDatas ['#memberNames'] ?? null, $metaDatas ['#accessors'], $transformers );
 			if ($hasIncluded) {
 				self::_affectsRelationObjects ( $className, OrmUtils::getFirstPropKey ( $className ), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $included, $useCache );
 			}
@@ -126,11 +125,9 @@ trait DAOCoreTrait {
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
 		$propsKeys = OrmUtils::getPropKeys ( $className );
-		$accessors = $metaDatas ['#accessors'];
 		foreach ( $query as $row ) {
-			$object = self::_loadObjectFromRow ( $db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $accessors, $transformers );
-			$key = OrmUtils::getPropKeyValues ( $object, $propsKeys );
-			$objects [$key] = $object;
+			$object = self::_loadObjectFromRow ( $db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $oneToManyFields, $manyToManyFields, $oneToManyQueries, $manyToManyParsers, $metaDatas ['#memberNames'] ?? null, $metaDatas ['#accessors'], $transformers );
+			$objects [OrmUtils::getPropKeyValues ( $object, $propsKeys )] = $object;
 		}
 		if ($hasIncluded) {
 			self::_affectsRelationObjects ( $className, OrmUtils::getFirstPropKey ( $className ), $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache );
@@ -153,12 +150,13 @@ trait DAOCoreTrait {
 	 * @param array $accessors
 	 * @return object
 	 */
-	public static function _loadObjectFromRow(Database $db, $row, $className, &$invertedJoinColumns, &$manyToOneQueries, &$oneToManyFields, &$manyToManyFields, &$oneToManyQueries, &$manyToManyParsers, &$accessors, &$transformers) {
+	public static function _loadObjectFromRow(Database $db, $row, $className, $invertedJoinColumns, &$manyToOneQueries, $oneToManyFields, $manyToManyFields, &$oneToManyQueries, &$manyToManyParsers, $memberNames, $accessors, $transformers) {
 		$o = new $className ();
-		if (self::$useTransformers) {
-			foreach ( $transformers as $field => $transformer ) {
+		if ($memberNames && self::$useTransformers) { // TOTO to remove
+			foreach ( $transformers as $member => $transformer ) {
+				$field = \array_search ( $member, $memberNames );
 				$transform = self::$transformerOp;
-				$row [$field] = $transformer::$transform ( $row [$field] );
+				$row [$field] = $transformer::{$transform} ( $row [$field] );
 			}
 		}
 		foreach ( $row as $k => $v ) {
@@ -166,7 +164,7 @@ trait DAOCoreTrait {
 				$accesseur = $accessors [$k];
 				$o->$accesseur ( $v );
 			}
-			$o->_rest [$k] = $v;
+			$o->_rest [$memberNames [$k] ?? $k] = $v;
 			if (isset ( $invertedJoinColumns ) && isset ( $invertedJoinColumns [$k] )) {
 				$fk = '_' . $k;
 				$o->$fk = $v;
