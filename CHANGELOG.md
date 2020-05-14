@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
-- Nothing
+### Added
+- `put`, `patch`, `delete`, `options` annotations added for router (see [#108](https://github.com/phpMv/ubiquity/issues/108))
+### Fixed
+- ORM: pbs on column annotation see [#116](https://github.com/phpMv/ubiquity/issues/116) and [#117](https://github.com/phpMv/ubiquity/issues/117)
 ## [2.3.8] 2020-05-06
 ### Added
 - Add csrf functions to twig templates
