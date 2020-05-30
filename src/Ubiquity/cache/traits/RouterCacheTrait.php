@@ -12,6 +12,7 @@ use Ubiquity\controllers\di\DiManager;
 use Ubiquity\utils\base\UIntrospection;
 use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\StartupAsync;
+use Ubiquity\utils\http\UResponse;
 
 /**
  *
@@ -19,7 +20,7 @@ use Ubiquity\controllers\StartupAsync;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.8
+ * @version 1.0.9
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
@@ -98,7 +99,8 @@ trait RouterCacheTrait {
 	}
 
 	private static function storeRouteResponse($key, $response) {
-		self::$cache->store ( 'controllers/' . $key, $response, 'controllers', false );
+		$cache = [ 'content-type' => UResponse::$headers ['Content-Type'] ?? 'text/html','content' => $response ];
+		self::$cache->store ( 'controllers/' . $key, 'return ' . UArray::asPhpArray ( $cache, 'array' ) . ';', 'controllers' );
 		return $response;
 	}
 
@@ -125,8 +127,11 @@ trait RouterCacheTrait {
 		$key = self::getRouteKey ( $routePath );
 
 		if (self::$cache->exists ( 'controllers/' . $key ) && ! self::expired ( $key, $duration )) {
-			$response = self::$cache->file_get_contents ( 'controllers/' . $key );
-			return $response;
+			$response = self::$cache->fetch ( 'controllers/' . $key );
+			if ($ct = $response ['content-type'] ?? false) {
+				UResponse::setContentType ( $ct );
+			}
+			return $response ['content'] ?? '';
 		} else {
 			$response = Startup::runAsString ( $routeArray );
 			return self::storeRouteResponse ( $key, $response );
