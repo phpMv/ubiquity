@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `put`, `patch`, `delete`, `options` annotations added for router (see [#108](https://github.com/phpMv/ubiquity/issues/108))
 ### Fixed
+- Router cache Content-Type omited see [#120](https://github.com/phpMv/ubiquity/issues/120)
 - ORM: pbs on column annotation see [#116](https://github.com/phpMv/ubiquity/issues/116) and [#117](https://github.com/phpMv/ubiquity/issues/117)
 ## [2.3.8] 2020-05-06
 ### Added
