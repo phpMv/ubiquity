@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+- Nothing
+## [2.3.9] 2020-06-04
 ### Added
 - `put`, `patch`, `delete`, `options` annotations added for router (see [#108](https://github.com/phpMv/ubiquity/issues/108))
 ### Fixed
