@@ -12,7 +12,7 @@ use Ubiquity\orm\parser\ConditionParser;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 abstract class DAOPreparedQuery {
@@ -188,7 +188,7 @@ abstract class DAOPreparedQuery {
 		}
 		$this->transformers = $metaDatas ['#transformers'] [DAO::$transformerOp] ?? [ ];
 		$this->fieldList = DAO::_getFieldList ( $this->tableName, $metaDatas );
-		$this->memberList = \array_flip ( $this->fieldList );
+		$this->memberList = \array_flip ( \array_diff ( $metaDatas ['#fieldNames'], $metaDatas ['#notSerializable'] ) );
 		$this->propsKeys = OrmUtils::getPropKeys ( $this->className );
 		$this->accessors = $metaDatas ['#accessors'];
 		$this->firstPropKey = OrmUtils::getFirstPropKey ( $this->className );
