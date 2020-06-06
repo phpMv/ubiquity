@@ -440,6 +440,68 @@ Example with a modification of the theme according to a variable passed in the U
 		}
 	});
 
+Mobile device support
+~~~~~~~~~~~~~~~~~~~~~
+Add a mobile device detection tool. |br|
+Installing MobileDetect:
+
+.. code-block:: bash
+    
+    composer require mobiledetect/mobiledetectlib
+    
+
+It is generally easier to create different views per device.
+
+Create a specific theme for the mobile part (by creating a folder `views/themes/mobile` and putting the views specific to mobile devices in it). |br|
+It is important in this case to use the same file names for the mobile and non-mobile part.
+
+It is also advisable in this case that all view loadings use the **@activeTheme**:
+
+.. code-block:: php
+    
+    $this->loadView("@activeTheme/index.html");
+    
+
+**index.html** must be available in this case in the folders `views` and `views/themes/mobile`.
+
+Global mobile detection (from services.php)
++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: php
+   :linenos:
+   :caption: app/config/services.php
+   
+   use Ubiquity\themes\ThemesManager;
+   
+   ...
+   
+   ThemesManager::onBeforeRender(function () {
+   	$mb = new \Mobile_Detect();
+   	if ($mb->isMobile()) {
+   		ThemesManager::setActiveTheme('mobile');
+   	}
+   });
+   
+
+Locale detection (From a controller)
+++++++++++++++++++++++++++++++++++++
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/FooController.php
+   
+   use Ubiquity\themes\ThemesManager;
+   
+   ...
+   
+   	public function initialize() {
+   		$mb = new \Mobile_Detect();
+   		if ($mb->isMobile()) {
+   			ThemesManager::setActiveTheme('mobile');
+   		}
+   		parent::initialize();
+   	}
+
 View and assets loading
 -----------------------
 
