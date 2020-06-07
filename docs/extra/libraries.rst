@@ -29,7 +29,7 @@ Dependency installation
 Among the listed dependencies:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Click on the add button of the dependencies you want to add.
+Click on the **add** button of the dependencies you want to add.
 
 .. image:: /_static/images/composer/composer-add-1.png
    :class: bordered
@@ -40,3 +40,35 @@ Then click on the **Generate composer update** button:
    :class: bordered
 
 The validation generates the update.
+
+For non listed dependencies:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Click on the **Add dependency** button :
+
+.. image:: /_static/images/composer/composer-add-dependency.png
+   :class: bordered
+
+- Enter a vendor name (provider) ;
+- Select a package in the list ;
+- Select eventually a version (if none, the last stable version will be installed).
+
+Dependency removal
+------------------
+
+Click on the **remove** button of the dependencies you want to add.
+
+.. image:: /_static/images/composer/composer-remove-1.png
+   :class: bordered
+
+Then click on the **Generate composer update** button, and validate the update.
+
+.. note:: It is possible to perform several addition or deletion operations and validate them simultaneously.
+
+Composer optimization
+---------------------
+
+Click on the **Optimize autoloader** button.
+
+This optimize composer autoloading with an authoritative classmap.
+
