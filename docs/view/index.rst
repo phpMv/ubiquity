@@ -452,17 +452,17 @@ Installing MobileDetect:
 
 It is generally easier to create different views per device.
 
-Create a specific theme for the mobile part (by creating a folder `views/themes/mobile` and putting the views specific to mobile devices in it). |br|
+Create a specific theme for the mobile part (by creating a folder ``views/themes/mobile`` and putting the views specific to mobile devices in it). |br|
 It is important in this case to use the same file names for the mobile and non-mobile part.
 
-It is also advisable in this case that all view loadings use the **@activeTheme**:
+It is also advisable in this case that all view loadings use the **@activeTheme** namespace:
 
 .. code-block:: php
     
     $this->loadView("@activeTheme/index.html");
     
 
-**index.html** must be available in this case in the folders `views` and `views/themes/mobile`.
+**index.html** must be available in this case in the folders ``views`` and ``views/themes/mobile``.
 
 Global mobile detection (from services.php)
 +++++++++++++++++++++++++++++++++++++++++++
@@ -483,7 +483,7 @@ Global mobile detection (from services.php)
    });
    
 
-Locale detection (From a controller)
+Locale detection (from a controller)
 ++++++++++++++++++++++++++++++++++++
 
 .. code-block:: php
