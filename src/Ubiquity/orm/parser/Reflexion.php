@@ -10,7 +10,8 @@ use Ubiquity\orm\OrmUtils;
  * in dev environment only
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
+ *
  */
 class Reflexion {
 	use ReflexionFieldsTrait;
@@ -49,9 +50,10 @@ class Reflexion {
 	public static function getPropertiesAndValues($instance, $props = NULL) {
 		$ret = array ();
 		$className = \get_class ( $instance );
+		$modelMetas = OrmUtils::getModelMetadata ( $className );
 		if (isset ( self::$classProperties [$className] )) {
-			foreach ( self::$classProperties [$className] as $prop ) {
-				$ret [$prop->getName ()] = $prop->getValue ( $instance );
+			foreach ( self::$classProperties [$className] as $name => $prop ) {
+				$ret [$name] = $prop->getValue ( $instance );
 			}
 			return $ret;
 		}
@@ -60,11 +62,11 @@ class Reflexion {
 		foreach ( $props as $prop ) {
 			$prop->setAccessible ( true );
 			$v = $prop->getValue ( $instance );
-			if (OrmUtils::isSerializable ( $className, $prop->getName () )) {
+			if (\array_search ( $prop->getName (), $modelMetas ['#notSerializable'] ) === false) {
 				if (OrmUtils::isNotNullOrNullAccepted ( $v, $className, $prop->getName () )) {
-					$name = OrmUtils::getFieldName ( $className, $prop->getName () );
+					$name = $modelMetas ['#fieldNames'] [$prop->getName ()] ?? $prop->getName ();
 					$ret [$name] = $v;
-					self::$classProperties [$className] [] = $prop;
+					self::$classProperties [$className] [$name] = $prop;
 				}
 			}
 		}
