@@ -36,5 +36,9 @@ abstract class AbstractSession {
 	abstract public function getAll();
 
 	abstract public function delete($key);
+
+	public function getVerifyCsrf() {
+		return $this->verifyCsrf;
+	}
 }
 
