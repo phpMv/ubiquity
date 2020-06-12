@@ -51,7 +51,6 @@ class TransformersManager {
 	 * @param ?string $op
 	 */
 	public static function startProd(?string $op = 'transform'): void {
-		self::start ();
 		DAO::$useTransformers = true;
 		DAO::$transformerOp = $op;
 	}
