@@ -9,7 +9,7 @@ namespace Ubiquity\utils\http\session\protection;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class NoCsrfProtection implements VerifySessionCsrfInterface {
@@ -21,5 +21,9 @@ class NoCsrfProtection implements VerifySessionCsrfInterface {
 	}
 
 	public function clear() {
+	}
+
+	public function getLevel() {
+		return 0;
 	}
 }

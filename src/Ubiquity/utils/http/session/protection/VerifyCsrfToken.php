@@ -11,7 +11,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class VerifyCsrfToken implements VerifySessionCsrfInterface {
@@ -58,6 +58,10 @@ class VerifyCsrfToken implements VerifySessionCsrfInterface {
 			}
 		}
 		$this->init ();
+	}
+
+	public function getLevel() {
+		return 1;
 	}
 }
 

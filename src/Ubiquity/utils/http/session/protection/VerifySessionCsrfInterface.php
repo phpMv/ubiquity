@@ -7,7 +7,7 @@ namespace Ubiquity\utils\http\session\protection;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 interface VerifySessionCsrfInterface {
@@ -17,5 +17,10 @@ interface VerifySessionCsrfInterface {
 	public function start();
 
 	public function clear();
+
+	/**
+	 * Get security level.
+	 */
+	abstract public function getLevel();
 }
 
