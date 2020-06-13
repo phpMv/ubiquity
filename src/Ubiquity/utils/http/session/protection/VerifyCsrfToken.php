@@ -60,7 +60,7 @@ class VerifyCsrfToken implements VerifySessionCsrfInterface {
 		$this->init ();
 	}
 
-	public function getLevel() {
+	public static function getLevel() {
 		return 1;
 	}
 }

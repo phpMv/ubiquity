@@ -21,6 +21,6 @@ interface VerifySessionCsrfInterface {
 	/**
 	 * Get security level.
 	 */
-	abstract public function getLevel();
+	public static function getLevel();
 }
 

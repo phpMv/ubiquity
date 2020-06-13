@@ -23,7 +23,7 @@ class NoCsrfProtection implements VerifySessionCsrfInterface {
 	public function clear() {
 	}
 
-	public function getLevel() {
+	public static function getLevel() {
 		return 0;
 	}
 }
