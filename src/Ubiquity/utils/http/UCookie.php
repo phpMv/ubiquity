@@ -2,16 +2,25 @@
 
 namespace Ubiquity\utils\http;
 
+use Ubiquity\contents\transformation\TransformerInterface;
+
 /**
  * Http Cookies utilities
  * Ubiquity\utils\http$UCookie
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.1.1
  *
  */
 class UCookie {
+
+	/**
+	 *
+	 * @var TransformerInterface
+	 */
+	private static $transformer;
+	public static $useTransformer = false;
 
 	/**
 	 * Sends a cookie
@@ -25,6 +34,9 @@ class UCookie {
 	 * @return boolean
 	 */
 	public static function set($name, $value, $duration = 60 * 60 * 24, $path = '/', $secure = false, $httpOnly = false): bool {
+		if (self::$useTransformer && isset ( self::$transformer )) {
+			$value = self::$transformer->transform ( $value );
+		}
 		return \setcookie ( $name, $value, $duration ? (\time () + $duration) : null, $path, $secure, $httpOnly );
 	}
 
@@ -36,7 +48,11 @@ class UCookie {
 	 * @return string|array|null
 	 */
 	public static function get($name, $default = null) {
-		return $_COOKIE [$name] ?? $default;
+		$v = $_COOKIE [$name] ?? $default;
+		if (self::$useTransformer && isset ( self::$transformer )) {
+			return self::$transformer->reverse ( $v );
+		}
+		return $v;
 	}
 
 	/**
@@ -85,6 +101,21 @@ class UCookie {
 	 * @since Ubiquity 2.0.11
 	 */
 	public static function setRaw($name, $value, $duration = 60 * 60 * 24, $path = '/', $secure = false, $httpOnly = false): bool {
+		if (self::$useTransformer && isset ( self::$transformer )) {
+			$value = self::$transformer->transform ( $value );
+		}
 		return \setrawcookie ( $name, $value, \time () + $duration, $path, $secure, $httpOnly );
+	}
+
+	public static function setTransformer(TransformerInterface $transformer) {
+		self::$transformer = $transformer;
+		self::$useTransformer = true;
+	}
+
+	public static function getTransformerClass(): ?string {
+		if (isset ( self::$transformer )) {
+			return \get_class ( self::$transformer );
+		}
+		return null;
 	}
 }

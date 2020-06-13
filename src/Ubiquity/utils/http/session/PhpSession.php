@@ -8,7 +8,7 @@ namespace Ubiquity\utils\http\session;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class PhpSession extends AbstractSession {
@@ -62,6 +62,22 @@ class PhpSession extends AbstractSession {
 
 	public function delete($key) {
 		unset ( $_SESSION [$key] );
+	}
+
+	public function visitorCount(): int {
+		$sessionPath = \ini_get ( 'session.save_path' );
+		$sessionLifetime = \ini_get ( 'session.gc_maxlifetime' );
+		$files = glob ( $sessionPath . DS . 'sess_*' );
+		$now = time ();
+		$count = 0;
+		foreach ( $files as $file ) {
+			if (is_file ( $file )) {
+				if ($now - filemtime ( $file ) <= $sessionLifetime) {
+					$count ++;
+				}
+			}
+		}
+		return $count;
 	}
 }
 

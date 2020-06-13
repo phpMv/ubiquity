@@ -10,7 +10,7 @@ use Ubiquity\utils\http\session\protection\VerifyCsrfToken;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 abstract class AbstractSession {
@@ -36,6 +36,8 @@ abstract class AbstractSession {
 	abstract public function getAll();
 
 	abstract public function delete($key);
+
+	abstract public function visitorCount(): int;
 
 	public function getVerifyCsrf() {
 		return $this->verifyCsrf;
