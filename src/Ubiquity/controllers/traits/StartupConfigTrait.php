@@ -2,22 +2,23 @@
 
 namespace Ubiquity\controllers\traits;
 
-use Ubiquity\utils\base\UString;
-use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\utils\http\foundation\PhpHttp;
-use Ubiquity\utils\http\foundation\AbstractHttp;
-use Ubiquity\utils\http\session\PhpSession;
-use Ubiquity\utils\http\session\AbstractSession;
-use Ubiquity\utils\base\UArray;
-use Ubiquity\utils\base\CodeUtils;
+use Ubiquity\controllers\Router;
 use Ubiquity\orm\DAO;
+use Ubiquity\utils\base\CodeUtils;
+use Ubiquity\utils\base\UArray;
+use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\utils\base\UString;
+use Ubiquity\utils\http\foundation\AbstractHttp;
+use Ubiquity\utils\http\foundation\PhpHttp;
+use Ubiquity\utils\http\session\AbstractSession;
+use Ubiquity\utils\http\session\PhpSession;
 
 /**
  * Ubiquity\controllers\traits$StartupConfigTrait
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.3
+ * @version 1.1.4
  *
  */
 trait StartupConfigTrait {
@@ -137,6 +138,29 @@ trait StartupConfigTrait {
 
 	public static function setSessionInstance(AbstractSession $sessionInstance): void {
 		self::$sessionInstance = $sessionInstance;
+	}
+
+	public static function isValidUrl(string $url) {
+		$u = self::parseUrl ( $url );
+		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, false, self::$config ['debug'] ?? false)) !== false) {
+			if (\is_array ( $ru )) {
+				if (\is_string ( $ru [0] )) {
+					return static::isValidControllerAction ( $ru [0], $ru [1] ?? 'index');
+				} else {
+					return is_callable ( $ru );
+				}
+			}
+		} else {
+			$u [0] = self::$ctrlNS . $u [0];
+			return static::isValidControllerAction ( $u [0], $u [1] ?? 'index');
+		}
+	}
+
+	private static function isValidControllerAction($controller, $action) {
+		if (\class_exists ( $controller )) {
+			return \method_exists ( $controller, $action );
+		}
+		return false;
 	}
 }
 
