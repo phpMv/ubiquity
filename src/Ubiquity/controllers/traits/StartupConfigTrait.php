@@ -140,7 +140,7 @@ trait StartupConfigTrait {
 		self::$sessionInstance = $sessionInstance;
 	}
 
-	public static function isValidUrl(string $url) {
+	public static function isValidUrl(string $url): bool {
 		$u = self::parseUrl ( $url );
 		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, false, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
@@ -154,9 +154,10 @@ trait StartupConfigTrait {
 			$u [0] = self::$ctrlNS . $u [0];
 			return static::isValidControllerAction ( $u [0], $u [1] ?? 'index');
 		}
+		return false;
 	}
 
-	private static function isValidControllerAction($controller, $action) {
+	private static function isValidControllerAction(string $controller, string $action): bool {
 		if (\class_exists ( $controller )) {
 			return \method_exists ( $controller, $action );
 		}
