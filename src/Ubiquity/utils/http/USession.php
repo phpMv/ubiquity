@@ -323,18 +323,33 @@ class USession {
 		self::$sessionInstance->terminate ();
 	}
 
+	/**
+	 * Return the Csrf protection class name.
+	 *
+	 * @return string
+	 */
 	public static function getCsrfProtectionClass() {
 		if (isset ( self::$sessionInstance )) {
 			return \get_class ( self::$sessionInstance->getVerifyCsrf () );
 		}
 	}
 
+	/**
+	 * Return the instance class name for the session.
+	 *
+	 * @return string
+	 */
 	public static function getInstanceClass() {
 		if (isset ( self::$sessionInstance )) {
 			return \get_class ( self::$sessionInstance );
 		}
 	}
 
+	/**
+	 * Returns the number of sessions started.
+	 *
+	 * @return number
+	 */
 	public static function visitorCount() {
 		return self::$sessionInstance->visitorCount ();
 	}
