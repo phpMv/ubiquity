@@ -11,7 +11,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.1
+ * @version 1.1.2
  */
 class USession {
 	protected static $sessionInstance;
@@ -321,5 +321,21 @@ class USession {
 	 */
 	public static function terminate(): void {
 		self::$sessionInstance->terminate ();
+	}
+
+	public static function getCsrfProtectionClass() {
+		if (isset ( self::$sessionInstance )) {
+			return \get_class ( self::$sessionInstance->getVerifyCsrf () );
+		}
+	}
+
+	public static function getInstanceClass() {
+		if (isset ( self::$sessionInstance )) {
+			return \get_class ( self::$sessionInstance );
+		}
+	}
+
+	public static function visitorCount() {
+		return self::$sessionInstance->visitorCount ();
 	}
 }
