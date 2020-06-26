@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+- Nothing
+## [2.3.10] 2020-06-27
 ### Added
-- transformer for UCookie (for Crypto)
+- transformer for `UCookie` (for Crypto)
 - getter on session Csrf protection
 - security level to csrf protection (0 => no secure)
 ### Updated
