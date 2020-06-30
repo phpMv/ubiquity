@@ -62,7 +62,7 @@ trait RouterCacheTrait {
 	}
 
 	protected static function sortByPriority(&$array) {
-		uasort ( $array, function ($item1, $item2) {
+		\uasort ( $array, function ($item1, $item2) {
 			return UArray::getRecursive ( $item2, 'priority', 0 ) <=> UArray::getRecursive ( $item1, 'priority', 0 );
 		} );
 		UArray::removeRecursive ( $array, 'priority' );
@@ -105,7 +105,7 @@ trait RouterCacheTrait {
 	}
 
 	private static function getRouteKey($routePath) {
-		if (is_array ( $routePath )) {
+		if (\is_array ( $routePath )) {
 			return 'path' . \md5 ( \implode ( '', $routePath ) );
 		}
 		return 'path' . \md5 ( Router::slashPath ( $routePath ) );
