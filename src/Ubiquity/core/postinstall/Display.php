@@ -18,8 +18,8 @@ class Display {
 
 	public static function semanticMenu($id, $semantic) {
 		$links = self::getLinks ();
-		$menu = $semantic->htmlMenu ( $id, array_keys ( $links ) );
-		$menu->asLinks ( array_values ( $links ), 'new' );
+		$menu = $semantic->htmlMenu ( $id, \array_keys ( $links ) );
+		$menu->asLinks ( \array_values ( $links ), 'new' );
 		$menu->setSecondary ();
 		return $menu;
 	}
@@ -27,7 +27,7 @@ class Display {
 	public static function getLinks() {
 		$links = self::$links;
 		if (Framework::hasAdmin ()) {
-			$links ['UbiquityMyAdmin'] = 'Admin';
+			$links ['Webtools'] = 'Admin';
 		}
 		return $links;
 	}
