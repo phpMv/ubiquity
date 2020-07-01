@@ -3,6 +3,9 @@
 .inverted {
 	background-color: #333333!important;
 }
+.informations{
+	background-color: hsl(0, 8%, 25%)!important;
+}
 .logo{
 	font-family: 'Righteous', cursive;
 }
@@ -33,7 +36,7 @@
 			</div>
 		</div>
 		<!-- page Informations begin -->
-				<h4 class="ui top attached inverted header">Page informations</h4>
+				<h4 class="ui top attached inverted header informations">Page informations</h4>
 				{% set infos = infos|merge({'Template': _self}) %}
 				<div class="ui basic attached segment">
 					<div class="ui relaxed divided grid">
