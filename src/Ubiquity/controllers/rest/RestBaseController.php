@@ -207,7 +207,7 @@ abstract class RestBaseController extends Controller {
 		$this->operate_ ( $instance, function ($instance) {
 			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
-			if ($this->_validateInstance ( $instance, array_keys ( $datas ) )) {
+			if ($this->_validateInstance ( $instance, \array_keys ( $datas ) )) {
 				return $this->updateOperation ( $instance, $datas, true );
 			}
 			return null;
@@ -224,7 +224,7 @@ abstract class RestBaseController extends Controller {
 		$this->operate_ ( $instance, function ($instance) {
 			$datas = $this->getDatas ();
 			$this->_setValuesToObject ( $instance, $datas );
-			if ($this->_validateInstance ( $instance, $datas )) {
+			if ($this->_validateInstance ( $instance, \array_keys ( $datas ) )) {
 				return $this->AddOperation ( $instance, $datas, true );
 			}
 			return null;
