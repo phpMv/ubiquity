@@ -36,7 +36,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class ValidatorsManager {
@@ -48,33 +48,33 @@ class ValidatorsManager {
 		self::$cache = new SessionCache ();
 	}
 	public static $validatorTypes = [
-									"notNull" => NotNullValidator::class,
-									"isNull" => IsNullValidator::class,
-									"notEmpty" => NotEmptyValidator::class,
-									"isEmpty" => IsEmptyValidator::class,
-									"isTrue" => IsTrueValidator::class,
-									"isFalse" => IsFalseValidator::class,
-									"isBool" => IsBooleanValidator::class,
-									"equals" => EqualsValidator::class,
-									"type" => TypeValidator::class,
-									"greaterThan" => GreaterThanValidator::class,
-									"greaterThanOrEqual" => GreaterThanOrEqualValidator::class,
-									"lessThan" => LessThanValidator::class,
-									"lessThanOrEqual" => LessThanOrEqualValidator::class,
-									"length" => LengthValidator::class,
-									"id" => IdValidator::class,
-									"regex" => RegexValidator::class,
-									"email" => EmailValidator::class,
-									"url" => UrlValidator::class,
-									"ip" => IpValidator::class,
-									"range" => RangeValidator::class,
-									"date" => DateValidator::class,
-									"dateTime" => DateTimeValidator::class,
-									"time" => TimeValidator::class ];
+										"notNull" => NotNullValidator::class,
+										"isNull" => IsNullValidator::class,
+										"notEmpty" => NotEmptyValidator::class,
+										"isEmpty" => IsEmptyValidator::class,
+										"isTrue" => IsTrueValidator::class,
+										"isFalse" => IsFalseValidator::class,
+										"isBool" => IsBooleanValidator::class,
+										"equals" => EqualsValidator::class,
+										"type" => TypeValidator::class,
+										"greaterThan" => GreaterThanValidator::class,
+										"greaterThanOrEqual" => GreaterThanOrEqualValidator::class,
+										"lessThan" => LessThanValidator::class,
+										"lessThanOrEqual" => LessThanOrEqualValidator::class,
+										"length" => LengthValidator::class,
+										"id" => IdValidator::class,
+										"regex" => RegexValidator::class,
+										"email" => EmailValidator::class,
+										"url" => UrlValidator::class,
+										"ip" => IpValidator::class,
+										"range" => RangeValidator::class,
+										"date" => DateValidator::class,
+										"dateTime" => DateTimeValidator::class,
+										"time" => TimeValidator::class ];
 	protected static $key = "contents/validators/";
 
 	protected static function store($model, $validators) {
-		CacheManager::$cache->store ( self::getModelCacheKey ( $model ), $validators,'validators' );
+		CacheManager::$cache->store ( self::getModelCacheKey ( $model ), $validators, 'validators' );
 	}
 
 	protected static function fetch($model) {
@@ -129,19 +129,20 @@ class ValidatorsManager {
 	 *
 	 * @param object $instance
 	 * @param string $group
+	 * @param array $excludedValidators
 	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation[]
 	 */
-	public static function validate($instance, $group = "") {
+	public static function validate($instance, $group = "", $excludedValidators = [ ]) {
 		$class = get_class ( $instance );
 		$cache = self::getClassCacheValidators ( $class, $group );
 		if ($cache !== false) {
-			return self::validateFromCache_ ( $instance, $cache );
+			return self::validateFromCache_ ( $instance, $cache, $excludedValidators );
 		}
 		$members = self::fetch ( $class );
 		if ($group !== "") {
 			$members = self::getGroupArrayValidators ( $members, $group );
 		}
-		return self::validate_ ( $instance, $members );
+		return self::validate_ ( $instance, $members, $excludedValidators );
 	}
 
 	/**
@@ -192,18 +193,21 @@ class ValidatorsManager {
 		return $result;
 	}
 
-	protected static function validate_($instance, $members) {
+	protected static function validate_($instance, $members, $excludedValidators = [ ]) {
 		$result = [ ];
 		foreach ( $members as $member => $validators ) {
 			$accessor = "get" . ucfirst ( $member );
-			if (method_exists ( $instance, $accessor )) {
+			if (\method_exists ( $instance, $accessor )) {
 				foreach ( $validators as $validator ) {
-					$validatorInstance = self::getValidatorInstance ( $validator ["type"] );
-					if ($validatorInstance !== false) {
-						$validatorInstance->setValidationParameters ( $member, $validator ["constraints"], $validator ["severity"]??null, $validator ["message"]??null );
-						$valid = $validatorInstance->validate_ ( $instance->$accessor () );
-						if ($valid !== true) {
-							$result [] = $valid;
+					$typeV = $validator ['type'];
+					if (! isset ( $excludedValidators [$typeV] )) {
+						$validatorInstance = self::getValidatorInstance ( $typeV );
+						if ($validatorInstance !== false) {
+							$validatorInstance->setValidationParameters ( $member, $validator ["constraints"], $validator ["severity"] ?? null, $validator ["message"] ?? null);
+							$valid = $validatorInstance->validate_ ( $instance->$accessor () );
+							if ($valid !== true) {
+								$result [] = $valid;
+							}
 						}
 					}
 				}
@@ -246,7 +250,7 @@ class ValidatorsManager {
 				foreach ( $validators as $validator ) {
 					$validatorInstance = self::getValidatorInstance ( $validator ["type"] );
 					if ($validatorInstance !== false) {
-						$validatorInstance->setValidationParameters ( $member, $validator ["constraints"], $validator ["severity"]??null, $validator ["message"]??null );
+						$validatorInstance->setValidationParameters ( $member, $validator ["constraints"], $validator ["severity"] ?? null, $validator ["message"] ?? null);
 						if ($group === "" || (isset ( $validator ["group"] ) && $validator ["group"] === $group)) {
 							self::$instanceValidators [$class] [$accessor] [] = $validatorInstance;
 							$result [$accessor] [] = $validatorInstance;

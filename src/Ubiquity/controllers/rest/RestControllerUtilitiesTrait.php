@@ -136,7 +136,7 @@ trait RestControllerUtilitiesTrait {
 	 * @param object $instance the instance to update
 	 * @param array $values
 	 */
-	protected function _setValuesToObject($instance, $values = []) {
+	protected function _setValuesToObject($instance, $values = [ ]) {
 		if (URequest::isJSON ()) {
 			if (is_string ( $values )) {
 				$values = \json_decode ( $values, true );
@@ -228,12 +228,12 @@ trait RestControllerUtilitiesTrait {
 		}
 	}
 
-	public function _validateInstance($instance, $members) {
+	public function _validateInstance($instance, $members, $excludedValidators = [ ]) {
 		if ($this->useValidation) {
 			$isValid = true;
-			$violations = ValidatorsManager::validate ( $instance );
+			$violations = ValidatorsManager::validate ( $instance, '', $excludedValidators );
 			foreach ( $violations as $violation ) {
-				if (array_search ( $violation->getMember (), $members ) !== false) {
+				if (\array_search ( $violation->getMember (), $members ) !== false) {
 					$this->addViolation ( $violation );
 					$isValid = false;
 				}
