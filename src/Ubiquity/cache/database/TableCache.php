@@ -10,22 +10,16 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.2
  *
  */
 class TableCache extends DbCache {
 	protected $arrayCache;
 
 	public function store($tableName, $condition, $result) {
-		$exists = $this->getCache ( $tableName );
-		$exists [$this->getKey ( $condition )] = $result;
-		$this->cache->store ( $tableName, "return " . UArray::asPhpArray ( $exists, "array" ) . ";" );
-	}
-
-	public function getCache($tableName) {
-		if ($this->cache->exists ( $tableName ))
-			return $this->cache->fetch ( $tableName );
-		return [ ];
+		$this->getArrayCache ( $tableName );
+		$this->arrayCache [$this->getKey ( $condition )] = $result;
+		$this->cache->store ( $tableName, "return " . UArray::asPhpArray ( $this->arrayCache, "array" ) . ";" );
 	}
 
 	protected function getArrayCache($tableName) {
@@ -34,7 +28,7 @@ class TableCache extends DbCache {
 		if ($this->cache->exists ( $tableName )) {
 			return $this->arrayCache [$tableName] = $this->cache->fetch ( $tableName );
 		}
-		return false;
+		return [ ];
 	}
 
 	public function fetch($tableName, $condition) {
