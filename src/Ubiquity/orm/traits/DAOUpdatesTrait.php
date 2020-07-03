@@ -17,7 +17,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.5
+ * @version 1.1.6
  * @property \Ubiquity\db\Database $db
  *
  */
@@ -144,10 +144,10 @@ trait DAOUpdatesTrait {
 		try {
 			$result = $statement->execute ( $keyAndValues );
 			if ($result) {
-				$accesseurId = 'set' . \ucfirst ( $pk );
 				$lastId = $db->lastInserId ( "{$tableName}_{$pk}_seq" );
 				if ($lastId != 0) {
-					$instance->$accesseurId ( $lastId );
+					$propKey = OrmUtils::getFirstPropKey ( $className );
+					$propKey->setValue ( $instance, $lastId );
 					$instance->_rest = $keyAndValues;
 					$instance->_rest [$pk] = $lastId;
 				}
@@ -239,7 +239,7 @@ trait DAOUpdatesTrait {
 		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
 		if (Logger::isActive ()) {
 			Logger::info ( "DAOUpdates", $sql, "update" );
-			Logger::info ( "DAOUpdates", json_encode ( $ColumnskeyAndValues ), "Key and values" );
+			Logger::info ( "DAOUpdates", \json_encode ( $ColumnskeyAndValues ), "Key and values" );
 		}
 		$statement = $db->getUpdateStatement ( $sql );
 		try {

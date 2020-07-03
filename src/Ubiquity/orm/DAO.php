@@ -25,7 +25,7 @@ use Ubiquity\orm\traits\DAOPreparedTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.4
+ * @version 1.2.5
  *
  */
 class DAO {
@@ -75,8 +75,8 @@ class DAO {
 		self::parseKey ( $ids, $className, $quote );
 		$condition = SqlUtils::getCondition ( $ids, $className );
 		$keyFields = OrmUtils::getKeyFields ( $className );
-		if (is_array ( $keyFields )) {
-			$keys = implode ( ',', $keyFields );
+		if (\is_array ( $keyFields )) {
+			$keys = \implode ( ',', $keyFields );
 		} else {
 			$keys = '1';
 		}

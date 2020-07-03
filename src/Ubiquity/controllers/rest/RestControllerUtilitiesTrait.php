@@ -16,7 +16,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  * @property ResponseFormatter $responseFormatter
  * @property RestServer $server
  * @property string $model
@@ -63,7 +63,7 @@ trait RestControllerUtilitiesTrait {
 
 	protected function generatePagination(&$filter, $pageNumber, $pageSize) {
 		$count = DAO::count ( $this->model, $filter );
-		$pagesCount = ceil ( $count / $pageSize );
+		$pagesCount = \ceil ( $count / $pageSize );
 		$pages = [ 'self' => $pageNumber,'first' => 1,'last' => $pagesCount,'pageSize' => $pageSize ];
 		if ($pageNumber - 1 > 0) {
 			$pages ['prev'] = $pageNumber - 1;
@@ -120,15 +120,6 @@ trait RestControllerUtilitiesTrait {
 		return new RestServer ( $this->config );
 	}
 
-	/*
-	 * protected function connectDb($config) {
-	 * $db = $config ["database"];
-	 * if ($db ["dbName"] !== "") {
-	 * DAO::connect ( $db ["type"], $db ["dbName"], $db ["serverName"] ?? '127.0.0.1', $db ["port"] ?? 3306, $db ["user"] ?? 'root', $db ["password"] ?? '', $db ["options"] ?? [ ], $db ["cache"] ?? false);
-	 * }
-	 * }
-	 */
-
 	/**
 	 * Updates $instance with $values
 	 * To eventually be redefined in derived classes
@@ -138,7 +129,7 @@ trait RestControllerUtilitiesTrait {
 	 */
 	protected function _setValuesToObject($instance, $values = [ ]) {
 		if (URequest::isJSON ()) {
-			if (is_string ( $values )) {
+			if (\is_string ( $values )) {
 				$values = \json_decode ( $values, true );
 			}
 		}
@@ -146,7 +137,7 @@ trait RestControllerUtilitiesTrait {
 		$fieldsInRelationForUpdate = OrmUtils::getFieldsInRelationsForUpdate_ ( $className );
 		$manyToOneRelations = $fieldsInRelationForUpdate ["manyToOne"];
 
-		$members = array_keys ( $values );
+		$members = \array_keys ( $values );
 		OrmUtils::setFieldToMemberNames ( $members, $fieldsInRelationForUpdate ["relations"] );
 		URequest::setValuesToObject ( $instance, $values );
 		if ($manyToOneRelations) {
@@ -156,7 +147,7 @@ trait RestControllerUtilitiesTrait {
 
 	protected function updateManyToOne($manyToOneRelations, $members, $className, $instance, $values) {
 		foreach ( $manyToOneRelations as $member ) {
-			if (array_search ( $member, $members ) !== false) {
+			if (\array_search ( $member, $members ) !== false) {
 				$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, "#joinColumn", $member );
 				if ($joinColumn) {
 					$fkClass = $joinColumn ["className"];
@@ -177,7 +168,7 @@ trait RestControllerUtilitiesTrait {
 	 */
 	protected function getInclude($include) {
 		if (! UString::isBooleanStr ( $include )) {
-			return explode ( ",", $include );
+			return \explode ( ',', $include );
 		}
 		return UString::isBooleanTrue ( $include );
 	}
@@ -187,7 +178,7 @@ trait RestControllerUtilitiesTrait {
 	}
 
 	protected function hasErrors() {
-		return is_array ( $this->errors ) && sizeof ( $this->errors ) > 0;
+		return \is_array ( $this->errors ) && \sizeof ( $this->errors ) > 0;
 	}
 
 	protected function displayErrors() {
@@ -262,8 +253,8 @@ trait RestControllerUtilitiesTrait {
 
 	protected function getCondition($condition) {
 		$condition = urldecode ( $condition );
-		if (strpos ( $condition, 'like' ) !== false) {
-			$condition = str_replace ( '*', '%', $condition );
+		if (\strpos ( $condition, 'like' ) !== false) {
+			$condition = \str_replace ( '*', '%', $condition );
 		}
 		return $condition;
 	}

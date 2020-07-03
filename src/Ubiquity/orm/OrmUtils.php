@@ -12,7 +12,7 @@ use Ubiquity\orm\traits\OrmUtilsFieldsTrait;
  * Object/relational mapping utilities
  *
  * @author jc
- * @version 1.0.4
+ * @version 1.0.5
  */
 class OrmUtils {
 
@@ -49,8 +49,7 @@ class OrmUtils {
 
 	public static function getKeyFieldsAndValues($instance) {
 		$class = \get_class ( $instance );
-		$kf = self::getAnnotationInfo ( $class, '#primaryKeys' );
-		return self::getFieldsAndValues_ ( $instance, $kf );
+		return self::getFieldsAndValues_ ( $instance, self::getKeyMembers ( $class ) );
 	}
 
 	public static function getFieldsAndValues_($instance, $members) {

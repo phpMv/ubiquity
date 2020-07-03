@@ -20,7 +20,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  * @property \Ajax\JsUtils $jquery
  */
 trait FormModelViewerTrait {
@@ -125,9 +125,10 @@ trait FormModelViewerTrait {
 	 *
 	 * @param string $identifier
 	 * @param object $instance the object to add or modify
+	 * @param ?string $updateUrl
 	 * @return \Ajax\semantic\widgets\dataform\DataForm
 	 */
-	public function getForm($identifier, $instance) {
+	public function getForm($identifier, $instance, $updateUrl = 'updateModel') {
 		$form = $this->jquery->semantic ()->dataForm ( $identifier, $instance );
 		$form->setLibraryId ( "frmEdit" );
 		$className = \get_class ( $instance );
@@ -147,7 +148,7 @@ trait FormModelViewerTrait {
 		$form->setCaption ( "_message", $message ["subMessage"] );
 		$form->fieldAsMessage ( "_message", [ "icon" => $message ["icon"] ] );
 		$instance->_message = $message ["message"];
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/_updateModel", "#frm-add-update" );
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/" . $updateUrl, "#frm-add-update" );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
 		return $form;
 	}
@@ -160,9 +161,10 @@ trait FormModelViewerTrait {
 	 * @param string $member
 	 * @param string $td
 	 * @param string $part
+	 * @param ?string $updateUrl
 	 * @return \Ajax\semantic\widgets\dataform\DataForm
 	 */
-	public function getMemberForm($identifier, $instance, $member, $td, $part) {
+	public function getMemberForm($identifier, $instance, $member, $td, $part, $updateUrl = '_updateMember') {
 		$editMemberParams = $this->getEditMemberParams_ ( $part );
 
 		$form = $this->jquery->semantic ()->dataForm ( $identifier, $instance );
@@ -192,13 +194,13 @@ trait FormModelViewerTrait {
 						$f->setWidth ( 16 )->setProperty ( "style", "padding-left:0;" );
 					}
 				}
-				$f->on ( "keydown", "if(event.which == 13) {\$('#" . $identifier . "').trigger('validate');}if(event.keyCode===27) {\$('#" . $identifier . "').trigger('endEdit');}" );
+				$f->on ( "keydown", "if(event.keyCode===27) {\$('#" . $identifier . "').trigger('endEdit');}" );
 				$f->onClick ( "return false;", true, true );
 			} else {
 				$f->setProperty ( "style", "display: none;" );
 			}
 		} );
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/_updateMember/" . $member . "/" . $editMemberParams->getUpdateCallback (), "#" . $td, [ "attr" => "","hasLoader" => false,"jsCallback" => "$(self).remove();","jqueryDone" => "html" ] );
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/$updateUrl/" . $member . "/" . $editMemberParams->getUpdateCallback (), "#" . $td, [ "attr" => "","hasLoader" => false,"jsCallback" => "$(self).remove();","jqueryDone" => "html" ] );
 		if ($editMemberParams->getHasPopup ()) {
 			$endEdit = "\$('#" . $identifier . "').html();\$('.popup').hide();\$('#" . $td . "').popup('destroy');";
 			$validate = $endEdit;
