@@ -74,8 +74,12 @@ class MemCachedDriver extends AbstractDataCache {
 	 * @return mixed the cached data
 	 */
 	public function fetch($key) {
-		$result = $this->cacheInstance->get ( $this->getRealKey ( $key ) ) [self::CONTENT];
-		return eval ( $result );
+		$entry = $this->cacheInstance->get ( $this->getRealKey ( $key ) );
+		if ($entry) {
+			$result = $entry [self::CONTENT];
+			return eval ( $result );
+		}
+		return false;
 	}
 
 	/**
