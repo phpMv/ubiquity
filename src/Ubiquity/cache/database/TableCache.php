@@ -22,11 +22,12 @@ class TableCache extends DbCache {
 		$this->cache->store ( $tableName, "return " . UArray::asPhpArray ( $this->arrayCache, "array" ) . ";" );
 	}
 
-	protected function getArrayCache($tableName) {
-		if (isset ( $this->arrayCache [$tableName] ))
-			return $this->arrayCache [$tableName];
-		if ($this->cache->exists ( $tableName )) {
-			return $this->arrayCache [$tableName] = $this->cache->fetch ( $tableName );
+	protected function getArrayCache($key) {
+		if (isset ( $this->arrayCache [$key] )) {
+			return $this->arrayCache [$key];
+		}
+		if ($this->cache->exists ( $key )) {
+			return $this->arrayCache [$key] = $this->cache->fetch ( $key );
 		}
 		return [ ];
 	}
