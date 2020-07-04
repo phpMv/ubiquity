@@ -26,8 +26,12 @@ abstract class DbCache {
 		return \md5 ( $query );
 	}
 
-	public function __construct() {
-		$this->cache = new ArrayCache ( CacheManager::getCacheSubDirectory ( "queries" ), ".query" );
+	public function __construct($cacheSystem = ArrayCache::class) {
+		if (is_string ( $cacheSystem )) {
+			$this->cache = new ArrayCache ( CacheManager::getCacheSubDirectory ( "queries" ), ".query" );
+		} else {
+			$this->cache = $cacheSystem;
+		}
 	}
 
 	/**
