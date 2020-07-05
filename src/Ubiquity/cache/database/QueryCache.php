@@ -15,7 +15,6 @@ use Ubiquity\cache\system\ArrayCache;
  */
 class QueryCache extends DbCache {
 	use MemoryCacheTrait;
-	protected $storeDeferred;
 
 	public function __construct($cacheSystem = ArrayCache::class, $config = [ ]) {
 		parent::__construct ( $cacheSystem, $config );

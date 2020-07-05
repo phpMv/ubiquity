@@ -2,8 +2,6 @@
 
 namespace Ubiquity\cache\database;
 
-use Ubiquity\cache\database\traits\MemoryCacheTrait;
-
 /**
  * Ubiquity\cache\database$MemoryCache
  * This class is part of Ubiquity
