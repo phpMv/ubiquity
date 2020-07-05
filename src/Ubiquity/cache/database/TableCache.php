@@ -10,7 +10,7 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class TableCache extends DbCache {
@@ -18,8 +18,8 @@ class TableCache extends DbCache {
 
 	public function store($tableName, $condition, $result) {
 		$this->getArrayCache ( $tableName );
-		$this->arrayCache [$this->getKey ( $condition )] = $result;
-		$this->cache->store ( $tableName, "return " . UArray::asPhpArray ( $this->arrayCache, "array" ) . ";" );
+		$this->arrayCache [$tableName] [$this->getKey ( $condition )] = $result;
+		$this->cache->store ( $tableName, "return " . UArray::asPhpArray ( $this->arrayCache [$tableName], "array" ) . ";" );
 	}
 
 	protected function getArrayCache($key) {
