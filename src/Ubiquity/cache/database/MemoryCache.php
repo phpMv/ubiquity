@@ -21,6 +21,9 @@ class MemoryCache extends DbCache {
 		return $tableName . '.' . $this->getKey ( $condition );
 	}
 
+	public function __construct() {
+	}
+
 	public function fetch($tableName, $condition) {
 		$key = $this->getMemoryKey ( $tableName, $condition );
 		if (isset ( $this->memoryCache [$key] )) {
