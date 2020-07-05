@@ -26,9 +26,13 @@ abstract class DbCache {
 		return \md5 ( $query );
 	}
 
+	protected function asPhpArray($array) {
+		return \var_export ( $array, true );
+	}
+
 	public function __construct($cacheSystem = ArrayCache::class) {
 		if (is_string ( $cacheSystem )) {
-			$this->cache = new ArrayCache ( CacheManager::getCacheSubDirectory ( "queries" ), ".query" );
+			$this->cache = new ArrayCache ( CacheManager::getCacheSubDirectory ( 'queries' ), '.query' );
 		} else {
 			$this->cache = $cacheSystem;
 		}
@@ -61,7 +65,7 @@ abstract class DbCache {
 	 */
 	abstract public function delete($tableName, $condition);
 
-	public function clear($matches = "") {
+	public function clear($matches = '') {
 		$this->cache->clear ( $matches );
 	}
 
