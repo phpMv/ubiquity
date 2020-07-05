@@ -6,23 +6,24 @@ use Ubiquity\events\DAOEvents;
 use Ubiquity\events\EventsManager;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\cache\database\DbCache;
 
 /**
  * Ubiquity\orm\core\prepared$DAOPreparedQueryOne
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class DAOPreparedQueryById extends DAOPreparedQuery {
 
-	public function __construct($className, $included = false) {
-		parent::__construct ( $className, '', $included );
+	public function __construct($className, $included = false, $cache = null) {
+		parent::__construct ( $className, '', $included, $cache );
 	}
 
-	protected function prepare() {
-		parent::prepare ();
+	protected function prepare(?DbCache $cache = null) {
+		parent::prepare ( $cache );
 		$keys = OrmUtils::getKeyFields ( $this->className );
 		$this->conditionParser->addKeyValues ( \array_fill ( 0, \count ( $keys ), '' ), $this->className );
 		$this->conditionParser->limitOne ();

@@ -11,6 +11,7 @@ use Ubiquity\exceptions\DBException;
 use Ubiquity\db\traits\DatabaseTransactionsTrait;
 use Ubiquity\controllers\Startup;
 use Ubiquity\db\traits\DatabaseMetadatas;
+use Ubiquity\cache\database\DbCache;
 
 /**
  * Ubiquity Generic database class.
@@ -297,5 +298,13 @@ class Database {
 			case 'tostring' :
 				return $this->wrapperObject->toStringOperator ();
 		}
+	}
+
+	public function setCacheInstance(DbCache $cache) {
+		$this->cache = $cache;
+	}
+
+	public function getCacheInstance() {
+		return $this->cache;
 	}
 }
