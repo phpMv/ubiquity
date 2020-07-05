@@ -13,7 +13,11 @@ use Ubiquity\cache\database\traits\MemoryCacheTrait;
  *
  */
 class MemoryCache extends DbCache {
-	use MemoryCacheTrait;
+	/**
+	 *
+	 * @var array
+	 */
+	protected $memoryCache;
 
 	protected function getMemoryKey($tableName, $condition) {
 		return $tableName . '.' . $this->getKey ( $condition );
