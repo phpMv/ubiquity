@@ -37,13 +37,19 @@ trait DAOPreparedTrait {
 		return null;
 	}
 
+	public static function storeCachePrepared($name) {
+		if (isset ( self::$preparedDAOQueries [$name] )) {
+			self::$preparedDAOQueries [$name]->storeCache ();
+		}
+	}
+
 	/**
 	 * Returns the daoPreparedQuery corresponding to a name
 	 *
 	 * @param string $name
 	 * @return DAOPreparedQuery
 	 */
-	public function getPrepared(string $name): DAOPreparedQuery {
+	public static function getPrepared(string $name): DAOPreparedQuery {
 		return self::$preparedDAOQueries [$name];
 	}
 }

@@ -235,5 +235,12 @@ abstract class DAOPreparedQuery {
 		}
 		$this->updateSqlAdditionalMembers ();
 	}
+
+	/**
+	 * Store the cache for a prepared Query
+	 */
+	public function storeCache() {
+		$this->db->storeCache ();
+	}
 }
 
