@@ -30,12 +30,13 @@ abstract class DbCache {
 		return \var_export ( $array, true );
 	}
 
-	public function __construct($cacheSystem = ArrayCache::class) {
-		if (is_string ( $cacheSystem )) {
+	public function __construct($cacheSystem = ArrayCache::class, $config = [ ]) {
+		if (\is_string ( $cacheSystem )) {
 			$this->cache = new ArrayCache ( CacheManager::getCacheSubDirectory ( 'queries' ), '.query' );
 		} else {
 			$this->cache = $cacheSystem;
 		}
+		$this->config = $config;
 	}
 
 	/**
@@ -75,5 +76,8 @@ abstract class DbCache {
 
 	public function setActive($value = true) {
 		self::$active = $value;
+	}
+
+	public function storeDeferred() {
 	}
 }

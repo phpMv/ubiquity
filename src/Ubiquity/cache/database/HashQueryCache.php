@@ -23,14 +23,17 @@ class HashQueryCache extends DbCache {
 	 * @var array
 	 */
 	protected $arrayCache;
+	protected $storeDeferred;
+	protected $toStore = [ ];
 
 	protected function hash(string $string) {
 		return \substr ( \md5 ( $string ), 0, $this->size );
 	}
 
-	public function __construct($cacheSystem = ArrayCache::class, $size = 5) {
-		parent::__construct ( $cacheSystem );
-		$this->size = $size;
+	public function __construct($cacheSystem = ArrayCache::class, $config = [ ]) {
+		parent::__construct ( $cacheSystem, $config );
+		$this->size = $config ['size'] ?? 5;
+		$this->storeDeferred = $config ['deferred'] ?? true;
 	}
 
 	public function store($tableName, $condition, $result) {
@@ -38,7 +41,18 @@ class HashQueryCache extends DbCache {
 		$k = $this->hash ( $refString );
 		$this->getArrayCache ( $k );
 		$this->arrayCache [$k] [$this->getKey ( $refString )] = $result;
-		$this->cache->store ( $k, 'return ' . $this->asPhpArray ( $this->arrayCache [$k] ) . ';' );
+		if ($this->storeDeferred) {
+			$this->toStore [] = $k;
+		} else {
+			$this->cache->store ( $k, 'return ' . $this->asPhpArray ( $this->arrayCache [$k] ) . ';' );
+		}
+	}
+
+	public function storeDeferred() {
+		foreach ( $this->toStore as $k ) {
+			$this->cache->store ( $k, 'return ' . $this->asPhpArray ( $this->arrayCache [$k] ) . ';' );
+		}
+		$this->toStore = [ ];
 	}
 
 	protected function getArrayCache($key) {

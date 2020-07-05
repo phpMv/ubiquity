@@ -191,4 +191,11 @@ trait DAOCoreTrait {
 			}
 		}
 	}
+
+	public static function storeCache(string $model) {
+		$offset = self::$modelsDatabase [$model] ?? 'default';
+		if (isset ( self::$db [$offset] )) {
+			self::$db [$offset]->storeCache ();
+		}
+	}
 }
