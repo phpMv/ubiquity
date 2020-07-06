@@ -305,4 +305,9 @@ class DAO {
 	public static function start() {
 		self::$modelsDatabase = CacheManager::getModelsDatabases ();
 	}
+
+	public static function getCacheInstance($model) {
+		$db = static::$db [self::$modelsDatabase [$model] ?? 'default'];
+		return $db->getCacheInstance ();
+	}
 }
