@@ -103,7 +103,7 @@ class UArray {
 		}
 		foreach ( $array as $k => $v ) {
 			if (\is_string ( $k )) {
-				$exts [] = "\"" . UString::doubleBackSlashes ( $k ) . "\"=>" . self::parseValue ( $v, $prefix, $depth + 1, $format );
+				$exts [] = "\"" . UString::doubleBackSlashes ( $k ) . "\"=>" . self::parseValue ( $v, 'array', $depth + 1, $format );
 			} else {
 				$exts [] = self::parseValue ( $v, $prefix, $depth + 1, $format );
 			}
