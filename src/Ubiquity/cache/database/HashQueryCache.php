@@ -28,7 +28,7 @@ class HashQueryCache extends DbCache {
 	public function __construct($cacheSystem = ArrayCache::class, $config = [ ]) {
 		parent::__construct ( $cacheSystem, $config );
 		$this->size = $config ['size'] ?? 5;
-		$this->storeDeferred = $config ['deferred'] ?? true;
+		$this->storeDeferred = $config ['deferred'] ?? false;
 	}
 
 	public function store($tableName, $condition, $result) {

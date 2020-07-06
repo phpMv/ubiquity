@@ -18,16 +18,16 @@ use Ubiquity\orm\core\prepared\DAOPreparedQuery;
 trait DAOPreparedTrait {
 	protected static $preparedDAOQueries = [ ];
 
-	public static function prepareGetById($name, $className, $included = false) {
-		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryById ( $className, $included );
+	public static function prepareGetById($name, $className, $included = false, $cache = null) {
+		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryById ( $className, $included, $cache );
 	}
 
-	public static function prepareGetOne($name, $className, $condition = '', $included = false) {
-		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryOne ( $className, $condition, $included );
+	public static function prepareGetOne($name, $className, $condition = '', $included = false, $cache = null) {
+		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryOne ( $className, $condition, $included, $cache );
 	}
 
-	public static function prepareGetAll($name, $className, $condition = '', $included = false) {
-		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryAll ( $className, $condition, $included );
+	public static function prepareGetAll($name, $className, $condition = '', $included = false, $cache = null) {
+		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryAll ( $className, $condition, $included, $cache );
 	}
 
 	public static function executePrepared($name, $params = [ ], $useCache = false) {
