@@ -19,7 +19,6 @@ use Ubiquity\cache\CacheManager;
  */
 abstract class DbCache {
 	protected $cache;
-	protected $config;
 	public static $active = false;
 
 	protected function getKey($query) {
@@ -30,13 +29,12 @@ abstract class DbCache {
 		return \var_export ( $array, true );
 	}
 
-	public function __construct($cacheSystem = ArrayCache::class, $config = [ ]) {
+	public function __construct($cacheSystem = ArrayCache::class) {
 		if (\is_string ( $cacheSystem )) {
-			$this->cache = new ArrayCache ( CacheManager::getCacheSubDirectory ( 'queries' ), '.query' );
+			$this->cache = new $cacheSystem ( CacheManager::getCacheSubDirectory ( 'queries' ), '.query' );
 		} else {
 			$this->cache = $cacheSystem;
 		}
-		$this->config = $config;
 	}
 
 	/**

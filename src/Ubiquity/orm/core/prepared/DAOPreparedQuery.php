@@ -243,7 +243,7 @@ abstract class DAOPreparedQuery {
 	/**
 	 * Store the cache for a prepared Query
 	 */
-	public function storeCache() {
+	public function storeDbCache() {
 		$this->db->storeCache ();
 	}
 }

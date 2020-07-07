@@ -19,6 +19,7 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\orm\traits\DAOPooling;
 use Ubiquity\orm\traits\DAOBulkUpdatesTrait;
 use Ubiquity\orm\traits\DAOPreparedTrait;
+use Ubiquity\cache\dao\AbstractDAOCache;
 
 /**
  * Gateway class between database and object model.
@@ -38,9 +39,15 @@ class DAO {
 	 */
 	public static $db;
 	public static $useTransformers = false;
+	public static $useCache = false;
 	public static $transformerOp = 'transform';
 	private static $conditionParsers = [ ];
 	protected static $modelsDatabase = [ ];
+	/**
+	 *
+	 * @var AbstractDAOCache
+	 */
+	protected static $cache;
 
 	public static function getDb($model) {
 		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
@@ -306,8 +313,28 @@ class DAO {
 		self::$modelsDatabase = CacheManager::getModelsDatabases ();
 	}
 
-	public static function getCacheInstance($model) {
+	public static function getDbCacheInstance($model) {
 		$db = static::$db [self::$modelsDatabase [$model] ?? 'default'];
 		return $db->getCacheInstance ();
+	}
+
+	public static function initCache(array $objects) {
+		if (isset ( self::$cache )) {
+			foreach ( $objects as $o ) {
+				self::$cache->store ( get_class ( $o ), OrmUtils::getKeyValues ( $o ), $o );
+			}
+		}
+	}
+
+	public static function setCache(AbstractDAOCache $cache) {
+		self::$cache = $cache;
+	}
+
+	/**
+	 *
+	 * @return \Ubiquity\cache\dao\AbstractDAOCache
+	 */
+	public static function getCache() {
+		return static::$cache;
 	}
 }

@@ -7,6 +7,7 @@ use Ubiquity\events\EventsManager;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\cache\database\DbCache;
+use Ubiquity\cache\dao\AbstractDAOCache;
 
 /**
  * Ubiquity\orm\core\prepared$DAOPreparedQueryOne
@@ -14,7 +15,7 @@ use Ubiquity\cache\database\DbCache;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
- *
+ * @property AbstractDAOCache $cache
  */
 class DAOPreparedQueryById extends DAOPreparedQuery {
 
@@ -30,6 +31,10 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 	}
 
 	public function execute($params = [ ], $useCache = false) {
+		if ($useCache && isset ( self::$cache ) && ($object = self::$cache->fetch ( $this->className, \implode ( '_', $params ) ))) {
+			return $object;
+		}
+
 		$cp = $this->conditionParser;
 		$cp->setKeyValues ( $params );
 		$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );

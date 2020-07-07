@@ -6,6 +6,7 @@ use Ubiquity\orm\core\prepared\DAOPreparedQueryOne;
 use Ubiquity\orm\core\prepared\DAOPreparedQueryById;
 use Ubiquity\orm\core\prepared\DAOPreparedQueryAll;
 use Ubiquity\orm\core\prepared\DAOPreparedQuery;
+use Ubiquity\cache\dao\AbstractDAOCache;
 
 /**
  * Ubiquity\orm\traits$DAOPreparedTrait
@@ -37,9 +38,9 @@ trait DAOPreparedTrait {
 		return null;
 	}
 
-	public static function storeCachePrepared($name) {
+	public static function storeDbCachePrepared($name) {
 		if (isset ( self::$preparedDAOQueries [$name] )) {
-			self::$preparedDAOQueries [$name]->storeCache ();
+			self::$preparedDAOQueries [$name]->storeDbCache ();
 		}
 	}
 

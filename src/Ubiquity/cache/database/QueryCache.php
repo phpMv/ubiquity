@@ -17,7 +17,7 @@ class QueryCache extends DbCache {
 	use MemoryCacheTrait;
 
 	public function __construct($cacheSystem = ArrayCache::class, $config = [ ]) {
-		parent::__construct ( $cacheSystem, $config );
+		parent::__construct ( $cacheSystem );
 		$this->storeDeferred = $config ['deferred'] ?? false;
 	}
 
