@@ -6,20 +6,21 @@ use Ubiquity\events\DAOEvents;
 use Ubiquity\events\EventsManager;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\DAO;
+use Ubiquity\cache\database\DbCache;
 
 /**
  * Ubiquity\orm\core\prepared$DAOPreparedQueryOne
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class DAOPreparedQueryAll extends DAOPreparedQuery {
 
-	protected function prepare() {
+	protected function prepare(?DbCache $cache = null) {
 		$this->conditionParser->setCondition ( $this->condition );
-		parent::prepare ();
+		parent::prepare ( $cache );
 	}
 
 	public function execute($params = [ ], $useCache = false) {

@@ -15,6 +15,14 @@ use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\common\html\HtmlContentOnly;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
 
+/**
+ * Ubiquity\controllers\crud$CRUDController
+ * This class is part of Ubiquity
+ *
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface {
 	use MessagesTrait,CRUDControllerUtilitiesTrait,InsertJqueryTrait;
 	protected $model;
@@ -43,7 +51,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		} ) ] );
 	}
 
-	public function _updateMember($member, $callback = false) {
+	public function updateMember($member, $callback = false) {
 		$instance = $_SESSION ["instance"] ?? null;
 		if (isset ( $instance )) {
 			$updated = CRUDHelper::update ( $instance, $_POST );
@@ -138,7 +146,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$instance = $this->getModelInstance ( $ids, false, $member );
 		$_SESSION ["instance"] = $instance;
 		$instance->_new = false;
-		$form = $this->_getModelViewer ()->getMemberForm ( "frm-member-" . $member, $instance, $member, $td, $part );
+		$form = $this->_getModelViewer ()->getMemberForm ( "frm-member-" . $member, $instance, $member, $td, $part, 'updateMember' );
 		$form->setLibraryId ( "_compo_" );
 		$this->jquery->renderView ( "@framework/main/component.html" );
 	}
@@ -214,7 +222,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 *
 	 * @return object The updated instance
 	 */
-	public function _updateModel() {
+	public function updateModel() {
 		$message = new CRUDMessage ( "Modifications were successfully saved", "Updating" );
 		$instance = $_SESSION ["instance"] ?? null;
 		if (isset ( $instance )) {

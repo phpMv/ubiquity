@@ -11,7 +11,7 @@ use Ubiquity\utils\yuml\traits\ClassToYumlRelationsTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class ClassToYuml {
@@ -65,7 +65,7 @@ class ClassToYuml {
 		$parts = [ $reflect->getShortName () ];
 
 		if ($this->displayProperties) {
-			$prikeys = OrmUtils::getKeyFields ( $this->class );
+			$prikeys = OrmUtils::getKeyMembers ( $this->class );
 			$types = OrmUtils::getFieldTypes ( $this->class );
 			$propertiesArray = [ ];
 			$properties = $reflect->getProperties ();

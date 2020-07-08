@@ -2,37 +2,30 @@
 
 namespace Ubiquity\cache\database;
 
-use Ubiquity\utils\base\UArray;
-
 /**
  * Cache
  * Ubiquity\cache\database$TableCache
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.4
  *
  */
 class TableCache extends DbCache {
 	protected $arrayCache;
 
 	public function store($tableName, $condition, $result) {
-		$exists = $this->getCache ( $tableName );
-		$exists [$this->getKey ( $condition )] = $result;
-		$this->cache->store ( $tableName, "return " . UArray::asPhpArray ( $exists, "array" ) . ";" );
+		$this->getArrayCache ( $tableName );
+		$this->arrayCache [$tableName] [$this->getKey ( $condition )] = $result;
+		$this->cache->store ( $tableName, 'return ' . $this->asPhpArray ( $this->arrayCache [$tableName] ) . ';' );
 	}
 
-	public function getCache($tableName) {
-		if ($this->cache->exists ( $tableName ))
-			return $this->cache->fetch ( $tableName );
-		return [ ];
-	}
-
-	protected function getArrayCache($tableName) {
-		if (isset ( $this->arrayCache [$tableName] ))
-			return $this->arrayCache [$tableName];
-		if ($this->cache->exists ( $tableName )) {
-			return $this->arrayCache [$tableName] = $this->cache->fetch ( $tableName );
+	protected function getArrayCache($key) {
+		if (isset ( $this->arrayCache [$key] )) {
+			return $this->arrayCache [$key];
+		}
+		if ($this->cache->exists ( $key )) {
+			return $this->arrayCache [$key] = $this->cache->fetch ( $key );
 		}
 		return false;
 	}
@@ -51,7 +44,7 @@ class TableCache extends DbCache {
 			$key = $this->getKey ( $condition );
 			if (isset ( $cache [$key] )) {
 				unset ( $cache [$key] );
-				$this->cache->store ( $tableName, "return " . UArray::asPhpArray ( $cache, "array" ) . ";" );
+				$this->cache->store ( $tableName, 'return ' . $this->asPhpArray ( $cache ) . ';' );
 			}
 		}
 	}

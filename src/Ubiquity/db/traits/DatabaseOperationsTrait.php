@@ -73,6 +73,10 @@ trait DatabaseOperationsTrait {
 		return $result;
 	}
 
+	public function storeCache() {
+		$this->cache->storeDeferred ();
+	}
+
 	public function prepareAndFetchAll($sql, $parameters = null, $mode = null) {
 		return $this->wrapperObject->fetchAll ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $mode );
 	}

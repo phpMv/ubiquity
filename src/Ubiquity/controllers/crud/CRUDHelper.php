@@ -14,18 +14,18 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class CRUDHelper {
 
 	public static function getIdentifierFunction($model) {
-		$pks = self::getPks ( $model );
+		$pks = OrmUtils::getKeyMembers ( $model );
 		return function ($index, $instance) use ($pks) {
 			$values = [ ];
 			foreach ( $pks as $pk ) {
 				$getter = "get" . ucfirst ( $pk );
-				if (method_exists ( $instance, $getter )) {
+				if (\method_exists ( $instance, $getter )) {
 					$values [] = $instance->{$getter} ();
 				}
 			}
@@ -128,11 +128,6 @@ class CRUDHelper {
 				}
 			}
 		}
-	}
-
-	private static function getPks($model) {
-		$instance = new $model ();
-		return OrmUtils::getKeyFields ( $instance );
 	}
 
 	private static function getMultiWhere($ids, $class) {

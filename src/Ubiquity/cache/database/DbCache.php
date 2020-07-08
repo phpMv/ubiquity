@@ -19,15 +19,22 @@ use Ubiquity\cache\CacheManager;
  */
 abstract class DbCache {
 	protected $cache;
-	protected $config;
 	public static $active = false;
 
 	protected function getKey($query) {
 		return \md5 ( $query );
 	}
 
-	public function __construct() {
-		$this->cache = new ArrayCache ( CacheManager::getCacheSubDirectory ( "queries" ), ".query" );
+	protected function asPhpArray($array) {
+		return \var_export ( $array, true );
+	}
+
+	public function __construct($cacheSystem = ArrayCache::class) {
+		if (\is_string ( $cacheSystem )) {
+			$this->cache = new $cacheSystem ( CacheManager::getCacheSubDirectory ( 'queries' ), '.query' );
+		} else {
+			$this->cache = $cacheSystem;
+		}
 	}
 
 	/**
@@ -57,7 +64,7 @@ abstract class DbCache {
 	 */
 	abstract public function delete($tableName, $condition);
 
-	public function clear($matches = "") {
+	public function clear($matches = '') {
 		$this->cache->clear ( $matches );
 	}
 
@@ -67,5 +74,8 @@ abstract class DbCache {
 
 	public function setActive($value = true) {
 		self::$active = $value;
+	}
+
+	public function storeDeferred() {
 	}
 }

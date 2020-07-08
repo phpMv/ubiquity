@@ -19,13 +19,14 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\orm\traits\DAOPooling;
 use Ubiquity\orm\traits\DAOBulkUpdatesTrait;
 use Ubiquity\orm\traits\DAOPreparedTrait;
+use Ubiquity\cache\dao\AbstractDAOCache;
 
 /**
  * Gateway class between database and object model.
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.4
+ * @version 1.2.5
  *
  */
 class DAO {
@@ -41,6 +42,11 @@ class DAO {
 	public static $transformerOp = 'transform';
 	private static $conditionParsers = [ ];
 	protected static $modelsDatabase = [ ];
+	/**
+	 *
+	 * @var AbstractDAOCache
+	 */
+	protected static $cache;
 
 	public static function getDb($model) {
 		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
@@ -75,8 +81,8 @@ class DAO {
 		self::parseKey ( $ids, $className, $quote );
 		$condition = SqlUtils::getCondition ( $ids, $className );
 		$keyFields = OrmUtils::getKeyFields ( $className );
-		if (is_array ( $keyFields )) {
-			$keys = implode ( ',', $keyFields );
+		if (\is_array ( $keyFields )) {
+			$keys = \implode ( ',', $keyFields );
 		} else {
 			$keys = '1';
 		}
@@ -304,5 +310,29 @@ class DAO {
 
 	public static function start() {
 		self::$modelsDatabase = CacheManager::getModelsDatabases ();
+	}
+
+	public static function getDbCacheInstance($model) {
+		$db = static::$db [self::$modelsDatabase [$model] ?? 'default'];
+		return $db->getCacheInstance ();
+	}
+
+	public static function warmupCache($className, $condition = '', $included = false, $parameters = [ ]) {
+		$objects = static::getAll ( $className, $condition, $included, $parameters );
+		foreach ( $objects as $o ) {
+			self::$cache->store ( $className, OrmUtils::getKeyValues ( $o ), $o );
+		}
+	}
+
+	public static function setCache(AbstractDAOCache $cache) {
+		self::$cache = $cache;
+	}
+
+	/**
+	 *
+	 * @return \Ubiquity\cache\dao\AbstractDAOCache
+	 */
+	public static function getCache() {
+		return static::$cache;
 	}
 }

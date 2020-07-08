@@ -2,6 +2,14 @@
 
 namespace Ubiquity\orm\traits;
 
+/**
+ * Ubiquity\orm\traits$OrmUtilsFieldsTrait
+ * This class is part of Ubiquity
+ *
+ * @author jc
+ * @version 1.0.2
+ *
+ */
 trait OrmUtilsFieldsTrait {
 
 	abstract public static function getAnnotationInfo($class, $keyAnnotation);
@@ -28,6 +36,12 @@ trait OrmUtilsFieldsTrait {
 		return "int";
 	}
 
+	/**
+	 * Return primary key fields from instance or model class
+	 *
+	 * @param string|object $instance
+	 * @return array
+	 */
 	public static function getKeyFields($instance) {
 		if (! \is_string ( $instance )) {
 			$instance = \get_class ( $instance );
@@ -35,16 +49,34 @@ trait OrmUtilsFieldsTrait {
 		return self::getAnnotationInfo ( $instance, "#primaryKeys" );
 	}
 
+	/**
+	 * Return primary key members from instance or model class
+	 *
+	 * @param string|object $instance
+	 * @return array
+	 */
+	public static function getKeyMembers($instance) {
+		if (! \is_string ( $instance )) {
+			$instance = \get_class ( $instance );
+		}
+		return \array_keys ( self::getAnnotationInfo ( $instance, "#primaryKeys" ) );
+	}
+
 	public static function getFirstKey($class) {
 		$kf = self::getAnnotationInfo ( $class, "#primaryKeys" );
 		return \current ( $kf );
 	}
 
+	/**
+	 *
+	 * @param string $class
+	 * @return \ReflectionProperty
+	 */
 	public static function getFirstPropKey($class) {
 		if (isset ( self::$propFirstKeys [$class] )) {
 			return self::$propFirstKeys [$class];
 		}
-		$prop = new \ReflectionProperty ( $class, current ( self::getAnnotationInfo ( $class, "#primaryKeys" ) ) );
+		$prop = new \ReflectionProperty ( $class, \array_key_first ( self::getAnnotationInfo ( $class, "#primaryKeys" ) ) );
 		$prop->setAccessible ( true );
 		return self::$propFirstKeys [$class] = $prop;
 	}
@@ -55,7 +87,7 @@ trait OrmUtilsFieldsTrait {
 		}
 		$result = [ ];
 		$pkMembers = self::getAnnotationInfo ( $class, "#primaryKeys" );
-		foreach ( $pkMembers as $member ) {
+		foreach ( $pkMembers as $member => $_field ) {
 			$prop = new \ReflectionProperty ( $class, $member );
 			$prop->setAccessible ( true );
 			$result [] = $prop;
@@ -97,12 +129,18 @@ trait OrmUtilsFieldsTrait {
 
 	public static function getSerializableFields($class) {
 		$notSerializable = self::getAnnotationInfo ( $class, "#notSerializable" );
-		$fieldNames = \array_keys ( self::getAnnotationInfo ( $class, "#fieldNames" ) );
+		$fieldNames = \array_values ( self::getAnnotationInfo ( $class, "#fieldNames" ) );
 		return \array_diff ( $fieldNames, $notSerializable );
 	}
 
+	public static function getSerializableMembers($class) {
+		$notSerializable = self::getAnnotationInfo ( $class, "#notSerializable" );
+		$memberNames = \array_keys ( self::getAnnotationInfo ( $class, "#fieldNames" ) );
+		return \array_diff ( $memberNames, $notSerializable );
+	}
+
 	public static function getFormAllFields($class) {
-		$result = self::getSerializableFields ( $class );
+		$result = self::getSerializableMembers ( $class );
 		if ($manyToOne = self::getAnnotationInfo ( $class, "#manyToOne" )) {
 			foreach ( $manyToOne as $member ) {
 				$joinColumn = self::getAnnotationInfoMember ( $class, "#joinColumn", $member );
