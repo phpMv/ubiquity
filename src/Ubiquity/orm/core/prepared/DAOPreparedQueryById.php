@@ -15,9 +15,13 @@ use Ubiquity\cache\dao\AbstractDAOCache;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
- * @property AbstractDAOCache $cache
  */
 class DAOPreparedQueryById extends DAOPreparedQuery {
+	/**
+	 *
+	 * @var AbstractDAOCache
+	 */
+	protected $cache;
 
 	public function __construct($className, $included = false, $cache = null) {
 		parent::__construct ( $className, '', $included, $cache );
@@ -28,10 +32,13 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		$keys = OrmUtils::getKeyFields ( $this->className );
 		$this->conditionParser->addKeyValues ( \array_fill ( 0, \count ( $keys ), '' ), $this->className );
 		$this->conditionParser->limitOne ();
+		if (DAO::$useCache) {
+			$this->cache = DAO::getCache ();
+		}
 	}
 
 	public function execute($params = [ ], $useCache = false) {
-		if ($useCache && isset ( self::$cache ) && ($object = self::$cache->fetch ( $this->className, \implode ( '_', $params ) ))) {
+		if ($useCache && isset ( $this->cache ) && ($object = $this->cache->fetch ( $this->className, \implode ( '_', $params ) ))) {
 			return $object;
 		}
 
