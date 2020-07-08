@@ -32,9 +32,7 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		$keys = OrmUtils::getKeyFields ( $this->className );
 		$this->conditionParser->addKeyValues ( \array_fill ( 0, \count ( $keys ), '' ), $this->className );
 		$this->conditionParser->limitOne ();
-		if (DAO::$useCache) {
-			$this->cache = DAO::getCache ();
-		}
+		$this->cache = DAO::getCache ();
 	}
 
 	public function execute($params = [ ], $useCache = false) {

@@ -39,7 +39,6 @@ class DAO {
 	 */
 	public static $db;
 	public static $useTransformers = false;
-	public static $useCache = false;
 	public static $transformerOp = 'transform';
 	private static $conditionParsers = [ ];
 	protected static $modelsDatabase = [ ];
@@ -318,11 +317,10 @@ class DAO {
 		return $db->getCacheInstance ();
 	}
 
-	public static function initCache(array $objects) {
-		if (isset ( self::$cache )) {
-			foreach ( $objects as $o ) {
-				self::$cache->store ( get_class ( $o ), OrmUtils::getKeyValues ( $o ), $o );
-			}
+	public static function warmupCache($className, $condition = '', $included = false, $parameters = [ ]) {
+		$objects = static::getAll ( $className, $condition, $included, $parameters );
+		foreach ( $objects as $o ) {
+			self::$cache->store ( $className, OrmUtils::getKeyValues ( $o ), $o );
 		}
 	}
 

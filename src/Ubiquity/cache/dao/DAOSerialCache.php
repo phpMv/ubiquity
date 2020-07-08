@@ -3,10 +3,10 @@
 namespace Ubiquity\cache\dao;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\cache\system\ArrayCache;
 use Ubiquity\contents\serializers\SerializerInterface;
 use Ubiquity\contents\serializers\PhpSerializer;
 use Ubiquity\cache\system\AbstractDataCache;
+use Ubiquity\cache\system\MemCachedDriver;
 
 /**
  * Ubiquity\cache\dao$DAOSerialCache
@@ -30,11 +30,11 @@ class DAOSerialCache extends AbstractDAOCache {
 	 */
 	protected $cache;
 
-	protected function getKey($value) {
-		return \md5 ( $value );
+	protected function getKey($class, $key) {
+		return \md5 ( $class . $key );
 	}
 
-	public function __construct($cacheSystem = ArrayCache::class, $serializer = PhpSerializer::class) {
+	public function __construct($cacheSystem = MemCachedDriver::class, $serializer = PhpSerializer::class) {
 		if (\is_string ( $cacheSystem )) {
 			$this->cache = new $cacheSystem ( CacheManager::getCacheSubDirectory ( 'objects' ), '.object' );
 		} else {
@@ -44,11 +44,11 @@ class DAOSerialCache extends AbstractDAOCache {
 	}
 
 	public function store($class, $key, $object) {
-		$this->cache->store ( $this->getKey ( $class . $key ), $this->serializer->serialize ( $object ) );
+		$this->cache->store ( $this->getKey ( $class, $key ), $this->serializer->serialize ( $object ) );
 	}
 
 	public function fetch($class, $key) {
-		$result = $this->cache->fetch ( $this->getKey ( $class . $key ) );
+		$result = $this->cache->fetch ( $this->getKey ( $class, $key ) );
 		if ($result) {
 			return $this->serializer->unserialize ( $result );
 		}
@@ -56,7 +56,7 @@ class DAOSerialCache extends AbstractDAOCache {
 	}
 
 	public function delete($class, $key) {
-		$key = $this->getKey ( $class . $key );
+		$key = $this->getKey ( $class, $key );
 		if ($this->cache->exists ( $key )) {
 			return $this->cache->remove ( $key );
 		}
