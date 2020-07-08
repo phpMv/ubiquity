@@ -29,7 +29,7 @@ class MemCachedDriver extends AbstractDataCache {
 	public function __construct($root, $postfix = "", $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
 		$defaultParams = [ 'server' => '0.0.0.0','port' => 11211 ];
-		$cacheParams = \array_merge ( $cacheParams, $defaultParams );
+		$cacheParams = \array_merge ( $defaultParams, $cacheParams );
 		$this->cacheInstance = new \Memcached ( $root );
 		$this->cacheInstance->addServer ( $cacheParams ['server'], $cacheParams ['port'] );
 	}
@@ -76,8 +76,7 @@ class MemCachedDriver extends AbstractDataCache {
 	public function fetch($key) {
 		$entry = $this->cacheInstance->get ( $this->getRealKey ( $key ) );
 		if ($entry) {
-			$result = $entry [self::CONTENT];
-			return eval ( $result );
+			return $entry [self::CONTENT];
 		}
 		return false;
 	}
