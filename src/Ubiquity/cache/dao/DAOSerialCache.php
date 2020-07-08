@@ -40,6 +40,9 @@ class DAOSerialCache extends AbstractDAOCache {
 		} else {
 			$this->cache = $cacheSystem;
 		}
+		if ($this->cache instanceof MemCachedDriver) {
+			$this->cache->setUseArrays ( false );
+		}
 		$this->serializer = new $serializer ();
 	}
 

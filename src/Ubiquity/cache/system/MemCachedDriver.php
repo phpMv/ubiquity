@@ -22,6 +22,7 @@ class MemCachedDriver extends AbstractDataCache {
 	private const CONTENT = 'content';
 	private const TAG = 'tag';
 	private const TIME = 'time';
+	private $useArrays = true;
 
 	/**
 	 * Initializes the cache-provider
@@ -76,6 +77,9 @@ class MemCachedDriver extends AbstractDataCache {
 	public function fetch($key) {
 		$entry = $this->cacheInstance->get ( $this->getRealKey ( $key ) );
 		if ($entry) {
+			if ($this->useArrays) {
+				return eval ( $entry [self::CONTENT] );
+			}
 			return $entry [self::CONTENT];
 		}
 		return false;
@@ -142,5 +146,13 @@ class MemCachedDriver extends AbstractDataCache {
 
 	public function getEntryKey($key) {
 		return $this->getRealKey ( $key );
+	}
+
+	/**
+	 *
+	 * @param boolean $useArrays
+	 */
+	public function setUseArrays($useArrays) {
+		$this->useArrays = $useArrays;
 	}
 }
