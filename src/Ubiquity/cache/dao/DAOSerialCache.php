@@ -55,8 +55,8 @@ class DAOSerialCache extends AbstractDAOCache {
 		return false;
 	}
 
-	public function delete($key) {
-		$key = $this->getKey ( $key );
+	public function delete($class, $key) {
+		$key = $this->getKey ( $class . $key );
 		if ($this->cache->exists ( $key )) {
 			return $this->cache->remove ( $key );
 		}
