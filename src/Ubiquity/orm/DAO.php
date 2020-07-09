@@ -318,10 +318,12 @@ class DAO {
 	}
 
 	public static function warmupCache($className, $condition = '', $included = false, $parameters = [ ]) {
-		$objects = static::getAll ( $className, $condition, $included, $parameters );
+		$objects = self::getAll ( $className, $condition, $included, $parameters );
 		foreach ( $objects as $o ) {
 			self::$cache->store ( $className, OrmUtils::getKeyValues ( $o ), $o );
 		}
+		self::$db->close ();
+		self::$db = null;
 	}
 
 	public static function setCache(AbstractDAOCache $cache) {
