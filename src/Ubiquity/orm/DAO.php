@@ -323,6 +323,8 @@ class DAO {
 			self::$cache->store ( $className, OrmUtils::getKeyValues ( $o ), $o );
 		}
 		$offset = self::$modelsDatabase [$className] ?? 'default';
+		$db = self::$db [$offset];
+		$db->close ();
 		unset ( self::$db [$offset] );
 	}
 
