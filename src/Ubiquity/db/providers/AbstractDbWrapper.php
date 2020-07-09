@@ -101,6 +101,7 @@ abstract class AbstractDbWrapper {
 	}
 
 	public function close() {
+		$this->statements = [ ];
 		$this->dbInstance = null;
 	}
 
