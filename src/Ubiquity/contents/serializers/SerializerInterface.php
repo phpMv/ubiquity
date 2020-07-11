@@ -7,13 +7,22 @@ namespace Ubiquity\contents\serializers;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 interface SerializerInterface {
 
+	/**
+	 *
+	 * @param object $object
+	 */
 	public function serialize($object);
 
-	public function unserialize($serial): object;
+	/**
+	 *
+	 * @param string $serial
+	 * @return array|object
+	 */
+	public function unserialize($serial);
 }
 

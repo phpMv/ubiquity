@@ -16,7 +16,7 @@ class JsonSerializer implements SerializerInterface {
 		return \json_encode ( [ 'class' => \get_class ( $object ),'o' => $object ] );
 	}
 
-	public function unserialize($serial): object {
+	public function unserialize($serial) {
 		$datas = \json_decode ( $serial );
 		$class = $datas->class;
 		$stdObj = $datas->o;
