@@ -34,7 +34,8 @@ class MemCachedDriver extends AbstractDataCache {
 		$this->cacheInstance = new \Memcached ( $root );
 		if (isset ( $cacheParams ['serializer'] )) {
 			$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, $cacheParams ['serializer'] );
-			var_dump ( $cacheParams ['serializer'] );
+			var_dump ( "HasIgBinary: " . \Memcached::HAVE_IGBINARY . "\n" );
+			var_dump ( "HasMsgPack: " . \Memcached::HAVE_MSGPACK . "\n" );
 		}
 		$this->cacheInstance->addServer ( $cacheParams ['server'], $cacheParams ['port'] );
 	}
