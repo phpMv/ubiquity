@@ -5,37 +5,34 @@ namespace Ubiquity\cache\system;
 use Ubiquity\cache\CacheFile;
 
 /**
- * This class is responsible for storing values with MemCached.
- * Ubiquity\cache\system$MemCachedDriver
+ * This class is responsible for storing values with Redis.
+ * Ubiquity\cache\system$RedisCacheDriver
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
  *
  */
-class MemCachedDriver extends AbstractDataCache {
+class RedisCacheDriver extends AbstractDataCache {
 	/**
 	 *
-	 * @var \Memcached
+	 * @var \Redis
 	 */
 	private $cacheInstance;
-	private const CONTENT = 'content';
-	private const TAG = 'tag';
-	private const TIME = 'time';
-	private $useArrays = true;
 
 	/**
 	 * Initializes the cache-provider
 	 */
 	public function __construct($root, $postfix = "", $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
-		$defaultParams = [ 'server' => '0.0.0.0','port' => 11211 ];
+		$defaultParams = [ 'server' => '0.0.0.0','port' => 6379,'persistent' => true ];
 		$cacheParams = \array_merge ( $defaultParams, $cacheParams );
-		$this->cacheInstance = new \Memcached ( $root );
-		if (\Memcached::HAVE_IGBINARY) {
-			$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, \Memcached::SERIALIZER_IGBINARY );
+		$this->cacheInstance = new \Redis ();
+		$connect = 'connect';
+		if ($cacheParams ['persistent'] ?? true) {
+			$connect = 'pconnect';
 		}
-		$this->cacheInstance->addServer ( $cacheParams ['server'], $cacheParams ['port'] );
+		$this->cacheInstance->{$connect} ( $cacheParams ['server'], $cacheParams ['port'] );
 	}
 
 	/**
@@ -46,8 +43,7 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	public function exists($key) {
 		$k = $this->getRealKey ( $key );
-		$this->cacheInstance->get ( $k );
-		return \Memcached::RES_NOTFOUND !== $this->cacheInstance->getResultCode ();
+		return $this->cacheInstance->exists ( $k );
 	}
 
 	public function store($key, $code, $tag = null, $php = true) {
@@ -63,12 +59,11 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	protected function storeContent($key, $content, $tag) {
 		$key = $this->getRealKey ( $key );
-		$this->cacheInstance->set ( $key, [ self::CONTENT => $content,self::TAG => $tag,self::TIME => \time () ] );
+		$this->cacheInstance->set ( $key, $content );
 	}
 
 	protected function getRealKey($key) {
-		$key = \str_replace ( "/", "-", $key );
-		return \str_replace ( "\\", "-", $key );
+		return \str_replace ( [ '/','\\' ], "-", $key );
 	}
 
 	/**
@@ -78,14 +73,7 @@ class MemCachedDriver extends AbstractDataCache {
 	 * @return mixed the cached data
 	 */
 	public function fetch($key) {
-		$entry = $this->cacheInstance->get ( $this->getRealKey ( $key ) );
-		if ($entry) {
-			if ($this->useArrays) {
-				return eval ( $entry [self::CONTENT] );
-			}
-			return $entry [self::CONTENT];
-		}
-		return false;
+		return $this->cacheInstance->get ( $this->getRealKey ( $key ) );
 	}
 
 	/**
@@ -95,7 +83,7 @@ class MemCachedDriver extends AbstractDataCache {
 	 * @return mixed the cached data
 	 */
 	public function file_get_contents($key) {
-		return $this->cacheInstance->get ( $this->getRealKey ( $key ) ) [self::CONTENT];
+		return $this->cacheInstance->get ( $this->getRealKey ( $key ) );
 	}
 
 	/**
@@ -106,7 +94,7 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	public function getTimestamp($key) {
 		$key = $this->getRealKey ( $key );
-		return $this->cacheInstance->get ( $key ) [self::TIME];
+		return $this->cacheInstance->ttl ( $key );
 	}
 
 	public function remove($key) {
@@ -115,18 +103,16 @@ class MemCachedDriver extends AbstractDataCache {
 	}
 
 	public function clear() {
-		$this->cacheInstance->flush ();
+		$this->cacheInstance->flushAll ();
 	}
 
 	public function getCacheFiles($type) {
 		$result = [ ];
-		$keys = $this->cacheInstance->getAllKeys ();
+		$keys = $this->cacheInstance->keys ( $type );
 
 		foreach ( $keys as $key ) {
-			$entry = $this->cacheInstance->get ( $key );
-			if ($entry [self::TAG] === $type) {
-				$result [] = new CacheFile ( \ucfirst ( $type ), $key, $entry [self::TIME], "", $key );
-			}
+			$ttl = $this->cacheInstance->ttl ( $key );
+			$result [] = new CacheFile ( \ucfirst ( $type ), $key, $ttl, "", $key );
 		}
 		if (\sizeof ( $result ) === 0)
 			$result [] = new CacheFile ( \ucfirst ( $type ), "", "", "" );
@@ -134,28 +120,17 @@ class MemCachedDriver extends AbstractDataCache {
 	}
 
 	public function clearCache($type) {
-		$keys = $this->cacheInstance->getAllKeys ();
+		$keys = $this->cacheInstance->keys ( $type );
 		foreach ( $keys as $key ) {
-			$entry = $this->cacheInstance->get ( $key );
-			if ($entry [self::TAG] === $type) {
-				$this->cacheInstance->delete ( $key );
-			}
+			$this->cacheInstance->delete ( $key );
 		}
 	}
 
 	public function getCacheInfo() {
-		return parent::getCacheInfo () . "<br>Driver name : <b>" . \Memcached::class . "</b>";
+		return parent::getCacheInfo () . "<br>Driver name : <b>" . \Redis::class . "</b>";
 	}
 
 	public function getEntryKey($key) {
 		return $this->getRealKey ( $key );
-	}
-
-	/**
-	 *
-	 * @param boolean $useArrays
-	 */
-	public function setUseArrays($useArrays) {
-		$this->useArrays = $useArrays;
 	}
 }
