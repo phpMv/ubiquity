@@ -29,14 +29,18 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	public function __construct($root, $postfix = "", $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
-		$defaultParams = [ 'server' => '0.0.0.0','port' => 11211 ];
+		$defaultParams = [ 'server' => '0.0.0.0','port' => 11211,'serializer' => \Memcached::SERIALIZER_PHP ];
 		$cacheParams = \array_merge ( $defaultParams, $cacheParams );
 		$this->cacheInstance = new \Memcached ( $root );
-		if (\Memcached::HAVE_IGBINARY) {
-			$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, \Memcached::SERIALIZER_IGBINARY );
-			var_dump ( "igBinary activation" );
+		if (isset ( $cacheParams ['serializer'] )) {
+			$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, $cacheParams ['serializer'] );
+			var_dump ( $cacheParams ['serializer'] );
 		}
 		$this->cacheInstance->addServer ( $cacheParams ['server'], $cacheParams ['port'] );
+	}
+
+	public function setSerializer($serializer) {
+		$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, $serializer );
 	}
 
 	/**
