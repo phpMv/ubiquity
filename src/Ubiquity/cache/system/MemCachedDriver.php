@@ -34,6 +34,7 @@ class MemCachedDriver extends AbstractDataCache {
 		$this->cacheInstance = new \Memcached ( $root );
 		if (\Memcached::HAVE_IGBINARY) {
 			$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, \Memcached::SERIALIZER_IGBINARY );
+			var_dump ( "igBinary activation" );
 		}
 		$this->cacheInstance->addServer ( $cacheParams ['server'], $cacheParams ['port'] );
 	}
