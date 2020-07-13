@@ -25,14 +25,21 @@ class RedisCacheDriver extends AbstractDataCache {
 	 */
 	public function __construct($root, $postfix = "", $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
-		$defaultParams = [ 'server' => '0.0.0.0','port' => 6379,'persistent' => true ];
+		$defaultParams = [ 'server' => '0.0.0.0','port' => 6379,'persistent' => true,'serializer' => \Redis::SERIALIZER_PHP ];
 		$cacheParams = \array_merge ( $defaultParams, $cacheParams );
 		$this->cacheInstance = new \Redis ();
 		$connect = 'connect';
 		if ($cacheParams ['persistent'] ?? true) {
 			$connect = 'pconnect';
 		}
+		if (isset ( $cacheParams ['serializer'] )) {
+			$this->cacheInstance->setOption ( \Redis::OPT_SERIALIZER, $cacheParams ['serializer'] );
+		}
 		$this->cacheInstance->{$connect} ( $cacheParams ['server'], $cacheParams ['port'] );
+	}
+
+	public function setSerializer($serializer) {
+		$this->cacheInstance->setOption ( \Redis::OPT_SERIALIZER, $serializer );
 	}
 
 	/**
