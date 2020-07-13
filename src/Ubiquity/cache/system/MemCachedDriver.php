@@ -68,8 +68,7 @@ class MemCachedDriver extends AbstractDataCache {
 	 * @param string $tag
 	 */
 	protected function storeContent($key, $content, $tag) {
-		// $key = $this->getRealKey ( $key );
-		$this->cacheInstance->set ( $key, [ self::CONTENT => $content,self::TAG => $tag,self::TIME => \time () ] );
+		$this->cacheInstance->set ( $this->getRealKey ( $key ), [ self::CONTENT => $content,self::TAG => $tag,self::TIME => \time () ] );
 	}
 
 	protected function getRealKey($key) {
@@ -83,11 +82,11 @@ class MemCachedDriver extends AbstractDataCache {
 	 * @return mixed the cached data
 	 */
 	public function fetch($key) {
-		$entry = $this->cacheInstance->get ( $key );
+		$entry = $this->cacheInstance->get ( $this->getRealKey ( $key ) );
 		if ($entry) {
-			// if ($this->useArrays) {
-			// return eval ( $entry [self::CONTENT] );
-			// }
+			if ($this->useArrays) {
+				return eval ( $entry [self::CONTENT] );
+			}
 			return $entry [self::CONTENT];
 		}
 		return false;
