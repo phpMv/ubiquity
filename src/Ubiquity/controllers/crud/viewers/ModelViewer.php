@@ -128,7 +128,7 @@ class ModelViewer {
 		$dataTable->setIdentifierFunction ( CRUDHelper::getIdentifierFunction ( $model ) );
 
 		if (! isset ( $selector )) {
-			if ($this->showDetailsOnDataTableClick ()) {
+			if (\count ( $instances ) > 0 && $this->showDetailsOnDataTableClick ()) {
 				$dataTable->getOnRow ( "click", $adminRoute . $files->getRouteDetails (), "#table-details", [ "selector" => $selector,"attr" => "data-ajax","hasLoader" => false,"jsCondition" => "!event.detail || event.detail==1","jsCallback" => "return false;" ] );
 				$dataTable->setActiveRowSelector ( "active" );
 			}
