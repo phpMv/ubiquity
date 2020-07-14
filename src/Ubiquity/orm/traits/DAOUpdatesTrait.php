@@ -129,9 +129,10 @@ trait DAOUpdatesTrait {
 		$quote = $db->quote;
 		$tableName = OrmUtils::getTableName ( $className );
 		$keyAndValues = Reflexion::getPropertiesAndValues ( $instance );
-		$keyAndValues = array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
+		$keyAndValues = \array_merge ( $keyAndValues, OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 		$pk = OrmUtils::getFirstKey ( $className );
-		if (($keyAndValues [$pk] ?? null) == null) {
+		$pkVal = $keyAndValues [$pk] ?? null;
+		if (($pkVal) == null) {
 			unset ( $keyAndValues [$pk] );
 		}
 		$sql = "INSERT INTO {$quote}{$tableName}{$quote} (" . SqlUtils::getInsertFields ( $keyAndValues ) . ') VALUES(' . SqlUtils::getInsertFieldsValues ( $keyAndValues ) . ')';
@@ -144,13 +145,17 @@ trait DAOUpdatesTrait {
 		try {
 			$result = $statement->execute ( $keyAndValues );
 			if ($result) {
-				$lastId = $db->lastInserId ( "{$tableName}_{$pk}_seq" );
-				if ($lastId != 0) {
-					$propKey = OrmUtils::getFirstPropKey ( $className );
-					$propKey->setValue ( $instance, $lastId );
-					$instance->_rest = $keyAndValues;
-					$instance->_rest [$pk] = $lastId;
+				if ($pkVal == null) {
+					$lastId = $db->lastInserId ( "{$tableName}_{$pk}_seq" );
+					if ($lastId != 0) {
+						$propKey = OrmUtils::getFirstPropKey ( $className );
+						$propKey->setValue ( $instance, $lastId );
+						$pkVal = $lastId;
+					}
 				}
+				$instance->_rest = $keyAndValues;
+				$instance->_rest [$pk] = $pkVal;
+
 				if ($insertMany) {
 					self::insertOrUpdateAllManyToMany ( $instance );
 				}
