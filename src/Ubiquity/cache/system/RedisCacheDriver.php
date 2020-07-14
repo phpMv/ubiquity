@@ -32,10 +32,10 @@ class RedisCacheDriver extends AbstractDataCache {
 		if ($cacheParams ['persistent'] ?? true) {
 			$connect = 'pconnect';
 		}
+		$this->cacheInstance->{$connect} ( $cacheParams ['server'], $cacheParams ['port'] );
 		if (isset ( $cacheParams ['serializer'] )) {
 			$this->cacheInstance->setOption ( \Redis::OPT_SERIALIZER, $cacheParams ['serializer'] );
 		}
-		$this->cacheInstance->{$connect} ( $cacheParams ['server'], $cacheParams ['port'] );
 	}
 
 	public function setSerializer($serializer) {
