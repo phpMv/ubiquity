@@ -32,7 +32,7 @@ class DAOCache extends AbstractDAOCache {
 		} else {
 			$this->cache = $cacheSystem;
 		}
-		if ($this->cache instanceof MemCachedDriver) {
+		if (\method_exists ( $this->cache, 'setUseArrays' )) {
 			$this->cache->setUseArrays ( false );
 		}
 	}

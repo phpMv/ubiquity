@@ -22,6 +22,7 @@ class PhpFastCacheDriver extends AbstractDataCache {
 	 * @var ExtendedCacheItemPoolInterface
 	 */
 	private $cacheInstance;
+	private $useArrays = true;
 
 	/**
 	 * Initializes the cache-provider
@@ -67,8 +68,7 @@ class PhpFastCacheDriver extends AbstractDataCache {
 	}
 
 	protected function getRealKey($key) {
-		$key = \str_replace ( "/", "-", $key );
-		return \str_replace ( "\\", "-", $key );
+		return \str_replace ( [ '\\','/' ], '-', $key );
 	}
 
 	/**
@@ -79,7 +79,10 @@ class PhpFastCacheDriver extends AbstractDataCache {
 	 */
 	public function fetch($key) {
 		$result = $this->cacheInstance->getItem ( $this->getRealKey ( $key ) )->get ();
-		return eval ( $result );
+		if ($this->useArrays) {
+			return eval ( $result );
+		}
+		return $result;
 	}
 
 	/**
@@ -139,5 +142,13 @@ class PhpFastCacheDriver extends AbstractDataCache {
 
 	public function getEntryKey($key) {
 		return $this->cacheInstance->getItem ( $this->getRealKey ( $key ) )->getKey ();
+	}
+
+	/**
+	 *
+	 * @param boolean $useArrays
+	 */
+	public function setUseArrays($useArrays) {
+		$this->useArrays = $useArrays;
 	}
 }
