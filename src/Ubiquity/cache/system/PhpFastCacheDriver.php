@@ -5,7 +5,6 @@ namespace Ubiquity\cache\system;
 use Ubiquity\cache\CacheFile;
 use Phpfastcache\Core\Pool\ExtendedCacheItemPoolInterface;
 use Phpfastcache\CacheManager;
-use Phpfastcache\Config\Config;
 
 /**
  * This class is responsible for storing values with PhpFastCache.
@@ -33,7 +32,7 @@ class PhpFastCacheDriver extends AbstractDataCache {
 		$configClass = '\\Phpfastcache\\Drivers\\' . \ucfirst ( $cacheType ) . '\\Config';
 		unset ( $cacheParams ['type'] );
 		$defaultParams = [ 'defaultTtl' => 86400,'itemDetailedDate' => true ];
-		$cacheParams = \array_merge ( $cacheParams, $defaultParams );
+		$cacheParams = \array_merge ( $defaultParams, $cacheParams );
 		$this->cacheInstance = CacheManager::getInstance ( $cacheType, new $configClass ( $cacheParams ) );
 	}
 
