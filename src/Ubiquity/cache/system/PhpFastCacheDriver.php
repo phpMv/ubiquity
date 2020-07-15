@@ -26,9 +26,9 @@ class PhpFastCacheDriver extends AbstractDataCache {
 	/**
 	 * Initializes the cache-provider
 	 */
-	public function __construct($root, $postfix = "", $cacheParams = []) {
+	public function __construct($root, $postfix = "", $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
-		$cacheType = $cacheParams ['type']??'Files';
+		$cacheType = $cacheParams ['type'] ?? 'Files';
 		unset ( $cacheParams ['type'] );
 		$defaultParams = [ 'defaultTtl' => 86400,'itemDetailedDate' => true ];
 		$cacheParams = \array_merge ( $cacheParams, $defaultParams );
@@ -60,7 +60,9 @@ class PhpFastCacheDriver extends AbstractDataCache {
 		$key = $this->getRealKey ( $key );
 		$item = $this->cacheInstance->getItem ( $key );
 		$item->set ( $content );
-		$item->addTag ( $tag );
+		if ($tag != null) {
+			$item->addTag ( $tag );
+		}
 		$this->cacheInstance->save ( $item );
 	}
 
