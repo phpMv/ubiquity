@@ -17,20 +17,16 @@ class DAOMemory5Cache extends AbstractDAOCache {
 	 */
 	protected $arrayCache;
 
-	protected function getKey($class, $key) {
-		return \md5 ( $class . $key );
-	}
-
 	public function store($class, $key, $object) {
-		$this->arrayCache [$this->getKey ( $class, $key )] = $object;
+		$this->arrayCache [$class . $key] = $object;
 	}
 
 	public function fetch($class, $key) {
-		return $this->arrayCache [$this->getKey ( $class, $key )] ?? false;
+		return $this->arrayCache [$class . $key] ?? false;
 	}
 
 	public function delete($class, $key) {
-		$k = $this->getKey ( $class, $key );
+		$k = $class . $key;
 		if (isset ( $this->arrayCache [$k] )) {
 			unset ( $this->arrayCache [$k] );
 		}
