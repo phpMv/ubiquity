@@ -15,7 +15,7 @@ use Ubiquity\cache\system\MemCachedDriver;
  *
  */
 class DAOCache extends AbstractDAOCache {
-
+	private $items;
 	/**
 	 *
 	 * @var AbstractDataCache
@@ -42,7 +42,11 @@ class DAOCache extends AbstractDAOCache {
 	}
 
 	public function fetch($class, $key) {
-		return $this->cache->fetch ( $this->getKey ( $class, $key ) );
+		$k = $this->getKey ( $class, $key );
+		if (! isset ( $this->items [$k] )) {
+			$this->items [$k] = $this->cache->fetch ( $k );
+		}
+		return $this->items [$k];
 	}
 
 	public function delete($class, $key) {
