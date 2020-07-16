@@ -15,6 +15,10 @@ use Ubiquity\cache\system\MemCachedDriver;
  *
  */
 class DAOCache extends AbstractDAOCache {
+	/**
+	 *
+	 * @var array
+	 */
 	private $items;
 	/**
 	 *
