@@ -17,5 +17,8 @@ abstract class AbstractDAOCache {
 	abstract public function fetch($class, $key);
 
 	abstract public function delete($class, $key);
+
+	public function optimize() {
+	}
 }
 
