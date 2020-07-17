@@ -18,15 +18,15 @@ class DAOMemory5Cache extends AbstractDAOCache {
 	protected $arrayCache;
 
 	public function store($class, $key, $object) {
-		$this->arrayCache [\md5 ( $class )] [$key] = $object;
+		$this->arrayCache [\crc32 ( $class )] [$key] = $object;
 	}
 
 	public function fetch($class, $key) {
-		return $this->arrayCache [\md5 ( $class )] [$key] ?? false;
+		return $this->arrayCache [\crc32 ( $class )] [$key] ?? false;
 	}
 
 	public function delete($class, $key) {
-		$k = [ \md5 ( $class ) ];
+		$k = [ \crc32 ( $class ) ];
 		if (isset ( $this->arrayCache [$k] [$key] )) {
 			unset ( $this->arrayCache [$k] [$key] );
 		}
