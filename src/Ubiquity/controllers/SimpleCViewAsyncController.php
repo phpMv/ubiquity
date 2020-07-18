@@ -16,7 +16,7 @@ abstract class SimpleCViewAsyncController extends SimpleViewController {
 
 	protected function getViewKey($filename, $pdata) {
 		if (isset ( $pdata )) {
-			return $filename . \crc32 ( \serialize ( $pdata ) );
+			return $filename . \crc32 ( \json_encode ( $pdata ) );
 		}
 		return $filename;
 	}
