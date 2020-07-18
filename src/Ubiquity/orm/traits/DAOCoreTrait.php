@@ -147,7 +147,13 @@ trait DAOCoreTrait {
 	 * @param string $className
 	 * @param array $invertedJoinColumns
 	 * @param array $manyToOneQueries
+	 * @param array $oneToManyFields
+	 * @param array $manyToManyFields
+	 * @param array $oneToManyQueries
+	 * @param array $manyToManyParsers
+	 * @param array $memberNames
 	 * @param array $accessors
+	 * @param array $transformers
 	 * @return object
 	 */
 	public static function _loadObjectFromRow(Database $db, $row, $className, $invertedJoinColumns, &$manyToOneQueries, $oneToManyFields, $manyToManyFields, &$oneToManyQueries, &$manyToManyParsers, $memberNames, $accessors, $transformers) {
@@ -180,6 +186,35 @@ trait DAOCoreTrait {
 			foreach ( $manyToManyFields as $k => $annot ) {
 				self::prepareManyToMany ( $db, $manyToManyParsers, $o, $k, $annot );
 			}
+		}
+		return $o;
+	}
+
+	/**
+	 *
+	 * @param Database $db
+	 * @param array $row
+	 * @param string $className
+	 * @param array $memberNames
+	 * @param array $accessors
+	 * @param array $transformers
+	 * @return object
+	 */
+	public static function _loadSimpleObjectFromRow(Database $db, $row, $className, $memberNames, $accessors, $transformers) {
+		$o = new $className ();
+		if ($memberNames && self::$useTransformers) { // TOTO to remove
+			foreach ( $transformers as $member => $transformer ) {
+				$field = \array_search ( $member, $memberNames );
+				$transform = self::$transformerOp;
+				$row [$field] = $transformer::{$transform} ( $row [$field] );
+			}
+		}
+		foreach ( $row as $k => $v ) {
+			if (isset ( $accessors [$k] )) {
+				$accesseur = $accessors [$k];
+				$o->$accesseur ( $v );
+			}
+			$o->_rest [$memberNames [$k] ?? $k] = $v;
 		}
 		return $o;
 	}

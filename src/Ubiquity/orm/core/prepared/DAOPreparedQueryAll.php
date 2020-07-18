@@ -9,11 +9,11 @@ use Ubiquity\orm\DAO;
 use Ubiquity\cache\database\DbCache;
 
 /**
- * Ubiquity\orm\core\prepared$DAOPreparedQueryOne
+ * Ubiquity\orm\core\prepared$DAOPreparedQueryAll
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class DAOPreparedQueryAll extends DAOPreparedQuery {
@@ -24,13 +24,32 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 	}
 
 	public function execute($params = [ ], $useCache = false) {
-		$objects = array ();
-		$invertedJoinColumns = null;
-
 		$cp = $this->conditionParser;
 		$cp->setParams ( $params );
 		$className = $this->className;
 		$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
+		if ($this->hasIncluded) {
+			return $this->_parseQueryResponseWithIncluded ( $query, $className, $useCache );
+		}
+		return $this->_parseQueryResponse ( $query, $className );
+	}
+
+	protected function _parseQueryResponse($query, $className) {
+		$objects = [ ];
+		foreach ( $query as $row ) {
+			$object = DAO::_loadSimpleObjectFromRow ( $this->db, $row, $className, $this->memberList, $this->accessors, $this->transformers );
+			$key = OrmUtils::getPropKeyValues ( $object, $this->propsKeys );
+			$this->addAditionnalMembers ( $object, $row );
+			$objects [$key] = $object;
+		}
+		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
+		return $objects;
+	}
+
+	protected function _parseQueryResponseWithIncluded($query, $className, $useCache) {
+		$objects = [ ];
+		$invertedJoinColumns = null;
+
 		$oneToManyQueries = [ ];
 		$manyToOneQueries = [ ];
 		$manyToManyParsers = [ ];
@@ -40,9 +59,7 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 			$this->addAditionnalMembers ( $object, $row );
 			$objects [$key] = $object;
 		}
-		if ($this->hasIncluded) {
-			DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $this->included, $useCache );
-		}
+		DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $this->included, $useCache );
 		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
 		return $objects;
 	}
