@@ -30,17 +30,5 @@ class DAOMemoryCache extends AbstractDAOCache {
 			unset ( $this->arrayCache [$class] [$key] );
 		}
 	}
-
-	public function optimize() {
-		$this->sort ( $this->arrayCache );
-	}
-
-	private function sort(&$array) {
-		foreach ( $array as &$value ) {
-			if (\is_array ( $value ))
-				$this->sort ( $value );
-		}
-		return ksort ( $array );
-	}
 }
 
