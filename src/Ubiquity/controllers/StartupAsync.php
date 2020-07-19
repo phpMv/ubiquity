@@ -5,12 +5,12 @@ namespace Ubiquity\controllers;
 use Ubiquity\log\Logger;
 
 /**
- * Startup for async platforms (Swoole, Workerman, php-pm...)
+ * Startup for async platforms (Swoole, Workerman, Roadrunner, php-pm...)
  * Ubiquity\controllers$StartupAsync
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class StartupAsync extends Startup {
@@ -55,10 +55,13 @@ class StartupAsync extends Startup {
 	}
 
 	public static function getControllerInstance($controllerName): ?object {
-		if (! isset ( self::$controllers [$controllerName] )) {
-			return self::$controllers [$controllerName] = self::_getControllerInstance ( $controllerName );
-		}
-		return self::$controllers [$controllerName];
+		return self::$controllers [$controllerName] ??= self::_getControllerInstance ( $controllerName );
+	}
+
+	public static function warmupAction($controller, $action = 'index') {
+		ob_start ();
+		$ru = [ $controller,$action ];
+		static::runAction ( $ru, true, true );
+		ob_end_clean ();
 	}
 }
-
