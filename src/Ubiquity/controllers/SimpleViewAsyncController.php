@@ -15,29 +15,16 @@ abstract class SimpleViewAsyncController extends SimpleViewController {
 	protected static $views = [ ];
 
 	protected function _includeFileAsString($filename, $pData) {
+		if (isset ( $pData )) {
+			\extract ( $pData );
+		}
 		if (! isset ( self::$views [$filename] )) {
 			\ob_start ();
-			if (isset ( $pData )) {
-				\extract ( $pData );
-			}
 			include ($filename);
 			self::$views [$filename] = \file_get_contents ( $filename );
 			return \ob_get_clean ();
 		}
-		if (isset ( $pData )) {
-			return self::$views [$filename];
-		}
-		return self::eval ( self::$views [$filename], $pData );
-	}
-
-	protected function eval($code, $pData) {
-		$keys = [ ];
-		$values = [ ];
-		foreach ( $pData as $key => $value ) {
-			$keys [] = "$$key";
-			$values [] = $value;
-		}
-		return \str_replace ( $keys, $values, $code );
+		return eval ( '?>' . self::$views [$filename] );
 	}
 
 	/**
