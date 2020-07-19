@@ -14,17 +14,24 @@ namespace Ubiquity\controllers;
 abstract class SimpleViewAsyncController extends SimpleViewController {
 	protected static $views = [ ];
 
-	protected function _includeFileAsString($filename, $pData) {
-		if (isset ( $pData )) {
-			\extract ( $pData );
+	protected function getViewKey($filename, $pdata) {
+		if (isset ( $pdata )) {
+			return \md5 ( $filename . \json_encode ( $pdata ) );
 		}
-		if (! isset ( self::$views [$filename] )) {
+		return \md5 ( $filename );
+	}
+
+	protected function _includeFileAsString($filename, $pdata) {
+		$key = $this->getViewKey ( $filename, $pdata );
+		if (! isset ( self::$views [$key] )) {
+			if (isset ( $pdata )) {
+				\extract ( $pdata );
+			}
 			\ob_start ();
 			include ($filename);
-			self::$views [$filename] = \file_get_contents ( $filename );
-			return \ob_get_clean ();
+			return self::$views [$key] = \ob_get_clean ();
 		}
-		return eval ( '?>' . self::$views [$filename] );
+		return self::$views [$key];
 	}
 
 	/**
