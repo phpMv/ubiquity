@@ -12,7 +12,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  * @property mixed $cache
  * @property array $options
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
@@ -71,6 +71,11 @@ trait DatabaseOperationsTrait {
 			}
 		}
 		return $result;
+	}
+
+	public function prepareAndExecuteNoCache($tableName, $condition, $fields, $parameters = null) {
+		$quote = SqlUtils::$quote;
+		return $this->wrapperObject->_optPrepareAndExecute ( "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters );
 	}
 
 	public function storeCache() {
@@ -196,4 +201,3 @@ trait DatabaseOperationsTrait {
 		return ($this->wrapperObject && $this->wrapperObject->ping ());
 	}
 }
-

@@ -12,7 +12,7 @@ use Ubiquity\orm\traits\OrmUtilsFieldsTrait;
  * Object/relational mapping utilities
  *
  * @author jc
- * @version 1.0.5
+ * @version 1.0.6
  */
 class OrmUtils {
 
@@ -190,5 +190,16 @@ class OrmUtils {
 
 	public static function clearMetaDatas() {
 		self::$modelsMetadatas = [ ];
+	}
+
+	public static function hasAllMembersPublic($className) {
+		$members = self::getMembers ( $className );
+		foreach ( $members as $memberName ) {
+			$field = new \ReflectionProperty ( $className, $memberName );
+			if (! $field->isPublic ()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

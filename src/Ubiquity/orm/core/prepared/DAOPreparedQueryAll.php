@@ -13,7 +13,7 @@ use Ubiquity\cache\database\DbCache;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class DAOPreparedQueryAll extends DAOPreparedQuery {
@@ -27,8 +27,12 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		$cp = $this->conditionParser;
 		$cp->setParams ( $params );
 		$className = $this->className;
-		$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
-		if ($this->hasIncluded) {
+		if ($useCache) {
+			$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
+		} else {
+			$query = $this->db->prepareAndExecuteNoCache ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams () );
+		}
+		if ($this->hasIncluded || ! $this->allPublic) {
 			return $this->_parseQueryResponseWithIncluded ( $query, $className, $useCache );
 		}
 		return $this->_parseQueryResponse ( $query, $className );
@@ -37,7 +41,7 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 	protected function _parseQueryResponse($query, $className) {
 		$objects = [ ];
 		foreach ( $query as $row ) {
-			$object = DAO::_loadSimpleObjectFromRow ( $this->db, $row, $className, $this->memberList, $this->accessors, $this->transformers );
+			$object = DAO::_loadSimpleObjectFromRow ( $this->db, $row, $className, $this->memberList, $this->transformers );
 			$key = OrmUtils::getPropKeyValues ( $object, $this->propsKeys );
 			$this->addAditionnalMembers ( $object, $row );
 			$objects [$key] = $object;
@@ -64,4 +68,3 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		return $objects;
 	}
 }
-

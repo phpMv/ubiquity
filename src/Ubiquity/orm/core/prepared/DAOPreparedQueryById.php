@@ -14,7 +14,7 @@ use Ubiquity\cache\dao\AbstractDAOCache;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  */
 class DAOPreparedQueryById extends DAOPreparedQuery {
 	/**
@@ -42,18 +42,27 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 
 		$cp = $this->conditionParser;
 		$cp->setKeyValues ( $params );
-		$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
+		if ($useCache) {
+			$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
+		} else {
+			$query = $this->db->prepareAndExecuteNoCache ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams () );
+		}
 		if ($query && \sizeof ( $query ) > 0) {
-			$oneToManyQueries = [ ];
-			$manyToOneQueries = [ ];
-			$manyToManyParsers = [ ];
 			$className = $this->className;
 			$row = \current ( $query );
-			$object = DAO::_loadObjectFromRow ( $this->db, $row, $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers );
-			$this->addAditionnalMembers ( $object, $row );
-			if ($this->hasIncluded) {
-				DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $this->included, $useCache );
+			if ($this->hasIncluded || ! $this->allPublic) {
+				$oneToManyQueries = [ ];
+				$manyToOneQueries = [ ];
+				$manyToManyParsers = [ ];
+				$object = DAO::_loadObjectFromRow ( $this->db, $row, $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers );
+				if ($this->hasIncluded) {
+					DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $this->included, $useCache );
+				}
+			} else {
+				$object = DAO::_loadSimpleObjectFromRow ( $this->db, $row, $className, $this->memberList, $this->transformers );
 			}
+			$this->addAditionnalMembers ( $object, $row );
+
 			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
 			return $object;
 		}
