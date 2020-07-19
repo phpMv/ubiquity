@@ -7,7 +7,7 @@ namespace Ubiquity\db\providers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 abstract class AbstractDbWrapper {
@@ -24,11 +24,7 @@ abstract class AbstractDbWrapper {
 	abstract public static function getAvailableDrivers();
 
 	public function _getStatement(string $sql) {
-		$key = \md5 ( $sql );
-		if (! isset ( $this->statements [$key] )) {
-			$this->statements [$key] = $this->getStatement ( $sql );
-		}
-		return $this->statements [$key];
+		return $this->statements [\md5 ( $sql )] ??= $this->getStatement ( $sql );
 	}
 
 	abstract public function getStatement(string $sql);
