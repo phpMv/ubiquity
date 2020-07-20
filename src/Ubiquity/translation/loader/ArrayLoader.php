@@ -18,7 +18,7 @@ use Ubiquity\cache\CacheManager;
  */
 class ArrayLoader implements LoaderInterface {
 	private $rootDir;
-	private $key = "translations/";
+	private $key = 'translations/';
 
 	private function getRootKey($locale = null, $domain = null) {
 		return $this->key . $locale ?? '' . $domain ?? '';
@@ -31,9 +31,9 @@ class ArrayLoader implements LoaderInterface {
 	public function loadDomain($locale, $domain) {
 		$messages = [ ];
 		$rootDirectory = $this->getRootDirectory ( $locale );
-		if (file_exists ( $rootDirectory )) {
+		if (\file_exists ( $rootDirectory )) {
 			$filename = $rootDirectory . \DS . $domain . '.php';
-			if (file_exists ( $filename )) {
+			if (\file_exists ( $filename )) {
 				$messages = $this->loadFile ( $filename );
 			}
 		}
@@ -47,17 +47,17 @@ class ArrayLoader implements LoaderInterface {
 		}
 		$messages = [ ];
 		$rootDirectory = $this->getRootDirectory ( $locale );
-		if (file_exists ( $rootDirectory )) {
+		if (\file_exists ( $rootDirectory )) {
 			$files = UFileSystem::glob_recursive ( $rootDirectory . $domain . '.php' );
 			foreach ( $files as $file ) {
-				if (file_exists ( $file )) {
-					$name = basename ( $file, '.php' );
-					Logger::info ( 'Translate', 'Loading ' . $locale . '.' . $domain . ' from file ' . $name, 'load', [ get_class () ] );
+				if (\file_exists ( $file )) {
+					$name = \basename ( $file, '.php' );
+					Logger::info ( 'Translate', 'Loading ' . $locale . '.' . $domain . ' from file ' . $name, 'load', [ \get_class () ] );
 					$messages [$name] = $this->loadFile ( $file );
 				}
 			}
 			$this->flatten ( $messages );
-			CacheManager::$cache->store ( $key, "return " . UArray::asPhpArray ( $messages, 'array' ) . ';' );
+			CacheManager::$cache->store ( $key, $messages );
 		} else {
 			return false;
 		}
@@ -82,9 +82,9 @@ class ArrayLoader implements LoaderInterface {
 	}
 
 	private function getDirectory($domain, &$filename) {
-		$parts = explode ( '.', $domain );
-		$filename = array_pop ( $parts ) . ".php";
-		return implode ( \DS, $parts );
+		$parts = \explode ( '.', $domain );
+		$filename = \array_pop ( $parts ) . ".php";
+		return \implode ( \DS, $parts );
 	}
 
 	/**
@@ -142,10 +142,10 @@ class ArrayLoader implements LoaderInterface {
 	public function getDomains($locale) {
 		$domains = [ ];
 		$rootDirectory = $this->getRootDirectory ( $locale );
-		if (file_exists ( $rootDirectory )) {
+		if (\file_exists ( $rootDirectory )) {
 			$files = UFileSystem::glob_recursive ( $rootDirectory . '*.php' );
 			foreach ( $files as $file ) {
-				$domains [] = basename ( $file, '.php' );
+				$domains [] = \basename ( $file, '.php' );
 			}
 		}
 		return $domains;

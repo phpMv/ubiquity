@@ -7,13 +7,12 @@ use Ubiquity\seo\UrlParser;
 use Ubiquity\utils\http\UResponse;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
-use Ubiquity\utils\base\UArray;
 use Ubiquity\seo\ControllerSeo;
 
 class SeoController extends Controller {
-	const SEO_PREFIX = "seo";
-	protected $urlsKey = "urls";
-	protected $seoTemplateFilename = "@framework/Seo/sitemap.xml.html";
+	const SEO_PREFIX = 'seo';
+	protected $urlsKey = 'urls';
+	protected $seoTemplateFilename = '@framework/Seo/sitemap.xml.html';
 
 	public function index() {
 		$config = Startup::getConfig ();
@@ -24,7 +23,7 @@ class SeoController extends Controller {
 		if (\is_array ( $urls )) {
 			$parser = new UrlParser ();
 			$parser->parseArray ( $urls );
-			$this->loadView ( $this->seoTemplateFilename, [ "urls" => $parser->getUrls (),"base" => $base ] );
+			$this->loadView ( $this->seoTemplateFilename, [ 'urls' => $parser->getUrls (),'base' => $base ] );
 		}
 	}
 
@@ -37,7 +36,7 @@ class SeoController extends Controller {
 	}
 
 	public function _save($array) {
-		CacheManager::$cache->store ( $this->_getUrlsFilename (), 'return ' . UArray::asPhpArray ( $array, "array" ) . ';' );
+		CacheManager::$cache->store ( $this->_getUrlsFilename (), $array );
 	}
 
 	public function _getArrayUrls() {

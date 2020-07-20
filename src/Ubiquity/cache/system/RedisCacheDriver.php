@@ -10,7 +10,7 @@ use Ubiquity\cache\CacheFile;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class RedisCacheDriver extends AbstractDataCache {
@@ -53,18 +53,7 @@ class RedisCacheDriver extends AbstractDataCache {
 		return $this->cacheInstance->exists ( $k );
 	}
 
-	public function store($key, $code, $tag = null, $php = true) {
-		$this->storeContent ( $key, $code, $tag );
-	}
-
-	/**
-	 * Caches the given data with the given key.
-	 *
-	 * @param string $key cache key
-	 * @param string $content the source-code to be cached
-	 * @param string $tag
-	 */
-	protected function storeContent($key, $content, $tag) {
+	public function store($key, $content, $tag = null) {
 		$key = $this->getRealKey ( $key );
 		$this->cacheInstance->set ( $key, $content );
 	}

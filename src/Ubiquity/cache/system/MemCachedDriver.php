@@ -10,7 +10,7 @@ use Ubiquity\cache\CacheFile;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.2
  *
  */
 class MemCachedDriver extends AbstractDataCache {
@@ -22,7 +22,6 @@ class MemCachedDriver extends AbstractDataCache {
 	private const CONTENT = 'content';
 	private const TAG = 'tag';
 	private const TIME = 'time';
-	private $useArrays = true;
 
 	/**
 	 * Initializes the cache-provider
@@ -56,18 +55,7 @@ class MemCachedDriver extends AbstractDataCache {
 		return \Memcached::RES_NOTFOUND !== $this->cacheInstance->getResultCode ();
 	}
 
-	public function store($key, $code, $tag = null, $php = true) {
-		$this->storeContent ( $key, $code, $tag );
-	}
-
-	/**
-	 * Caches the given data with the given key.
-	 *
-	 * @param string $key cache key
-	 * @param string $content the source-code to be cached
-	 * @param string $tag
-	 */
-	protected function storeContent($key, $content, $tag) {
+	public function store($key, $content, $tag = null) {
 		$this->cacheInstance->set ( $this->getRealKey ( $key ), [ self::CONTENT => $content,self::TAG => $tag,self::TIME => \time () ] );
 	}
 
@@ -83,13 +71,7 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	public function fetch($key) {
 		$entry = $this->cacheInstance->get ( $this->getRealKey ( $key ) );
-		if ($entry) {
-			if ($this->useArrays) {
-				return eval ( $entry [self::CONTENT] );
-			}
-			return $entry [self::CONTENT];
-		}
-		return false;
+		return $entry [self::CONTENT] ?? false;
 	}
 
 	/**
@@ -153,13 +135,5 @@ class MemCachedDriver extends AbstractDataCache {
 
 	public function getEntryKey($key) {
 		return $this->getRealKey ( $key );
-	}
-
-	/**
-	 *
-	 * @param boolean $useArrays
-	 */
-	public function setUseArrays($useArrays) {
-		$this->useArrays = $useArrays;
 	}
 }

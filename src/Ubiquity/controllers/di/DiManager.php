@@ -10,7 +10,7 @@ use Ubiquity\cache\CacheManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @since Ubiquity 2.1.0
  *
  */
@@ -26,12 +26,12 @@ class DiManager {
 	public static function init(&$config) {
 		$controllers = CacheManager::getControllers ();
 		foreach ( $controllers as $controller ) {
-			CacheManager::$cache->remove( self::getControllerCacheKey ( $controller ));
+			CacheManager::$cache->remove ( self::getControllerCacheKey ( $controller ) );
 			$parser = new DiControllerParser ();
 			$parser->parse ( $controller, $config );
 			$injections = $parser->getInjections ();
-			if (sizeof ( $injections ) > 0) {
-				self::store ( $controller, $parser->__toString () );
+			if (\count ( $injections ) > 0) {
+				self::store ( $controller, $injections );
 			}
 		}
 	}

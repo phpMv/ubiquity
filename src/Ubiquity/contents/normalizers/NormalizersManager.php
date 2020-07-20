@@ -30,7 +30,7 @@ class NormalizersManager {
 		}
 	}
 
-	public static function registerClass($classname, $normalizer, $constructorParameters = []) {
+	public static function registerClass($classname, $normalizer, $constructorParameters = [ ]) {
 		$reflect = new \ReflectionClass ( $normalizer );
 		self::$normalizers [$classname] = $reflect->newInstanceArgs ( $constructorParameters );
 	}
@@ -83,7 +83,7 @@ class NormalizersManager {
 	}
 
 	public static function store() {
-		CacheManager::$cache->store ( self::$key, "return " . UArray::asPhpArray ( self::$normalizers, 'array' ) . ';' );
+		CacheManager::$cache->store ( self::$key, self::$normalizers );
 	}
 }
 

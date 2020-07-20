@@ -19,8 +19,8 @@ trait ValidatorsManagerInitTrait {
 	 * @param array $config
 	 * @param array $databaseOffset
 	 */
-	public static function initModelsValidators(&$config,$databaseOffset='default') {
-		$models = CacheManager::getModels ( $config, true ,$databaseOffset);
+	public static function initModelsValidators(&$config, $databaseOffset = 'default') {
+		$models = CacheManager::getModels ( $config, true, $databaseOffset );
 		foreach ( $models as $model ) {
 			self::initClassValidators ( $model );
 		}
@@ -38,7 +38,7 @@ trait ValidatorsManagerInitTrait {
 		$parser->parse ( $class );
 		$validators = $parser->getValidators ();
 		if (sizeof ( $validators ) > 0) {
-			self::store ( $class, $parser->__toString () );
+			self::store ( $class, $validators );
 		}
 	}
 

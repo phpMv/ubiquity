@@ -3,7 +3,6 @@
 namespace Ubiquity\translation;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\utils\base\UArray;
 
 /**
  * Store translation updates.
@@ -129,7 +128,7 @@ class MessagesUpdates {
 	public function save() {
 		if ($this->dirty) {
 			$key = $this->getKey ();
-			CacheManager::$cache->store ( $this->key . $key, 'return array' . UArray::asPhpArray ( [ 'newKeys' => $this->newKeys,'toAdd' => $this->toAdd,'toUpdate' => $this->toUpdate,'toDelete' => $this->toDelete ] ) . ';' );
+			CacheManager::$cache->store ( $this->key . $key, [ 'newKeys' => $this->newKeys,'toAdd' => $this->toAdd,'toUpdate' => $this->toUpdate,'toDelete' => $this->toDelete ] );
 			$this->dirty = false;
 			return true;
 		}
@@ -147,16 +146,16 @@ class MessagesUpdates {
 
 	public function __toString() {
 		$res = [ ];
-		if (($nb = sizeof ( $this->toAdd )) > 0) {
+		if (($nb = \count ( $this->toAdd )) > 0) {
 			$res [] = '+' . $nb;
 		}
-		if (($nb = sizeof ( $this->toUpdate )) > 0) {
+		if (($nb = \count ( $this->toUpdate )) > 0) {
 			$res [] = '±' . $nb;
 		}
-		if (($nb = sizeof ( $this->toDelete )) > 0) {
+		if (($nb = \count ( $this->toDelete )) > 0) {
 			$res [] = '-' . $nb;
 		}
-		return implode ( ', ', $res );
+		return \implode ( ', ', $res );
 	}
 }
 

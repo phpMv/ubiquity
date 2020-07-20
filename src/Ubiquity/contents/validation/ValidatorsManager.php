@@ -111,7 +111,7 @@ class ValidatorsManager {
 	}
 
 	private static function getCacheValidators($instance, $group = "") {
-		return self::getClassCacheValidators ( get_class ( $instance ), $group );
+		return self::getClassCacheValidators ( \get_class ( $instance ), $group );
 	}
 
 	protected static function getClassCacheValidators($class, $group = "") {
@@ -133,7 +133,7 @@ class ValidatorsManager {
 	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation[]
 	 */
 	public static function validate($instance, $group = "", $excludedValidators = [ ]) {
-		$class = get_class ( $instance );
+		$class = \get_class ( $instance );
 		$cache = self::getClassCacheValidators ( $class, $group );
 		if ($cache !== false) {
 			return self::validateFromCache_ ( $instance, $cache, $excludedValidators );
@@ -153,9 +153,9 @@ class ValidatorsManager {
 	 * @return \Ubiquity\contents\validation\validators\ConstraintViolation[]
 	 */
 	public static function validateInstances($instances, $group = "") {
-		if (sizeof ( $instances ) > 0) {
-			$instance = current ( $instances );
-			$class = get_class ( $instance );
+		if (\count ( $instances ) > 0) {
+			$instance = \current ( $instances );
+			$class = \get_class ( $instance );
 			$cache = self::getClassCacheValidators ( $class, $group );
 			if ($cache === false) {
 				$members = self::fetch ( $class );

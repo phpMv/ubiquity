@@ -70,8 +70,8 @@ trait RouterCacheTrait {
 
 	private static function initRouterCache(&$config, $silent = false) {
 		$routes = self::parseControllerFiles ( $config, $silent );
-		self::$cache->store ( 'controllers/routes.default', 'return ' . UArray::asPhpArray ( $routes ['default'], 'array' ) . ';', 'controllers' );
-		self::$cache->store ( 'controllers/routes.rest', 'return ' . UArray::asPhpArray ( $routes ['rest'], 'array' ) . ';', 'controllers' );
+		self::$cache->store ( 'controllers/routes.default', $routes ['default'], 'controllers' );
+		self::$cache->store ( 'controllers/routes.rest', $routes ['rest'], 'controllers' );
 		DiManager::init ( $config );
 		if (! $silent) {
 			echo "Router cache reset\n";
@@ -95,12 +95,12 @@ trait RouterCacheTrait {
 	public static function storeDynamicRoutes($isRest = false) {
 		$routes = Router::getRoutes ();
 		$part = ($isRest) ? 'rest' : 'default';
-		self::$cache->store ( 'controllers/routes.' . $part, 'return ' . UArray::asPhpArray ( $routes, 'array' ) . ';', 'controllers' );
+		self::$cache->store ( 'controllers/routes.' . $part, $routes, 'controllers' );
 	}
 
 	private static function storeRouteResponse($key, $response) {
 		$cache = [ 'content-type' => UResponse::$headers ['Content-Type'] ?? 'text/html','content' => $response ];
-		self::$cache->store ( 'controllers/' . $key, 'return ' . UArray::asPhpArray ( $cache, 'array' ) . ';', 'controllers' );
+		self::$cache->store ( 'controllers/' . $key, $cache, 'controllers' );
 		return $response;
 	}
 
@@ -191,7 +191,7 @@ trait RouterCacheTrait {
 	public static function addRoute($path, $controller, $action = 'index', $methods = null, $name = '', $isRest = false, $priority = 0, $callback = null) {
 		$controllerCache = self::getControllerCache ( $isRest );
 		Router::addRouteToRoutes ( $controllerCache, $path, $controller, $action, $methods, $name, false, null, [ ], $priority, $callback );
-		self::$cache->store ( 'controllers/routes.' . ($isRest ? 'rest' : 'default'), "return " . UArray::asPhpArray ( $controllerCache, 'array' ) . ';', 'controllers' );
+		self::$cache->store ( 'controllers/routes.' . ($isRest ? 'rest' : 'default'), $controllerCache, 'controllers' );
 	}
 
 	public static function addRoutes($pathArray, $controller, $action = 'index', $methods = null, $name = '') {
@@ -209,7 +209,7 @@ trait RouterCacheTrait {
 			$postfix = 'rest';
 		}
 		Router::addRoutesToRoutes ( $controllerCache, $pathArray, $controller, $action, $methods, $name );
-		self::$cache->store ( 'controllers/routes.' . $postfix, 'return ' . UArray::asPhpArray ( $controllerCache, 'array' ) . ';', 'controllers' );
+		self::$cache->store ( 'controllers/routes.' . $postfix, $controllerCache, 'controllers' );
 	}
 
 	public static function getControllersFiles(&$config, $silent = false) {

@@ -8,18 +8,13 @@ namespace Ubiquity\cache\system;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class ArrayApcCache extends ArrayCache {
 
-	/**
-	 *
-	 * {@inheritdoc}
-	 * @see \Ubiquity\cache\system\ArrayCache::storeContent()
-	 */
-	protected function storeContent($key, $content, $tag) {
-		parent::storeContent ( $key, $content, $tag );
+	public function storeContent($key, $content, $tag = null) {
+		parent::store ( $key, $content, $tag );
 		$apcK = $this->getApcKey ( $key );
 		if ($this->apcExists ( $apcK )) {
 			\apc_delete ( $apcK );

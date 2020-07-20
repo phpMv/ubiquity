@@ -5,6 +5,7 @@ namespace Ubiquity\cache\system;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\exceptions\CacheException;
 use Ubiquity\cache\CacheFile;
+use Ubiquity\utils\base\UArray;
 
 /**
  * This class is responsible for storing Arrays in PHP files.
@@ -12,10 +13,16 @@ use Ubiquity\cache\CacheFile;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class ArrayCache extends AbstractDataCache {
+	/**
+	 *
+	 * @var string The PHP opening tag (used when writing cache files)
+	 */
+	const PHP_TAG = "<?php\n";
+
 	/**
 	 *
 	 * @var int The file mode used when creating new cache files
@@ -29,11 +36,12 @@ class ArrayCache extends AbstractDataCache {
 	 * @param string $postfix Termination of file names
 	 * @param array $cacheParams defaults to ["fileMode"=>"0755"]
 	 */
-	public function __construct($root, $postfix = "", $cacheParams = []) {
+	public function __construct($root, $postfix = '', $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
-		$this->_fileMode = (isset ( $cacheParams ["fileMode"] )) ? $cacheParams ["fileMode"] : 0755;
-		if (! is_dir ( $root ))
+		$this->_fileMode = $cacheParams ['fileMode'] ?? 0755;
+		if (! is_dir ( $root )) {
 			\mkdir ( $root, $this->_fileMode, true );
+		}
 	}
 
 	/**
@@ -43,18 +51,14 @@ class ArrayCache extends AbstractDataCache {
 	 * @return boolean true if data with the given key has been stored; otherwise false
 	 */
 	public function exists($key) {
-		return file_exists ( $this->_getPath ( $key ) );
+		return \file_exists ( $this->_getPath ( $key ) );
 	}
 
-	/**
-	 * Caches the given data with the given key.
-	 *
-	 * @param string $key cache key
-	 * @param string $content the source-code to be cached
-	 * @param string $tag
-	 * @throws CacheException if file could not be written
-	 */
-	protected function storeContent($key, $content, $tag) {
+	public function store($key, $code, $tag = null) {
+		$content = $code;
+		if (\is_array ( $code )) {
+			$content = self::PHP_TAG . 'return ' . UArray::asPhpArray ( $code, 'array' ) . ';\n';
+		}
 		$path = $this->_getPath ( $key );
 		$dir = pathinfo ( $path, PATHINFO_DIRNAME );
 		if (UFileSystem::safeMkdir ( $dir )) {

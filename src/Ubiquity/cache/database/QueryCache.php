@@ -2,9 +2,6 @@
 
 namespace Ubiquity\cache\database;
 
-use Ubiquity\cache\database\traits\MemoryCacheTrait;
-use Ubiquity\cache\system\ArrayCache;
-
 /**
  * Ubiquity\cache\database$QueryCache
  * This class is part of Ubiquity
@@ -14,29 +11,19 @@ use Ubiquity\cache\system\ArrayCache;
  *
  */
 class QueryCache extends DbCache {
-	use MemoryCacheTrait;
-
-	public function __construct($cacheSystem = ArrayCache::class, $config = [ ]) {
-		parent::__construct ( $cacheSystem );
-		$this->storeDeferred = $config ['deferred'] ?? false;
-	}
-
-	public function fetch($tableName, $condition) {
-		return $this->getMemoryCache ( $tableName . '.' . $this->getKey ( $condition ) );
-	}
 
 	public function store($tableName, $condition, $result) {
-		$key = $tableName . '.' . $this->getKey ( $condition );
+		$key = $this->getKey ( $tableName, $condition );
 		$this->memoryCache [$key] = $result;
 		if ($this->storeDeferred) {
 			$this->toStore [] = $key;
 		} else {
-			$this->cache->store ( $key, 'return ' . $this->asPhpArray ( $result ) . ';' );
+			$this->cache->store ( $key, $result );
 		}
 	}
 
 	public function delete($tableName, $condition) {
-		$key = $tableName . '.' . $this->getKey ( $condition );
+		$key = $this->getKey ( $tableName, $condition );
 		if ($this->cache->exists ( $key )) {
 			if (isset ( $this->memoryCache [$key] )) {
 				unset ( $this->memoryCache [$key] );

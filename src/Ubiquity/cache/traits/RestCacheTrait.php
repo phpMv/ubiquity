@@ -30,7 +30,7 @@ trait RestCacheTrait {
 					$restCache = \array_merge ( $restCache, $parser->asArray () );
 			}
 		}
-		self::$cache->store ( 'controllers/rest', 'return ' . UArray::asPhpArray ( $restCache, 'array' ) . ';', 'controllers' );
+		self::$cache->store ( 'controllers/rest', $restCache, 'controllers' );
 		if (! $silent) {
 			echo "Rest cache reset\n";
 		}

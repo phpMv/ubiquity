@@ -180,7 +180,7 @@ class TransformersManager {
 	 * Store the loaded transformers in cache.
 	 */
 	public static function store(): void {
-		CacheManager::$cache->store ( self::$key, "return " . UArray::asPhpArray ( self::$transformers, 'array' ) . ';' );
+		CacheManager::$cache->store ( self::$key, self::$transformers );
 	}
 }
 

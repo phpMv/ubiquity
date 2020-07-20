@@ -46,18 +46,7 @@ class PhpFastCacheDriver extends AbstractDataCache {
 		return $this->cacheInstance->hasItem ( $this->getRealKey ( $key ) );
 	}
 
-	public function store($key, $code, $tag = null, $php = true) {
-		$this->storeContent ( $key, $code, $tag );
-	}
-
-	/**
-	 * Caches the given data with the given key.
-	 *
-	 * @param string $key cache key
-	 * @param string $content the source-code to be cached
-	 * @param string $tag
-	 */
-	protected function storeContent($key, $content, $tag) {
+	public function store($key, $content, $tag = null) {
 		$key = $this->getRealKey ( $key );
 		$item = $this->cacheInstance->getItem ( $key );
 		$item->set ( $content );

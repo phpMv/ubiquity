@@ -19,11 +19,6 @@ use Ubiquity\exceptions\CacheException;
  *
  */
 abstract class AbstractDataCache {
-	/**
-	 *
-	 * @var string The PHP opening tag (used when writing cache files)
-	 */
-	const PHP_TAG = "<?php\n";
 	protected $_root;
 	protected $postfix;
 
@@ -58,16 +53,9 @@ abstract class AbstractDataCache {
 	 * @param string $key cache key
 	 * @param string $code the source-code to be cached
 	 * @param string $tag the item tag
-	 * @param boolean $php
-	 * @throws CacheException if file could not be written
+	 * @throws CacheException
 	 */
-	public function store($key, $code, $tag = null, $php = true) {
-		$content = "";
-		if ($php)
-			$content = self::PHP_TAG;
-		$content .= $code . "\n";
-		$this->storeContent ( $key, $content, $tag );
-	}
+	abstract public function store($key, $code, $tag = null);
 
 	public function getRoot() {
 		return $this->_root;
@@ -80,8 +68,6 @@ abstract class AbstractDataCache {
 	public function setRoot($_root) {
 		$this->_root = $_root;
 	}
-
-	abstract protected function storeContent($key, $content, $tag);
 
 	/**
 	 * Fetches data stored for the given key.

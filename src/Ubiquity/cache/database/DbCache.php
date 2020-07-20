@@ -14,27 +14,41 @@ use Ubiquity\cache\CacheManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class DbCache {
 	protected $cache;
+	/**
+	 *
+	 * @var array
+	 */
+	protected $memoryCache;
+	protected $storeDeferred;
+	protected $toStore = [ ];
 	public static $active = false;
 
-	protected function getKey($query) {
-		return \md5 ( $query );
+	protected function getKey($tableName, $condition) {
+		return $tableName . \md5 ( $condition );
 	}
 
-	protected function asPhpArray($array) {
-		return \var_export ( $array, true );
-	}
-
-	public function __construct($cacheSystem = ArrayCache::class) {
+	public function __construct($cacheSystem = ArrayCache::class, $config = [ ]) {
 		if (\is_string ( $cacheSystem )) {
 			$this->cache = new $cacheSystem ( CacheManager::getCacheSubDirectory ( 'queries' ), '.query' );
 		} else {
 			$this->cache = $cacheSystem;
 		}
+		$this->storeDeferred = $config ['deferred'] ?? false;
+	}
+
+	protected function getMemoryCache($key) {
+		if (isset ( $this->memoryCache [$key] )) {
+			return $this->memoryCache [$key];
+		}
+		if ($this->cache->exists ( $key )) {
+			return $this->memoryCache [$key] = $this->cache->fetch ( $key );
+		}
+		return false;
 	}
 
 	/**
@@ -53,7 +67,16 @@ abstract class DbCache {
 	 * @param string $condition
 	 * @return mixed the cached datas
 	 */
-	abstract public function fetch($tableName, $condition);
+	public function fetch($tableName, $condition) {
+		$key = $this->getKey ( $tableName, $condition );
+		if (isset ( $this->memoryCache [$key] )) {
+			return $this->memoryCache [$key];
+		}
+		if ($this->cache->exists ( $key )) {
+			return $this->memoryCache [$key] = $this->cache->fetch ( $key );
+		}
+		return false;
+	}
 
 	/**
 	 * Deletes the entry corresponding to $condition apply to $table
@@ -77,5 +100,9 @@ abstract class DbCache {
 	}
 
 	public function storeDeferred() {
+		foreach ( $this->toStore as $k ) {
+			$this->cache->store ( $k, $this->memoryCache [$k] );
+		}
+		$this->toStore = [ ];
 	}
 }

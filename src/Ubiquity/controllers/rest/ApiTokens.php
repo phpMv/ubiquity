@@ -3,7 +3,6 @@
 namespace Ubiquity\controllers\rest;
 
 use Ubiquity\cache\system\ArrayCache;
-use Ubiquity\utils\base\UArray;
 
 /**
  * Manage the token api for the Rest part.
@@ -20,7 +19,7 @@ class ApiTokens {
 	protected $duration;
 	protected static $cache;
 
-	public function __construct($length = 10, $duration = 3600, $tokens = []) {
+	public function __construct($length = 10, $duration = 3600, $tokens = [ ]) {
 		$this->length = $length ?? 10;
 		$this->duration = $duration ?? 3600;
 		$this->tokens = $tokens;
@@ -54,13 +53,13 @@ class ApiTokens {
 	public function isExpired($key) {
 		$token = $this->getToken ( $key );
 		if ($token !== false)
-			return \time () - $token ["creationTime"] > $this->duration;
+			return \time () - $token ['creationTime'] > $this->duration;
 		return true;
 	}
 
 	public function addToken() {
 		$key = $this->generateToken ();
-		$this->tokens [$key] = [ "creationTime" => \time () ];
+		$this->tokens [$key] = [ 'creationTime' => \time () ];
 		return $key;
 	}
 
@@ -85,9 +84,9 @@ class ApiTokens {
 		return false;
 	}
 
-	public function storeToCache($key = "_apiTokens") {
-		$fileContent = [ "duration" => $this->duration,"length" => $this->length,"tokens" => $this->tokens ];
-		self::$cache->store ( $key, "return " . UArray::asPhpArray ( $fileContent, "array" ) . ";" );
+	public function storeToCache($key = '_apiTokens') {
+		$fileContent = [ 'duration' => $this->duration,'length' => $this->length,'tokens' => $this->tokens ];
+		self::$cache->store ( $key, $fileContent );
 	}
 
 	/**
@@ -96,19 +95,19 @@ class ApiTokens {
 	 * @param string $key
 	 * @return ApiTokens
 	 */
-	public function getFromCache($folder, $key = "_apiTokens") {
+	public function getFromCache($folder, $key = '_apiTokens') {
 		if (! isset ( self::$cache )) {
-			self::$cache = new ArrayCache ( $folder . "rest/tokens", ".rest" );
+			self::$cache = new ArrayCache ( $folder . 'rest/tokens', '.rest' );
 		}
 		if (self::$cache->exists ( $key )) {
 			$filecontent = self::$cache->fetch ( $key );
-			if (isset ( $filecontent ["tokens"] )) {
-				$this->tokens = $filecontent ["tokens"];
+			if (isset ( $filecontent ['tokens'] )) {
+				$this->tokens = $filecontent ['tokens'];
 			}
-			if (isset ( $filecontent ["length"] )) {
-				$this->length = $filecontent ["length"];
+			if (isset ( $filecontent ['length'] )) {
+				$this->length = $filecontent ['length'];
 			}
-			if (isset ( $filecontent ["duration"] )) {
+			if (isset ( $filecontent ['duration'] )) {
 				$this->duration = $filecontent ["duration"];
 			}
 		}
