@@ -68,10 +68,7 @@ class DAO {
 	}
 
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {
-		if (! isset ( $condition )) {
-			$condition = '1=1';
-		}
-		return self::getAll ( $className, $condition . ' LIMIT ' . $rowsPerPage . ' OFFSET ' . (($page - 1) * $rowsPerPage), $included );
+		return self::getAll ( $className, ($condition ?? '1=1') . ' LIMIT ' . $rowsPerPage . ' OFFSET ' . (($page - 1) * $rowsPerPage), $included );
 	}
 
 	public static function getRownum($className, $ids) {

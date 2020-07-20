@@ -3,6 +3,7 @@
 namespace Ubiquity\cache\dao;
 
 /**
+ * Simple Memory cache for DAO instances
  * Ubiquity\cache\dao$DAOMemoryCache
  * This class is part of Ubiquity
  *
