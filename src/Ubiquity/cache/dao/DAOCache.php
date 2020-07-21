@@ -36,9 +36,6 @@ class DAOCache extends AbstractDAOCache {
 		} else {
 			$this->cache = $cacheSystem;
 		}
-		if (\method_exists ( $this->cache, 'setUseArrays' )) {
-			$this->cache->setUseArrays ( false );
-		}
 	}
 
 	public function store($class, $key, $object) {

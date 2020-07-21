@@ -31,7 +31,7 @@ trait ModelsCacheTrait {
 		if (isset ( self::$cache )) {
 			$p = new ModelParser ();
 			$p->parse ( $classname );
-			self::$cache->store ( $key, $p->__toString (), 'models' );
+			self::$cache->store ( $key, $p->asArray (), 'models' );
 			return self::$cache->fetch ( $key );
 		}
 	}
@@ -73,7 +73,7 @@ trait ModelsCacheTrait {
 			}
 		}
 		if (! $forChecking) {
-			self::$cache->store ( 'models' . \DS . '_modelsDatabases', 'return ' . UArray::asPhpArray ( $modelsDb, 'array' ) . ';', 'models' );
+			self::$cache->store ( 'models' . \DS . '_modelsDatabases', $modelsDb, 'models' );
 		}
 		if (! $silent) {
 			echo "Models cache reset\n";

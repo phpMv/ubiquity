@@ -15,7 +15,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  */
 class TranslatorManager {
 	protected static $locale;
@@ -32,7 +32,7 @@ class TranslatorManager {
 	 * @param string $locale
 	 * @return string
 	 */
-	protected static function transCallable($callback, $id, array $parameters = array(), $domain = null, $locale = null) {
+	protected static function transCallable($callback, $id, array $parameters = array (), $domain = null, $locale = null) {
 		if (null === $domain) {
 			$domain = 'messages';
 		}
@@ -68,7 +68,7 @@ class TranslatorManager {
 	 * @param array $parameters
 	 * @return string
 	 */
-	protected static function doChoice($message, array $choice, array $parameters = []) {
+	protected static function doChoice($message, array $choice, array $parameters = [ ]) {
 		$message = ( string ) $message;
 
 		$number = ( float ) current ( $choice );
@@ -80,20 +80,20 @@ class TranslatorManager {
 			$parts = $matches [0];
 		}
 		$intervalRegexp = <<<'EOF'
-/^(?P<interval>
-    ({\s*
-        (\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)
-    \s*})
-        |
-    (?P<left_delimiter>[\[\]])
-        \s*
-        (?P<left>-Inf|\-?\d+(\.\d+)?)
-        \s*,\s*
-        (?P<right>\+?Inf|\-?\d+(\.\d+)?)
-        \s*
-    (?P<right_delimiter>[\[\]])
-)\s*(?P<message>.*?)$/xs
-EOF;
+		/^(?P<interval>
+		    ({\s*
+		        (\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)
+		    \s*})
+		        |
+		    (?P<left_delimiter>[\[\]])
+		        \s*
+		        (?P<left>-Inf|\-?\d+(\.\d+)?)
+		        \s*,\s*
+		        (?P<right>\+?Inf|\-?\d+(\.\d+)?)
+		        \s*
+		    (?P<right_delimiter>[\[\]])
+		)\s*(?P<message>.*?)$/xs
+		EOF;
 		foreach ( $parts as $part ) {
 			$part = trim ( str_replace ( '||', '|', $part ) );
 			if (preg_match ( $intervalRegexp, $part, $matches )) {
@@ -116,7 +116,7 @@ EOF;
 		}
 	}
 
-	protected static function replaceParams($trans, array $parameters = array()) {
+	protected static function replaceParams($trans, array $parameters = array ()) {
 		foreach ( $parameters as $k => $v ) {
 			$trans = str_replace ( '%' . $k . '%', $v, $trans );
 		}
@@ -192,7 +192,7 @@ EOF;
 	 * @param string $locale
 	 * @return string
 	 */
-	public static function trans($id, array $parameters = array(), $domain = null, $locale = null) {
+	public static function trans($id, array $parameters = array (), $domain = null, $locale = null) {
 		return self::transCallable ( function ($trans, $parameters) {
 			return self::replaceParams ( $trans, $parameters );
 		}, $id, $parameters, $domain, $locale );
@@ -208,7 +208,7 @@ EOF;
 	 * @param string $locale
 	 * @return string
 	 */
-	public static function transChoice($id, array $choice, array $parameters = array(), $domain = null, $locale = null) {
+	public static function transChoice($id, array $choice, array $parameters = array (), $domain = null, $locale = null) {
 		return self::transCallable ( function ($message, $parameters) use ($choice) {
 			return self::doChoice ( $message, $choice, $parameters );
 		}, $id, $parameters, $domain, $locale );
@@ -282,7 +282,7 @@ EOF;
 		$locales = [ ];
 		$dirs = \glob ( self::getRootDir () . \DS . '*', GLOB_ONLYDIR );
 		foreach ( $dirs as $dir ) {
-			$locales [] = basename ( $dir );
+			$locales [] = \basename ( $dir );
 		}
 		return $locales;
 	}
@@ -338,7 +338,7 @@ EOF;
 	}
 
 	public static function fixLocale($language) {
-		return str_replace ( [ '-','.' ], '_', $language );
+		return \str_replace ( [ '-','.' ], '_', $language );
 	}
 
 	/**
@@ -365,9 +365,9 @@ EOF;
 	public static function createDomain($locale, $domain, $defaultValues = null) {
 		if (isset ( self::$loader )) {
 			$domains = self::getDomains ( $locale );
-			if (array_search ( $domain, $domains ) === false) {
+			if (\array_search ( $domain, $domains ) === false) {
 				$dom = new MessagesDomain ( $locale, self::$loader, $domain );
-				if (is_array ( $defaultValues )) {
+				if (\is_array ( $defaultValues )) {
 					$dom->setMessages ( $defaultValues );
 				}
 				$dom->store ();

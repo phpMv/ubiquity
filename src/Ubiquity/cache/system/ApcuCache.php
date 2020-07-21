@@ -35,19 +35,8 @@ class ApcuCache extends AbstractDataCache {
 		return $success;
 	}
 
-	public function store($key, $code, $tag = null, $php = true) {
-		$this->storeContent ( $key, $code, $tag );
-	}
-
-	/**
-	 * Caches the given data with the given key.
-	 *
-	 * @param string $key cache key
-	 * @param string $content the source-code to be cached
-	 * @param string $tag not used
-	 */
-	protected function storeContent($key, $content, $tag) {
-		\apc_store ( $this->getRealKey ( $key ), $content );
+	public function store($key, $code, $tag = null) {
+		\apc_store ( $this->getRealKey ( $key ), $code );
 	}
 
 	protected function getRealKey($key) {
@@ -61,8 +50,7 @@ class ApcuCache extends AbstractDataCache {
 	 * @return mixed the cached data
 	 */
 	public function fetch($key) {
-		$result = \apc_fetch ( $this->getRealKey ( $key ) );
-		return eval ( $result );
+		return \apc_fetch ( $this->getRealKey ( $key ) );
 	}
 
 	/**
