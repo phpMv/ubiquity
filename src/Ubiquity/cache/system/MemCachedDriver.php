@@ -29,23 +29,22 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	public function __construct($root, $postfix = "", $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
-		$defaultParams = [ 'servers' => [ [ 'host' => '0.0.0.0','port' => 11211 ] ],'serializer' => \Memcached::SERIALIZER_PHP,'persistent' => false ];
+		$defaultParams = [ 'servers' => [ [ 'host' => '0.0.0.0','port' => 11211 ] ],'serializer' => \Memcached::SERIALIZER_PHP,'persistent' => true ];
 		$cacheParams = \array_merge ( $defaultParams, $cacheParams );
 		$this->cacheInstance = new \Memcached ( $cacheParams ['persistent'] ? \crc32 ( $root ) : null );
 		if (isset ( $cacheParams ['serializer'] )) {
 			$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, $cacheParams ['serializer'] );
 		}
-		$this->addServers ( $cacheParams ['servers'] );
+		if ($this->cacheInstance->isPristine ()) {
+			$this->addServers ( $cacheParams ['servers'] );
+		}
 	}
 
 	public function addServer($host, $port, $weight = null) {
+		$this->cacheInstance->addServer ( $host, $port, $weight );
 		$statuses = $this->cacheInstance->getStats ();
 		if (! isset ( $statuses ["$host:$port"] )) {
-			$this->cacheInstance->addServer ( $host, $port, $weight );
-			$statuses = $this->cacheInstance->getStats ();
-			if (! isset ( $statuses ["$host:$port"] )) {
-				throw new CacheException ( "Connection to the server $host:$port failed!" );
-			}
+			throw new CacheException ( "Connection to the server $host:$port failed!" );
 		}
 	}
 
