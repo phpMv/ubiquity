@@ -39,10 +39,13 @@ class MemCachedDriver extends AbstractDataCache {
 	}
 
 	public function addServer($host, $port, $weight = null) {
-		$this->cacheInstance->addServer ( $host, $port, $weight );
 		$statuses = $this->cacheInstance->getStats ();
 		if (! isset ( $statuses ["$host:$port"] )) {
-			throw new CacheException ( "Connection to the server $host:$port failed!" );
+			$this->cacheInstance->addServer ( $host, $port, $weight );
+			$statuses = $this->cacheInstance->getStats ();
+			if (! isset ( $statuses ["$host:$port"] )) {
+				throw new CacheException ( "Connection to the server $host:$port failed!" );
+			}
 		}
 	}
 
