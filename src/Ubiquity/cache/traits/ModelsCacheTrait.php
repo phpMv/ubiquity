@@ -9,7 +9,6 @@ use Ubiquity\orm\parser\ModelParser;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\contents\validation\ValidatorsManager;
 use Ubiquity\orm\parser\Reflexion;
-use Ubiquity\utils\base\UArray;
 use Ubiquity\exceptions\UbiquityException;
 use Ubiquity\orm\OrmUtils;
 
@@ -25,6 +24,7 @@ use Ubiquity\orm\OrmUtils;
 trait ModelsCacheTrait {
 
 	abstract protected static function _getFiles(&$config, $type, $silent = false);
+	private static $modelsDatabaseKey = 'models' . \DS . '_modelsDatabases';
 
 	public static function createOrmModelCache($classname) {
 		$key = self::getModelCacheKey ( $classname );
@@ -73,7 +73,7 @@ trait ModelsCacheTrait {
 			}
 		}
 		if (! $forChecking) {
-			self::$cache->store ( 'models' . \DS . '_modelsDatabases', $modelsDb, 'models' );
+			self::$cache->store ( self::$modelsDatabaseKey, $modelsDb, 'models' );
 		}
 		if (! $silent) {
 			echo "Models cache reset\n";
@@ -90,7 +90,7 @@ trait ModelsCacheTrait {
 		$result = false;
 		$files = self::getModelsFiles ( $config, true );
 		foreach ( $files as $file ) {
-			if (is_file ( $file )) {
+			if (\is_file ( $file )) {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
 				$p = new ModelParser ();
 				$p->parse ( $model );
@@ -138,8 +138,8 @@ trait ModelsCacheTrait {
 	}
 
 	public static function getModelsDatabases() {
-		if (self::$cache->exists ( 'models/_modelsDatabases' )) {
-			return self::$cache->fetch ( 'models/_modelsDatabases' );
+		if (self::$cache->exists ( self::$modelsDatabaseKey )) {
+			return self::$cache->fetch ( self::$modelsDatabaseKey );
 		}
 		return [ ];
 	}
