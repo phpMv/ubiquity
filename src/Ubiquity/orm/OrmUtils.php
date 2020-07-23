@@ -20,7 +20,7 @@ class OrmUtils {
 	private static $modelsMetadatas;
 
 	public static function getModelMetadata($className) {
-		return self::$modelsMetadatas [$className] ?? (self::$modelsMetadatas [$className] = CacheManager::getOrmModelCache ( $className ));
+		return self::$modelsMetadatas [$className] ??= CacheManager::getOrmModelCache ( $className );
 	}
 
 	public static function isSerializable($class, $member) {
@@ -73,8 +73,9 @@ class OrmUtils {
 
 	public static function getMembers($className) {
 		$fieldNames = self::getAnnotationInfo ( $className, '#fieldNames' );
-		if ($fieldNames !== false)
+		if ($fieldNames !== false) {
 			return \array_keys ( $fieldNames );
+		}
 		return [ ];
 	}
 

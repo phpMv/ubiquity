@@ -153,7 +153,7 @@ trait ModelsCacheTrait {
 	 * @param ?array $models
 	 */
 	public static function warmUpModels(&$config, $offset = 'default', $models = null) {
-		$models = $models ?? self::getModels ( $config, true, $offset );
+		$models ??= self::getModels ( $config, true, $offset );
 		foreach ( $models as $model ) {
 			OrmUtils::getModelMetadata ( $model );
 			Reflexion::getPropertiesAndValues ( new $model () );
