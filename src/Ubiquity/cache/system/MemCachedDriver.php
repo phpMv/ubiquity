@@ -29,9 +29,9 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	public function __construct($root, $postfix = "", $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
-		$defaultParams = [ 'servers' => [ [ 'host' => '0.0.0.0','port' => 11211 ] ],'serializer' => \Memcached::SERIALIZER_PHP ];
+		$defaultParams = [ 'servers' => [ [ 'host' => '0.0.0.0','port' => 11211 ] ],'serializer' => \Memcached::SERIALIZER_PHP,'persistent' => false ];
 		$cacheParams = \array_merge ( $defaultParams, $cacheParams );
-		$this->cacheInstance = new \Memcached ( \crc32 ( $root ) );
+		$this->cacheInstance = new \Memcached ( $cacheParams ['persistent'] ? \crc32 ( $root ) : null );
 		if (isset ( $cacheParams ['serializer'] )) {
 			$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, $cacheParams ['serializer'] );
 		}
