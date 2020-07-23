@@ -3,6 +3,7 @@
 namespace Ubiquity\cache\system;
 
 use Ubiquity\cache\CacheFile;
+use Ubiquity\exceptions\CacheException;
 
 /**
  * This class is responsible for storing values with MemCached.
@@ -10,7 +11,7 @@ use Ubiquity\cache\CacheFile;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class MemCachedDriver extends AbstractDataCache {
@@ -28,13 +29,27 @@ class MemCachedDriver extends AbstractDataCache {
 	 */
 	public function __construct($root, $postfix = "", $cacheParams = [ ]) {
 		parent::__construct ( $root, $postfix );
-		$defaultParams = [ 'server' => '0.0.0.0','port' => 11211,'serializer' => \Memcached::SERIALIZER_PHP ];
+		$defaultParams = [ 'servers' => [ [ 'host' => '0.0.0.0','port' => 11211 ] ],'serializer' => \Memcached::SERIALIZER_PHP ];
 		$cacheParams = \array_merge ( $defaultParams, $cacheParams );
-		$this->cacheInstance = new \Memcached ( $root );
+		$this->cacheInstance = new \Memcached ( \crc32 ( $root ) );
 		if (isset ( $cacheParams ['serializer'] )) {
 			$this->cacheInstance->setOption ( \Memcached::OPT_SERIALIZER, $cacheParams ['serializer'] );
 		}
-		$this->cacheInstance->addServer ( $cacheParams ['server'], $cacheParams ['port'] );
+		$this->addServers ( $cacheParams ['servers'] );
+	}
+
+	public function addServer($host, $port, $weight = null) {
+		$this->cacheInstance->addServer ( $host, $port, $weight );
+		$statuses = $this->cacheInstance->getStats ();
+		if (! isset ( $statuses ["$host:$port"] )) {
+			throw new CacheException ( "Connection to the server $host:$port failed!" );
+		}
+	}
+
+	public function addServers(array $servers) {
+		foreach ( $servers as $srv ) {
+			$this->addServer ( $srv ['host'] ?? '0.0.0.0', $srv ['port'] ?? 11211, $srv ['weight'] ?? null);
+		}
 	}
 
 	public function setSerializer($serializer) {
@@ -58,7 +73,7 @@ class MemCachedDriver extends AbstractDataCache {
 	}
 
 	protected function getRealKey($key) {
-		return \str_replace ( [ '/','\\' ], "-", $key );
+		return \crc32 ( $key );
 	}
 
 	/**
