@@ -24,7 +24,7 @@ use Ubiquity\orm\OrmUtils;
 trait ModelsCacheTrait {
 
 	abstract protected static function _getFiles(&$config, $type, $silent = false);
-	private static $modelsDatabaseKey = 'models' . \DS . '_modelsDatabases';
+	private static $modelsDatabaseKey = 'models' . \DIRECTORY_SEPARATOR . '_modelsDatabases';
 
 	public static function createOrmModelCache($classname) {
 		$key = self::getModelCacheKey ( $classname );

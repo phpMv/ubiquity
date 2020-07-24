@@ -7,22 +7,22 @@ namespace Ubiquity\cache\preloading;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 trait PreloaderInternalTrait {
 	private $vendorDir;
 	private static $libraries = [
-								'application' => './../app/',
-								'ubiquity' => 'phpmv/ubiquity/src/Ubiquity/',
-								'ubiquity-dev' => 'phpmv/ubiquity-dev/src/Ubiquity/',
-								'ubiquity-webtools' => 'phpmv/ubiquity-webtools/src/Ubiquity/',
-								'ubiquity-mailer' => 'phpmv/ubiquity-mailer/src/Ubiquity/',
-								'ubiquity-swoole' => 'phpmv/ubiquity-swoole/src/Ubiquity/',
-								'ubiquity-workerman' => 'phpmv/ubiquity-workerman/src/Ubiquity/',
-								'ubiquity-tarantool' => 'phpmv/ubiquity-tarantool/src/Ubiquity/',
-								'ubiquity-mysqli' => 'phpmv/ubiquity-mysqli/src/Ubiquity/',
-								'phpmv-ui' => 'phpmv/php-mv-ui/Ajax/' ];
+									'application' => './../app/',
+									'ubiquity' => 'phpmv/ubiquity/src/Ubiquity/',
+									'ubiquity-dev' => 'phpmv/ubiquity-dev/src/Ubiquity/',
+									'ubiquity-webtools' => 'phpmv/ubiquity-webtools/src/Ubiquity/',
+									'ubiquity-mailer' => 'phpmv/ubiquity-mailer/src/Ubiquity/',
+									'ubiquity-swoole' => 'phpmv/ubiquity-swoole/src/Ubiquity/',
+									'ubiquity-workerman' => 'phpmv/ubiquity-workerman/src/Ubiquity/',
+									'ubiquity-tarantool' => 'phpmv/ubiquity-tarantool/src/Ubiquity/',
+									'ubiquity-mysqli' => 'phpmv/ubiquity-mysqli/src/Ubiquity/',
+									'phpmv-ui' => 'phpmv/php-mv-ui/Ajax/' ];
 	private $excludeds = [ ];
 	private static $count = 0;
 	private $classes = [ ];
@@ -36,7 +36,7 @@ trait PreloaderInternalTrait {
 
 	private function loadClass($class, $file = null) {
 		if (! \class_exists ( $class, false )) {
-			$file = $file ?? $this->getPathFromClass ( $class );
+			$file ??= $this->getPathFromClass ( $class );
 			if (isset ( $file )) {
 				$this->loadFile ( $file );
 			}
@@ -55,8 +55,10 @@ trait PreloaderInternalTrait {
 	}
 
 	private function loadFile(string $file): void {
-		require_once ($file);
-		self::$count ++;
+		if (\file_exists ( $file )) {
+			require_once ($file);
+			self::$count ++;
+		}
 	}
 
 	private function isExcluded(string $name): bool {
