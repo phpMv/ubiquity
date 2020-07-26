@@ -5,7 +5,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
-- Nothing
+## [2.3.11] Soon
+### Added
+- `DAOCache` (caches objects loaded by id)
+- `MemcachedDriver` system
+- `RedisDriver`system
+### Updated
+- fomantic-ui 2.8.6
+- default index view relooking
+- Cache system and ArrayCache refactoring
+- light opt for async view and dbWrapper getStatement
+### Fixed
+- [rest] no violations on insert with ValidatorManager see [#122](https://github.com/phpMv/ubiquity/issues/122)
+- [rest] Validation on insertion should be complete see [#123](https://github.com/phpMv/ubiquity/issues/123)
+- [postgresql] pb wth PgsqlDriverMetas (names protection) see [#128](https://github.com/phpMv/ubiquity/issues/128)
+- [postgresql] Insert fail with non autoinc pk see [#129](https://github.com/phpMv/ubiquity/issues/129)
+- [webtools][models] click on Nothing to display generates an error see [#130](https://github.com/phpMv/ubiquity/issues/130)
+- [webtools][models] instances count not updated see [#131](https://github.com/phpMv/ubiquity/issues/131)
+- Session names with non allowed characters see [#134](https://github.com/phpMv/ubiquity/issues/134)
+- `SimpleViewAsyncController` pb with cache (no open issue)
 ## [2.3.10] 2020-06-27
 ### Added
 - transformer for `UCookie` (for Crypto)
