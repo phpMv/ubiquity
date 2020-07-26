@@ -1,11 +1,45 @@
+<style>
+@import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
+.inverted {
+	background-color: #333333!important;
+	color: white;
+}
+.informations{
+	background-color: hsl(0, 8%, 25%)!important;
+}
+.logo{
+	font-family: 'Righteous', cursive;
+}
+.u{
+	color: #779F89;
+}
+.sub.header{
+	font-size: 1rem!important;
+}
+.small-image{
+	width: 2.1em;
+}
+</style>
 <br>
 <div class="container">
 	<div class="">
-		<div class="container">
-			<div class="alert alert-success" role="alert">
+		<div class="card container p-3">
+			<div class="card container bg-dark rounded p-3 inverted">
+				<h1 class="">
+					<img class="small-image rounded" src="https://github.com/phpMv/ubiquity/blob/master/Banner/ubiquity-icon.png?raw=true">
+					Hi, welcome to <span class="logo"><span class="u">U</span>biquity</span>
+									<span class="lead sub header">
+					Version <span class="badge version p-2">{{app.getVersion()}}</span>
+				</span>
+				</h1>
+
+			</div>
+			
+
+			<div class="alert alert-success mt-4" role="alert">
 			    <div class="row">
 			        <div class="col-auto align-self-start">
-			           <i class="fa fa-check-circle fa-3x"></i>
+			           <i class="fa fa-check-square fa-3x"></i>
 			        </div>
 			        <div class="col">
 			           	<h4>It works !</h4>
@@ -13,15 +47,11 @@
 			        </div>
 			    </div>
 			</div>
-			<h1>Welcome to Ubiquity</h1>
 
-			<p class="lead">
-				Version <span class="badge version">{{app.getVersion()}}</span>
-			</p>
 			<hr class="my-4">
 			<ul class="list-group">
 				{% set infos = infos|merge({'Template': _self}) %}
-				<li class='list-group-item inverted'><strong><i class="fa fa-info-circle"></i> Page informations</strong></li>
+				<li class='list-group-item inverted'><strong>Page informations</strong></li>
 				{% for key, value in infos %}
 				  <li class="list-group-item">{{key}} :&nbsp;<span class="font-weight-bold text-info">{{value}}</span>
 				  </li>
