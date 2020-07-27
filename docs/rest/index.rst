@@ -342,6 +342,7 @@ Allowed origins
 
 Allowed origins allow to define the clients that can access the resource in case of a cross domain request by defining The **Access-Control-Allow-Origin** response header. |br|
 This header field is returned by the ``OPTIONS`` method.
+
 .. code-block:: php
    :linenos:
    :caption: app/controllers/RestOrgas.php
