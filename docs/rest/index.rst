@@ -312,10 +312,35 @@ It is possible to customize the token generation, by overriding the ``getRestSer
 		}
 	}
 
-Allowed origins
-+++++++++++++++
-Allowed origins allow to define the clients that can access the resource in case of a cross domain request by defining The **Access-Control-Allow-Origin** response header.
+Allowed origins and CORS
+++++++++++++++++++++++++
 
+Cross-Origin Resource Sharing (CORS)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you access your api from another site, it is necessary to set up **CORS**.
+
+In this case, for requests of type ``PATCH``, ``PUT``, ``DELETE``, your api must define a route allowing CORS to carry out its control pre-request using the ``OPTIONS`` method.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/RestOrgas.php
+   
+	class RestOrgas extends \Ubiquity\controllers\rest\RestController {
+		
+		...
+		
+		/**
+		 * @options('{url}')
+		 */
+		public function options($url='') {}
+	}
+
+Allowed origins
+~~~~~~~~~~~~~~~
+
+Allowed origins allow to define the clients that can access the resource in case of a cross domain request by defining The **Access-Control-Allow-Origin** response header. |br|
+This header field is returned by the ``OPTIONS`` method.
 .. code-block:: php
    :linenos:
    :caption: app/controllers/RestOrgas.php
@@ -347,6 +372,7 @@ It is possible to authorize several origins:
 			return $srv;
 		}
 	}
+
 
 Response
 ++++++++
