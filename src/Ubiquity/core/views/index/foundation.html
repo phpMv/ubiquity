@@ -1,7 +1,42 @@
+<style>
+@import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
+.inverted {
+	background-color: #333333!important;
+	color: white;
+}
+.informations{
+	background-color: hsl(0, 8%, 25%)!important;
+}
+.logo{
+	font-family: 'Righteous', cursive;
+}
+.u{
+	color: #779F89;
+}
+.sub.header{
+	font-size: 1rem!important;
+}
+.small-image{
+	width: 1.6em;
+}
+.card.container{
+	padding: 10px;
+}
+</style>
 <br>
 <div class="grid-container">
 	<div class="row">
-		<div class="callout success radius">
+		<div class="card container">
+		<div class="card container bg-dark inverted">
+			<h1 class="">
+				<img class="small-image radius" src="https://github.com/phpMv/ubiquity/blob/master/Banner/ubiquity-icon.png?raw=true">
+				Hi, welcome to <span class="logo"><span class="u">U</span>biquity</span>
+				<span class="lead sub header">
+				Version <span class="label radius version">{{app.getVersion()}}</span>
+				</span>
+			</h1>
+		</div>
+		<div class="callout small success radius">
 		    <div class="grid-x">
 		        <div class="cell small-1">
 		           <i class="fi-checkbox large"></i>
@@ -12,13 +47,8 @@
 		        </div>
 		    </div>
 		</div>
-		<h1>Welcome to Ubiquity</h1>
 
-		<p>
-			Version <span class="label radius version">{{app.getVersion()}}</span>
-		</p>
-		<hr class="my-4">
-		<div class="callout radius small inverted"><h4><i class="fi-info"></i> Page informations</h4></div>
+		<div class="callout radius small inverted"><h4>Page informations</h4></div>
 		<dl class="infos square">
 			{% set infos = infos|merge({'Template': _self}) %}
 			{% for key, value in infos %}
@@ -34,5 +64,6 @@
 			{% endfor %}
 		</ul>
 	</div>
+</div>
 </div>
 <p></p>
