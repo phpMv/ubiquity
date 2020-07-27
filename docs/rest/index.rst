@@ -293,6 +293,7 @@ Api tokens
 
 It is possible to customize the token generation, by overriding the ``getRestServer`` method:
 
+
 .. code-block:: php
    :linenos:
    :caption: app/controllers/RestOrgas.php
