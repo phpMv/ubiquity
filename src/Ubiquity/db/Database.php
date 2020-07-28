@@ -12,7 +12,6 @@ use Ubiquity\db\traits\DatabaseTransactionsTrait;
 use Ubiquity\controllers\Startup;
 use Ubiquity\db\traits\DatabaseMetadatas;
 use Ubiquity\cache\database\DbCache;
-use Ubiquity\db\providers\pdo\PDOWrapper;
 
 /**
  * Ubiquity Generic database class.
@@ -20,7 +19,7 @@ use Ubiquity\db\providers\pdo\PDOWrapper;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.2
+ * @version 1.1.3
  *
  */
 class Database {
@@ -237,7 +236,7 @@ class Database {
 		$config ??= Startup::$config;
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
 		if ($db ['dbName'] !== '') {
-			$database = new Database ( $db ['wrapper'] ?? PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			$database = new Database ( $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 			$database->connect ();
 			return $database;
 		}
