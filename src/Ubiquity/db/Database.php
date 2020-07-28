@@ -12,6 +12,7 @@ use Ubiquity\db\traits\DatabaseTransactionsTrait;
 use Ubiquity\controllers\Startup;
 use Ubiquity\db\traits\DatabaseMetadatas;
 use Ubiquity\cache\database\DbCache;
+use Ubiquity\db\providers\pdo\PDOWrapper;
 
 /**
  * Ubiquity Generic database class.
@@ -229,14 +230,14 @@ class Database {
 	 * Starts and returns a database instance corresponding to an offset in config
 	 *
 	 * @param string $offset
-	 * @param string $dbWrapperClass
+	 * @param array $config Ubiquity config file content
 	 * @return \Ubiquity\db\Database|NULL
 	 */
-	public static function start($offset = null, $dbWrapperClass = \Ubiquity\db\providers\pdo\PDOWrapper::class) {
-		$config = Startup::$config;
+	public static function start(string $offset = null, ?array $config = null): ?self {
+		$config ??= Startup::$config;
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
 		if ($db ['dbName'] !== '') {
-			$database = new Database ( $dbWrapperClass, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+			$database = new Database ( $db ['wrapper'] ?? PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
 			$database->connect ();
 			return $database;
 		}
