@@ -31,8 +31,8 @@ abstract class AbstractDbWrapper {
 		return $this->statements [$name] = $this->getStatement ( $sql );
 	}
 
-	public function getNamedStatement(string $name) {
-		return $this->statements [$name];
+	public function getNamedStatement(string $name, ?string $sql = null) {
+		return $this->statements [$name] ??= $this->getStatement ( $sql );
 	}
 
 	abstract public function getStatement(string $sql);

@@ -148,7 +148,7 @@ class Database {
 	}
 
 	public static function getAvailableDrivers($dbWrapperClass = \Ubiquity\db\providers\pdo\PDOWrapper::class) {
-		return call_user_func ( $dbWrapperClass . '::getAvailableDrivers' );
+		return \call_user_func ( $dbWrapperClass . '::getAvailableDrivers' );
 	}
 
 	/**

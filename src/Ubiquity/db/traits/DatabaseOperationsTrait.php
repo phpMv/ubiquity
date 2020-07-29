@@ -166,10 +166,11 @@ trait DatabaseOperationsTrait {
 	 * Returns the statement corresponding to the name.
 	 *
 	 * @param string $name
+	 * @param ?string $sql
 	 * @return mixed
 	 */
-	public function getNamedStatement(string $name) {
-		return $this->wrapperObject->getNamedStatement ( $name );
+	public function getNamedStatement(string $name, ?string $sql = null) {
+		return $this->wrapperObject->getNamedStatement ( $name, $sql );
 	}
 
 	/**
