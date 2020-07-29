@@ -27,6 +27,14 @@ abstract class AbstractDbWrapper {
 		return $this->statements [\md5 ( $sql )] ??= $this->getStatement ( $sql );
 	}
 
+	public function prepareNamedStatement(string $name, string $sql) {
+		return $this->statements [$name] = $this->getStatement ( $sql );
+	}
+
+	public function getNamedStatement(string $name) {
+		return $this->statements [$name];
+	}
+
 	abstract public function getStatement(string $sql);
 
 	abstract public function connect(string $dbType, $dbName, $serverName, string $port, string $user, string $password, array $options);

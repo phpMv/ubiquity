@@ -153,6 +153,26 @@ trait DatabaseOperationsTrait {
 	}
 
 	/**
+	 * Prepares a statement for execution and gives it a name.
+	 *
+	 * @param $name
+	 * @param String $sql
+	 */
+	public function prepareNamedStatement(string $name, string $sql) {
+		$this->wrapperObject->prepareNamedStatement ( $name, $sql );
+	}
+
+	/**
+	 * Returns the statement corresponding to the name.
+	 *
+	 * @param string $name
+	 * @return mixed
+	 */
+	public function getNamedStatement(string $name) {
+		return $this->wrapperObject->getNamedStatement ( $name );
+	}
+
+	/**
 	 * Sets $value to $parameter
 	 *
 	 * @param mixed $statement
