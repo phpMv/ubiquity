@@ -1,12 +1,10 @@
 <?php
-
 namespace Ubiquity\orm\traits;
 
 use Ubiquity\orm\core\prepared\DAOPreparedQueryOne;
 use Ubiquity\orm\core\prepared\DAOPreparedQueryById;
 use Ubiquity\orm\core\prepared\DAOPreparedQueryAll;
 use Ubiquity\orm\core\prepared\DAOPreparedQuery;
-use Ubiquity\cache\dao\AbstractDAOCache;
 
 /**
  * Ubiquity\orm\traits$DAOPreparedTrait
@@ -17,30 +15,31 @@ use Ubiquity\cache\dao\AbstractDAOCache;
  *
  */
 trait DAOPreparedTrait {
-	protected static $preparedDAOQueries = [ ];
+
+	protected static $preparedDAOQueries = [];
 
 	public static function prepareGetById($name, $className, $included = false, $cache = null) {
-		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryById ( $className, $included, $cache );
+		return self::$preparedDAOQueries[$name] = new DAOPreparedQueryById($className, $included, $cache);
 	}
 
 	public static function prepareGetOne($name, $className, $condition = '', $included = false, $cache = null) {
-		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryOne ( $className, $condition, $included, $cache );
+		return self::$preparedDAOQueries[$name] = new DAOPreparedQueryOne($className, $condition, $included, $cache);
 	}
 
 	public static function prepareGetAll($name, $className, $condition = '', $included = false, $cache = null) {
-		return self::$preparedDAOQueries [$name] = new DAOPreparedQueryAll ( $className, $condition, $included, $cache );
+		return self::$preparedDAOQueries[$name] = new DAOPreparedQueryAll($className, $condition, $included, $cache);
 	}
 
-	public static function executePrepared($name, $params = [ ], $useCache = false) {
-		if (isset ( self::$preparedDAOQueries [$name] )) {
-			return self::$preparedDAOQueries [$name]->execute ( $params, $useCache );
+	public static function executePrepared($name, $params = [], $useCache = false) {
+		if (isset(self::$preparedDAOQueries[$name])) {
+			return self::$preparedDAOQueries[$name]->execute($params, $useCache);
 		}
 		return null;
 	}
 
 	public static function storeDbCachePrepared($name) {
-		if (isset ( self::$preparedDAOQueries [$name] )) {
-			self::$preparedDAOQueries [$name]->storeDbCache ();
+		if (isset(self::$preparedDAOQueries[$name])) {
+			self::$preparedDAOQueries[$name]->storeDbCache();
 		}
 	}
 
@@ -51,7 +50,7 @@ trait DAOPreparedTrait {
 	 * @return DAOPreparedQuery
 	 */
 	public static function getPrepared(string $name): DAOPreparedQuery {
-		return self::$preparedDAOQueries [$name];
+		return self::$preparedDAOQueries[$name];
 	}
 }
 
