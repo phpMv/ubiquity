@@ -8,6 +8,8 @@ use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\UString;
 use Ubiquity\controllers\Router;
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\events\EventsManager;
+use Ubiquity\events\RestEvents;
 
 /**
  * Abstract base class for Rest controllers.
@@ -15,7 +17,7 @@ use Ubiquity\orm\OrmUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.7
+ * @version 1.0.8
  *
  */
 abstract class RestBaseController extends Controller {
@@ -222,6 +224,7 @@ abstract class RestBaseController extends Controller {
 		$instance = DAO::getById($this->model, $keyValues, false);
 		$this->operate_($instance, function ($instance) {
 			$datas = $this->getDatas();
+			EventsManager::trigger(RestEvents::BEFORE_UPDATE, $instance, $datas, $this);
 			$this->_setValuesToObject($instance, $datas);
 			if ($this->_validateInstance($instance, \array_keys($datas))) {
 				return $this->updateOperation($instance, $datas, true);
@@ -239,6 +242,7 @@ abstract class RestBaseController extends Controller {
 		$instance = new $model();
 		$this->operate_($instance, function ($instance) use ($model) {
 			$datas = $this->getDatas();
+			EventsManager::trigger(RestEvents::BEFORE_INSERT, $instance, $datas, $this);
 			$this->_setValuesToObject($instance, $datas);
 			$fields = \array_keys(OrmUtils::getSerializableFields($model));
 			if ($this->_validateInstance($instance, $fields, [
