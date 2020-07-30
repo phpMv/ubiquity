@@ -48,7 +48,7 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		if ($useCache) {
 			$query = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache);
 		} else {
-			$query = $this->statement->execute($cp->getParams());
+			$query = $this->db->executeDAOStatementNoCache($this->statement, $cp->getParams());
 		}
 		if ($query && \sizeof($query) > 0) {
 			$className = $this->className;

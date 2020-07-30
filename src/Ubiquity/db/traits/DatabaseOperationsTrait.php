@@ -84,12 +84,16 @@ trait DatabaseOperationsTrait {
 			$result = $this->getCacheValue($tableName, $condition, $parameters, $cKey);
 		}
 		if ($result === false) {
-			$result = $statement->execute($parameters);
+			$result = $this->wrapperObject->fetchAll($statement, $parameters);
 			if ($cache) {
 				$this->cache->store($tableName, $cKey, $result);
 			}
 		}
 		return $result;
+	}
+
+	public function executeDAOStatementNoCache($statement, $parameters = null) {
+		return $this->wrapperObject->fetchAll($statement, $parameters);
 	}
 
 	public function getDaoPreparedStatement($tableName, $condition, $fields) {
