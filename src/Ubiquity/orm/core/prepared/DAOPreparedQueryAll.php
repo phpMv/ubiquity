@@ -1,5 +1,4 @@
 <?php
-
 namespace Ubiquity\orm\core\prepared;
 
 use Ubiquity\events\DAOEvents;
@@ -19,52 +18,53 @@ use Ubiquity\cache\database\DbCache;
 class DAOPreparedQueryAll extends DAOPreparedQuery {
 
 	protected function prepare(?DbCache $cache = null) {
-		$this->conditionParser->setCondition ( $this->condition );
-		parent::prepare ( $cache );
+		$this->conditionParser->setCondition($this->condition);
+		parent::prepare($cache);
+		$this->updatePrepareStatement();
 	}
 
-	public function execute($params = [ ], $useCache = false) {
+	public function execute($params = [], $useCache = false) {
 		$cp = $this->conditionParser;
-		$cp->setParams ( $params );
+		$cp->setParams($params);
 		$className = $this->className;
 		if ($useCache) {
-			$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
+			$query = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache);
 		} else {
-			$query = $this->db->prepareAndExecuteNoCache ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams () );
+			$query = $this->statement->execute($cp->getParams());
 		}
 		if ($this->hasIncluded || ! $this->allPublic) {
-			return $this->_parseQueryResponseWithIncluded ( $query, $className, $useCache );
+			return $this->_parseQueryResponseWithIncluded($query, $className, $useCache);
 		}
-		return $this->_parseQueryResponse ( $query, $className );
+		return $this->_parseQueryResponse($query, $className);
 	}
 
 	protected function _parseQueryResponse($query, $className) {
-		$objects = [ ];
-		foreach ( $query as $row ) {
-			$object = DAO::_loadSimpleObjectFromRow ( $this->db, $row, $className, $this->memberList, $this->transformers );
-			$key = OrmUtils::getPropKeyValues ( $object, $this->propsKeys );
-			$this->addAditionnalMembers ( $object, $row );
-			$objects [$key] = $object;
+		$objects = [];
+		foreach ($query as $row) {
+			$object = DAO::_loadSimpleObjectFromRow($this->db, $row, $className, $this->memberList, $this->transformers);
+			$key = OrmUtils::getPropKeyValues($object, $this->propsKeys);
+			$this->addAditionnalMembers($object, $row);
+			$objects[$key] = $object;
 		}
-		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
+		EventsManager::trigger(DAOEvents::GET_ALL, $objects, $className);
 		return $objects;
 	}
 
 	protected function _parseQueryResponseWithIncluded($query, $className, $useCache) {
-		$objects = [ ];
+		$objects = [];
 		$invertedJoinColumns = null;
 
-		$oneToManyQueries = [ ];
-		$manyToOneQueries = [ ];
-		$manyToManyParsers = [ ];
-		foreach ( $query as $row ) {
-			$object = DAO::_loadObjectFromRow ( $this->db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers );
-			$key = OrmUtils::getPropKeyValues ( $object, $this->propsKeys );
-			$this->addAditionnalMembers ( $object, $row );
-			$objects [$key] = $object;
+		$oneToManyQueries = [];
+		$manyToOneQueries = [];
+		$manyToManyParsers = [];
+		foreach ($query as $row) {
+			$object = DAO::_loadObjectFromRow($this->db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers);
+			$key = OrmUtils::getPropKeyValues($object, $this->propsKeys);
+			$this->addAditionnalMembers($object, $row);
+			$objects[$key] = $object;
 		}
-		DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $this->included, $useCache );
-		EventsManager::trigger ( DAOEvents::GET_ALL, $objects, $className );
+		DAO::_affectsRelationObjects($className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $this->included, $useCache);
+		EventsManager::trigger(DAOEvents::GET_ALL, $objects, $className);
 		return $objects;
 	}
 }

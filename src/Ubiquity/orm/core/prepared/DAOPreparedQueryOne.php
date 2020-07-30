@@ -1,5 +1,4 @@
 <?php
-
 namespace Ubiquity\orm\core\prepared;
 
 use Ubiquity\cache\database\DbCache;
@@ -15,12 +14,13 @@ use Ubiquity\cache\database\DbCache;
 class DAOPreparedQueryOne extends DAOPreparedQueryById {
 
 	public function __construct($className, $condition = '', $included = false, $cache = null) {
-		DAOPreparedQuery::__construct ( $className, $condition, $included, $cache );
+		DAOPreparedQuery::__construct($className, $condition, $included, $cache);
 	}
 
 	protected function prepare(?DbCache $cache = null) {
-		$this->conditionParser->limitOne ();
-		DAOPreparedQuery::prepare ( $cache );
+		$this->conditionParser->limitOne();
+		DAOPreparedQuery::prepare($cache);
+		$this->updatePrepareStatement();
 	}
 }
 
