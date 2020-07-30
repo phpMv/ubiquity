@@ -36,7 +36,7 @@ class EventsManager {
 		CacheManager::$cache->store(self::$key, self::$managedEvents);
 	}
 
-	public static function trigger($eventName, ...$params) {
+	public static function trigger($eventName, &...$params) {
 		if (isset(self::$managedEvents[$eventName])) {
 			foreach (self::$managedEvents[$eventName] as $action) {
 				self::triggerOne($action, $params);
@@ -44,7 +44,7 @@ class EventsManager {
 		}
 	}
 
-	private static function triggerOne($action, $params) {
+	private static function triggerOne($action, &$params) {
 		if (\is_callable($action)) {
 			\call_user_func_array($action, $params);
 		} elseif (is_subclass_of($action, EventListenerInterface::class)) {
