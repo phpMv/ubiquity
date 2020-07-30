@@ -77,7 +77,6 @@ abstract class DAOPreparedQuery {
 		$this->condition = $condition;
 		$this->conditionParser = new ConditionParser($condition);
 		$this->prepare($cache);
-		$this->preparedCondition = SqlUtils::checkWhere($this->conditionParser->getCondition());
 	}
 
 	public function getFirstPropKey() {

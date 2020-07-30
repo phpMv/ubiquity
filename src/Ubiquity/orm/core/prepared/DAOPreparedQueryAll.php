@@ -6,6 +6,7 @@ use Ubiquity\events\EventsManager;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\DAO;
 use Ubiquity\cache\database\DbCache;
+use Ubiquity\db\SqlUtils;
 
 /**
  * Ubiquity\orm\core\prepared$DAOPreparedQueryAll
@@ -20,6 +21,7 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 	protected function prepare(?DbCache $cache = null) {
 		$this->conditionParser->setCondition($this->condition);
 		parent::prepare($cache);
+		$this->preparedCondition = SqlUtils::checkWhere($this->conditionParser->getCondition());
 		$this->updatePrepareStatement();
 	}
 
