@@ -1,5 +1,4 @@
 <?php
-
 namespace Ubiquity\db\providers;
 
 /**
@@ -11,8 +10,11 @@ namespace Ubiquity\db\providers;
  *
  */
 abstract class AbstractDbWrapper {
+
 	protected $dbInstance;
+
 	protected $statements;
+
 	public $quote;
 
 	abstract public function query(string $sql);
@@ -24,16 +26,18 @@ abstract class AbstractDbWrapper {
 	abstract public static function getAvailableDrivers();
 
 	public function _getStatement(string $sql) {
-		return $this->statements [\md5 ( $sql )] ??= $this->getStatement ( $sql );
+		return $this->statements[\md5($sql)] ??= $this->getStatement($sql);
 	}
 
 	public function prepareNamedStatement(string $name, string $sql) {
-		return $this->statements [$name] = $this->getStatement ( $sql );
+		return $this->statements[$name] = $this->getStatement($sql);
 	}
 
 	public function getNamedStatement(string $name, ?string $sql = null) {
-		return $this->statements [$name] ??= $this->getStatement ( $sql );
+		return $this->statements[$name] ??= $this->getStatement($sql);
 	}
+
+	public function _optExecuteAndFetch($statement, array $values = null) {}
 
 	abstract public function getStatement(string $sql);
 
@@ -105,7 +109,7 @@ abstract class AbstractDbWrapper {
 	}
 
 	public function close() {
-		$this->statements = [ ];
+		$this->statements = [];
 		$this->dbInstance = null;
 	}
 
@@ -126,6 +130,6 @@ abstract class AbstractDbWrapper {
 	}
 
 	public function quoteValue($value, $type = 2) {
-		return "'" . \addslashes ( $value ) . "'";
+		return "'" . \addslashes($value) . "'";
 	}
 }

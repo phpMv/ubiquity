@@ -30,14 +30,14 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		$cp->setParams($params);
 		$className = $this->className;
 		if ($useCache) {
-			$query = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache);
+			$rows = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache);
 		} else {
-			$query = $this->db->executeDAOStatementNoCache($this->statement, $cp->getParams());
+			$rows = $this->db->executeDAOStatementNoCache($this->statement, $cp->getParams());
 		}
 		if ($this->hasIncluded || ! $this->allPublic) {
-			return $this->_parseQueryResponseWithIncluded($query, $className, $useCache);
+			return $this->_parseQueryResponseWithIncluded($rows, $className, $useCache);
 		}
-		return $this->_parseQueryResponse($query, $className);
+		return $this->_parseQueryResponse($rows, $className);
 	}
 
 	protected function _parseQueryResponse($query, $className) {
