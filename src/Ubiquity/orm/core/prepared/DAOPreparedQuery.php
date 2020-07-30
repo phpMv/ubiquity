@@ -224,6 +224,7 @@ abstract class DAOPreparedQuery {
 	}
 
 	protected function updatePrepareStatement() {
+		$this->preparedCondition = SqlUtils::checkWhere($this->conditionParser->getCondition());
 		$this->statement = $this->db->getDaoPreparedStatement($this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers);
 	}
 

@@ -6,7 +6,6 @@ use Ubiquity\events\EventsManager;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\DAO;
 use Ubiquity\cache\database\DbCache;
-use Ubiquity\db\SqlUtils;
 
 /**
  * Ubiquity\orm\core\prepared$DAOPreparedQueryAll
@@ -21,28 +20,24 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 	protected function prepare(?DbCache $cache = null) {
 		$this->conditionParser->setCondition($this->condition);
 		parent::prepare($cache);
-		$this->preparedCondition = SqlUtils::checkWhere($this->conditionParser->getCondition());
 		$this->updatePrepareStatement();
 	}
 
 	public function execute($params = [], $useCache = false) {
-		$cp = $this->conditionParser;
-		$cp->setParams($params);
-		$className = $this->className;
 		if ($useCache) {
-			$rows = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache);
+			$rows = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $params, $useCache);
 		} else {
-			$rows = $this->db->executeDAOStatementNoCache($this->statement, $cp->getParams());
+			$rows = $this->db->executeDAOStatementNoCache($this->statement, $params);
 		}
 		if ($this->hasIncluded || ! $this->allPublic) {
-			return $this->_parseQueryResponseWithIncluded($rows, $className, $useCache);
+			return $this->_parseQueryResponseWithIncluded($rows, $this->className, $useCache);
 		}
-		return $this->_parseQueryResponse($rows, $className);
+		return $this->_parseQueryResponse($rows, $this->className);
 	}
 
-	protected function _parseQueryResponse($query, $className) {
+	protected function _parseQueryResponse($rows, $className) {
 		$objects = [];
-		foreach ($query as $row) {
+		foreach ($rows as $row) {
 			$object = DAO::_loadSimpleObjectFromRow($this->db, $row, $className, $this->memberList, $this->transformers);
 			$key = OrmUtils::getPropKeyValues($object, $this->propsKeys);
 			$this->addAditionnalMembers($object, $row);
@@ -52,14 +47,14 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		return $objects;
 	}
 
-	protected function _parseQueryResponseWithIncluded($query, $className, $useCache) {
+	protected function _parseQueryResponseWithIncluded($rows, $className, $useCache) {
 		$objects = [];
 		$invertedJoinColumns = null;
 
 		$oneToManyQueries = [];
 		$manyToOneQueries = [];
 		$manyToManyParsers = [];
-		foreach ($query as $row) {
+		foreach ($rows as $row) {
 			$object = DAO::_loadObjectFromRow($this->db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers);
 			$key = OrmUtils::getPropKeyValues($object, $this->propsKeys);
 			$this->addAditionnalMembers($object, $row);

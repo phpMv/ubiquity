@@ -2,7 +2,6 @@
 namespace Ubiquity\orm\core\prepared;
 
 use Ubiquity\cache\database\DbCache;
-use Ubiquity\db\SqlUtils;
 
 /**
  * Ubiquity\orm\core\prepared$DAOPreparedQueryOne
@@ -21,7 +20,6 @@ class DAOPreparedQueryOne extends DAOPreparedQueryById {
 	protected function prepare(?DbCache $cache = null) {
 		$this->conditionParser->limitOne();
 		DAOPreparedQuery::prepare($cache);
-		$this->preparedCondition = SqlUtils::checkWhere($this->conditionParser->getCondition());
 		$this->updatePrepareStatement();
 	}
 }

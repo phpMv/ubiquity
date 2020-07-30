@@ -7,7 +7,6 @@ use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\cache\database\DbCache;
 use Ubiquity\cache\dao\AbstractDAOCache;
-use Ubiquity\db\SqlUtils;
 
 /**
  * Ubiquity\orm\core\prepared$DAOPreparedQueryOne
@@ -34,7 +33,6 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		$this->conditionParser->addKeyValues(\array_fill(0, \count($keys), ''), $this->className);
 		$this->conditionParser->limitOne();
 		$this->cache = DAO::getCache();
-		$this->preparedCondition = SqlUtils::checkWhere($this->conditionParser->getCondition());
 		$this->updatePrepareStatement();
 	}
 
