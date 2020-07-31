@@ -96,12 +96,8 @@ trait DatabaseOperationsTrait {
 		return $result;
 	}
 
-	public function _optExecuteAndFetchNoCache($statement, $parameters = null) {
-		return $this->wrapperObject->_optExecuteAndFetch($statement, $parameters);
-	}
-
-	public function _optExecuteAndFetchOneNoCache($statement, $parameters = null) {
-		return $this->wrapperObject->_optExecuteAndFetchOne($statement, $parameters);
+	public function _optExecuteAndFetchNoCache($statement, $parameters = null, $one = false) {
+		return $this->wrapperObject->_optExecuteAndFetch($statement, $parameters, $one);
 	}
 
 	public function getDaoPreparedStatement($tableName, $condition, $fields) {

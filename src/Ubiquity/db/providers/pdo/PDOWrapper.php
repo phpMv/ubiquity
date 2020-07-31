@@ -75,21 +75,23 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function fetchAll($statement, array $values = null, $mode = null) {
-		$result = false;
 		if ($statement->execute($values)) {
 			$result = $statement->fetchAll($mode ?? \PDO::FETCH_ASSOC);
+			$statement->closeCursor();
+			return $result;
 		}
-		$statement->closeCursor();
-		return $result;
+
+		return false;
 	}
 
 	public function fetchOne($statement, array $values = null, $mode = null) {
-		$result = false;
 		if ($statement->execute($values)) {
 			$result = $statement->fetch($mode ?? \PDO::FETCH_ASSOC);
+			$statement->closeCursor();
+			return $result;
 		}
-		$statement->closeCursor();
-		return $result;
+
+		return false;
 	}
 
 	public static function getAvailableDrivers() {
@@ -224,16 +226,15 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $result;
 	}
 
-	public function _optExecuteAndFetch($statement, array $values = null) {
+	public function _optExecuteAndFetch($statement, array $values = null, $one = false) {
 		if ($statement->execute($values)) {
-			return $statement->fetchAll(\PDO::FETCH_ASSOC);
-		}
-		return false;
-	}
-
-	public function _optExecuteAndFetchOne($statement, array $values = null) {
-		if ($statement->execute($values)) {
-			return $statement->fetch(\PDO::FETCH_ASSOC);
+			if ($one) {
+				$row = $statement->fetch(\PDO::FETCH_ASSOC);
+			} else {
+				$row = $statement->fetchAll(\PDO::FETCH_ASSOC);
+			}
+			$statement->closeCursor();
+			return $row;
 		}
 		return false;
 	}

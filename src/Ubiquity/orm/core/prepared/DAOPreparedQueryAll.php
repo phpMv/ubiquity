@@ -53,9 +53,7 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 		$objects = [];
 		$invertedJoinColumns = null;
 
-		$oneToManyQueries = [];
-		$manyToOneQueries = [];
-		$manyToManyParsers = [];
+		$oneToManyQueries = $manyToOneQueries = $manyToManyParsers = [];
 		foreach ($rows as $row) {
 			$object = DAO::_loadObjectFromRow($this->db, $row, $className, $invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers);
 			$key = OrmUtils::getPropKeyValues($object, $this->propsKeys);
