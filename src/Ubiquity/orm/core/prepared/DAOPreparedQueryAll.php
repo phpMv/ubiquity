@@ -37,13 +37,17 @@ class DAOPreparedQueryAll extends DAOPreparedQuery {
 
 	protected function _parseQueryResponse($rows, $className) {
 		$objects = [];
-		foreach ($rows as $row) {
-			$object = DAO::_loadSimpleObjectFromRow($this->db, $row, $className, $this->memberList, $this->transformers);
-			$key = OrmUtils::getPropKeyValues($object, $this->propsKeys);
-			if ($this->additionalMembers) {
+		if ($this->additionalMembers) {
+			foreach ($rows as $row) {
+				$object = DAO::_loadSimpleObjectFromRow($this->db, $row, $className, $this->memberList, $this->transformers);
 				$this->addAditionnalMembers($object, $row);
+				$objects[OrmUtils::getPropKeyValues($object, $this->propsKeys)] = $object;
 			}
-			$objects[$key] = $object;
+		} else {
+			foreach ($rows as $row) {
+				$object = DAO::_loadSimpleObjectFromRow($this->db, $row, $className, $this->memberList, $this->transformers);
+				$objects[OrmUtils::getPropKeyValues($object, $this->propsKeys)] = $object;
+			}
 		}
 		EventsManager::trigger(DAOEvents::GET_ALL, $objects, $className);
 		return $objects;
