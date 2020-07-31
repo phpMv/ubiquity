@@ -44,13 +44,12 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		$cp = $this->conditionParser;
 		$cp->setKeyValues($params);
 		if ($useCache) {
-			$query = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache);
+			$row = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache);
 		} else {
-			$query = $this->db->executeDAOStatementNoCache($this->statement, $cp->getParams());
+			$row = $this->db->executeDAOStatementOneNoCache($this->statement, $cp->getParams());
 		}
-		if ($query && \sizeof($query) > 0) {
+		if ($row) {
 			$className = $this->className;
-			$row = \current($query);
 			if ($this->hasIncluded || ! $this->allPublic) {
 				$oneToManyQueries = [];
 				$manyToOneQueries = [];

@@ -96,6 +96,10 @@ trait DatabaseOperationsTrait {
 		return $this->wrapperObject->_optExecuteAndFetch($statement, $parameters);
 	}
 
+	public function executeDAOStatementOneNoCache($statement, $parameters = null) {
+		return $this->wrapperObject->_optExecuteAndFetchOne($statement, $parameters);
+	}
+
 	public function getDaoPreparedStatement($tableName, $condition, $fields) {
 		$quote = SqlUtils::$quote;
 		return $this->wrapperObject->prepareStatement("SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}");

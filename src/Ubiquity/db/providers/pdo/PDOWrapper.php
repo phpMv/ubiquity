@@ -227,6 +227,13 @@ class PDOWrapper extends AbstractDbWrapper {
 		return false;
 	}
 
+	public function _optExecuteAndFetchOne($statement, array $values = null) {
+		if ($statement->execute($values)) {
+			return $statement->fetch(\PDO::FETCH_ASSOC);
+		}
+		return false;
+	}
+
 	public function quoteValue($value, $type = 2) {
 		return $this->dbInstance->quote($value, $type);
 	}
