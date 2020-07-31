@@ -57,7 +57,7 @@ abstract class DAOPreparedQuery {
 
 	protected $preparedCondition;
 
-	protected $additionalMembers = [];
+	protected $additionalMembers = false;
 
 	protected $sqlAdditionalMembers = "";
 
@@ -229,10 +229,10 @@ abstract class DAOPreparedQuery {
 	}
 
 	protected function updateSqlAdditionalMembers() {
-		if (\count($this->additionalMembers) > 0) {
+		if ($this->additionalMembers) {
 			$this->sqlAdditionalMembers = ',' . $this->parseExpressions();
+			$this->updatePrepareStatement();
 		}
-		$this->updatePrepareStatement();
 	}
 
 	protected function parseExpressions() {

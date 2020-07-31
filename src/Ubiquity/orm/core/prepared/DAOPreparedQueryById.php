@@ -44,9 +44,9 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		$cp = $this->conditionParser;
 		$cp->setKeyValues($params);
 		if ($useCache) {
-			$row = $this->db->executeDAOStatement($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache);
+			$row = $this->db->_optExecuteAndFetch($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache, true);
 		} else {
-			$row = $this->db->executeDAOStatementOneNoCache($this->statement, $cp->getParams());
+			$row = $this->db->_optExecuteAndFetchOneNoCache($this->statement, $cp->getParams());
 		}
 		if ($row) {
 			$className = $this->className;
@@ -63,8 +63,9 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 			} else {
 				$object = DAO::_loadSimpleObjectFromRow($this->db, $row, $className, $this->memberList, $this->transformers);
 			}
-			$this->addAditionnalMembers($object, $row);
-
+			if ($this->additionalMembers) {
+				$this->addAditionnalMembers($object, $row);
+			}
 			EventsManager::trigger(DAOEvents::GET_ONE, $object, $className);
 			return $object;
 		}

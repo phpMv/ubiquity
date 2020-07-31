@@ -77,14 +77,18 @@ trait DatabaseOperationsTrait {
 		return $result;
 	}
 
-	public function executeDAOStatement($statement, $tableName, $condition, $parameters = null, $useCache = false) {
+	public function _optExecuteAndFetch($statement, $tableName, $condition, $parameters = null, $useCache = false, $one = false) {
 		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
 			$result = $this->getCacheValue($tableName, $condition, $parameters, $cKey);
 		}
 		if ($result === false) {
-			$result = $this->wrapperObject->_optExecuteAndFetch($statement, $parameters);
+			if ($one) {
+				$result = $this->wrapperObject->_optExecuteAndFetchOne($statement, $parameters);
+			} else {
+				$result = $this->wrapperObject->_optExecuteAndFetch($statement, $parameters);
+			}
 			if ($cache) {
 				$this->cache->store($tableName, $cKey, $result);
 			}
@@ -92,11 +96,11 @@ trait DatabaseOperationsTrait {
 		return $result;
 	}
 
-	public function executeDAOStatementNoCache($statement, $parameters = null) {
+	public function _optExecuteAndFetchNoCache($statement, $parameters = null) {
 		return $this->wrapperObject->_optExecuteAndFetch($statement, $parameters);
 	}
 
-	public function executeDAOStatementOneNoCache($statement, $parameters = null) {
+	public function _optExecuteAndFetchOneNoCache($statement, $parameters = null) {
 		return $this->wrapperObject->_optExecuteAndFetchOne($statement, $parameters);
 	}
 
