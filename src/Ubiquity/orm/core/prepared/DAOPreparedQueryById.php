@@ -40,13 +40,10 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		if ($useCache && isset($this->cache) && ($object = $this->cache->fetch($this->className, \implode('_', $params)))) {
 			return $object;
 		}
-
-		$cp = $this->conditionParser;
-		$cp->setKeyValues($params);
 		if ($useCache) {
-			$row = $this->db->_optExecuteAndFetch($this->statement, $this->tableName, $this->preparedCondition, $cp->getParams(), $useCache, true);
+			$row = $this->db->_optExecuteAndFetch($this->statement, $this->tableName, $this->preparedCondition, $params, $useCache, true);
 		} else {
-			$row = $this->db->_optExecuteAndFetchNoCache($this->statement, $cp->getParams(), true);
+			$row = $this->db->_optExecuteAndFetchNoCache($this->statement, $params, true);
 		}
 		if ($row) {
 			$className = $this->className;
