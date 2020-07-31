@@ -210,11 +210,15 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $this->getDriverMetaDatas()->getFieldsInfos($tableName);
 	}
 
-	public function _optPrepareAndExecute($sql, array $values = null) {
+	public function _optPrepareAndExecute($sql, array $values = null, $one = false) {
 		$statement = $this->_getStatement($sql);
 		$result = false;
 		if ($statement->execute($values)) {
-			$result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+			if ($one) {
+				$result = $statement->fetch(\PDO::FETCH_ASSOC);
+			} else {
+				$result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+			}
 		}
 		$statement->closeCursor();
 		return $result;

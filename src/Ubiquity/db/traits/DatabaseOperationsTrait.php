@@ -47,7 +47,7 @@ trait DatabaseOperationsTrait {
 	 * @param boolean|null $useCache
 	 * @return array
 	 */
-	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = false) {
+	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = false, $one = false) {
 		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
@@ -55,7 +55,7 @@ trait DatabaseOperationsTrait {
 		}
 		if ($result === false) {
 			$quote = SqlUtils::$quote;
-			$result = $this->wrapperObject->_optPrepareAndExecute("SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters);
+			$result = $this->wrapperObject->_optPrepareAndExecute("SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters, $one);
 			if ($cache) {
 				$this->cache->store($tableName, $cKey, $result);
 			}

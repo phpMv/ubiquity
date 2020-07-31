@@ -39,6 +39,8 @@ abstract class AbstractDbWrapper {
 
 	public function _optExecuteAndFetch($statement, array $values = null) {}
 
+	public function _optExecuteAndFetchOne($statement, array $values = null) {}
+
 	abstract public function getStatement(string $sql);
 
 	abstract public function connect(string $dbType, $dbName, $serverName, string $port, string $user, string $password, array $options);
@@ -98,7 +100,7 @@ abstract class AbstractDbWrapper {
 
 	abstract public function getForeignKeys($tableName, $pkName, $dbName = null);
 
-	abstract public function _optPrepareAndExecute($sql, array $values = null);
+	abstract public function _optPrepareAndExecute($sql, array $values = null, $one = false);
 
 	abstract public function getRowNum(string $tableName, string $pkName, string $condition): int;
 
