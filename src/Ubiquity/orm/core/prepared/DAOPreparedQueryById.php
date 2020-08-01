@@ -41,11 +41,11 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 			return $object;
 		}
 
-		$this->conditionParser->setKeyValues($params);
+		$params = $this->conditionParser->setKeyValues($params);
 		if ($useCache) {
-			$row = $this->db->_optExecuteAndFetch($this->statement, $this->tableName, $this->preparedCondition, $this->conditionParser->getParams(), $useCache, true);
+			$row = $this->db->_optExecuteAndFetch($this->statement, $this->tableName, $this->preparedCondition, $params, $useCache, true);
 		} else {
-			$row = $this->db->_optExecuteAndFetchNoCache($this->statement, $this->conditionParser->getParams(), true);
+			$row = $this->db->_optExecuteAndFetchNoCache($this->statement, $params, true);
 		}
 		if ($row) {
 			$className = $this->className;
