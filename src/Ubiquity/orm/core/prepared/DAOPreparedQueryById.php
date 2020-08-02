@@ -1,5 +1,4 @@
 <?php
-
 namespace Ubiquity\orm\core\prepared;
 
 use Ubiquity\events\DAOEvents;
@@ -17,6 +16,7 @@ use Ubiquity\cache\dao\AbstractDAOCache;
  * @version 1.0.4
  */
 class DAOPreparedQueryById extends DAOPreparedQuery {
+
 	/**
 	 *
 	 * @var AbstractDAOCache
@@ -24,46 +24,46 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 	protected $cache;
 
 	public function __construct($className, $included = false, $cache = null) {
-		parent::__construct ( $className, '', $included, $cache );
+		parent::__construct($className, '', $included, $cache);
 	}
 
 	protected function prepare(?DbCache $cache = null) {
-		parent::prepare ( $cache );
-		$keys = OrmUtils::getKeyFields ( $this->className );
-		$this->conditionParser->addKeyValues ( \array_fill ( 0, \count ( $keys ), '' ), $this->className );
-		$this->conditionParser->limitOne ();
-		$this->cache = DAO::getCache ();
+		parent::prepare($cache);
+		$keys = OrmUtils::getKeyFields($this->className);
+		$this->conditionParser->addKeyValues(\array_fill(0, \count($keys), ''), $this->className);
+		$this->conditionParser->limitOne();
+		$this->cache = DAO::getCache();
+		$this->updatePrepareStatement();
 	}
 
-	public function execute($params = [ ], $useCache = false) {
-		if ($useCache && isset ( $this->cache ) && ($object = $this->cache->fetch ( $this->className, \implode ( '_', $params ) ))) {
+	public function execute($params = [], $useCache = false) {
+		if ($useCache && isset($this->cache) && ($object = $this->cache->fetch($this->className, \implode('_', $params)))) {
 			return $object;
 		}
 
-		$cp = $this->conditionParser;
-		$cp->setKeyValues ( $params );
+		$params = $this->conditionParser->setKeyValues($params);
 		if ($useCache) {
-			$query = $this->db->prepareAndExecute ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams (), $useCache );
+			$row = $this->db->_optExecuteAndFetch($this->statement, $this->tableName, $this->preparedCondition, $params, $useCache, true);
 		} else {
-			$query = $this->db->prepareAndExecuteNoCache ( $this->tableName, $this->preparedCondition, $this->fieldList . $this->sqlAdditionalMembers, $cp->getParams () );
+			$row = $this->db->_optExecuteAndFetchNoCache($this->statement, $params, true);
 		}
-		if ($query && \sizeof ( $query ) > 0) {
+		if ($row) {
 			$className = $this->className;
-			$row = \current ( $query );
 			if ($this->hasIncluded || ! $this->allPublic) {
-				$oneToManyQueries = [ ];
-				$manyToOneQueries = [ ];
-				$manyToManyParsers = [ ];
-				$object = DAO::_loadObjectFromRow ( $this->db, $row, $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers );
+				$oneToManyQueries = $manyToOneQueries = $manyToManyParsers = [];
+				$object = DAO::_loadObjectFromRow($this->db, $row, $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers);
 				if ($this->hasIncluded) {
-					DAO::_affectsRelationObjects ( $className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [ $object ], $this->included, $useCache );
+					DAO::_affectsRelationObjects($className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [
+						$object
+					], $this->included, $useCache);
 				}
 			} else {
-				$object = DAO::_loadSimpleObjectFromRow ( $this->db, $row, $className, $this->memberList, $this->transformers );
+				$object = DAO::_loadSimpleObjectFromRow($this->db, $row, $className, $this->memberList, $this->transformers);
 			}
-			$this->addAditionnalMembers ( $object, $row );
-
-			EventsManager::trigger ( DAOEvents::GET_ONE, $object, $className );
+			if ($this->additionalMembers) {
+				$this->addAditionnalMembers($object, $row);
+			}
+			EventsManager::trigger(DAOEvents::GET_ONE, $object, $className);
 			return $object;
 		}
 		return null;
