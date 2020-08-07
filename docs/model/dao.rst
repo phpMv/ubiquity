@@ -30,16 +30,18 @@ Loading an instance of the `models\\User` class with id `5`
 .. code-block:: php
     
     use Ubiquity\orm\DAO;
+    use models\User;
         
-    $user=DAO::getById(models\User::class, 5);
+    $user=DAO::getById(User::class, 5);
 
 Loading an instance using a condition:
 
 .. code-block:: php
     
     use Ubiquity\orm\DAO;
-    
-    DAO::getOne(models\User::class, 'name= ?',false,['DOE']);
+    use models\User;
+        
+    DAO::getOne(User::class, 'name= ?',false,['DOE']);
 
 BelongsTo loading
 ^^^^^^^^^^^^^^^^^
@@ -49,14 +51,14 @@ Each user belongs to only one category:
 
 .. code-block:: php
     
-    $user=DAO::getById(models\User::class,5);
+    $user=DAO::getById(User::class,5);
     echo $user->getCategory()->getName();
     
 It is possible to prevent this default loading ; the third parameter allows the loading or not of belongsTo members:
 
 .. code-block:: php
     
-    $user=DAO::getOne(models\User::class,5, false);
+    $user=DAO::getOne(User::class,5, false);
     echo $user->getCategory();// NULL
     
 HasMany loading
@@ -67,7 +69,7 @@ Each user has many groups:
 
 .. code-block:: php
     
-    $user=DAO::getOne(models\User::class,5,['groupes']);
+    $user=DAO::getOne(User::class,5,['groupes']);
     foreach($user->getGroupes() as $groupe){
         echo $groupe->getName().'<br>';
     }
@@ -99,7 +101,7 @@ The second parameter `$keyValues` can be an array if the primary key is composit
 
 .. code-block:: php
     
-    $productDetail=DAO::getOne(models\ProductDetail::class,[18,'BF327']);
+    $productDetail=DAO::getOne(ProductDetail::class,[18,'BF327']);
     echo 'Command:'.$productDetail->getCommande().'<br>';
     echo 'Product:'.$productDetail->getProduct().'<br>';
     
@@ -109,7 +111,7 @@ Loading instances of the `User` class:
 
 .. code-block:: php
     
-    $users=DAO::getAll(models\User::class);
+    $users=DAO::getAll(User::class);
     foreach($users as $user){
         echo $user->getName()."<br>";
     }
@@ -121,7 +123,7 @@ Loading instances of the `User` class with its category and its groups :
 
 .. code-block:: php
     
-    $users=DAO::getAll(models\User::class,['groupes','category']);
+    $users=DAO::getAll(User::class,['groupes','category']);
     foreach($users as $user){
         echo "<h2>".$user->getName()."</h2>";
         echo $user->getCategory()."<br>";
@@ -138,7 +140,7 @@ Loading instances of the `User` class with its category, its groups and the orga
 
 .. code-block:: php
     
-    $users=DAO::getAll(models\User::class,['groupes.organization','category']);
+    $users=DAO::getAll(User::class,['groupes.organization','category']);
     foreach($users as $user){
         echo "<h2>".$user->getName()."</h2>";
         echo $user->getCategory()."<br>";
@@ -157,7 +159,7 @@ Loading instances of the `User` class with its category, its groups and all rela
 
 .. code-block:: php
     
-    $users=DAO::getAll(models\User::class,['groupes.*','category']);
+    $users=DAO::getAll(User::class,['groupes.*','category']);
 
 Querying using conditions
 -------------------------
@@ -255,7 +257,7 @@ If the instance is loaded from database:
 
 .. code-block:: php
     
-    $orga=DAO::getOne(Organization::class,5,false);
+    $orga=DAO::getById(Organization::class,5,false);
     if(DAO::remove($orga)){
     	echo $orga.' deleted from database';
     }
@@ -358,7 +360,7 @@ The **SDAO** class inherits from **DAO** and has the same methods for performing
     
     use Ubiquity\orm\DAO;
         
-    $product=DAO::getById(models\Product::class, 5);
+    $product=DAO::getById(Product::class, 5);
 
 Prepared DAO queries
 ====================
@@ -377,8 +379,8 @@ Preparation
    
    $swooleServer->on('workerStart', function ($srv) use (&$config) {
    	\Ubiquity\orm\DAO::startDatabase($config);
-   	\Ubiquity\orm\DAO::prepareGetById('user', models\User::class);
-   	\Ubiquity\orm\DAO::prepareGetAll('productsByName', models\Product::class,'name like ?');
+   	\Ubiquity\orm\DAO::prepareGetById('user', User::class);
+   	\Ubiquity\orm\DAO::prepareGetAll('productsByName', Product::class,'name like ?');
    });
 
 Usage
