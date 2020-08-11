@@ -207,6 +207,51 @@ The corresponding logs:
 .. image:: /_static/images/dao/uquery-users-orga-log.png
    :class: bordered
    
+Counting
+--------
+
+Existence testing
+^^^^^^^^^^^^^^^^^
+
+.. code-block:: php
+        
+    if(DAO::exists(User::class,'lastname like ?',['SMITH'])){
+        //there's a Mr SMITH
+    }
+
+Counting
+^^^^^^^^
+
+To count the instances, what not to do, if users are not already loaded:
+
+.. code-block:: php
+        
+    $users=DAO::getAll(User::class);
+    echo "there are ". \count($users) ." users";
+
+What needs to be done:
+
+.. code-block:: php
+        
+    $count=DAO::count(User::class);
+    echo "there are $count users";
+   
+With a condition:
+
+.. code-block:: php
+        
+    $notSuspendedCount=DAO::count(User::class, 'suspended = ?', [false]);
+
+
+with a condition on associated objects:
+
+Number of users belonging to the **OTAN** named organization.
+
+.. code-block:: php
+        
+    $count=DAO::uCount(User::class,'organization.name= ?',['OTAN']);
+
+
 Modifying data
 ============
 Adding an instance
