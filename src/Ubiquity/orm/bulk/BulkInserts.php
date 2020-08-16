@@ -7,7 +7,7 @@ namespace Ubiquity\orm\bulk;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class BulkInserts extends AbstractBulks {
@@ -38,6 +38,23 @@ class BulkInserts extends AbstractBulks {
 		}
 		$this->parameters = $parameters;
 		return "INSERT INTO {$quote}{$this->tableName}{$quote} (" . $this->insertFields . ') VALUES ' . \implode ( ',', $values );
+	}
+
+	public function groupOp($count = 5) {
+		$quote = $this->db->quote;
+		$groups = \array_chunk ( $this->instances, $count );
+
+		$insertTable = "INSERT INTO {$quote}{$this->tableName}{$quote} (" . $this->insertFields . ') VALUES ';
+		foreach ( $groups as $group ) {
+			$sql = '';
+			foreach ( $group as $instance ) {
+				$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
+				$sql .= $insertTable . $this->db->getInsertValues ( $instance->_rest ) . ';';
+			}
+			$this->execGroupTrans ( $sql );
+		}
+		$this->instances = [ ];
+		$this->parameters = [ ];
 	}
 }
 

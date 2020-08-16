@@ -7,7 +7,7 @@ namespace Ubiquity\orm\traits;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 trait DAOBulkUpdatesTrait {
@@ -87,7 +87,14 @@ trait DAOBulkUpdatesTrait {
 	public static function updateGroups($count = 5) {
 		$bulks = self::$bulks ['update'];
 		foreach ( $bulks as $bulk ) {
-			$bulk->updateGroup ( $count );
+			$bulk->groupOp ( $count );
+		}
+	}
+
+	public static function insertGroups($count = 5) {
+		$bulks = self::$bulks ['insert'];
+		foreach ( $bulks as $bulk ) {
+			$bulk->groupOp ( $count );
 		}
 	}
 

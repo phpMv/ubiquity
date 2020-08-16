@@ -19,7 +19,7 @@ use Ubiquity\cache\database\DbCache;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.3
+ * @version 1.1.4
  *
  */
 class Database {
@@ -251,6 +251,14 @@ class Database {
 		$ret = array ();
 		foreach ( $keyAndValues as $key => $value ) {
 			$ret [] = $this->quote . $key . $this->quote . ' = ' . $this->quoteValue ( $value );
+		}
+		return \implode ( ',', $ret );
+	}
+
+	public function getInsertValues($keyAndValues) {
+		$ret = array ();
+		foreach ( $keyAndValues as $value ) {
+			$ret [] = $this->quoteValue ( $value );
 		}
 		return \implode ( ',', $ret );
 	}
