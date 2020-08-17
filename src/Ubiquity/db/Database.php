@@ -247,10 +247,10 @@ class Database {
 		return $this->wrapperObject->quoteValue ( ( string ) $value, $type );
 	}
 
-	public function getUpdateFieldsKeyAndValues($keyAndValues) {
+	public function getUpdateFieldsKeyAndValues($keyAndValues,$fields) {
 		$ret = array ();
-		foreach ( $keyAndValues as $key => $value ) {
-			$ret [] = $this->quote . $key . $this->quote . ' = ' . $this->quoteValue ( $value );
+		foreach ( $fields as $field ) {
+			$ret [] = $this->quote . $field . $this->quote . ' = ' . $this->quoteValue ( $keyAndValues[$field] );
 		}
 		return \implode ( ',', $ret );
 	}

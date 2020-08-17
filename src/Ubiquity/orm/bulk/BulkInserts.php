@@ -44,12 +44,11 @@ class BulkInserts extends AbstractBulks {
 		$quote = $this->db->quote;
 		$groups = \array_chunk ( $this->instances, $count );
 
-		$insertTable = "INSERT INTO {$quote}{$this->tableName}{$quote} (" . $this->insertFields . ') VALUES ';
+		$insertTable = "INSERT INTO {$quote}{$this->tableName}{$quote} (" . $this->insertFields . ') VALUES(';
 		foreach ( $groups as $group ) {
 			$sql = '';
 			foreach ( $group as $instance ) {
-				$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
-				$sql .= $insertTable . $this->db->getInsertValues ( $instance->_rest ) . ';';
+				$sql .= $insertTable . $this->db->getInsertValues ( $instance->_rest ) . ');';
 			}
 			$this->execGroupTrans ( $sql );
 		}

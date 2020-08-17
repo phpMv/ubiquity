@@ -25,6 +25,7 @@ abstract class AbstractBulks {
 	protected $parameters;
 	protected $dbType;
 	protected $insertFields;
+	protected $memberNames;
 
 	protected function getQuotedKeys($fields, $quote) {
 		$ret = array ();
@@ -36,7 +37,7 @@ abstract class AbstractBulks {
 
 	protected function updateInstanceRest($instance) {
 		foreach ( $this->fields as $field ) {
-			$accessor = 'get' . \ucfirst ( $field );
+			$accessor = 'get' . \ucfirst ( $this->memberNames[$field]??$field );
 			$instance->_rest [$field] = $instance->$accessor ();
 		}
 	}
@@ -62,6 +63,7 @@ abstract class AbstractBulks {
 		$this->db = DAO::getDb ( $className );
 		$this->dbType = $this->db->getDbType ();
 		$this->tableName = OrmUtils::getTableName ( $className );
+		$this->memberNames=OrmUtils::getAnnotationInfo($className,'#memberNames');
 	}
 
 	public function addInstances($instances) {
