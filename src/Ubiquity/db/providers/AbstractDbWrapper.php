@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\db\providers;
 
 /**
@@ -6,15 +7,11 @@ namespace Ubiquity\db\providers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
-abstract class AbstractDbWrapper {
-
-	protected $dbInstance;
-
+abstract class AbstractDbWrapper extends AbstractDbWrapper_ {
 	protected $statements;
-
 	public $quote;
 
 	abstract public function query(string $sql);
@@ -23,25 +20,19 @@ abstract class AbstractDbWrapper {
 
 	abstract public function queryColumn(string $sql, int $columnNumber = null);
 
-	abstract public static function getAvailableDrivers();
-
 	public function _getStatement(string $sql) {
-		return $this->statements[\md5($sql)] ??= $this->getStatement($sql);
+		return $this->statements [\md5 ( $sql )] ??= $this->getStatement ( $sql );
 	}
 
 	public function prepareNamedStatement(string $name, string $sql) {
-		return $this->statements[$name] = $this->getStatement($sql);
+		return $this->statements [$name] = $this->getStatement ( $sql );
 	}
 
 	public function getNamedStatement(string $name, ?string $sql = null) {
-		return $this->statements[$name] ??= $this->getStatement($sql);
+		return $this->statements [$name] ??= $this->getStatement ( $sql );
 	}
 
 	abstract public function getStatement(string $sql);
-
-	abstract public function connect(string $dbType, $dbName, $serverName, string $port, string $user, string $password, array $options);
-
-	abstract public function getDSN(string $serverName, string $port, string $dbName, string $dbType = 'mysql');
 
 	abstract public function execute(string $sql);
 
@@ -88,8 +79,6 @@ abstract class AbstractDbWrapper {
 
 	abstract public function rollbackPoint($level);
 
-	abstract public function ping();
-
 	abstract public function getPrimaryKeys($tableName);
 
 	abstract public function getFieldsInfos($tableName);
@@ -98,7 +87,8 @@ abstract class AbstractDbWrapper {
 
 	abstract public function _optPrepareAndExecute($sql, array $values = null, $one = false);
 
-	public function _optExecuteAndFetch($statement, array $values = null, $one = false) {}
+	public function _optExecuteAndFetch($statement, array $values = null, $one = false) {
+	}
 
 	abstract public function getRowNum(string $tableName, string $pkName, string $condition): int;
 
@@ -109,27 +99,11 @@ abstract class AbstractDbWrapper {
 	}
 
 	public function close() {
-		$this->statements = [];
+		$this->statements = [ ];
 		$this->dbInstance = null;
 	}
 
-	/**
-	 *
-	 * @return object
-	 */
-	public function getDbInstance() {
-		return $this->dbInstance;
-	}
-
-	/**
-	 *
-	 * @param object $dbInstance
-	 */
-	public function setDbInstance($dbInstance) {
-		$this->dbInstance = $dbInstance;
-	}
-
 	public function quoteValue($value, $type = 2) {
-		return "'" . \addslashes($value) . "'";
+		return "'" . \addslashes ( $value ) . "'";
 	}
 }
