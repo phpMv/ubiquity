@@ -11,6 +11,7 @@ namespace Ubiquity\db\providers;
  *
  */
 abstract class AbstractDbWrapper extends AbstractDbWrapper_ {
+	public static $databaseClass = '\\Ubiquity\\db\\Database';
 	protected $statements;
 	public $quote;
 

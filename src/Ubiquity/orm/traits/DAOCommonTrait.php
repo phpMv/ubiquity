@@ -6,6 +6,10 @@ use Ubiquity\cache\CacheManager;
 use Ubiquity\cache\dao\AbstractDAOCache;
 use Ubiquity\controllers\Startup;
 use Ubiquity\db\AbstractDatabase;
+use Ubiquity\db\Database;
+use Ubiquity\db\SqlUtils;
+use Ubiquity\exceptions\DAOException;
+use Ubiquity\log\Logger;
 
 /**
  * Ubiquity\orm\traits$DAOCommon
@@ -30,6 +34,31 @@ trait DAOCommonTrait {
 	 * @var AbstractDAOCache
 	 */
 	protected static $cache;
+
+	/**
+	 * Returns the database instance defined at $offset key in config
+	 *
+	 * @param string $offset
+	 * @return \Ubiquity\db\Database
+	 */
+	public static function getSqlOrNosqlDatabase($offset = 'default') {
+		if (! isset ( self::$db [$offset] )) {
+			$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
+			$wrapper = $db ['wrapper'];
+			$databaseClass = $$wrapper::$databaseClass;
+			$dbInstance = self::$db [$offset] = new $databaseClass ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false, self::$pool );
+			try {
+				$dbInstance->connect ();
+			} catch ( \Exception $e ) {
+				Logger::error ( "DAO", $e->getMessage () );
+				throw new DAOException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
+			}
+		}
+		if ($dbInstance instanceof Database) {
+			SqlUtils::$quote = $dbInstance->quote;
+		}
+		return $dbInstance;
+	}
 
 	public static function getDb($model) {
 		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
