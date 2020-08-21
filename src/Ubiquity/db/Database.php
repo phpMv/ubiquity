@@ -24,7 +24,6 @@ use Ubiquity\cache\database\DbCache;
  */
 class Database extends AbstractDatabase {
 	use DatabaseOperationsTrait,DatabaseTransactionsTrait,DatabaseMetadatas;
-	public static $wrappers = [ 'pdo' => \Ubiquity\db\providers\pdo\PDOWrapper::class,'tarantool' => '\Ubiquity\db\providers\tarantool\TarantoolWrapper','mysqli' => '\Ubiquity\db\providers\mysqli\MysqliWrapper','swoole' => '\Ubiquity\db\providers\swoole\SwooleWrapper' ];
 	public $quote;
 
 	protected function setDbWrapperClass($dbWrapperClass, $dbType) {
