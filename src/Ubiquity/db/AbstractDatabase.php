@@ -2,6 +2,10 @@
 
 namespace Ubiquity\db;
 
+use Ubiquity\cache\database\DbCache;
+use Ubiquity\exceptions\CacheException;
+use Ubiquity\exceptions\DBException;
+
 class AbstractDatabase {
 	protected $dbType;
 	protected $serverName;
