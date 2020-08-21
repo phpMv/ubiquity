@@ -13,7 +13,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 trait DAORelationsPrepareTrait {
@@ -61,10 +61,15 @@ trait DAORelationsPrepareTrait {
 		if (! isset ( $annot ))
 			$annot = OrmUtils::getAnnotationInfoMember ( $class, "#oneToMany", $member );
 		if ($annot !== false) {
-			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $annot ["className"], "#joinColumn", $annot ["mappedBy"] );
+			$fkClass = $annot ["className"];
+			$fkAnnot = OrmUtils::getAnnotationInfoMember ( $fkClass, "#joinColumn", $annot ["mappedBy"] );
 			if ($fkAnnot !== false) {
+				$fkMemberName = $annot ["mappedBy"];
+				if (\property_exists ( $fkClass, $fkAnnot ['name'] )) { // $fkClass is a class association (manyToMany with property)
+					$fkMemberName = $fkAnnot ['name'];
+				}
 				$fkv = OrmUtils::getFirstKeyValue ( $instance );
-				$key = $annot ["className"] . "|" . $member . "|" . $annot ["mappedBy"] . "|" . $fkAnnot ["className"];
+				$key = $annot ["className"] . "|" . $member . "|" . $fkMemberName . "|" . $fkAnnot ["className"];
 				if (! isset ( $ret [$key] )) {
 					$ret [$key] = new PendingRelationsRequest ();
 				}

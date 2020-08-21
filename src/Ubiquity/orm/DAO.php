@@ -20,6 +20,7 @@ use Ubiquity\orm\traits\DAOPooling;
 use Ubiquity\orm\traits\DAOBulkUpdatesTrait;
 use Ubiquity\orm\traits\DAOPreparedTrait;
 use Ubiquity\cache\dao\AbstractDAOCache;
+use Ubiquity\orm\traits\DAOCommonTrait;
 
 /**
  * Gateway class between database and object model.
@@ -30,26 +31,58 @@ use Ubiquity\cache\dao\AbstractDAOCache;
  *
  */
 class DAO {
-	use DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,
+	use DAOCommontrait,DAOCoreTrait,DAOUpdatesTrait,DAORelationsTrait,DAORelationsPrepareTrait,DAORelationsAssignmentsTrait,
 	DAOUQueries,DAOTransactionsTrait,DAOPooling,DAOBulkUpdatesTrait,DAOPreparedTrait;
-
-	/**
-	 *
-	 * @var Database
-	 */
-	public static $db;
-	public static $useTransformers = false;
-	public static $transformerOp = 'transform';
 	private static $conditionParsers = [ ];
-	protected static $modelsDatabase = [ ];
-	/**
-	 *
-	 * @var AbstractDAOCache
-	 */
-	protected static $cache;
 
-	public static function getDb($model) {
-		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
+	/**
+	 * Establishes the connection to the database using the past parameters
+	 *
+	 * @param string $offset
+	 * @param string $wrapper
+	 * @param string $dbType
+	 * @param string $dbName
+	 * @param string $serverName
+	 * @param string $port
+	 * @param string $user
+	 * @param string $password
+	 * @param array $options
+	 * @param boolean $cache
+	 */
+	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [ ], $cache = false) {
+		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$pool );
+		try {
+			self::$db [$offset]->connect ();
+		} catch ( \Exception $e ) {
+			Logger::error ( "DAO", $e->getMessage () );
+			throw new DAOException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
+		}
+	}
+
+	/**
+	 * Returns the database instance defined at $offset key in config
+	 *
+	 * @param string $offset
+	 * @return \Ubiquity\db\Database
+	 */
+	public static function getDatabase($offset = 'default') {
+		if (! isset ( self::$db [$offset] )) {
+			self::startDatabase ( Startup::$config, $offset );
+		}
+		SqlUtils::$quote = self::$db [$offset]->quote;
+		return self::$db [$offset];
+	}
+
+	/**
+	 * Establishes the connection to the database using the $config array
+	 *
+	 * @param array $config the config array (Startup::getConfig())
+	 */
+	public static function startDatabase(&$config, $offset = null) {
+		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
+		if ($db ['dbName'] !== '') {
+			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
+		}
 	}
 
 	/**
@@ -171,149 +204,6 @@ class DAO {
 		return self::$conditionParsers [$className];
 	}
 
-	/**
-	 * Establishes the connection to the database using the past parameters
-	 *
-	 * @param string $offset
-	 * @param string $wrapper
-	 * @param string $dbType
-	 * @param string $dbName
-	 * @param string $serverName
-	 * @param string $port
-	 * @param string $user
-	 * @param string $password
-	 * @param array $options
-	 * @param boolean $cache
-	 */
-	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [ ], $cache = false) {
-		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$pool );
-		try {
-			self::$db [$offset]->connect ();
-		} catch ( \Exception $e ) {
-			Logger::error ( "DAO", $e->getMessage () );
-			throw new DAOException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
-		}
-	}
-
-	/**
-	 * Establishes the connection to the database using the $config array
-	 *
-	 * @param array $config the config array (Startup::getConfig())
-	 */
-	public static function startDatabase(&$config, $offset = null) {
-		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
-		if ($db ['dbName'] !== '') {
-			self::connect ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false);
-		}
-	}
-
-	public static function getDbOffset(&$config, $offset = null) {
-		return $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
-	}
-
-	/**
-	 * Returns true if the connection to the database is established
-	 *
-	 * @return boolean
-	 */
-	public static function isConnected($offset = 'default') {
-		$db = self::$db [$offset] ?? false;
-		return $db && ($db instanceof Database) && $db->isConnected ();
-	}
-
-	/**
-	 * Sets the transformer operation
-	 *
-	 * @param string $op
-	 */
-	public static function setTransformerOp($op) {
-		self::$transformerOp = $op;
-	}
-
-	/**
-	 * Closes the active pdo connection to the database
-	 */
-	public static function closeDb($offset = 'default') {
-		$db = self::$db [$offset] ?? false;
-		if ($db !== false) {
-			$db->close ();
-		}
-	}
-
-	/**
-	 * Defines the database connection to use for $model class
-	 *
-	 * @param string $model a model class
-	 * @param string $database a database connection defined in config.php
-	 */
-	public static function setModelDatabase($model, $database = 'default') {
-		self::$modelsDatabase [$model] = $database;
-	}
-
-	/**
-	 * Defines the database connections to use for models classes
-	 *
-	 * @param array $modelsDatabase
-	 */
-	public static function setModelsDatabases($modelsDatabase) {
-		self::$modelsDatabase = $modelsDatabase;
-	}
-
-	/**
-	 * Returns the database instance defined at $offset key in config
-	 *
-	 * @param string $offset
-	 * @return \Ubiquity\db\Database
-	 */
-	public static function getDatabase($offset = 'default') {
-		if (! isset ( self::$db [$offset] )) {
-			self::startDatabase ( Startup::$config, $offset );
-		}
-		SqlUtils::$quote = self::$db [$offset]->quote;
-		return self::$db [$offset];
-	}
-
-	public static function getDatabases() {
-		$config = Startup::getConfig ();
-		if (isset ( $config ['database'] )) {
-			if (isset ( $config ['database'] ['dbName'] )) {
-				return [ 'default' ];
-			} else {
-				return \array_keys ( $config ['database'] );
-			}
-		}
-		return [ ];
-	}
-
-	public static function updateDatabaseParams(array &$config, array $parameters, $offset = 'default') {
-		if ($offset === 'default') {
-			if (isset ( $config ['database'] [$offset] )) {
-				foreach ( $parameters as $k => $param ) {
-					$config ['database'] [$offset] [$k] = $param;
-				}
-			} else {
-				foreach ( $parameters as $k => $param ) {
-					$config ['database'] [$k] = $param;
-				}
-			}
-		} else {
-			if (isset ( $config ['database'] [$offset] )) {
-				foreach ( $parameters as $k => $param ) {
-					$config ['database'] [$offset] [$k] = $param;
-				}
-			}
-		}
-	}
-
-	public static function start() {
-		self::$modelsDatabase = CacheManager::getModelsDatabases ();
-	}
-
-	public static function getDbCacheInstance($model) {
-		$db = static::$db [self::$modelsDatabase [$model] ?? 'default'];
-		return $db->getCacheInstance ();
-	}
-
 	public static function warmupCache($className, $condition = '', $included = false, $parameters = [ ]) {
 		$objects = self::getAll ( $className, $condition, $included, $parameters );
 		foreach ( $objects as $o ) {
@@ -324,17 +214,5 @@ class DAO {
 		$db = self::$db [$offset];
 		$db->close ();
 		unset ( self::$db [$offset] );
-	}
-
-	public static function setCache(AbstractDAOCache $cache) {
-		self::$cache = $cache;
-	}
-
-	/**
-	 *
-	 * @return \Ubiquity\cache\dao\AbstractDAOCache
-	 */
-	public static function getCache() {
-		return static::$cache;
 	}
 }
