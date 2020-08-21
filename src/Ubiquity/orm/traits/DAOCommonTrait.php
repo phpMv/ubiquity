@@ -119,6 +119,14 @@ trait DAOCommonTrait {
 		}
 	}
 
+	protected static function applyTransformers($transformers, &$row, $memberNames) {
+		foreach ( $transformers as $member => $transformer ) {
+			$field = \array_search ( $member, $memberNames );
+			$transform = self::$transformerOp;
+			$row [$field] = $transformer::{$transform} ( $row [$field] );
+		}
+	}
+
 	public static function start() {
 		self::$modelsDatabase = CacheManager::getModelsDatabases ();
 	}
