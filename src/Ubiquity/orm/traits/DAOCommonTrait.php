@@ -20,6 +20,7 @@ use Ubiquity\log\Logger;
  *
  */
 trait DAOCommonTrait {
+
 	/**
 	 *
 	 * @var AbstractDatabase
@@ -38,15 +39,17 @@ trait DAOCommonTrait {
 	/**
 	 * Returns the database instance defined at $offset key in config
 	 *
+	 * @param ?array $config
 	 * @param string $offset
 	 * @return \Ubiquity\db\Database
 	 */
-	public static function getSqlOrNosqlDatabase($offset = 'default') {
+	public static function getSqlOrNosqlDatabase($config = null, $offset = 'default') {
 		if (! isset ( self::$db [$offset] )) {
+			$config ??= Startup::$config;
 			$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ['default'] ?? $config ['database']);
 			$wrapper = $db ['wrapper'];
-			$databaseClass = $$wrapper::$databaseClass;
-			$dbInstance = self::$db [$offset] = new $databaseClass ( $offset ?? 'default', $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false, self::$pool );
+			$databaseClass = $wrapper::$databaseClass;
+			$dbInstance = self::$db [$offset] = new $databaseClass ( $db ['wrapper'] ?? \Ubiquity\db\providers\pdo\PDOWrapper::class, $db ['type'], $db ['dbName'], $db ['serverName'] ?? '127.0.0.1', $db ['port'] ?? 3306, $db ['user'] ?? 'root', $db ['password'] ?? '', $db ['options'] ?? [ ], $db ['cache'] ?? false, self::$pool );
 			try {
 				$dbInstance->connect ();
 			} catch ( \Exception $e ) {
@@ -54,10 +57,10 @@ trait DAOCommonTrait {
 				throw new DAOException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
 			}
 		}
-		if ($dbInstance instanceof Database) {
-			SqlUtils::$quote = $dbInstance->quote;
+		if (self::$db [$offset] instanceof Database) {
+			SqlUtils::$quote = self::$db [$offset]->quote;
 		}
-		return $dbInstance;
+		return self::$db [$offset];
 	}
 
 	public static function getDb($model) {
