@@ -63,6 +63,16 @@ trait DAOCommonTrait {
 		return self::$db [$offset];
 	}
 
+	public static function getDAOClass($config = null, $offset = 'default') {
+		$db = self::getDbOffset ( $config, $offset );
+		$wrapper = $db ['wrapper'];
+		$databaseClass = $wrapper::$databaseClass;
+		if ($databaseClass === '\\Ubiquity\\db\\Database') {
+			return '\\Ubiquity\\orm\\DAO';
+		}
+		return '\\Ubiquity\\orm\\DAONosql';
+	}
+
 	public static function getDb($model) {
 		return self::getDatabase ( self::$modelsDatabase [$model] ?? 'default');
 	}
