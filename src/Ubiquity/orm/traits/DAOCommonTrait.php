@@ -64,13 +64,17 @@ trait DAOCommonTrait {
 	}
 
 	public static function getDAOClass($config = null, $offset = 'default') {
-		$db = self::getDbOffset ( $config, $offset );
+		$db = self::getDbOffset ( $config ?? Startup::$config, $offset );
 		$wrapper = $db ['wrapper'];
 		$databaseClass = $wrapper::$databaseClass;
 		if ($databaseClass === '\\Ubiquity\\db\\Database') {
 			return '\\Ubiquity\\orm\\DAO';
 		}
 		return '\\Ubiquity\\orm\\DAONosql';
+	}
+
+	public static function getDAOClassFromModel($model) {
+		return self::getDAOClass ( null, self::$modelsDatabase [$model] ?? 'default');
 	}
 
 	public static function getDb($model) {
