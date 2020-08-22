@@ -164,7 +164,7 @@ Then create a controller that inherits from ``SimpleViewController``, or ``Simpl
       
     namespace controllers;
     
-    use Ubiquiy\controllers\SimpleViewController;
+    use Ubiquity\controllers\SimpleViewController;
     
     class Users extends SimpleViewController{
     	...
