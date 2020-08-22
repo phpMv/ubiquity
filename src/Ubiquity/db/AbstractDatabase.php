@@ -79,6 +79,14 @@ class AbstractDatabase {
 		}
 	}
 
+	public function isConnected() {
+		return ($this->wrapperObject !== null && $this->ping ());
+	}
+
+	public function ping() {
+		return ($this->wrapperObject && $this->wrapperObject->ping ());
+	}
+
 	public function getDSN() {
 		return $this->wrapperObject->getDSN ( $this->serverName, $this->port, $this->dbName, $this->dbType );
 	}

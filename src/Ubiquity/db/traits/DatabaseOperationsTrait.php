@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\db\traits;
 
 use Ubiquity\log\Logger;
@@ -21,11 +22,11 @@ trait DatabaseOperationsTrait {
 	abstract public function getDSN();
 
 	public function getDbObject() {
-		return $this->wrapperObject->getDbInstance();
+		return $this->wrapperObject->getDbInstance ();
 	}
 
 	public function _connect() {
-		$this->wrapperObject->connect($this->dbType, $this->dbName, $this->serverName, $this->port, $this->user, $this->password, $this->options);
+		$this->wrapperObject->connect ( $this->dbType, $this->dbName, $this->serverName, $this->port, $this->user, $this->password, $this->options );
 	}
 
 	/**
@@ -35,7 +36,7 @@ trait DatabaseOperationsTrait {
 	 * @return object|boolean
 	 */
 	public function query($sql) {
-		return $this->wrapperObject->query($sql);
+		return $this->wrapperObject->query ( $sql );
 	}
 
 	/**
@@ -51,13 +52,13 @@ trait DatabaseOperationsTrait {
 		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
-			$result = $this->getCacheValue($tableName, $condition, $parameters, $cKey);
+			$result = $this->getCacheValue ( $tableName, $condition, $parameters, $cKey );
 		}
 		if ($result === false) {
 			$quote = SqlUtils::$quote;
-			$result = $this->wrapperObject->_optPrepareAndExecute("SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters, $one);
+			$result = $this->wrapperObject->_optPrepareAndExecute ( "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters, $one );
 			if ($cache) {
-				$this->cache->store($tableName, $cKey, $result);
+				$this->cache->store ( $tableName, $cKey, $result );
 			}
 		}
 		return $result;
@@ -65,14 +66,14 @@ trait DatabaseOperationsTrait {
 
 	private function getCacheValue($tableName, $condition, $parameters, &$cKey) {
 		$cKey = $condition;
-		if (\is_array($parameters)) {
-			$cKey .= \implode(',', $parameters);
+		if (\is_array ( $parameters )) {
+			$cKey .= \implode ( ',', $parameters );
 		}
 		try {
-			$result = $this->cache->fetch($tableName, $cKey);
-			Logger::info("Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters);
-		} catch (\Exception $e) {
-			throw new CacheException("Cache is not created in Database constructor");
+			$result = $this->cache->fetch ( $tableName, $cKey );
+			Logger::info ( "Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters );
+		} catch ( \Exception $e ) {
+			throw new CacheException ( "Cache is not created in Database constructor" );
 		}
 		return $result;
 	}
@@ -81,56 +82,56 @@ trait DatabaseOperationsTrait {
 		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
-			$result = $this->getCacheValue($tableName, $condition, $parameters, $cKey);
+			$result = $this->getCacheValue ( $tableName, $condition, $parameters, $cKey );
 		}
 		if ($result === false) {
 			if ($one) {
-				$result = $this->wrapperObject->_optExecuteAndFetchOne($statement, $parameters);
+				$result = $this->wrapperObject->_optExecuteAndFetchOne ( $statement, $parameters );
 			} else {
-				$result = $this->wrapperObject->_optExecuteAndFetch($statement, $parameters);
+				$result = $this->wrapperObject->_optExecuteAndFetch ( $statement, $parameters );
 			}
 			if ($cache) {
-				$this->cache->store($tableName, $cKey, $result);
+				$this->cache->store ( $tableName, $cKey, $result );
 			}
 		}
 		return $result;
 	}
 
 	public function _optExecuteAndFetchNoCache($statement, $parameters = null, $one = false) {
-		return $this->wrapperObject->_optExecuteAndFetch($statement, $parameters, $one);
+		return $this->wrapperObject->_optExecuteAndFetch ( $statement, $parameters, $one );
 	}
 
 	public function getDaoPreparedStatement($tableName, $condition, $fields) {
 		$quote = SqlUtils::$quote;
-		return $this->wrapperObject->prepareStatement("SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}");
+		return $this->wrapperObject->prepareStatement ( "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}" );
 	}
 
 	public function prepareAndExecuteNoCache($tableName, $condition, $fields, $parameters = null) {
 		$quote = SqlUtils::$quote;
-		return $this->wrapperObject->_optPrepareAndExecute("SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters);
+		return $this->wrapperObject->_optPrepareAndExecute ( "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters );
 	}
 
 	public function storeCache() {
-		$this->cache->storeDeferred();
+		$this->cache->storeDeferred ();
 	}
 
 	public function prepareAndFetchAll($sql, $parameters = null, $mode = null) {
-		return $this->wrapperObject->fetchAll($this->wrapperObject->_getStatement($sql), $parameters, $mode);
+		return $this->wrapperObject->fetchAll ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $mode );
 	}
 
 	public function prepareAndFetchOne($sql, $parameters = null, $mode = null) {
-		return $this->wrapperObject->fetchOne($this->wrapperObject->_getStatement($sql), $parameters, $mode);
+		return $this->wrapperObject->fetchOne ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $mode );
 	}
 
 	public function prepareAndFetchAllColumn($sql, $parameters = null, $column = null) {
-		return $this->wrapperObject->fetchAllColumn($this->wrapperObject->_getStatement($sql), $parameters, $column);
+		return $this->wrapperObject->fetchAllColumn ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $column );
 	}
 
 	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = null) {
-		$statement = $this->wrapperObject->_getStatement($sql);
-		if ($statement->execute($parameters)) {
-			Logger::info("Database", $sql, "prepareAndFetchColumn", $parameters);
-			return $statement->fetchColumn($columnNumber);
+		$statement = $this->wrapperObject->_getStatement ( $sql );
+		if ($statement->execute ( $parameters )) {
+			Logger::info ( "Database", $sql, "prepareAndFetchColumn", $parameters );
+			return $statement->fetchColumn ( $columnNumber );
 		}
 		return false;
 	}
@@ -141,7 +142,7 @@ trait DatabaseOperationsTrait {
 	 * @return object statement
 	 */
 	private function getStatement($sql) {
-		return $this->wrapperObject->_getStatement($sql);
+		return $this->wrapperObject->_getStatement ( $sql );
 	}
 
 	/**
@@ -150,7 +151,7 @@ trait DatabaseOperationsTrait {
 	 * @return object statement
 	 */
 	public function getUpdateStatement($sql) {
-		return $this->wrapperObject->_getStatement($sql);
+		return $this->wrapperObject->_getStatement ( $sql );
 	}
 
 	/**
@@ -161,7 +162,7 @@ trait DatabaseOperationsTrait {
 	 * @return boolean
 	 */
 	public function prepareAndExecuteUpdate($sql, $parameters = null) {
-		return $this->getUpdateStatement($sql)->execute($parameters);
+		return $this->getUpdateStatement ( $sql )->execute ( $parameters );
 	}
 
 	/**
@@ -171,7 +172,7 @@ trait DatabaseOperationsTrait {
 	 * @return int the number of rows that were modified or deleted by the SQL statement you issued
 	 */
 	public function execute($sql) {
-		return $this->wrapperObject->execute($sql);
+		return $this->wrapperObject->execute ( $sql );
 	}
 
 	/**
@@ -181,19 +182,18 @@ trait DatabaseOperationsTrait {
 	 * @return object|boolean
 	 */
 	public function prepareStatement($sql) {
-		return $this->wrapperObject->prepareStatement($sql);
+		return $this->wrapperObject->prepareStatement ( $sql );
 	}
 
 	/**
 	 * Prepares and returns a statement for execution and gives it a name.
 	 *
-	 * @param
-	 *        	$name
+	 * @param $name
 	 * @param String $sql
 	 * @return mixed
 	 */
 	public function prepareNamedStatement(string $name, string $sql) {
-		return $this->wrapperObject->prepareNamedStatement($name, $sql);
+		return $this->wrapperObject->prepareNamedStatement ( $name, $sql );
 	}
 
 	/**
@@ -204,7 +204,7 @@ trait DatabaseOperationsTrait {
 	 * @return mixed
 	 */
 	public function getNamedStatement(string $name, ?string $sql = null) {
-		return $this->wrapperObject->getNamedStatement($name, $sql);
+		return $this->wrapperObject->getNamedStatement ( $name, $sql );
 	}
 
 	/**
@@ -216,7 +216,7 @@ trait DatabaseOperationsTrait {
 	 * @return boolean
 	 */
 	public function bindValueFromStatement($statement, $parameter, $value) {
-		return $this->wrapperObject->bindValueFromStatement($statement, $parameter, $value);
+		return $this->wrapperObject->bindValueFromStatement ( $statement, $parameter, $value );
 	}
 
 	/**
@@ -225,35 +225,26 @@ trait DatabaseOperationsTrait {
 	 * @return string
 	 */
 	public function lastInserId($name = null) {
-		return $this->wrapperObject->lastInsertId($name);
+		return $this->wrapperObject->lastInsertId ( $name );
 	}
 
 	/**
 	 * Returns the number of records in $tableName matching with the condition passed as a parameter
 	 *
 	 * @param string $tableName
-	 * @param string $condition
-	 *        	Part following the WHERE of an SQL statement
+	 * @param string $condition Part following the WHERE of an SQL statement
 	 */
 	public function count($tableName, $condition = '') {
 		if ($condition != '')
 			$condition = " WHERE " . $condition;
-		return $this->wrapperObject->queryColumn("SELECT COUNT(*) FROM " . $tableName . $condition);
+		return $this->wrapperObject->queryColumn ( "SELECT COUNT(*) FROM " . $tableName . $condition );
 	}
 
 	public function queryColumn($query, $columnNumber = null) {
-		return $this->wrapperObject->queryColumn($query, $columnNumber);
+		return $this->wrapperObject->queryColumn ( $query, $columnNumber );
 	}
 
 	public function fetchAll($query, $mode = null) {
-		return $this->wrapperObject->queryAll($query, $mode);
-	}
-
-	public function isConnected() {
-		return ($this->wrapperObject !== null && $this->ping());
-	}
-
-	public function ping() {
-		return ($this->wrapperObject && $this->wrapperObject->ping());
+		return $this->wrapperObject->queryAll ( $query, $mode );
 	}
 }
