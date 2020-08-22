@@ -64,7 +64,8 @@ trait DAOCommonTrait {
 	}
 
 	public static function getDAOClass($config = null, $offset = 'default') {
-		$db = self::getDbOffset ( $config ?? Startup::$config, $offset );
+		$config ??= Startup::$config;
+		$db = self::getDbOffset ( $config, $offset );
 		$wrapper = $db ['wrapper'];
 		$databaseClass = $wrapper::$databaseClass;
 		if ($databaseClass === '\\Ubiquity\\db\\Database') {
