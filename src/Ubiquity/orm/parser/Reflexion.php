@@ -53,8 +53,9 @@ class Reflexion {
 		$modelMetas = OrmUtils::getModelMetadata ( $className );
 		if (isset ( self::$classProperties [$className] )) {
 			foreach ( self::$classProperties [$className] as $name => $prop ) {
+				$v = $prop->getValue ( $instance );
 				if (! $updated || (! isset ( $instance->_rest [$name] ) || $instance->_rest [$name] != $v)) {
-					$ret [$name] = $prop->getValue ( $instance );
+					$ret [$name] = $v;
 				}
 			}
 			return $ret;
