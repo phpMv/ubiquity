@@ -47,26 +47,30 @@ class Reflexion {
 		return false;
 	}
 
-	public static function getPropertiesAndValues($instance, $props = NULL) {
+	public static function getPropertiesAndValues($instance, $props = NULL, $updated = false) {
 		$ret = array ();
 		$className = \get_class ( $instance );
 		$modelMetas = OrmUtils::getModelMetadata ( $className );
 		if (isset ( self::$classProperties [$className] )) {
 			foreach ( self::$classProperties [$className] as $name => $prop ) {
-				$ret [$name] = $prop->getValue ( $instance );
+				if (! $updated || (! isset ( $instance->_rest [$name] ) || $instance->_rest [$name] != $v)) {
+					$ret [$name] = $prop->getValue ( $instance );
+				}
 			}
 			return $ret;
 		}
-		if (\is_null ( $props ))
-			$props = self::getProperties ( $instance );
+		$props ??= self::getProperties ( $instance );
 		foreach ( $props as $prop ) {
 			$prop->setAccessible ( true );
 			$v = $prop->getValue ( $instance );
-			if (\array_search ( $prop->getName (), $modelMetas ['#notSerializable'] ) === false) {
-				if (OrmUtils::isNotNullOrNullAccepted ( $v, $className, $prop->getName () )) {
-					$name = $modelMetas ['#fieldNames'] [$prop->getName ()] ?? $prop->getName ();
-					$ret [$name] = $v;
-					self::$classProperties [$className] [$name] = $prop;
+			$propName = $prop->getName ();
+			if (! $updated || (! isset ( $instance->_rest [$propName] ) || $instance->_rest [$propName] != $v)) {
+				if (\array_search ( $propName, $modelMetas ['#notSerializable'] ) === false) {
+					if (OrmUtils::isNotNullOrNullAccepted ( $v, $className, $propName )) {
+						$name = $modelMetas ['#fieldNames'] [$propName] ?? $propName;
+						$ret [$name] = $v;
+						self::$classProperties [$className] [$name] = $prop;
+					}
 				}
 			}
 		}
