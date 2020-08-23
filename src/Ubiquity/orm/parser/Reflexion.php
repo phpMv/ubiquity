@@ -54,7 +54,7 @@ class Reflexion {
 		if (isset ( self::$classProperties [$className] )) {
 			foreach ( self::$classProperties [$className] as $name => $prop ) {
 				$v = $prop->getValue ( $instance );
-				if (! $updated || (! isset ( $instance->_rest [$name] ) || $instance->_rest [$name] != $v)) {
+				if (! $updated || (! \is_array ( $v ) && (! isset ( $instance->_rest [$name] ) || $instance->_rest [$name] != $v))) {
 					$ret [$name] = $v;
 				}
 			}
