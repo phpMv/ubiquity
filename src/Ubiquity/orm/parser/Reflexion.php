@@ -50,7 +50,6 @@ class Reflexion {
 	public static function getPropertiesAndValues($instance, $props = NULL, $updated = false) {
 		$ret = array ();
 		$className = \get_class ( $instance );
-		$modelMetas = OrmUtils::getModelMetadata ( $className );
 		if (isset ( self::$classProperties [$className] )) {
 			foreach ( self::$classProperties [$className] as $name => $prop ) {
 				$v = $prop->getValue ( $instance );
@@ -61,6 +60,7 @@ class Reflexion {
 			return $ret;
 		}
 		$props ??= self::getProperties ( $instance );
+		$modelMetas = OrmUtils::getModelMetadata ( $className );
 		foreach ( $props as $prop ) {
 			$prop->setAccessible ( true );
 			$v = $prop->getValue ( $instance );
