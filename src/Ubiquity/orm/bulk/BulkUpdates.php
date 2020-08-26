@@ -100,7 +100,7 @@ class BulkUpdates extends AbstractBulks {
 			$sql = '';
 			foreach ( $group as $instance ) {
 				$kv = OrmUtils::getKeyFieldsAndValues ( $instance );
-				$sql .= $updateTable . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
+				$sql .= $updateTable . $this->db->getUpdateFieldsKeyAndValues ( $instance->_rest, $this->fields ) . ' WHERE ' . $this->db->getCondition ( $kv ) . ';';
 			}
 			$this->execGroupTrans ( $sql );
 		}
