@@ -26,9 +26,20 @@ class Database extends AbstractDatabase {
 	use DatabaseOperationsTrait,DatabaseTransactionsTrait,DatabaseMetadatas;
 	public $quote;
 
-	protected function setDbWrapperClass($dbWrapperClass, $dbType) {
-		$this->wrapperObject = new $dbWrapperClass ( $this->dbType = $dbType );
-		$this->quote = $this->wrapperObject->quote;
+	/**
+	 * Creates the Db instance and realize a safe connection.
+	 *
+	 * @throws DBException
+	 * @return boolean
+	 */
+	public function connect() {
+		try {
+			$this->_connect ();
+			$this->quote = $this->wrapperObject->quote;
+			return true;
+		} catch ( \Exception $e ) {
+			throw new DBException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
+		}
 	}
 
 	/**
