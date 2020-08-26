@@ -80,7 +80,6 @@ class Database {
 
 	private function setDbWrapperClass($dbWrapperClass, $dbType) {
 		$this->wrapperObject = new $dbWrapperClass ( $this->dbType = $dbType );
-		$this->quote = $this->wrapperObject->quote;
 	}
 
 	/**
@@ -92,6 +91,7 @@ class Database {
 	public function connect() {
 		try {
 			$this->_connect ();
+			$this->quote = $this->wrapperObject->quote;
 			return true;
 		} catch ( \Exception $e ) {
 			throw new DBException ( $e->getMessage (), $e->getCode (), $e->getPrevious () );
@@ -247,10 +247,10 @@ class Database {
 		return $this->wrapperObject->quoteValue ( ( string ) $value, $type );
 	}
 
-	public function getUpdateFieldsKeyAndValues($keyAndValues,$fields) {
+	public function getUpdateFieldsKeyAndValues($keyAndValues, $fields) {
 		$ret = array ();
 		foreach ( $fields as $field ) {
-			$ret [] = $this->quote . $field . $this->quote . ' = ' . $this->quoteValue ( $keyAndValues[$field] );
+			$ret [] = $this->quote . $field . $this->quote . ' = ' . $this->quoteValue ( $keyAndValues [$field] );
 		}
 		return \implode ( ',', $ret );
 	}
