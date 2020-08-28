@@ -7,7 +7,7 @@ namespace Ubiquity\cache\database;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class MemoryCache extends DbCache {
@@ -17,15 +17,11 @@ class MemoryCache extends DbCache {
 	 */
 	protected $memoryCache;
 
-	protected function getMemoryKey($tableName, $condition) {
-		return $tableName . '.' . $this->getKey ( $condition );
-	}
-
 	public function __construct() {
 	}
 
 	public function fetch($tableName, $condition) {
-		$key = $this->getMemoryKey ( $tableName, $condition );
+		$key = $this->getKey ( $tableName, $condition );
 		if (isset ( $this->memoryCache [$key] )) {
 			return $this->memoryCache [$key];
 		}
@@ -33,11 +29,11 @@ class MemoryCache extends DbCache {
 	}
 
 	public function store($tableName, $condition, $result) {
-		$this->memoryCache [$this->getMemoryKey ( $tableName, $condition )] = $result;
+		$this->memoryCache [$this->getKey ( $tableName, $condition )] = $result;
 	}
 
 	public function delete($tableName, $condition) {
-		$key = $this->getMemoryKey ( $tableName, $condition );
+		$key = $this->getKey ( $tableName, $condition );
 		if (isset ( $this->memoryCache [$key] )) {
 			unset ( $this->memoryCache [$key] );
 			return true;
