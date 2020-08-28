@@ -3,12 +3,12 @@ use Ubiquity\orm\DAO;
 use models\User;
 use models\Organization;
 use models\Groupe;
-use Ubiquity\cache\database\TableCache;
+use Ubiquity\cache\database\MemoryCache;
 
 /**
  * DAO test case.
  */
-class DAOTableCacheTest extends BaseTest {
+class DAOMemoryCacheTest extends BaseTest {
 
 	/**
 	 *
@@ -23,7 +23,7 @@ class DAOTableCacheTest extends BaseTest {
 		parent::_before ();
 		$this->dao = new DAO ();
 		$this->_loadConfig ();
-		$this->config ["database"] ["cache"] = TableCache::class;
+		$this->config ["database"] ["cache"] = MemoryCache::class;
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
 	}
