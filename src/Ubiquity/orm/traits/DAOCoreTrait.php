@@ -197,7 +197,7 @@ trait DAOCoreTrait {
 		return $o;
 	}
 
-	protected static function applyTransformers($transformers, $row, $memberNames) {
+	protected static function applyTransformers($transformers, &$row, $memberNames) {
 		foreach ( $transformers as $member => $transformer ) {
 			$field = \array_search ( $member, $memberNames );
 			$transform = self::$transformerOp;
