@@ -32,7 +32,7 @@ class CrudOrgaCest extends BaseAcceptance {
 	// Tests
 	public function tryToCrudAddNewAndDelete(AcceptanceTester $I) {
 		$I->amOnPage ( "/TestCrudOrgas" );
-		$I->click ( "#btAddNew" );
+		$this->waitAndclick ( $I, "#btAddNew" );
 		$I->waitForText ( "New object creation", self::TIMEOUT );
 		$I->fillField ( "#frmEdit [name='name']", "Organization name test" );
 		$I->fillField ( "#frmEdit [name='domain']", "Organization domain test" );
