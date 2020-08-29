@@ -31,7 +31,7 @@ class DAOWithApcTest extends BaseTest {
 	}
 
 	protected function _startServices($what = false) {
-		CacheManager::initCache ( $this->config );
+		CacheManager::initCache ( $this->oConfig );
 		$this->_startCache ();
 		$this->_startRouter ( $what );
 	}

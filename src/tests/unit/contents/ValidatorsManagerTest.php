@@ -139,7 +139,7 @@ class ValidatorsManagerTest extends BaseTest {
 		CacheManager::$cache = null;
 		CacheManager::start ( $this->config );
 
-		CacheManager::initModelsCache ( $this->config );
+		CacheManager::initModelsCache ( $this->oConfig );
 		ValidatorsManager::start ();
 		$groupes = DAO::getAll ( Groupe::class, '', false );
 		$result = ValidatorsManager::validateInstances ( $groupes );
