@@ -484,7 +484,7 @@ class DAOTest extends BaseTest {
 		$this->config = include ROOT . 'config/config.php';
 		Startup::$config = $this->config;
 		$dbs = $this->dao->getDatabases ();
-		$this->assertEquals ( 2, sizeof ( $dbs ) );
+		$this->assertEquals ( 3, sizeof ( $dbs ) );
 	}
 }
 
