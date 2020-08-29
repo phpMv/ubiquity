@@ -216,13 +216,17 @@ class ValidatorsManager {
 		return $result;
 	}
 
-	protected static function validateFromCache_($instance, $members) {
+	protected static function validateFromCache_($instance, $members, $excludedValidators = [ ]) {
 		$result = [ ];
+		$types = array_flip ( self::$validatorTypes );
 		foreach ( $members as $accessor => $validators ) {
 			foreach ( $validators as $validatorInstance ) {
-				$valid = $validatorInstance->validate_ ( $instance->$accessor () );
-				if ($valid !== true) {
-					$result [] = $valid;
+				$typeV = $types [get_class ( $validatorInstance )];
+				if (! isset ( $excludedValidators [$typeV] )) {
+					$valid = $validatorInstance->validate_ ( $instance->$accessor () );
+					if ($valid !== true) {
+						$result [] = $valid;
+					}
 				}
 			}
 		}
