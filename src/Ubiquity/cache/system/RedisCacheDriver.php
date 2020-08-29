@@ -49,13 +49,11 @@ class RedisCacheDriver extends AbstractDataCache {
 	 * @return boolean true if data with the given key has been stored; otherwise false
 	 */
 	public function exists($key) {
-		$k = $this->getRealKey ( $key );
-		return $this->cacheInstance->exists ( $k );
+		return $this->cacheInstance->exists ( $this->getRealKey ( $key ) );
 	}
 
 	public function store($key, $content, $tag = null) {
-		$key = $this->getRealKey ( $key );
-		$this->cacheInstance->set ( $key, $content );
+		$this->cacheInstance->set ( $this->getRealKey ( $key ), $content );
 	}
 
 	protected function getRealKey($key) {
@@ -89,12 +87,10 @@ class RedisCacheDriver extends AbstractDataCache {
 	 * @return int unix timestamp
 	 */
 	public function getTimestamp($key) {
-		$key = $this->getRealKey ( $key );
-		return $this->cacheInstance->ttl ( $key );
+		return $this->cacheInstance->ttl ( $this->getRealKey ( $key ) );
 	}
 
 	public function remove($key) {
-		$key = $this->getRealKey ( $key );
 		$this->cacheInstance->delete ( $this->getRealKey ( $key ) );
 	}
 
