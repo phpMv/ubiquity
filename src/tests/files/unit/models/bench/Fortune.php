@@ -1,5 +1,6 @@
 <?php
-namespace models;
+
+namespace models\bench;
 
 class Fortune {
 
