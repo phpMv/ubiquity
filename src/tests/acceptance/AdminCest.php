@@ -82,7 +82,7 @@ class AdminCest extends BaseAcceptance {
 		$this->gotoAdminModule ( "Admin/Rest", $I );
 		$I->canSee ( "Restfull web service", "body" );
 		$I->click ( "#bt-init-rest-cache" );
-		$I->waitForText ( "Rest service", 200, "body" );
+		$I->waitForElementNotVisible ( '.ajax-loader', self::TIMEOUT );
 		// Add a new resource
 		$I->click ( "#bt-new-resource" );
 		$I->waitForText ( "Creating a new REST controller...", self::TIMEOUT, "body" );
