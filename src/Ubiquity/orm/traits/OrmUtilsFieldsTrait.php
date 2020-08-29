@@ -40,7 +40,7 @@ trait OrmUtilsFieldsTrait {
 	 * Return primary key fields from instance or model class
 	 *
 	 * @param string|object $instance
-	 * @return array
+	 * @return array|boolean
 	 */
 	public static function getKeyFields($instance) {
 		if (! \is_string ( $instance )) {
