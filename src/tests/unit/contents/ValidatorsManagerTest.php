@@ -45,6 +45,7 @@ class ValidatorsManagerTest extends BaseTest {
 	private $validatorsManager;
 	protected $dbType;
 	protected $dbName;
+
 	/**
 	 *
 	 * @var Database
