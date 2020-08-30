@@ -20,7 +20,7 @@ class SDAOTest extends BaseTest {
 		parent::_before ();
 		$this->dao = new SDAO ();
 		$this->_startCache ();
-		$this->dao->setModelDatabase ( 'models\\bench\\Fortune', 'bench' );
+		$this->dao->setModelDatabase ( Fortune::class, 'bench' );
 		$this->_startDatabase ( $this->dao, 'bench' );
 	}
 
@@ -35,6 +35,10 @@ class SDAOTest extends BaseTest {
 		$fortune = $this->dao->getById ( Fortune::class, [ 1 ] );
 		$this->assertEquals ( 1, $fortune->id );
 		$this->assertEquals ( 'fortune: No such file or directory', $fortune->message );
+	}
+
+	protected function getDatabase() {
+		return 'bench';
 	}
 }
 
