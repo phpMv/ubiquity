@@ -31,7 +31,7 @@ class SDAOTest extends BaseTest {
 		$this->dao->closeDb ();
 	}
 
-	public function testGetPrepared() {
+	public function testGetById() {
 		$fortune = $this->dao->getById ( Fortune::class, [ 1 ] );
 		$this->assertEquals ( 1, $fortune->id );
 		$this->assertEquals ( 'fortune: No such file or directory', $fortune->message );
