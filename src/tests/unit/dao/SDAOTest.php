@@ -3,9 +3,9 @@ use Ubiquity\orm\SDAO;
 use models\bench\Fortune;
 
 /**
- * DAO test case.
+ * SDAO test case.
  */
-class DAOTest extends BaseTest {
+class SDAOTest extends BaseTest {
 
 	/**
 	 *
