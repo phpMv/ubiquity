@@ -61,9 +61,11 @@ build:
 filter:
     paths: ["src/Ubiquity/*"]
     excluded_paths:
-        - src/Ubiquity/controllers/Autoloader.php
-        - src/Ubiquity/controllers/admin/
-        - src/Ubiquity/annotations/
+        - src/Ubiquity/cache/system/ApcuCache.php
+        - src/Ubiquity/cache/system/ArrayApcCache.php
+        - src/Ubiquity/cache/system/MemCacheDriver.php
+        - src/Ubiquity/cache/system/PhpFastCacheDriver.php
+        - src/Ubiquity/cache/system/RedisCacheDriver.php
         - src/Ubiquity/utils/git/UGitRepository.php
         - src/Ubiquity/cache/Preloader.php
         - src/Ubiquity/cache/preloading/

@@ -56,5 +56,16 @@ class SDAOTest extends BaseTest {
 	protected function getDatabase() {
 		return 'bench';
 	}
+
+	public function testUpdate() {
+		$fortune = $this->dao->getById ( Fortune::class, [ 1 ] );
+		$this->assertEquals ( 1, $fortune->id );
+		$this->assertEquals ( 'fortune: No such file or directory', $fortune->message );
+		$newMessage = 'New message for fortune';
+		$fortune->message = $newMessage;
+		$this->dao->update ( $fortune );
+		$fortune = $this->dao->getById ( Fortune::class, [ 1 ] );
+		$this->assertEquals ( $newMessage, $fortune->message );
+	}
 }
 
