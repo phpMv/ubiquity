@@ -8,7 +8,6 @@
 		"codeception/c3": "^2.4",
 		"codeception/codeception": "^2.5",
 		"phpmv/ubiquity-codeception": "1.0.x-dev",
-		"phpmv/ubiquity-reactphp": "dev-master",
 		"phpmv/ubiquity-mysqli": "dev-master"
 	},
 	"require-dev": {
