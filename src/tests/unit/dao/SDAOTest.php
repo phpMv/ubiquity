@@ -37,6 +37,22 @@ class SDAOTest extends BaseTest {
 		$this->assertEquals ( 'fortune: No such file or directory', $fortune->message );
 	}
 
+	public function testGetOne() {
+		$fortune = $this->dao->getOne ( Fortune::class, 1 );
+		$this->assertEquals ( 1, $fortune->id );
+		$this->assertEquals ( 'fortune: No such file or directory', $fortune->message );
+	}
+
+	public function testGetAll() {
+		$fortunes = $this->dao->getAll ( Fortune::class );
+		$this->assertEquals ( 12, \count ( $fortunes ) );
+		$this->assertInstanceOf ( Fortune::class, \current ( $fortunes ) );
+
+		$fortunes = $this->dao->getAll ( Fortune::class, 'id < ?', false, [ 6 ] );
+		$this->assertEquals ( 5, \count ( $fortunes ) );
+		$this->assertInstanceOf ( Fortune::class, \current ( $fortunes ) );
+	}
+
 	protected function getDatabase() {
 		return 'bench';
 	}
