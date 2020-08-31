@@ -45,7 +45,7 @@ class DAOTest extends BaseTest {
 
 		$orga = $this->dao->executePrepared ( 'oneOrga', [ 1 ] );
 		$this->assertInstanceOf ( Organization::class, $orga );
-		$this->assertEquals ( "Conservatoire National des Arts et Métiers:lecnam.net", $orga->fullname );
+		$this->assertEquals ( "Conservatoire National des Arts et Métiers", $orga->getName () );
 
 		$orgas = $this->dao->executePrepared ( 'orgas' );
 		$this->assertInstanceOf ( Organization::class, current ( $orgas ) );
