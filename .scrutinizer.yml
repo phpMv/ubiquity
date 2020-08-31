@@ -63,9 +63,10 @@ filter:
     excluded_paths:
         - src/Ubiquity/cache/system/ApcuCache.php
         - src/Ubiquity/cache/system/ArrayApcCache.php
-        - src/Ubiquity/cache/system/MemCacheDriver.php
+        - src/Ubiquity/cache/system/MemCachedDriver.php
         - src/Ubiquity/cache/system/PhpFastCacheDriver.php
         - src/Ubiquity/cache/system/RedisCacheDriver.php
+        - src/Ubiquity/cache/system/ObjectCacheDriver.php
         - src/Ubiquity/utils/git/UGitRepository.php
         - src/Ubiquity/cache/Preloader.php
         - src/Ubiquity/cache/preloading/

@@ -26,6 +26,8 @@ class DAOTest extends BaseTest {
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
 		$this->dao->prepareGetById ( "orga", Organization::class );
+		$this->dao->prepareGetOne ( "oneOrga", Organization::class );
+		$this->dao->prepareGetAll ( "orgas", Organization::class );
 	}
 
 	/**
@@ -40,6 +42,15 @@ class DAOTest extends BaseTest {
 		$orga = $this->dao->executePrepared ( 'orga', 1 );
 		$this->assertInstanceOf ( Organization::class, $orga );
 		$this->assertEquals ( "Conservatoire National des Arts et Métiers:lecnam.net", $orga->fullname );
+
+		$orga = $this->dao->executePrepared ( 'oneOrga', 1 );
+		$this->assertInstanceOf ( Organization::class, $orga );
+		$this->assertEquals ( "Conservatoire National des Arts et Métiers:lecnam.net", $orga->fullname );
+
+		$orgas = $this->dao->executePrepared ( 'orgas' );
+		$this->assertInstanceOf ( Organization::class, current ( $orgas ) );
+		$allOrgas = $this->dao->getAll ( Organization::class );
+		$this->assertEquals ( count ( $orgas ), count ( $allOrgas ) );
 	}
 
 	/**
