@@ -91,6 +91,33 @@ class BulkTest extends BaseTest {
 		$this->assertEquals ( 10, $this->countUpdated ( $worlds, $updatedWorlds ) );
 	}
 
+	public function testFlush() {
+		$id1 = \mt_rand ( 1, 10000 );
+		$world1 = $this->dao->getById ( World::class, [ $id1 ] );
+		$world1->randomNumber = 10001;
+		$this->dao->toUpdate ( $world1 );
+
+		$id2 = \mt_rand ( 1, 10000 );
+		$world2 = $this->dao->getById ( World::class, [ $id2 ] );
+		$this->dao->toDelete ( $world2 );
+
+		$world3 = new World ();
+		$world3->randomNumber = mt_rand ( 1, 10000 );
+		$this->dao->toInsert ( $world3 );
+
+		$this->dao->flush ();
+
+		$world1 = $this->dao->getById ( World::class, [ $id1 ] );
+		$this->assertEquals ( 10001, $world1->randomNumber );
+
+		$world2 = $this->dao->getById ( World::class, [ $id2 ] );
+
+		$this->assertNull ( $world2 );
+
+		$worlds = $this->dao->getAll ( World::class );
+		$this->assertEquals ( 10000, \count ( $worlds ) );
+	}
+
 	protected function countUpdated($worlds, $updatedWorlds) {
 		$count = 0;
 		$worlds = array_values ( $worlds );
