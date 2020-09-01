@@ -57,7 +57,7 @@ class DAOCacheTest extends BaseTest {
 		$cache = $this->dao->getCache ();
 		$this->assertInstanceOf ( Organization::class, $cache->fetch ( Organization::class, 1 ) );
 		$cache->delete ( Organization::class, 1 );
-		$this->assertNull ( $cache->fetch ( Organization::class, 1 ) );
+		$this->assertFalse ( $cache->fetch ( Organization::class, 1 ) );
 	}
 }
 
