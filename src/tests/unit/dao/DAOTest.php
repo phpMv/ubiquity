@@ -62,6 +62,12 @@ class DAOTest extends BaseTest {
 		$this->assertInstanceOf ( Organization::class, $orga );
 	}
 
+	public function testExists() {
+		$this->assertTrue ( $this->dao->exists ( User::class, "email='benjamin.sherman@gmail.com'" ) );
+		$this->assertTrue ( $this->dao->exists ( User::class, "email=?", [ 'benjamin.sherman@gmail.com' ] ) );
+		$this->assertFalse ( $this->dao->exists ( User::class, "email=?", [ 'blop@gmail.com' ] ) );
+	}
+
 	/**
 	 * Tests DAO::getOneToMany()
 	 */
