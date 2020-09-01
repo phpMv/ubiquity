@@ -98,6 +98,13 @@ trait DAOBulkUpdatesTrait {
 		}
 	}
 
+	public static function deleteGroups($count = 5) {
+		$bulks = self::$bulks ['delete'];
+		foreach ( $bulks as $bulk ) {
+			$bulk->groupOp ( $count );
+		}
+	}
+
 	/**
 	 * Executes all waiting update operations
 	 */

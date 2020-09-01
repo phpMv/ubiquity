@@ -146,6 +146,38 @@ class BulkTest extends BaseTest {
 		$this->assertEquals ( 10, $this->countUpdated ( $worlds, $updatedWorlds ) );
 	}
 
+	public function testInsertDeleteGroups() {
+		$worlds = $this->dao->getAll ( World::class );
+		$this->assertEquals ( 10000, \count ( $worlds ) );
+		for($i = 0; $i < 10; $i ++) {
+			$world = new World ();
+			$world->randomNumber = \mt_rand ( 1, 10000 );
+			$this->dao->toInsert ( $world );
+		}
+		$this->dao->insertGroups ();
+		$worlds = $this->dao->getAll ( World::class );
+		$this->assertEquals ( 10010, \count ( $worlds ) );
+		$newWorlds = [ ];
+		for($i = 0; $i < 10; $i ++) {
+			$world = new World ();
+			$world->randomNumber = \mt_rand ( 1, 10000 );
+			$newWorlds [] = $world;
+		}
+		$this->dao->toInserts ( $newWorlds );
+		$this->dao->insertGroups ( 2 );
+
+		$worlds = $this->dao->getAll ( World::class );
+		$this->assertEquals ( 10020, \count ( $worlds ) );
+
+		$worlds = $this->dao->getAll ( World::class, '1=1 ORDER BY id DESC Limit 20' );
+		$this->assertEquals ( 20, \count ( $worlds ) );
+		$this->dao->toDeletes ( $worlds );
+		$this->dao->deleteGroups ();
+
+		$worlds = $this->dao->getAll ( World::class );
+		$this->assertEquals ( 10000, \count ( $worlds ) );
+	}
+
 	protected function countUpdated($worlds, $updatedWorlds) {
 		$count = 0;
 		$worlds = array_values ( $worlds );
