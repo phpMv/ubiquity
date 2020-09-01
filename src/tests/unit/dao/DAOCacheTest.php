@@ -52,5 +52,12 @@ class DAOCacheTest extends BaseTest {
 			$this->assertEquals ( $user->getLastname (), $cUser->getLastname () );
 		}
 	}
+
+	public function testDeleteCache() {
+		$cache = $this->dao->getCache ();
+		$this->assertInstanceOf ( Organization::class, $cache->fetch ( Organization::class, 1 ) );
+		$cache->delete ( Organization::class, 1 );
+		$this->assertNull ( $cache->fetch ( Organization::class, 1 ) );
+	}
 }
 
