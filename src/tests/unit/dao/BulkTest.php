@@ -118,6 +118,34 @@ class BulkTest extends BaseTest {
 		$this->assertEquals ( 10000, \count ( $worlds ) );
 	}
 
+	public function testUpdateGroup() {
+		$worlds = $this->dao->getAll ( World::class, '1=1 Limit 10' );
+		$this->assertEquals ( 10, \count ( $worlds ) );
+		foreach ( $worlds as $world ) {
+			do {
+				$nRn = \mt_rand ( 1, 10000 );
+			} while ( $nRn === $world->randomNumber );
+			$world->randomNumber = $nRn;
+			$this->dao->toUpdate ( $world );
+		}
+		$this->dao->updateGroups ();
+		$updatedWorlds = $this->dao->getAll ( World::class, '1=1 Limit 10' );
+		$this->assertEquals ( 10, $this->countUpdated ( $worlds, $updatedWorlds ) );
+
+		$worlds = $this->dao->getAll ( World::class, '1=1 ORDER BY id DESC Limit 10' );
+		$this->assertEquals ( 10, \count ( $worlds ) );
+		foreach ( $worlds as $world ) {
+			do {
+				$nRn = \mt_rand ( 1, 10000 );
+			} while ( $nRn === $world->randomNumber );
+			$world->randomNumber = $nRn;
+		}
+		$this->dao->toUpdates ( $worlds );
+		$this->dao->updateGroups ( 2 );
+		$updatedWorlds = $this->dao->getAll ( World::class, '1=1 ORDER BY id DESC Limit 10' );
+		$this->assertEquals ( 10, $this->countUpdated ( $worlds, $updatedWorlds ) );
+	}
+
 	protected function countUpdated($worlds, $updatedWorlds) {
 		$count = 0;
 		$worlds = array_values ( $worlds );
