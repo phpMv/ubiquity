@@ -177,6 +177,12 @@ class DAOTest extends BaseTest {
 	public function testGetOne() {
 		$user = $this->dao->getOne ( User::class, 'firstname="Benjamin"' );
 		$this->assertInstanceOf ( User::class, $user );
+
+		$user = $this->dao->getOne ( User::class, 'firstname= ?', false, [ 'Benjamin' ] );
+		$this->assertInstanceOf ( User::class, $user );
+
+		$user = $this->dao->getOne ( User::class, [ 1 ] );
+		$this->assertInstanceOf ( User::class, $user );
 	}
 
 	/**
