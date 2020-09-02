@@ -151,6 +151,17 @@ class AdminCest extends BaseAcceptance {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$this->waitAndclick ( $I, "#seoCtrls-tr-controllersTestSEOController" );
 		$I->waitForText ( "Change Frequency", self::TIMEOUT, "body" );
+		$this->waitAndclick ( $I, "#displayAllRoutes label" );
+		$I->waitForElementVisible ( "#div-priority-1" );
+		$I->fillField ( "#priority-1", 1 );
+		$I->clickWithLeftButton ( "#dtSiteMap-input-1" );
+		$this->waitAndclick ( $I, "#ck-ck-dtSiteMap-1" );
+		$this->waitAndclick ( $I, "#saveUrls" );
+		$I->waitForText ( 'saved with 1 url' );
+		$this->waitAndclick ( $I, "#ck-ck-seoCtrls-controllersTestSEOController" );
+		$this->waitAndclick ( $I, "#generateRobots" );
+		$I->waitForText ( 'has been generated in' );
+
 		$I->amOnPage ( "/TestSEOController" );
 		$I->canSeeInSource ( "http://www.sitemaps.org/schemas/sitemap/0.9" );
 	}
