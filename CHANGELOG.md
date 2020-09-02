@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrelease]
 - nothing
-## [2.3.12] 2020-08-28
+## [2.3.12] Coming soon
 ### Added
 - Named db statements for async platforms
 - Rest events on insert and update `BEFORE_INSERT = 'rest.before.insert'` and `BEFORE_UPDATE = 'rest.before.update'`
