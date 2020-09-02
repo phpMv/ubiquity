@@ -63,5 +63,27 @@ class RestApiTest extends BaseTest {
 		} );
 		$this->assertTrue ( UString::contains ( 'Conservatoire National des Arts', $result ) );
 	}
+
+	public function testNormalizationDatas() {
+		$this->_initRequest ( 'RestApiController/testNormalizationDatas', 'GET' );
+		$result = $this->_display ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( RestApiController::class, $this->startup->getController () );
+			$this->assertEquals ( 'testNormalizationDatas', $this->startup->getAction () );
+			$this->assertEquals ( 0, sizeof ( $this->startup->getActionParams () ) );
+		} );
+		$this->assertTrue ( UString::contains ( 'Conservatoire National des Arts', $result ) );
+	}
+
+	public function testNormalizationData() {
+		$this->_initRequest ( 'RestApiController/testNormalizationData', 'GET' );
+		$result = $this->_display ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( RestApiController::class, $this->startup->getController () );
+			$this->assertEquals ( 'testNormalizationData', $this->startup->getAction () );
+			$this->assertEquals ( 0, sizeof ( $this->startup->getActionParams () ) );
+		} );
+		$this->assertTrue ( UString::contains ( 'Conservatoire National des Arts', $result ) );
+	}
 }
 
