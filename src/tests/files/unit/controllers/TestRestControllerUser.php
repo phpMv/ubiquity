@@ -10,5 +10,13 @@ use Ubiquity\controllers\rest\RestController;
  * @rest("resource"=>"models\\User")
  */
 class TestRestControllerUser extends RestController {
+
+	/**
+	 *
+	 * @get("")
+	 */
+	public function index() {
+		return parent::_index ();
+	}
 }
 

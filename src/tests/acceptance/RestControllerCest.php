@@ -7,7 +7,7 @@ class RestControllerCest extends BaseAcceptance {
 
 	// tests
 	public function tryToGet(AcceptanceTester $I) {
-		$I->amOnPage ( "/rest/simple/user/1" );
+		$I->amOnPage ( "/rest/simple/user/get/1" );
 		$I->see ( 'Benjamin' );
 		$I->amOnPage ( "/rest/simple/user/" );
 		$I->see ( 'Benjamin' );
@@ -15,7 +15,7 @@ class RestControllerCest extends BaseAcceptance {
 
 	// tests
 	public function tryToGetWithInclude(AcceptanceTester $I) {
-		$I->amOnPage ( "/rest/simple/user/1/organization" );
+		$I->amOnPage ( "/rest/simple/user/get/1/organization" );
 		$I->see ( 'Benjamin' );
 		$I->see ( 'unicaen.fr' );
 	}
