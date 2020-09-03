@@ -7,7 +7,7 @@ use Ubiquity\controllers\rest\RestController;
 /**
  *
  * @route("/rest/simple/user","inherited"=>true,"automated"=>true)
- * @rest("resource"=>"User")
+ * @rest("resource"=>"models\\User")
  */
 class TestRestControllerUser extends RestController {
 }
