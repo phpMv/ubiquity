@@ -181,8 +181,9 @@ abstract class Controller {
 	 *
 	 * @param int $code
 	 * @param ?string $message
+	 * @param ?bool $partial
 	 */
-	public function onError(int $code, ?string $message = null) {
-		Startup::onError ( $code, $message );
+	public function onError(int $code, ?string $message = null, ?bool $partial = true) {
+		Startup::onError ( $code, $message, $partial );
 	}
 }

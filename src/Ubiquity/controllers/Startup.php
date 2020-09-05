@@ -145,13 +145,13 @@ class Startup {
 						$controller->$action ( ...(self::$actionParams) );
 					} catch ( \Error $e ) {
 						if (! \method_exists ( $controller, $action )) {
-							$controller->onError ( 404, "This action does not exist on the controller " . $ctrl );
+							$controller->onError ( 404, "This action does not exist on the controller " . $ctrl, true );
 						} else {
 							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
 							if (self::$config ['debug']) {
 								throw $e;
 							} else {
-								$controller->onError ( 500, $e->getMessage () );
+								$controller->onError ( 500, $e->getMessage (), true );
 							}
 						}
 					}
@@ -161,14 +161,14 @@ class Startup {
 				}
 			} else {
 				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
-				static::onError ( 404 );
+				static::onError ( 404, null, false );
 			}
 		} catch ( \Error $eC ) {
 			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
 			if (self::$config ['debug']) {
 				throw $eC;
 			} else {
-				static::onError ( 500, $e->getMessage () );
+				static::onError ( 500, $eC->getMessage (), false );
 			}
 		}
 	}
@@ -230,16 +230,19 @@ class Startup {
 		return \ob_get_clean ();
 	}
 
-	public static function onError(int $code, ?string $message = null) {
-		switch ($code) {
-			case 404 :
-				die ( $message ?? "The page you are loocking for doesn't exists!");
-				break;
+	public static function onError(int $code, ?string $message = null, $partial = true) {
+		$onError = self::$config ['onError'] ?? (function ($code, $message = null, $partial = true) {
+			switch ($code) {
+				case 404 :
+					echo ($message ?? "The page you are loocking for doesn't exists!");
+					break;
 
-			case 500 :
-				die ( $message ?? "A server error occurred!");
-				break;
-		}
+				case 500 :
+					echo ($message ?? "A server error occurred!");
+					break;
+			}
+		});
+		$onError ( $code, $message, $partial );
 	}
 
 	public static function errorHandler($message = '', $code = 0, $severity = 1, $filename = null, int $lineno = 0, $previous = NULL) {
