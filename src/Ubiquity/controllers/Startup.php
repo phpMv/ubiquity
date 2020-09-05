@@ -234,6 +234,7 @@ class Startup {
 		$onError = self::$config ['onError'] ?? (function ($code, $message = null, $partial = true) {
 			switch ($code) {
 				case 404 :
+					self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
 					echo ($message ?? "The page you are loocking for doesn't exists!");
 					break;
 
