@@ -23,5 +23,22 @@ class TestController extends Controller {
 	public function doForward() {
 		echo "forward!";
 	}
+
+	/**
+	 *
+	 * @route("/route/test/withView/{p}", "name"=>"withView")
+	 * @param string $p
+	 */
+	public function withView($p) {
+		$this->loadDefaultView ( [ 'message' => $p ] );
+	}
+
+	public function redirectToWithView() {
+		$this->redirectToRoute ( "withView", [ 'redirection' ] );
+	}
+
+	public function forwardToWithView() {
+		$this->forward ( self::class, 'withView', [ 'redirection2' ] );
+	}
 }
 
