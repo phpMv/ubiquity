@@ -10,7 +10,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class StartupAsync extends Startup {
@@ -36,20 +36,31 @@ class StartupAsync extends Startup {
 					try {
 						$controller->$action ( ...(self::$actionParams) );
 					} catch ( \Error $e ) {
-						Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
-						if (self::$config ['debug']) {
-							throw $e;
+						if (! \method_exists ( $controller, $action )) {
+							static::onError ( 404, "This action does not exist on the controller " . $ctrl, $controller );
+						} else {
+							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
+							if (self::$config ['debug']) {
+								throw $e;
+							} else {
+								static::onError ( 500, $e->getMessage (), $controller );
+							}
 						}
 					}
 					if (($binaryCalls & self::FINALIZE) && $finalize) {
 						$controller->finalize ();
 					}
 				}
+			} else {
+				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
+				static::onError ( 404 );
 			}
 		} catch ( \Error $eC ) {
 			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
 			if (self::$config ['debug']) {
 				throw $eC;
+			} else {
+				static::onError ( 500, $eC->getMessage () );
 			}
 		}
 	}
