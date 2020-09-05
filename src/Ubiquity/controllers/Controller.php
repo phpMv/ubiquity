@@ -175,15 +175,4 @@ abstract class Controller {
 	public function getView() {
 		return $this->view;
 	}
-
-	/**
-	 * Called in case of error (500 or 404), to override for customization.
-	 *
-	 * @param int $code
-	 * @param ?string $message
-	 * @param ?bool $partial
-	 */
-	public function onError(int $code, ?string $message = null, ?bool $partial = true) {
-		Startup::onError ( $code, $message, $partial );
-	}
 }

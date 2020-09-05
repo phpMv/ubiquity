@@ -145,13 +145,13 @@ class Startup {
 						$controller->$action ( ...(self::$actionParams) );
 					} catch ( \Error $e ) {
 						if (! \method_exists ( $controller, $action )) {
-							$controller->onError ( 404, "This action does not exist on the controller " . $ctrl, true );
+							static::onError ( 404, "This action does not exist on the controller " . $ctrl, $controller );
 						} else {
 							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
 							if (self::$config ['debug']) {
 								throw $e;
 							} else {
-								$controller->onError ( 500, $e->getMessage (), true );
+								static::onError ( 500, $e->getMessage (), $controller );
 							}
 						}
 					}
@@ -161,14 +161,14 @@ class Startup {
 				}
 			} else {
 				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
-				static::onError ( 404, null, false );
+				static::onError ( 404 );
 			}
 		} catch ( \Error $eC ) {
 			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
 			if (self::$config ['debug']) {
 				throw $eC;
 			} else {
-				static::onError ( 500, $eC->getMessage (), false );
+				static::onError ( 500, $eC->getMessage () );
 			}
 		}
 	}
@@ -230,7 +230,7 @@ class Startup {
 		return \ob_get_clean ();
 	}
 
-	public static function onError(int $code, ?string $message = null, $partial = true) {
+	public static function onError(int $code, ?string $message = null, $controllerInstance = null) {
 		$onError = self::$config ['onError'] ?? (function ($code, $message = null, $partial = true) {
 			switch ($code) {
 				case 404 :
