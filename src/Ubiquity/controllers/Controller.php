@@ -12,7 +12,7 @@ use Ubiquity\themes\ThemesManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 abstract class Controller {
@@ -174,5 +174,15 @@ abstract class Controller {
 	 */
 	public function getView() {
 		return $this->view;
+	}
+
+	/**
+	 * Called in case of error (500 or 404), to override for customization.
+	 *
+	 * @param int $code
+	 * @param ?string $message
+	 */
+	public function onError(int $code, ?string $message = null) {
+		Startup::onError ( $code, $message );
 	}
 }

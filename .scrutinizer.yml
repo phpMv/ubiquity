@@ -74,6 +74,7 @@ filter:
         - src/Ubiquity/utils/git/UGitRepository.php
         - src/Ubiquity/utils/http/session/MultiSiteSession.php
         - src/Ubiquity/utils/http/foundation/Psr7.php
+        - src/Ubiquity/utils/git/*
         - src/Ubiquity/cache/Preloader.php
         - src/Ubiquity/cache/preloading/
 checks:

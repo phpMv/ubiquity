@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.6
+ * @version 1.1.7
  *
  */
 class Startup {
@@ -39,11 +39,8 @@ class Startup {
 				self::injectDependences ( $controller );
 			}
 			return $controller;
-		} else {
-			Logger::warn ( 'Startup', 'The controller `' . $controllerName . '` doesn\'t exists! <br/>', 'runAction' );
-			self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-			return null;
 		}
+		return null;
 	}
 
 	protected static function startTemplateEngine(&$config): void {
@@ -147,20 +144,31 @@ class Startup {
 					try {
 						$controller->$action ( ...(self::$actionParams) );
 					} catch ( \Error $e ) {
-						Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
-						if (self::$config ['debug']) {
-							throw $e;
+						if (! \method_exists ( $controller, $action )) {
+							$controller->onError ( 404, "This action does not exist on the controller " . $ctrl );
+						} else {
+							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
+							if (self::$config ['debug']) {
+								throw $e;
+							} else {
+								$controller->onError ( 500, $e->getMessage () );
+							}
 						}
 					}
 					if ($finalize) {
 						$controller->finalize ();
 					}
 				}
+			} else {
+				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
+				static::onError ( 404 );
 			}
 		} catch ( \Error $eC ) {
 			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
 			if (self::$config ['debug']) {
 				throw $eC;
+			} else {
+				static::onError ( 500, $e->getMessage () );
 			}
 		}
 	}
@@ -220,6 +228,18 @@ class Startup {
 		\ob_start ();
 		self::runAction ( $u, $initialize, $finalize );
 		return \ob_get_clean ();
+	}
+
+	public static function onError(int $code, ?string $message = null) {
+		switch ($code) {
+			case 404 :
+				die ( $message ?? "The page you are loocking for doesn't exists!");
+				break;
+
+			case 500 :
+				die ( $message ?? "A server error occurred!");
+				break;
+		}
 	}
 
 	public static function errorHandler($message = '', $code = 0, $severity = 1, $filename = null, int $lineno = 0, $previous = NULL) {
