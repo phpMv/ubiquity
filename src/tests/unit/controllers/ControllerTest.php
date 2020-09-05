@@ -50,7 +50,7 @@ class ControllerTest extends BaseTest {
 	 * Tests Controller::loadDefaultView()
 	 */
 	public function testLoadDefaultView() {
-		$_GET ["c"] = "/route/test/withView/avec vue";
+		$_GET ["c"] = "route/test/withView/avec vue";
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
@@ -62,7 +62,7 @@ class ControllerTest extends BaseTest {
 	 * Tests Controller::redirectToWithView()
 	 */
 	public function testRedirectToWithView() {
-		$_GET ["c"] = "/TestController/redirectToWithView";
+		$_GET ["c"] = "TestController/redirectToWithView";
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
@@ -74,7 +74,7 @@ class ControllerTest extends BaseTest {
 	 * Tests Controller::forward()
 	 */
 	public function testForward() {
-		$_GET ["c"] = "/TestController/forwardToWithView";
+		$_GET ["c"] = "TestController/forwardToWithView";
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
