@@ -231,7 +231,7 @@ class Startup {
 	}
 
 	public static function onError(int $code, ?string $message = null, $controllerInstance = null) {
-		$onError = self::$config ['onError'] ?? (function ($code, $message = null, $partial = true) {
+		$onError = self::$config ['onError'] ?? (function ($code, $message = null, $controllerInstance = null) {
 			switch ($code) {
 				case 404 :
 					self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
@@ -243,7 +243,7 @@ class Startup {
 					break;
 			}
 		});
-		$onError ( $code, $message, $partial );
+		$onError ( $code, $message, $controllerInstance );
 	}
 
 	public static function errorHandler($message = '', $code = 0, $severity = 1, $filename = null, int $lineno = 0, $previous = NULL) {
