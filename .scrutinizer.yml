@@ -55,7 +55,7 @@ build:
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
           - composer require phpmv/ubiquity-workerman
-          - cp -f src/tests/files/workerman/_workerman.php .ubiquity/
+          - cp -f src/tests/files/workerman/_workerman.php src/.ubiquity/
           - command: ./run-workerman.sh
             background: true
           - sudo curl -v http://127.0.0.1:8095
