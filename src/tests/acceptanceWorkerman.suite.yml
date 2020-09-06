@@ -8,7 +8,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: 'http://dev.local:8095/'
+            url: 'http://127.0.0.1:8095/'
             window_size: false
             browser: chrome
             capabilities:

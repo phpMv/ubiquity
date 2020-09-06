@@ -6,7 +6,7 @@ if (! defined ( 'DS' )) {
 	define ( 'ROOT', __DIR__ . \DS . '..' . \DS . 'app' . \DS );
 }
 $config = include ROOT . 'config/config.php';
-$sConfig = [ 'host' => 'dev.local','port' => 8095,'sessionName' => 'workerman' ];
+$sConfig = [ 'host' => '127.0.0.1','port' => 8095,'sessionName' => 'workerman' ];
 $config ["sessionName"] = $sConfig ["sessionName"];
 $address = $sConfig ['host'] . ':' . $sConfig ['port'];
 $config ["siteUrl"] = 'http://' . $address;
