@@ -102,7 +102,7 @@ class ControllerTest extends BaseTest {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
 			$this->assertEquals ( 'assets', $this->startup->getAction () );
-		}, [ 'Hello world!','- Remember this','new content' ] );
+		}, [ 'Hello world!','public/assets/semantic/css/style.css','new content' ] );
 	}
 
 	protected function getCacheDirectory() {

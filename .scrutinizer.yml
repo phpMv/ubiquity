@@ -52,6 +52,10 @@ build:
           - sudo /usr/share/locales/install-language-pack fr_FR
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
+          - sudo composer require phpmv/ubiquity-workerman
+          - command: (cd src/ && ./../vendor/bin/Ubiquity serve -t=workerman -p=8095)
+            background: true
+          - sudo curl -v http://127.0.0.1:8095
 
         override:
           - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v)
