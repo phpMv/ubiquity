@@ -24,7 +24,7 @@ class DbMy extends \Ubiquity\controllers\Controller {
 	}
 
 	public static function warmup() {
-		self::$pDao = new DAOPreparedQueryById ( 'models\\World' );
+		self::$pDao = new DAOPreparedQueryById ( 'models\\bench\\World' );
 	}
 
 	public function getCount($queries) {

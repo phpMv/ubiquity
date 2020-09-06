@@ -1,13 +1,13 @@
 <?php
 \Ubiquity\cache\CacheManager::startProd ( $config );
 
-\Ubiquity\orm\DAO::setModelsDatabases ( [ 'models\\Fortune' => 'bench','models\\World' => 'bench' ] );
+\Ubiquity\orm\DAO::setModelsDatabases ( [ 'models\\bench\\Fortune' => 'bench','models\\bench\\World' => 'bench' ] );
 
-\Ubiquity\cache\CacheManager::warmUpControllers ( [ \controllers\DbMy::class,\controllers\Fortunes_::class ] );
+\Ubiquity\cache\CacheManager::warmUpControllers ( [ \controllers\bench\DbMy::class,\controllers\bench\Fortunes_::class ] );
 
 $workerServer->onWorkerStart = function () use ($config) {
 	\Ubiquity\orm\DAO::startDatabase ( $config, 'bench' );
-	\controllers\DbMy::warmup ();
-	\controllers\Fortunes_::warmup ();
+	\controllers\bench\DbMy::warmup ();
+	\controllers\bench\Fortunes_::warmup ();
 };
 
