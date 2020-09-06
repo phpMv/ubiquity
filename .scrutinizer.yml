@@ -58,7 +58,7 @@ build:
           - cp -f src/tests/files/workerman/_workerman.php src/.ubiquity/
           - command: ./run-workerman.sh
             background: true
-          - (cd src/ && ./../vendor/bin/Ubiquity info:routes)
+          - (cd src/ && ./../vendor/bin/Ubiquity info:models)
           - sudo curl -v http://127.0.0.1:8095/db
 
         override:
