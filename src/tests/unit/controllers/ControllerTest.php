@@ -23,7 +23,6 @@ class ControllerTest extends BaseTest {
 
 		$this->_startServices ();
 		$this->startup = new Startup ();
-		$this->startup::$config = $this->config;
 	}
 
 	protected function _startServices($what = false) {
@@ -87,6 +86,10 @@ class ControllerTest extends BaseTest {
 
 	protected function getCacheDirectory() {
 		return null;
+	}
+
+	protected function getDi() {
+		return [ ];
 	}
 }
 
