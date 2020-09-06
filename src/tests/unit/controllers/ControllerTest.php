@@ -96,7 +96,7 @@ class ControllerTest extends BaseTest {
 	/**
 	 * Tests loadAssets()
 	 */
-	public function testLoadDefaultView() {
+	public function testLoadAssets() {
 		$_GET ["c"] = "route/test/assets/Hello world!";
 		$this->_assertDisplayContains ( function () {
 			$this->startup->run ( $this->config );
