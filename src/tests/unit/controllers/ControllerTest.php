@@ -19,6 +19,8 @@ class ControllerTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
+		$this->config ['di'] = [ ];
+		Startup::$config = $this->config;
 		$this->_startServices ();
 		$this->startup = new Startup ();
 	}
@@ -66,7 +68,7 @@ class ControllerTest extends BaseTest {
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
-			$this->assertEquals ( 'redirectToWithView', $this->startup->getAction () );
+			$this->assertEquals ( 'withView', $this->startup->getAction () );
 		}, 'redirection' );
 	}
 
@@ -78,16 +80,12 @@ class ControllerTest extends BaseTest {
 		$this->_assertDisplayEquals ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
-			$this->assertEquals ( 'forwardToWithView', $this->startup->getAction () );
+			$this->assertEquals ( 'withView', $this->startup->getAction () );
 		}, 'redirection2' );
 	}
 
 	protected function getCacheDirectory() {
 		return null;
-	}
-
-	protected function getDi() {
-		return [ ];
 	}
 }
 
