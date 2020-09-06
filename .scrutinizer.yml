@@ -49,11 +49,13 @@ build:
           -  (cd src/ && ./../vendor/bin/Ubiquity all-models -d=bench -a=public)
           -  (cd src/ && ./../vendor/bin/Ubiquity init-cache)
           - sudo chmod 0777 -R src/*
+          - cp -f src/tests/files/run-workerman.sh run-workerman.sh
+          - sudo chmod +x run-workerman.sh
           - sudo /usr/share/locales/install-language-pack fr_FR
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
-          - sudo composer require phpmv/ubiquity-workerman
-          - command: (cd src/ && ./../vendor/bin/Ubiquity serve -t=workerman -p=8095)
+          - composer require phpmv/ubiquity-workerman
+          - command: ./run-workerman.sh
             background: true
           - sudo curl -v http://127.0.0.1:8095
 
