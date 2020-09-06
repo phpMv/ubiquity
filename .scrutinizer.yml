@@ -56,8 +56,7 @@ build:
           - sudo curl -v http://dev.local/index.php?c=Admin
           - composer require phpmv/ubiquity-workerman
           - cp -f src/tests/files/workerman/_workerman.php src/.ubiquity/
-          - command: ./run-workerman.sh
-            background: true
+          - ./run-workerman.sh
           - sudo curl -v http://dev.local:8095
 
         override:
