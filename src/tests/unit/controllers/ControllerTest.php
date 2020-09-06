@@ -20,9 +20,10 @@ class ControllerTest extends BaseTest {
 	protected function _before() {
 		parent::_before ();
 		$this->config ['di'] = [ ];
-		Startup::$config = $this->config;
+
 		$this->_startServices ();
 		$this->startup = new Startup ();
+		$this->startup->config = $this->config;
 	}
 
 	protected function _startServices($what = false) {
