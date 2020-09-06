@@ -47,7 +47,7 @@ class DbMy extends \Ubiquity\controllers\Controller {
 
 	/**
 	 *
-	 * @route("db/queries/{queries}")
+	 * @route("db/query/{queries}")
 	 */
 	public function query($queries = 1) {
 		$worlds = [ ];
