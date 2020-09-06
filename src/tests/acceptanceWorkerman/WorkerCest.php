@@ -5,7 +5,7 @@ class WorkerCest {
 	}
 
 	// tests
-	public function tryToGotoForunes(AcceptanceTester $I) {
+	public function tryToGotoFortunes(AcceptanceTester $I) {
 		$I->amOnPage ( "/fortunes" );
 		$I->seeElement ( 'body' );
 		$I->see ( 'fortune: No such file or directory', [ 'css' => 'body' ] );
