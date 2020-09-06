@@ -6,7 +6,7 @@ if (! defined ( 'DS' )) {
 	define ( 'ROOT', __DIR__ . \DS . '..' . \DS . 'app' . \DS );
 }
 $config = include ROOT . 'config/config.php';
-$sConfig = include __DIR__ . \DS . 'workerman-config.php';
+$sConfig = [ 'host' => 'dev.local','port' => 8095,'sessionName' => 'workerman' ];
 $config ["sessionName"] = $sConfig ["sessionName"];
 $address = $sConfig ['host'] . ':' . $sConfig ['port'];
 $config ["siteUrl"] = 'http://' . $address;
