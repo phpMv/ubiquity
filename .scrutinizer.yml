@@ -58,7 +58,7 @@ build:
           - cp -f src/tests/files/workerman/_workerman.php src/.ubiquity/
           - command: ./run-workerman.sh
             background: true
-          - sudo curl -v http://dev.local:8095
+          - sudo curl -v http://dev.local:8095/db
 
         override:
           - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v)
