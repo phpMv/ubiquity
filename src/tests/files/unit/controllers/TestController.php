@@ -27,7 +27,6 @@ class TestController extends Controller {
 	/**
 	 *
 	 * @route("/route/test/withView/{p}", "name"=>"withView")
-	 * @param string $p
 	 */
 	public function withView($p) {
 		$this->loadDefaultView ( [ 'message' => $p ] );

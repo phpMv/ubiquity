@@ -81,5 +81,9 @@ class ControllerTest extends BaseTest {
 			$this->assertEquals ( 'forwardToWithView', $this->startup->getAction () );
 		}, 'redirection2' );
 	}
+
+	protected function getCacheDirectory() {
+		return null;
+	}
 }
 
