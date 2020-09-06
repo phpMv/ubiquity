@@ -46,8 +46,8 @@ build:
           - (cd src/ && composer update)
           - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/ && cp -f src/tests/files/config.php src/app/config/
           - cp -R src/tests/files/unit/* src/app/
-          -  (cd src/ && ./../vendor/bin/Ubiquity all-models -d=bench -a=public)
-          -  (cd src/ && ./../vendor/bin/Ubiquity init-cache)
+          - (cd src/ && ./../vendor/bin/Ubiquity all-models -d=bench -a=public)
+          - (cd src/ && ./../vendor/bin/Ubiquity init-cache)
           - sudo chmod 0777 -R src/*
           - cp -f src/tests/files/workerman/run-workerman.sh run-workerman.sh && cp -f src/tests/files/workerman/workerServices.php src/app/config/workerServices.php
           - sudo chmod +x run-workerman.sh
@@ -58,6 +58,7 @@ build:
           - cp -f src/tests/files/workerman/_workerman.php src/.ubiquity/
           - command: ./run-workerman.sh
             background: true
+          - (cd src/ && ./../vendor/bin/Ubiquity info:routes)
           - sudo curl -v http://dev.local:8095/db
 
         override:
