@@ -85,5 +85,9 @@ class ControllerTest extends BaseTest {
 	protected function getCacheDirectory() {
 		return null;
 	}
+
+	protected function getDi() {
+		return [ ];
+	}
 }
 
