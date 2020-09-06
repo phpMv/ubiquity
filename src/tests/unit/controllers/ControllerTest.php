@@ -19,8 +19,6 @@ class ControllerTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
-		$this->config ['di'] = [ ];
-
 		$this->_startServices ();
 		$this->startup = new Startup ();
 	}
@@ -48,12 +46,17 @@ class ControllerTest extends BaseTest {
 		$this->assertEquals ( $result, $res );
 	}
 
+	protected function _assertDisplayContains($callback, $result) {
+		$res = $this->_display ( $callback );
+		$this->assertContains ( $result, $res );
+	}
+
 	/**
 	 * Tests Controller::loadDefaultView()
 	 */
 	public function testLoadDefaultView() {
 		$_GET ["c"] = "route/test/withView/avec vue";
-		$this->_assertDisplayEquals ( function () {
+		$this->_assertDisplayContains ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
 			$this->assertEquals ( 'withView', $this->startup->getAction () );
@@ -65,7 +68,7 @@ class ControllerTest extends BaseTest {
 	 */
 	public function testRedirectToWithView() {
 		$_GET ["c"] = "TestController/redirectToWithView";
-		$this->_assertDisplayEquals ( function () {
+		$this->_assertDisplayContains ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
 			$this->assertEquals ( 'withView', $this->startup->getAction () );
@@ -77,7 +80,7 @@ class ControllerTest extends BaseTest {
 	 */
 	public function testForward() {
 		$_GET ["c"] = "TestController/forwardToWithView";
-		$this->_assertDisplayEquals ( function () {
+		$this->_assertDisplayContains ( function () {
 			$this->startup->run ( $this->config );
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
 			$this->assertEquals ( 'withView', $this->startup->getAction () );
@@ -86,10 +89,6 @@ class ControllerTest extends BaseTest {
 
 	protected function getCacheDirectory() {
 		return null;
-	}
-
-	protected function getDi() {
-		return [ ];
 	}
 }
 
