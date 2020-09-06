@@ -24,7 +24,7 @@ class DbMy extends \Ubiquity\controllers\Controller {
 	}
 
 	public static function warmup() {
-		self::$pDao = new DAOPreparedQueryById ( 'models\\bench\\World' );
+		self::$pDao = new DAOPreparedQueryById ( \models\bench\World::class );
 	}
 
 	public function getCount($queries) {
@@ -37,10 +37,18 @@ class DbMy extends \Ubiquity\controllers\Controller {
 		return $count;
 	}
 
+	/**
+	 *
+	 * @route("db")
+	 */
 	public function index() {
 		echo \json_encode ( self::$pDao->execute ( [ 'id' => \mt_rand ( 1, 10000 ) ] )->_rest );
 	}
 
+	/**
+	 *
+	 * @route("db/queries/{queries}")
+	 */
 	public function query($queries = 1) {
 		$worlds = [ ];
 		$count = $this->getCount ( $queries );
@@ -51,6 +59,10 @@ class DbMy extends \Ubiquity\controllers\Controller {
 		echo \json_encode ( $worlds );
 	}
 
+	/**
+	 *
+	 * @route("db/update/{queries}")
+	 */
 	public function update($queries = 1) {
 		$worlds = [ ];
 		$count = $this->getCount ( $queries );

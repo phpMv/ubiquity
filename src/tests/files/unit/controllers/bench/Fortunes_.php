@@ -9,7 +9,7 @@ class Fortunes_ extends \Ubiquity\controllers\SimpleViewAsyncController {
 	protected static $pDao;
 
 	public static function warmup() {
-		self::$pDao = new DAOPreparedQueryAll ( 'models\\bench\\Fortune' );
+		self::$pDao = new DAOPreparedQueryAll ( Fortune::class );
 	}
 
 	public function initialize() {
