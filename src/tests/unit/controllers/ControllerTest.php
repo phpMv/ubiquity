@@ -23,7 +23,7 @@ class ControllerTest extends BaseTest {
 
 		$this->_startServices ();
 		$this->startup = new Startup ();
-		$this->startup->config = $this->config;
+		$this->startup::$config = $this->config;
 	}
 
 	protected function _startServices($what = false) {
