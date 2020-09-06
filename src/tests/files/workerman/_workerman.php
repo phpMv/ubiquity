@@ -11,6 +11,7 @@ $config ["sessionName"] = $sConfig ["sessionName"];
 $address = $sConfig ['host'] . ':' . $sConfig ['port'];
 $config ["siteUrl"] = 'http://' . $address;
 require ROOT . './../vendor/autoload.php';
+require ROOT . 'config/workerServices.php';
 $workerServer = new \Ubiquity\servers\workerman\WorkermanServer ();
 $workerServer->init ( $config, __DIR__ );
 $workerServer->setDefaultCount ();
