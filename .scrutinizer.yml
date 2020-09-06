@@ -54,9 +54,10 @@ build:
           - sudo /usr/share/locales/install-language-pack fr_FR
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
-          - composer require phpmv/ubiquity-workerman:dev-master
+          - (cd src/ && composer require phpmv/ubiquity-workerman:dev-master)
           - cp -f src/tests/files/workerman/_workerman.php src/.ubiquity/
-          - ./run-workerman.sh
+          - command: ./run-workerman.sh
+            background: true
           - sudo curl -v http://dev.local:8095
 
         override:
