@@ -2,7 +2,7 @@
 
 namespace controllers\bench;
 
-use models\Fortune;
+use models\bench\Fortune;
 use Ubiquity\orm\core\prepared\DAOPreparedQueryAll;
 
 class Fortunes_ extends \Ubiquity\controllers\SimpleViewAsyncController {
