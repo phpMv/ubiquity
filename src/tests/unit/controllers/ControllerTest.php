@@ -48,7 +48,13 @@ class ControllerTest extends BaseTest {
 
 	protected function _assertDisplayContains($callback, $result) {
 		$res = $this->_display ( $callback );
-		$this->assertContains ( $result, $res );
+		if (is_array ( $result )) {
+			foreach ( $result as $c ) {
+				$this->assertContains ( $c, $res );
+			}
+		} else {
+			$this->assertContains ( $result, $res );
+		}
 	}
 
 	/**
@@ -85,6 +91,18 @@ class ControllerTest extends BaseTest {
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
 			$this->assertEquals ( 'withView', $this->startup->getAction () );
 		}, 'redirection2' );
+	}
+
+	/**
+	 * Tests loadAssets()
+	 */
+	public function testLoadDefaultView() {
+		$_GET ["c"] = "route/test/assets/Hello world!";
+		$this->_assertDisplayContains ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestController::class, $this->startup->getController () );
+			$this->assertEquals ( 'assets', $this->startup->getAction () );
+		}, [ 'Hello world!','- Remember this','new content' ] );
 	}
 
 	protected function getCacheDirectory() {

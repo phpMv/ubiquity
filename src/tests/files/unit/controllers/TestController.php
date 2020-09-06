@@ -39,5 +39,13 @@ class TestController extends Controller {
 	public function forwardToWithView() {
 		$this->forward ( self::class, 'withView', [ 'redirection2' ] );
 	}
+
+	/**
+	 *
+	 * @route("/route/test/assets/{p}", "name"=>"assets")
+	 */
+	public function assets($p) {
+		$this->loadDefaultView ( [ 'message' => $p ] );
+	}
 }
 
