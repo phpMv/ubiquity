@@ -28,4 +28,7 @@ require ROOT . 'config/workerServices.php';
 \Ubiquity\controllers\Router::get ( "c3/(.*?)", function () {
 	require \ROOT . './../c3.php';
 } );
+\Ubiquity\controllers\Router::get ( "_default", function () {
+	require \ROOT . './../c3.php';
+} );
 $workerServer->run ( $sConfig ['host'], $sConfig ['port'], $sConfig ['socket'] ?? [ ]);
