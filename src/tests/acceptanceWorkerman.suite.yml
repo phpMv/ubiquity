@@ -19,6 +19,7 @@ modules:
 coverage:
     enabled: true
     remote: true
+    cookie_domain: ".mysite.com"
     c3_url: 'http://dev.local'
 
     include:
