@@ -11,13 +11,6 @@ extensions:
 coverage:
     enabled: true
     remote: false
-    c3_url: 'http://127.0.0.1:8095'
-
-    include:
-        - Ubiquity/*.php
-coverage:
-    enabled: true
-    remote: false
     c3_url: 'http://dev.local'
 
     include:

@@ -15,3 +15,20 @@ modules:
               "goog:chromeOptions":
                 w3c: false
         - \Helper\Acceptance
+
+coverage:
+    enabled: true
+    remote: false
+    c3_url: 'http://127.0.0.1:8095'
+
+    include:
+        - Ubiquity/*.php
+
+    exclude:
+        - Ubiquity/*Interface.php
+        - Ubiquity/controllers/Autoloader.php
+        - Ubiquity/controllers/admin/
+        - Ubiquity/annotations/
+        - Ubiquity/utils/git/UGitRepository.php
+        - Ubiquity/views/engine/micro/*
+        - Ubiquity/views/Gui.php
