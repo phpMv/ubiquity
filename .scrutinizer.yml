@@ -59,6 +59,7 @@ build:
           - command: ./run-workerman.sh
             background: true
           - (cd src/ && ./../vendor/bin/Ubiquity info:models -d=bench)
+          - sudo curl -v http://127.0.0.1:8095/db
 
         override:
           - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v)
