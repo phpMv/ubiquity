@@ -1,5 +1,5 @@
 <?php
-class WorkerCest {
+class ApacheWorkerCest {
 
 	public function _before(AcceptanceTester $I) {
 	}
