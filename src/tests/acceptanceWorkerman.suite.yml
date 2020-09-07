@@ -18,18 +18,6 @@ modules:
 
 coverage:
     enabled: true
-    remote: true
+    remote: false
     cookie_domain: ".mysite.com"
-    c3_url: 'http://dev.local'
-
-    include:
-        - Ubiquity/*.php
-
-    exclude:
-        - Ubiquity/*Interface.php
-        - Ubiquity/controllers/Autoloader.php
-        - Ubiquity/controllers/admin/
-        - Ubiquity/annotations/
-        - Ubiquity/utils/git/UGitRepository.php
-        - Ubiquity/views/engine/micro/*
-        - Ubiquity/views/Gui.php
+    c3_url: 'http://127.0.0.1:8095'

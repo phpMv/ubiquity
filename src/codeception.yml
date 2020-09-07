@@ -10,7 +10,7 @@ extensions:
         - Codeception\Extension\RunFailed
 coverage:
     enabled: true
-    remote: true
+    remote: false
     c3_url: 'http://dev.local'
     cookie_domain: ".mysite.com"
 
