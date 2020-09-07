@@ -8,7 +8,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: 'http://127.0.0.1:8095/'
+            url: 'http://worker.local:8095/'
             window_size: false
             browser: chrome
             capabilities:
@@ -20,4 +20,4 @@ coverage:
     enabled: true
     remote: false
     cookie_domain: ".mysite.com"
-    c3_url: 'http://127.0.0.1:8095'
+    c3_url: 'http://worker.local:8095'

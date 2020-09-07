@@ -23,6 +23,7 @@ build:
           version: 7.4
         hosts:
           dev.local: '127.0.0.1'
+          worker.local: '127.0.0.1'
         apache2:
           modules: ['rewrite']
           sites:
@@ -59,7 +60,7 @@ build:
           - command: ./run-workerman.sh
             background: true
           - (cd src/ && ./../vendor/bin/Ubiquity info:models -d=bench)
-          - sudo curl -v http://127.0.0.1:8095/db
+          - sudo curl -v http://worker.local:8095/db
 
         override:
           - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v)
