@@ -2,6 +2,7 @@
 
 namespace controllers\bench;
 
+use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\core\prepared\DAOPreparedQueryById;
 
@@ -21,6 +22,10 @@ class DbMy extends \Ubiquity\controllers\Controller {
 
 	public function initialize() {
 		\Ubiquity\utils\http\UResponse::setContentType ( 'application/json' );
+		if (\php_sapi_name () == 'apache2handler') {
+			DAO::startDatabase ( Startup::$config, 'bench' );
+			self::warmup ();
+		}
 	}
 
 	public static function warmup() {

@@ -4,6 +4,8 @@ namespace controllers\bench;
 
 use models\bench\Fortune;
 use Ubiquity\orm\core\prepared\DAOPreparedQueryAll;
+use Ubiquity\orm\DAO;
+use Ubiquity\controllers\Startup;
 
 class Fortunes_ extends \Ubiquity\controllers\SimpleViewAsyncController {
 	protected static $pDao;
@@ -14,6 +16,10 @@ class Fortunes_ extends \Ubiquity\controllers\SimpleViewAsyncController {
 
 	public function initialize() {
 		\Ubiquity\utils\http\UResponse::setContentType ( 'text/html', 'utf-8' );
+		if (\php_sapi_name () == 'apache2handler') {
+			DAO::startDatabase ( Startup::$config, 'bench' );
+			self::warmup ();
+		}
 	}
 
 	/**

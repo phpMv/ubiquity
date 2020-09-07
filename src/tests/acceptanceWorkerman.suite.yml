@@ -15,9 +15,3 @@ modules:
               "goog:chromeOptions":
                 w3c: false
         - \Helper\Acceptance
-
-coverage:
-    enabled: true
-    remote: false
-    cookie_domain: ".mysite.com"
-    c3_url: 'http://worker.local:8095'
