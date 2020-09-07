@@ -15,7 +15,7 @@ require \ROOT . './../vendor/autoload.php';
 class MyWorker extends \Ubiquity\servers\workerman\WorkermanServer {
 
 	protected function handle(\Workerman\Connection\ConnectionInterface $connection, $datas) {
-		include \ROOT . '/../c3.php';
+		include \ROOT . './../c3.php';
 		return parent::handle ( $connection, $datas );
 	}
 }
