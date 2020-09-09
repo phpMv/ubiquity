@@ -99,20 +99,17 @@ class RouterClassTest extends BaseTest {
 	}
 
 	/**
-	 * Tests Router::getRouteUrlParts()
-	 */
-	public function testGetRouteUrlParts() {
-		$this->router->get ( 'foo/bar/{i}', function ($i) {
-			echo $i;
-		}, 'callbackName' );
-		$rep = $this->router->getRouteUrlParts ( [ 'path' => 'foo/bar/(.+?)/','details' => 'get' ], [ 5 ] );
-	}
-
-	/**
 	 * Tests Router::slashPath()
 	 */
 	public function testSlashPath() {
 		$this->assertEquals ( '/test/oo/', $this->router->slashPath ( 'test/oo' ) );
+	}
+
+	/**
+	 * Tests Router::testRoutes()
+	 */
+	public function testTestRoutes() {
+		$this->assertIsArray ( $this->router->testRoutes ( 'route/test/withView/foo/', '' ) );
 	}
 
 	/**
