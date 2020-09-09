@@ -94,7 +94,7 @@ class RouterClassTest extends BaseTest {
 	 * Tests Router::url()
 	 */
 	public function testUrl() {
-		$this->assertEquals ( 'route/test/withView/foo/', $this->router->url ( 'withView', [ 'foo' ] ) );
+		$this->assertEquals ( 'http://dev.local/route/test/withView/foo/', $this->router->url ( 'withView', [ 'foo' ] ) );
 		$this->assertFalse ( $this->router->url ( 'withView2', [ 'foo' ] ) );
 	}
 
