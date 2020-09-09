@@ -4,7 +4,7 @@ use Ubiquity\controllers\Router;
 /**
  * Router test case.
  */
-class RouterTest_ extends BaseTest {
+class RouterClassTest extends BaseTest {
 
 	/**
 	 *
@@ -136,6 +136,10 @@ class RouterTest_ extends BaseTest {
 	 */
 	public function testGetRoutes() {
 		$this->assertIsArray ( $this->router->getRoutes () );
+	}
+
+	protected function getCacheDirectory() {
+		return "cache/";
 	}
 }
 
