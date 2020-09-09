@@ -86,6 +86,7 @@ filter:
         - src/Ubiquity/utils/git/*
         - src/Ubiquity/cache/Preloader.php
         - src/Ubiquity/cache/preloading/
+        - src/Ubiquity/controllers/StartupAsync.php
 checks:
     php:
         code_rating: true
