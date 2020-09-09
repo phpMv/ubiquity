@@ -67,20 +67,18 @@ class RouterTest_ extends BaseTest {
 	 * Tests Router::getRouteByName()
 	 */
 	public function testGetRouteByName() {
-		// TODO Auto-generated RouterTest_::testGetRouteByName()
-		$this->markTestIncomplete ( "getRouteByName test not implemented" );
-
-		Router::getRouteByName(/* parameters */);
+		$this->assertEquals ( '/route/test/withView/(.*?)', $this->router->getRouteByName ( 'withView' ) );
+		$this->assertFalse ( $this->router->getRouteByName ( 'withView2' ) );
 	}
 
 	/**
 	 * Tests Router::getRouteInfoByName()
 	 */
 	public function testGetRouteInfoByName() {
-		// TODO Auto-generated RouterTest_::testGetRouteInfoByName()
-		$this->markTestIncomplete ( "getRouteInfoByName test not implemented" );
-
-		Router::getRouteInfoByName(/* parameters */);
+		$r = Router::getRouteInfoByName ( 'withView' );
+		$this->assertEquals ( 'withView', $r ['action'] );
+		$this->assertEquals ( 'controllers\\TestController', $r ['controller'] );
+		$this->assertFalse ( $this->router->getRouteInfoByName ( 'withView2' ) );
 	}
 
 	/**
