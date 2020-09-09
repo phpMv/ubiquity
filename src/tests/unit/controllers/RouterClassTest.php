@@ -85,50 +85,41 @@ class RouterClassTest extends BaseTest {
 	 * Tests Router::path()
 	 */
 	public function testPath() {
-		// TODO Auto-generated RouterTest_::testPath()
-		$this->markTestIncomplete ( "path test not implemented" );
-
-		Router::path(/* parameters */);
+		$this->assertEquals ( 'route/test/withView/foo/', $this->router->path ( 'withView', [ 'foo' ] ) );
+		$this->assertEquals ( '/route/test/withView/foo/', $this->router->path ( 'withView', [ 'foo' ], true ) );
+		$this->assertFalse ( $this->router->path ( 'withView2', [ 'foo' ] ) );
 	}
 
 	/**
 	 * Tests Router::url()
 	 */
 	public function testUrl() {
-		// TODO Auto-generated RouterTest_::testUrl()
-		$this->markTestIncomplete ( "url test not implemented" );
-
-		Router::url(/* parameters */);
+		$this->assertEquals ( 'route/test/withView/foo/', $this->router->url ( 'withView', [ 'foo' ] ) );
+		$this->assertFalse ( $this->router->url ( 'withView2', [ 'foo' ] ) );
 	}
 
 	/**
 	 * Tests Router::getRouteUrlParts()
 	 */
 	public function testGetRouteUrlParts() {
-		// TODO Auto-generated RouterTest_::testGetRouteUrlParts()
-		$this->markTestIncomplete ( "getRouteUrlParts test not implemented" );
-
-		Router::getRouteUrlParts(/* parameters */);
+		$this->router->get ( 'foo/bar/{i}', function ($i) {
+			echo $i;
+		}, 'callbackName' );
+		$rep = $this->router->getRouteUrlParts ( [ 'path' => 'foo/bar/(.+?)/','details' => 'get' ], [ 5 ] );
 	}
 
 	/**
 	 * Tests Router::slashPath()
 	 */
 	public function testSlashPath() {
-		// TODO Auto-generated RouterTest_::testSlashPath()
-		$this->markTestIncomplete ( "slashPath test not implemented" );
-
-		Router::slashPath(/* parameters */);
+		$this->assertEquals ( '/test/oo/', $this->router->slashPath ( 'test/oo' ) );
 	}
 
 	/**
 	 * Tests Router::setExpired()
 	 */
 	public function testSetExpired() {
-		// TODO Auto-generated RouterTest_::testSetExpired()
-		$this->markTestIncomplete ( "setExpired test not implemented" );
-
-		Router::setExpired(/* parameters */);
+		$this->router->setExpired ( '/route/test/withView/(.+?)/' );
 	}
 
 	/**
