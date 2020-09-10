@@ -274,11 +274,11 @@ class StartupTest extends BaseTest {
 	 * Tests Startup::updateConfig()
 	 */
 	public function testUpdateConfig() {
-		$config = $this->startup::$config;
 		$this->startup->updateConfig ( [ 'sessionName' => 'foo','newVar' => 'bar' ] );
 		$this->assertEquals ( 'bar', $this->startup::$config ['newVar'] );
 		$this->assertEquals ( 'foo', $this->startup::$config ['sessionName'] );
 		$this->startup->reloadServices ();
+		$config = include ROOT . 'config/config.php';
 		$this->startup->updateConfig ( $config );
 	}
 }
