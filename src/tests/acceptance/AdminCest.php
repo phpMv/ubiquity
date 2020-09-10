@@ -20,12 +20,7 @@ class AdminCest extends BaseAcceptance {
 	public function tryToGotoAdminIndex(AcceptanceTester $I) {
 		$I->amOnPage ( "/Admin/index" );
 		$I->seeInCurrentUrl ( "Admin/index" );
-		try {
-			$I->seeElement ( '#validate-btn' );
-			$this->waitAndclick ( $I, '#validate-btn' );
-		} catch ( \Exception $e ) {
-		}
-		$I->waitForText ( 'Used to perform CRUD operations on data', [ 'css' => 'body' ] );
+		// $I->waitForText ( 'Used to perform CRUD operations on data', [ 'css' => 'body' ] );
 	}
 
 	private function gotoAdminModule(string $url, AcceptanceTester $I) {
