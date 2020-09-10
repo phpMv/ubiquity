@@ -90,7 +90,7 @@ class UIntrospection {
 		} else {
 			$str .= \strrchr ( $lines [$sLine - 1], "{" );
 			for($l = $sLine; $l < $eLine - 1; $l ++) {
-				$str .= $lines [$l];
+				$str .= $lines [$l] ?? '';
 			}
 			$str .= \strstr ( $lines [$eLine - 1], "}", true ) . "}";
 		}
