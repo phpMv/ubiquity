@@ -88,7 +88,7 @@ class UIntrospection {
 			$match = \strstr ( $lines [$sLine - 1], "function" );
 			$str .= \strstr ( \strstr ( $match, "{" ), "}", true ) . "}";
 		} else {
-			$str .= \strrchr ( $lines [$sLine - 1], "{" );
+			$str .= \strrchr ( $lines [$sLine - 1] ?? '', "{" );
 			for($l = $sLine; $l < $eLine - 1; $l ++) {
 				$str .= $lines [$l] ?? '';
 			}
