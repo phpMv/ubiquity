@@ -83,8 +83,9 @@ class UIntrospection {
 		$str .= ')';
 		$lines = file ( $r->getFileName () );
 		$sLine = $r->getStartLine ();
-		$beforeStartLine = max ( $sLine - 1, 0 );
-		$eLine = min ( $r->getEndLine (), \count ( $lines ) - 1 );
+		$maxSize=\count ( $lines ) - 1;
+		$beforeStartLine = min(max ( $sLine - 1, 0 ),$maxSize);
+		$eLine = min ( $r->getEndLine (), $maxSize );
 		if ($eLine === $sLine) {
 			$match = \strstr ( $lines [$beforeStartLine], "function" );
 			$str .= \strstr ( \strstr ( $match, "{" ), "}", true ) . "}";
