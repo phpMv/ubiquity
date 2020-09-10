@@ -7,6 +7,8 @@ use controllers\TestControllerWithControl;
 use controllers\TestRestController;
 use controllers\TestControllerInitialize;
 use services\Service;
+use Ubiquity\utils\http\session\PhpSession;
+use Ubiquity\utils\http\foundation\PhpHttp;
 
 /**
  * Startup test case.
@@ -246,6 +248,36 @@ class StartupTest extends BaseTest {
 	 */
 	public function testGetApplicationName() {
 		$this->assertNotEmpty ( $this->startup->getApplicationName () );
+	}
+
+	/**
+	 * Tests Startup::isValidUrl()
+	 */
+	public function testIsValidUrl() {
+		$this->assertTrue ( $this->startup->isValidUrl ( '/route/test/params/aa/bb' ) );
+		$this->assertFalse ( $this->startup->isValidUrl ( '/route/test/params' ) );
+		$this->assertFalse ( $this->startup->isValidUrl ( '/zozo' ) );
+	}
+
+	/**
+	 * Tests Startup::setSessionHttpInstance()
+	 */
+	public function testSetSessionHttp() {
+		$this->startup->setSessionInstance ( new PhpSession () );
+		USession::set ( 'foo', 'bar' );
+		$this->assertInstanceOf ( PhpSession::class, $this->startup->getHttpInstance () );
+		$this->startup->setHttpInstance ( new PhpHttp () );
+		$this->assertIsArray ( $this->startup->getHttpInstance ()->getAllHeaders () );
+	}
+
+	/**
+	 * Tests Startup::updateConfig()
+	 */
+	public function testUpdateConfig() {
+		$this->startup->updateConfig ( [ 'sessionName' => 'foo','newVar' => 'bar' ] );
+		$this->assertEquals ( 'bar', $this->startup::$config ['newVar'] );
+		$this->assertEquals ( 'foo', $this->startup::$config ['sessionName'] );
+		$this->startup->reloadServices ();
 	}
 }
 
