@@ -92,7 +92,7 @@ class UIntrospection {
 			for($l = $sLine; $l < $eLine - 1; $l ++) {
 				$str .= $lines [$l] ?? '';
 			}
-			$str .= \strstr ( $lines [$eLine - 1], "}", true ) . "}";
+			$str .= \strstr ( $lines [$eLine - 1] ?? '', "}", true ) . "}";
 		}
 		$vars = $r->getStaticVariables ();
 		foreach ( $vars as $k => $v ) {
