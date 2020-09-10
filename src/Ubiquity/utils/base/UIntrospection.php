@@ -83,16 +83,16 @@ class UIntrospection {
 		$str .= ')';
 		$lines = file ( $r->getFileName () );
 		$sLine = $r->getStartLine ();
-		$eLine = $r->getEndLine ();
+		$eLine = min ( $r->getEndLine (), \count ( $lines ) - 1 );
 		if ($eLine === $sLine) {
 			$match = \strstr ( $lines [$sLine - 1], "function" );
 			$str .= \strstr ( \strstr ( $match, "{" ), "}", true ) . "}";
 		} else {
-			$str .= \strrchr ( $lines [$sLine - 1] ?? '', "{" );
+			$str .= \strrchr ( $lines [$sLine - 1], "{" );
 			for($l = $sLine; $l < $eLine - 1; $l ++) {
-				$str .= $lines [$l] ?? '';
+				$str .= $lines [$l];
 			}
-			$str .= \strstr ( $lines [$eLine - 1] ?? '', "}", true ) . "}";
+			$str .= \strstr ( $lines [$eLine - 1], "}", true ) . "}";
 		}
 		$vars = $r->getStaticVariables ();
 		foreach ( $vars as $k => $v ) {
