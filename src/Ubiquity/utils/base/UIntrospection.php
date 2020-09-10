@@ -83,12 +83,13 @@ class UIntrospection {
 		$str .= ')';
 		$lines = file ( $r->getFileName () );
 		$sLine = $r->getStartLine ();
+		$beforeStartLine = max ( $sLine - 1, 0 );
 		$eLine = min ( $r->getEndLine (), \count ( $lines ) - 1 );
 		if ($eLine === $sLine) {
-			$match = \strstr ( $lines [$sLine - 1], "function" );
+			$match = \strstr ( $lines [$beforeStartLine], "function" );
 			$str .= \strstr ( \strstr ( $match, "{" ), "}", true ) . "}";
 		} else {
-			$str .= \strrchr ( $lines [$sLine - 1], "{" );
+			$str .= \strrchr ( $lines [$beforeStartLine], "{" );
 			for($l = $sLine; $l < $eLine - 1; $l ++) {
 				$str .= $lines [$l];
 			}
