@@ -14,13 +14,19 @@ return array (
 				"logger" => function () {
 					return new \Ubiquity\log\libraries\UMonolog ( "verif", \Monolog\Logger::INFO );
 				},
-				"di" => array ("*.allS" => function ($controller) {
-					return new \services\IAllService ();
-				},"*.inj" => function ($ctrl) {
-					return new \services\IAllService ();
-				},"@exec" => array ("jquery" => function ($controller) {
-					return \Ubiquity\core\Framework::diSemantic ( $controller );
-				} ) ),
+				"di" => array ("*.allS" =>
+					function ($controller) {
+						return new \services\IAllService ();
+					}
+				,"*.inj" =>
+					function ($ctrl) {
+						return new \services\IAllService ();
+					}
+				,"@exec" => array ("jquery" =>
+					function ($controller) {
+						return \Ubiquity\core\Framework::diSemantic ( $controller );
+					}
+				) ),
 				"cache" => array ("directory" => "cache/","system" => "Ubiquity\\cache\\system\\ArrayCache","params" => array () ),
 				"mvcNS" => array ("models" => "models","controllers" => "controllers","rest" => "" ),
 				"isRest" => function () {
