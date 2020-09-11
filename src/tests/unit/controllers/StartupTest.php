@@ -280,7 +280,6 @@ class StartupTest extends BaseTest {
 		$this->assertEquals ( 'bar', $this->startup::$config ['newVar'] );
 		$this->assertEquals ( 'foo', $this->startup::$config ['sessionName'] );
 		Startup::saveConfig ( $config );
-		Startup::reloadConfig();
 	}
 }
 
