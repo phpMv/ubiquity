@@ -48,7 +48,7 @@ class DAOObjectTest extends BaseTest {
 	}
 
 	protected function getCacheDirectory() {
-		return "cache-objects/";
+		return "cacheobjects/";
 	}
 
 	protected function getCacheSystem() {
