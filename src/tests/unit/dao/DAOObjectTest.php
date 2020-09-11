@@ -19,9 +19,16 @@ class DAOObjectTest extends DAOTest {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		BaseTest::_before();
+		if (! defined ( 'ROOT' )) {
+			define ( 'ROOT', __DIR__ );
+		}
+		if (! defined ( 'DS' )) {
+			define ( 'DS', DIRECTORY_SEPARATOR );
+		}
+		$this->config = include ROOT . 'config/config.php';
 		CacheManager::start($this->config);
 		CacheManager::initCache($this->config,'models',true);
+		$this->_loadConfig();
 		$this->dao = new DAO ();
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
