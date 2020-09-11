@@ -270,16 +270,5 @@ class StartupTest extends BaseTest {
 		$this->assertIsArray ( $this->startup->getHttpInstance ()->getAllHeaders () );
 	}
 
-	/**
-	 * Tests Startup::updateConfig()
-	 */
-	public function testUpdateConfig() {
-		$config = include ROOT . 'config/config.php';
-		$this->startup::$config=[];
-		$this->startup->updateConfig ( [ 'sessionName' => 'foo','newVar' => 'bar' ] );
-		$this->assertEquals ( 'bar', $this->startup::$config ['newVar'] );
-		$this->assertEquals ( 'foo', $this->startup::$config ['sessionName'] );
-		Startup::saveConfig ( $config );
-	}
 }
 
