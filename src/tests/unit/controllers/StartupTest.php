@@ -265,7 +265,7 @@ class StartupTest extends BaseTest {
 	public function testSetSessionHttp() {
 		$this->startup->setSessionInstance ( new PhpSession () );
 		USession::set ( 'foo', 'bar' );
-		$this->assertInstanceOf ( PhpSession::class, $this->startup->getHttpInstance () );
+		$this->assertInstanceOf ( PhpSession::class, $this->startup->getSessionInstance() );
 		$this->startup->setHttpInstance ( new PhpHttp () );
 		$this->assertIsArray ( $this->startup->getHttpInstance ()->getAllHeaders () );
 	}
