@@ -7,6 +7,8 @@ use models\Groupe;
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
 
+require "DAOTest.php";
+
 /**
  * DAO test case.
  */
