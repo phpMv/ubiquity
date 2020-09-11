@@ -47,6 +47,14 @@ class DAOObjectTest extends BaseTest {
 		$this->dao->closeDb ();
 	}
 
+	protected function getCacheDirectory() {
+		return "cache-objects/";
+	}
+
+	protected function getCacheSystem() {
+		return "Ubiquity\\cache\\system\\ObjectCache";
+	}
+
 	public function testGetPrepared() {
 		$this->dao->getPrepared ( 'orga' )->addMember ( 'CONCAT(name,":",domain)', 'fullname' );
 		$orga = $this->dao->executePrepared ( 'orga', 1 );
