@@ -172,8 +172,9 @@ class AdminCest extends BaseAcceptance {
 		  $this->gotoAdminModule ( "Admin/Logs", $I );
 		  $I->waitForElement ( "#bt-apply", self::TIMEOUT );
 		  $this->waitAndclick($I, '#ck-ck-reverse label');
+		  $I->waitForElementNotVisible(".ajax-loader");
 		  $this->waitAndclick($I, "[data-url='_deleteAllLogs']", "#menu-logs" );
-
+		  $I->waitForElementNotVisible(".ajax-loader");
 		  $this->waitAndclick($I, "[data-url='_deActivateLog']", "#menu-logs" );
 	  }
 

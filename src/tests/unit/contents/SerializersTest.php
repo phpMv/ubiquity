@@ -17,8 +17,8 @@ class SerializersTest extends \Codeception\Test\Unit {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		$php=new PhpSerializer();
-		$json=new JsonSerializer();
+		$this->php=new PhpSerializer();
+		$this->json=new JsonSerializer();
 		$this->groupe=new Groupe();
 		$this->groupe->setName('Sup');
 		$this->groupe->setId(1);
