@@ -20,8 +20,7 @@ class RestTester extends ControllerBase {
 		$fields->addInput ( 'datas' );
 		$fields->addInput ( 'contentType', null, 'text', 'application/x-www-form-urlencoded' );
 		$form->addSubmit ( 'btSubmitJSON', 'Valider', 'green', "RestTester/submit", "#request", [ 'before' => '$("#newId").html("");' ] );
-		$this->jquery->compile ( $this->view );
-		$this->loadView ( 'RestTester/index.html' );
+		$this->jquery->renderView( 'RestTester/index.html' );
 	}
 
 	public function submit() {
