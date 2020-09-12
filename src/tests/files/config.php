@@ -15,12 +15,12 @@ return array (
 					return new \Ubiquity\log\libraries\UMonolog ( "verif", \Monolog\Logger::INFO );
 				},
 				"di" => array ("*.allS" =>
-					function ($controller) {
+					function ($controller=null) {
 						return new \services\IAllService ($controller);
 					}
 				,"*.inj" =>
-					function ($ctrl) {
-						return new \services\IAllService ($controller);
+					function ($ctrl=null) {
+						return new \services\IAllService ($ctrl);
 					}
 				,"@exec" => array ("jquery" =>
 					function ($controller) {
