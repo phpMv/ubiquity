@@ -102,6 +102,7 @@ class TransformersManagerTest extends BaseTest {
 		$this->assertEquals ( ucfirst ( $groupe->getName () ), $groupeU->getName () );
 		$this->assertEquals ( strtolower ( $groupe->getEmail () ), $groupeU->getEmail () );
 		$this->assertEquals ( strtoupper ( $groupe->getAliases () ), $groupeU->getAliases () );
+		$this->assertEquals ( md5( $groupe->getId () ), $groupeU->getId () );
 	}
 
 	protected function getCacheDirectory() {
