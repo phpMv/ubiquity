@@ -4,7 +4,7 @@ namespace services;
 use controllers\TestRestSimpleOrga;
 
 class IAllService{
-	public function __construct($controller){
+	public function __construct($controller=null){
 		if(!($controller instanceof TestRestSimpleOrga)){
         	echo 'IAllService instanciation';
 		}
