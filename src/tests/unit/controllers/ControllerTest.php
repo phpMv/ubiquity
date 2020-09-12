@@ -2,6 +2,7 @@
 use Ubiquity\controllers\Startup;
 use controllers\TestController;
 use services\Service;
+use controllers\TestSimpleViewController;
 
 /**
  * Controller test case.
@@ -103,6 +104,42 @@ class ControllerTest extends BaseTest {
 			$this->assertEquals ( TestController::class, $this->startup->getController () );
 			$this->assertEquals ( 'assets', $this->startup->getAction () );
 		}, [ 'Hello world!','public/assets/semantic/css/style.css','new content' ] );
+	}
+
+	/**
+	 * Tests SimpleViewController::index()
+	 */
+	public function testSimpleIndex() {
+		$_GET ["c"] = "route/simple/index";
+		$this->_assertDisplayContains ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestSimpleViewController::class, $this->startup->getController () );
+			$this->assertEquals ( 'index', $this->startup->getAction () );
+		}, 'Hello world!');
+	}
+
+	/**
+	 * Tests SimpleViewController::withView()
+	 */
+	public function testSimpleWithView() {
+		$_GET ["c"] = "route/simple/withView/Hello";
+		$this->_assertDisplayContains ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestSimpleViewController::class, $this->startup->getController () );
+			$this->assertEquals ( 'withView', $this->startup->getAction () );
+		}, 'Hello');
+	}
+
+	/**
+	 * Tests SimpleViewController::withViewString()
+	 */
+	public function testSimpleWithViewString() {
+		$_GET ["c"] = "route/simple/withViewString/Hello";
+		$this->_assertDisplayContains ( function () {
+			$this->startup->run ( $this->config );
+			$this->assertEquals ( TestSimpleViewController::class, $this->startup->getController () );
+			$this->assertEquals ( 'withViewString', $this->startup->getAction () );
+		}, 'Hello');
 	}
 
 	protected function getCacheDirectory() {
