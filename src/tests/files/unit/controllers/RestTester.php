@@ -40,4 +40,8 @@ class RestTester extends ControllerBase {
 
 		$this->jquery->renderView ( 'RestTester/submit.html' );
 	}
+
+	public function finalize(){
+
+	}
 }
