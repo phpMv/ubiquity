@@ -42,6 +42,6 @@ class RestTester extends ControllerBase {
 	}
 
 	public function finalize(){
-
+		parent::finalize();
 	}
 }
