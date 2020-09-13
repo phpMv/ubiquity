@@ -3,6 +3,8 @@
 namespace controllers;
 
 use Ubiquity\controllers\Controller;
+use Ubiquity\log\Logger;
+use Ubiquity\log\libraries\UMonolog;
 
 class TestController extends Controller {
 
@@ -46,6 +48,12 @@ class TestController extends Controller {
 	 */
 	public function assets($p) {
 		$this->loadDefaultView ( [ 'message' => $p ] );
+	}
+
+	public function logs() {
+		Logger::critical('logs', 'critical','part',(object)[id=>15]);
+		Logger::alert('logs', 'alert');
+		Logger::log('info', 'logs', 'info');
 	}
 }
 

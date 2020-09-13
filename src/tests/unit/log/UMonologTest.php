@@ -61,5 +61,19 @@ class UMonologTest extends BaseTest {
 		$this->assertEquals ( "info", $log->getLevel () );
 		$this->assertEquals ( LoggerParams::DATABASE, $log->getContext () );
 	}
+
+	public function forceLogs(){
+		$logs = Logger::asObjects ();
+		$this->assertEquals ( 0, sizeof ( $logs ) );
+		$this->_initRequest ( '/TestController/logs', 'GET' );
+		Startup::run ( $this->config );
+		$logs = Logger::asObjects ( false, null, 'logs' );
+		$this->assertEquals ( 3, sizeof ( $logs ) );
+		$log = $logs [0];
+		$this->assertEquals ( "critical", $log->getLevel () );
+		$this->assertEquals ( 'logs', $log->getContext () );
+		$this->assertInstanceOf(\DateTimeImmutable::class, $log->getDatetime());
+		$this->assertEquals(15, $log->getExtra()->id);
+	}
 }
 
