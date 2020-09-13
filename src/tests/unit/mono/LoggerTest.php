@@ -17,10 +17,11 @@ class LoggerTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
-		$this->logger=new UMonolog('tests');
 		$this->config ["debug"] = true;
+		$this->logger=new UMonolog('tests', \Monolog\Logger::INFO);
 		$this->config["logger"]=$this->logger;
 		$this->logger->init ( $this->config );
+		Logger::init($this->config);
 		$this->logger->clearAll ();
 		$this->_startServices ();
 		$this->_initRequest ( 'TestController', 'GET' );
@@ -45,9 +46,9 @@ class LoggerTest extends BaseTest {
 	public function testNavigate() {
 		$logs = $this->logger->asObjects ();
 		$this->assertEquals ( 0, sizeof ( $logs ) );
-		$this->_initRequest ( 'TestController', 'GET' );
+		$this->_initRequest ( 'TestController/notexist', 'GET' );
 		Startup::run ( $this->config );
-		$logs = $this->logger->asObjects ( false, null, [LoggerParams::ROUTER] );
+		$logs = $this->logger->asObjects ( false, null, ['Startup'] );
 		$this->assertEquals ( 1, sizeof ( $logs ) );
 		$this->assertInstanceOf ( LogMessage::class, $logs [0] );
 	}
