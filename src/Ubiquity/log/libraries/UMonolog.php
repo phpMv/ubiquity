@@ -92,6 +92,10 @@ class UMonolog extends Logger {
 		UFileSystem::deleteFile ( $this->handler->getUrl () );
 	}
 
+	public function _close() {
+		$this->handler->close ();
+	}
+
 	public function _registerError() {
 		// TODO register error handlers
 	}
