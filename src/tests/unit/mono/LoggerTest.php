@@ -10,19 +10,15 @@ use Ubiquity\log\libraries\UMonolog;
  */
 class LoggerTest extends BaseTest {
 
-	private $logger;
-
 	/**
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
 		parent::_before ();
 		$this->config ["debug"] = true;
-		$this->logger=new UMonolog('tests', \Monolog\Logger::INFO);
-		$this->config["logger"]=$this->logger;
-		$this->logger->init ( $this->config );
+		$this->config["logger"]=new UMonolog('tests', \Monolog\Logger::INFO);
 		Logger::init($this->config);
-		$this->logger->clearAll ();
+		Logger::clearAll ();
 		$this->_startServices ();
 		$this->_initRequest ( 'TestController', 'GET' );
 	}
@@ -36,7 +32,7 @@ class LoggerTest extends BaseTest {
 	 * Cleans up the environment after running a test.
 	 */
 	protected function _after() {
-		$this->logger=null;
+		Logger::clearAll();
 		$this->config ["debug"] = false;
 	}
 
@@ -44,12 +40,12 @@ class LoggerTest extends BaseTest {
 	 * Tests Logger::warn()
 	 */
 	public function testNavigate() {
-		$logs = $this->logger->asObjects ();
+		$logs = Logger::asObjects ();
 		$this->assertEquals ( 0, count ( $logs ) );
 		$this->_initRequest ( 'TestController/notexist', 'GET' );
 		Startup::run ( $this->config );
-		$this->logger->close();
-		$logs = $this->logger->asObjects ( false);
+		Logger::close();
+		$logs = Logger::asObjects ( false);
 		$this->assertEquals ( 1, count ( $logs ) );
 		$this->assertInstanceOf ( LogMessage::class, $logs [0] );
 	}
@@ -58,12 +54,12 @@ class LoggerTest extends BaseTest {
 	 * Tests Logger::warn()
 	 */
 	public function testDatabase() {
-		$logs = $this->logger->asObjects ();
+		$logs = Logger::asObjects ();
 		$this->assertEquals ( 0, count ( $logs ) );
 		$this->_initRequest ( 'TestCrudOrgas/blop', 'GET' );
 		Startup::run ( $this->config );
-		$this->logger->close();
-		$logs = $this->logger->asObjects ( false);
+		Logger::close();
+		$logs =Logger::asObjects ( false);
 		$this->assertEquals ( 6, count ( $logs ) );
 		$this->assertInstanceOf ( LogMessage::class, $logs [0] );
 		$log = $logs [0];
@@ -75,12 +71,12 @@ class LoggerTest extends BaseTest {
 	 * Tests Logger::critical()
 	 */
 	public function testForceLogs(){
-		$logs = $this->logger->asObjects ();
+		$logs = Logger::asObjects ();
 		$this->assertEquals ( 0, count ( $logs ) );
 		$this->_initRequest ( 'TestController/logs', 'GET' );
 		Startup::run ( $this->config );
-		$this->logger->close();
-		$logs = $this->logger->asObjects ( false, null, ['logs'] );
+		Logger::close();
+		$logs = Logger::asObjects ( false, null, ['logs'] );
 		$this->assertEquals ( 3, sizeof ( $logs ) );
 		$log = $logs [0];
 		$this->assertEquals ( \Monolog\Logger::CRITICAL, $log->getLevel () );
