@@ -20,7 +20,6 @@ class LoggerTest extends BaseTest {
 		Logger::init($this->config);
 		Logger::clearAll ();
 		$this->_startServices ();
-		$this->_initRequest ( 'TestController', 'GET' );
 	}
 
 	protected function _startServices($what = false) {
@@ -37,37 +36,6 @@ class LoggerTest extends BaseTest {
 	}
 
 	/**
-	 * Tests Logger::warn()
-	 */
-	public function testNavigate() {
-		$logs = Logger::asObjects ();
-		$this->assertEquals ( 0, count ( $logs ) );
-		$this->_initRequest ( 'TestController/notexist', 'GET' );
-		Startup::run ( $this->config );
-		Logger::close();
-		$logs = Logger::asObjects ( false);
-		$this->assertEquals ( 1, count ( $logs ) );
-		$this->assertInstanceOf ( LogMessage::class, $logs [0] );
-	}
-
-	/**
-	 * Tests Logger::warn()
-	 */
-	public function testDatabase() {
-		$logs = Logger::asObjects ();
-		$this->assertEquals ( 0, count ( $logs ) );
-		$this->_initRequest ( 'TestCrudOrgas/blop', 'GET' );
-		Startup::run ( $this->config );
-		Logger::close();
-		$logs =Logger::asObjects ( false);
-		$this->assertEquals ( 6, count ( $logs ) );
-		$this->assertInstanceOf ( LogMessage::class, $logs [0] );
-		$log = $logs [0];
-		$this->assertEquals ( \Monolog\Logger::INFO, $log->getLevel () );
-		$this->assertEquals ( LoggerParams::DATABASE, $log->getContext () );
-	}
-
-	/**
 	 * Tests Logger::critical()
 	 */
 	public function testForceLogs(){
@@ -81,7 +49,7 @@ class LoggerTest extends BaseTest {
 		$log = $logs [0];
 		$this->assertEquals ( \Monolog\Logger::CRITICAL, $log->getLevel () );
 		$this->assertEquals ( 'logs', $log->getContext () );
-		$this->assertInstanceOf(\DateTimeImmutable::class, $log->getDatetime());
+		$this->assertNotNull($log->getDatetime());
 		$this->assertEquals(15, $log->getExtra()->id);
 	}
 }
