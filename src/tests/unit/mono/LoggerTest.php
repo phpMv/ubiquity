@@ -19,6 +19,7 @@ class LoggerTest extends BaseTest {
 		parent::_before ();
 		$this->logger=new UMonolog('tests');
 		$this->config ["debug"] = true;
+		$this->config["logger"]=$this->logger;
 		$this->logger->init ( $this->config );
 		$this->logger->clearAll ();
 		$this->_startServices ();
