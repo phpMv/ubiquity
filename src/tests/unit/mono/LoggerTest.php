@@ -5,9 +5,9 @@ use Ubiquity\log\LoggerParams;
 use Ubiquity\log\LogMessage;
 
 /**
- * UMonolog test case.
+ * Logger test case.
  */
-class UMonologTest extends BaseTest {
+class LoggerTest extends BaseTest {
 
 	/**
 	 * Prepares the environment before running a test.
