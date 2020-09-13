@@ -50,7 +50,7 @@ class LoggerTest extends BaseTest {
 		$this->assertEquals ( \Monolog\Logger::CRITICAL, $log->getLevel () );
 		$this->assertEquals ( 'logs', $log->getContext () );
 		$this->assertNotNull($log->getDatetime());
-		$this->assertEquals('id: 15', $log->getExtra());
+		$this->assertEquals('id: 15', \current($log->getExtra()));
 	}
 }
 
