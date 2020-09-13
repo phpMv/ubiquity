@@ -34,7 +34,7 @@ class UMonologTest extends BaseTest {
 	}
 
 	/**
-	 * Tests Logget::warn()
+	 * Tests Logger::warn()
 	 */
 	public function navigate() {
 		$logs = Logger::asObjects ();
@@ -47,7 +47,7 @@ class UMonologTest extends BaseTest {
 	}
 
 	/**
-	 * Tests Logget::warn()
+	 * Tests Logger::warn()
 	 */
 	public function database() {
 		$logs = Logger::asObjects ();
@@ -62,9 +62,12 @@ class UMonologTest extends BaseTest {
 		$this->assertEquals ( LoggerParams::DATABASE, $log->getContext () );
 	}
 
+	/**
+	 * Tests Logger::critical()
+	 */
 	public function forceLogs(){
 		$logs = Logger::asObjects ();
-		$this->assertEquals ( 0, sizeof ( $logs ) );
+		$this->assertEquals ( 0, count ( $logs ) );
 		$this->_initRequest ( '/TestController/logs', 'GET' );
 		Startup::run ( $this->config );
 		$logs = Logger::asObjects ( false, null, 'logs' );
