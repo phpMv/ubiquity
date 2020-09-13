@@ -91,6 +91,12 @@ abstract class Logger {
 		}
 	}
 
+	public static function close() {
+		if (self::$test) {
+			self::$instance->close ();
+		}
+	}
+
 	abstract public function _log($level, $context, $message, $part, $extra);
 
 	abstract public function _info($context, $message, $part, $extra);

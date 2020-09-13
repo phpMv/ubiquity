@@ -51,7 +51,7 @@ class TestController extends Controller {
 	}
 
 	public function logs() {
-		Logger::critical('logs', 'critical','part',(object)[id=>15]);
+		Logger::critical('logs', 'critical','part',(object)['id'=>15]);
 		Logger::alert('logs', 'alert');
 		Logger::log('info', 'logs', 'info');
 	}
