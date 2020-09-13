@@ -59,7 +59,7 @@ class LoggerTest extends BaseTest {
 	public function testDatabase() {
 		$logs = $this->logger->asObjects ();
 		$this->assertEquals ( 0, sizeof ( $logs ) );
-		$this->_initRequest ( '/TestCrudController', 'GET' );
+		$this->_initRequest ( 'TestCrudOrgas/blop', 'GET' );
 		Startup::run ( $this->config );
 		$logs = $this->logger->asObjects ( false, null, [LoggerParams::DATABASE] );
 		$this->assertEquals ( 6, sizeof ( $logs ) );
@@ -75,7 +75,7 @@ class LoggerTest extends BaseTest {
 	public function testForceLogs(){
 		$logs = $this->logger->asObjects ();
 		$this->assertEquals ( 0, count ( $logs ) );
-		$this->_initRequest ( '/TestController/logs', 'GET' );
+		$this->_initRequest ( 'TestController/logs', 'GET' );
 		Startup::run ( $this->config );
 		$logs = $this->logger->asObjects ( false, null, ['logs'] );
 		$this->assertEquals ( 3, sizeof ( $logs ) );
