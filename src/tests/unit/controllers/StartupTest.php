@@ -9,6 +9,7 @@ use controllers\TestControllerInitialize;
 use services\Service;
 use Ubiquity\utils\http\session\PhpSession;
 use Ubiquity\utils\http\foundation\PhpHttp;
+use Ubiquity\controllers\Router;
 
 /**
  * Startup test case.
@@ -27,6 +28,7 @@ class StartupTest extends BaseTest {
 	protected function _before() {
 		parent::_before ();
 		$this->_startServices ();
+		Router::addCallableRoute('/call/hello', function(){echo 'Hello world!';});
 		$this->startup = new Startup ();
 		$this->startup::$config['debug']=false;
 		$this->_initRequest ( 'TestController', 'GET' );
@@ -158,11 +160,11 @@ class StartupTest extends BaseTest {
 		}, 'This action does not exist on the controller' );
 	}
 
-	public function testOnError500(){
-		$_GET ["c"] = "TestController/throwError";
+	public function testOnError404(){
+		$_GET ["c"] = "xxx";
 		$this->_assertDisplayContains( function () {
 			$this->startup->run ( $this->config );
-		}, 'division' );
+		}, "The page you are loocking for doesn't exists!" );
 	}
 
 	/**
