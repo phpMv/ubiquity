@@ -28,6 +28,7 @@ class StartupTest extends BaseTest {
 		parent::_before ();
 		$this->_startServices ();
 		$this->startup = new Startup ();
+		$this->startup::$config['debug']=false;
 		$this->_initRequest ( 'TestController', 'GET' );
 	}
 
@@ -52,6 +53,17 @@ class StartupTest extends BaseTest {
 	protected function _assertDisplayEquals($callback, $result) {
 		$res = $this->_display ( $callback );
 		$this->assertEquals ( $result, $res );
+	}
+
+	protected function _assertDisplayContains($callback, $result) {
+		$res = $this->_display ( $callback );
+		if (is_array ( $result )) {
+			foreach ( $result as $c ) {
+				$this->assertContains ( $c, $res );
+			}
+		} else {
+			$this->assertContains ( $result, $res );
+		}
 	}
 
 	/**
@@ -130,6 +142,27 @@ class StartupTest extends BaseTest {
 		} finally{
 			ob_get_clean ();
 		}
+	}
+
+	public function testRunCallable(){
+		$_GET ["c"] = "call/hello/";
+		$this->_assertDisplayEquals ( function () {
+			$this->startup->run ( $this->config );
+		}, 'Hello world!' );
+	}
+
+	public function testOnError(){
+		$_GET ["c"] = "TestController/notExist";
+		$this->_assertDisplayContains( function () {
+			$this->startup->run ( $this->config );
+		}, 'This action does not exist on the controller' );
+	}
+
+	public function testOnError500(){
+		$_GET ["c"] = "TestController/throwError";
+		$this->_assertDisplayContains( function () {
+			$this->startup->run ( $this->config );
+		}, 'division' );
 	}
 
 	/**

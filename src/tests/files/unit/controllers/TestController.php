@@ -26,6 +26,10 @@ class TestController extends Controller {
 		echo "forward!";
 	}
 
+	public function throwError(){
+		echo 15/0;
+	}
+
 	/**
 	 *
 	 * @route("/route/test/withView/{p}", "name"=>"withView")

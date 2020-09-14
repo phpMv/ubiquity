@@ -6,4 +6,5 @@ $config ["debug"] = true;
 \Ubiquity\orm\DAO::start ();
 Router::startAll ();
 Router::addRoute ( "_default", "controllers\\IndexController" );
+Router::addCallableRoute('/call/hello', function(){echo 'Hello world!';},['get']);
 \Ubiquity\assets\AssetsManager::start ( $config );
