@@ -183,7 +183,7 @@ class Startup {
 		if (isset ( self::$config ['di'] )) {
 			$di = self::$config ['di'];
 			if (\is_array ( $di )) {
-				self::$actionParams += $di;
+				self::$actionParams += \array_values($di);
 			}
 		}
 		$func = $u [0];
