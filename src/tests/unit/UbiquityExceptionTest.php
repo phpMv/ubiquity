@@ -28,7 +28,7 @@ class UbiquityExceptionTest extends \Codeception\Test\Unit {
 		];
 		foreach ($exArray as $class=>$message){
 			$e=new $class($message,500);
-			$this->assertContainsEquals($message,($e)."");
+			$this->assertContains($message,($e)."");
 		}
 
 	}
