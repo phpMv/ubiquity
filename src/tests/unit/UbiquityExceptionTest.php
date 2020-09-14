@@ -11,7 +11,6 @@ use Ubiquity\exceptions\ThemesException;
 use Ubiquity\exceptions\TransformerException;
 use Ubiquity\exceptions\ValidatorException;
 
-require_once 'src/Ubiquity/exceptions/UbiquityException.php';
 
 /**
  * UbiquityException test case.
