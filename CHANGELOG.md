@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `quote` options for PDO wrappers
 ### Fixed
 - [orm] `oneToMany` and `manyToMany` loading pb with 2.3.11 version see [#145](https://github.com/phpMv/ubiquity/issues/145)
+### Tests
+- Adding tests
+- increase of coverage to 73%.
 ## [2.3.11] 2020-07-28
 ### Added
 - `DAOCache` (caches objects loaded by id)
