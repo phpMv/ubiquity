@@ -82,9 +82,9 @@ Goto admin interface by clicking on the button **Webtools**:
 
 .. image:: /_static/images/quick-start-2/ubi-my-admin-btn.png
 
-Select the tools you need.
+Select the tools you need:
 
-.. image:: /_static/images/quick-start-2/ubi-my-admin-btn-0.png
+.. image:: /_static/images/quick-start-2/ubi-my-admin-interface-0.png
    :class: bordered
 
 The web application **Webtools** saves time in repetitive operations.
