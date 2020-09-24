@@ -386,7 +386,7 @@ All DAO operations can be inserted into a transaction, so that a series of chang
 .. code-block:: php
       
    try{
-   		DAO::beginTransaction();
+    	DAO::beginTransaction();
     	$orga=new Organization();
     	$orga->setName('Foo');
     	DAO::save($orga);
