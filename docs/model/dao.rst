@@ -396,9 +396,9 @@ All DAO operations can be inserted into a transaction, so that a series of chang
     	$user->setOrganization($orga);
     	DAO::save($user);
     	DAO::commit();
-	}catch (\Exception $e){
+   }catch (\Exception $e){
 	        DAO::rollBack();
-	}
+   }
 
 In case of multiple databases defined in the configuration, transaction-related methods can take the database offset defined in parameter.
 

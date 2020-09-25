@@ -15,6 +15,8 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Commands module<commands>`
+   - :ref:`Composer module<composer>`
    - :ref:`OAuth client module<oauth>`
    - :ref:`Mailer module<mailer>`
    - :ref:`Servers configuration<servers>`
@@ -124,7 +126,8 @@ Ubiquity User guide
 .. toctree::
    :maxdepth: 1
    :caption: Extras
-   
+
+   extra/commands
    extra/libraries
    extra/caching
    extra/dependencies
