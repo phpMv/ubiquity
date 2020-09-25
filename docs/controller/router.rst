@@ -471,7 +471,7 @@ Checking routes with devtools :
 
    Ubiquity info:routes
    
-.. image:: /_static/images/quick-start/ubi-version.png
+.. image:: /_static/images/controllers/info-routes.png
    :class: console
 
 Error management 
@@ -509,7 +509,7 @@ Implement the requested action **p404** in the **IndexController**:
 Routage with annotations
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case, it is enough in this case to add a last route disabling the default routing system, and corresponding to the management of the 404 error:
+It is enough in this case to add a last route disabling the default routing system, and corresponding to the management of the 404 error:
 
 .. code-block:: php
    :caption: app/controllers/IndexController.php
