@@ -474,9 +474,9 @@ Checking routes with devtools :
 .. image:: /_static/images/controllers/info-routes.png
    :class: console
 
-Error management 
------------------
-Management of errors 404 and 500
+Error management (404 & 500 errors)
+-----------------------------------
+
 Default routing system
 ^^^^^^^^^^^^^^^^^^^^^^
 
