@@ -1,3 +1,4 @@
+.. _composer:
 Composer management
 ===================
 .. |br| raw:: html

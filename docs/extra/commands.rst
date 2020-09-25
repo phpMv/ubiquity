@@ -1,3 +1,4 @@
+.. _commands:
 Ubiquity commands
 =================
 .. |br| raw:: html
@@ -206,3 +207,23 @@ The **CreateArray** command implemented:
    		}
    	}
    } 
+   
+Custom command execution
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The new command is accessible from the devtools, as long as it is in the project:
+
+.. code-block:: bash
+   
+   Ubiquity help createArray
+
+.. image:: /_static/images/commands/custom-command-help.png
+   :class: console
+   
+.. code-block:: bash
+   
+   Ubiquity createArray "{\"b\":true,\"i\":5,\"s\":\"string\"}" -f=test.php
+
+.. image:: /_static/images/commands/custom-command-devtools.png
+   :class: console
+   
