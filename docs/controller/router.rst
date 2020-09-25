@@ -231,7 +231,16 @@ It is possible to specify the http method or methods associated with a route:
 The **methods** attribute can accept several methods: |br|
 ``@route("testMethods","methods"=>["get","post","delete"])``
 
-It is also possible to use specific annotations **@get**, **@post**... |br|
+The **@route** annotation defaults to all HTTP methods. |br|
+There is a specific annotation for each of the existing HTTP methods:
+ - **@get**
+ - **@post**
+ - **@put**
+ - **@patch**
+ - **@delete**
+ - **@head**
+ - **@options**
+
 ``@get("products")``
 
 Route name
@@ -464,6 +473,55 @@ Checking routes with devtools :
    
 .. image:: /_static/images/quick-start/ubi-version.png
    :class: console
+
+Error management 
+-----------------
+Management of errors 404 and 500
+Default routing system
+^^^^^^^^^^^^^^^^^^^^^^
+
+With the default routing system (the controller+action couple defining a route), the error handler can be redefined to customize the error management.
+
+In the configuration file **app/config/config.php**, add the **onError** key, associated to a callback defining the error messages:
+
+.. code-block:: php
+   
+   	"onError"=>function ($code, $message = null,$controller=null){
+   		switch($code){
+   			case 404:
+   			$init=($controller==null);
+   			\Ubiquity\controllers\Startup::forward('IndexController/p404',$init,$init);
+   			break;
+   		}
+   	}
+
+Implement the requested action **p404** in the **IndexController**:
+
+.. code-block:: php
+   :caption: app/controllers/IndexController.php
+   
+   ...
+   
+	public function p404(){
+			echo "<div class='ui error message'><div class='header'>404</div>The page you are loocking for doesn't exists!</div>";
+	}
+
+Routage with annotations
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this case, it is enough in this case to add a last route disabling the default routing system, and corresponding to the management of the 404 error:
+
+.. code-block:: php
+   :caption: app/controllers/IndexController.php
+   
+   ...
+   
+   	/**
+   	 * @route("{url}","priority"=>-1000)
+   	 */
+   	public function p404($url){
+   			echo "<div class='ui error message'><div class='header'>404</div>The page `$url` you are loocking for doesn't exists!</div>";
+   	}
 
 .. |br| raw:: html
 
