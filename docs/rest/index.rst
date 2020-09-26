@@ -176,6 +176,122 @@ Deleting an instance
 .. image:: /_static/images/rest/delete-instance.png
    :class: bordered
 
+Customizing
+++++++++++++++++++
+
+Routes
+~~~~~~
+It is of course possible to customize and simplify the routes. |br|
+In this case, it is preferable to use inheritance from the **RestBaseController** class, and not to enable automatic routes.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/RestOrgas.php
+   
+   namespace controllers;
+   
+   use models\Organization;
+   
+   /**
+    * Rest Controller for organizations
+    *
+    * @route("/orgas")
+    * @rest
+    */
+   class RestOrgas extends \Ubiquity\controllers\rest\RestBaseController {
+   
+   	public function initialize() {
+   		$this->model = Organization::class;
+   		parent::initialize();
+   	}
+   
+   	/**
+   	 *
+   	 * @get
+   	 */
+   	public function index() {
+   		$this->_get();
+   	}
+   
+   	/**
+   	 *
+   	 * @get("{keyValues}")
+   	 */
+   	public function get($keyValues) {
+   		$this->_getOne($keyValues);
+   	}
+   
+   	/**
+   	 *
+   	 * @post("/")
+   	 */
+   	public function add() {
+   		$this->_add();
+   	}
+   
+   	/**
+   	 *
+   	 * @patch("{keyValues}")
+   	 */
+   	public function update(...$keyValues) {
+   		$this->_update(...$keyValues);
+   	}
+   
+   	/**
+   	 *
+   	 * @delete("{keyValues}")
+   	 */
+   	public function delete(...$keyValues) {
+   		$this->_delete(...$keyValues);
+   	}
+   }
+
+
+After re-initializing the cache, the test interface shows the accessible routes:
+
+.. image:: /_static/images/rest/custom-orgas.png
+   :class: bordered
+   
+Modification of sent data
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By overriding
++++++++++++++
+
+It is possible to modify the data sent to the update and add methods, in order to add, modify or delete the value of fields before sending. |br|
+Either by overdefining the method getDatas:
+
+.. code-block:: php
+   :caption: app/controllers/RestOrgas.php
+   
+   ...
+   
+   	protected function getDatas() {
+   		$datas = parent::getDatas();
+   		unset($datas['aliases']);// Remove aliases field
+   		return $datas;
+   	}
+
+With events
++++++++++++
+
+Either in a more global way by acting on the rest events:
+
+.. code-block:: php
+   :caption: app/config/services.php
+   
+   
+   use Ubiquity\events\EventsManager;
+   use Ubiquity\events\RestEvents;
+   use Ubiquity\controllers\rest\RestBaseController;
+
+   ...
+   
+   EventsManager::addListener(RestEvents::BEFORE_INSERT, function ($o, array &$datas, RestBaseController $resource) {
+   	unset($datas['aliases']);// Remove aliases field
+   });
+
+
 Authentification
 ----------------
 Ubiquity REST implements an Oauth2 authentication with Bearer tokens. |br|
