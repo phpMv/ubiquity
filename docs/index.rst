@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Async platforms module<async>`
    - :ref:`Commands module<commands>`
    - :ref:`Composer module<composer>`
    - :ref:`OAuth client module<oauth>`
@@ -132,6 +133,7 @@ Ubiquity User guide
    extra/caching
    extra/dependencies
    extra/oauth
+   extra/async
 
 Indices and tables
 ==================
