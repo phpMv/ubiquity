@@ -5,8 +5,6 @@ Async platforms
 
    <br />
 
-.. note:: This part is accessible from the **webtools**, so if you created your project with the **-a** option or with the **create-project** command..
-
 Ubiquity supports multiple platforms : Swoole, Workerman, RoadRunner, PHP-PM, ngx_php.
 
 Swoole
@@ -19,7 +17,7 @@ Install the Swoole extension on your system (linux) or in your Docker image :
    #!/bin/bash
    pecl install swoole
    
-Run Ubiquity Swoole (for the first time, Ubiquity-swoole package will be installed):
+Run Ubiquity Swoole (for the first time, **ubiquity-swoole** package will be installed):
 
 .. code-block:: bash
    
@@ -70,6 +68,11 @@ Startup of services will be done only once, at server startup.
    	\controllers\IndexController::warmup();
    	\controllers\FooController::warmup();
    });
+
+The warmUpControllers method:
+- instantiates the controllers
+- performs dependency injection
+- prepares the call of the initialize and finalize methods (initialization of call constants)
    
 At the start of each Worker, the **warmup** method of the controllers can for example initialize prepared DAO queries:
 
@@ -84,10 +87,10 @@ At the start of each Worker, the **warmup** method of the controllers can for ex
 Workerman
 ---------
 
-Workerman does not require any special installation (except for libevent to be used in production for performance reasons).
+Workerman does not require any special installation (except for **libevent** to be used in production for performance reasons).
 
    
-Run Ubiquity Workerman (for the first time, Ubiquity-workerman package will be installed):
+Run Ubiquity Workerman (for the first time, **ubiquity-workerman** package will be installed):
 
 .. code-block:: bash
    

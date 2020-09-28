@@ -15,7 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
-   - :ref:`Async platforms module<async>`
+   - :ref:`Async platforms<async>`
    - :ref:`Commands module<commands>`
    - :ref:`Composer module<composer>`
    - :ref:`OAuth client module<oauth>`
