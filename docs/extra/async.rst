@@ -5,7 +5,7 @@ Async platforms
 
    <br />
 
-Ubiquity supports multiple platforms : Swoole, Workerman, RoadRunner, PHP-PM, ngx_php.
+.. note:: Ubiquity supports multiple platforms : Swoole, Workerman, RoadRunner, PHP-PM, ngx_php.
 
 Swoole
 ------
@@ -70,9 +70,9 @@ Startup of services will be done only once, at server startup.
    });
 
 The warmUpControllers method:
-- instantiates the controllers
-- performs dependency injection
-- prepares the call of the initialize and finalize methods (initialization of call constants)
+  - instantiates the controllers
+  - performs dependency injection
+  - prepares the call of the initialize and finalize methods (initialization of call constants)
    
 At the start of each Worker, the **warmup** method of the controllers can for example initialize prepared DAO queries:
 
