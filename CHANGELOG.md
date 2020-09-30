@@ -6,12 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrelease]
 - nothing
-## [2.3.12] Coming soon
+## [2.3.12] 2020-09-30
 ### Added
 - Named db statements for async platforms
 - Rest events on insert and update `BEFORE_INSERT = 'rest.before.insert'` and `BEFORE_UPDATE = 'rest.before.update'`
 - `insertGroups` method (inserts in an implicit transaction)
 - `quote` options for PDO wrappers
+- `ApplicationStorage` for global variables with async platforms (Swoole, Workerman, ngx_php...)
 ### Fixed
 - [orm] `oneToMany` and `manyToMany` loading pb with 2.3.11 version see [#145](https://github.com/phpMv/ubiquity/issues/145)
 ### Tests
