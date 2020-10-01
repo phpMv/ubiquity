@@ -6,6 +6,7 @@
 [![License](https://poser.pugx.org/phpmv/ubiquity/license)](https://packagist.org/packages/phpmv/ubiquity)
 [![Total Downloads](https://poser.pugx.org/phpmv/ubiquity/downloads)](https://packagist.org/packages/phpmv/ubiquity)
 [![Monthly Downloads](https://poser.pugx.org/phpmv/ubiquity/d/monthly)](//packagist.org/packages/phpmv/ubiquity)
+![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/phpmv/ubiquity/2.3.12?style=flat-square)
 [![Discord](https://img.shields.io/discord/708356828022571090?label=Discord)](https://discord.gg/cwrmQRP)
 [![Join the chat at https://gitter.im/ubiquity-framework/community](https://badges.gitter.im/ubiquity-framework/community.svg)](https://gitter.im/ubiquity-framework/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
 
