@@ -160,7 +160,7 @@ class Startup {
 					}
 				}
 			} else {
-				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
+				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exist! <br/>', 'runAction' );
 				static::onError ( 404 );
 			}
 		} catch ( \Error $eC ) {
@@ -235,7 +235,7 @@ class Startup {
 			switch ($code) {
 				case 404 :
 					self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-					echo ($message ?? "The page you are loocking for doesn't exists!");
+					echo ($message ?? "The page you are looking for doesn't exist!");
 					break;
 
 				case 500 :
