@@ -23,7 +23,7 @@ class ApplicationStorage {
 	 * @param mixed $value
 	 */
 	public static function put(string $key, $value){
-		self::$datas[$key=$value];
+		self::$datas[$key]=$value;
 	}
 
 	/**
