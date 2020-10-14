@@ -68,7 +68,7 @@ trait RouterCacheTrait {
 		UArray::removeRecursive ( $array, 'priority' );
 	}
 
-	private static function initRouterCache(&$config, $silent = false) {
+	protected static function initRouterCache(&$config, $silent = false) {
 		$routes = self::parseControllerFiles ( $config, $silent );
 		self::$cache->store ( 'controllers/routes.default', $routes ['default'], 'controllers' );
 		self::$cache->store ( 'controllers/routes.rest', $routes ['rest'], 'controllers' );
