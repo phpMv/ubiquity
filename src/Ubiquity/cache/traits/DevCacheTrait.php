@@ -5,6 +5,7 @@ namespace Ubiquity\cache\traits;
 use Ubiquity\utils\base\UFileSystem;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
+use mindplay\annotations\Annotations;
 
 /**
  * To be Used in dev mode, not in production
