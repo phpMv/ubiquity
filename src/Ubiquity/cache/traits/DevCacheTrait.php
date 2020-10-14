@@ -17,7 +17,7 @@ trait DevCacheTrait {
 	/**
 	 * @var array array of annotations name/class
 	 */
-	protected $registry;
+	protected static $registry;
 
 	abstract protected static function getCacheInstance(&$config, $cacheDirectory, $postfix);
 
@@ -83,7 +83,7 @@ trait DevCacheTrait {
 	 */
 	public static function registerAnnotations(string $nameClasses):void{
 		foreach ($nameClasses as $name=>$class){
-			self::$register[$name]=$class;
+			self::$registry[$name]=$class;
 		}
 	}
 
