@@ -80,7 +80,12 @@ class Reflexion {
 
 	public static function getAnnotationMember($class, $member, $annotation) {
 		$annot = Annotations::ofProperty ( $class, $member, $annotation );
-		return current ( $annot );
+		return \current ( $annot );
+	}
+
+	public static function getAnnotationMethod($class, $method, $annotation) {
+		$annot = Annotations::ofMethod ( $class, $method, $annotation );
+		return \current ( $annot );
 	}
 
 	public static function getAnnotationsMember($class, $member, $annotation) {
