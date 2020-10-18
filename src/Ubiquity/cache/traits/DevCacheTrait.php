@@ -82,9 +82,9 @@ trait DevCacheTrait {
 	}
 
 	/**
-	 * @param string $nameClasses an array of name=>class annotations
+	 * @param array $nameClasses an array of name=>class annotations
 	 */
-	public static function registerAnnotations(string $nameClasses):void{
+	public static function registerAnnotations(array $nameClasses):void{
 		foreach ($nameClasses as $name=>$class){
 			self::$registry[$name]=$class;
 		}
