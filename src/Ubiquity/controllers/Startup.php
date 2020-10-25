@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.7
+ * @version 1.1.8
  *
  */
 class Startup {
@@ -46,7 +46,7 @@ class Startup {
 	protected static function startTemplateEngine(&$config): void {
 		try {
 			$templateEngine = $config ['templateEngine'];
-			$engineOptions = $config ['templateEngineOptions'] ?? array ('cache' => false );
+			$engineOptions = $config ['templateEngineOptions'] ?? ['cache' => false ];
 			$engine = new $templateEngine ( $engineOptions );
 			if ($engine instanceof TemplateEngine) {
 				self::$templateEngine = $engine;
@@ -279,7 +279,7 @@ class Startup {
 	 * @return string
 	 */
 	public static function getViewNameFileExtension(): string {
-		return "html";
+		return 'html';
 	}
 
 	/**

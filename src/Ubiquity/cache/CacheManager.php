@@ -44,6 +44,9 @@ class CacheManager {
 		self::getCacheInstance($config, $cacheDirectory, '.cache');
 	}
 
+	/**
+	 * Starts the cache from a controller
+	 */
 	public static function startProdFromCtrl() {
 		$config = &Startup::$config;
 		$cacheD = \ROOT . \DS . ($config['cache']['directory'] ??= 'cache' . \DS);

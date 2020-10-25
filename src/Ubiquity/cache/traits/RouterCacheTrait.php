@@ -20,7 +20,7 @@ use Ubiquity\utils\http\UResponse;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.9
+ * @version 1.0.10
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
@@ -249,7 +249,7 @@ trait RouterCacheTrait {
 	 * @param ?array $controllers
 	 */
 	public static function warmUpControllers($controllers = null) {
-		$controllers = $controllers ?? self::getControllers ();
+		$controllers ??= self::getControllers ();
 		foreach ( $controllers as $ctrl ) {
 			$controller = StartupAsync::getControllerInstance ( $ctrl );
 			$binary = UIntrospection::implementsMethod ( $controller, 'isValid', Controller::class ) ? 1 : 0;
