@@ -17,14 +17,14 @@
   - PSR-4 Autoloader
   - Router based on annotations
   - ORM implementing Data Mapper
-  - Multi-databases & multi-database types support (PDO Mysql, Mysqli, Swoole coroutine Mysql, Tarantool)
+  - Multi-databases & multi-database types support (PDO Mysql/PostgreSQL/SQLite, Mysqli, Swoole coroutine Mysql, Tarantool, MongoDB)
   - Multi-level cache
   - Rest Server
-  - Web admin interface (UbiquityMyAdmin)
-  - Scaffolding
+  - Web admin interface (Webtools)
+  - Scaffolding (CRUD, REST, Controllers, views, authentification...)
   - Console Admin interface (Devtools)
   - Assets & themes management (since 2.1.0, on a [proposal](https://github.com/phpMv/ubiquity/issues/11) from [@Gildonei](https://github.com/gildonei))
-  - Managed servers: fpm/fastcgi with Apache or nginX, [Workerman](https://github.com/walkor/Workerman), [Swoole](https://github.com/swoole/swoole-src), [Roadrunner](https://github.com/Lapinskas/roadrunner-ubiquity), [PHP-PM](https://github.com/php-pm/php-pm) with ReactPHP (Dev only)
+  - Managed servers: fpm/fastcgi with Apache or nginX, [ngx_php](https://github.com/rryqszq4/ngx_php7), [Workerman](https://github.com/walkor/Workerman), [Swoole](https://github.com/swoole/swoole-src), [Roadrunner](https://github.com/Lapinskas/roadrunner-ubiquity), [PHP-PM](https://github.com/php-pm/php-pm) with ReactPHP (Dev only)
 
 # Upgrade
 If Ubiquity devtools are already globally installed, and you want to upgrade to the lastest stable version:
