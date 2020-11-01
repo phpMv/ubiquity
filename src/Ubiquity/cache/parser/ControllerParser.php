@@ -30,7 +30,7 @@ class ControllerParser {
 		$this->controllerClass = $controllerClass;
 		$restAnnotsClass = [ ];
 		$reflect = new \ReflectionClass ( $controllerClass );
-		if (! $reflect->isAbstract () && $reflect->isSubclassOf ( Ubiquity\controllers\Controller::class )) {
+		if (! $reflect->isAbstract () && $reflect->isSubclassOf ( \Ubiquity\controllers\Controller::class )) {
 			try {
 				$annotsClass = Reflexion::getAnnotationClass ( $controllerClass, '@route' );
 				$restAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, '@rest' );
