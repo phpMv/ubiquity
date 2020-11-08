@@ -30,7 +30,7 @@ class StartupAsync extends Startup {
 	 */
 	public static function forward($url, $initialize = true, $finalize = true): void {
 		$methodUrl=$_SERVER['REQUEST_METHOD'].$url;
-		if($m=(self::$routes[$methodUrl]??false)){
+		if(($m=(self::$routes[$methodUrl]??false))!==false){
 			$m($initialize,$finalize);
 			return ;
 		}
