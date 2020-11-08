@@ -29,8 +29,8 @@ class StartupAsync extends Startup {
 	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 */
 	public static function forward($url, $initialize = true, $finalize = true): void {
-		$methodUrl=$_SERVER['REQUEST_METHOD'].$url;
-		if(($m=(self::$routes[$methodUrl]??false))!==false){
+		$method=$_SERVER['REQUEST_METHOD'];
+		if(($m=(self::$routes[$url][$method]??false))!==false){
 			$m($initialize,$finalize);
 			return ;
 		}
@@ -39,16 +39,16 @@ class StartupAsync extends Startup {
 			if (\is_array ( $ru )) {
 				if (\is_string ( $ru [0] )) {
 					$xu=['ctrl'=>$ru[0],'action'=>$ru[1]??'index','params'=>\array_slice ( $ru, 2 )];
-					(self::$routes[$methodUrl]=function($i,$f)use($xu){
+					(self::$routes[$url][$method]=function($i,$f)use($xu){
 						static::runAction ( $xu, $i, $f );
 					})($initialize,$finalize);
 				} else {
-					(self::$routes[$methodUrl]=function() use($ru){
+					(self::$routes[$url][$method]=function() use($ru){
 						self::runCallable ( $ru );
 					})();
 				}
 			} else {
-				(self::$routes[$methodUrl]=function() use($ru){
+				(self::$routes[$url][$method]=function() use($ru){
 					echo $ru; // Displays route response from cache
 				})();
 
@@ -56,7 +56,7 @@ class StartupAsync extends Startup {
 		} else {
 			$u [0] = self::$ctrlNS . $u [0];
 			$xu=['ctrl'=>$u[0],'action'=>$u[1]??'index','params'=>\array_slice ( $u, 2 )];
-			(self::$routes[$methodUrl]=function($i,$f)use($xu){
+			(self::$routes[$url][$method]=function($i,$f)use($xu){
 				static::runAction ( $xu, $i, $f );
 			})($initialize,$finalize);
 		}
