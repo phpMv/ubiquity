@@ -336,10 +336,10 @@ class URequest {
 	 * Creates a password hash for a posted value at $key position
 	 *
 	 * @param string $key
-	 * @param int $algo
+	 * @param string $algo
 	 * @return string|boolean
 	 */
-	public static function password_hash(string $key, int $algo = PASSWORD_DEFAULT) {
+	public static function password_hash(string $key, string $algo = PASSWORD_DEFAULT) {
 		if (isset ( $_POST [$key] )) {
 			return $_POST [$key] = password_hash ( $_POST [$key], $algo );
 		}
