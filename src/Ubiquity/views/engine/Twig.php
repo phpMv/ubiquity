@@ -133,7 +133,12 @@ class Twig extends TemplateEngine {
 	 * @see \Ubiquity\views\engine\TemplateEngine::getBlockNames()
 	 */
 	public function getBlockNames($templateName) {
-		return $this->twig->load ( $templateName )->getBlockNames ();
+		try {
+			$result = $this->twig->load($templateName)->getBlockNames();
+		} catch (\Error $e) {
+			$result = [];
+		}
+		return $result;
 	}
 
 	/**
