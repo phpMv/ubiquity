@@ -39,7 +39,7 @@ trait DAOUQueries {
 			$jSQL = OrmUtils::getUJoinSQL ( $db, $className, $relations [$field], $field, $aliases, $quote );
 			$condition .= ' ' . $jSQL ['sql'];
 			if (\count ( $expressionArray ) === 1) {
-				$ucondition = preg_replace ( '/(^|\s|\()' . $expression . '/', " {$jSQL['alias']}." . $expressionArray [0], $ucondition );
+				$ucondition = preg_replace ( '/(^|\s|\()' . $expression . '/', "\$1{$jSQL['alias']}." . $expressionArray [0], $ucondition );
 			} else {
 				self::uParseExpression ( $db, $jSQL ['class'], $expression, $expressionArray, $condition, $ucondition, $aliases, $quote );
 			}
