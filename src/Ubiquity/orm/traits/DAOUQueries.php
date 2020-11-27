@@ -11,7 +11,7 @@ use Ubiquity\db\Database;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 trait DAOUQueries {
@@ -34,14 +34,14 @@ trait DAOUQueries {
 
 	protected static function uParseExpression($db, $className, $expression, &$expressionArray, &$condition, &$ucondition, &$aliases, $quote) {
 		$relations = self::getAnnotFieldsInRelations ( $className );
-		$field = array_shift ( $expressionArray );
+		$field = \array_shift ( $expressionArray );
 		if (isset ( $relations [$field] )) {
 			$jSQL = OrmUtils::getUJoinSQL ( $db, $className, $relations [$field], $field, $aliases, $quote );
-			$condition .= " " . $jSQL ["sql"];
-			if (sizeof ( $expressionArray ) === 1) {
-				$ucondition = preg_replace ( '/(^|\s)' . $expression . '/', " {$jSQL["alias"]}." . $expressionArray [0], $ucondition );
+			$condition .= ' ' . $jSQL ['sql'];
+			if (\count ( $expressionArray ) === 1) {
+				$ucondition = preg_replace ( '/(^|\s|\()' . $expression . '/', " {$jSQL['alias']}." . $expressionArray [0], $ucondition );
 			} else {
-				self::uParseExpression ( $db, $jSQL ["class"], $expression, $expressionArray, $condition, $ucondition, $aliases, $quote );
+				self::uParseExpression ( $db, $jSQL ['class'], $expression, $expressionArray, $condition, $ucondition, $aliases, $quote );
 			}
 		}
 	}
