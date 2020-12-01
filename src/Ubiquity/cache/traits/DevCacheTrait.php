@@ -1,30 +1,32 @@
 <?php
-
 namespace Ubiquity\cache\traits;
 
 use Ubiquity\utils\base\UFileSystem;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 use mindplay\annotations\Annotations;
+use Ubiquity\security\acl\AclManager;
 
 /**
  * To be Used in dev mode, not in production
  * Ubiquity\cache\traits$DevCacheTrait
  * This class is part of Ubiquity
+ *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 trait DevCacheTrait {
 
 	/**
+	 *
 	 * @var array array of annotations name/class
 	 */
 	protected static $registry;
 
 	abstract protected static function getCacheInstance(&$config, $cacheDirectory, $postfix);
 
-	abstract protected  static function initRestCache(&$config, $silent = false);
+	abstract protected static function initRestCache(&$config, $silent = false);
 
 	abstract protected static function initRouterCache(&$config, $silent = false);
 
@@ -33,6 +35,7 @@ trait DevCacheTrait {
 	private static function initialGetCacheDirectory(&$config) {
 		return $config['cache']['directory'] ??= 'cache' . \DS;
 	}
+
 	/**
 	 * Starts the cache in dev mode, for generating the other caches
 	 * Do not use in production
@@ -40,39 +43,39 @@ trait DevCacheTrait {
 	 * @param array $config
 	 */
 	public static function start(&$config) {
-		self::$registry=[
-				'id' => 'Ubiquity\annotations\IdAnnotation',
-				'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
-				'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
-				'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
-				'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
-				'table' => 'Ubiquity\annotations\TableAnnotation',
-				'database' => 'Ubiquity\annotations\DatabaseAnnotation',
-				'transient' => 'Ubiquity\annotations\TransientAnnotation',
-				'column' => 'Ubiquity\annotations\ColumnAnnotation',
-				'validator' => 'Ubiquity\annotations\ValidatorAnnotation',
-				'transformer' => 'Ubiquity\annotations\TransformerAnnotation',
-				'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
-				'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
-				'route' => 'Ubiquity\annotations\router\RouteAnnotation',
-				'get' => 'Ubiquity\annotations\router\GetAnnotation',
-				'getMapping' => 'Ubiquity\annotations\router\GetAnnotation',
-				'post' => 'Ubiquity\annotations\router\PostAnnotation',
-				'postMapping' => 'Ubiquity\annotations\router\PostAnnotation',
-				'put' => 'Ubiquity\annotations\router\PutAnnotation',
-				'putMapping' => 'Ubiquity\annotations\router\PutAnnotation',
-				'patch' => 'Ubiquity\annotations\router\PatchAnnotation',
-				'patchMapping' => 'Ubiquity\annotations\router\PatchAnnotation',
-				'delete' => 'Ubiquity\annotations\router\DeleteAnnotation',
-				'deleteMapping' => 'Ubiquity\annotations\router\DeleteAnnotation',
-				'options' => 'Ubiquity\annotations\router\OptionsAnnotation',
-				'optionsMapping' => 'Ubiquity\annotations\router\OptionsAnnotation',
-				'var' => 'mindplay\annotations\standard\VarAnnotation',
-				'yuml' => 'Ubiquity\annotations\YumlAnnotation',
-				'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
-				'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation',
-				'injected' => 'Ubiquity\annotations\di\InjectedAnnotation',
-				'autowired' => 'Ubiquity\annotations\di\AutowiredAnnotation'
+		self::$registry = [
+			'id' => 'Ubiquity\annotations\IdAnnotation',
+			'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
+			'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
+			'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
+			'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
+			'table' => 'Ubiquity\annotations\TableAnnotation',
+			'database' => 'Ubiquity\annotations\DatabaseAnnotation',
+			'transient' => 'Ubiquity\annotations\TransientAnnotation',
+			'column' => 'Ubiquity\annotations\ColumnAnnotation',
+			'validator' => 'Ubiquity\annotations\ValidatorAnnotation',
+			'transformer' => 'Ubiquity\annotations\TransformerAnnotation',
+			'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
+			'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
+			'route' => 'Ubiquity\annotations\router\RouteAnnotation',
+			'get' => 'Ubiquity\annotations\router\GetAnnotation',
+			'getMapping' => 'Ubiquity\annotations\router\GetAnnotation',
+			'post' => 'Ubiquity\annotations\router\PostAnnotation',
+			'postMapping' => 'Ubiquity\annotations\router\PostAnnotation',
+			'put' => 'Ubiquity\annotations\router\PutAnnotation',
+			'putMapping' => 'Ubiquity\annotations\router\PutAnnotation',
+			'patch' => 'Ubiquity\annotations\router\PatchAnnotation',
+			'patchMapping' => 'Ubiquity\annotations\router\PatchAnnotation',
+			'delete' => 'Ubiquity\annotations\router\DeleteAnnotation',
+			'deleteMapping' => 'Ubiquity\annotations\router\DeleteAnnotation',
+			'options' => 'Ubiquity\annotations\router\OptionsAnnotation',
+			'optionsMapping' => 'Ubiquity\annotations\router\OptionsAnnotation',
+			'var' => 'mindplay\annotations\standard\VarAnnotation',
+			'yuml' => 'Ubiquity\annotations\YumlAnnotation',
+			'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
+			'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation',
+			'injected' => 'Ubiquity\annotations\di\InjectedAnnotation',
+			'autowired' => 'Ubiquity\annotations\di\AutowiredAnnotation'
 		];
 		self::$cacheDirectory = self::initialGetCacheDirectory($config);
 		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
@@ -82,9 +85,11 @@ trait DevCacheTrait {
 	}
 
 	/**
-	 * @param array $nameClasses an array of name=>class annotations
+	 *
+	 * @param array $nameClasses
+	 *        	an array of name=>class annotations
 	 */
-	public static function registerAnnotations(array $nameClasses):void{
+	public static function registerAnnotations(array $nameClasses): void {
 		$annotationManager = Annotations::getManager();
 		foreach ($nameClasses as $name => $class) {
 			self::$registry[$name] = $class;
@@ -92,7 +97,7 @@ trait DevCacheTrait {
 		}
 	}
 
-	protected  static function register(AnnotationManager $annotationManager) {
+	protected static function register(AnnotationManager $annotationManager) {
 		$annotationManager->registry = \array_merge($annotationManager->registry, self::$registry);
 	}
 
@@ -136,14 +141,14 @@ trait DevCacheTrait {
 		$gitCacheDir = $cacheDirectory . 'git';
 		$contentsCacheDir = $cacheDirectory . 'contents';
 		return [
-				'annotations' => $annotationCacheDir,
-				'models' => $modelsCacheDir,
-				'controllers' => $controllersCacheDir,
-				'queries' => $queriesCacheDir,
-				'views' => $viewsCacheDir,
-				'seo' => $seoCacheDir,
-				'git' => $gitCacheDir,
-				'contents' => $contentsCacheDir
+			'annotations' => $annotationCacheDir,
+			'models' => $modelsCacheDir,
+			'controllers' => $controllersCacheDir,
+			'queries' => $queriesCacheDir,
+			'views' => $viewsCacheDir,
+			'seo' => $seoCacheDir,
+			'git' => $gitCacheDir,
+			'contents' => $contentsCacheDir
 		];
 	}
 
@@ -161,12 +166,12 @@ trait DevCacheTrait {
 	public static function clearCache(&$config, $type = 'all') {
 		$cacheDirectories = self::checkCache($config);
 		$cacheDirs = [
-				'annotations',
-				'controllers',
-				'models',
-				'queries',
-				'views',
-				'contents'
+			'annotations',
+			'controllers',
+			'models',
+			'queries',
+			'views',
+			'contents'
 		];
 		foreach ($cacheDirs as $typeRef) {
 			self::_clearCache($cacheDirectories, $type, $typeRef);
@@ -187,13 +192,16 @@ trait DevCacheTrait {
 	public static function initCache(&$config, $type = 'all', $silent = false) {
 		self::checkCache($config, $silent);
 		self::start($config);
-		if ($type === 'all' || $type === 'models'){
+		if ($type === 'all' || $type === 'models') {
 			self::initModelsCache($config, false, $silent);
 		}
-		if ($type === 'all' || $type === 'controllers'){
+		if ($type === 'all' || $type === 'controllers') {
+			if (\class_exists('\\Ubiquity\\security\\acl\\AclManager')) {
+				AclManager::registerAnnotations($config);
+			}
 			self::initRouterCache($config, $silent);
 		}
-		if ($type === 'all' || $type === 'rest'){
+		if ($type === 'all' || $type === 'rest') {
 			self::initRestCache($config, $silent);
 		}
 	}
