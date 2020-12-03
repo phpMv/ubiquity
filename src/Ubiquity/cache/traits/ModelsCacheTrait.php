@@ -121,17 +121,19 @@ trait ModelsCacheTrait {
 	 * @return string[]
 	 */
 	public static function getModels(&$config, $silent = false, $databaseOffset = 'default') {
-		$result = [ ];
-		$files = self::getModelsFiles ( $config, $silent );
-		foreach ( $files as $file ) {
-			$className = ClassUtils::getClassFullNameFromFile ( $file );
-			$db = 'default';
-			$ret = Reflexion::getAnnotationClass ( $className, '@database' );
-			if (\sizeof ( $ret ) > 0) {
-				$db = $ret [0]->name;
-			}
-			if ($db === $databaseOffset) {
-				$result [] = $className;
+		$result = [];
+		$files = self::getModelsFiles($config, $silent);
+		foreach ($files as $file) {
+			$className = ClassUtils::getClassFullNameFromFile($file);
+			if (\class_exists($className, true)) {
+				$db = 'default';
+				$ret = Reflexion::getAnnotationClass($className, '@database');
+				if (\sizeof($ret) > 0) {
+					$db = $ret[0]->name;
+				}
+				if ($db === $databaseOffset) {
+					$result[] = $className;
+				}
 			}
 		}
 		return $result;
