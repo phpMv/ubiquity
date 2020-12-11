@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - ACL Manager in [ubiquity-acl repository](https://github.com/phpMv/ubiquity-acl)
 ### Fixed
+- Update php version in composer.json for php 8
 - DAOUqueries [pb with parentheses in condition](https://github.com/phpMv/ubiquity/issues/159)
 - [Password hash algo type](https://github.com/phpMv/ubiquity/commit/ddd8504aaa697b3d15ec2db7bece4b7202b81c7b) (no open issue)
 - [DB Logging omitted](https://github.com/phpMv/ubiquity/commit/50f645355db7d395774ad7d9a47e1c4bf91dc0ce) (no open issue)
