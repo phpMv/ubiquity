@@ -144,7 +144,7 @@ class Router {
 				if (\count ( $parameters ) > 0) {
 					$routePath = self::_getURL ( $routePath, $parameters );
 				}
-				$routePath = \preg_replace('~\((.*?)\)~', '', $routePath);
+				$routePath = \str_replace('//', '/',\preg_replace('~\((.*?)\)~', '', $routePath));
 				return ($absolute)?$routePath:\ltrim ( $routePath, '/' );
 			}
 		}
