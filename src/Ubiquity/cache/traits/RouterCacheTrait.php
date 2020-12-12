@@ -21,6 +21,7 @@ use Ubiquity\utils\http\UResponse;
  *
  */
 trait RouterCacheTrait {
+	abstract public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false, $includeAbstract = false);
 
 	public static function controllerCacheUpdated(&$config) {
 		$result = false;
