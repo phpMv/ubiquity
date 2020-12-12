@@ -12,6 +12,7 @@ use Ubiquity\utils\base\UFileSystem;
 
 use Ubiquity\controllers\Startup;
 use Ubiquity\cache\traits\DevCacheTrait;
+use Ubiquity\cache\traits\DevRouterCacheTrait;
 
 /**
  * Manager for caches (Router, Rest, models).
@@ -19,11 +20,11 @@ use Ubiquity\cache\traits\DevCacheTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class CacheManager {
-	use DevCacheTrait,RouterCacheTrait,ModelsCacheTrait,RestCacheTrait;
+	use DevCacheTrait,RouterCacheTrait,DevRouterCacheTrait,ModelsCacheTrait,RestCacheTrait;
 
 	/**
 	 *
