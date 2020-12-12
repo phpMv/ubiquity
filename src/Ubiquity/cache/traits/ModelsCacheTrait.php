@@ -19,7 +19,7 @@ use Ubiquity\orm\OrmUtils;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
- * @property \Ubiquity\cache\system\AbstractDataCache $cache
+ * @staticvar \Ubiquity\cache\system\AbstractDataCache $cache
  */
 trait ModelsCacheTrait {
 

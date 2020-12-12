@@ -14,6 +14,7 @@ use mindplay\annotations\Annotations;
  * @author jc
  * @version 1.0.1
  *
+ * @staticvar string $cacheDirectory
  */
 trait DevCacheTrait {
 
