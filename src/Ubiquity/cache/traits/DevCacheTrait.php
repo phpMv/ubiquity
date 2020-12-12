@@ -5,7 +5,6 @@ use Ubiquity\utils\base\UFileSystem;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 use mindplay\annotations\Annotations;
-use Ubiquity\security\acl\AclManager;
 
 /**
  * To be Used in dev mode, not in production
@@ -197,7 +196,7 @@ trait DevCacheTrait {
 		}
 		if ($type === 'all' || $type === 'controllers') {
 			if (\class_exists('\\Ubiquity\\security\\acl\\AclManager')) {
-				AclManager::registerAnnotations($config);
+				\Ubiquity\security\acl\AclManager::registerAnnotations($config);
 			}
 			self::initRouterCache($config, $silent);
 		}

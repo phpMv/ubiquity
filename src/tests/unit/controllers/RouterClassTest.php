@@ -67,7 +67,7 @@ class RouterClassTest extends BaseTest {
 	 * Tests Router::getRouteByName()
 	 */
 	public function testGetRouteByName() {
-		$this->assertEquals ( '/route/test/withView/(.+?)/', $this->router->getRouteByName ( 'withView' ) );
+		$this->assertEquals ( '/route/test/withView/', $this->router->getRouteByName ( 'withView' ) );
 		$this->assertFalse ( $this->router->getRouteByName ( 'withView2' ) );
 	}
 
