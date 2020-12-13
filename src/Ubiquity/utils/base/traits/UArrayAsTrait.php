@@ -69,8 +69,8 @@ trait UArrayAsTrait {
 		return self::as_($array,['prefix'=>'','before'=>'[','after'=>']'],null,$depth,$format);
 	}
 
-	public static function asPhpAttribute($array, $prefix = '#', $depth = 1, $format = false) {
-		return self::as_($array,['prefix'=>$prefix,'before'=>'[','after'=>']'],function($k,$v){return $k.': '.$v;},$depth,$format);
+	public static function asPhpAttribute($array, $prefix = '', $depth = 1, $format = false) {
+		return self::as_($array,['prefix'=>$prefix,'before'=>'(','after'=>')'],function($k,$v){return $k.': '.$v;},$depth,$format);
 	}
 
 	public static function asPhpClass($array, $name, $namespace = '', $format = false) {
