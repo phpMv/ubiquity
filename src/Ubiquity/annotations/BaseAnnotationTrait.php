@@ -16,7 +16,7 @@ trait BaseAnnotationTrait {
 		$props = $reflect->getProperties ();
 		return $props;
 	}
-	
+
 	public function getPropertiesAndValues($props = NULL) {
 		$ret = array ();
 		if (\is_null ( $props ))
@@ -29,11 +29,6 @@ trait BaseAnnotationTrait {
 				}
 			}
 			return $ret;
-	}
-	
-	public function asPhpArray() {
-		$fields = $this->getPropertiesAndValues ();
-		return UArray::asPhpArray ( $fields );
 	}
 }
 
