@@ -18,17 +18,22 @@ trait BaseAnnotationTrait {
 	}
 
 	public function getPropertiesAndValues($props = NULL) {
-		$ret = array ();
+		$ret = [];
 		if (\is_null ( $props ))
 			$props = $this->getProperties ( $this );
 			foreach ( $props as $prop ) {
 				$prop->setAccessible ( true );
 				$v = $prop->getValue ( $this );
-				if ($v !== null && $v !== "" && isset ( $v )) {
+				if ($v !== null && $v !== '' && isset ( $v )) {
 					$ret [$prop->getName ()] = $v;
 				}
 			}
 			return $ret;
+	}
+
+	protected function asAnnotation() {
+		$fields = $this->getPropertiesAndValues ();
+		return UArray::asPhpArray ( $fields );
 	}
 }
 
