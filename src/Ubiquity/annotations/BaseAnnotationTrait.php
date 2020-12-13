@@ -30,10 +30,5 @@ trait BaseAnnotationTrait {
 			}
 			return $ret;
 	}
-
-	protected function asAnnotation() {
-		$fields = $this->getPropertiesAndValues ();
-		return UArray::asPhpArray ( $fields );
-	}
 }
 
