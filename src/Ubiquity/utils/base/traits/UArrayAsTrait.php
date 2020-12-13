@@ -19,7 +19,7 @@ trait UArrayAsTrait {
 		} elseif ($v !== '' && UString::isBooleanStr ( $v )) {
 			$result = UString::getBooleanStr ( $v );
 		} elseif (\is_array ( $v )) {
-			$result = self::asPhpArray ( $v, $formatParams,$valueCallback, $depth + 1, $format );
+			$result = self::asPhpArray_ ( $v, $depth + 1, $format );
 		} elseif (\is_string ( $v ) && (UString::startswith ( \trim ( $v ), '$config' ) || UString::startswith ( \trim ( $v ), 'function' ) || UString::startswith ( \trim ( $v ), 'array(' ))) {
 			$result = $v;
 		} elseif ($v instanceof \Closure) {
@@ -63,6 +63,10 @@ trait UArrayAsTrait {
 	}
 	public static function asPhpArray($array, $prefix = '', $depth = 1, $format = false) {
 		return self::as_($array,['prefix'=>$prefix,'before'=>'(','after'=>')'],null,$depth,$format);
+	}
+
+	public static function asPhpArray_($array, $depth = 1, $format = false) {
+		return self::as_($array,['prefix'=>'','before'=>'[','after'=>']'],null,$depth,$format);
 	}
 
 	public static function asPhpAttribute($array, $prefix = '#', $depth = 1, $format = false) {
