@@ -58,6 +58,8 @@ trait UArrayAsTrait {
 		}
 		if (\sizeof ( $exts ) > 0) {
 			$extsStr = $formatParams['before']."{$nl}{$tab}" . \implode ( ",{$nl}{$tab}", $exts ) . "{$nl}{$tab}".$formatParams['after'];
+		}else{
+			$extsStr = $formatParams['before'].$formatParams['after'];
 		}
 		return $formatParams['prefix'] . $extsStr;
 	}
