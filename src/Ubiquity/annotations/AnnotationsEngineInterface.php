@@ -28,34 +28,34 @@ interface AnnotationsEngineInterface {
 	/**
 	 *
 	 * @param string $class
-	 * @param string $annotationType
+	 * @param ?string $annotationType
 	 * @return array
 	 */
-	public function getAnnotsOfClass(string $class, string $annotationType = null): array;
+	public function getAnnotsOfClass(string $class, ?string $annotationType = null): array;
 
 	/**
 	 *
 	 * @param string $class
 	 * @param string $method
-	 * @param string $annotationType
+	 * @param ?string $annotationType
 	 * @return array
 	 */
-	public function getAnnotsOfMethod(string $class, string $method, string $annotationType = null): array;
+	public function getAnnotsOfMethod(string $class, string $method, ?string $annotationType = null): array;
 
 	/**
 	 *
 	 * @param string $class
 	 * @param string $property
-	 * @param string $annotationType
+	 * @param ?string $annotationType
 	 * @return array
 	 */
-	public function getAnnotsOfProperty(string $class, string $property, string $annotationType = null): array;
+	public function getAnnotsOfProperty(string $class, string $property, ?string $annotationType = null): array;
 
 	/**
 	 *
-	 * @param string $key
+	 * @param ?string $key
 	 * @return string|NULL
 	 */
-	public function getAnnotationByKey(string $key): ?string;
+	public function getAnnotationByKey(?string $key=null): ?string;
 }
 

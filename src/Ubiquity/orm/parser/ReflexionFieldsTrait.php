@@ -2,11 +2,11 @@
 
 namespace Ubiquity\orm\parser;
 
-use mindplay\annotations\Annotations;
 
 trait ReflexionFieldsTrait {
 
 	abstract public static function getAnnotationMember($class, $member, $annotation);
+	abstract public static function getAnnotsEngine();
 
 	/**
 	 *
@@ -65,15 +65,19 @@ trait ReflexionFieldsTrait {
 	}
 
 	public static function getPropertyType($class, $property) {
-		return self::getMetadata ( $class, $property, "@var", "type" );
+		if(($r=self::getMetadata ( $class, $property, 'var', 'type' ))===false){
+			$reflect=new \ReflectionProperty($class, $property);
+			return $reflect->getType();
+		}
+		return $r;
 	}
 
 	public static function getMetadata($class, $property, $type, $name) {
-		$a = Annotations::ofProperty ( $class, $property, $type );
-		if (! count ( $a )) {
+		$a = self::getAnnotsEngine()->getAnnotsOfProperty ( $class, $property, $type );
+		if (! \count ( $a )) {
 			return false;
 		}
-		return trim ( $a [0]->$name, ";" );
+		return \trim ( $a [0]->$name, ';' );
 	}
 }
 

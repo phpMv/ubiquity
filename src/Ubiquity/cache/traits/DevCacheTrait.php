@@ -2,9 +2,6 @@
 namespace Ubiquity\cache\traits;
 
 use Ubiquity\utils\base\UFileSystem;
-use mindplay\annotations\AnnotationCache;
-use mindplay\annotations\AnnotationManager;
-use mindplay\annotations\Annotations;
 use Ubiquity\annotations\AnnotationsEngineInterface;
 
 /**
@@ -13,19 +10,13 @@ use Ubiquity\annotations\AnnotationsEngineInterface;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  * @staticvar string $cacheDirectory
  */
 trait DevCacheTrait {
 
 	private static AnnotationsEngineInterface $annotationsEngine;
-
-	/**
-	 *
-	 * @var array array of annotations name/class
-	 */
-	protected static $registry;
 
 	abstract protected static function getCacheInstance(&$config, $cacheDirectory, $postfix);
 
@@ -70,16 +61,9 @@ trait DevCacheTrait {
 	 *        	an array of name=>class annotations
 	 */
 	public static function registerAnnotations(array $nameClasses): void {
-		$annotationManager = Annotations::getManager();
-		foreach ($nameClasses as $name => $class) {
-			self::$registry[$name] = $class;
-			$annotationManager->registry[$name] = $class;
-		}
+		self::getAnnotationsEngineInstance()->register($nameClasses);
 	}
 
-	protected static function register(AnnotationManager $annotationManager) {
-		$annotationManager->registry = \array_merge($annotationManager->registry, self::$registry);
-	}
 
 	/**
 	 * Checks the existence of cache subdirectories and returns an array of cache folders
