@@ -43,8 +43,8 @@ trait DevCacheTrait {
 		}
 	}
 
-	private static function getAnnotationsEngineInstance(){
-		return self
+	public static function getAnnotationsEngineInstance(){
+		return self::$annotationsEngine??=self::_getAnnotationsEngineInstance();
 	}
 
 	private static function initialGetCacheDirectory(&$config) {
@@ -58,44 +58,9 @@ trait DevCacheTrait {
 	 * @param array $config
 	 */
 	public static function start(&$config) {
-		self::$registry = [
-			'id' => 'Ubiquity\annotations\IdAnnotation',
-			'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
-			'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
-			'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
-			'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
-			'table' => 'Ubiquity\annotations\TableAnnotation',
-			'database' => 'Ubiquity\annotations\DatabaseAnnotation',
-			'transient' => 'Ubiquity\annotations\TransientAnnotation',
-			'column' => 'Ubiquity\annotations\ColumnAnnotation',
-			'validator' => 'Ubiquity\annotations\ValidatorAnnotation',
-			'transformer' => 'Ubiquity\annotations\TransformerAnnotation',
-			'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
-			'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
-			'route' => 'Ubiquity\annotations\router\RouteAnnotation',
-			'get' => 'Ubiquity\annotations\router\GetAnnotation',
-			'getMapping' => 'Ubiquity\annotations\router\GetAnnotation',
-			'post' => 'Ubiquity\annotations\router\PostAnnotation',
-			'postMapping' => 'Ubiquity\annotations\router\PostAnnotation',
-			'put' => 'Ubiquity\annotations\router\PutAnnotation',
-			'putMapping' => 'Ubiquity\annotations\router\PutAnnotation',
-			'patch' => 'Ubiquity\annotations\router\PatchAnnotation',
-			'patchMapping' => 'Ubiquity\annotations\router\PatchAnnotation',
-			'delete' => 'Ubiquity\annotations\router\DeleteAnnotation',
-			'deleteMapping' => 'Ubiquity\annotations\router\DeleteAnnotation',
-			'options' => 'Ubiquity\annotations\router\OptionsAnnotation',
-			'optionsMapping' => 'Ubiquity\annotations\router\OptionsAnnotation',
-			'var' => 'mindplay\annotations\standard\VarAnnotation',
-			'yuml' => 'Ubiquity\annotations\YumlAnnotation',
-			'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
-			'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation',
-			'injected' => 'Ubiquity\annotations\di\InjectedAnnotation',
-			'autowired' => 'Ubiquity\annotations\di\AutowiredAnnotation'
-		];
 		self::$cacheDirectory = self::initialGetCacheDirectory($config);
 		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
-		Annotations::$config['cache'] = new AnnotationCache($cacheDirectory . '/annotations');
-		self::register(Annotations::getManager());
+		self::getAnnotationsEngineInstance()->start($cacheDirectory);
 		self::getCacheInstance($config, $cacheDirectory, '.cache')->init();
 	}
 
