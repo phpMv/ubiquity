@@ -5,6 +5,7 @@ use Ubiquity\utils\base\UFileSystem;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 use mindplay\annotations\Annotations;
+use Ubiquity\annotations\AnnotationsEngineInterface;
 
 /**
  * To be Used in dev mode, not in production
@@ -17,6 +18,8 @@ use mindplay\annotations\Annotations;
  * @staticvar string $cacheDirectory
  */
 trait DevCacheTrait {
+
+	private static AnnotationsEngineInterface $annotationsEngine;
 
 	/**
 	 *
@@ -31,6 +34,18 @@ trait DevCacheTrait {
 	abstract protected static function initRouterCache(&$config, $silent = false);
 
 	abstract public static function initModelsCache(&$config, $forChecking = false, $silent = false);
+
+	private static function _getAnnotationsEngineInstance(){
+		if(\class_exists('Ubiquity\\attributes\\AttributesEngine',true)){
+			$instance=\Ubiquity\attributes\AttributesEngine();
+		}elseif(\class_exists('Ubiquity\\annotations\\AnnotationsEngine',true)){
+			$instance=\Ubiquity\annotations\AnnotationsEngine();
+		}
+	}
+
+	private static function getAnnotationsEngineInstance(){
+		return self
+	}
 
 	private static function initialGetCacheDirectory(&$config) {
 		return $config['cache']['directory'] ??= 'cache' . \DS;
