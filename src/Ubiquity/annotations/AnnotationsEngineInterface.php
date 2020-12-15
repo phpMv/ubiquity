@@ -57,5 +57,12 @@ interface AnnotationsEngineInterface {
 	 * @return string|NULL
 	 */
 	public function getAnnotationByKey(?string $key=null): ?string;
+
+	/**
+	 * @param string $key
+	 * @param array $parameters
+	 * @return object|NULL
+	 */
+	public static function getAnnotation(string $key,array $parameters=[]): ?object;
 }
 
