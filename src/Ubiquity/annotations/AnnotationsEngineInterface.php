@@ -64,5 +64,11 @@ interface AnnotationsEngineInterface {
 	 * @return object|NULL
 	 */
 	public static function getAnnotation(string $key,array $parameters=[]): ?object;
+
+	/**
+	 * @param array $annotations
+	 * @return string
+	 */
+	public function getAnnotationsStr(array $annotations,string $prefix="\t"):string;
 }
 
