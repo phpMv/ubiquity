@@ -27,7 +27,6 @@ trait DevCacheTrait {
 	abstract public static function initModelsCache(&$config, $forChecking = false, $silent = false);
 
 	private static function _getAnnotationsEngineInstance(){
-		var_dump(\class_exists('Ubiquity\\attributes\\AttributesEngine'));
 		if(\class_exists('Ubiquity\\attributes\\AttributesEngine',true)){
 			return new \Ubiquity\attributes\AttributesEngine();
 		}elseif(\class_exists('Ubiquity\\annotations\\AnnotationsEngine',true)){
