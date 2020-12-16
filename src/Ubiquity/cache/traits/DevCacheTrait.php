@@ -61,7 +61,7 @@ trait DevCacheTrait {
 	 *        	an array of name=>class annotations
 	 */
 	public static function registerAnnotations(array $nameClasses): void {
-		self::getAnnotationsEngineInstance()->register($nameClasses);
+		self::getAnnotationsEngineInstance()->registerAnnotations($nameClasses);
 	}
 
 
