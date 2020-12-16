@@ -70,5 +70,11 @@ interface AnnotationsEngineInterface {
 	 * @return string
 	 */
 	public function getAnnotationsStr(array $annotations,string $prefix="\t"):string;
+
+	public static function isManyToOne(object $annotation):bool;
+
+	public static function isMany(object $annotation):bool;
+
+	public function is(string $key, object $annotation): bool;
 }
 
