@@ -28,9 +28,9 @@ trait DevCacheTrait {
 
 	private static function _getAnnotationsEngineInstance(){
 		if(\class_exists('Ubiquity\\attributes\\AttributesEngine',true)){
-			$instance=\Ubiquity\attributes\AttributesEngine();
+			$instance=new \Ubiquity\attributes\AttributesEngine();
 		}elseif(\class_exists('Ubiquity\\annotations\\AnnotationsEngine',true)){
-			$instance=\Ubiquity\annotations\AnnotationsEngine();
+			$instance=new \Ubiquity\annotations\AnnotationsEngine();
 		}
 	}
 
