@@ -6,6 +6,7 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UString;
 use Ubiquity\annotations\router\RouteAnnotation;
 use Ubiquity\cache\ClassUtils;
+use Ubiquity\annotations\AnnotationsEngineInterface;
 
 /**
  * Scans a controller to detect routes defined by annotations.
@@ -24,6 +25,15 @@ class ControllerParser {
 	private $rest = false;
 	private static $excludeds = [ '__construct','isValid','initialize','finalize','onInvalidControl','loadView','forward','redirectToRoute' ];
 
+	/**
+	 * @var AnnotationsEngineInterface
+	 */
+	private $annotsEngine;
+
+	public function __construct(AnnotationsEngineInterface $annotsEngine){
+		$this->annotsEngine=$annotsEngine;
+	}
+
 	public function parse($controllerClass) {
 		$automated = false;
 		$inherited = false;
@@ -32,8 +42,8 @@ class ControllerParser {
 		$reflect = new \ReflectionClass ( $controllerClass );
 		if (! $reflect->isAbstract () && $reflect->isSubclassOf ( \Ubiquity\controllers\Controller::class )) {
 			try {
-				$annotsClass = Reflexion::getAnnotationClass ( $controllerClass, '@route' );
-				$restAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, '@rest' );
+				$annotsClass = Reflexion::getAnnotationClass ( $controllerClass, 'route' );
+				$restAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, 'rest' );
 			} catch ( \Exception $e ) {
 				// When controllerClass generates an exception
 			}
@@ -52,8 +62,8 @@ class ControllerParser {
 		foreach ( $methods as $method ) {
 			if ($method->getDeclaringClass ()->getName () === $controllerClass || $inherited) {
 				try {
-					$annots = Reflexion::getAnnotationsMethod ( $controllerClass, $method->name, [ '@route','@get','@post','@patch','@put','@delete','@options' ] );
-					if (sizeof ( $annots ) > 0) {
+					$annots = Reflexion::getAnnotationsMethod ( $controllerClass, $method->name, [ 'route','get','post','patch','put','delete','options' ] );
+					if (\count ( $annots ) > 0) {
 						foreach ( $annots as $annot ) {
 							$this->parseAnnot ( $annot, $method );
 						}
@@ -81,9 +91,7 @@ class ControllerParser {
 	}
 
 	private function generateRouteAnnotationFromMethod(\ReflectionMethod $method) {
-		$annot = new RouteAnnotation ();
-		$annot->path = self::getPathFromMethod ( $method );
-		return [ $annot ];
+		return [ $this->annotsEngine->getAnnotation('route',['path'=>self::getPathFromMethod ( $method )]) ];
 	}
 
 	public function asArray() {

@@ -19,13 +19,11 @@ class ValidationModelParser {
 		$properties=Reflexion::getProperties($instance);
 		foreach ( $properties as $property ) {
 			$propName=$property->getName();
-			$annots=Reflexion::getAnnotationsMember($modelClass, $propName, "@validator");
+			$annots=Reflexion::getAnnotationsMember($modelClass, $propName, "validator");
 			if(sizeof($annots)>0){
 				$this->validators[$propName]=[];
 				foreach ($annots as $annotation){
-					if($annotation instanceof ValidatorAnnotation){
-						$this->validators[$propName][]=$annotation->getPropertiesAndValues();
-					}
+					$this->validators[$propName][]=$annotation->getPropertiesAndValues();
 				}
 			}
 		}
