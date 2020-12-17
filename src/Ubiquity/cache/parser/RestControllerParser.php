@@ -11,7 +11,7 @@ use Ubiquity\controllers\rest\RestBaseController;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class RestControllerParser {
@@ -30,9 +30,9 @@ class RestControllerParser {
 		$this->controllerClass = $controllerClass;
 		$reflect = new \ReflectionClass ( $controllerClass );
 		if (! $reflect->isAbstract () && $reflect->isSubclassOf ( RestBaseController::class )) {
-			$restAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, "@rest" );
+			$restAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, "rest" );
 			if (\sizeof ( $restAnnotsClass ) > 0) {
-				$routeAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, "@route" );
+				$routeAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, "route" );
 				if (\sizeof ( $routeAnnotsClass ) > 0) {
 					$this->route = $routeAnnotsClass [0]->path;
 				}
@@ -40,7 +40,7 @@ class RestControllerParser {
 				$this->rest = true;
 				$methods = Reflexion::getMethods ( $controllerClass, \ReflectionMethod::IS_PUBLIC );
 				foreach ( $methods as $method ) {
-					$annots = Reflexion::getAnnotationsMethod ( $controllerClass, $method->name, "@authorization" );
+					$annots = Reflexion::getAnnotationsMethod ( $controllerClass, $method->name, "authorization" );
 					if ($annots !== false) {
 						$this->authorizationMethods [] = $method->name;
 					}
