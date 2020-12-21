@@ -91,7 +91,7 @@ class ControllerParser {
 	}
 
 	private function generateRouteAnnotationFromMethod(\ReflectionMethod $method) {
-		return [ $this->annotsEngine->getAnnotation('route',['path'=>self::getPathFromMethod ( $method )]) ];
+		return [ $this->annotsEngine->getAnnotation(null,'route',['path'=>self::getPathFromMethod ( $method )]) ];
 	}
 
 	public function asArray() {
