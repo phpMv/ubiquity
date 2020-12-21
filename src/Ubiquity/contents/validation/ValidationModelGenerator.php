@@ -51,7 +51,7 @@ class ValidationModelGenerator {
 		if (isset ( $ref )) {
 			$constraints ["ref"] = $ref;
 		}
-		return $this->annotsEngine->getAnnotation('validator',\compact('type','$constraints'));
+		return $this->annotsEngine->getAnnotation('validator',\compact('type','constraints'));
 	}
 
 	protected function parseSize($type, $size) {
