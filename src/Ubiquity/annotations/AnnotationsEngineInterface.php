@@ -63,7 +63,7 @@ interface AnnotationsEngineInterface {
 	 * @param array $parameters
 	 * @return object|NULL
 	 */
-	public static function getAnnotation(string $key,array $parameters=[]): ?object;
+	public function getAnnotation(string $key,array $parameters=[]): ?object;
 
 	/**
 	 * @param array $annotations
@@ -76,5 +76,7 @@ interface AnnotationsEngineInterface {
 	public static function isMany(object $annotation):bool;
 
 	public function is(string $key, object $annotation): bool;
+
+	public function getUses(): array;
 }
 
