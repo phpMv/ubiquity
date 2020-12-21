@@ -25,7 +25,7 @@ class Reflexion {
 	}
 
 	public static function getKeyFields($instance) {
-		return self::getMembersNameWithAnnotation ( get_class ( $instance ), "@id" );
+		return self::getMembersNameWithAnnotation ( \get_class ( $instance ), 'id' );
 	}
 
 	public static function getMemberValue($instance, $member) {
@@ -149,11 +149,11 @@ class Reflexion {
 	}
 
 	public static function getTableName($class) {
-		$ret = self::getAnnotationClass ( $class, "table" );
-		if (\sizeof ( $ret ) === 0) {
-			$posSlash = strrpos ( $class, '\\' );
+		$ret = self::getAnnotationClass ( $class, 'table' );
+		if (\count ( $ret ) === 0) {
+			$posSlash = \strrpos ( $class, '\\' );
 			if ($posSlash !== false)
-				$class = substr ( $class, $posSlash + 1 );
+				$class = \substr ( $class, $posSlash + 1 );
 			$ret = $class;
 		} else {
 			$ret = $ret [0]->name;
@@ -171,7 +171,7 @@ class Reflexion {
 
 	public static function getJoinTables($class) {
 		$result = [ ];
-		$annots = self::getMembersAnnotationWithAnnotation ( $class, "joinTable" );
+		$annots = self::getMembersAnnotationWithAnnotation ( $class, 'joinTable' );
 		foreach ( $annots as $annot ) {
 			$result [] = $annot->name;
 		}

@@ -15,7 +15,7 @@ trait ReflexionFieldsTrait {
 	 * @return \Ubiquity\annotations\ColumnAnnotation|boolean
 	 */
 	protected static function getAnnotationColumnMember($class, $member) {
-		return self::getAnnotationMember ( $class, $member, "@column" );
+		return self::getAnnotationMember ( $class, $member, 'column' );
 	}
 
 	public static function getDbType($class, $member) {
@@ -27,7 +27,7 @@ trait ReflexionFieldsTrait {
 	}
 
 	public static function isSerializable($class, $member) {
-		if (self::getAnnotationMember ( $class, $member, "@transient" ) !== false || self::getAnnotationMember ( $class, $member, "@manyToOne" ) !== false || self::getAnnotationMember ( $class, $member, "@manyToMany" ) !== false || self::getAnnotationMember ( $class, $member, "@oneToMany" ) !== false)
+		if (self::getAnnotationMember ( $class, $member, 'transient' ) !== false || self::getAnnotationMember ( $class, $member, 'manyToOne' ) !== false || self::getAnnotationMember ( $class, $member, 'manyToMany' ) !== false || self::getAnnotationMember ( $class, $member, 'oneToMany' ) !== false)
 			return false;
 		else
 			return true;
