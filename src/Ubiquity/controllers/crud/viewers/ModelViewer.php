@@ -211,11 +211,10 @@ class ModelViewer {
 
 	public function addAllButtons(DataTable $dataTable, $attributes) {
 		$transition=$this->getTransition();
-		$dtId='#'.$this->getDataTableId();
 		$dataTable->onPreCompile ( function () use (&$dataTable) {
 			$dataTable->getHtmlComponent ()->colRightFromRight ( 0 );
 		} );
-		$dataTable->addAllButtons ( false, [ 'ajaxTransition' => $transition,'listenerOn'=>$dtId ], function ($bt) {
+		$dataTable->addAllButtons ( false, [ 'ajaxTransition' => $transition,'listenerOn'=>'body' ], function ($bt) {
 			$bt->addClass ( 'circular' );
 			$this->onDataTableRowButton ( $bt );
 		}, function ($bt) {
@@ -225,7 +224,7 @@ class ModelViewer {
 			$bt->addClass ( 'circular' );
 			$this->onDataTableRowButton ( $bt );
 		} );
-		$dataTable->setDisplayBehavior ( [ 'jsCallback' => '$("#dataTable").hide();','ajaxTransition' => $transition,'listenerOn'=>$dtId ] );
+		$dataTable->setDisplayBehavior ( [ 'jsCallback' => '$("#dataTable").hide();','ajaxTransition' => $transition,'listenerOn'=>'body' ] );
 	}
 
 	/**
