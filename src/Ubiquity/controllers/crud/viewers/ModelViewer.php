@@ -18,6 +18,7 @@ use Ubiquity\utils\base\UString;
  * Responsible of the display
  *
  * @author jc
+ * @version 1.0.3
  *
  */
 class ModelViewer {
@@ -81,7 +82,7 @@ class ModelViewer {
 	 * @param string $className
 	 */
 	public function getElementCaptions($captions, $className, $instance) {
-		return array_map ( "ucfirst", $captions );
+		return array_map ( 'ucfirst', $captions );
 	}
 
 	/**
@@ -99,12 +100,12 @@ class ModelViewer {
 		$this->setDataTableAttributes ( $dataTable, $attributes, $model, $instances );
 		$dataTable->setCaptions ( $this->getCaptions ( $attributes, $model ) );
 
-		$dataTable->addClass ( "small very compact" );
-		$lbl = new HtmlLabel ( "search-query", "<span id='search-query-content'></span>" );
-		$icon = $lbl->addIcon ( "delete", false );
+		$dataTable->addClass ( 'small very compact' );
+		$lbl = new HtmlLabel ( 'search-query', "<span id='search-query-content'></span>" );
+		$icon = $lbl->addIcon ( 'delete', false );
 		$lbl->wrap ( "<span>", "</span>" );
 		$lbl->setProperty ( "style", "display: none;" );
-		$icon->getOnClick ( $adminRoute . $files->getRouteRefreshTable (), "#lv", [ "jqueryDone" => "replaceWith","hasLoader" => "internal" ] );
+		$icon->getOnClick ( $adminRoute . $files->getRouteRefreshTable (), '#'.$this->getDataTableId(), [ "jqueryDone" => "replaceWith","hasLoader" => "internal" ] );
 
 		$dataTable->addItemInToolbar ( $lbl );
 		$dataTable->addSearchInToolbar ();
@@ -114,14 +115,14 @@ class ModelViewer {
 	}
 
 	public function setDataTableAttributes(DataTable $dataTable, $attributes, $model, $instances, $selector = null) {
-		$modal = ($this->isModal ( $instances, $model ) ? "modal" : "no");
+		$modal = ($this->isModal ( $instances, $model ) ? 'modal' : 'no');
 
 		$adminRoute = $this->controller->_getBaseRoute ();
 		$files = $this->controller->_getFiles ();
 		$dataTable->setButtons ( $this->getDataTableRowButtons () );
 		$dataTable->setFields ( $attributes );
-		if (array_search ( "password", $attributes ) !== false) {
-			$dataTable->setValueFunction ( "password", function ($v) {
+		if (\array_search ( 'password', $attributes ) !== false) {
+			$dataTable->setValueFunction ( 'password', function ($v) {
 				return UString::mask ( $v );
 			} );
 		}
@@ -178,22 +179,24 @@ class ModelViewer {
 	 * @return DataTable
 	 */
 	protected function getDataTableInstance($instances, $model, $totalCount, $page = 1): DataTable {
+		$dtId=$this->getDataTableId();
 		$semantic = $this->jquery->semantic ();
 		$recordsPerPage = $this->recordsPerPage ( $model, $totalCount );
 		if (is_numeric ( $recordsPerPage )) {
 			$grpByFields = $this->getGroupByFields ();
 			if (is_array ( $grpByFields )) {
-				$dataTable = $semantic->dataTable ( "lv", $model, $instances );
+				$dataTable = $semantic->dataTable ( $dtId, $model, $instances );
 				$dataTable->setGroupByFields ( $grpByFields );
 			} else {
-				$dataTable = $semantic->jsonDataTable ( "lv", $model, $instances );
+				$dataTable = $semantic->jsonDataTable ( $dtId, $model, $instances );
 			}
 			$dataTable->paginate ( $page, $totalCount, $recordsPerPage, 5 );
 			$dataTable->onActiveRowChange ( '$("#table-details").html("");' );
 			$dataTable->onSearchTerminate ( '$("#search-query-content").html(data);$("#search-query").show();$("#table-details").html("");' );
 		} else {
-			$dataTable = $semantic->dataTable ( "lv", $model, $instances );
+			$dataTable = $semantic->dataTable ( $dtId, $model, $instances );
 		}
+		$dataTable->setLibraryId('lv');
 		return $dataTable;
 	}
 
@@ -203,24 +206,38 @@ class ModelViewer {
 	 * @return string[]
 	 */
 	protected function getDataTableRowButtons() {
-		return [ "edit","delete" ];
+		return [ 'edit','delete' ];
 	}
 
 	public function addAllButtons(DataTable $dataTable, $attributes) {
+		$transition=$this->getTransition();
+		$dtId='#'.$this->getDataTableId();
 		$dataTable->onPreCompile ( function () use (&$dataTable) {
 			$dataTable->getHtmlComponent ()->colRightFromRight ( 0 );
 		} );
-		$dataTable->addAllButtons ( false, [ "ajaxTransition" => "random" ], function ($bt) {
-			$bt->addClass ( "circular" );
+		$dataTable->addAllButtons ( false, [ 'ajaxTransition' => $transition,'listenerOn'=>$dtId ], function ($bt) {
+			$bt->addClass ( 'circular' );
 			$this->onDataTableRowButton ( $bt );
 		}, function ($bt) {
-			$bt->addClass ( "circular" );
+			$bt->addClass ( 'circular' );
 			$this->onDataTableRowButton ( $bt );
 		}, function ($bt) {
-			$bt->addClass ( "circular" );
+			$bt->addClass ( 'circular' );
 			$this->onDataTableRowButton ( $bt );
 		} );
-		$dataTable->setDisplayBehavior ( [ "jsCallback" => '$("#dataTable").hide();',"ajaxTransition" => "random" ] );
+		$dataTable->setDisplayBehavior ( [ 'jsCallback' => '$("#dataTable").hide();','ajaxTransition' => $transition,'listenerOn'=>$dtId ] );
+	}
+
+	/**
+	 * The default transition for display, edit and delete behaviors
+	 * @return string
+	 */
+	public function getTransition(){
+		return 'fade';
+	}
+
+	public function getDataTableId(){
+		return 'lv';
 	}
 
 	/**
@@ -247,7 +264,7 @@ class ModelViewer {
 	 * @param string $className
 	 */
 	public function getCaptions($captions, $className) {
-		return \array_map ( "ucfirst", $captions );
+		return \array_map ( 'ucfirst', $captions );
 	}
 
 	/**
@@ -259,7 +276,7 @@ class ModelViewer {
 	 * @return HtmlHeader
 	 */
 	public function getFkHeaderElementDetails($member, $className, $object) {
-		return new HtmlHeader ( "", 4, $member, "content" );
+		return new HtmlHeader ( '', 4, $member, 'content' );
 	}
 
 	/**
@@ -271,7 +288,7 @@ class ModelViewer {
 	 * @return HtmlHeader
 	 */
 	public function getFkHeaderListDetails($member, $className, $list) {
-		return new HtmlHeader ( "", 4, $member . " (" . \count ( $list ) . ")", "content" );
+		return new HtmlHeader ( '', 4, $member . ' (' . \count ( $list ) . ')', 'content' );
 	}
 
 	/**
@@ -283,7 +300,7 @@ class ModelViewer {
 	 * @return \Ajax\common\html\BaseHtml
 	 */
 	public function getFkElementDetails($member, $className, $object) {
-		return $this->jquery->semantic ()->htmlLabel ( "element-" . $className . "." . $member, $object . "" );
+		return $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
 	}
 
 	/**
@@ -295,10 +312,10 @@ class ModelViewer {
 	 * @return \Ajax\common\html\HtmlCollection
 	 */
 	public function getFkListDetails($member, $className, $list) {
-		$element = $this->jquery->semantic ()->htmlList ( "list-" . $className . "." . $member );
+		$element = $this->jquery->semantic ()->htmlList ( 'list-' . $className . '.' . $member );
 		$element->setMaxVisible ( 15 );
 
-		return $element->addClass ( "animated divided celled" );
+		return $element->addClass ( 'animated divided celled' );
 	}
 
 	/**
@@ -365,19 +382,19 @@ class ModelViewer {
 		if (is_array ( $objectFK ) || $objectFK instanceof \Traversable) {
 			$element = $this->getFkList ( $memberFK, $objectFK );
 			foreach ( $objectFK as $oItem ) {
-				if (method_exists ( $oItem, "__toString" )) {
+				if (\method_exists ( $oItem, '__toString' )) {
 					$id = (CRUDHelper::getIdentifierFunction ( $fkClass )) ( 0, $oItem );
-					$item = $element->addItem ( $oItem . "" );
-					$item->setProperty ( "data-ajax", $_fkClass . "||" . $id );
-					$item->addClass ( "showTable" );
+					$item = $element->addItem ( $oItem . '' );
+					$item->setProperty ( 'data-ajax', $_fkClass . '||' . $id );
+					$item->addClass ( 'showTable' );
 					$this->displayFkElementList ( $item, $memberFK, $fkClass, $oItem );
 				}
 			}
 		} else {
-			if (method_exists ( $objectFK, "__toString" )) {
+			if (method_exists ( $objectFK, '__toString' )) {
 				$id = (CRUDHelper::getIdentifierFunction ( $fkClass )) ( 0, $objectFK );
 				$element = $this->getFkElement ( $memberFK, $fkClass, $objectFK );
-				$element->setProperty ( "data-ajax", $_fkClass . "||" . $id )->addClass ( "showTable" );
+				$element->setProperty ( 'data-ajax', $_fkClass . '||' . $id )->addClass ( 'showTable' );
 			}
 		}
 		return $element;
@@ -392,9 +409,9 @@ class ModelViewer {
 	 * @return \Ajax\common\html\HtmlCollection
 	 */
 	public function getFkList($member, $list) {
-		$element = $this->jquery->semantic ()->htmlList ( "list-" . $member );
+		$element = $this->jquery->semantic ()->htmlList ( 'list-' . $member );
 		$element->setMaxVisible ( 10 );
-		return $element->addClass ( "animated" );
+		return $element->addClass ( 'animated' );
 	}
 
 	/**
@@ -417,7 +434,7 @@ class ModelViewer {
 	 * @return \Ajax\common\html\BaseHtml
 	 */
 	public function getFkElement($member, $className, $object) {
-		return $this->jquery->semantic ()->htmlLabel ( "element-" . $className . "." . $member, $object . "" );
+		return $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
 	}
 
 	/**
