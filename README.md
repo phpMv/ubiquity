@@ -1,4 +1,4 @@
-![img](https://github.com/phpMv/ubiquity/blob/master/Banner/banner-duck-santa.png?raw=true)
+![img](https://github.com/phpMv/ubiquity/blob/master/Banner/banner-duck.png?raw=true)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpMv/ubiquity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpMv/ubiquity/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/phpMv/ubiquity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phpMv/ubiquity/?branch=master) [![Documentation Status](https://readthedocs.org/projects/micro-framework/badge/?version=latest)](http://micro-framework.readthedocs.io/en/latest/?badge=latest)
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/phpmv/ubiquity) 
