@@ -78,5 +78,7 @@ interface AnnotationsEngineInterface {
 
 	public function is(string $key, object $annotation): bool;
 
+	public function registerAcls(): void;
+
 }
 

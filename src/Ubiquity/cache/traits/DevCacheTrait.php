@@ -161,7 +161,7 @@ trait DevCacheTrait {
 		}
 		if ($type === 'all' || $type === 'controllers') {
 			if (\class_exists('\\Ubiquity\\security\\acl\\AclManager')) {
-				\Ubiquity\security\acl\AclManager::registerAnnotations($config);
+				self::getAnnotationsEngineInstance()->registerAcls();
 			}
 			self::initRouterCache($config, $silent);
 		}
