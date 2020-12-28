@@ -34,16 +34,5 @@ trait BaseAnnotationTrait {
 			}
 			return $ret;
 	}
-
-	protected function getDefaultParameters():array{
-		$r=new \ReflectionMethod(get_class($this),'__construct');
-		$result=[];
-		foreach ($r->getParameters() as $param){
-			if($param->isOptional()){
-				$result[$param->getName()]=$param->getDefaultValue();
-			}
-		}
-		return $result;
-	}
 }
 
