@@ -53,11 +53,11 @@ trait UArrayAsTrait {
 				$exts [] = $v;
 			}
 		}
-		if ($formatParams['prefix'] !== '') {
-			$extsStr = $formatParams['before'].$formatParams['after'];
-		}
+
 		if (\count ( $exts ) > 0) {
 			$extsStr = $formatParams['before']."{$nl}{$tab}" . \implode ( ",{$nl}{$tab}", $exts ) . "{$nl}{$tab}".$formatParams['after'];
+		}else{
+			$extsStr = $formatParams['before'].$formatParams['after'];
 		}
 		return $formatParams['prefix'] . $extsStr;
 	}
