@@ -3,7 +3,7 @@ build:
     analysis:
       dependencies:
         before:
-          - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
+          - composer require twig/twig phpmv/ubiquity-annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception:^2.2 --dev
           - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
