@@ -32,6 +32,6 @@
 		"phpmv/ubiquity-devtools": "dev-master",
 		"phpmv/ubiquity-codeception": "dev-master",
 		"phpmv/php-mv-ui": "^2.2",
-		"phpmv/ubiquity-dev": "dev-master"
+		"phpmv/ubiquity-dev": "^0.1"
 	}
 }
