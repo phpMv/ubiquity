@@ -60,7 +60,7 @@ trait ModelsCacheTrait {
 				if (! $forChecking) {
 					self::createOrmModelCache ( $model );
 					$db = 'default';
-					$ret = Reflexion::getAnnotationClass ( $model, '@database' );
+					$ret = Reflexion::getAnnotationClass ( $model, 'database' );
 					if (\sizeof ( $ret ) > 0) {
 						$db = $ret [0]->name;
 						if (! isset ( $config ['database'] [$db] )) {
@@ -127,7 +127,7 @@ trait ModelsCacheTrait {
 			$className = ClassUtils::getClassFullNameFromFile($file);
 			if (\class_exists($className, true)) {
 				$db = 'default';
-				$ret = Reflexion::getAnnotationClass($className, '@database');
+				$ret = Reflexion::getAnnotationClass($className, 'database');
 				if (\sizeof($ret) > 0) {
 					$db = $ret[0]->name;
 				}

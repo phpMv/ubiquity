@@ -9,17 +9,17 @@ use Ubiquity\utils\base\UString;
  * Ubiquity\utils\base\traits$UArrayAsTrait
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 trait UArrayAsTrait {
-	private static function parseValue($v, $prefix = '', $depth = 1, $format = false) {
+	private static function parseValue($v, $formatParams,$valueCallback=null, $depth = 1, $format = false) {
 		if (\is_numeric ( $v )) {
 			$result = $v;
 		} elseif ($v !== '' && UString::isBooleanStr ( $v )) {
 			$result = UString::getBooleanStr ( $v );
 		} elseif (\is_array ( $v )) {
-			$result = self::asPhpArray ( $v, $prefix, $depth + 1, $format );
+			$result = self::asPhpArray_ ( $v, $depth + 1, $format );
 		} elseif (\is_string ( $v ) && (UString::startswith ( \trim ( $v ), '$config' ) || UString::startswith ( \trim ( $v ), 'function' ) || UString::startswith ( \trim ( $v ), 'array(' ))) {
 			$result = $v;
 		} elseif ($v instanceof \Closure) {
@@ -32,7 +32,7 @@ trait UArrayAsTrait {
 		}
 		return $result;
 	}
-	public static function asPhpArray($array, $prefix = '', $depth = 1, $format = false) {
+	private static function as_($array,$formatParams=['prefix' => '','before'=>'(','after'=>')'], $valueCallback=null,$depth = 1,$format = false) {
 		$exts = array ();
 		$extsStr = '';
 		$tab = '';
@@ -42,19 +42,37 @@ trait UArrayAsTrait {
 			$nl = PHP_EOL;
 		}
 		foreach ( $array as $k => $v ) {
+			$v=self::parseValue ( $v, $formatParams,$valueCallback, $depth + 1, $format );
 			if (\is_string ( $k )) {
-				$exts [] = "\"" . UString::doubleBackSlashes ( $k ) . "\"=>" . self::parseValue ( $v, 'array', $depth + 1, $format );
+				if(isset($valueCallback)){
+					$exts []=$valueCallback($k,$v);
+				}else{
+					$exts [] = "\"" . UString::doubleBackSlashes ( $k ) . "\"=>" . $v;
+				}
 			} else {
-				$exts [] = self::parseValue ( $v, $prefix, $depth + 1, $format );
+				$exts [] = $v;
 			}
 		}
-		if ($prefix !== '') {
-			$extsStr = '()';
+		if ($formatParams['prefix'] !== '') {
+			$extsStr = $formatParams['before'].$formatParams['after'];
 		}
 		if (\sizeof ( $exts ) > 0) {
-			$extsStr = "({$nl}{$tab}" . \implode ( ",{$nl}{$tab}", $exts ) . "{$nl}{$tab})";
+			$extsStr = $formatParams['before']."{$nl}{$tab}" . \implode ( ",{$nl}{$tab}", $exts ) . "{$nl}{$tab}".$formatParams['after'];
+		}else{
+			$extsStr = $formatParams['before'].$formatParams['after'];
 		}
-		return $prefix . $extsStr;
+		return $formatParams['prefix'] . $extsStr;
+	}
+	public static function asPhpArray($array, $prefix = '', $depth = 1, $format = false) {
+		return self::as_($array,['prefix'=>$prefix,'before'=>'(','after'=>')'],null,$depth,$format);
+	}
+
+	public static function asPhpArray_($array, $depth = 1, $format = false) {
+		return self::as_($array,['prefix'=>'','before'=>'[','after'=>']'],null,$depth,$format);
+	}
+
+	public static function asPhpAttribute($array, $prefix = '', $depth = 1, $format = false) {
+		return self::as_($array,['prefix'=>$prefix,'before'=>'(','after'=>')'],function($k,$v){return $k.': '.$v;},$depth,$format);
 	}
 
 	public static function asPhpClass($array, $name, $namespace = '', $format = false) {

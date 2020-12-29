@@ -2,9 +2,7 @@
 namespace Ubiquity\cache\traits;
 
 use Ubiquity\utils\base\UFileSystem;
-use mindplay\annotations\AnnotationCache;
-use mindplay\annotations\AnnotationManager;
-use mindplay\annotations\Annotations;
+use Ubiquity\annotations\AnnotationsEngineInterface;
 
 /**
  * To be Used in dev mode, not in production
@@ -12,17 +10,13 @@ use mindplay\annotations\Annotations;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  * @property string $cacheDirectory
  */
 trait DevCacheTrait {
 
-	/**
-	 *
-	 * @var array array of annotations name/class
-	 */
-	protected static $registry;
+	private static AnnotationsEngineInterface $annotationsEngine;
 
 	abstract protected static function getCacheInstance(&$config, $cacheDirectory, $postfix);
 
@@ -31,6 +25,18 @@ trait DevCacheTrait {
 	abstract protected static function initRouterCache(&$config, $silent = false);
 
 	abstract public static function initModelsCache(&$config, $forChecking = false, $silent = false);
+
+	private static function _getAnnotationsEngineInstance(){
+		if(\class_exists('Ubiquity\\attributes\\AttributesEngine',true)){
+			return new \Ubiquity\attributes\AttributesEngine();
+		}elseif(\class_exists('Ubiquity\\annotations\\AnnotationsEngine',true)){
+			return new \Ubiquity\annotations\AnnotationsEngine();
+		}
+	}
+
+	public static function getAnnotationsEngineInstance(){
+		return self::$annotationsEngine??=self::_getAnnotationsEngineInstance();
+	}
 
 	private static function initialGetCacheDirectory(&$config) {
 		return $config['cache']['directory'] ??= 'cache' . \DS;
@@ -43,44 +49,9 @@ trait DevCacheTrait {
 	 * @param array $config
 	 */
 	public static function start(&$config) {
-		self::$registry = [
-			'id' => 'Ubiquity\annotations\IdAnnotation',
-			'manyToOne' => 'Ubiquity\annotations\ManyToOneAnnotation',
-			'oneToMany' => 'Ubiquity\annotations\OneToManyAnnotation',
-			'manyToMany' => 'Ubiquity\annotations\ManyToManyAnnotation',
-			'joinColumn' => 'Ubiquity\annotations\JoinColumnAnnotation',
-			'table' => 'Ubiquity\annotations\TableAnnotation',
-			'database' => 'Ubiquity\annotations\DatabaseAnnotation',
-			'transient' => 'Ubiquity\annotations\TransientAnnotation',
-			'column' => 'Ubiquity\annotations\ColumnAnnotation',
-			'validator' => 'Ubiquity\annotations\ValidatorAnnotation',
-			'transformer' => 'Ubiquity\annotations\TransformerAnnotation',
-			'joinTable' => 'Ubiquity\annotations\JoinTableAnnotation',
-			'requestMapping' => 'Ubiquity\annotations\router\RouteAnnotation',
-			'route' => 'Ubiquity\annotations\router\RouteAnnotation',
-			'get' => 'Ubiquity\annotations\router\GetAnnotation',
-			'getMapping' => 'Ubiquity\annotations\router\GetAnnotation',
-			'post' => 'Ubiquity\annotations\router\PostAnnotation',
-			'postMapping' => 'Ubiquity\annotations\router\PostAnnotation',
-			'put' => 'Ubiquity\annotations\router\PutAnnotation',
-			'putMapping' => 'Ubiquity\annotations\router\PutAnnotation',
-			'patch' => 'Ubiquity\annotations\router\PatchAnnotation',
-			'patchMapping' => 'Ubiquity\annotations\router\PatchAnnotation',
-			'delete' => 'Ubiquity\annotations\router\DeleteAnnotation',
-			'deleteMapping' => 'Ubiquity\annotations\router\DeleteAnnotation',
-			'options' => 'Ubiquity\annotations\router\OptionsAnnotation',
-			'optionsMapping' => 'Ubiquity\annotations\router\OptionsAnnotation',
-			'var' => 'mindplay\annotations\standard\VarAnnotation',
-			'yuml' => 'Ubiquity\annotations\YumlAnnotation',
-			'rest' => 'Ubiquity\annotations\rest\RestAnnotation',
-			'authorization' => 'Ubiquity\annotations\rest\AuthorizationAnnotation',
-			'injected' => 'Ubiquity\annotations\di\InjectedAnnotation',
-			'autowired' => 'Ubiquity\annotations\di\AutowiredAnnotation'
-		];
 		self::$cacheDirectory = self::initialGetCacheDirectory($config);
 		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
-		Annotations::$config['cache'] = new AnnotationCache($cacheDirectory . '/annotations');
-		self::register(Annotations::getManager());
+		self::getAnnotationsEngineInstance()->start($cacheDirectory);
 		self::getCacheInstance($config, $cacheDirectory, '.cache')->init();
 	}
 
@@ -90,16 +61,9 @@ trait DevCacheTrait {
 	 *        	an array of name=>class annotations
 	 */
 	public static function registerAnnotations(array $nameClasses): void {
-		$annotationManager = Annotations::getManager();
-		foreach ($nameClasses as $name => $class) {
-			self::$registry[$name] = $class;
-			$annotationManager->registry[$name] = $class;
-		}
+		self::getAnnotationsEngineInstance()->registerAnnotations($nameClasses);
 	}
 
-	protected static function register(AnnotationManager $annotationManager) {
-		$annotationManager->registry = \array_merge($annotationManager->registry, self::$registry);
-	}
 
 	/**
 	 * Checks the existence of cache subdirectories and returns an array of cache folders
@@ -197,7 +161,7 @@ trait DevCacheTrait {
 		}
 		if ($type === 'all' || $type === 'controllers') {
 			if (\class_exists('\\Ubiquity\\security\\acl\\AclManager')) {
-				\Ubiquity\security\acl\AclManager::registerAnnotations($config);
+				self::getAnnotationsEngineInstance()->registerAcls();
 			}
 			self::initRouterCache($config, $silent);
 		}

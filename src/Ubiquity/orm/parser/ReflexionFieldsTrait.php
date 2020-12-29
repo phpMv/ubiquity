@@ -2,11 +2,11 @@
 
 namespace Ubiquity\orm\parser;
 
-use mindplay\annotations\Annotations;
 
 trait ReflexionFieldsTrait {
 
 	abstract public static function getAnnotationMember($class, $member, $annotation);
+	abstract public static function getAnnotsEngine();
 
 	/**
 	 *
@@ -15,7 +15,7 @@ trait ReflexionFieldsTrait {
 	 * @return \Ubiquity\annotations\ColumnAnnotation|boolean
 	 */
 	protected static function getAnnotationColumnMember($class, $member) {
-		return self::getAnnotationMember ( $class, $member, "@column" );
+		return self::getAnnotationMember ( $class, $member, 'column' );
 	}
 
 	public static function getDbType($class, $member) {
@@ -27,7 +27,7 @@ trait ReflexionFieldsTrait {
 	}
 
 	public static function isSerializable($class, $member) {
-		if (self::getAnnotationMember ( $class, $member, "@transient" ) !== false || self::getAnnotationMember ( $class, $member, "@manyToOne" ) !== false || self::getAnnotationMember ( $class, $member, "@manyToMany" ) !== false || self::getAnnotationMember ( $class, $member, "@oneToMany" ) !== false)
+		if (self::getAnnotationMember ( $class, $member, 'transient' ) !== false || self::getAnnotationMember ( $class, $member, 'manyToOne' ) !== false || self::getAnnotationMember ( $class, $member, 'manyToMany' ) !== false || self::getAnnotationMember ( $class, $member, 'oneToMany' ) !== false)
 			return false;
 		else
 			return true;
@@ -65,15 +65,19 @@ trait ReflexionFieldsTrait {
 	}
 
 	public static function getPropertyType($class, $property) {
-		return self::getMetadata ( $class, $property, "@var", "type" );
+		if(($r=self::getMetadata ( $class, $property, 'var', 'type' ))===false){
+			$reflect=new \ReflectionProperty($class, $property);
+			return $reflect->getType();
+		}
+		return $r;
 	}
 
 	public static function getMetadata($class, $property, $type, $name) {
-		$a = Annotations::ofProperty ( $class, $property, $type );
-		if (! count ( $a )) {
+		$a = self::getAnnotsEngine()->getAnnotsOfProperty ( $class, $property, $type );
+		if (! \count ( $a )) {
 			return false;
 		}
-		return trim ( $a [0]->$name, ";" );
+		return \trim ( $a [0]->$name, ';' );
 	}
 }
 

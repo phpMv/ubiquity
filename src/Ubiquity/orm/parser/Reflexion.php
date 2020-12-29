@@ -2,8 +2,9 @@
 
 namespace Ubiquity\orm\parser;
 
-use mindplay\annotations\Annotations;
 use Ubiquity\orm\OrmUtils;
+use Ubiquity\cache\CacheManager;
+use Ubiquity\annotations\AnnotationsEngineInterface;
 
 /**
  * Reflection utilities
@@ -24,7 +25,7 @@ class Reflexion {
 	}
 
 	public static function getKeyFields($instance) {
-		return self::getMembersNameWithAnnotation ( get_class ( $instance ), "@id" );
+		return self::getMembersNameWithAnnotation ( \get_class ( $instance ), 'id' );
 	}
 
 	public static function getMemberValue($instance, $member) {
@@ -73,39 +74,48 @@ class Reflexion {
 		return $ret;
 	}
 
+	/**
+	 * @return AnnotationsEngineInterface
+	 */
+	public static function getAnnotsEngine(){
+		return CacheManager::getAnnotationsEngineInstance();
+	}
+
 	public static function getAnnotationClass($class, $annotation) {
-		$annot = Annotations::ofClass ( $class, $annotation );
+		$annot = self::getAnnotsEngine()->getAnnotsOfClass( $class, $annotation );
 		return $annot;
 	}
 
 	public static function getAnnotationMember($class, $member, $annotation) {
-		$annot = Annotations::ofProperty ( $class, $member, $annotation );
+		$annot = self::getAnnotsEngine()->getAnnotsOfProperty( $class, $member, $annotation );
 		return \current ( $annot );
 	}
 
 	public static function getAnnotationMethod($class, $method, $annotation) {
-		$annot = Annotations::ofMethod ( $class, $method, $annotation );
+		$annot = self::getAnnotsEngine()->getAnnotsOfMethod( $class, $method, $annotation );
 		return \current ( $annot );
 	}
 
 	public static function getAnnotationsMember($class, $member, $annotation) {
-		return Annotations::ofProperty ( $class, $member, $annotation );
+		return self::getAnnotsEngine()->getAnnotsOfProperty ( $class, $member, $annotation );
 	}
 
 	public static function getAnnotationsMethod($class, $method, $annotation) {
-		if (is_array ( $annotation )) {
+		$annotsEngine=self::getAnnotsEngine();
+		if (\is_array ( $annotation )) {
 			$result = [ ];
 			foreach ( $annotation as $annot ) {
-				$annots = Annotations::ofMethod ( $class, $method, $annot );
+				$annots = $annotsEngine->getAnnotsOfMethod( $class, $method, $annot );
 				if (sizeof ( $annots ) > 0) {
-					$result = array_merge ( $result, $annots );
+					$result = \array_merge ( $result, $annots );
 				}
 			}
 			return $result;
 		}
-		$annots = Annotations::ofMethod ( $class, $method, $annotation );
-		if (\sizeof ( $annots ) > 0)
+		$annots = $annotsEngine->getAnnotsOfMethod ( $class, $method, $annotation );
+		if (\sizeof ( $annots ) > 0){
 			return $annots;
+		}
 		return false;
 	}
 
@@ -139,11 +149,11 @@ class Reflexion {
 	}
 
 	public static function getTableName($class) {
-		$ret = Reflexion::getAnnotationClass ( $class, "@table" );
-		if (\sizeof ( $ret ) === 0) {
-			$posSlash = strrpos ( $class, '\\' );
+		$ret = self::getAnnotationClass ( $class, 'table' );
+		if (\count ( $ret ) === 0) {
+			$posSlash = \strrpos ( $class, '\\' );
 			if ($posSlash !== false)
-				$class = substr ( $class, $posSlash + 1 );
+				$class = \substr ( $class, $posSlash + 1 );
 			$ret = $class;
 		} else {
 			$ret = $ret [0]->name;
@@ -161,7 +171,7 @@ class Reflexion {
 
 	public static function getJoinTables($class) {
 		$result = [ ];
-		$annots = self::getMembersAnnotationWithAnnotation ( $class, "@joinTable" );
+		$annots = self::getMembersAnnotationWithAnnotation ( $class, 'joinTable' );
 		foreach ( $annots as $annot ) {
 			$result [] = $annot->name;
 		}

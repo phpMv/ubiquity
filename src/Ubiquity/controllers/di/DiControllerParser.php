@@ -15,7 +15,7 @@ use Ubiquity\exceptions\DiException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.2
  * @since Ubiquity 2.1.0
  *
  */
@@ -26,14 +26,14 @@ class DiControllerParser {
 		$properties = Reflexion::getProperties ( $controllerClass );
 		foreach ( $properties as $property ) {
 			$propName = $property->getName ();
-			$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@injected" );
+			$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, 'injected' );
 			if ($annot !== false) {
 				$name = $annot->name;
 				if ($this->isInjectable ( $controllerClass, $name ?? $propName, false )) {
 					$this->injections [$propName] = $this->getInjection ( $name ?? $propName, $config, $controllerClass, $annot->code ?? null);
 				}
 			} else {
-				$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, "@autowired" );
+				$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, 'autowired' );
 				if ($annot !== false) {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {

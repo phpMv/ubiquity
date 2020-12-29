@@ -30,10 +30,11 @@ trait DevRouterCacheTrait {
 	private static function parseControllerFiles(&$config, $silent = false) {
 		$routes = [ 'rest' => [ ],'default' => [ ] ];
 		$files = self::getControllersFiles ( $config, $silent );
+		$annotsEngine=self::getAnnotationsEngineInstance();
 		foreach ( $files as $file ) {
 			if (is_file ( $file )) {
 				$controller = ClassUtils::getClassFullNameFromFile ( $file );
-				$parser = new ControllerParser ();
+				$parser = new ControllerParser ($annotsEngine);
 				try {
 					$parser->parse ( $controller );
 					$ret = $parser->asArray ();

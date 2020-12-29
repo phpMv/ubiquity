@@ -5,17 +5,24 @@
  */
 namespace Ubiquity\contents\validation;
 
-use Ubiquity\annotations\ValidatorAnnotation;
 use Ubiquity\db\utils\DbTypes;
 use Ubiquity\contents\validation\validators\HasNotNullInterface;
+use Ubiquity\annotations\AnnotationsEngineInterface;
 
 class ValidationModelGenerator {
 	protected $type;
 	protected $name;
 	protected $notNull;
 	protected $primary;
+	protected $modelContainer;
+	/**
+	 * @var AnnotationsEngineInterface
+	 */
+	protected $annotsEngine;
 
-	public function __construct($type, $name, $notNull, $primary) {
+	public function __construct($container,$annotsEngine,$type, $name, $notNull, $primary) {
+		$this->modelContainer=$container;
+		$this->annotsEngine=$annotsEngine;
 		$this->type = $type;
 		$this->name = $name;
 		$this->notNull = $notNull;
@@ -24,25 +31,35 @@ class ValidationModelGenerator {
 
 	protected function parseType($type, $size) {
 		switch ($type) {
-			case "tinyint" :
+			case 'tinyint' :
 				if ($size == 1) {
-					return ValidatorAnnotation::initializeFromModel ( "isBool" );
+					return $this->getValidatorAnnotFromModel( 'isBool' );
 				}
 				break;
-			case "date" :
-				return ValidatorAnnotation::initializeFromModel ( "type", "date" );
-			case "datetime" :
-				return ValidatorAnnotation::initializeFromModel ( "type", "dateTime" );
-			case "time" :
-				return ValidatorAnnotation::initializeFromModel ( "type", "time" );
+			case 'date' :
+				return $this->getValidatorAnnotFromModel ( 'type', 'date' );
+			case 'datetime' :
+				return $this->getValidatorAnnotFromModel ( 'type', 'dateTime' );
+			case 'time' :
+				return $this->getValidatorAnnotFromModel ( 'type', 'time' );
 		}
 		return null;
+	}
+
+	protected function getValidatorAnnotFromModel($type, $ref = null, $constraints = []){
+		if (! is_array ( $constraints )) {
+			$constraints = [ ];
+		}
+		if (isset ( $ref )) {
+			$constraints ["ref"] = $ref;
+		}
+		return $this->annotsEngine->getAnnotation($this->modelContainer,'validator',\compact('type','constraints'));
 	}
 
 	protected function parseSize($type, $size) {
 		if (isset ( $size )) {
 			if (DbTypes::isString ( $type )) {
-				return ValidatorAnnotation::initializeFromModel ( "length", null, [ "max" => $size ] );
+				return $this->getValidatorAnnotFromModel ( 'length', null, [ 'max' => $size ] );
 			}
 		}
 		return null;
@@ -63,18 +80,18 @@ class ValidationModelGenerator {
 				$i ++;
 			}
 			if (! $notNullAffected) {
-				$validatorAnnots [] = ValidatorAnnotation::initializeFromModel ( "notNull" );
+				$validatorAnnots [] = $this->getValidatorAnnotFromModel ( 'notNull' );
 			}
 		}
 	}
 
 	protected function parseName() {
 		switch ($this->name) {
-			case "email" :
-			case "mail" :
-				return ValidatorAnnotation::initializeFromModel ( "email" );
-			case "url" :
-				return ValidatorAnnotation::initializeFromModel ( "url" );
+			case 'email' :
+			case 'mail' :
+				return $this->getValidatorAnnotFromModel ( 'email' );
+			case 'url' :
+				return $this->getValidatorAnnotFromModel ( 'url' );
 		}
 		return null;
 	}
@@ -86,7 +103,7 @@ class ValidationModelGenerator {
 
 	public function parse() {
 		if ($this->primary && DbTypes::isInt ( $this->type )) {
-			return [ ValidatorAnnotation::initializeFromModel ( "id", null, [ "autoinc" => true ] ) ];
+			return [ $this->getValidatorAnnotFromModel ( 'id', null, [ 'autoinc' => true ] ) ];
 		}
 		$validatorAnnot = $this->parseName ();
 		$this->scanType ( $type, $size );
