@@ -341,7 +341,23 @@ class URequest {
 	 */
 	public static function password_hash(string $key, string $algo = PASSWORD_DEFAULT) {
 		if (isset ( $_POST [$key] )) {
-			return $_POST [$key] = password_hash ( $_POST [$key], $algo );
+			return $_POST [$key] = \password_hash ( $_POST [$key], $algo );
+		}
+		return false;
+	}
+
+
+	/**
+	 * Verifies that a posted password matches a hash at $passwordKey position.
+	 *
+	 * @param string $passwordKey
+	 * @param string $hash
+	 * @return bool
+	 * @since 2.4.0
+	 */
+	public static function password_verify(string $passwordKey,string $hash):bool {
+		if (isset ( $_POST [$passwordKey] )) {
+			return \password_verify( $_POST [$passwordKey], $hash );
 		}
 		return false;
 	}

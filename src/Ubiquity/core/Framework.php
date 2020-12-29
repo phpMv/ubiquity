@@ -20,7 +20,7 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 
 class Framework {
-	public const version = '2.3.13';
+	public const version = '2.4.0';
 
 	public static function getVersion() {
 		return self::version;
@@ -81,7 +81,7 @@ class Framework {
 	 * @param array $options
 	 * @return \Ajax\php\ubiquity\JsUtils
 	 */
-	public static function diSemantic($controller, $options = [ "defer" => true,"gc" => true ]) {
+	public static function diSemantic($controller, $options = [ 'defer' => true,'gc' => true ]) {
 		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
 		$jquery->semantic ( new \Ajax\Semantic () );
 		$jquery->setAjaxLoader ( "<div class=\"ui active centered inline text loader\">Loading</div>" );
@@ -95,7 +95,7 @@ class Framework {
 	 * @param array $options
 	 * @return \Ajax\php\ubiquity\JsUtils
 	 */
-	public static function diBootstrap($controller, $options = [ "defer" => true,"gc" => true ]) {
+	public static function diBootstrap($controller, $options = [ 'defer' => true,'gc' => true ]) {
 		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
 		$jquery->bootstrap ( new \Ajax\Bootstrap () );
 		$jquery->setAjaxLoader ( "<div class=\"ui active centered inline text loader\">Loading</div>" );

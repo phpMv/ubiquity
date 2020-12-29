@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unrelease]
 - Nothing
+## [2.4.0] 
+### Added
+- PHP8 attributes support => with PHP8, Ubiquity uses the PHP8 attributes system for annotations. 
+- `password_verify` method to `URequest`
+### Updated
+- CRUD and Auth controllers no longer use twig inheritance on views by default: It is easier to customize the display.
 ## [2.3.13] 2020-12-11
 ### Added
 - ACL Manager in [ubiquity-acl repository](https://github.com/phpMv/ubiquity-acl)
