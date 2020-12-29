@@ -11,6 +11,8 @@ use Ubiquity\utils\base\UArray;
  *
  */
 trait BaseAnnotationTrait {
+	abstract protected function getDefaultParameters(): array;
+
 	public function getProperties() {
 		$reflect = new \ReflectionClass ( $this );
 		$props = $reflect->getProperties ();
@@ -21,7 +23,7 @@ trait BaseAnnotationTrait {
 		$ret = [];
 		$defaultParameters=$this->getDefaultParameters();
 		if (\is_null ( $props ))
-			$props = $this->getProperties ( $this );
+			$props = $this->getProperties ();
 			foreach ( $props as $prop ) {
 				$prop->setAccessible ( true );
 				$name=$prop->getName();

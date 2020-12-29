@@ -16,8 +16,10 @@ use Ubiquity\utils\base\UArray;
  *
  */
 trait DevRouterCacheTrait {
+	abstract public static function getAnnotationsEngineInstance();
+
 	private static function addControllerCache($classname) {
-		$parser = new ControllerParser ();
+		$parser = new ControllerParser (self::getAnnotationsEngineInstance());
 		try {
 			$parser->parse ( $classname );
 			return $parser->asArray ();

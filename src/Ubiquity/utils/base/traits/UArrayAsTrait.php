@@ -13,7 +13,7 @@ use Ubiquity\utils\base\UString;
  *
  */
 trait UArrayAsTrait {
-	private static function parseValue($v, $formatParams,$valueCallback=null, $depth = 1, $format = false) {
+	private static function parseValue($v, $depth = 1, $format = false) {
 		if (\is_numeric ( $v )) {
 			$result = $v;
 		} elseif ($v !== '' && UString::isBooleanStr ( $v )) {
@@ -33,7 +33,7 @@ trait UArrayAsTrait {
 		return $result;
 	}
 	private static function as_($array,$formatParams=['prefix' => '','before'=>'(','after'=>')'], $valueCallback=null,$depth = 1,$format = false) {
-		$exts = array ();
+		$exts = [];
 		$extsStr = '';
 		$tab = '';
 		$nl = '';
@@ -42,7 +42,7 @@ trait UArrayAsTrait {
 			$nl = PHP_EOL;
 		}
 		foreach ( $array as $k => $v ) {
-			$v=self::parseValue ( $v, $formatParams,$valueCallback, $depth + 1, $format );
+			$v=self::parseValue ( $v, $depth + 1, $format );
 			if (\is_string ( $k )) {
 				if(isset($valueCallback)){
 					$exts []=$valueCallback($k,$v);
@@ -56,10 +56,8 @@ trait UArrayAsTrait {
 		if ($formatParams['prefix'] !== '') {
 			$extsStr = $formatParams['before'].$formatParams['after'];
 		}
-		if (\sizeof ( $exts ) > 0) {
+		if (\count ( $exts ) > 0) {
 			$extsStr = $formatParams['before']."{$nl}{$tab}" . \implode ( ",{$nl}{$tab}", $exts ) . "{$nl}{$tab}".$formatParams['after'];
-		}else{
-			$extsStr = $formatParams['before'].$formatParams['after'];
 		}
 		return $formatParams['prefix'] . $extsStr;
 	}
