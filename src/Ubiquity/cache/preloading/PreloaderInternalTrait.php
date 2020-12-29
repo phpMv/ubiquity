@@ -7,7 +7,7 @@ namespace Ubiquity\cache\preloading;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 trait PreloaderInternalTrait {
@@ -19,6 +19,8 @@ trait PreloaderInternalTrait {
 									'ubiquity-webtools' => 'phpmv/ubiquity-webtools/src/Ubiquity/',
 									'ubiquity-mailer' => 'phpmv/ubiquity-mailer/src/Ubiquity/',
 									'ubiquity-swoole' => 'phpmv/ubiquity-swoole/src/Ubiquity/',
+									'ubiquity-annotations'=>'phpmv/ubiquity-annotations/src/Ubiquity/',
+									'ubiquity-attributes'=>'phpmv/ubiquity-attributes/src/Ubiquity/',
 									'ubiquity-workerman' => 'phpmv/ubiquity-workerman/src/Ubiquity/',
 									'ubiquity-tarantool' => 'phpmv/ubiquity-tarantool/src/Ubiquity/',
 									'ubiquity-mysqli' => 'phpmv/ubiquity-mysqli/src/Ubiquity/',

@@ -11,7 +11,7 @@ use Ubiquity\annotations\AnnotationsEngineInterface;
  * in dev environment only
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class Reflexion {
@@ -49,7 +49,7 @@ class Reflexion {
 	}
 
 	public static function getPropertiesAndValues($instance, $props = NULL) {
-		$ret = array ();
+		$ret = [];
 		$className = \get_class ( $instance );
 		$modelMetas = OrmUtils::getModelMetadata ( $className );
 		if (isset ( self::$classProperties [$className] )) {
@@ -106,14 +106,14 @@ class Reflexion {
 			$result = [ ];
 			foreach ( $annotation as $annot ) {
 				$annots = $annotsEngine->getAnnotsOfMethod( $class, $method, $annot );
-				if (sizeof ( $annots ) > 0) {
+				if (\count ( $annots ) > 0) {
 					$result = \array_merge ( $result, $annots );
 				}
 			}
 			return $result;
 		}
 		$annots = $annotsEngine->getAnnotsOfMethod ( $class, $method, $annotation );
-		if (\sizeof ( $annots ) > 0){
+		if (\count ( $annots ) > 0){
 			return $annots;
 		}
 		return false;
