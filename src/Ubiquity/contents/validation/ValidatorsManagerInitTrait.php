@@ -37,7 +37,7 @@ trait ValidatorsManagerInitTrait {
 		$parser = new ValidationModelParser ();
 		$parser->parse ( $class );
 		$validators = $parser->getValidators ();
-		if (sizeof ( $validators ) > 0) {
+		if (\count ( $validators ) > 0) {
 			self::store ( $class, $validators );
 		}
 	}

@@ -24,6 +24,7 @@ class YumlModelsCreatorTest extends BaseTest {
 		parent::_before ();
 		Startup::setConfig ( $this->config );
 		$this->_startCache ();
+		CacheManager::start($this->config);
 		$this->yumlModelsCreator = new YumlModelsCreator ();
 	}
 
