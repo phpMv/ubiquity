@@ -22,7 +22,7 @@ abstract class AbstractDataCache {
 	protected $_root;
 	protected $postfix;
 
-	public function __construct($root, $postfix = "") {
+	public function __construct($root, $postfix = '') {
 		$this->setRoot ( $root );
 		$this->postfix = $postfix;
 	}
