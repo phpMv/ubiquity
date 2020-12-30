@@ -12,7 +12,7 @@ trait ReflexionFieldsTrait {
 	 *
 	 * @param string $class
 	 * @param string $member
-	 * @return \Ubiquity\annotations\ColumnAnnotation|boolean
+	 * @return object|boolean
 	 */
 	protected static function getAnnotationColumnMember($class, $member) {
 		return self::getAnnotationMember ( $class, $member, 'column' );
@@ -20,10 +20,10 @@ trait ReflexionFieldsTrait {
 
 	public static function getDbType($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if (! $ret)
-			return false;
-		else
+		if (\property_exists($ret, 'dbType')){
 			return $ret->dbType;
+		}
+		return false;
 	}
 
 	public static function isSerializable($class, $member) {
@@ -35,19 +35,20 @@ trait ReflexionFieldsTrait {
 
 	public static function getFieldName($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if ($ret === false || ! isset ( $ret->name ))
+		if ($ret === false || ! isset ( $ret->name )){
 			$ret = $member;
-		else
+		} else {
 			$ret = $ret->name;
+		}
 		return $ret;
 	}
 
 	public static function isNullable($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if (! $ret)
-			return false;
-		else
+		if (\property_exists($ret, 'nullable')){
 			return $ret->nullable;
+		}
+		return false;
 	}
 
 	public static function getProperties($class) {

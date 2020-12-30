@@ -4,7 +4,6 @@ namespace Ubiquity\cache\parser;
 
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UString;
-use Ubiquity\annotations\router\RouteAnnotation;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\annotations\AnnotationsEngineInterface;
 

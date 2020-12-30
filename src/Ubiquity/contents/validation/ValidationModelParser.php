@@ -4,7 +4,6 @@ namespace Ubiquity\contents\validation;
 
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UArray;
-use Ubiquity\annotations\ValidatorAnnotation;
 
 /**
  * @author jc
