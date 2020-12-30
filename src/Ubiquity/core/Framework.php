@@ -18,6 +18,7 @@ use Ubiquity\translation\TranslatorManager;
 use Ubiquity\utils\http\UCookie;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
+use Ubiquity\cache\CacheManager;
 
 class Framework {
 	public const version = '~2.4.0';
@@ -72,6 +73,14 @@ class Framework {
 
 	public static function getAssets() {
 		return new AssetsManager ();
+	}
+
+	public static function getCacheSystem(){
+		return \get_class(CacheManager::$cache);
+	}
+
+	public static function getAnnotationsEngine(){
+		return \get_class(CacheManager::getAnnotationsEngineInstance());
 	}
 
 	/**

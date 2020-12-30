@@ -75,7 +75,10 @@ class Reflexion {
 	}
 
 	/**
+	 * Returns the annotation engine (php8 attributes or php annotations).
+	 *
 	 * @return AnnotationsEngineInterface
+	 * @since 2.4.0
 	 */
 	public static function getAnnotsEngine(){
 		return CacheManager::getAnnotationsEngineInstance();
