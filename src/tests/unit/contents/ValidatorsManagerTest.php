@@ -136,6 +136,7 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->config ["cache"] ["directory"] = "new-cache/";
 		$this->config ["mvcNS"] = [ "models" => "models","controllers" => "controllers","rest" => "" ];
 		Startup::setConfig ( $this->config );
+		CacheManager::start ( $this->config );
 		(new DbModelsCreator ())->create ( $this->config, false );
 		CacheManager::$cache = null;
 		CacheManager::start ( $this->config );
