@@ -20,7 +20,7 @@ trait ReflexionFieldsTrait {
 
 	public static function getDbType($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if (\property_exists($ret, 'dbType')){
+		if (\is_object($ret) && \property_exists($ret, 'dbType')){
 			return $ret->dbType;
 		}
 		return false;
@@ -45,7 +45,7 @@ trait ReflexionFieldsTrait {
 
 	public static function isNullable($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if (\property_exists($ret, 'nullable')){
+		if (\is_object($ret) && \property_exists($ret, 'nullable')){
 			return $ret->nullable;
 		}
 		return false;
