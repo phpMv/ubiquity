@@ -96,8 +96,8 @@ We can then edit ``app/controllers/DefaultController`` file in our favorite IDE:
       
    namespace controllers;
     /**
-    * Controller DefaultController
-    **/
+     * Controller DefaultController
+     */
    class DefaultController extends ControllerBase{
     	public function index(){}
    }
@@ -107,14 +107,14 @@ Add the traditional message, and test your page at ``http://127.0.0.1:8090/Defau
 .. code-block:: php
    :caption: app/controllers/DefaultController.php
    
-	class DefaultController extends ControllerBase{
-	
-		public function index(){
-			echo 'Hello world!';
-		}
-	
-	}
-   
+   class DefaultController extends ControllerBase{
+
+       public function index(){
+           echo 'Hello world!';
+       }
+
+   }
+
 For now, we have not defined routes, |br|
 Access to the application is thus made according to the following scheme: |br|
 ``controllerName/actionName/param``
@@ -125,28 +125,48 @@ Route
 -----
 
 .. important::
-	The routing is defined with the annotation ``@route`` and is not done in a configuration file: |br|
+	The routing is defined with the attribute ``Route`` (with php>8) or the annotation ``@route`` and is not done in a configuration file: |br|
 	it's a design choice.
 	
 The **automated** parameter set to **true** allows the methods of our class to be defined as sub routes of the main route ``/hello``.
+
+With annotations:
 
 .. code-block:: php
    :linenos:
    :caption: app/controllers/DefaultController.php
       
-	namespace controllers;
-	 /**
-	 * Controller DefaultController
-	 * @route("/hello","automated"=>true)
-	 **/
-	class DefaultController extends ControllerBase{
-	
-		public function index(){
-			echo 'Hello world!';
-		}
-	
-	}
-	
+   namespace controllers;
+   /**
+    * Controller DefaultController
+    * @route("/hello","automated"=>true)
+    */
+   class DefaultController extends ControllerBase{
+
+       public function index(){
+           echo 'Hello world!';
+       }
+
+   }
+
+With attributes (php>8):
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/DefaultController.php
+
+   namespace controllers;
+   use Ubiquity\attributes\items\router\Route;
+
+   #[Route('/hello', automated: true)]
+   class DefaultController extends ControllerBase{
+
+       public function index(){
+           echo 'Hello world!';
+       }
+
+   }
+
 Router cache
 ^^^^^^^^^^^^
 .. important::
@@ -197,8 +217,8 @@ Change the code in your IDE: the action must say Hello to somebody...
    :caption: app/controllers/DefaultController.php
    
 	/**
-	 *@route("to/{name}/")
-	**/
+	 * @route("to/{name}/")
+	 */
 	public function sayHello($name){
 		echo 'Hello '.$name.'!';
 	}
@@ -229,8 +249,8 @@ Let's go back to our development environment and see the generated code:
    :caption: app/controllers/DefaultController.php
 
 	/**
-	 *@route("info/{title}/{message}")
-	**/
+	 * @route("info/{title}/{message}")
+	 */
 	public function information($title,$message='nothing'){
 		$this->loadView('DefaultController/information.html');
 	}
@@ -240,8 +260,8 @@ We need to pass the 2 variables to the view:
 .. code-block:: php
 
 	/**
-	 *@route("info/{title}/{message}")
-	**/
+	 * @route("info/{title}/{message}")
+	 */
 	public function information($title,$message='nothing'){
 		$this->loadView('DefaultController/information.html',compact('title','message'));
 	}
