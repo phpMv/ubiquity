@@ -36,7 +36,7 @@ class Framework {
 	}
 
 	public static function getUrl() {
-		return \implode ( "/", Startup::$urlParts );
+		return \implode ( '/', Startup::$urlParts );
 	}
 
 	public static function getRouter() {
