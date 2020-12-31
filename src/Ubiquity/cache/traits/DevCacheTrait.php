@@ -165,6 +165,11 @@ trait DevCacheTrait {
 			}
 			self::initRouterCache($config, $silent);
 		}
+		if ($type === 'all' || $type === 'acls') {
+			if (\class_exists('\\Ubiquity\\security\\acl\\AclManager')) {
+				\Ubiquity\security\acl\AclManager::initCache($config);
+			}
+		}
 		if ($type === 'all' || $type === 'rest') {
 			self::initRestCache($config, $silent);
 		}
