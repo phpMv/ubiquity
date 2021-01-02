@@ -21,7 +21,7 @@ Ubiquity User guide
    - :ref:`OAuth client module<oauth>`
    - :ref:`Mailer module<mailer>`
    - :ref:`Servers configuration<servers>`
-   - :ref:`Database connexions<db>`
+   - :ref:`Database connection<db>`
    - :ref:`Optimization<optimization>`
    - :ref:`Rich client<richclient>`
    - :ref:`REST module<rest>`
@@ -68,7 +68,7 @@ Ubiquity User guide
    :maxdepth: 1
    :caption: Models and ORM
    
-   Database connexion <model/db>
+   Database connection <model/db>
    Generation <model/generation>
    model/models
    model/dao
