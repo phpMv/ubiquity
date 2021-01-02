@@ -79,24 +79,24 @@ The controller created is the following:
    
    namespace controllers;
    use Hybridauth\Adapter\AdapterInterface;
-    /**
+   /**
     * Controller OAuthTest
     */
    class OAuthTest extends \Ubiquity\controllers\auth\AbstractOAuthController{
-   
-   	public function index(){
-   	}
-   	
-   	/**
-   	* @get("oauth/{name}")
-   	*/
-   	public function _oauth(string $name):void {
-   		parent::_oauth($name);
-   	}
-   	
-   	protected function onConnect(string $name,AdapterInterface $provider){
-   		//TODO
-   	}
+
+      public function index(){
+      }
+
+      /**
+       * @get("oauth/{name}")
+       */
+      public function _oauth(string $name):void {
+         parent::_oauth($name);
+      }
+
+      protected function onConnect(string $name,AdapterInterface $provider){
+         //TODO
+      }
    }
 
 - The **_oauth** method corresponds to the callback url
@@ -112,18 +112,18 @@ Example :
 .. code-block:: php
    :caption: app/controllers/OAuthTest.php
    
-   	protected function onConnect(string $name, AdapterInterface $provider) {
-   		$userProfile = $provider->getUserProfile();
-   		$key = md5($name . $userProfile->identifier);
-   		$user = DAO::getOne(User::class, 'oauth= ?', false, [
-   			$key
-   		]);
-   		if (! isset($user)) {
-   			$user = new User();
-   			$user->setOauth($key);
-   			$user->setLogin($userProfile->displayName);
-   			DAO::save($user);
-   		}
-   		USession::set('activeUser', $user);
-   		header('location:/');
+      protected function onConnect(string $name, AdapterInterface $provider) {
+         $userProfile = $provider->getUserProfile();
+         $key = md5($name . $userProfile->identifier);
+         $user = DAO::getOne(User::class, 'oauth= ?', false, [
+            $key
+         ]);
+         if (! isset($user)) {
+            $user = new User();
+            $user->setOauth($key);
+            $user->setLogin($userProfile->displayName);
+            DAO::save($user);
+         }
+         USession::set('activeUser', $user);
+         \header('location:/');
    	}

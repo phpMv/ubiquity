@@ -74,17 +74,37 @@ Define the connection configuration parameters:
 Generate models for the new connection:|br|
 The generated models include the ``@database`` annotation mentioning their link to the connection.
 
-.. code-block:: php
-    
-    <?php
-    namespace models\tests;
-    /**
-     * @database('tests')
-     * @table('groupe')
-    */
-    class Groupe{
-    	...
-    }
+
+.. tabs::
+
+   .. tab:: Attributes
+
+      .. code-block:: php
+
+        <?php
+        namespace models\tests;
+        /**
+         * @database('tests')
+         * @table('groupe')
+         */
+        class Groupe{
+            ...
+        }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+
+        <?php
+        namespace models\tests;
+        use Ubiquity\attributes\items\Database;
+        use Ubiquity\attributes\items\Table;
+
+        #[Database('tests')]
+        #[Table('groupe')]
+        class Groupe{
+            ...
+        }
 
 Models are generated in a sub-folder of ``models``.
 

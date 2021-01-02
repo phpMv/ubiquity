@@ -143,7 +143,7 @@ In the case below, the `initialize` method only loads the `vHeader.html` view if
     namespace controllers;
     
     use Ubiquity\orm\DAO;
-    use Uniquity\utils\http\URequest;
+    use Ubiquity\utils\http\URequest;
     
     class Users extends BaseController{
     	...

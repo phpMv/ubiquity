@@ -139,6 +139,13 @@ With attributes:
 
 The method ``Products::index()`` will be accessible via the url ``/products``.
 
+
+.. note::
+   The initial or terminal slash is ignored in the path. The following routes are therefore equivalent: |br|
+   - ``#[Route('products')]``
+   - ``#[Route('/products')]``
+   - ``#[Route('/products/')]``
+
 Route parameters
 ^^^^^^^^^^^^^^^^
 A route can have parameters:
@@ -588,6 +595,13 @@ In the example below, the **products/all** route will be defined before the **/p
 
    }
 
+
+With attributes:
+
+.. code-block:: php
+
+   #[Route('products/all',priority: 10)]
+
 The default priority value is ``0``.
 
 Routes response caching
@@ -596,11 +610,21 @@ It is possible to cache the response produced by a route:
 
 In this case, the response is cached and is no longer dynamic.
 
+With annotations:
+
 .. code-block:: php
    
    /**
     * @route("products/all","cache"=>true)
     */
+   public function all(){}
+
+
+With attributes:
+
+.. code-block:: php
+
+   #[Route('products/all', cache: true)]
    public function all(){}
 
 Cache duration
@@ -614,6 +638,12 @@ The **duration** is expressed in seconds, if it is omitted, the duration of the 
     */
    public function all(){}
 
+With attributes:
+
+.. code-block:: php
+
+   #[Route('products/all', cache: true, duration: 3600)]
+   public function all(){}
 
 Cache expiration
 ^^^^^^^^^^^^^^^^
@@ -629,7 +659,7 @@ Dynamic routes caching
 Dynamic routes can also be cached.
 
 .. important::
-   This possiblity is only useful if this caching is not done in production, but at the time of initialization of the cache.
+   This possibility is only useful if this caching is not done in production, but at the time of initialization of the cache.
 
 .. code-block:: php
 

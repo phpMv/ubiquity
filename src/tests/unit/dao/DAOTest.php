@@ -215,7 +215,7 @@ class DAOTest extends BaseTest {
 	 */
 	public function testUGetAllWithQuery() {
 		$users = DAO::uGetAll ( User::class, "groupes.name = ?", [ "groupes" ], [ "Etudiants" ] );
-		$this->assertEquals ( "jeremy.bryan", current ( $users ) . "" );
+		$this->assertEquals ( "jeremy.bryan", (\current ( $users ))->getEmail() . "" );
 		$this->assertEquals ( 8, sizeof ( $users ) . "" );
 	}
 
