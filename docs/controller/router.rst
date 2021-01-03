@@ -146,9 +146,9 @@ The method ``Products::index()`` will be accessible via the url ``/products``.
 
 .. note::
    The initial or terminal slash is ignored in the path. The following routes are therefore equivalent: |br|
-     - ``#[Route('products')]``
-     - ``#[Route('/products')]``
-     - ``#[Route('/products/')]``
+     * ``#[Route('products')]``
+     * ``#[Route('/products')]``
+     * ``#[Route('/products/')]``
 
 Route parameters
 ^^^^^^^^^^^^^^^^

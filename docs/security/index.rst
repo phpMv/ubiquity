@@ -152,5 +152,5 @@ It is also possible to check a password entered by a user in the same way, to co
 Security module/ ACL management
 ===============================
 In addition to these few rules, you can install if necessary:
-- :ref:`Ubiquity-acl<aclModule>`
-- :ref:`Ubiquity-security<securityModule>`
+* :ref:`Ubiquity-acl<aclModule>`
+* :ref:`Ubiquity-security<securityModule>`
