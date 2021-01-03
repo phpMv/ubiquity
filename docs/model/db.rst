@@ -43,11 +43,11 @@ In some cases, however, it may be useful to make an explicit connection to the d
     use Ubiquity\controllers\Startup;
     ...
     try{
-    	$config=\Ubiquity\controllers\Startup::getConfig();
-    	DAO::startDatabase($config);
-    	$users=DAO::getAll(User::class,'');
+        $config=\Ubiquity\controllers\Startup::getConfig();
+        DAO::startDatabase($config);
+        $users=DAO::getAll(User::class,'');
     }catch(Exception $e){
-    	echo $e->getMessage();
+        echo $e->getMessage();
     }
 
 
@@ -72,7 +72,7 @@ Define the connection configuration parameters:
    :class: bordered
 
 Generate models for the new connection:|br|
-The generated models include the ``@database`` annotation mentioning their link to the connection.
+The generated models include the ``@database`` annotation or the ``Database`` attribute mentioning their link to the connection.
 
 
 .. tabs::
@@ -83,10 +83,11 @@ The generated models include the ``@database`` annotation mentioning their link 
 
         <?php
         namespace models\tests;
-        /**
-         * @database('tests')
-         * @table('groupe')
-         */
+        use Ubiquity\attributes\items\Database;
+        use Ubiquity\attributes\items\Table;
+
+        #[Database('tests')]
+        #[Table('groupe')]
         class Groupe{
             ...
         }
@@ -97,11 +98,10 @@ The generated models include the ``@database`` annotation mentioning their link 
 
         <?php
         namespace models\tests;
-        use Ubiquity\attributes\items\Database;
-        use Ubiquity\attributes\items\Table;
-
-        #[Database('tests')]
-        #[Table('groupe')]
+        /**
+         * @database('tests')
+         * @table('groupe')
+         */
         class Groupe{
             ...
         }

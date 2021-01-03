@@ -15,6 +15,7 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Security<security>`
    - :ref:`Async platforms<async>`
    - :ref:`Commands module<commands>`
    - :ref:`Composer module<composer>`
@@ -103,6 +104,14 @@ Ubiquity User guide
    contents/validators
    contents/transformers
    translation/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Security
+
+   security/index
+   security/module
+   security/acl
 
 .. toctree::
    :maxdepth: 1
