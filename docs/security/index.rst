@@ -19,6 +19,7 @@ Example of the creation of a form in the action of a controller (this part could
 .. code-block:: php
    :linenos:
    :caption: app/controllers/UsersManagement.php
+
     public function index(){
         $frm=$this->jquery->semantic()->dataForm('frm-user',new User());
         $frm->setFields(['login','password','connection']);
@@ -40,6 +41,7 @@ The Associated View:
 
 .. code-block:: html+twig
    :caption: app/views/UsersManagement/index.html
+
     {{ q['frm-user'] | raw }}
     {{ script_foot | raw }}
     <div id="response"></div>
