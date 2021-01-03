@@ -60,7 +60,7 @@ The Associated View:
 
 Server-side validation
 ^^^^^^^^^^^^^^^^^^^^^^
-It is preferable to restrict the URLs allowed to modify data.
+It is preferable to restrict the URLs allowed to modify data. |br|
 Beforehand, by specifying the Http method in the routes, and by testing the request :
 
 .. code-block:: php
@@ -99,8 +99,8 @@ After modifying an object, it is possible to check its validity, given the valid
 DAO operations
 --------------
 It is always recommended to use parameterized queries, regardless of the operations performed on the data:
-- To avoid SQL injections.
-- To allow the use of prepared queries, speeding up processing.
+   * To avoid SQL injections.
+   * To allow the use of prepared queries, speeding up processing.
 
 .. code-block:: php
 
@@ -121,7 +121,7 @@ It is always recommended to use parameterized queries, regardless of the operati
 Passwords management
 --------------------
 
-The `Password` Transformer allows a field to be of the password type when displayed in an automatically generated CRUD form.
+The ``Password`` Transformer allows a field to be of the password type when displayed in an automatically generated CRUD form.
 
 .. code-block:: php
 
@@ -136,7 +136,7 @@ After submission from a form, it is possible to encrypt a password from the UReq
    $user->setPassword($encryptedPassword);
    DAO::save($user);
 
-The algorithm used in this case is defined by the php `PASSWORD_DEFAULT`.
+The algorithm used in this case is defined by the php ``PASSWORD_DEFAULT``.
 
 It is also possible to check a password entered by a user in the same way, to compare it to a hash:
 
@@ -152,5 +152,5 @@ It is also possible to check a password entered by a user in the same way, to co
 Security module/ ACL management
 ===============================
 In addition to these few rules, you can install if necessary:
-* :ref:`Ubiquity-acl<aclModule>`
-* :ref:`Ubiquity-security<securityModule>`
+   * :ref:`Ubiquity-acl<aclModule>`
+   * :ref:`Ubiquity-security<securityModule>`
