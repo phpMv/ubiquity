@@ -15,6 +15,7 @@ Client-side validation
 It is preferable to perform an initial client-side validation to avoid submitting invalid data to the server.
 
 Example of the creation of a form in the action of a controller (this part could be located in a dedicated service for a better separation of layers):
+
 .. code-block:: php
    :linenos:
    :caption: app/controllers/UsersManagement.php
@@ -36,6 +37,7 @@ Example of the creation of a form in the action of a controller (this part could
     }
 
 The Associated View:
+
 .. code-block:: html+twig
    :caption: app/views/UsersManagement/index.html
     {{ q['frm-user'] | raw }}
@@ -45,7 +47,7 @@ The Associated View:
 .. image:: /_static/images/security/bases/frm-user.png
    :class: bordered
 
-.. tip:: The CRUD controllers automatically integrate this client-side validation using the Validators attached to the members of the models.
+.. note:: The CRUD controllers automatically integrate this client-side validation using the Validators attached to the members of the models.
 
 .. code-block:: php
 
@@ -69,7 +71,7 @@ Beforehand, by specifying the Http method in the routes, and by testing the requ
       }
    }
 
-.. tips:: The **Ubiquity-security** module offers additional control to avoid cross-site requests.
+.. note:: The **Ubiquity-security** module offers additional control to avoid cross-site requests.
 
 After modifying an object, it is possible to check its validity, given the validators attached to the members of the associated Model:
 
@@ -77,10 +79,11 @@ After modifying an object, it is possible to check its validity, given the valid
 
    #[Post(path: "/submit")]
    public function submitUser(){
-      if(!URequest::isCrossSite() && URequest::isAjax()){
+      if(!URequest::isCrossSite()){
          $datas=URequest::getPost();//post with htmlEntities
          $user=new User();
          URequest::setValuesToObject($user,$datas);
+
          $violations=ValidatorsManager::validate($user);
          if(\count($violations)==0){
             //do something with this valid user
@@ -93,7 +96,7 @@ After modifying an object, it is possible to check its validity, given the valid
 
 DAO operations
 --------------
-It is always recommended to use parameterized queries, regardless of the operations performed on the data.
+It is always recommended to use parameterized queries, regardless of the operations performed on the data:
 - To avoid SQL injections.
 - To allow the use of prepared queries, speeding up processing.
 
@@ -105,7 +108,7 @@ It is always recommended to use parameterized queries, regardless of the operati
 
    $countActiveUsers=DAO::count(User::class,'active= ?',[true]);
 
-.. tips:: DAO operations that take objects as parameters use this mechanism by default.
+.. note:: DAO operations that take objects as parameters use this mechanism by default.
 
 .. code-block:: php
 
@@ -143,3 +146,9 @@ It is also possible to check a password entered by a user in the same way, to co
 
 
 .. important:: Set up Https to avoid sending passwords in clear text.
+
+Security module/ ACL management
+===============================
+In addition to these few rules, you can install if necessary:
+- :ref:`Ubiquity-acl<aclModule>`
+- :ref:`Ubiquity-security<securityModule>`

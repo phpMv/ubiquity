@@ -19,6 +19,7 @@ Then activate the display of the Security part in the **Webtools**:
 
 .. image:: /_static/images/security/display-security.png
    :class: bordered
+
 Session CSRF
 ============
 
@@ -31,23 +32,23 @@ Encryption manager
 ==================
 The **EncryptionManager** service can be started directly from the **webtools** interface.
 
-- In this case, a key is generated in the configuration file `app/config/config.php`.
+- In this case, a key is generated in the configuration file ``app/config/config.php``.
 
-- The service is started in the `services.php` file.
+- The service is started in the ``services.php`` file.
 
 .. code-block:: php
    :caption: app/config/services.php
 
     \Ubiquity\security\data\EncryptionManager::start($config);
 
-.. tips:: By default, encryption is performed in ``AES-256``.
+.. note:: By default, encryption is performed in ``AES-256``.
 
 .. image:: /_static/images/security/encryption-manager-started.png
    :class: bordered
 
 Cookie encryption
 -----------------
-Cookies can be encrypted by default, by adding this in `services.php`:
+Cookies can be encrypted by default, by adding this in ``services.php``:
 
 .. code-block:: php
    :caption: app/config/services.php
@@ -86,6 +87,6 @@ To then decrypt it, with possible serialisation/deserialisation if it is an obje
 
 .. code-block:: php
 
-    $user=EncryptionManager::encrypt($encryptedUser);
+    $user=EncryptionManager::decrypt($encryptedUser);
 
 

@@ -99,43 +99,47 @@ Static routes are defined using annotation or with php native attributes since `
 
 Creation
 ^^^^^^^
-With annotations:
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 7-9
-   
-   namespace controllers;
-   /**
-    * Controller ProductsController
-    */
-   class ProductsController extends ControllerBase{
+.. tabs::
 
-       /**
-        * @route("products")
-        */
-       public function index(){}
+   .. tab:: Attributes
 
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 7
 
-With attributes:
+         namespace controllers;
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 7
+         use Ubiquity\attributes\items\router\Route;
 
-   namespace controllers;
+         class ProductsController extends ControllerBase{
 
-   use Ubiquity\attributes\items\router\Route;
+             #[Route('products')]
+             public function index(){}
 
-   class ProductsController extends ControllerBase{
+         }
 
-       #[Route('products')]
-       public function index(){}
+   .. tab:: Annotations
 
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 7-9
+
+         namespace controllers;
+         /**
+          * Controller ProductsController
+          */
+         class ProductsController extends ControllerBase{
+
+             /**
+              * @route("products")
+              */
+             public function index(){}
+      
+         }
+
 
 The method ``Products::index()`` will be accessible via the url ``/products``.
 
