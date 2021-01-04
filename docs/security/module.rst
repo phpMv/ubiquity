@@ -109,7 +109,7 @@ The form view:
       <input type='text' id='sensitiveData' name='sensitiveData'>
    </form>
 
-The ``csrf`` method generates a token for the form.
+The ``csrf`` method generates a token for the form (By adding a hidden field in the form corresponding to the token.).
 
 The form submitting in a controller:
 
@@ -124,7 +124,71 @@ The form submitting in a controller:
       }
    }
 
-.. note:: It is also possible to manage this protection via cookie, or meta tag in Http headers.
+
+
+.. note:: It is also possible to manage this protection via cookie.
+
+Example of protection with ajax:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The meta field ``csrf-token`` is generated on all pages.
+
+.. code-block:: php
+   :caption: app/controllers/BaseController.php
+   :emphasize-lines: 7
+
+   abstract class ControllerBase extends Controller{
+      protected $headerView = "@activeTheme/main/vHeader.html";
+      protected $footerView = "@activeTheme/main/vFooter.html";
+
+      public function initialize() {
+         if (! URequest::isAjax ()) {
+            $meta=UCsrfHttp::getTokenMeta('postAjax');
+            $this->loadView ( $this->headerView,['meta'=>$meta] );
+         }
+      }
+   }
+
+This field is added in the headerView:
+
+.. code-block:: html+twig
+   :caption: app/views/main/vHeader.html
+   :emphasize-lines: 5
+
+   {% block header %}
+      <base href="{{config["siteUrl"]}}">
+      <meta charset="UTF-8">
+      <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+      {{meta | raw}}
+      <title>Tests</title>
+   {% endblock %}
+
+
+Example with a button posting data via ajax.
+The parameter ``csrf`` is set to true. So when the request is posted, the ``csrf-token`` is sent in the request headers.
+
+.. code-block:: php
+   :emphasize-lines: 3
+
+   #[Get(path: "/ajax")]
+   public function ajax(){
+      $this->jquery->postOnClick('#bt','/postAjax','{id:55}','#myResponse',['csrf'=>true]);
+      $this->jquery->renderDefaultView();
+   }
+
+The submitting route can check the presence and validity of the token:
+
+.. code-block:: php
+   :emphasize-lines: 3
+
+   #[Post(path: "postAjax")]
+   public function postAjax(){
+      if(UCsrfHttp::isValidMeta('postAjax')){
+         var_dump($_POST);
+      }else{
+         echo 'invalid or absent meta csrf-token';
+      }
+   }
 
 Encryption manager
 ==================
