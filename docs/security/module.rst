@@ -288,4 +288,5 @@ To then decrypt it, with possible serialisation/deserialisation if it is an obje
 
     $user=EncryptionManager::decrypt($encryptedUser);
 
-
+Password management
+===================

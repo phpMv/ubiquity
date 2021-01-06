@@ -100,7 +100,7 @@ This controller just goes to redefine the ``_getRole`` method, so that it return
       }
 
       public function _getRole() {
-         return '@ME';
+         $_GET['role']??'@ME';//Just for testing: logically, this is the active user's role
       }
 
       /**
@@ -113,6 +113,8 @@ This controller just goes to redefine the ``_getRole`` method, so that it return
    }
 
 Authorisation has been granted for the resource:
+  * Without specifying the resource, the controller's actions are defined as a resource.
+  * Without specifying the permission, the ``ALL`` permission is used.
 
 .. image:: /_static/images/security/acls/me-allow.png
    :class: bordered
@@ -122,4 +124,61 @@ And this association is present in the Acls map:
 .. image:: /_static/images/security/acls/me-map.png
    :class: bordered
 
+Allow with Role, resource and permission
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Allow without prior creation:
+
+``@USER`` is allowed to access to ``Foo`` resource with ``READ`` permission.
+
+.. code-block:: php
+   :caption: app/controllers/BaseAclController.php
+
+   use Ubiquity\attributes\items\acl\Allow;
+
+   class BaseAclController extends Controller {
+   use AclControllerTrait;
+      ...
+
+      #[Allow('@USER','Foo', 'READ')]
+      public function foo(){
+         echo 'foo page allowed for @USER and @ME';
+      }
+   }
+
+.. note::
+   The role, resource and permission are automatically created as soon as they are invoked with ``Allow``.
+
+Allow with explicit creation:
+
+.. code-block:: php
+   :caption: app/controllers/BaseAclController.php
+
+   use Ubiquity\attributes\items\acl\Allow;
+   use Ubiquity\attributes\items\acl\Permission;
+
+   class BaseAclController extends Controller {
+   use AclControllerTrait;
+      ...
+
+      #[Permission('READ',500)]
+      #[Allow('@USER','Foo', 'READ')]
+      public function foo(){
+         echo 'foo page allowed for @USER and @ME';
+      }
+   }
+
+Adding ACL at runtime
+*********************
+
+Whether in a controller or in a service, it is possible to add Roles, Resources, Permissions and Authorizations at runtime:
+
+For example :\\
+Adding a Role ``@USER`` inheriting from ``@GUEST``.
+
+.. code-block:: php
+
+   use Ubiquity\security\acl\AclManager;
+
+   AclManager::addRole('@GUEST');
+   AclManager::addRole('@USER',['@GUEST']);
 
