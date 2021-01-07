@@ -290,3 +290,7 @@ To then decrypt it, with possible serialisation/deserialisation if it is an obje
 
 Password management
 ===================
+
+
+Users token
+===========

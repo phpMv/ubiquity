@@ -77,22 +77,24 @@ abstract class AbstractBulks {
 	public abstract function createSQL();
 
 	public function flush() {
-		$statement = $this->db->getUpdateStatement ( $this->createSQL () );
-		while ( true ) {
-			try {
-				$result = $statement->execute ( $this->parameters );
-				if ($result !== false) {
-					$this->instances = [ ];
-					$this->parameters = [ ];
-					return $result;
-				}
-			} catch ( \Exception $e ) {
-				Logger::warn ( "DAOBulkUpdates", $e->getMessage (), \get_class ( $this ) );
-				if ($e->errorInfo [0] == 40001 && $this->db->getDbType () == 'mysql' && $e->errorInfo [1] == 1213) {
-					echo "deadlock";
-				} else {
-					if (Startup::$config ['debug']) {
-						throw $e;
+		if(\count($this->instances)>0){
+			$statement = $this->db->getUpdateStatement ( $this->createSQL () );
+			while ( true ) {
+				try {
+					$result = $statement->execute ( $this->parameters );
+					if ($result !== false) {
+						$this->instances = [ ];
+						$this->parameters = [ ];
+						return $result;
+					}
+				} catch ( \Exception $e ) {
+					Logger::warn ( "DAOBulkUpdates", $e->getMessage (), \get_class ( $this ) );
+					if ($e->errorInfo [0] == 40001 && $this->db->getDbType () == 'mysql' && $e->errorInfo [1] == 1213) {
+						echo "deadlock";
+					} else {
+						if (Startup::$config ['debug']) {
+							throw $e;
+						}
 					}
 				}
 			}

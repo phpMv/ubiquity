@@ -168,7 +168,7 @@ Allow with explicit creation:
    }
 
 Adding ACL at runtime
-*********************
+^^^^^^^^^^^^^^^^^^^^^
 
 Whether in a controller or in a service, it is possible to add Roles, Resources, Permissions and Authorizations at runtime:
 
