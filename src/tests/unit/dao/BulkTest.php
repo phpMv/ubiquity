@@ -33,13 +33,16 @@ class BulkTest extends BaseTest {
 
 	public function testInsertDelete() {
 		$worlds = $this->dao->getAll ( World::class );
+		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
 		$this->assertEquals ( 10000, \count ( $worlds ) );
 		for($i = 0; $i < 10; $i ++) {
 			$world = new World ();
 			$world->randomNumber = \mt_rand ( 1, 10000 );
 			$this->dao->toInsert ( $world );
 		}
+		$this->assertEquals ( 10, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
 		$this->dao->flushInserts ();
+		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
 		$worlds = $this->dao->getAll ( World::class );
 		$this->assertEquals ( 10010, \count ( $worlds ) );
 		$newWorlds = [ ];
@@ -116,6 +119,35 @@ class BulkTest extends BaseTest {
 
 		$worlds = $this->dao->getAll ( World::class );
 		$this->assertEquals ( 10000, \count ( $worlds ) );
+	}
+
+	public function testClear() {
+		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'update' ) );
+		$id1 = \mt_rand ( 1, 10000 );
+		$world1 = $this->dao->getById ( World::class, [ $id1 ] );
+		$world1->randomNumber = 10001;
+		$this->dao->toUpdate ( $world1 );
+		$this->assertEquals ( 1, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
+
+		$id2 = \mt_rand ( 1, 10000 );
+		$world2 = $this->dao->getById ( World::class, [ $id2 ] );
+		$this->dao->toDelete ( $world2 );
+		$this->assertEquals ( 2, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
+
+		$world3 = new World ();
+		$world3->randomNumber = mt_rand ( 1, 10000 );
+		$this->dao->toInsert ( $world3 );
+
+		$this->dao->clearBulks ();
+		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'update' ) );
+		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
+
+		$world3 = new World ();
+		$world3->randomNumber = mt_rand ( 1, 10000 );
+		$this->dao->toInsert ( $world3 );
+		$this->assertEquals ( 1, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
+		$this->dao->clearBulks ( [ 'insert' ], [ World::class ] );
+		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
 	}
 
 	public function testUpdateGroup() {

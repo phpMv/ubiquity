@@ -12,7 +12,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class AbstractBulks {
@@ -37,7 +37,7 @@ abstract class AbstractBulks {
 
 	protected function updateInstanceRest($instance) {
 		foreach ( $this->fields as $field ) {
-			$accessor = 'get' . \ucfirst ( $this->memberNames[$field]??$field );
+			$accessor = 'get' . \ucfirst ( $this->memberNames [$field] ?? $field);
 			$instance->_rest [$field] = $instance->$accessor ();
 		}
 	}
@@ -63,7 +63,7 @@ abstract class AbstractBulks {
 		$this->db = DAO::getDb ( $className );
 		$this->dbType = $this->db->getDbType ();
 		$this->tableName = OrmUtils::getTableName ( $className );
-		$this->memberNames=OrmUtils::getAnnotationInfo($className,'#memberNames');
+		$this->memberNames = OrmUtils::getAnnotationInfo ( $className, '#memberNames' );
 	}
 
 	public function addInstances($instances) {
@@ -77,7 +77,7 @@ abstract class AbstractBulks {
 	public abstract function createSQL();
 
 	public function flush() {
-		if(\count($this->instances)>0){
+		if (\count ( $this->instances ) > 0) {
 			$statement = $this->db->getUpdateStatement ( $this->createSQL () );
 			while ( true ) {
 				try {
@@ -100,6 +100,23 @@ abstract class AbstractBulks {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Remove all instances and parameters from this bulk.
+	 */
+	public function clear(): void {
+		$this->instances = [ ];
+		$this->parameters = [ ];
+	}
+
+	/**
+	 * Count all elements in instances to be flush.
+	 *
+	 * @return int
+	 */
+	public function count(): int {
+		return \count ( $this->instances );
 	}
 }
 

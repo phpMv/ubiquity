@@ -7,7 +7,7 @@ namespace Ubiquity\orm\traits;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 trait DAOBulkUpdatesTrait {
@@ -154,6 +154,39 @@ trait DAOBulkUpdatesTrait {
 				$bulk->flush ();
 			}
 		}
+	}
+
+	/**
+	 * Clear bulk and clear instances waiting for operations.
+	 *
+	 * @param array $operations
+	 * @param array $classes
+	 */
+	public static function clearBulks(?array $operations = null, ?array $classes = null): void {
+		$operations ??= \array_keys ( self::$bulks );
+		foreach ( $operations as $op ) {
+			$thisClasses = $classes ?? \array_keys ( self::$bulks [$op] );
+			foreach ( $thisClasses as $class ) {
+				if (isset ( self::$bulks [$op] [$class] )) {
+					self::$bulks [$op] [$class]->clear ();
+				}
+			}
+		}
+	}
+
+	/**
+	 * Return the count of instances waiting for flushing in a bulk.
+	 *
+	 * @param string $class
+	 * @param string $operation
+	 * @return int
+	 */
+	public static function countInstancesBulk(string $class, string $operation = 'update'): int {
+		$bulk = self::$bulks [$operation] [$class] ?? null;
+		if (isset ( $bulk )) {
+			return $bulk->count ();
+		}
+		return 0;
 	}
 }
 
