@@ -123,16 +123,17 @@ class BulkTest extends BaseTest {
 
 	public function testClear() {
 		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'update' ) );
+		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'delete' ) );
 		$id1 = \mt_rand ( 1, 10000 );
 		$world1 = $this->dao->getById ( World::class, [ $id1 ] );
 		$world1->randomNumber = 10001;
 		$this->dao->toUpdate ( $world1 );
-		$this->assertEquals ( 1, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
+		$this->assertEquals ( 1, $this->dao->countInstancesBulk ( World::class, 'update' ) );
 
 		$id2 = \mt_rand ( 1, 10000 );
 		$world2 = $this->dao->getById ( World::class, [ $id2 ] );
 		$this->dao->toDelete ( $world2 );
-		$this->assertEquals ( 2, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
+		$this->assertEquals ( 1, $this->dao->countInstancesBulk ( World::class, 'delete' ) );
 
 		$world3 = new World ();
 		$world3->randomNumber = mt_rand ( 1, 10000 );
@@ -140,7 +141,7 @@ class BulkTest extends BaseTest {
 
 		$this->dao->clearBulks ();
 		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'update' ) );
-		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'insert' ) );
+		$this->assertEquals ( 0, $this->dao->countInstancesBulk ( World::class, 'delete' ) );
 
 		$world3 = new World ();
 		$world3->randomNumber = mt_rand ( 1, 10000 );
