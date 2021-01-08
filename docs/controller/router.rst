@@ -125,12 +125,10 @@ Creation
       .. code-block:: php
          :linenos:
          :caption: app/controllers/ProductsController.php
-         :emphasize-lines: 7-9
+         :emphasize-lines: 5-7
 
          namespace controllers;
-         /**
-          * Controller ProductsController
-          */
+
          class ProductsController extends ControllerBase{
 
              /**
@@ -154,138 +152,138 @@ Route parameters
 ^^^^^^^^^^^^^^^^
 A route can have parameters:
 
-With annotations:
+.. tabs::
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 8
-   
-   namespace controllers;
+   .. tab:: Attributes
 
-   class ProductsController extends ControllerBase{
-       ...
-       /**
-        * Matches products/*
-        *
-        * @route("products/{value}")
-        */
-        public function search($value){
-           // $value will equal the dynamic part of the URL
-           // e.g. at /products/brocolis, then $value='brocolis'
-           // ...
-        }
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 7
 
-With attributes:
+         namespace controllers;
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 7
+         use Ubiquity\attributes\items\router\Route;
 
-   namespace controllers;
+         class ProductsController extends ControllerBase{
+         ...
+              #[Route('products/{value}')]
+              public function search($value){
+                  // $value will equal the dynamic part of the URL
+                  // e.g. at /products/brocolis, then $value='brocolis'
+                  // ...
+              }
+         }
 
-   use Ubiquity\attributes\items\router\Route;
+   .. tab:: Annotations
 
-   class ProductsController extends ControllerBase{
-   ...
-        #[Route('products/{value}')]
-        public function search($value){
-            // $value will equal the dynamic part of the URL
-            // e.g. at /products/brocolis, then $value='brocolis'
-            // ...
-        }
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 6
+
+         namespace controllers;
+
+         class ProductsController extends ControllerBase{
+         ...
+             /**
+              * @route("products/{value}")
+              */
+              public function search($value){
+                 // $value will equal the dynamic part of the URL
+                 // e.g. at /products/brocolis, then $value='brocolis'
+                 // ...
+              }
+         }
 
 Route optional parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 A route can define optional parameters, if the associated method has optional arguments:
 
-With annotations:
+.. tabs::
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 8
-   
-   namespace controllers;
+   .. tab:: Attributes
 
-   class ProductsController extends ControllerBase{
-      ...
-      /**
-       * Matches products/all/(.*?)/(.*?)
-       *
-       * @route("products/all/{pageNum}/{countPerPage}")
-       */
-      public function list($pageNum,$countPerPage=50){
-         // ...
-      }
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 7
 
-With attributes:
+         namespace controllers;
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 7
+         use Ubiquity\attributes\items\router\Route;
 
-   namespace controllers;
+         class ProductsController extends ControllerBase{
+            ...
+            #[Route('products/all/{pageNum}/{countPerPage}')]
+            public function list($pageNum,$countPerPage=50){
+               // ...
+            }
+         }
 
-   use Ubiquity\attributes\items\router\Route;
+   .. tab:: Annotations
 
-   class ProductsController extends ControllerBase{
-      ...
-      #[Route('products/all/{pageNum}/{countPerPage}')]
-      public function list($pageNum,$countPerPage=50){
-         // ...
-      }
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 6
+
+         namespace controllers;
+
+         class ProductsController extends ControllerBase{
+            ...
+            /**
+             * @route("products/all/{pageNum}/{countPerPage}")
+             */
+            public function list($pageNum,$countPerPage=50){
+               // ...
+            }
+         }
 
 Route requirements
 ^^^^^^^^^^^^^^^^^^
 
 It is possible to add specifications on the variables passed in the url via the attribute **requirements**.
 
-With annotations:
+.. tabs::
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 8
-   
-   namespace controllers;
+   .. tab:: Attributes
 
-   class ProductsController extends ControllerBase{
-      ...
-      /**
-       * Matches products/all/(\d+)/(\d?)
-       *
-       * @route("products/all/{pageNum}/{countPerPage}","requirements"=>["pageNum"=>"\d+","countPerPage"=>"\d?"])
-       */
-      public function list($pageNum,$countPerPage=50){
-         // ...
-      }
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 7
 
-With attributes:
+         namespace controllers;
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 7
+         use Ubiquity\attributes\items\router\Route;
 
-   namespace controllers;
+         class ProductsController extends ControllerBase{
+            ...
+            #[Route('products/all/{pageNum}/{countPerPage}',requirements: ["pageNum"=>"\d+","countPerPage"=>"\d?"])]
+            public function list($pageNum,$countPerPage=50){
+               // ...
+            }
+         }
 
-   use Ubiquity\attributes\items\router\Route;
+   .. tab:: Annotations
 
-   class ProductsController extends ControllerBase{
-      ...
-      #[Route('products/all/{pageNum}/{countPerPage}',requirements: ["pageNum"=>"\d+","countPerPage"=>"\d?"])]
-      public function list($pageNum,$countPerPage=50){
-         // ...
-      }
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 6
+
+         namespace controllers;
+
+         class ProductsController extends ControllerBase{
+            ...
+            /**
+             * @route("products/all/{pageNum}/{countPerPage}","requirements"=>["pageNum"=>"\d+","countPerPage"=>"\d?"])
+             */
+            public function list($pageNum,$countPerPage=50){
+               // ...
+            }
+         }
 
 The defined route matches these urls:
   - ``products/all/1/20``
@@ -299,41 +297,43 @@ Route http methods
 
 It is possible to specify the http method or methods associated with a route:
 
-With associations:
+.. tabs::
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 6
-   
-   namespace controllers;
+   .. tab:: Attributes
 
-   class ProductsController extends ControllerBase{
-   
-      /**
-       * @route("products","methods"=>["get"])
-       */
-      public function index(){}
-   
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 7
 
-With attributes:
+         namespace controllers;
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 7
+         use Ubiquity\attributes\items\router\Route;
 
-   namespace controllers;
+         class ProductsController extends ControllerBase{
 
-   use Ubiquity\attributes\items\router\Route;
+            #[Route('products',methods: ['get'])]
+            public function index(){}
 
-   class ProductsController extends ControllerBase{
+         }
 
-      #[Route('products',methods: ['get'])]
-      public function index(){}
+   .. tab:: Annotations
 
-   }
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 6
+
+         namespace controllers;
+
+         class ProductsController extends ControllerBase{
+
+            /**
+             * @route("products","methods"=>["get"])
+             */
+            public function index(){}
+
+         }
 
 The **methods** attribute can accept several methods: |br|
 ``@route("testMethods","methods"=>["get","post","delete"])`` |br|
@@ -364,42 +364,43 @@ Route name
 It is possible to specify the **name** of a route, this name then facilitates access to the associated url. |br|
 If the **name** attribute is not specified, each route has a default name, based on the pattern **controllerName_methodName**.
 
-With annotations:
+.. tabs::
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 5-7
-   
-   namespace controllers;
+   .. tab:: Attributes
 
-   class ProductsController extends ControllerBase{
-   
-      /**
-       * @route("products","name"=>"products.index")
-       */
-      public function index(){}
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 7
 
-   }
+           namespace controllers;
 
+           use Ubiquity\attributes\items\router\Route;
 
-With attributes:
+           class ProductsController extends ControllerBase{
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 7
+              #[Route('products',name: 'products.index')]
+              public function index(){}
 
-   namespace controllers;
+           }
 
-   use Ubiquity\attributes\items\router\Route;
+   .. tab:: Annotations
 
-   class ProductsController extends ControllerBase{
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 5-7
 
-      #[Route('products',name: 'products.index')]
-      public function index(){}
+           namespace controllers;
 
-   }
+           class ProductsController extends ControllerBase{
+
+              /**
+               * @route("products","name"=>"products.index")
+               */
+              public function index(){}
+
+           }
 
 URL or path generation
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -416,45 +417,47 @@ Global route
 ^^^^^^^^^^^^
 The **@route** annotation can be used on a controller class :
 
-With annotations:
+.. tabs::
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 3
-   
-   namespace controllers;
-   /**
-    * @route("/product")
-    */
-   class ProductsController extends ControllerBase{
-   
-      ...
-      /**
-       * @route("/all")
-       */
-      public function display(){}
+   .. tab:: Attributes
 
-   }
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 5
 
-With attributes:
+           namespace controllers;
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 5
+           use Ubiquity\attributes\items\router\Route;
 
-   namespace controllers;
+           #[Route('products')]
+           class ProductsController extends ControllerBase{
+              ...
+              #[Route('/all')]
+              public function display(){}
 
-   use Ubiquity\attributes\items\router\Route;
+           }
 
-   #[Route('products')]
-   class ProductsController extends ControllerBase{
-      ...
-      #[Route('/all')]
-      public function display(){}
+   .. tab:: Annotations
 
-   }
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 3
+
+           namespace controllers;
+           /**
+            * @route("/product")
+            */
+           class ProductsController extends ControllerBase{
+
+              ...
+              /**
+               * @route("/all")
+               */
+              public function display(){}
+
+           }
 
 In this case, the route defined on the controller is used as a prefix for all controller routes : |br|
 The generated route for the action **display** is ``/product/all``
@@ -464,48 +467,50 @@ automated routes
 
 If a global route is defined, it is possible to add all controller actions as routes (using the global prefix), by setting the **automated** parameter :
 
-With annotations:
+.. tabs::
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 3
-   
-   namespace controllers;
-   /**
-    * @route("/product","automated"=>true)
-    */
-   class ProductsController extends ControllerBase{
+   .. tab:: Attributes
 
-      public function index(){}
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 5
 
-      public function generate(){}
+           namespace controllers;
 
-      public function display($id){}
+           use Ubiquity\attributes\items\router\Route;
 
-   }
+           #[Route('/products',automated: true)]
+           class ProductsController extends ControllerBase{
 
-With attributes:
+              public function index(){}
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 5
+              public function generate(){}
 
-   namespace controllers;
+              public function display($id){}
 
-   use Ubiquity\attributes\items\router\Route;
+           }
 
-   #[Route('/products',automated: true)]
-   class ProductsController extends ControllerBase{
+   .. tab:: Annotations
 
-      public function index(){}
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 3
 
-      public function generate(){}
+           namespace controllers;
+           /**
+            * @route("/product","automated"=>true)
+            */
+           class ProductsController extends ControllerBase{
 
-      public function display($id){}
+              public function index(){}
 
-   }
+              public function generate(){}
+
+              public function display($id){}
+
+           }
 
 The **automated** attribute defines the 3 routes contained in **ProductsController**:
   - `/product/(index/)?`
@@ -520,46 +525,88 @@ or to generate routes associated with base class actions if the **automated** at
 
 The base class:
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsBase.php
-   
-   namespace controllers;
-   /**
-    * Controller ProductsBase
-    */
-   abstract class ProductsBase extends ControllerBase{
-   
-      /**
-       *@route("(index/)?")
-       */
-      public function index(){}
+.. tabs::
 
-      /**
-       * @route("sort/{name}")
-       */
-      public function sortBy($name){}
-   
-   }
+   .. tab:: Attributes
+
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsBase.php
+
+            namespace controllers;
+
+            use Ubiquity\attributes\items\router\Route;
+
+            abstract class ProductsBase extends ControllerBase{
+
+                #[Route('(index/)?')]
+                public function index(){}
+
+                #[Route('sort/{name}')]
+                public function sortBy($name){}
+
+            }
+
+   .. tab:: Annotations
+
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsBase.php
+
+           namespace controllers;
+
+           abstract class ProductsBase extends ControllerBase{
+
+              /**
+               *@route("(index/)?")
+               */
+              public function index(){}
+
+              /**
+               * @route("sort/{name}")
+               */
+              public function sortBy($name){}
+
+           }
 
 The derived class using inherited members:
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 3
-   
-   namespace controllers;
-   /**
-    * @route("/product","inherited"=>true)
-    * Controller ProductsController
-    */
-   class ProductsController extends ProductsBase{
-   
-      public function display(){}
+.. tabs::
 
-   }
+   .. tab:: Attributes
 
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 5
+
+           namespace controllers;
+
+           use Ubiquity\attributes\items\router\Route;
+
+           #[Route('/product',inherited: true)]
+           class ProductsController extends ProductsBase{
+
+              public function display(){}
+
+           }
+
+   .. tab:: Annotations
+
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 3
+
+           namespace controllers;
+           /**
+            * @route("/product","inherited"=>true)
+            */
+           class ProductsController extends ProductsBase{
+
+              public function display(){}
+
+           }
 
 The **inherited** attribute defines the 2 routes defined in **ProductsBase**:
   - `/products/(index/)?`
@@ -576,35 +623,52 @@ The higher the priority parameter, the more the route will be defined at the beg
 
 In the example below, the **products/all** route will be defined before the **/products** route.
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/ProductsController.php
-   :emphasize-lines: 8,13
-   
-   namespace controllers;
-   /**
-    * Controller ProductsController
-    */
-   class ProductsController extends ControllerBase{
-   
-      /**
-       * @route("products","priority"=>1)
-       */
-      public function index(){}
+.. tabs::
 
-      /**
-       * @route("products/all","priority"=>10)
-       */
-      public function all(){}
+   .. tab:: Attributes
 
-   }
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 7,10
 
+           namespace controllers;
 
-With attributes:
+           use Ubiquity\attributes\items\router\Route;
 
-.. code-block:: php
+           class ProductsController extends ControllerBase{
 
-   #[Route('products/all',priority: 10)]
+              #[Route('products', priority: 1)]
+              public function index(){}
+
+              #[Route('products/all', priority: 10)]
+              public function all(){}
+
+           }
+
+   .. tab:: Annotations
+
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/ProductsController.php
+           :emphasize-lines: 6,11
+
+           namespace controllers;
+
+           class ProductsController extends ControllerBase{
+
+              /**
+               * @route("products","priority"=>1)
+               */
+              public function index(){}
+
+              /**
+               * @route("products/all","priority"=>10)
+               */
+              public function all(){}
+
+           }
+
 
 The default priority value is ``0``.
 
@@ -614,40 +678,47 @@ It is possible to cache the response produced by a route:
 
 In this case, the response is cached and is no longer dynamic.
 
-With annotations:
+.. tabs::
 
-.. code-block:: php
-   
-   /**
-    * @route("products/all","cache"=>true)
-    */
-   public function all(){}
+   .. tab:: Attributes
 
+        .. code-block:: php
 
-With attributes:
+           #[Route('products/all', cache: true)]
+           public function all(){}
 
-.. code-block:: php
+   .. tab:: Annotations
 
-   #[Route('products/all', cache: true)]
-   public function all(){}
+        .. code-block:: php
+
+           /**
+            * @route("products/all","cache"=>true)
+            */
+           public function all(){}
+
 
 Cache duration
 ^^^^^^^^^^^^^^
 The **duration** is expressed in seconds, if it is omitted, the duration of the cache is infinite.
 
-.. code-block:: php
+.. tabs::
 
-   /**
-    * @route("products/all","cache"=>true,"duration"=>3600)
-    */
-   public function all(){}
+   .. tab:: Attributes
 
-With attributes:
+        .. code-block:: php
 
-.. code-block:: php
+           #[Route('products/all', cache: true, duration: 3600)]
+           public function all(){}
 
-   #[Route('products/all', cache: true, duration: 3600)]
-   public function all(){}
+   .. tab:: Annotations
+
+        .. code-block:: php
+
+           /**
+            * @route("products/all","cache"=>true,"duration"=>3600)
+            */
+           public function all(){}
+
 
 Cache expiration
 ^^^^^^^^^^^^^^^^
@@ -712,7 +783,7 @@ Implement the requested action **p404** in the **IndexController**:
    ...
    
    public function p404(){
-      echo "<div class='ui error message'><div class='header'>404</div>The page you are loocking for doesn't exists!</div>";
+      echo "<div class='ui error message'><div class='header'>404</div>The page you are looking for doesn't exist!</div>";
    }
 
 Routage with annotations
@@ -720,17 +791,33 @@ Routage with annotations
 
 It is enough in this case to add a last route disabling the default routing system, and corresponding to the management of the 404 error:
 
-.. code-block:: php
-   :caption: app/controllers/IndexController.php
-   
-   ...
-   
-   /**
-    * @route("{url}","priority"=>-1000)
-    */
-   public function p404($url){
-      echo "<div class='ui error message'><div class='header'>404</div>The page `$url` you are loocking for doesn't exists!</div>";
-   }
+.. tabs::
+
+   .. tab:: Attributes
+
+        .. code-block:: php
+           :caption: app/controllers/IndexController.php
+
+           ...
+
+           #[Route('{url}', priority: -1000)]
+           public function p404($url){
+              echo "<div class='ui error message'><div class='header'>404</div>The page `$url` you are looking for doesn't exist!</div>";
+           }
+
+   .. tab:: Annotations
+
+        .. code-block:: php
+           :caption: app/controllers/IndexController.php
+
+           ...
+
+           /**
+            * @route("{url}","priority"=>-1000)
+            */
+           public function p404($url){
+              echo "<div class='ui error message'><div class='header'>404</div>The page `$url` you are looking for doesn't exist!</div>";
+           }
 
 .. |br| raw:: html
 
