@@ -65,7 +65,7 @@ The **AclManager** service can be started directly from the **webtools** interfa
     \Ubiquity\security\acl\AclManager::startWithCacheProvider();
 
 ACLCacheProvider
-****************
+----------------
 This default provider allows you to manage ACLs defined through attributes or annotations.
 
 AclController
@@ -181,4 +181,120 @@ Adding a Role ``@USER`` inheriting from ``@GUEST``.
 
    AclManager::addRole('@GUEST');
    AclManager::addRole('@USER',['@GUEST']);
+
+
+Strategies for defining ACLs
+============================
+
+With few resources:
+-------------------
+Defining authorisations for each controller's action or action group:
+
+Resources logically correspond to controllers, and permissions to actions.
+But this rule may not be respected, and an action may be defined as a resource, as required.
+
+The only mandatory rule is that a Controller/action pair can only correspond to one Resource/permission pair (not necessarily unique).
+
+
+.. code-block:: php
+   :caption: app/controllers/BaseAclController.php
+
+   namespace controllers;
+
+   use Ubiquity\controllers\Controller;
+   use Ubiquity\security\acl\controllers\AclControllerTrait;
+   use Ubiquity\attributes\items\acl\Permission;
+   use Ubiquity\attributes\items\acl\Resource;
+
+   #[Resource('Foo')]
+   #[Allow('@ADMIN')]
+   class FooController extends Controller {
+      use AclControllerTrait;
+
+      #[Allow('@NONE')]
+      public function index() {
+         echo 'index';
+      }
+
+      #[Allow('@USER')]
+      public function read() {
+         echo 'read';
+      }
+
+      #[Allow('@USER')]
+      public function write() {
+         echo 'write';
+      }
+
+      public function admin() {
+         echo 'admin';
+      }
+
+      public function _getRole() {
+         return $_GET['role']??'@NONE';
+      }
+
+      /**
+       * {@inheritdoc}
+       * @see \Ubiquity\controllers\Controller::onInvalidControl()
+       */
+      public function onInvalidControl() {
+         echo $this->_getRole() . ' is not allowed!';
+      }
+
+   }
+
+
+
+With more resources:
+--------------------
+
+
+.. code-block:: php
+   :caption: app/controllers/BaseAclController.php
+
+   namespace controllers;
+
+   use Ubiquity\controllers\Controller;
+   use Ubiquity\security\acl\controllers\AclControllerTrait;
+   use Ubiquity\attributes\items\acl\Permission;
+   use Ubiquity\attributes\items\acl\Resource;
+
+   #[Resource('Foo')]
+   class FooController extends Controller {
+      use AclControllerTrait;
+
+      #[Permission('INDEX',1)]
+      public function index() {
+         echo 'index';
+      }
+
+      #[Permission('READ',2)]
+      public function read() {
+         echo 'read';
+      }
+
+      #[Permission('WRITE',3)]
+      public function write() {
+         echo 'write';
+      }
+
+      #[Permission('ADMIN',10)]
+      public function admin() {
+         echo 'admin';
+      }
+
+      public function _getRole() {
+         return $_GET['role']??'NONE';
+      }
+
+      /**
+       * {@inheritdoc}
+       * @see \Ubiquity\controllers\Controller::onInvalidControl()
+       */
+      public function onInvalidControl() {
+         echo $this->_getRole() . ' is not allowed!';
+      }
+
+   }
 

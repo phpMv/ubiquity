@@ -312,7 +312,7 @@ It is possible to specify the http method or methods associated with a route:
 
          class ProductsController extends ControllerBase{
 
-            #[Route('products',methods: ['get'])]
+            #[Route('products',methods: ['get','post'])]
             public function index(){}
 
          }
@@ -329,7 +329,7 @@ It is possible to specify the http method or methods associated with a route:
          class ProductsController extends ControllerBase{
 
             /**
-             * @route("products","methods"=>["get"])
+             * @route("products","methods"=>["get","post"])
              */
             public function index(){}
 
@@ -349,14 +349,43 @@ There is a specific annotation for each of the existing HTTP methods:
  - **@head** => **Head**
  - **@options** => **Options**
 
-With annotations:
+.. tabs::
 
-``@get("products")``
+   .. tab:: Attributes
 
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 7
 
-With attributes:
+         namespace controllers;
 
-``#[Get('products')]``
+         use Ubiquity\attributes\items\router\Get;
+
+         class ProductsController extends ControllerBase{
+
+            #[Get('products')]
+            public function index(){}
+
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/ProductsController.php
+         :emphasize-lines: 6
+
+         namespace controllers;
+
+         class ProductsController extends ControllerBase{
+
+            /**
+             * @get("products")
+             */
+            public function index(){}
+
+         }
 
 
 Route name
