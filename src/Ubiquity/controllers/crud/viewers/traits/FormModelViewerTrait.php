@@ -109,7 +109,9 @@ trait FormModelViewerTrait {
 		if ($params && isset ( $params [$part] )) {
 			return $params [$part];
 		}
-		return new EditMemberParams ();
+		$emp= new EditMemberParams ();
+		$emp->setDtId($this->getDataTableId());
+		return $emp;
 	}
 
 	/**
@@ -117,7 +119,7 @@ trait FormModelViewerTrait {
 	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
 	 */
 	protected function defaultEditMemberParams() {
-		return [ "dataTable" => EditMemberParams::dataTable (),"dataElement" => EditMemberParams::dataElement () ];
+		return [ "dataTable" => EditMemberParams::dataTable ($this->getDataTableId()),"dataElement" => EditMemberParams::dataElement () ];
 	}
 
 	/**
@@ -146,7 +148,7 @@ trait FormModelViewerTrait {
 		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
 		$message = $this->getFormTitle ( $form, $instance );
 		$form->setCaption ( "_message", $message ["subMessage"] );
-		$form->fieldAsMessage ( "_message", [ "icon" => $message ["icon"] ] );
+		$form->fieldAsMessage ( "_message", [ "icon" => $message ["icon"]] );
 		$instance->_message = $message ["message"];
 		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/" . $updateUrl, "#frm-add-update" );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );

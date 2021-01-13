@@ -28,6 +28,8 @@ class ModelViewer {
 	 * @var \Ajax\JsUtils
 	 */
 	private $jquery;
+	
+	private $style;
 
 	/**
 	 *
@@ -35,9 +37,19 @@ class ModelViewer {
 	 */
 	protected $controller;
 
-	public function __construct(HasModelViewerInterface $controller) {
+	public function __construct(HasModelViewerInterface $controller, $style=null) {
 		$this->jquery = $controller->jquery;
 		$this->controller = $controller;
+		$this->style=$style;
+	}
+	
+	public function setStyle($elm){
+		if($this->style==='inverted'){
+			$elm->setInverted(true);
+			if($elm instanceof DataTable){
+				$elm->setActiveRowSelector('black');
+			}
+		}
 	}
 
 	/**
@@ -71,7 +83,7 @@ class ModelViewer {
 			}
 		}
 		$this->addEditMemberFonctionality ( "dataElement" );
-		return $dataElement;
+		return $dataElement->addClass($this->style);
 	}
 
 	/**
@@ -82,7 +94,7 @@ class ModelViewer {
 	 * @param string $className
 	 */
 	public function getElementCaptions($captions, $className, $instance) {
-		return array_map ( 'ucfirst', $captions );
+		return \array_map ( 'ucfirst', $captions );
 	}
 
 	/**
@@ -111,6 +123,7 @@ class ModelViewer {
 		$dataTable->addSearchInToolbar ();
 		$dataTable->setToolbarPosition ( PositionInTable::FOOTER );
 		$dataTable->getToolbar ()->setSecondary ();
+		$this->setStyle($dataTable);
 		return $dataTable;
 	}
 
@@ -213,15 +226,19 @@ class ModelViewer {
 		$transition=$this->getTransition();
 		$dataTable->onPreCompile ( function () use (&$dataTable) {
 			$dataTable->getHtmlComponent ()->colRightFromRight ( 0 );
+			$tb=$dataTable->getPaginationToolbar();
+			if(isset($tb)){
+				$tb->addClass($this->style);
+			}
 		} );
 		$dataTable->addAllButtons ( false, [ 'ajaxTransition' => $transition ], function ($bt) {
-			$bt->addClass ( 'circular' );
+			$bt->addClass ( 'circular '.$this->style );
 			$this->onDataTableRowButton ( $bt );
 		}, function ($bt) {
-			$bt->addClass ( 'circular' );
+			$bt->addClass ( 'circular ' .$this->style );
 			$this->onDataTableRowButton ( $bt );
 		}, function ($bt) {
-			$bt->addClass ( 'circular' );
+			$bt->addClass ( 'circular ' .$this->style );
 			$this->onDataTableRowButton ( $bt );
 		} );
 		$dataTable->setDisplayBehavior ( [ 'jsCallback' => '$("#dataTable").hide();','ajaxTransition' => $transition] );
@@ -275,7 +292,8 @@ class ModelViewer {
 	 * @return HtmlHeader
 	 */
 	public function getFkHeaderElementDetails($member, $className, $object) {
-		return new HtmlHeader ( '', 4, $member, 'content' );
+		$res= new HtmlHeader ( '', 4, $member, 'content' );
+		return $res->addClass($this->style);
 	}
 
 	/**
@@ -287,7 +305,8 @@ class ModelViewer {
 	 * @return HtmlHeader
 	 */
 	public function getFkHeaderListDetails($member, $className, $list) {
-		return new HtmlHeader ( '', 4, $member . ' (' . \count ( $list ) . ')', 'content' );
+		$res= new HtmlHeader ( '', 4, $member . ' (' . \count ( $list ) . ')', 'content' );
+		return $res->addClass($this->style);
 	}
 
 	/**
@@ -299,7 +318,8 @@ class ModelViewer {
 	 * @return \Ajax\common\html\BaseHtml
 	 */
 	public function getFkElementDetails($member, $className, $object) {
-		return $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
+		$res= $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
+		return $res->addClass($this->style);
 	}
 
 	/**
@@ -314,7 +334,7 @@ class ModelViewer {
 		$element = $this->jquery->semantic ()->htmlList ( 'list-' . $className . '.' . $member );
 		$element->setMaxVisible ( 15 );
 
-		return $element->addClass ( 'animated divided celled' );
+		return $element->addClass ( 'animated divided celled '.$this->style );
 	}
 
 	/**
@@ -433,7 +453,8 @@ class ModelViewer {
 	 * @return \Ajax\common\html\BaseHtml
 	 */
 	public function getFkElement($member, $className, $object) {
-		return $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
+		$res= $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
+		return $res->addClass($this->style);
 	}
 
 	/**

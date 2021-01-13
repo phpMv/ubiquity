@@ -149,7 +149,7 @@ trait CRUDControllerUtilitiesTrait {
 			}
 			$this->index ();
 		} else {
-			$message = new CRUDMessage ( "Do you confirm the deletion of this objects?", "Remove confirmation", "error" );
+			$message = new CRUDMessage ( "Do you confirm the deletion of this objects?", "Remove confirmation", "error ".$this->style );
 			$this->_getEvents ()->onConfDeleteMultipleMessage ( $message, $data );
 			$message = $this->_showConfMessage ( $message, $this->_getBaseRoute () . "/{$action}/{$data}", $target, $data, [ "jqueryDone" => "replaceWith" ] );
 			echo $message;
@@ -185,7 +185,7 @@ trait CRUDControllerUtilitiesTrait {
 	 * @return ModelViewer
 	 */
 	protected function getModelViewer(): ModelViewer {
-		return new ModelViewer ( $this );
+		return new ModelViewer ( $this ,$this->style??null);
 	}
 
 	protected function _getModelViewer(): ModelViewer {

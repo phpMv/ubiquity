@@ -27,10 +27,12 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	use MessagesTrait,CRUDControllerUtilitiesTrait,InsertJqueryTrait;
 	protected $model;
 	protected $activePage;
+	protected $style;
 
 	public function __construct() {
 		parent::__construct ();
 		DAO::$transformerOp = 'toView';
+		$this->style = '';
 		$this->_insertJquerySemantic ();
 	}
 
@@ -61,7 +63,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 					$dt->compile ();
 					echo new HtmlContentOnly ( $dt->getFieldValue ( $member ) );
 				} else {
-					if (method_exists ( $this, $callback )) {
+					if (\method_exists ( $this, $callback )) {
 						$this->$callback ( $member, $instance );
 					} else {
 						throw new \Exception ( "The method `" . $callback . "` does not exists in " . get_class () );
@@ -264,7 +266,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$fkInstances = CRUDHelper::getFKIntances ( $instance, $model );
 			$semantic = $this->jquery->semantic ();
 			$grid = $semantic->htmlGrid ( "detail" );
-			if (sizeof ( $fkInstances ) > 0) {
+			if (\count ( $fkInstances ) > 0) {
 				$wide = intval ( 16 / sizeof ( $fkInstances ) );
 				if ($wide < 4)
 					$wide = 4;
