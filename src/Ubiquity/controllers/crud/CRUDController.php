@@ -184,7 +184,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if (URequest::isAjax ()) {
 			$instance = $this->getModelInstance ( $ids );
 			$instanceString = $this->getInstanceToString ( $instance );
-			if (sizeof ( $_POST ) > 0) {
+			if (\count ( $_POST ) > 0) {
 				try {
 					if (DAO::remove ( $instance )) {
 						$message = new CRUDMessage ( "Deletion of `<b>" . $instanceString . "</b>`", "Deletion", "info", "info circle", 4000 );
@@ -266,8 +266,8 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$fkInstances = CRUDHelper::getFKIntances ( $instance, $model );
 			$semantic = $this->jquery->semantic ();
 			$grid = $semantic->htmlGrid ( "detail" );
-			if (\count ( $fkInstances ) > 0) {
-				$wide = intval ( 16 / sizeof ( $fkInstances ) );
+			if (($nb = \count ( $fkInstances )) > 0) {
+				$wide = intval ( 16 / $nb );
 				if ($wide < 4)
 					$wide = 4;
 				foreach ( $fkInstances as $member => $fkInstanceArray ) {
