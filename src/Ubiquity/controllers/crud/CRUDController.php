@@ -14,13 +14,14 @@ use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\common\html\HtmlContentOnly;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
+use Ajax\semantic\widgets\datatable\DataTable;
 
 /**
  * Ubiquity\controllers\crud$CRUDController
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface {
@@ -35,6 +36,15 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$this->style = '';
 		$this->_insertJquerySemantic ();
 	}
+	
+	public function _setStyle($elm){
+		if($this->style==='inverted'){
+			$elm->setInverted(true);
+			if($elm instanceof DataTable){
+				$elm->setActiveRowSelector('black');
+			}
+		}
+	}
 
 	/**
 	 * Default page : list all objects
@@ -46,11 +56,14 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$objects = $this->getInstances ( $totalCount );
 		$modal = ($this->_getModelViewer ()->isModal ( $objects, $this->model )) ? "modal" : "no";
 		$dt = $this->_getModelViewer ()->getModelDataTable ( $objects, $this->model, $totalCount );
-		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute () . "/newModel/" . $modal, "#frm-add-update", [ "hasLoader" => "internal" ] );
+		$this->jquery->getOnClick ( '#btAddNew', $this->_getBaseRoute () . '/newModel/' . $modal, '#frm-add-update', [ 'hasLoader' => 'internal' ] );
 		$this->_getEvents ()->onDisplayElements ( $dt, $objects, false );
-		$this->crudLoadView ( $this->_getFiles ()->getViewIndex (), [ "classname" => $this->model,"messages" => $this->jquery->semantic ()->matchHtmlComponents ( function ($compo) {
-			return $compo instanceof HtmlMessage;
-		} ) ] );
+		$this->crudLoadView ( $this->_getFiles ()->getViewIndex (), [ 
+						'classname' => $this->model,
+						'messages' => $this->jquery->semantic ()->matchHtmlComponents ( function ($compo) {
+										return $compo instanceof HtmlMessage;
+									} )
+					] );
 	}
 
 	public function updateMember($member, $callback = false) {
@@ -82,10 +95,10 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 */
 	public function refresh_() {
 		$model = $this->model;
-		if (isset ( $_POST ["s"] )) {
-			$instances = $this->search ( $model, $_POST ["s"] );
+		if (isset ( $_POST ['s'] )) {
+			$instances = $this->search ( $model, $_POST ['s'] );
 		} else {
-			$page = URequest::post ( "p", 1 );
+			$page = URequest::post ( 'p', 1 );
 			$instances = $this->getInstances ( $totalCount, $page );
 		}
 		if (! isset ( $totalCount )) {
@@ -102,7 +115,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 			}
 		} else {
-			$this->jquery->execAtLast ( '$("#search-query-content").html("' . $_POST ["s"] . '");$("#search-query").show();$("#table-details").html("");' );
+			$this->jquery->execAtLast ( '$("#search-query-content").html("' . $_POST ['s'] . '");$("#search-query").show();$("#table-details").html("");' );
 			$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 		}
 	}
