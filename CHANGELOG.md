@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unrelease]
 - Nothing
+## [2.4.1] 2021-01-17
+### Fixed
+- [consecutive Bulk updates pb](https://github.com/phpMv/ubiquity/issues/166)
+### Added
+- Dark theme for CRUD controllers
 ## [2.4.0] 2020-12-31
 ### Added
 - PHP8 attributes support => with PHP8, Ubiquity uses the PHP8 attributes system for annotations. 
