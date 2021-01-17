@@ -237,9 +237,9 @@ trait FormModelViewerTrait {
 	 */
 	protected function getFormTitle($form, $instance) {
 		$type = ($instance->_new) ? "new" : "edit";
-		$messageInfos = [ "new" => [ "icon" => HtmlIconGroups::corner ( "table", "plus", "big" ),"subMessage" => "New object creation" ],"edit" => [ "icon" => HtmlIconGroups::corner ( "table", "edit", "big" ),"subMessage" => "Editing an existing object" ] ];
+		$messageInfos = [ "new" => [ "icon" => HtmlIconGroups::corner ( "table", "plus", "big" ),"subMessage" => "New object creation" ],"edit" => [ "icon" => HtmlIconGroups::corner ( "table ".$this->style, "edit ".$this->style, "big" ),"subMessage" => "&nbsp;Editing an existing object" ] ];
 		$message = $messageInfos [$type];
-		$message ["message"] = \get_class ( $instance );
+		$message ["message"] = '&nbsp;'.\get_class ( $instance );
 		return $message;
 	}
 
