@@ -2,10 +2,10 @@
 
 namespace Ubiquity\orm\parser;
 
-
 trait ReflexionFieldsTrait {
 
 	abstract public static function getAnnotationMember($class, $member, $annotation);
+
 	abstract public static function getAnnotsEngine();
 
 	/**
@@ -15,12 +15,15 @@ trait ReflexionFieldsTrait {
 	 * @return object|boolean
 	 */
 	protected static function getAnnotationColumnMember($class, $member) {
-		return self::getAnnotationMember ( $class, $member, 'column' );
+		if ($r = self::getAnnotationMember ( $class, $member, 'column' ) === false) {
+			$r = self::getAnnotationMember ( $class, $member, 'joinColumn' );
+		}
+		return $r;
 	}
 
 	public static function getDbType($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if (\is_object($ret) && \property_exists($ret, 'dbType')){
+		if (\is_object ( $ret ) && \property_exists ( $ret, 'dbType' )) {
 			return $ret->dbType;
 		}
 		return false;
@@ -35,7 +38,7 @@ trait ReflexionFieldsTrait {
 
 	public static function getFieldName($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if ($ret === false || ! isset ( $ret->name )){
+		if ($ret === false || ! isset ( $ret->name )) {
 			$ret = $member;
 		} else {
 			$ret = $ret->name;
@@ -45,7 +48,7 @@ trait ReflexionFieldsTrait {
 
 	public static function isNullable($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if (\is_object($ret) && \property_exists($ret, 'nullable')){
+		if (\is_object ( $ret ) && \property_exists ( $ret, 'nullable' )) {
 			return $ret->nullable;
 		}
 		return false;
@@ -66,15 +69,15 @@ trait ReflexionFieldsTrait {
 	}
 
 	public static function getPropertyType($class, $property) {
-		if(($r=self::getMetadata ( $class, $property, 'var', 'type' ))===false){
-			$reflect=new \ReflectionProperty($class, $property);
-			return $reflect->getType();
+		if (($r = self::getMetadata ( $class, $property, 'var', 'type' )) === false) {
+			$reflect = new \ReflectionProperty ( $class, $property );
+			return $reflect->getType ();
 		}
 		return $r;
 	}
 
 	public static function getMetadata($class, $property, $type, $name) {
-		$a = self::getAnnotsEngine()->getAnnotsOfProperty ( $class, $property, $type );
+		$a = self::getAnnotsEngine ()->getAnnotsOfProperty ( $class, $property, $type );
 		if (! \count ( $a )) {
 			return false;
 		}
