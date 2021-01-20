@@ -15,7 +15,7 @@ trait ReflexionFieldsTrait {
 	 * @return object|boolean
 	 */
 	protected static function getAnnotationColumnMember($class, $member) {
-		if ($r = self::getAnnotationMember ( $class, $member, 'column' ) === false) {
+		if (($r = self::getAnnotationMember ( $class, $member, 'column' )) === false) {
 			$r = self::getAnnotationMember ( $class, $member, 'joinColumn' );
 		}
 		return $r;
