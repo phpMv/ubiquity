@@ -193,14 +193,6 @@ trait DAOCoreTrait {
 		return $o;
 	}
 
-	protected static function applyTransformers($transformers, &$row, $memberNames) {
-		foreach ( $transformers as $member => $transformer ) {
-			$field = \array_search ( $member, $memberNames );
-			$transform = self::$transformerOp;
-			$row [$field] = $transformer::{$transform} ( $row [$field] );
-		}
-	}
-
 	protected static function loadManys($o, $db, $oneToManyFields, &$oneToManyQueries, $manyToManyFields, &$manyToManyParsers) {
 		if (isset ( $oneToManyFields )) {
 			foreach ( $oneToManyFields as $k => $annot ) {
