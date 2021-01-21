@@ -69,7 +69,7 @@ class Database extends AbstractDatabase {
 		}
 	}
 
-	private function setDbWrapperClass($dbWrapperClass, $dbType) {
+	protected function setDbWrapperClass($dbWrapperClass, $dbType) {
 		$this->wrapperObject = new $dbWrapperClass ( $this->dbType = $dbType );
 	}
 
