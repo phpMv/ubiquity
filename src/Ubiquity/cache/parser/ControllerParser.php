@@ -8,12 +8,12 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\annotations\AnnotationsEngineInterface;
 
 /**
- * Scans a controller to detect routes defined by annotations.
+ * Scans a controller to detect routes defined by annotations or attributes.
  * Ubiquity\cache\parser$ControllerParser
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.8
+ * @version 1.0.9
  *
  */
 class ControllerParser {
@@ -25,12 +25,13 @@ class ControllerParser {
 	private static $excludeds = [ '__construct','isValid','initialize','finalize','onInvalidControl','loadView','forward','redirectToRoute' ];
 
 	/**
+	 *
 	 * @var AnnotationsEngineInterface
 	 */
 	private $annotsEngine;
 
-	public function __construct(AnnotationsEngineInterface $annotsEngine){
-		$this->annotsEngine=$annotsEngine;
+	public function __construct(AnnotationsEngineInterface $annotsEngine) {
+		$this->annotsEngine = $annotsEngine;
 	}
 
 	public function parse($controllerClass) {
@@ -90,7 +91,7 @@ class ControllerParser {
 	}
 
 	private function generateRouteAnnotationFromMethod(\ReflectionMethod $method) {
-		return [ $this->annotsEngine->getAnnotation(null,'route',['path'=>self::getPathFromMethod ( $method )]) ];
+		return [ $this->annotsEngine->getAnnotation ( null, 'route', [ 'path' => self::getPathFromMethod ( $method ) ] ) ];
 	}
 
 	public function asArray() {
@@ -126,7 +127,7 @@ class ControllerParser {
 		$pathParameters = self::addParamsPath ( $routeArray ['path'], $method, $routeArray ['requirements'] );
 		$name = $routeArray ['name'];
 		if (! isset ( $name )) {
-			$name = UString::cleanAttribute ( ClassUtils::getClassSimpleName ( $controllerClass ) . '_' . $methodName );
+			$name = UString::cleanAttribute ( ClassUtils::getClassSimpleName ( $controllerClass ) . '.' . $methodName );
 		}
 		$cache = $routeArray ['cache'];
 		$duration = $routeArray ['duration'];

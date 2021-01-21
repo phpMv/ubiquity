@@ -4,13 +4,14 @@ namespace Ubiquity\cache\parser;
 
 use Ubiquity\utils\base\UString;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\exceptions\ParserException;
 
 /**
  * Ubiquity\cache\parser$ControllerParserPathTrait
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 trait ControllerParserPathTrait {
@@ -53,19 +54,19 @@ trait ControllerParserPathTrait {
 	}
 
 	public static function cleanpath($prefix, $path = "") {
-		$path = str_replace ( "//", "/", $path );
-		if ($prefix !== "" && ! UString::startswith ( $prefix, "/" )) {
-			$prefix = "/" . $prefix;
+		$path = str_replace ( '//', '/', $path );
+		if ($prefix !== '' && ! UString::startswith ( $prefix, '/' )) {
+			$prefix = '/' . $prefix;
 		}
-		if (! UString::endswith ( $prefix, "/" )) {
-			$prefix = $prefix . "/";
+		if (! UString::endswith ( $prefix, '/' )) {
+			$prefix = $prefix . '/';
 		}
-		if ($path !== "" && UString::startswith ( $path, "/" )) {
+		if ($path !== '' && UString::startswith ( $path, '/' )) {
 			$path = \substr ( $path, 1 );
 		}
 		$path = $prefix . $path;
-		if (! UString::endswith ( $path, "/" ) && ! UString::endswith ( $path, '(.*?)' ) && ! UString::endswith ( $path, "(index/)?" )) {
-			$path = $path . "/";
+		if (! UString::endswith ( $path, '/' ) && ! UString::endswith ( $path, '(.*?)' ) && ! UString::endswith ( $path, '(index/)?' )) {
+			$path = $path . '/';
 		}
 		return $path;
 	}
@@ -74,8 +75,8 @@ trait ControllerParserPathTrait {
 	public static function addParamsPath($path, \ReflectionFunctionAbstract $method, $requirements) {
 		$parameters = [ ];
 		$hasOptional = false;
-		preg_match_all ( '@\{(\.\.\.|\~)?(.+?)\}@s', $path, $matches );
-		if (isset ( $matches [2] ) && \sizeof ( $matches [2] ) > 0) {
+		\preg_match_all ( '@\{(\.\.\.|\~)?(.+?)\}@s', $path, $matches );
+		if (isset ( $matches [2] ) && \count ( $matches [2] ) > 0) {
 			$path = \preg_quote ( $path );
 			$params = Reflexion::getMethodParameters ( $method );
 			$index = 0;
@@ -88,33 +89,33 @@ trait ControllerParserPathTrait {
 					}
 					self::scanParam ( $parameters, $hasOptional, $matches, $index, $paramMatch, $find, $path, $requirement );
 				} else {
-					throw new \Exception ( "{$paramMatch} is not a parameter of the method " . $method->name );
+					throw new ParserException ( "{$paramMatch} is not a parameter of the method " . $method->name );
 				}
 				$index ++;
 			}
 		}
 		if ($hasOptional)
-			$path .= "/(.*?)";
-		return [ "path" => $path,"parameters" => $parameters ];
+			$path .= '/(.*?)';
+		return [ 'path' => $path,'parameters' => $parameters ];
 	}
 
 	public static function scanParam(&$parameters, &$hasOptional, $matches, $index, $paramMatch, $find, &$path, $requirement) {
 		$toReplace = true;
 		if (isset ( $matches [1] [$index] )) {
-			if ($matches [1] [$index] === "...") {
-				$parameters [] = "*";
-				$path = \str_replace ( "\{\.\.\." . $paramMatch . "\}", "(.*?)", $path );
+			if ($matches [1] [$index] === '...') {
+				$parameters [] = '*';
+				$path = \str_replace ( '\{\.\.\.' . $paramMatch . '\}', '(.*?)', $path );
 				$toReplace = false;
-			} elseif ($matches [1] [$index] === "~") {
-				$parameters [] = "~" . $find;
-				$path = \str_replace ( "\{~" . $paramMatch . "\}", "", $path );
+			} elseif ($matches [1] [$index] === '~') {
+				$parameters [] = '~' . $find;
+				$path = \str_replace ( '\{~' . $paramMatch . '\}', '', $path );
 				$hasOptional = true;
 				$toReplace = false;
 			}
 		}
 		if ($toReplace) {
 			$parameters [] = $find;
-			$path = \str_replace ( "\{" . $paramMatch . "\}", "({$requirement})", $path );
+			$path = \str_replace ( '\{' . $paramMatch . '\}', "({$requirement})", $path );
 		}
 	}
 }

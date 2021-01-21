@@ -7,19 +7,22 @@ use Ubiquity\cache\parser\ControllerParser;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\di\DiManager;
 use Ubiquity\utils\base\UArray;
+use Ubiquity\exceptions\ParserException;
 
 /**
  * Ubiquity\cache\traits$DevRouterCacheTrait
  * This class is part of Ubiquity
+ *
  * @author jc
- * @version 1.0.11
+ * @version 1.0.12
  *
  */
 trait DevRouterCacheTrait {
+
 	abstract public static function getAnnotationsEngineInstance();
 
 	private static function addControllerCache($classname) {
-		$parser = new ControllerParser (self::getAnnotationsEngineInstance());
+		$parser = new ControllerParser ( self::getAnnotationsEngineInstance () );
 		try {
 			$parser->parse ( $classname );
 			return $parser->asArray ();
@@ -32,17 +35,20 @@ trait DevRouterCacheTrait {
 	private static function parseControllerFiles(&$config, $silent = false) {
 		$routes = [ 'rest' => [ ],'default' => [ ] ];
 		$files = self::getControllersFiles ( $config, $silent );
-		$annotsEngine=self::getAnnotationsEngineInstance();
+		$annotsEngine = self::getAnnotationsEngineInstance ();
 		foreach ( $files as $file ) {
 			if (is_file ( $file )) {
 				$controller = ClassUtils::getClassFullNameFromFile ( $file );
-				$parser = new ControllerParser ($annotsEngine);
+				$parser = new ControllerParser ( $annotsEngine );
 				try {
 					$parser->parse ( $controller );
 					$ret = $parser->asArray ();
 					$key = ($parser->isRest ()) ? 'rest' : 'default';
 					$routes [$key] = \array_merge ( $routes [$key], $ret );
 				} catch ( \Exception $e ) {
+					if ($e instanceof ParserException) {
+						throw $e;
+					}
 					// Nothing to do
 				}
 			}
@@ -56,7 +62,7 @@ trait DevRouterCacheTrait {
 		\uasort ( $array, function ($item1, $item2) {
 			return UArray::getRecursive ( $item2, 'priority', 0 ) <=> UArray::getRecursive ( $item1, 'priority', 0 );
 		} );
-			UArray::removeRecursive ( $array, 'priority' );
+		UArray::removeRecursive ( $array, 'priority' );
 	}
 
 	protected static function initRouterCache(&$config, $silent = false) {
