@@ -18,7 +18,7 @@ use Ubiquity\utils\http\session\PhpSession;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.4
+ * @version 1.1.5
  *
  */
 trait StartupConfigTrait {
@@ -52,7 +52,7 @@ trait StartupConfigTrait {
 	}
 
 	public static function getNS($part = 'controllers'): string {
-		$ns = self::$config ['mvcNS'] [$part];
+		$ns = (self::$config ['mvcNS'] [$part])??$part;
 		return ($ns != null) ? $ns .= "\\" : $ns;
 	}
 
@@ -63,9 +63,9 @@ trait StartupConfigTrait {
 	public static function checkDbConfig($offset = 'default'): array {
 		$config = self::$config;
 		$result = [ ];
-		$needs = [ "type","dbName","serverName" ];
-		if (! isset ( $config ["database"] )) {
-			$result [] = "database";
+		$needs = [ 'type','dbName','serverName' ];
+		if (! isset ( $config ['database'] )) {
+			$result [] = 'database';
 		} else {
 			self::needsKeyInConfigArray ( $result, DAO::getDbOffset ( $config, $offset ), $needs );
 		}
@@ -76,7 +76,7 @@ trait StartupConfigTrait {
 		$config = self::$config;
 		$result = [ ];
 		if (! isset ( $config ['mvcNS'] )) {
-			$result [] = "mvcNS";
+			$result [] = 'mvcNS';
 		} else {
 			self::needsKeyInConfigArray ( $result, $config ['mvcNS'], [ 'models' ] );
 		}
@@ -85,7 +85,7 @@ trait StartupConfigTrait {
 
 	public static function reloadConfig(): array {
 		$appDir = \dirname ( \ROOT );
-		$filename = $appDir . "/app/config/config.php";
+		$filename = $appDir . '/app/config/config.php';
 		self::$config = include ($filename);
 		self::startTemplateEngine ( self::$config );
 		return self::$config;
@@ -98,11 +98,11 @@ trait StartupConfigTrait {
 
 	public static function saveConfig(array $contentArray) {
 		$appDir = \dirname ( \ROOT );
-		$filename = $appDir . "/app/config/config.php";
-		$oldFilename = $appDir . "/app/config/config.old.php";
-		$content = "<?php\nreturn " . UArray::asPhpArray ( $contentArray, "array", 1, true ) . ";";
+		$filename = $appDir . '/app/config/config.php';
+		$oldFilename = $appDir . '/app/config/config.old.php';
+		$content = "<?php\nreturn " . UArray::asPhpArray ( $contentArray, 'array', 1, true ) . ";";
 		if (CodeUtils::isValidCode ( $content )) {
-			if (! file_exists ( $filename ) || copy ( $filename, $oldFilename )) {
+			if (! \file_exists ( $filename ) || \copy ( $filename, $oldFilename )) {
 				return UFileSystem::save ( $filename, $content );
 			}
 		} else {

@@ -14,24 +14,36 @@ use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\HtmlMessage;
 use Ajax\common\html\HtmlContentOnly;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
+use Ajax\semantic\widgets\datatable\DataTable;
 
 /**
  * Ubiquity\controllers\crud$CRUDController
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface {
 	use MessagesTrait,CRUDControllerUtilitiesTrait,InsertJqueryTrait;
 	protected $model;
 	protected $activePage;
+	protected $style;
 
 	public function __construct() {
 		parent::__construct ();
 		DAO::$transformerOp = 'toView';
+		$this->style = '';
 		$this->_insertJquerySemantic ();
+	}
+	
+	public function _setStyle($elm){
+		if($this->style==='inverted'){
+			$elm->setInverted(true);
+			if($elm instanceof DataTable){
+				$elm->setActiveRowSelector('black');
+			}
+		}
 	}
 
 	/**
@@ -44,11 +56,14 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$objects = $this->getInstances ( $totalCount );
 		$modal = ($this->_getModelViewer ()->isModal ( $objects, $this->model )) ? "modal" : "no";
 		$dt = $this->_getModelViewer ()->getModelDataTable ( $objects, $this->model, $totalCount );
-		$this->jquery->getOnClick ( "#btAddNew", $this->_getBaseRoute () . "/newModel/" . $modal, "#frm-add-update", [ "hasLoader" => "internal" ] );
+		$this->jquery->getOnClick ( '#btAddNew', $this->_getBaseRoute () . '/newModel/' . $modal, '#frm-add-update', [ 'hasLoader' => 'internal' ] );
 		$this->_getEvents ()->onDisplayElements ( $dt, $objects, false );
-		$this->crudLoadView ( $this->_getFiles ()->getViewIndex (), [ "classname" => $this->model,"messages" => $this->jquery->semantic ()->matchHtmlComponents ( function ($compo) {
-			return $compo instanceof HtmlMessage;
-		} ) ] );
+		$this->crudLoadView ( $this->_getFiles ()->getViewIndex (), [ 
+						'classname' => $this->model,
+						'messages' => $this->jquery->semantic ()->matchHtmlComponents ( function ($compo) {
+										return $compo instanceof HtmlMessage;
+									} )
+					] );
 	}
 
 	public function updateMember($member, $callback = false) {
@@ -61,7 +76,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 					$dt->compile ();
 					echo new HtmlContentOnly ( $dt->getFieldValue ( $member ) );
 				} else {
-					if (method_exists ( $this, $callback )) {
+					if (\method_exists ( $this, $callback )) {
 						$this->$callback ( $member, $instance );
 					} else {
 						throw new \Exception ( "The method `" . $callback . "` does not exists in " . get_class () );
@@ -80,10 +95,10 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 */
 	public function refresh_() {
 		$model = $this->model;
-		if (isset ( $_POST ["s"] )) {
-			$instances = $this->search ( $model, $_POST ["s"] );
+		if (isset ( $_POST ['s'] )) {
+			$instances = $this->search ( $model, $_POST ['s'] );
 		} else {
-			$page = URequest::post ( "p", 1 );
+			$page = URequest::post ( 'p', 1 );
 			$instances = $this->getInstances ( $totalCount, $page );
 		}
 		if (! isset ( $totalCount )) {
@@ -100,7 +115,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 			}
 		} else {
-			$this->jquery->execAtLast ( '$("#search-query-content").html("' . $_POST ["s"] . '");$("#search-query").show();$("#table-details").html("");' );
+			$this->jquery->execAtLast ( '$("#search-query-content").html("' . $_POST ['s'] . '");$("#search-query").show();$("#table-details").html("");' );
 			$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 		}
 	}
@@ -182,7 +197,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if (URequest::isAjax ()) {
 			$instance = $this->getModelInstance ( $ids );
 			$instanceString = $this->getInstanceToString ( $instance );
-			if (sizeof ( $_POST ) > 0) {
+			if (\count ( $_POST ) > 0) {
 				try {
 					if (DAO::remove ( $instance )) {
 						$message = new CRUDMessage ( "Deletion of `<b>" . $instanceString . "</b>`", "Deletion", "info", "info circle", 4000 );
@@ -264,8 +279,8 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$fkInstances = CRUDHelper::getFKIntances ( $instance, $model );
 			$semantic = $this->jquery->semantic ();
 			$grid = $semantic->htmlGrid ( "detail" );
-			if (sizeof ( $fkInstances ) > 0) {
-				$wide = intval ( 16 / sizeof ( $fkInstances ) );
+			if (($nb = \count ( $fkInstances )) > 0) {
+				$wide = intval ( 16 / $nb );
 				if ($wide < 4)
 					$wide = 4;
 				foreach ( $fkInstances as $member => $fkInstanceArray ) {

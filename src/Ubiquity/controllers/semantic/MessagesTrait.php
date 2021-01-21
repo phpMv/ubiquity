@@ -34,6 +34,9 @@ trait MessagesTrait {
 		$semantic = $this->jquery->semantic ();
 		if (! isset ( $staticName ))
 			$staticName = "msg-" . rand ( 0, 50 );
+			if(isset($this->style)){
+				$type.=' '.$this->style;
+			}
 		$message = $semantic->htmlMessage ( $staticName, $content, $type );
 		if (isset ( $title )) {
 			$message->addHeader ( $title );

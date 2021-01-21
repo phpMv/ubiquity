@@ -32,7 +32,7 @@ class CrudOrgaCest extends BaseAcceptance {
 	// Tests
 	public function tryToCrudAddNewAndDelete(AcceptanceTester $I) {
 		$I->amOnPage ( "/TestCrudOrgas" );
-		$I->click ( "#btAddNew" );
+		$this->waitAndclick ( $I, "#btAddNew" );
 		$I->waitForText ( "New object creation", self::TIMEOUT );
 		$I->fillField ( "#frmEdit [name='name']", "Organization name test" );
 		$I->fillField ( "#frmEdit [name='domain']", "Organization domain test" );
@@ -82,7 +82,7 @@ class CrudOrgaCest extends BaseAcceptance {
 		$I->amOnPage ( "TestCrudOrgas/display/no/1" );
 		$I->waitForText ( "Organizationsettingss", self::TIMEOUT, "body" );
 		$I->waitForElementClickable ( "#table-details #buttons a._delete", self::TIMEOUT );
-		$I->click ( "a._delete", "#table-details" );
+		$I->click ( "a._delete", "#table-details #buttons" );
 		$I->waitForText ( "Remove confirmation", self::TIMEOUT, "body" );
 		$I->click ( "#bt-okay.negative" );
 		$I->waitForText ( "Can not delete `lecnam.net`", self::TIMEOUT, "body" );

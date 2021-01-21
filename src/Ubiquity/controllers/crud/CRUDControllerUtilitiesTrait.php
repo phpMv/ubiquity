@@ -101,6 +101,7 @@ trait CRUDControllerUtilitiesTrait {
 		$_SESSION ["instance"] = $instance;
 		$modal = ($modal == "modal");
 		$form = $this->_getModelViewer ()->getForm ( "frmEdit", $instance );
+		$this->_setStyle($form);
 		$this->jquery->click ( "#action-modal-frmEdit-0", "$('#frmEdit').form('submit');", false );
 		if (! $modal) {
 			$this->jquery->click ( "#bt-cancel", "$('#form-container').transition('drop');" );
@@ -110,8 +111,10 @@ trait CRUDControllerUtilitiesTrait {
 			$this->jquery->exec ( "$('#modal-frmEdit').modal('show');", true );
 			$form = $form->asModal ( \get_class ( $instance ) );
 			$form->setActions ( [ "Okay_","Cancel" ] );
+			$form->addClass($this->style);
 			$btOkay = $form->getAction ( 0 );
-			$btOkay->addClass ( "green" )->setValue ( "Validate modifications" );
+			$btOkay->addClass ( 'green '.$this->style )->setValue ( "Validate modifications" );
+			$form->getAction ( 1 )->addClass($this->style);
 			$form->onHidden ( "$('#modal-frmEdit').remove();" );
 			echo $form->compile ( $this->jquery );
 			echo $this->jquery->compile ( $this->view );
@@ -149,7 +152,7 @@ trait CRUDControllerUtilitiesTrait {
 			}
 			$this->index ();
 		} else {
-			$message = new CRUDMessage ( "Do you confirm the deletion of this objects?", "Remove confirmation", "error" );
+			$message = new CRUDMessage ( "Do you confirm the deletion of this objects?", "Remove confirmation", "error ".$this->style );
 			$this->_getEvents ()->onConfDeleteMultipleMessage ( $message, $data );
 			$message = $this->_showConfMessage ( $message, $this->_getBaseRoute () . "/{$action}/{$data}", $target, $data, [ "jqueryDone" => "replaceWith" ] );
 			echo $message;
@@ -185,7 +188,7 @@ trait CRUDControllerUtilitiesTrait {
 	 * @return ModelViewer
 	 */
 	protected function getModelViewer(): ModelViewer {
-		return new ModelViewer ( $this );
+		return new ModelViewer ( $this ,$this->style??null);
 	}
 
 	protected function _getModelViewer(): ModelViewer {
@@ -230,20 +233,21 @@ trait CRUDControllerUtilitiesTrait {
 	}
 
 	private function crudLoadView($viewName, $vars = [ ]) {
+		$vars['inverted']=$this->style;
 		$this->_getEvents ()->beforeLoadView ( $viewName, $vars );
 		if (! URequest::isAjax ()) {
 			$files = $this->_getFiles ();
 			$mainTemplate = $files->getBaseTemplate ();
 			if (isset ( $mainTemplate )) {
-				$vars ["_viewname"] = $viewName;
-				$vars ["_base"] = $mainTemplate;
+				$vars ['_viewname'] = $viewName;
+				$vars ['_base'] = $mainTemplate;
 				$this->jquery->renderView ( $files->getViewBaseTemplate (), $vars );
 			} else {
-				$vars ["hasScript"] = true;
+				$vars ['hasScript'] = true;
 				$this->jquery->renderView ( $viewName, $vars );
 			}
 		} else {
-			$vars ["hasScript"] = true;
+			$vars ['hasScript'] = true;
 			$this->jquery->renderView ( $viewName, $vars );
 		}
 	}

@@ -1,12 +1,15 @@
 ![img](https://github.com/phpMv/ubiquity/blob/master/Banner/banner-duck.png?raw=true)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpMv/ubiquity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpMv/ubiquity/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/phpMv/ubiquity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phpMv/ubiquity/?branch=master) [![Documentation Status](https://readthedocs.org/projects/micro-framework/badge/?version=latest)](http://micro-framework.readthedocs.io/en/latest/?badge=latest)
- [![Total Downloads](https://poser.pugx.org/phpmv/ubiquity/downloads)](https://packagist.org/packages/phpmv/ubiquity)
- [![Latest Unstable Version](https://poser.pugx.org/phpmv/ubiquity/v/unstable)](https://packagist.org/packages/phpmv/ubiquity)
- [![Latest Stable Version](https://poser.pugx.org/phpmv/ubiquity/v/stable)](https://packagist.org/packages/phpmv/ubiquity)
- [![License](https://poser.pugx.org/phpmv/ubiquity/license)](https://packagist.org/packages/phpmv/ubiquity) [![Discord](https://img.shields.io/discord/708356828022571090?label=Discord)](https://discord.gg/cwrmQRP) [![Join the chat at https://gitter.im/ubiquity-framework/community](https://badges.gitter.im/ubiquity-framework/community.svg)](https://gitter.im/ubiquity-framework/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/phpmv/ubiquity) 
+[![Latest Stable Version](https://poser.pugx.org/phpmv/ubiquity/v/stable)](https://packagist.org/packages/phpmv/ubiquity)
+[![License](https://poser.pugx.org/phpmv/ubiquity/license)](https://packagist.org/packages/phpmv/ubiquity)
+[![Total Downloads](https://poser.pugx.org/phpmv/ubiquity/downloads)](https://packagist.org/packages/phpmv/ubiquity)
+[![Monthly Downloads](https://poser.pugx.org/phpmv/ubiquity/d/monthly)](//packagist.org/packages/phpmv/ubiquity)
+![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/phpmv/ubiquity/2.3.12?style=flat-square)
+[![Join the chat at https://gitter.im/ubiquity-framework/community](https://badges.gitter.im/ubiquity-framework/community.svg)](https://gitter.im/ubiquity-framework/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
 
-[Ubiquity](https://ubiquity.kobject.net), one of the fastest Frameworks, with some interesting features.
+[Ubiquity](https://ubiquity.kobject.net), a powerful and fast framework for efficient design.
 
 # Main features
   - MVC
@@ -14,20 +17,25 @@
   - PSR-4 Autoloader
   - Router based on annotations
   - ORM implementing Data Mapper
-  - Multi-databases & multi-database types support (PDO Mysql, Mysqli, Swoole coroutine Mysql, Tarantool)
+  - Multi-databases & multi-database types support (PDO Mysql/PostgreSQL/SQLite, Mysqli, Swoole coroutine Mysql, Tarantool, MongoDB)
   - Multi-level cache
   - Rest Server
-  - Web admin interface (UbiquityMyAdmin)
-  - Scaffolding
+  - Web admin interface (Webtools)
+  - Scaffolding (CRUD, REST, Controllers, views, authentification...)
   - Console Admin interface (Devtools)
   - Assets & themes management (since 2.1.0, on a [proposal](https://github.com/phpMv/ubiquity/issues/11) from [@Gildonei](https://github.com/gildonei))
-  - Managed servers: fpm/fastcgi with Apache or nginX, [Workerman](https://github.com/walkor/Workerman), [Swoole](https://github.com/swoole/swoole-src), [Roadrunner](https://github.com/Lapinskas/roadrunner-ubiquity), [PHP-PM](https://github.com/php-pm/php-pm) with ReactPHP (Dev only)
+  - Managed servers: fpm/fastcgi with Apache or nginX, [ngx_php](https://github.com/rryqszq4/ngx_php7), [Workerman](https://github.com/walkor/Workerman), [Swoole](https://github.com/swoole/swoole-src), [Roadrunner](https://github.com/Lapinskas/roadrunner-ubiquity), [PHP-PM](https://github.com/php-pm/php-pm) with ReactPHP (Dev only)
 
 # Upgrade
 If Ubiquity devtools are already globally installed, and you want to upgrade to the lastest stable version:
 ```bash
 composer global update
 ```
+For an existing project (in the root folder):
+```bash
+composer update
+```
+
 # Project creation
 
 The easiest way to create a project is to use composer **create-project** command:
@@ -72,15 +80,15 @@ Ubiquity is very fast and performs well.
 ### In the PHP world
 The various results of the [Techempower benchmarks](https://www.techempower.com/benchmarks) show this conclusively.
 
-#### TechEmpower Fortune test(*) (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=79d56671-150b-4653-9513-337cade8b1e1&hw=ph&test=fortune&l=zik073-1r&c=4&o=c))
-![TechEmpower benchmarks Fortune](https://static.kobject.net/ubiquity/images/techempower-1.png "PHP Frameworks")
+#### TechEmpower Multiple queries test (*) (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=301db83d-878d-433d-ae5e-1a25013e0b3c&hw=ph&test=query&l=zg24n3-v&c=4&a=2&o=c))
+![TechEmpower benchmarks Multiple queries](https://static.kobject.net/ubiquity/images/techempower-1-190920.png "PHP Frameworks")
 
 These excellent results have also been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
 
 ### In the world of web frameworks
 **Ubiquity** is optimized for use with asynchronous platforms (**Workerman** and **Swoole**). It takes advantage of the recent PHP evolutions (opCache management and preloading). In this context, it performs against the fastest Frameworks written in C, C++, Rust or java:
 
-#### TechEmpower 20 updates test (*) (see [All frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=79d56671-150b-4653-9513-337cade8b1e1&hw=ph&test=update&c=4&o=c))
+#### TechEmpower 20 updates test (*) (see [All frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=301db83d-878d-433d-ae5e-1a25013e0b3c&hw=ph&test=update&c=4&a=2&o=c))
 ![TechEmpower benchmarks Update](https://static.kobject.net/ubiquity/images/techempower-2.png "All Frameworks")
 
 (*) Only tests with Framework and ORM are considered.

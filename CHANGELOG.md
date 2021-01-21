@@ -3,9 +3,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unrelease]
-- nothing
+- Nothing
+## [2.4.1] 2021-01-17
+### Fixed
+- [consecutive Bulk updates pb](https://github.com/phpMv/ubiquity/issues/166)
+### Added
+- Dark theme for CRUD controllers
+## [2.4.0] 2020-12-31
+### Added
+- PHP8 attributes support => with PHP8, Ubiquity uses the PHP8 attributes system for annotations. 
+- `password_verify` method to `URequest`
+### Updated
+- CRUD and Auth controllers no longer use twig inheritance on views by default: It is easier to customize the display.
+## [2.3.13] 2020-12-11
+### Added
+- ACL Manager in [ubiquity-acl repository](https://github.com/phpMv/ubiquity-acl)
+### Fixed
+- Update php version in composer.json for php 8
+- DAOUqueries [pb with parentheses in condition](https://github.com/phpMv/ubiquity/issues/159)
+- [Password hash algo type](https://github.com/phpMv/ubiquity/commit/ddd8504aaa697b3d15ec2db7bece4b7202b81c7b) (no open issue)
+- [DB Logging omitted](https://github.com/phpMv/ubiquity/commit/50f645355db7d395774ad7d9a47e1c4bf91dc0ce) (no open issue)
+## [2.3.12] 2020-09-30
+### Added
+- Named db statements for async platforms
+- Rest events on insert and update `BEFORE_INSERT = 'rest.before.insert'` and `BEFORE_UPDATE = 'rest.before.update'`
+- `insertGroups` method (inserts in an implicit transaction)
+- `quote` options for PDO wrappers
+- `ApplicationStorage` for global variables with async platforms (Swoole, Workerman, ngx_php...)
+### Fixed
+- [orm] `oneToMany` and `manyToMany` loading pb with 2.3.11 version see [#145](https://github.com/phpMv/ubiquity/issues/145)
+### Tests
+- Adding tests
+- increase of coverage to 73%.
 ## [2.3.11] 2020-07-28
 ### Added
 - `DAOCache` (caches objects loaded by id)

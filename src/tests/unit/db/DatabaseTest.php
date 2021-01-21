@@ -1,11 +1,12 @@
 <?php
 use Ubiquity\db\Database;
-use Ubiquity\cache\database\TableCache;
 use Ubiquity\exceptions\CacheException;
 use Ubiquity\exceptions\DBException;
 use Ubiquity\db\SqlUtils;
 use Ubiquity\db\providers\pdo\PDOWrapper;
 use Ubiquity\orm\DAO;
+use Ubiquity\cache\database\QueryCache;
+use Ubiquity\cache\database\MemoryCache;
 
 /**
  * Database test case.
@@ -57,10 +58,10 @@ class DatabaseTest extends BaseTest {
 	public function test__construct() {
 		$this->assertEquals ( $this->dbName, $this->database->getDbName () );
 		$this->assertEquals ( '3306', $this->database->getPort () );
-		$db = new Database ( $this->getWrapper (), $this->dbType, $this->dbName, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], TableCache::class );
+		$db = new Database ( $this->getWrapper (), $this->dbType, $this->dbName, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], QueryCache::class );
 		$this->assertTrue ( $db->connect () );
 		$db = new Database ( $this->getWrapper (), $this->dbType, $this->dbName, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], function () {
-			return new TableCache ();
+			return new MemoryCache ();
 		} );
 		$this->assertTrue ( $db->connect () );
 		$this->expectException ( CacheException::class );
@@ -146,7 +147,7 @@ class DatabaseTest extends BaseTest {
 		} catch ( Exception $e ) {
 			// Nothing
 		}
-		$db = new Database ( $this->getWrapper (), $this->dbType, $this->dbName, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], TableCache::class );
+		$db = new Database ( $this->getWrapper (), $this->dbType, $this->dbName, $this->db_server, 3306, 'root', '', [ "quote" => "`" ], MemoryCache::class );
 		$db->connect ();
 		$response = $db->prepareAndExecute ( "User", "WHERE `email`='benjamin.sherman@gmail.com'", $fields, null, true );
 		$this->assertEquals ( sizeof ( $response ), 1 );

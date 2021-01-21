@@ -44,8 +44,8 @@ class UCookie {
 	 * Returns the Cookie with the name $name
 	 *
 	 * @param string $name
-	 * @param string $default
-	 * @return string|array|null
+	 * @param mixed $default
+	 * @return mixed
 	 */
 	public static function get($name, $default = null) {
 		$v = $_COOKIE [$name] ?? $default;

@@ -91,6 +91,12 @@ abstract class Logger {
 		}
 	}
 
+	public static function close() {
+		if (self::$test) {
+			self::$instance->_close ();
+		}
+	}
+
 	abstract public function _log($level, $context, $message, $part, $extra);
 
 	abstract public function _info($context, $message, $part, $extra);
@@ -106,6 +112,8 @@ abstract class Logger {
 	abstract public function _asObjects($reverse = true, $maxlines = 10, $contexts = null);
 
 	abstract public function _clearAll();
+
+	abstract public function _close();
 
 	public static function isActive() {
 		return self::$test;

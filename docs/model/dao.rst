@@ -377,6 +377,52 @@ Deletions example
 
 The `DAO::flush()` method can be called if insertions, updates or deletions are pending.
 
+Transactions
+============
+Explicit transactions
+---------------------
+All DAO operations can be inserted into a transaction, so that a series of changes can be atomized:
+
+.. code-block:: php
+      
+   try{
+    	DAO::beginTransaction();
+    	$orga=new Organization();
+    	$orga->setName('Foo');
+    	DAO::save($orga);
+   
+    	$user=new User();
+    	$user->setFirstname('DOE');
+    	$user->setOrganization($orga);
+    	DAO::save($user);
+    	DAO::commit();
+   }catch (\Exception $e){
+	        DAO::rollBack();
+   }
+
+In case of multiple databases defined in the configuration, transaction-related methods can take the database offset defined in parameter.
+
+.. code-block:: php
+   
+   DAO::beginTransaction('db-messagerie');
+   //some DAO operations on messagerie models
+   DAO::commit('db-messagerie');
+
+Implicit transactions
+---------------------
+
+Some DAO methods implicitly use transactions to group together insert, update or delete operations.
+
+.. code-block:: php
+   
+   	    $users=DAO::getAll(User::class);
+   	    foreach ($users as $user){
+   	        $user->setSuspended(true);
+   	        DAO::toUpdate($user);
+   	    }
+   	    DAO::updateGroups();//Perform updates in a transaction
+
+
 SDAO class
 ==========
 The **SDAO** class accelerates CRUD operations for the business classes without relationships.

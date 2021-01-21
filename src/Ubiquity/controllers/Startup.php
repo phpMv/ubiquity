@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.6
+ * @version 1.1.8
  *
  */
 class Startup {
@@ -39,17 +39,14 @@ class Startup {
 				self::injectDependences ( $controller );
 			}
 			return $controller;
-		} else {
-			Logger::warn ( 'Startup', 'The controller `' . $controllerName . '` doesn\'t exists! <br/>', 'runAction' );
-			self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-			return null;
 		}
+		return null;
 	}
 
 	protected static function startTemplateEngine(&$config): void {
 		try {
 			$templateEngine = $config ['templateEngine'];
-			$engineOptions = $config ['templateEngineOptions'] ?? array ('cache' => false );
+			$engineOptions = $config ['templateEngineOptions'] ?? ['cache' => false ];
 			$engine = new $templateEngine ( $engineOptions );
 			if ($engine instanceof TemplateEngine) {
 				self::$templateEngine = $engine;
@@ -147,20 +144,31 @@ class Startup {
 					try {
 						$controller->$action ( ...(self::$actionParams) );
 					} catch ( \Error $e ) {
-						Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
-						if (self::$config ['debug']) {
-							throw $e;
+						if (! \method_exists ( $controller, $action )) {
+							static::onError ( 404, "This action does not exist on the controller " . $ctrl, $controller );
+						} else {
+							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
+							if (self::$config ['debug']) {
+								throw $e;
+							} else {
+								static::onError ( 500, $e->getMessage (), $controller );
+							}
 						}
 					}
 					if ($finalize) {
 						$controller->finalize ();
 					}
 				}
+			} else {
+				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exist! <br/>', 'runAction' );
+				static::onError ( 404 );
 			}
 		} catch ( \Error $eC ) {
 			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
 			if (self::$config ['debug']) {
 				throw $eC;
+			} else {
+				static::onError ( 500, $eC->getMessage () );
 			}
 		}
 	}
@@ -175,7 +183,7 @@ class Startup {
 		if (isset ( self::$config ['di'] )) {
 			$di = self::$config ['di'];
 			if (\is_array ( $di )) {
-				self::$actionParams += $di;
+				self::$actionParams += \array_values($di);
 			}
 		}
 		$func = $u [0];
@@ -222,6 +230,22 @@ class Startup {
 		return \ob_get_clean ();
 	}
 
+	public static function onError(int $code, ?string $message = null, $controllerInstance = null) {
+		$onError = self::$config ['onError'] ?? (function ($code, $message = null, $controllerInstance = null) {
+			switch ($code) {
+				case 404 :
+					self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
+					echo ($message ?? "The page you are looking for doesn't exist!");
+					break;
+
+				case 500 :
+					echo ($message ?? "A server error occurred!");
+					break;
+			}
+		});
+		$onError ( $code, $message, $controllerInstance );
+	}
+
 	public static function errorHandler($message = '', $code = 0, $severity = 1, $filename = null, int $lineno = 0, $previous = NULL) {
 		if (\error_reporting () == 0) {
 			return;
@@ -255,7 +279,7 @@ class Startup {
 	 * @return string
 	 */
 	public static function getViewNameFileExtension(): string {
-		return "html";
+		return 'html';
 	}
 
 	/**

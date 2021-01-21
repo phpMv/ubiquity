@@ -34,7 +34,7 @@ Example :
    
 Project creation
 ----------------
-Create the **quick-start** projet with **UbiquityMyAdmin** interface (the **-a** option)
+Create the **quick-start** projet with **Webtools** interface (the **-a** option)
 
 .. code-block:: bash
    
@@ -78,11 +78,16 @@ Check the correct operation at the address **http://127.0.0.1:8090**:
 Controller
 ----------
 
-Goto admin interface by clicking on the button **UbiquityMyAdmin**:
+Goto admin interface by clicking on the button **Webtools**:
 
 .. image:: /_static/images/quick-start-2/ubi-my-admin-btn.png
 
-The web application **UbiquityMyAdmin** saves time in repetitive operations.
+Select the tools you need:
+
+.. image:: /_static/images/quick-start-2/ubi-my-admin-interface-0.png
+   :class: bordered
+
+The web application **Webtools** saves time in repetitive operations.
 
 .. image:: /_static/images/quick-start-2/ubi-my-admin-interface.png
    :class: bordered

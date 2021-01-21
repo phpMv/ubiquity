@@ -109,7 +109,9 @@ trait FormModelViewerTrait {
 		if ($params && isset ( $params [$part] )) {
 			return $params [$part];
 		}
-		return new EditMemberParams ();
+		$emp= new EditMemberParams ();
+		$emp->setDtId($this->getDataTableId());
+		return $emp;
 	}
 
 	/**
@@ -117,7 +119,7 @@ trait FormModelViewerTrait {
 	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
 	 */
 	protected function defaultEditMemberParams() {
-		return [ "dataTable" => EditMemberParams::dataTable (),"dataElement" => EditMemberParams::dataElement () ];
+		return [ "dataTable" => EditMemberParams::dataTable ($this->getDataTableId()),"dataElement" => EditMemberParams::dataElement () ];
 	}
 
 	/**
@@ -130,13 +132,13 @@ trait FormModelViewerTrait {
 	 */
 	public function getForm($identifier, $instance, $updateUrl = 'updateModel') {
 		$form = $this->jquery->semantic ()->dataForm ( $identifier, $instance );
-		$form->setLibraryId ( "frmEdit" );
+		$form->setLibraryId ( 'frmEdit' );
 		$className = \get_class ( $instance );
-		$fields = array_unique ( $this->controller->_getAdminData ()->getFormFieldNames ( $className, $instance ) );
+		$fields = \array_unique ( $this->controller->_getAdminData ()->getFormFieldNames ( $className, $instance ) );
 		$relFields = OrmUtils::getFieldsInRelations_ ( $className );
 
 		$this->setFormFields_ ( $fields, $relFields );
-		array_unshift ( $fields, "_message" );
+		\array_unshift ( $fields, '_message' );
 		$form->setFields ( $fields );
 
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
@@ -145,10 +147,10 @@ trait FormModelViewerTrait {
 		OrmUtils::setFieldToMemberNames ( $fields, $relFields );
 		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
 		$message = $this->getFormTitle ( $form, $instance );
-		$form->setCaption ( "_message", $message ["subMessage"] );
-		$form->fieldAsMessage ( "_message", [ "icon" => $message ["icon"] ] );
-		$instance->_message = $message ["message"];
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/" . $updateUrl, "#frm-add-update" );
+		$form->setCaption ( '_message', $message ['subMessage'] );
+		$form->fieldAsMessage ( '_message', [ 'icon' => $message ["icon"]] );
+		$instance->_message = $message ['message'];
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/" . $updateUrl, '#frm-add-update' );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
 		return $form;
 	}
@@ -234,10 +236,10 @@ trait FormModelViewerTrait {
 	 * @return array the message title
 	 */
 	protected function getFormTitle($form, $instance) {
-		$type = ($instance->_new) ? "new" : "edit";
-		$messageInfos = [ "new" => [ "icon" => HtmlIconGroups::corner ( "table", "plus", "big" ),"subMessage" => "New object creation" ],"edit" => [ "icon" => HtmlIconGroups::corner ( "table", "edit", "big" ),"subMessage" => "Editing an existing object" ] ];
+		$type = ($instance->_new) ? 'new' : 'edit';
+		$messageInfos = [ 'new' => [ 'icon' => HtmlIconGroups::corner ( 'table '.$this->style, 'plus '.$this->style, 'big' ),'subMessage' => '&nbsp;New object creation' ],'edit' => [ 'icon' => HtmlIconGroups::corner ( 'table '.$this->style, 'edit '.$this->style, 'big' ),'subMessage' => '&nbsp;Editing an existing object' ] ];
 		$message = $messageInfos [$type];
-		$message ["message"] = \get_class ( $instance );
+		$message ['message'] = '&nbsp;'.\get_class ( $instance );
 		return $message;
 	}
 

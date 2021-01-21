@@ -10,7 +10,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class StartupAsync extends Startup {
@@ -19,10 +19,53 @@ class StartupAsync extends Startup {
 	private const FINALIZE = 4;
 	private static $controllers = [ ];
 
+	private static $routes=[];
+
+	/**
+	 * Forwards to url
+	 *
+	 * @param string $url The url to forward to
+	 * @param boolean $initialize If true, the **initialize** method of the controller is called
+	 * @param boolean $finalize If true, the **finalize** method of the controller is called
+	 */
+	public static function forward($url, $initialize = true, $finalize = true): void {
+		$methodUrl=$_SERVER['REQUEST_METHOD'].$url;
+		if(($m=(self::$routes[$methodUrl]??false))!==false){
+			$m($initialize,$finalize);
+			return ;
+		}
+		$u = self::parseUrl ( $url );
+		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, true, self::$config ['debug'] ?? false)) !== false) {
+			if (\is_array ( $ru )) {
+				if (\is_string ( $ru [0] )) {
+					$xu=['ctrl'=>$ru[0],'action'=>$ru[1]??'index','params'=>\array_slice ( $ru, 2 )];
+					(self::$routes[$methodUrl]=function($i,$f)use($xu){
+						static::runAction ( $xu, $i, $f );
+					})($initialize,$finalize);
+				} else {
+					(self::$routes[$methodUrl]=function() use($ru){
+						self::runCallable ( $ru );
+					})();
+				}
+			} else {
+				(self::$routes[$methodUrl]=function() use($ru){
+					echo $ru; // Displays route response from cache
+				})();
+
+			}
+		} else {
+			$u [0] = self::$ctrlNS . $u [0];
+			$xu=['ctrl'=>$u[0],'action'=>$u[1]??'index','params'=>\array_slice ( $u, 2 )];
+			(self::$routes[$methodUrl]=function($i,$f)use($xu){
+				static::runAction ( $xu, $i, $f );
+			})($initialize,$finalize);
+		}
+	}
+
 	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
-		self::$controller = $ctrl = $u [0];
-		self::$action = $action = $u [1] ?? 'index';
-		self::$actionParams = \array_slice ( $u, 2 );
+		self::$controller = $ctrl = $u ['ctrl'];
+		self::$action = $action = $u ['action'];
+		self::$actionParams = $u['params'];
 
 		try {
 			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
@@ -36,20 +79,31 @@ class StartupAsync extends Startup {
 					try {
 						$controller->$action ( ...(self::$actionParams) );
 					} catch ( \Error $e ) {
-						Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
-						if (self::$config ['debug']) {
-							throw $e;
+						if (! \method_exists ( $controller, $action )) {
+							static::onError ( 404, "This action does not exist on the controller " . $ctrl, $controller );
+						} else {
+							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
+							if (self::$config ['debug']) {
+								throw $e;
+							} else {
+								static::onError ( 500, $e->getMessage (), $controller );
+							}
 						}
 					}
 					if (($binaryCalls & self::FINALIZE) && $finalize) {
 						$controller->finalize ();
 					}
 				}
+			} else {
+				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
+				static::onError ( 404 );
 			}
 		} catch ( \Error $eC ) {
 			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
 			if (self::$config ['debug']) {
 				throw $eC;
+			} else {
+				static::onError ( 500, $eC->getMessage () );
 			}
 		}
 	}

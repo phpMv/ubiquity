@@ -3,7 +3,7 @@ build:
     analysis:
       dependencies:
         before:
-          - composer require twig/twig mindplay/annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
+          - composer require twig/twig phpmv/ubiquity-annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception:^2.2 --dev
           - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
@@ -23,6 +23,7 @@ build:
           version: 7.4
         hosts:
           dev.local: '127.0.0.1'
+          worker.local: '127.0.0.1'
         apache2:
           modules: ['rewrite']
           sites:
@@ -37,24 +38,30 @@ build:
           mysql: 5.7
       tests:
         before:
-          - sudo cp src/tests/files/xdebug.ini /home/scrutinizer/.phpenv/versions/7.4.0/etc/conf.d/xdebug.ini
+          - sudo cp src/tests/files/xdebug.ini /home/scrutinizer/.phpenv/versions/7.4.3/etc/conf.d/xdebug.ini
           - mysql -u root mysql < src/tests/unit/db/messagerie.sql
           - mysql -u root mysql < src/tests/unit/db/projects.sql
+          - mysql -u root mysql < src/tests/unit/db/hello_world.sql
           - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -m -a -h=semantic,foundation,bootstrap)
           - cp -f src/tests/files/composer.json src/composer.json
           - (cd src/ && composer update)
+          - (cd src/ && ./../vendor/bin/Ubiquity clear-cache)
           - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/ && cp -f src/tests/files/config.php src/app/config/
           - cp -R src/tests/files/unit/* src/app/
+          - (cd src/ && ./../vendor/bin/Ubiquity all-models -d=bench -a=public)
+          - (cd src/ && ./../vendor/bin/Ubiquity init-cache)
           - sudo chmod 0777 -R src/*
-          - cp -f src/tests/files/run-react.sh run-react.sh
-          - sudo chmod +x run-react.sh
+          - cp -f src/tests/files/workerman/run-workerman.sh run-workerman.sh && cp -f src/tests/files/workerman/workerServices.php src/app/config/workerServices.php
+          - sudo chmod +x run-workerman.sh
           - sudo /usr/share/locales/install-language-pack fr_FR
           - sudo service apache2 restart && sudo service apache2 reload
           - sudo curl -v http://dev.local/index.php?c=Admin
-          - cp -f src/tests/files/_react.php src/.ubiquity/_react.php && cp -f src/tests/files/react-config.php src/.ubiquity/react-config.php
-          - command: ./run-react.sh
+          - (cd src/ && composer require phpmv/ubiquity-workerman:dev-master)
+          - cp -f src/tests/files/workerman/_workerman.php src/.ubiquity/
+          - command: ./run-workerman.sh
             background: true
-          - sudo curl -v http://127.0.0.1:8801
+          - (cd src/ && ./../vendor/bin/Ubiquity info:models -d=bench)
+          - sudo curl -v http://worker.local:8095/db
 
         override:
           - command: (cd src/ && ./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v)
@@ -64,12 +71,23 @@ build:
 filter:
     paths: ["src/Ubiquity/*"]
     excluded_paths:
-        - src/Ubiquity/controllers/Autoloader.php
-        - src/Ubiquity/controllers/admin/
-        - src/Ubiquity/annotations/
+        - src/Ubiquity/cache/system/ApcuCache.php
+        - src/Ubiquity/cache/system/ArrayApcCache.php
+        - src/Ubiquity/cache/system/MemCachedDriver.php
+        - src/Ubiquity/cache/system/PhpFastCacheDriver.php
+        - src/Ubiquity/cache/system/RedisCacheDriver.php
+        - src/Ubiquity/cache/system/ObjectCacheDriver.php
+        - src/Ubiquity/cache/dao/DAOSerialCache.php
+        - src/Ubiquity/cache/dao/DAOCache.php
+        - src/Ubiquity/db/providers/pdo/drivers/SqliteDriverMetas.php
+        - src/Ubiquity/db/providers/pdo/drivers/PgsqlDriverMetas.php
         - src/Ubiquity/utils/git/UGitRepository.php
+        - src/Ubiquity/utils/http/session/MultiSiteSession.php
+        - src/Ubiquity/utils/http/foundation/Psr7.php
+        - src/Ubiquity/utils/git/*
         - src/Ubiquity/cache/Preloader.php
         - src/Ubiquity/cache/preloading/
+        - src/Ubiquity/controllers/StartupAsync.php
 checks:
     php:
         code_rating: true

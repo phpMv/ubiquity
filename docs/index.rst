@@ -15,10 +15,14 @@ Ubiquity User guide
    
 .. sidebar:: New in documentation
 
+   - :ref:`Security<security>`
+   - :ref:`Async platforms<async>`
+   - :ref:`Commands module<commands>`
+   - :ref:`Composer module<composer>`
    - :ref:`OAuth client module<oauth>`
    - :ref:`Mailer module<mailer>`
    - :ref:`Servers configuration<servers>`
-   - :ref:`Database connexions<db>`
+   - :ref:`Database connection<db>`
    - :ref:`Optimization<optimization>`
    - :ref:`Rich client<richclient>`
    - :ref:`REST module<rest>`
@@ -65,7 +69,7 @@ Ubiquity User guide
    :maxdepth: 1
    :caption: Models and ORM
    
-   Database connexion <model/db>
+   Database connection <model/db>
    Generation <model/generation>
    model/models
    model/dao
@@ -103,6 +107,14 @@ Ubiquity User guide
 
 .. toctree::
    :maxdepth: 1
+   :caption: Security
+
+   security/index
+   security/module
+   security/acl
+
+.. toctree::
+   :maxdepth: 1
    :caption: Rest
    
    rest/index
@@ -124,11 +136,13 @@ Ubiquity User guide
 .. toctree::
    :maxdepth: 1
    :caption: Extras
-   
+
+   extra/commands
    extra/libraries
    extra/caching
    extra/dependencies
    extra/oauth
+   extra/async
 
 Indices and tables
 ==================

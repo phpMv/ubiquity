@@ -1,7 +1,7 @@
 <?php
 return array (
 				"#tableName" => "Connection",
-				"#primaryKeys" => array ("id" ),
+				"#primaryKeys" => array ("id" => "id" ),
 				"#manyToOne" => array ("user" ),
 				"#fieldNames" => array ("id" => "id","dateCo" => "dateCo","url" => "url","user" => "idUser" ),
 				"#memberNames" => array ("id" => "id","dateCo" => "dateCo","url" => "url","idUser" => "user" ),

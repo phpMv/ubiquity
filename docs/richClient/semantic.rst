@@ -234,7 +234,8 @@ For this example, create the following database:
    CREATE TABLE `user` (
      `id` int(11) NOT NULL,
      `firstname` varchar(30) NOT NULL,
-     `lastname` varchar(30) NOT NULL
+     `lastname` varchar(30) NOT NULL,
+     `password` varchar(30) NOT NULL
    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
    
    INSERT INTO `user` (`id`, `firstname`, `lastname`) VALUES
@@ -242,6 +243,10 @@ For this example, create the following database:
    (2, 'Potencier', 'Fabien'),
    (3, 'Otwell', 'Taylor');
 
+   ALTER TABLE `user` ADD PRIMARY KEY (`id`);
+   ALTER TABLE `user`
+     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+     
 Connect the application to the database, and generate the `User` class:
 
 With devtools:
@@ -430,9 +435,67 @@ The view associated to `displayOneUser` action:
 Semantic components
 -------------------
 
-//todo
+Next, we are going to make a controller implementing the same functionalities as before, but using **PhpMv-UI** components (Semantic part).
+
 HtmlButton sample
 +++++++++++++++++
+
+Create a new Controller `UsersJqueryController`
+
+.. code-block:: bash
+   
+   Ubiquity controller UsersCompoController -v
+   
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/UsersJqueryController.php
+   
+   namespace controllers;
+   
+   use Ubiquity\controllers\Router;
+
+   /**
+    * Controller UsersCompoController
+    *
+    * @property \Ajax\php\ubiquity\JsUtils $jquery
+    * @route("users-compo")
+    */
+   class UsersCompoController extends ControllerBase {
+   
+   	private function semantic() {
+   		return $this->jquery->semantic();
+   	}
+   
+   	/**
+   	 *
+   	 * @get
+   	 */
+   	public function index() {
+   		$bt = $this->semantic()->htmlButton('users-bt', 'Display users');
+   		$bt->addIcon('users');
+   		$bt->getOnClick(Router::path('display.compo.users'), '#users', [
+   			'hasLoader' => 'internal'
+   		]);
+   		$this->jquery->renderDefaultView();
+   	}
+
+
+.. note::
+   Calling renderView or renderDefaultView on the JQuery object performs the compilation of the component, and generates the corresponding HTML and JS.
+
+
+The associated view integrates the button component with the `q` array available in the view :
+
+.. code-block:: html
+   :caption: app/views/UsersCompoController/index.html
+   
+   <div class="ui container">
+   	{{ q['users-bt'] | raw }}
+   	<p></p>
+   	<div id="users">
+   	</div>
+   </div>
+   {{ script_foot | raw }}
 
 //todo
 DataTable sample

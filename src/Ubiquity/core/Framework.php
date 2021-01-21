@@ -18,9 +18,10 @@ use Ubiquity\translation\TranslatorManager;
 use Ubiquity\utils\http\UCookie;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
+use Ubiquity\cache\CacheManager;
 
 class Framework {
-	public const version = '2.3.11';
+	public const version = '2.4.1';
 
 	public static function getVersion() {
 		return self::version;
@@ -35,7 +36,7 @@ class Framework {
 	}
 
 	public static function getUrl() {
-		return \implode ( "/", Startup::$urlParts );
+		return \implode ( '/', Startup::$urlParts );
 	}
 
 	public static function getRouter() {
@@ -74,6 +75,14 @@ class Framework {
 		return new AssetsManager ();
 	}
 
+	public static function getCacheSystem(){
+		return \get_class(CacheManager::$cache);
+	}
+
+	public static function getAnnotationsEngine(){
+		return \get_class(CacheManager::getAnnotationsEngineInstance());
+	}
+
 	/**
 	 * Returns an instance of JsUtils initialized with Semantic (for di injection)
 	 *
@@ -81,7 +90,7 @@ class Framework {
 	 * @param array $options
 	 * @return \Ajax\php\ubiquity\JsUtils
 	 */
-	public static function diSemantic($controller, $options = [ "defer" => true,"gc" => true ]) {
+	public static function diSemantic($controller, $options = [ 'defer' => true,'gc' => true ]) {
 		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
 		$jquery->semantic ( new \Ajax\Semantic () );
 		$jquery->setAjaxLoader ( "<div class=\"ui active centered inline text loader\">Loading</div>" );
@@ -95,7 +104,7 @@ class Framework {
 	 * @param array $options
 	 * @return \Ajax\php\ubiquity\JsUtils
 	 */
-	public static function diBootstrap($controller, $options = [ "defer" => true,"gc" => true ]) {
+	public static function diBootstrap($controller, $options = [ 'defer' => true,'gc' => true ]) {
 		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
 		$jquery->bootstrap ( new \Ajax\Bootstrap () );
 		$jquery->setAjaxLoader ( "<div class=\"ui active centered inline text loader\">Loading</div>" );

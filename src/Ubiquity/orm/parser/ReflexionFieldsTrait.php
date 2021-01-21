@@ -2,32 +2,35 @@
 
 namespace Ubiquity\orm\parser;
 
-use mindplay\annotations\Annotations;
-
 trait ReflexionFieldsTrait {
 
 	abstract public static function getAnnotationMember($class, $member, $annotation);
+
+	abstract public static function getAnnotsEngine();
 
 	/**
 	 *
 	 * @param string $class
 	 * @param string $member
-	 * @return \Ubiquity\annotations\ColumnAnnotation|boolean
+	 * @return object|boolean
 	 */
 	protected static function getAnnotationColumnMember($class, $member) {
-		return self::getAnnotationMember ( $class, $member, "@column" );
+		if (($r = self::getAnnotationMember ( $class, $member, 'column' )) === false) {
+			$r = self::getAnnotationMember ( $class, $member, 'joinColumn' );
+		}
+		return $r;
 	}
 
 	public static function getDbType($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if (! $ret)
-			return false;
-		else
+		if (\is_object ( $ret ) && \property_exists ( $ret, 'dbType' )) {
 			return $ret->dbType;
+		}
+		return false;
 	}
 
 	public static function isSerializable($class, $member) {
-		if (self::getAnnotationMember ( $class, $member, "@transient" ) !== false || self::getAnnotationMember ( $class, $member, "@manyToOne" ) !== false || self::getAnnotationMember ( $class, $member, "@manyToMany" ) !== false || self::getAnnotationMember ( $class, $member, "@oneToMany" ) !== false)
+		if (self::getAnnotationMember ( $class, $member, 'transient' ) !== false || self::getAnnotationMember ( $class, $member, 'manyToOne' ) !== false || self::getAnnotationMember ( $class, $member, 'manyToMany' ) !== false || self::getAnnotationMember ( $class, $member, 'oneToMany' ) !== false)
 			return false;
 		else
 			return true;
@@ -35,19 +38,20 @@ trait ReflexionFieldsTrait {
 
 	public static function getFieldName($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if ($ret === false || ! isset ( $ret->name ))
+		if ($ret === false || ! isset ( $ret->name )) {
 			$ret = $member;
-		else
+		} else {
 			$ret = $ret->name;
+		}
 		return $ret;
 	}
 
 	public static function isNullable($class, $member) {
 		$ret = self::getAnnotationColumnMember ( $class, $member );
-		if (! $ret)
-			return false;
-		else
+		if (\is_object ( $ret ) && \property_exists ( $ret, 'nullable' )) {
 			return $ret->nullable;
+		}
+		return false;
 	}
 
 	public static function getProperties($class) {
@@ -65,15 +69,19 @@ trait ReflexionFieldsTrait {
 	}
 
 	public static function getPropertyType($class, $property) {
-		return self::getMetadata ( $class, $property, "@var", "type" );
+		if (($r = self::getMetadata ( $class, $property, 'var', 'type' )) === false) {
+			$reflect = new \ReflectionProperty ( $class, $property );
+			return $reflect->getType ();
+		}
+		return $r;
 	}
 
 	public static function getMetadata($class, $property, $type, $name) {
-		$a = Annotations::ofProperty ( $class, $property, $type );
-		if (! count ( $a )) {
+		$a = self::getAnnotsEngine ()->getAnnotsOfProperty ( $class, $property, $type );
+		if (! \count ( $a )) {
 			return false;
 		}
-		return trim ( $a [0]->$name, ";" );
+		return \trim ( $a [0]->$name, ';' );
 	}
 }
 

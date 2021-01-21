@@ -19,7 +19,7 @@ use Ubiquity\orm\OrmUtils;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.3
- * @property \Ubiquity\cache\system\AbstractDataCache $cache
+ * @staticvar \Ubiquity\cache\system\AbstractDataCache $cache
  */
 trait ModelsCacheTrait {
 
@@ -60,7 +60,7 @@ trait ModelsCacheTrait {
 				if (! $forChecking) {
 					self::createOrmModelCache ( $model );
 					$db = 'default';
-					$ret = Reflexion::getAnnotationClass ( $model, '@database' );
+					$ret = Reflexion::getAnnotationClass ( $model, 'database' );
 					if (\sizeof ( $ret ) > 0) {
 						$db = $ret [0]->name;
 						if (! isset ( $config ['database'] [$db] )) {
@@ -121,17 +121,19 @@ trait ModelsCacheTrait {
 	 * @return string[]
 	 */
 	public static function getModels(&$config, $silent = false, $databaseOffset = 'default') {
-		$result = [ ];
-		$files = self::getModelsFiles ( $config, $silent );
-		foreach ( $files as $file ) {
-			$className = ClassUtils::getClassFullNameFromFile ( $file );
-			$db = 'default';
-			$ret = Reflexion::getAnnotationClass ( $className, '@database' );
-			if (\sizeof ( $ret ) > 0) {
-				$db = $ret [0]->name;
-			}
-			if ($db === $databaseOffset) {
-				$result [] = $className;
+		$result = [];
+		$files = self::getModelsFiles($config, $silent);
+		foreach ($files as $file) {
+			$className = ClassUtils::getClassFullNameFromFile($file);
+			if (\class_exists($className, true)) {
+				$db = 'default';
+				$ret = Reflexion::getAnnotationClass($className, 'database');
+				if (\sizeof($ret) > 0) {
+					$db = $ret[0]->name;
+				}
+				if ($db === $databaseOffset) {
+					$result[] = $className;
+				}
 			}
 		}
 		return $result;

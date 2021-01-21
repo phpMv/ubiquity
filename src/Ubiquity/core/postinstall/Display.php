@@ -33,7 +33,7 @@ class Display {
 	}
 
 	public static function getPageInfos() {
-		return [ 'Controller' => Framework::getController (),'Action' => Framework::getAction (),'Route' => Framework::getUrl (),'Path' => '/','ActiveTheme' => ThemesManager::getActiveTheme () ?? 'none'];
+		return [ 'Controller' => Framework::getController (),'Action' => Framework::getAction (),'Route' => Framework::getUrl (),'Path' => '/','ActiveTheme' => ThemesManager::getActiveTheme () ?? 'none','Cache'=>Framework::getCacheSystem(),'Annotations'=>Framework::getAnnotationsEngine()];
 	}
 
 	public static function getDefaultPage() {

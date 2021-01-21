@@ -27,6 +27,53 @@ class Database extends AbstractDatabase {
 	public $quote;
 
 	/**
+	 *
+	 * @var \Ubiquity\db\providers\AbstractDbWrapper
+	 */
+	protected $wrapperObject;
+
+	/**
+	 * Constructor
+	 *
+	 * @param string $dbWrapperClass
+	 * @param string $dbName
+	 * @param string $serverName
+	 * @param string $port
+	 * @param string $user
+	 * @param string $password
+	 * @param array $options
+	 * @param boolean|string $cache
+	 * @param mixed $pool
+	 */
+	public function __construct($dbWrapperClass, $dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [ ], $cache = false, $pool = null) {
+		$this->setDbWrapperClass ( $dbWrapperClass, $dbType );
+		$this->dbName = $dbName;
+		$this->serverName = $serverName;
+		$this->port = $port;
+		$this->user = $user;
+		$this->password = $password;
+		$this->options = $options;
+		if ($cache !== false) {
+			if ($cache instanceof \Closure) {
+				$this->cache = $cache ();
+			} else {
+				if (\class_exists ( $cache )) {
+					$this->cache = new $cache ();
+				} else {
+					throw new CacheException ( $cache . " is not a valid value for database cache" );
+				}
+			}
+		}
+		if ($pool && (\method_exists ( $this->wrapperObject, 'pool' ))) {
+			$this->wrapperObject->setPool ( $pool );
+		}
+	}
+
+	private function setDbWrapperClass($dbWrapperClass, $dbType) {
+		$this->wrapperObject = new $dbWrapperClass ( $this->dbType = $dbType );
+	}
+
+	/**
 	 * Creates the Db instance and realize a safe connection.
 	 *
 	 * @throws DBException

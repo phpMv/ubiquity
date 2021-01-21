@@ -18,7 +18,7 @@ use Ubiquity\exceptions\RestException;
  */
 trait RestCacheTrait {
 
-	private static function initRestCache(&$config, $silent = false) {
+	protected  static function initRestCache(&$config, $silent = false) {
 		$restCache = [ ];
 		$files = self::getControllersFiles ( $config );
 		foreach ( $files as $file ) {

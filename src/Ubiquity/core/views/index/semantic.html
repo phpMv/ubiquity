@@ -40,10 +40,10 @@
 				{% set infos = infos|merge({'Template': _self}) %}
 				<div class="ui basic attached segment">
 					<div class="ui relaxed divided grid">
-						{% for index in [0,3] %}
+						{% for index in [0,4] %}
 						<div class="eight wide column">
 							<div class="ui relaxed divided list">
-								{% for key, value in infos |slice(index, 3)%}
+								{% for key, value in infos |slice(index, 4)%}
 								  <div class="item">
 								    <div class="content">
 								      <a class="header">{{key}}</a>

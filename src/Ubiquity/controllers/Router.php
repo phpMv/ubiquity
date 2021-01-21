@@ -15,7 +15,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.13
+ * @version 1.0.14
  *
  */
 class Router {
@@ -46,7 +46,7 @@ class Router {
 		$result = \preg_replace_callback ( '~\((.*?)\)~', function () use (&$params) {
 			return \array_shift ( $params );
 		}, $routePath );
-		if (\sizeof ( $params ) > 0) {
+		if (\count ( $params ) > 0) {
 			$result = \rtrim ( $result, '/' ) . '/' . \implode ( '/', $params );
 		}
 		return $result;
@@ -135,20 +135,17 @@ class Router {
 	 * @param array $parameters array of the route parameters. default : []
 	 * @param boolean $absolute
 	 */
-	public static function getRouteByName($name, $parameters = [ ], $absolute = true) {
+	public static function getRouteByName($name, $parameters = [], $absolute = true) {
 		foreach ( self::$routes as $routePath => $routeDetails ) {
 			if (self::checkRouteName ( $routeDetails, $name )) {
-				if (\sizeof ( $parameters ) > 0) {
+				if (\trim ( $routePath, '/' ) == '_default') {
+					return ($absolute)?'/':'';
+				}
+				if (\count ( $parameters ) > 0) {
 					$routePath = self::_getURL ( $routePath, $parameters );
 				}
-				if (trim ( $routePath, '/' ) == '_default') {
-					$routePath = "/";
-				}
-				if (! $absolute) {
-					return \ltrim ( $routePath, '/' );
-				} else {
-					return $routePath;
-				}
+				$routePath = \str_replace('//', '/',\preg_replace('~\((.*?)\)~', '', $routePath));
+				return ($absolute)?$routePath:\ltrim ( $routePath, '/' );
 			}
 		}
 		return false;
@@ -171,7 +168,7 @@ class Router {
 	 * @param boolean $absolute true if the path is absolute (/ at first)
 	 * @return boolean|string|array|mixed the generated path (/path/to/route)
 	 */
-	public static function path($name, $parameters = [ ], $absolute = false) {
+	public static function path($name, $parameters = [], $absolute = false) {
 		return self::getRouteByName ( $name, $parameters, $absolute );
 	}
 
@@ -182,7 +179,7 @@ class Router {
 	 * @param array $parameters default: []
 	 * @return string the generated url (http://myApp/path/to/route)
 	 */
-	public static function url($name, $parameters = [ ]): string {
+	public static function url($name, $parameters = []): string {
 		return URequest::getUrl ( self::getRouteByName ( $name, $parameters, false ) );
 	}
 

@@ -12,7 +12,7 @@ use Ubiquity\themes\ThemesManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.7
  *
  */
 abstract class Controller {
@@ -114,7 +114,7 @@ abstract class Controller {
 	 * To be override in sub classes
 	 */
 	public function onInvalidControl() {
-		if (! headers_sent ()) {
+		if (! \headers_sent ()) {
 			\header ( 'HTTP/1.1 401 Unauthorized', true, 401 );
 		}
 	}
@@ -129,8 +129,8 @@ abstract class Controller {
 	 * @param boolean $finalize If true, the controller's finalize method is called after $action
 	 * @throws \Exception
 	 */
-	public function forward($controller, $action = "index", $params = array (), $initialize = false, $finalize = false) {
-		$u = array ($controller,$action );
+	public function forward($controller, $action = 'index', $params = [], $initialize = false, $finalize = false) {
+		$u = [$controller,$action ];
 		if (\is_array ( $params )) {
 			$u = \array_merge ( $u, $params );
 		} else {

@@ -164,7 +164,7 @@ Then create a controller that inherits from ``SimpleViewController``, or ``Simpl
       
     namespace controllers;
     
-    use Ubiquiy\controllers\SimpleViewController;
+    use Ubiquity\controllers\SimpleViewController;
     
     class Users extends SimpleViewController{
     	...
@@ -226,6 +226,9 @@ CDN with extra parameters:
 
 Themes
 ======
+
+.. note::
+   The themes are totally useless if you only have one presentation to apply.
 
 Ubiquity support themes wich can have it's own assets and views according to theme template to be rendered by controller. 
 Each controller action can render a specific theme, or they can use the default theme configured at *config.php* file in ``templateEngineOptions => array("activeTheme" => "semantic")``.

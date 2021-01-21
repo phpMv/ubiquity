@@ -20,7 +20,7 @@ class AdminCest extends BaseAcceptance {
 	public function tryToGotoAdminIndex(AcceptanceTester $I) {
 		$I->amOnPage ( "/Admin/index" );
 		$I->seeInCurrentUrl ( "Admin/index" );
-		$I->see ( 'Used to perform CRUD operations on data', [ 'css' => 'body' ] );
+		// $I->waitForText ( 'Used to perform CRUD operations on data', [ 'css' => 'body' ] );
 	}
 
 	private function gotoAdminModule(string $url, AcceptanceTester $I) {
@@ -82,7 +82,7 @@ class AdminCest extends BaseAcceptance {
 		$this->gotoAdminModule ( "Admin/Rest", $I );
 		$I->canSee ( "Restfull web service", "body" );
 		$I->click ( "#bt-init-rest-cache" );
-		$I->waitForText ( "Rest service", self::TIMEOUT, "body" );
+		$I->waitForElementNotVisible ( '.ajax-loader', self::TIMEOUT );
 		// Add a new resource
 		$I->click ( "#bt-new-resource" );
 		$I->waitForText ( "Creating a new REST controller...", self::TIMEOUT, "body" );
@@ -123,8 +123,6 @@ class AdminCest extends BaseAcceptance {
 	public function tryGotoAdminThemes(AcceptanceTester $I) {
 		$this->gotoAdminModule ( "Admin/Themes", $I );
 		$I->canSee ( "Themes module", "body" );
-		$I->click ( '._saveConfig' );
-		$this->waitAndclick ( $I, "._setTheme[href='Admin/_setTheme/foundation']" );
 		$I->amOnPage ( "/" );
 		$I->canSee ( "foundation" );
 		$this->gotoAdminModule ( "Admin/Themes", $I );
@@ -153,18 +151,33 @@ class AdminCest extends BaseAcceptance {
 		$this->gotoAdminModule ( "Admin/Seo", $I );
 		$this->waitAndclick ( $I, "#seoCtrls-tr-controllersTestSEOController" );
 		$I->waitForText ( "Change Frequency", self::TIMEOUT, "body" );
+		$this->waitAndclick ( $I, "#displayAllRoutes label" );
+		$I->waitForElementVisible ( "#div-priority-1" );
+		$I->fillField ( "#priority-1", 1 );
+		$I->clickWithLeftButton ( "#dtSiteMap-input-1" );
+		$this->waitAndclick ( $I, "#ck-ck-dtSiteMap-1" );
+		$this->waitAndclick ( $I, "#saveUrls" );
+		$I->waitForText ( 'saved with 1 url' );
+		$this->waitAndclick ( $I, "#ck-ck-seoCtrls-controllersTestSEOController" );
+		$this->waitAndclick ( $I, "#generateRobots" );
+		$I->waitForText ( 'has been generated in' );
+
 		$I->amOnPage ( "/TestSEOController" );
 		$I->canSeeInSource ( "http://www.sitemaps.org/schemas/sitemap/0.9" );
 	}
 
 	// tests
-	/*
-	 * public function tryGotoAdminLogs(AcceptanceTester $I) {
-	 * $this->gotoAdminModule ( "Admin/Logs", $I );
-	 * $I->click ( "[data-url='deActivateLog']", "#menu-logs" );
-	 * $I->waitForElement ( "#bt-apply", self::TIMEOUT );
-	 * }
-	 */
+
+	  public function tryGotoAdminLogs(AcceptanceTester $I) {
+		  $this->gotoAdminModule ( "Admin/Logs", $I );
+		  $I->waitForElement ( "#bt-apply", self::TIMEOUT );
+		  $this->waitAndclick($I, '#ck-ck-reverse label');
+		  $I->waitForElementNotVisible(".ajax-loader");
+		  $this->waitAndclick($I, "[data-url='_deleteAllLogs']", "#menu-logs" );
+		  $I->waitForElementNotVisible(".ajax-loader");
+		  $this->waitAndclick($I, "[data-url='_deActivateLog']", "#menu-logs" );
+	  }
+
 
 	// tests
 	public function tryGotoAdminTranslate(AcceptanceTester $I) {

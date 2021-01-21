@@ -5,3 +5,4 @@ docs/_build
 composer.lock
 vendor/
 tests/fw/prj-test-admin/
+.idea/

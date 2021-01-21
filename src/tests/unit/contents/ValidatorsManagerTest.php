@@ -45,6 +45,7 @@ class ValidatorsManagerTest extends BaseTest {
 	private $validatorsManager;
 	protected $dbType;
 	protected $dbName;
+
 	/**
 	 *
 	 * @var Database
@@ -56,7 +57,7 @@ class ValidatorsManagerTest extends BaseTest {
 	 */
 	protected function _before() {
 		parent::_before ();
-		$db = DAO::getDbOffset ( $this->config );
+		$db = DAO::getDbOffset ( $this->config, $this->getDatabase () );
 		$this->dbType = $db ['type'];
 		$this->dbName = $db ['dbName'];
 		$this->database = new Database ( $db ['wrapper'] ?? PDOWrapper::class, $this->dbType, $this->dbName, $this->db_server );
@@ -135,11 +136,12 @@ class ValidatorsManagerTest extends BaseTest {
 		$this->config ["cache"] ["directory"] = "new-cache/";
 		$this->config ["mvcNS"] = [ "models" => "models","controllers" => "controllers","rest" => "" ];
 		Startup::setConfig ( $this->config );
+		CacheManager::start ( $this->config );
 		(new DbModelsCreator ())->create ( $this->config, false );
 		CacheManager::$cache = null;
 		CacheManager::start ( $this->config );
 
-		CacheManager::initModelsCache ( $this->config );
+		CacheManager::initModelsCache ( $this->oConfig );
 		ValidatorsManager::start ();
 		$groupes = DAO::getAll ( Groupe::class, '', false );
 		$result = ValidatorsManager::validateInstances ( $groupes );

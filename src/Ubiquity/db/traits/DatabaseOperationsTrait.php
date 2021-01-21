@@ -2,17 +2,17 @@
 
 namespace Ubiquity\db\traits;
 
-use Ubiquity\log\Logger;
 use Ubiquity\cache\database\DbCache;
-use Ubiquity\exceptions\CacheException;
 use Ubiquity\db\SqlUtils;
+use Ubiquity\exceptions\CacheException;
+use Ubiquity\log\Logger;
 
 /**
  * Ubiquity\db\traits$DatabaseOperationsTrait
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  * @property mixed $cache
  * @property array $options
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
@@ -49,14 +49,15 @@ trait DatabaseOperationsTrait {
 	 * @return array
 	 */
 	public function prepareAndExecute($tableName, $condition, $fields, $parameters = null, $useCache = false, $one = false) {
-		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
-		if ($cache) {
+		if ($cache = ($useCache !== false && (DbCache::$active || $useCache))) {
 			$result = $this->getCacheValue ( $tableName, $condition, $parameters, $cKey );
 		}
 		if ($result === false) {
 			$quote = SqlUtils::$quote;
-			$result = $this->wrapperObject->_optPrepareAndExecute ( "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}", $parameters, $one );
+			$sql = "SELECT {$fields} FROM {$quote}{$tableName}{$quote} {$condition}";
+			Logger::info ( 'Database', $sql, 'prepareAndExecute', $parameters );
+			$result = $this->wrapperObject->_optPrepareAndExecute ( $sql, $parameters, $one );
 			if ($cache) {
 				$this->cache->store ( $tableName, $cKey, $result );
 			}
@@ -71,7 +72,8 @@ trait DatabaseOperationsTrait {
 		}
 		try {
 			$result = $this->cache->fetch ( $tableName, $cKey );
-			Logger::info ( "Cache", "fetching cache for table {$tableName} with condition : {$condition}", "Database::prepareAndExecute", $parameters );
+
+			Logger::info ( 'Cache', "fetching cache for table {$tableName} with condition : {$condition}", 'Database::prepareAndExecute', $parameters );
 		} catch ( \Exception $e ) {
 			throw new CacheException ( "Cache is not created in Database constructor" );
 		}
@@ -79,7 +81,6 @@ trait DatabaseOperationsTrait {
 	}
 
 	public function _optExecuteAndFetch($statement, $tableName, $condition, $parameters = null, $useCache = false, $one = false) {
-		$cache = ((DbCache::$active && $useCache !== false) || (! DbCache::$active && $useCache === true));
 		$result = false;
 		if ($cache) {
 			$result = $this->getCacheValue ( $tableName, $condition, $parameters, $cKey );
@@ -90,6 +91,7 @@ trait DatabaseOperationsTrait {
 			} else {
 				$result = $this->wrapperObject->_optExecuteAndFetch ( $statement, $parameters );
 			}
+
 			if ($cache) {
 				$this->cache->store ( $tableName, $cKey, $result );
 			}
@@ -130,7 +132,7 @@ trait DatabaseOperationsTrait {
 	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = null) {
 		$statement = $this->wrapperObject->_getStatement ( $sql );
 		if ($statement->execute ( $parameters )) {
-			Logger::info ( "Database", $sql, "prepareAndFetchColumn", $parameters );
+			Logger::info ( 'Database', $sql, 'prepareAndFetchColumn', $parameters );
 			return $statement->fetchColumn ( $columnNumber );
 		}
 		return false;
@@ -178,7 +180,7 @@ trait DatabaseOperationsTrait {
 	/**
 	 * Prepares a statement for execution and returns a statement object
 	 *
-	 * @param String $sql
+	 * @param string $sql
 	 * @return object|boolean
 	 */
 	public function prepareStatement($sql) {
@@ -188,8 +190,8 @@ trait DatabaseOperationsTrait {
 	/**
 	 * Prepares and returns a statement for execution and gives it a name.
 	 *
-	 * @param $name
-	 * @param String $sql
+	 * @param string $name
+	 * @param string $sql
 	 * @return mixed
 	 */
 	public function prepareNamedStatement(string $name, string $sql) {
@@ -211,7 +213,7 @@ trait DatabaseOperationsTrait {
 	 * Sets $value to $parameter
 	 *
 	 * @param mixed $statement
-	 * @param String $parameter
+	 * @param string $parameter
 	 * @param mixed $value
 	 * @return boolean
 	 */
@@ -235,9 +237,10 @@ trait DatabaseOperationsTrait {
 	 * @param string $condition Part following the WHERE of an SQL statement
 	 */
 	public function count($tableName, $condition = '') {
-		if ($condition != '')
-			$condition = " WHERE " . $condition;
-		return $this->wrapperObject->queryColumn ( "SELECT COUNT(*) FROM " . $tableName . $condition );
+		if ($condition != '') {
+			$condition = ' WHERE ' . $condition;
+		}
+		return $this->wrapperObject->queryColumn ( 'SELECT COUNT(*) FROM ' . $tableName . $condition );
 	}
 
 	public function queryColumn($query, $columnNumber = null) {
@@ -246,5 +249,13 @@ trait DatabaseOperationsTrait {
 
 	public function fetchAll($query, $mode = null) {
 		return $this->wrapperObject->queryAll ( $query, $mode );
+	}
+
+	public function isConnected() {
+		return ($this->wrapperObject !== null && $this->ping ());
+	}
+
+	public function ping() {
+		return ($this->wrapperObject && $this->wrapperObject->ping ());
 	}
 }

@@ -26,6 +26,8 @@ class DAOTest extends BaseTest {
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
 		$this->dao->prepareGetById ( "orga", Organization::class );
+		$this->dao->prepareGetOne ( "oneOrga", Organization::class, 'id= ?' );
+		$this->dao->prepareGetAll ( "orgas", Organization::class );
 	}
 
 	/**
@@ -40,6 +42,15 @@ class DAOTest extends BaseTest {
 		$orga = $this->dao->executePrepared ( 'orga', 1 );
 		$this->assertInstanceOf ( Organization::class, $orga );
 		$this->assertEquals ( "Conservatoire National des Arts et Métiers:lecnam.net", $orga->fullname );
+
+		$orga = $this->dao->executePrepared ( 'oneOrga', [ 1 ] );
+		$this->assertInstanceOf ( Organization::class, $orga );
+		$this->assertEquals ( "Conservatoire National des Arts et Métiers", $orga->getName () );
+
+		$orgas = $this->dao->executePrepared ( 'orgas' );
+		$this->assertInstanceOf ( Organization::class, current ( $orgas ) );
+		$allOrgas = $this->dao->getAll ( Organization::class );
+		$this->assertEquals ( count ( $orgas ), count ( $allOrgas ) );
 	}
 
 	/**
@@ -49,6 +60,12 @@ class DAOTest extends BaseTest {
 		$user = $this->dao->getOne ( User::class, "email='benjamin.sherman@gmail.com'", false );
 		$orga = DAO::getManyToOne ( $user, 'organization' );
 		$this->assertInstanceOf ( Organization::class, $orga );
+	}
+
+	public function testExists() {
+		$this->assertTrue ( $this->dao->exists ( User::class, "email='benjamin.sherman@gmail.com'" ) );
+		$this->assertTrue ( $this->dao->exists ( User::class, "email=?", [ 'benjamin.sherman@gmail.com' ] ) );
+		$this->assertFalse ( $this->dao->exists ( User::class, "email=?", [ 'blop@gmail.com' ] ) );
 	}
 
 	/**
@@ -160,6 +177,12 @@ class DAOTest extends BaseTest {
 	public function testGetOne() {
 		$user = $this->dao->getOne ( User::class, 'firstname="Benjamin"' );
 		$this->assertInstanceOf ( User::class, $user );
+
+		$user = $this->dao->getOne ( User::class, 'firstname= ?', false, [ 'Benjamin' ] );
+		$this->assertInstanceOf ( User::class, $user );
+
+		$user = $this->dao->getOne ( User::class, [ 1 ] );
+		$this->assertInstanceOf ( User::class, $user );
 	}
 
 	/**
@@ -192,7 +215,7 @@ class DAOTest extends BaseTest {
 	 */
 	public function testUGetAllWithQuery() {
 		$users = DAO::uGetAll ( User::class, "groupes.name = ?", [ "groupes" ], [ "Etudiants" ] );
-		$this->assertEquals ( "jeremy.bryan", current ( $users ) . "" );
+		$this->assertEquals ( "jeremy.bryan", (\current ( $users ))->getEmail() . "" );
 		$this->assertEquals ( 8, sizeof ( $users ) . "" );
 	}
 
@@ -484,7 +507,7 @@ class DAOTest extends BaseTest {
 		$this->config = include ROOT . 'config/config.php';
 		Startup::$config = $this->config;
 		$dbs = $this->dao->getDatabases ();
-		$this->assertEquals ( 2, sizeof ( $dbs ) );
+		$this->assertEquals ( 3, sizeof ( $dbs ) );
 	}
 }
 

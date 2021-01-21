@@ -12,7 +12,7 @@ use Ubiquity\utils\http\UCookie;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2-beta
+ * @version 1.0.3-beta
  *
  */
 class MultisiteSession extends AbstractSession {
@@ -96,7 +96,7 @@ class MultisiteSession extends AbstractSession {
 	}
 
 	public function visitorCount(): int {
-		\count ( \scandir ( $this->folder . $this->id . \DS ) );
+		return \count ( \scandir ( $this->folder . $this->id . \DS ) );
 	}
 }
 

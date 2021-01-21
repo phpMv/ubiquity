@@ -3,13 +3,13 @@
 {% block buttons %}
 	<div id="buttons" style="padding: 10px 0px 10px;">
 	{% block btClose %}
-		<a class="ui _close button"><i class="ui close icon"></i>Close</a>
+		<a class="ui _close {{inverted}} button"><i class="ui close icon"></i>Close</a>
 	{% endblock %}
 	{% block btDelete %}
-		<a class="ui _delete _element basic negative button" data-ajax="{{pk}}"><i class="ui close icon"></i>Delete <b>{{ instance | raw }}</b>...</a>
+		<a class="ui _delete _element basic negative {{inverted}} button" data-ajax="{{pk}}"><i class="ui close icon"></i>Delete <b>{{ instance | raw }}</b>...</a>
 	{% endblock %}
 	{% block btEdit %}
-		<a class="ui _edit _element basic button" data-ajax="{{pk}}"><i class="ui edit icon"></i>Edit <b>{{ instance | raw }}</b>...</a>
+		<a class="ui _edit _element basic {{inverted}} button" data-ajax="{{pk}}"><i class="ui edit icon"></i>Edit <b>{{ instance | raw }}</b>...</a>
 	{% endblock %}
 	</div>
 {% endblock %}

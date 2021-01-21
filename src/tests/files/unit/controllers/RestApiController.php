@@ -34,5 +34,18 @@ class RestApiController extends RestController {
 		$datas = NormalizersManager::normalizeArray_ ( $orgas );
 		echo $this->_getResponseFormatter ()->toJson ( $datas );
 	}
+
+	public function testNormalizationDatas() {
+		$orgas = DAO::getAll ( Organization::class, '', [ 'users' ] );
+		$datas = NormalizersManager::normalizeArray ( $orgas, new OrgaNormalizer () );
+		echo $this->_getResponseFormatter ()->toJson ( $datas );
+	}
+
+	public function testNormalizationData() {
+		$orga = DAO::getOne ( Organization::class, 'name= ?', true, [ 'Conservatoire National des Arts et métiers' ] );
+		NormalizersManager::registerClasses ( [ User::class => UserNormalizer::class,Organization::class => OrgaNormalizer::class ] );
+		$datas = NormalizersManager::normalize_ ( $orga );
+		echo $this->_getResponseFormatter ()->toJson ( $datas );
+	}
 }
 
