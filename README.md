@@ -81,7 +81,7 @@ Ubiquity is very fast and performs well.
 The various results of the [Techempower benchmarks](https://www.techempower.com/benchmarks) show this conclusively.
 
 #### TechEmpower Multiple queries test (*) (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=301db83d-878d-433d-ae5e-1a25013e0b3c&hw=ph&test=query&l=zg24n3-v&c=4&a=2&o=c))
-![TechEmpower benchmarks Multiple queries](https://static.kobject.net/ubiquity/images/techempower-1-190920.png "PHP Frameworks")
+![TechEmpower benchmarks Multiple queries](https://static.kobject.net/ubiquity/images/techempower-1.png "PHP Frameworks")
 
 These excellent results have also been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
 
