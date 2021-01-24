@@ -78,24 +78,50 @@ Composite primary key
 ^^^^^^^^^^^^^^^^^^^^^
 Either the `ProductDetail` model corresponding to a product ordered on a command and whose primary key is composite:
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/ProductDetail.php
-   
-    namespace models;
-    class ProductDetail{
-    	/**
-    	 * @id
-    	*/
-    	private $idProduct;
+.. tabs::
 
-    	/**
-    	 * @id
-    	*/
-    	private $idCommand;
-    
-    	...
-    }
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/ProductDetail.php
+
+          namespace models;
+
+         use Ubiquity\attributes\items\Id;
+
+          class ProductDetail{
+
+            #[Id]
+            private $idProduct;
+
+            #[Id]
+            private $idCommand;
+
+            ...
+          }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/ProductDetail.php
+
+          namespace models;
+
+          class ProductDetail{
+            /**
+             * @id
+             */
+            private $idProduct;
+
+            /**
+             * @id
+             */
+            private $idCommand;
+
+            ...
+          }
 
 The second parameter `$keyValues` can be an array if the primary key is composite:
 
@@ -130,7 +156,7 @@ Loading instances of the `User` class with its category and its groups :
         echo "<h3>Groups</h3>";
         echo "<ul>";
         foreach($user->getGroupes() as $groupe){
-        	echo "<li>".$groupe->getName()."</li>";
+            echo "<li>".$groupe->getName()."</li>";
         }
         echo "</ul>";
     }
@@ -147,8 +173,8 @@ Loading instances of the `User` class with its category, its groups and the orga
         echo "<h3>Groups</h3>";
         echo "<ul>";
         foreach($user->getGroupes() as $groupe){
-        	echo "<li>".$groupe->getName()."<br>";
-        	echo "<li>".$groupe->getOrganization()->getName()."</li>";
+            echo "<li>".$groupe->getName()."<br>";
+            echo "<li>".$groupe->getOrganization()->getName()."</li>";
         }
         echo "</ul>";
     }
@@ -265,7 +291,7 @@ Adding an organization:
     $orga->setName('Foo');
     $orga->setDomain('foo.net');
     if(DAO::save($orga)){
-    	echo $orga.' added in database';
+      echo $orga.' added in database';
     }
 
 Adding an instance of User, in an organization:
@@ -279,7 +305,7 @@ Adding an instance of User, in an organization:
     $user->setEmail('doe@bar.net');
     $user->setOrganization($orga);
     if(DAO::save($user)){
-    	echo $user.' added in database in '.$orga;
+      echo $user.' added in database in '.$orga;
     }
 
 Updating an instance
@@ -292,7 +318,7 @@ First, the instance must be loaded:
     $orga=DAO::getOne(Organization::class,'domain= ?',false,['foo.net']);
     $orga->setAliases('foo.org');
     if(DAO::save($orga)){
-    	echo $orga.' updated in database';
+      echo $orga.' updated in database';
     }
 
 Deleting an instance
@@ -304,7 +330,7 @@ If the instance is loaded from database:
     
     $orga=DAO::getById(Organization::class,5,false);
     if(DAO::remove($orga)){
-    	echo $orga.' deleted from database';
+      echo $orga.' deleted from database';
     }
 
 If the instance is not loaded, it is more appropriate to use the `delete` method:
@@ -312,7 +338,7 @@ If the instance is not loaded, it is more appropriate to use the `delete` method
 .. code-block:: php
     
     if(DAO::delete(Organization::class,5)){
-    	echo 'Organization deleted from database';
+      echo 'Organization deleted from database';
     }
 
 Deleting multiple instances
@@ -353,11 +379,11 @@ Updates example:
 .. code-block:: php
    
    $users = DAO::getAll(User::class, 'name like ?', false, [
-   	'Martin%'
+      'Martin%'
    ]);
    foreach ($users as $user) {
-   	$user->setName(\strtoupper($user->getName()));
-   	DAO::toUpdate($user);
+      $user->setName(\strtoupper($user->getName()));
+      DAO::toUpdate($user);
    }
    DAO::flushUpdates();
 
@@ -386,18 +412,18 @@ All DAO operations can be inserted into a transaction, so that a series of chang
 .. code-block:: php
       
    try{
-    	DAO::beginTransaction();
-    	$orga=new Organization();
-    	$orga->setName('Foo');
-    	DAO::save($orga);
+      DAO::beginTransaction();
+      $orga=new Organization();
+      $orga->setName('Foo');
+      DAO::save($orga);
    
-    	$user=new User();
-    	$user->setFirstname('DOE');
-    	$user->setOrganization($orga);
-    	DAO::save($user);
-    	DAO::commit();
+      $user=new User();
+      $user->setFirstname('DOE');
+      $user->setOrganization($orga);
+      DAO::save($user);
+      DAO::commit();
    }catch (\Exception $e){
-	        DAO::rollBack();
+      DAO::rollBack();
    }
 
 In case of multiple databases defined in the configuration, transaction-related methods can take the database offset defined in parameter.
@@ -435,14 +461,14 @@ Models must in this case declare public members only, and not respect the usual 
    
     namespace models;
     class Product{
-    	/**
-    	 * @id
-    	*/
-    	public $id;
+      /**
+       * @id
+       */
+      public $id;
 
-    	public $name;
+      public $name;
     
-    	...
+      ...
     }
 
 The **SDAO** class inherits from **DAO** and has the same methods for performing CRUD operations.
@@ -469,9 +495,9 @@ Preparation
    :caption: app/config/swooleServices.php
    
    $swooleServer->on('workerStart', function ($srv) use (&$config) {
-   	\Ubiquity\orm\DAO::startDatabase($config);
-   	\Ubiquity\orm\DAO::prepareGetById('user', User::class);
-   	\Ubiquity\orm\DAO::prepareGetAll('productsByName', Product::class,'name like ?');
+      \Ubiquity\orm\DAO::startDatabase($config);
+      \Ubiquity\orm\DAO::prepareGetById('user', User::class);
+      \Ubiquity\orm\DAO::prepareGetAll('productsByName', Product::class,'name like ?');
    });
 
 Usage
@@ -481,11 +507,11 @@ Usage
    :caption: app/controllers/UsersController.php
    
    public function displayUser($idUser){
-   	$user=DAO::executePrepared('user',[1]);
-   	echo $user->getName();
+      $user=DAO::executePrepared('user',[1]);
+      echo $user->getName();
    }
    
    public function displayProducts($name){
-   	$products=DAO::executePrepared('productsByName',[$name]);
-   	...
+      $products=DAO::executePrepared('productsByName',[$name]);
+      ...
    }
