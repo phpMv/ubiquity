@@ -247,13 +247,6 @@ A **user** belongs to an **organization**:
             }
          }
 
-
-         The **JoinColumn** attribute specifies that:
-
-         - The member **$organization** is an instance of **models\Organization**
-         - The table **user** has a foreign key **idOrganization** refering to organization primary key
-         - This foreign key is not null => a user will always have an organization
-
    .. tab:: Annotations
 
       .. code-block:: php
@@ -287,11 +280,11 @@ A **user** belongs to an **organization**:
          }
 
 
-         The **@joinColumn** annotation specifies that:
+The **@joinColumn** annotation or the **JoinColumn** attribute specifies that:
 
-         - The member **$organization** is an instance of **models\Organization**
-         - The table **user** has a foreign key **idOrganization** refering to organization primary key
-         - This foreign key is not null => a user will always have an organization
+- The member **$organization** is an instance of **models\Organization**
+- The table **user** has a foreign key **idOrganization** refering to organization primary key
+- This foreign key is not null => a user will always have an organization
 
 OneToMany
 +++++++++
@@ -300,26 +293,53 @@ An **organization** has many **users**:
 .. image:: /_static/images/model/oneToMany.png
    :class: bordered
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/Organization.php
-   :emphasize-lines: 11-13
-   
-	namespace models;
-	
-	class Organization{
-		/**
-		 * @id
-		**/
-		private $id;
-	
-		private $name;
-	
-		/**
-		 * @oneToMany("mappedBy"=>"organization","className"=>"models\\User")
-		**/
-		private $users;
-	}
+.. tabs::
+
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Organization.php
+         :emphasize-lines: 13
+
+         namespace models;
+
+         use Ubiquity\attributes\items\OneToMany;
+         use Ubiquity\attributes\items\Id;
+
+         class Organization{
+
+            #[Id]
+            private $id;
+
+            private $name;
+
+            #[OneToMany(mappedBy: 'organization', className: \models\User::class)]
+            private $users;
+         }
+
+   .. tab:: Annotation
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Organization.php
+         :emphasize-lines: 11-13
+
+         namespace models;
+
+         class Organization{
+            /**
+             * @id
+             */
+            private $id;
+
+            private $name;
+
+            /**
+             * @oneToMany("mappedBy"=>"organization","className"=>"models\\User")
+             */
+            private $users;
+         }
 
 In this case, the association is bi-directional. |br|
 The **@oneToMany** annotation must just specify:
@@ -335,80 +355,172 @@ ManyToMany
 .. image:: /_static/images/model/manyToMany.png
    :class: bordered
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/User.php
-   :emphasize-lines: 11-13
-   
-    namespace models;
-    
-    class User{
-    	/**
-    	 * @id
-    	**/
-    	private $id;
-    
-    	private $firstname;
+.. tabs::
 
-		/**
-		 * @manyToMany("targetEntity"=>"models\\Group","inversedBy"=>"users")
-		 * @joinTable("name"=>"groupusers")
-		**/
-		private $groups;
+   .. tab:: Attributes
 
-    }
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 14-15
+
+         namespace models;
+
+         use Ubiquity\attributes\items\ManyToMany;
+         use Ubiquity\attributes\items\Id;
+         use Ubiquity\attributes\items\JoinTable;
+
+         class User{
+
+            #[Id]
+            private $id;
+
+            private $firstname;
+
+            #[ManyToMany(targetEntity: \models\Group::class, inversedBy: 'users')]
+            #[JoinTable(name: 'groupusers')]
+            private $groups;
+
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 11-13
+
+         namespace models;
+
+         class User{
+            /**
+             * @id
+             */
+            private $id;
+
+            private $firstname;
+
+            /**
+             * @manyToMany("targetEntity"=>"models\\Group","inversedBy"=>"users")
+             * @joinTable("name"=>"groupusers")
+             */
+            private $groups;
+
+         }
 
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/Group.php
-   :emphasize-lines: 11-13
-   
-    namespace models;
-    
-    class Group{
-    	/**
-    	 * @id
-    	**/
-    	private $id;
-    
-    	private $name;
+.. tabs::
 
-		/**
-		 * @manyToMany("targetEntity"=>"models\\User","inversedBy"=>"groups")
-		 * @joinTable("name"=>"groupusers")
-		**/
-		private $users;
+   .. tab:: Attributes
 
-    }
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Group.php
+         :emphasize-lines: 14-15
+
+         namespace models;
+
+         use Ubiquity\attributes\items\ManyToMany;
+         use Ubiquity\attributes\items\Id;
+         use Ubiquity\attributes\items\JoinTable;
+
+         class Group{
+
+            #[Id]
+            private $id;
+
+            private $name;
+
+            #[ManyToMany(targetEntity: \models\User::class, inversedBy: 'groups')]
+            #[JoinTable(name: 'groupusers')]
+            private $users;
+
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Group.php
+         :emphasize-lines: 11-13
+
+         namespace models;
+
+         class Group{
+            /**
+             * @id
+             */
+            private $id;
+
+            private $name;
+
+            /**
+             * @manyToMany("targetEntity"=>"models\\User","inversedBy"=>"groups")
+             * @joinTable("name"=>"groupusers")
+             */
+            private $users;
+
+         }
 
 If the naming conventions are not respected for foreign keys, |br|
 it is possible to specify the related fields.
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/Group.php
-   :emphasize-lines: 11-16
-   
-    namespace models;
-    
-    class Group{
-    	/**
-    	 * @id
-    	**/
-    	private $id;
-    
-    	private $name;
+.. tabs::
 
-    	/**
-    	 * @manyToMany("targetEntity"=>"models\\User","inversedBy"=>"groupes")
-    	 * @joinTable("name"=>"groupeusers",
-    	 * "joinColumns"=>["name"=>"id_groupe","referencedColumnName"=>"id"],
-    	 * "inverseJoinColumns"=>["name"=>"id_user","referencedColumnName"=>"id"])
-    	**/
-    	private $users;
+   .. tab:: Attributes
 
-    }
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Group.php
+         :emphasize-lines: 14-17
+
+         namespace models;
+
+         use Ubiquity\attributes\items\ManyToMany;
+         use Ubiquity\attributes\items\Id;
+         use Ubiquity\attributes\items\JoinTable;
+
+         class Group{
+
+            #[Id]
+            private $id;
+
+            private $name;
+
+            #[ManyToMany(targetEntity: \models\User::class, inversedBy: 'groupes')]
+            #[JoinTable(name: 'groupeusers',
+            joinColumns: ['name'=>'id_groupe','referencedColumnName'=>'id'],
+            inverseJoinColumns: ['name'=>'id_user','referencedColumnName'=>'id'])]
+            private $users;
+
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Group.php
+         :emphasize-lines: 12-15
+
+         namespace models;
+
+         class Group{
+            /**
+             * @id
+             */
+            private $id;
+
+            private $name;
+
+            /**
+             * @manyToMany("targetEntity"=>"models\\User","inversedBy"=>"groupes")
+             * @joinTable("name"=>"groupeusers",
+             * "joinColumns"=>["name"=>"id_groupe","referencedColumnName"=>"id"],
+             * "inverseJoinColumns"=>["name"=>"id_user","referencedColumnName"=>"id"])
+             */
+            private $users;
+
+         }
 
 ORM Annotations
 ---------------
@@ -429,7 +541,7 @@ Annotations for members
 +=============+==============================================+==============+===================================+
 | @id         | Defines the primary key(s).                                                                     |
 +-------------+----------------------------------------------+--------------+-----------------------------------+
-| @column     | Specify the associated field caracteristics. | name         | Name of the associated field      |
+| @column     | Specify the associated field characteristics.| name         | Name of the associated field      |
 +             +                                              +--------------+-----------------------------------+
 |             |                                              | nullable     | true if value can be null         |
 +             |                                              +--------------+-----------------------------------+
