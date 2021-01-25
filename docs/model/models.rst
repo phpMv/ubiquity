@@ -5,7 +5,7 @@ ORM
 
 A model class is just a plain old php object without inheritance. |br|
 Models are located by default in the **app\\models** folder. |br|
-Object Relational Mapping (ORM) relies on member annotations in the model class.
+Object Relational Mapping (ORM) relies on member annotations or attributes (since PHP8) in the model class.
 
 Models definition
 -----------------
@@ -15,91 +15,186 @@ A basic model
 - Serialized members must have getters and setters
 - Without any other annotation, a class corresponds to a table with the same name in the database, each member corresponds to a field of this table
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/User.php
-   
-    namespace models;
-    class User{
-    	/**
-    	 * @id
-    	**/
-    	private $id;
-    
-    	private $firstname;
-    
-    	public function getFirstname(){
-    		return $this->firstname;
-    	}
-    	public function setFirstname($firstname){
-    		$this->firstname=$firstname;
-    	}
-    }
+.. tabs::
 
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+
+         namespace models;
+
+         use Ubiquity\attributes\items\Id;
+
+         class User{
+
+            #[Id]
+            private $id;
+
+            private $firstname;
+
+            public function getFirstname(){
+               return $this->firstname;
+            }
+            public function setFirstname($firstname){
+               $this->firstname=$firstname;
+            }
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+
+          namespace models;
+
+          class User{
+            /**
+             * @id
+             */
+            private $id;
+
+            private $firstname;
+
+            public function getFirstname(){
+               return $this->firstname;
+            }
+            public function setFirstname($firstname){
+               $this->firstname=$firstname;
+            }
+          }
 Mapping
 ^^^^^^^
 Table->Class
 ++++++++++++
 If the name of the table is different from the name of the class, the annotation **@table** allows to specify the name of the table.
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/User.php
-   :emphasize-lines: 3-5
-   
-    namespace models;
-    
-    /**
-    * @table("name"=>"user")
-    **/
-    class User{
-    	/**
-    	 * @id
-    	**/
-    	private $id;
-    
-    	private $firstname;
-    
-    	public function getFirstname(){
-    		return $this->firstname;
-    	}
-    	public function setFirstname($firstname){
-    		$this->firstname=$firstname;
-    	}
-    }
+.. tabs::
+
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 6
+
+         namespace models;
+
+         use Ubiquity\attributes\items\Table;
+         use Ubiquity\attributes\items\Id;
+
+         #[Table('user')]
+         class User{
+
+            #[Id]
+            private $id;
+
+            private $firstname;
+
+            public function getFirstname(){
+               return $this->firstname;
+            }
+            public function setFirstname($firstname){
+               $this->firstname=$firstname;
+            }
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 3-5
+
+         namespace models;
+
+         /**
+          * @table("name"=>"user")
+          */
+         class User{
+            /**
+             * @id
+             */
+            private $id;
+
+            private $firstname;
+
+            public function getFirstname(){
+               return $this->firstname;
+            }
+            public function setFirstname($firstname){
+               $this->firstname=$firstname;
+            }
+         }
 
 Field->Member
 +++++++++++++
 If the name of a field is different from the name of a member in the class, the annotation **@column** allows to specify a different field name.
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/User.php
-   :emphasize-lines: 12-14
-   
-    namespace models;
-    
-    /**
-    * @table("user")
-    **/
-    class User{
-    	/**
-    	 * @id
-    	**/
-    	private $id;
-    
-    	/**
-    	* column("user_name")
-    	**/
-    	private $firstname;
-    
-    	public function getFirstname(){
-    		return $this->firstname;
-    	}
-    	public function setFirstname($firstname){
-    		$this->firstname=$firstname;
-    	}
-    }
+.. tabs::
+
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 13
+
+         namespace models;
+
+         use Ubiquity\attributes\items\Table;
+         use Ubiquity\attributes\items\Id;
+         use Ubiquity\attributes\items\Column;
+
+         #[Table('user')
+         class User{
+
+            #[Id]
+            private $id;
+
+            #[Column('column_name')]
+            private $firstname;
+
+            public function getFirstname(){
+               return $this->firstname;
+            }
+            public function setFirstname($firstname){
+               $this->firstname=$firstname;
+            }
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 12-14
+
+         namespace models;
+
+         /**
+          * @table("user")
+          */
+         class User{
+            /**
+             * @id
+             */
+            private $id;
+
+            /**
+             * column("user_name")
+             */
+            private $firstname;
+
+            public function getFirstname(){
+               return $this->firstname;
+            }
+            public function setFirstname($firstname){
+               $this->firstname=$firstname;
+            }
+         }
 
 Associations
 ^^^^^^^^^^^^
@@ -117,41 +212,86 @@ A **user** belongs to an **organization**:
 .. image:: /_static/images/model/manyToOne.png
    :class: bordered
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/User.php
-   :emphasize-lines: 11-13
-   
-    namespace models;
-    
-    class User{
-    	/**
-    	 * @id
-    	**/
-    	private $id;
-    
-    	private $firstname;
+.. tabs::
 
-		/**
-		 * @manyToOne
-		 * @joinColumn("className"=>"models\\Organization","name"=>"idOrganization","nullable"=>false)
-		**/
-		private $organization;
-	    
-		public function getOrganization(){
-			return $this->organization;
-		}
-	
-		 public function setOrganization($organization){
-			$this->organization=$organization;
-		}
-    }
+   .. tab:: Attributes
 
-The **@joinColumn** annotation specifies that:
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 14-15
 
-- The member **$organization** is an instance of **models\Organization**
-- The table **user** has a foreign key **idOrganization** refering to organization primary key
-- This foreign key is not null => a user will always have an organization 
+          namespace models;
+
+         use Ubiquity\attributes\items\ManyToOne;
+         use Ubiquity\attributes\items\Id;
+         use Ubiquity\attributes\items\JoinColumn;
+
+          class User{
+
+            #[Id]
+            private $id;
+
+            private $firstname;
+
+            #[ManyToOne]
+            #[JoinColumn(className: \models\Organization::class, name: 'idOrganization', nullable: false)]
+            private $organization;
+
+            public function getOrganization(){
+               return $this->organization;
+            }
+
+            public function setOrganization($organization){
+               $this->organization=$organization;
+            }
+         }
+
+
+         The **JoinColumn** attribute specifies that:
+
+         - The member **$organization** is an instance of **models\Organization**
+         - The table **user** has a foreign key **idOrganization** refering to organization primary key
+         - This foreign key is not null => a user will always have an organization
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 12-13
+
+          namespace models;
+
+          class User{
+            /**
+             * @id
+             */
+            private $id;
+
+            private $firstname;
+
+            /**
+             * @manyToOne
+             * @joinColumn("className"=>"models\\Organization","name"=>"idOrganization","nullable"=>false)
+             */
+            private $organization;
+
+            public function getOrganization(){
+               return $this->organization;
+            }
+
+            public function setOrganization($organization){
+               $this->organization=$organization;
+            }
+         }
+
+
+         The **@joinColumn** annotation specifies that:
+
+         - The member **$organization** is an instance of **models\Organization**
+         - The table **user** has a foreign key **idOrganization** refering to organization primary key
+         - This foreign key is not null => a user will always have an organization
 
 OneToMany
 +++++++++
