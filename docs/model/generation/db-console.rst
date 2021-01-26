@@ -102,68 +102,129 @@ Generated classes are located in **app/models** folder, if the configuration of 
 
 The **User** class:
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/User.php
-   
-   namespace models;
-	class User{
-		/**
-		 * @id
-		 * @column("name"=>"id","nullable"=>false,"dbType"=>"int(11)")
-		 * @validator("id","constraints"=>array("autoinc"=>true))
-		**/
-		private $id;
-	
-		/**
-		 * @column("name"=>"firstname","nullable"=>false,"dbType"=>"varchar(65)")
-		 * @validator("length","constraints"=>array("max"=>65,"notNull"=>true))
-		**/
-		private $firstname;
-	
-		/**
-		 * @column("name"=>"lastname","nullable"=>false,"dbType"=>"varchar(65)")
-		 * @validator("length","constraints"=>array("max"=>65,"notNull"=>true))
-		**/
-		private $lastname;
-	
-		/**
-		 * @column("name"=>"email","nullable"=>false,"dbType"=>"varchar(255)")
-		 * @validator("email","constraints"=>array("notNull"=>true))
-		 * @validator("length","constraints"=>array("max"=>255))
-		**/
-		private $email;
-	
-		/**
-		 * @column("name"=>"password","nullable"=>true,"dbType"=>"varchar(255)")
-		 * @validator("length","constraints"=>array("max"=>255))
-		**/
-		private $password;
-	
-		/**
-		 * @column("name"=>"suspended","nullable"=>true,"dbType"=>"tinyint(1)")
-		 * @validator("isBool")
-		**/
-		private $suspended;
-	
-		/**
-		 * @manyToOne
-		 * @joinColumn("className"=>"models\\Organization","name"=>"idOrganization","nullable"=>false)
-		**/
-		private $organization;
-	
-		/**
-		 * @oneToMany("mappedBy"=>"user","className"=>"models\\Connection")
-		**/
-		private $connections;
-	
-		/**
-		 * @manyToMany("targetEntity"=>"models\\Groupe","inversedBy"=>"users")
-		 * @joinTable("name"=>"groupeusers")
-		**/
-		private $groupes;
-	}
+.. tabs::
 
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+
+         namespace models;
+
+         use Ubiquity\attributes\items\Id;
+         use Ubiquity\attributes\items\Column;
+         use Ubiquity\attributes\items\Validator;
+         use Ubiquity\attributes\items\ManyToOne;
+         use Ubiquity\attributes\items\JoinColumn;
+         use Ubiquity\attributes\items\OneToMany;
+         use Ubiquity\attributes\items\ManyToMany;
+         use Ubiquity\attributes\items\JoinTable;
+
+         class User{
+
+            #[Id]
+            #[Column(name: 'id', nullable: false, dbType: 'int(11)')]
+            #[Validator('id', constraints: ['autoinc'=>true])]
+            private $id;
+
+            #[Column(name: 'firstname, nullable: false, dbType: 'varchar(65)')]
+            #[Validator('length', constraints: ['max'=>65, 'notNull'=>true])]
+            private $firstname;
+
+            #[Column(name: 'lastname, nullable: false, dbType: 'varchar(65)')]
+            #[Validator('length', constraints: ['max'=>65, 'notNull'=>true])]
+            private $lastname;
+
+            #[Column(name: 'email', nullable: false, dbType: 'varchar(255)')]
+            #[Validator('email', constraints: ['notNull'=>true])]
+            #[Validator('length', constraints: ['max'=>255])]
+            private $email;
+
+            #[Column(name: 'password', nullable: true, dbType: 'varchar(255)')]
+            #[Validator('length', constraints: ['max'=>255])]
+            private $password;
+
+            #[Column(name: 'suspended', nullable: true, dbType: 'tinyint(1)')]
+            #[Validator('isBool')]
+            private $suspended;
+
+            #[ManyToOne]
+            #[JoinColumn(className: 'models\\Organization', name: 'idOrganization', nullable: false)]
+            private $organization;
+
+            #[OneToMany(mappedBy: 'user', className: "models\\Connection")]
+            private $connections;
+
+            #[ManyToMany(targetEntity: 'models\\Groupe', inversedBy: 'users')]
+            #[JoinTable(name: 'groupeusers')]
+            private $groupes;
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+
+         namespace models;
+
+         class User{
+            /**
+             * @id
+             * @column("name"=>"id","nullable"=>false,"dbType"=>"int(11)")
+             * @validator("id","constraints"=>array("autoinc"=>true))
+             */
+            private $id;
+
+            /**
+             * @column("name"=>"firstname","nullable"=>false,"dbType"=>"varchar(65)")
+             * @validator("length","constraints"=>array("max"=>65,"notNull"=>true))
+             */
+            private $firstname;
+
+            /**
+             * @column("name"=>"lastname","nullable"=>false,"dbType"=>"varchar(65)")
+             * @validator("length","constraints"=>array("max"=>65,"notNull"=>true))
+             */
+            private $lastname;
+
+            /**
+             * @column("name"=>"email","nullable"=>false,"dbType"=>"varchar(255)")
+             * @validator("email","constraints"=>array("notNull"=>true))
+             * @validator("length","constraints"=>array("max"=>255))
+             */
+            private $email;
+
+            /**
+             * @column("name"=>"password","nullable"=>true,"dbType"=>"varchar(255)")
+             * @validator("length","constraints"=>array("max"=>255))
+             */
+            private $password;
+
+            /**
+             * @column("name"=>"suspended","nullable"=>true,"dbType"=>"tinyint(1)")
+             * @validator("isBool")
+             */
+            private $suspended;
+
+            /**
+             * @manyToOne
+             * @joinColumn("className"=>"models\\Organization","name"=>"idOrganization","nullable"=>false)
+             */
+            private $organization;
+
+            /**
+             * @oneToMany("mappedBy"=>"user","className"=>"models\\Connection")
+             */
+            private $connections;
+
+            /**
+             * @manyToMany("targetEntity"=>"models\\Groupe","inversedBy"=>"users")
+             * @joinTable("name"=>"groupeusers")
+             */
+            private $groupes;
+         }
 
 .. important::
 

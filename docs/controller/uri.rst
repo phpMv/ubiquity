@@ -61,7 +61,7 @@ If a parameter is not present in the URL, the default value of the parameter is 
    :caption: app/controllers/Products.php
    
    class Products extends ControllerBase{
-       public function sort($field,$order="ASC"){} 
+       public function sort($field, $order='ASC'){}
    }
 
 **Valid Urls :**

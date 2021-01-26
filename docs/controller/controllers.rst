@@ -24,14 +24,15 @@ The ``Products.php`` controller is created in the ``app/controllers`` folder of 
    :caption: app/controllers/Products.php
    
    namespace controllers;
-    /**
+   /**
     * Controller Products
-    **/
+    */
    class Products extends ControllerBase{
-   
-   	public function index(){}
-   
+
+   public function index(){}
+
    }
+
 It is now possible to access URLs (the ``index`` method is solicited by default):
 ::
     example.com/Products
@@ -57,11 +58,11 @@ The “index” method is always loaded by default if the second segment of the 
    
    namespace controllers;
    class First extends ControllerBase{
-   
-   	public function hello(){
-   		echo "Hello world!";
-   	}
-   
+
+      public function hello(){
+         echo "Hello world!";
+      }
+
    }
 
 The ``hello`` method of the ``First`` controller makes the following URL available:
@@ -78,9 +79,9 @@ the arguments of a method must be passed in the url, except if they are optional
    namespace controllers;
    class First extends ControllerBase{
    
-   	public function says($what,$who="world"){
-   		echo $what." ".$who;
-   	}
+   public function says($what,$who='world') {
+      echo $what.' '.$who;
+   }
    
    }
 The ``hello`` method of the ``First`` controller makes the following URLs available:
@@ -120,10 +121,10 @@ If the file extension is not specified, the **loadView** method loads a php file
    
    namespace controllers;
    class First extends ControllerBase{
-   	public function displayPHP(){
-   		//loads the view app/views/index.php
-   		$this->loadView("index");
-   	}
+      public function displayPHP(){
+         //loads the view app/views/index.php
+         $this->loadView('index');
+      }
    }
 
 twig view loading
@@ -135,10 +136,10 @@ If the file extension is html, the **loadView** method loads an html twig file.
    
    namespace controllers;
    class First extends ControllerBase{
-   	public function displayTwig(){
-   		//loads the view app/views/index.html
-   		$this->loadView("index.html");
-   	}
+      public function displayTwig(){
+         //loads the view app/views/index.html
+         $this->loadView("index.html");
+      }
    }
 Default view loading
 ~~~~~~~~~~~~~~~~~~~~
@@ -147,11 +148,11 @@ The default view associated to an action in a controller is located in ``views/c
 
 .. code-block:: bash
 
-	views
-	     │
-	     └ Users
-	         └ info.html
-	         
+   views
+        │
+        └ Users
+            └ info.html
+
 
 .. code-block:: php
    :linenos:
@@ -161,13 +162,13 @@ The default view associated to an action in a controller is located in ``views/c
     namespace controllers;
     
     class Users extends BaseController{
-    	...
-    	public function info(){
-    			$this->loadDefaultView();
-    		}
-    	}
-    }
-  
+      ...
+      public function info(){
+         $this->loadDefaultView();
+      }
+   }
+
+
 view parameters
 ^^^^^^^^^^^^^^^
 One of the missions of the controller is to pass variables to the view. |br| 
@@ -177,11 +178,11 @@ This can be done at the loading of the view, with an associative array:
    :caption: app/controllers/First.php
    
    class First extends ControllerBase{
-   	public function displayTwigWithVar($name){
-   		$message="hello";
-   		//loads the view app/views/index.html
-   		$this->loadView("index.html",["recipient"=>$name,"message"=>$message]);
-   	}
+      public function displayTwigWithVar($name){
+         $message="hello";
+         //loads the view app/views/index.html
+         $this->loadView('index.html', ['recipient'=>$name, 'message'=>$message]);
+      }
    }
 
 The keys of the associative array create variables of the same name in the view. |br| 
@@ -197,11 +198,11 @@ Variables can also be passed before the view is loaded:
 .. code-block:: php
    
    //passing one variable
-   $this->view->setVar("title","Message");
+   $this->view->setVar('title','Message');
    //passing an array of 2 variables
-   $this->view->setVars(["message"=>$message,"recipient"=>$name]);
+   $this->view->setVars(['message'=>$message,'recipient'=>$name]);
    //loading the view that now contains 3 variables
-   $this->loadView("First/index.html");
+   $this->loadView('First/index.html');
 
 view result as string
 ^^^^^^^^^^^^^^^^^^^^^
@@ -221,11 +222,11 @@ A controller can load multiple views:
    
    namespace controllers;
    class Products extends ControllerBase{
-   	public function all(){
-   		$this->loadView("Main/header.html",["title"=>"Products"]);
-   		$this->loadView("Products/index.html",["products"=>$this->products]);
-   		$this->loadView("Main/footer.html");
-   	}
+      public function all(){
+         $this->loadView('Main/header.html', ['title'=>'Products']);
+         $this->loadView('Products/index.html',['products'=>$this->products]);
+         $this->loadView('Main/footer.html');
+      }
    }
 
 .. important:: A view is often partial. It is therefore important not to systematically integrate the **html** and **body** tags defining a complete html page.
@@ -248,30 +249,30 @@ Example of using the initialize and finalize methods with the base class automat
 .. code-block:: php
    :caption: app/controllers/ControllerBase.php
    
-	namespace controllers;
-	
-	use Ubiquity\controllers\Controller;
-	use Ubiquity\utils\http\URequest;
-	
-	/**
-	 * ControllerBase.
-	 **/
-	abstract class ControllerBase extends Controller{
-		protected $headerView = "@activeTheme/main/vHeader.html";
-		protected $footerView = "@activeTheme/main/vFooter.html";
-	
-		public function initialize() {
-			if (! URequest::isAjax ()) {
-				$this->loadView ( $this->headerView );
-			}
-		}
-	
-		public function finalize() {
-			if (! URequest::isAjax ()) {
-				$this->loadView ( $this->footerView );
-			}
-		}
-	}
+   namespace controllers;
+
+   use Ubiquity\controllers\Controller;
+   use Ubiquity\utils\http\URequest;
+
+   /**
+    * ControllerBase.
+    */
+   abstract class ControllerBase extends Controller{
+      protected $headerView = "@activeTheme/main/vHeader.html";
+      protected $footerView = "@activeTheme/main/vFooter.html";
+
+      public function initialize() {
+         if (! URequest::isAjax ()) {
+            $this->loadView ( $this->headerView );
+         }
+      }
+
+      public function finalize() {
+         if (! URequest::isAjax ()) {
+            $this->loadView ( $this->footerView );
+         }
+      }
+   }
 
 Access control
 --------------
@@ -285,12 +286,12 @@ In the following example, access to the actions of the **IndexController** contr
    :caption: app/controllers/IndexController.php
    :emphasize-lines: 3-5
    
-	class IndexController extends ControllerBase{
-	...
-		public function isValid($action){
-			return USession::exists('activeUser');
-		}
-	}
+   class IndexController extends ControllerBase{
+   ...
+      public function isValid($action){
+         return USession::exists('activeUser');
+      }
+   }
 
 If the **activeUser** variable does not exist, an **unauthorized 401** error is returned.
 
@@ -300,33 +301,33 @@ The `onInvalidControl` method allows you to customize the unauthorized access:
    :caption: app/controllers/IndexController.php
    :emphasize-lines: 7-11
    
-	class IndexController extends ControllerBase{
-		...
-		public function isValid($action){
-			return USession::exists('activeUser');
-		}
-		
-		public function onInvalidControl(){
-			$this->initialize();
-			$this->loadView("unauthorized.html");
-			$this->finalize();
-		}
-	}
+   class IndexController extends ControllerBase{
+      ...
+      public function isValid($action){
+         return USession::exists('activeUser');
+      }
+
+      public function onInvalidControl(){
+         $this->initialize();
+         $this->loadView('unauthorized.html');
+         $this->finalize();
+      }
+   }
 
 .. code-block:: smarty
    :caption: app/views/unauthorized.html
    
-	<div class="ui container">
-		<div class="ui brown icon message">
-		<i class="ui ban icon"></i>
-		<div class="content">
-			<div class="header">
-				Error 401
-				</div>
-				<p>You are not authorized to access to <b>{{app.getController() ~ "::" ~ app.getAction()}}</b>.</p>
-			</div>
-		</div>
-	</div>
+   <div class="ui container">
+      <div class="ui brown icon message">
+         <i class="ui ban icon"></i>
+         <div class="content">
+            <div class="header">
+               Error 401
+            </div>
+            <p>You are not authorized to access to <b>{{app.getController() ~ "::" ~ app.getAction()}}</b>.</p>
+         </div>
+      </div>
+   </div>
 
 It is also possible to automatically generate access control from :ref:`AuthControllers<auth>`
 

@@ -138,31 +138,56 @@ Generated classes are located in **app/models** folder, if the configuration of 
 
 The **Settings** class:
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/Settings.php
-   
-    namespace models;
-	class Settings{
-		/**
-		 * @id
-		 * @column("name"=>"id","nullable"=>false,"dbType"=>"int(11)")
-		 * @validator("id","constraints"=>array("autoinc"=>true))
-		**/
-		private $id;
-	
-		/**
-		 * @column("name"=>"name","nullable"=>true,"dbType"=>"varchar(45)")
-		 * @validator("length","constraints"=>array("max"=>45))
-		**/
-		private $name;
-	
-		/**
-		 * @oneToMany("mappedBy"=>"settings","className"=>"models\\Organizationsettings")
-		**/
-		private $organizationsettingss;
-	}
+.. tabs::
 
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Settings.php
+
+         namespace models;
+         class Settings{
+
+            #[Id]
+            #[Column(name: 'id', nullable: false, dbType: 'int(11)')]
+            #[Validator('id', constraints: ['autoinc'=>true])]
+            private $id;
+
+            #[Column(name: 'name', nullable: true, dbType: 'varchar(45)')]
+            #[Validator('length', constraints: ['max'=>45])]
+            private $name;
+
+            #[OneToMany(mappedBy: 'settings', className: 'models\\Organizationsettings')]
+            private $organizationsettingss;
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Settings.php
+
+         namespace models;
+         class Settings{
+            /**
+             * @id
+             * @column("name"=>"id","nullable"=>false,"dbType"=>"int(11)")
+             * @validator("id","constraints"=>array("autoinc"=>true))
+             */
+            private $id;
+
+            /**
+             * @column("name"=>"name","nullable"=>true,"dbType"=>"varchar(45)")
+             * @validator("length","constraints"=>array("max"=>45))
+             */
+            private $name;
+
+            /**
+             * @oneToMany("mappedBy"=>"settings","className"=>"models\\Organizationsettings")
+             */
+            private $organizationsettingss;
+         }
 
 .. important::
 
