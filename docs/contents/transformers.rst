@@ -13,28 +13,57 @@ Adding transformers
 
 Either the **Author** class that we want to use in our application :
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/Author.php
-   :emphasize-lines: 6
-   
-	namespace models;
-	
-	class Author {
-		/**
-		 * @var string
-		 * @transformer("upper")
-		 */
-		private $name;
-		
-		public function getName(){
-			return $this->name;
-		}
-		
-		public function setName($name){
-			$this->name=$name;
-		}
-	}
+.. tabs::
+
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Author.php
+         :emphasize-lines: 7
+
+         namespace models;
+
+         use Ubiquity\attributes\items\Transformer;
+
+         class Author {
+
+            #[Transformer('upper')]
+            private $name;
+
+            public function getName(){
+               return $this->name;
+            }
+
+            public function setName($name){
+               $this->name=$name;
+            }
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/Author.php
+         :emphasize-lines: 6
+
+         namespace models;
+
+         class Author {
+            /**
+             * @var string
+             * @transformer("upper")
+             */
+            private $name;
+
+            public function getName(){
+               return $this->name;
+            }
+
+            public function setName($name){
+               $this->name=$name;
+            }
+         }
 
 We added a transformer on the **name** member with the **@transformer** annotation, in order to capitalize the name in the views.
 
@@ -79,27 +108,27 @@ or by creating a controller:
    :linenos:
    :caption: app/controllers/Authors.php
    
-	namespace controllers;
-	
-	class Authors {
-		
-		public function index(){
-			DAO::transformersOp='toView';
-			$authors=DAO::getAll(Author::class);
-			$this->loadDefaultView(['authors'=>$authors]);
-		}
-	
-	}
+   namespace controllers;
+
+   class Authors {
+
+      public function index(){
+         DAO::transformersOp='toView';
+         $authors=DAO::getAll(Author::class);
+         $this->loadDefaultView(['authors'=>$authors]);
+      }
+
+   }
 
 
 .. code-block:: html
    :caption: app/views/Authors/index.html
    
-	<ul>
-	    {% for author in authors %}
-	        <li>{{ author.name }}</li>
-	    {% endfor %}
-	</ul>
+   <ul>
+      {% for author in authors %}
+         <li>{{ author.name }}</li>
+      {% endfor %}
+   </ul>
 
 Transformer types
 -----------------
@@ -188,17 +217,18 @@ Create a transformer to display a user name as a local email address:
    :linenos:
    :caption: app/transformers/toLocalEmail.php
    
-	namespace transformers;
-	use Ubiquity\contents\transformation\TransformerViewInterface;
-	
-	class ToLocalEmail implements TransformerViewInterface{
-		
-		public static function toView($value) {
-			if($value!=null)
-				return sprintf('%s@mydomain.local',strtolower($value));
-		}
-	
-	}
+   namespace transformers;
+   use Ubiquity\contents\transformation\TransformerViewInterface;
+
+   class ToLocalEmail implements TransformerViewInterface{
+
+      public static function toView($value) {
+         if($value!=null) {
+            return sprintf('%s@mydomain.local',strtolower($value));
+         }
+      }
+
+   }
 
 Registration
 ++++++++++++
@@ -213,29 +243,57 @@ Register the transformer by executing the following script:
 Usage
 +++++
 
-.. code-block:: php
-   :linenos:
-   :caption: app/models/User.php
-   :emphasize-lines: 6
-   
-	namespace models;
-	
-	class User {
-		/**
-		 * @var string
-		 * @transformer("localEmail")
-		 */
-		private $name;
-		
-		public function getName(){
-			return $this->name;
-		}
-		
-		public function setName($name){
-			$this->name=$name;
-		}
-	}
+.. tabs::
 
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 7
+
+         namespace models;
+
+         use Ubiquity\attributes\items\Transformer;
+
+         class User {
+
+            #[Transformer('localEmail')]
+            private $name;
+
+            public function getName(){
+               return $this->name;
+            }
+
+            public function setName($name){
+               $this->name=$name;
+            }
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/models/User.php
+         :emphasize-lines: 6
+
+         namespace models;
+
+         class User {
+            /**
+             * @var string
+             * @transformer("localEmail")
+             */
+            private $name;
+
+            public function getName(){
+               return $this->name;
+            }
+
+            public function setName($name){
+               $this->name=$name;
+            }
+         }
 
 .. code-block:: php
    
