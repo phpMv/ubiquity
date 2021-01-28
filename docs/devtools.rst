@@ -80,19 +80,19 @@ code result:
    :caption: app/controllers/Users.php
    :emphasize-lines: 9-11
 
-	namespace controllers;
-	 /**
-	 * Controller Users
-	 **/
-	class Users extends ControllerBase{
-	
-		public function index(){}
-	
-		public function all(){
-			
-		}
-	
-	}
+   namespace controllers;
+   /**
+    * Controller Users
+    */
+   class Users extends ControllerBase{
+
+      public function index(){}
+
+      public function all(){
+
+      }
+
+   }
 
 
 Adds the action ``display`` in controller ``Users`` with a parameter:
@@ -112,14 +112,14 @@ code result:
    :caption: app/controllers/Users.php
    :emphasize-lines: 5-7
    
-	class Users extends ControllerBase{
-	
-		public function index(){}
-	
-		public function display($idUser){
-			
-		}
-	}
+   class Users extends ControllerBase{
+
+      public function index(){}
+
+      public function display($idUser){
+
+      }
+   }
 
 Adds the action ``display`` with an associated route:
 
@@ -129,22 +129,49 @@ Adds the action ``display`` with an associated route:
 
 code result:
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/Users.php
-   :emphasize-lines: 5-10
-   
-	class Users extends ControllerBase{
-	
-		public function index(){}
-	
-		/**
-		 *@route("/users/display/{idUser}")
-		**/
-		public function display($idUser){
-			
-		}
-	}
+.. tabs::
+
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/Users.php
+         :emphasize-lines: 9-12
+
+         namespace controllers;
+
+         use Ubiquity\attributes\items\router\Route;
+
+         class Users extends ControllerBase{
+
+            public function index(){}
+
+            #[Route('/users/display/{idUser}')]
+            public function display($idUser){
+
+            }
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/Users.php
+         :emphasize-lines: 7-12
+
+         namespace controllers;
+
+         class Users extends ControllerBase{
+
+            public function index(){}
+
+            /**
+             *@route("/users/display/{idUser}")
+             */
+            public function display($idUser){
+
+            }
+         }
 
 Adds the action ``search`` with multiple parameters:
 
@@ -154,26 +181,57 @@ Adds the action ``search`` with multiple parameters:
 
 code result:
 
-.. code-block:: php
-   :linenos:
-   :caption: app/controllers/Users.php
-   :emphasize-lines: 12-14
-   
-	class Users extends ControllerBase{
-	
-		public function index(){}
-	
-		/**
-		 *@route("/users/display/{idUser}")
-		**/
-		public function display($idUser){
-			
-		}
-	
-		public function search($name,$address=''){
-			
-		}
-	}
+.. tabs::
+
+   .. tab:: Attributes
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/Users.php
+         :emphasize-lines: 14-16
+
+         namespace controllers;
+
+         use Ubiquity\attributes\items\router\Route;
+
+         class Users extends ControllerBase{
+
+            public function index(){}
+
+            #[Route('/users/display/{idUser}')]
+            public function display($idUser){
+
+            }
+
+            public function search($name,$address=''){
+
+            }
+         }
+
+   .. tab:: Annotations
+
+      .. code-block:: php
+         :linenos:
+         :caption: app/controllers/Users.php
+         :emphasize-lines: 14-16
+
+         namespace controllers;
+
+         class Users extends ControllerBase{
+
+            public function index(){}
+
+            /**
+             * @route("/users/display/{idUser}")
+             */
+            public function display($idUser){
+
+            }
+
+            public function search($name,$address=''){
+
+            }
+         }
 
 Adds the action ``search`` and creates the associated view:
 
