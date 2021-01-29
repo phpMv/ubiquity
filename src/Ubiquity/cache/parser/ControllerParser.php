@@ -18,11 +18,11 @@ use Ubiquity\annotations\AnnotationsEngineInterface;
  */
 class ControllerParser {
 	use ControllerParserPathTrait;
-	private $controllerClass;
-	private $mainRouteClass;
-	private $routesMethods = [ ];
-	private $rest = false;
-	private static $excludeds = [ '__construct','isValid','initialize','finalize','onInvalidControl','loadView','forward','redirectToRoute' ];
+	private string $controllerClass;
+	private string $mainRouteClass;
+	private array $routesMethods = [ ];
+	private bool $rest = false;
+	private static array $excludeds = [ '__construct','isValid','initialize','finalize','onInvalidControl','loadView','forward','redirectToRoute' ];
 
 	/**
 	 *
@@ -90,11 +90,16 @@ class ControllerParser {
 		}
 	}
 
-	private function generateRouteAnnotationFromMethod(\ReflectionMethod $method) {
+	private function generateRouteAnnotationFromMethod(\ReflectionMethod $method): array {
 		return [ $this->annotsEngine->getAnnotation ( null, 'route', [ 'path' => self::getPathFromMethod ( $method ) ] ) ];
 	}
 
-	public function asArray() {
+	private static function generateRouteName(string $controllerName,string $action){
+		$ctrl=\str_ireplace('controller','',ClassUtils::getClassSimpleName ( $controllerName ));
+		return UString::cleanAttribute ( $ctrl . '.' . $action ,'.');
+	}
+
+	public function asArray(): array {
 		$result = [ ];
 		$prefix = '';
 		$httpMethods = false;
@@ -127,7 +132,7 @@ class ControllerParser {
 		$pathParameters = self::addParamsPath ( $routeArray ['path'], $method, $routeArray ['requirements'] );
 		$name = $routeArray ['name'];
 		if (! isset ( $name )) {
-			$name = UString::cleanAttribute ( ClassUtils::getClassSimpleName ( $controllerClass ) . '.' . $methodName );
+			$name = self::generateRouteName($controllerClass,$methodName);
 		}
 		$cache = $routeArray ['cache'];
 		$duration = $routeArray ['duration'];
@@ -159,7 +164,7 @@ class ControllerParser {
 		}
 	}
 
-	public function isRest() {
+	public function isRest(): bool {
 		return $this->rest;
 	}
 }
