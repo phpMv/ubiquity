@@ -96,7 +96,7 @@ class ControllerParser {
 
 	private static function generateRouteName(string $controllerName,string $action): string {
 		$ctrl=\str_ireplace('controller','',ClassUtils::getClassSimpleName ( $controllerName ));
-		return \ucfirst($ctrl) . '.' . $action;
+		return \lcfirst($ctrl) . '.' . $action;
 	}
 
 	public function asArray(): array {
