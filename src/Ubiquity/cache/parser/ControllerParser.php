@@ -94,9 +94,9 @@ class ControllerParser {
 		return [ $this->annotsEngine->getAnnotation ( null, 'route', [ 'path' => self::getPathFromMethod ( $method ) ] ) ];
 	}
 
-	private static function generateRouteName(string $controllerName,string $action){
+	private static function generateRouteName(string $controllerName,string $action): string {
 		$ctrl=\str_ireplace('controller','',ClassUtils::getClassSimpleName ( $controllerName ));
-		return UString::cleanAttribute ( \ucfirst($ctrl) . '.' . $action ,'.');
+		return \ucfirst($ctrl) . '.' . $action;
 	}
 
 	public function asArray(): array {
