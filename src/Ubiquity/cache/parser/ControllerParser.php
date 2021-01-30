@@ -19,7 +19,7 @@ use Ubiquity\annotations\AnnotationsEngineInterface;
 class ControllerParser {
 	use ControllerParserPathTrait;
 	private string $controllerClass;
-	private string $mainRouteClass;
+	private $mainRouteClass;
 	private array $routesMethods = [ ];
 	private bool $rest = false;
 	private static array $excludeds = [ '__construct','isValid','initialize','finalize','onInvalidControl','loadView','forward','redirectToRoute' ];
@@ -96,7 +96,7 @@ class ControllerParser {
 
 	private static function generateRouteName(string $controllerName,string $action){
 		$ctrl=\str_ireplace('controller','',ClassUtils::getClassSimpleName ( $controllerName ));
-		return UString::cleanAttribute ( $ctrl . '.' . $action ,'.');
+		return UString::cleanAttribute ( \ucfirst($ctrl) . '.' . $action ,'.');
 	}
 
 	public function asArray(): array {
