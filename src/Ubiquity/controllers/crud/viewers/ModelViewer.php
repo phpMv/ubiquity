@@ -18,7 +18,7 @@ use Ubiquity\utils\base\UString;
  * Responsible of the display
  *
  * @author jc
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class ModelViewer {
@@ -28,7 +28,6 @@ class ModelViewer {
 	 * @var \Ajax\JsUtils
 	 */
 	private $jquery;
-	
 	private $style;
 
 	/**
@@ -37,17 +36,17 @@ class ModelViewer {
 	 */
 	protected $controller;
 
-	public function __construct(HasModelViewerInterface $controller, $style=null) {
+	public function __construct(HasModelViewerInterface $controller, $style = null) {
 		$this->jquery = $controller->jquery;
 		$this->controller = $controller;
-		$this->style=$style;
+		$this->style = $style;
 	}
-	
-	public function setStyle($elm){
-		if($this->style==='inverted'){
-			$elm->setInverted(true);
-			if($elm instanceof DataTable){
-				$elm->setActiveRowSelector('black');
+
+	public function setStyle($elm) {
+		if ($this->style === 'inverted') {
+			$elm->setInverted ( true );
+			if ($elm instanceof DataTable) {
+				$elm->setActiveRowSelector ( 'black' );
 			}
 		}
 	}
@@ -83,7 +82,7 @@ class ModelViewer {
 			}
 		}
 		$this->addEditMemberFonctionality ( "dataElement" );
-		return $dataElement->addClass($this->style);
+		return $dataElement->addClass ( $this->style );
 	}
 
 	/**
@@ -117,13 +116,13 @@ class ModelViewer {
 		$icon = $lbl->addIcon ( 'delete', false );
 		$lbl->wrap ( "<span>", "</span>" );
 		$lbl->setProperty ( "style", "display: none;" );
-		$icon->getOnClick ( $adminRoute . $files->getRouteRefreshTable (), '#'.$this->getDataTableId(), [ "jqueryDone" => "replaceWith","hasLoader" => "internal" ] );
+		$icon->getOnClick ( $adminRoute . $files->getRouteRefreshTable (), '#' . $this->getDataTableId (), [ "jqueryDone" => "replaceWith","hasLoader" => "internal" ] );
 
 		$dataTable->addItemInToolbar ( $lbl );
 		$dataTable->addSearchInToolbar ();
 		$dataTable->setToolbarPosition ( PositionInTable::FOOTER );
 		$dataTable->getToolbar ()->setSecondary ();
-		$this->setStyle($dataTable);
+		$this->setStyle ( $dataTable );
 		return $dataTable;
 	}
 
@@ -192,7 +191,7 @@ class ModelViewer {
 	 * @return DataTable
 	 */
 	protected function getDataTableInstance($instances, $model, $totalCount, $page = 1): DataTable {
-		$dtId=$this->getDataTableId();
+		$dtId = $this->getDataTableId ();
 		$semantic = $this->jquery->semantic ();
 		$recordsPerPage = $this->recordsPerPage ( $model, $totalCount );
 		if (is_numeric ( $recordsPerPage )) {
@@ -209,7 +208,7 @@ class ModelViewer {
 		} else {
 			$dataTable = $semantic->dataTable ( $dtId, $model, $instances );
 		}
-		$dataTable->setLibraryId('lv');
+		$dataTable->setLibraryId ( 'lv' );
 		return $dataTable;
 	}
 
@@ -223,36 +222,37 @@ class ModelViewer {
 	}
 
 	public function addAllButtons(DataTable $dataTable, $attributes) {
-		$transition=$this->getTransition();
+		$transition = $this->getTransition ();
 		$dataTable->onPreCompile ( function () use (&$dataTable) {
 			$dataTable->getHtmlComponent ()->colRightFromRight ( 0 );
-			$tb=$dataTable->getPaginationToolbar();
-			if(isset($tb)){
-				$tb->addClass($this->style);
+			$tb = $dataTable->getPaginationToolbar ();
+			if (isset ( $tb )) {
+				$tb->addClass ( $this->style );
 			}
 		} );
-		$dataTable->addAllButtons ( false, [ 'ajaxTransition' => $transition ], function ($bt) {
-			$bt->addClass ( 'circular '.$this->style );
+		$dataTable->addAllButtons ( false, [ 'ajaxTransition' => $transition,'hasLoader' => 'internal' ], function ($bt) {
+			$bt->addClass ( 'circular ' . $this->style );
 			$this->onDataTableRowButton ( $bt );
 		}, function ($bt) {
-			$bt->addClass ( 'circular ' .$this->style );
+			$bt->addClass ( 'circular ' . $this->style );
 			$this->onDataTableRowButton ( $bt );
 		}, function ($bt) {
-			$bt->addClass ( 'circular ' .$this->style );
+			$bt->addClass ( 'circular ' . $this->style );
 			$this->onDataTableRowButton ( $bt );
 		} );
-		$dataTable->setDisplayBehavior ( [ 'jsCallback' => '$("#dataTable").hide();','ajaxTransition' => $transition] );
+		$dataTable->setDisplayBehavior ( [ 'jsCallback' => '$("#dataTable").hide();','ajaxTransition' => $transition,'hasLoader' => 'internal' ] );
 	}
 
 	/**
 	 * The default transition for display, edit and delete behaviors
+	 *
 	 * @return string
 	 */
-	public function getTransition(){
+	public function getTransition() {
 		return 'fade';
 	}
 
-	public function getDataTableId(){
+	public function getDataTableId() {
 		return 'lv';
 	}
 
@@ -292,8 +292,8 @@ class ModelViewer {
 	 * @return HtmlHeader
 	 */
 	public function getFkHeaderElementDetails($member, $className, $object) {
-		$res= new HtmlHeader ( '', 4, $member, 'content' );
-		return $res->addClass($this->style);
+		$res = new HtmlHeader ( '', 4, $member, 'content' );
+		return $res->addClass ( $this->style );
 	}
 
 	/**
@@ -305,8 +305,8 @@ class ModelViewer {
 	 * @return HtmlHeader
 	 */
 	public function getFkHeaderListDetails($member, $className, $list) {
-		$res= new HtmlHeader ( '', 4, $member . ' (' . \count ( $list ) . ')', 'content' );
-		return $res->addClass($this->style);
+		$res = new HtmlHeader ( '', 4, $member . ' (' . \count ( $list ) . ')', 'content' );
+		return $res->addClass ( $this->style );
 	}
 
 	/**
@@ -318,8 +318,8 @@ class ModelViewer {
 	 * @return \Ajax\common\html\BaseHtml
 	 */
 	public function getFkElementDetails($member, $className, $object) {
-		$res= $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
-		return $res->addClass($this->style);
+		$res = $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
+		return $res->addClass ( $this->style );
 	}
 
 	/**
@@ -334,7 +334,7 @@ class ModelViewer {
 		$element = $this->jquery->semantic ()->htmlList ( 'list-' . $className . '.' . $member );
 		$element->setMaxVisible ( 15 );
 
-		return $element->addClass ( 'animated divided celled '.$this->style );
+		return $element->addClass ( 'animated divided celled ' . $this->style );
 	}
 
 	/**
@@ -453,8 +453,8 @@ class ModelViewer {
 	 * @return \Ajax\common\html\BaseHtml
 	 */
 	public function getFkElement($member, $className, $object) {
-		$res= $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
-		return $res->addClass($this->style);
+		$res = $this->jquery->semantic ()->htmlLabel ( 'element-' . $className . '.' . $member, $object . '' );
+		return $res->addClass ( $this->style );
 	}
 
 	/**
