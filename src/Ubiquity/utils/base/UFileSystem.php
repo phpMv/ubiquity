@@ -88,7 +88,7 @@ class UFileSystem {
 				$path = $path . \DS;
 			}
 		}
-		return $path;
+		return \realpath($path);
 	}
 
 	/**
@@ -105,7 +105,7 @@ class UFileSystem {
 				$path = \str_replace ( "/", \DS, $path );
 			$path = \str_replace ( \DS . \DS, \DS, $path );
 		}
-		return $path;
+		return \realpath($path);
 	}
 
 	/**

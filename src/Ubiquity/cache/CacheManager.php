@@ -117,7 +117,7 @@ class CacheManager {
 		$typeNS = $config['mvcNS'][$type];
 		$typeDir = \ROOT . \DS . \str_replace("\\", \DS, $typeNS);
 		if (! $silent)
-			echo \ucfirst($type) . ' directory is ' . \ROOT . $typeNS . "\n";
+			echo \ucfirst($type) . ' directory is ' . \realpath(\ROOT . $typeNS) . "\n";
 		return UFileSystem::glob_recursive($typeDir . \DS . '*.php');
 	}
 }
