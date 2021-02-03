@@ -71,5 +71,9 @@ abstract class AbstractDriverMetaDatas {
 	public function toStringOperator() {
 		return '';
 	}
+
+	public function getPHPType(string $dbType): string {
+		return '';
+	}
 }
 

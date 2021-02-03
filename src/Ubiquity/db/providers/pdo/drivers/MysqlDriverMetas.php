@@ -59,4 +59,20 @@ class MysqlDriverMetas extends AbstractDriverMetaDatas {
 	public function groupConcat(string $fields, string $separator): string {
 		return "GROUP_CONCAT({$fields} SEPARATOR '{$separator}')";
 	}
+
+	public function getPHPType(string $dbType): string {
+		$dbType = \strtolower ( $dbType );
+		$type = '';
+		if (\strpos ( $dbType, 'int' ) !== false) {
+			$type = 'int';
+		}
+		if ($dbType === 'tinyint(1)' || \strpos ( $dbType, 'bool' ) !== false) {
+			$type = 'bool';
+		} elseif (\strpos ( $dbType, 'char' ) !== false || \strpos ( $dbType, 'text' ) !== false) {
+			$type = 'string';
+		} elseif (\strpos ( $dbType, 'float' ) !== false || \strpos ( $dbType, 'decimal' ) !== false) {
+			$type = 'float';
+		}
+		return $type;
+	}
 }

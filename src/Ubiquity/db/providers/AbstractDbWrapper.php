@@ -13,6 +13,7 @@ namespace Ubiquity\db\providers;
 abstract class AbstractDbWrapper {
 	protected $dbInstance;
 	protected $statements;
+	const PHP_TYPES = [ 'string' => true,'bool' => true,'float' => true,'int' => true ];
 	public $quote;
 
 	abstract public function query(string $sql);
@@ -130,5 +131,9 @@ abstract class AbstractDbWrapper {
 
 	public function quoteValue($value, $type = 2) {
 		return "'" . \addslashes ( $value ) . "'";
+	}
+
+	public function getPHPType(string $dbType): string {
+		return '';
 	}
 }

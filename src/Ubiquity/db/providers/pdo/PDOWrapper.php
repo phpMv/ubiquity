@@ -237,4 +237,8 @@ class PDOWrapper extends AbstractDbWrapper {
 	public function toStringOperator() {
 		return $this->getDriverMetaDatas ()->toStringOperator ();
 	}
+
+	public function getPHPType(string $dbType): string {
+		return $this->getDriverMetaDatas ()->getPHPType ( $dbType );
+	}
 }

@@ -9,7 +9,7 @@ namespace Ubiquity\db\traits;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
  */
@@ -33,6 +33,10 @@ trait DatabaseMetadatas {
 
 	public function getRowNum(string $tableName, string $pkName, string $condition): int {
 		return $this->wrapperObject->getRowNum ( $tableName, $pkName, $condition );
+	}
+
+	public function getPHPType(string $dbType): string {
+		return $this->wrapperObject->getPHPType ( $dbType );
 	}
 }
 
