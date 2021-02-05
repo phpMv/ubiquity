@@ -141,7 +141,7 @@ Modify the Admin Controller to use BaseAuthController:
    class Admin extends UbiquityMyAdminBaseController{
 	use WithAuthTrait;
 	protected function getAuthController(): AuthController {
-		return new BaseAuthController();
+		return $this->_auth ??= new BaseAuthController($this);
 	}
    }
 
@@ -205,7 +205,7 @@ The index.html template manages the connection:
 
 .. image:: /_static/images/auth/template_authIndex.png
 
-Example with the **_userInfo** aera:
+Example with the **_userInfo** area:
 
 Create a new AuthController named **PersoAuthController**:
 
@@ -251,7 +251,7 @@ Change the AuthController **Admin** controller:
    class Admin extends UbiquityMyAdminBaseController{
 	use WithAuthTrait;
 	protected function getAuthController(): AuthController {
-		return new PersoAuthController();
+		return $this->_auth ??= new PersoAuthController($this);
 	}
    }
 
