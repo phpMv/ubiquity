@@ -32,9 +32,11 @@ class ViewRepository {
 	 * @param array $parameters
 	 * @param bool $useCache
 	 * @param string $viewVar
+	 * @return array
 	 */
-	public function all(string $condition = '', $included = false, array $parameters = [ ], bool $useCache = false, string $viewVar = 'all') {
-		$this->view->setVar ( $viewVar, DAO::getAll ( $this->model, $condition, $included, $parameters, $useCache ) );
+	public function all(string $condition = '', $included = false, array $parameters = [ ], bool $useCache = false, string $viewVar = 'all'): array {
+		$this->view->setVar ( $viewVar, $r = DAO::getAll ( $this->model, $condition, $included, $parameters, $useCache ) );
+		return $r;
 	}
 
 	/**
@@ -44,9 +46,11 @@ class ViewRepository {
 	 * @param bool|string $included
 	 * @param bool $useCache
 	 * @param string $viewVar
+	 * @return object
 	 */
-	public function byId($keyValues, $included = true, bool $useCache = false, string $viewVar = 'byId') {
-		$this->view->setVar ( $viewVar, DAO::getById ( $this->model, $keyValues, $included, $useCache ) );
+	public function byId($keyValues, $included = true, bool $useCache = false, string $viewVar = 'byId'): object {
+		$this->view->setVar ( $viewVar, $r = DAO::getById ( $this->model, $keyValues, $included, $useCache ) );
+		return $r;
 	}
 
 	/**
@@ -56,10 +60,12 @@ class ViewRepository {
 	 * @param bool|string $included
 	 * @param bool $useCache
 	 * @param string $viewVar
+	 * @return object
 	 * @throws \Ubiquity\exceptions\DAOException
 	 */
-	public function one(string $condition = '', $included = true, bool $useCache = false, string $viewVar = 'one') {
-		$this->view->setVar ( $viewVar, DAO::getOne ( $this->model, $condition, $included, $useCache ) );
+	public function one(string $condition = '', $included = true, bool $useCache = false, string $viewVar = 'one'): object {
+		$this->view->setVar ( $viewVar, $r = DAO::getOne ( $this->model, $condition, $included, $useCache ) );
+		return $r;
 	}
 
 	/**
