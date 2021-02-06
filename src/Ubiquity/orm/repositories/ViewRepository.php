@@ -6,6 +6,15 @@ use Ubiquity\controllers\Controller;
 use Ubiquity\orm\DAO;
 use Ubiquity\views\View;
 
+/**
+ * A repository for managing CRUD operations on a model, displayed in a view.
+ * Ubiquity\orm\repositories$ViewRepository
+ * This class is part of Ubiquity
+ *
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 class ViewRepository {
 	private string $model;
 	private View $view;
