@@ -12,6 +12,7 @@ use Ubiquity\controllers\crud\EditMemberParams;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\Reflexion;
+use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
 
 /**
  * Associated with a CRUDController class (part of ModelViewer)
@@ -20,7 +21,7 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  * @property \Ajax\JsUtils $jquery
  */
 trait FormModelViewerTrait {
@@ -109,8 +110,8 @@ trait FormModelViewerTrait {
 		if ($params && isset ( $params [$part] )) {
 			return $params [$part];
 		}
-		$emp= new EditMemberParams ();
-		$emp->setDtId($this->getDataTableId());
+		$emp = new EditMemberParams ();
+		$emp->setDtId ( $this->getDataTableId () );
 		return $emp;
 	}
 
@@ -119,7 +120,7 @@ trait FormModelViewerTrait {
 	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
 	 */
 	protected function defaultEditMemberParams() {
-		return [ "dataTable" => EditMemberParams::dataTable ($this->getDataTableId()),"dataElement" => EditMemberParams::dataElement () ];
+		return [ "dataTable" => EditMemberParams::dataTable ( $this->getDataTableId () ),"dataElement" => EditMemberParams::dataElement () ];
 	}
 
 	/**
@@ -148,7 +149,7 @@ trait FormModelViewerTrait {
 		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
 		$message = $this->getFormTitle ( $form, $instance );
 		$form->setCaption ( '_message', $message ['subMessage'] );
-		$form->fieldAsMessage ( '_message', [ 'icon' => $message ["icon"]] );
+		$form->fieldAsMessage ( '_message', [ 'icon' => $message ["icon"] ] );
 		$instance->_message = $message ['message'];
 		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/" . $updateUrl, '#frm-add-update' );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
@@ -191,9 +192,11 @@ trait FormModelViewerTrait {
 				if ($editMemberParams->getHasButtons ()) {
 					$btO = HtmlButton::icon ( "btO", "check" )->addClass ( "green mini compact" )->onClick ( "\$('#" . $identifier . "').trigger('validate');", true, true );
 					$btC = HtmlButton::icon ( "btC", "close" )->addClass ( "mini compact" )->onClick ( "\$('#" . $identifier . "').trigger('endEdit');" );
-					$f->wrap ( "<div class='fields' style='margin:0;'>", [ $btO,$btC,"</div>" ] );
+					$f->wrap ( "<div class='inline fields' style='margin:0;'>", [ $btO,$btC,"</div>" ] );
 					if (! $editMemberParams->getHasPopup ()) {
-						$f->setWidth ( 16 )->setProperty ( "style", "padding-left:0;" );
+						if (! ($f instanceof HtmlFormCheckbox)) {
+							$f->setWidth ( 16 )->setProperty ( "style", "padding-left:0;" );
+						}
 					}
 				}
 				$f->on ( "keydown", "if(event.keyCode===27) {\$('#" . $identifier . "').trigger('endEdit');}" );
@@ -237,9 +240,9 @@ trait FormModelViewerTrait {
 	 */
 	protected function getFormTitle($form, $instance) {
 		$type = ($instance->_new) ? 'new' : 'edit';
-		$messageInfos = [ 'new' => [ 'icon' => HtmlIconGroups::corner ( 'table '.$this->style, 'plus '.$this->style, 'big' ),'subMessage' => '&nbsp;New object creation' ],'edit' => [ 'icon' => HtmlIconGroups::corner ( 'table '.$this->style, 'edit '.$this->style, 'big' ),'subMessage' => '&nbsp;Editing an existing object' ] ];
+		$messageInfos = [ 'new' => [ 'icon' => HtmlIconGroups::corner ( 'table ' . $this->style, 'plus ' . $this->style, 'big' ),'subMessage' => '&nbsp;New object creation' ],'edit' => [ 'icon' => HtmlIconGroups::corner ( 'table ' . $this->style, 'edit ' . $this->style, 'big' ),'subMessage' => '&nbsp;Editing an existing object' ] ];
 		$message = $messageInfos [$type];
-		$message ['message'] = '&nbsp;'.\get_class ( $instance );
+		$message ['message'] = '&nbsp;' . \get_class ( $instance );
 		return $message;
 	}
 
