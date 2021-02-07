@@ -19,6 +19,12 @@ class ViewRepository {
 	private string $model;
 	private View $view;
 
+	private function setViewVarsAndReturn(string $viewVar, $instance, $r) {
+		$this->view->setVar ( $viewVar, $instance );
+		$this->view->setVar ( 'status', $r );
+		return $r;
+	}
+
 	public function __construct(Controller $ctrl, string $model) {
 		$this->view = $ctrl->getView ();
 		$this->model = $model;
@@ -80,9 +86,7 @@ class ViewRepository {
 	 */
 	public function insert(object $instance, $insertMany = false, string $viewVar = 'inserted'): bool {
 		$r = DAO::insert ( $instance, $insertMany );
-		$this->view->setVar ( $viewVar, $instance );
-		$this->view->setVar ( 'status', $r );
-		return $r;
+		return $this->setViewVarsAndReturn ( $viewVar, $instance, $r );
 	}
 
 	/**
@@ -96,9 +100,7 @@ class ViewRepository {
 	 */
 	public function update(object $instance, $insertMany = false, string $viewVar = 'updated'): bool {
 		$r = DAO::update ( $instance, $insertMany );
-		$this->view->setVar ( $viewVar, $instance );
-		$this->view->setVar ( 'status', $r );
-		return $r;
+		return $this->setViewVarsAndReturn ( $viewVar, $instance, $r );
 	}
 
 	/**
@@ -112,9 +114,7 @@ class ViewRepository {
 	 */
 	public function save(object $instance, $insertMany = false, string $viewVar = 'saved') {
 		$r = DAO::save ( $instance, $insertMany );
-		$this->view->setVar ( $viewVar, $instance );
-		$this->view->setVar ( 'status', $r );
-		return $r;
+		return $this->setViewVarsAndReturn ( $viewVar, $instance, $r );
 	}
 
 	/**
@@ -126,8 +126,6 @@ class ViewRepository {
 	 */
 	public function remove(object $instance, string $viewVar = 'removed'): ?int {
 		$r = DAO::remove ( $instance );
-		$this->view->setVar ( $viewVar, $instance );
-		$this->view->setVar ( 'status', $r );
-		return $r;
+		return $this->setViewVarsAndReturn ( $viewVar, $instance, $r );
 	}
 }

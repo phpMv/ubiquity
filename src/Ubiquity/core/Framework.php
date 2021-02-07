@@ -21,7 +21,7 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\cache\CacheManager;
 
 class Framework {
-	public const version = '2.4.1';
+	public const version = '2.4.2';
 
 	public static function getVersion() {
 		return self::version;
@@ -75,12 +75,12 @@ class Framework {
 		return new AssetsManager ();
 	}
 
-	public static function getCacheSystem(){
-		return \get_class(CacheManager::$cache);
+	public static function getCacheSystem() {
+		return \get_class ( CacheManager::$cache );
 	}
 
-	public static function getAnnotationsEngine(){
-		return \get_class(CacheManager::getAnnotationsEngineInstance());
+	public static function getAnnotationsEngine() {
+		return \get_class ( CacheManager::getAnnotationsEngineInstance () );
 	}
 
 	/**
