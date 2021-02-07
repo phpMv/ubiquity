@@ -6,8 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 ## [2.4.2] Unrelease
+### Added
+- `ViewRepository` CRUD operations + Automatic passing of the handled objects to the view
+- `AbstractRepository` only CRUD operations for overriding
+- `Repository` a default repository for any model
 ### Fixed
-- Fix cache generation pb for field names
+- Fix cache generation pb for field names & dbTypes
 ### Updated
 - Update route default name (ControllerName-{controller}.action)
 ## [2.4.1] 2021-01-17
