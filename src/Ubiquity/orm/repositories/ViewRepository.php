@@ -69,7 +69,8 @@ class ViewRepository {
 	}
 
 	/**
-	 * Insert a new instance $instance into the database and add the instance in a view variable.
+	 * Insert a new instance $instance into the database and add the instance in a view variable (inserted).
+	 * A status variable added to the view shows whether the operation was successful.
 	 *
 	 * @param object $instance
 	 * @param bool $insertMany
@@ -80,11 +81,13 @@ class ViewRepository {
 	public function insert(object $instance, $insertMany = false, string $viewVar = 'inserted'): bool {
 		$r = DAO::insert ( $instance, $insertMany );
 		$this->view->setVar ( $viewVar, $instance );
+		$this->view->setVar ( 'status', $r );
 		return $r;
 	}
 
 	/**
-	 * Update an instance $instance in the database and add the instance in a view variable.
+	 * Update an instance $instance in the database and add the instance in a view variable (updated).
+	 * A status variable added to the view shows whether the operation was successful.
 	 *
 	 * @param object $instance
 	 * @param bool $insertMany
@@ -94,11 +97,13 @@ class ViewRepository {
 	public function update(object $instance, $insertMany = false, string $viewVar = 'updated'): bool {
 		$r = DAO::update ( $instance, $insertMany );
 		$this->view->setVar ( $viewVar, $instance );
+		$this->view->setVar ( 'status', $r );
 		return $r;
 	}
 
 	/**
-	 * Save (insert or update) an instance $instance in the database and add the instance in a view variable.
+	 * Save (insert or update) an instance $instance in the database and add the instance in a view variable (saved).
+	 * A status variable added to the view shows whether the operation was successful.
 	 *
 	 * @param object $instance
 	 * @param bool $insertMany
@@ -108,6 +113,7 @@ class ViewRepository {
 	public function save(object $instance, $insertMany = false, string $viewVar = 'saved') {
 		$r = DAO::save ( $instance, $insertMany );
 		$this->view->setVar ( $viewVar, $instance );
+		$this->view->setVar ( 'status', $r );
 		return $r;
 	}
 
@@ -121,6 +127,7 @@ class ViewRepository {
 	public function remove(object $instance, string $viewVar = 'removed'): ?int {
 		$r = DAO::remove ( $instance );
 		$this->view->setVar ( $viewVar, $instance );
+		$this->view->setVar ( 'status', $r );
 		return $r;
 	}
 }
