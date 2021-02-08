@@ -133,14 +133,14 @@ class CRUDHelper {
 	private static function getMultiWhere($ids, $class) {
 		$pk = OrmUtils::getFirstKey ( $class );
 		$ids = explode ( ",", $ids );
-		if (sizeof ( $ids ) < 1)
-			return "";
+		$idCount = \count ( $ids );
+		if ($idCount < 1)
+			return '';
 		$strs = [ ];
-		$idCount = \sizeof ( $ids );
 		for($i = 0; $i < $idCount; $i ++) {
 			$strs [] = $pk . "='" . $ids [$i] . "'";
 		}
-		return implode ( " OR ", $strs );
+		return \implode ( " OR ", $strs );
 	}
 
 	public static function getFkIntance($instance, $model, $member, $included = false) {

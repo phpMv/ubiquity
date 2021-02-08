@@ -67,6 +67,25 @@ class DAO {
 		return static::_getAll ( $db, $className, new ConditionParser ( $condition, null, $parameters ), $included, $useCache );
 	}
 
+	/**
+	 * Returns an array of $className objects loaded by id from the database
+	 *
+	 * @param string $className class name of the model to load
+	 * @param array|null $parameters
+	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ['client.*','commands']
+	 * @param boolean $useCache use the active cache if true
+	 * @return array
+	 */
+	public static function getAllByIds($className, $keyValues = [ ], $included = true, $useCache = NULL) {
+		$db = self::getDb ( $className );
+		$key = OrmUtils::getFirstKey ( $className );
+		$countK = \count ( $keyValues );
+		if ($countK > 0) {
+			$condition = $key . ' IN (' . \str_repeat ( '?,', $countK - 1 ) . '?)';
+		}
+		return static::_getAll ( $db, $className, new ConditionParser ( $condition, null, $keyValues ), $included, $useCache );
+	}
+
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {
 		return self::getAll ( $className, ($condition ?? '1=1') . ' LIMIT ' . $rowsPerPage . ' OFFSET ' . (($page - 1) * $rowsPerPage), $included );
 	}
