@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ViewRepository` CRUD operations + Automatic passing of the handled objects to the view
 - `AbstractRepository` only CRUD operations for overriding
 - `Repository` a default repository for any model
+- `getAllByIds` method in `DAO` part
 ### Fixed
 - Fix cache generation pb for field names & dbTypes
 ### Updated
