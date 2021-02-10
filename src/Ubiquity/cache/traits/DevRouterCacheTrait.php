@@ -73,7 +73,7 @@ trait DevRouterCacheTrait {
 		foreach ( $routes as $path => $route ) {
 			if (self::hasCapturingGroup ( $path )) {
 				$part = self::getFirstPartIndex ( $path );
-				$res [$part] [] = $path;
+				$res [$part] [$path] = true;
 			}
 		}
 		return $res;
