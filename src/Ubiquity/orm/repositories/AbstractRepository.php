@@ -12,7 +12,7 @@ use Ubiquity\views\View;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class AbstractRepository {
@@ -38,9 +38,9 @@ abstract class AbstractRepository {
 	 * @param $keyValues
 	 * @param bool|string $included
 	 * @param bool $useCache
-	 * @return object
+	 * @return ?object
 	 */
-	public function byId($keyValues, $included = true, bool $useCache = false): object {
+	public function byId($keyValues, $included = true, bool $useCache = false): ?object {
 		return DAO::getById ( $this->getModel (), $keyValues, $included, $useCache );
 	}
 
@@ -50,10 +50,10 @@ abstract class AbstractRepository {
 	 * @param string $condition
 	 * @param bool|string $included
 	 * @param bool $useCache
-	 * @return object
+	 * @return ?object
 	 * @throws \Ubiquity\exceptions\DAOException
 	 */
-	public function one(string $condition = '', $included = true, bool $useCache = false): object {
+	public function one(string $condition = '', $included = true, bool $useCache = false): ?object {
 		return DAO::getOne ( $this->getModel (), $condition, $included, $useCache );
 	}
 

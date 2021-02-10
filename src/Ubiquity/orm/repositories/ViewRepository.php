@@ -52,9 +52,9 @@ class ViewRepository {
 	 * @param bool|string $included
 	 * @param bool $useCache
 	 * @param string $viewVar
-	 * @return object
+	 * @return ?object
 	 */
-	public function byId($keyValues, $included = true, bool $useCache = false, string $viewVar = 'byId'): object {
+	public function byId($keyValues, $included = true, bool $useCache = false, string $viewVar = 'byId'): ?object {
 		$this->view->setVar ( $viewVar, $r = DAO::getById ( $this->model, $keyValues, $included, $useCache ) );
 		return $r;
 	}
@@ -66,10 +66,10 @@ class ViewRepository {
 	 * @param bool|string $included
 	 * @param bool $useCache
 	 * @param string $viewVar
-	 * @return object
+	 * @return ?object
 	 * @throws \Ubiquity\exceptions\DAOException
 	 */
-	public function one(string $condition = '', $included = true, bool $useCache = false, string $viewVar = 'one'): object {
+	public function one(string $condition = '', $included = true, bool $useCache = false, string $viewVar = 'one'): ?object {
 		$this->view->setVar ( $viewVar, $r = DAO::getOne ( $this->model, $condition, $included, $useCache ) );
 		return $r;
 	}
