@@ -14,7 +14,7 @@ use Ubiquity\exceptions\ParserException;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.12
+ * @version 1.0.13
  *
  */
 trait DevRouterCacheTrait {
@@ -55,7 +55,28 @@ trait DevRouterCacheTrait {
 		}
 		self::sortByPriority ( $routes ['default'] );
 		self::sortByPriority ( $routes ['rest'] );
+		$routes ['rest-index'] = self::createIndex ( $routes ['rest'] );
+		$routes ['default-index'] = self::createIndex ( $routes ['default'] );
 		return $routes;
+	}
+
+	private static function hasCapturingGroup(string $expression): bool {
+		return \preg_match ( "~\\\\.(*SKIP)(?!)|\((?(?=\?)\?(P?['<]\w+['>]))~", $expression );
+	}
+
+	public static function getFirstPartIndex(string $element) {
+		return \strtok ( \trim ( $element, '/' ), '/' );
+	}
+
+	protected static function createIndex(array $routes): array {
+		$res = [ ];
+		foreach ( $routes as $path => $route ) {
+			if (self::hasCapturingGroup ( $path )) {
+				$part = self::getFirstPartIndex ( $path );
+				$res [$part] [] = $path;
+			}
+		}
+		return $res;
 	}
 
 	protected static function sortByPriority(&$array) {
@@ -69,6 +90,8 @@ trait DevRouterCacheTrait {
 		$routes = self::parseControllerFiles ( $config, $silent );
 		self::$cache->store ( 'controllers/routes.default', $routes ['default'], 'controllers' );
 		self::$cache->store ( 'controllers/routes.rest', $routes ['rest'], 'controllers' );
+		self::$cache->store ( 'controllers/routes.default-index', $routes ['default-index'], 'controllers' );
+		self::$cache->store ( 'controllers/routes.rest-index', $routes ['rest-index'], 'controllers' );
 		DiManager::init ( $config );
 		if (! $silent) {
 			echo "Router cache reset\n";
