@@ -9,18 +9,18 @@ use Ubiquity\controllers\StartupAsync;
 use Ubiquity\utils\base\UIntrospection;
 use Ubiquity\utils\http\UResponse;
 
-
 /**
  *
  * Ubiquity\cache\traits$RouterCacheTrait
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.11
+ * @version 1.0.12
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
 trait RouterCacheTrait {
+
 	abstract public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false, $includeAbstract = false);
 
 	public static function controllerCacheUpdated(&$config) {
@@ -63,8 +63,22 @@ trait RouterCacheTrait {
 	 */
 	public static function getControllerCache($isRest = false) {
 		$key = ($isRest) ? 'rest' : 'default';
-		if (self::$cache->exists ( 'controllers/routes.' . $key ))
+		if (self::$cache->exists ( 'controllers/routes.' . $key )) {
 			return self::$cache->fetch ( 'controllers/routes.' . $key );
+		}
+		return [ ];
+	}
+
+	/**
+	 *
+	 * @param boolean $isRest
+	 * @return array
+	 */
+	public static function getControllerCacheIndex($isRest = false) {
+		$key = ($isRest) ? 'rest-index' : 'default-index';
+		if (self::$cache->exists ( 'controllers/routes.' . $key )) {
+			return self::$cache->fetch ( 'controllers/routes.' . $key );
+		}
 		return [ ];
 	}
 
@@ -156,7 +170,6 @@ trait RouterCacheTrait {
 		Router::addRoutesToRoutes ( $controllerCache, $pathArray, $controller, $action, $methods, $name );
 		self::$cache->store ( 'controllers/routes.' . $postfix, $controllerCache, 'controllers' );
 	}
-
 
 	/**
 	 * Preloads controllers.
