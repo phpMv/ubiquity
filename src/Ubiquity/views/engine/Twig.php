@@ -68,6 +68,12 @@ class Twig extends TemplateEngine {
 			}, true );
 		}
 
+		if (\class_exists ( '\\Ubiquity\security\\acl\\AclManager' )) {
+			$this->addFunction ( 'isAllowedRoute', function ($role, $routeName) {
+				return \Ubiquity\security\acl\AclManager::isAllowedRoute ( $role, $routeName );
+			}, true );
+		}
+
 		$this->addFunction ( 'css', function ($resource, $parameters = [ ], $absolute = false) {
 			if ($this->hasThemeResource ( $resource )) {
 				return AssetsManager::css_ ( $resource, $parameters, $absolute );
@@ -134,9 +140,9 @@ class Twig extends TemplateEngine {
 	 */
 	public function getBlockNames($templateName) {
 		try {
-			$result = $this->twig->load($templateName)->getBlockNames();
-		} catch (\Error $e) {
-			$result = [];
+			$result = $this->twig->load ( $templateName )->getBlockNames ();
+		} catch ( \Error $e ) {
+			$result = [ ];
 		}
 		return $result;
 	}
