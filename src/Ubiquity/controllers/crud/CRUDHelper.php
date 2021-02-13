@@ -57,7 +57,7 @@ class CRUDHelper {
 		return DAO::getAll ( $model, $condition, false, $params );
 	}
 
-	public static function update($instance, $values, $setValues = true, $updateMany = true) {
+	public static function update($instance, $values, $setValues = true, $updateMany = true, $eventCallback = null) {
 		$className = \get_class ( $instance );
 		$fieldsInRelationForUpdate = OrmUtils::getFieldsInRelationsForUpdate_ ( $className );
 		$manyToOneRelations = $fieldsInRelationForUpdate ["manyToOne"];
@@ -84,6 +84,9 @@ class CRUDHelper {
 			self::updateManyToOne ( $manyToOneRelations, $members, $className, $instance, $values );
 		}
 		if (isset ( $instance )) {
+			if (isset ( $eventCallback )) {
+				$eventCallback ( $instance, $instance->_new );
+			}
 			if ($instance->_new) {
 				$update = DAO::insert ( $instance );
 			} else {

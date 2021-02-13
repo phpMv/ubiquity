@@ -36,12 +36,12 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$this->style = '';
 		$this->_insertJquerySemantic ();
 	}
-	
-	public function _setStyle($elm){
-		if($this->style==='inverted'){
-			$elm->setInverted(true);
-			if($elm instanceof DataTable){
-				$elm->setActiveRowSelector('black');
+
+	public function _setStyle($elm) {
+		if ($this->style === 'inverted') {
+			$elm->setInverted ( true );
+			if ($elm instanceof DataTable) {
+				$elm->setActiveRowSelector ( 'black' );
 			}
 		}
 	}
@@ -58,12 +58,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$dt = $this->_getModelViewer ()->getModelDataTable ( $objects, $this->model, $totalCount );
 		$this->jquery->getOnClick ( '#btAddNew', $this->_getBaseRoute () . '/newModel/' . $modal, '#frm-add-update', [ 'hasLoader' => 'internal' ] );
 		$this->_getEvents ()->onDisplayElements ( $dt, $objects, false );
-		$this->crudLoadView ( $this->_getFiles ()->getViewIndex (), [ 
-						'classname' => $this->model,
-						'messages' => $this->jquery->semantic ()->matchHtmlComponents ( function ($compo) {
-										return $compo instanceof HtmlMessage;
-									} )
-					] );
+		$this->crudLoadView ( $this->_getFiles ()->getViewIndex (), [ 'classname' => $this->model,'messages' => $this->jquery->semantic ()->matchHtmlComponents ( function ($compo) {
+			return $compo instanceof HtmlMessage;
+		} ) ] );
 	}
 
 	public function updateMember($member, $callback = false) {
@@ -243,7 +240,10 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if (isset ( $instance )) {
 			$isNew = $instance->_new;
 			try {
-				$updated = CRUDHelper::update ( $instance, $_POST );
+				$this->_getEvents ()->onBeforeUpdateRequest ( $_POST, $isNew );
+				$updated = CRUDHelper::update ( $instance, $_POST, true, true, function ($inst, $isNew) {
+					$this->_getEvents ()->onBeforeUpdate ( $inst, $isNew );
+				} );
 				if ($updated) {
 					$message->setType ( "success" )->setIcon ( "check circle outline" );
 					$message = $this->_getEvents ()->onSuccessUpdateMessage ( $message, $instance );
