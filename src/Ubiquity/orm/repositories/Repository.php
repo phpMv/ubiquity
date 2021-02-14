@@ -7,7 +7,7 @@ namespace Ubiquity\orm\repositories;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class Repository extends AbstractRepository {
@@ -17,7 +17,7 @@ class Repository extends AbstractRepository {
 		$this->model = $model;
 	}
 
-	protected function getModel() {
+	protected function getModel(): string {
 		return $this->model;
 	}
 }
