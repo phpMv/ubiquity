@@ -34,6 +34,7 @@ abstract class AuthController extends Controller {
 	protected $_attemptsSessionKey = "_attempts";
 	protected $_controllerInstance;
 	protected $_compileJS = true;
+	protected $_invalid=false;
 
 	public function __construct($instance = null) {
 		parent::__construct ();
@@ -103,7 +104,10 @@ abstract class AuthController extends Controller {
 				}
 				$this->onConnect ( $connected );
 			} else {
+				$this->_invalid=true;
+				$this->initializeAuth();
 				$this->onBadCreditentials ();
+				$this->finalizeAuth();
 			}
 		}
 	}
@@ -225,7 +229,9 @@ abstract class AuthController extends Controller {
 	 */
 	public function finalize() {
 		if (! UResponse::isJSON ()) {
-			$this->finalizeAuth ();
+			if(Startup::getAction()!=='connect') {
+				$this->finalizeAuth();
+			}
 			$this->jquery->execAtLast ( "if($('#_userInfo').length){\$('#_userInfo').html(" . preg_replace ( "/$\R?^/m", "", Javascript::prep_element ( $this->info () ) ) . ");}" );
 			if ($this->_compileJS) {
 				echo $this->jquery->compile ();
@@ -242,7 +248,9 @@ abstract class AuthController extends Controller {
 	 * @see \Ubiquity\controllers\ControllerBase::initialize()
 	 */
 	public function initialize() {
-		$this->initializeAuth ();
+		if(Startup::getAction()!=='connect') {
+			$this->initializeAuth();
+		}
 	}
 
 	protected function initializeAuth() {
