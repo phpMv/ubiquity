@@ -64,13 +64,14 @@ class ViewRepository {
 	 *
 	 * @param string $condition
 	 * @param bool|string $included
+	 * @param array $parameters
 	 * @param bool $useCache
 	 * @param string $viewVar
 	 * @return ?object
 	 * @throws \Ubiquity\exceptions\DAOException
 	 */
-	public function one(string $condition = '', $included = true, bool $useCache = false, string $viewVar = 'one'): ?object {
-		$this->view->setVar ( $viewVar, $r = DAO::getOne ( $this->model, $condition, $included, $useCache ) );
+	public function one(string $condition = '', $included = true, array $parameters = [ ], bool $useCache = false, string $viewVar = 'one'): ?object {
+		$this->view->setVar ( $viewVar, $r = DAO::getOne ( $this->model, $condition, $included, $parameters, $useCache ) );
 		return $r;
 	}
 
