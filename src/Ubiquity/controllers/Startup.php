@@ -46,7 +46,7 @@ class Startup {
 	protected static function startTemplateEngine(&$config): void {
 		try {
 			$templateEngine = $config ['templateEngine'];
-			$engineOptions = $config ['templateEngineOptions'] ?? ['cache' => false ];
+			$engineOptions = $config ['templateEngineOptions'] ?? [ 'cache' => false ];
 			$engine = new $templateEngine ( $engineOptions );
 			if ($engine instanceof TemplateEngine) {
 				self::$templateEngine = $engine;
@@ -112,7 +112,7 @@ class Startup {
 	 *
 	 * @return TemplateEngine
 	 */
-	public static function getTempateEngineInstance(): ?TemplateEngine {
+	public static function getTemplateEngineInstance(): ?TemplateEngine {
 		$config = self::$config;
 		if (isset ( $config ['templateEngine'] )) {
 			$templateEngine = $config ['templateEngine'];
@@ -183,7 +183,7 @@ class Startup {
 		if (isset ( self::$config ['di'] )) {
 			$di = self::$config ['di'];
 			if (\is_array ( $di )) {
-				self::$actionParams += \array_values($di);
+				self::$actionParams += \array_values ( $di );
 			}
 		}
 		$func = $u [0];
