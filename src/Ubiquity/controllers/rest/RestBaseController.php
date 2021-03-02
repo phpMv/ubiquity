@@ -3,6 +3,8 @@ namespace Ubiquity\controllers\rest;
 
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Controller;
+use Ubiquity\controllers\rest\formatters\ResponseFormatter;
+use Ubiquity\controllers\rest\traits\RestControllerUtilitiesTrait;
 use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\UString;
@@ -35,9 +37,13 @@ abstract class RestBaseController extends Controller {
 
 	/**
 	 *
-	 * @var ResponseFormatter
+	 * @var formatters\ResponseFormatter
 	 */
 	protected $responseFormatter;
+	/**
+	 * @var formatters\RequestFormatter 
+	 */
+	protected $requestFormatter;
 
 	/**
 	 *
@@ -55,6 +61,7 @@ abstract class RestBaseController extends Controller {
 			$this->server = $this->_getRestServer();
 			$this->server->cors();
 			$this->responseFormatter = $this->_getResponseFormatter();
+			$this->requestFormatter=$this->_getRequestFormatter();
 			$this->server->_setContentType($this->contentType);
 			$this->restCache = CacheManager::getRestCacheController(\get_class($this));
 		}
@@ -72,9 +79,21 @@ abstract class RestBaseController extends Controller {
 	public function isValid($action) {
 		if (isset($this->restCache['authorizations'])) {
 			if (\array_search($action, $this->restCache['authorizations']) !== false) {
-				return $this->server->isValid();
+				return $this->server->isValid(function($datas=null) use($action) {$this->checkPermissions($action,$datas);});
 			}
 		}
+		return true;
+	}
+
+	/**
+	 * To override in derived classes.
+	 * Check if the datas in the authorization token allows access to the action.
+	 * If the token is expired, this method is not used.
+	 * @param $action
+	 * @param mixed $datas datas in authorization token
+	 * @return bool
+	 */
+	protected function checkPermissions($action,$datas=null){
 		return true;
 	}
 
@@ -86,7 +105,7 @@ abstract class RestBaseController extends Controller {
 	 */
 	protected function requireAuth($action) {
 		if (isset($this->restCache["authorizations"])) {
-			return array_search($action, $this->restCache["authorizations"]) !== false;
+			return \array_search($action, $this->restCache["authorizations"]) !== false;
 		}
 		return false;
 	}
@@ -96,7 +115,7 @@ abstract class RestBaseController extends Controller {
 	}
 
 	/**
-	 * Realize the connection to the server
+	 * Realize the connection to the server.
 	 * To override in derived classes to define your own authentication
 	 */
 	public function connect() {
@@ -140,6 +159,26 @@ abstract class RestBaseController extends Controller {
 			$this->_setResponseCode(500);
 			echo $this->_getResponseFormatter()->formatException($e);
 		}
+	}
+	/**
+	 * Returns all the instances from the model $resource.
+	 * Query parameters:
+	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
+	 * - **page[number]**: The page to display (in this case, the page size is set to 1).
+	 * - **page[size]**: The page size (count of instance per page) (default: 1).
+	 *
+	 */
+	public function _getAll(){
+		$filter = $this->getCondition ( $this->getRequestParam ( 'filter', '1=1' ) );
+		$pages = null;
+		if (isset ( $_GET ['page'] )) {
+			$pageNumber = $_GET ['page'] ['number'];
+			$pageSize = $_GET ['page'] ['size'] ?? 1;
+			$pages = $this->generatePagination ( $filter, $pageNumber, $pageSize );
+		}
+		$datas = DAO::getAll ( $this->model, $filter, $this->getInclude ( $this->getRequestParam ( 'include', true ) ) );
+		echo $this->_getResponseFormatter ()->get ( $datas, $pages );
 	}
 
 	/**
@@ -248,10 +287,37 @@ abstract class RestBaseController extends Controller {
 			if ($this->_validateInstance($instance, $fields, [
 				'id' => false
 			])) {
-				return $this->AddOperation($instance, $datas, true);
+				return $this->addOperation($instance, $datas, true);
 			}
 			return null;
 		}, 'inserted', 'Unable to insert the instance', []);
+	}
+
+	/**
+	 * Returns an associated member value(s).
+	 * Query parameters:
+	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 *
+	 * @param string $id The primary key value(s), if the primary key is composite, use a comma to separate the values (e.g. 1,115,AB)
+	 * @param string $member The member to load
+	 *
+	 */
+	public function _getRelationShip($id, $member) {
+		$relations = OrmUtils::getAnnotFieldsInRelations ( $this->model );
+		if (isset ( $relations [$member] )) {
+			$include = $this->getRequestParam ( 'include', true );
+			switch ($relations [$member] ['type']) {
+				case 'manyToOne' :
+					$this->_getManyToOne ( $id, $member, $include );
+					break;
+				case 'oneToMany' :
+					$this->_getOneToMany ( $id, $member, $include );
+					break;
+				case 'manyToMany' :
+					$this->_getManyToMany ( $id, $member, $include );
+					break;
+			}
+		}
 	}
 
 	/**

@@ -1,7 +1,10 @@
 <?php
 
-namespace Ubiquity\controllers\rest;
+namespace Ubiquity\controllers\rest\traits;
 
+use Ubiquity\controllers\rest\formatters\RequestFormatter;
+use Ubiquity\controllers\rest\formatters\ResponseFormatter;
+use Ubiquity\controllers\rest\RestServer;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\UString;
 use Ubiquity\utils\http\URequest;
@@ -16,8 +19,9 @@ use Ubiquity\orm\parser\Reflexion;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  * @property ResponseFormatter $responseFormatter
+ * @property RequestFormatter $requestFormatter
  * @property RestServer $server
  * @property string $model
  *
@@ -28,7 +32,7 @@ trait RestControllerUtilitiesTrait {
 	abstract public function _setResponseCode($value);
 
 	protected function getDatas() {
-		return URequest::getDatas ();
+		return $this->_getRequestFormatter()->getDatas($this->model);
 	}
 
 	/**
@@ -38,10 +42,7 @@ trait RestControllerUtilitiesTrait {
 	 * @return string|boolean
 	 */
 	protected function getRequestParam($param, $default) {
-		if (isset ( $_GET [$param] )) {
-			return $_GET [$param];
-		}
-		return $default;
+		return $_GET[$param]??$default;
 	}
 
 	protected function operate_($instance, $callback, $status, $exceptionMessage, $keyValues) {
@@ -80,13 +81,13 @@ trait RestControllerUtilitiesTrait {
 		return DAO::update ( $instance, $updateMany );
 	}
 
-	protected function AddOperation($instance, $datas, $insertMany = false) {
+	protected function addOperation($instance, $datas, $insertMany = false) {
 		return DAO::insert ( $instance, $insertMany );
 	}
 
 	/**
 	 *
-	 * @return \Ubiquity\controllers\rest\ResponseFormatter
+	 * @return \Ubiquity\controllers\rest\formatters\ResponseFormatter
 	 */
 	protected function _getResponseFormatter() {
 		if (! isset ( $this->responseFormatter )) {
@@ -96,12 +97,32 @@ trait RestControllerUtilitiesTrait {
 	}
 
 	/**
-	 * To override, returns the active formatter for the response
+	 * To override, returns the active formatter for the response.
 	 *
-	 * @return \Ubiquity\controllers\rest\ResponseFormatter
+	 * @return \Ubiquity\controllers\rest\formatters\ResponseFormatter
 	 */
 	protected function getResponseFormatter(): ResponseFormatter {
 		return new ResponseFormatter ();
+	}
+
+	/**
+	 *
+	 * @return \Ubiquity\controllers\rest\formatters\RequestFormatter
+	 */
+	protected function _getRequestFormatter() {
+		if (! isset ( $this->requestFormatter )) {
+			$this->requestFormatter = $this->getRequestFormatter ();
+		}
+		return $this->requestFormatter;
+	}
+
+	/**
+	 * To override, returns the active formatter for the request.
+	 *
+	 * @return \Ubiquity\controllers\rest\formatters\RequestFormatter
+	 */
+	protected function getRequestFormatter(): RequestFormatter {
+		return new RequestFormatter ();
 	}
 
 	protected function _getRestServer() {
@@ -126,6 +147,7 @@ trait RestControllerUtilitiesTrait {
 	 *
 	 * @param object $instance the instance to update
 	 * @param array $values
+	 *
 	 */
 	protected function _setValuesToObject($instance, $values = [ ]) {
 		if (URequest::isJSON ()) {

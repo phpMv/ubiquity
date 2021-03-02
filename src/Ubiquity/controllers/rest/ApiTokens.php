@@ -10,7 +10,7 @@ use Ubiquity\cache\system\ArrayCache;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class ApiTokens {
@@ -57,9 +57,13 @@ class ApiTokens {
 		return true;
 	}
 
-	public function addToken() {
+	public function addToken($datas=null) {
 		$key = $this->generateToken ();
-		$this->tokens [$key] = [ 'creationTime' => \time () ];
+		$token=[ 'creationTime' => \time () ];
+		if(isset($datas)){
+			$token['datas']=$datas;
+		}
+		$this->tokens [$key] = $token;
 		return $key;
 	}
 

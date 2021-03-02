@@ -1,7 +1,8 @@
 <?php
 
-namespace Ubiquity\controllers\rest;
+namespace Ubiquity\controllers\rest\formatters;
 
+use Ubiquity\controllers\rest\RestError;
 use Ubiquity\utils\base\UString;
 
 /**
@@ -10,7 +11,7 @@ use Ubiquity\utils\base\UString;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 class ResponseFormatter {
@@ -24,7 +25,7 @@ class ResponseFormatter {
 	 */
 	public function get($objects, $pages = null) {
 		$objects = $this->getDatas ( $objects );
-		return $this->format ( [ "datas" => $objects,"count" => \sizeof ( $objects ) ] );
+		return $this->format ( $objects );
 	}
 
 	/**
@@ -76,7 +77,7 @@ class ResponseFormatter {
 	 * @return string
 	 */
 	public function getOne($object) {
-		return $this->format ( [ "data" => $this->cleanRestObject ( $object ) ] );
+		return $this->format ($this->cleanRestObject ( $object ));
 	}
 
 	/**

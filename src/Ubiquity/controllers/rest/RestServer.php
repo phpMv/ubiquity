@@ -40,8 +40,8 @@ class RestServer {
 	public function __construct(&$config, $headers = null) {
 		$this->config = $config;
 		$this->headers = [ 'Access-Control-Allow-Origin' => '*','Access-Control-Allow-Credentials' => 'true','Access-Control-Max-Age' => '86400','Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD','Content-Type' => 'application/json; charset=utf8' ];
-		if (is_array ( $headers )) {
-			$this->headers = array_merge ( $this->headers, $headers );
+		if (\is_array ( $headers )) {
+			$this->headers = \array_merge ( $this->headers, $headers );
 		}
 	}
 
@@ -50,28 +50,32 @@ class RestServer {
 	 *
 	 * @return array
 	 */
-	public function connect() {
+	public function connect($datas=null) {
 		if (! isset ( $this->apiTokens )) {
 			$this->apiTokens = $this->_loadApiTokens ();
 		}
-		$token = $this->apiTokens->addToken ();
+		$token = $this->apiTokens->addToken ($datas);
 		$this->_addHeaderToken ( $token );
 		return [ "access_token" => $token,"token_type" => "Bearer","expires_in" => $this->apiTokens->getDuration () ];
 	}
 
 	/**
 	 * Check if token is valid
-	 *
+	 * @param callable $callback
 	 * @return boolean
 	 */
-	public function isValid() {
+	public function isValid($callback) {
 		$this->apiTokens = $this->_loadApiTokens ();
 		$key = $this->_getHeaderToken ();
 		if ($this->apiTokens->isExpired ( $key )) {
 			return false;
 		} else {
-			$this->_addHeaderToken ( $key );
-			return true;
+			$token=$this->apiTokens->getToken($key);
+			if($callback($token['datas']??null)) {
+				$this->_addHeaderToken($key);
+				return true;
+			}
+			return false;
 		}
 	}
 
@@ -79,7 +83,7 @@ class RestServer {
 		$authHeader = $this->_getHeader ( "Authorization" );
 		if ($authHeader !== false) {
 			$headerDatas = explode ( " ", $authHeader, 2 );
-			if (sizeof ( $headerDatas ) === 2) {
+			if (\count( $headerDatas ) === 2) {
 				list ( $type, $data ) = $headerDatas;
 				if (\strcasecmp ( $type, "Bearer" ) == 0) {
 					return $data;
