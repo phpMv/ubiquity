@@ -3,7 +3,6 @@
 namespace controllers;
 
 use Ubiquity\contents\normalizers\NormalizersManager;
-use Ubiquity\controllers\rest\RestController;
 use Ubiquity\events\EventsManager;
 use eventListener\DefineLocaleEventListener;
 use models\User;
@@ -11,13 +10,14 @@ use normalizer\UserNormalizer;
 use models\Organization;
 use normalizer\OrgaNormalizer;
 use Ubiquity\orm\DAO;
+use Ubiquity\controllers\rest\RestBaseController;
 
 /**
  *
  * @route("/rest/benchmark","inherited"=>false,"automated"=>false)
  * @rest("resource"=>"")
  */
-class RestApiController extends RestController {
+class RestApiController extends RestBaseController {
 
 	public function initialize() {
 	}

@@ -2,14 +2,14 @@
 
 namespace controllers;
 
-use Ubiquity\controllers\rest\RestController;
+use Ubiquity\controllers\rest\RestBaseController;
 
 /**
  *
  * @route("/rest/test","inherited"=>false,"automated"=>false)
  * @rest("resource"=>"")
  */
-class TestRestController extends RestController {
+class TestRestController extends RestBaseController {
 
 	public function initialize() {
 	}
