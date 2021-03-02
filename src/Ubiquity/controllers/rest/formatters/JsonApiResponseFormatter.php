@@ -43,20 +43,20 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 		$o = $o->_rest;
 		foreach ( $o as $k => $v ) {
 			if (isset ( $fieldsInRelations [$k] )) {
-				$rClassname=$fieldsInRelations [$k] ['className'];
+				$rClassname = $fieldsInRelations [$k] ['className'] ?? $fieldsInRelations [$k] ['targetEntity'];
 				$rFrontClassname = $this->getFrontClassname ( $rClassname );
 				$member = $fieldsInRelations [$k] ['member'] ?? $k;
 				if (isset ( $v->_rest )) {
-					$pkf=OrmUtils::getFirstKey($rClassname);
-					$r ['relationships'] [$member] ['data'] = [ 'id' =>$v->_rest[$pkf],'type' => $rFrontClassname ];
-					$this->_included[] = $this->cleanRestObject ( $v );
+					$pkf = OrmUtils::getFirstKey ( $rClassname );
+					$r ['relationships'] [$member] ['data'] = [ 'id' => $v->_rest [$pkf],'type' => $rFrontClassname ];
+					$this->_included [] = $this->cleanRestObject ( $v );
 				} elseif (\is_array ( $v )) {
 					foreach ( $v as $index => $value ) {
 						if (isset ( $value->_rest )) {
-							$this->_included[] = $this->cleanRestObject($value);
+							$this->_included [] = $this->cleanRestObject ( $value );
 						}
-						$pkf=OrmUtils::getFirstKey($rClassname);
-						$r ['relationships'] [$member] ['data'] []= [ 'id' => $value->_rest[$pkf],'type' => $rFrontClassname ];
+						$pkf = OrmUtils::getFirstKey ( $rClassname );
+						$r ['relationships'] [$member] ['data'] [] = [ 'id' => $value->_rest [$pkf],'type' => $rFrontClassname ];
 					}
 				} else {
 					if (isset ( $v )) {
@@ -97,7 +97,7 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 		$r ['relationships'] [$member] ['links'] = [ $this->getLink ( $this->relationLink, [ "baseRoute" => $this->baseRoute,'id' => $pk,'member' => $member,'classname' => $frontClassname ] ),$this->getLink ( $this->selfLink, [ "baseRoute" => $this->baseRoute,'id' => $pkMember,'classname' => $rFrontClassname ] ) ];
 	}
 
-	private function getLink($pattern, $params = []) {
+	private function getLink($pattern, $params = [ ]) {
 		$r = $pattern;
 		foreach ( $params as $k => $v ) {
 			$r = \str_replace ( '%' . $k . '%', $v, $r );
@@ -117,8 +117,8 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 	public function get($objects, $pages = null) {
 		$objects = $this->getDatas ( $objects, $classname );
 		$r = [ 'data' => $objects ];
-		if(\count($this->_included)>0){
-			$r['included']=$this->_included;
+		if ($this->_included && \count ( $this->_included ) > 0) {
+			$r ['included'] = $this->_included;
 		}
 		if (isset ( $pages ) && \count ( $objects ) > 0) {
 			$this->addPageLinks ( $r, $this->getFrontClassname ( $classname ), $pages );
@@ -127,17 +127,16 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 	}
 
 	/**
+	 *
 	 * @param object $object
 	 * @return string
 	 */
 	public function getOne($object) {
-		$r= [ "data" => $this->cleanRestObject ( $object ) ] ;
-		if(\count($this->_included)>0){
-			$r['included']=$this->_included;
+		$r = [ "data" => $this->cleanRestObject ( $object ) ];
+		if (\count ( $this->_included ) > 0) {
+			$r ['included'] = $this->_included;
 		}
 		return $this->format ( $r );
 	}
-
-
 }
 
