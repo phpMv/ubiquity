@@ -54,7 +54,7 @@ trait ControllerParserPathTrait {
 	}
 
 	public static function cleanpath($prefix, $path = "") {
-		$path = str_replace ( '//', '/', $path );
+		$path = \str_replace ( '//', '/', $path );
 		if ($prefix !== '' && ! UString::startswith ( $prefix, '/' )) {
 			$prefix = '/' . $prefix;
 		}
@@ -68,7 +68,7 @@ trait ControllerParserPathTrait {
 		if (! UString::endswith ( $path, '/' ) && ! UString::endswith ( $path, '(.*?)' ) && ! UString::endswith ( $path, '(index/)?' )) {
 			$path = $path . '/';
 		}
-		return $path;
+		return \str_replace ( '//', '/', $path );
 	}
 
 	// TODO check
