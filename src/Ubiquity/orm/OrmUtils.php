@@ -4,9 +4,9 @@ namespace Ubiquity\orm;
 
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\CacheManager;
-use Ubiquity\controllers\rest\ResponseFormatter;
 use Ubiquity\orm\traits\OrmUtilsRelationsTrait;
 use Ubiquity\orm\traits\OrmUtilsFieldsTrait;
+use Ubiquity\controllers\rest\formatters\ResponseFormatter;
 
 /**
  * Object/relational mapping utilities
