@@ -110,8 +110,12 @@ class CRUDHelper {
 					$fkClass = $joinColumn ["className"];
 					$fkField = $joinColumn ["name"];
 					if (isset ( $values [$fkField] )) {
-						$fkObject = DAO::getById ( $fkClass, $values ["$fkField"] );
-						Reflexion::setMemberValue ( $instance, $member, $fkObject );
+						if ($values [$fkField] != null) {
+							$fkObject = DAO::getById ( $fkClass, $values ["$fkField"] );
+							Reflexion::setMemberValue ( $instance, $member, $fkObject );
+						} elseif ($joinColumn ["nullable"] ?? false) {
+							Reflexion::setMemberValue ( $instance, $member, null );
+						}
 					}
 				}
 			}

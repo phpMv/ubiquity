@@ -49,6 +49,7 @@ trait FormModelViewerTrait {
 				$fkObject = new $fkClass ();
 			}
 			$fkId = OrmUtils::getFirstKey ( $fkClass );
+
 			$fkIdGetter = "get" . \ucfirst ( $fkId );
 			if (\method_exists ( $fkObject, "__toString" ) && \method_exists ( $fkObject, $fkIdGetter )) {
 				$fkField = $joinColumn ["name"];
@@ -56,7 +57,13 @@ trait FormModelViewerTrait {
 				if (! Reflexion::setMemberValue ( $instance, $fkField, $fkValue )) {
 					$instance->{$fkField} = OrmUtils::getFirstKeyValue ( $fkObject );
 				}
-				$form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ) );
+				$attr = [ ];
+				if (OrmUtils::isNullable ( $className, $member )) {
+					$attr = [ 'jsCallback' => function ($elm) {
+						$elm->getField ()->setClearable ( true );
+					} ];
+				}
+				$form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), false, $attr );
 				$form->setCaption ( $fkField, \ucfirst ( $member ) );
 			}
 		}

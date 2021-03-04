@@ -229,6 +229,9 @@ trait OrmUtilsRelationsTrait {
 							$fkName = self::getJoinColumnName ( $class, $member );
 							$ret [$fkName] = \current ( $keyValues );
 						}
+					} elseif (self::isNullable ( $class, $member )) {
+						$fkName = self::getJoinColumnName ( $class, $member );
+						$ret [$fkName] = null;
 					}
 				}
 			}
