@@ -62,8 +62,12 @@ trait FormModelViewerTrait {
 					$attr = [ 'jsCallback' => function ($elm) {
 						$elm->getField ()->setClearable ( true );
 					} ];
+				} else {
+					$attr = [ 'jsCallback' => function ($elm) {
+						$elm->addRules ( [ 'empty' ] );
+					} ];
 				}
-				$form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), false, $attr );
+				$dd = $form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), false, $attr );
 				$form->setCaption ( $fkField, \ucfirst ( $member ) );
 			}
 		}
@@ -148,9 +152,9 @@ trait FormModelViewerTrait {
 		$this->setFormFields_ ( $fields, $relFields );
 		\array_unshift ( $fields, '_message' );
 		$form->setFields ( $fields );
-
+		$form->setDefaultValueFunction ( $defaultValueFunction );
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
-		$this->setFormFieldsComponent ( $form, $fieldTypes );
+		$this->setFormFieldsComponent ( $form, $fieldTypes, OrmUtils::getNullableFields ( $className ) );
 		$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields );
 		OrmUtils::setFieldToMemberNames ( $fields, $relFields );
 		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
@@ -258,9 +262,10 @@ trait FormModelViewerTrait {
 	 *
 	 * @param DataForm $form
 	 * @param array $fieldTypes associative array of field names (keys) and types (values)
+	 * @param ?array $nullableFields
 	 */
-	public function setFormFieldsComponent(DataForm $form, $fieldTypes) {
-		$this->setFormFieldsComponent_ ( $form, $fieldTypes );
+	public function setFormFieldsComponent(DataForm $form, $fieldTypes, $nullableFields = [ ]) {
+		$this->setFormFieldsComponent_ ( $form, $fieldTypes, $nullableFields );
 	}
 
 	/**
@@ -273,33 +278,54 @@ trait FormModelViewerTrait {
 		$this->setFormFieldsComponent_ ( $form, $fieldTypes );
 	}
 
-	protected function setFormFieldsComponent_(DataForm $form, $fieldTypes) {
+	protected function setFormFieldsComponent_(DataForm $form, $fieldTypes, $nullableFields = [ ]) {
 		foreach ( $fieldTypes as $property => $type ) {
+			$rules = [ ];
+			$hasRules = false;
+			$noPName = false;
+			$noPType = false;
+			if (\array_search ( $property, $nullableFields ) === false) {
+				$rules = [ 'empty' ];
+				$hasRules = true;
+			}
 			switch ($property) {
-				case "password" :
-					$form->fieldAsInput ( $property, [ "inputType" => "password" ] );
-					$form->setValidationParams ( [ "inline" => true ] );
+				case 'password' :
+					$form->fieldAsInput ( $property, [ 'inputType' => 'password','rules' => $rules ] );
+					$form->setValidationParams ( [ 'inline' => true ] );
 					break;
-				case "email" :
-				case "mail" :
-					$form->fieldAsInput ( $property, [ "inputType" => "email","rules" => [ [ "email" ] ] ] );
+				case 'email' :
+				case 'mail' :
+					$rules [] = 'email';
+					$form->fieldAsInput ( $property, [ 'inputType' => 'email','rules' => $rules ] );
 					break;
+				default :
+					$noPName = true;
 			}
 
 			switch ($type) {
-				case "tinyint(1)" :
-					$form->fieldAsCheckbox ( $property );
+				case 'tinyint(1)' :
+				case 'bool' :
+				case 'boolean' :
+					$form->fieldAsCheckbox ( $property, [ 'rules' => $rules ] );
 					break;
-				case "int" :
-				case "integer" :
-					$form->fieldAsInput ( $property, [ "inputType" => "number" ] );
+				case 'int' :
+				case 'integer' :
+					$form->fieldAsInput ( $property, [ 'inputType' => 'number','rules' => $rules ] );
 					break;
-				case "date" :
-					$form->fieldAsInput ( $property, [ "inputType" => "date" ] );
+				case 'date' :
+					$form->fieldAsInput ( $property, [ 'inputType' => 'date','rules' => $rules ] );
 					break;
-				case "datetime" :
-					$form->fieldAsInput ( $property, [ "inputType" => "datetime-local" ] );
+				case 'datetime' :
+					$form->fieldAsInput ( $property, [ 'inputType' => 'datetime-local','rules' => $rules ] );
 					break;
+				case 'text' :
+					$form->fieldAsTextarea ( $property, [ 'rules' => $rules ] );
+					break;
+				default :
+					$noPType = true;
+			}
+			if ($noPName && $noPType && $hasRules) {
+				$form->fieldAsInput ( $property, [ 'rules' => $rules ] );
 			}
 		}
 	}
@@ -313,7 +339,7 @@ trait FormModelViewerTrait {
 		if ($field instanceof HtmlFormInput) {
 			if ($field->getDataField ()->getProperty ( 'type' ) == "datetime-local") {
 				$v = $field->getDataField ()->getProperty ( 'value' );
-				$field->getDataField ()->setValue ( date ( "Y-m-d\TH:i:s", strtotime ( $v ) ) );
+				$field->getDataField ()->setValue ( date ( "Y-m-d\TH:i:s", \strtotime ( $v ) ) );
 			}
 		}
 		return;
@@ -337,7 +363,7 @@ trait FormModelViewerTrait {
 	 * @param string $className
 	 */
 	public function getFormCaptions($captions, $className, $instance) {
-		return \array_map ( "ucfirst", $captions );
+		return \array_map ( 'ucfirst', $captions );
 	}
 }
 

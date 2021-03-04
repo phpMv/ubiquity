@@ -133,6 +133,10 @@ trait OrmUtilsFieldsTrait {
 		return \array_diff ( $fieldNames, $notSerializable );
 	}
 
+	public static function getNullableFields($class) {
+		return self::getAnnotationInfo ( $class, "#nullable" );
+	}
+
 	public static function getSerializableMembers($class) {
 		$notSerializable = self::getAnnotationInfo ( $class, "#notSerializable" );
 		$memberNames = \array_keys ( self::getAnnotationInfo ( $class, "#fieldNames" ) );
