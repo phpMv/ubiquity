@@ -8,6 +8,7 @@ use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\HtmlIconGroups;
 use Ajax\semantic\widgets\dataform\DataForm;
 use Ajax\service\JArray;
+use Ubiquity\contents\validation\ValidatorsManager;
 use Ubiquity\controllers\crud\EditMemberParams;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
@@ -152,9 +153,10 @@ trait FormModelViewerTrait {
 		$this->setFormFields_ ( $fields, $relFields );
 		\array_unshift ( $fields, '_message' );
 		$form->setFields ( $fields );
-		$form->setDefaultValueFunction ( $defaultValueFunction );
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
-		$this->setFormFieldsComponent ( $form, $fieldTypes, OrmUtils::getNullableFields ( $className ) );
+		$attrs=ValidatorsManager::getUIConstraints($instance);
+		$this->setFormFieldsComponent ( $form, $fieldTypes,$attrs);
+
 		$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields );
 		OrmUtils::setFieldToMemberNames ( $fields, $relFields );
 		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
@@ -192,7 +194,8 @@ trait FormModelViewerTrait {
 		$form->setFields ( $fields );
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
 		$form->fieldAsHidden ( 0 );
-		$this->setMemberFormFieldsComponent ( $form, $fieldTypes );
+		$attrs=ValidatorsManager::getUIConstraints($instance);
+		$this->setMemberFormFieldsComponent ( $form, $fieldTypes ,$attrs);
 		if ($hasRelations) {
 			$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields );
 		}
@@ -232,7 +235,7 @@ trait FormModelViewerTrait {
 
 	private function setFormFields_(&$fields, $relFields) {
 		$hasRelations = false;
-		$relFields = array_flip ( $relFields );
+		$relFields = \array_flip ( $relFields );
 		foreach ( $fields as $index => $field ) {
 			if (isset ( $relFields [$field] )) {
 				$fields [$index] = $relFields [$field];
@@ -262,10 +265,10 @@ trait FormModelViewerTrait {
 	 *
 	 * @param DataForm $form
 	 * @param array $fieldTypes associative array of field names (keys) and types (values)
-	 * @param ?array $nullableFields
+	 * @param ?array $attributes
 	 */
-	public function setFormFieldsComponent(DataForm $form, $fieldTypes, $nullableFields = [ ]) {
-		$this->setFormFieldsComponent_ ( $form, $fieldTypes, $nullableFields );
+	public function setFormFieldsComponent(DataForm $form, $fieldTypes, $attributes = [ ]) {
+		$this->setFormFieldsComponent_ ( $form, $fieldTypes, $attributes );
 	}
 
 	/**
@@ -273,30 +276,27 @@ trait FormModelViewerTrait {
 	 *
 	 * @param DataForm $form
 	 * @param array $fieldTypes associative array of field names (keys) and types (values)
+	 * @param array $attributes
 	 */
-	public function setMemberFormFieldsComponent(DataForm $form, $fieldTypes) {
-		$this->setFormFieldsComponent_ ( $form, $fieldTypes );
+	public function setMemberFormFieldsComponent(DataForm $form, $fieldTypes,$attributes=[]) {
+		$this->setFormFieldsComponent_ ( $form, $fieldTypes ,$attributes);
 	}
 
-	protected function setFormFieldsComponent_(DataForm $form, $fieldTypes, $nullableFields = [ ]) {
+	protected function setFormFieldsComponent_(DataForm $form, $fieldTypes, $attributes = [ ]) {
 		foreach ( $fieldTypes as $property => $type ) {
-			$rules = [ ];
-			$hasRules = false;
+			$rules = $attributes[$property]??[];
+			if($hasRules = \count($rules)>0){
+				$form->setValidationParams(["on"=>"blur","inline"=>true]);
+			}
 			$noPName = false;
 			$noPType = false;
-			if (\array_search ( $property, $nullableFields ) === false) {
-				$rules = [ 'empty' ];
-				$hasRules = true;
-			}
 			switch ($property) {
 				case 'password' :
-					$form->fieldAsInput ( $property, [ 'inputType' => 'password','rules' => $rules ] );
-					$form->setValidationParams ( [ 'inline' => true ] );
+					$form->fieldAsInput ( $property, ['inputType'=>'password']+$rules );
 					break;
 				case 'email' :
 				case 'mail' :
-					$rules [] = 'email';
-					$form->fieldAsInput ( $property, [ 'inputType' => 'email','rules' => $rules ] );
+					$form->fieldAsInput ( $property,$rules);
 					break;
 				default :
 					$noPName = true;
@@ -306,26 +306,26 @@ trait FormModelViewerTrait {
 				case 'tinyint(1)' :
 				case 'bool' :
 				case 'boolean' :
-					$form->fieldAsCheckbox ( $property, [ 'rules' => $rules ] );
+					$form->fieldAsCheckbox ( $property, \array_diff($rules['rules']??[],['empty']));
 					break;
 				case 'int' :
 				case 'integer' :
-					$form->fieldAsInput ( $property, [ 'inputType' => 'number','rules' => $rules ] );
+					$form->fieldAsInput ( $property, [ 'inputType' => 'number']+$rules );
 					break;
 				case 'date' :
-					$form->fieldAsInput ( $property, [ 'inputType' => 'date','rules' => $rules ] );
+					$form->fieldAsInput ( $property, [ 'inputType' => 'date']+$rules );
 					break;
 				case 'datetime' :
-					$form->fieldAsInput ( $property, [ 'inputType' => 'datetime-local','rules' => $rules ] );
+					$form->fieldAsInput ( $property, [ 'inputType' => 'datetime-local']+$rules );
 					break;
 				case 'text' :
-					$form->fieldAsTextarea ( $property, [ 'rules' => $rules ] );
+					$form->fieldAsTextarea ( $property, $rules );
 					break;
 				default :
 					$noPType = true;
 			}
-			if ($noPName && $noPType && $hasRules) {
-				$form->fieldAsInput ( $property, [ 'rules' => $rules ] );
+			if ($hasRules && $noPName && $noPType) {
+				$form->fieldAsInput ( $property, $rules );
 			}
 		}
 	}

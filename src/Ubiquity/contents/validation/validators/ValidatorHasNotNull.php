@@ -16,5 +16,12 @@ abstract class ValidatorHasNotNull extends Validator implements HasNotNullInterf
 			throw new ValidatorException ( 'This value can not be converted to string' );
 		}
 	}
+
+	public function asUI(): array {
+		if ($this->notNull) {
+			return [ 'rules' => [ 'empty' ] ];
+		}
+		return [ ];
+	}
 }
 
