@@ -3,7 +3,7 @@
 namespace Ubiquity\contents\validation\validators\multiples;
 
 /**
- * Validate int identifiers (notNull positive integer)
+ * Validate int identifiers (notNull positive integer).
  * @author jc
  */
 class IdValidator extends ValidatorMultiple {
@@ -11,8 +11,8 @@ class IdValidator extends ValidatorMultiple {
 	public function __construct(){
 		parent::__construct();
 		$this->message=array_merge($this->message,[
-				"positive"=>"This value must be positive",
-				"type"=>"This value must be an integer"
+				'positive'=>'This value must be positive',
+				'type'=>'This value must be an integer'
 		]);
 	}
 	
@@ -21,11 +21,11 @@ class IdValidator extends ValidatorMultiple {
 			return false;
 		}
 		if($value!=(int)$value){
-			$this->violation="type";
+			$this->violation='type';
 			return false;
 		}
 		if($value<=0){
-			$this->violation="positive";
+			$this->violation='positive';
 			return false;
 		}
 		return true;
@@ -36,7 +36,7 @@ class IdValidator extends ValidatorMultiple {
 	 * @see \Ubiquity\contents\validation\validators\Validator::getParameters()
 	 */
 	public function getParameters(): array {
-		return ["value"];
+		return ['value'];
 	}
 	/**
 	 * {@inheritDoc}
@@ -49,8 +49,14 @@ class IdValidator extends ValidatorMultiple {
 		}
 	}
 
-	
-	
-
+	/**
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\contents\validation\validators\Validator::asUI()
+	 */
+	public function asUI(): array {
+		$rules[] = ['type' => 'regExp', 'prompt' => $this->_getMessage()['positive'], 'value' => '^[1-9]+$|^$'];
+		return \array_merge_recursive(parent::asUI () , ['inputType'=>'number','rules' => $rules]);
+	}
 }
 

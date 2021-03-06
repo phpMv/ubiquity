@@ -2,6 +2,7 @@
 
 namespace Ubiquity\contents\validation\validators\comparison;
 
+use Ajax\semantic\components\validation\CustomRule;
 use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
 /**
@@ -21,7 +22,7 @@ class RangeValidator extends ValidatorHasNotNull {
 	}
 
 	public function validate($value) {
-		parent::validate ( $value );
+		parent::validate($value);
 		if ($this->notNull !== false) {
 			return $value >= $this->min && $value <= $this->max;
 		}
@@ -34,7 +35,17 @@ class RangeValidator extends ValidatorHasNotNull {
 	 * @see \Ubiquity\contents\validation\validators\Validator::getParameters()
 	 */
 	public function getParameters(): array {
-		return [ "min","max","value" ];
+		return ['min', 'max', 'value'];
+	}
+
+	/**
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\contents\validation\validators\Validator::asUI()
+	 */
+	public function asUI(): array {
+		$rule = new CustomRule('range', "function(v,minMax){ if(v) {[min,max]=minMax.split(',');v=parseInt(v,10);return v>=parseInt(min,10) && v<=parseInt(max,10);} return true;}", $this->_getMessage(), $this->min . ',' . $this->max);
+		return \array_merge_recursive(parent::asUI(), ['rules' => [$rule]]);
 	}
 }
 

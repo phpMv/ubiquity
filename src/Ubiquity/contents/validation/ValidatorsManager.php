@@ -17,6 +17,7 @@ use Ubiquity\contents\validation\validators\comparison\GreaterThanOrEqualValidat
 use Ubiquity\contents\validation\validators\comparison\GreaterThanValidator;
 use Ubiquity\contents\validation\validators\comparison\LessThanOrEqualValidator;
 use Ubiquity\contents\validation\validators\comparison\LessThanValidator;
+use Ubiquity\contents\validation\validators\comparison\MatchWithValidator;
 use Ubiquity\contents\validation\validators\comparison\RangeValidator;
 use Ubiquity\contents\validation\validators\dates\DateTimeValidator;
 use Ubiquity\contents\validation\validators\dates\DateValidator;
@@ -70,7 +71,9 @@ class ValidatorsManager {
 										'range' => RangeValidator::class,
 										'date' => DateValidator::class,
 										'dateTime' => DateTimeValidator::class,
-										'time' => TimeValidator::class ];
+										'time' => TimeValidator::class,
+										'match'=>MatchWithValidator::class
+	];
 	protected static $key = 'contents/validators/';
 
 	protected static function store($model, $validators) {
@@ -145,6 +148,13 @@ class ValidatorsManager {
 		return self::validate_ ( $instance, $members, $excludedValidators );
 	}
 
+	/**
+	 * Returns an array of UI rules for Javascript validation.
+	 * @param $instance
+	 * @param string $group
+	 * @param array $excludedValidators
+	 * @return array
+	 */
 	public static function getUIConstraints($instance, $group = '', $excludedValidators = [ ]) {
 		$class = \get_class ( $instance );
 		$cache = self::getClassCacheValidators ( $class, $group );

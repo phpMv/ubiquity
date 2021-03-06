@@ -25,7 +25,16 @@ class EqualsValidator extends ValidatorHasNotNull {
 	 * @see \Ubiquity\contents\validation\validators\Validator::getParameters()
 	 */
 	public function getParameters(): array {
-		return [ "ref","value" ];
+		return [ 'ref','value' ];
+	}
+
+	/**
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\contents\validation\validators\Validator::asUI()
+	 */
+	public function asUI(): array {
+		return \array_merge_recursive(parent::asUI () , ['rules' => [['type' => 'is', 'prompt' => $this->_getMessage(), 'value' => $this->ref]]]);
 	}
 }
 

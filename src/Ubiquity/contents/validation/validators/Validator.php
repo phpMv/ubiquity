@@ -23,7 +23,7 @@ abstract class Validator implements ValidatorInterface {
 	public function validate_($value) {
 		$this->value = $value;
 		if (! $this->validate ( $value )) {
-			return new ConstraintViolation ( $this->_getMessage (), $value, $this->member, get_class ( $this ), $this->severity );
+			return new ConstraintViolation ( $this->_getMessage (), $value, $this->member, \get_class ( $this ), $this->severity );
 		}
 		return true;
 	}
@@ -82,7 +82,7 @@ abstract class Validator implements ValidatorInterface {
 		$parameters = $this->getParameters ();
 		$message = $this->mergeMessages ();
 		foreach ( $parameters as $param ) {
-			$message = str_replace ( "{" . $param . "}", $this->$param, $message );
+			$message = \str_replace ( "{" . $param . "}", $this->$param, $message );
 		}
 		return $message;
 	}

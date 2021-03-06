@@ -44,7 +44,14 @@ class UrlValidator extends RegexValidator {
 		$ref = $this->relative ? str_replace('(%s)://', '(?:(%s)://)?', $this->ref) : $this->ref;
 		$this->ref = sprintf($ref, implode('|', $this->protocols));
 	}
-
+	/**
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\contents\validation\validators\Validator::asUI()
+	 */
+	public function asUI(): array {
+		return ['inputType'=>'url']+\array_merge_recursive(parent::asUI () , ['rules' => [ ['type'=>'url','prompt'=>$this->_getMessage()] ]]);
+	}
 	
 }
 

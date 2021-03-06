@@ -16,7 +16,7 @@ class RegexValidator extends ValidatorHasNotNull {
 	protected $match;
 
 	public function __construct() {
-		$this->message = "This value is not valid";
+		$this->message = 'This value is not valid';
 		$this->match = true;
 	}
 
@@ -35,7 +35,16 @@ class RegexValidator extends ValidatorHasNotNull {
 	 * @see \Ubiquity\contents\validation\validators\Validator::getParameters()
 	 */
 	public function getParameters(): array {
-		return [ "value" ];
+		return [ 'value' ];
+	}
+
+	/**
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\contents\validation\validators\Validator::asUI()
+	 */
+	public function asUI(): array {
+		return \array_merge_recursive(parent::asUI () , ['rules'=>[['type' => 'regExp', 'prompt' => $this->_getMessage(), 'value' => $this->ref]]]);
 	}
 }
 
