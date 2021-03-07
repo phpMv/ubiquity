@@ -77,7 +77,7 @@ trait DynamicResourceTrait {
 	 */
 	public function getOne_($resource, $id) {
 		$this->_checkResource ( $resource, function () use ($id) {
-			$this->_getOne ( $id, true, false );
+			$this->_getOne ( $id, $this->getRequestParam ( 'include', false ), false );
 		} );
 	}
 
