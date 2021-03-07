@@ -32,7 +32,7 @@ trait RestControllerUtilitiesTrait {
 	abstract public function _setResponseCode($value);
 
 	protected function getDatas() {
-		return $this->_getRequestFormatter()->getDatas($this->model);
+		return $this->_getRequestFormatter ()->getDatas ( $this->model );
 	}
 
 	/**
@@ -42,7 +42,7 @@ trait RestControllerUtilitiesTrait {
 	 * @return string|boolean
 	 */
 	protected function getRequestParam($param, $default) {
-		return $_GET[$param]??$default;
+		return $_GET [$param] ?? $default;
 	}
 
 	protected function operate_($instance, $callback, $status, $exceptionMessage, $keyValues) {
@@ -274,7 +274,15 @@ trait RestControllerUtilitiesTrait {
 	}
 
 	protected function getCondition($condition) {
-		$condition = urldecode ( $condition );
+		if (\is_array ( $condition )) {
+			$conds = [ ];
+			foreach ( $condition as $f => $v ) {
+				$conds [] = $f . "='" . \urldecode ( $v ) . "'";
+			}
+			$condition = \implode ( ' AND ', $conds );
+		} else {
+			$condition = \urldecode ( $condition );
+		}
 		if (\strpos ( $condition, 'like' ) !== false) {
 			$condition = \str_replace ( '*', '%', $condition );
 		}
