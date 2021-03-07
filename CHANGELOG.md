@@ -18,19 +18,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Validators
 - Model validators can be used on the client side (used by default for CRUD controllers).
 #### Routing
-- Start router cache indexing (for routes avith parameters) => This cache indexing is not yet used in production.
+- Start router cache indexing (for routes with parameters) => This cache indexing is not yet used in production.
 
 #### Fixed
 - fix `Startup::getTemplateEngineInstance` method name.
 - AuthController finalize and initialize pb with bad creditentials(no open issue)
-- Make manyToOne dropdowns clearable in CRUD controllers for null values fk.
+- Make manyToOne dropdowns clearable in CRUD controllers for fk null values.
 - DI parser pb (no open issue)
 ### Breaking change possible
 #### Rest controllers refactoring
-- Removed: SimpleRestController, RestController => Use the RestBaseController or RestResourceController class instead
+- Removed: `SimpleRestController`, `RestController` => Use the `RestBaseController` or `RestResourceController` class instead
 - Added: 
-  - JsonRestController => for simple Json REST API
-  - RequestFormatter, JsonRequestFormatter, JsonApiRequestFormatter => for JSON or url-encoded requests
+  - `JsonRestController` => for simple Json REST API
+  - `RequestFormatter`, `JsonRequestFormatter`, `JsonApiRequestFormatter` => for JSON api, JSON or url-encoded requests
 - Updated (for request with authorization - accesstoken): 
   - The `checkPermissions` method in REST controllers must be overridden to check the data associated with an authentication token.
   - `checkPermissions` must be used in conjunction with the `connect` method to override as well.
