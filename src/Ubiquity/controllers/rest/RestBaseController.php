@@ -114,7 +114,8 @@ abstract class RestBaseController extends Controller {
 	 * To override in derived classes to define your own authentication
 	 */
 	public function connect() {
-		$resp = $this->server->connect ();
+		$datas = null;
+		$resp = $this->server->connect ( $datas );
 		echo $this->_format ( $resp );
 	}
 

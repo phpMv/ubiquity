@@ -21,7 +21,7 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\cache\CacheManager;
 
 class Framework {
-	public const version = '2.4.2';
+	public const version = '2.4.3';
 
 	public static function getVersion() {
 		return self::version;

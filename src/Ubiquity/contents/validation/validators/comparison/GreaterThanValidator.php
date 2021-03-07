@@ -4,11 +4,19 @@ namespace Ubiquity\contents\validation\validators\comparison;
 
 use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
 
+/**
+ * Ubiquity\contents\validation\validators\comparison$GreaterThanValidator
+ * This class is part of Ubiquity
+ *
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 class GreaterThanValidator extends ValidatorHasNotNull {
 	protected $ref;
 
 	public function __construct() {
-		$this->message = "This value should be greater than `{ref}`";
+		$this->message = 'This value should be greater than `{ref}`';
 	}
 
 	public function validate($value) {
@@ -25,7 +33,17 @@ class GreaterThanValidator extends ValidatorHasNotNull {
 	 * @see \Ubiquity\contents\validation\validators\Validator::getParameters()
 	 */
 	public function getParameters(): array {
-		return [ "ref","value" ];
+		return [ 'ref','value' ];
+	}
+
+	/**
+	 *
+	 * {@inheritdoc}
+	 * @see \Ubiquity\contents\validation\validators\Validator::asUI()
+	 */
+	public function asUI(): array {
+		$rule = new CustomRule ( 'greaterthan', "function(v,greaterThan){ return v>greaterThan;}", $this->_getMessage (), $this->ref );
+		return \array_merge_recursive ( parent::asUI (), [ 'rules' => [ $rule ] ] );
 	}
 }
 
