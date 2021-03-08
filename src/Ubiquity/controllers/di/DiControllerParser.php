@@ -15,7 +15,7 @@ use Ubiquity\exceptions\DiException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  * @since Ubiquity 2.1.0
  *
  */
@@ -38,7 +38,11 @@ class DiControllerParser {
 					$type = Reflexion::getPropertyType ( $controllerClass, $propName );
 					if ($type !== false) {
 						if ($this->isInjectable ( $controllerClass, $propName, false )) {
-							$this->getInjectableAutowired ( $type->getName (), $propName );
+							if(\is_string($type)){
+								$this->getInjectableAutowired ( $type, $propName );
+							}elseif($type instanceof \ReflectionProperty){
+								$this->getInjectableAutowired ( $type->getName (), $propName );
+							}
 						}
 					} else {
 						throw new DiException ( sprintf ( '%s property has no type and cannot be autowired!', $propName ) );
