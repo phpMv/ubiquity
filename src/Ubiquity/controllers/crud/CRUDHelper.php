@@ -14,7 +14,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class CRUDHelper {
@@ -160,7 +160,7 @@ class CRUDHelper {
 			$fkClass = $annot ["targetEntity"];
 		} else {
 			$objectFK = Reflexion::getMemberValue ( $instance, $member );
-			if (! is_object ( $objectFK )) {
+			if ($objectFK!=null && ! is_object ( $objectFK )) {
 				$objectFK = DAO::getManyToOne ( $instance, $member, $included );
 			}
 			if (isset ( $objectFK ))
