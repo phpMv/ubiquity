@@ -11,7 +11,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class ConditionParser {
@@ -76,7 +76,7 @@ class ConditionParser {
 	}
 
 	private function addParams($value) {
-		if (! isset($this->params[$value])) {
+		if ($value!=null && ! isset($this->params[$value])) {
 			return $this->params[$value] = true;
 		}
 		return false;
