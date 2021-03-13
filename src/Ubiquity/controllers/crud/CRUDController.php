@@ -8,7 +8,6 @@ use Ubiquity\controllers\crud\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\semantic\MessagesTrait;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
-use Ubiquity\controllers\rest\ResponseFormatter;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\utils\base\UString;
 use Ajax\semantic\html\collections\HtmlMessage;
@@ -106,8 +105,11 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if (isset ( $recordsPerPage )) {
 			if (! is_array ( $grpByFields )) {
 				UResponse::asJSON ();
-				$responseFormatter = new ResponseFormatter ();
-				print_r ( $responseFormatter->getJSONDatas ( $instances ) );
+				$objects = \array_map ( function ($o) {
+					return $o->_rest;
+				}, $instances );
+					
+				echo \json_encode(\array_values ( $objects ));
 			} else {
 				$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 			}
