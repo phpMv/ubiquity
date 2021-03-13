@@ -35,6 +35,18 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$this->style = '';
 		$this->_insertJquerySemantic ();
 	}
+	
+	/**
+	 * Return a JSON representation of $instances for the JsonDataTable component 
+	 * @param array $instances
+	 * @return string
+	 */
+	protected function refreshAsJson($instances){
+		$objects = \array_map ( function ($o) {
+			return $o->_rest;
+		}, $instances );
+		return \json_encode(\array_values ( $objects ));
+	}
 
 	public function _setStyle($elm) {
 		if ($this->style === 'inverted') {
@@ -105,11 +117,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if (isset ( $recordsPerPage )) {
 			if (! is_array ( $grpByFields )) {
 				UResponse::asJSON ();
-				$objects = \array_map ( function ($o) {
-					return $o->_rest;
-				}, $instances );
-					
-				echo \json_encode(\array_values ( $objects ));
+				echo $this->refreshAsJson($instances);
 			} else {
 				$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 			}

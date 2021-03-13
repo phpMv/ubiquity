@@ -122,9 +122,6 @@ trait FormModelViewerTrait {
 		if ($params && isset ( $params [$part] )) {
 			return $params [$part];
 		}
-		$emp = new EditMemberParams ();
-		$emp->setDtId ( $this->getDataTableId () );
-		return $emp;
 	}
 
 	/**
@@ -132,7 +129,7 @@ trait FormModelViewerTrait {
 	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
 	 */
 	protected function defaultEditMemberParams() {
-		return [ "dataTable" => EditMemberParams::dataTable ( $this->getDataTableId () ),"dataElement" => EditMemberParams::dataElement () ];
+		return [ "dataTable" => EditMemberParams::dataTable ( '#'.$this->getDataTableId () ),"dataElement" => EditMemberParams::dataElement () ];
 	}
 
 	/**

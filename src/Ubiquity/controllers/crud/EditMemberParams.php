@@ -10,6 +10,7 @@ use Ajax\JsUtils;
  *
  */
 class EditMemberParams {
+	private $parentId;
 	private $selector;
 	private $event;
 	private $hasButtons;
@@ -17,7 +18,8 @@ class EditMemberParams {
 	private $updateCallback;
 	private $identifierSelector;
 	
-	public function __construct($selector="[data-field]",$event="dblclick",$hasButtons=true,$hasPopup=false,$updateCallback="",$identifierSelector="$(this).closest('tr').attr('data-ajax')"){
+	public function __construct($parentId="",$selector="[data-field]",$event="dblclick",$hasButtons=true,$hasPopup=false,$updateCallback="",$identifierSelector="$(this).closest('tr').attr('data-ajax')"){
+		$this->parentId=$parentId;
 		$this->selector=$selector;
 		$this->event=$event;
 		$this->hasButtons=$hasButtons;
@@ -118,11 +120,11 @@ class EditMemberParams {
 	}
 	
 	public static function dataElement(){
-		return new EditMemberParams("#de td[data-field]","dblclick",true,true,"updateMemberDataElement","$(this).closest('table').attr('data-ajax')");
+		return new EditMemberParams("#de", "td[data-field]","dblclick",true,true,"updateMemberDataElement","$(this).closest('table').attr('data-ajax')");
 	}
-
-	public static function dataTable(){
-		return new EditMemberParams();
+	
+	public static function dataTable($parentId='#lv'){
+		return new EditMemberParams($parentId);
 	}
 	
 	public function compile($baseRoute,JsUtils $jquery,$part=null){
@@ -136,7 +138,7 @@ class EditMemberParams {
 		}else{
 			$before="";
 		}
-		$jquery->postOn($this->event,$this->selector, $baseRoute."/editMember/","{id: ".$this->identifierSelector.",td:$(this).attr('id')".$part."}",$element,["attr"=>"data-field","hasLoader"=>false,"jqueryDone"=>"html","before"=>"$('._memberForm').trigger('endEdit');".$before,"jsCallback"=>$jsCallback]);
+		$jquery->postOn($this->event,$this->selector, $baseRoute."/editMember/","{id: ".$this->identifierSelector.",td:$(this).attr('id')".$part."}",$element,["attr"=>"data-field","hasLoader"=>false,"jqueryDone"=>"html","before"=>"$('._memberForm').trigger('endEdit');".$before,"jsCallback"=>$jsCallback,"listenerOn"=>$this->parentId]);
 		
 	}
 	
