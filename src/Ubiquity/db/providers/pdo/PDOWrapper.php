@@ -10,7 +10,7 @@ use Ubiquity\exceptions\DBException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  * @property \PDO $dbInstance
  *
  */
@@ -236,9 +236,5 @@ class PDOWrapper extends AbstractDbWrapper {
 
 	public function toStringOperator() {
 		return $this->getDriverMetaDatas ()->toStringOperator ();
-	}
-
-	public function getPHPType(string $dbType): string {
-		return $this->getDriverMetaDatas ()->getPHPType ( $dbType );
 	}
 }

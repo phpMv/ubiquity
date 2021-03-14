@@ -133,6 +133,13 @@ abstract class AbstractDbWrapper {
 		return "'" . \addslashes ( $value ) . "'";
 	}
 
+	/**
+	 * 
+	 * @param string $dbType
+	 * @return string
+	 * 
+	 * @deprecated use Database::getPHPType instead
+	 */
 	public function getPHPType(string $dbType): string {
 		return '';
 	}

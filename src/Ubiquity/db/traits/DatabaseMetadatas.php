@@ -2,6 +2,8 @@
 
 namespace Ubiquity\db\traits;
 
+use Ubiquity\db\utils\DbTypes;
+
 /**
  * Retreives metadatas from the database.
  *
@@ -9,7 +11,7 @@ namespace Ubiquity\db\traits;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
  */
@@ -36,7 +38,7 @@ trait DatabaseMetadatas {
 	}
 
 	public function getPHPType(string $dbType): string {
-		return $this->wrapperObject->getPHPType ( $dbType );
+		return DbTypes::asPhpType($dbType);
 	}
 }
 
