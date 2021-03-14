@@ -104,7 +104,7 @@ class ConditionParser {
 			$conditions = [];
 			foreach ($parts as $part => $values) {
 				$values[0] = 'SELECT ? as _id';
-				$conditions[] = ' INNER JOIN (' . \implode(' UNION ALL SELECT ', $values) . ') as _tmp ON ' . $part . '=_tmp._id';
+				$conditions[] = ' INNER JOIN (' . \implode(' UNION ALL SELECT ', $values) . ') as _tmp ON ' . $part . '=cast(_tmp._id as integer)';
 			}
 			$this->condition = \implode(' ', $conditions);
 		} else {
