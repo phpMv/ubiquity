@@ -110,7 +110,7 @@ class ModelViewer {
 		$attributes = $this->controller->_getAdminData ()->getFieldNames ( $model );
 		$this->setDataTableAttributes ( $dataTable, $attributes, $model, $instances );
 		$dataTable->setCaptions ( $this->getCaptions ( $attributes, $model ) );
-
+		$dataTable->setFocusable(true);
 		$dataTable->addClass ( 'small very compact' );
 		$lbl = new HtmlLabel ( 'search-query', "<span id='search-query-content'></span>" );
 		$icon = $lbl->addIcon ( 'delete', false );
