@@ -36,6 +36,8 @@ class ValidationModelGenerator {
 					return $this->getValidatorAnnotFromModel( 'isBool' );
 				}
 				break;
+			case 'boolean':case 'bool':
+				return $this->getValidatorAnnotFromModel( 'isBool' );
 			case 'date' :
 				return $this->getValidatorAnnotFromModel ( 'type', 'date' );
 			case 'datetime' :
