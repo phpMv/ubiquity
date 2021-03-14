@@ -69,7 +69,7 @@ class CRUDHelper {
 
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
 		foreach ( $fieldTypes as $property => $type ) {
-			if ($type == "tinyint(1)") {
+			if (in_array($type, ["tinyint(1)", "boolean"])) {
 				if (isset ( $values [$property] )) {
 					$values [$property] = 1;
 				} else {
