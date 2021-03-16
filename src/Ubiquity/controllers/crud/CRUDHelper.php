@@ -8,13 +8,14 @@ use Ubiquity\orm\DAO;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\cache\database\DbCache;
 use Ubiquity\db\SqlUtils;
+use Ubiquity\db\utils\DbTypes;
 
 /**
  * Ubiquity\controllers\crud$CRUDHelper
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class CRUDHelper {
@@ -24,16 +25,16 @@ class CRUDHelper {
 		return function ($index, $instance) use ($pks) {
 			$values = [ ];
 			foreach ( $pks as $pk ) {
-				$getter = "get" . ucfirst ( $pk );
+				$getter = 'get' . \ucfirst ( $pk );
 				if (\method_exists ( $instance, $getter )) {
 					$values [] = $instance->{$getter} ();
 				}
 			}
-			return implode ( "_", $values );
+			return \implode ( '_', $values );
 		};
 	}
 
-	public static function search($model, $search, $fields, $initialCondition = "1=1") {
+	public static function search($model, $search, $fields, $initialCondition = '1=1') {
 		$words = preg_split ( "@(\s*?(\(|\)|\|\||\&\&)\s*?)@", $search );
 		$params = [ ];
 		$count = \count ( $fields );
@@ -44,12 +45,12 @@ class CRUDHelper {
 			$words = array_filter ( $words, 'strlen' );
 			$condition = "(" . SqlUtils::getSearchWhere ( $like, $fields, '?', '', '' ) . ")";
 			foreach ( $words as $word ) {
-				$word = trim ( $word );
+				$word = \trim ( $word );
 				$params = [ ...$params,...(\array_fill ( 0, $count, "%{$word}%" )) ];
 			}
 
-			$condition = str_replace ( "||", " OR ", $condition );
-			$condition = str_replace ( "&&", " AND ", $condition );
+			$condition = \str_replace ( '||', ' OR ', $condition );
+			$condition = \str_replace ( '&&', ' AND ', $condition );
 			$condition = '(' . $condition . ') AND ' . $initialCondition . '';
 		} else {
 			$condition = $initialCondition;
@@ -60,16 +61,16 @@ class CRUDHelper {
 	public static function update($instance, $values, $setValues = true, $updateMany = true, $eventCallback = null) {
 		$className = \get_class ( $instance );
 		$fieldsInRelationForUpdate = OrmUtils::getFieldsInRelationsForUpdate_ ( $className );
-		$manyToOneRelations = $fieldsInRelationForUpdate ["manyToOne"];
-		$manyToManyRelations = $fieldsInRelationForUpdate ["manyToMany"];
+		$manyToOneRelations = $fieldsInRelationForUpdate ['manyToOne'];
+		$manyToManyRelations = $fieldsInRelationForUpdate ['manyToMany'];
 
-		$members = array_keys ( $values );
-		OrmUtils::setFieldToMemberNames ( $members, $fieldsInRelationForUpdate ["relations"] );
+		$members = \array_keys ( $values );
+		OrmUtils::setFieldToMemberNames ( $members, $fieldsInRelationForUpdate ['relations'] );
 		$update = false;
 
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
 		foreach ( $fieldTypes as $property => $type ) {
-			if (in_array($type, ["tinyint(1)", "boolean"])) {
+			if (DbTypes::isBoolean($type)) {
 				if (isset ( $values [$property] )) {
 					$values [$property] = 1;
 				} else {
@@ -104,16 +105,16 @@ class CRUDHelper {
 
 	protected static function updateManyToOne($manyToOneRelations, $members, $className, $instance, $values) {
 		foreach ( $manyToOneRelations as $member ) {
-			if (array_search ( $member, $members ) !== false) {
-				$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, "#joinColumn", $member );
+			if (\array_search ( $member, $members ) !== false) {
+				$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, '#joinColumn', $member );
 				if ($joinColumn) {
-					$fkClass = $joinColumn ["className"];
-					$fkField = $joinColumn ["name"];
+					$fkClass = $joinColumn ['className'];
+					$fkField = $joinColumn ['name'];
 					if (isset ( $values [$fkField] )) {
 						if ($values [$fkField] != null) {
 							$fkObject = DAO::getById ( $fkClass, $values ["$fkField"] );
 							Reflexion::setMemberValue ( $instance, $member, $fkObject );
-						} elseif ($joinColumn ["nullable"] ?? false) {
+						} elseif ($joinColumn ['nullable'] ?? false) {
 							Reflexion::setMemberValue ( $instance, $member, null );
 						}
 					}
@@ -124,10 +125,10 @@ class CRUDHelper {
 
 	protected static function updateManyToMany($manyToManyRelations, $members, $className, $instance, $values) {
 		foreach ( $manyToManyRelations as $member ) {
-			if (array_search ( $member, $members ) !== false) {
-				if (($annot = OrmUtils::getAnnotationInfoMember ( $className, "#manyToMany", $member )) !== false) {
-					$newField = $member . "Ids";
-					$fkClass = $annot ["targetEntity"];
+			if (\array_search ( $member, $members ) !== false) {
+				if (($annot = OrmUtils::getAnnotationInfoMember ( $className, '#manyToMany', $member )) !== false) {
+					$newField = $member . 'Ids';
+					$fkClass = $annot ['targetEntity'];
 					$fkObjects = DAO::getAll ( $fkClass, self::getMultiWhere ( $values [$newField], $className ) );
 					if (Reflexion::setMemberValue ( $instance, $member, $fkObjects )) {
 						DAO::insertOrUpdateManyToMany ( $instance, $member );
@@ -139,7 +140,7 @@ class CRUDHelper {
 
 	private static function getMultiWhere($ids, $class) {
 		$pk = OrmUtils::getFirstKey ( $class );
-		$ids = explode ( ",", $ids );
+		$ids = explode ( ',', $ids );
 		$idCount = \count ( $ids );
 		if ($idCount < 1)
 			return '';
@@ -152,12 +153,12 @@ class CRUDHelper {
 
 	public static function getFkIntance($instance, $model, $member, $included = false) {
 		$result = [ ];
-		if (($annot = OrmUtils::getAnnotationInfoMember ( $model, "#oneToMany", $member )) !== false) {
+		if (($annot = OrmUtils::getAnnotationInfoMember ( $model, '#oneToMany', $member )) !== false) {
 			$objectFK = DAO::getOneToMany ( $instance, $member, $included );
-			$fkClass = $annot ["className"];
-		} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $model, "#manyToMany", $member )) !== false) {
+			$fkClass = $annot ['className'];
+		} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $model, '#manyToMany', $member )) !== false) {
 			$objectFK = DAO::getManyToMany ( $instance, $member );
-			$fkClass = $annot ["targetEntity"];
+			$fkClass = $annot ['targetEntity'];
 		} else {
 			$objectFK = Reflexion::getMemberValue ( $instance, $member );
 			if ($objectFK!=null && ! is_object ( $objectFK )) {
@@ -168,7 +169,7 @@ class CRUDHelper {
 		}
 		if (isset ( $fkClass )) {
 			$fkTable = OrmUtils::getTableName ( $fkClass );
-			$result [$member] = compact ( "objectFK", "fkClass", "fkTable" );
+			$result [$member] = compact ( 'objectFK', 'fkClass', 'fkTable' );
 		}
 		return $result;
 	}
@@ -178,8 +179,8 @@ class CRUDHelper {
 		$relations = OrmUtils::getFieldsInRelations ( $model );
 		foreach ( $relations as $member ) {
 			$fkInstance = self::getFkIntance ( $instance, $model, $member, $included );
-			if (sizeof ( $fkInstance ) > 0) {
-				$result = array_merge ( $result, $fkInstance );
+			if (\count ( $fkInstance ) > 0) {
+				$result = \array_merge ( $result, $fkInstance );
 			}
 		}
 		return $result;
