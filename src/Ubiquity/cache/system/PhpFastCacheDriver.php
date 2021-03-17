@@ -109,7 +109,7 @@ class PhpFastCacheDriver extends AbstractDataCache {
 			$key = $entry->getKey ();
 			$result [] = new CacheFile ( \ucfirst ( $type ), $key, $entry->getCreationDate ()->getTimestamp (), "", $key );
 		}
-		if (\sizeof ( $result ) === 0)
+		if (\count ( $result ) === 0)
 			$result [] = new CacheFile ( \ucfirst ( $type ), "", "", "" );
 		return $result;
 	}

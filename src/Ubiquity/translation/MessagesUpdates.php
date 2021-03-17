@@ -51,7 +51,7 @@ class MessagesUpdates {
 	}
 
 	public function hasUpdates() {
-		return sizeof ( $this->toUpdate ) > 0 || sizeof ( $this->toDelete ) > 0 || sizeof ( $this->toAdd ) > 0;
+		return \count ( $this->toUpdate ) > 0 || \count ( $this->toDelete ) > 0 || \count ( $this->toAdd ) > 0;
 	}
 
 	public function mergeMessages($messages, $beforeSave = false) {

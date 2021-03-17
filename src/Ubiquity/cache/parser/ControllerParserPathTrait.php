@@ -32,7 +32,7 @@ trait ControllerParserPathTrait {
 			if (! $parameter->isOptional ()) {
 				$pathParts [] = '{' . $parameter->getName () . '}';
 			} else {
-				$pathParts [\sizeof ( $pathParts ) - 1] .= '{~' . $parameter->getName () . '}';
+				$pathParts [\count ( $pathParts ) - 1] .= '{~' . $parameter->getName () . '}';
 			}
 		}
 		return "/" . \implode ( "/", $pathParts );

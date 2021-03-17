@@ -106,7 +106,7 @@ class RedisCacheDriver extends AbstractDataCache {
 			$ttl = $this->cacheInstance->ttl ( $key );
 			$result [] = new CacheFile ( \ucfirst ( $type ), $key, $ttl, "", $key );
 		}
-		if (\sizeof ( $result ) === 0)
+		if (\count ( $result ) === 0)
 			$result [] = new CacheFile ( \ucfirst ( $type ), "", "", "" );
 		return $result;
 	}

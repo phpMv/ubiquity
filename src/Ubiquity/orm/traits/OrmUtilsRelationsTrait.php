@@ -225,7 +225,7 @@ trait OrmUtilsRelationsTrait {
 					$memberInstance = $instance->$memberAccessor ();
 					if (isset ( $memberInstance ) && is_object ( $memberInstance )) {
 						$keyValues = self::getKeyFieldsAndValues ( $memberInstance );
-						if (sizeof ( $keyValues ) > 0) {
+						if (\count ( $keyValues ) > 0) {
 							$fkName = self::getJoinColumnName ( $class, $member );
 							$ret [$fkName] = \current ( $keyValues );
 						}

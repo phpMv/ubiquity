@@ -35,17 +35,17 @@ trait DAORelationsAssignmentsTrait {
 	}
 
 	public static function _affectsRelationObjects($className, $classPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, $objects, $included, $useCache): void {
-		if (\sizeof ( $manyToOneQueries ) > 0) {
+		if (\count ( $manyToOneQueries ) > 0) {
 			self::_affectsObjectsFromArray ( $manyToOneQueries, $included, function ($object, $member, $manyToOneObjects, $fkField, $accessor) {
 				self::affectsManyToOneFromArray ( $object, $member, $manyToOneObjects, $fkField, $accessor );
 			}, 'getManyToOne' );
 		}
-		if (\sizeof ( $oneToManyQueries ) > 0) {
+		if (\count ( $oneToManyQueries ) > 0) {
 			self::_affectsObjectsFromArray ( $oneToManyQueries, $included, function ($object, $member, $relationObjects, $fkField, $accessor, $class, $prop) use ($classPropKey) {
 				self::affectsOneToManyFromArray ( $object, $member, $relationObjects, $fkField, $accessor, $class, $prop, $classPropKey );
 			}, 'getOneToMany' );
 		}
-		if (\sizeof ( $manyToManyParsers ) > 0) {
+		if (\count ( $manyToManyParsers ) > 0) {
 			self::_affectsManyToManyObjectsFromArray ( $className, $manyToManyParsers, $objects, $included, $useCache );
 		}
 	}

@@ -153,9 +153,9 @@ trait PreloaderInternalTrait {
 				$exts [] = $this->parseValue ( $v, $prefix, $depth + 1, $format );
 			}
 		}
-		if (\sizeof ( $exts ) > 0 || $prefix !== "") {
+		if (\count ( $exts ) > 0 || $prefix !== "") {
 			$extsStr = "(" . \implode ( "," . $nl . $tab, $exts ) . ")";
-			if (\sizeof ( $exts ) > 0) {
+			if (\count ( $exts ) > 0) {
 				$extsStr = "(" . $nl . $tab . \implode ( "," . $nl . $tab, $exts ) . $nl . $tab . ")";
 			}
 		}

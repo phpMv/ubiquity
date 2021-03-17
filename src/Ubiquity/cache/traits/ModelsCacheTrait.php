@@ -61,7 +61,7 @@ trait ModelsCacheTrait {
 					self::createOrmModelCache ( $model );
 					$db = 'default';
 					$ret = Reflexion::getAnnotationClass ( $model, 'database' );
-					if (\sizeof ( $ret ) > 0) {
+					if (\count ( $ret ) > 0) {
 						$db = $ret [0]->name;
 						if (! isset ( $config ['database'] [$db] )) {
 							throw new UbiquityException ( $db . ' connection is not defined in config array' );
@@ -128,7 +128,7 @@ trait ModelsCacheTrait {
 			if (\class_exists($className, true)) {
 				$db = 'default';
 				$ret = Reflexion::getAnnotationClass($className, 'database');
-				if (\sizeof($ret) > 0) {
+				if (\count($ret) > 0) {
 					$db = $ret[0]->name;
 				}
 				if ($db === $databaseOffset) {

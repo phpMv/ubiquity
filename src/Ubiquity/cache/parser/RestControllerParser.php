@@ -31,9 +31,9 @@ class RestControllerParser {
 		$reflect = new \ReflectionClass ( $controllerClass );
 		if (! $reflect->isAbstract () && $reflect->isSubclassOf ( RestBaseController::class )) {
 			$restAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, "rest" );
-			if (\sizeof ( $restAnnotsClass ) > 0) {
+			if (\count ( $restAnnotsClass ) > 0) {
 				$routeAnnotsClass = Reflexion::getAnnotationClass ( $controllerClass, "route" );
-				if (\sizeof ( $routeAnnotsClass ) > 0) {
+				if (\count ( $routeAnnotsClass ) > 0) {
 					$this->route = $routeAnnotsClass [0]->path;
 				}
 				$this->resource = $this->_getResourceName ( $config, $restAnnotsClass [0]->resource );

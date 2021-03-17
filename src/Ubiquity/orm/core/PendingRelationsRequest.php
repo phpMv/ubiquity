@@ -22,7 +22,7 @@ class PendingRelationsRequest {
 	public function addPartObject($object, $condition, $value) {
 		$inserted = false;
 		$i = 0;
-		$count = \sizeof ( $this->objectsConditionParsers );
+		$count = \count ( $this->objectsConditionParsers );
 		while ( ! $inserted && $i < $count ) {
 			$objectsConditionParser = $this->objectsConditionParsers [$i];
 			if ($objectsConditionParser->hasParam ( $value )) {

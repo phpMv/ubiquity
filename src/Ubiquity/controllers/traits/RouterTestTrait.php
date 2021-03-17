@@ -40,7 +40,7 @@ trait RouterTestTrait {
 				$method = \ltrim ( $method, '-' );
 			}
 			$routeMethod = self::getMethod ( self::$routes [$path] );
-			if ((sizeof ( $routeMethod ) == 0 && ! $restrict) || \array_search ( \strtolower ( $method ), $routeMethod ) !== false) {
+			if ((\count ( $routeMethod ) == 0 && ! $restrict) || \array_search ( \strtolower ( $method ), $routeMethod ) !== false) {
 				$response [$path] = self::$routes [$path];
 			}
 		} else {

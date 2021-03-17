@@ -47,8 +47,8 @@ class ControllerParser {
 			} catch ( \Exception $e ) {
 				// When controllerClass generates an exception
 			}
-			$this->rest = \sizeof ( $restAnnotsClass ) > 0;
-			if (isset ( $annotsClass ) && \sizeof ( $annotsClass ) > 0) {
+			$this->rest = \count ( $restAnnotsClass ) > 0;
+			if (isset ( $annotsClass ) && \count ( $annotsClass ) > 0) {
 				$this->mainRouteClass = $annotsClass [0];
 				$inherited = $this->mainRouteClass->inherited;
 				$automated = $this->mainRouteClass->automated;

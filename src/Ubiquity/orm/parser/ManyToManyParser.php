@@ -226,19 +226,19 @@ class ManyToManyParser {
 
 	public function generateConcatSQL() {
 		$sql = $this->getConcatSQL ();
-		$where = "";
-		if (($size = sizeof ( $this->whereValues )) > 0) {
+		$where = '';
+		if (($size = \count ( $this->whereValues )) > 0) {
 			if ($size > 3) {
-				$res = array_fill ( 0, $size, "?" );
-				$res [0] = "SELECT ? as _id";
-				$where = $this->getParserConcatWhereInMask ( implode ( " UNION ALL SELECT ", $res ) );
+				$res = array_fill ( 0, $size, '?' );
+				$res [0] = 'SELECT ? as _id';
+				$where = $this->getParserConcatWhereInMask ( \implode ( ' UNION ALL SELECT ', $res ) );
 			} else {
-				$mask = $this->getParserConcatWhereMask ( " ?" );
-				$res = array_fill ( 0, $size, $mask );
-				$where = "WHERE " . implode ( " OR ", $res );
+				$mask = $this->getParserConcatWhereMask ( ' ?' );
+				$res = \array_fill ( 0, $size, $mask );
+				$where = 'WHERE ' . \implode ( ' OR ', $res );
 			}
 		}
-		return str_replace ( "{condition}", $where, $sql );
+		return \str_replace ( '{condition}', $where, $sql );
 	}
 
 	public function addValue($value) {

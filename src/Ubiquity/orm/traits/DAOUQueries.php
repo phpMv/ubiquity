@@ -56,7 +56,7 @@ trait DAOUQueries {
 	protected static function uGetExpressions($condition) {
 		$condition = \preg_replace ( '@(["\']([^"\']|""|\'\')*["\'])@', "%values%", $condition );
 		\preg_match_all ( '@[a-zA-Z_$][a-zA-Z_$0-9]*(?:\.[a-zA-Z_$\*][a-zA-Z_$0-9\*]*)+@', $condition, $matches );
-		if (\sizeof ( $matches ) > 0) {
+		if (\count ( $matches ) > 0) {
 			return \array_unique ( $matches [0] );
 		}
 		return [ ];

@@ -59,7 +59,7 @@ class NormalizersManager {
 	}
 
 	public static function normalizeArray_(array $datas) {
-		if (sizeof ( $datas ) > 0) {
+		if (count ( $datas ) > 0) {
 			$normalizer = self::getNormalizer ( get_class ( current ( $datas ) ) );
 			if (isset ( $normalizer )) {
 				return self::normalizeArray ( $datas, $normalizer );

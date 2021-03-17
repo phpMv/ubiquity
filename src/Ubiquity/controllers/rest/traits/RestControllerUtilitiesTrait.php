@@ -200,7 +200,7 @@ trait RestControllerUtilitiesTrait {
 	}
 
 	protected function hasErrors() {
-		return \is_array ( $this->errors ) && \sizeof ( $this->errors ) > 0;
+		return \is_array ( $this->errors ) && \count ( $this->errors ) > 0;
 	}
 
 	protected function displayErrors() {

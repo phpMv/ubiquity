@@ -42,7 +42,7 @@ trait DAORelationsTrait {
 	private static function parseEncludeMember(&$ret, $includedMember): void {
 		$array = \explode ( '.', $includedMember );
 		$member = \array_shift ( $array );
-		if (\sizeof ( $array ) > 0) {
+		if (\count ( $array ) > 0) {
 			$newValue = \implode ( '.', $array );
 			if ($newValue === '*') {
 				$newValue = true;
@@ -111,13 +111,13 @@ trait DAORelationsTrait {
 		$myPkAccessor = 'get' . \ucfirst ( $parser->getMyPk () );
 		$pk = self::getFirstKeyValue_ ( $instance );
 
-		if (sizeof ( $array ) > 0) {
-			$continue = \method_exists ( current ( $array ), $accessorToMember );
+		if (\count ( $array ) > 0) {
+			$continue = \method_exists ( \current ( $array ), $accessorToMember );
 		}
 		if ($continue) {
 			foreach ( $array as $targetEntityInstance ) {
 				$instances = $targetEntityInstance->$accessorToMember ();
-				if (is_array ( $instances )) {
+				if (\is_array ( $instances )) {
 					foreach ( $instances as $inst ) {
 						if ($inst->$myPkAccessor () == $pk)
 							\array_push ( $ret, $targetEntityInstance );
@@ -236,7 +236,7 @@ trait DAORelationsTrait {
 	public static function affectsManyToManys($instance, $array = NULL, $useCache = NULL) {
 		$metaDatas = OrmUtils::getModelMetadata ( \get_class ( $instance ) );
 		$manyToManyFields = $metaDatas ['#manyToMany'];
-		if (\sizeof ( $manyToManyFields ) > 0) {
+		if (\count ( $manyToManyFields ) > 0) {
 			foreach ( $manyToManyFields as $member ) {
 				self::getManyToMany ( $instance, $member, false, $array, $useCache );
 			}

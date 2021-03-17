@@ -118,7 +118,7 @@ class ApcuCache extends AbstractDataCache {
 				$result [] = new CacheFile ( \ucfirst ( $type ), $key, $entry ['creation_time'], $entry ['mem_size'], $key );
 			}
 		}
-		if (\sizeof ( $result ) === 0)
+		if (\count ( $result ) === 0)
 			$result [] = new CacheFile ( \ucfirst ( $type ), "", "", "" );
 		return $result;
 	}

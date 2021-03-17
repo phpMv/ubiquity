@@ -60,7 +60,7 @@ trait RouterAdminTrait {
 		$params = [ ];
 		foreach ( $routeParams as $param ) {
 			if ($param === '*') {
-				$params [] = $parameters [\sizeof ( $params )]->getName ();
+				$params [] = $parameters [\count ( $params )]->getName ();
 			} else {
 				$index = ( int ) \filter_var ( $param, FILTER_SANITIZE_NUMBER_INT );
 				$params [] = $parameters [$index]->getName ();

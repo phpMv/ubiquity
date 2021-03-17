@@ -42,7 +42,7 @@ abstract class AbstractDateTimeValidator extends ValidatorHasNotNull {
 	}
 
 	public function hasWarnings() {
-		return sizeof ( $this->warnings ) > 0;
+		return \count ( $this->warnings ) > 0;
 	}
 }
 

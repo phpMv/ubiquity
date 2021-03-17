@@ -194,7 +194,7 @@ class Router {
 			$result = [ \str_replace ( "\\\\", "\\", $routeDetails ['controller'] ),$routeDetails ['action'] ];
 			$resultStr = \implode ( '/', $result );
 		}
-		if (($paramsOrder = $routeDetails ['parameters']) && (\sizeof ( $paramsOrder ) > 0)) {
+		if (($paramsOrder = $routeDetails ['parameters']) && (\count ( $paramsOrder ) > 0)) {
 			self::setParamsInOrder ( $result, $paramsOrder, $params );
 		}
 		if (! $cached || ! $cachedResponse) {

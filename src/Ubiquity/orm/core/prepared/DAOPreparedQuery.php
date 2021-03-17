@@ -193,7 +193,7 @@ abstract class DAOPreparedQuery {
 
 		$metaDatas = OrmUtils::getModelMetadata ( $this->className );
 		$this->tableName = $metaDatas ['#tableName'];
-		$this->hasIncluded = $this->included || (\is_array ( $this->included ) && \sizeof ( $this->included ) > 0);
+		$this->hasIncluded = $this->included || (\is_array ( $this->included ) && \count ( $this->included ) > 0);
 		if ($this->hasIncluded) {
 			DAO::_initRelationFields ( $this->included, $metaDatas, $this->invertedJoinColumns, $this->oneToManyFields, $this->manyToManyFields );
 		}

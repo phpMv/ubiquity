@@ -23,8 +23,8 @@ class Yuml {
 
 	public static function parseMaskArray($element,$variables,$values) {
 		$result=$element;
-		$countValues=\sizeof($values);
-		$maxVariables=\sizeof($variables)-1;
+		$countValues=\count($values);
+		$maxVariables=\count($variables)-1;
 		for($i=0;$i<$countValues;$i++){
 			$j=\min($maxVariables,$i);
 			$result=self::parseMask($result, $variables[$j], $values[$i]);

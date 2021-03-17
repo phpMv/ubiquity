@@ -129,7 +129,7 @@ class MemCachedDriver extends AbstractDataCache {
 				$result [] = new CacheFile ( \ucfirst ( $type ), $key, $entry [self::TIME], "", $key );
 			}
 		}
-		if (\sizeof ( $result ) === 0)
+		if (\count ( $result ) === 0)
 			$result [] = new CacheFile ( \ucfirst ( $type ), "", "", "" );
 		return $result;
 	}

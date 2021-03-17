@@ -32,7 +32,7 @@ class CacheFile {
 				$result [] = new CacheFile ( $type, $keyFunction ( $file ), \filectime ( $file ), \filesize ( $file ), $file );
 			}
 		}
-		if (\sizeof ( $result ) == 0)
+		if (\count ( $result ) == 0)
 			$result [] = new CacheFile ( $type, "", "", "", "" );
 		return $result;
 	}

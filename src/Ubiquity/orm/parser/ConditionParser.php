@@ -99,7 +99,7 @@ class ConditionParser {
 	}
 
 	public function compileParts($separator = ' OR ') {
-		if ($separator == ' OR ' && \sizeof($this->parts) > 3) {
+		if ($separator == ' OR ' && \count($this->parts) > 3) {
 			$parts = $this->refactorParts();
 			$conditions = [];
 			foreach ($parts as $part => $values) {
@@ -175,7 +175,7 @@ class ConditionParser {
 
 	public function countParts() {
 		if (\is_array($this->params))
-			return \sizeof($this->params);
+			return \count($this->params);
 		return 0;
 	}
 

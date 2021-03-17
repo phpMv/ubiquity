@@ -58,7 +58,7 @@ class Psr7 {
 		if ($userInfo != null) {
 			$userInfo = explode ( ':', $userInfo );
 			$server ['PHP_AUTH_USER'] = $userInfo [0];
-			if (\sizeof ( $userInfo ) > 1) {
+			if (\count ( $userInfo ) > 1) {
 				$server ['PHP_AUTH_PW'] = $userInfo [1];
 			}
 		}
@@ -80,7 +80,7 @@ class Psr7 {
 		}
 		$queryString = '';
 		if ($uQuery != null) {
-			parse_str ( \html_entity_decode ( $uQuery ), $qs );
+			\parse_str ( \html_entity_decode ( $uQuery ), $qs );
 			if ($query) {
 				$query = \array_replace ( $qs, $query );
 				$queryString = \http_build_query ( $query, '', '&' );
@@ -95,10 +95,10 @@ class Psr7 {
 		if (isset ( $headers ['X-Requested-With'] ) && array_search ( 'XMLHttpRequest', $headers ['X-Requested-With'] ) !== false) {
 			$server ['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
 		}
-		if (strtoupper ( $method ) === 'POST') {
+		if (\strtoupper ( $method ) === 'POST') {
 			$_POST = $parsedBody;
 		}
-		if (sizeof ( $parameters ) > 0) {
+		if (\count ( $parameters ) > 0) {
 			$_GET = \array_merge ( $_GET, $parameters );
 		}
 		$_SERVER = $server;

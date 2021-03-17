@@ -70,7 +70,7 @@ class ValidationModelGenerator {
 	protected function parseNotNull(&$validatorAnnots) {
 		if ($this->notNull) {
 			$notNullAffected = false;
-			$size = sizeof ( $validatorAnnots );
+			$size = \count ( $validatorAnnots );
 			$i = 0;
 			while ( $i < $size && ! $notNullAffected ) {
 				$validatorAnnot = $validatorAnnots [$i];

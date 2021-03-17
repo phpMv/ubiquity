@@ -26,12 +26,12 @@ class UIntrospection {
 		$result = [];
 		$code = self::getMethodCode($r, $lines);
 		\preg_match_all('@(?:.*?)\$this\-\>loadView\([\'\"](.+?)[\'\"](?:.*?)@s', $code, $matches);
-		if (isset($matches[1]) && \sizeof($matches[1]) > 0) {
-			$result = array_merge($result, $matches[1]);
+		if (isset($matches[1]) && \count($matches[1]) > 0) {
+			$result = \array_merge($result, $matches[1]);
 		}
 		\preg_match_all('@(?:.*?)\$this\-\>jquery\-\>renderView\([\'\"](.+?)[\'\"](?:.*?)@s', $code, $matches);
 		if (isset($matches[1])) {
-			$result = array_merge($result, $matches[1]);
+			$result = \array_merge($result, $matches[1]);
 		}
 		if (\strpos($code, '$this->loadDefaultView') !== false || strpos($code, '$this->jquery->renderDefaultView') !== false) {
 			$result[] = $r->getDeclaringClass()->getShortName() . '/' . $r->getName() . '.html';
@@ -40,8 +40,8 @@ class UIntrospection {
 	}
 
 	public static function getMethodCode(\ReflectionMethod $r, $lines) {
-		$str = "";
-		$count = \sizeof($lines);
+		$str = '';
+		$count = \count($lines);
 		$sLine = $r->getStartLine();
 		$eLine = $r->getEndLine();
 		if ($sLine == $eLine)

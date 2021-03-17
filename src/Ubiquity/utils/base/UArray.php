@@ -54,8 +54,8 @@ class UArray {
 		if (\array_key_exists ( $key, $array )) {
 			return $array [$key];
 		}
-		$values = array_values ( $array );
-		if ($pos < \sizeof ( $values ))
+		$values = \array_values ( $array );
+		if ($pos < \count ( $values ))
 			return $values [$pos];
 	}
 
