@@ -2,14 +2,13 @@
 
 namespace Ubiquity\db;
 
-use Ubiquity\utils\base\UArray;
 use Ubiquity\orm\OrmUtils;
 
 /**
  * SQL utilities
  *
  * @author jc
- * @version 1.0.2
+ * @version 1.0.3
  */
 class SqlUtils {
 	public static $quote = '`';
@@ -79,8 +78,7 @@ class SqlUtils {
 	}
 
 	public static function checkWhere($condition) {
-		$c = \strtolower ( $condition );
-		if ($condition != '' && \strstr ( $c, ' join ' ) === false) {
+		if ($condition != null && \stristr ( $condition, ' join ' ) === false) {
 			$condition = ' WHERE ' . $condition;
 		}
 		return $condition;
@@ -90,7 +88,7 @@ class SqlUtils {
 		if (! \is_array ( $keyValues )) {
 			return $keyValues;
 		} else {
-			if (! UArray::isAssociative ( $keyValues )) {
+			if ((\array_keys ( $keyValues ) === \range ( 0, \count ( $keyValues ) - 1 ))) {//Not associative array
 				if (isset ( $classname )) {
 					$keys = OrmUtils::getKeyFields ( $classname );
 					if (\is_array ( $keys )) {
