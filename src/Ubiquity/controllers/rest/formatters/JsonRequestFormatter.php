@@ -35,7 +35,7 @@ class JsonRequestFormatter extends RequestFormatter {
 		foreach ( $manyToManys as $manyColumn => $manyColumnInfos ) {
 			$targetEntity = $manyColumnInfos ['targetEntity'];
 			$idField = OrmUtils::getFirstKey ( $targetEntity );
-			$v = $datas [$manyColumn] ?? '[]';
+			$v = $datas [$manyColumn] ?? [];
 			$ids = [ ];
 			foreach ( $v as $values ) {
 				if (isset ( $values [$idField] )) {
