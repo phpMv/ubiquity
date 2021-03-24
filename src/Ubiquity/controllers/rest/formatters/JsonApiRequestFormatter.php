@@ -20,10 +20,10 @@ class JsonApiRequestFormatter extends RequestFormatter {
 		if (\count ( $datas ) > 0) {
 			$datas = \current ( array_keys ( $datas ) );
 			$datas = \json_decode ( $datas, true );
-			$attributes = $datas ["data"] ["attributes"] ?? [ ];
-			if (isset ( $datas ["data"] ["id"] )) {
+			$attributes = $datas ['data'] ['attributes'] ?? [ ];
+			if (isset ( $datas ['data'] ['id'] )) {
 				$key = OrmUtils::getFirstKey ( $this->model );
-				$attributes [$key] = $datas ["data"] ["id"];
+				$attributes [$key] = $datas ['data'] ['id'];
 			}
 			$this->loadRelationshipsDatas ( $datas, $attributes );
 			return $attributes;
