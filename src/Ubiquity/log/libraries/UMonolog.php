@@ -14,7 +14,7 @@ use Ubiquity\utils\base\UFileSystem;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class UMonolog extends Logger {
@@ -26,14 +26,14 @@ class UMonolog extends Logger {
 	private $handler;
 
 	public function __construct($name, $level = \Monolog\Logger::INFO, $path = 'logs/app.log') {
-		$this->loggerInstance = new \Monolog\Logger ( $name );
+		$this->loggerInstance = new \Monolog\Logger ( $name??'application' );
 		$this->handler = new StreamHandler ( ROOT . DS . $path, $level );
 		$this->handler->setFormatter ( new JsonFormatter () );
 		$this->loggerInstance->pushHandler ( $this->handler );
 	}
 
 	private function createContext($context, $part, $extra = null) {
-		return compact ( "context", "part", "extra" );
+		return compact ( 'context', 'part', 'extra' );
 	}
 
 	public function addProcessor($callback) {
