@@ -133,6 +133,13 @@ Ubiquity User guide
    contributing/coding
    contributing/doc
    
+   .. toctree::
+   :maxdepth: 1
+   :caption: Deployment
+
+   config/servers
+   extra/optimization
+   
 .. toctree::
    :maxdepth: 1
    :caption: Extras
