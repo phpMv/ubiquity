@@ -132,7 +132,7 @@ Ubiquity User guide
    contributing/contributing-shem
    contributing/coding
    contributing/doc
-   
+
    .. toctree::
    :maxdepth: 1
    :caption: Deployment
