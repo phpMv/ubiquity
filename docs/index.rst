@@ -108,7 +108,7 @@ Ubiquity User guide
 .. toctree::
    :maxdepth: 1
    :caption: Security
-
+   
    security/index
    security/module
    security/acl
@@ -133,17 +133,17 @@ Ubiquity User guide
    contributing/coding
    contributing/doc
 
-   .. toctree::
+.. toctree::
    :maxdepth: 1
    :caption: Deployment
-
+   
    config/servers
    extra/optimization
-   
+
 .. toctree::
    :maxdepth: 1
    :caption: Extras
-
+   
    extra/commands
    extra/libraries
    extra/caching
