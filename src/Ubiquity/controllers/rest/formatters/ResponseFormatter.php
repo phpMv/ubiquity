@@ -57,7 +57,7 @@ class ResponseFormatter {
 		$o = $o->_rest;
 		foreach ( $o as $k => $v ) {
 			if (isset ( $v->_rest )) {
-				$o [$k] = $v->_rest;
+				$o [$k] = $this->cleanRestObject($v);
 			}
 			if (\is_array ( $v )) {
 				foreach ( $v as $index => $values ) {
