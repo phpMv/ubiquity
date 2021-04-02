@@ -29,8 +29,10 @@ class JsonRequestFormatter extends RequestFormatter {
 		$joinColumns = $metas ['#joinColumn'] ?? [ ];
 		$manyToManys = $metas ['#manyToMany'] ?? [ ];
 		foreach ( $joinColumns as $column => $infos ) {
-			$datas [$infos ['name']] = $datas [$column];
-			unset ( $datas [$column] );
+			if(isset($datas [$column])) {
+				$datas [$infos ['name']] = $datas [$column];
+				unset ($datas [$column]);
+			}
 		}
 		foreach ( $manyToManys as $manyColumn => $manyColumnInfos ) {
 			$targetEntity = $manyColumnInfos ['targetEntity'];
