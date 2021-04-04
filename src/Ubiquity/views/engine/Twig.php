@@ -25,7 +25,7 @@ use Ubiquity\assets\AssetsManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.9
+ * @version 1.0.10
  *
  */
 class Twig extends TemplateEngine {
@@ -55,7 +55,7 @@ class Twig extends TemplateEngine {
 			return Router::path ( $name, $params, $absolute );
 		} );
 
-		$this->addFunction ( 'url', function ($name, $params) {
+		$this->addFunction ( 'url', function ($name, $params= [ ]) {
 			return Router::url ( $name, $params );
 		} );
 
