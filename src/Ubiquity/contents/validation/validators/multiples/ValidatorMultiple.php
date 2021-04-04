@@ -68,7 +68,7 @@ abstract class ValidatorMultiple extends Validator implements HasNotNullInterfac
 
 	public function asUI(): array {
 		if ($this->notNull) {
-			return [ 'rules' => [[ 'type'=>'empty','prompt'=>$this->mergeMessages() ]] ];
+			return [ 'rules' => [[ 'type'=>'empty','prompt'=>$this->mergeMessages()['notNull']??'' ]] ];
 		}
 		return [ ];
 	}
