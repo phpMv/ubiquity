@@ -5,7 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unrelease]
 - Nothing
-
+## [2.4.4] Comming soon
+### Added
+- `UArrayModels` class for array of models manipulation (GroupBy, asKeyValues, sorting...)
+### Fixed
+- Boolean types pb [#174](https://github.com/phpMv/ubiquity/issues/174)
+- ResponseFormatter import [#173](https://github.com/phpMv/ubiquity/issues/173)
+- DAO PostgreSQL
+  - ConditionParser pb with cast [#172](https://github.com/phpMv/ubiquity/issues/172)
+  - Null values on fk [#171](https://github.com/phpMv/ubiquity/issues/171)
 ## [2.4.3] 2021-03-07
 ### Added
 - Dark mode for CRUD controllers (`setStyle('inverted')`)
