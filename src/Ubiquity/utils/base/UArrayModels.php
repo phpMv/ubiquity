@@ -74,11 +74,11 @@ class UArrayModels {
 	/**
 	 * Return an associative array of key/values from an array of objects.
 	 * @param array $objects
-	 * @param null $keyFunction
-	 * @param null $valueFunction
+	 * @param ?string|callable $keyFunction
+	 * @param ?string|callable $valueFunction
 	 * @return array
 	 */
-	public static function asKeyValue(array $objects, $keyFunction = NULL, $valueFunction = NULL) {
+	public static function asKeyValues(array $objects, $keyFunction = NULL, $valueFunction = NULL) {
 		$result = [];
 		if (isset($valueFunction) === false) {
 			$valueFunction = '__toString';
