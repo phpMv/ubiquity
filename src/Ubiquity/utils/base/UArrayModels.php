@@ -96,6 +96,59 @@ class UArrayModels {
 	}
 	
 	/**
+	 * Find and return the first occurrence of the array satisfying the callback.
+	 * @param array|null $objects
+	 * @param callable $callback
+	 * @return mixed|null
+	 */
+	public static function find(?array $objects,callable $callback){
+		$find=false;
+		if(\is_array($objects)) {
+			$o = \current($objects);
+			do {
+				$find = $callback($o);
+			} while (!$find && $o = \next($objects));
+			return $o;
+		}
+		return null;
+	}
+	
+	/**
+	 * Remove the first occurrence of the array satisfying the callback.
+	 * @param array|null $objects
+	 * @param callable $callback
+	 * @return array
+	 */
+	public static function remove(?array $objects,callable $callback):array{
+		foreach ($objects as $index=>$o) {
+			if($callback($o)){
+				unset($objects[$index]);
+				break;
+			}
+		}
+		return $objects;
+	}
+	
+	/**
+	 * Remove all the occurrences of the array satisfying the callback.
+	 * @param array|null $objects
+	 * @param callable $callback
+	 * @return array
+	 */
+	public static function removeAll(?array $objects,callable $callback):array{
+		$toRemove=[];
+		foreach ($objects as $index=>$o) {
+			if($callback($o)){
+				$toRemove[]=$index;
+			}
+		}
+		foreach ($toRemove as $index){
+			unset($objects[$index]);
+		}
+		return $objects;
+	}
+	
+	/**
 	 * @param $object
 	 * @param $callback
 	 * @return false|mixed
