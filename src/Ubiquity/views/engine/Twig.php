@@ -43,6 +43,12 @@ class Twig extends TemplateEngine {
 
 		$this->twig = new Environment ( $loader, $options );
 
+		if(isset($options['extensions'])){
+			foreach ($options['extensions'] as $ext) {
+				$this->twig->addExtension(new $ext());
+			}
+		}
+		
 		if (isset ( $options ["activeTheme"] )) {
 			ThemesManager::setActiveThemeFromTwig ( $options ["activeTheme"] );
 			$this->setTheme ( $options ["activeTheme"], ThemesManager::THEMES_FOLDER );
