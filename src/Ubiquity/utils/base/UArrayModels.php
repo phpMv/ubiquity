@@ -129,6 +129,25 @@ class UArrayModels {
 		return $objects;
 	}
 	
+	public static function compute(?array $objects,callable $callable,callable $computeCall){
+		$res=null;
+		if($objects!=null) {
+			foreach ($objects as $object) {
+				$computeCall($res, $callable($object));
+			}
+		}
+		return $res;
+	}
+	
+	public static function computeSumProperty(?array $objects,string $propertyName){
+		$getter='get'.\ucfirst($propertyName);
+		return self::compute($objects,fn($o)=>$o->$getter(),fn(&$r,$o)=>$r+=$o);
+	}
+	
+	public static function computeSum(?array $objects,callable $callable){
+		return self::compute($objects,$callable,fn(&$r,$o)=>$r+=$o);
+	}
+	
 	/**
 	 * Remove all the occurrences of the array satisfying the callback.
 	 * @param array|null $objects
