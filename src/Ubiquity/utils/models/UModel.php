@@ -59,4 +59,52 @@ class UModel {
 			$object->$setter($val.($object->$getter()));
 		}
 	}
+	
+	/**
+	 * @param object $object
+	 * @param string $propertyName
+	 * @param mixed $val
+	 */
+	public static function addTo(object $object,string $propertyName,$val):void{
+		list($getter,$setter)=self::getSet($propertyName);
+		$array=$object->$getter();
+		$array[]=$val;
+		$object->$setter($array);
+	}
+	
+	/**
+	 * @param object $object
+	 * @param string $propertyName
+	 * @param mixed $val
+	 * @return mixed
+	 */
+	public static function removeFrom(object $object,string $propertyName,$val){
+		list($getter,$setter)=self::getSet($propertyName);
+		$array=$object->$getter();
+		if(($index=\array_search($val, $array))!==false){
+			$r=$array[$index];
+			unset($array[$index]);
+			$object->$setter($array);
+			return $r;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param object $object
+	 * @param string $propertyName
+	 * @param mixed $index
+	 * @return mixed
+	 */
+	public static function removeFromByIndex(object $object,string $propertyName,$index){
+		list($getter,$setter)=self::getSet($propertyName);
+		$array=$object->$getter();
+		if(isset($array[$index])){
+			$r=$array[$index];
+			unset($array[$index]);
+			$object->$setter($array);
+			return $r;
+		}
+		return false;
+	}
 }
