@@ -21,17 +21,28 @@ class UIntrospection {
 		$r = new \ReflectionClass($classname);
 		return $r->getFileName();
 	}
+	
+	public static function getMethodAtLine($class,$line){
+		$r=new \ReflectionClass($class);
+		$methods=$r->getMethods();
+		foreach ($methods as $method){
+			if($method->getStartLine()<=$line && $line<=$method->getEndLine()){
+				return $method;
+			}
+		}
+		return null;
+	}
 
 	public static function getLoadedViews(\ReflectionMethod $r, $lines) {
 		$result = [];
 		$code = self::getMethodCode($r, $lines);
 		\preg_match_all('@(?:.*?)\$this\-\>loadView\([\'\"](.+?)[\'\"](?:.*?)@s', $code, $matches);
-		if (isset($matches[1]) && \count($matches[1]) > 0) {
-			$result = \array_merge($result, $matches[1]);
+		if (isset($matches[1]) && \sizeof($matches[1]) > 0) {
+			$result = array_merge($result, $matches[1]);
 		}
 		\preg_match_all('@(?:.*?)\$this\-\>jquery\-\>renderView\([\'\"](.+?)[\'\"](?:.*?)@s', $code, $matches);
 		if (isset($matches[1])) {
-			$result = \array_merge($result, $matches[1]);
+			$result = array_merge($result, $matches[1]);
 		}
 		if (\strpos($code, '$this->loadDefaultView') !== false || strpos($code, '$this->jquery->renderDefaultView') !== false) {
 			$result[] = $r->getDeclaringClass()->getShortName() . '/' . $r->getName() . '.html';
@@ -40,9 +51,10 @@ class UIntrospection {
 	}
 
 	public static function getMethodCode(\ReflectionMethod $r, $lines) {
-		$str = '';
+		\ini_set("auto_detect_line_endings", true);
+		$str = "";
 		$count = \count($lines);
-		$sLine = $r->getStartLine();
+		$sLine = $r->getStartLine()-1;
 		$eLine = $r->getEndLine();
 		if ($sLine == $eLine)
 			return $lines[$sLine];
@@ -51,6 +63,48 @@ class UIntrospection {
 				$str .= $lines[$l];
 			}
 			return $str;
+	}
+
+	public static function getMethodEffectiveParameters($code,$methodName){
+		$tokens=\token_get_all($code);
+		$parenthesis=0;
+		$result=[];
+		$status='';
+		foreach ($tokens as $tokenArray){
+			if(\is_array($tokenArray)){
+				if($tokenArray[0]=== T_STRING && $tokenArray[1]===$methodName){
+					$status='find';
+				}elseif($status==='open'){
+					$current.=$tokenArray[1];
+				}
+			}elseif(\is_string($tokenArray)){
+				if($tokenArray==='(' && $status==='find'){
+						$status='open';
+						$current='';
+						$parenthesis++;
+				}elseif($status==='open'){
+					if($tokenArray==='('){
+						$current.=$tokenArray;
+						$parenthesis++;
+					}elseif($tokenArray===',' && $parenthesis===1){
+						$result[]=\trim($current);
+						$current='';
+					}elseif ($tokenArray===')'){
+						$parenthesis--;
+						if($parenthesis===0){
+							if($current!=''){
+								$result[]=\trim($current);
+							}
+							return $result;
+						}
+						$current.=$tokenArray;
+					}else{
+						$current.=$tokenArray;
+					}
+				}
+			}
+		}
+		return $result;
 	}
 
 	public static function implementsMethod($object, $methodName, $baseDeclaringClass) {
