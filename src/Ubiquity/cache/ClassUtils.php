@@ -73,7 +73,11 @@ class ClassUtils {
 		if ($backSlash && UString::isNotNull ( $ns )) {
 			$ns = "\\" . $ns;
 		}
-		return $ns . '\\' . self::getClassNameFromPhpCode ( $phpCode );
+		$class=self::getClassNameFromPhpCode ( $phpCode );
+		if($class!=null) {
+			return $ns . '\\' . self::getClassNameFromPhpCode($phpCode);
+		}
+		return null;
 	}
 
 	public static function cleanClassname($classname) {
