@@ -160,8 +160,8 @@ class Startup {
 					}
 				}
 			} else {
-				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exist! <br/>', 'runAction' );
-				static::onError ( 404 );
+				Logger::warn ( 'Startup', "The controller `$ctrl` doesn't exist! <br/>", 'runAction' );
+				static::onError ( 404 ,"The controller `$ctrl` doesn't exist! <br/>");
 			}
 		} catch ( \Error $eC ) {
 			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
