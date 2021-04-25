@@ -5,9 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unrelease]
 - Nothing
-## [2.4.4] Coming soon
+## [2.4.4] 2021-04-25
 ### Added
 - `UArrayModels` class for array of models manipulation (GroupBy, asKeyValues, sorting...)
+- `UModel` class for models manipulation (property updating...)
+- `ubiquity-debug` integration
 ### Fixed
 - Boolean types pb [#174](https://github.com/phpMv/ubiquity/issues/174)
 - ResponseFormatter import [#173](https://github.com/phpMv/ubiquity/issues/173)
