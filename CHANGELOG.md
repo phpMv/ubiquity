@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 ## [2.4.4] 2021-04-25
+Before creating a new project, be sure to update the devtools:
+```bash
+composer global update
+```
 ### Added
 - `UArrayModels` class for array of models manipulation (GroupBy, asKeyValues, sorting...)
 - `UModel` class for models manipulation (property updating...)
