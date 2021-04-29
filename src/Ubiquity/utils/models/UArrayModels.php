@@ -168,6 +168,31 @@ class UArrayModels {
 	}
 	
 	/**
+	 * @param array $objects
+	 * @return array
+	 */
+	public static function asArray(array $object):array{
+		$result=[];
+		foreach ($objects as $index=>$o) {
+			$result[$index]=$object->_rest??[];
+		}
+		return $result;
+	}
+	
+	/**
+	 * @param array $objects
+	 * @param int options
+	 * @return string
+	 */
+	public static function asJson(object $object,int $options=null):string{
+		$result=[];
+		foreach ($objects as $index=>$o) {
+			$result[$index]=$object->_rest??[];
+		}
+		return \json_encode($result,$options);
+	}
+	
+	/**
 	 * @param $object
 	 * @param $callback
 	 * @return false|mixed

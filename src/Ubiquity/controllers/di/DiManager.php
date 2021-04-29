@@ -49,8 +49,8 @@ class DiManager {
 	}
 
 	protected static function getControllerCacheKey($classname) {
-		if (is_object ( $classname )) {
-			$classname = get_class ( $classname );
+		if (\is_object ( $classname )) {
+			$classname = \get_class ( $classname );
 		}
 		return self::$key . \str_replace ( "\\", \DS, $classname );
 	}

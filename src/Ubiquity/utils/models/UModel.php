@@ -107,4 +107,21 @@ class UModel {
 		}
 		return false;
 	}
+	
+	/**
+	 * @param object $object
+	 * @return array
+	 */
+	public static function asArray(object $object):array{
+		return $object->_rest??[];
+	}
+	
+	/**
+	 * @param object $object
+	 * @param int $options
+	 * @return string
+	 */
+	public static function asJson(object $object,int $options=null):string{
+		return \json_encode($object->_rest??[],$options);
+	}
 }
