@@ -4,6 +4,7 @@
 namespace Ubiquity\utils\models;
 
 
+
 /**
  * Ubiquity\utils\models$UModel
  * This class is part of Ubiquity
@@ -16,6 +17,7 @@ class UModel {
 		$propertyName=\ucfirst($propertyName);
 		return ['get'.$propertyName,'set'.$propertyName];
 	}
+	
 	/**
 	 * @param object $object
 	 * @param string $propertyName
@@ -123,5 +125,29 @@ class UModel {
 	 */
 	public static function asJson(object $object,int $options=null):string{
 		return \json_encode($object->_rest??[],$options);
+	}
+	
+	/**
+	 * @param object $object
+	 * @param array $properties
+	 * @return array
+	 */
+	public static function asArrayProperties(object $object,array $properties):array{
+		$res=[];
+		foreach ($properties as $property){
+			$get='get'.\ucfirst($property);
+			$res[]=$object->$get();
+		}
+		return $res;
+	}
+	
+	/**
+	 * @param object $object
+	 * @param array $properties
+	 * @param int $options
+	 * @return string
+	 */
+	public static function asJsonProperties(object $object,array $properties,int $options=null):string{
+		return \json_encode(self::asArrayProperties($object, $properties),$options);
 	}
 }

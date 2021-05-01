@@ -171,7 +171,7 @@ class UArrayModels {
 	 * @param array $objects
 	 * @return array
 	 */
-	public static function asArray(array $object):array{
+	public static function asArray(array $objects):array{
 		$result=[];
 		foreach ($objects as $index=>$o) {
 			$result[$index]=$object->_rest??[];
@@ -184,12 +184,49 @@ class UArrayModels {
 	 * @param int options
 	 * @return string
 	 */
-	public static function asJson(object $object,int $options=null):string{
+	public static function asJson(array $objects,int $options=null):string{
 		$result=[];
 		foreach ($objects as $index=>$o) {
 			$result[$index]=$object->_rest??[];
 		}
 		return \json_encode($result,$options);
+	}
+	
+	/**
+	 * @param array $objects
+	 * @param array $properties
+	 * @return array
+	 */
+	public static function asArrayProperties(array $objects,array $properties):array{
+		$res=[];
+		$accessors=self::getAccessors($properties);
+		foreach ($objects as $object){
+			$or=[];
+			foreach ($accessors as $get){
+				$or[]=$object->$get();
+			}
+			$res[]=$or;
+		}
+		return $res;
+	}
+	
+	/**
+	 * @param array $objects
+	 * @param array $properties
+	 * @param int $options
+	 * @return string
+	 */
+	public static function asJsonProperties(array $objects,array $properties,int $options=null):string{
+		return \json_encode(self::asArrayProperties($objects, $properties),$options);
+	}
+	
+	private static function getAccessors($properties,$prefix='get'){
+		$res=[];
+		foreach ($properties as $property){
+			$res[]=$prefix.\ucfirst($property);
+			
+		}
+		return $res;
 	}
 	
 	/**
