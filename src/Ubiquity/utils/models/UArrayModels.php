@@ -202,8 +202,8 @@ class UArrayModels {
 		$accessors=self::getAccessors($properties);
 		foreach ($objects as $object){
 			$or=[];
-			foreach ($accessors as $get){
-				$or[]=$object->$get();
+			foreach ($accessors as $prop=>$get){
+				$or[$prop]=$object->$get();
 			}
 			$res[]=$or;
 		}
@@ -223,7 +223,7 @@ class UArrayModels {
 	private static function getAccessors($properties,$prefix='get'){
 		$res=[];
 		foreach ($properties as $property){
-			$res[]=$prefix.\ucfirst($property);
+			$res[$property]=$prefix.\ucfirst($property);
 			
 		}
 		return $res;

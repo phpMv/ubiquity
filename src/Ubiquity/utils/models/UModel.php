@@ -136,7 +136,7 @@ class UModel {
 		$res=[];
 		foreach ($properties as $property){
 			$get='get'.\ucfirst($property);
-			$res[]=$object->$get();
+			$res[$property]=$object->$get();
 		}
 		return $res;
 	}
