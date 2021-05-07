@@ -11,7 +11,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class ConditionParser {
@@ -104,7 +104,7 @@ class ConditionParser {
 			$conditions = [];
 			foreach ($parts as $part => $values) {
 				$values[0] = 'SELECT ? as _id';
-				$conditions[] = ' INNER JOIN (' . \implode(' UNION ALL SELECT ', $values) . ') as _tmp ON ' . $part . '=cast(_tmp._id as integer)';
+				$conditions[] = ' INNER JOIN (' . \implode(' UNION ALL SELECT ', $values) . ') as _tmp ON ' . $part . '=(_tmp._id * 1)';
 			}
 			$this->condition = \implode(' ', $conditions);
 		} else {

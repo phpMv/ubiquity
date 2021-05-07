@@ -221,7 +221,7 @@ class ManyToManyParser {
 
 	private function getParserConcatWhereInMask($mask = "'{values}'") {
 		$quote = $this->db->quote;
-		return " INNER JOIN (" . $mask . ") as _tmp ON {$quote}" . $this->myFkField . "{$quote}=CAST(_tmp._id as integer)";
+		return " INNER JOIN (" . $mask . ") as _tmp ON {$quote}" . $this->myFkField . "{$quote}=(_tmp._id * 1)";
 	}
 
 	public function generateConcatSQL() {
