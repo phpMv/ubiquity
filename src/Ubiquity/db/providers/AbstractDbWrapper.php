@@ -7,13 +7,19 @@ namespace Ubiquity\db\providers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 abstract class AbstractDbWrapper {
 	protected $dbInstance;
 	protected $statements;
+	protected $operations=[
+			'create-database'=>'CREATE DATABASE {name}',
+			'create-table'=>'CREATE TABLE {name}'
+	];
+	
 	const PHP_TYPES = [ 'string' => true,'bool' => true,'float' => true,'int' => true ];
+	
 	public $quote;
 
 	abstract public function query(string $sql);
@@ -142,5 +148,14 @@ abstract class AbstractDbWrapper {
 	 */
 	public function getPHPType(string $dbType): string {
 		return '';
+	}
+	
+	/**
+	 * Returns the SQL string for a migration operation.
+	 * @param string $operation
+	 * @return string
+	 */
+	public function migrateOperation(string $operation):string{
+		return $this->operations[$operation]??'';
 	}
 }

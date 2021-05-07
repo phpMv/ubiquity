@@ -128,6 +128,28 @@ class UArrayModels {
 		}
 		return $objects;
 	}
+
+	/**
+	 * Remove an object from an array of objects using one of its properties.
+	 * @param array $objects
+	 * @param object $object
+	 * @param string $property default the id property
+	 * @return array
+	 */
+	public static function removeBy(?array $objects,object $object,string $property='id'):array{
+		if(!is_array($objects) || $object==null){
+			return;
+		}
+		$get='get'.\ucfirst($property);
+		$objectValue=$object->$get();
+		foreach ($objects as $index=>$o) {
+			if($objectValue===$o->$get()){
+				unset($objects[$index]);
+				break;
+			}
+		}
+		return $objects;
+	}
 	
 	public static function compute(?array $objects,callable $callable,callable $computeCall){
 		$res=null;

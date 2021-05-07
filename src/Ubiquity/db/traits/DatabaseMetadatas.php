@@ -11,7 +11,7 @@ use Ubiquity\db\utils\DbTypes;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
  */
@@ -39,6 +39,15 @@ trait DatabaseMetadatas {
 
 	public function getPHPType(string $dbType): string {
 		return DbTypes::asPhpType($dbType);
+	}
+	
+	/**
+	 * Returns the SQL command for a migration operation. 
+	 * @param string $operation The migration to opere
+	 * @return string The generated SQL string
+	 */
+	public function migrateOperation(string $operation):string {
+		return $this->wrapperObject->migrateOperation($operation);
 	}
 }
 

@@ -150,4 +150,19 @@ class UModel {
 	public static function asJsonProperties(object $object,array $properties,int $options=null):string{
 		return \json_encode(self::asArrayProperties($object, $properties),$options);
 	}
+	
+	/**
+	 * Determines if 2 objects are equal.
+	 * @param object $object
+	 * @param object $toObject
+	 * @param string $property
+	 * @return boolean
+	 */
+	public static function equals(object $object,?object $toObject,string $property='id'){
+		if($toObject==null){
+			return false;
+		}
+		$get='get'.\ucfirst($property);
+		return $object->$get()===$toObject->$get();
+	}
 }
