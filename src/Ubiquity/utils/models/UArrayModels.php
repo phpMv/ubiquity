@@ -145,8 +145,33 @@ class UArrayModels {
 		foreach ($objects as $index=>$o) {
 			if($objectValue===$o->$get()){
 				unset($objects[$index]);
-				break;
+				return $objects;
 			}
+		}
+		return $objects;
+	}
+	
+	/**
+	 * Remove objects from an array of objects using one of their properties.
+	 * @param array $objects
+	 * @param object $object
+	 * @param string $property default the id property
+	 * @return array
+	 */
+	public static function removeAllBy(?array $objects,object $object,string $property='id'):array{
+		if(!is_array($objects) || $object==null){
+			return;
+		}
+		$get='get'.\ucfirst($property);
+		$objectValue=$object->$get();
+		$toRemove=[];
+		foreach ($objects as $index=>$o) {
+			if($objectValue===$o->$get()){
+				$toRemove[]=$i;
+			}
+		}
+		foreach ($toRemove as $index){
+			unset($objects[$index]);
 		}
 		return $objects;
 	}
