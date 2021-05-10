@@ -82,7 +82,7 @@ trait DAOUpdatesTrait {
 	}
 
 	/**
-	 * Deletes all instances from $modelName matching the condition $where
+	 * Deletes all instances from $modelName matching the condition $where.
 	 *
 	 * @param string $modelName
 	 * @param string $where
@@ -94,6 +94,35 @@ trait DAOUpdatesTrait {
 		$quote = $db->quote;
 		$tableName = OrmUtils::getTableName ( $modelName );
 		return self::remove_ ( $db, $quote . $tableName . $quote, $where, $params );
+	}
+	
+	/**
+	 * Mass update for $modelName matching the condition $where, with an associative array of $values.
+	 * 
+	 * @param string $modelName
+	 * @param array $values
+	 * @param string $where
+	 * @param array $params
+	 */
+	public static function updateAll(string $modelName,array $values,string $where,array $params){
+		$db = self::getDb ( $modelName );
+		$quote = $db->quote;
+		$tableName = OrmUtils::getTableName ( $modelName );
+		
+		$allParams = \array_merge ( $values, $params );
+		
+		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $values ) . SqlUtils::checkWhere($condition);
+		if (Logger::isActive ()) {
+			Logger::info ( "DAOUpdates", $sql, "updateAll" );
+			Logger::info ( "DAOUpdates", \json_encode ( $allParams ), "All params" );
+		}
+		$statement = $db->getUpdateStatement ( $sql );
+		try {
+			return  $statement->execute ( $allParams );
+		}catch ( \Exception $e ) {
+			Logger::warn ( "DAOUpdates", $e->getMessage (), "updateAll" );
+		}
+		return false;
 	}
 
 	/**
