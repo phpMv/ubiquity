@@ -98,20 +98,20 @@ trait DAOUpdatesTrait {
 	
 	/**
 	 * Mass update for $modelName matching the condition $where, with an associative array of $values.
-	 * 
+	 *
 	 * @param string $modelName
 	 * @param array $values
-	 * @param string $where
+	 * @param string $condition
 	 * @param array $params
 	 */
-	public static function updateAll(string $modelName,array $values,string $where,array $params){
+	public static function updateAll(string $modelName,array $values,string $condition,array $params){
 		$db = self::getDb ( $modelName );
 		$quote = $db->quote;
 		$tableName = OrmUtils::getTableName ( $modelName );
 		
 		$allParams = \array_merge ( $values, $params );
 		
-		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $values ) . SqlUtils::checkWhere($condition);
+		$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $values ) . SqlUtils::checkWhereParams($condition,$params);
 		if (Logger::isActive ()) {
 			Logger::info ( "DAOUpdates", $sql, "updateAll" );
 			Logger::info ( "DAOUpdates", \json_encode ( $allParams ), "All params" );

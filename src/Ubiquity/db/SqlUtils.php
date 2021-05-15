@@ -83,6 +83,20 @@ class SqlUtils {
 		}
 		return $condition;
 	}
+	
+	public static function checkWhereParams($condition,&$params=[]) {
+		if(\strpos($condition,'?')!==-1){
+			foreach ($params as $k=>$v){
+				if(\is_int($k)){
+					$params["_$k"]=$v;
+					unset($params[$k]);
+					$k="_$k";
+				}
+				$condition=\str_replace('?',":$k",$condition);
+			}
+		}
+		return self::checkWhere($condition);
+	}
 
 	public static function getCondition($keyValues, $classname = NULL, $separator = ' AND ') {
 		if (! \is_array ( $keyValues )) {
