@@ -11,11 +11,11 @@ use Ubiquity\exceptions\ParserException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 trait ControllerParserPathTrait {
-
+	
 	protected static function getPathFromMethod(\ReflectionMethod $method) {
 		$methodName = $method->getName ();
 		if ($methodName === "index") {
@@ -37,22 +37,53 @@ trait ControllerParserPathTrait {
 		}
 		return "/" . \implode ( "/", $pathParts );
 	}
-
+	
+	private static function checkParams(\ReflectionFunctionAbstract $method,$actualParams){
+		foreach ( $method->getParameters () as $param ) {
+			if(!$param->isOptional() && \array_search($param->name,$actualParams)===false){
+				throw new ParserException(sprintf('The parameter %s is not present in the route path although it is mandatory.',$param->name));
+			}
+		}
+	}
+	
+	private static function checkParamsTypesForRequirement(\ReflectionFunctionAbstract $method){
+		$requirements=[];
+		foreach ( $method->getParameters () as $param ) {
+			if($param->hasType()){
+				$type=$param->getType();
+				if($type instanceof \ReflectionNamedType){
+					switch ($type->getName()){
+						case 'int':
+							$requirements[$param->getName()]='\d+';
+							break;
+						case 'bool':
+							$requirements[$param->getName()]='[0-1]{1}';
+							break;
+						case 'float':
+							$requirements[$param->getName()]='[+-]?([0-9]*[.])?[0-9]+';
+							break;
+					}
+				}
+			}
+		}
+		return $requirements;
+	}
+	
 	public static function parseMethodPath(\ReflectionFunctionAbstract $method, $path) {
 		if (! isset ( $path ) || $path === '')
 			return;
-		$parameters = $method->getParameters ();
-		foreach ( $parameters as $parameter ) {
-			$name = $parameter->getName ();
-			if ($parameter->isVariadic ()) {
-				$path = str_replace ( '{' . $name . '}', '{...' . $name . '}', $path );
-			} elseif ($parameter->isOptional ()) {
-				$path = str_replace ( '{' . $name . '}', '{~' . $name . '}', $path );
+			$parameters = $method->getParameters ();
+			foreach ( $parameters as $parameter ) {
+				$name = $parameter->getName ();
+				if ($parameter->isVariadic ()) {
+					$path = \str_replace ( '{' . $name . '}', '{...' . $name . '}', $path );
+				} elseif ($parameter->isOptional ()) {
+					$path = \str_replace ( '{' . $name . '}', '{~' . $name . '}', $path );
+				}
 			}
-		}
-		return $path;
+			return $path;
 	}
-
+	
 	public static function cleanpath($prefix, $path = "") {
 		$path = \str_replace ( '//', '/', $path );
 		if ($prefix !== '' && ! UString::startswith ( $prefix, '/' )) {
@@ -70,22 +101,27 @@ trait ControllerParserPathTrait {
 		}
 		return \str_replace ( '//', '/', $path );
 	}
-
+	
 	// TODO check
 	public static function addParamsPath($path, \ReflectionFunctionAbstract $method, $requirements) {
 		$parameters = [ ];
 		$hasOptional = false;
 		\preg_match_all ( '@\{(\.\.\.|\~)?(.+?)\}@s', $path, $matches );
+		self::checkParams($method,$matches[2]??[]);
 		if (isset ( $matches [2] ) && \count ( $matches [2] ) > 0) {
 			$path = \preg_quote ( $path );
 			$params = Reflexion::getMethodParameters ( $method );
+			$typeRequirements=self::checkParamsTypesForRequirement($method);
 			$index = 0;
 			foreach ( $matches [2] as $paramMatch ) {
 				$find = \array_search ( $paramMatch, $params );
 				if ($find !== false) {
+					unset($params[$find]);
 					$requirement = '.+?';
 					if (isset ( $requirements [$paramMatch] )) {
 						$requirement = $requirements [$paramMatch];
+					}elseif (isset($typeRequirements[$paramMatch])){
+						$requirement = $typeRequirements [$paramMatch];
 					}
 					self::scanParam ( $parameters, $hasOptional, $matches, $index, $paramMatch, $find, $path, $requirement );
 				} else {
@@ -94,11 +130,12 @@ trait ControllerParserPathTrait {
 				$index ++;
 			}
 		}
-		if ($hasOptional)
+		if ($hasOptional) {
 			$path .= '/(.*?)';
+		}
 		return [ 'path' => $path,'parameters' => $parameters ];
 	}
-
+	
 	public static function scanParam(&$parameters, &$hasOptional, $matches, $index, $paramMatch, $find, &$path, $requirement) {
 		$toReplace = true;
 		if (isset ( $matches [1] [$index] )) {
