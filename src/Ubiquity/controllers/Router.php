@@ -8,6 +8,7 @@ use Ubiquity\controllers\traits\RouterModifierTrait;
 use Ubiquity\controllers\traits\RouterTestTrait;
 use Ubiquity\log\Logger;
 use Ubiquity\utils\http\URequest;
+use Ubiquity\controllers\router\RouterStatus;
 
 /**
  * Router manager.
@@ -15,12 +16,13 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.14
+ * @version 1.0.15
  *
  */
 class Router {
 	use RouterModifierTrait,RouterAdminTrait,RouterTestTrait;
 	protected static $routes;
+	protected static $statusCode;
 
 	private static function cleanParam(string $param): string {
 		if (\substr ( $param, - 1 ) === '/') {
@@ -30,15 +32,18 @@ class Router {
 	}
 
 	private static function getRoute_(&$routeDetails, $routePath, $matches, $cachedResponse) {
+		self::$statusCode=RouterStatus::OK;
 		if (! isset ( $routeDetails ['controller'] )) {
 			$method = \strtolower ( $_SERVER ['REQUEST_METHOD'] );
 			if (isset ( $routeDetails [$method] )) {
 				$routeDetailsMethod = $routeDetails [$method];
 				return self::getRouteUrlParts ( [ 'path' => $routePath,'details' => $routeDetailsMethod ], $matches, $routeDetailsMethod ['cache'] ?? false, $routeDetailsMethod ['duration'] ?? null, $cachedResponse );
 			}
+			self::$statusCode=RouterStatus::METHOD_NOT_ALLOWED;
 		} else {
 			return self::getRouteUrlParts ( [ 'path' => $routePath,'details' => $routeDetails ], $matches, $routeDetails ['cache'] ?? false, $routeDetails ['duration'] ?? null, $cachedResponse );
 		}
+		self::$statusCode=RouterStatus::NOT_FOUND;
 		return false;
 	}
 
@@ -243,5 +248,13 @@ class Router {
 	 */
 	public static function getRoutes() {
 		return self::$routes;
+	}
+	
+	/**
+	 * Return router response status code.
+	 * @return int
+	 */
+	public static function getRouterStatus():int{
+		return self::$statusCode;
 	}
 }
