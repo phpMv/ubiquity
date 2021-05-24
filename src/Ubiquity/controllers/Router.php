@@ -43,7 +43,9 @@ class Router {
 		} else {
 			return self::getRouteUrlParts ( [ 'path' => $routePath,'details' => $routeDetails ], $matches, $routeDetails ['cache'] ?? false, $routeDetails ['duration'] ?? null, $cachedResponse );
 		}
-		self::$statusCode=RouterStatus::NOT_FOUND;
+		if(self::$statusCode===RouterStatus::OK) {
+			self::$statusCode = RouterStatus::NOT_FOUND;
+		}
 		return false;
 	}
 
@@ -254,7 +256,7 @@ class Router {
 	 * Return router response status code.
 	 * @return int
 	 */
-	public static function getRouterStatus():int{
+	public static function getStatusCode():int{
 		return self::$statusCode;
 	}
 }
