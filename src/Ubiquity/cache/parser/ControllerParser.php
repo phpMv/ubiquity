@@ -6,6 +6,7 @@ use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UString;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\annotations\AnnotationsEngineInterface;
+use Ubiquity\exceptions\RouterException;
 
 /**
  * Scans a controller to detect routes defined by annotations or attributes.
@@ -18,11 +19,15 @@ use Ubiquity\annotations\AnnotationsEngineInterface;
  */
 class ControllerParser {
 	use ControllerParserPathTrait;
+	
+	const HTTP_METHODS=['head','get','post','patch','put','delete','options','connect'];
+		
 	private string $controllerClass;
 	private $mainRouteClass;
 	private array $routesMethods = [ ];
 	private bool $rest = false;
 	private static array $excludeds = [ '__construct','isValid','initialize','finalize','onInvalidControl','loadView','forward','redirectToRoute' ];
+	
 
 	/**
 	 *
@@ -156,6 +161,10 @@ class ControllerParser {
 
 	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority, $callback = null) {
 		foreach ( $httpMethods as $httpMethod ) {
+			$httpMethod=\strtolower($httpMethod);
+			if(\array_search($httpMethod, self::HTTP_METHODS)===false){
+				throw new RouterException("$httpMethod is not a valid HTTP method!");
+			}
 			$v = [ 'controller' => $controllerClass,'action' => $method,'parameters' => $parameters,'name' => $name,'cache' => $cache,'duration' => $duration,'priority' => $priority ];
 			if (isset ( $callback )) {
 				$v ['callback'] = $callback;
