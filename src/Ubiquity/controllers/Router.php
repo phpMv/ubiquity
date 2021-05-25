@@ -255,6 +255,7 @@ class Router {
 	/**
 	 * Return router response status code.
 	 * @return int
+	 * @since 2.4.5
 	 */
 	public static function getStatusCode():int{
 		return self::$statusCode;

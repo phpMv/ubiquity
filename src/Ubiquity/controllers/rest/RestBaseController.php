@@ -128,7 +128,7 @@ abstract class RestBaseController extends Controller {
 	}
 
 	public function _errorHandler($e) {
-		$this->_setResponseCode ( 200 );
+		$this->_setResponseCode ( Router::getStatusCode() );
 		echo $this->_getResponseFormatter ()->formatException ( $e );
 	}
 
