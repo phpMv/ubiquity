@@ -129,7 +129,7 @@ class CRUDHelper {
 				if (($annot = OrmUtils::getAnnotationInfoMember ( $className, '#manyToMany', $member )) !== false) {
 					$newField = $member . 'Ids';
 					$fkClass = $annot ['targetEntity'];
-					$fkObjects = DAO::getAll ( $fkClass, self::getMultiWhere ( $values [$newField], $className ) );
+					$fkObjects = DAO::getAll ( $fkClass, self::getMultiWhere ( $values [$newField], $fkClass ) );
 					if (Reflexion::setMemberValue ( $instance, $member, $fkObjects )) {
 						DAO::insertOrUpdateManyToMany ( $instance, $member );
 					}
