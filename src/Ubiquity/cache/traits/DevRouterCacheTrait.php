@@ -74,6 +74,9 @@ trait DevRouterCacheTrait {
 			if (self::hasCapturingGroup ( $path )) {
 				$part = self::getFirstPartIndex ( $path );
 				if ($part != null) {
+					if($part===\trim($path,'/')){
+						$part='*';
+					}
 					$res [$part] [] = $path;
 				}
 			}
