@@ -18,7 +18,7 @@ use Ubiquity\utils\base\UString;
  * Responsible of the display
  *
  * @author jc
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class ModelViewer {
@@ -142,7 +142,7 @@ class ModelViewer {
 
 		if (! isset ( $selector )) {
 			if (\count ( $instances ) > 0 && $this->showDetailsOnDataTableClick ()) {
-				$dataTable->getOnRow ( 'mousedown', $adminRoute . $files->getRouteDetails (), "#table-details", [ "selector" => $selector,"attr" => "data-ajax","hasLoader" => false,"jsCallback" => "return false;" ] );
+				$dataTable->getOnRow ( 'mousedown', $adminRoute . $files->getRouteDetails (), '#table-details', [ 'selector' => $selector,'attr' => 'data-ajax','hasLoader' => false,'jsCallback' => 'return false;','jsCondition' => 'event.target === this' ] );
 				$dataTable->setActiveRowSelector ( 'active' );
 			}
 
