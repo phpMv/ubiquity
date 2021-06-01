@@ -225,7 +225,7 @@ trait CRUDControllerUtilitiesTrait {
 		return $this->getSingleton ( $this->events, "getEvents" );
 	}
 
-	private function getSingleton($value, $method) {
+	private function getSingleton(&$value, $method) {
 		if (! isset ( $value )) {
 			$value = $this->$method ();
 		}
