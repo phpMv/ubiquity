@@ -2,6 +2,8 @@
 
 namespace Ubiquity\utils\models;
 
+use Ubiquity\orm\OrmUtils;
+
 /**
  * Ubiquity\utils\models$UArrayModels
  * This class is part of Ubiquity
@@ -11,7 +13,7 @@ namespace Ubiquity\utils\models;
  */
 class UArrayModels {
 	/**
-	 * Return a sorted array using a user defined comparison function.
+	 * Returns a sorted array using a user defined comparison function.
 	 * @param array $array
 	 * @param callable $callback
 	 * @return array
@@ -22,7 +24,7 @@ class UArrayModels {
 	}
 	
 	/**
-	 * Group an array using an array of user defined comparison functions.
+	 * Groups an array using an array of user defined comparison functions.
 	 * @param array $objects
 	 * @param array $gbCallbacks
 	 * @param callable|null $lineCallback
@@ -43,7 +45,7 @@ class UArrayModels {
 	}
 	
 	/**
-	 * Group an array using a user defined comparison function.
+	 * Groups an array using a user defined comparison function.
 	 * @param array $objects
 	 * @param callable $gbCallback
 	 * @param callable|null $lineCallback
@@ -72,7 +74,7 @@ class UArrayModels {
 	}
 	
 	/**
-	 * Return an associative array of key/values from an array of objects.
+	 * Returns an associative array of key/values from an array of objects.
 	 * @param array $objects
 	 * @param ?string|callable $keyFunction
 	 * @param ?string|callable $valueFunction
@@ -96,7 +98,7 @@ class UArrayModels {
 	}
 	
 	/**
-	 * Find and return the first occurrence of the array satisfying the callback.
+	 * Finds and returns the first occurrence of the array satisfying the callback.
 	 * @param array|null $objects
 	 * @param callable $callback
 	 * @return mixed|null
@@ -114,7 +116,86 @@ class UArrayModels {
 	}
 	
 	/**
-	 * Remove the first occurrence of the array satisfying the callback.
+	 * Finds and returns the first occurrence of the array using one of the objects properties.
+	 * @param array $objects
+	 * @param mixed $value
+	 * @param string $property default the id property
+	 * @return mixed|null
+	 */
+	public static function findBy(?array $objects,mixed $value,string $property='id'){
+		if(!is_array($objects)){
+			return null;
+		}
+		$get='get'.\ucfirst($property);
+		foreach ($objects as $index=>$o) {
+			if($value===$o->$get()){
+				return $o;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Finds and returns the first occurrence of the array using the objects id.
+	 * 
+	 * @param array $objects
+	 * @param mixed $idValue
+	 * @return NULL|mixed|NULL
+	 */
+	public static function findById(?array $objects,mixed $idValue){
+		if(!is_array($objects) && \count($objects)>0){
+			return null;
+		}
+		$property=OrmUtils::getFirstKey(\get_class(\current($objects)));
+		return self::findBy($objects, $value,$property);
+	}
+	
+	/**
+	 * Checks if an object exist in an array of objects satisfying the callback.
+	 * 
+	 * @param array $objects
+	 * @param callable $callback
+	 * @return bool
+	 */
+	public static function contains(?array $objects,callable $callback):bool{
+		return self::find($objects, $callback)!==null;
+	}
+	
+	/**
+	 * Checks if an object exist in an array of objects using one of the object property.
+	 * 
+	 * @param array $objects
+	 * @param object $object
+	 * @param string $property
+	 * @return bool
+	 */
+	public static function containsBy(?array $objects,object $object,string $property='id'):bool{
+		if($object===null){
+			return false;
+		}
+		$get='get'.\ucfirst($property);
+		$objectValue=$object->$get();
+		return self::findBy($objects, $objectValue,$property)!==null;
+	}
+	
+	/**
+	 * Checks if an object exist in an array of objects using the object id.
+	 * 
+	 * @param array $objects
+	 * @param object $object
+	 * @return bool
+	 */
+	public static function containsById(?array $objects,object $object):bool {
+		if($object===null){
+			return false;
+		}
+		$property=OrmUtils::getFirstKey(\get_class($object));
+		return self::containsBy($objects, $object,$property);
+	}
+	
+	
+	/**
+	 * Removes the first occurrence of the array satisfying the callback.
 	 * @param array|null $objects
 	 * @param callable $callback
 	 * @return array
@@ -130,7 +211,7 @@ class UArrayModels {
 	}
 
 	/**
-	 * Remove an object from an array of objects using one of its properties.
+	 * Removes an object from an array of objects using one of its properties.
 	 * @param array $objects
 	 * @param object $object
 	 * @param string $property default the id property
@@ -152,7 +233,7 @@ class UArrayModels {
 	}
 	
 	/**
-	 * Remove objects from an array of objects using one of their properties.
+	 * Removes objects from an array of objects using one of their properties.
 	 * @param array $objects
 	 * @param object $object
 	 * @param string $property default the id property
@@ -196,7 +277,7 @@ class UArrayModels {
 	}
 	
 	/**
-	 * Remove all the occurrences of the array satisfying the callback.
+	 * Removes all the occurrences of the array satisfying the callback.
 	 * @param array|null $objects
 	 * @param callable $callback
 	 * @return array
