@@ -15,6 +15,12 @@ use Ubiquity\orm\OrmUtils;
  *
  */
 class CRUDDatas {
+	
+	protected $controller;
+	
+	public function __construct($controller) {
+		$this->controller = $controller;
+	}
 
 	/**
 	 * Returns the table names to display in the left admin menu
