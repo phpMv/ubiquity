@@ -221,7 +221,7 @@ trait CRUDControllerUtilitiesTrait {
 		return new CRUDEvents ( $this );
 	}
 
-	private function _getEvents(): CRUDEvents {
+	protected function _getEvents(): CRUDEvents {
 		return $this->getSingleton ( $this->events, "getEvents" );
 	}
 
