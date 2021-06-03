@@ -153,6 +153,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		if (URequest::isAjax ()) {
 			$model = $this->model;
 			$instance = new $model ();
+			$this->_getEvents()->onNewInstance($instance);
 			$instance->_new = true;
 			$this->_edit ( $instance, $modal );
 		} else {

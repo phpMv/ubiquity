@@ -106,6 +106,15 @@ class CRUDEvents {
 	public function onConfDeleteMultipleMessage(CRUDMessage $message, $data): CRUDMessage {
 		return $message;
 	}
+	
+	/**
+	 * Triggered when a new instance is created before rendering in the form.
+	 *
+	 * @param object $instance
+	 * @param bool $isNew
+	 */
+	public function onNewInstance(object $instance) {
+	}
 
 	/**
 	 * Triggered before the instance updating (insert or update).
