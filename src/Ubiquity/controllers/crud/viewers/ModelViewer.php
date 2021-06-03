@@ -7,6 +7,7 @@ use Ajax\semantic\html\elements\HtmlHeader;
 use Ajax\semantic\html\elements\HtmlLabel;
 use Ajax\semantic\widgets\datatable\DataTable;
 use Ajax\semantic\widgets\datatable\PositionInTable;
+use Ajax\service\JString;
 use Ubiquity\controllers\crud\CRUDHelper;
 use Ubiquity\controllers\crud\interfaces\HasModelViewerInterface;
 use Ubiquity\controllers\crud\viewers\traits\FormModelViewerTrait;
@@ -142,7 +143,7 @@ class ModelViewer {
 
 		if (! isset ( $selector )) {
 			if (\count ( $instances ) > 0 && $this->showDetailsOnDataTableClick ()) {
-				$dataTable->getOnRow ( 'mousedown', $adminRoute . $files->getRouteDetails (), '#table-details', [ 'selector' => $selector,'attr' => 'data-ajax','hasLoader' => false,'jsCallback' => 'return false;','jsCondition' => 'event.target.tagName === "TD"' ] );
+				$dataTable->getOnRow ( 'mousedown', $adminRoute . $files->getRouteDetails (), "#table-details", [ "selector" => $selector,"attr" => "data-ajax","hasLoader" => false,"jsCallback" => "return false;",'jsCondition' => 'event.target.tagName === "TD"' ] );
 				$dataTable->setActiveRowSelector ( 'active' );
 			}
 
@@ -232,14 +233,22 @@ class ModelViewer {
 		} );
 		$dataTable->addAllButtons ( false, [ 'ajaxTransition' => $transition,'hasLoader' => 'internal' ], function ($bt) {
 			$bt->addClass ( 'circular ' . $this->style );
-			$this->onDataTableRowButton ( $bt );
+			$this->onDataTableRowButton ( $bt ,'display');
 		}, function ($bt) {
 			$bt->addClass ( 'circular ' . $this->style );
-			$this->onDataTableRowButton ( $bt );
+			$this->onDataTableRowButton ( $bt ,'edit');
 		}, function ($bt) {
 			$bt->addClass ( 'circular ' . $this->style );
-			$this->onDataTableRowButton ( $bt );
+			$this->onDataTableRowButton ( $bt ,'delete');
 		} );
+		$buttons=\array_diff($this->getDataTableRowButtons(),['edit','display','delete']);
+		foreach ($buttons as $bt){
+			$attr=JString::cleanIdentifier($bt);
+			$dataTable->insertDefaultButtonIn($dataTable->getButtonsColumn(),$bt,"_$attr circular basic",false,function($b) use($attr){
+				$b->addClass ( $this->style );
+				$this->onDataTableRowButton ( $b,$attr );
+			},$bt);
+		}
 		$dataTable->setDisplayBehavior ( [ 'jsCallback' => '$("#dataTable").hide();','ajaxTransition' => $transition,'hasLoader' => 'internal' ] );
 	}
 
@@ -260,8 +269,9 @@ class ModelViewer {
 	 * To override for modifying the dataTable row buttons
 	 *
 	 * @param HtmlButton $bt
+	 * @param ?string $name
 	 */
-	public function onDataTableRowButton(HtmlButton $bt) {
+	public function onDataTableRowButton(HtmlButton $bt,?string $name=null) {
 	}
 
 	/**

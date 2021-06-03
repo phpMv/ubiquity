@@ -42,7 +42,7 @@ The generated controller:
    
    	public function __construct(){
    		parent::__construct();
-   		$this->model="models\\User";
+   		$this->model= models\User::class;
    	}
    
    	public function _getBaseRoute() {
@@ -162,7 +162,7 @@ ModelViewer methods to override
 +-------------------------------------------------------------------+---------------------------------------------------------------------------------+-------------------+
 | getDataTableRowButtons()                                          | Returns an array of buttons to display for each row ["edit","delete","display"] | ["edit","delete"] |
 +-------------------------------------------------------------------+---------------------------------------------------------------------------------+-------------------+
-| onDataTableRowButton(HtmlButton $bt)                              | To override for modifying the dataTable row buttons                             |                   |
+| onDataTableRowButton(HtmlButton $bt, ?string $name)               | To override for modifying the dataTable row buttons                             |                   |
 +-------------------------------------------------------------------+---------------------------------------------------------------------------------+-------------------+
 | getCaptions($captions, $className)                                | Returns the captions of the column headers                                      | all member names  |
 +-------------------------------------------------------------------+---------------------------------------------------------------------------------+-------------------+
