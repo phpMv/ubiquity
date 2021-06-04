@@ -328,11 +328,12 @@ trait FormModelViewerTrait {
 	}
 
 	/**
-	 * For doing something when $field is generated in form
-	 *
-	 * @param mixed $field
+	 * 
+	 * @param HtmlFormField $field
+	 * @param int $nb
+	 * @param string $name
 	 */
-	public function onGenerateFormField($field, $nb) {
+	public function onGenerateFormField($field, $nb,$name) {
 		if ($field instanceof HtmlFormInput) {
 			if ($field->getDataField ()->getProperty ( 'type' ) == "datetime-local") {
 				$v = $field->getDataField ()->getProperty ( 'value' );
@@ -358,6 +359,7 @@ trait FormModelViewerTrait {
 	 *
 	 * @param array $captions
 	 * @param string $className
+	 * @param object $instance
 	 */
 	public function getFormCaptions($captions, $className, $instance) {
 		return \array_map ( 'ucfirst', $captions );
