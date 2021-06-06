@@ -384,5 +384,14 @@ trait FormModelViewerTrait {
 	public function formHasMessage():bool{
 		return true;
 	}
+	
+	/**
+	 * Hook for changing the edit/new modal buttons.
+	 * @param HtmlButton $btOkay
+	 * @param HtmlButton $btCancel
+	 */
+	public function onFormModalButtons(HtmlButton $btOkay,HtmlButton $btCancel):void{
+		$btOkay->setValue ( "Validate modifications" );
+	}
 }
 
