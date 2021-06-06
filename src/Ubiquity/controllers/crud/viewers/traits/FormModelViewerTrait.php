@@ -22,11 +22,11 @@ use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  * @property \Ajax\JsUtils $jquery
  */
 trait FormModelViewerTrait {
-
+	
 	protected function relationMembersInForm($form, $instance, $className, $fields, $relations) {
 		foreach ( $relations as $field => $member ) {
 			if (array_search ( $field, $fields ) !== false) {
@@ -40,7 +40,7 @@ trait FormModelViewerTrait {
 			}
 		}
 	}
-
+	
 	protected function manyToOneFormField(DataForm $form, $member, $className, $instance) {
 		$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, "#joinColumn", $member );
 		if ($joinColumn) {
@@ -50,7 +50,7 @@ trait FormModelViewerTrait {
 				$fkObject = new $fkClass ();
 			}
 			$fkId = OrmUtils::getFirstKey ( $fkClass );
-
+			
 			$fkIdGetter = "get" . \ucfirst ( $fkId );
 			if (\method_exists ( $fkObject, "__toString" ) && \method_exists ( $fkObject, $fkIdGetter )) {
 				$fkField = $joinColumn ["name"];
@@ -73,7 +73,7 @@ trait FormModelViewerTrait {
 			}
 		}
 	}
-
+	
 	protected function oneToManyFormField(DataForm $form, $member, $instance, $annot) {
 		$newField = $member . "Ids";
 		$fkClass = $annot ["className"];
@@ -83,11 +83,11 @@ trait FormModelViewerTrait {
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
 		}, $fkInstances );
-		$instance->{$newField} = \implode ( ",", $ids );
-		$form->fieldAsDropDown ( $newField, JArray::modelArray ( $this->controller->_getAdminData ()->getOneToManyDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), true );
-		$form->setCaption ( $newField, \ucfirst ( $member ) );
+			$instance->{$newField} = \implode ( ",", $ids );
+			$form->fieldAsDropDown ( $newField, JArray::modelArray ( $this->controller->_getAdminData ()->getOneToManyDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), true );
+			$form->setCaption ( $newField, \ucfirst ( $member ) );
 	}
-
+	
 	protected function manyToManyFormField(DataForm $form, $member, $instance, $annot) {
 		$newField = $member . "Ids";
 		$fkClass = $annot ["targetEntity"];
@@ -97,13 +97,13 @@ trait FormModelViewerTrait {
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
 		}, $fkInstances );
-		$instance->{$newField} = \implode ( ",", $ids );
-		$form->fieldAsDropDown ( $newField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToManyDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), true, [ "jsCallback" => function ($elm) {
-			$elm->getField ()->asSearch ();
-		} ] );
-		$form->setCaption ( $newField, \ucfirst ( $member ) );
+			$instance->{$newField} = \implode ( ",", $ids );
+			$form->fieldAsDropDown ( $newField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToManyDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), true, [ "jsCallback" => function ($elm) {
+				$elm->getField ()->asSearch ();
+			} ] );
+				$form->setCaption ( $newField, \ucfirst ( $member ) );
 	}
-
+	
 	/**
 	 *
 	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
@@ -111,7 +111,7 @@ trait FormModelViewerTrait {
 	public function getEditMemberParams() {
 		return $this->defaultEditMemberParams ();
 	}
-
+	
 	/**
 	 *
 	 * @param string $part
@@ -123,7 +123,7 @@ trait FormModelViewerTrait {
 			return $params [$part];
 		}
 	}
-
+	
 	/**
 	 *
 	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
@@ -131,7 +131,7 @@ trait FormModelViewerTrait {
 	protected function defaultEditMemberParams() {
 		return [ "dataTable" => EditMemberParams::dataTable ( '#'.$this->getDataTableId () ),"dataElement" => EditMemberParams::dataElement () ];
 	}
-
+	
 	/**
 	 * Returns the form for adding or modifying an object
 	 *
@@ -141,31 +141,36 @@ trait FormModelViewerTrait {
 	 * @return \Ajax\semantic\widgets\dataform\DataForm
 	 */
 	public function getForm($identifier, $instance, $updateUrl = 'updateModel') {
+		$hasMessage=$this->formHasMessage();
 		$form = $this->jquery->semantic ()->dataForm ( $identifier, $instance );
 		$form->setLibraryId ( 'frmEdit' );
 		$className = \get_class ( $instance );
 		$fields = \array_unique ( $this->controller->_getAdminData ()->getFormFieldNames ( $className, $instance ) );
 		$relFields = OrmUtils::getFieldsInRelations_ ( $className );
-
+		
 		$this->setFormFields_ ( $fields, $relFields );
-		\array_unshift ( $fields, '_message' );
+		if($hasMessage) {
+			\array_unshift($fields, '_message');
+		}
 		$form->setFields ( $fields );
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
 		$attrs=ValidatorsManager::getUIConstraints($instance);
 		$this->setFormFieldsComponent ( $form, $fieldTypes,$attrs);
-
+		
 		$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields );
 		OrmUtils::setFieldToMemberNames ( $fields, $relFields );
 		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
-		$message = $this->getFormTitle ( $form, $instance );
-		$form->setCaption ( '_message', $message ['subMessage'] );
-		$form->fieldAsMessage ( '_message', [ 'icon' => $message ["icon"] ] );
-		$instance->_message = $message ['message'];
+		if($hasMessage) {
+			$message = $this->getFormTitle($form, $instance);
+			$form->setCaption('_message', $message ['subMessage']);
+			$form->fieldAsMessage('_message', ['icon' => $message ["icon"]]);
+			$instance->_message = $message ['message'];
+		}
 		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/" . $updateUrl, '#frm-add-update' );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
 		return $form;
 	}
-
+	
 	/**
 	 * Returns a form for member editing
 	 *
@@ -179,7 +184,7 @@ trait FormModelViewerTrait {
 	 */
 	public function getMemberForm($identifier, $instance, $member, $td, $part, $updateUrl = '_updateMember') {
 		$editMemberParams = $this->getEditMemberParams_ ( $part );
-
+		
 		$form = $this->jquery->semantic ()->dataForm ( $identifier, $instance );
 		$form->on ( "dblclick", "", true, true );
 		$form->setProperty ( "onsubmit", "return false;" );
@@ -216,20 +221,20 @@ trait FormModelViewerTrait {
 				$f->setProperty ( "style", "display: none;" );
 			}
 		} );
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/$updateUrl/" . $member . "/" . $editMemberParams->getUpdateCallback (), "#" . $td, [ "attr" => "","hasLoader" => false,"jsCallback" => "$(self).remove();","jqueryDone" => "html" ] );
-		if ($editMemberParams->getHasPopup ()) {
-			$endEdit = "\$('#" . $identifier . "').html();\$('.popup').hide();\$('#" . $td . "').popup('destroy');";
-			$validate = $endEdit;
-		} else {
-			$endEdit = "let td=\$('#" . $td . "');td.html(td.data('originalText'));";
-			$validate = "";
-		}
-		$form->on ( "endEdit", $endEdit );
-		$form->on ( "validate", "\$('#" . $identifier . "').form('submit');" . $validate );
-		$this->jquery->execAtLast ( "$('form').find('input[type=text],textarea,select').filter(':visible:first').focus();" );
-		return $form;
+			$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/$updateUrl/" . $member . "/" . $editMemberParams->getUpdateCallback (), "#" . $td, [ "attr" => "","hasLoader" => false,"jsCallback" => "$(self).remove();","jqueryDone" => "html" ] );
+			if ($editMemberParams->getHasPopup ()) {
+				$endEdit = "\$('#" . $identifier . "').html();\$('.popup').hide();\$('#" . $td . "').popup('destroy');";
+				$validate = $endEdit;
+			} else {
+				$endEdit = "let td=\$('#" . $td . "');td.html(td.data('originalText'));";
+				$validate = "";
+			}
+			$form->on ( "endEdit", $endEdit );
+			$form->on ( "validate", "\$('#" . $identifier . "').form('submit');" . $validate );
+			$this->jquery->execAtLast ( "$('form').find('input[type=text],textarea,select').filter(':visible:first').focus();" );
+			return $form;
 	}
-
+	
 	private function setFormFields_(&$fields, $relFields) {
 		$hasRelations = false;
 		$relFields = \array_flip ( $relFields );
@@ -241,7 +246,7 @@ trait FormModelViewerTrait {
 		}
 		return $hasRelations;
 	}
-
+	
 	/**
 	 * Returns an associative array defining form message title with keys "icon","message","subMessage"
 	 *
@@ -256,7 +261,7 @@ trait FormModelViewerTrait {
 		$message ['message'] = '&nbsp;' . \get_class ( $instance );
 		return $message;
 	}
-
+	
 	/**
 	 * Sets the components for each field
 	 *
@@ -267,7 +272,7 @@ trait FormModelViewerTrait {
 	public function setFormFieldsComponent(DataForm $form, $fieldTypes, $attributes = [ ]) {
 		$this->setFormFieldsComponent_ ( $form, $fieldTypes, $attributes );
 	}
-
+	
 	/**
 	 * Sets the components for each field
 	 *
@@ -278,7 +283,7 @@ trait FormModelViewerTrait {
 	public function setMemberFormFieldsComponent(DataForm $form, $fieldTypes,$attributes=[]) {
 		$this->setFormFieldsComponent_ ( $form, $fieldTypes ,$attributes);
 	}
-
+	
 	protected function setFormFieldsComponent_(DataForm $form, $fieldTypes, $attributes = [ ]) {
 		foreach ( $fieldTypes as $property => $type ) {
 			$rules = $attributes[$property]??[];
@@ -298,7 +303,7 @@ trait FormModelViewerTrait {
 				default :
 					$noPName = true;
 			}
-
+			
 			switch ($type) {
 				case 'tinyint(1)' :
 				case 'bool' :
@@ -326,12 +331,11 @@ trait FormModelViewerTrait {
 			}
 		}
 	}
-
+	
 	/**
-	 * 
-	 * @param HtmlFormField $field
-	 * @param int $nb
-	 * @param string $name
+	 * For doing something when $field is generated in form
+	 *
+	 * @param mixed $field
 	 */
 	public function onGenerateFormField($field, $nb,$name) {
 		if ($field instanceof HtmlFormInput) {
@@ -342,7 +346,7 @@ trait FormModelViewerTrait {
 		}
 		return;
 	}
-
+	
 	/**
 	 * Condition to determine if the edit or add form is modal for $model objects
 	 *
@@ -353,16 +357,32 @@ trait FormModelViewerTrait {
 	public function isModal($objects, $model) {
 		return \count ( $objects ) > 5;
 	}
-
+	
 	/**
 	 * Returns the captions for form fields
 	 *
 	 * @param array $captions
 	 * @param string $className
-	 * @param object $instance
 	 */
 	public function getFormCaptions($captions, $className, $instance) {
 		return \array_map ( 'ucfirst', $captions );
+	}
+	
+	/**
+	 * Returns the modal Title.
+	 * @param object $instance
+	 * @return string
+	 */
+	public function getFormModalTitle(object $instance):string{
+		return \get_class ( $instance );
+	}
+	
+	/**
+	 * If true, display a message for editing or updating (default true).
+	 * @return bool
+	 */
+	public function formHasMessage():bool{
+		return true;
 	}
 }
 

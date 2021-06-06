@@ -19,21 +19,21 @@ use Ubiquity\controllers\crud\viewers\ModelViewer;
  * @property \Ubiquity\views\View $view
  */
 trait CRUDControllerUtilitiesTrait {
-
+	
 	abstract protected function _showSimpleMessage(CRUDMessage $message, $staticName = null): HtmlMessage;
-
+	
 	abstract public function loadView($viewName, $pData = NULL, $asString = false);
-
+	
 	abstract public function index();
-
+	
 	abstract public function _getBaseRoute();
-
+	
 	abstract protected function _showConfMessage(CRUDMessage $message, $url, $responseElement, $data, $attributes = NULL): HtmlMessage;
 	protected $modelViewer;
 	protected $adminDatas;
 	protected $events;
 	protected $crudFiles;
-
+	
 	protected function getInstances(&$totalCount, $page = 1, $id = null) {
 		$this->activePage = $page;
 		$model = $this->model;
@@ -51,13 +51,13 @@ trait CRUDControllerUtilitiesTrait {
 		}
 		return DAO::getAll ( $model, $condition );
 	}
-
+	
 	protected function search($model, $search) {
 		$fields = $this->_getAdminData ()->getSearchFieldNames ( $model );
 		$condition = $this->_getAdminData ()->_getInstancesFilter ( $model );
 		return CRUDHelper::search ( $model, $search, $fields, $condition );
 	}
-
+	
 	/**
 	 *
 	 * @param mixed $ids
@@ -83,20 +83,20 @@ trait CRUDControllerUtilitiesTrait {
 		echo $this->jquery->compile ( $this->view );
 		exit ( 1 );
 	}
-
+	
 	protected function updateMemberDataElement($member, $instance) {
 		$dt = $this->_getModelViewer ()->getModelDataElement ( $instance, $this->model, false );
 		$dt->compile ();
 		echo new HtmlContentOnly ( $dt->getFieldValue ( $member ) );
 	}
-
+	
 	private function _renderDataTableForRefresh($instances, $model, $totalCount) {
 		$compo = $this->_getModelViewer ()->getModelDataTable ( $instances, $model, $totalCount )->refresh ( [ "tbody" ] );
 		$this->_getEvents ()->onDisplayElements ( $compo, $instances, true );
 		$compo->setLibraryId ( "_compo_" );
 		$this->jquery->renderView ( "@framework/main/component.html" );
 	}
-
+	
 	protected function _edit($instance, $modal = "no") {
 		$_SESSION ["instance"] = $instance;
 		$modal = ($modal == "modal");
@@ -109,7 +109,7 @@ trait CRUDControllerUtilitiesTrait {
 			$this->loadView ( $this->_getFiles ()->getViewForm (), [ "modal" => $modal,"instance" => $instance,"isNew" => $instance->_new ] );
 		} else {
 			$this->jquery->exec ( "$('#modal-frmEdit').modal('show');", true );
-			$form = $form->asModal ( \get_class ( $instance ) );
+			$form = $form->asModal ( $this->_getModelViewer()->getFormModalTitle($instance) );
 			$form->setActions ( [ "Okay_","Cancel" ] );
 			$form->addClass($this->style);
 			$btOkay = $form->getAction ( 0 );
@@ -120,13 +120,13 @@ trait CRUDControllerUtilitiesTrait {
 			echo $this->jquery->compile ( $this->view );
 		}
 	}
-
+	
 	protected function _showModel($id = null) {
 		$model = $this->model;
 		$datas = $this->getInstances ( $totalCount, 1, $id );
 		return $this->_getModelViewer ()->getModelDataTable ( $datas, $model, $totalCount, $this->activePage );
 	}
-
+	
 	/**
 	 * Helper to delete multiple objects
 	 *
@@ -159,7 +159,7 @@ trait CRUDControllerUtilitiesTrait {
 			echo $this->jquery->compile ( $this->view );
 		}
 	}
-
+	
 	protected function refreshInstance($instance, $isNew) {
 		if ($this->_getAdminData ()->refreshPartialInstance () && ! $isNew) {
 			$this->jquery->setJsonToElement ( OrmUtils::objectAsJSON ( $instance ) );
@@ -168,7 +168,7 @@ trait CRUDControllerUtilitiesTrait {
 			$this->jquery->get ( $this->_getBaseRoute () . "/refreshTable/" . $pk, "#lv", [ "jqueryDone" => "replaceWith" ] );
 		}
 	}
-
+	
 	/**
 	 * To override for defining a new adminData
 	 *
@@ -177,11 +177,11 @@ trait CRUDControllerUtilitiesTrait {
 	protected function getAdminData(): CRUDDatas {
 		return new CRUDDatas ();
 	}
-
+	
 	public function _getAdminData(): CRUDDatas {
-		return $this->getSingleton ( $this->adminDatas, "getAdminData" );
+		return $this->getSingleton ( $this->adminDatas, 'getAdminData' );
 	}
-
+	
 	/**
 	 * To override for defining a new ModelViewer
 	 *
@@ -190,11 +190,11 @@ trait CRUDControllerUtilitiesTrait {
 	protected function getModelViewer(): ModelViewer {
 		return new ModelViewer ( $this ,$this->style??null);
 	}
-
+	
 	protected function _getModelViewer(): ModelViewer {
-		return $this->getSingleton ( $this->modelViewer, "getModelViewer" );
+		return $this->getSingleton ( $this->modelViewer, 'getModelViewer' );
 	}
-
+	
 	/**
 	 * To override for changing view files
 	 *
@@ -203,15 +203,15 @@ trait CRUDControllerUtilitiesTrait {
 	protected function getFiles(): CRUDFiles {
 		return new CRUDFiles ();
 	}
-
+	
 	/**
 	 *
 	 * @return CRUDFiles
 	 */
 	public function _getFiles() {
-		return $this->getSingleton ( $this->crudFiles, "getFiles" );
+		return $this->getSingleton ( $this->crudFiles, 'getFiles' );
 	}
-
+	
 	/**
 	 * To override for changing events
 	 *
@@ -220,18 +220,18 @@ trait CRUDControllerUtilitiesTrait {
 	protected function getEvents(): CRUDEvents {
 		return new CRUDEvents ( $this );
 	}
-
-	protected function _getEvents(): CRUDEvents {
-		return $this->getSingleton ( $this->events, "getEvents" );
+	
+	private function _getEvents(): CRUDEvents {
+		return $this->getSingleton ( $this->events, 'getEvents' );
 	}
-
+	
 	private function getSingleton(&$value, $method) {
 		if (! isset ( $value )) {
 			$value = $this->$method ();
 		}
 		return $value;
 	}
-
+	
 	private function crudLoadView($viewName, $vars = [ ]) {
 		$vars['inverted']=$this->style;
 		$this->_getEvents ()->beforeLoadView ( $viewName, $vars );
@@ -251,17 +251,17 @@ trait CRUDControllerUtilitiesTrait {
 			$this->jquery->renderView ( $viewName, $vars );
 		}
 	}
-
+	
 	/**
 	 *
 	 * @param object $instance
 	 * @return string
 	 */
 	protected function getInstanceToString($instance) {
-		if (method_exists ( $instance, "__toString" )) {
-			return $instance . "";
+		if (\method_exists ( $instance, '__toString' )) {
+			return $instance . '';
 		} else {
-			return get_class ( $instance );
+			return \get_class ( $instance );
 		}
 	}
 }
