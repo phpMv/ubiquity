@@ -100,7 +100,8 @@ trait CRUDControllerUtilitiesTrait {
 	protected function _edit($instance, $modal = "no") {
 		$_SESSION ["instance"] = $instance;
 		$modal = ($modal == "modal");
-		$form = $this->_getModelViewer ()->getForm ( "frmEdit", $instance );
+		$modelViewer=$this->_getModelViewer ();
+		$form = $modelViewer->getForm ( "frmEdit", $instance );
 		$this->_setStyle($form);
 		$this->jquery->click ( "#action-modal-frmEdit-0", "$('#frmEdit').form('submit');", false );
 		if (! $modal) {
