@@ -20,7 +20,7 @@ use Ajax\semantic\widgets\datatable\DataTable;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface {
@@ -75,12 +75,13 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	}
 
 	public function updateMember($member, $callback = false) {
-		$instance = $_SESSION ["instance"] ?? null;
+		$instance = $_SESSION ['instance'] ?? null;
 		if (isset ( $instance )) {
 			$updated = CRUDHelper::update ( $instance, $_POST );
 			if ($updated) {
 				if ($callback === false) {
 					$dt = $this->_getModelViewer ()->getModelDataTable ( [ $instance ], $this->model, 1 );
+					$dt->setGroupByFields(null);
 					$dt->compile ();
 					echo new HtmlContentOnly ( $dt->getFieldValue ( $member ) );
 				} else {
