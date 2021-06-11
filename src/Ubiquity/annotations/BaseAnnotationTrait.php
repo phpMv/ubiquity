@@ -7,7 +7,7 @@ use Ubiquity\utils\base\UArray;
  * Ubiquity\annotations$BaseAnnotationTrait
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 trait BaseAnnotationTrait {
@@ -35,6 +35,10 @@ trait BaseAnnotationTrait {
 				}
 			}
 			return $ret;
+	}
+	
+	public function isSameAs(BaseAnnotationTrait $annot):bool{
+		return \get_class($this)===\get_class($annot);
 	}
 }
 
