@@ -75,6 +75,10 @@ interface AnnotationsEngineInterface {
 	public static function isManyToOne(object $annotation):bool;
 
 	public static function isMany(object $annotation):bool;
+	
+	public static function isOneToMany(object $annotation):bool;
+	
+	public static function isManyToMany(object $annotation):bool;
 
 	public function is(string $key, object $annotation): bool;
 
