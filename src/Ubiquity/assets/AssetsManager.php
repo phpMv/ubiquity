@@ -19,22 +19,22 @@ use Ubiquity\utils\base\UArray;
  *
  */
 class AssetsManager {
-	const ASSETS_FOLDER = '/assets/';
+	private static $assetsFolder = '/assets/';
 	private static $siteURL;
-
+	
 	private static function gString($template, $variable, $attributes = []) {
 		$implode = UArray::implodeAsso ( $attributes, ' ' );
 		return \sprintf ( $template, $variable, $implode );
 	}
-
+	
 	private static function script($src, $attributes = []) {
 		return self::gString ( '<script type="text/javascript" src="%s" %s></script>', $src, $attributes );
 	}
-
+	
 	private static function stylesheet($link, $attributes = []) {
 		return self::gString ( '<link href="%s" type="text/css" rel="stylesheet" %s>', $link, $attributes );
 	}
-
+	
 	/**
 	 * Starts the assets manager.
 	 * Essential to define the siteURL part
@@ -45,7 +45,11 @@ class AssetsManager {
 		$siteURL = $config ['siteUrl'] ?? '';
 		self::$siteURL = \rtrim ( $siteURL, '/' );
 	}
-
+	
+	public static function setAssetsFolder($assetsFolder='/public/assets/'){
+		self::$assetsFolder=$assetsFolder;
+	}
+	
 	/**
 	 * Returns the absolute or relative url to the resource.
 	 *
@@ -58,11 +62,11 @@ class AssetsManager {
 			return $resource;
 		}
 		if ($absolute) {
-			return self::$siteURL . self::ASSETS_FOLDER . $resource;
+			return self::$siteURL . self::$assetsFolder . $resource;
 		}
-		return \ltrim ( self::ASSETS_FOLDER, '/' ) . $resource;
+		return \ltrim ( self::$assetsFolder, '/' ) . $resource;
 	}
-
+	
 	/**
 	 * Returns the absolute or relative url for a resource in the **activeTheme**.
 	 *
@@ -74,7 +78,7 @@ class AssetsManager {
 		$activeTheme = ThemesManager::getActiveTheme ();
 		return self::getThemeUrl ( $activeTheme, $resource, $absolute );
 	}
-
+	
 	/**
 	 * Returns the absolute or relative url for a resource in a theme.
 	 *
@@ -85,11 +89,11 @@ class AssetsManager {
 	 */
 	public static function getThemeUrl($theme, $resource, $absolute = false) {
 		if ($absolute) {
-			return self::$siteURL . self::ASSETS_FOLDER . $theme . '/' . $resource;
+			return self::$siteURL . self::$assetsFolder . $theme . '/' . $resource;
 		}
-		return \ltrim ( self::ASSETS_FOLDER, '/' ) . $theme . '/' . $resource;
+		return \ltrim ( self::$assetsFolder, '/' ) . $theme . '/' . $resource;
 	}
-
+	
 	/**
 	 * Returns the script inclusion for a javascript resource.
 	 *
@@ -101,7 +105,7 @@ class AssetsManager {
 	public static function js($resource, $attributes = [], $absolute = false) {
 		return self::script ( self::getUrl ( $resource, $absolute ), $attributes );
 	}
-
+	
 	/**
 	 * Returns the css inclusion for a stylesheet resource.
 	 *
@@ -113,7 +117,7 @@ class AssetsManager {
 	public static function css($resource, $attributes = [], $absolute = false) {
 		return self::stylesheet ( self::getUrl ( $resource, $absolute ), $attributes );
 	}
-
+	
 	/**
 	 * Returns the script inclusion for a javascript resource in **activeTheme**.
 	 *
@@ -125,7 +129,7 @@ class AssetsManager {
 	public static function js_($resource, $attributes = [], $absolute = false) {
 		return self::script ( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
 	}
-
+	
 	/**
 	 * Returns the css inclusion for a stylesheet resource in **activeTheme**.
 	 *
