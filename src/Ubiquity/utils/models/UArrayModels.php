@@ -8,7 +8,7 @@ use Ubiquity\orm\OrmUtils;
  * Ubiquity\utils\models$UArrayModels
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class UArrayModels {
@@ -215,11 +215,11 @@ class UArrayModels {
 	 * @param array $objects
 	 * @param object $object
 	 * @param string $property default the id property
-	 * @return array
+	 * @return ?array
 	 */
-	public static function removeBy(?array $objects,object $object,string $property='id'):array{
+	public static function removeBy(?array $objects,object $object,string $property='id'):?array{
 		if(!is_array($objects) || $object==null){
-			return;
+			return null;
 		}
 		$get='get'.\ucfirst($property);
 		$objectValue=$object->$get();
@@ -237,11 +237,11 @@ class UArrayModels {
 	 * @param array $objects
 	 * @param object $object
 	 * @param string $property default the id property
-	 * @return array
+	 * @return ?array
 	 */
-	public static function removeAllBy(?array $objects,object $object,string $property='id'):array{
+	public static function removeAllBy(?array $objects,object $object,string $property='id'):?array{
 		if(!is_array($objects) || $object==null){
-			return;
+			return null;
 		}
 		$get='get'.\ucfirst($property);
 		$objectValue=$object->$get();
