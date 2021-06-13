@@ -14,17 +14,17 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  * @since Ubiquity 2.1.0
  *
  */
 class AssetsManager {
-	const ASSETS_FOLDER = '/public/assets/';
+	const ASSETS_FOLDER = '/assets/';
 	private static $siteURL;
 
 	private static function gString($template, $variable, $attributes = []) {
 		$implode = UArray::implodeAsso ( $attributes, ' ' );
-		return sprintf ( $template, $variable, $implode );
+		return \sprintf ( $template, $variable, $implode );
 	}
 
 	private static function script($src, $attributes = []) {
@@ -43,7 +43,7 @@ class AssetsManager {
 	 */
 	public static function start(&$config) {
 		$siteURL = $config ['siteUrl'] ?? '';
-		self::$siteURL = rtrim ( $siteURL, '/' );
+		self::$siteURL = \rtrim ( $siteURL, '/' );
 	}
 
 	/**
@@ -54,13 +54,13 @@ class AssetsManager {
 	 * @return string
 	 */
 	public static function getUrl($resource, $absolute = false) {
-		if (strpos ( $resource, '//' ) !== false) {
+		if (\strpos ( $resource, '//' ) !== false) {
 			return $resource;
 		}
 		if ($absolute) {
 			return self::$siteURL . self::ASSETS_FOLDER . $resource;
 		}
-		return ltrim ( self::ASSETS_FOLDER, '/' ) . $resource;
+		return \ltrim ( self::ASSETS_FOLDER, '/' ) . $resource;
 	}
 
 	/**
@@ -87,7 +87,7 @@ class AssetsManager {
 		if ($absolute) {
 			return self::$siteURL . self::ASSETS_FOLDER . $theme . '/' . $resource;
 		}
-		return ltrim ( self::ASSETS_FOLDER, '/' ) . $theme . '/' . $resource;
+		return \ltrim ( self::ASSETS_FOLDER, '/' ) . $theme . '/' . $resource;
 	}
 
 	/**
