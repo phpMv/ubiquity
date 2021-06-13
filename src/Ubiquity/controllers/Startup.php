@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.9
+ * @version 1.1.10
  *
  */
 class Startup {
@@ -119,6 +119,20 @@ class Startup {
 			return new $templateEngine ( [ ] );
 		}
 		return null;
+	}
+	
+	/**
+	 * Starts the default Template engine (Twig for Webtools).
+	 * 
+	 * @return TemplateEngine
+	 */
+	public static function startDefaultTemplateEngine():TemplateEngine{
+		if(self::$templateEngine===null || !self::$templateEngine instanceof \Ubiquity\views\engine\Twig){
+			$config=self::$config;
+			$config['templateEngine']=\Ubiquity\views\engine\Twig::class;
+			self::startDefaultTemplateEngine($config);
+		}
+		return self::$templateEngine;
 	}
 
 	/**
