@@ -11,7 +11,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class View {
@@ -57,10 +57,11 @@ class View {
 	public function render($viewName, $asString = false) {
 		$templateEngine = Startup::$templateEngine;
 		$ext = \pathinfo ( $viewName, PATHINFO_EXTENSION );
-		if ($ext == null)
-			$viewName = $viewName . '.php';
+		if ($ext == null){
+			$viewName = $viewName . '.'.Startup::getViewNameFileExtension();
+		}
 		$data = $this->vars;
-		if (\substr ( $viewName, - strlen ( '.php' ) ) !== '.php' && $templateEngine instanceof TemplateEngine) {
+		if ($templateEngine instanceof TemplateEngine) {
 			return $templateEngine->render ( $viewName, $data, $asString );
 		}
 

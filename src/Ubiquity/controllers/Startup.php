@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.8
+ * @version 1.1.9
  *
  */
 class Startup {
@@ -279,7 +279,7 @@ class Startup {
 	 * @return string
 	 */
 	public static function getViewNameFileExtension(): string {
-		return 'html';
+		return self::$config ['templateEngineOptions']['fileExt']??'html';
 	}
 
 	/**

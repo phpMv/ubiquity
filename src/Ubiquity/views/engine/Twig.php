@@ -25,7 +25,7 @@ use Ubiquity\assets\AssetsManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.10
+ * @version 1.0.11
  *
  */
 class Twig extends TemplateEngine {
@@ -33,12 +33,12 @@ class Twig extends TemplateEngine {
 	private $loader;
 
 	public function __construct($options = array ()) {
-		$loader = new FilesystemLoader ( \ROOT . \DS . "views" . \DS );
-		$loader->addPath ( implode ( \DS, [ Startup::getFrameworkDir (),"..","core","views" ] ) . \DS, "framework" );
+		$loader = new FilesystemLoader ( \ROOT . \DS . 'views' . \DS );
+		$loader->addPath ( \implode ( \DS, [ Startup::getFrameworkDir (),'..','core','views' ] ) . \DS, 'framework' );
 		$this->loader = $loader;
 
-		if (isset ( $options ["cache"] ) && $options ["cache"] === true) {
-			$options ["cache"] = CacheManager::getCacheSubDirectory ( "views" );
+		if (isset ( $options ['cache'] ) && $options ['cache'] === true) {
+			$options ['cache'] = CacheManager::getCacheSubDirectory ( 'views' );
 		}
 
 		$this->twig = new Environment ( $loader, $options );
@@ -49,12 +49,12 @@ class Twig extends TemplateEngine {
 			}
 		}
 		
-		if (isset ( $options ["activeTheme"] )) {
-			ThemesManager::setActiveThemeFromTwig ( $options ["activeTheme"] );
-			$this->setTheme ( $options ["activeTheme"], ThemesManager::THEMES_FOLDER );
-			unset ( $options ["activeTheme"] );
+		if (isset ( $options ['activeTheme'] )) {
+			ThemesManager::setActiveThemeFromTwig ( $options ['activeTheme'] );
+			$this->setTheme ( $options ['activeTheme'], ThemesManager::THEMES_FOLDER );
+			unset ( $options ['activeTheme'] );
 		} else {
-			$this->loader->setPaths ( [ \ROOT . \DS . 'views' ], "activeTheme" );
+			$this->loader->setPaths ( [ \ROOT . \DS . 'views' ], 'activeTheme' );
 		}
 
 		$this->addFunction ( 'path', function ($name, $params = [ ], $absolute = false) {
@@ -110,11 +110,11 @@ class Twig extends TemplateEngine {
 			return $var instanceof $class;
 		} );
 		$this->twig->addTest ( $test );
-		$this->twig->addGlobal ( "app", new Framework () );
+		$this->twig->addGlobal ( '"app', new Framework () );
 	}
 
 	protected function hasThemeResource(&$resource) {
-		$resource = str_replace ( '@activeTheme/', "", $resource, $count );
+		$resource = \str_replace ( '@activeTheme/', '', $resource, $count );
 		return $count > 0;
 	}
 
@@ -128,7 +128,7 @@ class Twig extends TemplateEngine {
 	 * @see TemplateEngine::render()
 	 */
 	public function render($viewName, $pData, $asString) {
-		$pData ["config"] = Startup::getConfig ();
+		$pData ['config'] = Startup::getConfig ();
 		EventsManager::trigger ( ViewEvents::BEFORE_RENDER, $viewName, $pData );
 		$render = $this->twig->render ( $viewName, $pData );
 		EventsManager::trigger ( ViewEvents::AFTER_RENDER, $render, $viewName, $pData );
@@ -186,7 +186,7 @@ class Twig extends TemplateEngine {
 			$path = \ROOT . \DS . 'views';
 		}
 		if (file_exists ( $path )) {
-			$this->loader->setPaths ( [ $path ], "activeTheme" );
+			$this->loader->setPaths ( [ $path ], 'activeTheme' );
 		} else {
 			throw new ThemesException ( sprintf ( 'The path `%s` does not exists!', $path ) );
 		}
