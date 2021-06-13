@@ -37,7 +37,7 @@ trait BaseAnnotationTrait {
 			return $ret;
 	}
 	
-	public function isSameAs(BaseAnnotationTrait $annot):bool{
+	public function isSameAs($annot):bool{
 		return \get_class($this)===\get_class($annot);
 	}
 }
