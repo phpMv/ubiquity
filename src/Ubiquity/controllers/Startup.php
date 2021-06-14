@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.10
+ * @version 1.1.11
  *
  */
 class Startup {
@@ -26,7 +26,7 @@ class Startup {
 
 	protected static function parseUrl(&$url): array {
 		if (! $url) {
-			$url = '_default';
+			return self::$urlParts =[$url = '_default'];
 		}
 		return self::$urlParts = \explode ( '/', \rtrim ( $url, '/' ) );
 	}
@@ -130,7 +130,7 @@ class Startup {
 		if(self::$templateEngine===null || !self::$templateEngine instanceof \Ubiquity\views\engine\Twig){
 			$config=self::$config;
 			$config['templateEngine']=\Ubiquity\views\engine\Twig::class;
-			self::startDefaultTemplateEngine($config);
+			self::startTemplateEngine($config);
 		}
 		return self::$templateEngine;
 	}
@@ -258,15 +258,6 @@ class Startup {
 			}
 		});
 		$onError ( $code, $message, $controllerInstance );
-	}
-
-	public static function errorHandler($message = '', $code = 0, $severity = 1, $filename = null, int $lineno = 0, $previous = NULL) {
-		if (\error_reporting () == 0) {
-			return;
-		}
-		if (\error_reporting () & $severity) {
-			throw new \ErrorException ( $message, 0, $severity, $filename, $lineno, $previous );
-		}
 	}
 
 	/**

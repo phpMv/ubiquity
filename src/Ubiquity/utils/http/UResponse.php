@@ -5,7 +5,8 @@ namespace Ubiquity\utils\http;
 use Ubiquity\controllers\Startup;
 
 /**
- * Http Response utilities
+ * Http Response utilities.
+ * 
  * Ubiquity\utils\http$UResponse
  * This class is part of Ubiquity
  *

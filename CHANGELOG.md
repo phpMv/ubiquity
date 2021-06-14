@@ -23,6 +23,9 @@ composer global update
 
 ### Updated
 
+#### Models generation
+- The regeneration of models preserves the code implemented on the existing models.
+
 #### CRUD controllers
 - Add custom default buttons to dataTable (returned by `ModelViewer::getDataTableRowButtons()`)
 - Add `onNewInstance($instance)` event
