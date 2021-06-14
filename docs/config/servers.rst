@@ -1,6 +1,8 @@
 .. _servers:
 Servers configuration
 =====================
+.. important::
+   Since version 2.4.5, for security and simplification reasons, the root of an Ubiquity application is located in the public folder.
 
 Apache2
 -------
@@ -14,22 +16,17 @@ Apache 2.2
    
 	<VirtualHost *:80>
 	    ServerName mydomain.tld
-	    ServerAlias www.mydomain.tld
 	
-	    DocumentRoot /var/www/project
-	    <Directory /var/www/project>
+	    DocumentRoot /var/www/project/public
+	    DirectoryIndex /index.php
+
+	    <Directory /var/www/project/public>
 	        # enable the .htaccess rewrites
 	        AllowOverride All
 	        Order Allow,Deny
 	        Allow from All
 	    </Directory>
 	    
-	    #No access to subfolders
-	    <Directory /var/www/project/*/>
-	        Order Allow,Deny
-	        Deny from All
-	    </Directory>
-	
 	    ErrorLog /var/log/apache2/project_error.log
 	    CustomLog /var/log/apache2/project_access.log combined
 	</VirtualHost>
@@ -38,6 +35,27 @@ Apache 2.2
    
    Performance can be significantly improved by moving the rewrite rules from the **.htaccess** file to the VirtualHost block in your Apache configuration, and then changing ``AllowOverride All`` to ``AllowOverride None`` in your **VirtualHost** block.
 
+
+.. code-block:: bash
+   :caption: mydomain.conf
+   
+	<VirtualHost *:80>
+	    ServerName mydomain.tld
+	
+	    DocumentRoot /var/www/project/public
+	    DirectoryIndex /index.php
+
+	    <Directory /var/www/project/public>
+	        AllowOverride None
+	        
+	        # Copy .htaccess contents here
+	        
+	    </Directory>
+	    
+	    ErrorLog /var/log/apache2/project_error.log
+	    CustomLog /var/log/apache2/project_access.log combined
+	</VirtualHost>
+	
 Apache 2.4
 **********
 In Apache 2.4, ``Order Allow,Deny`` has been replaced by ``Require all granted``. 
@@ -47,27 +65,23 @@ In Apache 2.4, ``Order Allow,Deny`` has been replaced by ``Require all granted``
    
 	<VirtualHost *:80>
 	    ServerName mydomain.tld
-	    ServerAlias www.mydomain.tld
 	
-	    DocumentRoot /var/www/project
-	    <Directory /var/www/project>
+	    DocumentRoot /var/www/project/public
+	    DirectoryIndex /index.php
+	    
+	    <Directory /var/www/project/public>
 	        # enable the .htaccess rewrites
 	        AllowOverride All
 	        Require all granted
 	    </Directory>
 	    
-	    #No access to subfolders
-	    <Directory /var/www/project/*/>
-	        Require all denied
-	    </Directory>
-	
 	    ErrorLog /var/log/apache2/project_error.log
 	    CustomLog /var/log/apache2/project_access.log combined
 	</VirtualHost>
 
 index.php relocation in public folder
 *************************************
-Some may prefer to limit access to the **public** folder, and move **index.php** to that folder:
+If you created your project with a version prior to 2.4.5, you have to modify ``index.php`` and move the ``index.php`` and ``.htaccess`` files to the ``public`` folder.
 
 .. code-block:: php
    :caption: public/index.php
@@ -81,11 +95,6 @@ Some may prefer to limit access to the **public** folder, and move **index.php**
    require_once ROOT . 'config/services.php';
    \Ubiquity\controllers\Startup::run($config);
 
-The **Virtualhost** block or the **.htaccess** file must in this case specify the new index directory:
-
-.. code-block:: bash
-   
-   DirectoryIndex public/index.php
 
 PHP-FPM
 ^^^^^^^
@@ -143,7 +152,7 @@ nginX
    }
    server {
        server_name mydomain.tld www.mydomain.tld;
-       root /var/www/project;
+       root /var/www/project/public;
        index index.php;
        listen 8080;
 
@@ -164,15 +173,6 @@ nginX
        # this prevents access to other php files you don't want to be accessible.
        location ~ \.php$ {
            return 404;
-       }
-   
-       location /public/ {
-           allow all;
-           try_files $uri $uri/ =404;
-       }
-   
-       location /.*/ {
-          deny all;
        }
    
        error_log /var/log/nginx/project_error.log;
