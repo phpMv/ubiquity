@@ -5,6 +5,46 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unrelease]
 - Nothing
+
+## [2.4.5] 2021-06-15
+Before creating a new project, be sure to update the devtools if they are installed globally:
+```bash
+composer global update
+```
+### Added
+- mass update in DAO class (`updateAll`)
+- type checker for routes params (int, bool=>regex)
+- status code for router (200, 404, 405)
+
+### Fixed
+- autowiring pb with ReflectionType
+- Mysql pb: replace parser cast for Mysql/mariaDB diff
+- ManyToMany update pb (no open issue)
+
+### Updated
+
+#### CRUD controllers
+- Add custom default buttons to dataTable (returned by `ModelViewer::getDataTableRowButtons()`)
+- Add `onNewInstance($instance)` event
+- Add `name` paramteter in `onGenerateFormField($field, $nb, $name)` event
+- Add methods for modal title and message (`getFormModalTitle($instance)` and `formHasMessage()`)
+- Add hook for form modal buttons (`onFormModalButtons($btOkay, $btCancel)`)
+
+#### Application root (breaking change)
+- For apache and nginX, root folder is set to public folder
+
+For an old project (created with a version prior to 2.4.5), you have to modify ``index.php`` and move the ``index.php`` and ``.htaccess`` files to the ``public`` folder.
+```php
+   <?php
+   define('DS', DIRECTORY_SEPARATOR);
+   //Updated with index.php in public folder
+   define('ROOT', __DIR__ . DS . '../app' . DS);
+   $config = include_once ROOT . 'config/config.php';
+   require_once ROOT . './../vendor/autoload.php';
+   require_once ROOT . 'config/services.php';
+   \Ubiquity\controllers\Startup::run($config);
+```
+
 ## [2.4.4] 2021-04-25
 Before creating a new project, be sure to update the devtools:
 ```bash
