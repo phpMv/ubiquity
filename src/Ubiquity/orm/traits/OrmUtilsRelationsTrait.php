@@ -176,11 +176,8 @@ trait OrmUtilsRelationsTrait {
 		return self::getAnnotationInfo ( $class, '#oneToMany' );
 	}
 	
-	public static function getRemoveCascadeFields($class) {
-		$infos= self::getAnnotationInfo ( $class, '#oneToMany' );
-		if ($manyToMany = self::getAnnotationInfo ( $class, '#manyToMany' )) {
-			$infos = \array_merge($infos??[], \array_keys($manyToMany));
-		}
+	public static function getRemoveCascadeFields($class,$keyAnnotation='#oneToMany') {
+		$infos= self::getAnnotationInfo ( $class, $keyAnnotation);
 		$res=[];
 		if($infos!==false){
 			foreach ($infos as $f=>$annot){

@@ -97,32 +97,47 @@ trait DAOUpdatesTrait {
 		return self::remove_ ( $db, $quote . $tableName . $quote, $where, $params );
 	}
 	
-	public static function deleteChildren(object $instance,string $memberName){
-		$oneToManyInfo=OrmUtils::getAnnotationInfoMember(\get_class($instance), '#oneToMany', $memberName);
-		if($oneToManyInfo!=false){
-			$mappedBy=$oneToManyInfo['mappedBy'];
-			$manyClass=$oneToManyInfo['className'];
-			$joinColumnInfo=OrmUtils::getAnnotationInfoMember($manyClass, '#joinColumn', $mappedBy);
-			if($joinColumnInfo!=false){
-				$fkManyField=$joinColumnInfo['name'];
-				$pkv=OrmUtils::getFirstKeyValue($instance);
-				return self::deleteAll($manyClass, "$fkManyField= ?",[$pkv]);
-			}
+	protected static function deleteManyToManyChildren(object $instance,string $memberName){
+		$modelName=\get_class($instance);
+		$db = self::getDb ( $modelName );
+		$manyParser=new ManyToManyParser($db,$instance,$memberName);
+		$manyParser->init();
+		$pkv=OrmUtils::getFirstKeyValue($instance);
+		$quote = $db->quote;
+		$tableName = $manyParser->getJoinTable();
+		$fkManyField=$manyParser->getMyFkField();
+		return self::remove_ ( $db, $quote . $tableName . $quote, "$fkManyField= ?", [$pkv] );
+	}
+	
+	protected static function deleteOneToManyChildren(object $instance,string $memberName){
+		$getter='get'.\ucfirst($memberName);
+		$instances=$instance->{$getter}();
+		foreach ($instances as $o){
+			self::remove($o);
 		}
-		return false;
 	}
 	
 	
 	public static function deleteAllChildren(object $instance){
-		$oneToManyMembers=OrmUtils::getRemoveCascadeFields(\get_class($instance));
+		$classname=\get_class($instance);
+		$oneToManyMembers=OrmUtils::getRemoveCascadeFields($classname);
 		$continue=true;
 		$i=0;
 		$count=\count($oneToManyMembers);
 		while($continue!==false && $i<$count){
-			$continue=self::deleteChildren($instance, $oneToManyMembers[$i]);
+			$continue=self::deleteOneToManyChildren($instance, $oneToManyMembers[$i]);
 			$i++;
 		}
-		return $i-1;
+		
+		$manyToManyMembers=OrmUtils::getRemoveCascadeFields($classname,'#manyToMany');
+		$continue=true;
+		$j=0;
+		$count=\count($manyToManyMembers);
+		while($continue!==false && $j<$count){
+			$continue=self::deleteManyToManyChildren($instance, $manyToManyMembers[$j]);
+			$j++;
+		}
+		return $i+$j;
 	}
 	
 	/**
