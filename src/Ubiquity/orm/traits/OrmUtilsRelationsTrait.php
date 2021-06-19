@@ -10,26 +10,26 @@ use Ubiquity\orm\parser\ManyToManyParser;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 trait OrmUtilsRelationsTrait {
-
+	
 	abstract public static function getAnnotationInfoMember($class, $keyAnnotation, $member);
-
+	
 	abstract public static function getAnnotationInfo($class, $keyAnnotation);
-
+	
 	abstract public static function getTableName($class);
-
+	
 	abstract public static function getFirstKey($class);
-
+	
 	abstract public static function getModelMetadata($className);
-
+	
 	abstract public static function getKeyFieldsAndValues($instance);
-
+	
 	public static function getJoinTables($class) {
 		$result = [ ];
-
+		
 		if (isset ( self::getModelMetadata ( $class ) ['#joinTable'] )) {
 			$jts = self::getModelMetadata ( $class ) ['#joinTable'];
 			foreach ( $jts as $jt ) {
@@ -38,7 +38,7 @@ trait OrmUtilsRelationsTrait {
 		}
 		return $result;
 	}
-
+	
 	public static function getAllJoinTables($models) {
 		$result = [ ];
 		foreach ( $models as $model ) {
@@ -46,10 +46,10 @@ trait OrmUtilsRelationsTrait {
 		}
 		return $result;
 	}
-
+	
 	public static function getFieldsInRelations($class) {
 		$result = [ ];
-
+		
 		if ($manyToOne = self::getAnnotationInfo ( $class, '#manyToOne' )) {
 			$result = \array_merge ( $result, $manyToOne );
 		}
@@ -61,7 +61,7 @@ trait OrmUtilsRelationsTrait {
 		}
 		return $result;
 	}
-
+	
 	public static function getRelationInfos($class) {
 		$result = [ ];
 		$joinColumns = self::getAnnotationInfo ( $class, '#joinColumn' );
@@ -81,11 +81,11 @@ trait OrmUtilsRelationsTrait {
 		}
 		return $result;
 	}
-
+	
 	public static function getFieldsInRelations_($class) {
 		return self::getFieldsInRelationsForUpdate_ ( $class ) ['relations'];
 	}
-
+	
 	public static function getFieldsInRelationsForUpdate_($class) {
 		$result = [ ];
 		if ($manyToOne = self::getAnnotationInfo ( $class, '#manyToOne' )) {
@@ -108,7 +108,7 @@ trait OrmUtilsRelationsTrait {
 		}
 		return [ 'relations' => $result,'manyToOne' => $manyToOne,'manyToMany' => $manyToMany,'oneToMany' => $oneToMany ];
 	}
-
+	
 	public static function getAnnotFieldsInRelations($class) {
 		$result = [ ];
 		if ($manyToOnes = self::getAnnotationInfo ( $class, '#manyToOne' )) {
@@ -131,7 +131,7 @@ trait OrmUtilsRelationsTrait {
 		}
 		return $result;
 	}
-
+	
 	public static function getUJoinSQL($db, $model, $arrayAnnot, $field, &$aliases, $quote) {
 		$type = $arrayAnnot ['type'];
 		$annot = $arrayAnnot ['value'];
@@ -160,37 +160,53 @@ trait OrmUtilsRelationsTrait {
 			$alias = self::getJoinAlias ( $table, $fkTable );
 			$result = $parser->getSQL ( $alias, $aliases );
 		}
-
+		
 		if (array_search ( $alias, $aliases ) !== false) {
 			$result = "";
 		}
 		$aliases [$fkTable] = $alias;
 		return [ 'class' => $fkClass,'table' => $fkTable,'sql' => $result,'alias' => $alias ];
 	}
-
+	
 	private static function getJoinAlias($table, $fkTable) {
 		return uniqid ( $fkTable . '_' . $table [0] );
 	}
-
+	
 	public static function getOneToManyFields($class) {
 		return self::getAnnotationInfo ( $class, '#oneToMany' );
 	}
-
+	
+	public static function getRemoveCascadeFields($class) {
+		$infos= self::getAnnotationInfo ( $class, '#oneToMany' );
+		if ($manyToMany = self::getAnnotationInfo ( $class, '#manyToMany' )) {
+			$infos = \array_merge($infos??[], \array_keys($manyToMany));
+		}
+		$res=[];
+		if($infos!==false){
+			foreach ($infos as $f=>$annot){
+				if(\array_search('remove',$annot['cascade']??[])!==false){
+					$res[]=$f;
+				}
+			}
+		}
+		return $res;
+	}
+	
 	public static function getManyToOneFields($class) {
 		return self::getAnnotationInfo ( $class, '#manyToOne' );
 	}
-
+	
 	public static function getManyToManyFields($class) {
 		$result = self::getAnnotationInfo ( $class, '#manyToMany' );
 		if ($result !== false)
 			return \array_keys ( $result );
-		return [ ];
+			return [ ];
 	}
-
+	
 	public static function getDefaultFk($classname) {
 		return 'id' . \ucfirst ( self::getTableName ( $classname ) );
 	}
-
+	
 	public static function getMemberJoinColumns($instance, $member, $metaDatas = NULL) {
 		if (! isset ( $metaDatas )) {
 			if (is_object ( $instance )) {
@@ -208,7 +224,7 @@ trait OrmUtilsRelationsTrait {
 		}
 		return null;
 	}
-
+	
 	/**
 	 *
 	 * @param object $instance
@@ -238,7 +254,7 @@ trait OrmUtilsRelationsTrait {
 		}
 		return $ret;
 	}
-
+	
 	public static function getJoinColumnName($class, $member) {
 		$annot = self::getAnnotationInfoMember ( $class, '#joinColumn', $member );
 		if ($annot !== false) {

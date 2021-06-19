@@ -22,19 +22,20 @@ use Ubiquity\controllers\Startup;
  *
  */
 trait DAOUpdatesTrait {
-
+	
 	/**
 	 * Deletes the object $instance from the database
 	 *
 	 * @param object $instance instance à supprimer
 	 */
 	public static function remove($instance): ?int {
+		self::deleteAllChildren($instance);
 		$className = \get_class ( $instance );
 		$tableName = OrmUtils::getTableName ( $className );
 		$keyAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
 		return self::removeByKey_ ( $className, $tableName, $keyAndValues );
 	}
-
+	
 	/**
 	 *
 	 * @param string $className
@@ -57,7 +58,7 @@ trait DAOUpdatesTrait {
 		}
 		return 0;
 	}
-
+	
 	/**
 	 *
 	 * @param \Ubiquity\db\Database $db
@@ -80,7 +81,7 @@ trait DAOUpdatesTrait {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Deletes all instances from $modelName matching the condition $where.
 	 *
@@ -94,6 +95,34 @@ trait DAOUpdatesTrait {
 		$quote = $db->quote;
 		$tableName = OrmUtils::getTableName ( $modelName );
 		return self::remove_ ( $db, $quote . $tableName . $quote, $where, $params );
+	}
+	
+	public static function deleteChildren(object $instance,string $memberName){
+		$oneToManyInfo=OrmUtils::getAnnotationInfoMember(\get_class($instance), '#oneToMany', $memberName);
+		if($oneToManyInfo!=false){
+			$mappedBy=$oneToManyInfo['mappedBy'];
+			$manyClass=$oneToManyInfo['className'];
+			$joinColumnInfo=OrmUtils::getAnnotationInfoMember($manyClass, '#joinColumn', $mappedBy);
+			if($joinColumnInfo!=false){
+				$fkManyField=$joinColumnInfo['name'];
+				$pkv=OrmUtils::getFirstKeyValue($instance);
+				return self::deleteAll($manyClass, "$fkManyField= ?",[$pkv]);
+			}
+		}
+		return false;
+	}
+	
+	
+	public static function deleteAllChildren(object $instance){
+		$oneToManyMembers=OrmUtils::getRemoveCascadeFields(\get_class($instance));
+		$continue=true;
+		$i=0;
+		$count=\count($oneToManyMembers);
+		while($continue!==false && $i<$count){
+			$continue=self::deleteChildren($instance, $oneToManyMembers[$i]);
+			$i++;
+		}
+		return $i-1;
 	}
 	
 	/**
@@ -124,7 +153,7 @@ trait DAOUpdatesTrait {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Deletes all instances from $modelName corresponding to $ids
 	 *
@@ -144,7 +173,7 @@ trait DAOUpdatesTrait {
 		$r = $quote . $pk . $quote . "= ?";
 		return self::remove_ ( $db, $quote . $tableName . $quote, \str_repeat ( "$r OR", $count - 1 ) . $r, $ids );
 	}
-
+	
 	/**
 	 * Inserts a new instance $instance into the database
 	 *
@@ -169,7 +198,7 @@ trait DAOUpdatesTrait {
 			Logger::info ( 'DAOUpdates', $sql, 'insert' );
 			Logger::info ( 'DAOUpdates', \json_encode ( $keyAndValues ), 'Key and values' );
 		}
-
+		
 		$statement = $db->getUpdateStatement ( $sql );
 		try {
 			$result = $statement->execute ( $keyAndValues );
@@ -184,7 +213,7 @@ trait DAOUpdatesTrait {
 				}
 				$instance->_rest = $keyAndValues;
 				$instance->_rest [$pk] = $pkVal;
-
+				
 				if ($insertMany) {
 					self::insertOrUpdateAllManyToMany ( $instance );
 				}
@@ -199,7 +228,7 @@ trait DAOUpdatesTrait {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Updates manyToMany members
 	 *
@@ -214,7 +243,7 @@ trait DAOUpdatesTrait {
 			}
 		}
 	}
-
+	
 	/**
 	 * Updates the $member member of $instance annotated by a ManyToMany
 	 *
@@ -254,7 +283,7 @@ trait DAOUpdatesTrait {
 			}
 		}
 	}
-
+	
 	/**
 	 * Updates an existing $instance in the database.
 	 * Be careful not to modify the primary key
@@ -289,7 +318,7 @@ trait DAOUpdatesTrait {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Updates an array of $instances in the database.
 	 * Be careful not to modify the primary key
@@ -308,7 +337,7 @@ trait DAOUpdatesTrait {
 			$ColumnskeyAndValues = \array_merge ( Reflexion::getPropertiesAndValues ( $instance ), OrmUtils::getManyToOneMembersAndValues ( $instance ) );
 			$keyFieldsAndValues = OrmUtils::getKeyFieldsAndValues ( $instance );
 			$sql = "UPDATE {$quote}{$tableName}{$quote} SET " . SqlUtils::getUpdateFieldsKeyAndParams ( $ColumnskeyAndValues ) . ' WHERE ' . SqlUtils::getWhere ( $keyFieldsAndValues );
-
+			
 			$statement = $db->getUpdateStatement ( $sql );
 			try {
 				$db->beginTransaction ();
@@ -335,7 +364,7 @@ trait DAOUpdatesTrait {
 		}
 		return false;
 	}
-
+	
 	/**
 	 *
 	 * @param object $instance

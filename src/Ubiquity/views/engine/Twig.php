@@ -34,7 +34,7 @@ class Twig extends TemplateEngine {
 	
 	public function __construct($options = []) {
 		$loader = new FilesystemLoader (\ROOT . \DS . 'views' . \DS);
-		$loader->addPath(Startup::getFrameworkDir().\DS .'..'.\DS .'core'.\DS.'views' . \DS, 'framework');
+		$loader->addPath(Startup::getFrameworkDir().\DS .'..'.\DS .'core'.\DS.'views', 'framework');
 		$this->loader = $loader;
 		
 		if (($options ['cache'] ?? false) === true) {
