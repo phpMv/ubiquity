@@ -11,14 +11,14 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class View {
 	private $vars;
 
 	public function __construct() {
-		$this->vars = array ();
+		$this->vars = [];
 	}
 
 	protected function includeFileAsString($filename) {
@@ -33,17 +33,16 @@ class View {
 	}
 
 	public function setVars($vars) {
-		if (\is_array ( $vars ))
+		if (\is_array ( $vars )){
 			$this->vars = \array_merge ( $this->vars, $vars );
-		else
+		} else {
 			$this->vars = $vars;
+		}
 		return $this;
 	}
 
 	public function getVar($name) {
-		if (\array_key_exists ( $name, $this->vars )) {
-			return $this->vars [$name];
-		}
+		return $this->vars [$name]??null;
 	}
 
 	/**
