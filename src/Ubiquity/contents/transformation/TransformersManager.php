@@ -12,6 +12,7 @@ use Ubiquity\contents\transformation\transformers\UpperCase;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\utils\base\UArray;
+use Ubiquity\contents\transformation\transformers\Boolean;
 
 /**
  * Transform objects after loading
@@ -20,7 +21,7 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class TransformersManager {
@@ -29,7 +30,7 @@ class TransformersManager {
 	 *
 	 * @var array|mixed
 	 */
-	private static $transformers = [ 'md5' => Md5::class,'datetime' => DateTime::class,'upper' => UpperCase::class,'firstUpper' => FirstUpperCase::class,'lower' => LowerCase::class,'password' => Password::class ];
+	private static $transformers = [ 'md5' => Md5::class,'datetime' => DateTime::class,'upper' => UpperCase::class,'firstUpper' => FirstUpperCase::class,'lower' => LowerCase::class,'password' => Password::class,'boolean'=>Boolean::class ];
 	private static $key = 'contents/transformers';
 
 	/**
