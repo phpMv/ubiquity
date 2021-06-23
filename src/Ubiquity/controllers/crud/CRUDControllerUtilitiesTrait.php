@@ -176,7 +176,7 @@ trait CRUDControllerUtilitiesTrait {
 	 * @return CRUDDatas
 	 */
 	protected function getAdminData(): CRUDDatas {
-		return new CRUDDatas ();
+		return new CRUDDatas ($this);
 	}
 	
 	public function _getAdminData(): CRUDDatas {
