@@ -16,8 +16,8 @@ class CRUDFiles {
 	/**
 	 * To override for defining viewBase (default : @framework/crud)
 	 */
-	public function __construct() {
-		$this->viewBase = "@framework/crud";
+	public function __construct(string $viewBase='@framework/crud') {
+		$this->viewBase = $viewBase;
 	}
 
 	/**
@@ -27,7 +27,7 @@ class CRUDFiles {
 	 * @return string
 	 */
 	public function getViewIndex() {
-		return $this->viewBase . "/index.html";
+		return $this->viewBase . '/index.html';
 	}
 
 	/**
@@ -37,7 +37,7 @@ class CRUDFiles {
 	 * @return string
 	 */
 	public function getViewForm() {
-		return $this->viewBase . "/form.html";
+		return $this->viewBase . '/form.html';
 	}
 
 	/**
@@ -47,7 +47,7 @@ class CRUDFiles {
 	 * @return string
 	 */
 	public function getViewDisplay() {
-		return $this->viewBase . "/display.html";
+		return $this->viewBase . '/display.html';
 	}
 
 	/**
@@ -56,7 +56,7 @@ class CRUDFiles {
 	 * @return string
 	 */
 	public function getViewBaseTemplate() {
-		return $this->viewBase . "/baseTemplate.html";
+		return $this->viewBase . '/baseTemplate.html';
 	}
 
 	/**
