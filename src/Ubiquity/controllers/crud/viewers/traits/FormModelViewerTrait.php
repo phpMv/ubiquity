@@ -155,7 +155,6 @@ trait FormModelViewerTrait {
 		$form->setFields ( $fields );
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
 		$attrs=ValidatorsManager::getUIConstraints($instance);
-		$this->setFormFieldsComponent ( $form, $fieldTypes,$attrs);
 		
 		$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields );
 		OrmUtils::setFieldToMemberNames ( $fields, $relFields );
@@ -166,6 +165,7 @@ trait FormModelViewerTrait {
 			$form->fieldAsMessage('_message', ['icon' => $message ["icon"]]);
 			$instance->_message = $message ['message'];
 		}
+		$this->setFormFieldsComponent ( $form, $fieldTypes,$attrs);
 		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/" . $updateUrl, '#frm-add-update' );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
 		return $form;
