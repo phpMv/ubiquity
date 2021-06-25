@@ -138,7 +138,7 @@ class DAO {
 	public static function exists($className, $condition = '', $parameters = null) {
 		$tableName = OrmUtils::getTableName ( $className );
 		if ($condition != '') {
-			$condition = ' WHERE ' . $condition;
+			$condition = SqlUtils::checkWhere($condition);
 		}
 		$db = self::getDb ( $className );
 		$quote = $db->quote;
