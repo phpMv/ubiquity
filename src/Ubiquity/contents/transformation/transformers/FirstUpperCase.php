@@ -17,6 +17,6 @@ class FirstUpperCase implements TransformerViewInterface {
 
 	public static function toView($value) {
 		if ($value != null)
-			return ucfirst ( $value );
+			return \ucfirst ( $value );
 	}
 }

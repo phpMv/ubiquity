@@ -1,0 +1,13 @@
+{% extends _base %}
+{% block body %}
+    <v-app>
+        <v-data-table :headers="headers" :items="items" item-key="{{ item-key }}" class="{{data-table-class}}">
+        {% block items %}
+        {% endblock %}
+        </v-data-table>
+    </v-app>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    {{ script_foot | raw }}
+{% endblock %}

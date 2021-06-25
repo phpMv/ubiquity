@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block header %}
+        <base href="{{config["siteUrl"]}}">
+        <meta charset="UTF-8">
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <title></title>
+    {% endblock %}
+
+    {% block css %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+{% endblock %}
+{% block js %}
+    {{ js('https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js') }}
+    {{ js('https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js') }}
+{% endblock %}
+</body>
+</html>
