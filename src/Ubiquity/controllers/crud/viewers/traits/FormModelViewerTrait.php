@@ -6,6 +6,7 @@ use Ajax\semantic\html\collections\form\HtmlFormField;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
 use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\HtmlIconGroups;
+use Ajax\semantic\widgets\base\FieldAsTrait;
 use Ajax\semantic\widgets\dataform\DataForm;
 use Ajax\service\JArray;
 use Ubiquity\contents\validation\ValidatorsManager;
@@ -22,38 +23,39 @@ use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  * @property \Ajax\JsUtils $jquery
  */
 trait FormModelViewerTrait {
 	
-	protected function relationMembersInForm($form, $instance, $className, $fields, $relations) {
+	protected function relationMembersInForm($form, $instance, $className, $fields, $relations, &$fieldTypes) {
 		foreach ( $relations as $field => $member ) {
 			if (array_search ( $field, $fields ) !== false) {
-				if (OrmUtils::getAnnotationInfoMember ( $className, "#manyToOne", $member ) !== false) {
+				unset($fieldTypes[$field]);
+				if (OrmUtils::getAnnotationInfoMember ( $className, '#manyToOne', $member ) !== false) {
 					$this->manyToOneFormField ( $form, $member, $className, $instance );
-				} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $className, "#oneToMany", $member )) !== false) {
+				} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $className, '#oneToMany', $member )) !== false) {
 					$this->oneToManyFormField ( $form, $member, $instance, $annot );
-				} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $className, "#manyToMany", $member )) !== false) {
+				} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $className, '#manyToMany', $member )) !== false) {
 					$this->manyToManyFormField ( $form, $member, $instance, $annot );
 				}
 			}
 		}
 	}
 	
-	protected function manyToOneFormField(DataForm $form, $member, $className, $instance) {
-		$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, "#joinColumn", $member );
+	protected function manyToOneFormField(DataForm|DataTable $form, $member, $className, $instance) {
+		$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, '#joinColumn', $member );
 		if ($joinColumn) {
 			$fkObject = Reflexion::getMemberValue ( $instance, $member );
-			$fkClass = $joinColumn ["className"];
+			$fkClass = $joinColumn ['className'];
 			if ($fkObject === null) {
 				$fkObject = new $fkClass ();
 			}
 			$fkId = OrmUtils::getFirstKey ( $fkClass );
 			
-			$fkIdGetter = "get" . \ucfirst ( $fkId );
-			if (\method_exists ( $fkObject, "__toString" ) && \method_exists ( $fkObject, $fkIdGetter )) {
-				$fkField = $joinColumn ["name"];
+			$fkIdGetter = 'get' . \ucfirst ( $fkId );
+			if (\method_exists ( $fkObject, '__toString' ) && \method_exists ( $fkObject, $fkIdGetter )) {
+				$fkField = $joinColumn ['name'];
 				$fkValue = OrmUtils::getFirstKeyValue ( $fkObject );
 				if (! Reflexion::setMemberValue ( $instance, $fkField, $fkValue )) {
 					$instance->{$fkField} = OrmUtils::getFirstKeyValue ( $fkObject );
@@ -75,10 +77,10 @@ trait FormModelViewerTrait {
 	}
 	
 	protected function oneToManyFormField(DataForm $form, $member, $instance, $annot) {
-		$newField = $member . "Ids";
-		$fkClass = $annot ["className"];
+		$newField = $member . 'Ids';
+		$fkClass = $annot ['className'];
 		$fkId = OrmUtils::getFirstKey ( $fkClass );
-		$fkIdGetter = "get" . \ucfirst ( $fkId );
+		$fkIdGetter = 'get' . \ucfirst ( $fkId );
 		$fkInstances = DAO::getOneToMany ( $instance, $member );
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
@@ -89,10 +91,10 @@ trait FormModelViewerTrait {
 	}
 	
 	protected function manyToManyFormField(DataForm $form, $member, $instance, $annot) {
-		$newField = $member . "Ids";
-		$fkClass = $annot ["targetEntity"];
+		$newField = $member . 'Ids';
+		$fkClass = $annot ['targetEntity'];
 		$fkId = OrmUtils::getFirstKey ( $fkClass );
-		$fkIdGetter = "get" . \ucfirst ( $fkId );
+		$fkIdGetter = 'get' . \ucfirst ( $fkId );
 		$fkInstances = DAO::getManyToMany ( $instance, $member );
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
@@ -129,7 +131,7 @@ trait FormModelViewerTrait {
 	 * @return \Ubiquity\controllers\crud\EditMemberParams[]
 	 */
 	protected function defaultEditMemberParams() {
-		return [ "dataTable" => EditMemberParams::dataTable ( '#'.$this->getDataTableId () ),"dataElement" => EditMemberParams::dataElement () ];
+		return [ 'dataTable' => EditMemberParams::dataTable ( '#'.$this->getDataTableId () ),'dataElement' => EditMemberParams::dataElement () ];
 	}
 	
 	/**
@@ -156,17 +158,18 @@ trait FormModelViewerTrait {
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
 		$attrs=ValidatorsManager::getUIConstraints($instance);
 		
-		$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields );
+		$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields ,$fieldTypes);
 		OrmUtils::setFieldToMemberNames ( $fields, $relFields );
 		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
 		if($hasMessage) {
 			$message = $this->getFormTitle($form, $instance);
 			$form->setCaption('_message', $message ['subMessage']);
-			$form->fieldAsMessage('_message', ['icon' => $message ["icon"]]);
+			$form->fieldAsMessage('_message', ['icon' => $message ['icon']]);
 			$instance->_message = $message ['message'];
 		}
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . '/' . $updateUrl, '#frm-add-update' );
+		
 		$this->setFormFieldsComponent ( $form, $fieldTypes,$attrs);
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . "/" . $updateUrl, '#frm-add-update' );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
 		return $form;
 	}
@@ -394,4 +397,3 @@ trait FormModelViewerTrait {
 		$btOkay->setValue ( "Validate modifications" );
 	}
 }
-
