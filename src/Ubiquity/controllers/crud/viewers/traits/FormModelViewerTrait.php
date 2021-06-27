@@ -167,9 +167,9 @@ trait FormModelViewerTrait {
 			$form->fieldAsMessage('_message', ['icon' => $message ['icon']]);
 			$instance->_message = $message ['message'];
 		}
-		$form->setSubmitParams ( $this->controller->_getBaseRoute () . '/' . $updateUrl, '#frm-add-update' );
 		
 		$this->setFormFieldsComponent ( $form, $fieldTypes,$attrs);
+		$form->setSubmitParams ( $this->controller->_getBaseRoute () . '/' . $updateUrl, '#frm-add-update' );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
 		return $form;
 	}
