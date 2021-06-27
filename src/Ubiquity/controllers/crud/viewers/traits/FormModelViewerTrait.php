@@ -43,7 +43,7 @@ trait FormModelViewerTrait {
 		}
 	}
 	
-	protected function manyToOneFormField(DataForm|DataTable $form, $member, $className, $instance) {
+	protected function manyToOneFormField($form, $member, $className, $instance) {
 		$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, '#joinColumn', $member );
 		if ($joinColumn) {
 			$fkObject = Reflexion::getMemberValue ( $instance, $member );
@@ -81,7 +81,7 @@ trait FormModelViewerTrait {
 		$fkClass = $annot ['className'];
 		$fkId = OrmUtils::getFirstKey ( $fkClass );
 		$fkIdGetter = 'get' . \ucfirst ( $fkId );
-		$fkInstances = DAO::getOneToMany ( $instance, $member );
+		$fkInstances = Reflexion::getMemberValue ( $instance, $member );//DAO::getOneToMany ( $instance, $member );
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
 		}, $fkInstances );
@@ -95,7 +95,7 @@ trait FormModelViewerTrait {
 		$fkClass = $annot ['targetEntity'];
 		$fkId = OrmUtils::getFirstKey ( $fkClass );
 		$fkIdGetter = 'get' . \ucfirst ( $fkId );
-		$fkInstances = DAO::getManyToMany ( $instance, $member );
+		$fkInstances = Reflexion::getMemberValue ( $instance, $member );//DAO::getManyToMany ( $instance, $member );
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
 		}, $fkInstances );
