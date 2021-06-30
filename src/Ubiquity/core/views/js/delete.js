@@ -14,8 +14,12 @@ if (statusField.val() != "deleted") {
     } else {
         $(this).closest("tr").find(".text, input").css("text-decoration", "line-through");
         statusField.val("deleted");
+        $(this).toggleClass('red');
+        $(this).find('i.icon').toggleClass('remove undo');
     }
 } else if(statusField.val() != "added") {
     statusField.val("");
     $(this).closest("tr").find(".text, input").css("text-decoration", "none");
+    $(this).toggleClass('red');
+    $(this).find('i.icon').toggleClass('remove undo');
 }
