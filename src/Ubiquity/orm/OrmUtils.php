@@ -12,7 +12,7 @@ use Ubiquity\controllers\rest\formatters\ResponseFormatter;
  * Object/relational mapping utilities
  *
  * @author jc
- * @version 1.0.6
+ * @version 1.0.7
  */
 class OrmUtils {
 
@@ -202,5 +202,38 @@ class OrmUtils {
 			}
 		}
 		return true;
+	}
+
+	public static function isManyToMany($class):bool{
+		$metas=self::getModelMetadata ( $class );
+		$pks=$metas['#primaryKeys'];
+		$manyToOnes=$metas['#manyToOne'];
+		$manysCount=\count($manyToOnes);
+		$counter=0;
+		if($manysCount>1) {
+			foreach ($manyToOnes as $manyToOne) {
+				$len = \strlen($manyToOne);
+				foreach ($pks as $k) {
+					if (\substr($k, -$len) === \ucfirst($manyToOne)) {
+						$counter++;
+					}
+				}
+			}
+			return $counter>1;
+		}
+		return false;
+	}
+
+	public static function getManyToManyFieldsDt($class,$manyClass) {
+		$fields=self::getSerializableMembers($manyClass);
+		$joinColumns=self::getModelMetadata($manyClass)['#joinColumn'];
+		foreach ($joinColumns as $joinColumn){
+			if($joinColumn['className']===$class){
+				if($index=\array_search($joinColumn['name'],$fields)!==false){
+					unset($fields[$index]);
+				}
+			}
+		}
+		return array_values($fields);
 	}
 }
