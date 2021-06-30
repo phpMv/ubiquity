@@ -17,7 +17,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.6
+ * @version 1.1.7
  * @property \Ubiquity\db\Database $db
  *
  */
@@ -187,6 +187,14 @@ trait DAOUpdatesTrait {
 		$count = \count ( $ids );
 		$r = $quote . $pk . $quote . "= ?";
 		return self::remove_ ( $db, $quote . $tableName . $quote, \str_repeat ( "$r OR", $count - 1 ) . $r, $ids );
+	}
+	
+	public static function deleteById($modelName,$id){
+		$tableName = OrmUtils::getTableName ( $modelName );
+		if(!\is_array($id)){
+			$id=[OrmUtils::getFirstKey($modelName)=>$id];
+		}
+		return self::removeByKey_($modelName,$tableName,$id);
 	}
 	
 	/**

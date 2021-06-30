@@ -77,7 +77,10 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	public function updateMember($member, $callback = false) {
 		$instance = $_SESSION ['instance'] ?? null;
 		if (isset ( $instance )) {
-			$updated = CRUDHelper::update ( $instance, $_POST );
+			$this->_getEvents ()->onBeforeUpdateRequest ( $_POST, false );
+			$updated = CRUDHelper::update ( $instance, $_POST, true, true, function ($inst) {
+				$this->_getEvents ()->onBeforeUpdate ( $inst, false );
+			} );
 			if ($updated) {
 				if ($callback === false) {
 					$dt = $this->_getModelViewer ()->getModelDataTable ( [ $instance ], $this->model, 1 );

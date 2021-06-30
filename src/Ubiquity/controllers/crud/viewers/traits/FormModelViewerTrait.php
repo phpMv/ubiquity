@@ -8,7 +8,9 @@ use Ajax\semantic\html\elements\HtmlButton;
 use Ajax\semantic\html\elements\HtmlIconGroups;
 use Ajax\semantic\widgets\base\FieldAsTrait;
 use Ajax\semantic\widgets\dataform\DataForm;
+use Ajax\semantic\widgets\datatable\DataTable;
 use Ajax\service\JArray;
+use normalizer\UserNormalizer;
 use Ubiquity\contents\validation\ValidatorsManager;
 use Ubiquity\controllers\crud\EditMemberParams;
 use Ubiquity\orm\DAO;
@@ -23,19 +25,24 @@ use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
- * @property \Ajax\JsUtils $jquery
+ * @version 1.0.6
+ * @property \Ajax\php\ubiquity\JsUtils $jquery
  */
 trait FormModelViewerTrait {
 	
 	protected function relationMembersInForm($form, $instance, $className, $fields, $relations, &$fieldTypes) {
 		foreach ( $relations as $field => $member ) {
-			if (array_search ( $field, $fields ) !== false) {
+			if (\array_search ( $field, $fields ) !== false) {
 				unset($fieldTypes[$field]);
 				if (OrmUtils::getAnnotationInfoMember ( $className, '#manyToOne', $member ) !== false) {
 					$this->manyToOneFormField ( $form, $member, $className, $instance );
 				} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $className, '#oneToMany', $member )) !== false) {
-					$this->oneToManyFormField ( $form, $member, $instance, $annot );
+					$fkClass=$annot['className'];
+					if(OrmUtils::isManyToMany($fkClass)) {
+						$this->oneToManyFormFieldDt($form, $member, $instance, $annot);
+					}else{
+						$this->oneToManyFormField ( $form, $member, $instance, $annot );
+					}
 				} elseif (($annot = OrmUtils::getAnnotationInfoMember ( $className, '#manyToMany', $member )) !== false) {
 					$this->manyToManyFormField ( $form, $member, $instance, $annot );
 				}
@@ -70,7 +77,7 @@ trait FormModelViewerTrait {
 						$elm->addRules ( [ 'empty' ] );
 					} ];
 				}
-				$dd = $form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), false, $attr );
+				$dd = $form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, $instance, $member ), $fkIdGetter, '__toString' ), false, $attr );
 				$form->setCaption ( $fkField, \ucfirst ( $member ) );
 			}
 		}
@@ -89,6 +96,66 @@ trait FormModelViewerTrait {
 			$form->fieldAsDropDown ( $newField, JArray::modelArray ( $this->controller->_getAdminData ()->getOneToManyDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), true );
 			$form->setCaption ( $newField, \ucfirst ( $member ) );
 	}
+
+	protected function oneToManyFormFieldDt(DataForm $form,$member, $instance, $annot){
+		$newField = $member . 'Ids';
+		$fkClass = $annot ['className'];
+		$fkv=OrmUtils::getFirstKeyValue($instance);
+		if($fkv!=null) {
+			$fkInstances = DAO::getOneToMany($instance, $member);
+		}
+		$fields=OrmUtils::getManyToManyFieldsDt ( \get_class($instance),$fkClass );
+		$fkInstances[]=new $fkClass();
+		$relFields = OrmUtils::getFieldsInRelations_ ( $fkClass );
+		$form->fieldAsDataTable( $newField, $fkClass,$fkInstances,$fields,['jsCallback'=>function(DataTable $dt) use($fkClass,$relFields,$fields,$newField){
+			$this->dtManyField($dt,$fkClass,$relFields,$fields);
+			$id=$dt->getIdentifier();
+			$removeSelected='function updateCmb(){let cmb=$("#'.$id.' tbody tr:last-child div.dropdown");cmb.find("a[data-value]").removeClass("disabled");$("#'.$id.' tbody tr div.dropdown input").each(function(){if($(this).val()) cmb.find("[data-value="+$(this).val()+"]").addClass("disabled");});}';
+			$this->jquery->execAtLast($removeSelected.'updateCmb();$("#'.$id.' tbody tr:last-child .dropdown").removeClass("disabled");$("#'.$id.' tbody tr:last-child").find("input._status").val("added");');
+			$deleteJS=$this->jquery->execJSFromFile('@framework/js/delete',[],false);
+			$this->jquery->click('._delete','$("[name='.$newField.']").val("updated");'.$deleteJS,true,false,false, "#$id");
+			$this->jquery->change('tr:last-child input',$this->jquery->execJSFromFile('@framework/js/change',compact('id'),false),false,false,"#$id");
+			$this->jquery->change('tr .dropdown input','updateCmb();',false,false,"#$id");
+			$this->jquery->change('tr input','$("[name='.$newField.']").val("updated");if($(this).closest("tr").find("input._status").val()!=="added"){$(this).closest("tr").find("input._status").val("updated");}',false,false,"#$id");
+
+		}] );
+		$form->setCaption ( $newField, \ucfirst ( $member ) );
+	}
+
+	protected function dtManyField(DataTable $dt,$className,array $relations,array $fields){
+		foreach ( $relations as $field => $member ) {
+			if (\array_search($field, $fields) !== false) {
+				if (OrmUtils::getAnnotationInfoMember($className, "#manyToOne", $member) !== false) {
+					$this->dtManyFieldCmb($dt,$member,$className);
+				}
+			}
+		}
+	}
+
+	protected function dtManyFieldCmb($dt, $member, $className) {
+		$joinColumn = OrmUtils::getAnnotationInfoMember ( $className, "#joinColumn", $member );
+		if ($joinColumn) {
+			$fkClass = $joinColumn ['className'];
+			$fkId = OrmUtils::getFirstKey ( $fkClass );
+
+			$fkIdGetter = 'get' . \ucfirst ( $fkId );
+			$fkField = $joinColumn ['name'];
+
+			$attr = [ ];
+			if (OrmUtils::isNullable ( $className, $member )) {
+				$attr = [ 'jsCallback' => function ($elm) {
+					$f=$elm->getField ();
+					$f->setClearable ( true );
+					$f->addClass('disabled');
+				} ];
+			} else {
+				$attr = [ 'jsCallback' => function ($elm) {
+					$elm->getField()->addClass('disabled');
+				} ];
+			}
+			$dt->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, null, $member ), $fkIdGetter, '__toString' ), false, $attr );
+		}
+	}
 	
 	protected function manyToManyFormField(DataForm $form, $member, $instance, $annot) {
 		$newField = $member . 'Ids';
@@ -99,8 +166,8 @@ trait FormModelViewerTrait {
 		$ids = \array_map ( function ($elm) use ($fkIdGetter) {
 			return $elm->{$fkIdGetter} ();
 		}, $fkInstances );
-			$instance->{$newField} = \implode ( ",", $ids );
-			$form->fieldAsDropDown ( $newField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToManyDatas ( $fkClass, $instance, $member ), $fkIdGetter, "__toString" ), true, [ "jsCallback" => function ($elm) {
+			$instance->{$newField} = \implode ( ',', $ids );
+			$form->fieldAsDropDown ( $newField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToManyDatas ( $fkClass, $instance, $member ), $fkIdGetter, '__toString' ), true, [ 'jsCallback' => function ($elm) {
 				$elm->getField ()->asSearch ();
 			} ] );
 				$form->setCaption ( $newField, \ucfirst ( $member ) );
@@ -157,7 +224,7 @@ trait FormModelViewerTrait {
 		$form->setFields ( $fields );
 		$fieldTypes = OrmUtils::getFieldTypes ( $className );
 		$attrs=ValidatorsManager::getUIConstraints($instance);
-		
+
 		$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields ,$fieldTypes);
 		OrmUtils::setFieldToMemberNames ( $fields, $relFields );
 		$form->setCaptions ( $this->getFormCaptions ( $fields, $className, $instance ) );
@@ -167,7 +234,7 @@ trait FormModelViewerTrait {
 			$form->fieldAsMessage('_message', ['icon' => $message ['icon']]);
 			$instance->_message = $message ['message'];
 		}
-		
+
 		$this->setFormFieldsComponent ( $form, $fieldTypes,$attrs);
 		$form->setSubmitParams ( $this->controller->_getBaseRoute () . '/' . $updateUrl, '#frm-add-update' );
 		$form->onGenerateField ( [ $this,'onGenerateFormField' ] );
@@ -397,3 +464,4 @@ trait FormModelViewerTrait {
 		$btOkay->setValue ( "Validate modifications" );
 	}
 }
+

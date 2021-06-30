@@ -63,6 +63,7 @@ class CRUDHelper {
 		$fieldsInRelationForUpdate = OrmUtils::getFieldsInRelationsForUpdate_ ( $className );
 		$manyToOneRelations = $fieldsInRelationForUpdate ['manyToOne'];
 		$manyToManyRelations = $fieldsInRelationForUpdate ['manyToMany'];
+		$oneToManyRelations = $fieldsInRelationForUpdate ['oneToMany'];
 
 		$members = \array_keys ( $values );
 		OrmUtils::setFieldToMemberNames ( $members, $fieldsInRelationForUpdate ['relations'] );
@@ -99,8 +100,77 @@ class CRUDHelper {
 			if ($updateMany && $update && $manyToManyRelations) {
 				self::updateManyToMany ( $manyToManyRelations, $members, $className, $instance, $values );
 			}
+			if ($updateMany && $update && $oneToManyRelations) {
+				self::updateOneToMany ( $oneToManyRelations, $members, $className, $instance, $values );
+			}
 		}
 		return $update;
+	}
+
+	private static function getInputValues($values,$index){
+		$r=[];
+		foreach ($values as $k=>$oValues){
+			if($k!=='_status') {
+				$r[$k] = $oValues[$index];
+			}
+		}
+		return $r;
+	}
+
+	private static function getOneToManyKeys($keys,$values,$index,$defaultId){
+		foreach ( $keys as $k){
+			$nk=$values[$k][$index]??$defaultId;
+			$r[$k]=$nk;
+			if($nk==''){
+				return false;
+			}
+		}
+		return $r;
+	}
+
+	protected static function updateOneToMany($oneToManyRelations,$members,$className,$instance,$values){
+		$id=OrmUtils::getFirstKeyValue($instance);
+		foreach ($oneToManyRelations as $name){
+			$member=$name.'Ids';
+			$len=\strlen($member);
+			if(($values[$member]??'')==='updated'){
+				foreach ($values as $k=>$v){
+					if(\substr($k, 0, $len) === $member){
+						$newK=\substr($k,$len+1);
+						if($newK!=null) {
+							$newValues[$newK] = $v;
+						}
+					}
+				}
+				$r=OrmUtils::getAnnotationInfoMember($className,'#oneToMany',$name);
+				$fkClass=$r['className'];
+				$keys=\array_keys(OrmUtils::getKeyFields($fkClass));
+				foreach ($newValues['_status'] as $index=>$status){
+					$kv=self::getOneToManyKeys($keys,$newValues,$index,$id);
+					if($kv!==false) {
+						switch ($status) {
+							case 'deleted':
+								DAO::deleteById($fkClass,$kv);
+								break;
+							case 'updated':
+								$o = DAO::getById($fkClass, $kv);
+								if ($o) {
+									$oValues = self::getInputValues($newValues, $index);
+									URequest::setValuesToObject($o, $oValues);
+									DAO::update($o);
+								}
+								break;
+							case 'added':
+								$o=new $fkClass();
+								$oValues = \array_merge($kv,self::getInputValues($newValues, $index));
+								URequest::setValuesToObject($o, $oValues);
+								DAO::insert($o);
+								break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	protected static function updateManyToOne($manyToOneRelations, $members, $className, $instance, $values) {
