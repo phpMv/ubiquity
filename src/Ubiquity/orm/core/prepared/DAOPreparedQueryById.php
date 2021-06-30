@@ -13,7 +13,7 @@ use Ubiquity\cache\dao\AbstractDAOCache;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  */
 class DAOPreparedQueryById extends DAOPreparedQuery {
 
@@ -30,7 +30,7 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 	protected function prepare(?DbCache $cache = null) {
 		parent::prepare($cache);
 		$keys = OrmUtils::getKeyFields($this->className);
-		$this->conditionParser->addKeyValues(\array_fill(0, \count($keys), '?'), $this->className);
+		$this->conditionParser->prepareKeys($keys);
 		$this->conditionParser->limitOne();
 		$this->cache = DAO::getCache();
 		$this->updatePrepareStatement();

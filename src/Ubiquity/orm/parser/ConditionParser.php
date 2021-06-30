@@ -11,7 +11,7 @@ use Ubiquity\db\SqlUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class ConditionParser {
@@ -33,6 +33,15 @@ class ConditionParser {
 			$this->setParams($params);
 		}
 	}
+	
+	public function prepareKeys(array $keys){
+		$keyValues=\array_values($keys);
+		$retArray=[];
+		foreach ($keyValues as $key) {
+				$retArray[] = SqlUtils::$quote . $key . SqlUtils::$quote . ' = ?';
+		}
+		$this->condition = \implode(' AND ', $retArray);
+	}
 
 	public function addKeyValues($keyValues, $classname, $separator = ' AND ') {
 		if (! \is_array($keyValues)) {
@@ -47,8 +56,10 @@ class ConditionParser {
 				}
 			}
 			$retArray = array();
+			$this->invertedParams=false;
 			foreach ($keyValues as $key => $value) {
-				if ($this->addParams($value)) {
+				if ($value!=null) {
+					$this->params[] = $value;
 					$retArray[] = SqlUtils::$quote . $key . SqlUtils::$quote . ' = ?';
 				}
 			}
@@ -57,21 +68,11 @@ class ConditionParser {
 	}
 
 	public function setKeyValues($values) {
+		$this->invertedParams=false;
 		if (! \is_array($values)) {
-			$this->params = [
-				$values => true
-			];
-			return [
-				$values
-			];
+			return	$this->params=[$values];
 		} else {
-			$this->params = [];
-			$ret = [];
-			foreach ($values as $val) {
-				$this->params[$val] = true;
-				$ret[] = $val;
-			}
-			return $ret;
+			return $this->params = \array_values($values);
 		}
 	}
 
