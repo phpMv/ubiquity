@@ -10,7 +10,7 @@ use Ubiquity\orm\parser\ManyToManyParser;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.0.7
  *
  */
 trait OrmUtilsRelationsTrait {
@@ -42,7 +42,7 @@ trait OrmUtilsRelationsTrait {
 	public static function getAllJoinTables($models) {
 		$result = [ ];
 		foreach ( $models as $model ) {
-			$result = array_merge ( $result, self::getJoinTables ( $model ) );
+			$result = \array_merge ( $result, self::getJoinTables ( $model ) );
 		}
 		return $result;
 	}
@@ -236,11 +236,16 @@ trait OrmUtilsRelationsTrait {
 				$memberAccessor = 'get' . ucfirst ( $member );
 				if (\method_exists ( $instance, $memberAccessor )) {
 					$memberInstance = $instance->$memberAccessor ();
-					if (isset ( $memberInstance ) && is_object ( $memberInstance )) {
-						$keyValues = self::getKeyFieldsAndValues ( $memberInstance );
-						if (\count ( $keyValues ) > 0) {
-							$fkName = self::getJoinColumnName ( $class, $member );
-							$ret [$fkName] = \current ( $keyValues );
+					if (isset ( $memberInstance ) ){
+						if(\is_object ( $memberInstance )) {
+							$keyValues = self::getKeyFieldsAndValues($memberInstance);
+							if (\count($keyValues) > 0) {
+								$fkName = self::getJoinColumnName($class, $member);
+								$ret [$fkName] = \current($keyValues);
+							}
+						}else{
+							$fkName = self::getJoinColumnName($class, $member);
+							$ret [$fkName] = $memberInstance;
 						}
 					} elseif (self::isNullable ( $class, $member )) {
 						$fkName = self::getJoinColumnName ( $class, $member );
