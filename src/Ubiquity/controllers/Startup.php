@@ -263,9 +263,9 @@ class Startup {
 	/**
 	 * Returns the active controller name
 	 *
-	 * @return string
+	 * @return ?string
 	 */
-	public static function getController(): string {
+	public static function getController(): ?string {
 		return self::$controller;
 	}
 

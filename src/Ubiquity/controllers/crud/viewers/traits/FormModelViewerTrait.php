@@ -269,7 +269,7 @@ trait FormModelViewerTrait {
 		$attrs=ValidatorsManager::getUIConstraints($instance);
 		$this->setMemberFormFieldsComponent ( $form, $fieldTypes ,$attrs);
 		if ($hasRelations) {
-			$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields );
+			$this->relationMembersInForm ( $form, $instance, $className, $fields, $relFields,$fieldTypes );
 		}
 		$form->setCaptions ( [ "","" ] );
 		$form->onGenerateField ( function (HtmlFormField $f, $nb) use ($identifier, $editMemberParams) {
