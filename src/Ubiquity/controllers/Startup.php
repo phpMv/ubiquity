@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.11
+ * @version 1.1.12
  *
  */
 class Startup {
@@ -93,7 +93,7 @@ class Startup {
 		$u = self::parseUrl ( $url );
 		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, true, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
-				if (\is_string ( $ru [0] )) {
+				if (isset ( $ru ['controller'] )) {
 					static::runAction ( $ru, $initialize, $finalize );
 				} else {
 					self::runCallable ( $ru );
@@ -102,8 +102,8 @@ class Startup {
 				echo $ru; // Displays route response from cache
 			}
 		} else {
-			$u [0] = self::$ctrlNS . $u [0];
-			static::runAction ( $u, $initialize, $finalize );
+			$ru =['controller'=>self::$ctrlNS . $u [0],'action'=> $u [1]??'index','params'=> \array_slice ( $u, 2 )];
+			static::runAction ( $ru, $initialize, $finalize );
 		}
 	}
 
@@ -143,9 +143,9 @@ class Startup {
 	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 */
 	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
-		self::$controller = $ctrl = $u [0];
-		self::$action = $action = $u [1] ?? 'index';
-		self::$actionParams = \array_slice ( $u, 2 );
+		self::$controller = $ctrl = $u ['controller'];
+		self::$action = $action = $u ['action'] ?? 'index';
+		self::$actionParams = $u['params']??[];
 
 		try {
 			if (null !== $controller = self::_getControllerInstance ( $ctrl )) {
@@ -193,14 +193,14 @@ class Startup {
 	 * @param array $u An array containing a callback, and some parameters
 	 */
 	public static function runCallable(array &$u): void {
-		self::$actionParams = \array_slice ( $u, 1 );
+		self::$actionParams = $u['params']??[];
 		if (isset ( self::$config ['di'] )) {
 			$di = self::$config ['di'];
 			if (\is_array ( $di )) {
 				self::$actionParams += \array_values ( $di );
 			}
 		}
-		$func = $u [0];
+		$func = $u ['callback'];
 		$func ( ...(self::$actionParams) );
 	}
 
@@ -213,7 +213,7 @@ class Startup {
 		$di = DiManager::fetch ( $controller );
 		if ($di !== false) {
 			foreach ( $di as $k => $v ) {
-				$setter = 'set' . ucfirst ( $k );
+				$setter = 'set' . \ucfirst ( $k );
 				if (\method_exists ( $controller, $setter )) {
 					$controller->$setter ( $v ( $controller ) );
 				} else {

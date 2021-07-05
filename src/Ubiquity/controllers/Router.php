@@ -16,7 +16,7 @@ use Ubiquity\controllers\router\RouterStatus;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.15
+ * @version 1.0.16
  *
  */
 class Router {
@@ -70,26 +70,28 @@ class Router {
 		return isset ( $routeDetails ['name'] ) && $routeDetails ['name'] == $name;
 	}
 
-	protected static function setParamsInOrder(&$routeUrlParts, $paramsOrder, $params) {
+	protected static function setParamsInOrder($paramsOrder, $params) {
 		$index = 0;
+		$newParams=[];
 		foreach ( $paramsOrder as $order ) {
 			if ($order === '*') {
 				if (isset ( $params [$index] )) {
-					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( '/', $params [$index] ), [ '' ] ) );
+					$newParams = \array_merge ( $newParams, \array_diff ( \explode ( '/', $params [$index] ), [ '' ] ) );
 				}
 				break;
 			}
 			if (($order [0] ?? '') === '~') {
 				$order = \intval ( \substr ( $order, 1, 1 ) );
 				if (isset ( $params [$order] )) {
-					$routeUrlParts = \array_merge ( $routeUrlParts, \array_diff ( \explode ( '/', $params [$order] ), [ '' ] ) );
+					$newParams = \array_merge ( $newParams, \array_diff ( \explode ( '/', $params [$order] ), [ '' ] ) );
 					break;
 				}
 			}
-			$routeUrlParts [] = self::cleanParam ( $params [$order] );
+			$newParams [] = self::cleanParam ( $params [$order] );
 			unset ( $params [$order] );
 			$index ++;
 		}
+		return $newParams;
 	}
 
 	/**
@@ -195,14 +197,14 @@ class Router {
 		\array_shift ( $params );
 		$routeDetails = $routeArray ['details'];
 		if ($routeDetails ['controller'] instanceof \Closure) {
-			$result = [ $routeDetails ['controller'] ];
+			$result = [ 'callback'=>$routeDetails ['controller'] ];
 			$resultStr = 'callable function';
 		} else {
-			$result = [ \str_replace ( "\\\\", "\\", $routeDetails ['controller'] ),$routeDetails ['action'] ];
-			$resultStr = \implode ( '/', $result );
+			$result = [ 'controller'=>\str_replace ( "\\\\", "\\", $routeDetails ['controller'] ),'action'=>$routeDetails ['action']];
+			$resultStr = \json_encode($result);
 		}
 		if (($paramsOrder = $routeDetails ['parameters']) && (\count ( $paramsOrder ) > 0)) {
-			self::setParamsInOrder ( $result, $paramsOrder, $params );
+			$result['params']=self::setParamsInOrder ( $paramsOrder, $params );
 		}
 		if (! $cached || ! $cachedResponse) {
 			Logger::info ( 'Router', \sprintf ( 'Route found for %s : %s', $routeArray ['path'], $resultStr ), 'getRouteUrlParts' );

@@ -10,7 +10,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class StartupAsync extends Startup {
@@ -18,9 +18,9 @@ class StartupAsync extends Startup {
 	private const INITIALIZE = 2;
 	private const FINALIZE = 4;
 	private static $controllers = [ ];
-
+	
 	private static $routes=[];
-
+	
 	/**
 	 * Forwards to url
 	 *
@@ -37,10 +37,9 @@ class StartupAsync extends Startup {
 		$u = self::parseUrl ( $url );
 		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, true, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
-				if (\is_string ( $ru [0] )) {
-					$xu=['ctrl'=>$ru[0],'action'=>$ru[1]??'index','params'=>\array_slice ( $ru, 2 )];
-					(self::$routes[$methodUrl]=function($i,$f)use($xu){
-						static::runAction ( $xu, $i, $f );
+				if (isset ( $ru ['controller'] )) {
+					(self::$routes[$methodUrl]=function($i,$f)use($ru){
+						static::runAction ( $ru, $i, $f );
 					})($initialize,$finalize);
 				} else {
 					(self::$routes[$methodUrl]=function() use($ru){
@@ -51,22 +50,21 @@ class StartupAsync extends Startup {
 				(self::$routes[$methodUrl]=function() use($ru){
 					echo $ru; // Displays route response from cache
 				})();
-
+				
 			}
 		} else {
-			$u [0] = self::$ctrlNS . $u [0];
-			$xu=['ctrl'=>$u[0],'action'=>$u[1]??'index','params'=>\array_slice ( $u, 2 )];
-			(self::$routes[$methodUrl]=function($i,$f)use($xu){
-				static::runAction ( $xu, $i, $f );
+			$ru =['controller'=>self::$ctrlNS . $u [0],'action'=> $u [1]??'index','params'=> \array_slice ( $u, 2 )];
+			(self::$routes[$methodUrl]=function($i,$f)use($ru){
+				static::runAction ( $ru, $i, $f );
 			})($initialize,$finalize);
 		}
 	}
-
+	
 	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
-		self::$controller = $ctrl = $u ['ctrl'];
+		self::$controller = $ctrl = $u ['controller'];
 		self::$action = $action = $u ['action'];
 		self::$actionParams = $u['params'];
-
+		
 		try {
 			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
 				$binaryCalls = $controller->_binaryCalls ?? (self::IS_VALID + self::INITIALIZE + self::FINALIZE);
@@ -107,14 +105,14 @@ class StartupAsync extends Startup {
 			}
 		}
 	}
-
+	
 	public static function getControllerInstance($controllerName): ?object {
 		return self::$controllers [$controllerName] ??= self::_getControllerInstance ( $controllerName );
 	}
-
+	
 	public static function warmupAction($controller, $action = 'index') {
 		ob_start ();
-		$ru = [ $controller,$action ];
+		$ru = [ 'controller'=>$controller,'action'=>$action ];
 		static::runAction ( $ru, true, true );
 		ob_end_clean ();
 	}
