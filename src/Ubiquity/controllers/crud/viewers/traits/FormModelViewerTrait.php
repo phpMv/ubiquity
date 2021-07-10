@@ -258,6 +258,7 @@ trait FormModelViewerTrait {
 		$form = $this->jquery->semantic ()->dataForm ( $identifier, $instance );
 		$form->on ( "dblclick", "", true, true );
 		$form->setProperty ( "onsubmit", "return false;" );
+		$form->setProperty('style','margin:0;');
 		$form->addClass ( "_memberForm" );
 		$className = \get_class ( $instance );
 		$fields = [ "id",$member ];
