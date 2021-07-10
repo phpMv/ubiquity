@@ -2,6 +2,8 @@
 
 namespace Ubiquity\cache\parser;
 
+use Ubiquity\cache\CacheManager;
+use Ubiquity\exceptions\RouterException;
 use Ubiquity\utils\base\UString;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\exceptions\ParserException;
@@ -11,11 +13,11 @@ use Ubiquity\exceptions\ParserException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.1.0
  *
  */
 trait ControllerParserPathTrait {
-	
+	protected static $mainParams;
 	protected static function getPathFromMethod(\ReflectionMethod $method) {
 		$methodName = $method->getName ();
 		if ($methodName === "index") {
@@ -84,7 +86,7 @@ trait ControllerParserPathTrait {
 			return $path;
 	}
 	
-	public static function cleanpath($prefix, $path = "") {
+	public static function cleanpath($prefix, $path = "", &$isRoot=false) {
 		$path = \str_replace ( '//', '/', $path );
 		if ($prefix !== '' && ! UString::startswith ( $prefix, '/' )) {
 			$prefix = '/' . $prefix;
@@ -95,14 +97,18 @@ trait ControllerParserPathTrait {
 		if ($path !== '' && UString::startswith ( $path, '/' )) {
 			$path = \substr ( $path, 1 );
 		}
-		$path = $prefix . $path;
+		if(UString::startswith($path,'#/')){
+			$path=\substr($path,1);
+			$isRoot=true;
+		}else {
+			$path = $prefix . $path;
+		}
 		if (! UString::endswith ( $path, '/' ) && ! UString::endswith ( $path, '(.*?)' ) && ! UString::endswith ( $path, '(index/)?' )) {
 			$path = $path . '/';
 		}
 		return \str_replace ( '//', '/', $path );
 	}
 	
-	// TODO check
 	public static function addParamsPath($path, \ReflectionFunctionAbstract $method, $requirements) {
 		$parameters = [ ];
 		$hasOptional = false;
@@ -154,6 +160,38 @@ trait ControllerParserPathTrait {
 			$parameters [] = $find;
 			$path = \str_replace ( '\{' . $paramMatch . '\}', "({$requirement})", $path );
 		}
+	}
+
+	protected static function parseMainPath(string $path,string $controllerClass): string{
+		\preg_match_all ( '@\{(.+?)\}@s', $path, $matches );
+		self::$mainParams=[];
+		if (isset ( $matches [1] ) && \count ( $matches [1] ) > 0) {
+			foreach ( $matches [1] as $paramMatch ) {
+				if(\substr($paramMatch, -2) === '()'){
+					$method=\substr($paramMatch,0,strlen($paramMatch)-2);
+					if(\method_exists($controllerClass,$method)){
+						self::$mainParams[]=$method;
+						$path = \str_replace('{' . $paramMatch . '}', '(.+?)', $path);
+					}else{
+						throw new RouterException("Method $method does not exist on $controllerClass");
+					}
+				}else{
+					if(\property_exists($controllerClass,$paramMatch)){
+						$rProp=new \ReflectionProperty($controllerClass,$paramMatch);
+						if($rProp->isPublic()){
+							$path = \str_replace('{' . $paramMatch . '}', '(.+?)', $path);
+							self::$mainParams[]=$paramMatch;
+						}else{
+							throw new RouterException("Property $paramMatch must be public $controllerClass");
+						}
+					}else{
+						throw new RouterException("Property $paramMatch does not exist on $controllerClass");
+					}
+				}
+				
+			}
+		}
+		return $path;
 	}
 }
 

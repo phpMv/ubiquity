@@ -16,7 +16,7 @@ use Ubiquity\controllers\router\RouterStatus;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.16
+ * @version 1.1.0
  *
  */
 class Router {
@@ -200,7 +200,14 @@ class Router {
 			$result = [ 'callback'=>$routeDetails ['controller'] ];
 			$resultStr = 'callable function';
 		} else {
-			$result = [ 'controller'=>\str_replace ( "\\\\", "\\", $routeDetails ['controller'] ),'action'=>$routeDetails ['action']];
+			$mainParams=null;
+			if(($mainMethodParams=$routeDetails['main.params']??null)!==null){
+				foreach ($mainMethodParams as $index=>$mainMethodParam) {
+					$mainParams[$mainMethodParam]=$params[$index];
+				}
+				$params=\array_slice ( $params, $index+1);
+			}
+			$result = [ 'controller'=>\str_replace ( "\\\\", "\\", $routeDetails ['controller'] ),'action'=>$routeDetails ['action'],'mainParams'=>$mainParams];
 			$resultStr = \json_encode($result);
 		}
 		if (($paramsOrder = $routeDetails ['parameters']) && (\count ( $paramsOrder ) > 0)) {

@@ -14,7 +14,7 @@ use Ubiquity\exceptions\RouterException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.9
+ * @version 1.1.0
  *
  */
 class ControllerParser {
@@ -109,8 +109,10 @@ class ControllerParser {
 		$prefix = '';
 		$httpMethods = false;
 		if ($this->mainRouteClass) {
-			if (isset ( $this->mainRouteClass->path ))
+			if (isset ( $this->mainRouteClass->path )) {
+				$this->mainRouteClass->path=self::parseMainPath($this->mainRouteClass->path,$this->controllerClass);
 				$prefix = $this->mainRouteClass->path;
+			}
 			if (isset ( $this->mainRouteClass->methods )) {
 				$httpMethods = $this->mainRouteClass->methods;
 				if ($httpMethods !== null) {
@@ -145,21 +147,25 @@ class ControllerParser {
 		$parameters = $pathParameters ['parameters'];
 		$priority = $routeArray ['priority'];
 		$callback = $routeArray ['callback'] ?? null;
-		$path = self::cleanpath ( $prefix, $path );
+		$isRoot=false;
+		$path = self::cleanpath ( $prefix, $path ,$isRoot);
 		if (isset ( $routeArray ['methods'] ) && \is_array ( $routeArray ['methods'] )) {
-			self::createRouteMethod ( $result, $controllerClass, $path, $routeArray ['methods'], $methodName, $parameters, $name, $cache, $duration, $priority, $callback );
+			self::createRouteMethod ( $result, $controllerClass, $path, $routeArray ['methods'], $methodName, $parameters, $name, $cache, $duration, $priority, $callback , $isRoot);
 		} elseif (\is_array ( $httpMethods )) {
-			self::createRouteMethod ( $result, $controllerClass, $path, $httpMethods, $methodName, $parameters, $name, $cache, $duration, $priority, $callback );
+			self::createRouteMethod ( $result, $controllerClass, $path, $httpMethods, $methodName, $parameters, $name, $cache, $duration, $priority, $callback , $isRoot);
 		} else {
-			$v = [ 'controller' => $controllerClass,'action' => $methodName,'parameters' => $parameters,'name' => $name,'cache' => $cache,'duration' => $duration,'priority' => $priority ];
+			$v = [ 'controller' => $controllerClass,'action' => $methodName,'parameters' => $parameters,'name' => $name,'cache' => $cache,'duration' => $duration,'priority' => $priority];
 			if (isset ( $callback )) {
 				$v ['callback'] = $callback;
+			}
+			if(!$isRoot && isset(self::$mainParams) && \count(self::$mainParams)>0){
+				$v['main.params']=self::$mainParams;
 			}
 			$result [$path] = $v;
 		}
 	}
 
-	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority, $callback = null) {
+	private function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority, $callback = null,$isRoot=false) {
 		foreach ( $httpMethods as $httpMethod ) {
 			$httpMethod=\strtolower($httpMethod);
 			if(\array_search($httpMethod, self::HTTP_METHODS)===false){
@@ -168,6 +174,9 @@ class ControllerParser {
 			$v = [ 'controller' => $controllerClass,'action' => $method,'parameters' => $parameters,'name' => $name,'cache' => $cache,'duration' => $duration,'priority' => $priority ];
 			if (isset ( $callback )) {
 				$v ['callback'] = $callback;
+			}
+			if(!$isRoot && isset(self::$mainParams) && \count(self::$mainParams)>0){
+				$v['main.params']=self::$mainParams;
 			}
 			$result [$path] [$httpMethod] = $v;
 		}

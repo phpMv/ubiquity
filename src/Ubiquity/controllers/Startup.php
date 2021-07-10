@@ -13,7 +13,7 @@ use Ubiquity\views\engine\TemplateEngine;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.12
+ * @version 1.2.0
  *
  */
 class Startup {
@@ -53,6 +53,16 @@ class Startup {
 			}
 		} catch ( \Exception $e ) {
 			echo $e->getTraceAsString ();
+		}
+	}
+
+	protected static function setMainParams($controller,$mainParams){
+		foreach ($mainParams as $k=>$v){
+			if(\method_exists($controller,$k)){
+				$controller->$k($v);
+			}else {
+				$controller->$k = $v;
+			}
 		}
 	}
 
@@ -149,6 +159,9 @@ class Startup {
 
 		try {
 			if (null !== $controller = self::_getControllerInstance ( $ctrl )) {
+				if($mainParams=$u['mainParams']??false){
+					static::setMainParams($controller,$mainParams);
+				}
 				if (! $controller->isValid ( $action )) {
 					$controller->onInvalidControl ();
 				} else {

@@ -10,7 +10,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.1.0
  *
  */
 class StartupAsync extends Startup {
@@ -67,6 +67,9 @@ class StartupAsync extends Startup {
 		
 		try {
 			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
+				if($mainParams=$u['mainParams']??false){
+					static::setMainParams($controller,$mainParams);
+				}
 				$binaryCalls = $controller->_binaryCalls ?? (self::IS_VALID + self::INITIALIZE + self::FINALIZE);
 				if (($binaryCalls & self::IS_VALID) && ! $controller->isValid ( $action )) {
 					$controller->onInvalidControl ();
