@@ -82,7 +82,7 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 		$this->jquery->getHref('a[href]',"",['hasLoader'=>false,'historize'=>false]);
 	}
 
-	protected function getIndexType(){
+	protected function getIndexType():array {
 		return ['four link cards','card'];
 	}
 
