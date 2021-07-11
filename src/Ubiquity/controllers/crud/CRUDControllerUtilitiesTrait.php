@@ -20,7 +20,7 @@ use Ubiquity\controllers\crud\viewers\ModelViewer;
  */
 trait CRUDControllerUtilitiesTrait {
 	
-	abstract protected function _showSimpleMessage(CRUDMessage $message, $staticName = null): HtmlMessage;
+	abstract protected function showSimpleMessage_(CRUDMessage $message, $staticName = null): HtmlMessage;
 	
 	abstract public function loadView($viewName, $pData = NULL, $asString = false);
 	
