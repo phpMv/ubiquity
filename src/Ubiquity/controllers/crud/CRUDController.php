@@ -223,11 +223,11 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 					$message = new CRUDMessage ( "Exception : can not delete `" . $instanceString . "`", "Exception", "warning", "warning" );
 					$message = $this->_getEvents ()->onErrorDeleteMessage ( $message, $instance );
 				}
-				$message = $this->_showSimpleMessage ( $message );
+				$message = $this->showSimpleMessage_ ( $message );
 			} else {
 				$message = new CRUDMessage ( "Do you confirm the deletion of `<b>" . $instanceString . "</b>`?", "Remove confirmation", "error", "question circle" );
 				$message = $this->_getEvents ()->onConfDeleteMessage ( $message, $instance );
-				$message = $this->_showConfMessage ( $message, $this->_getBaseRoute () . "/delete/{$ids}", "#table-messages", $ids );
+				$message = $this->showConfMessage_ ( $message, $this->_getBaseRoute () . "/delete/{$ids}", "#table-messages", $ids );
 			}
 			echo $message;
 			echo $this->jquery->compile ( $this->view );
@@ -272,7 +272,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				$message = new CRUDMessage ( "Exception : can not update `" . $instanceString . "`", "Exception", "warning", "warning" );
 				$message = $this->_getEvents ()->onErrorUpdateMessage ( $message, $instance );
 			}
-			echo $this->_showSimpleMessage ( $message, "updateMsg" );
+			echo $this->showSimpleMessage_ ( $message, "updateMsg" );
 			echo $this->jquery->compile ( $this->view );
 			return $instance;
 		} else {

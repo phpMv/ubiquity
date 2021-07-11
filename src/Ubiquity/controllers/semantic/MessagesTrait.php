@@ -26,11 +26,11 @@ trait MessagesTrait {
 
 	abstract public function _getFiles();
 
-	protected function _showSimpleMessage(CRUDMessage $message, $staticName = null, $toast = false): HtmlMessage {
-		return $this->showSimpleMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $message->getTimeout (), $staticName, null, $toast );
+	protected function showSimpleMessage_(CRUDMessage $message, $staticName = null, $toast = false): HtmlMessage {
+		return $this->_showSimpleMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $message->getTimeout (), $staticName, null, $toast );
 	}
 
-	public function showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null, $closeAction = null, $toast = false): HtmlMessage {
+	public function _showSimpleMessage($content, $type, $title = null, $icon = "info", $timeout = NULL, $staticName = null, $closeAction = null, $toast = false): HtmlMessage {
 		$semantic = $this->jquery->semantic ();
 		if (! isset ( $staticName ))
 			$staticName = "msg-" . rand ( 0, 50 );
@@ -58,12 +58,12 @@ trait MessagesTrait {
 		return $message;
 	}
 
-	protected function _showConfMessage(CRUDMessage $message, $url, $responseElement, $data, $attributes = NULL): HtmlMessage {
-		return $this->showConfMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $url, $responseElement, $data, $attributes );
+	protected function showConfMessage_(CRUDMessage $message, $url, $responseElement, $data, $attributes = NULL): HtmlMessage {
+		return $this->_showConfMessage ( $message->getMessage (), $message->getType (), $message->getTitle (), $message->getIcon (), $url, $responseElement, $data, $attributes );
 	}
 
-	public function showConfMessage($content, $type, $title, $icon, $url, $responseElement, $data, $attributes = NULL): HtmlMessage {
-		$messageDlg = $this->showSimpleMessage ( $content, $type, $title, $icon );
+	protected function _showConfMessage($content, $type, $title, $icon, $url, $responseElement, $data, $attributes = NULL): HtmlMessage {
+		$messageDlg = $this->_showSimpleMessage ( $content, $type, $title, $icon );
 		$btOkay = new HtmlButton ( "bt-okay", "Confirm", "negative" );
 		$btOkay->addIcon ( "check circle" );
 		$btOkay->postOnClick ( $url, "{data:'" . $data . "'}", $responseElement, $attributes );

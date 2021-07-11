@@ -28,7 +28,8 @@ trait CRUDControllerUtilitiesTrait {
 	
 	abstract public function _getBaseRoute();
 	
-	abstract protected function _showConfMessage(CRUDMessage $message, $url, $responseElement, $data, $attributes = NULL): HtmlMessage;
+	abstract protected function showConfMessage_(CRUDMessage $message, $url, $responseElement, $data, $attributes = NULL): HtmlMessage;
+
 	protected $modelViewer;
 	protected $adminDatas;
 	protected $events;
@@ -79,7 +80,7 @@ trait CRUDControllerUtilitiesTrait {
 		}
 		$message = new CRUDMessage ( "This object does not exist!", "Get object", "warning", "warning circle" );
 		$message = $this->_getEvents ()->onNotFoundMessage ( $message, $ids );
-		echo $this->_showSimpleMessage ( $message );
+		echo $this->showSimpleMessage_ ( $message );
 		echo $this->jquery->compile ( $this->view );
 		exit ( 1 );
 	}
@@ -149,13 +150,13 @@ trait CRUDControllerUtilitiesTrait {
 				$message->parseContent ( [ "count" => $rep ] );
 			}
 			if (isset ( $message )) {
-				$this->_showSimpleMessage ( $message, "delete-all" );
+				$this->showSimpleMessage_ ( $message, "delete-all" );
 			}
 			$this->index ();
 		} else {
 			$message = new CRUDMessage ( "Do you confirm the deletion of this objects?", "Remove confirmation", "error ".$this->style );
 			$this->_getEvents ()->onConfDeleteMultipleMessage ( $message, $data );
-			$message = $this->_showConfMessage ( $message, $this->_getBaseRoute () . "/{$action}/{$data}", $target, $data, [ "jqueryDone" => "replaceWith" ] );
+			$message = $this->showConfMessage_ ( $message, $this->_getBaseRoute () . "/{$action}/{$data}", $target, $data, [ "jqueryDone" => "replaceWith" ] );
 			echo $message;
 			echo $this->jquery->compile ( $this->view );
 		}
