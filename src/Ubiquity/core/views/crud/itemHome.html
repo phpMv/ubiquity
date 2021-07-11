@@ -1,0 +1,23 @@
+<div class="{{ type }}">
+    <i class="ui large {{ icon }} icon">
+    </i>
+    <div class="content">
+        <a href="{{ url }}" class="header" data-target=".crud">{{ title }}</a>
+        {% if meta %}
+            <div class="meta">{{ meta|raw }}</div>
+        {% endif %}
+        <div class="description">
+            {{ desc|raw }}
+        </div>
+    </div>
+    {%  if actions %}
+        <div class="ui bottom attached buttons">
+            {%  for action in actions %}
+                <div class="ui {{ action['class'] }} button">
+                    <i class="{{ action['icon']}} icon"></i>
+                    {{ action['caption'] }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
