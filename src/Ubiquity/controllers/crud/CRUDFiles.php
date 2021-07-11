@@ -29,6 +29,26 @@ class CRUDFiles {
 	public function getViewIndex() {
 		return $this->viewBase . '/index.html';
 	}
+	
+	/**
+	 * To override with MultiResourceCRUDController only
+	 * Returns the template for the home route (default : @framework/crud/home.html)
+	 *
+	 * @return string
+	 */
+	public function getViewHome(){
+		return $this->viewBase . '/home.html';
+	}
+
+	/**
+	 * To override with MultiResourceCRUDController only
+	 * Returns the template for an item in home route (default : @framework/crud/itemHome.html)
+	 *
+	 * @return string
+	 */
+	public function getViewItemHome(){
+		return $this->viewBase . '/itemHome.html';
+	}
 
 	/**
 	 * To override
