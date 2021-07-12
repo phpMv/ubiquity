@@ -1,0 +1,17 @@
+<div class="ui labeled icon top left pointing dropdown button">
+    <i class="{{ btIcon }} icon"></i>
+    <span class="text">{{ btTitle }}</span>
+    <div class="menu">
+        <div class="ui search icon input">
+            <i class="search icon"></i>
+            <input type="text" name="search" placeholder="Search...">
+        </div>
+        <div class="divider"></div>
+        {% for item in items %}
+        <div class="item" data-href="{{ item['url'] }}">
+            <i class="{{ item['icon'] }} icon"></i>
+            {{ item['title'] }}
+        </div>
+        {% endfor %}
+    </div>
+</div>

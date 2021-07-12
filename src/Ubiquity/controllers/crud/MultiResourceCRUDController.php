@@ -22,11 +22,15 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 	
 	public string $resource='';
 	
+	private $displayedItems=[];
+	
+	private $_hasDropdown=false;
+	
 	public function initialize() {
 		parent::initialize();
 		$this->model = $this->getModelName();
 	}
-
+	
 	public function home(){
 		$models=$this->getIndexModels();
 		$items=[];
@@ -35,60 +39,101 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 		foreach ($models as $model){
 			$resource=\lcfirst(ClassUtils::getClassSimpleName($model));
 			$myModel=$myModels[$resource]??[];
-			$items[$resource]=$this->loadView($this->_getFiles()->getViewItemHome(),[
-				'title'=>$myModel['title']??$this->getIndexDefaultTitle($resource),
-				'desc'=>$myModel['desc']??$this->getIndexDefaultDesc($model),
-				'resource'=>$resource,
-				'icon'=>$myModel['icon']??$this->getIndexDefaultIcon($resource),
-				'url'=>$myModel['url']??$this->getIndexDefaultUrl($resource),
-				'meta'=>$myModel['meta']??$this->getIndexDefaultMeta($model),
-				'actions'=>$myModel['actions']??null,
-				'type'=>$type
-			],true);
+			$this->displayedItems[$resource]=$displayedItems=[
+					'title'=>$myModel['title']??$this->getIndexDefaultTitle($resource),
+					'desc'=>$myModel['desc']??$this->getIndexDefaultDesc($model),
+					'resource'=>$resource,
+					'icon'=>$myModel['icon']??$this->getIndexDefaultIcon($resource),
+					'url'=>$myModel['url']??$this->getIndexDefaultUrl($resource),
+					'meta'=>$myModel['meta']??$this->getIndexDefaultMeta($model),
+					'actions'=>$myModel['actions']??null,
+					'type'=>$type
+			];
+			$items[$resource]=$this->loadView($this->_getFiles()->getViewItemHome(),$displayedItems,true);
 		}
+		
+		$data=['items'=>$items,'type'=>$mainType];
+		if($this->hasNavigation()){
+			$data['nav']=$this->dropdown($models);
+		}
+		$this->onRenderView($data);
 		$this->addIndexBehavior();
-		$this->jquery->renderView($this->_getFiles()->getViewHome(),['items'=>$items,'type'=>$mainType]);
+		$this->jquery->renderView($this->_getFiles()->getViewHome(),$data);
 	}
-
+	
+	/**
+	 * To override
+	 * @param array $data
+	 */
+	protected function onRenderView(array &$data):void{
+		
+	}
+	
+	/**
+	 * To override
+	 * Return true for adding a navigation dropdown menu.
+	 * @return bool
+	 */
+	protected function hasNavigation():bool{
+		return true;
+	}
+	
+	protected function dropdown(?array $models=null,string $btIcon='chevron right',string $btTitle='Navigate to...',bool $asString=true):?string{
+		$this->_hasDropdown=true;
+		$models??=$this->getIndexModels();
+		$myModels=$this->getIndexModelsDetails();
+		$items=[];
+		foreach ($models as $model){
+			$resource=\lcfirst(ClassUtils::getClassSimpleName($model));
+			$items[]=$this->displayedItems[$resource]??['title'=>$myModel['title']??$this->getIndexDefaultTitle($resource),'icon'=>$myModel['icon']??$this->getIndexDefaultIcon($resource),'url'=>$myModel['url']??$this->getIndexDefaultUrl($resource)];
+		}
+		
+		return $this->loadView($this->_getFiles()->getViewDropdown(),compact('items','btIcon','btTitle'),$asString);
+	}
+	
 	protected function getIndexModels():array{
 		return CacheManager::getModels(Startup::$config,true);
 	}
-
+	
 	protected function getIndexModelsDetails():array{
 		return [];
 	}
-
+	
 	protected function getIndexDefaultIcon(string $resource): string {
-		return ' bordered colored '.Animals::getRandomValue(true).' '.Color::getRandomValue(true);
+		return ' colored '.Animals::getRandomValue(true).' '.Color::getRandomValue(true);
 	}
-
+	
 	protected function getIndexDefaultTitle(string $resource):string{
 		return \ucfirst($resource);
 	}
-
+	
 	protected function getIndexDefaultDesc(string $modelClass):string{
 		return $modelClass;
 	}
-
+	
 	protected function getIndexDefaultUrl(string $resource):string{
 		return Router::path('crud.index',[$resource]);
 	}
-
+	
 	protected function getIndexDefaultMeta(string $modelClass):?string{
 		return null;
 	}
-
+	
 	protected function addIndexBehavior():void{
-		$this->jquery->getHref('a[href]',"",['hasLoader'=>false,'historize'=>false]);
+		if($this->_hasDropdown){
+			$this->jquery->execAtLast('$(".dropdown").dropdown();');
+			$this->jquery->getOnClick('.item[data-href]','','.crud',['hasLoader'=>false,'preventDefault'=>false,'stopPropagation'=>false,'attr'=>'data-href']);
+		}
+		$this->jquery->getHref('a[href]',"",['historize'=>false,'hasLoader'=>true]);
 	}
-
+	
 	protected function getIndexType():array {
 		return ['four link cards','card'];
 	}
-
+	
 	protected function getModelName(){
 		return Startup::getNS('models') . \ucfirst($this->resource);
 	}
-
+	
 	public abstract function _getBaseRoute():string;
 }
