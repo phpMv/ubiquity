@@ -21,16 +21,16 @@ use Ubiquity\orm\DAO;
 abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CRUDController {
 	
 	public string $resource='';
-	
+
 	private $displayedItems=[];
-	
+
 	private $_hasDropdown=false;
 	
 	public function initialize() {
 		parent::initialize();
 		$this->model = $this->getModelName();
 	}
-	
+
 	public function home(){
 		$models=$this->getIndexModels();
 		$items=[];
@@ -40,27 +40,27 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 			$resource=\lcfirst(ClassUtils::getClassSimpleName($model));
 			$myModel=$myModels[$resource]??[];
 			$this->displayedItems[$resource]=$displayedItems=[
-					'title'=>$myModel['title']??$this->getIndexDefaultTitle($resource),
-					'desc'=>$myModel['desc']??$this->getIndexDefaultDesc($model),
-					'resource'=>$resource,
-					'icon'=>$myModel['icon']??$this->getIndexDefaultIcon($resource),
-					'url'=>$myModel['url']??$this->getIndexDefaultUrl($resource),
-					'meta'=>$myModel['meta']??$this->getIndexDefaultMeta($model),
-					'actions'=>$myModel['actions']??null,
-					'type'=>$type
+				'title'=>$myModel['title']??$this->getIndexDefaultTitle($resource),
+				'desc'=>$myModel['desc']??$this->getIndexDefaultDesc($model),
+				'resource'=>$resource,
+				'icon'=>$myModel['icon']??$this->getIndexDefaultIcon($resource),
+				'url'=>$myModel['url']??$this->getIndexDefaultUrl($resource),
+				'meta'=>$myModel['meta']??$this->getIndexDefaultMeta($model),
+				'actions'=>$myModel['actions']??null,
+				'type'=>$type
 			];
 			$items[$resource]=$this->loadView($this->_getFiles()->getViewItemHome(),$displayedItems,true);
 		}
-		
+
 		$data=['items'=>$items,'type'=>$mainType];
 		if($this->hasNavigation()){
-			$data['nav']=$this->dropdown($models);
+			$data['nav']=$this->nav($models);
 		}
 		$this->onRenderView($data);
 		$this->addIndexBehavior();
 		$this->jquery->renderView($this->_getFiles()->getViewHome(),$data);
 	}
-	
+
 	/**
 	 * To override
 	 * @param array $data
@@ -68,7 +68,7 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 	protected function onRenderView(array &$data):void{
 		
 	}
-	
+
 	/**
 	 * To override
 	 * Return true for adding a navigation dropdown menu.
@@ -77,8 +77,8 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 	protected function hasNavigation():bool{
 		return true;
 	}
-	
-	protected function dropdown(?array $models=null,string $btIcon='chevron right',string $btTitle='Navigate to...',bool $asString=true):?string{
+
+	protected function nav(?array $models=null,string $btIcon='chevron right',string $btTitle='Navigate to...',bool $asString=true):?string{
 		$this->_hasDropdown=true;
 		$models??=$this->getIndexModels();
 		$myModels=$this->getIndexModelsDetails();
@@ -87,38 +87,38 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 			$resource=\lcfirst(ClassUtils::getClassSimpleName($model));
 			$items[]=$this->displayedItems[$resource]??['title'=>$myModel['title']??$this->getIndexDefaultTitle($resource),'icon'=>$myModel['icon']??$this->getIndexDefaultIcon($resource),'url'=>$myModel['url']??$this->getIndexDefaultUrl($resource)];
 		}
-		
-		return $this->loadView($this->_getFiles()->getViewDropdown(),compact('items','btIcon','btTitle'),$asString);
+
+		return $this->loadView($this->_getFiles()->getViewNav(),compact('items','btIcon','btTitle'),$asString);
 	}
-	
+
 	protected function getIndexModels():array{
 		return CacheManager::getModels(Startup::$config,true);
 	}
-	
+
 	protected function getIndexModelsDetails():array{
 		return [];
 	}
-	
+
 	protected function getIndexDefaultIcon(string $resource): string {
 		return ' colored '.Animals::getRandomValue(true).' '.Color::getRandomValue(true);
 	}
-	
+
 	protected function getIndexDefaultTitle(string $resource):string{
 		return \ucfirst($resource);
 	}
-	
+
 	protected function getIndexDefaultDesc(string $modelClass):string{
 		return $modelClass;
 	}
-	
+
 	protected function getIndexDefaultUrl(string $resource):string{
 		return Router::path('crud.index',[$resource]);
 	}
-	
+
 	protected function getIndexDefaultMeta(string $modelClass):?string{
 		return null;
 	}
-	
+
 	protected function addIndexBehavior():void{
 		if($this->_hasDropdown){
 			$this->jquery->execAtLast('$(".dropdown").dropdown();');
@@ -126,14 +126,14 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 		}
 		$this->jquery->getHref('a[href]',"",['historize'=>false,'hasLoader'=>true]);
 	}
-	
+
 	protected function getIndexType():array {
 		return ['four link cards','card'];
 	}
-	
+
 	protected function getModelName(){
 		return Startup::getNS('models') . \ucfirst($this->resource);
 	}
-	
+
 	public abstract function _getBaseRoute():string;
 }

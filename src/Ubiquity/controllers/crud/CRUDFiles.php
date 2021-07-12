@@ -51,6 +51,16 @@ class CRUDFiles {
 	}
 
 	/**
+	 * To override with MultiResourceCRUDController only
+	 * Returns the template for displaying models in a dropdown (default : @framework/crud/itemHome.html)
+	 *
+	 * @return string
+	 */
+	public function getViewNav(){
+		return $this->viewBase . '/nav.html';
+	}
+
+	/**
 	 * To override
 	 * Returns the template for the edit and new instance routes (default : @framework/crud/form.html)
 	 *
