@@ -2,15 +2,19 @@
 <div class="ui {{inverted}} segment">
 {% endblock %}
 {% block btAddNew %}
-	<a id="btAddNew" class="ui {{inverted}} button orange _new">
-	 <i class="icon plus"></i>
-	 {% block _addNewCaption %}
-	Add a new {{classname}}...
-	{% endblock %}
-	</a>
+	<div class="ui secondary {{ inverted }} menu">
+		<div class="item">
+			<a id="btAddNew" class="ui {{inverted}} button orange _new">
+			 <i class="icon plus"></i>
+			 {% block _addNewCaption %}
+			Add a new {{classname}}...
+			{% endblock %}
+			</a>
+		</div>
+	</div>
 {% endblock %}
 {% block frm %}
-	<div id='frm-add-update' style="padding-top: 10px"></div>
+	<div id='frm-add-update'></div>
 {% endblock %}
 {% block dataTable %}
 	<div id="dataTable" style="padding: 10px 0px 10px;">
