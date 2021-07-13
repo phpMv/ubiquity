@@ -5,6 +5,7 @@ namespace Ubiquity\orm\traits;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\ConditionParser;
 use Ubiquity\db\Database;
+use Ubiquity\db\SqlUtils;
 
 /**
  * Ubiquity\orm\traits$DAOUQueries
@@ -92,7 +93,7 @@ trait DAOUQueries {
 		$condition = self::uParse ( $db, $className, $ucondition, $quote );
 		$tableName = OrmUtils::getTableName ( $className );
 		if ($ucondition != '') {
-			$ucondition = " WHERE " . $ucondition;
+			$ucondition = SqlUtils::checkWhere($ucondition);
 		}
 		return $db->prepareAndFetchColumn ( "SELECT COUNT(*) FROM {$quote}{$tableName}{$quote} " . $condition . $ucondition, $parameters, 0 );
 	}
@@ -111,7 +112,7 @@ trait DAOUQueries {
 		$db = self::getDb ( $className );
 		$condition = self::uParse ( $db, $className, $ucondition, $db->quote );
 		$conditionParser = new ConditionParser ( $ucondition, $condition );
-		if (is_array ( $parameters )) {
+		if (\is_array ( $parameters )) {
 			$conditionParser->setParams ( $parameters );
 		}
 		return self::_getOne ( $db, $className, $conditionParser, $included, $useCache );
