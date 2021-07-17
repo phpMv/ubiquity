@@ -20,15 +20,15 @@ use Ajax\semantic\widgets\datatable\DataTable;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 abstract class CRUDController extends ControllerBase implements HasModelViewerInterface {
 	use MessagesTrait,CRUDControllerUtilitiesTrait,InsertJqueryTrait;
 	protected $model;
-	protected $activePage;
+	protected $activePage=1;
 	protected $style;
-
+	
 	public function __construct() {
 		parent::__construct ();
 		DAO::$transformerOp = 'toView';
@@ -37,7 +37,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	}
 	
 	/**
-	 * Return a JSON representation of $instances for the JsonDataTable component 
+	 * Return a JSON representation of $instances for the JsonDataTable component
 	 * @param array $instances
 	 * @return string
 	 */
@@ -45,9 +45,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$objects = \array_map ( function ($o) {
 			return $o->_rest;
 		}, $instances );
-		return \json_encode(\array_values ( $objects ));
+			return \json_encode(\array_values ( $objects ));
 	}
-
+	
 	public function _setStyle($elm) {
 		if ($this->style === 'inverted') {
 			$elm->setInverted ( true );
@@ -56,7 +56,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			}
 		}
 	}
-
+	
 	/**
 	 * Default page : list all objects
 	 * Uses modelViewer.isModal, modelViewer.getModelDataTable
@@ -64,16 +64,16 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * Triggers the events onDisplayElements,beforeLoadView
 	 */
 	public function index() {
-		$objects = $this->getInstances ( $totalCount );
+		$objects = $this->getInstances ( $totalCount ,$this->activePage);
 		$modal = ($this->_getModelViewer ()->isModal ( $objects, $this->model )) ? "modal" : "no";
-		$dt = $this->_getModelViewer ()->getModelDataTable ( $objects, $this->model, $totalCount );
+		$dt = $this->_getModelViewer ()->getModelDataTable ( $objects, $this->model, $totalCount ,$this->activePage);
 		$this->jquery->getOnClick ( '#btAddNew', $this->_getBaseRoute () . '/newModel/' . $modal, '#frm-add-update', [ 'hasLoader' => 'internal' ] );
 		$this->_getEvents ()->onDisplayElements ( $dt, $objects, false );
 		$this->crudLoadView ( $this->_getFiles ()->getViewIndex (), [ 'classname' => $this->model,'messages' => $this->jquery->semantic ()->matchHtmlComponents ( function ($compo) {
 			return $compo instanceof HtmlMessage;
 		} ) ] );
 	}
-
+	
 	public function updateMember($member, $callback = false) {
 		$instance = $_SESSION ['instance'] ?? null;
 		if (isset ( $instance )) {
@@ -81,27 +81,27 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$updated = CRUDHelper::update ( $instance, $_POST, true, true, function ($inst) {
 				$this->_getEvents ()->onBeforeUpdate ( $inst, false );
 			} );
-			if ($updated) {
-				if ($callback === false) {
-					$dt = $this->_getModelViewer ()->getModelDataTable ( [ $instance ], $this->model, 1 );
-					$dt->setGroupByFields(null);
-					$dt->compile ();
-					echo new HtmlContentOnly ( $dt->getFieldValue ( $member ) );
-				} else {
-					if (\method_exists ( $this, $callback )) {
-						$this->$callback ( $member, $instance );
+				if ($updated) {
+					if ($callback === false) {
+						$dt = $this->_getModelViewer ()->getModelDataTable ( [ $instance ], $this->model, 1 );
+						$dt->setGroupByFields(null);
+						$dt->compile ();
+						echo new HtmlContentOnly ( $dt->getFieldValue ( $member ) );
 					} else {
-						throw new \Exception ( "The method `" . $callback . "` does not exists in " . get_class () );
+						if (\method_exists ( $this, $callback )) {
+							$this->$callback ( $member, $instance );
+						} else {
+							throw new \Exception ( "The method `" . $callback . "` does not exists in " . get_class () );
+						}
 					}
+				} else {
+					UResponse::setResponseCode ( 404 );
 				}
-			} else {
-				UResponse::setResponseCode ( 404 );
-			}
 		} else {
 			throw new \Exception ( '$_SESSION["instance"] is null' );
 		}
 	}
-
+	
 	/**
 	 * Refreshes the area corresponding to the DataTable
 	 */
@@ -130,7 +130,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->_renderDataTableForRefresh ( $instances, $model, $totalCount );
 		}
 	}
-
+	
 	/**
 	 * Edits an instance
 	 *
@@ -147,7 +147,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->index ();
 		}
 	}
-
+	
 	/**
 	 * Adds a new instance and edits it
 	 *
@@ -165,7 +165,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->index ();
 		}
 	}
-
+	
 	public function editMember($member) {
 		$ids = URequest::post ( "id" );
 		$td = URequest::post ( "td" );
@@ -177,7 +177,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		$form->setLibraryId ( "_compo_" );
 		$this->jquery->renderView ( "@framework/main/component.html" );
 	}
-
+	
 	/**
 	 * Displays an instance
 	 *
@@ -191,7 +191,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->jquery->execOn ( "click", "._close", '$("#table-details").html("");$("#dataTable").show();' );
 			$this->jquery->getOnClick ( "._edit", $this->_getBaseRoute () . "/edit/" . $modal . "/" . $key, "#frm-add-update" );
 			$this->jquery->getOnClick ( "._delete", $this->_getBaseRoute () . "/delete/" . $key, "#table-messages" );
-
+			
 			$this->_getModelViewer ()->getModelDataElement ( $instance, $this->model, $modal );
 			$this->jquery->renderView ( $this->_getFiles ()->getViewDisplay (), [ "classname" => $this->model,"instance" => $instance,"pk" => $key ] );
 		} else {
@@ -199,7 +199,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->index ();
 		}
 	}
-
+	
 	/**
 	 * Deletes an instance
 	 *
@@ -236,14 +236,14 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->index ();
 		}
 	}
-
+	
 	public function refreshTable($id = null) {
 		$compo = $this->_showModel ( $id );
 		$this->jquery->execAtLast ( '$("#table-details").html("");' );
 		$compo->setLibraryId ( "_compo_" );
 		$this->jquery->renderView ( "@framework/main/component.html" );
 	}
-
+	
 	/**
 	 * Updates an instance from the data posted in a form
 	 *
@@ -259,14 +259,14 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				$updated = CRUDHelper::update ( $instance, $_POST, true, true, function ($inst, $isNew) {
 					$this->_getEvents ()->onBeforeUpdate ( $inst, $isNew );
 				} );
-				if ($updated) {
-					$message->setType ( "success" )->setIcon ( "check circle outline" );
-					$message = $this->_getEvents ()->onSuccessUpdateMessage ( $message, $instance );
-					$this->refreshInstance ( $instance, $isNew );
-				} else {
-					$message->setMessage ( "An error has occurred. Can not save changes." )->setType ( "error" )->setIcon ( "warning circle" );
-					$message = $this->_getEvents ()->onErrorUpdateMessage ( $message, $instance );
-				}
+					if ($updated) {
+						$message->setType ( "success" )->setIcon ( "check circle outline" );
+						$message = $this->_getEvents ()->onSuccessUpdateMessage ( $message, $instance );
+						$this->refreshInstance ( $instance, $isNew );
+					} else {
+						$message->setMessage ( "An error has occurred. Can not save changes." )->setType ( "error" )->setIcon ( "warning circle" );
+						$message = $this->_getEvents ()->onErrorUpdateMessage ( $message, $instance );
+					}
 			} catch ( \Exception $e ) {
 				$instanceString = $this->getInstanceToString ( $instance );
 				$message = new CRUDMessage ( "Exception : can not update `" . $instanceString . "`", "Exception", "warning", "warning" );
@@ -279,7 +279,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			throw new \Exception ( '$_SESSION["instance"] is null' );
 		}
 	}
-
+	
 	/**
 	 * Shows associated members with foreign keys
 	 *
@@ -298,28 +298,28 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 				$wide = intval ( 16 / $nb );
 				if ($wide < 4)
 					$wide = 4;
-				foreach ( $fkInstances as $member => $fkInstanceArray ) {
-					$element = $viewer->getFkMemberElementDetails ( $member, $fkInstanceArray ["objectFK"], $fkInstanceArray ["fkClass"], $fkInstanceArray ["fkTable"] );
-					if (isset ( $element )) {
-						$grid->addCol ( $wide )->setContent ( $element );
-						$hasElements = true;
+					foreach ( $fkInstances as $member => $fkInstanceArray ) {
+						$element = $viewer->getFkMemberElementDetails ( $member, $fkInstanceArray ["objectFK"], $fkInstanceArray ["fkClass"], $fkInstanceArray ["fkTable"] );
+						if (isset ( $element )) {
+							$grid->addCol ( $wide )->setContent ( $element );
+							$hasElements = true;
+						}
 					}
-				}
-				if ($hasElements) {
-					echo $grid;
-					$url = $this->_getFiles ()->getDetailClickURL ( $this->model );
-					if (UString::isNotNull ( $url )) {
-						$this->detailClick ( $url );
+					if ($hasElements) {
+						echo $grid;
+						$url = $this->_getFiles ()->getDetailClickURL ( $this->model );
+						if (UString::isNotNull ( $url )) {
+							$this->detailClick ( $url );
+						}
 					}
-				}
-				echo $this->jquery->compile ( $this->view );
+					echo $this->jquery->compile ( $this->view );
 			}
 		} else {
 			$this->jquery->execAtLast ( "$('tr[data-ajax={$ids}]').trigger('click');" );
 			$this->index ();
 		}
 	}
-
+	
 	public function detailClick($url) {
 		$this->jquery->postOnClick ( ".showTable", $this->_getBaseRoute () . "/" . $url, "{}", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ] );
 	}
