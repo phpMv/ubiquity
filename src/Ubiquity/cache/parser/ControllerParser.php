@@ -2,6 +2,7 @@
 
 namespace Ubiquity\cache\parser;
 
+use Ubiquity\exceptions\ParserException;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UString;
 use Ubiquity\cache\ClassUtils;
@@ -14,31 +15,32 @@ use Ubiquity\exceptions\RouterException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 class ControllerParser {
 	use ControllerParserPathTrait;
 	
 	const HTTP_METHODS=['head','get','post','patch','put','delete','options','connect'];
-		
+	
 	private string $controllerClass;
 	private $mainRouteClass;
 	private array $routesMethods = [ ];
 	private bool $rest = false;
+	private bool $silent=false;
 	private static array $excludeds = [ '__construct','isValid','initialize','finalize','onInvalidControl','loadView','forward','redirectToRoute' ];
 	
-
+	
 	/**
 	 *
 	 * @var AnnotationsEngineInterface
 	 */
 	private $annotsEngine;
-
+	
 	public function __construct(AnnotationsEngineInterface $annotsEngine) {
 		$this->annotsEngine = $annotsEngine;
 	}
-
+	
 	public function parse($controllerClass) {
 		$automated = false;
 		$inherited = false;
@@ -62,7 +64,7 @@ class ControllerParser {
 			$this->parseMethods ( $methods, $controllerClass, $inherited, $automated );
 		}
 	}
-
+	
 	private function parseMethods($methods, $controllerClass, $inherited, $automated) {
 		foreach ( $methods as $method ) {
 			if ($method->getDeclaringClass ()->getName () === $controllerClass || $inherited) {
@@ -80,12 +82,15 @@ class ControllerParser {
 						}
 					}
 				} catch ( \Exception $e ) {
+					if (!$this->silent && $e instanceof ParserException){
+						throw $e;
+					}
 					// When controllerClass generates an exception
 				}
 			}
 		}
 	}
-
+	
 	private function parseAnnot(&$annot, $method) {
 		if (UString::isNull ( $annot->path )) {
 			$newAnnot = $this->generateRouteAnnotationFromMethod ( $method );
@@ -94,16 +99,16 @@ class ControllerParser {
 			$annot->path = $this->parseMethodPath ( $method, $annot->path );
 		}
 	}
-
+	
 	private function generateRouteAnnotationFromMethod(\ReflectionMethod $method): array {
 		return [ $this->annotsEngine->getAnnotation ( null, 'route', [ 'path' => self::getPathFromMethod ( $method ) ] ) ];
 	}
-
+	
 	private static function generateRouteName(string $controllerName,string $action): string {
 		$ctrl=\str_ireplace('controller','',ClassUtils::getClassSimpleName ( $controllerName ));
 		return \lcfirst($ctrl) . '.' . $action;
 	}
-
+	
 	public function asArray(): array {
 		$result = [ ];
 		$prefix = '';
@@ -123,7 +128,7 @@ class ControllerParser {
 		}
 		foreach ( $this->routesMethods as $method => $arrayAnnotsMethod ) {
 			$routeAnnotations = $arrayAnnotsMethod ['annotations'];
-
+			
 			foreach ( $routeAnnotations as $routeAnnotation ) {
 				$params = [ 'path' => $routeAnnotation->path,'methods' => $routeAnnotation->methods,'name' => $routeAnnotation->name,'cache' => $routeAnnotation->cache,'duration' => $routeAnnotation->duration,'requirements' => $routeAnnotation->requirements,'priority' => $routeAnnotation->priority ];
 				self::parseRouteArray ( $result, $this->controllerClass, $params, $arrayAnnotsMethod ['method'], $method, $prefix, $httpMethods );
@@ -131,7 +136,7 @@ class ControllerParser {
 		}
 		return $result;
 	}
-
+	
 	public static function parseRouteArray(&$result, $controllerClass, $routeArray, \ReflectionMethod $method, $methodName, $prefix = '', $httpMethods = NULL) {
 		if (! isset ( $routeArray ['path'] )) {
 			$routeArray ['path'] = self::getPathFromMethod ( $method );
@@ -164,7 +169,7 @@ class ControllerParser {
 			$result [$path] = $v;
 		}
 	}
-
+	
 	private function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority, $callback = null,$isRoot=false) {
 		foreach ( $httpMethods as $httpMethod ) {
 			$httpMethod=\strtolower($httpMethod);
@@ -181,8 +186,15 @@ class ControllerParser {
 			$result [$path] [$httpMethod] = $v;
 		}
 	}
-
+	
 	public function isRest(): bool {
 		return $this->rest;
+	}
+	
+	/**
+	 * @param bool $silent
+	 */
+	public function setSilent(bool $silent): void {
+		$this->silent = $silent;
 	}
 }

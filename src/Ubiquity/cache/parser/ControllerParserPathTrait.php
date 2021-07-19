@@ -3,7 +3,6 @@
 namespace Ubiquity\cache\parser;
 
 use Ubiquity\cache\CacheManager;
-use Ubiquity\exceptions\RouterException;
 use Ubiquity\utils\base\UString;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\exceptions\ParserException;
@@ -161,19 +160,19 @@ trait ControllerParserPathTrait {
 			$path = \str_replace ( '\{' . $paramMatch . '\}', "({$requirement})", $path );
 		}
 	}
-
+	
 	protected static function parseMainPath(string $path,string $controllerClass): string{
 		\preg_match_all ( '@\{(.+?)\}@s', $path, $matches );
 		self::$mainParams=[];
 		if (isset ( $matches [1] ) && \count ( $matches [1] ) > 0) {
 			foreach ( $matches [1] as $paramMatch ) {
 				if(\substr($paramMatch, -2) === '()'){
-					$method=\substr($paramMatch,0,strlen($paramMatch)-2);
+					$method=\substr($paramMatch,0,\strlen($paramMatch)-2);
 					if(\method_exists($controllerClass,$method)){
 						self::$mainParams[]=$method;
 						$path = \str_replace('{' . $paramMatch . '}', '(.+?)', $path);
 					}else{
-						throw new RouterException("Method $method does not exist on $controllerClass");
+						throw new ParserException("Method $method does not exist on $controllerClass");
 					}
 				}else{
 					if(\property_exists($controllerClass,$paramMatch)){
@@ -182,10 +181,10 @@ trait ControllerParserPathTrait {
 							$path = \str_replace('{' . $paramMatch . '}', '(.+?)', $path);
 							self::$mainParams[]=$paramMatch;
 						}else{
-							throw new RouterException("Property $paramMatch must be public $controllerClass");
+							throw new ParserException("Property $paramMatch must be public $controllerClass");
 						}
 					}else{
-						throw new RouterException("Property $paramMatch does not exist on $controllerClass");
+						throw new ParserException("Property $paramMatch does not exist on $controllerClass");
 					}
 				}
 				

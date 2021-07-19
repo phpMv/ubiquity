@@ -14,13 +14,13 @@ use Ubiquity\exceptions\ParserException;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.13
+ * @version 1.0.14
  *
  */
 trait DevRouterCacheTrait {
-
+	
 	abstract public static function getAnnotationsEngineInstance();
-
+	
 	private static function addControllerCache($classname) {
 		$parser = new ControllerParser ( self::getAnnotationsEngineInstance () );
 		try {
@@ -31,7 +31,7 @@ trait DevRouterCacheTrait {
 		}
 		return [ ];
 	}
-
+	
 	private static function parseControllerFiles(&$config, $silent = false) {
 		$routes = [ 'rest' => [ ],'default' => [ ] ];
 		$files = self::getControllersFiles ( $config, $silent );
@@ -40,13 +40,14 @@ trait DevRouterCacheTrait {
 			if (is_file ( $file )) {
 				$controller = ClassUtils::getClassFullNameFromFile ( $file );
 				$parser = new ControllerParser ( $annotsEngine );
+				$parser->setSilent($silent);
 				try {
-					$parser->parse ( $controller );
+					$parser->parse ( $controller);
 					$ret = $parser->asArray ();
 					$key = ($parser->isRest ()) ? 'rest' : 'default';
 					$routes [$key] = \array_merge ( $routes [$key], $ret );
 				} catch ( \Exception $e ) {
-					if ($e instanceof ParserException) {
+					if (!$silent && $e instanceof ParserException) {
 						throw $e;
 					}
 					// Nothing to do
@@ -59,15 +60,15 @@ trait DevRouterCacheTrait {
 		$routes ['default-index'] = self::createIndex ( $routes ['default'] );
 		return $routes;
 	}
-
+	
 	private static function hasCapturingGroup(string $expression): bool {
 		return \preg_match ( "~\\\\.(*SKIP)(?!)|\((?(?=\?)\?(P?['<]\w+['>]))~", $expression );
 	}
-
+	
 	public static function getFirstPartIndex(string $element) {
 		return \strtok ( \trim ( $element, '/' ), '/' );
 	}
-
+	
 	protected static function createIndex(array $routes): array {
 		$res = [ ];
 		foreach ( $routes as $path => $route ) {
@@ -83,14 +84,14 @@ trait DevRouterCacheTrait {
 		}
 		return $res;
 	}
-
+	
 	protected static function sortByPriority(&$array) {
 		\uasort ( $array, function ($item1, $item2) {
 			return UArray::getRecursive ( $item2, 'priority', 0 ) <=> UArray::getRecursive ( $item1, 'priority', 0 );
 		} );
-		UArray::removeRecursive ( $array, 'priority' );
+			UArray::removeRecursive ( $array, 'priority' );
 	}
-
+	
 	protected static function initRouterCache(&$config, $silent = false) {
 		$routes = self::parseControllerFiles ( $config, $silent );
 		self::$cache->store ( 'controllers/routes.default', $routes ['default'], 'controllers' );
@@ -102,11 +103,11 @@ trait DevRouterCacheTrait {
 			echo "Router cache reset\n";
 		}
 	}
-
+	
 	public static function getControllersFiles(&$config, $silent = false) {
 		return self::_getFiles ( $config, 'controllers', $silent );
 	}
-
+	
 	public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false, $includeAbstract = false) {
 		$result = [ ];
 		if ($includeSubclass) {
@@ -134,3 +135,4 @@ trait DevRouterCacheTrait {
 	}
 }
 
+	
