@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 
+## [2.4.6] Soon
+### Added
+- [ORM] Update cascade behavior
+- `boolean` transformer
+- main params for routes
+- `MultiResourceCRUDController` Crud controller with index for several models
+- [ORM] aggregate uQueries (count, sum, min, max, avg)
+
+### Fixed
+- [DAO] Fix Where pb with count method
+- [DAO] Fix Where pb with exists method
+
+### Updated
+- default index page
+
 ## [2.4.5] 2021-06-15
 Before creating a new project, be sure to update the devtools if they are installed globally:
 ```bash
