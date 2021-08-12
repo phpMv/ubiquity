@@ -170,7 +170,7 @@ class ControllerParser {
 		}
 	}
 	
-	private function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority, $callback = null,$isRoot=false) {
+	private static function createRouteMethod(&$result, $controllerClass, $path, $httpMethods, $method, $parameters, $name, $cache, $duration, $priority, $callback = null,$isRoot=false) {
 		foreach ( $httpMethods as $httpMethod ) {
 			$httpMethod=\strtolower($httpMethod);
 			if(\array_search($httpMethod, self::HTTP_METHODS)===false){

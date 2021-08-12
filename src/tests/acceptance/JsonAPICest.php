@@ -15,7 +15,7 @@ class JsonAPICest extends BaseAcceptance {
 
 	// tests
 	public function tryToGetWithInclude(AcceptanceTester $I) {
-		$I->amOnPage ( "/jsonapi/user/1/?included=organization" );
+		$I->amOnPage ( "/jsonapi/user/1/?include=organization" );
 		$I->see ( 'Benjamin' );
 		$I->see ( 'unicaen.fr' );
 	}

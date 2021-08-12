@@ -130,11 +130,11 @@ abstract class Controller {
 	 * @throws \Exception
 	 */
 	public function forward($controller, $action = 'index', $params = [], $initialize = false, $finalize = false) {
-		$u = [$controller,$action ];
+		$u = ['controller'=>$controller,'action'=>$action ];
 		if (\is_array ( $params )) {
-			$u = \array_merge ( $u, $params );
+			$u['params']= $params;
 		} else {
-			$u = \array_merge ( $u, [ $params ] );
+			$u['params'] =[ $params ];
 		}
 		Startup::runAction ( $u, $initialize, $finalize );
 	}

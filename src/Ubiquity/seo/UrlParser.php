@@ -69,9 +69,12 @@ class UrlParser {
 				$baseView=\ROOT.\DS."views".\DS;
 				foreach ( $views as $view ) {
 					$file = $baseView. $view;
-					$viewDate = UFileSystem::lastModified ( $file );
-					if ($viewDate > $lastModified)
-						$lastModified = $viewDate;
+					if(\file_exists($file)){
+						$viewDate = UFileSystem::lastModified ( $file );
+						if ($viewDate > $lastModified){
+							$lastModified = $viewDate;
+						}
+					}
 				}
 			}
 			return $lastModified;

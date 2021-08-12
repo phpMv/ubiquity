@@ -85,7 +85,7 @@ class AdminCest extends BaseAcceptance {
 		$I->waitForElementNotVisible ( '.ajax-loader', self::TIMEOUT );
 		// Add a new resource
 		$I->click ( "#bt-new-resource" );
-		$I->waitForText ( "Creating a new REST controller...", self::TIMEOUT, "body" );
+		$I->waitForText ( "Rest controller creation", self::TIMEOUT, "body" );
 		$I->fillField ( "#ctrlName", "RestUsersController" );
 		$I->fillField ( "#route", "/rest-users" );
 		$I->click ( "#bt-create-new-resource" );

@@ -3,6 +3,7 @@
 namespace controllers;
 
 use Ubiquity\controllers\rest\RestResourceController;
+use Ubiquity\orm\DAO;
 
 /**
  * Rest Controller TestRestSimpleOrga
