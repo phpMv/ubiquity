@@ -84,11 +84,11 @@ class AdminCest extends BaseAcceptance {
 		$I->click ( "#bt-init-rest-cache" );
 		$I->waitForElementNotVisible ( '.ajax-loader', self::TIMEOUT );
 		// Add a new resource
-		$I->click ( "#bt-new-resource" );
+		$this->waitAndclick($I, "#bt-new-resource" );
 		$I->waitForText ( "Rest controller creation", self::TIMEOUT, "body" );
 		$I->fillField ( "#ctrlName", "RestUsersController" );
 		$I->fillField ( "#route", "/rest-users" );
-		$I->click ( "#bt-create-new-resource" );
+		$I->click ( "#validate-btn" );
 		$I->wait ( 10 );
 		$I->click ( "#bt-init-rest-cache" );
 		$I->wait ( 10 );
