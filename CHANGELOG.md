@@ -15,8 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ORM] aggregate uQueries (count, sum, min, max, avg)
 
 ### Fixed
-- [DAO] Fix Where pb with count method
-- [DAO] Fix Where pb with exists method
+- [DAO] Fix Where pb with `count` method
+- [DAO] Fix Where pb with `exists` method
 
 ### Updated
 - default index page
