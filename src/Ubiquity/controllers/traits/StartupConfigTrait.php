@@ -144,10 +144,10 @@ trait StartupConfigTrait {
 		$u = self::parseUrl ( $url );
 		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, false, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
-				if (\is_string ( $ru [0] )) {
-					return static::isValidControllerAction ( $ru [0], $ru [1] ?? 'index');
+				if (\is_string ( $ru ['controller'] )) {
+					return static::isValidControllerAction ( $ru ['controller'], $ru ['action'] ?? 'index');
 				} else {
-					return is_callable ( $ru );
+					return \is_callable ( $ru );
 				}
 			}
 		} else {
