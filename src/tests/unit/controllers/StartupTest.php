@@ -206,7 +206,7 @@ class StartupTest extends BaseTest {
 	 * Tests Startup::runAsString()
 	 */
 	public function testRunAsString() {
-		$u = [ TestControllerInitialize::class,"index" ];
+		$u = [ 'controller'=>TestControllerInitialize::class,'action'=>"index" ];
 		$this->assertEquals ( 'service init!initialize!-Hello world!-finalize!', $this->startup->runAsString ( $u ) );
 		$this->assertEquals ( 'service init!initialize!-Hello world!', $this->startup->runAsString ( $u, true, false ) );
 		$this->assertEquals ( 'service init!Hello world!', $this->startup->runAsString ( $u, false, false ) );
