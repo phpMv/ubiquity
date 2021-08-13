@@ -12,7 +12,7 @@ use Ubiquity\cache\ClassUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  * @since Ubiquity 2.0.11
  */
 class JsonApiResponseFormatter extends ResponseFormatter {
@@ -118,7 +118,7 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 		$objects = $this->getDatas ( $objects, $classname );
 		$r = [ 'data' => $objects ];
 		if ($this->_included) {
-			$r ['data']['included'] = $this->_included;
+			$r ['included'] = $this->_included;
 		}
 		if (isset ( $pages ) && \count ( $objects ) > 0) {
 			$this->addPageLinks ( $r, $this->getFrontClassname ( $classname ), $pages );
@@ -134,7 +134,7 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 	public function getOne($object) {
 		$r = [ 'data' => $this->cleanRestObject ( $object ) ];
 		if ($this->_included) {
-			$r ['data']['included'] = $this->_included;
+			$r['included'] = $this->_included;
 		}
 		return $this->format ( $r );
 	}

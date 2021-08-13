@@ -87,9 +87,9 @@ class ResponseFormatter {
 	 * @return string
 	 */
 	public function format($arrayResponse) {
-		if(isset($arrayResponse['data'])){
+		/*if(isset($arrayResponse['data'])){//To check
 			return \json_encode ( $arrayResponse['data'] );
-		}
+		}*/
 		return \json_encode ( $arrayResponse );
 	}
 
