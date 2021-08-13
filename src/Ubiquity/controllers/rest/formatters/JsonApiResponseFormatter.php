@@ -117,24 +117,24 @@ class JsonApiResponseFormatter extends ResponseFormatter {
 	public function get($objects, $pages = null) {
 		$objects = $this->getDatas ( $objects, $classname );
 		$r = [ 'data' => $objects ];
-		if ($this->_included && \count ( $this->_included ) > 0) {
-			$r ['included'] = $this->_included;
+		if ($this->_included) {
+			$r ['data']['included'] = $this->_included;
 		}
 		if (isset ( $pages ) && \count ( $objects ) > 0) {
 			$this->addPageLinks ( $r, $this->getFrontClassname ( $classname ), $pages );
 		}
 		return $this->format ( $r );
 	}
-
+	
 	/**
 	 *
 	 * @param object $object
 	 * @return string
 	 */
 	public function getOne($object) {
-		$r = [ "data" => $this->cleanRestObject ( $object ) ];
-		if (\count ( $this->_included ) > 0) {
-			$r ['included'] = $this->_included;
+		$r = [ 'data' => $this->cleanRestObject ( $object ) ];
+		if ($this->_included) {
+			$r ['data']['included'] = $this->_included;
 		}
 		return $this->format ( $r );
 	}
