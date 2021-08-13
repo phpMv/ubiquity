@@ -164,7 +164,7 @@ class RestServer {
 	 *
 	 * @param string $headerField
 	 * @param string $value
-	 * @param boolean $replace
+	 * @param null|boolean $replace
 	 */
 	public function _header($headerField, $value = null, $replace = null) {
 		if (! isset ( $value )) {

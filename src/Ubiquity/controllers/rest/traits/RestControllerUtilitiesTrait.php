@@ -12,6 +12,7 @@ use Ubiquity\contents\validation\ValidatorsManager;
 use Ubiquity\contents\validation\validators\ConstraintViolation;
 use Ubiquity\orm\OrmUtils;
 use Ubiquity\orm\parser\Reflexion;
+use Ubiquity\controllers\rest\RestError;
 
 /**
  * Rest controller internal utilities.
@@ -196,7 +197,7 @@ trait RestControllerUtilitiesTrait {
 	}
 
 	protected function addError($code, $title, $detail = null, $source = null, $status = null) {
-		$this->errors [] = new RestError ( $code, $title, $detail, $source, $status );
+		$this->errors [] = new RestError( $code, $title, $detail, $source, $status );
 	}
 
 	protected function hasErrors() {

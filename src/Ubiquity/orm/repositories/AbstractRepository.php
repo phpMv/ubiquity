@@ -23,7 +23,7 @@ abstract class AbstractRepository {
 	 * Load all instances.
 	 *
 	 * @param string $condition
-	 * @param string|boolean $included
+	 * @param array|boolean $included
 	 * @param array $parameters
 	 * @param bool $useCache
 	 * @return array
@@ -36,7 +36,7 @@ abstract class AbstractRepository {
 	 * Load one instance by id.
 	 *
 	 * @param $keyValues
-	 * @param bool|string $included
+	 * @param bool|array $included
 	 * @param bool $useCache
 	 * @return ?object
 	 */
@@ -48,7 +48,7 @@ abstract class AbstractRepository {
 	 * Load one instance.
 	 *
 	 * @param string $condition
-	 * @param bool|string $included
+	 * @param bool|array $included
 	 * @param array $parameters
 	 * @param bool $useCache
 	 * @return ?object

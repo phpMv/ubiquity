@@ -62,7 +62,7 @@ trait DevRouterCacheTrait {
 	}
 	
 	private static function hasCapturingGroup(string $expression): bool {
-		return \preg_match ( "~\\\\.(*SKIP)(?!)|\((?(?=\?)\?(P?['<]\w+['>]))~", $expression );
+		return \preg_match ( "~\\\\.(*SKIP)(?!)|\((?(?=\?)\?(P?['<]\w+['>]))~", $expression )===1;
 	}
 	
 	public static function getFirstPartIndex(string $element) {

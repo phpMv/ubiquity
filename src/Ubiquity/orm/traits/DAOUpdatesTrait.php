@@ -121,20 +121,18 @@ trait DAOUpdatesTrait {
 	public static function deleteAllChildren(object $instance){
 		$classname=\get_class($instance);
 		$oneToManyMembers=OrmUtils::getRemoveCascadeFields($classname);
-		$continue=true;
 		$i=0;
 		$count=\count($oneToManyMembers);
-		while($continue!==false && $i<$count){
-			$continue=self::deleteOneToManyChildren($instance, $oneToManyMembers[$i]);
+		while($i<$count){
+			self::deleteOneToManyChildren($instance, $oneToManyMembers[$i]);
 			$i++;
 		}
 		
 		$manyToManyMembers=OrmUtils::getRemoveCascadeFields($classname,'#manyToMany');
-		$continue=true;
 		$j=0;
 		$count=\count($manyToManyMembers);
-		while($continue!==false && $j<$count){
-			$continue=self::deleteManyToManyChildren($instance, $manyToManyMembers[$j]);
+		while($j<$count){
+			self::deleteManyToManyChildren($instance, $manyToManyMembers[$j]);
 			$j++;
 		}
 		return $i+$j;

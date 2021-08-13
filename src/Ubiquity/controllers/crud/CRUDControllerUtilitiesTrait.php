@@ -30,6 +30,8 @@ trait CRUDControllerUtilitiesTrait {
 	
 	abstract protected function showConfMessage_(CRUDMessage $message, $url, $responseElement, $data, $attributes = NULL): HtmlMessage;
 
+	abstract public function _setStyle($elm);
+	
 	protected $modelViewer;
 	protected $adminDatas;
 	protected $events;

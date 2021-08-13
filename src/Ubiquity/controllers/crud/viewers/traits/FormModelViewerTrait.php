@@ -30,6 +30,8 @@ use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
  */
 trait FormModelViewerTrait {
 	
+	abstract public function getDataTableId();
+	
 	protected function relationMembersInForm($form, $instance, $className, $fields, $relations, &$fieldTypes) {
 		foreach ( $relations as $field => $member ) {
 			if (\array_search ( $field, $fields ) !== false) {

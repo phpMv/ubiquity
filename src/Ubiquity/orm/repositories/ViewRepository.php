@@ -34,7 +34,7 @@ class ViewRepository {
 	 * Load all instances in a view variable named all.
 	 *
 	 * @param string $condition
-	 * @param string|boolean $included
+	 * @param array|boolean $included
 	 * @param array $parameters
 	 * @param bool $useCache
 	 * @param string $viewVar
@@ -49,7 +49,7 @@ class ViewRepository {
 	 * Load one instance by id in a view variable named byId.
 	 *
 	 * @param $keyValues
-	 * @param bool|string $included
+	 * @param bool|array $included
 	 * @param bool $useCache
 	 * @param string $viewVar
 	 * @return ?object
@@ -63,7 +63,7 @@ class ViewRepository {
 	 * Load one instance in a view variable named one.
 	 *
 	 * @param string $condition
-	 * @param bool|string $included
+	 * @param bool|array $included
 	 * @param array $parameters
 	 * @param bool $useCache
 	 * @param string $viewVar

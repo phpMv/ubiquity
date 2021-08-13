@@ -3,6 +3,7 @@
 namespace Ubiquity\contents\validation\validators\comparison;
 
 use Ubiquity\contents\validation\validators\ValidatorHasNotNull;
+use Ajax\semantic\components\validation\CustomRule;
 
 class GreaterThanOrEqualValidator extends ValidatorHasNotNull {
 	protected $ref;

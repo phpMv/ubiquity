@@ -14,10 +14,31 @@ use Ubiquity\orm\OrmUtils;
  *
  * @author jc
  * @version 1.0.0
- *
+ * 
+ * @property string $model
  */
 trait DynamicResourceTrait {
+	
+	abstract protected function _getResponseFormatter();
+	
+	abstract public function _setResponseCode($value);
+	
+	abstract public function _format($arrayMessage);
+	
+	abstract public function _getAll();
+	
+	abstract public function _getRelationShip($id, $member);
+	
+	abstract public function _getOne($keyValues, $include = false, $useCache = false);
 
+	abstract protected function getRequestParam($param, $default);
+	
+	abstract protected function hasErrors();
+	
+	abstract protected function displayErrors();
+	
+	abstract public function _delete(...$keyValues);
+	
 	protected function updateOperation($instance, $datas, $updateMany = false) {
 		$instance->_new = false;
 		return CRUDHelper::update ( $instance, $datas, false, $updateMany );
