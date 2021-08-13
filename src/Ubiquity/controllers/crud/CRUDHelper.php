@@ -118,6 +118,7 @@ class CRUDHelper {
 	}
 
 	private static function getOneToManyKeys($keys,$values,$index,$defaultId){
+		$r=[];
 		foreach ( $keys as $k){
 			$nk=$values[$k][$index]??$defaultId;
 			$r[$k]=$nk;
@@ -130,6 +131,7 @@ class CRUDHelper {
 
 	protected static function updateOneToMany($oneToManyRelations,$members,$className,$instance,$values){
 		$id=OrmUtils::getFirstKeyValue($instance);
+		$newValues=[];
 		foreach ($oneToManyRelations as $name){
 			$member=$name.'Ids';
 			$len=\strlen($member);

@@ -320,7 +320,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 		}
 	}
 	
-	public function detailClick($url) {
-		$this->jquery->postOnClick ( ".showTable", $this->_getBaseRoute () . "/" . $url, "{}", "#divTable", [ "attr" => "data-ajax","ajaxTransition" => "random" ] );
+	public function detailClick($url,$responseElement='#divTable',$attributes=[ "attr" => "data-ajax"]) {
+		$this->jquery->postOnClick ( ".showTable", $this->_getBaseRoute () . "/" . $url, "{}", $responseElement, $attributes );
 	}
 }

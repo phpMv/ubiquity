@@ -86,7 +86,7 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 		$items=[];
 		foreach ($models as $model){
 			$resource=\lcfirst(ClassUtils::getClassSimpleName($model));
-			$items[]=$this->displayedItems[$resource]??['title'=>$myModel['title']??$this->getIndexDefaultTitle($resource),'icon'=>$myModel['icon']??$this->getIndexDefaultIcon($resource),'url'=>$myModel['url']??$this->getIndexDefaultUrl($resource)];
+			$items[]=$this->displayedItems[$resource]??['title'=>$myModels['title']??$this->getIndexDefaultTitle($resource),'icon'=>$myModels['icon']??$this->getIndexDefaultIcon($resource),'url'=>$myModels['url']??$this->getIndexDefaultUrl($resource)];
 		}
 		
 		return $this->loadView($this->_getFiles()->getViewNav(),compact('items','btIcon','btTitle'),$asString);

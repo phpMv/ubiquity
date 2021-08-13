@@ -79,7 +79,7 @@ trait FormModelViewerTrait {
 						$elm->addRules ( [ 'empty' ] );
 					} ];
 				}
-				$dd = $form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, $instance, $member ), $fkIdGetter, '__toString' ), false, $attr );
+				$form->fieldAsDropDown ( $fkField, JArray::modelArray ( $this->controller->_getAdminData ()->getManyToOneDatas ( $fkClass, $instance, $member ), $fkIdGetter, '__toString' ), false, $attr );
 				$form->setCaption ( $fkField, \ucfirst ( $member ) );
 			}
 		}
