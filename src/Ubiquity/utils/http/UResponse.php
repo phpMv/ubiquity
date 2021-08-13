@@ -194,7 +194,7 @@ class UResponse {
 	/**
 	 * Get the response code
 	 *
-	 * @return int
+	 * @return int|bool
 	 */
 	public static function getResponseCode() {
 		return \http_response_code ();

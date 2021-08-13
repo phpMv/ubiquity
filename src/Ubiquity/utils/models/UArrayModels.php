@@ -104,7 +104,6 @@ class UArrayModels {
 	 * @return mixed|null
 	 */
 	public static function find(?array $objects,callable $callback){
-		$find=false;
 		if(\is_array($objects)) {
 			$o = \current($objects);
 			do {
@@ -147,7 +146,7 @@ class UArrayModels {
 			return null;
 		}
 		$property=OrmUtils::getFirstKey(\get_class(\current($objects)));
-		return self::findBy($objects, $value,$property);
+		return self::findBy($objects, $idValue,$property);
 	}
 	
 	/**
@@ -248,7 +247,7 @@ class UArrayModels {
 		$toRemove=[];
 		foreach ($objects as $index=>$o) {
 			if($objectValue===$o->$get()){
-				$toRemove[]=$i;
+				$toRemove[]=$index;
 			}
 		}
 		foreach ($toRemove as $index){
@@ -302,20 +301,20 @@ class UArrayModels {
 	public static function asArray(array $objects):array{
 		$result=[];
 		foreach ($objects as $index=>$o) {
-			$result[$index]=$object->_rest??[];
+			$result[$index]=$o->_rest??[];
 		}
 		return $result;
 	}
 	
 	/**
 	 * @param array $objects
-	 * @param int options
+	 * @param int $options
 	 * @return string
 	 */
 	public static function asJson(array $objects,int $options=null):string{
 		$result=[];
 		foreach ($objects as $index=>$o) {
-			$result[$index]=$object->_rest??[];
+			$result[$index]=$o->_rest??[];
 		}
 		return \json_encode($result,$options);
 	}
