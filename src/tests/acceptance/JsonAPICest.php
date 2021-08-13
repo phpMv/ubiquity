@@ -20,30 +20,7 @@ class JsonAPICest extends BaseAcceptance {
 		$I->see ( 'unicaen.fr' );
 	}
 
-	// tests
-	public function tryToGetLinks(AcceptanceTester $I) {
-		$I->amOnPage ( "/jsonapi/links/" );
-		$I->see ( 'links' );
-		$I->see ( '\/jsonapi\/{resource}\/' );
-	}
 
-	// tests
-	public function tryToGetManyToOne(AcceptanceTester $I) {
-		$I->amOnPage ( "/jsonapi/user/1/relationships/organization/" );
-		$I->see ( 'unicaen.fr' );
-	}
-
-	// tests
-	public function tryToGetOneToMany(AcceptanceTester $I) {
-		$I->amOnPage ( "/jsonapi/organization/1/relationships/users/" );
-		$I->see ( 'wyatt.higgins' );
-	}
-
-	// tests
-	public function tryToGetManyToMany(AcceptanceTester $I) {
-		$I->amOnPage ( "/jsonapi/user/1/relationships/groupes/" );
-		$I->see ( 'Auditeurs' );
-	}
 
 	// tests
 	public function tryToAddUpdateAndDelete(AcceptanceTester $I) {

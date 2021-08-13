@@ -164,7 +164,7 @@ class StartupTest extends BaseTest {
 		$_GET ["c"] = "xxx";
 		$this->_assertDisplayContains( function () {
 			$this->startup->run ( $this->config );
-		}, "The page you are looking for doesn't exist!" );
+		}, "The controller `controllers\xxx` doesn't exist!" );
 	}
 
 	/**
