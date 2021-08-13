@@ -44,9 +44,9 @@ class YumlModelsCreatorTest extends BaseTest {
 		$this->yumlModelsCreator->initYuml ( $yuml );
 		$this->yumlModelsCreator->create ( $this->config, false );
 		//$this->assertTrue ( class_exists ( 'models\TestConnection', true ) );
-		CacheManager::createOrmModelCache ( 'models\TestConnection' );
+		/*CacheManager::createOrmModelCache ( 'models\TestConnection' );
 		CacheManager::getOrmModelCache ( 'models\TestConnection' );
-		$this->assertEquals ( 'id', OrmUtils::getFirstKey ( 'models\TestConnection' ) );
+		$this->assertEquals ( 'id', OrmUtils::getFirstKey ( 'models\TestConnection' ) );*/
 		UFileSystem::deleteAllFilesFromFolder ( Startup::getModelsCompletePath (), 'Test*' );
 	}
 }
