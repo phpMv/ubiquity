@@ -86,8 +86,10 @@ class DAO {
 			if ($condition != null) {
 				$nCondition .= ' AND ' . $condition;
 			}
+			return static::_getAll ( $db, $className, new ConditionParser ( $nCondition, null, $keyValues ), $included, $useCache );
 		}
-		return static::_getAll ( $db, $className, new ConditionParser ( $nCondition, null, $keyValues ), $included, $useCache );
+		return [];
+		
 	}
 
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {

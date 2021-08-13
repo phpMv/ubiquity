@@ -13,7 +13,7 @@ class UIntrospection {
 
 	public static function getClassCode($classname) {
 		$r = new \ReflectionClass($classname);
-		$lines = file($r->getFileName());
+		$lines = \file($r->getFileName());
 		return $lines;
 	}
 
@@ -70,6 +70,7 @@ class UIntrospection {
 		$parenthesis=0;
 		$result=[];
 		$status='';
+		$current='';
 		foreach ($tokens as $tokenArray){
 			if(\is_array($tokenArray)){
 				if($tokenArray[0]=== T_STRING && $tokenArray[1]===$methodName){
