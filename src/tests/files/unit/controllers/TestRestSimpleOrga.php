@@ -1,108 +1,92 @@
 <?php
-
 namespace controllers;
 
-use Ubiquity\controllers\rest\RestResourceController;
-use Ubiquity\orm\DAO;
+
 
 /**
- * Rest Controller TestRestSimpleOrga
- *
- * @route("/rest/simple/orgas/")
  * @rest("resource"=>"models\\Organization")
+ * @route("path"=>"/rest/simple/orgas/")
  */
-class TestRestSimpleOrga extends RestResourceController {
-
+class TestRestSimpleOrga extends \Ubiquity\controllers\rest\RestResourceController {
+	
 	public function isValid($action) {
 		return true;
 	}
-
+	
 	/**
+	 * Returns all links for this controller.
 	 *
-	 * {@inheritdoc}
-	 * @see \Ubiquity\controllers\rest\RestBaseController::index()
-	 * @route("/links","methods"=>["get"],"priority"=>3000)
+	 * @get("/links","priority"=>3000)
 	 */
 	public function index() {
 		parent::index ();
 	}
-
+	
 	/**
-	 * Returns all the instances from the model $this->model.
-	 * Query parameters:
-	 * - **include**: A string of associated members to load, comma separated (e.g. users,groups,organization...), or a boolean: true for all members, false for none (default: true).
-	 * - **filter**: The filter to apply to the query (where part of an SQL query) (default: 1=1).
-	 * - **page[number]**: The page to display (in this case, the page size is set to 1).
-	 * - **page[size]**: The page size (count of instance per page) (default: 1).
+	 * Returns a list of objects from the server.
 	 *
-	 * @route("/","methods"=>["get"],"priority"=>0)
+	 * @param string $condition the sql Where part
+	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param boolean $useCache
+	 * @get("list/{condition}/{included}/{useCache}", "priority"=> 0)
 	 */
-	public function getAll_() {
-		$filter = $this->getCondition ( $this->getRequestParam ( 'filter', '1=1' ) );
-		$pages = null;
-		if (isset ( $_GET ['page'] )) {
-			$pageNumber = $_GET ['page'] ['number'];
-			$pageSize = $_GET ['page'] ['size'] ?? 1;
-			$pages = $this->generatePagination ( $filter, $pageNumber, $pageSize );
-		}
-		$datas = DAO::getAll ( $this->model, $filter, $this->getInclude ( $this->getRequestParam ( 'include', true ) ) );
-		echo $this->_getResponseFormatter ()->get ( $datas, $pages );
+	public function all($condition = "1=1", $included = false, $useCache = false) {
+		$this->_get ( $condition, $included, $useCache );
 	}
-
+	
 	/**
-	 * Get the first object corresponding to the $keyValues
-	 * Query parameters:
-	 * - **include**: A string of associated members to load, comma separated (e.g.
-	 * users,groups,organization...), or a boolean: true for all members, false for none (default: true).
+	 * Get the first object corresponding to the $keyValues.
 	 *
-	 * @param string $id primary key(s) value(s) or condition
-	 * @route("{id}/","methods"=>["get"],"priority"=>1000)
+	 * @param string $keyValues primary key(s) value(s) or condition
+	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
+	 * @param boolean $useCache if true then response is cached
+	 * @get("{keyValues}/{included}/{useCache}", "priority"=> -1)
 	 */
-	public function getOne($id) {
-		$this->_getOne ( $id, $this->getRequestParam ( 'include', true ) );
+	public function one($keyValues, $included = false, $useCache = false) {
+		$this->_getOne ( $keyValues, $included, $useCache );
 	}
-
+	
 	/**
-	 * Update an instance of $model selected by the primary key $keyValues
+	 * Update an instance of $model selected by the primary key $keyValues.
 	 * Require members values in $_POST array
 	 * Requires an authorization with access token
 	 *
 	 * @param array $keyValues
 	 * @authorization
-	 * @route("/{keyValues}","methods"=>["patch"],"priority"=>0)
+	 * @put("{keyValues}")
 	 */
 	public function update(...$keyValues) {
 		$this->_update ( ...$keyValues );
 	}
-
+	
 	/**
-	 *
-	 * @route("/","methods"=>["options"],"priority"=>3000)
-	 */
-	public function options(...$resource) {
-	}
-
-	/**
-	 * Insert a new instance of $model
+	 * Insert a new instance of $model.
 	 * Require members values in $_POST array
 	 * Requires an authorization with access token
 	 *
 	 * @authorization
-	 * @route("/","methods"=>["post"],"priority"=>0)
+	 * @post("/")
 	 */
 	public function add() {
 		$this->_add ();
 	}
-
+	
 	/**
-	 * Delete the instance of $model selected by the primary key $keyValues
+	 * Delete the instance of $model selected by the primary key $keyValues.
 	 * Requires an authorization with access token
 	 *
 	 * @param array $keyValues
-	 * @route("/{keyValues}","methods"=>["delete"],"priority"=>30)
+	 * @delete("{keyValues}")
 	 * @authorization
 	 */
 	public function delete(...$keyValues) {
 		$this->_delete ( ...$keyValues );
 	}
+	
+	/**
+	 * Route for CORS.
+	 *
+	 * @options("{resource}")
+	 */
+	public function options(...$resource) {}
 }
