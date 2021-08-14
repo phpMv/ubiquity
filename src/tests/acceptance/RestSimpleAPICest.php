@@ -85,7 +85,7 @@ class RestSimpleAPICest extends BaseAcceptance {
 		  $id = $I->grabTextFrom ( "#newId span" );
 		  $uuid = uniqid ();
 		  $I->fillField ( '#url', '/rest/simple/orgas/' . $id );
-		  $I->fillField ( '#method', 'patch' );
+		  $I->fillField ( '#method', 'put' );
 		  $I->fillField ( '#datas', "{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . ".com'}" );
 		  $this->waitAndclick($I, "#btSubmitJSON" );
 		  $I->waitForText ( 'updated', self::TIMEOUT );
