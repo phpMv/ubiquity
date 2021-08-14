@@ -25,18 +25,16 @@ class RestSimpleAPICest extends BaseAcceptance {
 	// tests
 	public function tryToGetMultiple(AcceptanceTester $I) {
 		$I->amOnPage ( "/rest/simple/orgas/list/" );
-		$I->see ( 'Personnels' );
-		$I->see ( 'Auditeurs' );
-		$I->see ( 'Etudiants' );
-		$I->see ( 'Enseignants' );
-		$I->see ( 'Vacataires' );
+		$I->see ( 'Conservatoire' );
+		$I->see ( 'Campus' );
+		$I->see ( 'lycee' );
 	}
 
 	// tests
 	public function tryToGetFilter(AcceptanceTester $I) {
 		$I->amOnPage ( "/rest/simple/orgas/list/name='CONSERVATOIRE NATIONAL DES ARTS ET MéTIERS'" );
 		$I->see ( 'lecnam.net' );
-		$I->amOnPage ( "/rest/simple/orgas/name like 'C*'" );
+		$I->amOnPage ( "/rest/simple/orgas/list/name like 'C*'" );
 		$I->see ( 'lecnam.net' );
 	}
 
