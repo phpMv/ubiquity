@@ -14,9 +14,9 @@ class RestSimpleAPICest extends BaseAcceptance {
 
 	// tests
 	public function tryToGetWithInclude(AcceptanceTester $I) {
-		$I->amOnPage ( "/rest/simple/orgas/1/organizationsettingss" );
+		$I->amOnPage ( "/rest/simple/orgas/1?include=organizationsettingss" );
 		$I->see ( 'lecnam.net' );
-		$I->amOnPage ( "/rest/simple/orgas/1/groupes" );
+		$I->amOnPage ( "/rest/simple/orgas/1?include=groupes" );
 		$I->see ( 'lecnam.net' );
 		$I->see ( 'Personnels' );
 		$I->see ( 'Auditeurs' );
@@ -24,7 +24,7 @@ class RestSimpleAPICest extends BaseAcceptance {
 
 	// tests
 	public function tryToGetMultiple(AcceptanceTester $I) {
-		$I->amOnPage ( "/rest/simple/orgas/list/" );
+		$I->amOnPage ( "/rest/simple/orgas/" );
 		$I->see ( 'Conservatoire' );
 		$I->see ( 'Campus' );
 		$I->see ( 'lycee' );
@@ -32,41 +32,41 @@ class RestSimpleAPICest extends BaseAcceptance {
 
 	// tests
 	public function tryToGetFilter(AcceptanceTester $I) {
-		$I->amOnPage ( "/rest/simple/orgas/list/name='CONSERVATOIRE NATIONAL DES ARTS ET MéTIERS'" );
+		$I->amOnPage ( "/rest/simple/orgas?filter=name='CONSERVATOIRE NATIONAL DES ARTS ET MéTIERS'" );
 		$I->see ( 'lecnam.net' );
-		$I->amOnPage ( "/rest/simple/orgas/list/name like 'C*'" );
+		$I->amOnPage ( "/rest/simple/orgas?filter=name like 'C*'" );
 		$I->see ( 'lecnam.net' );
 	}
 
 	// tests
 	public function tryToGetPaginate(AcceptanceTester $I) {
-		$I->amOnPage ( "/rest/simple/orgas/list/?page[number]=1" );
+		$I->amOnPage ( "/rest/simple/orgas?page[number]=1" );
 		$I->see ( 'lecnam.net' );
-		$I->amOnPage ( "/rest/simple/orgas/list/?page[number]=2" );
+		$I->amOnPage ( "/rest/simple/orgas?page[number]=2" );
 		$I->see ( 'unicaen.fr' );
 		//$I->see ( '"count":1' );
-		$I->amOnPage ( "/rest/simple/orgas/list/?page[number]=1&page[size]=2" );
+		$I->amOnPage ( "/rest/simple/orgas?page[number]=1&page[size]=2" );
 		$I->see ( 'lecnam.net' );
 		$I->see ( 'unicaen.fr' );
 		//$I->see ( '"count":2' );
-		$I->amOnPage ( "/rest/simple/orgas/list/?page[number]=1&page[size]=10" );
+		$I->amOnPage ( "/rest/simple/orgas?page[number]=1&page[size]=10" );
 		$I->see ( 'lecnam.net' );
 		$I->see ( 'unicaen.fr' );
 		//$I->see ( '"count":4' );
-		$I->amOnPage ( "/rest/simple/orgas/list/?page[number]=4" );
+		$I->amOnPage ( "/rest/simple/orgas?page[number]=4" );
 		$I->see ( 'lycee-sainte-ursule.com' );
 		//$I->see ( '"count":1' );
-		$I->amOnPage ( "/rest/simple/orgas/list/?page[number]=2&page[size]=2" );
+		$I->amOnPage ( "/rest/simple/orgas?page[number]=2&page[size]=2" );
 		$I->see ( 'lycee-sainte-ursule.com' );
 		$I->see ( 'IUT Campus III' );
 		//$I->see ( '"count":2' );
-		$I->amOnPage ( "/rest/simple/orgas/list/?page[number]=4&page[size]=2" );
+		$I->amOnPage ( "/rest/simple/orgas?page[number]=4&page[size]=2" );
 		//$I->see ( '"count":0' );
 	}
 
 	// tests
 	public function tryToGetAllAttributes(AcceptanceTester $I) {
-		$I->amOnPage ( "/rest/simple/orgas/list/?filter=name like 'C*'&page[number]=1&page[size]=1" );
+		$I->amOnPage ( "/rest/simple/orgas?filter=name like 'C*'&page[number]=1&page[size]=1" );
 		$I->see ( 'lecnam.net' );
 		//$I->see ( '"count":1' );
 	}

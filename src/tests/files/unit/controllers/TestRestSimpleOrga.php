@@ -24,26 +24,20 @@ class TestRestSimpleOrga extends \Ubiquity\controllers\rest\RestResourceControll
 	
 	/**
 	 * Returns a list of objects from the server.
-	 *
-	 * @param string $condition the sql Where part
-	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
-	 * @param boolean $useCache
-	 * @get("list/{condition}/{included}/{useCache}", "priority"=> 0)
+	 * @get("/", "priority"=> 0)
 	 */
-	public function all($condition = "1=1", $included = false, $useCache = false) {
-		$this->_get ( $condition, $included, $useCache );
+	public function all() {
+		$this->_getAll ();
 	}
 	
 	/**
 	 * Get the first object corresponding to the $keyValues.
 	 *
 	 * @param string $keyValues primary key(s) value(s) or condition
-	 * @param boolean|string $included if true, loads associate members with associations, if string, example : client.*,commands
-	 * @param boolean $useCache if true then response is cached
-	 * @get("{keyValues}/{included}/{useCache}", "priority"=> -1)
+	 * @get("{keyValues}", "priority"=> -1)
 	 */
-	public function one($keyValues, $included = false, $useCache = false) {
-		$this->_getOne ( $keyValues, $included, $useCache );
+	public function one($keyValues) {
+		$this->_getOne ( $keyValues, $this->getRequestParam ( 'include', false ), false );
 	}
 	
 	/**
