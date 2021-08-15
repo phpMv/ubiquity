@@ -54,9 +54,10 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see('Personnels');
 		
 		$I->amOnPage ( "/rest/simple/orgas/1/groupes" );
-		$I->see ( 'Wyatt' );
-		$I->see ( 'Mosley' );
+		$I->see ( 'Kelsey' );
 		$I->see('Personnels');
+		$I->see('Auditeurs');
+		$I->see('Cyrus');
 	}
 
 	// tests
