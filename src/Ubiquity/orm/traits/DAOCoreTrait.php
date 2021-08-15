@@ -16,11 +16,12 @@ use Ubiquity\db\Database;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.5
+ * @version 1.1.6
  *
  * @property array $db
  * @property boolean $useTransformers
  * @property string $transformerOp
+ * @property array $modelsDatabase
  *
  */
 trait DAOCoreTrait {
@@ -224,5 +225,15 @@ trait DAOCoreTrait {
 		if (isset ( self::$db [$offset] )) {
 			self::$db [$offset]->storeCache ();
 		}
+	}
+	
+	public static function getModels($dbOffset='default'){
+		$result=[];
+		foreach ( self::$modelsDatabase as $model=>$offset){
+			if($offset===$dbOffset){
+				$result[]=$model;
+			}
+		}
+		return $result;
 	}
 }

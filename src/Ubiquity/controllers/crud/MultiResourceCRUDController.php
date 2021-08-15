@@ -8,7 +8,6 @@ use Ajax\php\ubiquity\JsUtils;
 use Ajax\semantic\html\base\constants\Color;
 use Ajax\semantic\html\base\constants\icons\Animals;
 use Ajax\semantic\widgets\datatable\Pagination;
-use Ubiquity\cache\CacheManager;
 use Ubiquity\cache\ClassUtils;
 use Ubiquity\controllers\Router;
 use Ubiquity\controllers\Startup;
@@ -93,7 +92,7 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 	}
 	
 	protected function getIndexModels():array{
-		return CacheManager::getModels(Startup::$config,true);
+		return DAO::getModels('default');
 	}
 	
 	protected function getIndexModelsDetails():array{
