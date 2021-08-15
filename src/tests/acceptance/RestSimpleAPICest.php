@@ -11,6 +11,17 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see ( 'lecnam.net' );
 		$I->see ( 'cnam-basse-normandie.fr;' );
 	}
+	
+	// tests
+	public function tryToGetLinks(AcceptanceTester $I) {
+		$I->amOnPage ( "/rest/simple/orgas/links" );
+		$I->see ( 'links' );
+		$I->see ( 'get' );
+		$I->see ( 'post' );
+		$I->see ( 'put' );
+		$I->see ( 'delete' );
+		$I->see ( 'options' );
+	}
 
 	// tests
 	public function tryToGetWithInclude(AcceptanceTester $I) {
@@ -28,6 +39,24 @@ class RestSimpleAPICest extends BaseAcceptance {
 		$I->see ( 'Conservatoire' );
 		$I->see ( 'Campus' );
 		$I->see ( 'lycee' );
+	}
+	
+	// tests
+	public function tryToGetRelatedMembers(AcceptanceTester $I) {
+		$I->amOnPage ( "/rest/simple/orgas/1/users?include=0" );
+		$I->see ( 'Wyatt' );
+		$I->see ( 'Mosley' );
+		
+		$I->amOnPage ( "/rest/simple/orgas/1/users" );
+		$I->see ( 'Wyatt' );
+		$I->see ( 'Mosley' );
+		$I->see('lecnam.net');
+		$I->see('Personnels');
+		
+		$I->amOnPage ( "/rest/simple/orgas/1/groupes" );
+		$I->see ( 'Wyatt' );
+		$I->see ( 'Mosley' );
+		$I->see('Personnels');
 	}
 
 	// tests

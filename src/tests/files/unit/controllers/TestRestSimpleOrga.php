@@ -23,6 +23,15 @@ class TestRestSimpleOrga extends \Ubiquity\controllers\rest\RestResourceControll
 	}
 	
 	/**
+	 * Returns related members.
+	 *
+	 * @get("{id}/{member}","priority"=>0)
+	 */
+	public function getRelationShip($id, $member) {
+		$this->_getRelationShip($id, $member);
+	}
+	
+	/**
 	 * Returns a list of objects from the server.
 	 * @get("/", "priority"=> 0)
 	 */
