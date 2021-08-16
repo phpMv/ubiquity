@@ -85,13 +85,12 @@ class UModelTest extends BaseTest {
 	 */
 	public function testAddToRemoveFrom() {
 		$u=$this->dao->getById(User::class, 1,['groupes']);
-		$groupes=$u->getGroupes();
-		$this->assertEquals(3,\count($groupes));
+		$count=\count($u->getGroupes());
 		$gr=new Groupe();
 		UModel::addTo($u, 'groupes',$gr);
-		$this->assertEquals(4,\count($u->getGroupes()));
+		$this->assertEquals($count+1,\count($u->getGroupes()));
 		UModel::removeFrom($u, 'groupes', $gr);
-		$this->assertEquals(3,\count($u->getGroupes()));
+		$this->assertEquals($count,\count($u->getGroupes()));
 	}
 
 
@@ -99,11 +98,11 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::removeFromByIndex()
 	 */
 	public function testRemoveFromByIndex() {
-		$u=$this->dao->getById(User::class, 1,['groupes']);
+		$u=$this->dao->getById(User::class, 7,['groupes']);
 		$groupes=$u->getGroupes();
-		$this->assertEquals(3,\count($groupes));
-		UModel::removeFromByIndex($u, 'groupes',2);
-		$this->assertEquals(2,\count($u->getGroupes()));
+		$this->assertEquals(1,\count($groupes));
+		UModel::removeFromByIndex($u, 'groupes',20);
+		$this->assertEquals(0,\count($u->getGroupes()));
 	}
 
 	/**
