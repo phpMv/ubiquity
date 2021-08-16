@@ -99,16 +99,16 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::removeFromByIndex()
 	 */
 	public function testRemoveFromByIndex() {
-		$u=$this->dao->getById(User::class, 7,true);
-		$groupes=$u->getGroupes();
-		$this->assertEquals(0,\count($groupes));
-		UModel::removeFromByIndex($u, 'groupes',20);
-		$this->assertEquals(0,\count($u->getGroupes()));
+		$o=DAO::getById(Organization::class, 1,true);
+		$users=$o->getUsers();
+		$this->assertEquals(12,\count($groupes));
+		UModel::removeFromByIndex($o, 'users',9);
+		$this->assertEquals(11,\count($o->getUsers()));
 	}
 	
 	public function testGetOneWithRelations() {
 		$orga = DAO::getOne ( Organization::class, 'domain="lecnam.net"', true );
-		$this->assertEquals ( "Conservatoire National des Arts et Métiers", $orga->getName () );
+		$this->assertEquals ( "CONSERVATOIRE NATIONAL DES ARTS ET MéTIERS", $orga->getName () );
 		$this->assertEquals(3,\count($orga->getGroupes()));
 		
 	}
