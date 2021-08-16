@@ -1,16 +1,2 @@
 <?php
-return array (
-				"#tableName" => "Groupe",
-				"#primaryKeys" => array ("id" => "id" ),
-				"#manyToOne" => array ("organization" ),
-				"#fieldNames" => array ("id" => "id","name" => "name","email" => "email","aliases" => "aliases","organization" => "idOrganization","users" => "users" ),
-				"#memberNames" => array ("id" => "id","name" => "name","email" => "email","aliases" => "aliases","idOrganization" => "organization","users" => "users" ),
-				"#fieldTypes" => array ("id" => "int(11)","name" => "varchar(65)","email" => "varchar(255)","aliases" => "mediumtext","organization" => false,"users" => "mixed" ),
-				"#nullable" => array ("name","email","aliases" ),
-				"#notSerializable" => array ("organization","users" ),
-				"#transformers" => array ("toView" => array ("name" => "Ubiquity\\contents\\transformation\\transformers\\FirstUpperCase","email" => "Ubiquity\\contents\\transformation\\transformers\\LowerCase","aliases" => "Ubiquity\\contents\\transformation\\transformers\\UpperCase" ) ),
-				"#accessors" => array ("id" => "setId","name" => "setName","email" => "setEmail","aliases" => "setAliases","idOrganization" => "setOrganization","users" => "setUsers" ),
-				"#manyToMany" => array ("users" => array ("targetEntity" => "models\\User","inversedBy" => "groupes" ) ),
-				"#joinTable" => array ("users" => array ("name" => "groupeusers" ) ),
-				"#joinColumn" => array ("organization" => array ("className" => "models\\Organization","name" => "idOrganization","nullable" => false ) ),
-				"#invertedJoinColumn" => array ("idOrganization" => array ("member" => "organization","className" => "models\\Organization" ) ) );
+return array("#tableName"=>"groupe","#primaryKeys"=>["id"=>"id"],"#manyToOne"=>["organization"],"#fieldNames"=>["id"=>"id","name"=>"name","email"=>"email","aliases"=>"aliases","organization"=>"idOrganization","users"=>"users"],"#memberNames"=>["id"=>"id","name"=>"name","email"=>"email","aliases"=>"aliases","idOrganization"=>"organization","users"=>"users"],"#fieldTypes"=>["id"=>"int(11)","name"=>"varchar(65)","email"=>"varchar(255)","aliases"=>"mediumtext","organization"=>"mixed","users"=>"mixed"],"#nullable"=>["id","name","email","aliases"],"#notSerializable"=>["organization","users"],"#transformers"=>[],"#accessors"=>["id"=>"setId","name"=>"setName","email"=>"setEmail","aliases"=>"setAliases","idOrganization"=>"setOrganization","users"=>"setUsers"],"#manyToMany"=>["users"=>["targetEntity"=>"models\\User","inversedBy"=>"groupes"]],"#joinTable"=>["users"=>["name"=>"groupeusers"]],"#joinColumn"=>["organization"=>["className"=>"models\\Organization","name"=>"idOrganization"]],"#invertedJoinColumn"=>["idOrganization"=>["member"=>"organization","className"=>"models\\Organization"]]);

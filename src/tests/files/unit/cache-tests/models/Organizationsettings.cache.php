@@ -1,14 +1,2 @@
 <?php
-return array (
-				"#tableName" => "Organizationsettings",
-				"#primaryKeys" => array ("idSettings" => "idSettings","idOrganization" => "idOrganization" ),
-				"#manyToOne" => array ("organization","settings" ),
-				"#fieldNames" => array ("idSettings" => "idSettings","idOrganization" => "idOrganization","value" => "value","organization" => "idOrganization","settings" => "idSettings" ),
-				"#memberNames" => array ("idSettings" => "idSettings","idOrganization" => "idOrganization","value" => "value","organization" => "idOrganization","settings" => "idSettings" ),
-				"#fieldTypes" => array ("idSettings" => "int(11)","idOrganization" => "int(11)","value" => "varchar(100)","organization" => false,"settings" => false ),
-				"#nullable" => array ("value" ),
-				"#notSerializable" => array ("organization","settings" ),
-				"#transformers" => array (),
-				"#accessors" => array ("idSettings" => "setIdSettings","idOrganization" => "setIdOrganization","value" => "setValue" ),
-				"#joinColumn" => array ("organization" => array ("className" => "models\\Organization","name" => "idOrganization","nullable" => false ),"settings" => array ("className" => "models\\Settings","name" => "idSettings","nullable" => false ) ),
-				"#invertedJoinColumn" => array ("idOrganization" => array ("member" => "organization","className" => "models\\Organization" ),"idSettings" => array ("member" => "settings","className" => "models\\Settings" ) ) );
+return array("#tableName"=>"organizationsettings","#primaryKeys"=>["idSettings"=>"idSettings","idOrganization"=>"idOrganization"],"#manyToOne"=>["organization","settings"],"#fieldNames"=>["idSettings"=>"idSettings","idOrganization"=>"idOrganization","value"=>"value","organization"=>"idOrganization","settings"=>"idSettings"],"#memberNames"=>["idSettings"=>"settings","idOrganization"=>"organization","value"=>"value"],"#fieldTypes"=>["idSettings"=>"int(11)","idOrganization"=>"int(11)","value"=>"varchar(100)","organization"=>"mixed","settings"=>"mixed"],"#nullable"=>["idSettings","idOrganization","value"],"#notSerializable"=>["organization","settings"],"#transformers"=>[],"#accessors"=>["idSettings"=>"setIdSettings","idOrganization"=>"setIdOrganization","value"=>"setValue"],"#joinColumn"=>["organization"=>["className"=>"models\\Organization","name"=>"idOrganization"],"settings"=>["className"=>"models\\Settings","name"=>"idSettings"]],"#invertedJoinColumn"=>["idOrganization"=>["member"=>"organization","className"=>"models\\Organization"],"idSettings"=>["member"=>"settings","className"=>"models\\Settings"]]);

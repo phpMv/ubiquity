@@ -1,14 +1,2 @@
 <?php
-return array (
-				"#tableName" => "Connection",
-				"#primaryKeys" => array ("id" => "id" ),
-				"#manyToOne" => array ("user" ),
-				"#fieldNames" => array ("id" => "id","dateCo" => "dateCo","url" => "url","user" => "idUser" ),
-				"#memberNames" => array ("id" => "id","dateCo" => "dateCo","url" => "url","idUser" => "user" ),
-				"#fieldTypes" => array ("id" => "int(11)","dateCo" => "datetime","url" => "varchar(255)","user" => false ),
-				"#nullable" => array (),
-				"#notSerializable" => array ("user" ),
-				"#transformers" => array ("transform" => array ("dateCo" => "Ubiquity\\contents\\transformation\\transformers\\DateTime" ),"toView" => array ("dateCo" => "Ubiquity\\contents\\transformation\\transformers\\DateTime" ),"toForm" => array ("dateCo" => "Ubiquity\\contents\\transformation\\transformers\\DateTime" ) ),
-				"#accessors" => array ("id" => "setId","dateCo" => "setDateCo","url" => "setUrl","idUser" => "setUser" ),
-				"#joinColumn" => array ("user" => array ("className" => "models\\User","name" => "idUser","nullable" => false ) ),
-				"#invertedJoinColumn" => array ("idUser" => array ("member" => "user","className" => "models\\User" ) ) );
+return array("#tableName"=>"connection","#primaryKeys"=>["id"=>"id"],"#manyToOne"=>["user"],"#fieldNames"=>["id"=>"id","dateCo"=>"dateCo","url"=>"url","user"=>"idUser"],"#memberNames"=>["id"=>"id","dateCo"=>"dateCo","url"=>"url","idUser"=>"user"],"#fieldTypes"=>["id"=>"int(11)","dateCo"=>"datetime","url"=>"varchar(255)","user"=>"mixed"],"#nullable"=>["id"],"#notSerializable"=>["user"],"#transformers"=>["transform"=>["dateCo"=>"Ubiquity\\contents\\transformation\\transformers\\DateTime"],"toView"=>["dateCo"=>"Ubiquity\\contents\\transformation\\transformers\\DateTime"],"toForm"=>["dateCo"=>"Ubiquity\\contents\\transformation\\transformers\\DateTime"]],"#accessors"=>["id"=>"setId","dateCo"=>"setDateCo","url"=>"setUrl","idUser"=>"setUser"],"#joinColumn"=>["user"=>["className"=>"models\\User","name"=>"idUser"]],"#invertedJoinColumn"=>["idUser"=>["member"=>"user","className"=>"models\\User"]]);
