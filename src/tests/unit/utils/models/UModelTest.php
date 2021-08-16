@@ -98,7 +98,7 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::removeFromByIndex()
 	 */
 	public function testRemoveFromByIndex() {
-		$users=$this->dao->getAllByIds(User::class,[7]);
+		$users=DAO::getAllByIds(User::class,[7]);
 		$u=current($users);
 		$groupes=$u->getGroupes();
 		$this->assertEquals(1,\count($groupes));
