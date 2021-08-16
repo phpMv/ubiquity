@@ -67,6 +67,13 @@ class DAOTest extends BaseTest {
 		$this->assertTrue ( $this->dao->exists ( User::class, "email=?", [ 'benjamin.sherman@gmail.com' ] ) );
 		$this->assertFalse ( $this->dao->exists ( User::class, "email=?", [ 'blop@gmail.com' ] ) );
 	}
+	
+	public function testGetOneWithRelations() {
+		$orga = DAO::getOne ( Organization::class, 'domain="lecnam.net"', true );
+		$this->assertEquals ( "Conservatoire National des Arts et Métiers", $orga->getName () );
+		$this->assertEquals(3,\count($orga->getGroupes()));
+		
+	}
 
 	/**
 	 * Tests DAO::getOneToMany()
