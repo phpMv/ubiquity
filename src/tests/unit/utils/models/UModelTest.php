@@ -39,29 +39,31 @@ class UModelTest extends BaseTest {
 		$u=$this->dao->getById(User::class, 1);
 		$s=$u->getSuspended();
 		UModel::toggleProperty($u, 'suspended');
-		$this->assertNotEquals($s,$u->getSuspended());
+		$this->assertFalse($s==$u->getSuspended());
 		UModel::toggleProperty($u, 'suspended');
-		$this->assertEquals($s,$u->getSuspended());
+		$this->assertTrue($s==$u->getSuspended());
 	}
 
 	/**
 	 * Tests UModel::incProperty()
 	 */
 	public function testIncProperty() {
-		// TODO Auto-generated UModelTest::testIncProperty()
-		$this->markTestIncomplete ( "incProperty test not implemented" );
-
-		UModel::incProperty(/* parameters */);
+		$u=$this->dao->getById(User::class, 1);
+		$id=$u->getId();
+		$this->assertEquals(1,$id);
+		UModel::incProperty($u, 'id');
+		$this->assertEquals(2,$u->getId());
 	}
 
 	/**
 	 * Tests UModel::decProperty()
 	 */
 	public function testDecProperty() {
-		// TODO Auto-generated UModelTest::testDecProperty()
-		$this->markTestIncomplete ( "decProperty test not implemented" );
-
-		UModel::decProperty(/* parameters */);
+		$u=$this->dao->getById(User::class, 2);
+		$id=$u->getId();
+		$this->assertEquals(2,$id);
+		UModel::decProperty($u, 'id');
+		$this->assertEquals(1,$u->getId());
 	}
 
 	/**
