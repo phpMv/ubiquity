@@ -24,6 +24,7 @@ class UModelTest extends BaseTest {
 		$this->dao = new DAO ();
 		$this->_startCache ();
 		$this->_startDatabase ( $this->dao );
+		$this->dao->start();
 	}
 	
 	/**
@@ -73,7 +74,6 @@ class UModelTest extends BaseTest {
 	public function testConcatProperty() {
 		$u=$this->dao->getById(User::class, 1);
 		$fn=$u->getFirstname();
-		$this->assertEquals(2,$id);
 		UModel::concatProperty($u, 'firstname','after');
 		$this->assertEquals($fn.'after',$u->getFirstname());
 		UModel::concatProperty($u, 'firstname','before',false);
