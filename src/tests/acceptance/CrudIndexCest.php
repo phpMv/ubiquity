@@ -17,5 +17,17 @@ class CrudIndexCest extends BaseAcceptance {
 		$I->waitForText ( "Add a new models\Connection...", self::TIMEOUT, "body" );
 
 	}
+	
+	// tests
+	public function tryToSeeRelations(AcceptanceTester $I) {
+		$I->amOnPage ( "/crud/home" );
+		$I->see ( "Groupe" );
+
+		$I->click ( '//a[@href="crud/groupe/?"]');
+		$I->waitForText ( "Add a new models\Groupe...", self::TIMEOUT, "body" );
+		
+		$I->doubleClick( '//tr[@data-ajax="2"]');
+		$I->waitForText ( "users (85)", self::TIMEOUT, "body" );
+	}
 
 }
