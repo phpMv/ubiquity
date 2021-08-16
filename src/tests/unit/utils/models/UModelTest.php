@@ -3,6 +3,7 @@
 use Ubiquity\orm\DAO;
 use models\User;
 use Ubiquity\utils\models\UModel;
+use models\Groupe;
 
 /**
  * UModel test case.
@@ -70,40 +71,39 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::concatProperty()
 	 */
 	public function testConcatProperty() {
-		// TODO Auto-generated UModelTest::testConcatProperty()
-		$this->markTestIncomplete ( "concatProperty test not implemented" );
-
-		UModel::concatProperty(/* parameters */);
+		$u=$this->dao->getById(User::class, 1);
+		$fn=$u->getFirstname();
+		$this->assertEquals(2,$id);
+		UModel::concatProperty($u, 'firstname','after');
+		$this->assertEquals($fn.'after',$u->getFirstname());
+		UModel::concatProperty($u, 'firstname','before',false);
+		$this->assertEquals('before'.$fn.'after',$u->getFirstname());
 	}
 
 	/**
 	 * Tests UModel::addTo()
 	 */
-	public function testAddTo() {
-		// TODO Auto-generated UModelTest::testAddTo()
-		$this->markTestIncomplete ( "addTo test not implemented" );
-
-		UModel::addTo(/* parameters */);
+	public function testAddToRemoveFrom() {
+		$u=$this->dao->getById(User::class, 1,['groupes']);
+		$groupes=$u->getGroupes();
+		$this->assertEquals(3,\count($groupes));
+		$gr=new Groupe();
+		UModel::addTo($u, 'groupes',$gr);
+		$this->assertEquals(4,\count($u->getGroupes()));
+		UModel::removeFrom($u, 'groupes', $gr);
+		$this->assertEquals(3,\count($u->getGroupes()));
 	}
 
-	/**
-	 * Tests UModel::removeFrom()
-	 */
-	public function testRemoveFrom() {
-		// TODO Auto-generated UModelTest::testRemoveFrom()
-		$this->markTestIncomplete ( "removeFrom test not implemented" );
-
-		UModel::removeFrom(/* parameters */);
-	}
 
 	/**
 	 * Tests UModel::removeFromByIndex()
 	 */
 	public function testRemoveFromByIndex() {
-		// TODO Auto-generated UModelTest::testRemoveFromByIndex()
-		$this->markTestIncomplete ( "removeFromByIndex test not implemented" );
-
-		UModel::removeFromByIndex(/* parameters */);
+		$u=$this->dao->getById(User::class, 1,['groupes']);
+		$groupes=$u->getGroupes();
+		$this->assertEquals(3,\count($groupes));
+		UModel::removeFromByIndex($u, 'groupes',2);
+		$this->assertEquals(2,\count($u->getGroupes()));
 	}
 
 	/**
@@ -150,10 +150,10 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::equals()
 	 */
 	public function testEquals() {
-		// TODO Auto-generated UModelTest::testEquals()
-		$this->markTestIncomplete ( "equals test not implemented" );
-
-		UModel::equals(/* parameters */);
+		$u1=$this->dao->getById(User::class, 1);
+		$u2=$this->dao->getById(User::class, 2);
+		$this->assertTrue(UModel::equals($u1, $u1));
+		$this->assertFalse(UModel::equals($u1, $u2));
 	}
 }
 
