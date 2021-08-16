@@ -117,40 +117,40 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::asArray()
 	 */
 	public function testAsArray() {
-		// TODO Auto-generated UModelTest::testAsArray()
-		$this->markTestIncomplete ( "asArray test not implemented" );
-
-		UModel::asArray(/* parameters */);
+		$u=$this->dao->getById(User::class, 1);
+		$array=UModel::asArray($u);
+		$this->assertArrayHasKey($array,'id');
+		$this->assertArrayHasKey($array,'firstname');
+		$this->assertTrue($array['id']===1);
 	}
 
 	/**
 	 * Tests UModel::asJson()
 	 */
 	public function testAsJson() {
-		// TODO Auto-generated UModelTest::testAsJson()
-		$this->markTestIncomplete ( "asJson test not implemented" );
-
-		UModel::asJson(/* parameters */);
+		$u=$this->dao->getById(User::class, 1);
+		$json=UModel::asJson($u);
+		$this->assetJson($json);
 	}
 
 	/**
 	 * Tests UModel::asArrayProperties()
 	 */
 	public function testAsArrayProperties() {
-		// TODO Auto-generated UModelTest::testAsArrayProperties()
-		$this->markTestIncomplete ( "asArrayProperties test not implemented" );
-
-		UModel::asArrayProperties(/* parameters */);
+		$u=$this->dao->getById(User::class, 1);
+		$array=UModel::asArrayProperties($u,['id','firstname']);
+		$this->assertArrayHasKey($array,'id');
+		$this->assertArrayHasKey($array,'firstname');
+		$this->assertTrue($array['id']===1);
 	}
 
 	/**
 	 * Tests UModel::asJsonProperties()
 	 */
 	public function testAsJsonProperties() {
-		// TODO Auto-generated UModelTest::testAsJsonProperties()
-		$this->markTestIncomplete ( "asJsonProperties test not implemented" );
-
-		UModel::asJsonProperties(/* parameters */);
+		$u=$this->dao->getById(User::class, 1);
+		$json=UModel::asJsonProperties($u,['id','firstname']);
+		$this->assetJson($json);
 	}
 
 	/**
