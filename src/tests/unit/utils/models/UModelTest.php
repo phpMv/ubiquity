@@ -104,6 +104,13 @@ class UModelTest extends BaseTest {
 		UModel::removeFromByIndex($u, 'groupes',20);
 		$this->assertEquals(0,\count($u->getGroupes()));
 	}
+	
+	public function testGetOneWithRelations() {
+		$orga = DAO::getOne ( Organization::class, 'domain="lecnam.net"', true );
+		$this->assertEquals ( "Conservatoire National des Arts et Métiers", $orga->getName () );
+		$this->assertEquals(3,\count($orga->getGroupes()));
+		
+	}
 
 	/**
 	 * Tests UModel::asArray()
