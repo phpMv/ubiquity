@@ -4,6 +4,7 @@ use Ubiquity\orm\DAO;
 use models\User;
 use Ubiquity\utils\models\UModel;
 use models\Groupe;
+use models\Organization;
 
 /**
  * UModel test case.
