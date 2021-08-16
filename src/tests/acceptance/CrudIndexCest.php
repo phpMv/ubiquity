@@ -13,7 +13,7 @@ class CrudIndexCest extends BaseAcceptance {
 		$I->see ( "Settings" );
 		$I->see ( "Organizationsettings" );
 
-		$I->click ( "a[href=crud/connection/?]");
+		$I->click ( "crud/connection/?");
 		$I->waitForText ( "Add a new models\Connection...", self::TIMEOUT, "body" );
 
 	}
