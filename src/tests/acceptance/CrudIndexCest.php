@@ -27,7 +27,7 @@ class CrudIndexCest extends BaseAcceptance {
 		$I->waitForText ( "Add a new models\Groupe...", self::TIMEOUT, "body" );
 		
 		$I->doubleClick( '//tr[@data-ajax="2"]');
-		$I->waitForText ( "users (85)", self::TIMEOUT, "body" );
+		$I->waitForText ( "users (11)", self::TIMEOUT, "body" );
 	}
 
 }
