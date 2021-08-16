@@ -29,7 +29,7 @@ class CrudIndexCest extends BaseAcceptance {
 		$I->doubleClick( '//tr[@data-ajax="2"]');
 		$I->waitForText ( "users (11)", self::TIMEOUT, "body" );
 		
-		$I->click('//div[@data-ajax="models.User||98"');
+		$I->click('//div[@data-ajax="models.User||98"]');
 		$I->waitForElement( '//a[@data-page="17"]', self::TIMEOUT);
 		
 	}
