@@ -119,8 +119,8 @@ class UModelTest extends BaseTest {
 	public function testAsArray() {
 		$u=$this->dao->getById(User::class, 1, false);
 		$array=UModel::asArray($u);
-		$this->assertTrue($array['id']===1);
-		$this->assertTrue($array['firstname']==='Benjamin');
+		$this->assertTrue($array['id']==1);
+		$this->assertTrue($array['firstname']=='Benjamin');
 	}
 
 	/**
@@ -138,8 +138,8 @@ class UModelTest extends BaseTest {
 	public function testAsArrayProperties() {
 		$u=$this->dao->getById(User::class, 1,false);
 		$array=UModel::asArrayProperties($u,['id','firstname']);
-		$this->assertTrue($array['id']===1);
-		$this->assertTrue($array['firstname']==='Benjamin');
+		$this->assertTrue($array['id']==1);
+		$this->assertTrue($array['firstname']=='Benjamin');
 	}
 
 	/**
