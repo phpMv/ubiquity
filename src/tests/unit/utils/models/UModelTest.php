@@ -120,7 +120,7 @@ class UModelTest extends BaseTest {
 		$o=$this->dao->getById(Organization::class, 1, false);
 		$array=UModel::asArray($o);
 		$this->assertTrue($array['id']==1);
-		$this->assertTrue($array['name']=='Conservatoire National des Arts et Métiers');
+		$this->assertTrue($array['name']=='CONSERVATOIRE NATIONAL DES ARTS ET MéTIERS');
 	}
 
 	/**
@@ -136,10 +136,10 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::asArrayProperties()
 	 */
 	public function testAsArrayProperties() {
-		$o=$this->dao->getById(User::class, 1,false);
+		$o=$this->dao->getById(Organization::class, 1,false);
 		$array=UModel::asArrayProperties($o,['id','name']);
 		$this->assertTrue($array['id']==1);
-		$this->assertTrue($array['name']=='Conservatoire National des Arts et Métiers');
+		$this->assertTrue($array['name']=='CONSERVATOIRE NATIONAL DES ARTS ET MéTIERS');
 	}
 
 	/**
