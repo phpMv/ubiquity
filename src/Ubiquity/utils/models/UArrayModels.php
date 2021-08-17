@@ -105,11 +105,11 @@ class UArrayModels {
 	 */
 	public static function find(?array $objects,callable $callback){
 		if(\is_array($objects)) {
-			$o = \current($objects);
-			do {
-				$find = $callback($o);
-			} while (!$find && $o = \next($objects));
-			return $o;
+			foreach ($objects as $o){
+				if($callback($o)){
+					return $o;
+				}
+			}
 		}
 		return null;
 	}

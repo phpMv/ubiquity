@@ -78,7 +78,7 @@ class UArrayModelsTest extends BaseTest {
 	 */
 	public function testFind() {
 		$orgas=$this->dao->getAll(Organization::class);
-		$orga=UArrayModels::find($orgas,fn($item)=>$item->getId()===1);
+		$orga=UArrayModels::find($orgas,fn($item)=>$item->getId()==1);
 		$this->assertEquals(1,$orga->getId());
 	}
 
@@ -105,7 +105,7 @@ class UArrayModelsTest extends BaseTest {
 	 */
 	public function testContains() {
 		$orgas=$this->dao->getAll(Organization::class);
-		$this->assertTrue(UArrayModels::contains($orgas,fn($item)=>$item->getId()===1));
+		$this->assertTrue(UArrayModels::contains($orgas,fn($item)=>$item->getId()==1));
 	}
 
 	/**
