@@ -122,12 +122,12 @@ class UArrayModels {
 	 * @return mixed|null
 	 */
 	public static function findBy(?array $objects,$value,string $property='id'){
-		if(!is_array($objects)){
+		if(!\is_array($objects)){
 			return null;
 		}
 		$get='get'.\ucfirst($property);
 		foreach ($objects as $index=>$o) {
-			if($value===$o->$get()){
+			if($value==$o->$get()){
 				return $o;
 			}
 		}

@@ -113,7 +113,7 @@ class UArrayModelsTest extends BaseTest {
 	 */
 	public function testContainsBy() {
 		$orgas=$this->dao->getAll(Organization::class);
-		$this->assertTrue(UArrayModels::containsBy($orgas,1));
+		$this->assertTrue(UArrayModels::containsBy($orgas,\current($orgas)));
 	}
 
 	/**
@@ -121,7 +121,7 @@ class UArrayModelsTest extends BaseTest {
 	 */
 	public function testContainsById() {
 		$orgas=$this->dao->getAll(Organization::class);
-		$this->assertTrue(UArrayModels::containsById($orgas,1));
+		$this->assertTrue(UArrayModels::containsById($orgas,\current($orgas)));
 	}
 
 	/**
