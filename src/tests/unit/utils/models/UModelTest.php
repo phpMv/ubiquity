@@ -130,7 +130,7 @@ class UModelTest extends BaseTest {
 	public function testAsJson() {
 		$u=$this->dao->getById(User::class, 1);
 		$json=UModel::asJson($u);
-		$this->assetJson($json);
+		$this->assertJson($json);
 	}
 
 	/**
@@ -139,8 +139,8 @@ class UModelTest extends BaseTest {
 	public function testAsArrayProperties() {
 		$u=$this->dao->getById(User::class, 1);
 		$array=UModel::asArrayProperties($u,['id','firstname']);
-		$this->assertArrayHasKey($array,'id');
-		$this->assertArrayHasKey($array,'firstname');
+		$this->assertArrayHasKey('id',$array);
+		$this->assertArrayHasKey('firstname',$array);
 		$this->assertTrue($array['id']===1);
 	}
 
