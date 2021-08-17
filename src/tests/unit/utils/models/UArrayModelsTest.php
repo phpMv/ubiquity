@@ -3,6 +3,7 @@
 use Ubiquity\utils\models\UArrayModels;
 use Ubiquity\orm\DAO;
 use models\Organization;
+use models\Groupe;
 
 /**
  * UArrayModels test case.
@@ -47,20 +48,20 @@ class UArrayModelsTest extends BaseTest {
 	 * Tests UArrayModels::groupsBy()
 	 */
 	public function testGroupsBy() {
-		// TODO Auto-generated UArrayModelsTest::testGroupsBy()
-		$this->markTestIncomplete ( "groupsBy test not implemented" );
-
-		UArrayModels::groupsBy(/* parameters */);
+		$groupes=$this->dao->getAll(Groupe::class,'1=1',['organization']);
+		$gr=UArrayModels::groupsBy($groupes,[fn($item)=>$item->getOrganization()->getName()],null,true);
+		$this->assertEquals(3,\count($gr));
 	}
 
 	/**
 	 * Tests UArrayModels::groupBy()
 	 */
 	public function testGroupBy() {
-		// TODO Auto-generated UArrayModelsTest::testGroupBy()
-		$this->markTestIncomplete ( "groupBy test not implemented" );
-
-		UArrayModels::groupBy(/* parameters */);
+		$groupes=$this->dao->getAll(Groupe::class,'1=1',['organization']);
+		$gr=UArrayModels::groupBy($groupes,fn($item)=>$item->getOrganization()->getName(),null,true);
+		$this->assertEquals(3,\count($gr));
+		$gr=UArrayModels::groupBy($groupes,fn($item)=>$item->getOrganization()->getName(),fn($item)=>$item->getName(),true);
+		$this->assertEquals(3,\count($gr));
 	}
 
 	/**
