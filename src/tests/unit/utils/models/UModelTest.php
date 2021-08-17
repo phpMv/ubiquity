@@ -117,18 +117,17 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::asArray()
 	 */
 	public function testAsArray() {
-		$u=$this->dao->getById(User::class, 1);
+		$u=$this->dao->getById(User::class, 1, false);
 		$array=UModel::asArray($u);
-		$this->assertArrayHasKey('id', $array);
-		$this->assertArrayHasKey('firstname', $array);
 		$this->assertTrue($array['id']===1);
+		$this->assertTrue($array['firstname']==='Benjamin');
 	}
 
 	/**
 	 * Tests UModel::asJson()
 	 */
 	public function testAsJson() {
-		$u=$this->dao->getById(User::class, 1);
+		$u=$this->dao->getById(User::class, 1,false);
 		$json=UModel::asJson($u);
 		$this->assertJson($json);
 	}
@@ -137,11 +136,10 @@ class UModelTest extends BaseTest {
 	 * Tests UModel::asArrayProperties()
 	 */
 	public function testAsArrayProperties() {
-		$u=$this->dao->getById(User::class, 1);
+		$u=$this->dao->getById(User::class, 1,false);
 		$array=UModel::asArrayProperties($u,['id','firstname']);
-		$this->assertArrayHasKey('id',$array);
-		$this->assertArrayHasKey('firstname',$array);
 		$this->assertTrue($array['id']===1);
+		$this->assertTrue($array['firstname']==='Benjamin');
 	}
 
 	/**
