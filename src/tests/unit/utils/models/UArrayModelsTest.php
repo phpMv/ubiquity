@@ -4,6 +4,7 @@ use Ubiquity\utils\models\UArrayModels;
 use Ubiquity\orm\DAO;
 use models\Organization;
 use models\Groupe;
+use models\User;
 
 /**
  * UArrayModels test case.
@@ -168,10 +169,8 @@ class UArrayModelsTest extends BaseTest {
 	 * Tests UArrayModels::computeSumProperty()
 	 */
 	public function testComputeSumProperty() {
-		// TODO Auto-generated UArrayModelsTest::testComputeSumProperty()
-		$this->markTestIncomplete ( "computeSumProperty test not implemented" );
-
-		UArrayModels::computeSumProperty(/* parameters */);
+		$users=$this->dao->getAll(User::class);
+		$this->assertEquals(4,UArrayModels::computeSumProperty($users,'suspended'));
 	}
 
 	/**
@@ -198,40 +197,40 @@ class UArrayModelsTest extends BaseTest {
 	 * Tests UArrayModels::asArray()
 	 */
 	public function testAsArray() {
-		// TODO Auto-generated UArrayModelsTest::testAsArray()
-		$this->markTestIncomplete ( "asArray test not implemented" );
-
-		UArrayModels::asArray(/* parameters */);
+		$orgas=$this->dao->getAll(Organization::class);
+		$this->assertEquals(4,\count($orgas));
+		$array=UArrayModels::asArray($orgas);
+		$this->assertEquals(4,\count($array));
 	}
 
 	/**
 	 * Tests UArrayModels::asJson()
 	 */
 	public function testAsJson() {
-		// TODO Auto-generated UArrayModelsTest::testAsJson()
-		$this->markTestIncomplete ( "asJson test not implemented" );
-
-		UArrayModels::asJson(/* parameters */);
+		$orgas=$this->dao->getAll(Organization::class,'1=1',false);
+		$this->assertEquals(4,\count($orgas));
+		$json=UArrayModels::asJson($orgas);
+		$this->assertJson($json);
 	}
 
 	/**
 	 * Tests UArrayModels::asArrayProperties()
 	 */
 	public function testAsArrayProperties() {
-		// TODO Auto-generated UArrayModelsTest::testAsArrayProperties()
-		$this->markTestIncomplete ( "asArrayProperties test not implemented" );
-
-		UArrayModels::asArrayProperties(/* parameters */);
+		$orgas=$this->dao->getAll(Organization::class);
+		$this->assertEquals(4,\count($orgas));
+		$array=UArrayModels::asArrayProperties($orgas,['id','name']);
+		$this->assertEquals(4,\count($array));
 	}
 
 	/**
 	 * Tests UArrayModels::asJsonProperties()
 	 */
 	public function testAsJsonProperties() {
-		// TODO Auto-generated UArrayModelsTest::testAsJsonProperties()
-		$this->markTestIncomplete ( "asJsonProperties test not implemented" );
-
-		UArrayModels::asJsonProperties(/* parameters */);
+		$orgas=$this->dao->getAll(Organization::class,'1=1',false);
+		$this->assertEquals(4,\count($orgas));
+		$json=UArrayModels::asJsonProperties($orgas,['id','name']);
+		$this->assertJson($json);
 	}
 }
 
