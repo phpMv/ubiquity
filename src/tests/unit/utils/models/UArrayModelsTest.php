@@ -130,7 +130,7 @@ class UArrayModelsTest extends BaseTest {
 	public function testRemove() {
 		$orgas=$this->dao->getAll(Organization::class);
 		$this->assertEquals(4,\count($orgas));
-		UArrayModels::remove($orgas,fn($item)=>$item->getId()==1);
+		$orgas=UArrayModels::remove($orgas,fn($item)=>$item->getId()==1);
 		$this->assertEquals(3,\count($orgas));
 	}
 
@@ -140,7 +140,7 @@ class UArrayModelsTest extends BaseTest {
 	public function testRemoveBy() {
 		$orgas=$this->dao->getAll(Organization::class);
 		$this->assertEquals(4,\count($orgas));
-		UArrayModels::removeBy($orgas,\current($orgas));
+		$orgas=UArrayModels::removeBy($orgas,\current($orgas));
 		$this->assertEquals(3,\count($orgas));
 	}
 
@@ -150,7 +150,7 @@ class UArrayModelsTest extends BaseTest {
 	public function testRemoveAllBy() {
 		$orgas=$this->dao->getAll(Organization::class);
 		$this->assertEquals(4,\count($orgas));
-		UArrayModels::removeAllBy($orgas,\current($orgas));
+		$orgas=UArrayModels::removeAllBy($orgas,\current($orgas));
 		$this->assertEquals(3,\count($orgas));
 	}
 
@@ -190,7 +190,7 @@ class UArrayModelsTest extends BaseTest {
 	public function testRemoveAll() {
 		$groupes=$this->dao->getAll(Groupe::class,'1=1',['organization']);
 		$this->assertEquals(11,\count($groupes));
-		UArrayModels::removeAll($groupes,fn($item)=>$item->getOrganization()->getId()==1);
+		$groupes=UArrayModels::removeAll($groupes,fn($item)=>$item->getOrganization()->getId()==1);
 		$this->assertEquals(8,\count($groupes));
 	}
 
