@@ -68,10 +68,9 @@ class UArrayModelsTest extends BaseTest {
 	 * Tests UArrayModels::asKeyValues()
 	 */
 	public function testAsKeyValues() {
-		// TODO Auto-generated UArrayModelsTest::testAsKeyValues()
-		$this->markTestIncomplete ( "asKeyValues test not implemented" );
-
-		UArrayModels::asKeyValues(/* parameters */);
+		$orgas=$this->dao->getAll(Organization::class);
+		$array=UArrayModels::asKeyValues($orgas,'getId');
+		$this->assertEquals(4,\count($array));
 	}
 
 	/**
@@ -129,30 +128,30 @@ class UArrayModelsTest extends BaseTest {
 	 * Tests UArrayModels::remove()
 	 */
 	public function testRemove() {
-		// TODO Auto-generated UArrayModelsTest::testRemove()
-		$this->markTestIncomplete ( "remove test not implemented" );
-
-		UArrayModels::remove(/* parameters */);
+		$orgas=$this->dao->getAll(Organization::class);
+		$this->assertEquals(4,\count($orgas));
+		UArrayModels::remove($orgas,fn($item)=>$item->getId()==1);
+		$this->assertEquals(3,\count($orgas));
 	}
 
 	/**
 	 * Tests UArrayModels::removeBy()
 	 */
 	public function testRemoveBy() {
-		// TODO Auto-generated UArrayModelsTest::testRemoveBy()
-		$this->markTestIncomplete ( "removeBy test not implemented" );
-
-		UArrayModels::removeBy(/* parameters */);
+		$orgas=$this->dao->getAll(Organization::class);
+		$this->assertEquals(4,\count($orgas));
+		UArrayModels::removeBy($orgas,\current($orgas));
+		$this->assertEquals(3,\count($orgas));
 	}
 
 	/**
 	 * Tests UArrayModels::removeAllBy()
 	 */
 	public function testRemoveAllBy() {
-		// TODO Auto-generated UArrayModelsTest::testRemoveAllBy()
-		$this->markTestIncomplete ( "removeAllBy test not implemented" );
-
-		UArrayModels::removeAllBy(/* parameters */);
+		$orgas=$this->dao->getAll(Organization::class);
+		$this->assertEquals(4,\count($orgas));
+		UArrayModels::removeAllBy($orgas,\current($orgas));
+		$this->assertEquals(3,\count($orgas));
 	}
 
 	/**
@@ -189,10 +188,10 @@ class UArrayModelsTest extends BaseTest {
 	 * Tests UArrayModels::removeAll()
 	 */
 	public function testRemoveAll() {
-		// TODO Auto-generated UArrayModelsTest::testRemoveAll()
-		$this->markTestIncomplete ( "removeAll test not implemented" );
-
-		UArrayModels::removeAll(/* parameters */);
+		$groupes=$this->dao->getAll(Groupe::class,'1=1',['organization']);
+		$this->assertEquals(11,\count($groupes));
+		UArrayModels::removeAll($groupes,fn($item)=>$item->getOrganization()->getId()==1);
+		$this->assertEquals(8,\count($groupes));
 	}
 
 	/**
