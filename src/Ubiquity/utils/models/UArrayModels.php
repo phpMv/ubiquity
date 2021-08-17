@@ -121,7 +121,7 @@ class UArrayModels {
 	 * @param string $property default the id property
 	 * @return mixed|null
 	 */
-	public static function findBy(?array $objects,mixed $value,string $property='id'){
+	public static function findBy(?array $objects,$value,string $property='id'){
 		if(!is_array($objects)){
 			return null;
 		}
@@ -141,7 +141,7 @@ class UArrayModels {
 	 * @param mixed $idValue
 	 * @return NULL|mixed|NULL
 	 */
-	public static function findById(?array $objects,mixed $idValue){
+	public static function findById(?array $objects,$idValue){
 		if(!is_array($objects) && \count($objects)>0){
 			return null;
 		}
