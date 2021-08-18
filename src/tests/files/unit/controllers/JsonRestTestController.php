@@ -11,6 +11,10 @@ namespace controllers;
  */
 class JsonRestTestController extends \Ubiquity\controllers\rest\api\json\JsonRestController {
 
+	public function isValid($action) {
+		return true;
+	}
+	
 	/**
 	 * Returns all the instances from the model $resource.
 	 * Query parameters:
