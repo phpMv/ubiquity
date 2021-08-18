@@ -32,7 +32,7 @@ class JsonCest extends BaseAcceptance {
 		 $I->fillField ( '#url', '/json/organizations/' );
 		 $I->fillField ( '#method', 'post' );
 		 $I->fillField ( '#contentType', 'application/json; charset=utf-8' );
-		 $I->fillField ( '#datas', "{data:{attributes:{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . ".com'}}}" );
+		 $I->fillField ( '#datas', "{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . ".com'}" );
 		 $I->click ( "#btSubmitJSON" );
 		 $I->waitForText ( 'inserted', self::TIMEOUT );
 		 $I->waitForElement ( "#newId span", self::TIMEOUT );
@@ -40,7 +40,7 @@ class JsonCest extends BaseAcceptance {
 		 $id = $I->grabTextFrom ( "#newId span" );
 		 $I->fillField ( '#url', '/json/organizations/' . trim ( $id ) );
 		 $I->fillField ( '#method', 'put' );
-		 $I->fillField ( '#datas', "{data:{attributes:{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . "'}}}" );
+		 $I->fillField ( '#datas', "{name:'microsoft" . $uuid . "',domain:'microsoft" . $uuid . "'}" );
 		 $I->click ( "#btSubmitJSON" );
 		 $I->waitForText ( 'updated', self::TIMEOUT );
 		 $I->fillField ( '#method', 'delete' );
