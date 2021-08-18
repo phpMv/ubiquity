@@ -88,6 +88,8 @@ filter:
         - src/Ubiquity/cache/Preloader.php
         - src/Ubiquity/cache/preloading/
         - src/Ubiquity/controllers/StartupAsync.php
+        - src/Ubiquity/controllers/crud/viewers/traits/FormModelViewerTrait.php
+
 checks:
     php:
         code_rating: true
