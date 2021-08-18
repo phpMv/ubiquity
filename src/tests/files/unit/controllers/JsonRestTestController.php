@@ -76,7 +76,7 @@ class JsonRestTestController extends \Ubiquity\controllers\rest\api\json\JsonRes
 	 *
 	 * @param string $resource The resource (model) to use
 	 *
-	 * @route("{resource}/{id}","methods"=>["patch"],"priority"=>0)
+	 * @route("{resource}/{id}","methods"=>["put"],"priority"=>0)
 	 * @authorization
 	 */
 	public function update($resource,...$id ){
