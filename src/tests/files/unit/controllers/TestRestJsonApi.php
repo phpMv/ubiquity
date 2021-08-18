@@ -92,7 +92,7 @@ class TestRestJsonApi extends JsonApiRestController {
 	 *
 	 * @param string $resource The resource (model) to use
 	 *
-	 * @route("{resource}/{id}","methods"=>["patch"],"priority"=>0)
+	 * @route("{resource}/{id}","methods"=>["put"],"priority"=>0)
 	 * @authorization
 	 */
 	# [Put('{resource}/{id}',priority: 0)]
