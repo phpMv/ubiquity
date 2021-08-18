@@ -1,4 +1,5 @@
 <?php
+
 return array (
 				"siteUrl" => "http://dev.local/",
 				"database" => [
@@ -20,7 +21,9 @@ return array (
 					}
 				,"*.inj" =>
 					function ($ctrl=null) {
-						return new \services\IAllService ($ctrl);
+						if(!($ctrl instanceof \Ubiquity\controllers\rest\RestBaseController)){
+							return new \services\IAllService ($ctrl);
+						}
 					}
 				,"@exec" => array ("jquery" =>
 					function ($controller) {
