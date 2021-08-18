@@ -17,7 +17,7 @@ return array (
 				},
 				"di" => array ("*.allS" =>
 					function ($controller=null) {
-						if(!($ctrl instanceof \Ubiquity\controllers\rest\RestBaseController)){
+						if(!($controller instanceof \Ubiquity\controllers\rest\RestBaseController)){
 							return new \services\IAllService ($controller);
 						}
 					}
