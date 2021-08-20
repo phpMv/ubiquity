@@ -35,7 +35,7 @@ class CRUDHelper {
 	}
 
 	public static function search($model, $search, $fields, $initialCondition = '1=1') {
-		$words = preg_split ( "@(\s*?(\(|\)|\|\||\&\&)\s*?)@", $search );
+		$words = \preg_split ( "@(\s*?(\(|\)|\|\||\&\&)\s*?)@", $search );
 		$params = [ ];
 		$count = \count ( $fields );
 		$db = DAO::getDb ( $model );
@@ -97,11 +97,13 @@ class CRUDHelper {
 					// TODO update dbCache
 				}
 			}
-			if ($updateMany && $update && $manyToManyRelations) {
-				self::updateManyToMany ( $manyToManyRelations, $members, $className, $instance, $values );
-			}
-			if ($updateMany && $update && $oneToManyRelations) {
-				self::updateOneToMany ( $oneToManyRelations, $members, $className, $instance, $values );
+			if($updateMany && $update){
+				if ($manyToManyRelations) {
+					self::updateManyToMany ( $manyToManyRelations, $members, $className, $instance, $values );
+				}
+				if ($oneToManyRelations) {
+					self::updateOneToMany ( $oneToManyRelations, $members, $className, $instance, $values );
+				}
 			}
 		}
 		return $update;
