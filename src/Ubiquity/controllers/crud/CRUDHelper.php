@@ -68,20 +68,9 @@ class CRUDHelper {
 		$members = \array_keys ( $values );
 		OrmUtils::setFieldToMemberNames ( $members, $fieldsInRelationForUpdate ['relations'] );
 		$update = false;
+		
+		self::setInputValues($className, $instance, $values, $setValues);
 
-		$fieldTypes = OrmUtils::getFieldTypes ( $className );
-		foreach ( $fieldTypes as $property => $type ) {
-			if (DbTypes::isBoolean($type)) {
-				if (isset ( $values [$property] )) {
-					$values [$property] = 1;
-				} else {
-					$values [$property] = 0;
-				}
-			}
-		}
-		if ($setValues) {
-			URequest::setValuesToObject ( $instance, $values );
-		}
 		if ($manyToOneRelations) {
 			self::updateManyToOne ( $manyToOneRelations, $members, $className, $instance, $values );
 		}
@@ -107,6 +96,22 @@ class CRUDHelper {
 			}
 		}
 		return $update;
+	}
+	
+	protected static function setInputValues(string $className,$instance,&$values,$setValues){
+		$fieldTypes = OrmUtils::getFieldTypes ( $className );
+		foreach ( $fieldTypes as $property => $type ) {
+			if (DbTypes::isBoolean($type)) {
+				if (isset ( $values [$property] )) {
+					$values [$property] = 1;
+				} else {
+					$values [$property] = 0;
+				}
+			}
+		}
+		if ($setValues) {
+			URequest::setValuesToObject ( $instance, $values );
+		}
 	}
 
 	private static function getInputValues($values,$index){
@@ -160,14 +165,14 @@ class CRUDHelper {
 								$o = DAO::getById($fkClass, $kv);
 								if ($o) {
 									$oValues = self::getInputValues($newValues, $index);
-									URequest::setValuesToObject($o, $oValues);
+									self::setInputValues($fkClass, $o, $oValues, true);
 									DAO::update($o);
 								}
 								break;
 							case 'added':
 								$o=new $fkClass();
 								$oValues = \array_merge($kv,self::getInputValues($newValues, $index));
-								URequest::setValuesToObject($o, $oValues);
+								self::setInputValues($fkClass, $o, $oValues, true);
 								DAO::insert($o);
 								break;
 						}
