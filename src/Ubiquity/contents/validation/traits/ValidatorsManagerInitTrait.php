@@ -4,6 +4,7 @@ namespace Ubiquity\contents\validation\traits;
 
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
+use Ubiquity\contents\validation\ValidationModelParser;
 
 /**
  *
@@ -34,7 +35,7 @@ trait ValidatorsManagerInitTrait {
 	 * @param string $class
 	 */
 	public static function initClassValidators($class) {
-		$parser = new ValidationModelParser ();
+		$parser = new ValidationModelParser();
 		$parser->parse ( $class );
 		$validators = $parser->getValidators ();
 		if (\count ( $validators ) > 0) {

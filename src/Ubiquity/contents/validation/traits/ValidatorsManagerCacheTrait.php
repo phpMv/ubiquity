@@ -3,6 +3,7 @@
 namespace Ubiquity\contents\validation\traits;
 
 use Ubiquity\cache\CacheManager;
+use Ubiquity\log\Logger;
 
 /**
  * Ubiquity\contents\validation\traits$ValidatorsManagerCacheTrait
@@ -11,6 +12,7 @@ use Ubiquity\cache\CacheManager;
  * @version 1.0.0
  * 
  * @property array $validatorTypes
+ * @property array $instanceValidators
  *
  */
 trait ValidatorsManagerCacheTrait {
