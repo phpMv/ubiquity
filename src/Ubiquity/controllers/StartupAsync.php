@@ -63,7 +63,7 @@ class StartupAsync extends Startup {
 	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
 		self::$controller = $ctrl = $u ['controller'];
 		self::$action = $action = $u ['action'];
-		self::$actionParams = $u['params'];
+		self::$actionParams = $u['params']??[];
 		
 		try {
 			if (null !== $controller = self::getControllerInstance ( $ctrl )) {
