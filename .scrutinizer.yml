@@ -4,11 +4,14 @@ build:
       dependencies:
         before:
           - composer require twig/twig phpmv/ubiquity-annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
-          - composer require codeception/codeception:^2.2 --dev
+          - composer require codeception/codeception:^4.0 --dev
+          - composer require codeception/module-webdriver:^1.4 --dev
           - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
         php:
           version: 7.4
+          pecl_extensions:
+            - zip
       tests:
         override:
           - php-scrutinizer-run
@@ -21,6 +24,8 @@ build:
       environment:
         php:
           version: 7.4
+          pecl_extensions:
+            - zip
         hosts:
           dev.local: '127.0.0.1'
           worker.local: '127.0.0.1'
