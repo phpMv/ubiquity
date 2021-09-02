@@ -4,6 +4,7 @@ namespace Ubiquity\contents\validation;
 
 use Ubiquity\cache\CacheManager;
 use Ubiquity\cache\objects\SessionCache;
+use Ubiquity\contents\validation\traits\ValidatorsManagerInitTrait;
 use Ubiquity\contents\validation\validators\basic\IsBooleanValidator;
 use Ubiquity\contents\validation\validators\basic\IsEmptyValidator;
 use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
@@ -29,6 +30,7 @@ use Ubiquity\contents\validation\validators\strings\IpValidator;
 use Ubiquity\contents\validation\validators\strings\RegexValidator;
 use Ubiquity\contents\validation\validators\strings\UrlValidator;
 use Ubiquity\log\Logger;
+use Ubiquity\contents\validation\traits\ValidatorsManagerCacheTrait;
 
 /**
  * Validators manager
@@ -37,13 +39,12 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class ValidatorsManager {
-	use ValidatorsManagerInitTrait;
+	use ValidatorsManagerInitTrait,ValidatorsManagerCacheTrait;
 	protected static $instanceValidators = [ ];
-	protected static $cache;
 
 	public static function start() {
 		self::$cache = new SessionCache ();
@@ -74,19 +75,8 @@ class ValidatorsManager {
 										'time' => TimeValidator::class,
 										'match'=>MatchWithValidator::class
 	];
-	protected static $key = 'contents/validators/';
 
-	protected static function store($model, $validators) {
-		CacheManager::$cache->store ( self::getModelCacheKey ( $model ), $validators, 'validators' );
-	}
 
-	protected static function fetch($model) {
-		$key = self::getModelCacheKey ( $model );
-		if (CacheManager::$cache->exists ( $key )) {
-			return CacheManager::$cache->fetch ( $key );
-		}
-		return [ ];
-	}
 
 	public static function getCacheInfo($model) {
 		return self::fetch ( $model );
@@ -113,19 +103,6 @@ class ValidatorsManager {
 		return $result;
 	}
 
-	private static function getCacheValidators($instance, $group = '') {
-		return self::getClassCacheValidators ( \get_class ( $instance ), $group );
-	}
-
-	protected static function getClassCacheValidators($class, $group = '') {
-		if (isset ( self::$cache )) {
-			$key = self::getHash ( $class . $group );
-			if (self::$cache->exists ( $key )) {
-				return self::$cache->fetch ( $key );
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * Validates an instance
@@ -190,17 +167,6 @@ class ValidatorsManager {
 		return [ ];
 	}
 
-	public static function clearCache($model = null, $group = '') {
-		if (isset ( self::$cache )) {
-			if (isset ( $model )) {
-				$key = self::getHash ( $model . $group );
-				self::$cache->remove ( $key );
-			} else {
-				self::$cache->clear ();
-			}
-		}
-	}
-
 	protected static function validateInstances_($instances, $members) {
 		$result = [ ];
 		foreach ( $instances as $instance ) {
@@ -258,89 +224,6 @@ class ValidatorsManager {
 			}
 		}
 		return $result;
-	}
-
-	protected static function validateFromCache_($instance, $members, $excludedValidators = [ ]) {
-		$result = [ ];
-		$types = \array_flip ( self::$validatorTypes );
-		foreach ( $members as $accessor => $validators ) {
-			foreach ( $validators as $validatorInstance ) {
-				$typeV = $types [get_class ( $validatorInstance )];
-				if (! isset ( $excludedValidators [$typeV] )) {
-					$valid = $validatorInstance->validate_ ( $instance->$accessor () );
-					if ($valid !== true) {
-						$result [] = $valid;
-					}
-				}
-			}
-		}
-		return $result;
-	}
-
-	protected static function getUIConstraintsFromCache_($instance, $members, $excludedValidators = [ ]) {
-		$result = [ ];
-		$types = \array_flip ( self::$validatorTypes );
-		foreach ( $members as $accessor => $validators ) {
-			$member = \lcfirst ( \ltrim ( 'get', $accessor ) );
-			foreach ( $validators as $validatorInstance ) {
-				$typeV = $types [get_class ( $validatorInstance )];
-				if (! isset ( $excludedValidators [$typeV] )) {
-					$result [$member] += $validatorInstance->asUI ();
-				}
-			}
-		}
-		return $result;
-	}
-
-	/**
-	 * Initializes the cache (SessionCache) for the class of instance
-	 *
-	 * @param object $instance
-	 * @param string $group
-	 */
-	public static function initCacheInstanceValidators($instance, $group = '') {
-		$class = \get_class ( $instance );
-		$members = self::fetch ( $class );
-		self::initInstancesValidators ( $instance, $members, $group );
-	}
-
-	protected static function initInstancesValidators($instance, $members, $group = '') {
-		$class = \get_class ( $instance );
-		$result = [ ];
-		foreach ( $members as $member => $validators ) {
-			$accessor = 'get' . \ucfirst ( $member );
-			if (\method_exists ( $instance, $accessor )) {
-				foreach ( $validators as $validator ) {
-					$validatorInstance = self::getValidatorInstance ( $validator ['type'] );
-					if ($validatorInstance !== false) {
-						$validatorInstance->setValidationParameters ( $member, $validator ['constraints'] ?? [ ], $validator ['severity'] ?? null, $validator ['message'] ?? null);
-						if ($group === '' || (isset ( $validator ['group'] ) && $validator ['group'] === $group)) {
-							self::$instanceValidators [$class] [$accessor] [] = $validatorInstance;
-							$result [$accessor] [] = $validatorInstance;
-						}
-					}
-				}
-			}
-		}
-		self::$cache->store ( self::getHash ( $class . $group ), $result );
-	}
-
-	protected static function getHash($class) {
-		return \hash ( 'sha1', $class );
-	}
-
-	protected static function getModelCacheKey($classname) {
-		return self::$key . \str_replace ( "\\", \DS, $classname );
-	}
-
-	protected static function getValidatorInstance($type) {
-		if (isset ( self::$validatorTypes [$type] )) {
-			$class = self::$validatorTypes [$type];
-			return new $class ();
-		} else {
-			Logger::warn ( "validation", "Validator " . $type . " does not exists!" );
-			return false;
-		}
 	}
 }
 

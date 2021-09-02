@@ -1,6 +1,6 @@
 <?php
 
-namespace Ubiquity\contents\validation;
+namespace Ubiquity\contents\validation\traits;
 
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
