@@ -6,6 +6,7 @@ build:
           - composer require twig/twig phpmv/ubiquity-annotations phpfastcache/phpfastcache monolog/monolog czproject/git-php phpmv/php-mv-ui
           - composer require codeception/codeception:^4.0 --dev
           - composer require codeception/module-webdriver:^1.4 --dev
+          - composer require symfony/http-kernel:^5.3 --dev
           - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
         php:
