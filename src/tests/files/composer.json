@@ -7,6 +7,7 @@
 		"phpmv\/ubiquity": "dev-master",
 		"codeception/c3": "^2.4",
 		"codeception/codeception": "^4.0",
+		"codeception/lib-innerbrowser": "^1.5",
 		"codeception/module-webdriver": "^1.4",
 		"symfony/http-kernel": "^5.3",
 		"phpmv/ubiquity-codeception": "1.0.x-dev",
