@@ -9,6 +9,7 @@
 		"codeception/codeception": "^4.0",
 		"codeception/lib-innerbrowser": "^1.5",
 		"codeception/module-webdriver": "^1.4",
+		"codeception/module-asserts": "^1.3",
 		"symfony/http-kernel": "^5.3",
 		"phpmv/ubiquity-codeception": "1.0.x-dev",
 		"phpmv/ubiquity-mysqli": "dev-master"

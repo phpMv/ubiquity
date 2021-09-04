@@ -7,6 +7,7 @@ build:
           - composer require codeception/codeception:^4.0 --dev
           - composer require codeception/module-webdriver:^1.4 --dev
           - composer require codeception/lib-innerbrowser:^1.5 --dev
+          - composer require codeception/module-asserts --dev
           - composer require symfony/http-kernel:^5.3 --dev
           - composer require phpmv/ubiquity-devtools:dev-master --dev
       environment:
