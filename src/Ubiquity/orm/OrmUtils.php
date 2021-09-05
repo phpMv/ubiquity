@@ -12,7 +12,7 @@ use Ubiquity\controllers\rest\formatters\ResponseFormatter;
  * Object/relational mapping utilities
  *
  * @author jc
- * @version 1.0.7
+ * @version 1.0.8
  */
 class OrmUtils {
 
