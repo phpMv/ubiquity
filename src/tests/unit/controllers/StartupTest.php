@@ -61,10 +61,10 @@ class StartupTest extends BaseTest {
 		$res = $this->_display ( $callback );
 		if (is_array ( $result )) {
 			foreach ( $result as $c ) {
-				$this->assertContains ( $c, $res );
+				$this->assertStringContainsString ( $c, $res );
 			}
 		} else {
-			$this->assertContains ( $result, $res );
+			$this->assertStringContainsString ( $result, $res );
 		}
 	}
 
