@@ -169,7 +169,7 @@ trait OrmUtilsRelationsTrait {
 	}
 	
 	private static function getJoinAlias($table, $fkTable) {
-		return uniqid ( $fkTable . '_' . $table [0] );
+		return \uniqid ( $fkTable . '_' . $table [0] );
 	}
 	
 	public static function getOneToManyFields($class) {
@@ -206,8 +206,8 @@ trait OrmUtilsRelationsTrait {
 	
 	public static function getMemberJoinColumns($instance, $member, $metaDatas = NULL) {
 		if (! isset ( $metaDatas )) {
-			if (is_object ( $instance )) {
-				$class = get_class ( $instance );
+			if (\is_object ( $instance )) {
+				$class = \get_class ( $instance );
 			} else {
 				$class = $instance;
 			}
