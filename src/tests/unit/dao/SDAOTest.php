@@ -12,6 +12,8 @@ class SDAOTest extends BaseTest {
 	 * @var SDAO
 	 */
 	private $dao;
+	
+	private $message;
 
 	/**
 	 * Prepares the environment before running a test.
@@ -22,6 +24,7 @@ class SDAOTest extends BaseTest {
 		$this->_startCache ();
 		$this->dao->setModelDatabase ( Fortune::class, 'bench' );
 		$this->_startDatabase ( $this->dao, 'bench' );
+		$this->message='init-_before';
 	}
 
 	/**
@@ -29,6 +32,10 @@ class SDAOTest extends BaseTest {
 	 */
 	protected function _after() {
 		$this->dao->closeDb ();
+	}
+	
+	public function testMessageInit(){
+		$this->assertEquals('init-_before',$this->message);
 	}
 
 	public function testGetById() {
