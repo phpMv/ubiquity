@@ -34,13 +34,13 @@ class SDAOTest extends BaseTest {
 	public function testGetById() {
 		$fortune = $this->dao->getById ( Fortune::class, [ 1 ] );
 		$this->assertEquals ( 1, $fortune->id );
-		$this->assertEquals ( 'fortune: No such file or directory', $fortune->message );
+		$this->assertEquals ( 'Fortune: No such file or directory', $fortune->message );
 	}
 
 	public function testGetOne() {
 		$fortune = $this->dao->getOne ( Fortune::class, 1 );
 		$this->assertEquals ( 1, $fortune->id );
-		$this->assertEquals ( 'fortune: No such file or directory', $fortune->message );
+		$this->assertEquals ( 'Fortune: No such file or directory', $fortune->message );
 	}
 
 	public function testGetAll() {
@@ -64,7 +64,7 @@ class SDAOTest extends BaseTest {
 	public function testUpdate() {
 		$fortune = $this->dao->getById ( Fortune::class, [ 1 ] );
 		$this->assertEquals ( 1, $fortune->id );
-		$this->assertEquals ( 'fortune: No such file or directory', $fortune->message );
+		$this->assertEquals ( 'Fortune: No such file or directory', $fortune->message );
 		$newMessage = 'New message for fortune';
 		$fortune->message = $newMessage;
 		$this->dao->update ( $fortune );

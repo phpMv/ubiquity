@@ -21,6 +21,10 @@ class ClassesToYumlTest extends BaseTest {
 		parent::_before ();
 		$this->classesToYuml = new ClassesToYuml ();
 	}
+	
+	protected function getCacheDirectory() {
+		return "cache/";
+	}
 
 	/**
 	 * Tests ClassesToYuml->__toString()

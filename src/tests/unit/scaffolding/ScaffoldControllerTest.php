@@ -54,7 +54,7 @@ class ScaffoldControllerTest extends BaseTest {
 
 	protected function _assertDisplayContains($callback, $result) {
 		$res = $this->_display ( $callback );
-		$this->assertContains ( $result, $res );
+		$this->assertStringContainsString ( $result, $res );
 	}
 
 	/**
@@ -93,10 +93,10 @@ class ScaffoldControllerTest extends BaseTest {
 		ob_start ();
 		$this->scaffoldController->_newAction ( "controllers\\TestNewController", "newAction", "a,b=5", "echo 'test-'.\$a.'-'.\$b;", [ "path" => "/test/new/{a}/{b}/","methods" => "" ], true );
 		$res = ob_get_clean ();
-		$this->assertContains ( "The action <b>newAction</b> is created in controller <b>controllers\TestNewController</b>", $res );
-		$this->assertContains ( "Created route : <b>/test/new/{a}/{b}/</b>", $res );
-		$this->assertContains ( "You need to re-init Router cache to apply this update", $res );
-		$this->assertContains ( "Created view : <b>TestNewController/newAction.html</b>", $res );
+		$this->assertStringContainsString ( "The action <b>newAction</b> is created in controller <b>controllers\TestNewController</b>", $res );
+		$this->assertStringContainsString ( "Created route : <b>/test/new/{a}/{b}/</b>", $res );
+		$this->assertStringContainsString ( "You need to re-init Router cache to apply this update", $res );
+		$this->assertStringContainsString ( "Created view : <b>TestNewController/newAction.html</b>", $res );
 	}
 
 	/**
