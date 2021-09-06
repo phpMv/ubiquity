@@ -24,8 +24,7 @@ coverage:
         - Ubiquity/utils/git/UGitRepository.php
         - Ubiquity/views/engine/micro/*
         - Ubiquity/views/Gui.php
-settings:
- bootstrap: _bootstrap.php
+
 reporters:
     xml: Codeception\PHPUnit\Log\JUnit
     html: Codeception\PHPUnit\ResultPrinter\HTML
