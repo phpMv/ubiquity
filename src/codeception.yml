@@ -25,6 +25,8 @@ coverage:
         - Ubiquity/views/engine/micro/*
         - Ubiquity/views/Gui.php
 
+bootstrap: _bootstrap.php
+
 reporters:
     xml: Codeception\PHPUnit\Log\JUnit
     html: Codeception\PHPUnit\ResultPrinter\HTML
