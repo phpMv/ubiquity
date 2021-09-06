@@ -55,8 +55,13 @@ trait ModelsCacheTrait {
 		$modelsDb = [ ];
 		$files = self::getModelsFiles ( $config, $silent );
 		foreach ( $files as $file ) {
-			if (is_file ( $file )) {
+			if (\is_file ( $file )) {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
+				if(!\class_exists($model,true)){
+					if(\file_exists($file)){
+						include $file;
+					}
+				}
 				if (! $forChecking) {
 					self::createOrmModelCache ( $model );
 					$db = 'default';
