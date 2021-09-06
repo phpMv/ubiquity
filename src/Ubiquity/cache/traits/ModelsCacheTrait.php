@@ -57,7 +57,7 @@ trait ModelsCacheTrait {
 		foreach ( $files as $file ) {
 			if (\is_file ( $file )) {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
-				if(!\class_exists($model,true)){
+				if(!\class_exists($model)){
 					if(\file_exists($file)){
 						include $file;
 					}
