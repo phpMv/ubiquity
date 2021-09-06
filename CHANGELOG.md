@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 
-## [2.4.6] Soon
+## [2.4.6] 2021-09-06
 ### Added
 - [ORM] Update cascade behavior
 - `boolean` transformer
