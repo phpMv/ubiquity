@@ -68,7 +68,10 @@ trait OrmUtilsFieldsTrait {
 
 	public static function getFirstKey($class) {
 		$kf = self::getAnnotationInfo ( $class, "#primaryKeys" );
-		return \current ( $kf );
+		if($fk){
+			return \current ( $kf );
+		}
+		return [];
 	}
 
 	/**

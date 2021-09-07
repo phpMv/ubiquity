@@ -163,7 +163,7 @@ class ValidatorsManagerTest extends BaseTest {
 
 		$object->setBool ( "not boolean" );
 		$res = ValidatorsManager::validate ( $object );
-		$this->assertEquals ( 1, sizeof ( $res ) );
+		$this->assertEquals ( 1, count ( $res ) );
 		$current = current ( $res );
 		$this->assertInstanceOf ( ConstraintViolation::class, $current );
 		$this->assertEquals ( "This value should be a boolean", $current->getMessage () );
@@ -256,7 +256,7 @@ class ValidatorsManagerTest extends BaseTest {
 		$object = new TestClassString ();
 		ValidatorsManager::addClassValidators ( TestClassString::class );
 		$res = ValidatorsManager::validate ( $object );
-		$this->assertEquals ( 0, sizeof ( $res ) );
+		$this->assertEquals ( 0, count ( $res ) );
 		// Test email
 		$this->testValidatorInstanceOf ( function (TestClassString $object) {
 			$object->setEmail ( "mymail@" );
@@ -310,7 +310,7 @@ class ValidatorsManagerTest extends BaseTest {
 		$object = new $classname ();
 		$callback ( $object );
 		$res = ValidatorsManager::validate ( $object );
-		$this->assertEquals ( 1, sizeof ( $res ) );
+		$this->assertEquals ( 1, count ( $res ) );
 		return current ( $res );
 	}
 
