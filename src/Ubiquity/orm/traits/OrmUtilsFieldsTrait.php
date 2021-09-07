@@ -21,7 +21,7 @@ trait OrmUtilsFieldsTrait {
 	protected static $accessors = [ ];
 
 	public static function getFieldTypes($className) {
-		$fieldTypes = self::getAnnotationInfo ( $className, "#fieldTypes" );
+		$fieldTypes = self::getAnnotationInfo ( $className, '#fieldTypes' );
 		if ($fieldTypes !== false) {
 			return $fieldTypes;
 		}
@@ -33,7 +33,7 @@ trait OrmUtilsFieldsTrait {
 		if (isset ( $types [$field] )) {
 			return $types [$field];
 		}
-		return "int";
+		return 'int';
 	}
 
 	/**
@@ -59,7 +59,7 @@ trait OrmUtilsFieldsTrait {
 		if (! \is_string ( $instance )) {
 			$instance = \get_class ( $instance );
 		}
-		if($info=self::getAnnotationInfo ( $instance, "#primaryKeys" )){
+		if($info=self::getAnnotationInfo ( $instance, '#primaryKeys' )){
 			return \array_keys ( $info );
 		}
 		return [];
@@ -67,11 +67,8 @@ trait OrmUtilsFieldsTrait {
 	}
 
 	public static function getFirstKey($class) {
-		$kf = self::getAnnotationInfo ( $class, "#primaryKeys" );
-		if($fk){
-			return \current ( $kf );
-		}
-		return [];
+		$kf = self::getAnnotationInfo ( $class, '#primaryKeys' );
+		return \current ( $kf );
 	}
 
 	/**
@@ -83,7 +80,7 @@ trait OrmUtilsFieldsTrait {
 		if (isset ( self::$propFirstKeys [$class] )) {
 			return self::$propFirstKeys [$class];
 		}
-		$prop = new \ReflectionProperty ( $class, \array_key_first ( self::getAnnotationInfo ( $class, "#primaryKeys" ) ) );
+		$prop = new \ReflectionProperty ( $class, \array_key_first ( self::getAnnotationInfo ( $class, '#primaryKeys' ) ) );
 		$prop->setAccessible ( true );
 		return self::$propFirstKeys [$class] = $prop;
 	}
@@ -93,7 +90,7 @@ trait OrmUtilsFieldsTrait {
 			return self::$propKeys [$class];
 		}
 		$result = [ ];
-		$pkMembers = self::getAnnotationInfo ( $class, "#primaryKeys" );
+		$pkMembers = self::getAnnotationInfo ( $class, '#primaryKeys' );
 		foreach ( $pkMembers as $member => $_field ) {
 			$prop = new \ReflectionProperty ( $class, $member );
 			$prop->setAccessible ( true );
@@ -108,7 +105,7 @@ trait OrmUtilsFieldsTrait {
 		}
 		$result = [ ];
 		foreach ( $members as $member => $field ) {
-			$accesseur = "set" . ucfirst ( $member );
+			$accesseur = 'set' . \ucfirst ( $member );
 			if (! isset ( $result [$field] ) && method_exists ( $class, $accesseur )) {
 				$result [$field] = $accesseur;
 			}
@@ -117,14 +114,14 @@ trait OrmUtilsFieldsTrait {
 	}
 
 	public static function getAllFields($class) {
-		return \array_keys ( self::getAnnotationInfo ( $class, "#fieldNames" ) );
+		return \array_keys ( self::getAnnotationInfo ( $class, '#fieldNames' ) );
 	}
 
 	public static function getFieldNames($model) {
 		if (isset ( self::$fieldNames [$model] )) {
 			return self::$fieldNames [$model];
 		}
-		$fields = self::getAnnotationInfo ( $model, "#fieldNames" );
+		$fields = self::getAnnotationInfo ( $model, '#fieldNames' );
 		$result = [ ];
 		$serializables = self::getSerializableFields ( $model );
 		foreach ( $fields as $member => $field ) {
@@ -135,33 +132,33 @@ trait OrmUtilsFieldsTrait {
 	}
 
 	public static function getSerializableFields($class) {
-		$notSerializable = self::getAnnotationInfo ( $class, "#notSerializable" );
-		$fieldNames = \array_values ( self::getAnnotationInfo ( $class, "#fieldNames" ) );
+		$notSerializable = self::getAnnotationInfo ( $class, '#notSerializable' );
+		$fieldNames = \array_values ( self::getAnnotationInfo ( $class, '#fieldNames' ) );
 		return \array_diff ( $fieldNames, $notSerializable );
 	}
 
 	public static function getNullableFields($class) {
-		return self::getAnnotationInfo ( $class, "#nullable" );
+		return self::getAnnotationInfo ( $class, '#nullable' );
 	}
 
 	public static function getSerializableMembers($class) {
-		$notSerializable = self::getAnnotationInfo ( $class, "#notSerializable" );
-		$memberNames = \array_keys ( self::getAnnotationInfo ( $class, "#fieldNames" ) );
+		$notSerializable = self::getAnnotationInfo ( $class, '#notSerializable' );
+		$memberNames = \array_keys ( self::getAnnotationInfo ( $class, '#fieldNames' ) );
 		return \array_diff ( $memberNames, $notSerializable );
 	}
 
 	public static function getFormAllFields($class) {
 		$result = self::getSerializableMembers ( $class );
-		if ($manyToOne = self::getAnnotationInfo ( $class, "#manyToOne" )) {
+		if ($manyToOne = self::getAnnotationInfo ( $class, '#manyToOne' )) {
 			foreach ( $manyToOne as $member ) {
-				$joinColumn = self::getAnnotationInfoMember ( $class, "#joinColumn", $member );
-				$result [] = $joinColumn ["name"];
+				$joinColumn = self::getAnnotationInfoMember ( $class, '#joinColumn', $member );
+				$result [] = $joinColumn ['name'];
 			}
 		}
-		if ($manyToMany = self::getAnnotationInfo ( $class, "#manyToMany" )) {
-			$manyToMany = array_keys ( $manyToMany );
+		if ($manyToMany = self::getAnnotationInfo ( $class, '#manyToMany' )) {
+			$manyToMany = \array_keys ( $manyToMany );
 			foreach ( $manyToMany as $member ) {
-				$result [] = $member . "Ids";
+				$result [] = $member . 'Ids';
 			}
 		}
 		return $result;
