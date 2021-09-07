@@ -21,7 +21,7 @@ class DatabaseReversorTest extends BaseTest {
 	}
 	
 	protected function getCacheDirectory() {
-		return "cache/";
+		return "cache-tests/";
 	}
 
 	/**

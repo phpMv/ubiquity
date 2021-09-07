@@ -159,7 +159,7 @@ class ValidatorsManagerTest extends BaseTest {
 		$object = new TestClassToValidate ();
 		ValidatorsManager::addClassValidators ( TestClassToValidate::class );
 		$res = ValidatorsManager::validate ( $object );
-		$this->assertEquals ( 0, sizeof ( $res ) );
+		$this->assertEquals ( 0, count ( $res ) );
 
 		$object->setBool ( "not boolean" );
 		$res = ValidatorsManager::validate ( $object );

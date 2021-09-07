@@ -58,7 +58,7 @@ build:
           - cp -R src/tests/files/unit/* src/app/
           - (cd src/ && ./../vendor/bin/Ubiquity all-models -d=bench -a=public)
           - (cd src/ && ./../vendor/bin/Ubiquity init-cache)
-          - sudo chmod 0777 -R src/*
+          - sudo chmod -R 777 src
           - cp -f src/tests/files/workerman/run-workerman.sh run-workerman.sh && cp -f src/tests/files/workerman/workerServices.php src/app/config/workerServices.php
           - sudo chmod +x run-workerman.sh
           - sudo /usr/share/locales/install-language-pack fr_FR
