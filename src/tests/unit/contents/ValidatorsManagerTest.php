@@ -156,6 +156,7 @@ class ValidatorsManagerTest extends BaseTest {
 	 * Tests base validators
 	 */
 	public function testValidatorsBase() {
+		CacheManager::start($this->config);
 		$object = new TestClassToValidate ();
 		ValidatorsManager::addClassValidators ( TestClassToValidate::class );
 		$res = ValidatorsManager::validate ( $object );
@@ -215,6 +216,7 @@ class ValidatorsManagerTest extends BaseTest {
 	 * Tests comparison validators
 	 */
 	public function testValidatorsComparison() {
+		CacheManager::start($this->config);
 		$object = new TestClassComparison ();
 		ValidatorsManager::addClassValidators ( TestClassComparison::class );
 		$res = ValidatorsManager::validate ( $object );
@@ -253,6 +255,7 @@ class ValidatorsManagerTest extends BaseTest {
 	 * Tests string validators
 	 */
 	public function testValidatorsString() {
+		CacheManager::start($this->config);
 		$object = new TestClassString ();
 		ValidatorsManager::addClassValidators ( TestClassString::class );
 		$res = ValidatorsManager::validate ( $object );
