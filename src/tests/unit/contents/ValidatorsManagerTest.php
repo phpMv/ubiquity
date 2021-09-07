@@ -83,7 +83,7 @@ class ValidatorsManagerTest extends BaseTest {
 	}
 	
 	protected function getCacheDirectory() {
-		return "cache-tests/";
+		return "cache/";
 	}
 
 	/**

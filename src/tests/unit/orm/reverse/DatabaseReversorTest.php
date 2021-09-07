@@ -18,6 +18,7 @@ class DatabaseReversorTest extends BaseTest {
 	protected function _before() {
 		parent::_before ();
 		Startup::setConfig ( $this->config );
+		CacheManager::start($this->config);
 		$this->databaseReversor = new DatabaseReversor ( new DbGenerator () );
 	}
 	
@@ -29,7 +30,6 @@ class DatabaseReversorTest extends BaseTest {
 	 * Tests DatabaseReversor->createDatabase()
 	 */
 	public function testCreateDatabase() {
-		CacheManager::start($this->config);
 		$this->databaseReversor->createDatabase ( "testDb" );
 		$script = $this->databaseReversor->__toString ();
 		$this->assertTrue ( UString::contains ( "CREATE DATABASE", $script ) );
