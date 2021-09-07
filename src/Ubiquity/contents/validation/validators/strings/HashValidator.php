@@ -16,7 +16,7 @@ namespace Ubiquity\contents\validation\validators\strings;
             "/^[a-f0-9]{32}$/i", // MD5
             "/\b([a-f0-9]{40})\b/", //SHA1
             "\b[A-Fa-f0-9]{64}\b", //SHA256
-            "\b[A-Fa-f0-9]{128}\b", //SHA512
+            "\b[A-Fa-f0-9]{128}\b",  //SHA512
         ));
     }
 
