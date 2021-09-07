@@ -19,6 +19,10 @@ class DatabaseReversorTest extends BaseTest {
 		Startup::setConfig ( $this->config );
 		$this->databaseReversor = new DatabaseReversor ( new DbGenerator () );
 	}
+	
+	protected function getCacheDirectory() {
+		return "cache/";
+	}
 
 	/**
 	 * Tests DatabaseReversor->createDatabase()

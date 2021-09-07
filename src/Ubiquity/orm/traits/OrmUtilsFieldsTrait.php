@@ -59,7 +59,11 @@ trait OrmUtilsFieldsTrait {
 		if (! \is_string ( $instance )) {
 			$instance = \get_class ( $instance );
 		}
-		return \array_keys ( self::getAnnotationInfo ( $instance, "#primaryKeys" ) );
+		if($info=self::getAnnotationInfo ( $instance, "#primaryKeys" )){
+			return \array_keys ( $info );
+		}
+		return [];
+		
 	}
 
 	public static function getFirstKey($class) {

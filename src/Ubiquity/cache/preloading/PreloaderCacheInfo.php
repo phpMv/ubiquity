@@ -9,11 +9,11 @@ namespace Ubiquity\cache\preloading;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 class PreloaderCacheInfo {
-	private static const PRELOAD_KEY_CACHE = 'preload_statistics';
+	private const PRELOAD_KEY_CACHE = 'preload_statistics';
 
 	private static function getStatus() {
 		return \opcache_get_status ();
