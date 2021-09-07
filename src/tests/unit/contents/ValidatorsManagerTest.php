@@ -81,6 +81,10 @@ class ValidatorsManagerTest extends BaseTest {
 		$callback ();
 		return ob_get_clean ();
 	}
+	
+	protected function getCacheDirectory() {
+		return "cache-tests/";
+	}
 
 	/**
 	 * Tests ValidatorsManager::validate()
@@ -145,7 +149,7 @@ class ValidatorsManagerTest extends BaseTest {
 		ValidatorsManager::start ();
 		$groupes = DAO::getAll ( Groupe::class, '', false );
 		$result = ValidatorsManager::validateInstances ( $groupes );
-		$this->assertEquals ( sizeof ( $result ), 9 );
+		$this->assertEquals ( count ( $result ), 9 );
 	}
 
 	/**
