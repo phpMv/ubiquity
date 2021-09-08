@@ -14,6 +14,9 @@ coverage:
     c3_url: 'http://dev.local'
     cookie_domain: ".mysite.com"
     work_dir: '/home/scrutinizer/build/src/'
+    remote_context_options:
+        http:
+            timeout: 60
 
     include:
         - Ubiquity/*.php
