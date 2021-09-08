@@ -13,6 +13,7 @@ coverage:
     remote: false
     c3_url: 'http://dev.local'
     cookie_domain: ".mysite.com"
+    work_dir: '/home/scrutinizer/build/src/'
 
     include:
         - Ubiquity/*.php
