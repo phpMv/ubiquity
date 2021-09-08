@@ -1,4 +1,5 @@
 <?php
+include_once 'tests/acceptance/BaseAcceptance.php';
 class JsonAPICest extends BaseAcceptance {
 	const TIMEOUT = 50;
 

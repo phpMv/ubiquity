@@ -1,4 +1,5 @@
 <?php
+include_once 'tests/acceptance/BaseAcceptance.php';
 class CrudIndexCest extends BaseAcceptance {
 
 	public function _before(AcceptanceTester $I) {

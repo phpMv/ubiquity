@@ -1,4 +1,5 @@
 <?php
+include_once 'tests/acceptance/BaseAcceptance.php';
 class RestSimpleAPICest extends BaseAcceptance {
 	const TIMEOUT = 30;
 
