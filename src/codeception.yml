@@ -13,7 +13,7 @@ coverage:
     remote: false
     c3_url: 'http://dev.local'
     cookie_domain: ".mysite.com"
-    work_dir: '/home/scrutinizer/build/src/'
+    work_dir: 'src/'
     remote_context_options:
         http:
             timeout: 60
