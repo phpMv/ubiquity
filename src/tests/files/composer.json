@@ -4,7 +4,6 @@
 		"twig\/twig": "^3.0",
 		"phpmv\/ubiquity-annotations": "dev-main",
 		"phpmv\/php-mv-ui": "dev-master",
-		"phpmv\/ubiquity": "dev-master",
 		"codeception/c3": "2.*",
 		"codeception/codeception": "^4.0",
 		"codeception/lib-innerbrowser": "^1.5",
