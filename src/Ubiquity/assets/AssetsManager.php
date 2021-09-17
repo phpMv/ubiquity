@@ -14,7 +14,7 @@ use Ubiquity\utils\base\UArray;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  * @since Ubiquity 2.1.0
  *
  */
@@ -23,7 +23,7 @@ class AssetsManager {
 	private static $siteURL;
 	
 	private static function gString($template, $variable, $attributes = []) {
-		$implode = UArray::implodeAsso ( $attributes, ' ' );
+		$implode = UArray::implodeAsso ( $attributes, ' ','=','' );
 		return \sprintf ( $template, $variable, $implode );
 	}
 	

@@ -10,7 +10,7 @@ use Ubiquity\utils\base\traits\UArrayAsTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class UArray {
@@ -188,7 +188,11 @@ class UArray {
 	public static function implodeAsso($array, $glue, $op = '=', $quoteKey = '"', $quoteValue = '"') {
 		$res = [ ];
 		foreach ( $array as $k => $v ) {
-			$res [] = "{$quoteKey}{$k}{$quoteKey}{$op}{$quoteValue}{$v}{$quoteValue}";
+			if(\is_string($k)){
+				$res [] = "{$quoteKey}{$k}{$quoteKey}{$op}{$quoteValue}{$v}{$quoteValue}";
+			}else{
+				$res [] = "{$quoteKey}{$v}{$quoteKey}";
+			}
 		}
 		return \implode ( $glue, $res );
 	}
