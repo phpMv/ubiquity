@@ -19,24 +19,40 @@ class EventsManager {
 	 */
 	protected static $managedEvents = [];
 
-	public static function start() {
+	/**
+	 * Starts the event manager (in app/config/services.php)
+	 */
+	public static function start():void {
 		if (CacheManager::$cache->exists(self::$key)) {
 			self::$managedEvents = CacheManager::$cache->fetch(self::$key);
 		}
 	}
 
-	public static function addListener($eventName, $action) {
+	/**
+	 * Adds a listener on eventName
+	 * @param string $eventName
+	 * @param EventListenerInterface|callable $action
+	 */
+	public static function addListener($eventName, $action):void {
 		if (! isset(self::$managedEvents[$eventName])) {
 			self::$managedEvents[$eventName] = [];
 		}
 		self::$managedEvents[$eventName][] = $action;
 	}
 
-	public static function store() {
+	/**
+	 * Store the managed events in cache (do not use in prod)
+	 */
+	public static function store():void {
 		CacheManager::$cache->store(self::$key, self::$managedEvents);
 	}
 
-	public static function trigger($eventName, &...$params) {
+	/**
+	 * Trigger an event
+	 * @param string $eventName
+	 * @param mixed ...$params
+	 */
+	public static function trigger($eventName, &...$params):void {
 		if (isset(self::$managedEvents[$eventName])) {
 			foreach (self::$managedEvents[$eventName] as $action) {
 				self::triggerOne($action, $params);
@@ -44,7 +60,7 @@ class EventsManager {
 		}
 	}
 
-	private static function triggerOne($action, &$params) {
+	private static function triggerOne($action, &$params):void {
 		if (\is_callable($action)) {
 			\call_user_func_array($action, $params);
 		} elseif (is_subclass_of($action, EventListenerInterface::class)) {
