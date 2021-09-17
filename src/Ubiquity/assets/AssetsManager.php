@@ -28,7 +28,7 @@ class AssetsManager {
 	}
 	
 	private static function script($src, $attributes = []) {
-		return self::gString ( '<script type="text/javascript" src="%s" %s></script>', $src, $attributes );
+		return self::gString ( '<script src="%s" %s></script>', $src, $attributes );
 	}
 	
 	private static function stylesheet($link, $attributes = []) {
