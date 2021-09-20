@@ -9,10 +9,16 @@ The CRUD controllers allow you to perform basic operations on a Model class:
  - Delete
  - ...
  
-Creation
----------
  
- In the admin interface (web-tools), activate the **Controllers** part, and choose create **Crud controller**:
+.. note::
+	Since version 2.4.6, Two types of CrudController exist:
+    - `ResourceCrudController` associated with a model
+    - `IndexCrudController`, displaying an index and allowing to navigate between models.
+ 
+ResourceCrudController Creation
+-------------------------------
+ 
+ In the admin interface (web-tools), activate the **Controllers** part, and choose create **Resource Crud controller**:
 
 .. image:: /_static/images/crud/speControllerBtn.png
 
@@ -102,7 +108,7 @@ Display of the confirmation message before deletion:
 
 Customization
 -------------
-Create again a CrudController from the admin interface:
+Create again a ResourceCrudController from the admin interface:
 
 .. image:: /_static/images/crud/createCrudForm2.png
 
@@ -116,8 +122,8 @@ Overview
 Classes overriding
 ^^^^^^^^^^^^^^^^^^
 
-CRUDController methods to override
-##################################
+ResourceCRUDController methods to override
+##########################################
 
 +-------------------------------------------------------------------+---------------------------------------------------------------------------------+-------------------+
 | Method                                                            | Signification                                                                   | Default return    |
