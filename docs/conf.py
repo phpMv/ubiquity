@@ -48,7 +48,7 @@ html_favicon = 'favicon.png'
 
 # General information about the project.
 project = 'Ubiquity'
-copyright = '2017-2020, phpmv'
+copyright = '2017-2021, phpmv'
 author = 'phpmv'
 
 # The version info for the project you're documenting, acts as replacement for
