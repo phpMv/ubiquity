@@ -13,10 +13,12 @@ The CRUD controllers allow you to perform basic operations on a Model class:
 .. note::
 	Since version 2.4.6, Two types of CrudController exist:
     - `ResourceCrudController` associated with a model
-    - `IndexCrudController`, displaying an index and allowing to navigate between models.
+    - `MultiResourceCRUDController`, displaying an index and allowing to navigate between models.
  
-ResourceCrudController Creation
--------------------------------
+ResourceCrudController
+----------------------
+Creation
+~~~~~~~~
  
  In the admin interface (web-tools), activate the **Controllers** part, and choose create **Resource Crud controller**:
 
@@ -30,7 +32,7 @@ Then fill in the form:
 .. image:: /_static/images/crud/createCrudForm1.png
 
 Description of the features
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The generated controller:
 
@@ -107,7 +109,7 @@ Display of the confirmation message before deletion:
 .. image:: /_static/images/crud/usersControllerDelete1.png
 
 Customization
--------------
+~~~~~~~~~~~~~
 Create again a ResourceCrudController from the admin interface:
 
 .. image:: /_static/images/crud/createCrudForm2.png
@@ -219,7 +221,7 @@ ModelViewer methods to override
 +-------------------------------------------------------------------+---------------------------------------------------------------------------------+-------------------+
 
 CRUDDatas methods to override
-###############################
+#############################
 
 +--------------------------------------------------------------+---------------------------------------------------------------------------------+------------------------+
 | Method                                                       | Signification                                                                   | Default return         |
@@ -281,7 +283,7 @@ CRUDEvents methods to override
 
 
 CRUDFiles methods to override
-###############################
+#############################
 
 +-------------------------------------------------------------------+-----------------------------------------------------------------+-----------------------------------+
 | Method                                                            | Signification                                                   | Default return                    |
@@ -334,3 +336,66 @@ display.html
 Displayed in **frm** block
 
 .. image:: /_static/images/crud/template_display.png
+
+MultiResourceCrudController
+---------------------------
+
+.. note::
+	The `MultiResourceCRUDController` displays an index allowing to navigate between the CRUDs of the models.
+
+
+Creation
+~~~~~~~~
+ 
+ In the admin interface (web-tools), activate the **Controllers** part, and choose create **Index Crud controller**:
+
+.. image:: /_static/images/crud/speControllerBtn.png
+
+
+Then fill in the form:
+  - Enter the controller name
+  - The route path (which must contain the variable part `{resource}`)
+  - Then click on the validate button
+
+.. image:: /_static/images/crud/createIndexCrudForm1.png
+
+Description of the features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The generated controller:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/CrudIndex.php
+   
+   <?php
+   namespace controllers;
+   use Ubiquity\attributes\items\router\Route;
+   
+   #[Route(path: "/{resource}/crud",inherited: true,automated: true)]
+   class CrudIndex extends \Ubiquity\controllers\crud\MultiResourceCRUDController{
+   
+   		#[Route(name: "crud.index",priority: -1)]
+   		public function index() {
+   			parent::index();
+   		}
+   
+   		#[Route(path: "#//home/crud",name: "crud.home",priority: 100)]
+   		public function home(){
+   			parent::home();
+   		}
+   
+   		protected function getIndexType():array {
+   			return ['four link cards','card'];
+   		}
+   
+   		public function _getBaseRoute():string {
+   			return "/".$this->resource."/crud";
+   		}
+   
+   }
+   
+Test the created controller at `/home/crud` url:
+
+.. image:: /_static/images/crud/indexCrudController.png
+
