@@ -407,8 +407,8 @@ Create again a `MultiResourceCrudController` from the admin interface:
 
 It is now possible to customize the module using overriding like the `ResourceCRUDControllers`.
 
-Specific classe to override
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Specific classes to override
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 MultiResourceCRUDController methods to override
 ###############################################

@@ -10,12 +10,12 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class ControllerBase extends Controller {
-	protected $headerView = "@framework/main/vHeader.html";
-	protected $footerView = "@framework/main/vFooter.html";
+	protected $headerView = '@framework/main/vHeader.html';
+	protected $footerView = '@framework/main/vFooter.html';
 
 	public function initialize() {
 		if (! URequest::isAjax ()) {

@@ -31,7 +31,7 @@ class Startup {
 		return self::$urlParts = \explode ( '/', \rtrim ( $url, '/' ) );
 	}
 
-	protected static function _getControllerInstance($controllerName): ?object {
+	protected static function _getControllerInstance(string $controllerName): ?object {
 		if (\class_exists ( $controllerName, true )) {
 			$controller = new $controllerName ();
 			// Dependency injection
@@ -43,7 +43,7 @@ class Startup {
 		return null;
 	}
 
-	protected static function startTemplateEngine(&$config): void {
+	protected static function startTemplateEngine(array &$config): void {
 		try {
 			$templateEngine = $config ['templateEngine'];
 			$engineOptions = $config ['templateEngineOptions'] ?? [ 'cache' => false ];
@@ -99,7 +99,7 @@ class Startup {
 	 * @param boolean $initialize If true, the **initialize** method of the controller is called
 	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 */
-	public static function forward($url, $initialize = true, $finalize = true): void {
+	public static function forward(string $url, bool $initialize = true, bool $finalize = true): void {
 		$u = self::parseUrl ( $url );
 		if (\is_array ( Router::getRoutes () ) && ($ru = Router::getRoute ( $url, true, self::$config ['debug'] ?? false)) !== false) {
 			if (\is_array ( $ru )) {
@@ -152,7 +152,7 @@ class Startup {
 	 * @param boolean $initialize If true, the **initialize** method of the controller is called
 	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 */
-	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
+	public static function runAction(array &$u, bool $initialize = true, bool $finalize = true): void {
 		self::$controller = $ctrl = $u ['controller'];
 		self::$action = $action = $u ['action'] ?? 'index';
 		self::$actionParams = $u['params']??[];
@@ -251,7 +251,7 @@ class Startup {
 	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 * @return string
 	 */
-	public static function runAsString(array &$u, $initialize = true, $finalize = true): string {
+	public static function runAsString(array &$u, bool $initialize = true, bool $finalize = true): string {
 		\ob_start ();
 		self::runAction ( $u, $initialize, $finalize );
 		return \ob_get_clean ();

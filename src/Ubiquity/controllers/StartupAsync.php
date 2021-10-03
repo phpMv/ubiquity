@@ -28,7 +28,7 @@ class StartupAsync extends Startup {
 	 * @param boolean $initialize If true, the **initialize** method of the controller is called
 	 * @param boolean $finalize If true, the **finalize** method of the controller is called
 	 */
-	public static function forward($url, $initialize = true, $finalize = true): void {
+	public static function forward(string $url, bool $initialize = true, bool $finalize = true): void {
 		$methodUrl=$_SERVER['REQUEST_METHOD'].$url;
 		if(($m=(self::$routes[$methodUrl]??false))!==false){
 			$m($initialize,$finalize);
@@ -60,7 +60,7 @@ class StartupAsync extends Startup {
 		}
 	}
 	
-	public static function runAction(array &$u, $initialize = true, $finalize = true): void {
+	public static function runAction(array &$u, bool $initialize = true, bool $finalize = true): void {
 		self::$controller = $ctrl = $u ['controller'];
 		self::$action = $action = $u ['action'];
 		self::$actionParams = $u['params']??[];
@@ -96,7 +96,7 @@ class StartupAsync extends Startup {
 					}
 				}
 			} else {
-				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exists! <br/>', 'runAction' );
+				Logger::warn ( 'Startup', 'The controller `' . $ctrl . '` doesn\'t exist! <br/>', 'runAction' );
 				static::onError ( 404 );
 			}
 		} catch ( \Error $eC ) {
@@ -109,14 +109,14 @@ class StartupAsync extends Startup {
 		}
 	}
 	
-	public static function getControllerInstance($controllerName): ?object {
+	public static function getControllerInstance(string $controllerName): ?object {
 		return self::$controllers [$controllerName] ??= self::_getControllerInstance ( $controllerName );
 	}
 	
-	public static function warmupAction($controller, $action = 'index') {
-		ob_start ();
+	public static function warmupAction(string $controller, string $action = 'index') {
+		\ob_start ();
 		$ru = [ 'controller'=>$controller,'action'=>$action ];
 		static::runAction ( $ru, true, true );
-		ob_end_clean ();
+		\ob_end_clean ();
 	}
 }
