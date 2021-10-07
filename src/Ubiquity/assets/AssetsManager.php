@@ -46,7 +46,7 @@ class AssetsManager {
 		self::$siteURL = \rtrim ( $siteURL, '/' );
 	}
 	
-	public static function setAssetsFolder($assetsFolder='/public/assets/'){
+	public static function setAssetsFolder($assetsFolder='/assets/'){
 		self::$assetsFolder=$assetsFolder;
 	}
 	
