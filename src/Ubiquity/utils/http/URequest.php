@@ -305,7 +305,7 @@ use URequestTesterTrait;
 		return [
 				'uri' => $uri,
 				'isAction' => $isAction,
-				'file' => $fe
+				'file' => $fe??false
 		];
 	}
 }
