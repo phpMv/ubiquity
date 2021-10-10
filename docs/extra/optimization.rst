@@ -128,7 +128,7 @@ As for the configuration file, keep only those items that are essential to your 
 +---------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
 | **Router::addRoute("_default", "controllers\\IndexController")**    | Defines the default route (to remove in production)                                                                    |
 +---------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| **\Ubiquity\assets\AssetsManager::start($config)**                  | Assigns the variable siteUrl to the ThemeManager, to be used only if the ``css`` and ``js`` functions of twig are used |
+| **\\Ubiquity\\assets\\AssetsManager::start($config)**               | Assigns the variable siteUrl to the ThemeManager, to be used only if the ``css`` and ``js`` functions of twig are used |
 +---------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
 
 **Example of a Services file with a database and starting the router :**

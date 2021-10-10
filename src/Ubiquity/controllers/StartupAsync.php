@@ -10,7 +10,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 class StartupAsync extends Startup {
@@ -30,7 +30,8 @@ class StartupAsync extends Startup {
 	 */
 	public static function forward(string $url, bool $initialize = true, bool $finalize = true): void {
 		$methodUrl=$_SERVER['REQUEST_METHOD'].$url;
-		if(($m=(self::$routes[$methodUrl]??false))!==false){
+		if(isset(self::$routes[$methodUrl])){
+			$m=self::$routes[$methodUrl];
 			$m($initialize,$finalize);
 			return ;
 		}
@@ -117,6 +118,12 @@ class StartupAsync extends Startup {
 		\ob_start ();
 		$ru = [ 'controller'=>$controller,'action'=>$action ];
 		static::runAction ( $ru, true, true );
+		\ob_end_clean ();
+	}
+	
+	public static function warmupForward(string $url, bool $initialize = true, bool $finalize = true): void {
+		\ob_start ();
+		static::forward( $url, $initialize, $finalize );
 		\ob_end_clean ();
 	}
 }
