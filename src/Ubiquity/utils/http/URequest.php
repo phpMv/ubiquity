@@ -295,12 +295,12 @@ use URequestTesterTrait;
 		return false;
 	}
 	
-	public static function parseURI($basedir){
-		return self::$uriInfos[$_SERVER['REQUEST_URI']]??=self::_parseURI($basedir);
+	public static function parseURI(string $uri,string $basedir):array{
+		return self::$uriInfos[$uri]??=self::_parseURI($uri,$basedir);
 	}
 	
-	private static function _parseURI( $basedir) {
-		$uri = \ltrim(\urldecode(\parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), '/');
+	private static function _parseURI(string $uri,string $basedir):array {
+		$uri = \ltrim(\urldecode(\parse_url($uri, PHP_URL_PATH)), '/');
 		$isAction = ($uri == null || ! ($fe = \file_exists($basedir . '/../' . $uri))) && ($uri != 'favicon.ico');
 		return [
 				'uri' => $uri,
