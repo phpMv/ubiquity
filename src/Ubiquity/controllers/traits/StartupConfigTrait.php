@@ -18,7 +18,7 @@ use Ubiquity\utils\http\session\PhpSession;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.5
+ * @version 1.1.6
  *
  */
 trait StartupConfigTrait {
@@ -52,8 +52,7 @@ trait StartupConfigTrait {
 	}
 
 	public static function getNS($part = 'controllers'): string {
-		$ns = (self::$config ['mvcNS'] [$part])??$part;
-		return ($ns != null) ? $ns .= "\\" : $ns;
+		return ((self::$config ['mvcNS'] [$part])??$part)."\\";
 	}
 
 	protected static function setCtrlNS(): string {

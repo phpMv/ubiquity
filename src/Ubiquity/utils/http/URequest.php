@@ -295,7 +295,7 @@ use URequestTesterTrait;
 		return false;
 	}
 	
-	public static function parseURI(string $uri,string $basedir):array{
+	public static function parseURI(string $uri,string $basedir):array {
 		return self::$uriInfos[$uri]??=self::_parseURI($uri,$basedir);
 	}
 	
