@@ -17,6 +17,8 @@ use Ubiquity\utils\http\traits\URequestTesterTrait;
  */
 class URequest {
 use URequestTesterTrait;
+
+	private static array $uriInfos;
 	/**
 	 * Affects member to member the values of the associative array $values to the members of the object $object
 	 * Used for example to retrieve the variables posted and assign them to the members of an object
@@ -291,5 +293,19 @@ use URequestTesterTrait;
 			return \password_verify( $_POST [$passwordKey], $hash );
 		}
 		return false;
+	}
+	
+	public static function parseURI(string $uri,string $basedir):array {
+		return self::$uriInfos[$uri]??=self::_parseURI($uri,$basedir);
+	}
+	
+	private static function _parseURI(string $uri,string $basedir):array {
+		$uri = \ltrim(\urldecode(\parse_url($uri, PHP_URL_PATH)), '/');
+		$isAction = ($uri == null || ! ($fe = \file_exists($basedir . '/../' . $uri))) && ($uri != 'favicon.ico');
+		return [
+				'uri' => $uri,
+				'isAction' => $isAction,
+				'file' => $fe??false
+		];
 	}
 }
