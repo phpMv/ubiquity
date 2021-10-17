@@ -26,6 +26,7 @@ trait StartupConfigTrait {
 	protected static $ctrlNS;
 	protected static $httpInstance;
 	protected static $sessionInstance;
+	protected static $activeDomain='';
 
 	public static function getConfig(): array {
 		return self::$config;
@@ -52,7 +53,7 @@ trait StartupConfigTrait {
 	}
 
 	public static function getNS($part = 'controllers'): string {
-		return ((self::$config ['mvcNS'] [$part])??$part)."\\";
+		return self::$activeDomain.((self::$config ['mvcNS'] [$part])??$part)."\\";
 	}
 
 	protected static function setCtrlNS(): string {
@@ -162,5 +163,25 @@ trait StartupConfigTrait {
 		}
 		return false;
 	}
-}
 
+	/**
+	 * Sets the active domain for a Domain Driven Design approach.
+	 * @param string $domain The new active domain name
+	 * @param string $base The base folder for domains
+	 */
+	public static function setActiveDomain(string $domain,string $base='domains'): void {
+			self::$activeDomain = $base . '\\' . \trim($domain, '\\') . '\\';
+			if(isset(self::$templateEngine)){
+				$viewFolder=\str_replace('\\',\DS,\ROOT.self::$activeDomain.'\\views');
+				self::$templateEngine->addPath($viewFolder,$domain);
+			}
+	}
+
+	public static function getActiveDomain(): string {
+		return self::$activeDomain;
+	}
+
+	public static function resetActiveDomain(): void {
+		self::$activeDomain='';
+	}
+}

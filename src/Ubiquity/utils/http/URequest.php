@@ -297,7 +297,13 @@ use URequestTesterTrait;
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Internal use for async servers (Swoole and Workerman).
+	 * @param string $uri
+	 * @param string $basedir
+	 * @return array
+	 */
 	public static function parseURI(string $uri,string $basedir):array {
 		return self::$uriInfos[$uri]??=self::_parseURI($uri,$basedir);
 	}
