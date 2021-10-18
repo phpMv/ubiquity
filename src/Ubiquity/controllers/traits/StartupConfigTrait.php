@@ -53,7 +53,7 @@ trait StartupConfigTrait {
 	}
 
 	public static function getNS($part = 'controllers'): string {
-		return self::$activeDomain.((self::$config ['mvcNS'] [$part])??$part)."\\";
+		return self::$activeDomainBase.((self::$config ['mvcNS'] [$part])??$part)."\\";
 	}
 
 	protected static function setCtrlNS(): string {
