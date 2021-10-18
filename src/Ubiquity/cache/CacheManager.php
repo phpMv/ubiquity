@@ -114,7 +114,7 @@ class CacheManager {
 	 * @return array
 	 */
 	protected static function _getFiles(&$config, $type, $silent = false) {
-		$typeNS = Startup::getActiveDomain().$config['mvcNS'][$type];
+		$typeNS = Startup::getActiveDomainBase().$config['mvcNS'][$type];
 		$typeDir = \ROOT . \DS . \str_replace("\\", \DS, $typeNS);
 		if (! $silent) {
 			echo \ucfirst($type) . ' directory is ' . \realpath(\ROOT . $typeNS) . "\n";
