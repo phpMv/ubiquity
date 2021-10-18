@@ -6,7 +6,9 @@ use Ubiquity\controllers\Controller;
 use Ubiquity\controllers\Router;
 use Ubiquity\controllers\Startup;
 use Ubiquity\controllers\StartupAsync;
+use Ubiquity\domains\DDDManager;
 use Ubiquity\utils\base\UIntrospection;
+use Ubiquity\utils\base\UString;
 use Ubiquity\utils\http\UResponse;
 
 /**
@@ -26,11 +28,12 @@ trait RouterCacheTrait {
 	public static function controllerCacheUpdated(&$config) {
 		$result = false;
 		$newRoutes = self::parseControllerFiles ( $config, true );
-		$ctrls = self::getControllerCache ();
+		$domain=DDDManager::getActiveDomain();
+		$ctrls = self::getControllerCacheByDomain(false,$domain);
 		if ($newRoutes ['default'] != $ctrls) {
 			$result ['default'] = true;
 		}
-		$ctrls = self::getControllerCache ( true );
+		$ctrls = self::getControllerCacheByDomain ( true,$domain );
 		if ($newRoutes ['rest'] != $ctrls) {
 			$result ['rest'] = true;
 		}
@@ -65,6 +68,40 @@ trait RouterCacheTrait {
 		$key = ($isRest) ? 'rest' : 'default';
 		if (self::$cache->exists ( 'controllers/routes.' . $key )) {
 			return self::$cache->fetch ( 'controllers/routes.' . $key );
+		}
+		return [ ];
+	}
+
+	/**
+	 *
+	 * @param boolean $isRest
+	 * @param string $domain
+	 * @return array
+	 */
+	public static function getControllerCacheByDomain(bool $isRest = false,string $domain=''): array {
+		$key = ($isRest) ? 'rest' : 'default';
+		if (self::$cache->exists ( 'controllers/routes.' . $key )) {
+			if($domain=='') {
+				return self::$cache->fetch('controllers/routes.' . $key);
+			}else{
+				$ns=Startup::getNS();
+				$routes=self::$cache->fetch('controllers/routes.' . $key);
+				$result=[];
+				foreach ($routes as $k=>$route){
+					if(isset($route['controller'])){
+						if(UString::startswith($route['controller'],$ns)) {
+							$result[$k]=$route;
+						}
+					}else{
+						foreach ($route as $method=>$routePart){
+							if(UString::startswith($routePart['controller'],$ns)) {
+								$result[$k][$method]=$routePart;
+							}
+						}
+					}
+				}
+				return $result;
+			}
 		}
 		return [ ];
 	}
