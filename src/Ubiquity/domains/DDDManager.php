@@ -61,4 +61,7 @@ class DDDManager {
 		return '';
 	}
 
+	public static function getDomainBase($domain){
+		return self::$base.\DS. \trim($domain, '\\') . '\\';
+	}
 }

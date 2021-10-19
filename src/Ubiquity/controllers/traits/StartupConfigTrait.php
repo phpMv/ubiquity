@@ -172,8 +172,8 @@ trait StartupConfigTrait {
 	public static function setActiveDomainBase(string $domain,string $base='domains'): void {
 		self::$activeDomainBase = $base . '\\' . \trim($domain, '\\') . '\\';
 		if(isset(self::$templateEngine)){
-			$viewFolder=\str_replace('\\',\DS,\ROOT.self::$activeDomainBase.'\\views');
-			self::$templateEngine->addPath($viewFolder,$domain);
+			$viewFolder=\realpath( \str_replace('\\',\DS,\ROOT.self::$activeDomainBase.'views'));
+			self::$templateEngine->setPaths([$viewFolder],$domain);
 		}
 	}
 
