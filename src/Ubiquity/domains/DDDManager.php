@@ -3,6 +3,7 @@
 
 namespace Ubiquity\domains;
 
+use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UFileSystem;
 
@@ -19,8 +20,8 @@ class DDDManager {
 	private static $base='domains';
 	private static $activeDomain='';
 
-	public static function start(string $base='domains'): void{
-		self::$base=$base;
+	public static function start(): void{
+		self::$base=Startup::$config['mvcNS']['domains']??'domains';
 	}
 
 	public static function setDomain(string $domain): void {
@@ -85,11 +86,40 @@ class DDDManager {
 		return false;
 	}
 
+	private static function updateClassesNamespace(string $oldBase,string $newBase){
+		$files=UFileSystem::glob_recursive(\ROOT.$newBase.\DS.'*.{php}',GLOB_BRACE);
+		foreach ($files as $file){
+			if(($content=\file_get_contents($file))!==false){
+				$content=\str_replace($oldBase.'\\',$newBase.'\\',$content);
+				\file_put_contents($file,$content);
+			}
+		}
+	}
+
+
 	/**
 	 * @return string
 	 */
 	public static function getBase(): string {
 		return self::$base;
 	}
-	
+
+	/**
+	 * @param string $base
+	 */
+	public static function setBase(string $base): void {
+		if (self::$base !== $base) {
+			if (\file_exists(\ROOT . self::$base)) {
+				if(\rename(\ROOT . self::$base, \ROOT . $base)){
+					self::updateClassesNamespace(self::$base,$base);
+				}
+			} else {
+				UFileSystem::safeMkdir(\ROOT . $base);
+			}
+			self::$base = $base;
+			$config = Startup::$config;
+			$config['mvcNS']['domains'] = $base;
+			Startup::updateConfig($config);
+		}
+	}
 }
