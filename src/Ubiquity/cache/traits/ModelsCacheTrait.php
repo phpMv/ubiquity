@@ -53,7 +53,7 @@ trait ModelsCacheTrait {
 
 	public static function initModelsCache(&$config, $forChecking = false, $silent = false) {
 		$modelsDb = [ ];
-		$files = self::getModelsFiles ( $config, $silent );
+		$files = self::getAllModelsFiles( $config, $silent );
 		foreach ( $files as $file ) {
 			if (\is_file ( $file )) {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
@@ -116,6 +116,17 @@ trait ModelsCacheTrait {
 	 */
 	public static function getModelsFiles(&$config, $silent = false) {
 		return self::_getFiles ( $config, 'models', $silent );
+	}
+
+	/**
+	 * Returns an array of all model files
+	 *
+	 * @param array $config
+	 * @param boolean $silent
+	 * @return array
+	 */
+	public static function getAllModelsFiles(&$config, $silent = false) {
+		return self::_getAllFiles ( $config, 'models', $silent );
 	}
 
 	/**

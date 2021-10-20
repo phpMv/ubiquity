@@ -140,9 +140,9 @@ class CacheManager {
 		$domains=DDDManager::getDomains();
 		$result=[];
 		foreach ($domains as $domain){
-			$result+=self::_getFiles($config,$type,$silent,$domain);
+			$result=\array_merge($result,self::_getFiles($config,$type,$silent,$domain));
 		}
-		$result+=self::_getFiles($config,$type,$silent,'');
+		$result=\array_merge($result, self::_getFiles($config,$type,$silent,''));
 		return $result;
 	}
 }

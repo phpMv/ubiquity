@@ -27,10 +27,10 @@ trait RouterCacheTrait {
 
 	public static function controllerCacheUpdated(&$config) {
 		$result = false;
-		$newRoutes = self::parseControllerFiles ( $config, true );
 		$domain=DDDManager::getActiveDomain();
+		$newRoutes = self::parseControllerFiles ( $config, true ,$domain!='');
 		$ctrls = self::getControllerCacheByDomain(false,$domain);
-		if ($newRoutes ['default'] != $ctrls) {
+		if ($newRoutes ['default'] != $ctrls && !(false)) {
 			$result ['default'] = true;
 		}
 		$ctrls = self::getControllerCacheByDomain ( true,$domain );
