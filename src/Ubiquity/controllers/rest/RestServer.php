@@ -15,7 +15,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.0.7
  *
  */
 class RestServer {
@@ -209,11 +209,8 @@ class RestServer {
 
 	public static function getRestNamespace() {
 		$config = Startup::getConfig ();
-		$controllerNS = $config ["mvcNS"] ["controllers"];
-		$restNS = "";
-		if (isset ( $config ["mvcNS"] ["rest"] )) {
-			$restNS = $config ["mvcNS"] ["rest"];
-		}
+		$controllerNS = Startup::getNS('controllers');
+		$restNS = $config ["mvcNS"]["rest"]??"";
 		return ClassUtils::getNamespaceFromParts ( [ $controllerNS,$restNS ] );
 	}
 
