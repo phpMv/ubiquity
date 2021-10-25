@@ -175,6 +175,16 @@ class Twig extends TemplateEngine {
 	public function addPath(string $path, string $namespace) {
 		$this->loader->addPath($path, $namespace);
 	}
+
+	/**
+	 * Sets a path in a namespace
+	 *
+	 * @param array $paths The paths to add
+	 * @param string $namespace The namespace to use
+	 */
+	public function setPaths(array $paths, string $namespace) {
+		$this->loader->setPaths($paths, $namespace);
+	}
 	
 	/**
 	 * Defines the activeTheme.

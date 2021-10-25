@@ -134,6 +134,7 @@ trait ModelsCacheTrait {
 	 *
 	 * @param array $config
 	 * @param boolean $silent
+	 * @param ?string $databaseOffset
 	 * @return string[]
 	 */
 	public static function getModels(&$config, $silent = false, $databaseOffset = 'default') {
@@ -147,12 +148,21 @@ trait ModelsCacheTrait {
 				if (\count($ret) > 0) {
 					$db = $ret[0]->name;
 				}
-				if ($db === $databaseOffset) {
+				if ($databaseOffset==null || $db === $databaseOffset) {
 					$result[] = $className;
 				}
 			}
 		}
 		return $result;
+	}
+
+	public static function getModelsNamespace(array &$config,string $databaseOffet='default'): ?string {
+		$files = self::getModelsFiles($config, true);
+		if(\count($files)>0){
+			$file=$files[0];
+			return ClassUtils::getClassNamespaceFromFile($file);
+		}
+		return null;
 	}
 
 	public static function getModelsDatabases() {
