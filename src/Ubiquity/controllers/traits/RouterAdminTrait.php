@@ -2,6 +2,8 @@
 
 namespace Ubiquity\controllers\traits;
 
+use Ubiquity\controllers\Startup;
+
 /**
  * Trait for admin part of Router class.
  * Ubiquity\controllers\traits$RouterAdminTrait
@@ -26,7 +28,7 @@ trait RouterAdminTrait {
 			if (! isset ( $routeDetails ['controller'] )) {
 				$routeDetails = \current ( $routeDetails );
 			}
-			if ($controller === $routeDetails ['controller'] && $action === $routeDetails ['action']) {
+			if ($controller === str_replace('\\\\','\\',$routeDetails ['controller']) && $action === $routeDetails ['action']) {
 				$routeDetails ['path'] = $routePath;
 				return $routeDetails;
 			}
@@ -112,6 +114,17 @@ trait RouterAdminTrait {
 			}
 		}
 		return $result;
+	}
+	public static function getRouteInfoByDefaultRouting(string $url){
+		$ns = Startup::getNS();
+		$url=\trim($url,'/');
+		$u = \explode("/", $url);
+		$controller = $ns . $u[0];
+		if (\count($u) > 1)
+			$action = $u[1];
+		else
+			$action = "index";
+		return self::getRouteInfoByControllerAction($controller,$action);
 	}
 }
 

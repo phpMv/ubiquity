@@ -170,11 +170,11 @@ trait StartupConfigTrait {
 	 * @param string $base The base folder for domains
 	 */
 	public static function setActiveDomainBase(string $domain,string $base='domains'): void {
-		self::$activeDomainBase = $base . '\\' . \trim($domain, '\\') . '\\';
-		if(isset(self::$templateEngine)){
-			$viewFolder=\realpath( \str_replace('\\',\DS,\ROOT.self::$activeDomainBase.'views'));
-			self::$templateEngine->setPaths([$viewFolder],$domain);
-		}
+			self::$activeDomainBase = $base . '\\' . \trim($domain, '\\') . '\\';
+			if(isset(self::$templateEngine)){
+				$viewFolder=\realpath( \str_replace('\\',\DS,\ROOT.self::$activeDomainBase.'views'));
+				self::$templateEngine->setPaths([$viewFolder],$domain);
+			}
 	}
 
 	public static function getActiveDomainBase(): string {
