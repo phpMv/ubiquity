@@ -32,9 +32,13 @@ trait DevRouterCacheTrait {
 		return [ ];
 	}
 	
-	private static function parseControllerFiles(&$config, $silent = false) {
+	private static function parseControllerFiles(&$config, $silent = false,$activeDomain=false) {
 		$routes = [ 'rest' => [ ],'default' => [ ] ];
-		$files = self::getControllersFiles ( $config, $silent );
+		if($activeDomain){
+			$files=self::getControllersFiles($config,$silent);
+		}else {
+			$files = self::getAllControllersFiles($config, $silent);
+		}
 		$annotsEngine = self::getAnnotationsEngineInstance ();
 		foreach ( $files as $file ) {
 			if (is_file ( $file )) {
@@ -106,6 +110,10 @@ trait DevRouterCacheTrait {
 	
 	public static function getControllersFiles(&$config, $silent = false) {
 		return self::_getFiles ( $config, 'controllers', $silent );
+	}
+
+	public static function getAllControllersFiles(&$config, $silent = false) {
+		return self::_getAllFiles ( $config, 'controllers', $silent );
 	}
 	
 	public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false, $includeAbstract = false) {

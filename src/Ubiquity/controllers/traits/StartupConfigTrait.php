@@ -26,6 +26,7 @@ trait StartupConfigTrait {
 	protected static $ctrlNS;
 	protected static $httpInstance;
 	protected static $sessionInstance;
+	protected static $activeDomainBase='';
 
 	public static function getConfig(): array {
 		return self::$config;
@@ -36,7 +37,7 @@ trait StartupConfigTrait {
 	}
 
 	public static function getModelsDir(): string {
-		return self::$config ['mvcNS'] ['models'];
+		return str_replace('\\',\DS,self::getNS('models'));
 	}
 
 	public static function getModelsCompletePath(): string {
@@ -52,7 +53,7 @@ trait StartupConfigTrait {
 	}
 
 	public static function getNS($part = 'controllers'): string {
-		return ((self::$config ['mvcNS'] [$part])??$part)."\\";
+		return self::$activeDomainBase.((self::$config ['mvcNS'] [$part])??$part)."\\";
 	}
 
 	protected static function setCtrlNS(): string {
@@ -162,5 +163,25 @@ trait StartupConfigTrait {
 		}
 		return false;
 	}
-}
 
+	/**
+	 * Sets the active domain for a Domain Driven Design approach.
+	 * @param string $domain The new active domain name
+	 * @param string $base The base folder for domains
+	 */
+	public static function setActiveDomainBase(string $domain,string $base='domains'): void {
+			self::$activeDomainBase = $base . '\\' . \trim($domain, '\\') . '\\';
+			if(isset(self::$templateEngine)){
+				$viewFolder=\realpath( \str_replace('\\',\DS,\ROOT.self::$activeDomainBase.'views'));
+				self::$templateEngine->setPaths([$viewFolder],$domain);
+			}
+	}
+
+	public static function getActiveDomainBase(): string {
+		return self::$activeDomainBase;
+	}
+
+	public static function resetActiveDomainBase(): void {
+		self::$activeDomainBase='';
+	}
+}

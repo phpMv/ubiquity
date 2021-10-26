@@ -8,6 +8,7 @@ namespace Ubiquity\cache;
 use Ubiquity\cache\traits\ModelsCacheTrait;
 use Ubiquity\cache\traits\RestCacheTrait;
 use Ubiquity\cache\traits\RouterCacheTrait;
+use Ubiquity\domains\DDDManager;
 use Ubiquity\utils\base\UFileSystem;
 
 use Ubiquity\controllers\Startup;
@@ -113,11 +114,35 @@ class CacheManager {
 	 * @param boolean $silent
 	 * @return array
 	 */
-	protected static function _getFiles(&$config, $type, $silent = false) {
-		$typeNS = $config['mvcNS'][$type];
+	protected static function _getFiles(&$config, $type, $silent = false,$domain=null) {
+		if($domain==null){
+			$domainBase=Startup::getActiveDomainBase();
+		}else{
+			$domainBase=DDDManager::getDomainBase($domain);
+		}
+		$typeNS = $domainBase.($config['mvcNS'][$type])??$type;
 		$typeDir = \ROOT . \DS . \str_replace("\\", \DS, $typeNS);
-		if (! $silent)
+		if (! $silent) {
 			echo \ucfirst($type) . ' directory is ' . \realpath(\ROOT . $typeNS) . "\n";
+		}
 		return UFileSystem::glob_recursive($typeDir . \DS . '*.php');
+	}
+
+	/**
+	 * Returns an array of all files from type $type
+	 *
+	 * @param array $config
+	 * @param string $type
+	 * @param boolean $silent
+	 * @return array
+	 */
+	protected static function _getAllFiles(&$config, $type, $silent = false) {
+		$domains=DDDManager::getDomains();
+		$result=[];
+		foreach ($domains as $domain){
+			$result=\array_merge($result,self::_getFiles($config,$type,$silent,$domain));
+		}
+		$result=\array_merge($result, self::_getFiles($config,$type,$silent,''));
+		return $result;
 	}
 }

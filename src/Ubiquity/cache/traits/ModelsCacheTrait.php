@@ -53,7 +53,7 @@ trait ModelsCacheTrait {
 
 	public static function initModelsCache(&$config, $forChecking = false, $silent = false) {
 		$modelsDb = [ ];
-		$files = self::getModelsFiles ( $config, $silent );
+		$files = self::getAllModelsFiles( $config, $silent );
 		foreach ( $files as $file ) {
 			if (\is_file ( $file )) {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
@@ -119,10 +119,22 @@ trait ModelsCacheTrait {
 	}
 
 	/**
+	 * Returns an array of all model files
+	 *
+	 * @param array $config
+	 * @param boolean $silent
+	 * @return array
+	 */
+	public static function getAllModelsFiles(&$config, $silent = false) {
+		return self::_getAllFiles ( $config, 'models', $silent );
+	}
+
+	/**
 	 * Returns an array of the models class names
 	 *
 	 * @param array $config
 	 * @param boolean $silent
+	 * @param ?string $databaseOffset
 	 * @return string[]
 	 */
 	public static function getModels(&$config, $silent = false, $databaseOffset = 'default') {
@@ -136,12 +148,21 @@ trait ModelsCacheTrait {
 				if (\count($ret) > 0) {
 					$db = $ret[0]->name;
 				}
-				if ($db === $databaseOffset) {
+				if ($databaseOffset==null || $db === $databaseOffset) {
 					$result[] = $className;
 				}
 			}
 		}
 		return $result;
+	}
+
+	public static function getModelsNamespace(array &$config,string $databaseOffet='default'): ?string {
+		$files = self::getModelsFiles($config, true);
+		if(\count($files)>0){
+			$file=$files[0];
+			return ClassUtils::getClassNamespaceFromFile($file);
+		}
+		return null;
 	}
 
 	public static function getModelsDatabases() {
