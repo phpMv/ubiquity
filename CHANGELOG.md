@@ -31,6 +31,15 @@ app/
             ...
 ```
 
+- Route main parameters
+
+```php
+#[Route('/foo/{mainParam}')]
+public class FooController {
+	private $mainParam;
+}
+```
+
 ### Fixed
 - Tests pb (codeception vulnerability)
 - AssetsManager js and css attributes pb (no open issue)
