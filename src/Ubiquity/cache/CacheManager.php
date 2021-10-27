@@ -136,7 +136,7 @@ class CacheManager {
 	 * @param boolean $silent
 	 * @return array
 	 */
-	protected static function _getAllFiles(&$config, $type, $silent = false) {
+	protected static function _getAllFiles(&$config, $type, $silent = false): array {
 		$domains=DDDManager::getDomains();
 		$result=[];
 		foreach ($domains as $domain){

@@ -28,9 +28,11 @@ trait RouterAdminTrait {
 			if (! isset ( $routeDetails ['controller'] )) {
 				$routeDetails = \current ( $routeDetails );
 			}
-			if ($controller === str_replace('\\\\','\\',$routeDetails ['controller']) && $action === $routeDetails ['action']) {
-				$routeDetails ['path'] = $routePath;
-				return $routeDetails;
+			if(\is_string($routeDetails ['controller'])){
+				if ($controller === \str_replace('\\\\','\\',$routeDetails ['controller']) && $action === $routeDetails ['action']) {
+					$routeDetails ['path'] = $routePath;
+					return $routeDetails;
+				}
 			}
 		}
 		return false;

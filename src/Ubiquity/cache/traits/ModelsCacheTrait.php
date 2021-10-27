@@ -24,6 +24,8 @@ use Ubiquity\orm\OrmUtils;
 trait ModelsCacheTrait {
 
 	abstract protected static function _getFiles(&$config, $type, $silent = false);
+	abstract protected static function _getAllFiles(&$config, $type, $silent = false): array ;
+
 	private static $modelsDatabaseKey = 'models' . \DIRECTORY_SEPARATOR . '_modelsDatabases';
 
 	public static function createOrmModelCache($classname) {
@@ -156,7 +158,7 @@ trait ModelsCacheTrait {
 		return $result;
 	}
 
-	public static function getModelsNamespace(array &$config,string $databaseOffset='default'): ?string {
+	public static function getModelsNamespace(string $databaseOffset='default'): ?string {
 		$modelsDatabases=self::getModelsDatabases();
 		foreach ($modelsDatabases as $model=>$offset){
 			if($offset===$databaseOffset){

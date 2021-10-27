@@ -77,7 +77,7 @@ class DDDManager {
 	}
 
 	public static function createDomain(string $domainName): bool {
-		$baseFolder=$folder=\ROOT.self::$base.\DS.$domainName.\DS;
+		$baseFolder=\ROOT.self::$base.\DS.$domainName.\DS;
 		$result=self::createFolder($baseFolder.'views');
 		if($result) {
 			$result = self::createFolder($baseFolder . (Startup::$config['mvcNS']['controllers']) ?? 'controllers');
