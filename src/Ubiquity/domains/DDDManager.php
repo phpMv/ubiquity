@@ -6,6 +6,7 @@ namespace Ubiquity\domains;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\utils\base\UString;
 
 /**
  * Manager for a Domain Driven Design approach.
@@ -20,13 +21,21 @@ class DDDManager {
 	private static $base='domains';
 	private static $activeDomain='';
 
+	private static function getNamespace(string $type='controllers'): string{
+		$prefix='';
+		if(self::$activeDomain!='') {
+			$prefix = self::$base . '\\' . self::$activeDomain . '\\';
+		}
+		return $prefix.((Startup::$config['mvcNS'][$type]) ?? $type);
+	}
+
 	public static function start(): void{
 		self::$base=Startup::$config['mvcNS']['domains']??'domains';
 	}
 
 	public static function setDomain(string $domain): void {
-		self::$activeDomain=$domain;
-		Startup::setActiveDomainBase($domain,self::$base);
+		self::$activeDomain = $domain;
+		Startup::setActiveDomainBase($domain, self::$base);
 	}
 
 	public static function resetActiveDomain(): void {
@@ -46,7 +55,7 @@ class DDDManager {
 		return self::$activeDomain;
 	}
 	
-	public static function getActiveViewFolder(){
+	public static function getActiveViewFolder(): string {
 		if(self::$activeDomain!=''){
 			if(\file_exists($folder=\ROOT.self::$base.\DS.self::$activeDomain.\DS.'views'.\DS)){
 				return $folder;
@@ -55,7 +64,7 @@ class DDDManager {
 		return \ROOT.'views'.\DS;
 	}
 	
-	public static function getViewNamespace(){
+	public static function getViewNamespace(): string {
 		$activeDomain=self::$activeDomain;
 		if($activeDomain!=''){
 			return '@'.$activeDomain.'/';
@@ -63,11 +72,11 @@ class DDDManager {
 		return '';		
 	}
 	
-	public static function getDomainBase($domain){
+	public static function getDomainBase(string $domain): string {
 		return self::$base.\DS. \trim($domain, '\\') . '\\';
 	}
 
-	public static function createDomain($domainName){
+	public static function createDomain(string $domainName): bool {
 		$baseFolder=$folder=\ROOT.self::$base.\DS.$domainName.\DS;
 		$result=self::createFolder($baseFolder.'views');
 		if($result) {
@@ -86,7 +95,7 @@ class DDDManager {
 		return false;
 	}
 
-	private static function updateClassesNamespace(string $oldBase,string $newBase){
+	private static function updateClassesNamespace(string $oldBase,string $newBase): void {
 		$files=UFileSystem::glob_recursive(\ROOT.$newBase.\DS.'*.{php}',GLOB_BRACE);
 		foreach ($files as $file){
 			if(($content=\file_get_contents($file))!==false){
@@ -121,5 +130,17 @@ class DDDManager {
 			$config['mvcNS']['domains'] = $base;
 			Startup::updateConfig($config);
 		}
+	}
+
+	public static function getDatabases(): array {
+		$modelsDbs=CacheManager::getModelsDatabases();
+		$ns=self::getNamespace('models');
+		$result=[];
+		foreach ($modelsDbs as $model=>$db){
+			if(UString::startswith($model,$ns)){
+				$result[$db]=true;
+			}
+		}
+		return \array_keys($result);
 	}
 }

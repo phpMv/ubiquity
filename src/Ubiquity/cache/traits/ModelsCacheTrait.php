@@ -156,20 +156,26 @@ trait ModelsCacheTrait {
 		return $result;
 	}
 
-	public static function getModelsNamespace(array &$config,string $databaseOffet='default'): ?string {
-		$files = self::getModelsFiles($config, true);
-		if(\count($files)>0){
-			$file=$files[0];
-			return ClassUtils::getClassNamespaceFromFile($file);
+	public static function getModelsNamespace(array &$config,string $databaseOffset='default'): ?string {
+		$modelsDatabases=self::getModelsDatabases();
+		foreach ($modelsDatabases as $model=>$offset){
+			if($offset===$databaseOffset){
+				$rc=new \ReflectionClass($model);
+				return $rc->getNamespaceName();
+			}
 		}
 		return null;
 	}
 
-	public static function getModelsDatabases() {
+	public static function getModelsDatabases(): array {
 		if (self::$cache->exists ( self::$modelsDatabaseKey )) {
 			return self::$cache->fetch ( self::$modelsDatabaseKey );
 		}
 		return [ ];
+	}
+
+	public static function getDatabases(): array {
+		return \array_keys(\array_flip(self::getModelsDatabases()));
 	}
 
 	/**

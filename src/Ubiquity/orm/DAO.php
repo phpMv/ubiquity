@@ -71,7 +71,7 @@ class DAO {
 	 * Returns an array of $className objects loaded by id from the database
 	 *
 	 * @param string $className class name of the model to load
-	 * @param array|null $parameters
+	 * @param array $keyValues
 	 * @param boolean|array $included if true, loads associate members with associations, if array, example : ['client.*','commands']
 	 * @param string $condition additional condition
 	 * @param boolean $useCache use the active cache if true
@@ -151,7 +151,7 @@ class DAO {
 	 * Returns an instance of $className from the database, from $keyvalues values of the primary key or with a condition
 	 *
 	 * @param String $className complete classname of the model to load
-	 * @param Array|string $condition condition or primary key values
+	 * @param array|string $condition condition or primary key values
 	 * @param boolean|array $included if true, charges associate members with association
 	 * @param array|null $parameters the request parameters
 	 * @param boolean|null $useCache use cache if true
@@ -175,9 +175,8 @@ class DAO {
 	 * Returns an instance of $className from the database, from $keyvalues values of the primary key
 	 *
 	 * @param String $className complete classname of the model to load
-	 * @param Array|string $keyValues primary key values or condition
+	 * @param array|string $keyValues primary key values or condition
 	 * @param boolean|array $included if true, charges associate members with association
-	 * @param array|null $parameters the request parameters
 	 * @param boolean|null $useCache use cache if true
 	 * @return object the instance loaded or null if not found
 	 */
