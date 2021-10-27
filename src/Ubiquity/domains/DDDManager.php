@@ -69,7 +69,7 @@ class DDDManager {
 		if($activeDomain!=''){
 			return '@'.$activeDomain.'/';
 		}
-		return '';		
+		return '';
 	}
 	
 	public static function getDomainBase(string $domain): string {

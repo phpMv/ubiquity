@@ -5,6 +5,7 @@ namespace Ubiquity\controllers;
 use Ubiquity\views\View;
 use Ubiquity\exceptions\RouterException;
 use Ubiquity\themes\ThemesManager;
+use Ubiquity\domains\DDDManager;
 
 /**
  * Base class for controllers.
@@ -91,11 +92,10 @@ abstract class Controller {
 	 * @return string the default view name
 	 */
 	public function getDefaultViewName() {
-		$activeTheme = ThemesManager::getActiveTheme ();
-		if ($activeTheme !== '') {
+		if (ThemesManager::getActiveTheme () !== '') {
 			return '@activeTheme/' . Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
 		}
-		return Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
+		return DDDManager::getViewNamespace().Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
 	}
 
 	/**
