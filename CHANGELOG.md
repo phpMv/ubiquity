@@ -6,6 +6,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 
+## [2.4.7] Soon
+
+### Added
+- Domain Driven design approach with `DDDManager` class
+```php
+DDDManager::setDomain('users');
+```
+Sample file structure:
+```
+app/
+    domains/
+        users/
+            models/
+            controllers/
+            views/
+            services/
+            ...
+        posts/
+            models/
+            controllers/
+            views/
+            services/
+            ...
+```
+
+### Fixed
+- Tests pb (codeception vulnerability)
+- AssetsManager js and css attributes pb (no open issue)
+- default `index.html` W3C validation errors 
+
+### Updated
+- light opt : `parseURI` and `getNS` methods
+
 ## [2.4.6] 2021-09-06
 ### Added
 - [ORM] Update cascade behavior
