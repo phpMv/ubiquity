@@ -122,10 +122,7 @@ trait RouterAdminTrait {
 		$url=\trim($url,'/');
 		$u = \explode("/", $url);
 		$controller = $ns . $u[0];
-		if (\count($u) > 1)
-			$action = $u[1];
-		else
-			$action = "index";
+		$action = $u[1]??'index';
 		return self::getRouteInfoByControllerAction($controller,$action);
 	}
 }
