@@ -176,6 +176,10 @@ trait ModelsCacheTrait {
 		return [ ];
 	}
 
+	public static function storeModelsDatabases(array $modelsDatabases): void {
+		self::$cache->store ( self::$modelsDatabaseKey, $modelsDatabases, 'models' );
+	}
+
 	public static function getDatabases(): array {
 		return \array_keys(\array_flip(self::getModelsDatabases()));
 	}
