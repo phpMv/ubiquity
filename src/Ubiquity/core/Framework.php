@@ -89,6 +89,7 @@ class Framework {
 	 * @param \Ubiquity\controllers\Controller $controller
 	 * @param array $options
 	 * @return \Ajax\php\ubiquity\JsUtils
+	 * @deprecated use Ajax\php\ubiquity\JsUtils::diSemantic(...) instead.
 	 */
 	public static function diSemantic($controller, $options = [ 'defer' => true,'gc' => true ]) {
 		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
@@ -103,6 +104,7 @@ class Framework {
 	 * @param \Ubiquity\controllers\Controller $controller
 	 * @param array $options
 	 * @return \Ajax\php\ubiquity\JsUtils
+	 * @deprecated use Ajax\php\ubiquity\JsUtils::diBootstrap(...) instead.
 	 */
 	public static function diBootstrap($controller, $options = [ 'defer' => true,'gc' => true ]) {
 		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
