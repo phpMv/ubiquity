@@ -10,7 +10,7 @@ use Ubiquity\exceptions\DBException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  * @property \PDO $dbInstance
  *
  */
@@ -152,11 +152,17 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function commit() {
-		return $this->dbInstance->commit ();
+		if($this->dbInstance->inTransaction()) {
+			return $this->dbInstance->commit();
+		}
+		return false;
 	}
 
 	public function rollBack() {
-		return $this->dbInstance->rollBack ();
+		if($this->dbInstance->inTransaction()) {
+			return $this->dbInstance->rollBack ();
+		}
+		return false;
 	}
 
 	public function beginTransaction() {
