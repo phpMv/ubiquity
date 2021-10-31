@@ -42,6 +42,7 @@ class DAO {
 	public static $transformerOp = 'transform';
 	private static $conditionParsers = [ ];
 	protected static $modelsDatabase = [ ];
+
 	/**
 	 *
 	 * @var AbstractDAOCache
@@ -360,5 +361,12 @@ class DAO {
 	 */
 	public static function getCache() {
 		return static::$cache;
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getModelsDatabase(): array {
+		return self::$modelsDatabase;
 	}
 }
