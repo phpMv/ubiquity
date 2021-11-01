@@ -175,6 +175,7 @@ class DDDManager {
 	
 	/**
 	 * Changes the base directory for domains.
+	 * Do not use in production!
 	 * @param string $base
 	 * @return bool
 	 */

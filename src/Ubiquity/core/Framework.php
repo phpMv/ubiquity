@@ -4,7 +4,7 @@
  * Ubiquity\core
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 namespace Ubiquity\core;
@@ -21,7 +21,7 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\cache\CacheManager;
 
 class Framework {
-	public const version = '2.4.6';
+	public const version = '2.4.7';
 
 	public static function getVersion() {
 		return self::version;
