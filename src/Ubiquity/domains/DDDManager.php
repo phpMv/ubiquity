@@ -50,6 +50,11 @@ class DDDManager {
 	public static function hasDomains(): bool {
 		return \file_exists(\ROOT.self::$base) && \count(self::getDomains())>0;
 	}
+
+	public static function domainExists(string $domain): bool {
+		$domains=self::getDomains();
+		return \array_search($domain,$domains)!==false;
+	}
 	
 	public static function getActiveDomain(): string {
 		return self::$activeDomain;
