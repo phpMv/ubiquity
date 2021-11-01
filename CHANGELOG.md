@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 
-## [2.4.7] Soon
+## [2.4.7] 2021-11-01
 
 ### Added
 - Domain Driven design approach with `DDDManager` class
