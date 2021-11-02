@@ -81,7 +81,7 @@ Ubiquity is very fast and performs well.
 The various results of the [Techempower benchmarks](https://www.techempower.com/benchmarks) show this conclusively.
 
 #### TechEmpower Multiple queries test (*) (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=d6f9832a-d586-478c-84a0-8a89cccfcc2a&hw=ph&test=query&l=yyku7z-e7&c=c&a=2&o=c))
-![TechEmpower benchmarks Multiple queries](![image](https://user-images.githubusercontent.com/2511052/139774923-0038208b-e917-4f4f-9d49-091c5a609fb7.png) "PHP Frameworks")
+![image](https://user-images.githubusercontent.com/2511052/139775147-9fef3a88-bbbf-4b68-84da-621e2af585cb.png)
 
 These excellent results have also been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
 
@@ -89,7 +89,7 @@ These excellent results have also been confirmed by an independent benchmark sit
 **Ubiquity** is optimized for use with asynchronous platforms (**Workerman** and **Swoole**). It takes advantage of the recent PHP evolutions (opCache management and preloading). In this context, it performs against the fastest Frameworks written in C, C++, Rust or java:
 
 #### TechEmpower 20 updates test (*) (see [All frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=d6f9832a-d586-478c-84a0-8a89cccfcc2a&hw=ph&test=update&c=e&a=2&o=e))
-![TechEmpower benchmarks Update](![image](https://user-images.githubusercontent.com/2511052/139774720-9ab95f85-c8d4-4ba7-991d-cd8206bf6b38.png) "All Full-stack Frameworks")
+![image](https://user-images.githubusercontent.com/2511052/139774720-9ab95f85-c8d4-4ba7-991d-cd8206bf6b38.png)
 
 (*) Only tests with Framework and ORM are considered.
 # About design choices
