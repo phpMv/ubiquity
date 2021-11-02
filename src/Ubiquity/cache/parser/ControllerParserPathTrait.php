@@ -12,7 +12,7 @@ use Ubiquity\exceptions\ParserException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 trait ControllerParserPathTrait {
@@ -71,18 +71,19 @@ trait ControllerParserPathTrait {
 	}
 	
 	public static function parseMethodPath(\ReflectionFunctionAbstract $method, $path) {
-		if (! isset ( $path ) || $path === '')
+		if (! isset ( $path ) || $path === '') {
 			return;
-			$parameters = $method->getParameters ();
-			foreach ( $parameters as $parameter ) {
-				$name = $parameter->getName ();
-				if ($parameter->isVariadic ()) {
-					$path = \str_replace ( '{' . $name . '}', '{...' . $name . '}', $path );
-				} elseif ($parameter->isOptional ()) {
-					$path = \str_replace ( '{' . $name . '}', '{~' . $name . '}', $path );
-				}
+		}
+		$parameters = $method->getParameters ();
+		foreach ( $parameters as $parameter ) {
+			$name = $parameter->getName ();
+			if ($parameter->isVariadic ()) {
+				$path = \str_replace ( '{' . $name . '}', '{...' . $name . '}', $path );
+			} elseif ($parameter->isOptional ()) {
+				$path = \str_replace ( '{' . $name . '}', '{~' . $name . '}', $path );
 			}
-			return $path;
+		}
+		return $path;
 	}
 	
 	public static function cleanpath($prefix, $path = "", &$isRoot=false) {
@@ -138,6 +139,7 @@ trait ControllerParserPathTrait {
 		if ($hasOptional) {
 			$path .= '/(.*?)';
 		}
+		$path=\str_replace('\\#','#',$path);
 		return [ 'path' => $path,'parameters' => $parameters ];
 	}
 	
