@@ -1,12 +1,14 @@
 <?php
 namespace Ubiquity\utils\base;
 
+use Ubiquity\domains\DDDManager;
+
 /**
  * Ubiquity\utils\base$UIntrospection
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.9
+ * @version 1.0.10
  *
  */
 class UIntrospection {
@@ -45,7 +47,7 @@ class UIntrospection {
 			$result = array_merge($result, $matches[1]);
 		}
 		if (\strpos($code, '$this->loadDefaultView') !== false || strpos($code, '$this->jquery->renderDefaultView') !== false) {
-			$result[] = $r->getDeclaringClass()->getShortName() . '/' . $r->getName() . '.html';
+			$result[] = DDDManager::getViewNamespace().$r->getDeclaringClass()->getShortName() . '/' . $r->getName() . '.html';
 		}
 		return $result;
 	}
