@@ -134,6 +134,7 @@ class ControllerParser {
 				self::parseRouteArray ( $result, $this->controllerClass, $params, $arrayAnnotsMethod ['method'], $method, $prefix, $httpMethods );
 			}
 		}
+		self::$mainParams=null;
 		return $result;
 	}
 	
