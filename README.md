@@ -12,10 +12,10 @@
 [Ubiquity](https://ubiquity.kobject.net), a powerful and fast framework for efficient design.
 
 # Main features
-  - MVC
+  - MVC or Domain Driven Design with MVC
   - Dependency injection
   - PSR-4 Autoloader
-  - Router based on annotations
+  - Router based on annotations/attributes
   - ORM implementing Data Mapper
   - Multi-databases & multi-database types support (PDO Mysql/PostgreSQL/SQLite, Mysqli, Swoole coroutine Mysql, Tarantool, MongoDB)
   - Multi-level cache
@@ -80,16 +80,16 @@ Ubiquity is very fast and performs well.
 ### In the PHP world
 The various results of the [Techempower benchmarks](https://www.techempower.com/benchmarks) show this conclusively.
 
-#### TechEmpower Multiple queries test (*) (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=301db83d-878d-433d-ae5e-1a25013e0b3c&hw=ph&test=query&l=zg24n3-v&c=4&a=2&o=c))
-![TechEmpower benchmarks Multiple queries](https://static.kobject.net/ubiquity/images/techempower-1.png "PHP Frameworks")
+#### TechEmpower Multiple queries test (*) (see [PHP frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=d6f9832a-d586-478c-84a0-8a89cccfcc2a&hw=ph&test=query&l=yyku7z-e7&c=c&a=2&o=c))
+![TechEmpower benchmarks Multiple queries](![image](https://user-images.githubusercontent.com/2511052/139774923-0038208b-e917-4f4f-9d49-091c5a609fb7.png) "PHP Frameworks")
 
 These excellent results have also been confirmed by an independent benchmark site : [phpbenchmarks.com](http://www.phpbenchmarks.com/en/comparator/framework)
 
 ### In the world of web frameworks
 **Ubiquity** is optimized for use with asynchronous platforms (**Workerman** and **Swoole**). It takes advantage of the recent PHP evolutions (opCache management and preloading). In this context, it performs against the fastest Frameworks written in C, C++, Rust or java:
 
-#### TechEmpower 20 updates test (*) (see [All frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=301db83d-878d-433d-ae5e-1a25013e0b3c&hw=ph&test=update&c=4&a=2&o=c))
-![TechEmpower benchmarks Update](https://static.kobject.net/ubiquity/images/techempower-2.png "All Frameworks")
+#### TechEmpower 20 updates test (*) (see [All frameworks results](https://www.techempower.com/benchmarks/#section=test&runid=d6f9832a-d586-478c-84a0-8a89cccfcc2a&hw=ph&test=update&c=e&a=2&o=e))
+![TechEmpower benchmarks Update](![image](https://user-images.githubusercontent.com/2511052/139774720-9ab95f85-c8d4-4ba7-991d-cd8206bf6b38.png) "All Full-stack Frameworks")
 
 (*) Only tests with Framework and ORM are considered.
 # About design choices
