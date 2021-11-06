@@ -79,7 +79,7 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 		return true;
 	}
 	
-	protected function getRouteNamePrefix(){
+	protected function getRouteNamePrefix():string {
 		return '';
 	}
 	
