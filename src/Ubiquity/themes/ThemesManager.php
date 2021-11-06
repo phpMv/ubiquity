@@ -7,6 +7,7 @@ use Ubiquity\views\engine\Twig;
 use Ubiquity\exceptions\ThemesException;
 use Ubiquity\events\EventsManager;
 use Ubiquity\events\ViewEvents;
+use Ubiquity\domains\DDDManager;
 
 /**
  * Themes manager.
@@ -14,7 +15,7 @@ use Ubiquity\events\ViewEvents;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  * @since Ubiquity 2.1.0
  *
  */
@@ -65,11 +66,11 @@ class ThemesManager {
 	 * @return string[]
 	 */
 	public static function getAvailableThemes() {
-		$path = \ROOT . \DS . 'views' . \DS . self::THEMES_FOLDER . \DS . '*';
+		$path = DDDManager::getActiveViewFolder() . self::THEMES_FOLDER . \DS . '*';
 		$dirs = \glob ( $path, GLOB_ONLYDIR | GLOB_NOSORT );
 		$result = [ ];
 		foreach ( $dirs as $dir ) {
-			$result [] = basename ( $dir );
+			$result [] = \basename ( $dir );
 		}
 		return $result;
 	}
@@ -90,7 +91,7 @@ class ThemesManager {
 	 * @return boolean
 	 */
 	public static function isCustom($theme) {
-		return array_search ( $theme, self::$refThemes ) === false;
+		return \array_search ( $theme, self::$refThemes ) === false;
 	}
 
 	/**
@@ -100,7 +101,7 @@ class ThemesManager {
 	 */
 	public static function getNotInstalledThemes() {
 		$AvailableThemes = self::getAvailableThemes ();
-		return array_diff ( self::$refThemes, $AvailableThemes );
+		return \array_diff ( self::$refThemes, $AvailableThemes );
 	}
 
 	/**

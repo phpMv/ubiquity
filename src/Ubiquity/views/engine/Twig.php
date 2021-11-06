@@ -17,6 +17,7 @@ use Ubiquity\translation\TranslatorManager;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\themes\ThemesManager;
 use Ubiquity\assets\AssetsManager;
+use Ubiquity\domains\DDDManager;
 
 /**
  * Ubiquity Twig template engine.
@@ -25,7 +26,7 @@ use Ubiquity\assets\AssetsManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.11
+ * @version 1.0.12
  *
  */
 class Twig extends TemplateEngine {
@@ -195,9 +196,10 @@ class Twig extends TemplateEngine {
 	 * @throws ThemesException
 	 */
 	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER) {
-		$path = \ROOT . \DS . 'views' . \DS . $themeFolder . \DS . $theme;
+		$root=DDDManager::getActiveViewFolder();
+		$path = $root . $themeFolder . \DS . $theme;
 		if ($theme == '') {
-			$path = \ROOT . \DS . 'views';
+			$path = $root;
 		}
 		if (\file_exists($path)) {
 			$this->loader->setPaths([$path], 'activeTheme');
