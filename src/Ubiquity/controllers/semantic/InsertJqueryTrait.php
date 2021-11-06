@@ -2,7 +2,7 @@
 
 namespace Ubiquity\controllers\semantic;
 
-use Ajax\JsUtils;
+use Ajax\php\ubiquity\JsUtils;
 
 trait InsertJqueryTrait {
 	/**

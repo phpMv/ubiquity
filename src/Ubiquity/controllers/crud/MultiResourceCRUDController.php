@@ -56,6 +56,7 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 		if($this->hasNavigation()){
 			$data['nav']=$this->nav($models);
 		}
+		$data['routeNamePrefix']=$this->getRouteNamePrefix();
 		$this->onRenderView($data);
 		$this->addIndexBehavior();
 		$this->jquery->renderView($this->_getFiles()->getViewHome(),$data);
@@ -76,6 +77,10 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 	 */
 	protected function hasNavigation():bool{
 		return true;
+	}
+	
+	protected function getRouteNamePrefix(){
+		return '';
 	}
 	
 	protected function nav(?array $models=null,string $btIcon='chevron right',string $btTitle='Navigate to...',bool $asString=true):?string{
@@ -112,7 +117,7 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 	}
 	
 	protected function getIndexDefaultUrl(string $resource):string{
-		return Router::path('crud.index',[$resource]);
+		return Router::path($this->getRouteNamePrefix().'crud.index',[$resource]);
 	}
 	
 	protected function getIndexDefaultMeta(string $modelClass):?string{
