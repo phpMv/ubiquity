@@ -84,20 +84,24 @@ class UFilesUpload {
 		}
 	}
 
-	private function checkTypeMime(array $file): void{
+	private function checkTypeMime(array $file): bool {
 		$allowedMimeTypes=$this->getAllowedMimeTypes();
 		if(\is_array($allowedMimeTypes)) {
 			$finfo = new \finfo(\FILEINFO_MIME_TYPE);
 			if(\array_search($finfo->file($file['tmp_name']), $this->getAllowedMimeTypes(), true) === false){
-				throw new FileUploadException(\sprintf('The mime-type %s is not allowed for %s!',$finfo->file($file['tmp_name']),$this->getDisplayedFileName($file)));
+				$this->messages['errors'][]=\sprintf('The mime-type %s is not allowed for %s!',$finfo->file($file['tmp_name']),$this->getDisplayedFileName($file));
+				return false;
 			}
 		}
+		return true;
 	}
 
-	private function checkFileSize(array $file): void{
+	private function checkFileSize(array $file): bool{
 		if ($file['size'] > $this->maxFileSize) {
-			throw new FileUploadException(\sprintf('Exceeded file size limit for %s.',$this->getDisplayedFileName($file)));
+			$this->messages['errors'][]=\sprintf('Exceeded file size limit for %s.',$this->getDisplayedFileName($file));
+			return false;
 		}
+		return true;
 	}
 
 	private function getDisplayedFileName(array $file): string {
@@ -117,17 +121,17 @@ class UFilesUpload {
 		try{
 			foreach($_FILES as $file){
 				$this->checkErrors($file);
-				$this->checkTypeMime($file);
-				$this->checkFileSize($file);
-				$filename=\basename($file['name']);
-				if($force || !\file_exists($dest.$filename)) {
-					if (\move_uploaded_file($file['tmp_name'], $dest . $filename)) {
-						$this->messages['success'][] = 'The file ' . \htmlspecialchars($filename) . ' has been uploaded.';
+				if($this->checkTypeMime($file) && $this->checkFileSize($file)) {
+					$filename = \basename($file['name']);
+					if ($force || !\file_exists($dest . $filename)) {
+						if (\move_uploaded_file($file['tmp_name'], $dest . $filename)) {
+							$this->messages['success'][] = 'The file ' . \htmlspecialchars($filename) . ' has been uploaded.';
+						} else {
+							$this->messages['errors'][] = 'Sorry, there was an error uploading the file.' . \htmlspecialchars($filename);
+						}
 					} else {
-						$this->messages['errors'][] = 'Sorry, there was an error uploading the file.' . \htmlspecialchars($filename);
+						$this->messages['errors'][] = 'Sorry, The file ' . \htmlspecialchars($filename) . ' already exists.';
 					}
-				}else{
-					$this->messages['errors'][] = 'Sorry, The file '.\htmlspecialchars($filename).' already exists.';
 				}
 			}
 		}catch(\Exception $e){
