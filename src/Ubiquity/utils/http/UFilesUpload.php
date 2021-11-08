@@ -17,7 +17,7 @@ use Ubiquity\utils\base\UFileSystem;
  */
 
 class UFilesUpload {
-	private const IMAGES_MIME_TYPES=['bmp'=>'image/bmp','git'=>'image/gif','ico'=>'image/vnd.microsoft.icon','jpg'=>'image/jpeg','jpeg'=>'image/jpeg','svg'=>'image/svg+xml','png'=>'image/png','tif'=>'image/tiff','tiff'=>'image/tiff'];
+	private const IMAGES_MIME_TYPES=['bmp'=>'image/bmp','gif'=>'image/gif','ico'=>'image/vnd.microsoft.icon','jpg'=>'image/jpeg','jpeg'=>'image/jpeg','svg'=>'image/svg+xml','png'=>'image/png','tif'=>'image/tiff','tiff'=>'image/tiff'];
 	
 	private int $maxFileSize=100000;
 	private ?array $allowedMimeTypes=['pdf'=>'application/pdf'];
