@@ -17,6 +17,8 @@ use Ubiquity\utils\base\UFileSystem;
  */
 
 class UFilesUpload {
+	private const IMAGES_MIME_TYPES=['bmp'=>'image/bmp','git'=>'image/gif','ico'=>'image/vnd.microsoft.icon','jpg'=>'image/jpeg','jpeg'=>'image/jpeg','svg'=>'image/svg+xml','png'=>'image/png','tif'=>'image/tiff','tiff'=>'image/tiff'];
+	
 	private int $maxFileSize=100000;
 	private ?array $allowedMimeTypes=['pdf'=>'application/pdf'];
 	private array $messages;
@@ -62,8 +64,16 @@ class UFilesUpload {
 	public function setAllowedMimeTypes(?array $allowedMimeTypes): void {
 		$this->allowedMimeTypes = $allowedMimeTypes;
 	}
+	
+	public function allowImages(bool $only=true): void {
+		if($only){
+			$this->allowedMimeTypes=self::IMAGES_MIME_TYPES;
+		}else{
+			$this->allowedMimeTypes+=self::IMAGES_MIME_TYPES;
+		}
+	}
 
-	public function allowAllMineTypes(): void{
+	public function allowAllMimeTypes(): void{
 		$this->allowedMimeTypes=null;
 	}
 	
@@ -109,8 +119,8 @@ class UFilesUpload {
 	}
 
 	/**
-	 * Uploads files to $dest directory.
-	 * @param string $destDir $dest is relative to ROOT app
+	 * Uploads files to $destDir directory.
+	 * @param string $destDir is relative to ROOT app
 	 * @param bool $force if True, replace existing files
 	 */
 	public function upload(string $destDir=null,bool $force=true): void {
