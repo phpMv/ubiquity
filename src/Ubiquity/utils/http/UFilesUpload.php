@@ -17,13 +17,14 @@ use Ubiquity\utils\base\UFileSystem;
  */
 
 class UFilesUpload {
-	public const SUCCESS_MESSAGE='success';
-	public const NO_FILE_SENT_ERR='noFileSentErr';
-	public const FILE_SIZE_ERR='fileSizeErr';
-	public const UNKNOWN_ERR='unknownErr';
-	public const MIME_TYPE_ERR='mimeTypeErr';
-	public const EXISTING_FILE_ERR='existingFileErr';
+	public const SUCCESS_MESSAGE='uploadSuccess';
+	public const NO_FILE_SENT_ERR='uploadNoFileSentErr';
+	public const FILE_SIZE_ERR='uploadFileSizeErr';
+	public const UNKNOWN_ERR='uploadUnknownErr';
+	public const MIME_TYPE_ERR='uploadMimeTypeErr';
+	public const EXISTING_FILE_ERR='uploadExistingFileErr';
 	public const UPLOAD_ERR='uploadErr';
+	public const INVALID_FORMAT_ERR='uploadInvalidFormatErr';
 	
 	private const IMAGES_MIME_TYPES=['bmp'=>'image/bmp','gif'=>'image/gif','ico'=>'image/vnd.microsoft.icon','jpg'=>'image/jpeg','jpeg'=>'image/jpeg','svg'=>'image/svg+xml','png'=>'image/png','tif'=>'image/tiff','tiff'=>'image/tiff'];
 	
@@ -38,7 +39,8 @@ class UFilesUpload {
 			self::UNKNOWN_ERR=>'Unknown Error.',
 			self::MIME_TYPE_ERR=>'The mime-type %s is not allowed for %s!',
 			self::EXISTING_FILE_ERR=>'Sorry, The file %s already exists.',
-			self::UPLOAD_ERR=>'Sorry, there was an error uploading the file %s.'
+			self::UPLOAD_ERR=>'Sorry, there was an error uploading the file %s.',
+			self::INVALID_FORMAT_ERR=>'Invalid error format!'
 	];
 	
 	public function __construct($destDir='upload') {
@@ -100,7 +102,7 @@ class UFilesUpload {
 	
 	private function checkErrors(array $file):void{
 		if (!isset($file['error']) || \is_array($file['error'])){
-			throw new FileUploadException('Invalid error format.');
+			throw new FileUploadException($this->getMessageType(self::INVALID_FORMAT_ERR));
 		}
 		switch ($file['error']) {
 			case \UPLOAD_ERR_OK:
