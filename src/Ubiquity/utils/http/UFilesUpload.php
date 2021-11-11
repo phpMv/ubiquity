@@ -118,7 +118,7 @@ class UFilesUpload {
 	}
 	
 	private function getMessageType(string $type,string ...$params){
-		return \vsprintf($this->messageTypes[$type]??'No message', $params);
+		return \vsprintf($this->messageTypes[$type]??('No message for '.$type), $params);
 	}
 	
 	private function checkTypeMime(array $file): bool {
@@ -160,13 +160,14 @@ class UFilesUpload {
 	public function getMessageTypes(): array {
 		return $this->messageTypes;
 	}
-	
+
 	/**
 	 * Uploads files to $destDir directory.
-	 * @param string $destDir is relative to ROOT app
+	 * @param string|null $destDir is relative to ROOT app
 	 * @param bool $force if True, replace existing files
+	 * @param callable|null $fileNameCallback returns an updated version of the dest filename i.e. function($filename){ return '_'.$filename;}
 	 */
-	public function upload(string $destDir=null,bool $force=true): void {
+	public function upload(string $destDir=null,bool $force=true,?callable $filenameCallback=null): void {
 		$destDir??=$this->destDir;
 		$this->messages=[];
 		$dest=\ROOT.\DS.$destDir.\DS;
@@ -176,6 +177,9 @@ class UFilesUpload {
 				$this->checkErrors($file);
 				if($this->checkTypeMime($file) && $this->checkFileSize($file)) {
 					$filename = \basename($file['name']);
+					if(isset($filenameCallback) && \is_callable($filenameCallback)){
+						$filename=$filenameCallback($filename)??$filename;
+					}
 					$dFileName=\htmlspecialchars($filename);
 					if ($force || !\file_exists($dest . $filename)) {
 						if (\move_uploaded_file($file['tmp_name'], $dest . $filename)) {
