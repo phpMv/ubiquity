@@ -198,7 +198,7 @@ class UFilesUpload {
 	}
 	
 	/**
-	 * Returns true true if the upload generated at least one error.
+	 * Returns true if the upload generated at least one error.
 	 * @return bool
 	 */
 	public function hasErrors(): bool {
