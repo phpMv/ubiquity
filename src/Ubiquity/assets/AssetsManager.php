@@ -32,7 +32,8 @@ class AssetsManager {
 	}
 	
 	private static function stylesheet($link, $attributes = []) {
-		return self::gString ( '<link href="%s" type="text/css" rel="stylesheet" %s>', $link, $attributes );
+		$attributes['type']??='text/css';
+		return self::gString ( '<link href="%s" rel="stylesheet" %s>', $link, $attributes );
 	}
 	
 	/**
