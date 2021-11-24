@@ -122,8 +122,9 @@ abstract class AuthController extends Controller {
 		if (($nbAttempsMax = $this->attemptsNumber ()) !== null) {
 			$nb = USession::getTmp ( $this->_attemptsSessionKey, $nbAttempsMax );
 			$nb --;
-			if ($nb < 0)
+			if ($nb < 0) {
 				$nb = 0;
+			}
 			if ($nb == 0) {
 				$fAttemptsNumberMessage = $this->noAttempts ();
 			} else {
@@ -164,7 +165,9 @@ abstract class AuthController extends Controller {
 	 * Action displaying the logged user information
 	 * if _displayInfoAsString returns true, use _infoUser var in views to display user info
 	 *
+	 * @param null|boolean $force
 	 * @return string|null
+	 * @throws \Exception
 	 */
 	public function info($force = null) {
 		if (isset ( $force )) {

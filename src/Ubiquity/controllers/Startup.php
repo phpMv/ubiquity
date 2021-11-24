@@ -262,11 +262,11 @@ class Startup {
 			switch ($code) {
 				case 404 :
 					self::getHttpInstance ()->header ( 'HTTP/1.0 404 Not Found', '', true, 404 );
-					echo ($message ?? "The page you are looking for doesn't exist!");
+					echo $message ?? "The page you are looking for doesn't exist!";
 					break;
 
 				case 500 :
-					echo ($message ?? "A server error occurred!");
+					echo $message ?? "A server error occurred!";
 					break;
 			}
 		});
