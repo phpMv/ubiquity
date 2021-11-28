@@ -2,15 +2,23 @@
 
 namespace Ubiquity\db\providers\pdo\drivers;
 
+use Ubiquity\db\providers\DbOperations;
+
 /**
  * Ubiquity\db\providers\pdo\drivers$PgsqlDriverMetas
  * This class is part of Ubiquity
  *
  * @author Ulaş SAYGIN
- * @version 1.0.1
+ * @version 1.0.3
  *
  */
 class PgsqlDriverMetas extends AbstractDriverMetaDatas {
+
+	public function __construct($dbInstance) {
+		parent::__construct($dbInstance);
+		$this->operations[DbOperations::AUTO_INC]='CREATE SEQUENCE {seqName};ALTER TABLE {tableName} ALTER COLUMN {fieldName} SET DEFAULT nextval({seqName});';
+		$this->operations[DbOperations::MODIFY_FIELD]='ALTER TABLE {tableName} ALTER COLUMN {fieldName} TYPE {attributes}';
+	}
 
 	public function getForeignKeys($tableName, $pkName, $dbName = null): array {
 		$recordset = $this->dbInstance->query ( 'SELECT k1.constraint_catalog as "CONSTRAINT_CATALOG", k1.constraint_schema as "CONSTRAINT_SCHEMA",

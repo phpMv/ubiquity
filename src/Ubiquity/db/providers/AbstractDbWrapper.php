@@ -7,17 +7,25 @@ namespace Ubiquity\db\providers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 abstract class AbstractDbWrapper {
 	protected $dbInstance;
 	protected $statements;
 	protected $operations=[
-			'create-database'=>'CREATE DATABASE {name}',
-			'create-table'=>'CREATE TABLE {name}'
+			DbOperations::CREATE_DATABASE=>'CREATE DATABASE {name}',
+			DbOperations::CREATE_TABLE=>'CREATE TABLE {name} ({fields}) {attributes}',
+			DbOperations::SELECT_DB=>'USE {name}',
+			DbOperations::FIELD=>'{name} {type} {extra}',
+			DbOperations::ALTER_TABLE=>'ALTER TABLE {tableName} {alter}',
+			DbOperations::FOREIGN_KEY=>'ALTER TABLE {tableName} ADD CONSTRAINT {fkName} FOREIGN KEY ({fkFieldName}) REFERENCES {referencesTableName} ({referencesFieldName}) ON DELETE {onDelete} ON UPDATE {onUpdate}',
+			DbOperations::ALTER_TABLE_KEY=>'ALTER TABLE {tableName} ADD {type} KEY ({pkFields})',
+			DbOperations::AUTO_INC=>'ALTER TABLE {tableName} MODIFY {fieldName} AUTO_INCREMENT, AUTO_INCREMENT={value}',
+			DbOperations::MODIFY_FIELD=>'ALTER TABLE {tableName} MODIFY {fieldName} {attributes}',
+			DbOperations::ADD_FIELD=>'ALTER TABLE {tableName} ADD {fieldName} {attributes}'
 	];
-	
+
 	const PHP_TYPES = [ 'string' => true,'bool' => true,'float' => true,'int' => true ];
 	
 	public $quote;
@@ -155,7 +163,7 @@ abstract class AbstractDbWrapper {
 	 * @param string $operation
 	 * @return string
 	 */
-	public function migrateOperation(string $operation):string{
-		return $this->operations[$operation]??'';
+	public function migrateOperation(string $operation):?string{
+		return $this->operations[$operation]??null;
 	}
 }

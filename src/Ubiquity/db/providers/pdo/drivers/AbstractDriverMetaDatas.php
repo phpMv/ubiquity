@@ -7,11 +7,12 @@ namespace Ubiquity\db\providers\pdo\drivers;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 abstract class AbstractDriverMetaDatas {
 	protected $dbInstance;
+	protected $operations;
 
 	public function __construct($dbInstance) {
 		$this->dbInstance = $dbInstance;
@@ -74,6 +75,15 @@ abstract class AbstractDriverMetaDatas {
 
 	public function getPHPType(string $dbType): string {
 		return '';
+	}
+
+	/**
+	 * Returns the SQL string for a migration operation.
+	 * @param string $operation
+	 * @return string
+	 */
+	public function migrateOperation(string $operation):?string{
+		return $this->operations[$operation]??null;
 	}
 }
 

@@ -10,7 +10,7 @@ use Ubiquity\exceptions\DBException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  * @property \PDO $dbInstance
  *
  */
@@ -242,5 +242,14 @@ class PDOWrapper extends AbstractDbWrapper {
 
 	public function toStringOperator() {
 		return $this->getDriverMetaDatas ()->toStringOperator ();
+	}
+
+	/**
+	 * Returns the SQL string for a migration operation.
+	 * @param string $operation
+	 * @return string
+	 */
+	public function migrateOperation(string $operation):?string{
+		return $this->getDriverMetaDatas()->migrateOperation($operation)??parent::migrateOperation($operation);
 	}
 }
