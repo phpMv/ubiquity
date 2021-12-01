@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing
 
-## [2.4.8] Soon
+## [2.4.8] 2021-12-01
 
 ### Added
 - Pseudo-migrations in webtools and devtools
