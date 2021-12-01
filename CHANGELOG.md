@@ -3,7 +3,31 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## [Unrelease]
+
+Nothing
+
+## [2.4.8] Soon
+
+### Added
+- Pseudo-migrations in webtools and devtools
+
+```bash
+Ubiquity info-migrations
+Ubiquity migrations
+```
+
+- Models creation command in devtools
+
+```bash
+Ubiquity new-model User
+Ubiquity new-model user,group
+```
+
+### Updated
+- Db wrappers for migrations
+- Added `DbOperations`
 
 ### Fixed
 - Fix absolute path pb in router with `#/` (no open issue)
