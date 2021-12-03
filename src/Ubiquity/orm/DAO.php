@@ -26,7 +26,7 @@ use Ubiquity\cache\dao\AbstractDAOCache;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.5
+ * @version 1.2.6
  *
  */
 class DAO {
@@ -294,8 +294,8 @@ class DAO {
 		if (! isset ( self::$db [$offset] )) {
 			self::startDatabase ( Startup::$config, $offset );
 		}
-		SqlUtils::$quote = self::$db [$offset]->quote;
-		return self::$db [$offset];
+		SqlUtils::$quote = self::$db [$offset]->quote??'';
+		return self::$db [$offset]??null;
 	}
 
 	public static function getDatabases() {
