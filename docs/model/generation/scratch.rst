@@ -51,7 +51,7 @@ The added fields:
 Generating the class
 ^^^^^^^^^^^^^^^^^^^^
 
-.. image:: /_static/images/model/scratch/generated-class.png
+.. image:: /_static/images/model/scratch/generate-class.png
    :class: bordered
 
 Below is the created model, without the accessors:
@@ -137,6 +137,8 @@ Modifying existing models
 .. code-block:: bash
 
    Ubiquity model
+
+Without parameters, if models exist, the model command suggests their loading:
 
 
 
