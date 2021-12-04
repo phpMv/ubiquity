@@ -25,6 +25,7 @@ We will create it with devtools, in command prompt:
    It is possible to change the default name of the primary key when launching the command :
 
    .. code-block:: bash
+
       Ubiquity model user -k=uid
 
 
@@ -89,7 +90,7 @@ Below is the created model, without the accessors:
             #[Validator(type: "email",constraints: ["notNull"=>true])]
             #[Validator(type: "length",constraints: ["max"=>150])]
             private $email;
-        }
+         }
 
    .. tab:: Annotations
 
@@ -138,7 +139,7 @@ Modifying existing models
 
    Ubiquity model
 
-Without parameters, if models exist, the model command suggests their loading:
+Without parameters, if some models exist, the ``model`` command suggests their loading:
 
 
 
