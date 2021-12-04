@@ -23,13 +23,14 @@ We will create it with devtools, in command prompt:
 .. note::
    A primary key is automatically added at creation as an auto-increment. |br|
    It is possible to change the default name of the primary key when launching the command :
+
    .. code-block:: bash
       Ubiquity model user -k=uid
 
 
 Adding fields
 ^^^^^^^^^^^^^
-Select the `Add fields` menu item:
+Select the ``Add fields`` menu item:
 
   - Enter the field names separated by a comma:
 
@@ -132,6 +133,7 @@ Below is the created model, without the accessors:
 
 Modifying existing models
 -------------------------
+
 .. code-block:: bash
 
    Ubiquity model
