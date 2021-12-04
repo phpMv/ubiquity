@@ -18,7 +18,7 @@ We will create it with devtools, in command prompt:
    Ubiquity model user
 
 .. image:: /_static/images/model/scratch/create-model.png
-   :class: bordered
+   :class: console
 
 .. note::
    A primary key is automatically added at creation as an auto-increment. |br|
@@ -36,24 +36,24 @@ Select the ``Add fields`` menu item:
   - Enter the field names separated by a comma:
 
 .. image:: /_static/images/model/scratch/add-fields.png
-   :class: bordered
+   :class: console
 
   - Enter the field types (db types) in the same way.
   - Provide the list of nullable fields.
 
 .. image:: /_static/images/model/scratch/field-types.png
-   :class: bordered
+   :class: console
 
 The added fields:
 
 .. image:: /_static/images/model/scratch/fields-added.png
-   :class: bordered
+   :class: console
 
 Generating the class
 ^^^^^^^^^^^^^^^^^^^^
 
 .. image:: /_static/images/model/scratch/generate-class.png
-   :class: bordered
+   :class: console
 
 Below is the created model, without the accessors:
 
@@ -141,7 +141,26 @@ Modifying existing models
 
 Without parameters, if some models exist, the ``model`` command suggests their loading:
 
+.. image:: /_static/images/model/scratch/reload.png
+   :class: console
 
+The model to achieve is now the following:
+
+.. image:: /_static/images/model/scratch/group_users.png
+   :class: bordered
+
+Select the ``Add/switch to model`` menu option, and enter ``group``
+
+.. image:: /_static/images/model/scratch/switch-to-group.png
+   :class: console
+
+Add:
+  - primary key ``id`` in autoinc
+  - the ``name`` field
+  - The ``manyToMany`` relation with the ``User`` class :
+
+.. image:: /_static/images/model/scratch/manytomany-users.png
+   :class: console
 
 .. |br| raw:: html
 
