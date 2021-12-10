@@ -12,6 +12,8 @@ From scratch
 ------------
 
 - :doc:`with devtools </model/generation/scratch>`
+- :doc:`with devtools </model/generation/migrations>`
+
 
 
 
