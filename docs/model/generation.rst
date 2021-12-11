@@ -11,8 +11,8 @@ From existing database
 From scratch
 ------------
 
-- :doc:`with devtools </model/generation/scratch>`
-- :doc:`with devtools </model/generation/migrations>`
+- :doc:`Models creation with devtools </model/generation/scratch>`
+- :doc:`migrations </model/generation/migrations>`
 
 
 
