@@ -21,11 +21,11 @@ use Ubiquity\contents\transformation\transformers\Boolean;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class TransformersManager {
-	const TRANSFORMER_TYPES = [ 'transform' => TransformerInterface::class,'toView' => TransformerViewInterface::class,'toForm' => TransformerFormInterface::class ];
+	const TRANSFORMER_TYPES = [ 'reverse' => TransformerInterface::class,'transform' => TransformerInterface::class,'toView' => TransformerViewInterface::class,'toForm' => TransformerFormInterface::class ];
 	/**
 	 *
 	 * @var array|mixed
