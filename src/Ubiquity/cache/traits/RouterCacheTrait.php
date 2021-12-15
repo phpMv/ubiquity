@@ -17,7 +17,7 @@ use Ubiquity\utils\http\UResponse;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.12
+ * @version 1.0.13
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
@@ -26,7 +26,7 @@ trait RouterCacheTrait {
 	abstract public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false, $includeAbstract = false);
 
 	public static function controllerCacheUpdated(&$config) {
-		$result = false;
+		$result = [];
 		$domain=DDDManager::getActiveDomain();
 		$newRoutes = self::parseControllerFiles ( $config, true ,$domain!='');
 		$ctrls = self::getControllerCacheByDomain(false,$domain);
