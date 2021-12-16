@@ -10,7 +10,7 @@ use Ubiquity\contents\transformation\TransformerInterface;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.1
+ * @version 1.1.2
  *
  */
 class UCookie {
@@ -37,7 +37,7 @@ class UCookie {
 		if (self::$useTransformer && isset ( self::$transformer )) {
 			$value = self::$transformer->transform ( $value );
 		}
-		return \setcookie ( $name, $value, $duration ? (\time () + $duration) : null, $path, $secure, $httpOnly );
+		return \setcookie ( $name, $value, $duration ? (\time () + $duration) : 0, $path, $secure, $httpOnly );
 	}
 
 	/**
