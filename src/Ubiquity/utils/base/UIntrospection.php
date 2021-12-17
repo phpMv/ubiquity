@@ -53,7 +53,6 @@ class UIntrospection {
 	}
 
 	public static function getMethodCode(\ReflectionMethod $r, $lines) {
-		\ini_set('auto_detect_line_endings', '1');
 		$str = '';
 		$count = \count($lines);
 		$sLine = $r->getStartLine()-1;
