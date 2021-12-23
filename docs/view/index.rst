@@ -574,6 +574,8 @@ The mechanism is the same as for the views : ``@activeTheme`` namespace refers t
     {{ css('@activeTheme/css/style.css') }}
     
     {{ js('@activeTheme/js/scripts.js') }}
+    
+    {{ img('@activeTheme/img/image-name.png', ['alt="Image Alt Name"', 'class="css-class"']) }}
 
 If the **bootstrap** theme is active, |br|
 the assets folder is ``public/assets/bootstrap/``.
