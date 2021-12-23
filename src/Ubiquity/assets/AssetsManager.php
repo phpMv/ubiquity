@@ -37,7 +37,6 @@ class AssetsManager {
 	}
 
 	private static function image($link, $attributes = []) {
-		$attributes['type']??='text/css';
 		return self::gString ( '<img src="%s" %s>', $link, $attributes );
 	}
 
