@@ -36,8 +36,9 @@ class AssetsManager {
 		return self::gString ( '<link href="%s" rel="stylesheet" %s>', $link, $attributes );
 	}
 
-	private static function image($link, $attributes = []) {
-		return self::gString ( '<img src="%s" %s>', $link, $attributes );
+	private static function image($src, $attributes = []) {
+		$attributes['alt']??='Alternate text required';
+		return self::gString ( '<img src="%s" %s>', $src, $attributes );
 	}
 
 	/**
@@ -126,13 +127,13 @@ class AssetsManager {
 	/**
 	 * Returns the image tag for inclusion.
 	 *
-	 * @param string $resource The base path to the image
+	 * @param string $src The base path to the image
 	 * @param array $attributes The other html attributes of the image element
 	 * @param boolean $absolute True if url must be absolute (containing siteUrl)
 	 * @return string
 	 */
-	public static function img($resource, $attributes = [], $absolute = false) {
-		return self::image ( self::getUrl ( $resource, $absolute ), $attributes );
+	public static function img($src, $attributes = [], $absolute = false) {
+		return self::image ( self::getUrl ( $src, $absolute ), $attributes );
 	}
 
 	/**
@@ -162,12 +163,12 @@ class AssetsManager {
 	/**
 	 * Returns the image tag for inclusion in **activeTheme**.
 	 *
-	 * @param string $resource The base path to the image
+	 * @param string $src The base path to the image
 	 * @param array $attributes The other html attributes of the image element
 	 * @param boolean $absolute True if url must be absolute (containing siteUrl)
 	 * @return string
 	 */
-	public static function img_($resource, $attributes = [], $absolute = false) {
-		return self::image ( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
+	public static function img_($src, $attributes = [], $absolute = false) {
+		return self::image ( self::getActiveThemeUrl ( $src, $absolute ), $attributes );
 	}
 }
