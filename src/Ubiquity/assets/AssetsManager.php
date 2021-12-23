@@ -21,26 +21,26 @@ use Ubiquity\utils\base\UArray;
 class AssetsManager {
 	private static $assetsFolder = '/assets/';
 	private static $siteURL;
-	
+
 	private static function gString($template, $variable, $attributes = []) {
 		$implode = UArray::implodeAsso ( $attributes, ' ','=','' );
 		return \sprintf ( $template, $variable, $implode );
 	}
-	
+
 	private static function script($src, $attributes = []) {
 		return self::gString ( '<script src="%s" %s></script>', $src, $attributes );
 	}
-	
+
 	private static function stylesheet($link, $attributes = []) {
 		$attributes['type']??='text/css';
 		return self::gString ( '<link href="%s" rel="stylesheet" %s>', $link, $attributes );
 	}
-	
-	private static function image($src, $attributes = []) {
-		$attributes['alt']??='alternate text required';
-		return self::gString ( '<img src="%s" %s>', $src, $attributes );
+
+	private static function image($link, $attributes = []) {
+		$attributes['type']??='text/css';
+		return self::gString ( '<img src="%s" %s>', $link, $attributes );
 	}
-	
+
 	/**
 	 * Starts the assets manager.
 	 * Essential to define the siteURL part
@@ -51,11 +51,11 @@ class AssetsManager {
 		$siteURL = $config ['siteUrl'] ?? '';
 		self::$siteURL = \rtrim ( $siteURL, '/' );
 	}
-	
+
 	public static function setAssetsFolder($assetsFolder='/assets/'){
 		self::$assetsFolder=$assetsFolder;
 	}
-	
+
 	/**
 	 * Returns the absolute or relative url to the resource.
 	 *
@@ -72,7 +72,7 @@ class AssetsManager {
 		}
 		return \ltrim ( self::$assetsFolder, '/' ) . $resource;
 	}
-	
+
 	/**
 	 * Returns the absolute or relative url for a resource in the **activeTheme**.
 	 *
@@ -84,7 +84,7 @@ class AssetsManager {
 		$activeTheme = ThemesManager::getActiveTheme ();
 		return self::getThemeUrl ( $activeTheme, $resource, $absolute );
 	}
-	
+
 	/**
 	 * Returns the absolute or relative url for a resource in a theme.
 	 *
@@ -99,7 +99,7 @@ class AssetsManager {
 		}
 		return \ltrim ( self::$assetsFolder, '/' ) . $theme . '/' . $resource;
 	}
-	
+
 	/**
 	 * Returns the script inclusion for a javascript resource.
 	 *
@@ -111,7 +111,7 @@ class AssetsManager {
 	public static function js($resource, $attributes = [], $absolute = false) {
 		return self::script ( self::getUrl ( $resource, $absolute ), $attributes );
 	}
-	
+
 	/**
 	 * Returns the css inclusion for a stylesheet resource.
 	 *
@@ -124,19 +124,18 @@ class AssetsManager {
 		return self::stylesheet ( self::getUrl ( $resource, $absolute ), $attributes );
 	}
 
-	
 	/**
-	 * Returns the html inclusion for an image.
+	 * Returns the image tag for inclusion.
 	 *
-	 * @param string $resource The css resource to include
-	 * @param array $attributes The other html attributes of the script element
+	 * @param string $resource The base path to the image
+	 * @param array $attributes The other html attributes of the image element
 	 * @param boolean $absolute True if url must be absolute (containing siteUrl)
 	 * @return string
 	 */
 	public static function img($resource, $attributes = [], $absolute = false) {
-		return self::image( self::getUrl( $resource, $absolute ), $attributes );
+		return self::image ( self::getUrl ( $resource, $absolute ), $attributes );
 	}
-	
+
 	/**
 	 * Returns the script inclusion for a javascript resource in **activeTheme**.
 	 *
@@ -148,7 +147,7 @@ class AssetsManager {
 	public static function js_($resource, $attributes = [], $absolute = false) {
 		return self::script ( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
 	}
-	
+
 	/**
 	 * Returns the css inclusion for a stylesheet resource in **activeTheme**.
 	 *
@@ -160,17 +159,16 @@ class AssetsManager {
 	public static function css_($resource, $attributes = [], $absolute = false) {
 		return self::stylesheet ( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
 	}
-	
+
 	/**
-	 * Returns the html inclusion for an image in **activeTheme**.
+	 * Returns the image tag for inclusion in **activeTheme**.
 	 *
-	 * @param string $resource The css resource to include
-	 * @param array $attributes The other html attributes of the script element
+	 * @param string $resource The base path to the image
+	 * @param array $attributes The other html attributes of the image element
 	 * @param boolean $absolute True if url must be absolute (containing siteUrl)
 	 * @return string
 	 */
 	public static function img_($resource, $attributes = [], $absolute = false) {
-		return self::image( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
+		return self::image ( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
 	}
-
 }
