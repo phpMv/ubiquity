@@ -98,6 +98,13 @@ class Twig extends TemplateEngine {
 			}
 			return AssetsManager::js($resource, $parameters, $absolute);
 		}, true);
+		
+		$this->addFunction('img', function ($resource, $parameters = [], $absolute = false) {
+			if ($this->hasThemeResource($resource)) {
+				return AssetsManager::img_($resource, $parameters, $absolute);
+			}
+			return AssetsManager::img($resource, $parameters, $absolute);
+		}, true);
 			
 		$t = new TwigFunction ('t', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
 			$trans = TranslatorManager::trans($id, $parameters, $domain, $locale);
