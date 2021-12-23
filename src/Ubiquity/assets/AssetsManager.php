@@ -36,6 +36,11 @@ class AssetsManager {
 		return self::gString ( '<link href="%s" rel="stylesheet" %s>', $link, $attributes );
 	}
 	
+	private static function image($src, $attributes = []) {
+		$attributes['alt']??='alternate text required';
+		return self::gString ( '<img src="%s" %s>', $src, $attributes );
+	}
+	
 	/**
 	 * Starts the assets manager.
 	 * Essential to define the siteURL part
@@ -118,6 +123,19 @@ class AssetsManager {
 	public static function css($resource, $attributes = [], $absolute = false) {
 		return self::stylesheet ( self::getUrl ( $resource, $absolute ), $attributes );
 	}
+
+	
+	/**
+	 * Returns the html inclusion for an image.
+	 *
+	 * @param string $resource The css resource to include
+	 * @param array $attributes The other html attributes of the script element
+	 * @param boolean $absolute True if url must be absolute (containing siteUrl)
+	 * @return string
+	 */
+	public static function img($resource, $attributes = [], $absolute = false) {
+		return self::image( self::getUrl( $resource, $absolute ), $attributes );
+	}
 	
 	/**
 	 * Returns the script inclusion for a javascript resource in **activeTheme**.
@@ -142,4 +160,17 @@ class AssetsManager {
 	public static function css_($resource, $attributes = [], $absolute = false) {
 		return self::stylesheet ( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
 	}
+	
+	/**
+	 * Returns the html inclusion for an image in **activeTheme**.
+	 *
+	 * @param string $resource The css resource to include
+	 * @param array $attributes The other html attributes of the script element
+	 * @param boolean $absolute True if url must be absolute (containing siteUrl)
+	 * @return string
+	 */
+	public static function img_($resource, $attributes = [], $absolute = false) {
+		return self::image( self::getActiveThemeUrl ( $resource, $absolute ), $attributes );
+	}
+
 }
