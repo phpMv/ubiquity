@@ -124,6 +124,28 @@ And this association is present in the Acls map:
 .. image:: /_static/images/security/acls/me-map.png
    :class: bordered
 
+
+AclController with authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+   The use of both ``WithAuthTrait`` and ``AclControllerTrait`` requires to remove the ambiguity about the ``isValid`` method.
+
+.. code-block:: php
+   :caption: app/controllers/BaseAclController.php
+
+   class BaseAclController extends Controller {
+      use AclControllerTrait,WithAuthTrait{
+         WithAuthTrait::isValid insteadof AclControllerTrait;
+         AclControllerTrait::isValid as isValidAcl;
+      }
+
+      public function isValid($action){
+           return parent::isValid($action)&& $this->isValidAcl($action);
+      }
+   }
+
+
 Allow with Role, resource and permission
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Allow without prior creation:
@@ -182,6 +204,45 @@ Adding a Role ``@USER`` inheriting from ``@GUEST``.
    AclManager::addRole('@GUEST');
    AclManager::addRole('@USER',['@GUEST']);
 
+
+Defining ACLs with Database
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ACLs defined in the database are additional to the ACLs defined via annotations or attributes.
+
+Initializing
+------------
+
+The initialization allows to create the tables associated to the ACLs (Role, Resource, Permission, AclElement). It needs to be done only once, and in dev mode only.
+
+To place for example in ``app/config/bootstrap.php`` file:
+
+
+.. code-block:: php
+
+   use Ubiquity\controllers\Startup;
+   use Ubiquity\security\acl\AclManager;
+
+   $config=Startup::$config;
+   AclManager::initializeDAOProvider($config, 'default');
+
+Starting
+--------
+In ``app/config/services.php`` file :
+
+.. code-block:: php
+
+   use Ubiquity\security\acl\AclManager;
+   use Ubiquity\security\acl\persistence\AclCacheProvider;
+   use Ubiquity\security\acl\persistence\AclDAOProvider;
+   use Ubiquity\orm\DAO;
+
+   DAO::start();//Optional, to use only if dbOffset is not default
+
+   AclManager::start();
+   AclManager::initFromProviders([
+       new AclCacheProvider(), new AclDAOProvider($config)
+   ]);
 
 Strategies for defining ACLs
 ============================
@@ -297,4 +358,5 @@ With more resources:
       }
 
    }
+
 
