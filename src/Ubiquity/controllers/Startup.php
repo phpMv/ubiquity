@@ -305,7 +305,7 @@ class Startup {
 	 *
 	 * @return string
 	 */
-	public static function getAction(): string {
+	public static function getAction(): ?string {
 		return self::$action;
 	}
 
