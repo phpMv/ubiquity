@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ubiquity\controllers\crud;
+namespace Ubiquity\controllers\crud;
 
 
 use Ajax\php\ubiquity\JsUtils;
