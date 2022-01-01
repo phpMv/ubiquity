@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing
 
+## [2.4.9] 2022-01-01
+
+### Added
+- image insertion in AssetsManager, `img` twig function see https://github.com/phpMv/ubiquity/issues/188
+- `reverse` to Transformers
+- nonce in default template files
+
+### Fixed
+- typo in MultiResourceCrudController (no open issue)
+- php 8.1 depreciation warnings (UbiquityException, UCookie, UResponse...)
+
 ## [2.4.8] 2021-12-01
 
 ### Added
