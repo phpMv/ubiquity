@@ -19,7 +19,7 @@ abstract class ValidatorMultiple extends Validator implements HasNotNullInterfac
 	public function validate($value) {
 		if (null == $value) {
 			if ($this->notNull === true) {
-				$this->violation = "notNull";
+				$this->violation = 'notNull';
 				return false;
 			} else {
 				return;
@@ -54,7 +54,7 @@ abstract class ValidatorMultiple extends Validator implements HasNotNullInterfac
 			$message = $this->_getMessageViolation ( $message );
 		}
 		foreach ( $parameters as $param ) {
-			$message = \str_replace ( '{' . $param . '}', $this->$param, $message );
+			$message = \str_replace ( '{' . $param . '}', $this->$param??'', $message );
 		}
 		return $message;
 	}
