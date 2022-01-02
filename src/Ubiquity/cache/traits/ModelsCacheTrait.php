@@ -59,23 +59,25 @@ trait ModelsCacheTrait {
 		foreach ( $files as $file ) {
 			if (\is_file ( $file )) {
 				$model = ClassUtils::getClassFullNameFromFile ( $file );
-				if(!\class_exists($model)){
-					if(\file_exists($file)){
-						include $file;
-					}
-				}
-				if (! $forChecking) {
-					self::createOrmModelCache ( $model );
-					$db = 'default';
-					$ret = Reflexion::getAnnotationClass ( $model, 'database' );
-					if (\count ( $ret ) > 0) {
-						$db = $ret [0]->name;
-						if (! isset ( $config ['database'] [$db] )) {
-							throw new UbiquityException ( $db . ' connection is not defined in config array' );
+				if($model!=null) {
+					if (!\class_exists($model)) {
+						if (\file_exists($file)) {
+							include $file;
 						}
 					}
-					$modelsDb [$model] = $db;
-					ValidatorsManager::initClassValidators ( $model );
+					if (!$forChecking) {
+						self::createOrmModelCache($model);
+						$db = 'default';
+						$ret = Reflexion::getAnnotationClass($model, 'database');
+						if (\count($ret) > 0) {
+							$db = $ret [0]->name;
+							if (!isset ($config ['database'] [$db])) {
+								throw new UbiquityException ($db . ' connection is not defined in config array');
+							}
+						}
+						$modelsDb [$model] = $db;
+						ValidatorsManager::initClassValidators($model);
+					}
 				}
 			}
 		}
@@ -144,14 +146,16 @@ trait ModelsCacheTrait {
 		$files = self::getModelsFiles($config, $silent);
 		foreach ($files as $file) {
 			$className = ClassUtils::getClassFullNameFromFile($file);
-			if (\class_exists($className, true)) {
-				$db = 'default';
-				$ret = Reflexion::getAnnotationClass($className, 'database');
-				if (\count($ret) > 0) {
-					$db = $ret[0]->name;
-				}
-				if ($databaseOffset==null || $db === $databaseOffset) {
-					$result[] = $className;
+			if($className!=null) {
+				if (\class_exists($className, true)) {
+					$db = 'default';
+					$ret = Reflexion::getAnnotationClass($className, 'database');
+					if (\count($ret) > 0) {
+						$db = $ret[0]->name;
+					}
+					if ($databaseOffset == null || $db === $databaseOffset) {
+						$result[] = $className;
+					}
 				}
 			}
 		}
