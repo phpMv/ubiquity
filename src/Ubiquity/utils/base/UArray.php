@@ -163,7 +163,7 @@ class UArray {
 		} );
 	}
 
-	public static function iSearch($needle, $haystack, $strict = null) {
+	public static function iSearch($needle, $haystack, $strict = false) {
 		return \array_search ( strtolower ( $needle ), array_map ( 'strtolower', $haystack ), $strict );
 	}
 

@@ -123,7 +123,7 @@ trait DatabaseOperationsTrait {
 		return $this->wrapperObject->fetchAllColumn ( $this->wrapperObject->_getStatement ( $sql ), $parameters, $column );
 	}
 
-	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = null) {
+	public function prepareAndFetchColumn($sql, $parameters = null, $columnNumber = 0) {
 		$statement = $this->wrapperObject->_getStatement ( $sql );
 		if ($statement->execute ( $parameters )) {
 			Logger::info ( 'Database', $sql, 'prepareAndFetchColumn', $parameters );
