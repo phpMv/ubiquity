@@ -96,7 +96,7 @@ trait ModelsCacheTrait {
 	 * @return boolean|array
 	 */
 	public static function modelsCacheUpdated(&$config) {
-		$result = false;
+		$result = [];
 		$files = self::getModelsFiles ( $config, true );
 		foreach ( $files as $file ) {
 			if (\is_file ( $file )) {
