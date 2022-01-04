@@ -24,9 +24,13 @@ trait AuthControllerCoreTrait {
 	abstract public function _getBodySelector();
 
 	abstract public function _getBaseRoute();
-
+	
 	protected function getBaseUrl() {
 		return URequest::getUrl ( $this->_getBaseRoute () );
+	}
+	
+	protected function useAjax():bool{
+		return true;
 	}
 
 	public function message($type, $header, $body, $icon = "info", $id = null) {
@@ -60,14 +64,19 @@ trait AuthControllerCoreTrait {
 	}
 
 	protected function authLoadView($viewName, $vars = [ ]) {
+		if($this->useAjax()){
+			$loadView=function($vn,$v){$this->jquery->renderView($vn,$v);};
+		}else{
+			$loadView=function($vn,$v) {$this->loadView($vn, $v);};
+		}
 		$files = $this->_getFiles ();
 		$mainTemplate = $files->getBaseTemplate ();
 		if (isset ( $mainTemplate )) {
 			$vars ["_viewname"] = $viewName;
 			$vars ["_base"] = $mainTemplate;
-			$this->loadView ( $files->getViewBaseTemplate (), $vars );
+			$loadView ( $files->getViewBaseTemplate (), $vars );
 		} else {
-			$this->loadView ( $viewName, $vars );
+			$loadView ( $viewName, $vars );
 		}
 	}
 

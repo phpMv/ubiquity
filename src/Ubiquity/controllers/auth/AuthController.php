@@ -57,6 +57,9 @@ abstract class AuthController extends Controller {
 				return;
 			}
 		}
+		if($this->useAjax()){
+			$this->_addFrmAjaxBehavior();
+		}
 		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), [ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ] );
 	}
 
@@ -235,7 +238,7 @@ abstract class AuthController extends Controller {
 			if(Startup::getAction()!=='connect') {
 				$this->finalizeAuth();
 			}
-			$this->jquery->execAtLast ( "if($('#_userInfo').length){\$('#_userInfo').html(" . preg_replace ( "/$\R?^/m", "", Javascript::prep_element ( $this->info () ) ) . ");}" );
+			$this->jquery->execAtLast ( "if($('#_userInfo').length){\$('#_userInfo').replaceWith(" . preg_replace ( "/$\R?^/m", "", Javascript::prep_element ( $this->info () ) ) . ");}" );
 			if ($this->_compileJS) {
 				echo $this->jquery->compile ();
 			}
@@ -271,5 +274,18 @@ abstract class AuthController extends Controller {
 			$finalize = $initialize;
 		}
 		Startup::forward ( $url, $initialize, $finalize );
+	}
+	
+	public function _addAjaxBehavior($jquery=null,$ajaxParameters=['hasLoader'=>'internal','historize'=>false,'listenerOn'=>'body']){
+		$jquery??=$this->jquery;
+		$jquery->getHref('.ajax[data-target]','', $ajaxParameters);
+		$jquery->postFormAction('.ui.form',$this->_getBodySelector(),$ajaxParameters);
+	}
+
+	public function _addFrmAjaxBehavior(){
+		$frm=$this->jquery->semantic()->htmlForm('frm-login');
+		$frm->addExtraFieldRule($this->_getLoginInputName(),'empty');
+		$frm->addExtraFieldRule($this->_getPasswordInputName(),'empty');
+		$frm->setValidationParams(['inline'=>true,'on'=>'blur']);
 	}
 }
