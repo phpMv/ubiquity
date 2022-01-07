@@ -143,6 +143,7 @@ Create ``UbiquityValetDriver.php`` under ``~/.config/valet/Drivers/`` add below 
 		* @return string
 		*/
 		public function frontControllerPath($sitePath, $siteName, $uri){
+			$sitePath.='/public';
 			$_SERVER['DOCUMENT_ROOT'] = $sitePath;
 			$_SERVER['SCRIPT_NAME'] = '/index.php';
 			$_SERVER['SCRIPT_FILENAME'] = $sitePath . '/index.php';
