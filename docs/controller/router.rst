@@ -644,6 +644,108 @@ The **inherited** attribute defines the 2 routes defined in **ProductsBase**:
 
 If the **automated** and **inherited** attributes are combined, the base class actions are also added to the routes.
 
+Global route parameters
+~~~~~~~~~~~~~~~~~~~~~~~
+The global part of a route can define parameters, which will be passed in all generated routes. |br|
+These parameters can be retrieved through a public data member:
+
+.. tabs::
+
+   .. tab:: Attributes
+
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/FooController.php
+           :emphasize-lines: 5
+
+           namespace controllers;
+
+           use Ubiquity\attributes\items\router\Route;
+
+           #[Route('/foo/{bar}',automated: true)]
+           class FooController {
+
+              public string $bar;
+
+              public function display(){
+                  echo $this->bar;
+              }
+
+           }
+
+   .. tab:: Annotations
+
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/FooController.php
+           :emphasize-lines: 3
+
+           namespace controllers;
+
+           /**
+            * @route("/foo/{bar}","automated"=>true)
+            */
+           class FooController {
+
+              public string $bar;
+
+              public function display(){
+                  echo $this->bar;
+              }
+
+           }
+
+Accessing the url ``/foo/bar/display`` displays the contents of the bar member.
+
+Route without global prefix
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If the global route is defined on a controller, all the generated routes in this controller are preceded by the prefix. |br|
+It is possible to explicitly introduce exceptions on some routes, using the ``#/`` prefix.
+
+.. tabs::
+
+   .. tab:: Attributes
+
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/FooController.php
+           :emphasize-lines: 8
+
+           namespace controllers;
+
+           use Ubiquity\attributes\items\router\Route;
+
+           #[Route('/foo',automated: true)]
+           class FooController {
+
+              #[Route('#/noRoot')]
+              public function noRoot(){}
+
+           }
+
+   .. tab:: Annotations
+
+        .. code-block:: php
+           :linenos:
+           :caption: app/controllers/FooController.php
+           :emphasize-lines: 9
+
+           namespace controllers;
+
+           /**
+            * @route("/foo","automated"=>true)
+            */
+           class FooController {
+
+             /**
+              * @route("#/noRoot")
+              */
+              public function noRoot(){}
+
+           }
+
+The controller defines the ``/noRoot`` url, which is not prefixed with the ``/foo`` part.
+
 Route priority
 ^^^^^^^^^^^^^^
 The **prority** parameter of a route allows this route to be resolved in a priority order.
