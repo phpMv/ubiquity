@@ -1,6 +1,6 @@
 Ubiquity dependencies
 =====================
-- ``^php 7.4``
+- ``php >=7.4``
 - ``phpmv/ubiquity`` => Ubiquity core
 In production
 -------------
@@ -9,6 +9,12 @@ Templating
 Twig is required if it is used as a template engine, which is not a requirement.
 
 - ``twig/twig`` => Template engine
+
+Security
+^^^^^^^^
+- ``phpmv/ubiquity-security`` => Csrf, Csp...
+- ``phpmv/ubiquity-acl`` => Access Control List management
+
 
 In development
 --------------

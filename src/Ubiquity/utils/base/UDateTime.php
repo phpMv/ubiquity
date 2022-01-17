@@ -8,7 +8,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class UDateTime {
@@ -17,11 +17,7 @@ class UDateTime {
 	private static $locales = [ "fr" => [ "fr","fr_FR","fr_FR.UTF-8" ],"en" => [ "en","en_US","en_US.UTF-8" ] ];
 
 	private static function setLocale($locale) {
-		if (isset ( self::$locales [$locale] )) {
-			$locale = self::$locales [$locale];
-		} else {
-			$locale = self::$locales ["en"];
-		}
+		$locale = self::$locales [$locale]??self::$locales ["en"];
 		setlocale ( LC_TIME, $locale [0], $locale [1], $locale [2] );
 	}
 
@@ -42,22 +38,22 @@ class UDateTime {
 
 	public static function longDate($date, $locale = "en") {
 		self::setLocale ( $locale );
-		return utf8_encode ( strftime ( "%A %d %B %Y", strtotime ( $date ) ) );
+		return \date('l d F Y',\strtotime($date));
 	}
 
 	public static function shortDate($date, $locale = "en") {
 		self::setLocale ( $locale );
-		return strftime ( "%x", strtotime ( $date ) );
+		return \date('d/m/y',\strtotime($date));
 	}
 
 	public static function shortDatetime($datetime, $locale = "en") {
 		self::setLocale ( $locale );
-		return strftime ( "%c", strtotime ( $datetime ) );
+		return \date('c',\strtotime($date));
 	}
 
 	public static function longDatetime($datetime, $locale = "en") {
 		self::setLocale ( $locale );
-		return utf8_encode ( strftime ( "%A %d %B %Y, %T", strtotime ( $datetime ) ) );
+		return date('l d F Y, H:i:s', \strtotime ( $datetime ));
 	}
 
 	/**
@@ -89,7 +85,7 @@ class UDateTime {
 		}
 
 		if (! $full)
-			$string = array_slice ( $string, 0, 1 );
+			$string = \array_slice ( $string, 0, 1 );
 		return $string ? implode ( ', ', $string ) . ($diff->invert ? ' ago' : '') : 'just now';
 	}
 }
