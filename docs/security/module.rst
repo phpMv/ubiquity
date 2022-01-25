@@ -288,6 +288,88 @@ To then decrypt it, with possible serialisation/deserialisation if it is an obje
 
     $user=EncryptionManager::decrypt($encryptedUser);
 
+Content Security Policies manager
+=================================
+The **ContentSecurityManager** service can be started directly from the **webtools** interface.
+
+- The service is started in the ``services.php`` file.
+
+.. code-block:: php
+   :caption: app/config/services.php
+
+   \Ubiquity\security\csp\ContentSecurityManager::start(reportOnly: true,onNonce: function($name,$value){
+   	if($name==='jsUtils') {
+   		\Ubiquity\security\csp\ContentSecurityManager::defaultUbiquityDebug()->addNonce($value, \Ubiquity\security\csp\CspDirectives::SCRIPT_SRC)->addHeaderToResponse();
+   	}
+   });
+
+.. note:: With this default configuration, a nonce is added to jquery scripts generated with phpmv-ui.
+   CSP control is done in Report-only mode..
+
+.. image:: /_static/images/security/csp-manager-started.png
+   :class: bordered
+
+Adding a nonce
+^^^^^^^^^^^^^^
+Example of adding nonce on the header and footer pages:
+
+
+Updating the base controller
+----------------------------
+
+.. code-block:: php
+   :caption: app/controllers/ControllerBase.php
+   
+   namespace controllers;
+
+   use Ubiquity\controllers\Controller;
+   use Ubiquity\security\csp\ContentSecurityManager;
+   use Ubiquity\utils\http\URequest;
+
+   /**
+    * controllers$ControllerBase
+    */
+   abstract class ControllerBase extends Controller {
+
+   	protected $headerView = "@activeTheme/main/vHeader.html";
+
+   	protected $footerView = "@activeTheme/main/vFooter.html";
+
+   	protected $nonce;
+
+   	public function initialize() {
+   		$this->nonce=ContentSecurityManager::getNonce('jsUtils');
+   		if (! URequest::isAjax()) {
+   			$this->loadView($this->headerView,['nonce'=>$this->nonce]);
+   		}
+   	}
+
+   	public function finalize() {
+   		if (! URequest::isAjax()) {
+   			$this->loadView($this->footerView,['nonce'=>$this->nonce]);
+   		}
+   	}
+   }
+
+Adding the nonce in the header and footer views
+-----------------------------------------------
+
+.. code-block:: php
+   :caption: app/views/main/vHeader.html
+   
+   {% block css %}
+   	{{ css('https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css',['nonce'=>nonce]) }}
+   	{{css('css/style.css',['nonce'=>nonce])}}
+   {% endblock %}
+
+.. code-block:: php
+   :caption: app/views/main/vFooter.html
+   
+   {% block scripts %}
+   	{{ js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',['nonce'=>nonce]) }}
+   	{{ js('https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js',['nonce'=>nonce]) }}
+   {% endblock %}
+
 Password management
 ===================
 
