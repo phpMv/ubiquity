@@ -175,16 +175,16 @@ class UGitRepository extends GitRepository {
 	}
 
 	public function getCommits() {
-		$remoteBranchsSize=sizeof($this->getRemoteBranchs());
+		$remoteBranchsSize=\count($this->getRemoteBranchs());
 		$nonPushed = $this->getNonPushedCommitHash ();
 		try {
 			return $this->extractFromCommand ( 'git log --pretty=format:"%h___%an___%ar___%s___%H"', function ($str) use ($nonPushed,$remoteBranchsSize) {
-				$array = explode ( "___", $str );
+				$array = \explode ( "___", $str );
 				$pushed = true;
 				if($remoteBranchsSize==0){
 					$pushed=false;
 				}else{
-					if (is_array ( $nonPushed ))
+					if (\is_array ( $nonPushed ))
 						$pushed = ! in_array ( $array [0], $nonPushed );
 				}
 				return new GitCommit ( $array [0], $array [1], $array [2], $array [3], $array [4], $pushed );

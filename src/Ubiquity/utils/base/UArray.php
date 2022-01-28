@@ -10,7 +10,7 @@ use Ubiquity\utils\base\traits\UArrayAsTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  *
  */
 class UArray {
@@ -54,8 +54,8 @@ class UArray {
 		if (\array_key_exists ( $key, $array )) {
 			return $array [$key];
 		}
-		$values = array_values ( $array );
-		if ($pos < \sizeof ( $values ))
+		$values = \array_values ( $array );
+		if ($pos < \count ( $values ))
 			return $values [$pos];
 	}
 
@@ -163,7 +163,7 @@ class UArray {
 		} );
 	}
 
-	public static function iSearch($needle, $haystack, $strict = null) {
+	public static function iSearch($needle, $haystack, $strict = false) {
 		return \array_search ( strtolower ( $needle ), array_map ( 'strtolower', $haystack ), $strict );
 	}
 
@@ -188,7 +188,11 @@ class UArray {
 	public static function implodeAsso($array, $glue, $op = '=', $quoteKey = '"', $quoteValue = '"') {
 		$res = [ ];
 		foreach ( $array as $k => $v ) {
-			$res [] = "{$quoteKey}{$k}{$quoteKey}{$op}{$quoteValue}{$v}{$quoteValue}";
+			if(\is_string($k)){
+				$res [] = "{$quoteKey}{$k}{$quoteKey}{$op}{$quoteValue}{$v}{$quoteValue}";
+			}else{
+				$res [] = "{$quoteKey}{$v}{$quoteKey}";
+			}
 		}
 		return \implode ( $glue, $res );
 	}

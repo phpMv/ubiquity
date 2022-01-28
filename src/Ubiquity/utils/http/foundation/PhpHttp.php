@@ -7,7 +7,7 @@ namespace Ubiquity\utils\http\foundation;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class PhpHttp extends AbstractHttp {
@@ -16,7 +16,7 @@ class PhpHttp extends AbstractHttp {
 		return \getallheaders ();
 	}
 
-	public function header($key, $value, bool $replace = true, int $http_response_code = null) {
+	public function header($key, $value, bool $replace = true, int $http_response_code = 0) {
 		\header ( $key . ': ' . $value, $replace, $http_response_code );
 	}
 

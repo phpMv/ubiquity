@@ -7,11 +7,13 @@ use Ubiquity\controllers\Startup;
 /**
  * Ubiquity\utils\http\traits$URequestTesterTrait
  * This class is part of Ubiquity
+ *
  * @author jc
  * @version 1.0.0
  *
  */
 trait URequestTesterTrait {
+
 	/**
 	 * Tests if a value is present on the request and is not empty
 	 *
@@ -53,7 +55,11 @@ trait URequestTesterTrait {
 	}
 
 	/**
-	 * Returns true if the request is cross site
+	 * Returns true if the request is cross site.
+	 * Please note that this method is not secure, and does not protect against CSRF attacks.
+	 * For sufficient protection in this area, install the CSRF protection of the ubiquity-security module.
+	 *
+	 * @see https://micro-framework.readthedocs.io/en/latest/security/module.html#csrf-manager
 	 *
 	 * @return boolean
 	 */

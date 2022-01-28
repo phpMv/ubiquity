@@ -18,13 +18,16 @@ use Ubiquity\utils\http\traits\URequestTesterTrait;
 class URequest {
 use URequestTesterTrait;
 
-	private static array $uriInfos;
+	/**
+	 * @var array
+	 */
+	private static $uriInfos;
 	/**
 	 * Affects member to member the values of the associative array $values to the members of the object $object
 	 * Used for example to retrieve the variables posted and assign them to the members of an object
 	 *
 	 * @param object $object
-	 * @param associative array $values
+	 * @param array $values
 	 */
 	public static function setValuesToObject($object, $values = null): void {
 		if (! isset ( $values )) {
@@ -294,7 +297,13 @@ use URequestTesterTrait;
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Internal use for async servers (Swoole and Workerman).
+	 * @param string $uri
+	 * @param string $basedir
+	 * @return array
+	 */
 	public static function parseURI(string $uri,string $basedir):array {
 		return self::$uriInfos[$uri]??=self::_parseURI($uri,$basedir);
 	}

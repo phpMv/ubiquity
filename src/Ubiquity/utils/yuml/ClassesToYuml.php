@@ -43,14 +43,14 @@ class ClassesToYuml {
 		$config = Startup::getConfig ();
 		CacheManager::start ( $config );
 		$models = CacheManager::getModels ( $config, true, $this->database );
-		if (\sizeof ( $models ) !== 0) {
+		if (\count ( $models ) !== 0) {
 			foreach ( $models as $model ) {
 				$yumlR = new ClassToYuml ( $model, $this->displayProperties, false, $this->displayMethods, $this->displayMethodsParams, $this->displayPropertiesTypes, false );
 				$yumlR->loadManyToManys ();
 				$yumlResult [] = $yumlR;
 			}
 			if ($this->displayAssociations) {
-				$count = \sizeof ( $models );
+				$count = \count ( $models );
 				for($i = 0; $i < $count; $i ++) {
 					$this->checkManyToManys ( $yumlResult [$i]->getExtManyToManys (), $yumlResult [$i] );
 				}

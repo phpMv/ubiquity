@@ -9,7 +9,7 @@ namespace Ubiquity\utils\base;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class UString {
@@ -20,6 +20,15 @@ class UString {
 
 	public static function contains($needle, $haystack) {
 		return \strpos ( $haystack, $needle ) !== false;
+	}
+	
+	public static function containsValues(array $values,string $haystack):bool{
+		foreach ($values as $v){
+			if(\strpos ( $haystack, $v ) !== false){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static function endswith($hay, $needle) {

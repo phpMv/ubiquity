@@ -11,13 +11,13 @@ namespace Ubiquity\utils\http\foundation;
  *
  */
 abstract class AbstractHttp {
-	
+
 	public abstract function getAllHeaders();
-	
+
 	public abstract function header($key, $value, bool $replace = true, int $http_response_code = 0);
-	
+
 	public abstract function headersSent(string &$file = null, int &$line = null);
-	
+
 	public abstract function getInput();
 }
 

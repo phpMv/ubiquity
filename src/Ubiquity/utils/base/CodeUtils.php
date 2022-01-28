@@ -75,10 +75,10 @@ class CodeUtils {
 
 	public static function unCheckVar($var, $prefix = '$') {
 		if (UString::isNull ( $var ))
-			return "";
+			return '';
 		$var = \trim ( $var );
 		if (UString::startswith ( $var, $prefix )) {
-			$var = \substr ( $var, \sizeof ( $prefix ) );
+			$var = \substr ( $var, \count ( $prefix ) );
 		}
 		return $var;
 	}
@@ -93,15 +93,15 @@ class CodeUtils {
 		$output = [ ];
 		$result = 1;
 		$temp_file = tempnam ( sys_get_temp_dir (), 'Tux' );
-		$fp = fopen ( $temp_file, "w" );
-		fwrite ( $fp, $code );
-		fclose ( $fp );
-		if (file_exists ( $temp_file )) {
+		$fp = \fopen ( $temp_file, 'w' );
+		\fwrite ( $fp, $code );
+		\fclose ( $fp );
+		if (\file_exists ( $temp_file )) {
 			$phpExe = self::getPHPExecutable ();
 			if (isset ( $phpExe )) {
 				exec ( $phpExe . ' -l ' . $temp_file, $output, $result );
 			}
-			$output = implode ( "", $output );
+			$output = \implode ( '', $output );
 			\unlink ( $temp_file );
 			if (strpos ( $output, 'No syntax errors detected' ) === false && $result !== 1) {
 				return false;
@@ -118,35 +118,35 @@ class CodeUtils {
 	public static function getPHPExecutable() {
 		if (defined ( 'PHP_BINARY' ) && PHP_BINARY && in_array ( PHP_SAPI, array ('cli','cli-server' ) ) && is_file ( PHP_BINARY )) {
 			return PHP_BINARY;
-		} else if (strtoupper ( substr ( PHP_OS, 0, 3 ) ) === 'WIN') {
-			$paths = explode ( PATH_SEPARATOR, getenv ( 'PATH' ) );
+		} else if (\strtoupper ( substr ( PHP_OS, 0, 3 ) ) === 'WIN') {
+			$paths = \explode ( PATH_SEPARATOR, getenv ( 'PATH' ) );
 			foreach ( $paths as $path ) {
 				if (substr ( $path, strlen ( $path ) - 1 ) == \DS) {
-					$path = substr ( $path, 0, strlen ( $path ) - 1 );
+					$path = \substr ( $path, 0, strlen ( $path ) - 1 );
 				}
-				if (substr ( $path, strlen ( $path ) - strlen ( 'php' ) ) == 'php') {
+				if (\substr ( $path, strlen ( $path ) - strlen ( 'php' ) ) == 'php') {
 					$response = $path . \DS . 'php.exe';
 					if (is_file ( $response )) {
 						return $response;
 					}
-				} else if (substr ( $path, strlen ( $path ) - strlen ( 'php.exe' ) ) == 'php.exe') {
-					if (is_file ( $path )) {
+				} else if (\substr ( $path, \strlen ( $path ) - \strlen ( 'php.exe' ) ) == 'php.exe') {
+					if (\is_file ( $path )) {
 						return $path;
 					}
 				}
 			}
 		} else {
-			$paths = explode ( PATH_SEPARATOR, getenv ( 'PATH' ) );
+			$paths = \explode ( PATH_SEPARATOR, getenv ( 'PATH' ) );
 			foreach ( $paths as $path ) {
-				if (substr ( $path, strlen ( $path ) - 1 ) == \DS) {
+				if (\substr ( $path, \strlen ( $path ) - 1 ) == \DS) {
 					$path = substr ( $path, strlen ( $path ) - 1 );
 				}
-				if (substr ( $path, strlen ( $path ) - strlen ( 'php' ) ) == 'php') {
-					if (is_file ( $path )) {
+				if (\substr ( $path, \strlen ( $path ) - \strlen ( 'php' ) ) == 'php') {
+					if (\is_file ( $path )) {
 						return $path;
 					}
 					$response = $path . \DS . 'php';
-					if (is_file ( $response )) {
+					if (\is_file ( $response )) {
 						return $response;
 					}
 				}

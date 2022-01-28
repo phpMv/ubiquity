@@ -88,6 +88,9 @@ class UFileSystem {
 				$path = $path . \DS;
 			}
 		}
+		if (\file_exists ( $path )) {
+			return \realpath ( $path );
+		}
 		return $path;
 	}
 
@@ -104,6 +107,9 @@ class UFileSystem {
 			else
 				$path = \str_replace ( "/", \DS, $path );
 			$path = \str_replace ( \DS . \DS, \DS, $path );
+		}
+		if (\file_exists ( $path )) {
+			return \realpath ( $path );
 		}
 		return $path;
 	}
@@ -191,7 +197,7 @@ class UFileSystem {
 						} else {
 							$result [] = $lines [$ln];
 						}
-						if (isset ( $maxLines ) && \sizeof ( $result ) >= $maxLines) {
+						if (isset ( $maxLines ) && \count ( $result ) >= $maxLines) {
 							\fclose ( $fl );
 							return $result;
 						}
@@ -240,7 +246,7 @@ class UFileSystem {
 				} else {
 					$result [] = $line;
 				}
-				if (isset ( $maxLines ) && \sizeof ( $result ) >= $maxLines) {
+				if (isset ( $maxLines ) && \count ( $result ) >= $maxLines) {
 					\fclose ( $handle );
 					if (is_array ( $result ) && $reverse) {
 						$result = \array_reverse ( $result );
