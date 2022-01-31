@@ -1,0 +1,50 @@
+{% block _before %}
+<p></p>
+{% endblock %}
+{% block _form %}
+<form id="frm-create" class="ui form" name="frm-create" method="post" action="{{action}}">
+{% block _header %}
+<h4 class="ui header dividing">Account creation</h4> 
+{% endblock %}
+{% block _fields %}
+	{% block _fieldLogin %}
+	<div class="field required">
+	<label for="{{loginInputName}}">{{loginLabel}}</label> 
+	<div class="ui input">
+		{% block _login %}
+		<input id="{{loginInputName}}" name="{{loginInputName}}" type="text" placeholder="{{loginLabel}}">
+		{% endblock %}
+	</div>
+	</div>
+	{% endblock %}
+	{% block _fieldPassword %}
+	<div class="two fields">
+		<div class="field required">
+			<label for="{{passwordInputName}}">{{passwordLabel}}</label>
+			<div class="ui input">
+				{% block _password %}
+				<input id="{{passwordInputName}}" name="{{passwordInputName}}" type="password">
+				{% endblock %}
+			</div>
+		</div>
+		<div class="field required">
+			<label for="{{passwordInputName}}-conf">{{passwordConfLabel}}</label>
+			<div class="ui input">
+				{% block _passwordConf %}
+				<input id="{{passwordInputName}}-conf" name="{{passwordInputName}}-conf" type="password">
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+{% endblock %}
+{% block _buttons %}
+<button class="ui button inverted basic ajax _create">Creation</button>
+{% endblock %}
+</form>
+{% endblock %}
+{% block _after %}
+{% endblock %}
+{% block _script %}
+	{{ script_foot|raw }}
+{% endblock %}

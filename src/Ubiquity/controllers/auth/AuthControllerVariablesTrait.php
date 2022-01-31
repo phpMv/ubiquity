@@ -80,11 +80,11 @@ trait AuthControllerVariablesTrait {
 	}
 
 	public function _getLoginInputName() {
-		return "email";
+		return 'email';
 	}
 
 	protected function loginLabel() {
-		return ucfirst ( $this->_getLoginInputName () );
+		return \ucfirst ( $this->_getLoginInputName () );
 	}
 
 	public function _getPasswordInputName() {
@@ -92,7 +92,11 @@ trait AuthControllerVariablesTrait {
 	}
 
 	protected function passwordLabel() {
-		return ucfirst ( $this->_getPasswordInputName () );
+		return \ucfirst ( $this->_getPasswordInputName () );
+	}
+	
+	protected function passwordConfLabel() {
+		return \ucfirst ( $this->_getPasswordInputName () ).' confirmation';
 	}
 
 	/**
@@ -107,6 +111,13 @@ trait AuthControllerVariablesTrait {
 
 	protected function rememberCaption() {
 		return 'Remember me';
+	}
+	/**
+	 * Returns true for account creation.
+	 * @return boolean
+	 */
+	protected function hasAccountCreation(){
+		return false;
 	}
 }
 

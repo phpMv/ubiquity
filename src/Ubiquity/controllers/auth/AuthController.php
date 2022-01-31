@@ -12,6 +12,7 @@ use Ubiquity\controllers\Startup;
 use Ajax\service\Javascript;
 use Ubiquity\utils\http\UCookie;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
+use Ajax\semantic\html\collections\form\HtmlForm;
 
 /**
  * Controller Auth
@@ -58,9 +59,30 @@ abstract class AuthController extends Controller {
 			}
 		}
 		if($this->useAjax()){
-			$this->_addFrmAjaxBehavior();
+			$this->_addFrmAjaxBehavior('frm-login');
 		}
-		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), [ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ] );
+		$vData=[ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ];
+		if($this->hasAccountCreation()){
+			$vData['createAccountUrl']=$this->getBaseUrl().'/addAccount';
+			$vData['accountCreationTarget']=$this->_getBodySelector();
+		}
+		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), $vData );
+	}
+	
+	public function addAccount(){
+		if($this->hasAccountCreation()){
+			if($this->useAjax()){
+				$frm=$this->_addFrmAjaxBehavior('frm-create');
+				$passwordInputName=$this->_getPasswordInputName();
+				$frm->addExtraFieldRule($passwordInputName.'-conf', "match[$passwordInputName-conf]");
+			}
+			$this->authLoadView ( $this->_getFiles ()->getViewCreate(), [ 'action' => $this->getBaseUrl () . '/createAccount','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'passwordConfLabel'=>$this->passwordConfLabel(),'rememberCaption' => $this->rememberCaption () ] );
+		}
+	}
+	
+
+	public function createAccount(){
+		$this->_create(URequest::post($this->_getLoginInputName()),URequest::post($this->_getPasswordInputName()));
 	}
 
 	/**
@@ -282,10 +304,11 @@ abstract class AuthController extends Controller {
 		$jquery->postFormAction('.ui.form',$this->_getBodySelector(),$ajaxParameters);
 	}
 
-	public function _addFrmAjaxBehavior(){
-		$frm=$this->jquery->semantic()->htmlForm('frm-login');
+	public function _addFrmAjaxBehavior($id):HtmlForm{
+		$frm=$this->jquery->semantic()->htmlForm($id);
 		$frm->addExtraFieldRule($this->_getLoginInputName(),'empty');
 		$frm->addExtraFieldRule($this->_getPasswordInputName(),'empty');
 		$frm->setValidationParams(['inline'=>true,'on'=>'blur']);
+		return $frm;
 	}
 }

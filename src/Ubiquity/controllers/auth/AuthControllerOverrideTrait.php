@@ -26,6 +26,14 @@ trait AuthControllerOverrideTrait {
 	abstract protected function _connect();
 	
 	/**
+	 * To override
+	 * For creating a new user account.
+	 */
+	protected function _create(string $login,string $password):?bool{
+		return false;
+	}
+	
+	/**
 	 * @param object $connected
 	 */
 	abstract protected function onConnect($connected);
