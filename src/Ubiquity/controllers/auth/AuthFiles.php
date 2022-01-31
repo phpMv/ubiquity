@@ -11,7 +11,7 @@ class AuthFiles {
 
 	/**
 	 * To override
-	 * The login view
+	 * The login view.
 	 *
 	 * @return string
 	 */
@@ -21,7 +21,7 @@ class AuthFiles {
 
 	/**
 	 * To override
-	 * The info view, displays the connected user and a logout button
+	 * The info view, displays the connected user and a logout button.
 	 *
 	 * @return string
 	 */
@@ -29,6 +29,16 @@ class AuthFiles {
 		return $this->viewBase . "/info.html";
 	}
 
+	/**
+	 * To override
+	 * Displays the form for a new account.
+	 *
+	 * @return string
+	 */
+	public function getViewCreate() {
+		return $this->viewBase . "/create.html";
+	}
+	
 	/**
 	 * To override
 	 *
@@ -39,7 +49,7 @@ class AuthFiles {
 	}
 
 	/**
-	 * Returns the base template for all Auth actions if getBaseTemplate return a base template filename
+	 * Returns the base template for all Auth actions if getBaseTemplate return a base template filename.
 	 *
 	 * @return string
 	 */
