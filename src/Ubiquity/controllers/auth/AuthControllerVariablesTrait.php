@@ -47,10 +47,26 @@ trait AuthControllerVariablesTrait {
 	 */
 	protected function disconnectedMessage(FlashMessage $fMessage) {
 	}
+	
+	/**
+	 * To override for modifying the account creation message.
+	 *
+	 * @param FlashMessage $fMessage
+	 */
+	protected function createAccountMessage(FlashMessage $fMessage) {
+	}
+	
+	/**
+	 * To override for modifying the error for account creation.
+	 *
+	 * @param FlashMessage $fMessage
+	 */
+	protected function createAccountErrorMessage(FlashMessage $fMessage) {
+	}
 
 	/**
 	 * To override
-	 * Returns the maximum number of allowed login attempts
+	 * Returns the maximum number of allowed login attempts.
 	 */
 	protected function attemptsNumber() {
 		return;
@@ -59,7 +75,7 @@ trait AuthControllerVariablesTrait {
 	/**
 	 * To override
 	 * Returns the time before trying to connect again
-	 * Effective only if attemptsNumber return a number
+	 * Effective only if attemptsNumber return a number.
 	 *
 	 * @return number
 	 */

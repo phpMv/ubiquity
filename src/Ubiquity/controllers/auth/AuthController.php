@@ -82,7 +82,14 @@ abstract class AuthController extends Controller {
 	
 
 	public function createAccount(){
-		$this->_create(URequest::post($this->_getLoginInputName()),URequest::post($this->_getPasswordInputName()));
+		$account=URequest::post($this->_getLoginInputName());
+		if($this->_create($account,URequest::post($this->_getPasswordInputName()))){
+			$msg=new FlashMessage ( "<b>{account}</b> account created with success!", "Account creation", "success", "check square" );
+		}else{
+			$msg=new FlashMessage ( "The account <b>{account}</b> is not created!", "Account creation", "error", "warning circle" );
+		}
+		$msg->parseContent(['account'=>$account]);
+		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
 	}
 
 	/**
