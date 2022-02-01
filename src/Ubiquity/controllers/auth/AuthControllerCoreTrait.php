@@ -94,5 +94,12 @@ trait AuthControllerCoreTrait {
 	protected function getViewVars($viewname) {
 		return [ "authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ];
 	}
+	
+	protected function addAccountCreationViewData(array &$vData){
+		if($this->hasAccountCreation()){
+			$vData['createAccountUrl']=$this->getBaseUrl().'/addAccount';
+			$vData['accountCreationTarget']=$this->_getBodySelector();
+		}
+	}
 }
 

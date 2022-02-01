@@ -61,7 +61,9 @@ abstract class AuthController extends Controller {
 		if($this->useAjax()){
 			$this->_addFrmAjaxBehavior('frm-login');
 		}
-		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), [ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ] );
+		$vData=[ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ];
+		$this->addAccountCreationViewData($vData);
+		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), $vData );
 	}
 	
 	public function addAccount(){
@@ -116,11 +118,7 @@ abstract class AuthController extends Controller {
 		}
 		
 		$vData=[ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ];
-		if($this->hasAccountCreation()){
-			$vData['createAccountUrl']=$this->getBaseUrl().'/addAccount';
-			$vData['accountCreationTarget']=$this->_getBodySelector();
-		}
-
+		$this->addAccountCreationViewData($vData);
 		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), $vData);
 	}
 
