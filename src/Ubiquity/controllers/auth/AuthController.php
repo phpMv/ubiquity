@@ -61,12 +61,7 @@ abstract class AuthController extends Controller {
 		if($this->useAjax()){
 			$this->_addFrmAjaxBehavior('frm-login');
 		}
-		$vData=[ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ];
-		if($this->hasAccountCreation()){
-			$vData['createAccountUrl']=$this->getBaseUrl().'/addAccount';
-			$vData['accountCreationTarget']=$this->_getBodySelector();
-		}
-		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), $vData );
+		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), [ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ] );
 	}
 	
 	public function addAccount(){
@@ -114,12 +109,19 @@ abstract class AuthController extends Controller {
 		$fMessage = $this->_noAccessMsg;
 		$this->noAccessMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage->parseContent ( [ "url" => implode ( "/", $urlParts ) ] ) );
+		
 		if (URequest::isAjax ()) {
 			$this->jquery->get ( $this->_getBaseRoute () . "/info/f", "#_userInfo", [ "historize" => false,"jqueryDone" => "replaceWith","hasLoader" => false,"attr" => "" ] );
 			$this->jquery->compile ( $this->view );
 		}
+		
+		$vData=[ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ];
+		if($this->hasAccountCreation()){
+			$vData['createAccountUrl']=$this->getBaseUrl().'/addAccount';
+			$vData['accountCreationTarget']=$this->_getBodySelector();
+		}
 
-		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
+		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), $vData);
 	}
 
 	/**

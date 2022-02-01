@@ -13,6 +13,11 @@
 	{% block _loginButton %}
 		<a href="{{authURL}}" data-target="{{bodySelector}}" class="ui button ajax _login"><i class="icon sign in"></i>{{ _loginCaption }}</a>
 	{% endblock %}
+	{% block _accountCreation %}
+		{% if createAccountUrl %}
+			<a href="{{createAccountUrl}}" class="ui button inverted basic ajax _create" data-target='{{accountCreationTarget}}'>Create account</a>
+		{% endif %}
+		{% endblock %}
 {% endblock %}
 {% block _after %}
 {% endblock %}
