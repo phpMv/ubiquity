@@ -95,10 +95,16 @@ trait AuthControllerCoreTrait {
 		return [ "authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ];
 	}
 	
-	protected function addAccountCreationViewData(array &$vData){
+	protected function addAccountCreationViewData(array &$vData,$forMessage=false){
 		if($this->hasAccountCreation()){
-			$vData['createAccountUrl']=$this->getBaseUrl().'/addAccount';
-			$vData['accountCreationTarget']=$this->_getBodySelector();
+			if($forMessage){
+				$fMessage = new FlashMessage ( "<p>You can create one now!</p><a href='{createAccountUrl}' class='ui button black ajax _create' data-target='{accountCreationTarget}'>Create account</a>", "Don't have an account yet?", "", "question" );
+				$this->canCreateAccountMessage ( $fMessage->parseContent(['accountCreationTarget'=>$this->_getBodySelector(),'createAccountUrl'=>$this->getBaseUrl().'/addAccount']) );
+				$vData['canCreateAccountMessage'] = $this->fMessage ( $fMessage );
+			}else{
+				$vData['createAccountUrl']=$this->getBaseUrl().'/addAccount';
+				$vData['accountCreationTarget']=$this->_getBodySelector();
+			}
 		}
 	}
 }

@@ -62,7 +62,7 @@ abstract class AuthController extends Controller {
 			$this->_addFrmAjaxBehavior('frm-login');
 		}
 		$vData=[ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ];
-		$this->addAccountCreationViewData($vData);
+		$this->addAccountCreationViewData($vData,true);
 		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), $vData );
 	}
 	
@@ -71,7 +71,7 @@ abstract class AuthController extends Controller {
 			if($this->useAjax()){
 				$frm=$this->_addFrmAjaxBehavior('frm-create');
 				$passwordInputName=$this->_getPasswordInputName();
-				$frm->addExtraFieldRule($passwordInputName.'-conf', "match[$passwordInputName-conf]");
+				$frm->addExtraFieldRule($passwordInputName.'-conf', ['empty',"match[$passwordInputName-conf]"]);
 			}
 			$this->authLoadView ( $this->_getFiles ()->getViewCreate(), [ 'action' => $this->getBaseUrl () . '/createAccount','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'passwordConfLabel'=>$this->passwordConfLabel(),'rememberCaption' => $this->rememberCaption () ] );
 		}

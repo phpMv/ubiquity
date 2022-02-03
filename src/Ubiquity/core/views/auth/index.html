@@ -45,8 +45,9 @@
 {% block _buttons %}
 <button class="ui button green basic ajax _connect">Connection</button>
 	{% block _accountCreation %}
-		{% if createAccountUrl %}
-			<a href="{{createAccountUrl}}" class="ui button black ajax _create" data-target='{{accountCreationTarget}}'>Create account</a>
+		{% if canCreateAccountMessage %}
+			<div class="ui divider"></div>
+			{{canCreateAccountMessage}}
 		{% endif %}
 	{% endblock %}
 {% endblock %}

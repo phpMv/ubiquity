@@ -57,6 +57,14 @@ trait AuthControllerVariablesTrait {
 	}
 	
 	/**
+	 * To override for modifying the account creation message information.
+	 *
+	 * @param FlashMessage $fMessage
+	 */
+	protected function canCreateAccountMessage(FlashMessage $fMessage) {
+	}
+	
+	/**
 	 * To override for modifying the error for account creation.
 	 *
 	 * @param FlashMessage $fMessage
