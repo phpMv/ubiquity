@@ -71,7 +71,7 @@ abstract class AuthController extends Controller {
 			if($this->useAjax()){
 				$frm=$this->_addFrmAjaxBehavior('frm-create');
 				$passwordInputName=$this->_getPasswordInputName();
-				$frm->addExtraFieldRules($passwordInputName.'-conf', ['empty',"match[$passwordInputName-conf]"]);
+				$frm->addExtraFieldRules($passwordInputName.'-conf', ['empty',"match[$passwordInputName]"]);
 			}
 			$this->authLoadView ( $this->_getFiles ()->getViewCreate(), [ 'action' => $this->getBaseUrl () . '/createAccount','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'passwordConfLabel'=>$this->passwordConfLabel(),'rememberCaption' => $this->rememberCaption () ] );
 		}
