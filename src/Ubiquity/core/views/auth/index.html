@@ -47,7 +47,7 @@
 	{% block _accountCreation %}
 		{% if canCreateAccountMessage %}
 			<div class="ui divider"></div>
-			{{canCreateAccountMessage}}
+			{{canCreateAccountMessage | raw}}
 		{% endif %}
 	{% endblock %}
 {% endblock %}
