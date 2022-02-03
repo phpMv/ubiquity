@@ -13,6 +13,7 @@ use Ajax\service\Javascript;
 use Ubiquity\utils\http\UCookie;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ajax\semantic\html\collections\form\HtmlForm;
+use Ajax\semantic\components\validation\Rule;
 
 /**
  * Controller Auth
@@ -72,6 +73,12 @@ abstract class AuthController extends Controller {
 				$frm=$this->_addFrmAjaxBehavior('frm-create');
 				$passwordInputName=$this->_getPasswordInputName();
 				$frm->addExtraFieldRules($passwordInputName.'-conf', ['empty',"match[$passwordInputName]"]);
+				if($this->newAccountCreationRule!==null){
+					$this->jquery->exec(Rule::ajax($this->jquery, 'checkAccount', $this->getBaseUrl () . '/_newAccountCreationRule', '{}', 'result=data.result;', 'postForm', [
+									'form' => 'frm-create'
+							]), true);
+					$frm->addExtraFieldRule($this->_getLoginInputName(), 'checkAccount','Account {value} is not available!');
+				}
 			}
 			$this->authLoadView ( $this->_getFiles ()->getViewCreate(), [ 'action' => $this->getBaseUrl () . '/createAccount','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'passwordConfLabel'=>$this->passwordConfLabel(),'rememberCaption' => $this->rememberCaption () ] );
 		}

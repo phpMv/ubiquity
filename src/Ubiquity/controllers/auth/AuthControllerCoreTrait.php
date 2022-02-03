@@ -5,6 +5,7 @@ namespace Ubiquity\controllers\auth;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\flash\FlashMessage;
+use Ubiquity\utils\http\UResponse;
 
 /**
  *
@@ -40,6 +41,15 @@ trait AuthControllerCoreTrait {
 	protected function fMessage(FlashMessage $fMessage, $id = null) {
 		return $this->message ( $fMessage->getType (), $fMessage->getTitle (), $fMessage->getContent (), $fMessage->getIcon (), $id );
 	}
+	
+	public function _newAccountCreationRule(){
+		if (URequest::isPost()) {
+			$result = [];
+			UResponse::asJSON();
+			$result["result"] = $this->newAccountCreationRule(URequest::post($this->_getLoginInputName()));
+			echo \json_encode($result);
+		}
+	}
 
 	protected function noAttempts() {
 		$timeout = $this->attemptsTimeout ();
@@ -48,13 +58,13 @@ trait AuthControllerCoreTrait {
 			$this->jquery->exec ( "$('._login').addClass('disabled');", true );
 			$plus = " You can try again {_timer}";
 			$this->jquery->exec ( "var startTimer=function(duration, display) {var timer = duration, minutes, seconds;
-    										var interval=setInterval(function () {
-        										minutes = parseInt(timer / 60, 10);seconds = parseInt(timer % 60, 10);
-										        minutes = minutes < 10 ? '0' + minutes : minutes;
-        										seconds = seconds < 10 ? '0' + seconds : seconds;
-										        display.html(minutes + ':' + seconds);
-										        if (--timer < 0) {clearInterval(interval);$('#timeout-message').hide();$('#bad-login').removeClass('attached');$('._login').removeClass('disabled');}
-    										}, 1000);
+											var interval=setInterval(function () {
+												minutes = parseInt(timer / 60, 10);seconds = parseInt(timer % 60, 10);
+												minutes = minutes < 10 ? '0' + minutes : minutes;
+												seconds = seconds < 10 ? '0' + seconds : seconds;
+												display.html(minutes + ':' + seconds);
+												if (--timer < 0) {clearInterval(interval);$('#timeout-message').hide();$('#bad-login').removeClass('attached');$('._login').removeClass('disabled');}
+											}, 1000);
 										}", true );
 			$timeToLeft = USession::getTimeout ( $this->_attemptsSessionKey );
 			$this->jquery->exec ( "startTimer({$timeToLeft},$('#timer'));", true );

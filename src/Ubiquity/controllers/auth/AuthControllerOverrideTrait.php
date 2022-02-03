@@ -46,6 +46,16 @@ trait AuthControllerOverrideTrait {
 	}
 	
 	/**
+	 * To override
+	 * Returns true if the creation of $accountName is possible.
+	 * @param string $accountName
+	 * @return bool
+	 */
+	protected function newAccountCreationRule(string $accountName):?bool{
+		
+	}
+	
+	/**
 	 * To override for defining user session key, default : "activeUser"
 	 * @return string
 	 */
