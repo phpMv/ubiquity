@@ -41,6 +41,16 @@ class AuthFiles {
 	
 	/**
 	 * To override
+	 * Displays the form for step two.
+	 *
+	 * @return string
+	 */
+	public function getViewStepTwo() {
+		return $this->viewBase . "/stepTwo.html";
+	}
+	
+	/**
+	 * To override
 	 *
 	 * @return string
 	 */

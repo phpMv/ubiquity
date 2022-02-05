@@ -1,0 +1,21 @@
+{% block _before %}
+<p></p>
+{% endblock %}
+{% block _message %}
+{{ _message | raw }}
+{% endblock %}
+{% block _form %}
+<form class="ui form" action="{{submitURL}}" method="post">
+  <div class="field">
+    <label>Code</label>
+    <input type="text" placeholder="Enter a code">
+  </div>
+  <button type="submit" class="ui submit button">Validate</button>
+</form>
+{% endblock %}
+
+{% block _after %}
+{% endblock %}
+{% block _script %}
+	{{ script_foot|raw }}
+{% endblock %}

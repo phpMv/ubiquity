@@ -143,5 +143,23 @@ trait AuthControllerVariablesTrait {
 	protected function hasAccountCreation(){
 		return false;
 	}
+	
+	/**
+	 * To override
+	 * Returns true for a two factor authentification for this account.
+	 * @param mixed $accountValue
+	 * @return bool
+	 */
+	protected function has2FA($accountValue=null):bool{
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
+	protected function generate2FACode():string{
+		return \substr(\md5(\uniqid(\rand(), true)), 4, 4);
+	}
 }
 

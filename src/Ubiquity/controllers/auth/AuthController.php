@@ -73,7 +73,7 @@ abstract class AuthController extends Controller {
 				$frm=$this->_addFrmAjaxBehavior('frm-create');
 				$passwordInputName=$this->_getPasswordInputName();
 				$frm->addExtraFieldRules($passwordInputName.'-conf', ['empty',"match[$passwordInputName]"]);
-				if($this->newAccountCreationRule!==null){
+				if($this->newAccountCreationRule('')!==null){
 					$this->jquery->exec(Rule::ajax($this->jquery, 'checkAccount', $this->getBaseUrl () . '/_newAccountCreationRule', '{}', 'result=data.result;', 'postForm', [
 									'form' => 'frm-create'
 							]), true);
@@ -141,7 +141,14 @@ abstract class AuthController extends Controller {
 				if (USession::exists ( $this->_attemptsSessionKey )) {
 					USession::delete ( $this->_attemptsSessionKey );
 				}
-				$this->onConnect ( $connected );
+				if($this->has2FA($connected)){
+					$this->initializeAuth();
+					USession::set($this->_getUserSessionKey().'-2FA', $connected);
+					$this->confirm();
+					$this->finalizeAuth();
+				}else{
+					$this->onConnect ( $connected );
+				}
 			} else {
 				$this->_invalid=true;
 				$this->initializeAuth();
@@ -215,6 +222,32 @@ abstract class AuthController extends Controller {
 			$displayInfoAsString = $this->_displayInfoAsString ();
 		}
 		return $this->loadView ( $this->_getFiles ()->getViewInfo (), [ "connected" => USession::get ( $this->_getUserSessionKey () ),"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector () ], $displayInfoAsString );
+	}
+	
+	public function confirm(){
+		$fMessage = new FlashMessage ( "Enter the rescue code and validate.", "Two factor Authentification", "info", "key" );
+		$this->twoFAMessage ( $fMessage );
+		$message = $this->fMessage ( $fMessage );
+		$this->save2FACode();
+		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'submitCode',"bodySelector" => $this->_getBodySelector () ] );
+	}
+	
+	protected function save2FACode(){
+		USession::set('2FACode', $this->generate2FACode());
+	}
+	
+	public function submitCode(){
+		if(URequest::isPost()){
+			if(USession::get('2FACode')===URequest::post('code')){
+				$this->onConnect(USession::get($this->_getUserSessionKey().'-2FA'));
+			}
+			else{
+				$this->_invalid=true;
+				$this->initializeAuth();
+				$this->onBadCreditentials ();
+				$this->finalizeAuth();
+			}
+		}
 	}
 
 	public function checkConnection() {
