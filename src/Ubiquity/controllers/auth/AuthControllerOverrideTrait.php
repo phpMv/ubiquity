@@ -9,6 +9,7 @@ use Ubiquity\utils\http\UCookie;
 trait AuthControllerOverrideTrait {
 	
 	abstract public function badLogin();
+	abstract public function bad2FACode();
 	
 	/**
 	 * To override
@@ -39,10 +40,17 @@ trait AuthControllerOverrideTrait {
 	abstract protected function onConnect($connected);
 	
 	/**
-	 * To override for defining a new action when creditentials are invalid
+	 * To override for defining a new action when creditentials are invalid.
 	 */
 	protected function onBadCreditentials(){
 		$this->badLogin();
+	}
+	
+	/**
+	 * To override for defining a new action when 2FA code is invalid.
+	 */
+	protected function onBad2FACode(){
+		$this->bad2FACode();
 	}
 	
 	/**

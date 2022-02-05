@@ -185,6 +185,13 @@ abstract class AuthController extends Controller {
 		$message = $this->fMessage ( $fMessage, "bad-login" ) . $attemptsMessage;
 		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
 	}
+	
+	public function bad2FACode(){
+		$fMessage = new FlashMessage ( "Invalid 2FA code!", "Two Factor Authentification", "warning", "warning circle" );
+		$this->twoFABadCodeMessage( $fMessage );
+		$message = $this->fMessage ( $fMessage, "bad-code" );
+		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
+	}
 
 	/**
 	 * Logout action
@@ -244,7 +251,7 @@ abstract class AuthController extends Controller {
 			else{
 				$this->_invalid=true;
 				$this->initializeAuth();
-				$this->onBadCreditentials ();
+				$this->onBad2FACode();
 				$this->finalizeAuth();
 			}
 		}

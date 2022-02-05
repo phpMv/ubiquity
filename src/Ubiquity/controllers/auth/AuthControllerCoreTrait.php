@@ -46,7 +46,7 @@ trait AuthControllerCoreTrait {
 		if (URequest::isPost()) {
 			$result = [];
 			UResponse::asJSON();
-			$result["result"] = $this->newAccountCreationRule(URequest::post($this->_getLoginInputName()));
+			$result['result'] = $this->newAccountCreationRule(URequest::post($this->_getLoginInputName()));
 			echo \json_encode($result);
 		}
 	}

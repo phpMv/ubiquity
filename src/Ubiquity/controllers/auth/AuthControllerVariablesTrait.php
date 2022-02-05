@@ -71,6 +71,22 @@ trait AuthControllerVariablesTrait {
 	 */
 	protected function createAccountErrorMessage(FlashMessage $fMessage) {
 	}
+	
+	/**
+	 * To override for modifying the 2FA panel message.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function twoFAMessage(FlashMessage $fMessage){
+		
+	}
+	
+	/**
+	 * To override for modifying the message displayed if the 2FA code is bad.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function twoFABadCodeMessage(FlashMessage $fMessage){
+		
+	}
 
 	/**
 	 * To override
