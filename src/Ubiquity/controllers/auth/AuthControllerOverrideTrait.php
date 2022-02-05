@@ -55,6 +55,16 @@ trait AuthControllerOverrideTrait {
 	
 	/**
 	 * To override
+	 * Send the 2FA code to the user (email, sms, phone call...)
+	 * @param string $code
+	 * @param mixed $connected
+	 */
+	protected function _send2FACode(string $code,$connected){
+		
+	}
+	
+	/**
+	 * To override
 	 * Returns true if the creation of $accountName is possible.
 	 * @param string $accountName
 	 * @return bool

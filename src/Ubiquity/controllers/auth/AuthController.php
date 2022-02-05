@@ -144,6 +144,7 @@ abstract class AuthController extends Controller {
 				if($this->has2FA($connected)){
 					$this->initializeAuth();
 					USession::set($this->_getUserSessionKey().'-2FA', $connected);
+					$this->save2FACode();
 					$this->confirm();
 					$this->finalizeAuth();
 				}else{
@@ -235,13 +236,15 @@ abstract class AuthController extends Controller {
 		$fMessage = new FlashMessage ( "Enter the rescue code and validate.", "Two factor Authentification", "info", "key" );
 		$this->twoFAMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage );
-		$this->save2FACode();
-		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'submitCode',"bodySelector" => $this->_getBodySelector () ] );
+		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'/submitCode',"bodySelector" => $this->_getBodySelector () ] );
 	}
 	
 	protected function save2FACode(){
-		USession::set('2FACode', $this->generate2FACode());
+		$code=USession::get('2FACode',$this->generate2FACode());
+		USession::set('2FACode',$code);
+		return $code;
 	}
+	
 	
 	public function submitCode(){
 		if(URequest::isPost()){
@@ -255,6 +258,11 @@ abstract class AuthController extends Controller {
 				$this->finalizeAuth();
 			}
 		}
+	}
+	
+	public function send2FACode(){
+		$code=$this->save2FACode();
+		$this->_send2FACode($code, USession::get($this->_getUserSessionKey().'-2FA'));
 	}
 
 	public function checkConnection() {
