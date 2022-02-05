@@ -177,5 +177,9 @@ trait AuthControllerVariablesTrait {
 	protected function generate2FACode():string{
 		return \substr(\md5(\uniqid(\rand(), true)), 4, 4);
 	}
+	
+	protected function towFACodePrefix():string{
+		return 'U-';
+	}
 }
 

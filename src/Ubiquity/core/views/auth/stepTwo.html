@@ -6,11 +6,18 @@
 {% endblock %}
 {% block _form %}
 <form class="ui form" action="{{submitURL}}" method="post">
-  <div class="field">
-    <label>Code</label>
-    <input type="text" placeholder="Enter a code">
-  </div>
-  <button type="submit" class="ui submit button">Validate</button>
+	<div class="field">
+		<label for="code">Code</label>
+		{% if prefix %}
+			<div class="ui labeled input">
+				<div class="ui label">{{prefix}}</div>
+				<input type="text" placeholder="Enter a code" name="code" id="code">
+			</div>
+		{% else %}
+			<input type="text" placeholder="Enter a code" name="code" id="code">
+		{% endif %}
+	</div>
+<button type="submit" class="ui submit button">Validate</button>
 </form>
 {% endblock %}
 
