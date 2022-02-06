@@ -5,7 +5,7 @@
 {{ _message | raw }}
 {% endblock %}
 {% block _form %}
-<form class="ui form" action="{{submitURL}}" method="post" name="frm-valid-code">
+<form class="ui form" action="{{submitURL}}" method="post" name="frm-valid-code" id="frm-valid-code">
 	<div class="field">
 		<label for="code">Code</label>
 		{% if prefix %}
