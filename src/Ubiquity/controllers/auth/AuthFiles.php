@@ -51,6 +51,16 @@ class AuthFiles {
 	
 	/**
 	 * To override
+	 * Displays the message if the 2FA code is bad.
+	 *
+	 * @return string
+	 */
+	public function getViewBadTwoFACode() {
+		return $this->viewBase . "/badTwoFACode.html";
+	}
+	
+	/**
+	 * To override
 	 *
 	 * @return string
 	 */

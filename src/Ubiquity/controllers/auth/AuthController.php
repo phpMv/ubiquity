@@ -193,7 +193,7 @@ abstract class AuthController extends Controller {
 		$fMessage = new FlashMessage ( "Invalid 2FA code!", "Two Factor Authentification", "warning", "warning circle" );
 		$this->twoFABadCodeMessage( $fMessage );
 		$message = $this->fMessage ( $fMessage, "bad-code" );
-		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
+		$this->authLoadView ( $this->_getFiles ()->getViewBadTwoFACode(), [ "_message" => $message,"url" => $this->getBaseUrl ().'/sendNew2FACode',"bodySelector" => '#bad-two-fa',"_btCaption" => 'Send new code' ] );
 	}
 
 	/**
@@ -264,6 +264,15 @@ abstract class AuthController extends Controller {
 	public function send2FACode(){
 		$code=$this->save2FACode();
 		$this->_send2FACode($code, USession::get($this->_getUserSessionKey().'-2FA'));
+	}
+	
+	public function sendNew2FACode(){
+		USession::delete($this->_getUserSessionKey().'-2FA');
+		$this->send2FACode();
+		$fMessage = new FlashMessage ( "A new code was submited.", "Two factor Authentification", "success", "key" );
+		$this->newTwoFACodeMessage ( $fMessage );
+		$message = $this->fMessage ( $fMessage );
+		echo $message;
 	}
 
 	public function checkConnection() {

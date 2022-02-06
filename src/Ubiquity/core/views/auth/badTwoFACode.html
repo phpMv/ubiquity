@@ -1,0 +1,25 @@
+{% block _before %}
+<div id="bad-two-fa">
+{% endblock %}
+{% block _message %}
+{{ _message | raw }}
+{% endblock %}
+{% block _buttons %}
+	{% block _newCodeButton %}
+		<a href="{{url}}" data-target="{{bodySelector}}" class="ui button ajax _send"><i class="icon key"></i>{{ _btCaption }}</a>
+	{% endblock %}
+	{% block _extraButtons %}
+		{% for bt in q %}
+			{{ bt | raw }}
+		{% endfor %}
+	{% endblock %}
+	
+{% endblock %}
+{% block _after %}
+</div>
+{% endblock %}
+{% block script %}
+	{% if script_foot is defined %}
+		{{script_foot | raw}}
+	{% endif %}
+{% endblock %}

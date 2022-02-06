@@ -79,6 +79,13 @@ trait AuthControllerVariablesTrait {
 	protected function twoFAMessage(FlashMessage $fMessage){
 		
 	}
+	/**
+	 * To override
+	 * @param FlashMessage $fMessage
+	 */
+	protected function newTwoFACodeMessage(FlashMessage $fMessage){
+		
+	}
 	
 	/**
 	 * To override for modifying the message displayed if the 2FA code is bad.
