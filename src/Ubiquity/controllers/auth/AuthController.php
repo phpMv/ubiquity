@@ -238,6 +238,11 @@ abstract class AuthController extends Controller {
 		$fMessage = new FlashMessage ( "Enter the rescue code and validate.", "Two factor Authentification", "info", "key" );
 		$this->twoFAMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage );
+		if($this->useAjax()){
+			$frm=$this->jquery->semantic()->htmlForm('frm-valid-code');
+			$frm->addExtraFieldRule('code','empty');
+			$frm->setValidationParams(['inline'=>true,'on'=>'blur']);
+		}
 		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'/submitCode',"bodySelector" => $this->_getBodySelector(),'prefix'=>$this->towFACodePrefix() ] );
 	}
 	
@@ -267,12 +272,10 @@ abstract class AuthController extends Controller {
 	}
 	
 	public function sendNew2FACode(){
-		USession::delete($this->_getUserSessionKey().'-2FA');
 		$this->send2FACode();
 		$fMessage = new FlashMessage ( "A new code was submited.", "Two factor Authentification", "success", "key" );
 		$this->newTwoFACodeMessage ( $fMessage );
-		$message = $this->fMessage ( $fMessage );
-		echo $message;
+		echo $this->fMessage ( $fMessage );
 	}
 
 	public function checkConnection() {
@@ -370,7 +373,7 @@ abstract class AuthController extends Controller {
 		Startup::forward ( $url, $initialize, $finalize );
 	}
 	
-	public function _addAjaxBehavior(JsUtils $jquery=null,$ajaxParameters=['hasLoader'=>'internal','historize'=>false,'listenerOn'=>'body']){
+	public function _addAjaxBehavior(JsUtils $jquery=null,$ajaxParameters=['hasLoader'=>'$(this).children(".button")','historize'=>false,'listenerOn'=>'body']){
 		$jquery??=$this->jquery;
 		$jquery->getHref('.ajax[data-target]','', $ajaxParameters);
 		$jquery->postFormAction('.ui.form',$this->_getBodySelector(),$ajaxParameters);
