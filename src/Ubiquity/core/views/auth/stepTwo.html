@@ -5,7 +5,7 @@
 {{ _message | raw }}
 {% endblock %}
 {% block _form %}
-<form class="ui form" action="{{submitURL}}" method="post">
+<form class="ui form" action="{{submitURL}}" method="post" name="frm-valid-code">
 	<div class="field">
 		<label for="code">Code</label>
 		{% if prefix %}
@@ -17,7 +17,7 @@
 			<input type="text" placeholder="Enter a code" name="code" id="code">
 		{% endif %}
 	</div>
-<button type="submit" class="ui submit button">Validate</button>
+<button type="submit" class="ui submit button">Validate code</button>
 </form>
 {% endblock %}
 
