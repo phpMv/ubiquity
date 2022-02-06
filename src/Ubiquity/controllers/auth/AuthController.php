@@ -236,7 +236,7 @@ abstract class AuthController extends Controller {
 		$fMessage = new FlashMessage ( "Enter the rescue code and validate.", "Two factor Authentification", "info", "key" );
 		$this->twoFAMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage );
-		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'/submitCode',"bodySelector" => $this->_getBodySelector () ] );
+		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'/submitCode',"bodySelector" => $this->_getBodySelector (),'prefix'=>$this->towFACodePrefix() ] );
 	}
 	
 	protected function save2FACode(){
@@ -244,7 +244,6 @@ abstract class AuthController extends Controller {
 		USession::set('2FACode',$code);
 		return $code;
 	}
-	
 	
 	public function submitCode(){
 		if(URequest::isPost()){
