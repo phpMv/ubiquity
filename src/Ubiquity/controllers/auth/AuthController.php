@@ -14,6 +14,7 @@ use Ubiquity\utils\http\UCookie;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ajax\semantic\html\collections\form\HtmlForm;
 use Ajax\semantic\components\validation\Rule;
+use Ajax\php\ubiquity\JsUtils;
 
 /**
  * Controller Auth
@@ -188,6 +189,7 @@ abstract class AuthController extends Controller {
 	}
 	
 	public function bad2FACode(){
+		USession::terminate();
 		$fMessage = new FlashMessage ( "Invalid 2FA code!", "Two Factor Authentification", "warning", "warning circle" );
 		$this->twoFABadCodeMessage( $fMessage );
 		$message = $this->fMessage ( $fMessage, "bad-code" );
@@ -359,7 +361,7 @@ abstract class AuthController extends Controller {
 		Startup::forward ( $url, $initialize, $finalize );
 	}
 	
-	public function _addAjaxBehavior($jquery=null,$ajaxParameters=['hasLoader'=>'internal','historize'=>false,'listenerOn'=>'body']){
+	public function _addAjaxBehavior(JsUtils $jquery=null,$ajaxParameters=['hasLoader'=>'internal','historize'=>false,'listenerOn'=>'body']){
 		$jquery??=$this->jquery;
 		$jquery->getHref('.ajax[data-target]','', $ajaxParameters);
 		$jquery->postFormAction('.ui.form',$this->_getBodySelector(),$ajaxParameters);
