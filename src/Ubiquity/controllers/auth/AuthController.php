@@ -238,7 +238,7 @@ abstract class AuthController extends Controller {
 		$fMessage = new FlashMessage ( "Enter the rescue code and validate.", "Two factor Authentification", "info", "key" );
 		$this->twoFAMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage );
-		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'/submitCode',"bodySelector" => $this->_getBodySelector (),'prefix'=>$this->towFACodePrefix() ] );
+		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'/submitCode',"bodySelector" => '#two-step-response','prefix'=>$this->towFACodePrefix() ] );
 	}
 	
 	protected function save2FACode(){
