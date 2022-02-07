@@ -343,6 +343,9 @@ abstract class AuthController extends Controller {
 	}
 
 	protected function finalizeAuth() {
+		if (!URequest::isAjax()) {
+			$this->loadView('@activeTheme/main/vFooter.html');
+		}
 	}
 
 	/**
@@ -357,6 +360,9 @@ abstract class AuthController extends Controller {
 	}
 
 	protected function initializeAuth() {
+		if (!URequest::isAjax()) {
+			$this->loadView('@activeTheme/main/vHeader.html');
+		}
 	}
 
 	/**
