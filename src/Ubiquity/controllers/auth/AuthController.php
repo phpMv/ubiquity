@@ -93,12 +93,12 @@ abstract class AuthController extends Controller {
 		if($this->_create($account,URequest::post($this->_getPasswordInputName()))){
 			if($this->hasEmailValidation()){
 				$email=$this->getEmailFromNewAccount($account);
-				$this->sendEmailValidation($email);
+				$this->prepareEmailValidation($email);
 				$msgSup="<br>Confirm your email address by checking at <b>$email</b>.";
 			}
 			$msg=new FlashMessage ( "<b>{account}</b> account created with success!".$msgSup, "Account creation", "success", "check square" );
 		}else{
-			$msg=new FlashMessage ( "The account <b>{account}</b> is not created!", "Account creation", "error", "warning circle" );
+			$msg=new FlashMessage ( "The account <b>{account}</b> was not created!", "Account creation", "error", "warning circle" );
 		}
 		$message=$this->fMessage($msg->parseContent(['account'=>$account]));
 		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
@@ -242,7 +242,7 @@ abstract class AuthController extends Controller {
 	}
 	
 	public function confirm(){
-		$fMessage = new FlashMessage ( "Enter the rescue code and validate.", "Two factor Authentification", "info", "key" );
+		$fMessage = new FlashMessage ( 'Enter the rescue code and validate.', 'Two factor Authentification', 'info', 'key' );
 		$this->twoFAMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage );
 		if($this->useAjax()){
