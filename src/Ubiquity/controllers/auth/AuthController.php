@@ -145,7 +145,7 @@ abstract class AuthController extends Controller {
 				if($this->has2FA($connected)){
 					$this->initializeAuth();
 					USession::set($this->_getUserSessionKey().'-2FA', $connected);
-					$this->save2FACode();
+					$this->send2FACode();
 					$this->confirm();
 					$this->finalizeAuth();
 				}else{
