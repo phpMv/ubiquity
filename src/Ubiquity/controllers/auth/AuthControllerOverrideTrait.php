@@ -105,6 +105,15 @@ trait AuthControllerOverrideTrait {
 	}
 	
 	/**
+	 * Sends an email for email checking.
+	 * @param string $email
+	 * @param string $validationURL
+	 */
+	protected function _sendEmailValidation(string $email,string $validationURL){
+		
+	}
+	
+	/**
 	 * Loads the user from database using the cookie value
 	 * @param string $cookie
 	 */
@@ -138,6 +147,15 @@ trait AuthControllerOverrideTrait {
 	 */
 	protected function getFiles ():AuthFiles{
 		return new AuthFiles();
+	}
+	
+	/**
+	 * 
+	 * @param mixed $account
+	 * @return string
+	 */
+	protected function getEmailFromNewAccount($account):string{
+		return $account;
 	}
 }
 

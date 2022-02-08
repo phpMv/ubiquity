@@ -15,6 +15,7 @@ use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ajax\semantic\html\collections\form\HtmlForm;
 use Ajax\semantic\components\validation\Rule;
 use Ajax\php\ubiquity\JsUtils;
+use Ubiquity\cache\CacheManager;
 
 /**
  * Controller Auth
@@ -88,8 +89,14 @@ abstract class AuthController extends Controller {
 
 	public function createAccount(){
 		$account=URequest::post($this->_getLoginInputName());
+		$msgSup='';
 		if($this->_create($account,URequest::post($this->_getPasswordInputName()))){
-			$msg=new FlashMessage ( "<b>{account}</b> account created with success!", "Account creation", "success", "check square" );
+			if($this->hasEmailValidation()){
+				$email=$this->getEmailFromNewAccount($account);
+				$this->sendEmailValidation($email);
+				$msgSup="<br>Confirm your email address by checking at <b>$email</b>.";
+			}
+			$msg=new FlashMessage ( "<b>{account}</b> account created with success!".$msgSup, "Account creation", "success", "check square" );
 		}else{
 			$msg=new FlashMessage ( "The account <b>{account}</b> is not created!", "Account creation", "error", "warning circle" );
 		}
@@ -276,6 +283,53 @@ abstract class AuthController extends Controller {
 		$fMessage = new FlashMessage ( "A new code was submited.", "Two factor Authentification", "success", "key" );
 		$this->newTwoFACodeMessage ( $fMessage );
 		echo $this->fMessage ( $fMessage );
+	}
+	
+	protected function generateEmailValidationUrl($email):string {
+		$key=\uniqid('v',true);
+		$d=new \DateTime();
+		$data=['email'=>$email,'expire'=>$d->add($this->emailValidationDuration())];
+		CacheManager::$cache->store('auth/'.$key.'/'.md5($email), $data);
+		return $key;
+	}
+	
+	protected function prepareEmailValidation(string $email){
+		$base=Startup::$config['siteURL'];
+		$validationURL=$base.$this->getBaseUrl().'/checkEmail/'.$this->generateEmailValidationUrl($email);
+		$this->_sendEmailValidation($email, $validationURL);
+	}
+	
+	/**
+	 * To override
+	 * Checks an email.
+	 * 
+	 * @param string $mail
+	 * @return bool
+	 */
+	protected function validateEmail(string $mail):bool{
+		return true;
+	}
+	
+	public function checkEmail(string $uuid,string $hashMail){
+		$key='auth/'.$uuid;
+		$isValid=false;
+		if(CacheManager::$cache->exists($key)){
+			$data=CacheManager::$cache->fetch($key);
+			$email=$data['email'];
+			if(\md5($email)===$hashMail){
+				if($this->validateEmail($email)){
+					$fMessage = new FlashMessage ( "Your email <b>$email</b> has been validated.", "Account creation", "success", "user" );
+					$this->emailValidationSuccess($fMessage);
+					$isValid=true;
+				}
+			}
+			CacheManager::$cache->remove($key);
+		}
+		if(!$isValid){
+			$fMessage = new FlashMessage ( "This validation link is no longer active!", "Account creation", "error", "user" );
+			$this->emailValidationError($fMessage);
+		}
+		echo $this->fMessage($fMessage);
 	}
 
 	public function checkConnection() {

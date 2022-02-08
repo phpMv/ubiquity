@@ -94,6 +94,24 @@ trait AuthControllerVariablesTrait {
 	protected function twoFABadCodeMessage(FlashMessage $fMessage){
 		
 	}
+	
+	/**
+	 * To override 
+	 * Displayed when email is valid.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function emailValidationSuccess(FlashMessage $fMessage){
+		
+	}
+	
+	/**
+	 * To override
+	 * Displayed when email is invalid or if an error occurs.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function emailValidationError(FlashMessage $fMessage){
+		
+	}
 
 	/**
 	 * To override
@@ -163,7 +181,15 @@ trait AuthControllerVariablesTrait {
 	 * Returns true for account creation.
 	 * @return boolean
 	 */
-	protected function hasAccountCreation(){
+	protected function hasAccountCreation():bool{
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @return bool
+	 */
+	protected function hasEmailValidation():bool{
 		return false;
 	}
 	
@@ -182,11 +208,16 @@ trait AuthControllerVariablesTrait {
 	 * @return string
 	 */
 	protected function generate2FACode():string{
-		return \substr(\md5(\uniqid(\rand(), true)), 4, 4);
+		return \substr(\md5(\uniqid(\rand(), true)), 6, 6);
 	}
 	
 	protected function towFACodePrefix():string{
 		return 'U-';
 	}
+	
+	protected function emailValidationDuration():\DateInterval{
+		return new \DateInterval('PT24H');
+	}
+	
 }
 
