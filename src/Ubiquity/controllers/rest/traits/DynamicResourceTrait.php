@@ -51,7 +51,7 @@ trait DynamicResourceTrait {
 
 	protected function _setResource($resource) {
 		$modelsNS = Startup::getNS('models');
-		$this->model = $modelsNS . "\\" . $this->_getResponseFormatter ()->getModel ( $resource );
+		$this->model = $modelsNS . $this->_getResponseFormatter ()->getModel ( $resource );
 	}
 
 	protected function _checkResource($resource, $callback) {
