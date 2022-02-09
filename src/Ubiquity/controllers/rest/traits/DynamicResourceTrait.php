@@ -50,7 +50,7 @@ trait DynamicResourceTrait {
 	}
 
 	protected function _setResource($resource) {
-		$modelsNS = $this->config ["mvcNS"] ["models"];
+		$modelsNS = Startup::getNS('models');
 		$this->model = $modelsNS . "\\" . $this->_getResponseFormatter ()->getModel ( $resource );
 	}
 
