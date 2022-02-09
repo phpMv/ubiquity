@@ -328,7 +328,9 @@ abstract class AuthController extends Controller {
 			$fMessage = new FlashMessage ( "This validation link is no longer active!", "Account creation", "error", "user" );
 			$this->emailValidationError($fMessage);
 		}
+		$this->initializeAuth();
 		echo $this->fMessage($fMessage);
+		$this->finalizeAuth();
 	}
 
 	public function checkConnection() {
