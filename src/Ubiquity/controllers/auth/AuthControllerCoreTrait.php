@@ -34,7 +34,7 @@ trait AuthControllerCoreTrait {
 		return true;
 	}
 
-	public function message($type, $header, $body, $icon = "info", $id = null) {
+	public function message($type, $header, $body, $icon = 'info', $id = null) {
 		return $this->loadView ( $this->_getFiles ()->getViewMessage (), get_defined_vars (), true );
 	}
 
@@ -82,8 +82,8 @@ trait AuthControllerCoreTrait {
 		$files = $this->_getFiles ();
 		$mainTemplate = $files->getBaseTemplate ();
 		if (isset ( $mainTemplate )) {
-			$vars ["_viewname"] = $viewName;
-			$vars ["_base"] = $mainTemplate;
+			$vars ['_viewname'] = $viewName;
+			$vars ['_base'] = $mainTemplate;
 			$loadView ( $files->getViewBaseTemplate (), $vars );
 		} else {
 			$loadView ( $viewName, $vars );
@@ -91,7 +91,7 @@ trait AuthControllerCoreTrait {
 	}
 
 	protected function getOriginalURL() {
-		return USession::get ( "urlParts" );
+		return USession::get ( 'urlParts' );
 	}
 
 	protected function _getFiles(): AuthFiles {
@@ -102,7 +102,7 @@ trait AuthControllerCoreTrait {
 	}
 
 	protected function getViewVars($viewname) {
-		return [ "authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ];
+		return [ 'authURL' => $this->getBaseUrl (),'bodySelector' => $this->_getBodySelector (),'_loginCaption' => $this->_loginCaption ];
 	}
 	
 	protected function addAccountCreationViewData(array &$vData,$forMessage=false){

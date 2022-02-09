@@ -289,13 +289,12 @@ abstract class AuthController extends Controller {
 		$key=\uniqid('v',true);
 		$d=new \DateTime();
 		$data=['email'=>$email,'expire'=>$d->add($this->emailValidationDuration())];
-		CacheManager::$cache->store('auth/'.$key.'/'.md5($email), $data);
-		return $key;
+		CacheManager::$cache->store('auth/'.$key, $data);
+		return $key.'/'.\md5($email);
 	}
 	
 	protected function prepareEmailValidation(string $email){
-		$base=Startup::$config['siteURL'];
-		$validationURL=$base.$this->getBaseUrl().'/checkEmail/'.$this->generateEmailValidationUrl($email);
+		$validationURL=$this->getBaseUrl().'/checkEmail/'.$this->generateEmailValidationUrl($email);
 		$this->_sendEmailValidation($email, $validationURL);
 	}
 	
