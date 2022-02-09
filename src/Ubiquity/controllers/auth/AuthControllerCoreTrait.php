@@ -26,6 +26,14 @@ trait AuthControllerCoreTrait {
 
 	abstract public function _getBaseRoute();
 	
+	abstract protected function newAccountCreationRule(string $accountName):?bool;
+	
+	abstract public function _getLoginInputName();
+	
+	abstract protected function hasAccountCreation():bool;
+	
+	abstract protected function canCreateAccountMessage(FlashMessage $fMessage);
+	
 	protected function getBaseUrl() {
 		return URequest::getUrl ( $this->_getBaseRoute () );
 	}
