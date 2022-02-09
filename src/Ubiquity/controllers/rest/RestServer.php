@@ -15,7 +15,7 @@ use Ubiquity\utils\http\URequest;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.7
+ * @version 1.0.8
  *
  */
 class RestServer {
@@ -28,7 +28,7 @@ class RestServer {
 	protected $tokensFolder;
 	protected $tokenLength;
 	protected $tokenDuration;
-	protected $tokensCacheKey = "_apiTokens";
+	protected $tokensCacheKey = '_apiTokens';
 	protected $allowedOrigins;
 
 	/**
@@ -56,7 +56,7 @@ class RestServer {
 		}
 		$token = $this->apiTokens->addToken ($datas);
 		$this->_addHeaderToken ( $token );
-		return [ "access_token" => $token,"token_type" => "Bearer","expires_in" => $this->apiTokens->getDuration () ];
+		return [ 'access_token' => $token,'token_type' => 'Bearer','expires_in' => $this->apiTokens->getDuration () ];
 	}
 
 	/**
@@ -88,13 +88,13 @@ class RestServer {
 				if (\strcasecmp ( $type, "Bearer" ) == 0) {
 					return $data;
 				} else {
-					throw new RestException ( "Bearer is required in authorization header." );
+					throw new RestException ( 'Bearer is required in authorization header.' );
 				}
 			} else {
-				throw new RestException ( "The header Authorization is required in http headers." );
+				throw new RestException ( 'The header Authorization is required in http headers.' );
 			}
 		} else {
-			throw new RestException ( "The header Authorization is required in http headers." );
+			throw new RestException ( 'The header Authorization is required in http headers.' );
 		}
 	}
 
@@ -164,9 +164,9 @@ class RestServer {
 	 *
 	 * @param string $headerField
 	 * @param string $value
-	 * @param null|boolean $replace
+	 * @param boolean $replace
 	 */
-	public function _header($headerField, $value = null, $replace = null) {
+	public function _header($headerField, $value = null, bool $replace = true) {
 		if (! isset ( $value )) {
 			if (isset ( $this->headers [$headerField] )) {
 				$value = $this->headers [$headerField];
@@ -174,7 +174,7 @@ class RestServer {
 			} else
 				return;
 		}
-		\header ( trim ( $headerField ) . ": " . trim ( $value ), $replace );
+		\header ( \trim ( $headerField ) . ": " . \trim ( $value ), $replace );
 	}
 
 	/**
@@ -184,9 +184,10 @@ class RestServer {
 	 */
 	public function _setContentType($contentType = null, $charset = null) {
 		$value = $contentType;
-		if (isset ( $charset ))
-			$value .= "; charset=" . $charset;
-		$this->_header ( "Content-type", $value );
+		if (isset ( $charset )){
+			$value .= '; charset=' . $charset;
+		}
+		$this->_header ( 'Content-type', $value );
 	}
 
 	public function cors() {
@@ -194,15 +195,15 @@ class RestServer {
 		$this->_header ( 'Access-Control-Allow-Credentials' );
 		$this->_header ( 'Access-Control-Max-Age' );
 		if ($_SERVER ['REQUEST_METHOD'] == 'OPTIONS') {
-			if (isset ( $_SERVER ['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] ))
+			if (isset ( $_SERVER ['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] )){
 				$this->_header ( 'Access-Control-Allow-Methods' );
-
+			}
 			if (isset ( $_SERVER ['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'] )) {
 				$this->_header ( 'Access-Control-Allow-Headers', $_SERVER ['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'] );
 			} else {
 				$this->_header ( 'Access-Control-Allow-Headers', '*' );
 			}
-			Logger::info ( "Rest", "cors exit normally", "Cors" );
+			Logger::info ( 'Rest', 'cors exit normally', 'Cors' );
 		}
 		$this->addOtherHeaders ();
 	}
@@ -210,7 +211,7 @@ class RestServer {
 	public static function getRestNamespace() {
 		$config = Startup::getConfig ();
 		$controllerNS = Startup::getNS('controllers');
-		$restNS = $config ["mvcNS"]["rest"]??"";
+		$restNS = $config ['mvcNS']['rest']??"";
 		return ClassUtils::getNamespaceFromParts ( [ $controllerNS,$restNS ] );
 	}
 

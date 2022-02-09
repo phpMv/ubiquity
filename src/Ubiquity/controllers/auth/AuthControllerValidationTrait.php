@@ -43,6 +43,9 @@ trait AuthControllerValidationTrait {
 		return $code;
 	}
 	
+	/**
+	 * Submits the 2FA code in post request.
+	 */
 	public function submitCode(){
 		if(URequest::isPost()){
 			if(USession::get('2FACode')===URequest::post('code')){
