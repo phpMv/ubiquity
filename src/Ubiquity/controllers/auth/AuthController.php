@@ -23,7 +23,7 @@ use Ubiquity\cache\CacheManager;
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  */
 abstract class AuthController extends Controller {
-	use AuthControllerCoreTrait,AuthControllerVariablesTrait,AuthControllerOverrideTrait,InsertJqueryTrait;
+	use AuthControllerCoreTrait,AuthControllerVariablesTrait,AuthControllerOverrideTrait,InsertJqueryTrait,AuthControllerValidationTrait;
 
 	/**
 	 *
@@ -46,8 +46,8 @@ abstract class AuthController extends Controller {
 		$this->_controller = Startup::getController ();
 		$this->_action = Startup::getAction ();
 		$this->_actionParams = Startup::getActionParams ();
-		$this->_noAccessMsg = new FlashMessage ( "You are not authorized to access the page <b>{url}</b> !", "Forbidden access", "error", "warning circle" );
-		$this->_loginCaption = "Log in";
+		$this->_noAccessMsg = new FlashMessage ( 'You are not authorized to access the page <b>{url}</b> !', "Forbidden access", 'error', 'warning circle' );
+		$this->_loginCaption = 'Log in';
 		$this->_controllerInstance = $instance;
 		if (isset ( $instance ))
 			Startup::injectDependences ( $instance );
@@ -64,7 +64,7 @@ abstract class AuthController extends Controller {
 		if($this->useAjax()){
 			$this->_addFrmAjaxBehavior('frm-login');
 		}
-		$vData=[ "action" => $this->getBaseUrl () . "/connect","loginInputName" => $this->_getLoginInputName (),"loginLabel" => $this->loginLabel (),"passwordInputName" => $this->_getPasswordInputName (),"passwordLabel" => $this->passwordLabel (),"rememberCaption" => $this->rememberCaption () ];
+		$vData=[ "action" => $this->getBaseUrl () . 'connect','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'rememberCaption' => $this->rememberCaption () ];
 		$this->addAccountCreationViewData($vData,true);
 		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), $vData );
 	}
@@ -94,14 +94,14 @@ abstract class AuthController extends Controller {
 			if($this->hasEmailValidation()){
 				$email=$this->getEmailFromNewAccount($account);
 				$this->prepareEmailValidation($email);
-				$msgSup="<br>Confirm your email address by checking at <b>$email</b>.";
+				$msgSup='<br>Confirm your email address by checking at <b>$email</b>.';
 			}
-			$msg=new FlashMessage ( "<b>{account}</b> account created with success!".$msgSup, "Account creation", "success", "check square" );
+			$msg=new FlashMessage ( '<b>{account}</b> account created with success!'.$msgSup, 'Account creation', 'success', 'check square' );
 		}else{
-			$msg=new FlashMessage ( "The account <b>{account}</b> was not created!", "Account creation", "error", "warning circle" );
+			$msg=new FlashMessage ( 'The account <b>{account}</b> was not created!', 'Account creation', 'error', 'warning circle' );
 		}
 		$message=$this->fMessage($msg->parseContent(['account'=>$account]));
-		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
+		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ '_message' => $message,'authURL' => $this->getBaseUrl (),'bodySelector' => $this->_getBodySelector (),'_loginCaption' => $this->_loginCaption ] );
 	}
 
 	/**
@@ -119,20 +119,20 @@ abstract class AuthController extends Controller {
 	 * @param array|string $urlParts
 	 */
 	public function noAccess($urlParts) {
-		if (! is_array ( $urlParts )) {
-			$urlParts = explode ( ".", $urlParts );
+		if (! \is_array ( $urlParts )) {
+			$urlParts = \explode ( '.', $urlParts );
 		}
-		USession::set ( "urlParts", $urlParts );
+		USession::set ( 'urlParts', $urlParts );
 		$fMessage = $this->_noAccessMsg;
 		$this->noAccessMessage ( $fMessage );
-		$message = $this->fMessage ( $fMessage->parseContent ( [ "url" => implode ( "/", $urlParts ) ] ) );
+		$message = $this->fMessage ( $fMessage->parseContent ( [ 'url' => \implode ( '/', $urlParts ) ] ) );
 		
 		if (URequest::isAjax ()) {
-			$this->jquery->get ( $this->_getBaseRoute () . "/info/f", "#_userInfo", [ "historize" => false,"jqueryDone" => "replaceWith","hasLoader" => false,"attr" => "" ] );
+			$this->jquery->get ( $this->_getBaseRoute () . '/info/f', '#_userInfo', [ 'historize' => false,'jqueryDone' => 'replaceWith','hasLoader' => false,'attr' => '' ] );
 			$this->jquery->compile ( $this->view );
 		}
 		
-		$vData=[ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ];
+		$vData=[ '_message' => $message,'authURL' => $this->getBaseUrl (),'bodySelector' => $this->_getBodySelector (),'_loginCaption' => $this->_loginCaption ];
 		$this->addAccountCreationViewData($vData);
 		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), $vData);
 	}
@@ -143,7 +143,7 @@ abstract class AuthController extends Controller {
 	public function connect() {
 		if (URequest::isPost ()) {
 			if ($connected = $this->_connect ()) {
-				if (isset ( $_POST ["ck-remember"] )) {
+				if (isset ( $_POST ['ck-remember'] )) {
 					$this->rememberMe ( $connected );
 				}
 				if (USession::exists ( $this->_attemptsSessionKey )) {
@@ -171,7 +171,7 @@ abstract class AuthController extends Controller {
 	 * Default Action for invalid creditentials
 	 */
 	public function badLogin() {
-		$fMessage = new FlashMessage ( "Invalid creditentials!", "Connection problem", "warning", "warning circle" );
+		$fMessage = new FlashMessage ( 'Invalid creditentials!', 'Connection problem', 'warning', 'warning circle' );
 		$this->badLoginMessage ( $fMessage );
 		$attemptsMessage = "";
 		if (($nbAttempsMax = $this->attemptsNumber ()) !== null) {
@@ -183,45 +183,37 @@ abstract class AuthController extends Controller {
 			if ($nb == 0) {
 				$fAttemptsNumberMessage = $this->noAttempts ();
 			} else {
-				$fAttemptsNumberMessage = new FlashMessage ( "<i class='ui warning icon'></i> You still have {_attemptsCount} attempts to log in.", null, "bottom attached warning", "" );
+				$fAttemptsNumberMessage = new FlashMessage ( '<i class="ui warning icon"></i> You still have {_attemptsCount} attempts to log in.', null, 'bottom attached warning', '' );
 			}
 			USession::setTmp ( $this->_attemptsSessionKey, $nb, $this->attemptsTimeout () );
 			$this->attemptsNumberMessage ( $fAttemptsNumberMessage, $nb );
-			$fAttemptsNumberMessage->parseContent ( [ "_attemptsCount" => $nb,"_timer" => "<span id='timer'></span>" ] );
-			$attemptsMessage = $this->fMessage ( $fAttemptsNumberMessage, "timeout-message" );
+			$fAttemptsNumberMessage->parseContent ( [ '_attemptsCount' => $nb,'_timer' => '<span id="timer"></span>' ] );
+			$attemptsMessage = $this->fMessage ( $fAttemptsNumberMessage, 'timeout-message' );
 			$fMessage->addType ( "attached" );
 		}
-		$message = $this->fMessage ( $fMessage, "bad-login" ) . $attemptsMessage;
-		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
+		$message = $this->fMessage ( $fMessage, 'bad-login' ) . $attemptsMessage;
+		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ '_message' => $message,'authURL' => $this->getBaseUrl (),'bodySelector' => $this->_getBodySelector (),'_loginCaption' => $this->_loginCaption ] );
 	}
 	
-	public function bad2FACode(){
-		$this->confirm();
-		$fMessage = new FlashMessage ( "Invalid 2FA code!", "Two Factor Authentification", "warning", "warning circle" );
-		$this->twoFABadCodeMessage( $fMessage );
-		$message = $this->fMessage ( $fMessage, "bad-code" );
-		$this->authLoadView ( $this->_getFiles ()->getViewBadTwoFACode(), [ "_message" => $message,"url" => $this->getBaseUrl ().'/sendNew2FACode',"bodySelector" => '#bad-two-fa',"_btCaption" => 'Send new code' ] );
-	}
-
 	/**
 	 * Logout action
 	 * Terminate the session and display a logout message
 	 */
 	public function terminate() {
 		USession::terminate ();
-		$fMessage = new FlashMessage ( "You have been properly disconnected!", "Logout", "success", "checkmark" );
+		$fMessage = new FlashMessage ( 'You have been properly disconnected!', 'Logout', 'success', 'checkmark' );
 		$this->terminateMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage );
-		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ "_message" => $message,"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector (),"_loginCaption" => $this->_loginCaption ] );
+		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ '_message' => $message,'authURL' => $this->getBaseUrl (),'bodySelector' => $this->_getBodySelector (),'_loginCaption' => $this->_loginCaption ] );
 	}
 
 	public function _disConnected() {
-		$fMessage = new FlashMessage ( "You have been disconnected from the application!", "Logout", "", "sign out" );
+		$fMessage = new FlashMessage ( 'You have been disconnected from the application!', 'Logout', '', 'sign out' );
 		$this->disconnectedMessage ( $fMessage );
 		$message = $this->fMessage ( $fMessage );
-		$this->jquery->getOnClick ( "._signin", $this->getBaseUrl (), $this->_getBodySelector (), [ "stopPropagation" => false,"preventDefault" => false ] );
-		$this->jquery->execOn ( "click", "._close", "window.open(window.location,'_self').close();" );
-		return $this->jquery->renderView ( $this->_getFiles ()->getViewDisconnected (), [ "_title" => "Session ended","_message" => $message ], true );
+		$this->jquery->getOnClick ( '._signin', $this->getBaseUrl (), $this->_getBodySelector (), [ 'stopPropagation' => false,'preventDefault' => false ] );
+		$this->jquery->execOn ( 'click', '._close', "window.open(window.location,'_self').close();" );
+		return $this->jquery->renderView ( $this->_getFiles ()->getViewDisconnected (), [ "_title" => 'Session ended','_message' => $message ], true );
 	}
 
 	/**
@@ -238,101 +230,9 @@ abstract class AuthController extends Controller {
 		} else {
 			$displayInfoAsString = $this->_displayInfoAsString ();
 		}
-		return $this->loadView ( $this->_getFiles ()->getViewInfo (), [ "connected" => USession::get ( $this->_getUserSessionKey () ),"authURL" => $this->getBaseUrl (),"bodySelector" => $this->_getBodySelector () ], $displayInfoAsString );
+		return $this->loadView ( $this->_getFiles ()->getViewInfo (), [ 'connected' => USession::get ( $this->_getUserSessionKey () ),'authURL' => $this->getBaseUrl (),'bodySelector' => $this->_getBodySelector () ], $displayInfoAsString );
 	}
 	
-	public function confirm(){
-		$fMessage = new FlashMessage ( 'Enter the rescue code and validate.', 'Two factor Authentification', 'info', 'key' );
-		$this->twoFAMessage ( $fMessage );
-		$message = $this->fMessage ( $fMessage );
-		if($this->useAjax()){
-			$frm=$this->jquery->semantic()->htmlForm('frm-valid-code');
-			$frm->addExtraFieldRule('code','empty');
-			$frm->setValidationParams(['inline'=>true,'on'=>'blur']);
-		}
-		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ "_message" => $message,"submitURL" => $this->getBaseUrl ().'/submitCode',"bodySelector" => $this->_getBodySelector(),'prefix'=>$this->towFACodePrefix() ] );
-	}
-	
-	protected function save2FACode(){
-		$code=USession::get('2FACode',$this->generate2FACode());
-		USession::set('2FACode',$code);
-		return $code;
-	}
-	
-	public function submitCode(){
-		if(URequest::isPost()){
-			if(USession::get('2FACode')===URequest::post('code')){
-				$this->onConnect(USession::get($this->_getUserSessionKey().'-2FA'));
-			}
-			else{
-				$this->_invalid=true;
-				$this->initializeAuth();
-				$this->onBad2FACode();
-				$this->finalizeAuth();
-			}
-		}
-	}
-	
-	public function send2FACode(){
-		$code=$this->save2FACode();
-		$this->_send2FACode($code, USession::get($this->_getUserSessionKey().'-2FA'));
-	}
-	
-	public function sendNew2FACode(){
-		$this->send2FACode();
-		$fMessage = new FlashMessage ( "A new code was submited.", "Two factor Authentification", "success", "key" );
-		$this->newTwoFACodeMessage ( $fMessage );
-		echo $this->fMessage ( $fMessage );
-	}
-	
-	protected function generateEmailValidationUrl($email):string {
-		$key=\uniqid('v',true);
-		$d=new \DateTime();
-		$data=['email'=>$email,'expire'=>$d->add($this->emailValidationDuration())];
-		CacheManager::$cache->store('auth/'.$key, $data);
-		return $key.'/'.\md5($email);
-	}
-	
-	protected function prepareEmailValidation(string $email){
-		$validationURL=$this->getBaseUrl().'/checkEmail/'.$this->generateEmailValidationUrl($email);
-		$this->_sendEmailValidation($email, $validationURL);
-	}
-	
-	/**
-	 * To override
-	 * Checks an email.
-	 * 
-	 * @param string $mail
-	 * @return bool
-	 */
-	protected function validateEmail(string $mail):bool{
-		return true;
-	}
-	
-	public function checkEmail(string $uuid,string $hashMail){
-		$key='auth/'.$uuid;
-		$isValid=false;
-		if(CacheManager::$cache->exists($key)){
-			$data=CacheManager::$cache->fetch($key);
-			$email=$data['email'];
-			if(\md5($email)===$hashMail){
-				if($this->validateEmail($email)){
-					$fMessage = new FlashMessage ( "Your email <b>$email</b> has been validated.", "Account creation", "success", "user" );
-					$this->emailValidationSuccess($fMessage);
-					$isValid=true;
-				}
-			}
-			CacheManager::$cache->remove($key);
-		}
-		if(!$isValid){
-			$fMessage = new FlashMessage ( "This validation link is no longer active!", "Account creation", "error", "user" );
-			$this->emailValidationError($fMessage);
-		}
-		$this->initializeAuth();
-		echo $this->fMessage($fMessage);
-		$this->finalizeAuth();
-	}
-
 	public function checkConnection() {
 		UResponse::asJSON ();
 		echo "{\"valid\":" . UString::getBooleanStr ( $this->_isValidUser () ) . "}";

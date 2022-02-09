@@ -78,7 +78,7 @@ trait AuthControllerOverrideTrait {
 	 * @return string
 	 */
 	public function _getUserSessionKey(){
-		return "activeUser";
+		return 'activeUser';
 	}
 	
 	/**
@@ -150,7 +150,7 @@ trait AuthControllerOverrideTrait {
 	}
 	
 	/**
-	 * 
+	 * To override
 	 * @param mixed $account
 	 * @return string
 	 */
