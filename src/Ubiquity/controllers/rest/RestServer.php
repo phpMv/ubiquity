@@ -80,12 +80,12 @@ class RestServer {
 	}
 
 	public function _getHeaderToken() {
-		$authHeader = $this->_getHeader ( "Authorization" );
+		$authHeader = $this->_getHeader ( 'Authorization' );
 		if ($authHeader !== false) {
-			$headerDatas = explode ( " ", $authHeader, 2 );
+			$headerDatas = \explode ( ' ', $authHeader, 2 );
 			if (\count( $headerDatas ) === 2) {
 				list ( $type, $data ) = $headerDatas;
-				if (\strcasecmp ( $type, "Bearer" ) == 0) {
+				if (\strcasecmp ( $type, 'Bearer' ) == 0) {
 					return $data;
 				} else {
 					throw new RestException ( 'Bearer is required in authorization header.' );
@@ -114,7 +114,7 @@ class RestServer {
 	}
 
 	public function _addHeaderToken($token) {
-		$this->_header ( "Authorization", "Bearer " . $token, true );
+		$this->_header ( 'Authorization', 'Bearer ' . $token, true );
 	}
 
 	public function _loadApiTokens() {
@@ -139,8 +139,8 @@ class RestServer {
 
 	protected function getAllowedOrigin() {
 		$http_origin = URequest::getOrigin ();
-		if (is_array ( $this->allowedOrigins )) {
-			if (array_search ( $http_origin, $this->allowedOrigins ) !== false) {
+		if (\is_array ( $this->allowedOrigins )) {
+			if (\array_search ( $http_origin, $this->allowedOrigins ) !== false) {
 				return $http_origin;
 			}
 			return 'null';
