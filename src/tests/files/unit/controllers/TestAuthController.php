@@ -40,7 +40,7 @@ class TestAuthController extends \Ubiquity\controllers\auth\AuthController{
 	}
 
 	public function _getBaseRoute() {
-		return 'TestAuthController/';
+		return 'TestAuthController';
 	}
 	
 	protected function getFiles(): AuthFiles{

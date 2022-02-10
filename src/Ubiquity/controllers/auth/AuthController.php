@@ -64,7 +64,7 @@ abstract class AuthController extends Controller {
 		if($this->useAjax()){
 			$this->_addFrmAjaxBehavior('frm-login');
 		}
-		$vData=[ "action" => $this->getBaseUrl () . 'connect','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'rememberCaption' => $this->rememberCaption () ];
+		$vData=[ "action" => $this->getBaseUrl () . '/connect','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'rememberCaption' => $this->rememberCaption () ];
 		$this->addAccountCreationViewData($vData,true);
 		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), $vData );
 	}
@@ -94,7 +94,7 @@ abstract class AuthController extends Controller {
 			if($this->hasEmailValidation()){
 				$email=$this->getEmailFromNewAccount($account);
 				$this->prepareEmailValidation($email);
-				$msgSup='<br>Confirm your email address by checking at <b>$email</b>.';
+				$msgSup="<br>Confirm your email address <b>$email</b> by checking your mailbox.";
 			}
 			$msg=new FlashMessage ( '<b>{account}</b> account created with success!'.$msgSup, 'Account creation', 'success', 'check square' );
 		}else{
