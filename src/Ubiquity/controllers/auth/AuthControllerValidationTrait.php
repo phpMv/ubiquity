@@ -13,11 +13,53 @@ use Ubiquity\cache\CacheManager;
  * This class is part of Ubiquity
  * @author jc
  * @version 1.0.0
+ * 
+ * @property bool $_invalid
  *
  */
 trait AuthControllerValidationTrait {
 	
-	public function bad2FACode(){
+	abstract protected function twoFABadCodeMessage(FlashMessage $fMessage);
+	
+	abstract protected function fMessage(FlashMessage $fMessage, $id = null):string;
+	
+	abstract protected function _getFiles(): AuthFiles;
+	
+	abstract protected function getBaseUrl():string;
+	
+	abstract protected function authLoadView($viewName, $vars = [ ]):void;
+	
+	abstract protected function twoFAMessage(FlashMessage $fMessage);
+	
+	abstract protected function useAjax():bool;
+	
+	abstract public function _getBodySelector():string;
+	
+	abstract protected function generate2FACode():string;
+	
+	abstract public function _getUserSessionKey():string;
+	
+	abstract protected function onConnect($connected);
+	
+	abstract protected function initializeAuth();
+	
+	abstract protected function finalizeAuth();
+	
+	abstract protected function onBad2FACode():void;
+	
+	abstract protected function _send2FACode(string $code,$connected):void;
+	
+	abstract protected function newTwoFACodeMessage(FlashMessage $fMessage);
+	
+	abstract protected function emailValidationDuration():\DateInterval;
+	
+	abstract protected function _sendEmailValidation(string $email,string $validationURL):void;
+	
+	abstract protected function emailValidationSuccess(FlashMessage $fMessage);
+	
+	abstract protected function emailValidationError(FlashMessage $fMessage);
+	
+	public function bad2FACode():void{
 		$this->confirm();
 		$fMessage = new FlashMessage ( 'Invalid 2FA code!', 'Two Factor Authentification', 'warning', 'warning circle' );
 		$this->twoFABadCodeMessage( $fMessage );

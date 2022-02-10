@@ -170,11 +170,11 @@ trait AuthControllerVariablesTrait {
 	 *
 	 * @return string
 	 */
-	public function _getBodySelector() {
+	public function _getBodySelector():string {
 		return 'body';
 	}
 
-	protected function rememberCaption() {
+	protected function rememberCaption():string {
 		return 'Remember me';
 	}
 	/**

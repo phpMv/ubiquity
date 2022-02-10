@@ -34,7 +34,7 @@ trait AuthControllerCoreTrait {
 	
 	abstract protected function canCreateAccountMessage(FlashMessage $fMessage);
 	
-	protected function getBaseUrl() {
+	protected function getBaseUrl():string {
 		return URequest::getUrl ( $this->_getBaseRoute () );
 	}
 	
@@ -42,11 +42,11 @@ trait AuthControllerCoreTrait {
 		return true;
 	}
 
-	public function message($type, $header, $body, $icon = 'info', $id = null) {
-		return $this->loadView ( $this->_getFiles ()->getViewMessage (), get_defined_vars (), true );
+	public function message($type, $header, $body, $icon = 'info', $id = null):string {
+		return $this->loadView ( $this->_getFiles ()->getViewMessage (), \get_defined_vars (), true );
 	}
 
-	protected function fMessage(FlashMessage $fMessage, $id = null) {
+	protected function fMessage(FlashMessage $fMessage, $id = null):string {
 		return $this->message ( $fMessage->getType (), $fMessage->getTitle (), $fMessage->getContent (), $fMessage->getIcon (), $id );
 	}
 	
@@ -81,7 +81,7 @@ trait AuthControllerCoreTrait {
 		return new FlashMessage ( "<i class='ui warning icon'></i> You have no more attempt of connection !" . $plus, null, "bottom attached error", "" );
 	}
 
-	protected function authLoadView($viewName, $vars = [ ]) {
+	protected function authLoadView($viewName, $vars = [ ]):void {
 		if($this->useAjax()){
 			$loadView=function($vn,$v){$this->jquery->renderView($vn,$v);};
 		}else{

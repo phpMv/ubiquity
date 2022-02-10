@@ -9,7 +9,8 @@ use Ubiquity\utils\http\UCookie;
 trait AuthControllerOverrideTrait {
 	
 	abstract public function badLogin();
-	abstract public function bad2FACode();
+	
+	abstract public function bad2FACode():void;
 	
 	/**
 	 * To override
@@ -17,7 +18,7 @@ trait AuthControllerOverrideTrait {
 	 * @return string
 	 */
 	public function _getBaseRoute(){
-		return ClassUtils::getClassSimpleName(get_class($this));
+		return ClassUtils::getClassSimpleName(\get_class($this));
 	}
 	
 	/**
@@ -49,7 +50,7 @@ trait AuthControllerOverrideTrait {
 	/**
 	 * To override for defining a new action when 2FA code is invalid.
 	 */
-	protected function onBad2FACode(){
+	protected function onBad2FACode():void{
 		$this->bad2FACode();
 	}
 	
@@ -59,7 +60,7 @@ trait AuthControllerOverrideTrait {
 	 * @param string $code
 	 * @param mixed $connected
 	 */
-	protected function _send2FACode(string $code,$connected){
+	protected function _send2FACode(string $code,$connected):void{
 		
 	}
 	
@@ -77,7 +78,7 @@ trait AuthControllerOverrideTrait {
 	 * To override for defining user session key, default : "activeUser"
 	 * @return string
 	 */
-	public function _getUserSessionKey(){
+	public function _getUserSessionKey():string {
 		return 'activeUser';
 	}
 	
@@ -109,7 +110,7 @@ trait AuthControllerOverrideTrait {
 	 * @param string $email
 	 * @param string $validationURL
 	 */
-	protected function _sendEmailValidation(string $email,string $validationURL){
+	protected function _sendEmailValidation(string $email,string $validationURL):void{
 		
 	}
 	
