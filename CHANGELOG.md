@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing
 
+## [2.4.10] soon
+### Added
+In Auth controllers:
+- Two factor authentification
+- Default account creation + email validation
+
+In Router:
+- Action parameters typing with Router (int, float, bool)
+
+### Fixed
+- **RestServer** Fix php 8.1 depreciation
+- php 8.1 depreciations in **ModelsCacheUpdated**, **ValidatorMultiple**...
+
 ## [2.4.9] 2022-01-01
 
 ### Added
