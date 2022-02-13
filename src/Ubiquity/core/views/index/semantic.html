@@ -1,37 +1,37 @@
 <style>
-@import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
-.inverted {
-	background-color: #333333!important;
-}
-.informations{
-	background-color: hsl(0, 8%, 25%)!important;
-}
-.logo{
-	font-family: 'Righteous', cursive;
-}
-.u{
-	color: #779F89;
-}
-.sub.header{
-	font-size: 1rem!important;
-}
-.h1{
-	font-size: 2rem!important;
-}
+	@import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
+	.inverted {
+		background-color: #333333!important;
+	}
+	.logo{
+		font-family: 'Righteous', cursive;
+	}
+	.u{
+		color: #779F89;
+	}
+	a{
+		color: #00b5ad;
+	}
+	.sub.header{
+		font-size: 1rem!important;
+	}
+	.h1{
+		font-size: 2rem!important;
+	}
 </style>
 <br>
-<div class="ui olive segment container">
+<div class="ui teal segment container">
 	<div class="">
-		<div  id="header" class="ui header inverted segment">
+		<div  id="header" class="ui header inverted segment h1">
 			<img class="ui bordered rounded image" src="https://github.com/phpMv/ubiquity/blob/master/Banner/ubiquity-icon.png?raw=true" alt="Ubiquity logo">
-			<div id="content-header" class="content">Hi, welcome to <span class="logo"><span class="u">U</span>biquity</span> 
+			<div id="content-header" class="content">Hi, welcome to <span class="logo"><span class="u">U</span>biquity</span>
 				<div id="subheader-header" class="sub header">
 					Version <span class="ui label version">{{app.getVersion()}}</span>
 				</div>
 			</div>
 		</div>
 
-		<div class="ui icon positive message">
+		<div class="ui icon positive inverted message">
 			<i class="ui check square icon"></i>
 			<div class="content">
 				<div class="header">It works !</div>
@@ -39,33 +39,36 @@
 			</div>
 		</div>
 		<!-- page Informations begin -->
-				<h4 class="ui top attached inverted header informations">Page informations</h4>
-				{% set infos = infos|merge({'Template': _self}) %}
-				<div class="ui basic attached segment">
-					<div class="ui relaxed divided grid">
-						{% for index in [0,4] %}
-						<div class="eight wide column">
-							<div class="ui relaxed divided list">
-								{% for key, value in infos |slice(index, 4)%}
-								  <div class="item">
-								    <div class="content">
-								      <a class="header">{{key}}</a>
-								      <div class="description">{{value}}</div>
-								    </div>
-								  </div>
-								  {% endfor %}
-							</div>
+		<div class="ui top attached inverted olive segment">
+			<h4 class="ui header informations">Instance informations</h4>
+		</div>
+		{% set infos = infos|merge({'Template': _self}) %}
+		<div class="ui attached inverted segment">
+			<div class="ui relaxed divided grid">
+				{% for index in [0,4] %}
+					<div class="eight wide column">
+						<div class="ui relaxed inverted divided list">
+							{% for key, value in infos |slice(index, 4)%}
+								<div class="item">
+									<div class="content">
+										<div class="header">{{key}}</div>
+										<div class="description">{{value}}</div>
+									</div>
+								</div>
+							{% endfor %}
 						</div>
-						{% endfor %}
 					</div>
-				</div>
+				{% endfor %}
+			</div>
+		</div>
 		<!-- page Informations end -->
-		<div class="ui menu links secondary">
-			<div class="header item">Ubiquity</div>
-			{% for name, link in links %}
-				<a class="item" href="{{link}}" target="new">{{name}}</a> 
-			{% endfor %}
+		<div class="ui inverted segment">
+			<div class="ui menu inverted secondary">
+				<div class="header item">Ubiquity</div>
+				{% for name, link in links %}
+					<a class="item" href="{{link}}" target="new">{{name}}</a>
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 </div>
-<p>&nbsp;</p>
