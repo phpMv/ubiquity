@@ -2,11 +2,19 @@
 
 namespace Ubiquity\controllers\auth;
 
+/**
+ * 
+ * Ubiquity\controllers\auth$AuthFiles
+ * This class is part of Ubiquity
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 class AuthFiles {
 	protected $viewBase;
 
 	public function __construct() {
-		$this->viewBase = "@framework/auth";
+		$this->viewBase = '@framework/auth';
 	}
 
 	/**
@@ -16,7 +24,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewIndex() {
-		return $this->viewBase . "/index.html";
+		return $this->viewBase . '/index.html';
 	}
 
 	/**
@@ -26,7 +34,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewInfo() {
-		return $this->viewBase . "/info.html";
+		return $this->viewBase . '/info.html';
 	}
 
 	/**
@@ -36,7 +44,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewCreate() {
-		return $this->viewBase . "/create.html";
+		return $this->viewBase . '/create.html';
 	}
 	
 	/**
@@ -46,7 +54,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewStepTwo() {
-		return $this->viewBase . "/stepTwo.html";
+		return $this->viewBase . '/stepTwo.html';
 	}
 	
 	/**
@@ -56,7 +64,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewBadTwoFACode() {
-		return $this->viewBase . "/badTwoFACode.html";
+		return $this->viewBase . '/badTwoFACode.html';
 	}
 	
 	/**
@@ -65,7 +73,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewNoAccess() {
-		return $this->viewBase . "/noAccess.html";
+		return $this->viewBase . '/noAccess.html';
 	}
 
 	/**
@@ -74,7 +82,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewBaseTemplate() {
-		return $this->viewBase . "/baseTemplate.html";
+		return $this->viewBase . '/baseTemplate.html';
 	}
 
 	/**
@@ -83,7 +91,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewDisconnected() {
-		return $this->viewBase . "/disconnected.html";
+		return $this->viewBase . '/disconnected.html';
 	}
 
 	/**
@@ -91,7 +99,7 @@ class AuthFiles {
 	 * @return string
 	 */
 	public function getViewMessage() {
-		return $this->viewBase . "/message.html";
+		return $this->viewBase . '/message.html';
 	}
 
 	/**

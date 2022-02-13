@@ -5,10 +5,17 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\controllers\Startup;
 
 /**
- * ControllerBase
- *
+ * 
+ * For adding authentification on a controller.
+ * 
+ * Ubiquity\controllers\auth$WithAuthTrait
+ * This class is part of Ubiquity
+ * @author jc
+ * @version 1.0.0
+ * 
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  * @property \Ubiquity\views\View $view
+ *
  */
 trait WithAuthTrait {
 
@@ -31,7 +38,7 @@ trait WithAuthTrait {
 				$this->_checkConnectionContent = $this->checkConnection($authController);
 			} else {
 				if ($authController->_checkConnectionTimeout() !== null)
-					$this->jquery->clearInterval("_checkConnection");
+					$this->jquery->clearInterval('_checkConnection');
 			}
 		}
 	}
@@ -43,7 +50,7 @@ trait WithAuthTrait {
 	 */
 	public function loadView($viewName, $pData = NULL, $asString = false) {
 		if ((! URequest::isAjax() && $this->_getAuthController()->_displayInfoAsString()) || URequest::has('_userInfo')) {
-			$this->view->setVar("_userInfo", $this->_getAuthController()
+			$this->view->setVar('_userInfo', $this->_getAuthController()
 				->info());
 		}
 		return parent::loadView($viewName, $pData, $asString);
@@ -72,8 +79,8 @@ trait WithAuthTrait {
 	public function onInvalidControl() {
 		$auth = $this->_getAuthController();
 		if (URequest::isAjax()) {
-			$this->jquery->get($auth->_getBaseRoute() . "/noAccess/" . implode(".", Startup::$urlParts), $auth->_getBodySelector(), [
-				"historize" => false
+			$this->jquery->get($auth->_getBaseRoute() . '/noAccess/' . \implode('.', Startup::$urlParts), $auth->_getBodySelector(), [
+				'historize' => false
 			]);
 			echo $this->jquery->compile($this->view);
 		} else {
@@ -101,9 +108,9 @@ trait WithAuthTrait {
 	protected function checkConnection($authController) {
 		if ($authController->_checkConnectionTimeout() !== null) {
 			$ret = $authController->_disconnected();
-			$this->jquery->ajaxInterval("get", $authController->_getBaseRoute() . "/checkConnection/", $authController->_checkConnectionTimeout(), "_checkConnection", "", [
-				"historize" => false,
-				"jsCallback" => "data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"
+			$this->jquery->ajaxInterval("get", $authController->_getBaseRoute() . '/checkConnection/', $authController->_checkConnectionTimeout(), '_checkConnection', '', [
+				'historize' => false,
+				'jsCallback' => "data=($.isPlainObject(data))?data:JSON.parse(data);if(!data.valid){ $('#disconnected-modal').modal({closable: false}).modal('show');clearInterval(window._checkConnection);}"
 			]);
 			return $ret;
 		}

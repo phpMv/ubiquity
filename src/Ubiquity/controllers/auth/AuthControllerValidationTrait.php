@@ -59,6 +59,8 @@ trait AuthControllerValidationTrait {
 	
 	abstract protected function emailValidationError(FlashMessage $fMessage);
 	
+	abstract protected function towFACodePrefix():string;
+	
 	public function bad2FACode():void{
 		$this->confirm();
 		$fMessage = new FlashMessage ( 'Invalid 2FA code!', 'Two Factor Authentification', 'warning', 'warning circle' );

@@ -61,8 +61,8 @@ trait AuthControllerCoreTrait {
 
 	protected function noAttempts() {
 		$timeout = $this->attemptsTimeout ();
-		$plus = "";
-		if (is_numeric ( $timeout )) {
+		$plus = '';
+		if (\is_numeric ( $timeout )) {
 			$this->jquery->exec ( "$('._login').addClass('disabled');", true );
 			$plus = " You can try again {_timer}";
 			$this->jquery->exec ( "var startTimer=function(duration, display) {var timer = duration, minutes, seconds;

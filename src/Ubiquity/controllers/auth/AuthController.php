@@ -35,7 +35,7 @@ abstract class AuthController extends Controller {
 	protected $_actionParams;
 	protected $_noAccessMsg;
 	protected $_loginCaption;
-	protected $_attemptsSessionKey = "_attempts";
+	protected $_attemptsSessionKey = '_attempts';
 	protected $_controllerInstance;
 	protected $_compileJS = true;
 	protected $_invalid=false;
@@ -64,11 +64,14 @@ abstract class AuthController extends Controller {
 		if($this->useAjax()){
 			$this->_addFrmAjaxBehavior('frm-login');
 		}
-		$vData=[ "action" => $this->getBaseUrl () . '/connect','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'rememberCaption' => $this->rememberCaption () ];
+		$vData=[ 'action' => $this->getBaseUrl () . '/connect','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'rememberCaption' => $this->rememberCaption () ];
 		$this->addAccountCreationViewData($vData,true);
 		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), $vData );
 	}
-	
+	/**
+	 * Displays the account creation form.
+	 * Form is submited to /createAccount action
+	 */
 	public function addAccount(){
 		if($this->hasAccountCreation()){
 			if($this->useAjax()){
@@ -87,6 +90,9 @@ abstract class AuthController extends Controller {
 	}
 	
 
+	/**
+	 * Submit for a new account creation.
+	 */
 	public function createAccount(){
 		$account=URequest::post($this->_getLoginInputName());
 		$msgSup='';
@@ -235,7 +241,7 @@ abstract class AuthController extends Controller {
 	
 	public function checkConnection() {
 		UResponse::asJSON ();
-		echo "{\"valid\":" . UString::getBooleanStr ( $this->_isValidUser () ) . "}";
+		echo \json_encode(['valid'=> UString::getBooleanStr ( $this->_isValidUser () )]);
 	}
 
 	/**
@@ -290,7 +296,7 @@ abstract class AuthController extends Controller {
 			if(Startup::getAction()!=='connect') {
 				$this->finalizeAuth();
 			}
-			$this->jquery->execAtLast ( "if($('#_userInfo').length){\$('#_userInfo').replaceWith(" . preg_replace ( "/$\R?^/m", "", Javascript::prep_element ( $this->info () ) ) . ");}" );
+			$this->jquery->execAtLast ( "if($('#_userInfo').length){\$('#_userInfo').replaceWith(" . \preg_replace ( "/$\R?^/m", "", Javascript::prep_element ( $this->info () ) ) . ");}" );
 			if ($this->_compileJS) {
 				echo $this->jquery->compile ();
 			}

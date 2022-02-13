@@ -152,6 +152,7 @@ trait AuthControllerOverrideTrait {
 	
 	/**
 	 * To override
+	 * Returns the email from an account object.
 	 * @param mixed $account
 	 * @return string
 	 */

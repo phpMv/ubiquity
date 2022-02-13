@@ -4,6 +4,14 @@ namespace Ubiquity\controllers\auth;
 
 use Ubiquity\utils\flash\FlashMessage;
 
+/**
+ * 
+ * Ubiquity\controllers\auth$AuthControllerVariablesTrait
+ * This class is part of Ubiquity
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 trait AuthControllerVariablesTrait {
 
 	/**
