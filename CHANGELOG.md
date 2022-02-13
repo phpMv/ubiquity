@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing
 
-## [2.4.10] soon
+## [2.4.10] 2022-02-13
 ### Added
 In Auth controllers:
 - Two factor authentification
@@ -20,6 +20,9 @@ In Router:
 ### Fixed
 - **RestServer** Fix php 8.1 depreciation
 - php 8.1 depreciations in **ModelsCacheUpdated**, **ValidatorMultiple**...
+
+### Updated
+- Default index css style
 
 ## [2.4.9] 2022-01-01
 
