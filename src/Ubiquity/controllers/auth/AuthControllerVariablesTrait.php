@@ -174,12 +174,12 @@ trait AuthControllerVariablesTrait {
 
 	/**
 	 * Returns the body selector (jquery selector used for replacing the content of the page).
-	 * default: body
+	 * default: main .container
 	 *
 	 * @return string
 	 */
 	public function _getBodySelector():string {
-		return 'body';
+		return 'main .container';
 	}
 
 	protected function rememberCaption():string {
