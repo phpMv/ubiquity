@@ -46,11 +46,15 @@ abstract class AuthController extends Controller {
 		$this->_controller = Startup::getController ();
 		$this->_action = Startup::getAction ();
 		$this->_actionParams = Startup::getActionParams ();
-		$this->_noAccessMsg = new FlashMessage ( 'You are not authorized to access the page <b>{url}</b> !', "Forbidden access", 'error', 'warning circle' );
+		$this->_noAccessMsg = new FlashMessage ( 'You are not authorized to access the page <b>{url}</b> !', 'Forbidden access', 'error', 'warning circle' );
 		$this->_loginCaption = 'Log in';
 		$this->_controllerInstance = $instance;
-		if (isset ( $instance ))
+		if (isset ( $instance )){
 			Startup::injectDependences ( $instance );
+		}
+		if($this->useAjax() && !URequest::isAjax()) {
+			$this->_addAjaxBehavior($instance->jquery??$this->jquery);
+		}
 	}
 
 	public function index() {
