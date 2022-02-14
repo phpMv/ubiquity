@@ -20,8 +20,7 @@ class Reflexion {
 
 	public static function getMethods($instance, $filter = null) {
 		$reflect = new \ReflectionClass ( $instance );
-		$methods = $reflect->getMethods ( $filter );
-		return $methods;
+		return $reflect->getMethods ( $filter );
 	}
 
 	public static function getKeyFields($instance) {
@@ -38,7 +37,7 @@ class Reflexion {
 		return $prop->getValue ( $instance );
 	}
 
-	public static function setMemberValue($instance, $member, $value) {
+	public static function setMemberValue($instance, $member, $value):bool {
 		$prop = self::getProperty ( $instance, $member );
 		if ($prop) {
 			$prop->setAccessible ( true );
@@ -58,17 +57,16 @@ class Reflexion {
 			}
 			return $ret;
 		}
-		if (\is_null ( $props ))
-			$props = self::getProperties ( $instance );
+		if (\is_null ( $props )) {
+			$props = self::getProperties($instance);
+		}
 		foreach ( $props as $prop ) {
 			$prop->setAccessible ( true );
 			$v = $prop->getValue ( $instance );
-			if (\array_search ( $prop->getName (), $modelMetas ['#notSerializable'] ) === false) {
-				if (OrmUtils::isNotNullOrNullAccepted ( $v, $className, $prop->getName () )) {
+			if (\array_search ( $prop->getName (), $modelMetas ['#notSerializable'] ) === false && OrmUtils::isNotNullOrNullAccepted ( $v, $className, $prop->getName () )) {
 					$name = $modelMetas ['#fieldNames'] [$prop->getName ()] ?? $prop->getName ();
 					$ret [$name] = $v;
 					self::$classProperties [$className] [$name] = $prop;
-				}
 			}
 		}
 		return $ret;
@@ -85,8 +83,7 @@ class Reflexion {
 	}
 
 	public static function getAnnotationClass($class, $annotation) {
-		$annot = self::getAnnotsEngine()->getAnnotsOfClass( $class, $annotation );
-		return $annot;
+		return self::getAnnotsEngine()->getAnnotsOfClass( $class, $annotation );
 	}
 
 	public static function getAnnotationMember($class, $member, $annotation) {
@@ -142,11 +139,12 @@ class Reflexion {
 
 	protected static function getMembersWithAnnotation_($class, $annotation, $callback) {
 		$props = self::getProperties ( $class );
-		$ret = array ();
+		$ret = [];
 		foreach ( $props as $prop ) {
 			$annot = self::getAnnotationMember ( $class, $prop->getName (), $annotation );
-			if ($annot !== false)
-				$callback ( $ret, $prop, $annot );
+			if ($annot !== false) {
+				$callback ($ret, $prop, $annot);
+			}
 		}
 		return $ret;
 	}
@@ -155,8 +153,9 @@ class Reflexion {
 		$ret = self::getAnnotationClass ( $class, 'table' );
 		if (\count ( $ret ) === 0) {
 			$posSlash = \strrpos ( $class, '\\' );
-			if ($posSlash !== false)
-				$class = \substr ( $class, $posSlash + 1 );
+			if ($posSlash !== false) {
+				$class = \substr($class, $posSlash + 1);
+			}
 			$ret = $class;
 		} else {
 			$ret = $ret [0]->name;
@@ -165,7 +164,7 @@ class Reflexion {
 	}
 
 	public static function getMethodParameters(\ReflectionFunctionAbstract $method) {
-		$result = array ();
+		$result = [];
 		foreach ( $method->getParameters () as $param ) {
 			$result [] = $param->name;
 		}
@@ -184,7 +183,7 @@ class Reflexion {
 	public static function getAllJoinTables($models) {
 		$result = [ ];
 		foreach ( $models as $model ) {
-			$result = array_merge ( $result, self::getJoinTables ( $model ) );
+			$result = \array_merge ( $result, self::getJoinTables ( $model ) );
 		}
 		return $result;
 	}

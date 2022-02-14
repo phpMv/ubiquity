@@ -76,9 +76,8 @@ class ControllerParser {
 						}
 						$this->routesMethods [$method->name] = [ 'annotations' => $annots,'method' => $method ];
 					} else {
-						if ($automated) {
-							if ($method->class !== 'Ubiquity\\controllers\\Controller' && \array_search ( $method->name, self::$excludeds ) === false && ! UString::startswith ( $method->name, '_' ))
-								$this->routesMethods [$method->name] = [ 'annotations' => $this->generateRouteAnnotationFromMethod ( $method ),'method' => $method ];
+						if ($automated && $this->isRoutable($method)){
+							$this->routesMethods [$method->name] = [ 'annotations' => $this->generateRouteAnnotationFromMethod ( $method ),'method' => $method ];
 						}
 					}
 				} catch ( \Exception $e ) {
@@ -89,6 +88,13 @@ class ControllerParser {
 				}
 			}
 		}
+	}
+
+	private function isRoutable(\ReflectionMethod $method):bool{
+		return $method->class !== 'Ubiquity\\controllers\\Controller'
+			&& \array_search ( $method->name, self::$excludeds ) === false
+			&& ! UString::startswith ( $method->name, '_' )
+			&& Reflexion::getAnnotationsMethod($method->class,$method->name,'noRoute')===false;
 	}
 	
 	private function parseAnnot(&$annot, $method) {
