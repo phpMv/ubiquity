@@ -320,4 +320,112 @@ Limitation of connection attempts
    }
    
 
+Activation of MFA/2FA
+**********************
+Multi-factor authentication can be enabled conditionally, based on the pre-logged-in user's information.
+
+.. note::
+	Phase 2 of the authentication is done in the example below by sending a random code by email.
+	The AuthMailerClass class is available in the ``Ubiquity-mailer`` package.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/PersoAuthController.php
+   
+   class PersoAuthController extends \controllers\BaseAuth{
+   ...
+    /**
+     * {@inheritDoc}
+     * @see \Ubiquity\controllers\auth\AuthController::has2FA()
+     */
+    protected function has2FA($accountValue=null):bool{
+        return true;
+    }
+    
+    protected function _send2FACode(string $code, $connected):void {
+        MailerManager::start();
+        $mail=new AuthMailerClass();
+        $mail->to($connected->getEmail());
+        $mail->setCode($code);
+        MailerManager::send($mail);
+    }
+   ...
+   }
+   
+
+.. note::
+	It is possible to customize the creation of the generated code, as well as the prefix used.
+
+.. code-block:: php
+   
+   	protected function generate2FACode():string{
+   		return \substr(\md5(\uniqid(\rand(), true)), 6, 6);
+   	}
+   	
+   	protected function towFACodePrefix():string{
+   		return 'U-';
+   	}
+   
+
+Account creation
+****************
+
+The activation of the account creation is also optional:
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/PersoAuthController.php
+   
+   class PersoAuthController extends \controllers\BaseAuth{
+   ...
+    protected function hasAccountCreation():bool{
+        return true;
+    }
+   ...
+   }
+   
+
+In this case, the _create method must be overridden in order to create the account:
+
+.. code-block:: php
+   
+   	protected function _create(string $login, string $password): ?bool {
+   		if(!DAO::exists(User::class,'login= ?',[$login])){
+   			$user=new User();
+   			$user->setLogin($login);
+   			$user->setPassword($password);
+   			URequest::setValuesToObject($user);//for the others params in the POST.
+   			return DAO::insert($user);
+   		}
+   		return false;
+   	}
+   
+
+You can check the validity/availability of the login before validating the account creation form:
+
+.. code-block:: php
+   
+   	protected function newAccountCreationRule(string $accountName): ?bool {
+   		return !DAO::exists(User::class,'login= ?',[$accountName]);
+   	}
+   
+
+A confirmation action (email verification) may be requested from the user:
+
+.. code-block:: php
+   
+   	protected function hasEmailValidation(): bool {
+   		return true;
+   	}
+   
+   	protected function _sendEmailValidation(string $email, string $validationURL):void {
+   		MailerManager::start();
+   		$mail=new AuthEmailValidationMailerClass();
+   		$mail->to($connected->getEmail());
+   		$mail->setValidationURL($validationURL);
+   		MailerManager::send($mail);
+   	}
+
+.. note::
+	It is possible to customize these parts by overriding the associated methods, or by modifying the interfaces in the concerned templates.
 
