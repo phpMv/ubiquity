@@ -2,6 +2,8 @@
 
 namespace Ubiquity\controllers\auth;
 
+use Ubiquity\attributes\items\router\NoRoute;
+use Ubiquity\attributes\items\router\Post;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\flash\FlashMessage;
@@ -96,7 +98,10 @@ abstract class AuthController extends Controller {
 
 	/**
 	 * Submit for a new account creation.
+	 *
+	 * @post
 	 */
+	#[Post]
 	public function createAccount(){
 		$account=URequest::post($this->_getLoginInputName());
 		$msgSup='';
@@ -149,7 +154,10 @@ abstract class AuthController extends Controller {
 
 	/**
 	 * Override to implement the complete connection procedure
+	 *
+	 * @post
 	 */
+	#[Post]
 	public function connect() {
 		if (URequest::isPost ()) {
 			if ($connected = $this->_connect ()) {
@@ -180,10 +188,11 @@ abstract class AuthController extends Controller {
 	/**
 	 * Default Action for invalid creditentials
 	 */
+	#[NoRoute]
 	public function badLogin() {
 		$fMessage = new FlashMessage ( 'Invalid creditentials!', 'Connection problem', 'warning', 'warning circle' );
 		$this->badLoginMessage ( $fMessage );
-		$attemptsMessage = "";
+		$attemptsMessage = '';
 		if (($nbAttempsMax = $this->attemptsNumber ()) !== null) {
 			$nb = USession::getTmp ( $this->_attemptsSessionKey, $nbAttempsMax );
 			$nb --;

@@ -2,6 +2,8 @@
 
 namespace Ubiquity\controllers\auth;
 
+use Ubiquity\attributes\items\router\NoRoute;
+use Ubiquity\attributes\items\router\Post;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\flash\FlashMessage;
@@ -42,6 +44,7 @@ trait AuthControllerCoreTrait {
 		return true;
 	}
 
+	#[NoRoute()]
 	public function message($type, $header, $body, $icon = 'info', $id = null):string {
 		return $this->loadView ( $this->_getFiles ()->getViewMessage (), \get_defined_vars (), true );
 	}
@@ -50,6 +53,7 @@ trait AuthControllerCoreTrait {
 		return $this->message ( $fMessage->getType (), $fMessage->getTitle (), $fMessage->getContent (), $fMessage->getIcon (), $id );
 	}
 	
+	#[Post]
 	public function newAccountCreationRule(){
 		if (URequest::isPost()) {
 			$result = [];

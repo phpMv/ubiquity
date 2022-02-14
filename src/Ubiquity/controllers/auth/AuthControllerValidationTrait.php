@@ -2,6 +2,8 @@
 
 namespace Ubiquity\controllers\auth;
 
+use Ubiquity\attributes\items\router\NoRoute;
+use Ubiquity\attributes\items\router\Post;
 use Ubiquity\utils\flash\FlashMessage;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
@@ -61,6 +63,7 @@ trait AuthControllerValidationTrait {
 	
 	abstract protected function towFACodePrefix():string;
 	
+	#[NoRoute]
 	public function bad2FACode():void{
 		$this->confirm();
 		$fMessage = new FlashMessage ( 'Invalid 2FA code!', 'Two Factor Authentification', 'warning', 'warning circle' );
@@ -69,6 +72,7 @@ trait AuthControllerValidationTrait {
 		$this->authLoadView ( $this->_getFiles ()->getViewBadTwoFACode(), [ '_message' => $message,'url' => $this->getBaseUrl ().'/sendNew2FACode','bodySelector' => '#bad-two-fa','_btCaption' => 'Send new code' ] );
 	}
 	
+	#[NoRoute]
 	public function confirm(){
 		$fMessage = new FlashMessage( 'Enter the rescue code and validate.', 'Two factor Authentification', 'info', 'key' );
 		$this->twoFAMessage ( $fMessage );
@@ -89,7 +93,10 @@ trait AuthControllerValidationTrait {
 	
 	/**
 	 * Submits the 2FA code in post request.
+	 * 
+	 * @post
 	 */
+	#[Post]
 	public function submitCode(){
 		if(URequest::isPost()){
 			if(USession::get('2FACode')===URequest::post('code')){
@@ -103,7 +110,8 @@ trait AuthControllerValidationTrait {
 			}
 		}
 	}
-	
+
+	#[NoRoute]
 	public function send2FACode(){
 		$code=$this->save2FACode();
 		$this->_send2FACode($code, USession::get($this->_getUserSessionKey().'-2FA'));
