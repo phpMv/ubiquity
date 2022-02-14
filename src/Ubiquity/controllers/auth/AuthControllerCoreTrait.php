@@ -26,7 +26,7 @@ trait AuthControllerCoreTrait {
 
 	abstract public function _getBaseRoute();
 	
-	abstract protected function newAccountCreationRule(string $accountName):?bool;
+	abstract protected function _newAccountCreationRule(string $accountName):?bool;
 	
 	abstract public function _getLoginInputName();
 	
@@ -50,11 +50,11 @@ trait AuthControllerCoreTrait {
 		return $this->message ( $fMessage->getType (), $fMessage->getTitle (), $fMessage->getContent (), $fMessage->getIcon (), $id );
 	}
 	
-	public function _newAccountCreationRule(){
+	public function newAccountCreationRule(){
 		if (URequest::isPost()) {
 			$result = [];
 			UResponse::asJSON();
-			$result['result'] = $this->newAccountCreationRule(URequest::post($this->_getLoginInputName()));
+			$result['result'] = $this->_newAccountCreationRule(URequest::post($this->_getLoginInputName()));
 			echo \json_encode($result);
 		}
 	}

@@ -353,6 +353,9 @@ Multi-factor authentication can be enabled conditionally, based on the pre-logge
    }
    
 
+.. image:: /_static/images/auth/2fa-code.png
+
+
 .. note::
 	It is possible to customize the creation of the generated code, as well as the prefix used.
 
@@ -372,6 +375,8 @@ Account creation
 
 The activation of the account creation is also optional:
 
+.. image:: /_static/images/auth/account-creation-available.png
+
 .. code-block:: php
    :linenos:
    :caption: app/controllers/PersoAuthController.php
@@ -384,6 +389,8 @@ The activation of the account creation is also optional:
    ...
    }
    
+
+.. image:: /_static/images/auth/account-creation.png
 
 In this case, the _create method must be overridden in order to create the account:
 
@@ -409,6 +416,8 @@ You can check the validity/availability of the login before validating the accou
    		return !DAO::exists(User::class,'login= ?',[$accountName]);
    	}
    
+
+.. image:: /_static/images/auth/account-creation-error.png
 
 A confirmation action (email verification) may be requested from the user:
 

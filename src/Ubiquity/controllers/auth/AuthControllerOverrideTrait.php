@@ -70,7 +70,7 @@ trait AuthControllerOverrideTrait {
 	 * @param string $accountName
 	 * @return bool
 	 */
-	protected function newAccountCreationRule(string $accountName):?bool{
+	protected function _newAccountCreationRule(string $accountName):?bool{
 		
 	}
 	

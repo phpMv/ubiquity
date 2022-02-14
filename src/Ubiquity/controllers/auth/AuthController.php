@@ -82,8 +82,8 @@ abstract class AuthController extends Controller {
 				$frm=$this->_addFrmAjaxBehavior('frm-create');
 				$passwordInputName=$this->_getPasswordInputName();
 				$frm->addExtraFieldRules($passwordInputName.'-conf', ['empty',"match[$passwordInputName]"]);
-				if($this->newAccountCreationRule('')!==null){
-					$this->jquery->exec(Rule::ajax($this->jquery, 'checkAccount', $this->getBaseUrl () . '/_newAccountCreationRule', '{}', 'result=data.result;', 'postForm', [
+				if($this->_newAccountCreationRule('')!==null){
+					$this->jquery->exec(Rule::ajax($this->jquery, 'checkAccount', $this->getBaseUrl () . '/newAccountCreationRule', '{}', 'result=data.result;', 'postForm', [
 									'form' => 'frm-create'
 							]), true);
 					$frm->addExtraFieldRule($this->_getLoginInputName(), 'checkAccount','Account {value} is not available!');
