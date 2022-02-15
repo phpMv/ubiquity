@@ -73,7 +73,15 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			return $compo instanceof HtmlMessage;
 		} ) ] );
 	}
-	
+
+	/**
+	 * @param $member
+	 * @param false $callback
+	 * @throws \Exception
+	 *
+	 * @post
+	 */
+	#[\Ubiquity\attributes\items\router\Post]
 	public function updateMember($member, $callback = false) {
 		$instance = $_SESSION ['instance'] ?? null;
 		if (isset ( $instance )) {
@@ -165,7 +173,14 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$this->index ();
 		}
 	}
-	
+
+	/**
+	 * @param $member
+	 * @throws \Exception
+	 *
+	 * @post
+	 */
+	#[\Ubiquity\attributes\items\router\Post]
 	public function editMember($member) {
 		$ids = URequest::post ( "id" );
 		$td = URequest::post ( "td" );
@@ -204,7 +219,9 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * Deletes an instance
 	 *
 	 * @param mixed $ids
+	 * @route("methods"=>["post","get"])
 	 */
+	#[\Ubiquity\attributes\items\router\Route(methods: ['get','post'])]
 	public function delete($ids) {
 		if (URequest::isAjax ()) {
 			$instance = $this->getModelInstance ( $ids );
@@ -248,7 +265,10 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 	 * Updates an instance from the data posted in a form
 	 *
 	 * @return object The updated instance
+	 *
+	 * @post
 	 */
+	#[\Ubiquity\attributes\items\router\Post]
 	public function updateModel() {
 		$message = new CRUDMessage ( "Modifications were successfully saved", "Updating" );
 		$instance = $_SESSION ["instance"] ?? null;
