@@ -313,26 +313,27 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 			$model = $this->model;
 			$fkInstances = CRUDHelper::getFKIntances ( $instance, $model );
 			$semantic = $this->jquery->semantic ();
-			$grid = $semantic->htmlGrid ( "detail" );
+			$grid = $semantic->htmlGrid ( 'detail' );
 			if (($nb = \count ( $fkInstances )) > 0) {
 				$wide = intval ( 16 / $nb );
-				if ($wide < 4)
+				if ($wide < 4) {
 					$wide = 4;
-					foreach ( $fkInstances as $member => $fkInstanceArray ) {
-						$element = $viewer->getFkMemberElementDetails ( $member, $fkInstanceArray ["objectFK"], $fkInstanceArray ["fkClass"], $fkInstanceArray ["fkTable"] );
-						if (isset ( $element )) {
-							$grid->addCol ( $wide )->setContent ( $element );
-							$hasElements = true;
-						}
+				}
+				foreach ( $fkInstances as $member => $fkInstanceArray ) {
+					$element = $viewer->getFkMemberElementDetails ( $member, $fkInstanceArray ['objectFK'], $fkInstanceArray ['fkClass'], $fkInstanceArray ['fkTable'] );
+					if (isset ( $element )) {
+						$grid->addCol ( $wide )->setContent ( $element );
+						$hasElements = true;
 					}
-					if ($hasElements) {
-						echo $grid;
-						$url = $this->_getFiles ()->getDetailClickURL ( $this->model );
-						if (UString::isNotNull ( $url )) {
-							$this->detailClick ( $url );
-						}
+				}
+				if ($hasElements) {
+					echo $grid;
+					$url = $this->_getFiles ()->getDetailClickURL ( $this->model );
+					if (UString::isNotNull ( $url )) {
+						$this->detailClick ( $url );
 					}
-					echo $this->jquery->compile ( $this->view );
+				}
+				echo $this->jquery->compile ( $this->view );
 			}
 		} else {
 			$this->jquery->execAtLast ( "$('tr[data-ajax={$ids}]').trigger('click');" );

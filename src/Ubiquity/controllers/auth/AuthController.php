@@ -185,6 +185,8 @@ abstract class AuthController extends Controller {
 
 	/**
 	 * Default Action for invalid creditentials
+	 *
+	 * @noRoute()
 	 */
 	#[\Ubiquity\attributes\items\router\NoRoute]
 	public function badLogin() {

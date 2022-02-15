@@ -60,7 +60,10 @@ trait AuthControllerValidationTrait {
 	abstract protected function emailValidationError(FlashMessage $fMessage);
 	
 	abstract protected function towFACodePrefix():string;
-	
+
+	/**
+	 * @noRoute
+	 */
 	#[\Ubiquity\attributes\items\router\NoRoute]
 	public function bad2FACode():void{
 		$this->confirm();
@@ -69,7 +72,10 @@ trait AuthControllerValidationTrait {
 		$message = $this->fMessage ( $fMessage, 'bad-code' );
 		$this->authLoadView ( $this->_getFiles ()->getViewBadTwoFACode(), [ '_message' => $message,'url' => $this->getBaseUrl ().'/sendNew2FACode','bodySelector' => '#bad-two-fa','_btCaption' => 'Send new code' ] );
 	}
-	
+
+	/**
+	 * @noRoute
+	 */
 	#[\Ubiquity\attributes\items\router\NoRoute]
 	public function confirm(){
 		$fMessage = new FlashMessage( 'Enter the rescue code and validate.', 'Two factor Authentification', 'info', 'key' );
@@ -109,6 +115,9 @@ trait AuthControllerValidationTrait {
 		}
 	}
 
+	/**
+	 * @noRoute
+	 */
 	#[\Ubiquity\attributes\items\router\NoRoute]
 	public function send2FACode(){
 		$code=$this->save2FACode();
