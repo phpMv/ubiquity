@@ -188,9 +188,7 @@ trait AuthControllerValidationTrait {
 			$fMessage = new FlashMessage ( $msg??'This validation link is not valid!', 'Account creation', 'error', 'user' );
 			$this->emailValidationError($fMessage);
 		}
-		$this->initializeAuth();
 		echo $this->fMessage($fMessage);
-		$this->finalizeAuth();
 	}
 }
 
