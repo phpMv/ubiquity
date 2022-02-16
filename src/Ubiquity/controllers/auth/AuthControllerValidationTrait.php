@@ -2,6 +2,7 @@
 
 namespace Ubiquity\controllers\auth;
 
+use Ubiquity\utils\base\UDateTime;
 use Ubiquity\utils\flash\FlashMessage;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
@@ -53,7 +54,7 @@ trait AuthControllerValidationTrait {
 	
 	abstract protected function emailValidationDuration():\DateInterval;
 	
-	abstract protected function _sendEmailValidation(string $email,string $validationURL):void;
+	abstract protected function _sendEmailValidation(string $email,string $validationURL,string $expire):void;
 	
 	abstract protected function emailValidationSuccess(FlashMessage $fMessage);
 	
@@ -131,17 +132,19 @@ trait AuthControllerValidationTrait {
 		echo $this->fMessage ( $fMessage );
 	}
 	
-	protected function generateEmailValidationUrl($email):string {
+	protected function generateEmailValidationUrl($email):array {
 		$key=\uniqid('v',true);
 		$d=new \DateTime();
-		$data=['email'=>$email,'expire'=>$d->add($this->emailValidationDuration())];
+		$dExpire=$d->add($this->emailValidationDuration());
+		$data=['email'=>$email,'expire'=>$dExpire];
 		CacheManager::$cache->store('auth/'.$key, $data);
-		return $key.'/'.\md5($email);
+		return ['url'=>$key.'/'.\md5($email),'expire'=>$dExpire];
 	}
 	
 	protected function prepareEmailValidation(string $email){
-		$validationURL=$this->getBaseUrl().'/checkEmail/'.$this->generateEmailValidationUrl($email);
-		$this->_sendEmailValidation($email, $validationURL);
+		$data=$this->generateEmailValidationUrl($email);
+		$validationURL=$this->getBaseUrl().'/checkEmail/'.$data['url'];
+		$this->_sendEmailValidation($email, $validationURL,UDateTime::elapsed($data['expire']));
 	}
 	
 	/**

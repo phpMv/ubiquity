@@ -109,8 +109,9 @@ trait AuthControllerOverrideTrait {
 	 * Sends an email for email checking.
 	 * @param string $email
 	 * @param string $validationURL
+	 * @param string $expire
 	 */
-	protected function _sendEmailValidation(string $email,string $validationURL):void{
+	protected function _sendEmailValidation(string $email,string $validationURL,string $expire):void{
 		
 	}
 	
