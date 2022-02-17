@@ -19,6 +19,8 @@ use Ubiquity\cache\CacheManager;
  *
  */
 trait AuthControllerValidationTrait {
+
+	private static $TWO_FA_KEY='2FA-infos';
 	
 	abstract protected function twoFABadCodeMessage(FlashMessage $fMessage);
 	
@@ -62,6 +64,8 @@ trait AuthControllerValidationTrait {
 	
 	abstract protected function towFACodePrefix():string;
 
+	abstract protected function twoFACodeDuration():\DateInterval;
+
 	/**
 	 * @noRoute
 	 */
@@ -90,10 +94,12 @@ trait AuthControllerValidationTrait {
 		$this->authLoadView ( $this->_getFiles ()->getViewStepTwo(), [ '_message' => $message,'submitURL' => $this->getBaseUrl ().'/submitCode','bodySelector' => $this->_getBodySelector(),'prefix'=>$this->towFACodePrefix() ] );
 	}
 	
-	protected function save2FACode(){
-		$code=USession::get('2FACode',$this->generate2FACode());
-		USession::set('2FACode',$code);
-		return $code;
+	protected function save2FACode():array{
+		$code=$this->generate2FACode();
+		$expire=(new \DateTime())->add($this->twoFACodeDuration());
+		$codeInfos=USession::get(self::$TWO_FA_KEY,compact('code','expire'));
+		USession::set(self::$TWO_FA_KEY,$codeInfos);
+		return $codeInfos;
 	}
 	
 	/**
@@ -103,8 +109,10 @@ trait AuthControllerValidationTrait {
 	 */
 	#[\Ubiquity\attributes\items\router\Post]
 	public function submitCode(){
-		if(URequest::isPost()){
-			if(USession::get('2FACode')===URequest::post('code')){
+		if(URequest::isPost() && USession::exists(self::$TWO_FA_KEY)){
+			$twoFAInfos=USession::get(self::$TWO_FA_KEY);
+			$expired=$twoFAInfos['expire']<new \DateTime();
+			if(!$expired && $twoFAInfos['code']===URequest::post('code')){
 				$this->onConnect(USession::get($this->_getUserSessionKey().'-2FA'));
 			}
 			else{
@@ -121,8 +129,8 @@ trait AuthControllerValidationTrait {
 	 */
 	#[\Ubiquity\attributes\items\router\NoRoute]
 	public function send2FACode(){
-		$code=$this->save2FACode();
-		$this->_send2FACode($code, USession::get($this->_getUserSessionKey().'-2FA'));
+		$codeInfos=$this->save2FACode();
+		$this->_send2FACode($codeInfos['code'], USession::get($this->_getUserSessionKey().'-2FA'));
 	}
 	
 	public function sendNew2FACode(){

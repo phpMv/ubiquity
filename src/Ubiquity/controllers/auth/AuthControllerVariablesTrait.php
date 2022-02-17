@@ -141,8 +141,9 @@ trait AuthControllerVariablesTrait {
 	}
 
 	/**
-	 * Override to define if info is displayed as string
-	 * if set to true, use _infoUser var in views to display user info
+	 * Override to define if user info is displayed as string.
+	 * If set to true, use {{ _infoUser| raw }} in views to display user info.
+	 * Remember to use $this->jquery->renderView instead of $this->loadView for the javascript generation.
 	 */
 	public function _displayInfoAsString() {
 		return false;
@@ -212,19 +213,35 @@ trait AuthControllerVariablesTrait {
 	}
 	
 	/**
-	 * 
+	 * Generates a new random 2FA code.
 	 * @return string
 	 */
 	protected function generate2FACode():string{
-		return \substr(\md5(\uniqid(\rand(), true)), 6, 6);
+		return \strtoupper(\substr(\md5(\uniqid(\rand(), true)), 6, 6));
 	}
-	
+
+	/**
+	 * Returns the code prefix (which should not be entered by the user). 
+	 * @return string
+	 */
 	protected function towFACodePrefix():string{
 		return 'U-';
 	}
-	
+
+	/**
+	 * Returns the default validity duration of a mail validation link.
+	 * @return \DateInterval
+	 */
 	protected function emailValidationDuration():\DateInterval{
 		return new \DateInterval('PT24H');
+	}
+
+	/**
+	 * Returns the default validity duration of a generated 2FA code.
+	 * @return \DateInterval
+	 */
+	protected function twoFACodeDuration():\DateInterval{
+		return new \DateInterval('PT5M');
 	}
 	
 }
