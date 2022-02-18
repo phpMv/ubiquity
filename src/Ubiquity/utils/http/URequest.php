@@ -12,7 +12,7 @@ use Ubiquity\utils\http\traits\URequestTesterTrait;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.3
+ * @version 1.1.4
  *
  */
 class URequest {
@@ -306,6 +306,40 @@ use URequestTesterTrait;
 	 */
 	public static function parseURI(string $uri,string $basedir):array {
 		return self::$uriInfos[$uri]??=self::_parseURI($uri,$basedir);
+	}
+
+	/**
+	 * Gets a specific external variable by name and optionally filters it
+	 * @param string $key
+	 * @param int $type
+	 * @param int $filter
+	 * @param mixed|null $default
+	 * @return mixed|null
+	 */
+	public static function filter(string $key,int $type=\INPUT_POST,int $filter=\FILTER_DEFAULT,$default=null){
+		return \filter_input($type,$key,$filter)??$default;
+	}
+
+	/**
+	 * Gets a specific POST variable by name and optionally filters it
+	 * @param string $key
+	 * @param int $filter
+	 * @param mixed|null $default
+	 * @return mixed|null
+	 */
+	public static function filterPost(string $key,int $filter=\FILTER_DEFAULT,$default=null){
+		return self::filter($key,INPUT_POST,$filter,$default);
+	}
+
+	/**
+	 * Gets a specific GET variable by name and optionally filters it
+	 * @param string $key
+	 * @param int $filter
+	 * @param mixed|null $default
+	 * @return mixed|null
+	 */
+	public static function filterGet(string $key,int $filter=\FILTER_DEFAULT,$default=null){
+		return self::filter($key,INPUT_GET,$filter,$default);
 	}
 	
 	private static function _parseURI(string $uri,string $basedir):array {

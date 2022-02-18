@@ -10,7 +10,7 @@ use Ubiquity\contents\transformation\TransformerInterface;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.2
+ * @version 1.1.3
  *
  */
 class UCookie {
@@ -95,8 +95,8 @@ class UCookie {
 	 * @param string $value The value of the cookie.
 	 * @param int $duration default : 1 day
 	 * @param string $path default : / the cookie will be available within the entire domain
-	 * @param boolean $secure Indicates that the cookie should only be transmitted over asecure HTTPS
-	 * @param boolean $httpOnly When true the cookie will be made accessible only through the HTTPprotocol
+	 * @param boolean $secure Indicates that the cookie should only be transmitted over a secure HTTPS
+	 * @param boolean $httpOnly When true the cookie will be made accessible only through the HTTP protocol
 	 * @return boolean
 	 * @since Ubiquity 2.0.11
 	 */
@@ -105,6 +105,17 @@ class UCookie {
 			$value = self::$transformer->transform ( $value );
 		}
 		return \setrawcookie ( $name, $value, \time () + $duration, $path, $secure, $httpOnly );
+	}
+
+	/**
+	 * Gets a specific cookie by name and optionally filters it
+	 * @param string $key
+	 * @param int $filter
+	 * @param mixed|null $default
+	 * @return mixed|null
+	 */
+	public static function filter(string $key,int $filter=\FILTER_DEFAULT,$default=null){
+		return \filter_input(INPUT_COOKIE,$key,$filter)??$default;
 	}
 
 	public static function setTransformer(TransformerInterface $transformer) {
