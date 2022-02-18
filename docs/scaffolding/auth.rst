@@ -358,11 +358,13 @@ Multi-factor authentication can be enabled conditionally, based on the pre-logge
 
 .. note::
 	It is possible to customize the creation of the generated code, as well as the prefix used.
+	The sample below is implemented with ``robthree/twofactorauth`` library.
 
 .. code-block:: php
    
    	protected function generate2FACode():string{
-   		return \substr(\md5(\uniqid(\rand(), true)), 6, 6);
+   		$tfa=new TwoFactorAuth();
+   		return $tfa->createSecret();
    	}
    	
    	protected function towFACodePrefix():string{

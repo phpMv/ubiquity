@@ -214,6 +214,7 @@ trait AuthControllerVariablesTrait {
 	
 	/**
 	 * Generates a new random 2FA code.
+	 * You have to override this basic implementation.
 	 * @return string
 	 */
 	protected function generate2FACode():string{

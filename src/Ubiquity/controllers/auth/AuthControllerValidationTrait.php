@@ -112,7 +112,7 @@ trait AuthControllerValidationTrait {
 		if(URequest::isPost() && USession::exists(self::$TWO_FA_KEY)){
 			$twoFAInfos=USession::get(self::$TWO_FA_KEY);
 			$expired=$twoFAInfos['expire']<new \DateTime();
-			if(!$expired && $twoFAInfos['code']===URequest::post('code')){
+			if(!$expired && $this->check2FACode($twoFAInfos['code'],URequest::post('code'))){
 				$this->onConnect(USession::get($this->_getUserSessionKey().'-2FA'));
 			}
 			else{
@@ -164,6 +164,16 @@ trait AuthControllerValidationTrait {
 	 */
 	protected function validateEmail(string $mail):bool{
 		return true;
+	}
+
+	/**
+	 * To override for a more secure 2FA code.
+	 * @param string $secret
+	 * @param string $userInput
+	 * @return bool
+	 */
+	protected function check2FACode(string $secret,string $userInput):bool{
+		return $secret===$userInput;
 	}
 	
 	/**
