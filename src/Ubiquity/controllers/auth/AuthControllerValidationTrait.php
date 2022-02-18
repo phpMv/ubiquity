@@ -21,6 +21,8 @@ use Ubiquity\cache\CacheManager;
 trait AuthControllerValidationTrait {
 
 	private static $TWO_FA_KEY='2FA-infos';
+
+	protected static $TOKENS_VALIDATE_EMAIL='email.validation';
 	
 	abstract protected function twoFABadCodeMessage(FlashMessage $fMessage);
 	
@@ -65,6 +67,8 @@ trait AuthControllerValidationTrait {
 	abstract protected function towFACodePrefix():string;
 
 	abstract protected function twoFACodeDuration():\DateInterval;
+
+	
 
 	/**
 	 * @noRoute
@@ -141,11 +145,11 @@ trait AuthControllerValidationTrait {
 	}
 	
 	protected function generateEmailValidationUrl($email):array {
-		$key=\uniqid('v',true);
+		$duration=$this->emailValidationDuration();
+		$tokens=new AuthTokens(self::$TOKENS_VALIDATE_EMAIL,10,$duration->s);
 		$d=new \DateTime();
-		$dExpire=$d->add($this->emailValidationDuration());
-		$data=['email'=>$email,'expire'=>$dExpire];
-		CacheManager::$cache->store('auth/'.$key, $data);
+		$dExpire=$d->add($duration);
+		$key=$tokens->store(['email'=>$email]);
 		return ['url'=>$key.'/'.\md5($email),'expire'=>$dExpire];
 	}
 	
@@ -178,25 +182,22 @@ trait AuthControllerValidationTrait {
 	
 	/**
 	 * Route for email validation checking.
-	 * @param string $uuid
+	 * @param string $key
 	 * @param string $hashMail
 	 */
-	public function checkEmail(string $uuid,string $hashMail){
-		$key='auth/'.$uuid;
+	public function checkEmail(string $key,string $hashMail){
 		$isValid=false;
-		if(CacheManager::$cache->exists($key)){
-			$data=CacheManager::$cache->fetch($key);
-			$email=$data['email'];
-			$date=$data['expire'];
-			if($date>new \DateTime()){
-				if(\md5($email)===$hashMail){
-					if($this->validateEmail($email)){
-						$fMessage = new FlashMessage ( "Your email <b>$email</b> has been validated.", 'Account creation', 'success', 'user' );
-						$this->emailValidationSuccess($fMessage);
-						$isValid=true;
-					}
+		$duration=$this->emailValidationDuration();
+		$tokens=new AuthTokens(self::$TOKENS_VALIDATE_EMAIL,10,$duration->s);
+		if($tokens->exists($key)){
+			if(!$tokens->expired($key)){
+				$data=$tokens->fetch($key);
+				$email=$data['email'];
+				if(\md5($email)===$hashMail && $this->validateEmail($email)){
+					$fMessage = new FlashMessage ( "Your email <b>$email</b> has been validated.", 'Account creation', 'success', 'user' );
+					$this->emailValidationSuccess($fMessage);
+					$isValid=true;
 				}
-				CacheManager::$cache->remove($key);
 				$msg='This validation link is not valid!';
 			}else{
 				$msg='This validation link is no longer active!';

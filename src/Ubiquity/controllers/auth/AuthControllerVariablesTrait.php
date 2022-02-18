@@ -211,14 +211,24 @@ trait AuthControllerVariablesTrait {
 	protected function has2FA($accountValue=null):bool{
 		return false;
 	}
-	
+
+	/**
+	 * To override
+	 * Returns the default size for generated tokens.
+	 * @return int
+	 */
+	protected function getTokenSize():int{
+		return 6;
+	}
+
 	/**
 	 * Generates a new random 2FA code.
 	 * You have to override this basic implementation.
 	 * @return string
+	 * @throws \Exception
 	 */
 	protected function generate2FACode():string{
-		return \strtoupper(\substr(\md5(\uniqid(\rand(), true)), 6, 6));
+		return \bin2hex ( \random_bytes ($this->getTokenSize()));
 	}
 
 	/**

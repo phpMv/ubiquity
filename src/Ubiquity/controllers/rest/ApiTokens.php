@@ -45,9 +45,7 @@ class ApiTokens {
 	}
 
 	public function getToken($key) {
-		if (isset ( $this->tokens [$key] ))
-			return $this->tokens [$key];
-		return false;
+		return $this->tokens [$key]??false;
 	}
 
 	public function isExpired($key) {

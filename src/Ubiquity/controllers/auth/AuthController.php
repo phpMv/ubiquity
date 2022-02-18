@@ -245,7 +245,7 @@ abstract class AuthController extends Controller {
 	 */
 	public function info($force = null) {
 		if (isset ( $force )) {
-			$displayInfoAsString = ($force === true) ? true : false;
+			$displayInfoAsString = $force === true;
 		} else {
 			$displayInfoAsString = $this->_displayInfoAsString ();
 		}
