@@ -328,6 +328,8 @@ trait AuthControllerValidationTrait {
 	#[\Ubiquity\attributes\items\router\Post]
 	public function recoverySubmit(){
 		if(URequest::isPost() && URequest::has('key')){
+			$isValid=false;
+			$msg='This account recovery link is expired!';
 			$tokens = $this->getAuthTokensAccountRecovery();
 			$key=URequest::post('key');
 			if ($tokens->exists($key)) {
@@ -344,8 +346,6 @@ trait AuthControllerValidationTrait {
 							$msg='An error occurs when updating your password!';
 						}
 					}
-				}else{
-					$msg='This account recovery link is expired!';
 				}
 				$tokens->remove($key);
 			}
