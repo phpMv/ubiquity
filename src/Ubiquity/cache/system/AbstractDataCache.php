@@ -34,7 +34,7 @@ abstract class AbstractDataCache {
 	 * Check if annotation-data for the key has been stored.
 	 *
 	 * @param string $key cache key
-	 * @return string[]|boolean true if data with the given key has been stored; otherwise false
+	 * @return boolean true if data with the given key has been stored; otherwise false
 	 */
 	abstract public function exists($key);
 

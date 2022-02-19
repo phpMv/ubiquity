@@ -2,6 +2,7 @@
 
 namespace Ubiquity\controllers\auth;
 
+use Ajax\semantic\html\collections\form\HtmlForm;
 use Ubiquity\utils\base\UDateTime;
 use Ubiquity\utils\flash\FlashMessage;
 use Ubiquity\utils\http\UCookie;
@@ -90,6 +91,22 @@ trait AuthControllerValidationTrait {
 	abstract protected function resetPasswordSuccessMessage(FlashMessage $fMessage);
 
 	abstract protected function resetPasswordErrorMessage(FlashMessage $fMessage);
+
+	abstract protected function recoveryInitMessage(FlashMessage $fMessage);
+
+	abstract protected function emailAccountRecoverySuccess(FlashMessage $fMessage);
+
+	abstract protected function emailAccountRecoveryError(FlashMessage $fMessage);
+
+	abstract public function _addFrmAjaxBehavior($id):HtmlForm;
+
+	abstract public function _getPasswordInputName();
+
+	abstract protected function passwordConfLabel();
+
+	abstract protected function passwordLabel();
+
+	abstract public function info($force = null);
 
 	/**
 	 * @noRoute

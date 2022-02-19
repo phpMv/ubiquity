@@ -76,7 +76,7 @@ abstract class CRUDController extends ControllerBase implements HasModelViewerIn
 
 	/**
 	 * @param $member
-	 * @param false $callback
+	 * @param boolean $callback
 	 * @throws \Exception
 	 *
 	 * @post

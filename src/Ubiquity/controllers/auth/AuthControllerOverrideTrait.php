@@ -22,6 +22,10 @@ trait AuthControllerOverrideTrait {
 
 	abstract protected function accountRecoveryDuration():\DateInterval;
 
+	abstract public function _getBodySelector():string;
+
+	abstract protected function recoveryAccountCaption():string;
+
 	/**
 	 * To override
 	 * Return the base route for this Auth controller
@@ -204,14 +208,15 @@ trait AuthControllerOverrideTrait {
 	 * @param string $email
 	 * @param string $validationURL
 	 * @param string $expire
+	 * @return boolean
 	 */
-	protected function _sendEmailAccountRecovery(string $email,string $validationURL,string $expire):void{
-
+	protected function _sendEmailAccountRecovery(string $email,string $validationURL,string $expire):bool{
+		return false;
 	}
 
 	/**
 	 * To override
-	 * Modifies the active password associated with the account corresponding to this email.
+	 * Changes the active password associated with the account corresponding to this email.
 	 * @param string $email
 	 * @param string $newPasswordHash
 	 * @return bool
@@ -223,7 +228,8 @@ trait AuthControllerOverrideTrait {
 	protected function getAccountRecoveryLink():string{
 		$href=$this->_getBaseRoute().'/recoveryInit';
 		$target=$this->_getBodySelector();
-		return "<a href='$href' data-target='$target'>Forgot your password?</a>";
+		$caption=$this->recoveryAccountCaption();
+		return "<a href='$href' data-target='$target'>$caption</a>";
 	}
 }
 

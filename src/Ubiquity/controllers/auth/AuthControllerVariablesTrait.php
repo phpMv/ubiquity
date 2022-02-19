@@ -237,6 +237,15 @@ trait AuthControllerVariablesTrait {
 	}
 
 	/**
+	 * Returns the recovery account link caption.
+	 * Default : Forgot your password?
+	 * @return string
+	 */
+	protected function recoveryAccountCaption():string{
+		return 'Forgot your password?';
+	}
+
+	/**
 	 * Returns the body selector (jquery selector used for replacing the content of the page).
 	 * default: main .container
 	 *
