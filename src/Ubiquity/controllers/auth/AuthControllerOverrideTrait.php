@@ -26,6 +26,9 @@ trait AuthControllerOverrideTrait {
 
 	abstract protected function recoveryAccountCaption():string;
 
+	abstract protected function getBaseUrl():string;
+
+
 	/**
 	 * To override
 	 * Return the base route for this Auth controller
@@ -226,7 +229,7 @@ trait AuthControllerOverrideTrait {
 	}
 
 	protected function getAccountRecoveryLink():string{
-		$href=$this->_getBaseRoute().'/recoveryInit';
+		$href=$this->getBaseUrl().'/recoveryInit';
 		$target=$this->_getBodySelector();
 		$caption=$this->recoveryAccountCaption();
 		return "<a href='$href' data-target='$target'>$caption</a>";

@@ -30,7 +30,7 @@
 	{% endblock %}
 </div>
 {% block _extraFields %}
-	<div class="two fields">
+	<div class="inline fields">
 	{% block _fieldRemember %}
 		<div class="field">
 			<div class="ui checkbox">
@@ -39,15 +39,15 @@
 			</div>
 		</div>
 	{% endblock %}
-		{% block _recoveryLink %}
-			{% if resetPassword %}
-				<div class="field">
-					{{ resetPassword|raw }}
-				</div>
-			{% endif %}
-		{% endblock %}
+	{% block _recoveryLink %}
+		{% if resetPassword %}
+			<div class="field">
+				{{ resetPassword|raw }}
+			</div>
+		{% endif %}
+	{% endblock %}
 	</div>
-{% endblock %}
+	{% endblock %}
 {% endblock %}
 {% block _buttons %}
 <button class="ui button green basic ajax _connect">Connection</button>

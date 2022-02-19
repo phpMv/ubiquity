@@ -139,7 +139,7 @@ class AuthTokens {
 	 * @return bool
 	 */
 	protected function isSameOrigin($data):bool{
-		return $this->generateOrigin($data)===$this->getOrigin();
+		return ($data['origin']??'')===$this->getOrigin();
 	}
 
 	/**
