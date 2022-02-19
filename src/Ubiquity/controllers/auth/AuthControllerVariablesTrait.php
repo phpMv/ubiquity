@@ -123,6 +123,69 @@ trait AuthControllerVariablesTrait {
 
 	/**
 	 * To override
+	 * Displayed when an account recovery operation is initiated.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function recoveryInitMessage(FlashMessage $fMessage){
+
+	}
+
+	/**
+	 * To override
+	 * Displayed when email is sent for a recovery account operation.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function recoveryEmailSendMessage(FlashMessage $fMessage){
+
+	}
+
+	/**
+	 * To override
+	 * Displayed when email is not associated with an existing account.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function recoveryEmailErrorMessage(FlashMessage $fMessage){
+
+	}
+
+	/**
+	 * To override
+	 * Displayed when a new password is set with recovery account.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function resetPasswordSuccessMessage(FlashMessage $fMessage){
+
+	}
+
+	/**
+	 * To override
+	 * Displayed when an error occurs when a new password is set with recovery account.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function resetPasswordErrorMessage(FlashMessage $fMessage){
+
+	}
+
+	/**
+	 * To override
+	 * Displayed when the account recovery link is valid.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function emailAccountRecoverySuccess(FlashMessage $fMessage){
+
+	}
+
+	/**
+	 * To override
+	 * Displayed when the account recovery link is not valid.
+	 * @param FlashMessage $fMessage
+	 */
+	protected function emailAccountRecoveryError(FlashMessage $fMessage){
+
+	}
+
+	/**
+	 * To override
 	 * Returns the maximum number of allowed login attempts.
 	 */
 	protected function attemptsNumber() {
@@ -201,6 +264,13 @@ trait AuthControllerVariablesTrait {
 	protected function hasEmailValidation():bool{
 		return false;
 	}
+
+	/**
+	 * @return bool
+	 */
+	protected function hasAccountRecovery():bool{
+		return false;
+	}
 	
 	/**
 	 * To override
@@ -253,6 +323,20 @@ trait AuthControllerVariablesTrait {
 	 */
 	protected function twoFACodeDuration():\DateInterval{
 		return new \DateInterval('PT5M');
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasRecoveryAccount():bool{
+		return false;
+	}
+	/**
+	 * Returns the default validity duration for an email account recovery.
+	 * @return \DateInterval
+	 */
+	protected function accountRecoveryDuration():\DateInterval{
+		return new \DateInterval('PT30M');
 	}
 	
 }

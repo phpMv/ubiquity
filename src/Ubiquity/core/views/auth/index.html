@@ -39,6 +39,13 @@
 			</div>
 		</div>
 	{% endblock %}
+		{% block _recoveryLink %}
+			{% if resetPassword %}
+				<div class="field">
+					{{ resetPassword|raw }}
+				</div>
+			{% endif %}
+		{% endblock %}
 	</div>
 {% endblock %}
 {% endblock %}

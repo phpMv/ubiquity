@@ -104,6 +104,22 @@ class AuthFiles {
 
 	/**
 	 * To override
+	 * @return string
+	 */
+	public function getViewInitRecovery() {
+		return $this->viewBase . '/initRecovery.html';
+	}
+
+	/**
+	 * To override
+	 * @return string
+	 */
+	public function getViewRecovery() {
+		return $this->viewBase . '/recovery.html';
+	}
+
+	/**
+	 * To override
 	 * Returns the base template filename, default : null
 	 */
 	public function getBaseTemplate() {

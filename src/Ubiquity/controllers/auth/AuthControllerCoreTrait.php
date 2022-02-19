@@ -33,6 +33,8 @@ trait AuthControllerCoreTrait {
 	abstract protected function hasAccountCreation():bool;
 	
 	abstract protected function canCreateAccountMessage(FlashMessage $fMessage);
+
+	abstract protected function getAccountRecoveryLink():string;
 	
 	protected function getBaseUrl():string {
 		return URequest::getUrl ( $this->_getBaseRoute () );
@@ -88,6 +90,9 @@ trait AuthControllerCoreTrait {
 			$loadView=function($vn,$v){$this->jquery->renderView($vn,$v);};
 		}else{
 			$loadView=function($vn,$v) {$this->loadView($vn, $v);};
+		}
+		if($this->hasAccountCreation()){
+			$vars['resetPassword']=$this->getAccountRecoveryLink();
 		}
 		$files = $this->_getFiles ();
 		$mainTemplate = $files->getBaseTemplate ();

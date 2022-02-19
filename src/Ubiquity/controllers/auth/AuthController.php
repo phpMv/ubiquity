@@ -144,7 +144,6 @@ abstract class AuthController extends Controller {
 			$this->jquery->get ( $this->_getBaseRoute () . '/info/f', '#_userInfo', [ 'historize' => false,'jqueryDone' => 'replaceWith','hasLoader' => false,'attr' => '' ] );
 			$this->jquery->compile ( $this->view );
 		}
-		
 		$vData=[ '_message' => $message,'authURL' => $this->getBaseUrl (),'bodySelector' => $this->_getBodySelector (),'_loginCaption' => $this->_loginCaption ];
 		$this->addAccountCreationViewData($vData);
 		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), $vData);

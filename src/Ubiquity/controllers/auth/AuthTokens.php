@@ -127,7 +127,6 @@ class AuthTokens {
 		$tokenKey=$this->getKey($token);
 		if(CacheManager::$cache->exists($tokenKey) && !CacheManager::$cache->expired($tokenKey,$this->duration)) {
 			$data= CacheManager::$cache->fetch($tokenKey);
-			CacheManager::$cache->remove($tokenKey);
 			if(!$this->sameOrigin || $this->isSameOrigin($data)){
 				return $data;
 			}
@@ -142,4 +141,32 @@ class AuthTokens {
 	protected function isSameOrigin($data):bool{
 		return $this->generateOrigin($data)===$this->getOrigin();
 	}
+
+	/**
+	 * @param int $length
+	 */
+	public function setLength(int $length): void {
+		$this->length = $length;
+	}
+
+	/**
+	 * @param int $duration
+	 */
+	public function setDuration(int $duration): void {
+		$this->duration = $duration;
+	}
+
+	/**
+	 * @param bool $sameOrigin
+	 */
+	public function setSameOrigin(bool $sameOrigin): void {
+		$this->sameOrigin = $sameOrigin;
+	}
+
+	public function setParams(int $length,int $duration,bool $sameOrigin){
+		$this->length=$length;
+		$this->duration=$duration;
+		$this->sameOrigin=$sameOrigin;
+	}
+
 }

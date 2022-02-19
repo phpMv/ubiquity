@@ -4,6 +4,7 @@ namespace Ubiquity\controllers\auth;
 
 use Ubiquity\utils\base\UDateTime;
 use Ubiquity\utils\flash\FlashMessage;
+use Ubiquity\utils\http\UCookie;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\cache\CacheManager;
@@ -23,7 +24,9 @@ trait AuthControllerValidationTrait {
 	private static $TWO_FA_KEY='2FA-infos';
 
 	protected static $TOKENS_VALIDATE_EMAIL='email.validation';
-	
+
+	protected static $TOKENS_RECOVERY_ACCOUNT='account.recovery';
+
 	abstract protected function twoFABadCodeMessage(FlashMessage $fMessage);
 	
 	abstract protected function fMessage(FlashMessage $fMessage, $id = null):string;
@@ -68,7 +71,25 @@ trait AuthControllerValidationTrait {
 
 	abstract protected function twoFACodeDuration():\DateInterval;
 
-	
+	abstract protected function getAuthTokensEmailValidation():AuthTokens;
+
+	abstract protected function isValidEmailForRecovery(string $email):bool;
+
+	abstract protected function recoveryEmailSendMessage(FlashMessage $fMessage);
+
+	abstract protected function _sendEmailAccountRecovery(string $email,string $url,string $expire):bool;
+
+	abstract protected function recoveryEmailErrorMessage(FlashMessage $fMessage);
+
+	abstract protected function accountRecoveryDuration():\DateInterval;
+
+	abstract protected function getAuthTokensAccountRecovery():AuthTokens;
+
+	abstract protected function passwordResetAction(string $email,string $newPasswordHash):bool;
+
+	abstract protected function resetPasswordSuccessMessage(FlashMessage $fMessage);
+
+	abstract protected function resetPasswordErrorMessage(FlashMessage $fMessage);
 
 	/**
 	 * @noRoute
@@ -146,7 +167,7 @@ trait AuthControllerValidationTrait {
 	
 	protected function generateEmailValidationUrl($email):array {
 		$duration=$this->emailValidationDuration();
-		$tokens=new AuthTokens(self::$TOKENS_VALIDATE_EMAIL,10,$duration->s);
+		$tokens=$this->getAuthTokensEmailValidation();
 		$d=new \DateTime();
 		$dExpire=$d->add($duration);
 		$key=$tokens->store(['email'=>$email]);
@@ -181,14 +202,13 @@ trait AuthControllerValidationTrait {
 	}
 	
 	/**
-	 * Route for email validation checking.
+	 * Route for email validation checking when creating a new account.
 	 * @param string $key
 	 * @param string $hashMail
 	 */
 	public function checkEmail(string $key,string $hashMail){
 		$isValid=false;
-		$duration=$this->emailValidationDuration();
-		$tokens=new AuthTokens(self::$TOKENS_VALIDATE_EMAIL,10,$duration->s);
+		$tokens=$this->getAuthTokensEmailValidation();
 		if($tokens->exists($key)){
 			if(!$tokens->expired($key)){
 				$data=$tokens->fetch($key);
@@ -208,6 +228,116 @@ trait AuthControllerValidationTrait {
 			$this->emailValidationError($fMessage);
 		}
 		echo $this->fMessage($fMessage);
+	}
+
+	public function recoveryInit(){
+		$fMessage = new FlashMessage( 'Enter the email associated with your account to receive a password reset link.', 'Account recovery', 'info', 'user' );
+		$this->recoveryInitMessage ( $fMessage );
+		$message = $this->fMessage ( $fMessage );
+		if($this->useAjax()){
+			$frm=$this->jquery->semantic()->htmlForm('frm-account-recovery');
+			$frm->addExtraFieldRules('email',['empty','email']);
+			$frm->setValidationParams(['inline'=>true,'on'=>'blur']);
+		}
+		$this->authLoadView ( $this->_getFiles ()->getViewInitRecovery(), [ '_message' => $message,'submitURL' => $this->getBaseUrl ().'/recoveryInfo','bodySelector' => $this->_getBodySelector()] );
+	}
+
+	/**
+	 * @post
+	 */
+	#[\Ubiquity\attributes\items\router\Post]
+	public function recoveryInfo(){
+		if(URequest::isPost()){
+			if($this->isValidEmailForRecovery($email=URequest::filterPost('email',FILTER_VALIDATE_EMAIL))) {
+				$this->prepareEmailAccountRecovery($email);
+				$fMessage = new FlashMessage (sprintf('A password reset email has been sent to <b>%s</b>.<br>You can only use this link temporarily, from the same machine, on this browser.',$email), 'Account recovery', 'success', 'email');
+				$this->recoveryEmailSendMessage($fMessage);
+			}else{
+				$fMessage = new FlashMessage (sprintf('No account is associated with the email address <b>%s</b>.<br><a href="%s" data-target="%s">Try again.</a>.',$email,$this->getBaseUrl().'/recoveryInit',$this->_getBodySelector()), 'Account recovery', 'error', 'user');
+				$this->recoveryEmailErrorMessage($fMessage);
+			}
+			echo $this->fMessage ( $fMessage );
+		}
+	}
+
+	public function recovery(string $key,string $hashMail) {
+		$tokens = $this->getAuthTokensAccountRecovery();
+		if ($tokens->exists($key)) {
+			if (!$tokens->expired($key)) {
+				$data = $tokens->fetch($key);
+				if(\is_array($data)) {
+					$email = $data['email'];
+					if (\md5($email) === $hashMail && $this->validateEmail($email)) {
+						$fMessage = new FlashMessage ("Enter a new password associated to the account <b>$email</b>.", 'Account recovery', 'success', 'user');
+						$this->emailAccountRecoverySuccess($fMessage);
+						$message=$this->fMessage($fMessage);
+						if($this->useAjax()) {
+							$frm = $this->_addFrmAjaxBehavior('frm-account-recovery');
+							$passwordInputName = $this->_getPasswordInputName();
+							$frm->addExtraFieldRules($passwordInputName . '-conf', ['empty', "match[$passwordInputName]"]);
+						}
+						$this->authLoadView ( $this->_getFiles ()->getViewRecovery(), [ 'key'=>$key,'email'=>$email,'_message' => $message,'submitURL' => $this->getBaseUrl ().'/recoverySubmit','bodySelector' => $this->_getBodySelector(),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'passwordConfLabel'=>$this->passwordConfLabel()] );
+						return ;
+					}
+				}
+				$msg = 'This recovery link was not generated on this device!';
+			} else {
+				$msg = 'This recovery link is no longer active!';
+			}
+		}
+		$fMessage = new FlashMessage ($msg ?? 'This account recovery link is not valid!', 'Account recovery', 'error', 'user');
+		$this->emailAccountRecoveryError($fMessage);
+		echo $this->fMessage($fMessage);
+	}
+
+	protected function generateEmailAccountRecoveryUrl($email):array {
+		$duration=$this->accountRecoveryDuration();
+		$tokens=$this->getAuthTokensAccountRecovery();
+		$d=new \DateTime();
+		$dExpire=$d->add($duration);
+		$key=$tokens->store(['email'=>$email]);
+		return ['url'=>$key.'/'.\md5($email),'expire'=>$dExpire];
+	}
+
+	protected function prepareEmailAccountRecovery(string $email){
+		$data=$this->generateEmailAccountRecoveryUrl($email);
+		$validationURL=$this->getBaseUrl().'/recovery/'.$data['url'];
+		$this->_sendEmailAccountRecovery($email, $validationURL,UDateTime::elapsed($data['expire']));
+	}
+
+	/**
+	 * @post
+	 */
+	#[\Ubiquity\attributes\items\router\Post]
+	public function recoverySubmit(){
+		if(URequest::isPost() && URequest::has('key')){
+			$tokens = $this->getAuthTokensAccountRecovery();
+			$key=URequest::post('key');
+			if ($tokens->exists($key)) {
+				if(!$tokens->expired($key)){
+					$data=$tokens->fetch($key);
+					$email=$data['email'];
+					if($email===URequest::post('email')){
+						if($this->passwordResetAction($email,URequest::password_hash('password'))){
+							$fMessage = new FlashMessage ("Your password has been updated correctly for the account associated with <b>$email</b>.", 'Account recovery', 'success', 'user');
+							$this->resetPasswordSuccessMessage($fMessage);
+							echo $this->info(true);
+							$isValid=true;
+						}else{
+							$msg='An error occurs when updating your password!';
+						}
+					}
+				}else{
+					$msg='This account recovery link is expired!';
+				}
+				$tokens->remove($key);
+			}
+			if(!$isValid){
+				$fMessage = new FlashMessage ($msg, 'Account recovery', 'error', 'user');
+				$this->resetPasswordErrorMessage($fMessage);
+			}
+			echo $this->fMessage($fMessage);
+		}
 	}
 }
 
