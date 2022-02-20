@@ -4,6 +4,7 @@ namespace Ubiquity\controllers\auth\traits;
 
 use Ajax\semantic\components\validation\Rule;
 use Ajax\semantic\html\collections\form\HtmlForm;
+use Ubiquity\controllers\auth\AuthFiles;
 use Ubiquity\controllers\auth\AuthTokens;
 use Ubiquity\utils\base\UDateTime;
 use Ubiquity\utils\flash\FlashMessage;
@@ -37,9 +38,9 @@ trait AuthAccountCreationTrait {
 
 	abstract protected function passwordConfLabel(): string;
 
-	abstract protected static function _getFiles(&$config, $type, $silent = false);
+	abstract protected function passwordLabel(): string;
 
-	abstract protected function validateEmail(string $mail):bool;
+	abstract protected function _getFiles(): AuthFiles;
 
 	abstract public function _getBodySelector():string;
 
