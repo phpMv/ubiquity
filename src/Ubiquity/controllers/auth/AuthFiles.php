@@ -11,7 +11,7 @@ namespace Ubiquity\controllers\auth;
  *
  */
 class AuthFiles {
-	protected $viewBase;
+	protected string $viewBase;
 
 	public function __construct() {
 		$this->viewBase = '@framework/auth';
@@ -23,7 +23,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewIndex() {
+	public function getViewIndex(): string {
 		return $this->viewBase . '/index.html';
 	}
 
@@ -33,7 +33,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewInfo() {
+	public function getViewInfo(): string {
 		return $this->viewBase . '/info.html';
 	}
 
@@ -43,7 +43,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewCreate() {
+	public function getViewCreate(): string {
 		return $this->viewBase . '/create.html';
 	}
 	
@@ -53,7 +53,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewStepTwo() {
+	public function getViewStepTwo(): string {
 		return $this->viewBase . '/stepTwo.html';
 	}
 	
@@ -63,7 +63,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewBadTwoFACode() {
+	public function getViewBadTwoFACode(): string {
 		return $this->viewBase . '/badTwoFACode.html';
 	}
 	
@@ -72,7 +72,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewNoAccess() {
+	public function getViewNoAccess(): string {
 		return $this->viewBase . '/noAccess.html';
 	}
 
@@ -81,7 +81,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewBaseTemplate() {
+	public function getViewBaseTemplate(): string {
 		return $this->viewBase . '/baseTemplate.html';
 	}
 
@@ -90,7 +90,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewDisconnected() {
+	public function getViewDisconnected(): string {
 		return $this->viewBase . '/disconnected.html';
 	}
 
@@ -98,7 +98,7 @@ class AuthFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewMessage() {
+	public function getViewMessage(): string {
 		return $this->viewBase . '/message.html';
 	}
 
@@ -106,7 +106,7 @@ class AuthFiles {
 	 * To override
 	 * @return string
 	 */
-	public function getViewInitRecovery() {
+	public function getViewInitRecovery(): string {
 		return $this->viewBase . '/initRecovery.html';
 	}
 
@@ -114,7 +114,7 @@ class AuthFiles {
 	 * To override
 	 * @return string
 	 */
-	public function getViewRecovery() {
+	public function getViewRecovery(): string {
 		return $this->viewBase . '/recovery.html';
 	}
 

@@ -2,6 +2,9 @@
 
 namespace Ubiquity\controllers\auth;
 
+use Ubiquity\controllers\auth\traits\Auth2FATrait;
+use Ubiquity\controllers\auth\traits\AuthAccountCreationTrait;
+use Ubiquity\controllers\auth\traits\AuthAccountRecoveryTrait;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\flash\FlashMessage;
@@ -23,7 +26,7 @@ use Ubiquity\cache\CacheManager;
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  */
 abstract class AuthController extends Controller {
-	use AuthControllerCoreTrait,AuthControllerVariablesTrait,AuthControllerOverrideTrait,InsertJqueryTrait,AuthControllerValidationTrait;
+	use AuthControllerCoreTrait,AuthControllerVariablesTrait,AuthControllerOverrideTrait,InsertJqueryTrait,Auth2FATrait,AuthAccountCreationTrait,AuthAccountRecoveryTrait;
 
 	/**
 	 *
@@ -71,50 +74,6 @@ abstract class AuthController extends Controller {
 		$vData=[ 'action' => $this->getBaseUrl () . '/connect','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'rememberCaption' => $this->rememberCaption () ];
 		$this->addAccountCreationViewData($vData,true);
 		$this->authLoadView ( $this->_getFiles ()->getViewIndex (), $vData );
-	}
-	/**
-	 * Displays the account creation form.
-	 * Form is submited to /createAccount action
-	 */
-	public function addAccount(){
-		if($this->hasAccountCreation()){
-			if($this->useAjax()){
-				$frm=$this->_addFrmAjaxBehavior('frm-create');
-				$passwordInputName=$this->_getPasswordInputName();
-				$frm->addExtraFieldRules($passwordInputName.'-conf', ['empty',"match[$passwordInputName]"]);
-				if($this->_newAccountCreationRule('')!==null){
-					$this->jquery->exec(Rule::ajax($this->jquery, 'checkAccount', $this->getBaseUrl () . '/newAccountCreationRule', '{}', 'result=data.result;', 'postForm', [
-									'form' => 'frm-create'
-							]), true);
-					$frm->addExtraFieldRule($this->_getLoginInputName(), 'checkAccount','Account {value} is not available!');
-				}
-			}
-			$this->authLoadView ( $this->_getFiles ()->getViewCreate(), [ 'action' => $this->getBaseUrl () . '/createAccount','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'passwordConfLabel'=>$this->passwordConfLabel(),'rememberCaption' => $this->rememberCaption () ] );
-		}
-	}
-	
-
-	/**
-	 * Submit for a new account creation.
-	 *
-	 * @post
-	 */
-	#[\Ubiquity\attributes\items\router\Post]
-	public function createAccount(){
-		$account=URequest::post($this->_getLoginInputName());
-		$msgSup='';
-		if($this->_create($account,URequest::post($this->_getPasswordInputName()))){
-			if($this->hasEmailValidation()){
-				$email=$this->getEmailFromNewAccount($account);
-				$this->prepareEmailValidation($email);
-				$msgSup="<br>Confirm your email address <b>$email</b> by checking your mailbox.";
-			}
-			$msg=new FlashMessage ( '<b>{account}</b> account created with success!'.$msgSup, 'Account creation', 'success', 'check square' );
-		}else{
-			$msg=new FlashMessage ( 'The account <b>{account}</b> was not created!', 'Account creation', 'error', 'warning circle' );
-		}
-		$message=$this->fMessage($msg->parseContent(['account'=>$account]));
-		$this->authLoadView ( $this->_getFiles ()->getViewNoAccess (), [ '_message' => $message,'authURL' => $this->getBaseUrl (),'bodySelector' => $this->_getBodySelector (),'_loginCaption' => $this->_loginCaption ] );
 	}
 
 	/**

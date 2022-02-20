@@ -9,22 +9,12 @@ use Ubiquity\utils\http\UCookie;
 /**
  * Trait AuthControllerOverrideTrait
  *
- * @property string $TOKENS_VALIDATE_EMAIL
- * @property string $TOKENS_RECOVERY_ACCOUNT
  */
 trait AuthControllerOverrideTrait {
 	
 	abstract public function badLogin();
 	
-	abstract public function bad2FACode():void;
-
-	abstract protected function emailValidationDuration():\DateInterval;
-
-	abstract protected function accountRecoveryDuration():\DateInterval;
-
 	abstract public function _getBodySelector():string;
-
-	abstract protected function recoveryAccountCaption():string;
 
 	abstract protected function getBaseUrl():string;
 
@@ -45,14 +35,6 @@ trait AuthControllerOverrideTrait {
 	abstract protected function _connect();
 	
 	/**
-	 * To override
-	 * For creating a new user account.
-	 */
-	protected function _create(string $login,string $password):?bool{
-		return false;
-	}
-	
-	/**
 	 * @param object $connected
 	 */
 	abstract protected function onConnect($connected);
@@ -64,33 +46,8 @@ trait AuthControllerOverrideTrait {
 		$this->badLogin();
 	}
 	
-	/**
-	 * To override for defining a new action when 2FA code is invalid.
-	 */
-	protected function onBad2FACode():void{
-		$this->bad2FACode();
-	}
-	
-	/**
-	 * To override
-	 * Send the 2FA code to the user (email, sms, phone call...)
-	 * @param string $code
-	 * @param mixed $connected
-	 */
-	protected function _send2FACode(string $code,$connected):void{
-		
-	}
-	
-	/**
-	 * To override
-	 * Returns true if the creation of $accountName is possible.
-	 * @param string $accountName
-	 * @return bool
-	 */
-	protected function _newAccountCreationRule(string $accountName):?bool{
-		
-	}
-	
+
+
 	/**
 	 * To override for defining user session key, default : "activeUser"
 	 * @return string
@@ -120,16 +77,6 @@ trait AuthControllerOverrideTrait {
 	 */
 	protected function toCookie($connected){
 		return;
-	}
-	
-	/**
-	 * Sends an email for email checking.
-	 * @param string $email
-	 * @param string $validationURL
-	 * @param string $expire
-	 */
-	protected function _sendEmailValidation(string $email,string $validationURL,string $expire):void{
-		
 	}
 	
 	/**
@@ -167,72 +114,6 @@ trait AuthControllerOverrideTrait {
 	protected function getFiles ():AuthFiles{
 		return new AuthFiles();
 	}
-	
-	/**
-	 * To override
-	 * Returns the email from an account object.
-	 * @param mixed $account
-	 * @return string
-	 */
-	protected function getEmailFromNewAccount($account):string{
-		return $account;
-	}
 
-	/**
-	 * To override
-	 * Returns the AuthTokens instance used for tokens generation when sending an email for the account creation.
-	 * @return AuthTokens
-	 */
-	protected function getAuthTokensEmailValidation():AuthTokens{
-		return new AuthTokens(self::$TOKENS_VALIDATE_EMAIL,10,$this->emailValidationDuration()->s,false);
-	}
-
-	/**
-	 * To override
-	 * Returns the AuthTokens instance used for tokens generation for a recovery account.
-	 * @return AuthTokens
-	 */
-	protected function getAuthTokensAccountRecovery():AuthTokens{
-		return new AuthTokens(self::$TOKENS_RECOVERY_ACCOUNT,10,$this->accountRecoveryDuration()->s,true);
-	}
-
-	/**
-	 * To override
-	 * Checks if a valid account matches this email.
-	 * @param string $email
-	 * @return bool
-	 */
-	protected function isValidEmailForRecovery(string $email):bool {
-		return true;
-	}
-
-	/**
-	 * Sends an email for account recovery (password reset).
-	 * @param string $email
-	 * @param string $validationURL
-	 * @param string $expire
-	 * @return boolean
-	 */
-	protected function _sendEmailAccountRecovery(string $email,string $validationURL,string $expire):bool{
-		return false;
-	}
-
-	/**
-	 * To override
-	 * Changes the active password associated with the account corresponding to this email.
-	 * @param string $email
-	 * @param string $newPasswordHash
-	 * @return bool
-	 */
-	protected function passwordResetAction(string $email,string $newPasswordHash):bool{
-		return false;
-	}
-
-	protected function getAccountRecoveryLink():string{
-		$href=$this->getBaseUrl().'/recoveryInit';
-		$target=$this->_getBodySelector();
-		$caption=$this->recoveryAccountCaption();
-		return "<a href='$href' data-target='$target'>$caption</a>";
-	}
 }
 
