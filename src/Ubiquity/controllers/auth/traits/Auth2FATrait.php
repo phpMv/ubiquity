@@ -197,20 +197,18 @@ trait Auth2FATrait {
 		}
 	}
 
-	/**
-	 * @noRoute
-	 */
-	#[\Ubiquity\attributes\items\router\NoRoute]
-	public function send2FACode(){
+	protected function send2FACode(){
 		$codeInfos=$this->save2FACode();
 		$this->_send2FACode($codeInfos['code'], USession::get($this->_getUserSessionKey().'-2FA'));
 	}
 	
 	public function sendNew2FACode(){
-		$this->send2FACode();
-		$fMessage = new FlashMessage ( 'A new code was submited.', 'Two factor Authentification', 'success', 'key' );
-		$this->newTwoFACodeMessage ( $fMessage );
-		echo $this->fMessage ( $fMessage );
+		if(USession::exists( $this->_getUserSessionKey().'-2FA')) {
+			$this->send2FACode();
+			$fMessage = new FlashMessage ('A new code was submited.', 'Two factor Authentification', 'success', 'key');
+			$this->newTwoFACodeMessage($fMessage);
+			echo $this->fMessage($fMessage);
+		}
 	}
 
 }
