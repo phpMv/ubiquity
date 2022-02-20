@@ -6,27 +6,27 @@ use Ubiquity\controllers\auth\AuthFiles;
  * Class TestAuthControllerFiles
  **/
 class TestAuthControllerFiles extends AuthFiles{
-	public function getViewIndex(){
+	public function getViewIndex():string{
 		return "TestAuthController/index.html";
 	}
 
-	public function getViewInfo(){
+	public function getViewInfo():string{
 		return "TestAuthController/info.html";
 	}
 
-	public function getViewNoAccess(){
+	public function getViewNoAccess():string{
 		return "TestAuthController/noAccess.html";
 	}
 
-	public function getViewDisconnected(){
+	public function getViewDisconnected():string{
 		return "TestAuthController/disconnected.html";
 	}
 
-	public function getViewMessage(){
+	public function getViewMessage():string{
 		return "TestAuthController/message.html";
 	}
 
-	public function getViewBaseTemplate(){
+	public function getViewBaseTemplate():string{
 		return "TestAuthController/baseTemplate.html";
 	}
 
