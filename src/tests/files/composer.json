@@ -17,7 +17,7 @@
 		"monolog\/monolog": "^2.0",
 		"czproject\/git-php" : "^3.13",
 		"phpmv\/ubiquity-webtools": "dev-master",
-		"phpmv\/ubiquity-dev":"^0.1"
+		"phpmv\/ubiquity-dev":"dev-master"
 	},
 	"autoload": {
 		"psr-4": {

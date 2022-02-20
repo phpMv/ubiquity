@@ -29,6 +29,20 @@ trait AuthAccountCreationTrait {
 
 	abstract public function _getLoginInputName():string;
 
+	abstract protected function authLoadView($viewName, $vars = [ ]):void;
+
+	abstract protected function rememberCaption():string;
+
+	abstract protected function loginLabel():string;
+
+	abstract protected function passwordConfLabel(): string;
+
+	abstract protected static function _getFiles(&$config, $type, $silent = false);
+
+	abstract protected function validateEmail(string $mail):bool;
+
+	abstract public function _getBodySelector():string;
+
 	/**
 	 * Returns true for account creation.
 	 * @return boolean
