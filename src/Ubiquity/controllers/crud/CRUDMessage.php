@@ -22,35 +22,36 @@ class CRUDMessage {
 	/**
 	 * @return string
 	 */
-	public function getMessage() {
+	public function getMessage(): string {
 		return $this->_message;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getType() {
+	public function getType(): string {
 		return $this->type;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getIcon() {
+	public function getIcon(): string {
 		return $this->icon;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getTitle() {
+	public function getTitle(): string {
 		return $this->title;
 	}
 
 	/**
 	 * @param string $message
+	 * @return CRUDMessage
 	 */
-	public function setMessage($message) {
+	public function setMessage(string $message): CRUDMessage {
 		$this->_message = $message;
 		$this->message=$message;
 		return $this;
@@ -60,7 +61,7 @@ class CRUDMessage {
 	 * @param string $type
 	 * @return $this
 	 */
-	public function setType($type) {
+	public function setType(string $type): CRUDMessage {
 		$this->type = $type;
 		return $this;
 	}
@@ -69,7 +70,7 @@ class CRUDMessage {
 	 * @param string $icon
 	 * @return $this
 	 */
-	public function setIcon($icon) {
+	public function setIcon(string $icon): CRUDMessage {
 		$this->icon = $icon;
 		return $this;
 	}
@@ -78,7 +79,7 @@ class CRUDMessage {
 	 * @param string $title
 	 * @return $this
 	 */
-	public function setTitle($title) {
+	public function setTitle(string $title): CRUDMessage {
 		$this->title = $title;
 		return $this;
 	}
@@ -86,7 +87,7 @@ class CRUDMessage {
 	/**
 	 * @return integer
 	 */
-	public function getTimeout() {
+	public function getTimeout(): ?int {
 		return $this->timeout;
 	}
 
@@ -94,21 +95,26 @@ class CRUDMessage {
 	 * @param integer $timeout
 	 * @return $this
 	 */
-	public function setTimeout($timeout) {
+	public function setTimeout(int $timeout): CRUDMessage {
 		$this->timeout = $timeout;
 		return $this;
 	}
+
 	/**
-	 * 
+	 *
 	 * @param string $value
 	 * @return $this
 	 */
-	public function parse($value){
-		$this->_message=str_replace("{value}", $value, $this->message);
+	public function parse(string $value): CRUDMessage {
+		$this->_message=\str_replace("{value}", $value, $this->message);
 		return $this;
 	}
-	
-	public function parseContent($keyValues){
+
+	/**
+	 * @param array $keyValues
+	 * @return $this
+	 */
+	public function parseContent(array $keyValues): CRUDMessage {
 		$msg=$this->_message;
 		foreach ($keyValues as $key=>$value){
 			$msg=str_replace("{".$key."}", $value, $msg);

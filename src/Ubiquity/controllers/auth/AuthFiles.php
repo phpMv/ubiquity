@@ -121,6 +121,7 @@ class AuthFiles {
 	/**
 	 * To override
 	 * Returns the base template filename, default : null
+	 * @return  string|null
 	 */
 	public function getBaseTemplate() {
 		return;

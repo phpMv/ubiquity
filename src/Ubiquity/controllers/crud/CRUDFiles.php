@@ -26,7 +26,7 @@ class CRUDFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewIndex() {
+	public function getViewIndex():string {
 		return $this->viewBase . '/index.html';
 	}
 	
@@ -36,7 +36,7 @@ class CRUDFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewHome(){
+	public function getViewHome(): string {
 		return $this->viewBase . '/home.html';
 	}
 
@@ -46,7 +46,7 @@ class CRUDFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewItemHome(){
+	public function getViewItemHome(): string {
 		return $this->viewBase . '/itemHome.html';
 	}
 
@@ -56,7 +56,7 @@ class CRUDFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewNav(){
+	public function getViewNav(): string {
 		return $this->viewBase . '/nav.html';
 	}
 
@@ -66,7 +66,7 @@ class CRUDFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewForm() {
+	public function getViewForm(): string {
 		return $this->viewBase . '/form.html';
 	}
 
@@ -76,7 +76,7 @@ class CRUDFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewDisplay() {
+	public function getViewDisplay(): string {
 		return $this->viewBase . '/display.html';
 	}
 
@@ -85,13 +85,14 @@ class CRUDFiles {
 	 *
 	 * @return string
 	 */
-	public function getViewBaseTemplate() {
+	public function getViewBaseTemplate(): string {
 		return $this->viewBase . '/baseTemplate.html';
 	}
 
 	/**
 	 * To override
 	 * Returns the base template filename, default : null
+	 * @return  string|null
 	 */
 	public function getBaseTemplate() {
 		return;

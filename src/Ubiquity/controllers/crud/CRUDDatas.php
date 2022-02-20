@@ -25,7 +25,7 @@ class CRUDDatas {
 	/**
 	 * Returns the table names to display in the left admin menu
 	 */
-	public function getTableNames() {
+	public function getTableNames():array {
 		return DAO::$db->getTablesName ();
 	}
 
@@ -33,8 +33,9 @@ class CRUDDatas {
 	 * Returns the fields to display in the showModel action for $model (DataTable)
 	 *
 	 * @param string $model
+	 * @return array
 	 */
-	public function getFieldNames($model) {
+	public function getFieldNames(string $model): array {
 		return OrmUtils::getSerializableMembers ( $model );
 	}
 
@@ -43,8 +44,9 @@ class CRUDDatas {
 	 *
 	 * @param string $model
 	 * @param object $instance
+	 * @return array
 	 */
-	public function getFormFieldNames($model, $instance) {
+	public function getFormFieldNames(string $model, $instance): array {
 		return OrmUtils::getFormAllFields ( $model );
 	}
 
@@ -52,8 +54,9 @@ class CRUDDatas {
 	 * Returns the fields to use in search queries
 	 *
 	 * @param string $model
+	 * @return array
 	 */
-	public function getSearchFieldNames($model) {
+	public function getSearchFieldNames(string $model): array {
 		return OrmUtils::getSerializableFields ( $model );
 	}
 
@@ -61,8 +64,9 @@ class CRUDDatas {
 	 * Returns the fields for displaying an instance of $model (DataElement)
 	 *
 	 * @param string $model
+	 * @return array
 	 */
-	public function getElementFieldNames($model) {
+	public function getElementFieldNames(string $model): array {
 		return OrmUtils::getMembers ( $model );
 	}
 
@@ -74,7 +78,7 @@ class CRUDDatas {
 	 * @param string $member The member associated with a manyToMany relation
 	 * @return array
 	 */
-	public function getManyToManyDatas($fkClass, $instance, $member) {
+	public function getManyToManyDatas($fkClass, $instance, $member): array {
 		return DAO::getAll ( $fkClass, "", false );
 	}
 
@@ -86,7 +90,7 @@ class CRUDDatas {
 	 * @param string $member The member associated with a manyToOne relation
 	 * @return array
 	 */
-	public function getManyToOneDatas($fkClass, $instance, $member) {
+	public function getManyToOneDatas($fkClass, $instance, $member):array {
 		return DAO::getAll ( $fkClass, "", false );
 	}
 
@@ -98,7 +102,7 @@ class CRUDDatas {
 	 * @param string $member The member associated with a oneToMany relation
 	 * @return array
 	 */
-	public function getOneToManyDatas($fkClass, $instance, $member) {
+	public function getOneToManyDatas($fkClass, $instance, $member):array {
 		return DAO::getAll ( $fkClass, "", false );
 	}
 
@@ -106,7 +110,7 @@ class CRUDDatas {
 	 *
 	 * @return boolean
 	 */
-	public function getUpdateOneToManyInForm() {
+	public function getUpdateOneToManyInForm(): bool {
 		return false;
 	}
 
@@ -114,7 +118,7 @@ class CRUDDatas {
 	 *
 	 * @return boolean
 	 */
-	public function getUpdateManyToManyInForm() {
+	public function getUpdateManyToManyInForm(): bool {
 		return true;
 	}
 
@@ -122,7 +126,7 @@ class CRUDDatas {
 	 *
 	 * @return boolean
 	 */
-	public function getUpdateManyToOneInForm() {
+	public function getUpdateManyToOneInForm(): bool {
 		return true;
 	}
 
@@ -131,7 +135,7 @@ class CRUDDatas {
 	 *
 	 * @return boolean
 	 */
-	public function refreshPartialInstance() {
+	public function refreshPartialInstance(): bool {
 		return true;
 	}
 
@@ -142,7 +146,7 @@ class CRUDDatas {
 	 * @param string $model
 	 * @return string
 	 */
-	public function _getInstancesFilter($model) {
+	public function _getInstancesFilter(string $model): string {
 		return "1=1";
 	}
 }

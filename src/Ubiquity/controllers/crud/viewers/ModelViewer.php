@@ -62,7 +62,7 @@ class ModelViewer {
 	 * @param boolean $modal
 	 * @return \Ajax\semantic\widgets\dataelement\DataElement
 	 */
-	public function getModelDataElement($instance, $model, $modal) {
+	public function getModelDataElement($instance, $model, $modal): \Ajax\semantic\widgets\dataelement\DataElement {
 		$semantic = $this->jquery->semantic ();
 		$fields = $this->controller->_getAdminData ()->getElementFieldNames ( $model );
 		
@@ -93,7 +93,7 @@ class ModelViewer {
 	 * @param array $captions
 	 * @param string $className
 	 */
-	public function getElementCaptions($captions, $className, $instance) {
+	public function getElementCaptions($captions, $className, $instance): array {
 		return \array_map ( 'ucfirst', $captions );
 	}
 	
@@ -104,7 +104,7 @@ class ModelViewer {
 	 * @param string $model model class name (long name)
 	 * @return DataTable
 	 */
-	public function getModelDataTable($instances, $model, $totalCount, $page = 1) {
+	public function getModelDataTable($instances, $model, $totalCount, $page = 1): DataTable {
 		$adminRoute = $this->controller->_getBaseRoute ();
 		$files = $this->controller->_getFiles ();
 		$dataTable = $this->getDataTableInstance ( $instances, $model, $totalCount, $page );
@@ -170,9 +170,10 @@ class ModelViewer {
 	 * @return void|number default : 6
 	 */
 	public function recordsPerPage($model, $totalCount = 0) {
-		if ($totalCount > 6)
+		if ($totalCount > 6) {
 			return 6;
-			return;
+		}
+		return;
 	}
 	
 	/**
@@ -217,7 +218,7 @@ class ModelViewer {
 	 *
 	 * @return string[]
 	 */
-	protected function getDataTableRowButtons() {
+	protected function getDataTableRowButtons(): array {
 		return [ 'edit','delete' ];
 	}
 	
@@ -256,11 +257,11 @@ class ModelViewer {
 	 *
 	 * @return string
 	 */
-	public function getTransition() {
+	public function getTransition(): string {
 		return 'fade';
 	}
 	
-	public function getDataTableId() {
+	public function getDataTableId(): string {
 		return 'lv';
 	}
 	
@@ -288,7 +289,7 @@ class ModelViewer {
 	 * @param array $captions
 	 * @param string $className
 	 */
-	public function getCaptions($captions, $className) {
+	public function getCaptions($captions, $className):array {
 		return \array_map ( 'ucfirst', $captions );
 	}
 	
@@ -471,7 +472,7 @@ class ModelViewer {
 	 *
 	 * @return boolean Return true if you want to see details
 	 */
-	public function showDetailsOnDataTableClick() {
+	public function showDetailsOnDataTableClick(): bool {
 		return true;
 	}
 }
