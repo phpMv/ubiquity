@@ -6,7 +6,7 @@ use Ubiquity\controllers\crud\CRUDFiles;
  * Class TestCrudOrgasFiles
  **/
 class TestCrudOrgasFiles extends CRUDFiles{
-	public function getViewIndex(): string{
+	public function getViewIndex(): string {
 		return "TestCrudOrgas/index.html";
 	}
 
