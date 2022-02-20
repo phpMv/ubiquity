@@ -31,7 +31,9 @@ trait AuthControllerCoreTrait {
 	abstract public function _getLoginInputName();
 	
 	abstract protected function hasAccountCreation():bool;
-	
+
+	abstract protected function hasAccountRecovery():bool;
+
 	abstract protected function canCreateAccountMessage(FlashMessage $fMessage);
 
 	abstract protected function getAccountRecoveryLink():string;
@@ -91,7 +93,7 @@ trait AuthControllerCoreTrait {
 		}else{
 			$loadView=function($vn,$v) {$this->loadView($vn, $v);};
 		}
-		if($this->hasAccountCreation()){
+		if($this->hasAccountRecovery()){
 			$vars['resetPassword']=$this->getAccountRecoveryLink();
 		}
 		$files = $this->_getFiles ();
