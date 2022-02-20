@@ -21,7 +21,7 @@ class TestCrudOrgas extends \Ubiquity\controllers\crud\CRUDController {
 		$this->model = "models\\Organization";
 	}
 
-	public function _getBaseRoute() {
+	public function _getBaseRoute(): string {
 		return 'TestCrudOrgas';
 	}
 

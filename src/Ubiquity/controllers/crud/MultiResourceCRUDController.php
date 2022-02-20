@@ -136,7 +136,7 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 		return ['four link cards','card'];
 	}
 	
-	protected function getModelName(){
+	protected function getModelName(): string {
 		return Startup::getNS('models') . \ucfirst($this->resource);
 	}
 	

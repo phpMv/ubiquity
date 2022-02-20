@@ -8,7 +8,7 @@ interface HasModelViewerInterface {
 
 	public function _getAdminData(): CRUDDatas;
 
-	public function _getBaseRoute();
+	public function _getBaseRoute(): string;
 
 	public function _getFiles();
 }

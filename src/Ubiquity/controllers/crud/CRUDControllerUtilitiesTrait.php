@@ -26,7 +26,7 @@ trait CRUDControllerUtilitiesTrait {
 	
 	abstract public function index();
 	
-	abstract public function _getBaseRoute();
+	abstract public function _getBaseRoute():string;
 	
 	abstract protected function showConfMessage_(CRUDMessage $message, $url, $responseElement, $data, $attributes = NULL): HtmlMessage;
 
