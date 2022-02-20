@@ -3,6 +3,7 @@
 namespace Ubiquity\controllers\auth\traits;
 
 use Ajax\semantic\components\validation\Rule;
+use Ajax\semantic\html\collections\form\HtmlForm;
 use Ubiquity\controllers\auth\AuthTokens;
 use Ubiquity\utils\base\UDateTime;
 use Ubiquity\utils\flash\FlashMessage;
@@ -15,7 +16,18 @@ use Ubiquity\utils\http\URequest;
 trait AuthAccountCreationTrait {
 
 	protected static string $TOKENS_VALIDATE_EMAIL='email.validation';
+
 	abstract protected function getBaseUrl():string;
+
+	abstract protected function fMessage(FlashMessage $fMessage, $id = null):string;
+
+	abstract protected function useAjax():bool;
+
+	abstract public function _addFrmAjaxBehavior($id):HtmlForm;
+
+	abstract public function _getPasswordInputName():string;
+
+	abstract public function _getLoginInputName():string;
 
 	/**
 	 * Returns true for account creation.

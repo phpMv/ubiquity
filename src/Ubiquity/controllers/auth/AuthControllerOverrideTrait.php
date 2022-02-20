@@ -14,11 +14,6 @@ trait AuthControllerOverrideTrait {
 	
 	abstract public function badLogin();
 	
-	abstract public function _getBodySelector():string;
-
-	abstract protected function getBaseUrl():string;
-
-
 	/**
 	 * To override
 	 * Return the base route for this Auth controller
@@ -69,7 +64,7 @@ trait AuthControllerOverrideTrait {
 	 * @param string $action
 	 * return boolean true if activeUser is valid
 	 */
-	abstract public function _isValidUser($action=null);
+	abstract public function _isValidUser($action=null):bool;
 	
 	/**
 	 * Returns the value from connected user to save it in the cookie for auto connection

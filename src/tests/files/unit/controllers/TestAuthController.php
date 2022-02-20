@@ -35,11 +35,11 @@ class TestAuthController extends \Ubiquity\controllers\auth\AuthController{
 	 * {@inheritDoc}
 	 * @see \Ubiquity\controllers\auth\AuthController::isValidUser()
 	 */
-	public function _isValidUser($action=null) {
+	public function _isValidUser($action=null):bool {
 		return USession::exists($this->_getUserSessionKey());
 	}
 
-	public function _getBaseRoute() {
+	public function _getBaseRoute():string {
 		return 'TestAuthController';
 	}
 	
@@ -47,7 +47,7 @@ class TestAuthController extends \Ubiquity\controllers\auth\AuthController{
 		return new TestAuthControllerFiles();
 	}
 
-	public function _getLoginInputName(){
+	public function _getLoginInputName():string{
 		return "email";
 	}
 

@@ -19,7 +19,7 @@ use Ubiquity\utils\http\URequest;
  */
 trait AuthAccountRecoveryTrait {
 
-	protected static $TOKENS_RECOVERY_ACCOUNT='account.recovery';
+	protected static string $TOKENS_RECOVERY_ACCOUNT='account.recovery';
 
 	abstract protected function fMessage(FlashMessage $fMessage, $id = null):string;
 
@@ -33,17 +33,17 @@ trait AuthAccountRecoveryTrait {
 
 	abstract public function _getBodySelector():string;
 
-	abstract protected function onConnect($connected);
-
 	abstract public function _addFrmAjaxBehavior($id):HtmlForm;
 
-	abstract public function _getPasswordInputName();
+	abstract public function _getPasswordInputName():string;
 
-	abstract protected function passwordConfLabel();
+	abstract protected function passwordConfLabel():string;
 
-	abstract protected function passwordLabel();
+	abstract protected function passwordLabel():string;
 
 	abstract public function info($force = null);
+
+	abstract protected function validateEmail(string $mail):bool;
 
 	/**
 	 * @return bool

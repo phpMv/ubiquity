@@ -58,7 +58,7 @@ trait AuthControllerVariablesTrait {
 	
 	/**
 	 * To override
-	 * Returns the maximum number of allowed login attempts.
+	 * Returns int the maximum number of allowed login attempts.
 	 */
 	protected function attemptsNumber() {
 		return;
@@ -69,9 +69,9 @@ trait AuthControllerVariablesTrait {
 	 * Returns the time before trying to connect again
 	 * Effective only if attemptsNumber return a number.
 	 *
-	 * @return number
+	 * @return int
 	 */
-	protected function attemptsTimeout() {
+	protected function attemptsTimeout():int {
 		return 3 * 60;
 	}
 
@@ -80,7 +80,7 @@ trait AuthControllerVariablesTrait {
 	 * If set to true, use {{ _infoUser| raw }} in views to display user info.
 	 * Remember to use $this->jquery->renderView instead of $this->loadView for the javascript generation.
 	 */
-	public function _displayInfoAsString() {
+	public function _displayInfoAsString(): bool {
 		return false;
 	}
 
@@ -88,23 +88,23 @@ trait AuthControllerVariablesTrait {
 		return;
 	}
 
-	public function _getLoginInputName() {
+	public function _getLoginInputName(): string {
 		return 'email';
 	}
 
-	protected function loginLabel() {
+	protected function loginLabel():string {
 		return \ucfirst ( $this->_getLoginInputName () );
 	}
 
-	public function _getPasswordInputName() {
+	public function _getPasswordInputName():string {
 		return 'password';
 	}
 
-	protected function passwordLabel() {
+	protected function passwordLabel(): string {
 		return \ucfirst ( $this->_getPasswordInputName () );
 	}
 	
-	protected function passwordConfLabel() {
+	protected function passwordConfLabel(): string {
 		return \ucfirst ( $this->_getPasswordInputName () ).' confirmation';
 	}
 

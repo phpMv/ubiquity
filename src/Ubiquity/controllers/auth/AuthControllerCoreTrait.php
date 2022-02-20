@@ -22,13 +22,13 @@ trait AuthControllerCoreTrait {
 
 	abstract protected function getFiles(): AuthFiles;
 
-	abstract public function _getBodySelector();
+	abstract public function _getBodySelector():string;
 
-	abstract public function _getBaseRoute();
+	abstract public function _getBaseRoute():string;
 	
 	abstract protected function _newAccountCreationRule(string $accountName):?bool;
 	
-	abstract public function _getLoginInputName();
+	abstract public function _getLoginInputName():string;
 	
 	abstract protected function hasAccountCreation():bool;
 

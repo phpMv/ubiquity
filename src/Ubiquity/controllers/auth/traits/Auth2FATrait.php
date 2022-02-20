@@ -43,8 +43,6 @@ trait Auth2FATrait {
 
 	abstract protected function finalizeAuth();
 
-	abstract public function info($force = null);
-
 	/**
 	 * To override for defining a new action when 2FA code is invalid.
 	 */
