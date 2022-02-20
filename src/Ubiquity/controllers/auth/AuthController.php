@@ -16,9 +16,7 @@ use Ajax\service\Javascript;
 use Ubiquity\utils\http\UCookie;
 use Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ajax\semantic\html\collections\form\HtmlForm;
-use Ajax\semantic\components\validation\Rule;
 use Ajax\php\ubiquity\JsUtils;
-use Ubiquity\cache\CacheManager;
 
 /**
  * Controller Auth

@@ -19,7 +19,7 @@ trait AuthControllerOverrideTrait {
 	 * Return the base route for this Auth controller
 	 * @return string
 	 */
-	public function _getBaseRoute(){
+	public function _getBaseRoute(): string {
 		return ClassUtils::getClassSimpleName(\get_class($this));
 	}
 	
