@@ -42,15 +42,6 @@ trait AuthControllerOverrideTrait {
 	}
 	
 
-
-	/**
-	 * To override for defining user session key, default : "activeUser"
-	 * @return string
-	 */
-	public function _getUserSessionKey():string {
-		return 'activeUser';
-	}
-	
 	/**
 	 * To override for getting active user, default : USession::get("activeUser")
 	 * @return string

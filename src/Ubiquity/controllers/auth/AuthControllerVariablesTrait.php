@@ -84,6 +84,14 @@ trait AuthControllerVariablesTrait {
 		return false;
 	}
 
+	/**
+	 * To override for defining user session key, default : "activeUser"
+	 * @return string
+	 */
+	public function _getUserSessionKey():string {
+		return 'activeUser';
+	}
+
 	public function _checkConnectionTimeout() {
 		return;
 	}

@@ -43,6 +43,17 @@ trait Auth2FATrait {
 
 	abstract protected function finalizeAuth();
 
+
+	/**
+	 * To override
+	 * Returns true for a two factor authentification for this account.
+	 * @param mixed $accountValue
+	 * @return bool
+	 */
+	protected function has2FA($accountValue=null):bool{
+		return false;
+	}
+
 	/**
 	 * To override for defining a new action when 2FA code is invalid.
 	 */
@@ -58,16 +69,6 @@ trait Auth2FATrait {
 	 */
 	protected function _send2FACode(string $code,$connected):void{
 
-	}
-
-	/**
-	 * To override
-	 * Returns true for a two factor authentification for this account.
-	 * @param mixed $accountValue
-	 * @return bool
-	 */
-	protected function has2FA($accountValue=null):bool{
-		return false;
 	}
 
 	/**
