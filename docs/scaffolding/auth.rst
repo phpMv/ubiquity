@@ -329,6 +329,8 @@ Account recovery
 account recovery is used to reset the account password. |br|
 A password reset email is sent, to an email address corresponding to an active account.
 
+.. image:: /_static/images/auth/recoveryInit.png
+
 .. code-block:: php
    :linenos:
    :caption: app/controllers/PersoAuthController.php
@@ -356,6 +358,8 @@ A password reset email is sent, to an email address corresponding to an active a
         //To implement: return true if a valid account match with this email
     }
    }
+
+.. image:: /_static/images/auth/recoveryForm.png
 
 .. note::
     By default, the link can only be used on the same machine, within a predetermined period of time (which can be modified by overriding the ``accountRecoveryDuration`` method).
