@@ -53,7 +53,7 @@ The generated controller:
    		$this->model= models\User::class;
    	}
    
-   	public function _getBaseRoute() {
+   	public function _getBaseRoute():string {
    		return 'UsersController';
    	}
    }

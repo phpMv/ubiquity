@@ -40,7 +40,7 @@ class AuthTokens {
 	 * @return string
 	 */
 	protected function getOrigin():string{
-		return $this->generateOrigin(['platform'=>UASystem::getPlatform(),'browser'=>UASystem::getBrowserComplete()]);
+		return $this->generateOrigin(['platform'=>UASystem::getPlatform(),'browser'=>UASystem::getBrowserComplete(),'ip'=>$_SERVER['REMOTE_ADDR']]);
 	}
 
 	/**
@@ -48,7 +48,7 @@ class AuthTokens {
 	 * @return string
 	 */
 	protected function generateOrigin(array $data):string{
-		$data=['platform'=>$data['platform']??'','browser'=>$data['browser']??''];
+		$data=['platform'=>$data['platform']??'','browser'=>$data['browser']??'','ip'=>$data['ip']??''];
 		return \md5(\json_encode($data));
 	}
 

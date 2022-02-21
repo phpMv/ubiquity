@@ -2,6 +2,9 @@
 Auth Controllers
 ================
 
+.. |br| raw:: html
+
+   <br />
 
 The Auth controllers allow you to perform basic authentification with:
  - login with an account
@@ -320,6 +323,43 @@ Limitation of connection attempts
    }
    
 
+Account recovery
+****************
+
+account recovery is used to reset the account password. |br|
+A password reset email is sent, to an email address corresponding to an active account.
+
+.. code-block:: php
+   :linenos:
+   :caption: app/controllers/PersoAuthController.php
+
+   class PersoAuthController extends \controllers\BaseAuth{
+   ...
+    protected function hasAccountRecovery():bool{
+        return true;
+    }
+
+    protected function _sendEmailAccountRecovery(string $email,string $validationURL,string $expire):bool {
+        MailerManager::start();
+        $mail=new AuthAccountRecoveryMail();
+        $mail->to($connected->getEmail());
+        $mail->setUrl($validationURL);
+        $mail->setExpire($expire);
+        return MailerManager::send($mail);
+    }
+
+    protected function passwordResetAction(string $email,string $newPasswordHash):bool {
+        //To implement for modifying the user password
+    }
+
+    protected function isValidEmailForRecovery(string $email):bool {
+        //To implement: return true if a valid account match with this email
+    }
+   }
+
+.. note::
+    By default, the link can only be used on the same machine, within a predetermined period of time (which can be modified by overriding the ``accountRecoveryDuration`` method).
+
 Activation of MFA/2FA
 **********************
 Multi-factor authentication can be enabled conditionally, based on the pre-logged-in user's information.
@@ -429,11 +469,12 @@ A confirmation action (email verification) may be requested from the user:
    		return true;
    	}
    
-   	protected function _sendEmailValidation(string $email, string $validationURL):void {
+   	protected function _sendEmailValidation(string $email,string $validationURL,string $expire):void {
    		MailerManager::start();
-   		$mail=new AuthEmailValidationMailerClass();
+   		$mail=new AuthEmailValidationMail();
    		$mail->to($connected->getEmail());
-   		$mail->setValidationURL($validationURL);
+   		$mail->setUrl($validationURL);
+   		$mail->setExpire($expire);
    		MailerManager::send($mail);
    	}
 
