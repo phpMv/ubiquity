@@ -177,7 +177,7 @@ trait AuthAccountRecoveryTrait {
 		$href=$this->getBaseUrl().'/recoveryInit';
 		$target=$this->_getBodySelector();
 		$caption=$this->recoveryAccountCaption();
-		return "<a href='$href' data-target='$target'>$caption</a>";
+		return "<a class='_recovery' href='$href' data-target='$target'>$caption</a>";
 	}
 
 	public function recoveryInit(){

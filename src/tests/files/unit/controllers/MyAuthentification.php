@@ -53,4 +53,27 @@ class MyAuthentification extends \Ubiquity\controllers\auth\AuthControllerConfig
 		return $accountName!=="myaddressmail@gmail.com";
 	}
 
+	public function _create(string $login, string $password): ?bool {
+		return $login!='';
+	}
+
+	public function hasEmailValidation(): bool {
+		return true;
+	}
+
+	protected function _sendEmailValidation(string $email, string $validationURL, string $expire): void {
+		echo "<a id='url' href='$validationURL'>Validation url</a>";
+	}
+
+	protected function _sendEmailAccountRecovery(string $email, string $validationURL, string $expire): bool {
+		echo $email;
+		echo "<a id='url' href='$validationURL'>Validation url</a>";
+		return true;
+	}
+
+	protected function passwordResetAction(string $email,string $newPasswordHash):bool{
+		echo $email;
+		var_dump($newPasswordHash);
+		return true;
+	}
 }
