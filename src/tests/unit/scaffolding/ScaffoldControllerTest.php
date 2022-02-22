@@ -114,7 +114,7 @@ class ScaffoldControllerTest extends BaseTest {
 		$this->scaffoldController->addAuthController ( "TestScaffoldAuthConfig", "\\Ubiquity\\controllers\\auth\\AuthControllerConfig", "index,info,noAccess,disconnected,message,baseTemplate,initRecovery,recovery", "crud/config" );
 		$this->assertTrue ( \class_exists ( "controllers\\TestScaffoldAuthConfig" ) );
 		$this->assertTrue ( \class_exists ( "controllers\\auth\\files\\TestScaffoldAuthConfigFiles" ) );
-		$this->assertTrue(\file_exists(\ROOT.'/config/TestScaffoldAuthConfig.config.php'));
+		$this->assertTrue(\file_exists(\ROOT.'/config/testScaffoldAuthConfig.config.php'));
 	}
 
 	/**
