@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing
 
-## [2.4.11] 2022-02-20
+## [2.4.11] 2022-02-22
 ### Updated (breaking change)
 - AuthControllers refactoring
 - CRUDControllers (return types added on methods to override)
@@ -21,13 +21,14 @@ The signature of the methods of AuthController, AuthFiles, CRUDController, CRUDF
 It is therefore necessary to add this return types on the overridden methods
 ```php
 	public function getViewIndex():string {
-		return "MyAuth/index.html";
+		return 'MyAuth/index.html';
 	}
 ```
 
 ### Added
 In Auth controllers:
 - Account recovery (password reset)
+- `AuthControllerConfig`, `UASystem`, `UConfigFile` classes
 
 ## [2.4.10] 2022-02-13
 ### Added
