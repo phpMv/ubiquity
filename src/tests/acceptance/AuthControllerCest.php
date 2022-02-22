@@ -96,6 +96,8 @@ class AuthControllerCest {
 		$I->see('jeremy.bryan@gmail.com');
 		//Account recovery
 		$I->amOnPage ( "/TestMainControllerWithAuth" );
+		$I->click ( "a._login" );
+		$I->waitForText("Don't have an account yet?",self::TIMEOUT,'body');
 		$I->click ( "a._recovery" );
 		$I->waitForText("Account recovery",self::TIMEOUT,"body");
 		$I->see('Enter the email associated with your account to receive a password reset link.');
