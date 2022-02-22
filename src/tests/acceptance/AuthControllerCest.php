@@ -77,6 +77,7 @@ class AuthControllerCest {
 		$I->see ( "Forbidden access" );
 		//Create account
 		$I->amOnPage ( "/TestMainControllerWithAuth" );
+		$I->click ( "a._login" );
 		$I->waitForText("Don't have an account yet?",self::TIMEOUT,'body');
 		$I->click ( "a._create" );
 		$I->waitForText("Account creation",self::TIMEOUT,"body");
