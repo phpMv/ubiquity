@@ -16,12 +16,14 @@ use Ubiquity\utils\base\UConfigFile;
 abstract class AuthControllerConfig extends AuthController {
 	
 	protected array $config;
-	
-	public function __construct(string $configFilename,$instance=null){
-		$file=new UConfigFile($configFilename);
+
+	public function initialize(){
+		$file=new UConfigFile($this->getConfigFilename());
 		$this->config=$file->load();
-		parent::__construct($instance);
+		parent::initialize();
 	}
+
+	abstract protected function getConfigFilename():string;
 
 	protected function useAjax():bool{
 		return $this->config['useAjax']??true;
@@ -91,7 +93,7 @@ abstract class AuthControllerConfig extends AuthController {
 		return $this->config['recoveryAccountCaption']??'Forgot your password?';
 	}
 
-	public static function createDefaultConfig(?string $name=null,?array $config=null){
+	public static function init(?string $name=null,?array $config=null){
 		$config??=[
 			'attempsNumber'=>null,
 			'userSessionKey'=>'activeUser',
@@ -112,7 +114,7 @@ abstract class AuthControllerConfig extends AuthController {
 			'recoveryAccountCaption'=>'Forgot your password?'
 
 		];
-		$name??=ClassUtils::getClassSimpleName(static::class);
+		$name??=\lcfirst(ClassUtils::getClassSimpleName(static::class));
 		$file=new UConfigFile($name);
 		$file->setData($config);
 		$file->save();
