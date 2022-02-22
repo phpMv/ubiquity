@@ -54,7 +54,7 @@ build:
           - cp -f src/tests/files/composer.json src/composer.json
           - (cd src/ && composer update)
           - (cd src/ && ./../vendor/bin/Ubiquity clear-cache)
-          - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/ && cp -f src/tests/files/config.php src/app/config/
+          - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/ && cp -f src/tests/files/config.php src/app/config/ && cp -f src/tests/files/myAuthentification.config.php src/app/config/
           - cp -R src/tests/files/unit/* src/app/
           - (cd src/ && ./../vendor/bin/Ubiquity all-models -d=bench -a=public)
           - (cd src/ && ./../vendor/bin/Ubiquity init-cache)

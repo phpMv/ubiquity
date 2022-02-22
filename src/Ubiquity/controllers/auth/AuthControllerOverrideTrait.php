@@ -13,6 +13,8 @@ use Ubiquity\utils\http\UCookie;
 trait AuthControllerOverrideTrait {
 	
 	abstract public function badLogin();
+
+	abstract public function _getUserSessionKey():string;
 	
 	/**
 	 * To override
