@@ -90,7 +90,7 @@ class AuthControllerCest {
 		$I->see ( "account created with success!" );
 		$I->see('Confirm your email address');
 		$I->see('jeremy.bryan@gmail.com');
-		$I->click ( "a.#url" );
+		$I->click ( "#url" );
 		$I->waitForText("Account creation",self::TIMEOUT,"body");
 		$I->see("has been validated.");
 		$I->see('jeremy.bryan@gmail.com');
@@ -104,7 +104,7 @@ class AuthControllerCest {
 		$I->waitForText("Account recovery",self::TIMEOUT,"body");
 		$I->see('You can only use this link temporarily, from the same machine, on this browser.');
 		$I->see('recovery@gmail.com');
-		$I->click ( "a.#url" );
+		$I->click ( "#url" );
 		$I->waitForText('Account recovery (password reset)');
 		$I->fillField ( "[name='password']", "0000" );
 		$I->fillField ( "[name='password-conf']", "0000" );
