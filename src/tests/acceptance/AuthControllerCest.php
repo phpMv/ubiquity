@@ -112,7 +112,7 @@ class AuthControllerCest {
 		$I->fillField ( "[name='password-conf']", "0000" );
 		$I->click ( "button._submit" );
 		$I->waitForText('Your password has been updated correctly for the account associated with');
-		$I->see('$2y$10$ldspUaEFHGuqGgjA7QWITOuBHW.ISFwsV6iKEmMHLovkPFyXtneXu');
+		$I->see(\password_hash('0000'));
 		$I->see('recovery@gmail.com');
 	}
 }
