@@ -102,7 +102,7 @@ class AuthControllerCest {
 		$I->waitForText("Account recovery",self::TIMEOUT,"body");
 		$I->see('Enter the email associated with your account to receive a password reset link.');
 		$I->fillField ( "[name='email']", "recovery@gmail.com" );
-		$I->click ( "a._recoverySend" );
+		$I->click ( "button._recoverySend" );
 		$I->waitForText("Account recovery",self::TIMEOUT,"body");
 		$I->see('You can only use this link temporarily, from the same machine, on this browser.');
 		$I->see('recovery@gmail.com');
@@ -110,7 +110,7 @@ class AuthControllerCest {
 		$I->waitForText('Account recovery (password reset)');
 		$I->fillField ( "[name='password']", "0000" );
 		$I->fillField ( "[name='password-conf']", "0000" );
-		$I->click ( "a._submit" );
+		$I->click ( "button._submit" );
 		$I->waitForText('Your password has been updated correctly for the account associated with');
 		$I->see('$2y$10$ldspUaEFHGuqGgjA7QWITOuBHW.ISFwsV6iKEmMHLovkPFyXtneXu');
 		$I->see('recovery@gmail.com');
