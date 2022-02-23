@@ -322,4 +322,7 @@ abstract class AuthController extends Controller {
 		$frm->setValidationParams(['inline'=>true,'on'=>'blur']);
 		return $frm;
 	}
+	public function _init(){
+		
+	}
 }

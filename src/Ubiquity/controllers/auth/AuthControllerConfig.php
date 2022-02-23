@@ -18,9 +18,13 @@ abstract class AuthControllerConfig extends AuthController {
 	protected array $config;
 
 	public function initialize(){
+		$this->_init();
+		parent::initialize();
+	}
+	
+	public function _init(){
 		$file=new UConfigFile($this->getConfigFilename());
 		$this->config=$file->load();
-		parent::initialize();
 	}
 
 	abstract protected function getConfigFilename():string;
@@ -42,7 +46,7 @@ abstract class AuthControllerConfig extends AuthController {
 	}
 
 	public function _displayInfoAsString():bool{
-		return $this->config['_displayInfoAsString']??false;
+		return $this->config['displayInfoAsString']??false;
 	}
 
 	public function _getLoginInputName():string{

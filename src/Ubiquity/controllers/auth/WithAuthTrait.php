@@ -28,8 +28,9 @@ trait WithAuthTrait {
 	protected $authController;
 
 	public function initialize() {
-		parent::initialize();
 		$authController = $this->_getAuthController();
+		$authController->_init();
+		parent::initialize();
 		if (! URequest::isAjax() || URequest::has('_userInfo')) {
 			if (! $authController->_displayInfoAsString()) {
 				$authController->info();
