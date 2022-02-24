@@ -11,7 +11,7 @@
 		{% if prefix %}
 			<div class="ui labeled input">
 				<div class="ui label">{{prefix}}</div>
-				<input type="text" placeholder="Enter a code" name="code" id="code">
+				<input type="text" placeholder="Enter a code" name="code" id="code" value="{{ app.getSession().get('2FA-infos')['code'] }}">
 			</div>
 		{% else %}
 			<input type="text" placeholder="Enter a code" name="code" id="code">

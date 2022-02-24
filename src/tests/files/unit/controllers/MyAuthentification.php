@@ -1,5 +1,7 @@
 <?php
 namespace controllers;
+use controllers\auth\files\MyAuthentificationFiles;
+use Ubiquity\controllers\auth\AuthFiles;
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\attributes\items\router\Route;
@@ -76,4 +78,17 @@ class MyAuthentification extends \Ubiquity\controllers\auth\AuthControllerConfig
 		var_dump($newPasswordHash);
 		return true;
 	}
+
+	protected function getFiles(): AuthFiles{
+		return new MyAuthentificationFiles();
+	}
+
+	protected function has2FA($accountValue = null): bool {
+		return true;
+	}
+
+	protected function _send2FACode(string $code, $connected): void {
+		echo 'code submited!';
+	}
+
 }

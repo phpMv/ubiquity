@@ -1,0 +1,67 @@
+{% block _before %}
+<p></p>
+{% endblock %}
+{% block _form %}
+<form id="frm-login" class="ui form" name="frm-login" method="post" action="{{action}}">
+{% block _header %}
+<h4 class="ui header dividing">Connection</h4> 
+{% endblock %}
+{% block _fields %}
+<div class="two fields">
+	{% block _fieldLogin %}
+	<div class="field required">
+	<label for="{{loginInputName}}">{{loginLabel}}</label> 
+	<div class="ui input">
+		{% block _login %}
+		<input id="{{loginInputName}}" name="{{loginInputName}}" type="text" placeholder="{{loginLabel}}">
+		{% endblock %}
+	</div>
+	</div>
+	{% endblock %}
+	{% block _fieldPassword %}
+	<div class="field required">
+		<label for="{{passwordInputName}}">{{passwordLabel}}</label>
+		<div class="ui input">
+			{% block _password %}
+			<input id="{{passwordInputName}}" name="{{passwordInputName}}" type="password">
+			{% endblock %}
+		</div>
+	</div>
+	{% endblock %}
+</div>
+{% block _extraFields %}
+	<div class="inline fields">
+	{% block _fieldRemember %}
+		<div class="field">
+			<div class="ui checkbox">
+				<input id="ck-remember" name="ck-remember" value="1" type="checkbox" placeholder="Remember" tabindex="0" class="hidden"> 
+				<label for="ck-remember">{{rememberCaption}}</label>
+			</div>
+		</div>
+	{% endblock %}
+	{% block _recoveryLink %}
+		{% if resetPassword %}
+			<div class="field">
+				{{ resetPassword|raw }}
+			</div>
+		{% endif %}
+	{% endblock %}
+	</div>
+	{% endblock %}
+{% endblock %}
+{% block _buttons %}
+<button class="ui button green basic ajax _connect">Connection</button>
+	{% block _accountCreation %}
+		{% if canCreateAccountMessage %}
+			<div class="ui divider"></div>
+			{{canCreateAccountMessage | raw}}
+		{% endif %}
+	{% endblock %}
+{% endblock %}
+</form>
+{% endblock %}
+{% block _after %}
+{% endblock %}
+{% block _script %}
+	{{ script_foot|raw }}
+{% endblock %}

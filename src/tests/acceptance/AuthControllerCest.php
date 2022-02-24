@@ -63,11 +63,33 @@ class AuthControllerCest {
 		$I->fillField ( "[name='email']", "myaddressmail@gmail.com" );
 		$I->fillField ( "[name='password']", "0000" );
 		$I->click ( "button._connect" );
+		//2FA
+		$I->waitForText('Two factor Authentification');
+		$I->click ( "button._validate2FA" );
 		$I->waitForText ( "Hello world!", self::TIMEOUT, "body" );
 		// Test access to other page
 		$I->amOnPage ( "/TestMainControllerWithAuth/test" );
 		$I->see ( "test ok!" );
 		// Test Logout
+		$I->click ( "a._logout" );
+		$I->waitForText ( "You have been properly disconnected!", self::TIMEOUT, "body" );
+		//Bad 2FA
+		$I->amOnPage ( "/TestMainControllerWithAuth" );
+		$I->see ( "Forbidden access" );
+		$I->click ( "a._login" );
+		$I->fillField ( "[name='email']", "myaddressmail@gmail.com" );
+		$I->fillField ( "[name='password']", "0000" );
+		$I->click ( "button._connect" );
+		$I->waitForText('Two factor Authentification');
+		$I->see('code submited!');
+		$I->fillField ( "[name='code']", "0000" );
+		$I->click ( "button._validate2FA" );
+		$I->waitForText('Invalid 2FA code!');
+		//Re send 2FA
+		$I->click ( "a._send" );
+		$I->waitForText('A new code was submited.');
+		$I->click ( "button._validate2FA" );
+		$I->waitForText ( "Hello world!", self::TIMEOUT, "body" );
 		$I->click ( "a._logout" );
 		$I->waitForText ( "You have been properly disconnected!", self::TIMEOUT, "body" );
 		// Test no access

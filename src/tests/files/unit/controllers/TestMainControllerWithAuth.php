@@ -21,4 +21,6 @@ use WithAuthTrait;
 	public function test(){
 		echo "test ok!";
 	}
+
+
 }
