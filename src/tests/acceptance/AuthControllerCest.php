@@ -88,10 +88,6 @@ class AuthControllerCest {
 		//Re send 2FA
 		$I->click ( "a._send" );
 		$I->waitForText('A new code was submited.');
-		$I->click ( "button._validate2FA" );
-		$I->waitForText ( "Hello world!", self::TIMEOUT, "body" );
-		$I->click ( "a._logout" );
-		$I->waitForText ( "You have been properly disconnected!", self::TIMEOUT, "body" );
 		// Test no access
 		$I->amOnPage ( "/TestMainControllerWithAuth" );
 		$I->see ( "Forbidden access" );
