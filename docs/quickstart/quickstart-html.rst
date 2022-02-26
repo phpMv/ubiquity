@@ -1,5 +1,5 @@
 .. _quickstart-html:
-Quick start with web tools 
+Quick start with Webtools 
 ==========================
 
 Install Composer
