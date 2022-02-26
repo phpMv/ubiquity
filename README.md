@@ -67,7 +67,8 @@ Ubiquity serve
 # Need some help?
 Ubiquity is a recent project and does not yet have a large community.
 In the meantime, you can consult:
- - [Quick-start guide](https://micro-framework.readthedocs.io/en/latest/quickstart/quickstart.html) to discover the framework
+ - [Quick-start guide with devtools]https://micro-framework.readthedocs.io/en/latest/quickstart/quickstart.html) to discover the framework with the cli program
+ - [Quick-start guide with webtools]https://micro-framework.readthedocs.io/en/latest/quickstart/quickstart-html.html) to discover the framework with the webtools interface
  - [Documentation](https://micro-framework.readthedocs.io/en/latest/) to go deeper
  - [API documentation](http://api.kobject.net/ubiquity/) to search further
 
