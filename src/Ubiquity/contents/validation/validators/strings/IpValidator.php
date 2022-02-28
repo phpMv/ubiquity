@@ -39,7 +39,7 @@ class IpValidator extends ValidatorHasNotNull {
 			if (isset ( self::FLAGS [$this->ref] )) {
 				$flag = self::FLAGS [$this->ref];
 			}
-			return filter_var ( $value, FILTER_VALIDATE_IP, $flag );
+			return \filter_var ( $value, \FILTER_VALIDATE_IP, $flag );
 		}
 		return true;
 	}
@@ -50,7 +50,7 @@ class IpValidator extends ValidatorHasNotNull {
 	 * @see \Ubiquity\contents\validation\validators\Validator::getParameters()
 	 */
 	public function getParameters(): array {
-		return [ "value","ref" ];
+		return [ 'value','ref' ];
 	}
 }
 
