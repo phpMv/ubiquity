@@ -94,6 +94,20 @@ class MultisiteSession extends AbstractSession {
 	public function delete($key) {
 		\unlink ( $this->getFilename ( $key ) );
 	}
+	
+	public function regenerateId(bool $deleteOldSession=false):bool {
+		if($deleteOldSession){
+			$this->terminate();
+			$this->start($this->name,\rtrim($this->folder,\DS . 'session' . \DS));
+			return true;
+		}
+		$newId=$this->generateId();
+		$this->verifyCsrf->clear();
+		UCookie::set ( self::SESSION_ID, $id );
+		$this->id = $id;
+		$this->verifyCsrf->start ();
+		return UFileSystem::xmove($this->folder . $this->id . \DS, $this->folder . $this->id . \DS);
+	}
 
 	public function visitorCount(): int {
 		return \count ( \scandir ( $this->folder . $this->id . \DS ) );

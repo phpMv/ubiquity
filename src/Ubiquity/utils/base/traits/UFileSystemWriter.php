@@ -2,6 +2,8 @@
 
 namespace Ubiquity\utils\base\traits;
 
+use Ubiquity\utils\base\UFileSystem;
+
 trait UFileSystemWriter {
 	
 	public static function openReplaceInTemplateFile($source, $keyAndValues) {
@@ -20,11 +22,11 @@ trait UFileSystemWriter {
 	}
 	
 	public static function replaceFromTemplate($content, $keyAndValues) {
-		array_walk($keyAndValues, function (&$item) {
+		\array_walk($keyAndValues, function (&$item) {
 			if (\is_array($item))
 				$item=\implode("\n", $item);
 		});
-			$str=\str_replace(array_keys($keyAndValues), array_values($keyAndValues), $content);
+			$str=\str_replace(\array_keys($keyAndValues), \array_values($keyAndValues), $content);
 			return $str;
 	}
 	
@@ -37,16 +39,16 @@ trait UFileSystemWriter {
 	}
 	
 	public static function xcopy($source, $dest, $permissions = 0755){
-		if (is_link($source)) {
-			return symlink(readlink($source), $dest);
+		if (\is_link($source)) {
+			return \symlink(\readlink($source), $dest);
 		}
-		if (is_file($source)) {
-			return copy($source, $dest);
+		if (\is_file($source)) {
+			return \copy($source, $dest);
 		}
-		if (!is_dir($dest)) {
-			mkdir($dest, $permissions,true);
+		if (!\is_dir($dest)) {
+			\mkdir($dest, $permissions,true);
 		}
-		$dir = dir($source);
+		$dir = \dir($source);
 		while (false !== $entry = $dir->read()) {
 			if ($entry == '.' || $entry == '..') {
 				continue;
@@ -55,6 +57,22 @@ trait UFileSystemWriter {
 		}
 		$dir->close();
 		return true;
+	}
+	
+	public static function xmove(string $source,string $dest, int $permission=0755):bool {
+		if (\is_link($source)) {
+			if( \symlink(\readlink($source), $dest)){
+				return \unlink($source);
+			}
+			return false;
+		}
+		if(self::xcopy($source, $dest,$permission)){
+			if(\is_dir($source)){
+				return UFileSystem::delTree($source);
+			}
+			return \unlink($source);
+		}
+		return false;
 	}
 }
 

@@ -63,6 +63,10 @@ class PhpSession extends AbstractSession {
 	public function delete($key) {
 		unset ( $_SESSION [$key] );
 	}
+	
+	public function regenerateId($deleteOldSession=false):bool {
+		return \session_regenerate_id($deleteOldSession);
+	}
 
 	public function visitorCount(): int {
 		$sessionPath = \ini_get ( 'session.save_path' );

@@ -11,7 +11,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.2
+ * @version 1.1.3
  */
 class USession {
 	protected static $sessionInstance;
@@ -352,5 +352,14 @@ class USession {
 	 */
 	public static function visitorCount() {
 		return self::$sessionInstance->visitorCount ();
+	}
+	
+	/**
+	 * Re-generates the session id.
+	 * @param boolean $deleteOldSession if true, deletes the old session
+	 * @return bool
+	 */
+	public static function regenerateId(bool $deleteOldSession=false):bool {
+		return self::$sessionInstance->regenerateId($deleteOldSession);
 	}
 }
