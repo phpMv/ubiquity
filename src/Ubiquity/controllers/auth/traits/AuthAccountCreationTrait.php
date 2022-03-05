@@ -218,18 +218,19 @@ trait AuthAccountCreationTrait {
 	 */
 	public function addAccount(){
 		if($this->hasAccountCreation()){
+			$loginInputName=$this->_getLoginInputName();
+			$passwordInputName=$this->_getPasswordInputName();
 			if($this->useAjax()){
 				$frm=$this->_addFrmAjaxBehavior('frm-create');
-				$passwordInputName=$this->_getPasswordInputName();
 				$frm->addExtraFieldRules($passwordInputName.'-conf', ['empty',"match[$passwordInputName]"]);
 				if($this->_newAccountCreationRule('')!==null){
 					$this->jquery->exec(Rule::ajax($this->jquery, 'checkAccount', $this->getBaseUrl () . '/newAccountCreationRule', '{}', 'result=data.result;', 'postForm', [
 						'form' => 'frm-create'
 					]), true);
-					$frm->addExtraFieldRule($this->_getLoginInputName(), 'checkAccount','Account {value} is not available!');
+					$frm->addExtraFieldRule($loginInputName, 'checkAccount',"This $loginInputName value is not available!");
 				}
 			}
-			$this->authLoadView ( $this->_getFiles ()->getViewCreate(), [ 'action' => $this->getBaseUrl () . '/createAccount','loginInputName' => $this->_getLoginInputName (),'loginLabel' => $this->loginLabel (),'passwordInputName' => $this->_getPasswordInputName (),'passwordLabel' => $this->passwordLabel (),'passwordConfLabel'=>$this->passwordConfLabel(),'rememberCaption' => $this->rememberCaption () ] );
+			$this->authLoadView ( $this->_getFiles ()->getViewCreate(), [ 'action' => $this->getBaseUrl () . '/createAccount','loginInputName' => $loginInputName,'loginLabel' => $this->loginLabel (),'passwordInputName' => $passwordInputName,'passwordLabel' => $this->passwordLabel (),'passwordConfLabel'=>$this->passwordConfLabel(),'rememberCaption' => $this->rememberCaption () ] );
 		}
 	}
 
