@@ -6,7 +6,7 @@ namespace Ubiquity\contents\validation\validators;
  * Abstract class for validators
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  */
 abstract class Validator implements ValidatorInterface {
 	protected $modifiedMessage;
@@ -82,7 +82,7 @@ abstract class Validator implements ValidatorInterface {
 		$parameters = $this->getParameters ();
 		$message = $this->mergeMessages ();
 		foreach ( $parameters as $param ) {
-			$message = \str_replace ( "{" . $param . "}", $this->$param, $message );
+			$message = \str_replace ( "{" . $param . "}", $this->$param??'', $message );
 		}
 		return $message;
 	}

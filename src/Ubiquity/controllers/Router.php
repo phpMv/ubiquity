@@ -95,28 +95,28 @@ class Router {
 	}
 
 	/**
-	 * Starts the router by loading normal routes (not rest)
+	 * Starts the router by loading normal routes (not rest).
 	 */
 	public static function start(): void {
 		self::$routes = CacheManager::getControllerCache ();
 	}
 
 	/**
-	 * Starts the router by loading rest routes (not normal routes)
+	 * Starts the router by loading rest routes (not normal routes).
 	 */
 	public static function startRest(): void {
 		self::$routes = CacheManager::getControllerCache ( true );
 	}
 
 	/**
-	 * Starts the router by loading all routes (normal + rest routes)
+	 * Starts the router by loading all routes (normal + rest routes).
 	 */
 	public static function startAll(): void {
 		self::$routes = \array_merge ( CacheManager::getControllerCache (), CacheManager::getControllerCache ( true ) );
 	}
 
 	/**
-	 * Returns the route corresponding to a path
+	 * Returns the route corresponding to a path.
 	 *
 	 * @param string $path The route path
 	 * @param boolean $cachedResponse
@@ -138,7 +138,7 @@ class Router {
 	}
 
 	/**
-	 * Returns the generated path from a route
+	 * Returns the generated path from a route.
 	 *
 	 * @param string $name name of the route
 	 * @param array $parameters array of the route parameters. default : []
@@ -170,7 +170,7 @@ class Router {
 	}
 
 	/**
-	 * Returns the generated path from a route
+	 * Returns the generated path from a route.
 	 *
 	 * @param string $name The route name
 	 * @param array $parameters default: []
@@ -182,7 +182,7 @@ class Router {
 	}
 
 	/**
-	 * Returns the generated url from a route
+	 * Returns the generated url from a route.
 	 *
 	 * @param string $name the route name
 	 * @param array $parameters default: []
@@ -244,7 +244,7 @@ class Router {
 	}
 
 	/**
-	 * Declare a route as expired
+	 * Declares a route as expired.
 	 *
 	 * @param string $routePath
 	 */
@@ -253,7 +253,7 @@ class Router {
 	}
 
 	/**
-	 * Returns the array of loaded routes
+	 * Returns the array of loaded routes.
 	 *
 	 * @return array|mixed
 	 */
