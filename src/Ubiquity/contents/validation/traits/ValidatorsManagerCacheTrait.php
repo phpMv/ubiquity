@@ -136,7 +136,7 @@ trait ValidatorsManagerCacheTrait {
 			$class = self::$validatorTypes [$type];
 			return new $class ();
 		} else {
-			Logger::warn ( "validation", "Validator " . $type . " does not exists!" );
+			Logger::warn ( 'validation', "Validator $type does not exists!" );
 			return false;
 		}
 	}
