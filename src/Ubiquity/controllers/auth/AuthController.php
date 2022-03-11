@@ -210,7 +210,7 @@ abstract class AuthController extends Controller {
 	
 	public function checkConnection() {
 		UResponse::asJSON ();
-		echo \json_encode(['valid'=> UString::getBooleanStr ( $this->_isValidUser () )]);
+		echo \json_encode(['valid'=> $this->_isValidUser ()]);
 	}
 
 	/**
