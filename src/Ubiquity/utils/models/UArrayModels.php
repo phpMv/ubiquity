@@ -8,7 +8,7 @@ use Ubiquity\orm\OrmUtils;
  * Ubiquity\utils\models$UArrayModels
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class UArrayModels {
@@ -311,7 +311,7 @@ class UArrayModels {
 	 * @param int $options
 	 * @return string
 	 */
-	public static function asJson(array $objects,int $options=null):string{
+	public static function asJson(array $objects,int $options=0):string{
 		$result=[];
 		foreach ($objects as $index=>$o) {
 			$result[$index]=$o->_rest??[];
@@ -343,7 +343,7 @@ class UArrayModels {
 	 * @param int $options
 	 * @return string
 	 */
-	public static function asJsonProperties(array $objects,array $properties,int $options=null):string{
+	public static function asJsonProperties(array $objects,array $properties,int $options=0):string{
 		return \json_encode(self::asArrayProperties($objects, $properties),$options);
 	}
 	

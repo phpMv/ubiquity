@@ -123,7 +123,7 @@ class UModel {
 	 * @param int $options
 	 * @return string
 	 */
-	public static function asJson(object $object,int $options=null):string{
+	public static function asJson(object $object,int $options=0):string{
 		return \json_encode($object->_rest??[],$options);
 	}
 	
@@ -147,7 +147,7 @@ class UModel {
 	 * @param int $options
 	 * @return string
 	 */
-	public static function asJsonProperties(object $object,array $properties,int $options=null):string{
+	public static function asJsonProperties(object $object,array $properties,int $options=0):string{
 		return \json_encode(self::asArrayProperties($object, $properties),$options);
 	}
 	
