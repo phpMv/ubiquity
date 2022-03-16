@@ -12,6 +12,7 @@ use Ubiquity\cache\ClassUtils;
 use Ubiquity\controllers\Router;
 use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
+use Ubiquity\utils\http\URequest;
 
 /**
  * Class MultiResourceCRUDController
@@ -125,11 +126,16 @@ abstract class MultiResourceCRUDController extends \Ubiquity\controllers\crud\CR
 	}
 	
 	protected function addIndexBehavior():void{
+		$isAjax=URequest::isAjax();
 		if($this->_hasDropdown){
-			$this->jquery->execAtLast('$(".dropdown").dropdown();');
-			$this->jquery->getOnClick('.item[data-href]','','.crud',['hasLoader'=>false,'preventDefault'=>false,'stopPropagation'=>false,'attr'=>'data-href']);
+			$this->jquery->execAtLast('$(".dropdown._crud").dropdown();');
+			if(!$isAjax) {
+				$this->jquery->getOnClick('.item[data-href]', '', '.crud', ['hasLoader' => false, 'preventDefault' => false, 'stopPropagation' => false, 'attr' => 'data-href','listenerOn'=>'body']);
+			}
 		}
-		$this->jquery->getHref('a[href]',"",['historize'=>false,'hasLoader'=>false]);
+		if(!$isAjax) {
+			$this->jquery->getHref('a[href]._crud, a._home', "", ['historize' => false, 'hasLoader' => false, 'listenerOn' => 'body']);
+		}
 	}
 	
 	protected function getIndexType():array {

@@ -32,7 +32,7 @@ class EditMemberParams {
 		if($this->hasPopup){
 			return "$(self).popup({hideOnScroll: false,exclusive: true,delay:{show:50,hide: 5000},closable: false, variation: 'very wide',html: data, hoverable: true,className: {popup: 'ui popup'}}).popup('show');";
 		}else{
-			return "$(self).html(function(i,v){return $(this).data('originalText', v), '';});";
+			return "$(self).html(function(i,v){return $(this).data('originalText', v) || '';});";
 		}
 	}
 	

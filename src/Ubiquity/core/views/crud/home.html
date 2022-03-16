@@ -1,6 +1,6 @@
 {% block menu %}
 <div class="ui secondary menu">
-    <a href="{{ path(routeNamePrefix ~ 'crud.home') }}" data-target=".ui.container" class="active item">Home</a>
+    <a href="{{ path(routeNamePrefix ~ 'crud.home') }}" data-target="main .container" class="active item _home">Home</a>
     {% if nav %}
         <div class="item">{{ nav|raw }}</div>
     {% endif %}
