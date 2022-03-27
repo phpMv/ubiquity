@@ -11,7 +11,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.2
+ * @version 1.1.3
  *
  */
 class UResponse {
@@ -28,6 +28,15 @@ class UResponse {
 	public static function header($headerField, $value, bool $replace = true, int $responseCode = 0): void {
 		self::$headers [trim ( $headerField )] = trim ( $value );
 		Startup::getHttpInstance ()->header ( trim ( $headerField ), trim ( $value ), $replace, $responseCode );
+	}
+
+	/**
+	 * Forwards to url using Location header.
+	 * @param string $url
+	 * @param bool $preserveUrl
+	 */
+	public static function forward(string $url,bool $preserveUrl=true): void {
+		self::header('Location',$preserveUrl?$url:URequest::getUrl($url));
 	}
 
 	/**
