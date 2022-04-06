@@ -23,7 +23,7 @@ class VerifyCsrfToken implements VerifySessionCsrfInterface {
 	}
 
 	protected function csrfErrorLog() {
-		$context = array ();
+		$context = [];
 		$context ['HOST'] = $_SERVER ['HTTP_HOST'];
 		$context ['REQUEST_URI'] = $_SERVER ['REQUEST_URI'];
 		$context ['REQUEST_METHOD'] = $_SERVER ['REQUEST_METHOD'];

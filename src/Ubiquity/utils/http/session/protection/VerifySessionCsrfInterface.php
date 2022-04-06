@@ -12,10 +12,22 @@ namespace Ubiquity\utils\http\session\protection;
  */
 interface VerifySessionCsrfInterface {
 
+	/**
+	 * Creates the Csrf token and adds it to the session.
+	 * @return mixed
+	 */
 	public function init();
 
+	/**
+	 * Called wjen the session is started.
+	 * @return mixed
+	 */
 	public function start();
 
+	/**
+	 * Removes the actual csrftoken.
+	 * @return mixed
+	 */
 	public function clear();
 
 	/**
