@@ -46,7 +46,7 @@ build:
           mysql: 5.7
       tests:
         before:
-          - sudo cp src/tests/files/xdebug.ini /home/scrutinizer/.phpenv/versions/7.4.13/etc/conf.d/xdebug.ini
+          - sudo cp src/tests/files/xdebug.ini /home/scrutinizer/.phpenv/versions/7.4.27/etc/conf.d/xdebug.ini
           - mysql -u root mysql < src/tests/unit/db/messagerie.sql
           - mysql -u root mysql < src/tests/unit/db/projects.sql
           - mysql -u root mysql < src/tests/unit/db/hello_world.sql
