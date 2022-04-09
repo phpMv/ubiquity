@@ -8,20 +8,20 @@ namespace Ubiquity\utils\http\session;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class PhpSession extends AbstractSession {
 
-	public function set($key, $value) {
+	public function set(string $key, $value) {
 		return $_SESSION [$key] = $value;
 	}
 
-	public function get($key, $default = null) {
+	public function get(string $key, $default = null) {
 		return $_SESSION [$key] ?? $default;
 	}
 
-	public function start($name = null) {
+	public function start(string $name = null) {
 		if (! $this->isStarted ()) {
 			if (isset ( $name ) && $name !== '') {
 				$this->name = $name;
@@ -34,7 +34,7 @@ class PhpSession extends AbstractSession {
 		}
 	}
 
-	public function terminate() {
+	public function terminate(): void {
 		if (! $this->isStarted ()) {
 			return;
 		}
@@ -48,23 +48,23 @@ class PhpSession extends AbstractSession {
 		\session_destroy ();
 	}
 
-	public function isStarted() {
+	public function isStarted(): bool {
 		return \session_status () == PHP_SESSION_ACTIVE;
 	}
 
-	public function exists($key) {
+	public function exists(string $key): bool {
 		return isset ( $_SESSION [$key] );
 	}
 
-	public function getAll() {
+	public function getAll(): array {
 		return $_SESSION;
 	}
 
-	public function delete($key) {
+	public function delete(string $key) {
 		unset ( $_SESSION [$key] );
 	}
 	
-	public function regenerateId($deleteOldSession=false):bool {
+	public function regenerateId(bool $deleteOldSession=false):bool {
 		return \session_regenerate_id($deleteOldSession);
 	}
 

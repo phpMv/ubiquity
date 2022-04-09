@@ -12,34 +12,34 @@ use Ubiquity\utils\http\UCookie;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3-beta
+ * @version 1.0.4-beta
  *
  */
 class MultisiteSession extends AbstractSession {
-	private $folder;
-	private $id;
+	private string $folder;
+	private string $id;
 	const SESSION_ID = 'multi_session_id';
 
-	private function getKey($key) {
+	private function getKey($key): string {
 		return \md5 ( $key );
 	}
 
-	private function getFilename($key) {
+	private function getFilename($key): string {
 		return $this->folder . $this->id . \DS . $this->getKey ( $key ) . '.cache.ser';
 	}
 
-	protected function generateId() {
+	protected function generateId(): string {
 		return \bin2hex ( \random_bytes ( 32 ) );
 	}
 
-	public function set($key, $value) {
+	public function set(string $key, $value) {
 		$val = \serialize ( $value );
 		$tmp = "/tmp/$key." . \uniqid ( '', true ) . '.tmp';
 		\file_put_contents ( $tmp, $val, LOCK_EX );
 		\rename ( $tmp, $this->getFilename ( $key ) );
 	}
 
-	public function getAll() {
+	public function getAll(): array {
 		$files = UFileSystem::glob_recursive ( $this->folder . \DS . '*' );
 		$result = [ ];
 		foreach ( $files as $file ) {
@@ -48,7 +48,7 @@ class MultisiteSession extends AbstractSession {
 		return $result;
 	}
 
-	public function get($key, $default = null) {
+	public function get(string $key, $default = null) {
 		$filename = $this->getFilename ( $key );
 		if (\file_exists ( $filename )) {
 			$f = \file_get_contents ( $filename );
@@ -57,7 +57,7 @@ class MultisiteSession extends AbstractSession {
 		return isset ( $val ) ? $val : $default;
 	}
 
-	public function start($name = null, $root = null) {
+	public function start(string $name = null, $root = null) {
 		$this->name = $name;
 		if (! isset ( $root )) {
 			$this->folder = \ROOT . \DS . CacheManager::getCacheDirectory () . \DS . 'session' . \DS;
@@ -78,16 +78,16 @@ class MultisiteSession extends AbstractSession {
 		UFileSystem::safeMkdir ( $this->folder . $this->id . \DS );
 	}
 
-	public function exists($key) {
+	public function exists($key): bool {
 		return file_exists ( $this->getFilename ( $key ) );
 	}
 
-	public function terminate() {
+	public function terminate(): void {
 		$this->verifyCsrf->clear ();
 		UFileSystem::delTree ( $this->folder . $this->id . \DS );
 	}
 
-	public function isStarted() {
+	public function isStarted(): bool {
 		return isset ( $this->id );
 	}
 
@@ -95,7 +95,7 @@ class MultisiteSession extends AbstractSession {
 		\unlink ( $this->getFilename ( $key ) );
 	}
 	
-	public function regenerateId(bool $deleteOldSession=false):bool {
+	public function regenerateId(bool $deleteOldSession=false): bool {
 		if($deleteOldSession){
 			$this->terminate();
 			$this->start($this->name,\rtrim($this->folder,\DS . 'session' . \DS));
