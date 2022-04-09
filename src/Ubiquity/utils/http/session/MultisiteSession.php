@@ -103,14 +103,14 @@ class MultisiteSession extends AbstractSession {
 		}
 		$newId=$this->generateId();
 		$this->verifyCsrf->clear();
-		UCookie::set ( self::SESSION_ID, $id );
-		$this->id = $id;
+		UCookie::set ( self::SESSION_ID, $newId );
+		$oldId=$this->id;
+		$this->id = $newId;
 		$this->verifyCsrf->start ();
-		return UFileSystem::xmove($this->folder . $this->id . \DS, $this->folder . $this->id . \DS);
+		return UFileSystem::xmove($this->folder . $oldId . \DS, $this->folder . $newId . \DS);
 	}
 
 	public function visitorCount(): int {
 		return \count ( \scandir ( $this->folder . $this->id . \DS ) );
 	}
 }
-

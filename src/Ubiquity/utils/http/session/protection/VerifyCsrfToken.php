@@ -52,15 +52,15 @@ class VerifyCsrfToken implements VerifySessionCsrfInterface {
 				if (Logger::isActive ()) {
 					$this->csrfErrorLog ();
 				}
+				$this->clear();
 				$this->sessionInstance->terminate ();
-			} else {
-				return;
 			}
+			return;
 		}
 		$this->init ();
 	}
 
-	public static function getLevel() {
+	public static function getLevel(): int {
 		return 1;
 	}
 }

@@ -32,7 +32,8 @@ interface VerifySessionCsrfInterface {
 
 	/**
 	 * Get security level.
+	 * @return int
 	 */
-	public static function getLevel();
+	public static function getLevel():int;
 }
 
