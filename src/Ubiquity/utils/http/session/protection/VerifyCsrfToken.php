@@ -31,13 +31,13 @@ class VerifyCsrfToken implements VerifySessionCsrfInterface {
 		Logger::error ( 'Session', 'CSRF protector validation failure!', 'startSession', $context );
 	}
 
-	public function init() {
+	public function init(): void {
 		$token = new CsrfToken ();
 		$this->sessionInstance->set ( self::TOKEN_KEY, $token );
 		UCookie::set ( $token->getName (), $token->getValue (), null );
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$token = $this->sessionInstance->get ( self::TOKEN_KEY );
 		$this->sessionInstance->delete ( self::TOKEN_KEY );
 		if (isset ( $token )) {
@@ -45,7 +45,7 @@ class VerifyCsrfToken implements VerifySessionCsrfInterface {
 		}
 	}
 
-	public function start() {
+	public function start(): void {
 		$token = $this->sessionInstance->get ( self::TOKEN_KEY );
 		if (isset ( $token )) {
 			if (! $token instanceof CsrfToken || ! hash_equals ( $token->getValue (), '' . UCookie::get ( $token->getName () ) )) {

@@ -14,21 +14,18 @@ interface VerifySessionCsrfInterface {
 
 	/**
 	 * Creates the Csrf token and adds it to the session.
-	 * @return mixed
 	 */
-	public function init();
+	public function init(): void;
 
 	/**
 	 * Called wjen the session is started.
-	 * @return mixed
 	 */
-	public function start();
+	public function start(): void;
 
 	/**
 	 * Removes the actual csrftoken.
-	 * @return mixed
 	 */
-	public function clear();
+	public function clear(): void;
 
 	/**
 	 * Get security level.
