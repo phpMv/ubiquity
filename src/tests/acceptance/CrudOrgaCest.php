@@ -23,11 +23,11 @@ class CrudOrgaCest extends BaseAcceptance {
 		// Test field updating
 		$I->doubleClick ( "tr[data-ajax='3'] td[data-field='domain']" );
 		$I->waitForElement ( "#frm-member-domain", self::TIMEOUT );
-		$I->fillField ( "[name='domain']", "iutc3.unicaen.fr" );
+		$I->fillField ( "[name='domain']", "iutc3.unicaen2.fr" );
 		$I->click ( "#btO" );
-		$I->waitForText ( "iutc3.unicaen.fr", self::TIMEOUT );
+		$I->waitForText ( "iutc3.unicaen2.fr", self::TIMEOUT );
 		$I->amOnPage ( "/TestCrudOrgas" );
-		$I->see ( "iutc3.unicaen.fr" );
+		$I->see ( "iutc3.unicaen2.fr" );
 	}
 
 	// Tests
