@@ -24,7 +24,7 @@ class CrudOrgaCest extends BaseAcceptance {
 		$I->doubleClick ( "tr[data-ajax='3'] td[data-field='domain']" );
 		$I->waitForElement ( "#frm-member-domain", self::TIMEOUT );
 		$I->fillField ( "[name='domain']", "iutc3.unicaen2.fr" );
-		$I->click ( "#btO" );
+		$this->waitAndclick($I, "#btO" ,'body');
 		$I->waitForText ( "iutc3.unicaen2.fr", self::TIMEOUT );
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->see ( "iutc3.unicaen2.fr" );
@@ -59,7 +59,7 @@ class CrudOrgaCest extends BaseAcceptance {
 		$I->doubleClick ( "table._element td[data-field='aliases']" );
 		$I->waitForElement ( "#frm-member-aliases", self::TIMEOUT );
 		$I->fillField ( "[name='aliases']", "cnam-basse-normandie.fr;cnam.fr;theCnam.org" );
-		$this->waitAndclick ( $I, "#btO" );
+		$this->waitAndclick ( $I, "#btO",'body' );
 		$I->waitForText ( "cnam-basse-normandie.fr;cnam.fr;theCnam.org", self::TIMEOUT );
 		$I->amOnPage ( "/TestCrudOrgas" );
 		$I->see ( "cnam-basse-normandie.fr;cnam.fr;theCnam.org" );
