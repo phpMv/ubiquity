@@ -21,9 +21,11 @@ class CrudOrgaCest extends BaseAcceptance {
 		$I->waitForText ( "Modifications were successfully saved", self::TIMEOUT, "body" );
 		$I->canSee ( "cnam-basse-normandie.fr;cnam.fr", "tr[data-ajax='1'] td[data-field='aliases']" );
 		// Test field updating
+		$I->amOnPage ( "/TestCrudOrgas" );
+		$I->see ( "lecnam.net" );
 		$I->doubleClick ( "tr[data-ajax='3'] td[data-field='domain']" );
 		$I->waitForElement ( "#frm-member-domain", self::TIMEOUT );
-		$I->fillField ( "[name='domain']", "iutc3.unicaen2.fr" );
+		$I->fillField ( "#frm-member-domain [name='domain']", "iutc3.unicaen2.fr" );
 		$this->waitAndclick($I, "#btO" ,'body');
 		$I->waitForText ( "iutc3.unicaen2.fr", self::TIMEOUT );
 		$I->amOnPage ( "/TestCrudOrgas" );
@@ -56,6 +58,7 @@ class CrudOrgaCest extends BaseAcceptance {
 		$I->waitForText ( "Organizationsettingss", self::TIMEOUT, "body" );
 		$I->canSee ( "cnam-basse-normandie.fr", "body" );
 		// Test field updating
+		$I->wait(self::TIMEOUT);
 		$I->doubleClick ( "table._element td[data-field='aliases']" );
 		$I->waitForElement ( "#frm-member-aliases", self::TIMEOUT );
 		$I->fillField ( "[name='aliases']", "cnam-basse-normandie.fr;cnam.fr;theCnam.org" );
