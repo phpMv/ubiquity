@@ -156,10 +156,14 @@ nginX
        index index.php;
        listen 8080;
 
-       location / {
-           # try to serve file directly, fallback to index.php
-           rewrite ^/(.*)$ /index.php?c=$1 last;
-       }
+    location / {
+        # try to serve file directly, fallback to index.php
+        try_files $uri @rewrites;
+    }
+
+    location @rewrites {
+        rewrite ^/(.*)$ /index.php?c=$1 last;
+    }
 
        location = /index.php{
            fastcgi_pass fastcgi_backend;
