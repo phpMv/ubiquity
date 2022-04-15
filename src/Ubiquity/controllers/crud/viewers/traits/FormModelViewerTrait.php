@@ -2,6 +2,7 @@
 
 namespace Ubiquity\controllers\crud\viewers\traits;
 
+use Ajax\php\ubiquity\utils\DataFormHelper;
 use Ajax\semantic\html\collections\form\HtmlFormField;
 use Ajax\semantic\html\collections\form\HtmlFormInput;
 use Ajax\semantic\html\elements\HtmlButton;
@@ -25,7 +26,7 @@ use Ajax\semantic\html\collections\form\HtmlFormCheckbox;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.0.7
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  */
 trait FormModelViewerTrait {
@@ -343,7 +344,7 @@ trait FormModelViewerTrait {
 	 * @param ?array $attributes
 	 */
 	public function setFormFieldsComponent(DataForm $form, $fieldTypes, $attributes = [ ]) {
-		$this->setFormFieldsComponent_ ( $form, $fieldTypes, $attributes );
+		DataFormHelper::addDefaultUIConstraints($form,$fieldTypes,$attributes);
 	}
 	
 	/**
@@ -354,55 +355,7 @@ trait FormModelViewerTrait {
 	 * @param array $attributes
 	 */
 	public function setMemberFormFieldsComponent(DataForm $form, $fieldTypes,$attributes=[]) {
-		$this->setFormFieldsComponent_ ( $form, $fieldTypes ,$attributes);
-	}
-	
-	protected function setFormFieldsComponent_(DataForm $form, $fieldTypes, $attributes = [ ]) {
-		foreach ( $fieldTypes as $property => $type ) {
-			$rules = $attributes[$property]??[];
-			if($hasRules = \count($rules)>0){
-				$form->setValidationParams(["on"=>"blur","inline"=>true]);
-			}
-			$noPName = false;
-			$noPType = false;
-			switch ($property) {
-				case 'password' :
-					$form->fieldAsInput ( $property, ['inputType'=>'password']+$rules );
-					break;
-				case 'email' :
-				case 'mail' :
-					$form->fieldAsInput ( $property,$rules);
-					break;
-				default :
-					$noPName = true;
-			}
-			
-			switch ($type) {
-				case 'tinyint(1)' :
-				case 'bool' :
-				case 'boolean' :
-					$form->fieldAsCheckbox ( $property, \array_diff($rules['rules']??[],['empty']));
-					break;
-				case 'int' :
-				case 'integer' :
-					$form->fieldAsInput ( $property, [ 'inputType' => 'number']+$rules );
-					break;
-				case 'date' :
-					$form->fieldAsInput ( $property, [ 'inputType' => 'date']+$rules );
-					break;
-				case 'datetime' :
-					$form->fieldAsInput ( $property, [ 'inputType' => 'datetime-local']+$rules );
-					break;
-				case 'text' :
-					$form->fieldAsTextarea ( $property, $rules );
-					break;
-				default :
-					$noPType = true;
-			}
-			if ($hasRules && $noPName && $noPType) {
-				$form->fieldAsInput ( $property, $rules );
-			}
-		}
+		DataFormHelper::addDefaultUIConstraints($form,$fieldTypes,$attributes);
 	}
 	
 	/**
