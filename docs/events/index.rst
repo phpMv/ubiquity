@@ -23,11 +23,18 @@ These events are relatively few in number, to limit their impact on performance.
 +-----------------+-----------------+---------------------------+------------------------------------------------------------------------+
 |DAOEvents        |GET_ONE          | object, classname         |After loading one object                                                |
 +-----------------+-----------------+---------------------------+------------------------------------------------------------------------+
-|DAOEvents        |UPDATE           | instance, result          |After updating an object                                                |
+|DAOEvents        |BEFORE_UPDATE    | instance                  |Before updating an object                                               |
 +-----------------+-----------------+---------------------------+------------------------------------------------------------------------+
-|DAOEvents        |INSERT           | instance, result          |After inserting an object                                               |
+|DAOEvents        |AFTER_UPDATE     | instance, result          |After updating an object                                                |
 +-----------------+-----------------+---------------------------+------------------------------------------------------------------------+
-
+|DAOEvents        |BEFORE_INSERT    | instance                  |Before inserting an object                                              |
++-----------------+-----------------+---------------------------+------------------------------------------------------------------------+
+|DAOEvents        |AFTER_INSERT     | instance, result          |After inserting an object                                               |
++-----------------+-----------------+---------------------------+------------------------------------------------------------------------+
+|RestEvents       |BEFORE_INSERT    | instance                  |Before inserting an object                                              |
++-----------------+-----------------+---------------------------+------------------------------------------------------------------------+
+|RestEvents       |BEFORE_UPDATE    | instance                  |Before updating an object                                               |
++-----------------+-----------------+---------------------------+------------------------------------------------------------------------+
 .. note::
    There is no **BeforeAction** and **AfterAction** event, since the **initialize** and **finalize** methods of the controller class perform this operation.
 
