@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing
 
+## [2.4.12] 2022-04-20
+### Added
+- app methods to Logger: `appLog`, `appInfo`, `appError`...
+- regenerateId for `USession`
+- `DataFormHelper` class for model form generation
+- `forward` method to `UResponse`
+### Fixed
+- php 8.1 deprecation in `Validator`, `UModel`, `UArrayModel` classes
+- `checkConnection` in `AuthController`
+- `data-target` bug in `MultiResourceCrudController`
+- `UCookie` pb with transformers
+
 ## [2.4.11] 2022-02-22
 ### Updated (breaking change)
 - AuthControllers refactoring
