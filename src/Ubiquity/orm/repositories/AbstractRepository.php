@@ -12,7 +12,7 @@ use Ubiquity\views\View;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 abstract class AbstractRepository {
@@ -100,5 +100,16 @@ abstract class AbstractRepository {
 	 */
 	public function remove(object $instance): ?int {
 		return DAO::remove ( $instance );
+	}
+	
+	/**
+	 * Returns the number of instances.
+	 * 
+	 * @param string $condition
+	 * @param array $parameters
+	 * @return int
+	 */
+	public function count(string $condition='',?array $parameters=null):int {
+		return DAO::count($this->getModel(),$condition,$parameters);
 	}
 }

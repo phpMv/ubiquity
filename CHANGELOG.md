@@ -8,8 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing
 
-## [2.4.12] 2022-04-20
+## [2.4.12] 2022-04-24
 ### Added
+- `count` method to `AbstractRepository`
 - app methods to Logger: `appLog`, `appInfo`, `appError`...
 - regenerateId for `USession`
 - `DataFormHelper` class for model form generation
