@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing
 
-## [2.4.12] 2022-04-24
+## [2.4.12] 2022-04-25
 ### Added
 - `count` method to `AbstractRepository`
 - app methods to Logger: `appLog`, `appInfo`, `appError`...
@@ -20,6 +20,9 @@ Nothing
 - `checkConnection` in `AuthController`
 - `data-target` bug in `MultiResourceCrudController`
 - `UCookie` pb with transformers
+
+### Deleted
+- `diSemantic` and `diBootstrap` in `Framework` => use `Ajax\php\ubiquity\JsUtils::diSemantic(...)` instead.
 
 ## [2.4.11] 2022-02-22
 ### Updated (breaking change)

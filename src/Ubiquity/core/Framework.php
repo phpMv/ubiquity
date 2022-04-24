@@ -4,7 +4,7 @@
  * Ubiquity\core
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 namespace Ubiquity\core;
@@ -21,7 +21,7 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\cache\CacheManager;
 
 class Framework {
-	public const version = '2.4.11';
+	public const version = '2.4.12';
 
 	public static function getVersion() {
 		return self::version;
@@ -81,36 +81,6 @@ class Framework {
 
 	public static function getAnnotationsEngine() {
 		return \get_class ( CacheManager::getAnnotationsEngineInstance () );
-	}
-
-	/**
-	 * Returns an instance of JsUtils initialized with Semantic (for di injection)
-	 *
-	 * @param \Ubiquity\controllers\Controller $controller
-	 * @param array $options
-	 * @return \Ajax\php\ubiquity\JsUtils
-	 * @deprecated use Ajax\php\ubiquity\JsUtils::diSemantic(...) instead.
-	 */
-	public static function diSemantic($controller, $options = [ 'defer' => true,'gc' => true ]) {
-		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
-		$jquery->semantic ( new \Ajax\Semantic () );
-		$jquery->setAjaxLoader ( "<div class=\"ui active centered inline text loader\">Loading</div>" );
-		return $jquery;
-	}
-
-	/**
-	 * Returns an instance of JsUtils initialized with Bootstrap (for di injection)
-	 *
-	 * @param \Ubiquity\controllers\Controller $controller
-	 * @param array $options
-	 * @return \Ajax\php\ubiquity\JsUtils
-	 * @deprecated use Ajax\php\ubiquity\JsUtils::diBootstrap(...) instead.
-	 */
-	public static function diBootstrap($controller, $options = [ 'defer' => true,'gc' => true ]) {
-		$jquery = new \Ajax\php\ubiquity\JsUtils ( $options, $controller );
-		$jquery->bootstrap ( new \Ajax\Bootstrap () );
-		$jquery->setAjaxLoader ( "<div class=\"ui active centered inline text loader\">Loading</div>" );
-		return $jquery;
 	}
 }
 
