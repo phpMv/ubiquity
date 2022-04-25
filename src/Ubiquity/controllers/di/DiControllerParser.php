@@ -2,6 +2,7 @@
 
 namespace Ubiquity\controllers\di;
 
+use Hybridauth\Thirdparty\OpenID\ErrorException;
 use Ubiquity\orm\parser\Reflexion;
 use Ubiquity\utils\base\UArray;
 use Ubiquity\utils\base\UString;
@@ -15,7 +16,7 @@ use Ubiquity\exceptions\DiException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  * @since Ubiquity 2.1.0
  *
  */
@@ -29,7 +30,7 @@ class DiControllerParser {
 			$annot = Reflexion::getAnnotationMember ( $controllerClass, $propName, 'injected' );
 			if ($annot !== false) {
 				$name = $annot->name;
-				if ($this->isInjectable ( $controllerClass, $name ?? $propName, false )) {
+				if ($this->isInjectable ( $controllerClass, $propName, false )) {
 					$this->injections [$propName] = $this->getInjection ( $name ?? $propName, $config, $controllerClass, $annot->code ?? null);
 				}
 			} else {
@@ -94,12 +95,14 @@ class DiControllerParser {
 	}
 
 	protected function isInjectable($classname, $member, $silent = true) {
-		$prop = new \ReflectionProperty ( $classname, $member );
-		if ($prop->isPublic ()) {
-			return true;
+		if (\property_exists($classname, $member)) {
+			$prop = new \ReflectionProperty ($classname, $member);
+			if ($prop->isPublic()) {
+				return true;
+			}
 		}
 		$setter = 'set' . ucfirst ( $member );
-		if (method_exists ( $classname, $setter )) {
+		if (\method_exists ( $classname, $setter )) {
 			return true;
 		}
 		if (! $silent) {
