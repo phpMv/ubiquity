@@ -10,7 +10,7 @@ use Ubiquity\exceptions\DBException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.6
+ * @version 1.0.7
  * @property \PDO $dbInstance
  *
  */
@@ -251,5 +251,15 @@ class PDOWrapper extends AbstractDbWrapper {
 	 */
 	public function migrateOperation(string $operation):?string{
 		return $this->getDriverMetaDatas()->migrateOperation($operation)??parent::migrateOperation($operation);
+	}
+
+	/**
+	 * Sets the isolation level for transactions.
+	 * @param $isolationLevel
+	 * @return mixed|void
+	 * @throws DBException
+	 */
+	public function setIsolationLevel($isolationLevel) {
+		return $this->getDriverMetaDatas()->setIsolationLevel($isolationLevel);
 	}
 }

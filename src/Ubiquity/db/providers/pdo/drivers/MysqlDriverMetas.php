@@ -9,7 +9,7 @@ use Ubiquity\db\providers\DbOperations;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 class MysqlDriverMetas extends AbstractDriverMetaDatas {
@@ -66,5 +66,9 @@ class MysqlDriverMetas extends AbstractDriverMetaDatas {
 
 	public function groupConcat(string $fields, string $separator): string {
 		return "GROUP_CONCAT({$fields} SEPARATOR '{$separator}')";
+	}
+
+	public function setIsolationLevel($isolationLevel) {
+		return $this->dbInstance->exec("SET TRANSACTION ISOLATION LEVEL $isolationLevel");
 	}
 }

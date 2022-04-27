@@ -2,6 +2,8 @@
 
 namespace Ubiquity\db\providers;
 
+use Ubiquity\exceptions\DBException;
+
 /**
  * Ubiquity\db\providers$AbstractDbWrapper
  * This class is part of Ubiquity
@@ -165,5 +167,14 @@ abstract class AbstractDbWrapper {
 	 */
 	public function migrateOperation(string $operation):?string{
 		return $this->operations[$operation]??null;
+	}
+
+	/**
+	 * @param $isolationLevel
+	 * @throws DBException
+	 * @return mixed
+	 */
+	public function setIsolationLevel($isolationLevel){
+		throw new DBException('The setIsolation level is not implemented for this wrapper');
 	}
 }

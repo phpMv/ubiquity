@@ -11,7 +11,7 @@ use Ubiquity\log\Logger;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  * @property \Ubiquity\db\providers\AbstractDbWrapper $wrapperObject
  * @property string $dbType
  */
@@ -155,5 +155,15 @@ trait DatabaseTransactionsTrait {
 			return $ret;
 		}
 		throw new DBException ( 'Transaction was not started.' );
+	}
+
+	/**
+	 * Sets the isolation level for transactions.
+	 * @param $isolationLevel
+	 * @return mixed|void
+	 * @throws DBException
+	 */
+	public function setIsolationLevel($isolationLevel) {
+		return $this->wrapperObject->setIsolationLevel($isolationLevel);
 	}
 }

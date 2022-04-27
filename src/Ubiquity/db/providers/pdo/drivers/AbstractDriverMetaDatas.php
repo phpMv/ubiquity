@@ -7,7 +7,7 @@ namespace Ubiquity\db\providers\pdo\drivers;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 abstract class AbstractDriverMetaDatas {
@@ -84,6 +84,15 @@ abstract class AbstractDriverMetaDatas {
 	 */
 	public function migrateOperation(string $operation):?string{
 		return $this->operations[$operation]??null;
+	}
+
+	/**
+	 * Sets the isolation level for transactions.
+	 * @param $isolationLevel
+	 * @return mixed
+	 */
+	public function setIsolationLevel($isolationLevel) {
+
 	}
 }
 

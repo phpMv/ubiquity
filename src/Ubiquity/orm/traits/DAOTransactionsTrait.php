@@ -8,7 +8,7 @@ namespace Ubiquity\orm\traits;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @property \Ubiquity\db\Database $db
  *
  */
@@ -100,6 +100,16 @@ trait DAOTransactionsTrait {
 	 */
 	public static function callInTransaction($callback, $offset, ...$parameters) {
 		return self::getDatabase ( $offset )->callInTransaction ( $callback, $offset, ...$parameters );
+	}
+
+	/**
+	 * Sets the isolation level for transactions.
+	 * @param string $offset
+	 * @param string $isolationLevel
+	 * @return mixed
+	 */
+	public static function setIsolationLevel(string $offset='default',$isolationLevel='READ COMMITTED') {
+		return self::getDatabase($offset)->setIsolationLevel($isolationLevel);
 	}
 }
 
