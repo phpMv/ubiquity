@@ -344,7 +344,7 @@ use URequestTesterTrait;
 	
 	private static function _parseURI(string $uri,string $basedir):array {
 		$uri = \ltrim(\urldecode(\parse_url($uri, PHP_URL_PATH)), '/');
-		$isAction = ($uri == null || ! ($fe = \file_exists($basedir . '/../' . $uri))) && ($uri != 'favicon.ico');
+		$isAction = ($uri == null || ! ($fe = \file_exists($basedir . '/' . $uri))) && ($uri != 'favicon.ico');
 		return [
 				'uri' => $uri,
 				'isAction' => $isAction,
