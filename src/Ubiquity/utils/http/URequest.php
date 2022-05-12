@@ -130,10 +130,11 @@ use URequestTesterTrait;
 			$x = \explode ( ",", $http_accept );
 			$lang = [ ];
 			foreach ( $x as $val ) {
-				if (\preg_match ( "/(.*);q=([0-1]{0,1}.\d{0,4})/i", $val, $matches ))
-					$lang [$matches [1]] = ( float ) $matches [2];
-				else
+				if (\preg_match ( "/(.*);q=([0-1]{0,1}.\d{0,4})/i", $val, $matches )) {
+					$lang [$matches [1]] = ( float )$matches [2];
+				}else {
 					$lang [$val] = 1.0;
+				}
 			}
 
 			$qval = 0.0;
@@ -162,10 +163,10 @@ use URequestTesterTrait;
 	 * Returns the value of the $key variable passed by the get method or $default if the $key variable does not exist
 	 *
 	 * @param string $key
-	 * @param string $default return value by default
+	 * @param null $default return value by default
 	 * @return string
 	 */
-	public static function get($key, $default = NULL): ?string {
+	public static function get(string $key, $default = NULL): ?string {
 		return $_GET [$key] ?? $default;
 	}
 
@@ -175,7 +176,7 @@ use URequestTesterTrait;
 	 * @param string $key the key to add or set
 	 * @return boolean
 	 */
-	public static function getBoolean($key): bool {
+	public static function getBoolean(string $key): bool {
 		$ret = false;
 		if (isset ( $_REQUEST [$key] )) {
 			$ret = UString::isBooleanTrue ( $_REQUEST [$key] );
@@ -187,10 +188,10 @@ use URequestTesterTrait;
 	 * Returns the value of the $key variable passed by the post method or $default if the $key variable does not exist
 	 *
 	 * @param string $key
-	 * @param string $default return value by default
+	 * @param null $default return value by default
 	 * @return mixed
 	 */
-	public static function post($key, $default = NULL) {
+	public static function post(string $key, $default = NULL) {
 		return $_POST [$key] ?? $default;
 	}
 
@@ -223,16 +224,7 @@ use URequestTesterTrait;
 	 */
 	public static function getOrigin(): string {
 		$headers = Startup::getHttpInstance ()->getAllHeaders ();
-		if (isset ( $headers ['Origin'] )) {
-			return $headers ['Origin'];
-		}
-		if (isset ( $_SERVER ['HTTP_ORIGIN'] )) {
-			return $_SERVER ['HTTP_ORIGIN'];
-		} else if (isset ( $_SERVER ['HTTP_REFERER'] )) {
-			return $_SERVER ['HTTP_REFERER'];
-		} else {
-			return $_SERVER ['REMOTE_ADDR'];
-		}
+		return $headers ['Origin']??$_SERVER ['HTTP_ORIGIN']??$_SERVER ['HTTP_REFERER']??$_SERVER ['REMOTE_ADDR']??'';
 	}
 
 	public static function cleanUrl($url): string {
@@ -250,7 +242,7 @@ use URequestTesterTrait;
 	 */
 	public static function getRealInput($source = 'post'): array {
 		$pairs = \explode ( '&', \strtolower ( $source ) === 'get' ? $_SERVER ['QUERY_STRING'] : \file_get_contents ( 'php://input' ) );
-		$vars = array ();
+		$vars =[];
 		foreach ( $pairs as $pair ) {
 			$nv = \explode ( "=", $pair );
 			$name = \urldecode ( $nv [0] );
