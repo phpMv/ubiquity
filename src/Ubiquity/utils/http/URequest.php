@@ -163,7 +163,7 @@ use URequestTesterTrait;
 	 * Returns the value of the $key variable passed by the get method or $default if the $key variable does not exist
 	 *
 	 * @param string $key
-	 * @param null $default return value by default
+	 * @param mixed $default return value by default
 	 * @return string
 	 */
 	public static function get(string $key, $default = NULL): ?string {
@@ -188,7 +188,7 @@ use URequestTesterTrait;
 	 * Returns the value of the $key variable passed by the post method or $default if the $key variable does not exist
 	 *
 	 * @param string $key
-	 * @param null $default return value by default
+	 * @param mixed $default return value by default
 	 * @return mixed
 	 */
 	public static function post(string $key, $default = NULL) {
