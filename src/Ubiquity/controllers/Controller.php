@@ -91,7 +91,7 @@ abstract class Controller {
 	 *
 	 * @return string the default view name
 	 */
-	public function getDefaultViewName() {
+	public function getDefaultViewName(): string {
 		if (ThemesManager::getActiveTheme () !== '') {
 			return '@activeTheme/' . Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
 		}
@@ -172,7 +172,7 @@ abstract class Controller {
 	 *
 	 * @return \Ubiquity\views\View
 	 */
-	public function getView() {
+	public function getView(): View {
 		return $this->view;
 	}
 }
