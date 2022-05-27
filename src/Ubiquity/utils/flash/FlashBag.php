@@ -2,6 +2,9 @@
 
 namespace Ubiquity\utils\flash;
 
+use Ubiquity\controllers\Controller;
+use Ubiquity\events\EventsManager;
+use Ubiquity\events\ViewEvents;
 use Ubiquity\utils\http\USession;
 
 /**
@@ -14,19 +17,26 @@ use Ubiquity\utils\http\USession;
  *
  */
 class FlashBag implements \Iterator {
-	const FLASH_BAG_KEY = "_flash_bag";
+	const FLASH_BAG_KEY = '_flash_bag';
+	const VAR_VIEW_NAME='flashMessages';
 	private array $array;
 	private int $position = 0;
 
-	public function __construct() {
+	public function __construct(?Controller $controller=null) {
 		$this->array = USession::get ( self::FLASH_BAG_KEY, [ ] );
+		if(isset($controller)){
+			$controller->getView()->setVar(self::VAR_VIEW_NAME,$this->array);
+			EventsManager::addListener(ViewEvents::AFTER_RENDER,function(){
+				$this->clear();
+			});
+		}
 	}
 
-	public function addMessage($content, $title = NULL, $type = "info", $icon = null): void {
+	public function addMessage($content, $title = NULL, $type = 'info', $icon = null): void {
 		$this->array [] = new FlashMessage ( $content, $title, $type, $icon );
 	}
 
-	public function addMessageAndSave($content, $title = NULL, $type = "info", $icon = null): void  {
+	public function addMessageAndSave($content, $title = NULL, $type = 'info', $icon = null): void  {
 		$this->addMessage($content,$title,$type,$icon);
 		USession::set ( self::FLASH_BAG_KEY, $this->array );
 	}
