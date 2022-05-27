@@ -5,7 +5,7 @@ namespace Ubiquity\utils\http\session;
 class SessionObject {
 	protected $value;
 	protected $duration;
-	protected $creationTime;
+	protected int $creationTime;
 
 	public function __construct($value, $duration) {
 		$this->value = $value;
@@ -18,8 +18,9 @@ class SessionObject {
 	 * @return mixed
 	 */
 	public function getValue() {
-		if (! $this->isExpired ())
+		if (! $this->isExpired ()) {
 			return $this->value;
+		}
 		return;
 	}
 
@@ -33,19 +34,21 @@ class SessionObject {
 
 	/**
 	 *
-	 * @return mixed
+	 * @return int
 	 */
-	public function getCreationTime() {
+	public function getCreationTime(): int {
 		return $this->creationTime;
 	}
 
 	/**
 	 *
 	 * @param mixed $value
+	 * @return mixed
 	 */
 	public function setValue($value) {
-		if ($value !== $this->value)
-			$this->creationTime = time ();
+		if ($value !== $this->value) {
+			$this->creationTime = time();
+		}
 		return $this->value = $value;
 	}
 
@@ -61,18 +64,19 @@ class SessionObject {
 	 *
 	 * @return boolean
 	 */
-	public function isExpired() {
+	public function isExpired(): bool {
 		return \time () - $this->creationTime > $this->duration;
 	}
 
 	/**
 	 *
-	 * @return number
+	 * @return int
 	 */
-	public function getTimeout() {
+	public function getTimeout(): int {
 		$timeout = $this->duration - (\time () - $this->creationTime);
-		if ($timeout > 0)
+		if ($timeout > 0) {
 			return $timeout;
+		}
 		return 0;
 	}
 }

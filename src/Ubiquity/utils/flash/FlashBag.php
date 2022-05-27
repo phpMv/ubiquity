@@ -10,33 +10,38 @@ use Ubiquity\utils\http\USession;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 class FlashBag implements \Iterator {
 	const FLASH_BAG_KEY = "_flash_bag";
-	private $array;
-	private $position = 0;
+	private array $array;
+	private int $position = 0;
 
 	public function __construct() {
-		USession::start ();
 		$this->array = USession::get ( self::FLASH_BAG_KEY, [ ] );
 	}
 
-	public function addMessage($content, $title = NULL, $type = "info", $icon = null) {
+	public function addMessage($content, $title = NULL, $type = "info", $icon = null): void {
 		$this->array [] = new FlashMessage ( $content, $title, $type, $icon );
 	}
 
-	public function getMessages($type) {
+	public function addMessageAndSave($content, $title = NULL, $type = "info", $icon = null): void  {
+		$this->addMessage($content,$title,$type,$icon);
+		USession::set ( self::FLASH_BAG_KEY, $this->array );
+	}
+
+	public function getMessages($type): array {
 		$result = [ ];
 		foreach ( $this->array as $msg ) {
-			if ($msg->getType () == $type)
+			if ($msg->getType () == $type) {
 				$result [] = $msg;
+			}
 		}
 		return $result;
 	}
 
-	public function getAll() {
+	public function getAll(): array {
 		return $this->array;
 	}
 

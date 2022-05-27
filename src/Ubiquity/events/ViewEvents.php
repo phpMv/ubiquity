@@ -5,7 +5,7 @@ namespace Ubiquity\events;
 /**
  * View events constants
  *
- * src\Ubiquity\events$ViewEvents
+ * \Ubiquity\events$ViewEvents
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>

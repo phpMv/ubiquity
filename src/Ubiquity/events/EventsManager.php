@@ -11,7 +11,7 @@ use Ubiquity\cache\CacheManager;
  */
 class EventsManager {
 
-	private static $key = 'events/events';
+	private static string $key = 'events/events';
 
 	/**
 	 *
@@ -33,7 +33,7 @@ class EventsManager {
 	 * @param string $eventName
 	 * @param EventListenerInterface|callable $action
 	 */
-	public static function addListener($eventName, $action):void {
+	public static function addListener(string $eventName, $action):void {
 		if (! isset(self::$managedEvents[$eventName])) {
 			self::$managedEvents[$eventName] = [];
 		}
@@ -52,7 +52,7 @@ class EventsManager {
 	 * @param string $eventName
 	 * @param mixed ...$params
 	 */
-	public static function trigger($eventName, &...$params):void {
+	public static function trigger(string $eventName, &...$params):void {
 		if (isset(self::$managedEvents[$eventName])) {
 			foreach (self::$managedEvents[$eventName] as $action) {
 				self::triggerOne($action, $params);
@@ -66,7 +66,7 @@ class EventsManager {
 		} elseif (is_subclass_of($action, EventListenerInterface::class)) {
 			\call_user_func_array([
 				new $action(),
-				"on"
+				'on'
 			], $params);
 		}
 	}

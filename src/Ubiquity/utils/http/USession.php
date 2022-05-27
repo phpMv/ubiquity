@@ -11,7 +11,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.3
+ * @version 1.1.4
  */
 class USession {
 	protected static $sessionInstance;
@@ -22,7 +22,7 @@ class USession {
 	 * @param string $arrayKey the key of the array to return
 	 * @return array
 	 */
-	public static function getArray($arrayKey): array {
+	public static function getArray(string $arrayKey): array {
 		if (self::$sessionInstance->exists ( $arrayKey )) {
 			$array = self::$sessionInstance->get ( $arrayKey );
 			if (! \is_array ( $array ))
@@ -40,7 +40,7 @@ class USession {
 	 * @param boolean|null $add If true, adds otherwise removes
 	 * @return boolean|null
 	 */
-	public static function addOrRemoveValueFromArray($arrayKey, $value, $add = null): ?bool {
+	public static function addOrRemoveValueFromArray(string $arrayKey, $value, $add = null): ?bool {
 		$array = self::getArray ( $arrayKey );
 		$_SESSION [$arrayKey] = $array;
 		$search = \array_search ( $value, $array );
@@ -63,7 +63,7 @@ class USession {
 	 * @param mixed $value the value to remove
 	 * @return boolean|null
 	 */
-	public static function removeValueFromArray($arrayKey, $value): ?bool {
+	public static function removeValueFromArray(string $arrayKey, $value): ?bool {
 		return self::addOrRemoveValueFromArray ( $arrayKey, $value, false );
 	}
 
@@ -74,7 +74,7 @@ class USession {
 	 * @param mixed $value the value to add
 	 * @return boolean|null
 	 */
-	public static function addValueToArray($arrayKey, $value): ?bool {
+	public static function addValueToArray(string $arrayKey, $value): ?bool {
 		return self::addOrRemoveValueFromArray ( $arrayKey, $value, true );
 	}
 
@@ -85,7 +85,7 @@ class USession {
 	 * @param mixed $value the value to set
 	 * @return boolean
 	 */
-	public static function setBoolean($key, $value) {
+	public static function setBoolean(string $key, $value) {
 		return self::$sessionInstance->set ( $key, UString::isBooleanTrue ( $value ) );
 	}
 
@@ -95,7 +95,7 @@ class USession {
 	 * @param string $key the key to add or set
 	 * @return boolean
 	 */
-	public static function getBoolean($key): bool {
+	public static function getBoolean(string $key): bool {
 		$v = self::$sessionInstance->get ( $key, false );
 		return UString::isBooleanTrue ( $v );
 	}
@@ -107,7 +107,7 @@ class USession {
 	 * @param mixed $default the default value to return if the key does not exists in session
 	 * @return mixed
 	 */
-	public static function session($key, $default = NULL) {
+	public static function session(string $key, $default = NULL) {
 		return self::$sessionInstance->get ( $key, $default );
 	}
 
@@ -118,7 +118,7 @@ class USession {
 	 * @param mixed $default the default value to return if the key does not exists in session
 	 * @return mixed
 	 */
-	public static function get($key, $default = NULL) {
+	public static function get(string $key, $default = NULL) {
 		return self::$sessionInstance->get ( $key, $default );
 	}
 
@@ -127,12 +127,13 @@ class USession {
 	 *
 	 * @param string $key the key to add or set
 	 * @param mixed $value
+	 * @return mixed
 	 */
-	public static function set($key, $value) {
+	public static function set(string $key, $value) {
 		return self::$sessionInstance->set ( $key, $value );
 	}
 
-	public static function setTmp($key, $value, $duration) {
+	public static function setTmp(string $key, $value, $duration) {
 		if (self::$sessionInstance->exists ( $key )) {
 			$object = self::$sessionInstance->get ( $key );
 			if ($object instanceof SessionObject) {
@@ -143,13 +144,14 @@ class USession {
 		return self::$sessionInstance->set ( $key, $object );
 	}
 
-	public static function getTmp($key, $default = null) {
+	public static function getTmp(string $key, $default = null) {
 		if (self::$sessionInstance->exists ( $key )) {
 			$object = self::$sessionInstance->get ( $key );
 			if ($object instanceof SessionObject) {
 				$value = $object->getValue ();
-				if (isset ( $value ))
-					return $object->getValue ();
+				if (isset ( $value )) {
+					return $object->getValue();
+				}
 				else {
 					self::delete ( $key );
 				}
@@ -158,7 +160,7 @@ class USession {
 		return $default;
 	}
 
-	public static function getTimeout($key) {
+	public static function getTimeout(string $key) {
 		if (self::$sessionInstance->exists ( $key )) {
 			$object = self::$sessionInstance->get ( $key );
 			if ($object instanceof SessionObject) {
@@ -178,7 +180,7 @@ class USession {
 	 *
 	 * @param string $key the key to delete
 	 */
-	public static function delete($key): void {
+	public static function delete(string $key): void {
 		self::$sessionInstance->delete ( $key );
 	}
 
@@ -186,10 +188,10 @@ class USession {
 	 * Increment the value at the key index in session
 	 *
 	 * @param string $key
-	 * @param number $inc
+	 * @param int $inc
 	 * @return number
 	 */
-	public static function inc($key, $inc = 1) {
+	public static function inc(string $key, int $inc = 1) {
 		return self::set ( $key, self::get ( $key, 0 ) + $inc );
 	}
 
@@ -197,10 +199,10 @@ class USession {
 	 * Decrement the value at the key index in session
 	 *
 	 * @param string $key
-	 * @param number $dec
+	 * @param int $dec
 	 * @return number
 	 */
-	public static function dec($key, $dec = 1) {
+	public static function dec(string $key, int $dec = 1) {
 		return self::set ( $key, self::get ( $key, 0 ) - $dec );
 	}
 
@@ -209,9 +211,10 @@ class USession {
 	 *
 	 * @param string $key
 	 * @param string $str
+	 * @param ?string $default
 	 * @return string
 	 */
-	public static function concat($key, $str, $default = NULL): string {
+	public static function concat(string $key, string $str, string $default = NULL): string {
 		return self::set ( $key, self::get ( $key, $default ) . $str );
 	}
 
@@ -220,9 +223,10 @@ class USession {
 	 *
 	 * @param string $key
 	 * @param string|callable $callback
+	 * @param null $default
 	 * @return mixed
 	 */
-	public static function apply($key, $callback, $default = NULL) {
+	public static function apply(string $key, $callback, $default = NULL) {
 		$value = self::get ( $key, $default );
 		if (\is_string ( $callback ) && \function_exists ( $callback )) {
 			$value = \call_user_func ( $callback, $value );
@@ -255,7 +259,7 @@ class USession {
 	 * @param array $keyAndValues
 	 * @return array
 	 */
-	public static function replace($keyAndValues): array {
+	public static function replace(array $keyAndValues): array {
 		foreach ( $keyAndValues as $k => $v ) {
 			self::$sessionInstance->set ( $k, $v );
 		}
@@ -298,7 +302,7 @@ class USession {
 	 * @param string $key the key to test
 	 * @return boolean
 	 */
-	public static function exists($key): bool {
+	public static function exists(string $key): bool {
 		return self::$sessionInstance->exists ( $key );
 	}
 
@@ -309,7 +313,7 @@ class USession {
 	 * @param mixed $value
 	 * @return mixed
 	 */
-	public static function init($key, $value) {
+	public static function init(string $key, $value) {
 		if (! self::$sessionInstance->exists ( $key )) {
 			self::$sessionInstance->set ( $key, $value );
 		}
