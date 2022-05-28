@@ -22,26 +22,26 @@ class FlashBag implements \Iterator {
 	private array $array;
 	private int $position = 0;
 
-	public function __construct(?Controller $controller=null) {
+	public function __construct() {
 		$this->array = USession::get ( self::FLASH_BAG_KEY, [ ] );
-		if(isset($controller)){
-			$controller->getView()->setVar(self::VAR_VIEW_NAME,$this->array);
-			EventsManager::addListener(ViewEvents::AFTER_RENDER,function(){
-				$this->clear();
-			});
-		}
+		EventsManager::addListener(ViewEvents::BEFORE_RENDER,function($_, &$data) {
+			$data[self::VAR_VIEW_NAME]=$this->array;
+		});
+		EventsManager::addListener(ViewEvents::AFTER_RENDER,function(){
+			$this->clear();
+		});
 	}
 
-	public function addMessage($content, $title = NULL, $type = 'info', $icon = null): void {
+	public function addMessage(string $content, string $title = NULL, string $type = 'info', string $icon = null): void {
 		$this->array [] = new FlashMessage ( $content, $title, $type, $icon );
 	}
 
-	public function addMessageAndSave($content, $title = NULL, $type = 'info', $icon = null): void  {
+	public function addMessageAndSave(string $content, string $title = NULL, string $type = 'info', string $icon = null): void  {
 		$this->addMessage($content,$title,$type,$icon);
 		USession::set ( self::FLASH_BAG_KEY, $this->array );
 	}
 
-	public function getMessages($type): array {
+	public function getMessages(string $type): array {
 		$result = [ ];
 		foreach ( $this->array as $msg ) {
 			if ($msg->getType () == $type) {
@@ -55,12 +55,12 @@ class FlashBag implements \Iterator {
 		return $this->array;
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->array = [ ];
 		USession::delete ( self::FLASH_BAG_KEY );
 	}
 
-	public function rewind() {
+	public function rewind(): void {
 		$this->position = 0;
 	}
 
@@ -68,23 +68,23 @@ class FlashBag implements \Iterator {
 	 *
 	 * @return FlashMessage
 	 */
-	public function current() {
+	public function current(): mixed {
 		return $this->array [$this->position];
 	}
 
-	public function key() {
+	public function key(): int {
 		return $this->position;
 	}
 
-	public function next() {
+	public function next(): void {
 		++ $this->position;
 	}
 
-	public function valid() {
+	public function valid(): bool {
 		return isset ( $this->array [$this->position] );
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->array = USession::set ( self::FLASH_BAG_KEY, $this->array );
 	}
 }

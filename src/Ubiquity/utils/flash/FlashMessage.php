@@ -3,92 +3,86 @@
 namespace Ubiquity\utils\flash;
 
 class FlashMessage {
-	protected $title;
-	protected $content;
-	protected $type;
-	protected $icon;
+	protected ?string $title;
+	protected ?string $content;
+	protected ?string $type;
+	protected ?string $icon;
 
-	public function __construct($content,$title=NULL,$type="info",$icon=null){
+	public function __construct(string $content,string $title=NULL,string $type='info',string $icon=null){
 		$this->setValues($content,$title,$type,$icon);
 	}
 	
-	public function setValues($content,$title=NULL,$type=NULL,$icon=null){
-		if(isset($type))
-			$this->type=$type;
+	public function setValues(string $content,string $title=NULL,string $type=NULL,string $icon=null){
+		$this->type = $type;
 		$this->content=$content;
-		if(isset($icon))
-			$this->icon=$icon;
-		if(isset($title))
-			$this->title=$title;
+		$this->icon = $icon;
+		$this->title = $title;
 	}
 	/**
-	 * @return mixed
+	 * @return string|null
 	 */
-	public function getContent() {
+	public function getContent(): ?string {
 		return $this->content;
 	}
 
 	/**
-	 * @return mixed
+	 * @return string
 	 */
-	public function getType() {
+	public function getType(): ?string {
 		return $this->type;
 	}
 
 	/**
-	 * @return mixed
+	 * @return string|null
 	 */
-	public function getIcon() {
+	public function getIcon(): ?string {
 		return $this->icon;
 	}
 
 	/**
-	 * @param mixed $content
+	 * @param string $content
 	 */
-	public function setContent($content) {
+	public function setContent(string $content) {
 		$this->content = $content;
 	}
 
 	/**
-	 * @param mixed $type
+	 * @param string $type
 	 */
-	public function setType($type) {
+	public function setType(string $type) {
 		$this->type = $type;
 	}
 	
-	public function addType($type){
-		$this->type.=" ".$type;
+	public function addType(string $type){
+		$this->type.=' '.$type;
 	}
 
 	/**
-	 * @param mixed $icon
+	 * @param string $icon
 	 */
-	public function setIcon($icon) {
+	public function setIcon(string $icon) {
 		$this->icon = $icon;
 	}
 	/**
-	 * @return mixed
+	 * @return string|null
 	 */
-	public function getTitle() {
+	public function getTitle(): ?string {
 		return $this->title;
 	}
 
 	/**
-	 * @param mixed $title
+	 * @param string $title
 	 */
-	public function setTitle($title) {
+	public function setTitle(string $title) {
 		$this->title = $title;
 	}
 	
-	public function parseContent($keyValues){
+	public function parseContent(array $keyValues): self {
 		$msg=$this->content;
 		foreach ($keyValues as $key=>$value){
-			$msg=str_replace("{".$key."}", $value, $msg);
+			$msg=\str_replace('{'.$key.'}', $value, $msg);
 		}
 		$this->content=$msg;
 		return $this;
 	}
-
-
 }
-
