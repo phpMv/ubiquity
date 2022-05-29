@@ -36,7 +36,7 @@ class Startup {
 			$controller = new $controllerName ();
 			// Dependency injection
 			if (isset ( self::$config ['di'] ) && \is_array ( self::$config ['di'] )) {
-				self::injectDependences ( $controller );
+				self::injectDependencies ( $controller );
 			}
 			return $controller;
 		}
@@ -222,7 +222,7 @@ class Startup {
 	 *
 	 * @param Controller $controller The controller
 	 */
-	public static function injectDependences($controller): void {
+	public static function injectDependencies($controller): void {
 		$di = DiManager::fetch ( $controller );
 		if ($di !== false) {
 			foreach ( $di as $k => $v ) {

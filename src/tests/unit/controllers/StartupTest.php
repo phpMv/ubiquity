@@ -197,7 +197,7 @@ class StartupTest extends BaseTest {
 	 */
 	public function testInjectDependences() {
 		$ctrl = new TestController ();
-		$this->startup->injectDependences ( $ctrl );
+		$this->startup->injectDependencies ( $ctrl );
 		$this->assertTrue ( property_exists ( $ctrl, 'injected' ) );
 		$this->assertInstanceOf ( Service::class, $ctrl->injected );
 	}

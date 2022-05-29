@@ -51,7 +51,7 @@ abstract class AuthController extends Controller {
 		$this->_loginCaption = 'Log in';
 		$this->_controllerInstance = $instance;
 		if (isset ( $instance )){
-			Startup::injectDependences ( $instance );
+			Startup::injectDependencies ( $instance );
 		}
 		if($this->useAjax() && !URequest::isAjax()) {
 			$this->_addAjaxBehavior($instance->jquery??$this->jquery);
