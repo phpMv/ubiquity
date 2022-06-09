@@ -32,15 +32,34 @@ class FlashBag implements \Iterator {
 		});
 	}
 
+	/**
+	 * Adds a temporary new message to the bag.
+	 * @param string $content
+	 * @param string|null $title
+	 * @param string $type
+	 * @param string|null $icon
+	 */
 	public function addMessage(string $content, string $title = NULL, string $type = 'info', string $icon = null): void {
 		$this->array [] = new FlashMessage ( $content, $title, $type, $icon );
 	}
 
+	/**
+	 * Adds and saves a message in the bag.
+	 * @param string $content
+	 * @param string|null $title
+	 * @param string $type
+	 * @param string|null $icon
+	 */
 	public function addMessageAndSave(string $content, string $title = NULL, string $type = 'info', string $icon = null): void  {
 		$this->addMessage($content,$title,$type,$icon);
 		USession::set ( self::FLASH_BAG_KEY, $this->array );
 	}
 
+	/**
+	 * Returns all the message of a type in the bag.
+	 * @param string $type
+	 * @return array
+	 */
 	public function getMessages(string $type): array {
 		$result = [ ];
 		foreach ( $this->array as $msg ) {
@@ -51,10 +70,17 @@ class FlashBag implements \Iterator {
 		return $result;
 	}
 
+	/**
+	 * Returns all the messages.
+	 * @return array
+	 */
 	public function getAll(): array {
 		return $this->array;
 	}
 
+	/**
+	 * Clears the bag.
+	 */
 	public function clear(): void {
 		$this->array = [ ];
 		USession::delete ( self::FLASH_BAG_KEY );
