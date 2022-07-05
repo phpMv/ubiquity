@@ -4,7 +4,7 @@
  * Ubiquity\core
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 namespace Ubiquity\core;
@@ -23,63 +23,63 @@ use Ubiquity\cache\CacheManager;
 class Framework {
 	public const version = '2.4.12';
 
-	public static function getVersion() {
+	public static function getVersion(): string {
 		return self::version;
 	}
 
-	public static function getController() {
+	public static function getController(): ?string {
 		return Startup::getController ();
 	}
 
-	public static function getAction() {
+	public static function getAction(): ?string {
 		return Startup::getAction ();
 	}
 
-	public static function getUrl() {
+	public static function getUrl(): string {
 		return \implode ( '/', Startup::$urlParts );
 	}
 
-	public static function getRouter() {
+	public static function getRouter(): Router {
 		return new Router ();
 	}
 
-	public static function getORM() {
+	public static function getORM(): OrmUtils {
 		return new OrmUtils ();
 	}
 
-	public static function getRequest() {
+	public static function getRequest(): URequest {
 		return new URequest ();
 	}
 
-	public static function getSession() {
+	public static function getSession(): USession {
 		return new USession ();
 	}
 
-	public static function getCookies() {
+	public static function getCookies(): UCookie {
 		return new UCookie ();
 	}
 
-	public static function getTranslator() {
+	public static function getTranslator(): TranslatorManager {
 		return new TranslatorManager ();
 	}
 
-	public static function getNormalizer() {
+	public static function getNormalizer(): NormalizersManager {
 		return new NormalizersManager ();
 	}
 
-	public static function hasAdmin() {
+	public static function hasAdmin(): bool {
 		return \class_exists ( "controllers\Admin" );
 	}
 
-	public static function getAssets() {
+	public static function getAssets(): AssetsManager {
 		return new AssetsManager ();
 	}
 
-	public static function getCacheSystem() {
+	public static function getCacheSystem():string {
 		return \get_class ( CacheManager::$cache );
 	}
 
-	public static function getAnnotationsEngine() {
+	public static function getAnnotationsEngine():string {
 		return \get_class ( CacheManager::getAnnotationsEngineInstance () );
 	}
 }
