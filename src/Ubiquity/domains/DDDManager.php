@@ -14,12 +14,12 @@ use Ubiquity\utils\base\UString;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 0.0.0
+ * @version 0.0.1
  *
  */
 class DDDManager {
-	private static $base='domains';
-	private static $activeDomain='';
+	private static string $base='domains';
+	private static string $activeDomain='';
 	
 	private static function getNamespace(string $type='controllers'): string{
 		$prefix='';
@@ -97,10 +97,8 @@ class DDDManager {
 	 * @return string
 	 */
 	public static function getActiveViewFolder(): string {
-		if(self::$activeDomain!=''){
-			if(\file_exists($folder=\ROOT.self::$base.\DS.self::$activeDomain.\DS.'views'.\DS)){
-				return $folder;
-			}
+		if(self::$activeDomain != '' && \file_exists($folder = \ROOT . self::$base . \DS . self::$activeDomain . \DS . 'views' . \DS)) {
+			return $folder;
 		}
 		return \ROOT.'views'.\DS;
 	}
@@ -111,8 +109,7 @@ class DDDManager {
 	 * @return string
 	 */
 	public static function getViewNamespace(): string {
-		$activeDomain=self::$activeDomain;
-		if($activeDomain!=''){
+		if(($activeDomain=self::$activeDomain)!=''){
 			return '@'.$activeDomain.'/';
 		}
 		return '';
