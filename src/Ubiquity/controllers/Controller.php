@@ -13,7 +13,7 @@ use Ubiquity\domains\DDDManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.7
+ * @version 1.0.8
  *
  */
 abstract class Controller {
@@ -23,7 +23,7 @@ abstract class Controller {
 	 *
 	 * @var View
 	 */
-	protected $view;
+	protected View $view;
 
 	/**
 	 * Default action
@@ -63,7 +63,7 @@ abstract class Controller {
 	 * @throws \Exception
 	 * @return string null or the view content if **$asString** parameter is true
 	 */
-	public function loadView($viewName, $pData = NULL, $asString = false) {
+	public function loadView(string $viewName, $pData = NULL, bool $asString = false) {
 		if (isset ( $pData )) {
 			$this->view->setVars ( $pData );
 		}
@@ -129,7 +129,7 @@ abstract class Controller {
 	 * @param boolean $finalize If true, the controller's finalize method is called after $action
 	 * @throws \Exception
 	 */
-	public function forward($controller, $action = 'index', $params = [], $initialize = false, $finalize = false) {
+	public function forward(string $controller, string $action = 'index', $params = [], bool $initialize = false, bool $finalize = false) {
 		$u = ['controller'=>$controller,'action'=>$action ];
 		if (\is_array ( $params )) {
 			$u['params']= $params;
@@ -148,7 +148,7 @@ abstract class Controller {
 	 * @param boolean $finalize Call the **finalize** method if true
 	 * @throws RouterException
 	 */
-	public function redirectToRoute($routeName, $parameters = [ ], $initialize = false, $finalize = false) {
+	public function redirectToRoute(string $routeName, $parameters = [ ], bool $initialize = false, bool $finalize = false) {
 		$infos = Router::getRouteInfoByName ( $routeName );
 		if ($infos !== false) {
 			if (isset ( $infos ['controller'] )) {

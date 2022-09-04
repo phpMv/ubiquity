@@ -8,7 +8,7 @@ namespace Ubiquity\controllers;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 abstract class SimpleViewController extends Controller {
@@ -34,9 +34,9 @@ abstract class SimpleViewController extends Controller {
 	 *        If an associative array is passed, the view retrieves variables from the table's key names
 	 * @param boolean $asString If true, the view is not displayed but returned as a string (usable in a variable)
 	 * @throws \Exception
-	 * @return string null or the view content if **$asString** parameter is true
+	 * @return ?string null or the view content if **$asString** parameter is true
 	 */
-	public function loadView($viewName, $pData = NULL, $asString = false) {
+	public function loadView(string $viewName, $pData = NULL, bool $asString = false) {
 		$filename = \ROOT . \DS . 'views' . \DS . $viewName;
 		if ($asString) {
 			return $this->_includeFileAsString ( $filename, $pData );
