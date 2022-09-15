@@ -29,7 +29,7 @@
 	"prefer-stable": true,
 	"config": {
 		"allow-plugins": {
-			"allow-plugins.codeception/c3": true
+			"codeception/c3": true
 		}
 	}
 }
