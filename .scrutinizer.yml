@@ -52,6 +52,7 @@ build:
           - mysql -u root mysql < src/tests/unit/db/hello_world.sql
           - (yes | ./vendor/bin/Ubiquity new src -b=messagerie -m -a -h=semantic,foundation,bootstrap)
           - cp -f src/tests/files/composer.json src/composer.json
+          - composer config --no-plugins allow-plugins.codeception/c3 true
           - (cd src/ && composer update)
           - (cd src/ && ./../vendor/bin/Ubiquity clear-cache)
           - cp -f src/tests/files/_index.php src/index.php && cp -f src/tests/files/.htaccess src/.htaccess && cp -f src/tests/files/services.php src/app/config/ && cp -f src/tests/files/config.php src/app/config/ && cp -f src/tests/files/myAuthentification.config.php src/app/config/
