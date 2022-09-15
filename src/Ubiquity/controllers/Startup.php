@@ -174,7 +174,14 @@ class Startup {
 						if (! \method_exists ( $controller, $action )) {
 							static::onError ( 404, "This action does not exist on the controller " . $ctrl, $controller );
 						} else {
-							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
+							$code = $e->getCode();
+							if ($code <= E_ERROR) {
+								Logger::critical('Startup', $e->getMessage(), 'runAction');
+							} elseif ($code <= E_WARNING) {
+								Logger::error('Startup', $e->getMessage(), 'runAction');
+							} else {
+								Logger::warn('Startup', $e->getMessage(), 'runAction');
+							}
 							if (self::$config ['debug']) {
 								throw $e;
 							} else {
