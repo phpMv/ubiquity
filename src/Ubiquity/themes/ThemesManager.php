@@ -34,7 +34,7 @@ class ThemesManager {
 	 * @param string $activeTheme
 	 * @throws ThemesException
 	 */
-	public static function setActiveTheme($activeTheme) {
+	public static function setActiveTheme(string $activeTheme):void {
 		self::$activeTheme = $activeTheme ?? '';
 		$engineInstance = Startup::$templateEngine;
 		if ($engineInstance instanceof Twig) {
@@ -44,7 +44,7 @@ class ThemesManager {
 		}
 	}
 
-	public static function saveActiveTheme($theme) {
+	public static function saveActiveTheme(string $theme): array {
 		$config = Startup::getConfig ();
 		$config ['templateEngineOptions'] ['activeTheme'] = $theme;
 		Startup::saveConfig ( $config );
@@ -56,7 +56,7 @@ class ThemesManager {
 	 *
 	 * @param string $activeTheme
 	 */
-	public static function setActiveThemeFromTwig($activeTheme) {
+	public static function setActiveThemeFromTwig(string $activeTheme) {
 		self::$activeTheme = $activeTheme;
 	}
 
@@ -65,7 +65,7 @@ class ThemesManager {
 	 *
 	 * @return string[]
 	 */
-	public static function getAvailableThemes() {
+	public static function getAvailableThemes(): array {
 		$path = DDDManager::getActiveViewFolder() . self::THEMES_FOLDER . \DS . '*';
 		$dirs = \glob ( $path, GLOB_ONLYDIR | GLOB_NOSORT );
 		$result = [ ];
@@ -80,7 +80,7 @@ class ThemesManager {
 	 *
 	 * @return string[]
 	 */
-	public static function getRefThemes() {
+	public static function getRefThemes(): array {
 		return self::$refThemes;
 	}
 
@@ -90,7 +90,7 @@ class ThemesManager {
 	 * @param string $theme
 	 * @return boolean
 	 */
-	public static function isCustom($theme) {
+	public static function isCustom(string $theme): bool {
 		return \array_search ( $theme, self::$refThemes ) === false;
 	}
 
@@ -99,7 +99,7 @@ class ThemesManager {
 	 *
 	 * @return array
 	 */
-	public static function getNotInstalledThemes() {
+	public static function getNotInstalledThemes(): array {
 		$AvailableThemes = self::getAvailableThemes ();
 		return \array_diff ( self::$refThemes, $AvailableThemes );
 	}
