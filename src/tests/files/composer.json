@@ -26,5 +26,10 @@
 		}
 	},
 	"minimum-stability": "dev",
-	"prefer-stable": true
+	"prefer-stable": true,
+	"config": {
+		"allow-plugins": {
+			"allow-plugins.codeception/c3": true
+		}
+	}
 }
