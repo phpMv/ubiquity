@@ -81,7 +81,7 @@ abstract class Controller {
 	 * @throws \Exception
 	 * @return string null or the view content if **$asString** parameter is true
 	 */
-	public function loadDefaultView($pData = NULL, $asString = false) {
+	public function loadDefaultView($pData = NULL, bool $asString = false) {
 		return $this->loadView ( $this->getDefaultViewName (), $pData, $asString );
 	}
 
