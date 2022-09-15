@@ -49,7 +49,7 @@ trait WithAuthTrait {
 	 * {@inheritdoc}
 	 * @see \Ubiquity\controllers\Controller::loadView()
 	 */
-	public function loadView($viewName, $pData = NULL, $asString = false) {
+	public function loadView(string $viewName, $pData = NULL, bool $asString = false) {
 		if ((! URequest::isAjax() && $this->_getAuthController()->_displayInfoAsString()) || URequest::has('_userInfo')) {
 			$this->view->setVar('_userInfo', $this->_getAuthController()
 				->info());

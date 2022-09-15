@@ -38,7 +38,7 @@ abstract class SimpleViewAsyncController extends SimpleViewController {
 	 * @throws \Exception
 	 * @return string null or the view content if **$asString** parameter is true
 	 */
-	public function loadView($viewName, $pData = NULL, $asString = false) {
+	public function loadView(string $viewName, $pData = NULL, bool $asString = false) {
 		$filename = \ROOT . \DS . 'views' . \DS . $viewName;
 		if ($asString) {
 			return $this->_includeFileAsString ( $filename, $pData );

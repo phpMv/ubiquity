@@ -22,7 +22,7 @@ trait CRUDControllerUtilitiesTrait {
 	
 	abstract protected function showSimpleMessage_(CRUDMessage $message, $staticName = null): HtmlMessage;
 	
-	abstract public function loadView($viewName, $pData = NULL, $asString = false);
+	abstract public function loadView(string $viewName, $pData = NULL, bool $asString = false);
 	
 	abstract public function index();
 	

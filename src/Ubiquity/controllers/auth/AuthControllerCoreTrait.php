@@ -16,7 +16,7 @@ use Ubiquity\utils\http\UResponse;
  */
 trait AuthControllerCoreTrait {
 
-	abstract public function loadView($viewName, $pData = NULL, $asString = false);
+	abstract public function loadView(string $viewName, $pData = NULL, bool $asString = false);
 
 	abstract protected function attemptsTimeout();
 
