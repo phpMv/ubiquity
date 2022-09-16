@@ -23,18 +23,34 @@ use Ubiquity\cache\CacheManager;
 class Framework {
 	public const version = '2.4.12';
 
+	/**
+	 * Returns framework version.
+	 * @return string
+	 */
 	public static function getVersion(): string {
 		return self::version;
 	}
 
+	/**
+	 * Returns the active controller class name.
+	 * @return string|null
+	 */
 	public static function getController(): ?string {
 		return Startup::getController ();
 	}
 
+	/**
+	 * Returns the active action.
+	 * @return string|null
+	 */
 	public static function getAction(): ?string {
 		return Startup::getAction ();
 	}
 
+	/**
+	 * Gets the active URL.
+	 * @return string
+	 */
 	public static function getUrl(): string {
 		return \implode ( '/', Startup::$urlParts );
 	}
