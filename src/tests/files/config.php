@@ -29,7 +29,7 @@ return array (
 					}
 				,"@exec" => array ("jquery" =>
 					function ($controller) {
-						return \Ubiquity\core\Framework::diSemantic ( $controller );
+						return \Ajax\php\ubiquity\JsUtils::diSemantic ( $controller );
 					}
 				) ),
 				"cache" => array ("directory" => "cache/","system" => "Ubiquity\\cache\\system\\ArrayCache","params" => array () ),

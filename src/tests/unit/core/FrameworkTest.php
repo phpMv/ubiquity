@@ -163,7 +163,7 @@ class FrameworkTest extends BaseTest {
 	 * Tests Framework::diSemantic()
 	 */
 	public function testDiSemantic() {
-		$jquery = Framework::diSemantic ( new TestController () );
+		$jquery = \Ajax\php\ubiquity\JsUtils::diSemantic ( new TestController () );
 		$this->assertInstanceOf ( JsUtils::class, $jquery );
 		$this->assertInstanceOf ( Semantic::class, $jquery->semantic () );
 	}
@@ -172,7 +172,7 @@ class FrameworkTest extends BaseTest {
 	 * Tests Framework::diBootstrap()
 	 */
 	public function testDiBootstrap() {
-		$jquery = Framework::diBootstrap ( new TestController () );
+		$jquery = \Ajax\php\ubiquity\JsUtils::diBootstrap ( new TestController () );
 		$this->assertInstanceOf ( JsUtils::class, $jquery );
 		$this->assertInstanceOf ( Bootstrap::class, $jquery->bootstrap () );
 	}

@@ -25,7 +25,7 @@ This operation is done using dependency injection, in ``app/config.php``:
    "di"=>array(
    		"@exec"=>array(
    				"jquery"=>function ($controller){
-   					return \Ubiquity\core\Framework::diSemantic($controller);
+   					return \Ajax\php\ubiquity\JsUtils::diSemantic($controller);
    					}
    				)
    		)
