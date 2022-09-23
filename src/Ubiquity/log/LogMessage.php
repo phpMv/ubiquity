@@ -119,7 +119,7 @@ class LogMessage {
 	}
 
 	public static function addMessage(&$messages,LogMessage $newMessage){
-		if(!\empty($messages)){
+		if(!empty($messages)){
 			$lastM=end($messages);
 			if($newMessage->equals($lastM)){
 				return $lastM->incCount();
