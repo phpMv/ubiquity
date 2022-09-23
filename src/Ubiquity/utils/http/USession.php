@@ -223,7 +223,7 @@ class USession {
 	 *
 	 * @param string $key
 	 * @param string|callable $callback
-	 * @param null $default
+	 * @param mixed $default
 	 * @return mixed
 	 */
 	public static function apply(string $key, $callback, $default = NULL) {
