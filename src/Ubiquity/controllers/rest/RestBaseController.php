@@ -119,6 +119,15 @@ abstract class RestBaseController extends Controller {
 		echo $this->_format ( $resp );
 	}
 
+	/**
+	 * Refresh an active token.
+	 * @throws \Ubiquity\exceptions\RestException
+	 */
+	protected function refreshToken(){
+		$resp = $this->server->refreshToken();
+		echo $this->_format($resp);
+	}
+
 	public function initialize() {
 	}
 

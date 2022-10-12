@@ -50,8 +50,9 @@ class ApiTokens {
 
 	public function isExpired($key) {
 		$token = $this->getToken ( $key );
-		if ($token !== false)
-			return \time () - $token ['creationTime'] > $this->duration;
+		if ($token !== false) {
+			return \time() - $token ['creationTime'] > $this->duration;
+		}
 		return true;
 	}
 
@@ -63,6 +64,20 @@ class ApiTokens {
 		}
 		$this->tokens [$key] = $token;
 		return $key;
+	}
+
+	/**
+	 * Refresh the token using an existing one.
+	 * @param string $key
+	 * @return false|string
+	 */
+	public function refreshToken(string $key) {
+		if($token=$this->getToken($key)){
+			$token=$this->addToken($token['datas']??null);
+			$this->remove($key);
+			return $token;
+		}
+		return false;
 	}
 
 	public function clearAll() {

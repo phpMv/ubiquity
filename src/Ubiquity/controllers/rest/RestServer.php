@@ -45,24 +45,43 @@ class RestServer {
 		}
 	}
 
+
+	private function tokenCallback($callback){
+		if (! isset ( $this->apiTokens )) {
+			$this->apiTokens = $this->_loadApiTokens ();
+		}
+		$token = $callback();
+		$this->_addHeaderToken ( $token );
+		return [ 'access_token' => $token,'token_type' => 'Bearer','expires_in' => $this->apiTokens->getDuration () ];
+	}
 	/**
 	 * Establishes the connection with the server, returns an added token in the Authorization header of the request
 	 *
 	 * @return array
 	 */
 	public function connect($datas=null) {
-		if (! isset ( $this->apiTokens )) {
-			$this->apiTokens = $this->_loadApiTokens ();
-		}
-		$token = $this->apiTokens->addToken ($datas);
-		$this->_addHeaderToken ( $token );
-		return [ 'access_token' => $token,'token_type' => 'Bearer','expires_in' => $this->apiTokens->getDuration () ];
+		return $this->tokenCallback(function() use ($datas) {
+			return $this->apiTokens->addToken ($datas);
+		});
+	}
+
+	/**
+	 * Refresh an active token
+	 * @return array
+	 * @throws RestException
+	 */
+	public function refreshToken(): array {
+		return $this->tokenCallback(function() {
+			$key=$this->_getHeaderToken();
+			return $this->apiTokens->refreshToken($key);
+		});
 	}
 
 	/**
 	 * Check if token is valid
 	 * @param callable $callback
 	 * @return boolean
+	 * @throws RestException
 	 */
 	public function isValid($callback) {
 		$this->apiTokens = $this->_loadApiTokens ();
