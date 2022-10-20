@@ -174,7 +174,7 @@ class Startup {
 						if (! \method_exists ( $controller, $action )) {
 							static::onError ( 404, "This action does not exist on the controller " . $ctrl, $controller );
 						} else {
-							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
+							static::logError($e->getCode(), $e->getMessage());
 							if (self::$config ['debug']) {
 								throw $e;
 							} else {
@@ -191,7 +191,7 @@ class Startup {
 				static::onError ( 404 ,"The controller `$ctrl` doesn't exist! <br/>");
 			}
 		} catch ( \Error $eC ) {
-			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
+			static::logError($eC->getCode(), $eC->getMessage());
 			if (self::$config ['debug']) {
 				throw $eC;
 			} else {
@@ -271,6 +271,16 @@ class Startup {
 			}
 		});
 		$onError ( $code, $message, $controllerInstance );
+	}
+
+	public static function logError(int $code, string $message) {
+		if ($code <= E_ERROR) {
+			Logger::critical('Startup', $message, 'runAction');
+		} elseif ($code <= E_WARNING) {
+			Logger::error('Startup', $message, 'runAction');
+		} else {
+			Logger::warn('Startup', $message, 'runAction');
+		}
 	}
 
 	/**
