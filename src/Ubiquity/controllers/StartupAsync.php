@@ -84,7 +84,7 @@ class StartupAsync extends Startup {
 						if (! \method_exists ( $controller, $action )) {
 							static::onError ( 404, "This action does not exist on the controller " . $ctrl, $controller );
 						} else {
-							Logger::warn ( 'Startup', $e->getTraceAsString (), 'runAction' );
+							static::logError($e->getCode(), $e->getMessage());
 							if (self::$config ['debug']) {
 								throw $e;
 							} else {
@@ -101,7 +101,7 @@ class StartupAsync extends Startup {
 				static::onError ( 404 );
 			}
 		} catch ( \Error $eC ) {
-			Logger::warn ( 'Startup', $eC->getTraceAsString (), 'runAction' );
+			static::logError($eC->getCode(), $eC->getMessage());
 			if (self::$config ['debug']) {
 				throw $eC;
 			} else {
