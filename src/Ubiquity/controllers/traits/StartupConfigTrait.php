@@ -3,6 +3,7 @@
 namespace Ubiquity\controllers\traits;
 
 use Ubiquity\controllers\Router;
+use Ubiquity\exceptions\InvalidCodeException;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\base\CodeUtils;
 use Ubiquity\utils\base\UArray;
@@ -18,7 +19,7 @@ use Ubiquity\utils\http\session\PhpSession;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.6
+ * @version 1.1.7
  *
  */
 trait StartupConfigTrait {
@@ -27,6 +28,7 @@ trait StartupConfigTrait {
 	protected static $httpInstance;
 	protected static $sessionInstance;
 	protected static $activeDomainBase='';
+	protected static $CONFIG_LOCATION='/config/';
 
 	public static function getConfig(): array {
 		return self::$config;
@@ -37,7 +39,7 @@ trait StartupConfigTrait {
 	}
 
 	public static function getModelsDir(): string {
-		return str_replace('\\',\DS,self::getNS('models'));
+		return \str_replace('\\',\DS,self::getNS('models'));
 	}
 
 	public static function getModelsCompletePath(): string {
@@ -85,7 +87,7 @@ trait StartupConfigTrait {
 
 	public static function reloadConfig(): array {
 		$appDir = \dirname ( \ROOT );
-		$filename = $appDir . '/app/config/config.php';
+		$filename = $appDir . '/app'.static::$CONFIG_LOCATION.'config.php';
 		self::$config = include ($filename);
 		self::startTemplateEngine ( self::$config );
 		return self::$config;
@@ -96,9 +98,9 @@ trait StartupConfigTrait {
 		include \ROOT . 'config/services.php';
 	}
 
-	public static function saveConfig(array $contentArray) {
+	public static function saveConfig(array $contentArray,string $configFilename='config') {
 		$appDir = \dirname ( \ROOT );
-		$filename = $appDir . '/app/config/config.php';
+		$filename = $appDir . "/app/config/$configFilename.php";
 		$oldFilename = $appDir . '/app/config/config.old.php';
 		$content = "<?php\nreturn " . UArray::asPhpArray ( $contentArray, 'array', 1, true ) . ";";
 		if (CodeUtils::isValidCode ( $content )) {
@@ -106,16 +108,16 @@ trait StartupConfigTrait {
 				return UFileSystem::save ( $filename, $content );
 			}
 		} else {
-			throw new \RuntimeException ( 'Config contains invalid code' );
+			throw new InvalidCodeException ( 'Config contains invalid code' );
 		}
 		return false;
 	}
 
-	public static function updateConfig(array $content) {
+	public static function updateConfig(array $content,string $configFilename='config') {
 		foreach ( $content as $k => $v ) {
 			self::$config [$k] = $v;
 		}
-		return self::saveConfig ( self::$config );
+		return self::saveConfig ( self::$config ,$configFilename);
 	}
 
 	public static function getHttpInstance(): AbstractHttp {
