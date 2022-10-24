@@ -18,17 +18,17 @@ use Ubiquity\orm\OrmUtils;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.5
  * @staticvar \Ubiquity\cache\system\AbstractDataCache $cache
  */
 trait ModelsCacheTrait {
 
-	abstract protected static function _getFiles(&$config, $type, $silent = false);
-	abstract protected static function _getAllFiles(&$config, $type, $silent = false): array ;
+	abstract protected static function _getFiles(array &$config, string $type, bool $silent = false): array;
+	abstract protected static function _getAllFiles(array &$config, string $type, bool $silent = false): array ;
 
 	private static $modelsDatabaseKey = 'models' . \DIRECTORY_SEPARATOR . '_modelsDatabases';
 
-	public static function createOrmModelCache($classname) {
+	public static function createOrmModelCache(string $classname) {
 		$key = self::getModelCacheKey ( $classname );
 		if (isset ( self::$cache )) {
 			$p = new ModelParser ();
@@ -38,22 +38,22 @@ trait ModelsCacheTrait {
 		}
 	}
 
-	public static function getOrmModelCache($classname) {
+	public static function getOrmModelCache(string $classname) {
 		return self::$cache->fetch ( self::getModelCacheKey ( $classname ) );
 	}
 
-	public static function getModelCacheKey($classname) {
+	public static function getModelCacheKey(string $classname): string {
 		return \str_replace ( "\\", \DS, $classname );
 	}
 
-	public static function modelCacheExists($classname) {
+	public static function modelCacheExists(string $classname): bool {
 		$key = self::getModelCacheKey ( $classname );
 		if (isset ( self::$cache ))
 			return self::$cache->exists ( $key );
 		return false;
 	}
 
-	public static function initModelsCache(&$config, $forChecking = false, $silent = false) {
+	public static function initModelsCache(array &$config, bool $forChecking = false, bool $silent = false): void {
 		$modelsDb = [ ];
 		$files = self::getAllModelsFiles( $config, $silent );
 		foreach ( $files as $file ) {
@@ -93,9 +93,9 @@ trait ModelsCacheTrait {
 	 * Checks if the models cache is up to date
 	 *
 	 * @param array $config
-	 * @return boolean|array
+	 * @return array
 	 */
-	public static function modelsCacheUpdated(&$config) {
+	public static function modelsCacheUpdated(array &$config): array {
 		$result = [];
 		$files = self::getModelsFiles ( $config, true );
 		foreach ( $files as $file ) {
@@ -118,7 +118,7 @@ trait ModelsCacheTrait {
 	 * @param boolean $silent
 	 * @return array
 	 */
-	public static function getModelsFiles(&$config, $silent = false) {
+	public static function getModelsFiles(array &$config, bool $silent = false): array {
 		return self::_getFiles ( $config, 'models', $silent );
 	}
 
@@ -129,7 +129,7 @@ trait ModelsCacheTrait {
 	 * @param boolean $silent
 	 * @return array
 	 */
-	public static function getAllModelsFiles(&$config, $silent = false) {
+	public static function getAllModelsFiles(array &$config, bool $silent = false): array {
 		return self::_getAllFiles ( $config, 'models', $silent );
 	}
 
@@ -141,7 +141,7 @@ trait ModelsCacheTrait {
 	 * @param ?string $databaseOffset
 	 * @return string[]
 	 */
-	public static function getModels(&$config, $silent = false, $databaseOffset = 'default') {
+	public static function getModels(array &$config, bool $silent = false, string $databaseOffset = 'default'): array {
 		$result = [];
 		$files = self::getModelsFiles($config, $silent);
 		foreach ($files as $file) {
@@ -196,7 +196,7 @@ trait ModelsCacheTrait {
 	 * @param string $offset
 	 * @param ?array $models
 	 */
-	public static function warmUpModels(&$config, $offset = 'default', $models = null) {
+	public static function warmUpModels(array &$config, string $offset = 'default', ?array $models = null): void {
 		$models ??= self::getModels ( $config, true, $offset );
 		foreach ( $models as $model ) {
 			OrmUtils::getModelMetadata ( $model );

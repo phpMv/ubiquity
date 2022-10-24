@@ -1,6 +1,8 @@
 <?php
 namespace Ubiquity\cache\traits;
 
+use Ubiquity\cache\system\AbstractDataCache;
+use Ubiquity\config\ConfigCache;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\annotations\AnnotationsEngineInterface;
 
@@ -10,7 +12,7 @@ use Ubiquity\annotations\AnnotationsEngineInterface;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.2
+ * @version 1.0.3
  *
  * @property string $cacheDirectory
  */
@@ -18,15 +20,15 @@ trait DevCacheTrait {
 
 	private static AnnotationsEngineInterface $annotationsEngine;
 
-	abstract protected static function getCacheInstance(&$config, $cacheDirectory, $postfix);
+	abstract protected static function getCacheInstance(array &$config, string $cacheDirectory, string $postfix):AbstractDataCache;
 
-	abstract protected static function initRestCache(&$config, $silent = false);
+	abstract protected static function initRestCache(array &$config, bool $silent = false): void;
 
-	abstract protected static function initRouterCache(&$config, $silent = false);
+	abstract protected static function initRouterCache(array &$config, bool $silent = false): void;
 
-	abstract public static function initModelsCache(&$config, $forChecking = false, $silent = false);
+	abstract public static function initModelsCache(array &$config, bool $forChecking = false, bool $silent = false): void;
 
-	private static function _getAnnotationsEngineInstance(){
+	private static function _getAnnotationsEngineInstance():?AnnotationsEngineInterface {
 		if(\class_exists('Ubiquity\\attributes\\AttributesEngine',true)){
 			return new \Ubiquity\attributes\AttributesEngine();
 		}elseif(\class_exists('Ubiquity\\annotations\\AnnotationsEngine',true)){
@@ -34,11 +36,11 @@ trait DevCacheTrait {
 		}
 	}
 
-	public static function getAnnotationsEngineInstance(){
+	public static function getAnnotationsEngineInstance(): ?AnnotationsEngineInterface {
 		return self::$annotationsEngine??=self::_getAnnotationsEngineInstance();
 	}
 
-	private static function initialGetCacheDirectory(&$config) {
+	private static function initialGetCacheDirectory(array &$config): string {
 		return $config['cache']['directory'] ??= 'cache' . \DS;
 	}
 
@@ -48,7 +50,7 @@ trait DevCacheTrait {
 	 *
 	 * @param array $config
 	 */
-	public static function start(&$config) {
+	public static function start(array &$config) {
 		self::$cacheDirectory = self::initialGetCacheDirectory($config);
 		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
 		self::getAnnotationsEngineInstance()->start($cacheDirectory);
@@ -72,7 +74,7 @@ trait DevCacheTrait {
 	 * @param boolean $silent
 	 * @return string[]
 	 */
-	public static function checkCache(&$config, $silent = false) {
+	public static function checkCache(array &$config, bool $silent = false): array {
 		$dirs = self::getCacheDirectories($config, $silent);
 		foreach ($dirs as $dir) {
 			self::safeMkdir($dir);
@@ -87,15 +89,15 @@ trait DevCacheTrait {
 	 * @param boolean $silent
 	 * @return string[]
 	 */
-	public static function getCacheDirectories(&$config, $silent = false) {
+	public static function getCacheDirectories(array &$config, bool $silent = false): array {
 		$cacheDirectory = self::initialGetCacheDirectory($config);
 		$rootDS = \ROOT . \DS;
 		if (! $silent) {
 			echo "cache directory is " . UFileSystem::cleanPathname($rootDS . $cacheDirectory) . "\n";
 		}
 		$cacheDirectory = $rootDS . $cacheDirectory . \DS;
-		$modelsDir = str_replace("\\", \DS, $config['mvcNS']['models']);
-		$controllersDir = str_replace("\\", \DS, $config['mvcNS']['controllers']);
+		$modelsDir = \str_replace("\\", \DS, $config['mvcNS']['models']);
+		$controllersDir = \str_replace("\\", \DS, $config['mvcNS']['controllers']);
 		$annotationCacheDir = $cacheDirectory . 'annotations';
 		$modelsCacheDir = $cacheDirectory . $modelsDir;
 		$queriesCacheDir = $cacheDirectory . 'queries';
@@ -104,6 +106,7 @@ trait DevCacheTrait {
 		$seoCacheDir = $cacheDirectory . 'seo';
 		$gitCacheDir = $cacheDirectory . 'git';
 		$contentsCacheDir = $cacheDirectory . 'contents';
+		$configCacheDir=$cacheDirectory.'config';
 		return [
 			'annotations' => $annotationCacheDir,
 			'models' => $modelsCacheDir,
@@ -112,13 +115,16 @@ trait DevCacheTrait {
 			'views' => $viewsCacheDir,
 			'seo' => $seoCacheDir,
 			'git' => $gitCacheDir,
-			'contents' => $contentsCacheDir
+			'contents' => $contentsCacheDir,
+			'config'=>$configCacheDir
 		];
 	}
 
-	private static function safeMkdir($dir) {
-		if (! \is_dir($dir))
+	private static function safeMkdir(string $dir): bool {
+		if (! \is_dir($dir)) {
 			return \mkdir($dir, 0777, true);
+		}
+		return true;
 	}
 
 	/**
@@ -127,7 +133,7 @@ trait DevCacheTrait {
 	 * @param array $config
 	 * @param string $type
 	 */
-	public static function clearCache(&$config, $type = 'all') {
+	public static function clearCache(array &$config, string $type = 'all') {
 		$cacheDirectories = self::checkCache($config);
 		$cacheDirs = [
 			'annotations',
@@ -135,7 +141,8 @@ trait DevCacheTrait {
 			'models',
 			'queries',
 			'views',
-			'contents'
+			'contents',
+			'config'
 		];
 		foreach ($cacheDirs as $typeRef) {
 			self::_clearCache($cacheDirectories, $type, $typeRef);
@@ -143,8 +150,9 @@ trait DevCacheTrait {
 	}
 
 	private static function _clearCache($cacheDirectories, $type, $typeRef) {
-		if ($type === 'all' || $type === $typeRef)
+		if ($type === 'all' || $type === $typeRef) {
 			UFileSystem::deleteAllFilesFromFolder($cacheDirectories[$typeRef]);
+		}
 	}
 
 	/**
@@ -153,7 +161,7 @@ trait DevCacheTrait {
 	 * @param string $type
 	 * @param boolean $silent
 	 */
-	public static function initCache(&$config, $type = 'all', $silent = false) {
+	public static function initCache(array &$config, string $type = 'all', bool $silent = false): void {
 		self::checkCache($config, $silent);
 		self::start($config);
 		if ($type === 'all' || $type === 'models') {
@@ -172,6 +180,9 @@ trait DevCacheTrait {
 		}
 		if ($type === 'all' || $type === 'rest') {
 			self::initRestCache($config, $silent);
+		}
+		if($type === 'all' || $type === 'config'){
+			ConfigCache::generateCache();
 		}
 	}
 }
