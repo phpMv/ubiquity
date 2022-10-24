@@ -21,7 +21,7 @@ use Ubiquity\utils\http\USession;
 use Ubiquity\cache\CacheManager;
 
 class Framework {
-	public const version = '2.4.12';
+	public const version = '2.4.12+';
 
 	/**
 	 * Returns framework version.
@@ -29,6 +29,14 @@ class Framework {
 	 */
 	public static function getVersion(): string {
 		return self::version;
+	}
+
+	/**
+	 * Returns the APP_ENV env var value.
+	 * @return string
+	 */
+	public static function getEnv(): string {
+		return $_ENV['APP_ENV']??'dev';
 	}
 
 	/**
