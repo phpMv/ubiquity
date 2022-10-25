@@ -2,7 +2,7 @@
 namespace Ubiquity\cache\traits;
 
 use Ubiquity\cache\system\AbstractDataCache;
-use Ubiquity\config\ConfigCache;
+use Ubiquity\config\Configuration;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\annotations\AnnotationsEngineInterface;
 
@@ -182,7 +182,7 @@ trait DevCacheTrait {
 			self::initRestCache($config, $silent);
 		}
 		if($type === 'all' || $type === 'config'){
-			ConfigCache::generateCache();
+			Configuration::generateCache();
 		}
 	}
 }
