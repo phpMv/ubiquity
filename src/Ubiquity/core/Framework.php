@@ -32,11 +32,11 @@ class Framework {
 	}
 
 	/**
-	 * Returns the APP_ENV env var value.
+	 * Returns the app.env value in config cache.
 	 * @return string
 	 */
 	public static function getEnv(): string {
-		return $_ENV['APP_ENV']??'dev';
+		return Startup::getConfig()['app.env']??'dev';
 	}
 
 	/**
