@@ -53,7 +53,7 @@ trait MessagesTrait {
 			$message->getOnClose ( $this->_getFiles ()->getAdminBaseRoute () . "/_closeMessage/" . $closeAction );
 		}
 		if ($toast) {
-			$message->asToast ();
+			$message->asToast ($toast);
 		}
 		return $message;
 	}
