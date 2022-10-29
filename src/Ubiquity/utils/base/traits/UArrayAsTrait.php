@@ -18,7 +18,7 @@ trait UArrayAsTrait {
 		return UString::startswith ( $v , '$' ) || UString::startswith ( $v , 'function' ) || UString::startswith ( $v , 'array(' ) || UString::startswith ( $v , 'getenv(' );
 	}
 	private static function parseValue($v, $depth = 1, $format = false) {
-		if (\is_numeric ( $v )) {
+		if (\is_numeric ( $v ) && gettype($v)!=='string') {
 			$result = $v;
 		} elseif ($v !== '' && UString::isBooleanStr ( $v )) {
 			$result = UString::getBooleanStr ( $v );
