@@ -13,12 +13,12 @@ use Ubiquity\exceptions\RestException;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.0
+ * @version 1.0.2
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  */
 trait RestCacheTrait {
 
-	protected  static function initRestCache(&$config, $silent = false) {
+	protected  static function initRestCache(array &$config, bool $silent = false): void {
 		$restCache = [ ];
 		$files = self::getControllersFiles ( $config );
 		foreach ( $files as $file ) {
@@ -26,8 +26,9 @@ trait RestCacheTrait {
 				$controller = ClassUtils::getClassFullNameFromFile ( $file );
 				$parser = new RestControllerParser ();
 				$parser->parse ( $controller, $config );
-				if ($parser->isRest ())
-					$restCache = \array_merge ( $restCache, $parser->asArray () );
+				if ($parser->isRest ()) {
+					$restCache = \array_merge($restCache, $parser->asArray());
+				}
 			}
 		}
 		self::$cache->store ( 'controllers/rest', $restCache, 'controllers' );
@@ -36,7 +37,7 @@ trait RestCacheTrait {
 		}
 	}
 
-	public static function getRestRoutes() {
+	public static function getRestRoutes(): array {
 		$result = [ ];
 		$restCache = self::getRestCache ();
 		foreach ( $restCache as $controllerClass => $restAttributes ) {
@@ -48,19 +49,21 @@ trait RestCacheTrait {
 	}
 
 	public static function getRestCache() {
-		if (self::$cache->exists ( 'controllers/rest' ))
-			return self::$cache->fetch ( 'controllers/rest' );
+		if (self::$cache->exists ( 'controllers/rest' )) {
+			return self::$cache->fetch('controllers/rest');
+		}
 		throw new RestException ( 'Rest cache entry `' . self::$cache->getEntryKey ( 'controllers/rest' ) . "` is missing.\nTry to Re-init Rest cache." );
 	}
 
-	public static function getRestResource($controllerClass) {
+	public static function getRestResource(string $controllerClass) {
 		$cacheControllerClass = self::getRestCacheController ( $controllerClass );
-		if (isset ( $cacheControllerClass ))
+		if (isset ( $cacheControllerClass )) {
 			return $cacheControllerClass ['resource'];
+		}
 		return null;
 	}
 
-	public static function getRestCacheController($controllerClass) {
+	public static function getRestCacheController(string $controllerClass) {
 		$cache = self::getRestCache ();
 		if (isset ( $cache [$controllerClass] )) {
 			return $cache [$controllerClass];

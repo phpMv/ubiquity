@@ -5,6 +5,7 @@
  */
 namespace Ubiquity\cache;
 
+use Ubiquity\cache\system\AbstractDataCache;
 use Ubiquity\cache\traits\ModelsCacheTrait;
 use Ubiquity\cache\traits\RestCacheTrait;
 use Ubiquity\cache\traits\RouterCacheTrait;
@@ -40,7 +41,7 @@ class CacheManager {
 	 *
 	 * @param array $config
 	 */
-	public static function startProd(&$config) {
+	public static function startProd(array &$config): void {
 		self::$cacheDirectory = self::initialGetCacheDirectory($config);
 		$cacheDirectory = \ROOT . \DS . self::$cacheDirectory;
 		self::getCacheInstance($config, $cacheDirectory, '.cache');
@@ -49,14 +50,14 @@ class CacheManager {
 	/**
 	 * Starts the cache from a controller
 	 */
-	public static function startProdFromCtrl() {
+	public static function startProdFromCtrl(): void {
 		$config = &Startup::$config;
 		$cacheD = \ROOT . \DS . ($config['cache']['directory'] ??= 'cache' . \DS);
 		$cacheSystem = $config['cache']['system'] ?? 'Ubiquity\\cache\\system\\ArrayCache';
 		self::$cache = new $cacheSystem($cacheD, '.cache', $config['cache']['params'] ?? []);
 	}
 
-	protected static function getCacheInstance(&$config, $cacheDirectory, $postfix) {
+	protected static function getCacheInstance(array &$config, string $cacheDirectory, string $postfix):AbstractDataCache {
 		if (! isset(self::$cache)) {
 			$cacheSystem = $config['cache']['system'] ?? 'Ubiquity\\cache\\system\\ArrayCache';
 			$cacheParams = $config['cache']['params'] ?? [];
@@ -72,7 +73,7 @@ class CacheManager {
 	 *
 	 * @return string
 	 */
-	public static function getCacheDirectory() {
+	public static function getCacheDirectory(): string {
 		return self::$cacheDirectory;
 	}
 
@@ -81,7 +82,7 @@ class CacheManager {
 	 *
 	 * @return string
 	 */
-	public static function getAbsoluteCacheDirectory() {
+	public static function getAbsoluteCacheDirectory(): string {
 		return \ROOT . \DS . self::$cacheDirectory;
 	}
 
@@ -91,7 +92,7 @@ class CacheManager {
 	 * @param string $subDirectory
 	 * @return string
 	 */
-	public static function getCacheSubDirectory($subDirectory) {
+	public static function getCacheSubDirectory(string $subDirectory): string {
 		return \ROOT . \DS . self::$cacheDirectory . \DS . $subDirectory;
 	}
 
@@ -101,7 +102,7 @@ class CacheManager {
 	 *
 	 * @return array
 	 */
-	public static function getAllRoutes() {
+	public static function getAllRoutes(): array {
 		$routes = self::getControllerCache();
 		return \array_merge($routes, self::getControllerCache(true));
 	}
@@ -112,9 +113,10 @@ class CacheManager {
 	 * @param array $config
 	 * @param string $type
 	 * @param boolean $silent
+	 * @param ?string $domain
 	 * @return array
 	 */
-	protected static function _getFiles(&$config, $type, $silent = false,$domain=null) {
+	protected static function _getFiles(array &$config, string $type, bool $silent = false,?string $domain=null): array {
 		if($domain==null){
 			$domainBase=Startup::getActiveDomainBase();
 		}else{
@@ -136,7 +138,7 @@ class CacheManager {
 	 * @param boolean $silent
 	 * @return array
 	 */
-	protected static function _getAllFiles(&$config, $type, $silent = false): array {
+	protected static function _getAllFiles(array &$config, string $type, bool $silent = false): array {
 		$domains=DDDManager::getDomains();
 		$result=[];
 		foreach ($domains as $domain){

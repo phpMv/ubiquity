@@ -17,15 +17,15 @@ use Ubiquity\utils\http\UResponse;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.13
+ * @version 1.0.14
  * @property \Ubiquity\cache\system\AbstractDataCache $cache
  *
  */
 trait RouterCacheTrait {
 
-	abstract public static function getControllers($subClass = "\\Ubiquity\\controllers\\Controller", $backslash = false, $includeSubclass = false, $includeAbstract = false);
+	abstract public static function getControllers(string $subClass = "\\Ubiquity\\controllers\\Controller", bool $backslash = false, bool $includeSubclass = false, bool $includeAbstract = false): array;
 
-	public static function controllerCacheUpdated(&$config) {
+	public static function controllerCacheUpdated(array &$config): array {
 		$result = [];
 		$domain=DDDManager::getActiveDomain();
 		$newRoutes = self::parseControllerFiles ( $config, true ,$domain!='');
@@ -40,19 +40,19 @@ trait RouterCacheTrait {
 		return $result;
 	}
 
-	public static function storeDynamicRoutes($isRest = false) {
+	public static function storeDynamicRoutes(bool $isRest = false): void {
 		$routes = Router::getRoutes ();
 		$part = ($isRest) ? 'rest' : 'default';
 		self::$cache->store ( 'controllers/routes.' . $part, $routes, 'controllers' );
 	}
 
-	private static function storeRouteResponse($key, $response) {
+	private static function storeRouteResponse(string $key, ?string $response): ?string {
 		$cache = [ 'content-type' => UResponse::$headers ['Content-Type'] ?? 'text/html','content' => $response ];
 		self::$cache->store ( 'controllers/' . $key, $cache, 'controllers' );
 		return $response;
 	}
 
-	private static function getRouteKey($routePath) {
+	private static function getRouteKey(string $routePath): string {
 		if (\is_array ( $routePath )) {
 			return 'path' . \md5 ( \implode ( '', $routePath ) );
 		}
@@ -64,7 +64,7 @@ trait RouterCacheTrait {
 	 * @param boolean $isRest
 	 * @return array
 	 */
-	public static function getControllerCache($isRest = false) {
+	public static function getControllerCache(bool $isRest = false): array {
 		$key = ($isRest) ? 'rest' : 'default';
 		if (self::$cache->exists ( 'controllers/routes.' . $key )) {
 			return self::$cache->fetch ( 'controllers/routes.' . $key );
@@ -111,7 +111,7 @@ trait RouterCacheTrait {
 	 * @param boolean $isRest
 	 * @return array
 	 */
-	public static function getControllerCacheIndex($isRest = false) {
+	public static function getControllerCacheIndex(bool $isRest = false): array {
 		$key = ($isRest) ? 'rest-index' : 'default-index';
 		if (self::$cache->exists ( 'controllers/routes.' . $key )) {
 			return self::$cache->fetch ( 'controllers/routes.' . $key );
@@ -119,7 +119,7 @@ trait RouterCacheTrait {
 		return [ ];
 	}
 
-	public static function getRouteCache($routePath, $routeArray, $duration) {
+	public static function getRouteCache(string $routePath, array $routeArray, int $duration) {
 		$key = self::getRouteKey ( $routePath );
 
 		if (self::$cache->exists ( 'controllers/' . $key ) && ! self::expired ( $key, $duration )) {
@@ -134,37 +134,36 @@ trait RouterCacheTrait {
 		}
 	}
 
-	protected static function expired($key, $duration) {
+	protected static function expired(string $key, int $duration): bool {
 		return self::$cache->expired ( "controllers/" . $key, $duration ) === true;
 	}
 
-	public static function isExpired($routePath, $duration) {
+	public static function isExpired(string $routePath, int $duration): bool {
 		return self::expired ( self::getRouteKey ( $routePath ), $duration );
 	}
 
-	public static function setExpired($routePath) {
+	public static function setExpired(string $routePath): void {
 		$key = self::getRouteKey ( $routePath );
 		if (self::$cache->exists ( 'controllers/' . $key )) {
 			self::$cache->remove ( 'controllers/' . $key );
 		}
 	}
 
-	public static function setRouteCache($routePath) {
+	public static function setRouteCache(string $routePath): ?string {
 		$key = self::getRouteKey ( $routePath );
 		$response = Startup::runAsString ( $routePath );
 		return self::storeRouteResponse ( $key, $response );
 	}
 
-	public static function addAdminRoutes() {
+	public static function addAdminRoutes(): void {
 		self::addControllerCache ( 'Ubiquity\controllers\Admin' );
 	}
 
-	public static function getRoutes() {
-		$result = self::getControllerCache ();
-		return $result;
+	public static function getRoutes():array {
+		return self::getControllerCache ();
 	}
 
-	public static function getControllerRoutes($controllerClass, $isRest = false) {
+	public static function getControllerRoutes(string $controllerClass, bool $isRest = false): array {
 		$result = [ ];
 		$ctrlCache = self::getControllerCache ( $isRest );
 		foreach ( $ctrlCache as $path => $routeAttributes ) {
@@ -184,7 +183,7 @@ trait RouterCacheTrait {
 		return $result;
 	}
 
-	public static function addRoute($path, $controller, $action = 'index', $methods = null, $name = '', $isRest = false, $priority = 0, $callback = null) {
+	public static function addRoute(string $path, string $controller, string $action = 'index', ?array $methods = null, string $name = '', bool $isRest = false, int $priority = 0, $callback = null) {
 		$controllerCache = self::getControllerCache ( $isRest );
 		Router::addRouteToRoutes ( $controllerCache, $path, $controller, $action, $methods, $name, false, null, [ ], $priority, $callback );
 		self::$cache->store ( 'controllers/routes.' . ($isRest ? 'rest' : 'default'), $controllerCache, 'controllers' );
@@ -214,7 +213,7 @@ trait RouterCacheTrait {
 	 *
 	 * @param ?array $controllers
 	 */
-	public static function warmUpControllers($controllers = null) {
+	public static function warmUpControllers(?array $controllers = null) {
 		$controllers ??= self::getControllers ();
 		foreach ( $controllers as $ctrl ) {
 			$controller = StartupAsync::getControllerInstance ( $ctrl );

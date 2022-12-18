@@ -9,19 +9,23 @@ use Ubiquity\utils\base\UString;
  * Ubiquity\utils\base\traits$UArrayAsTrait
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.6
+ * @version 1.0.7
  *
  */
 trait UArrayAsTrait {
+	private static function isExpression(string $v): bool {
+		$v=\trim($v);
+		return UString::startswith ( $v , '$' ) || UString::startswith ( $v , 'function' ) || UString::startswith ( $v , 'array(' ) || UString::startswith ( $v , 'getenv(' );
+	}
 	private static function parseValue($v, $depth = 1, $format = false) {
-		if (\is_numeric ( $v )) {
+		if (\is_numeric ( $v ) && gettype($v)!=='string') {
 			$result = $v;
 		} elseif ($v !== '' && UString::isBooleanStr ( $v )) {
 			$result = UString::getBooleanStr ( $v );
 		} elseif (\is_array ( $v )) {
 			$result = self::asPhpArray_ ( $v, $depth + 1, $format );
-		} elseif (\is_string ( $v ) && (UString::startswith ( \trim ( $v ), '$config' ) || UString::startswith ( \trim ( $v ), 'function' ) || UString::startswith ( \trim ( $v ), 'array(' ))) {
-			$result = $v;
+		} elseif (\is_string ( $v ) && self::isExpression($v)) {
+			$result = trim($v);
 		} elseif ($v instanceof \Closure) {
 			$result = UIntrospection::closure_dump ( $v );
 		} elseif ($v instanceof \DateTime) {
