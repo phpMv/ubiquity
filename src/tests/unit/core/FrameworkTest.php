@@ -1,18 +1,19 @@
 <?php
-use Ubiquity\core\Framework;
-use Ubiquity\controllers\Router;
-use Ubiquity\orm\OrmUtils;
-use Ubiquity\utils\http\URequest;
-use Ubiquity\utils\http\USession;
-use Ubiquity\utils\http\UCookie;
-use Ubiquity\translation\TranslatorManager;
-use Ubiquity\contents\normalizers\NormalizersManager;
-use Ubiquity\assets\AssetsManager;
-use Ubiquity\controllers\Startup;
+
+use Ajax\Bootstrap;
 use Ajax\JsUtils;
 use Ajax\Semantic;
 use controllers\TestController;
-use Ajax\Bootstrap;
+use Ubiquity\assets\AssetsManager;
+use Ubiquity\contents\normalizers\NormalizersManager;
+use Ubiquity\controllers\Router;
+use Ubiquity\controllers\Startup;
+use Ubiquity\core\Framework;
+use Ubiquity\orm\OrmUtils;
+use Ubiquity\translation\TranslatorManager;
+use Ubiquity\utils\http\UCookie;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\USession;
 
 /**
  * Framework test case.
@@ -29,7 +30,7 @@ class FrameworkTest extends BaseTest {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		parent::_before ();
+		parent::_before();
 		$this->framework = new Framework ();
 	}
 
@@ -38,143 +39,144 @@ class FrameworkTest extends BaseTest {
 	 */
 	protected function _after() {
 		$this->framework = null;
-		parent::_after ();
+		parent::_after();
 	}
 
 	protected function _startServices($what = false) {
-		$this->_startCache ();
-		$this->_startRouter ( $what );
+		$this->_startCache();
+		$this->_startRouter($what);
 	}
 
 	/**
 	 * Tests Framework::getVersion()
 	 */
 	public function testGetVersion() {
-		$version = Framework::getVersion ();
-		$this->assertEquals ( Framework::version, $version );
+		$version = Framework::getVersion();
+		$this->assertEquals(Framework::VERSION, $version);
 	}
 
 	/**
 	 * Tests Framework::getController()
 	 */
 	public function testGetController() {
-		$this->_startServices ();
-		$this->_initRequest ( 'TestController', 'GET' );
-		Startup::run ( $this->config );
-		$ctrl = Framework::getController ();
-		$this->assertEquals ( 'controllers\TestController', $ctrl );
-		$this->assertEquals ( 'index', Framework::getAction () );
+		$this->_startServices();
+		$this->_initRequest('TestController', 'GET');
+		Startup::run($this->config);
+		$ctrl = Framework::getController();
+		$this->assertEquals('controllers\TestController', $ctrl);
+		$this->assertEquals('index', Framework::getAction());
 	}
 
 	/**
 	 * Tests Framework::getAction()
 	 */
 	public function testGetAction() {
-		$this->_startServices ();
-		$this->_initRequest ( 'TestController/test', 'GET' );
-		Startup::run ( $this->config );
-		$action = Framework::getAction ();
-		$this->assertEquals ( 'test', $action );
+		$this->_startServices();
+		$this->_initRequest('TestController/test', 'GET');
+		Startup::run($this->config);
+		$action = Framework::getAction();
+		$this->assertEquals('test', $action);
 	}
 
 	/**
 	 * Tests Framework::getUrl()
 	 */
 	public function testGetUrl() {
-		$this->_startServices ();
-		$this->_initRequest ( 'TestController', 'GET' );
-		Startup::run ( $this->config );
-		$url = Framework::getUrl ();
-		$this->assertEquals ( 'TestController', $url );
+		$this->_startServices();
+		$this->_initRequest('TestController', 'GET');
+		Startup::run($this->config);
+		$url = Framework::getUrl();
+		$this->assertEquals('TestController', $url);
 	}
 
 	/**
 	 * Tests Framework::getRouter()
 	 */
 	public function testGetRouter() {
-		$router = Framework::getRouter ();
-		$this->assertInstanceOf ( Router::class, $router );
+		$router = Framework::getRouter();
+		$this->assertInstanceOf(Router::class, $router);
 	}
 
 	/**
 	 * Tests Framework::getORM()
 	 */
 	public function testGetORM() {
-		$orm = Framework::getORM ();
-		$this->assertInstanceOf ( OrmUtils::class, $orm );
+		$orm = Framework::getORM();
+		$this->assertInstanceOf(OrmUtils::class, $orm);
 	}
 
 	/**
 	 * Tests Framework::getRequest()
 	 */
 	public function testGetRequest() {
-		$uRequest = Framework::getRequest ();
-		$this->assertInstanceOf ( URequest::class, $uRequest );
+		$uRequest = Framework::getRequest();
+		$this->assertInstanceOf(URequest::class, $uRequest);
 	}
 
 	/**
 	 * Tests Framework::getSession()
 	 */
 	public function testGetSession() {
-		$session = Framework::getSession ();
-		$this->assertInstanceOf ( USession::class, $session );
+		$session = Framework::getSession();
+		$this->assertInstanceOf(USession::class, $session);
 	}
 
 	/**
 	 * Tests Framework::getCookies()
 	 */
 	public function testGetCookies() {
-		$uCookies = Framework::getCookies ();
-		$this->assertInstanceOf ( UCookie::class, $uCookies );
+		$uCookies = Framework::getCookies();
+		$this->assertInstanceOf(UCookie::class, $uCookies);
 	}
 
 	/**
 	 * Tests Framework::getTranslator()
 	 */
 	public function testGetTranslator() {
-		$trans = Framework::getTranslator ();
-		$this->assertInstanceOf ( TranslatorManager::class, $trans );
+		$trans = Framework::getTranslator();
+		$this->assertInstanceOf(TranslatorManager::class, $trans);
 	}
 
 	/**
 	 * Tests Framework::getNormalizer()
 	 */
 	public function testGetNormalizer() {
-		$norm = Framework::getNormalizer ();
-		$this->assertInstanceOf ( NormalizersManager::class, $norm );
+		$norm = Framework::getNormalizer();
+		$this->assertInstanceOf(NormalizersManager::class, $norm);
 	}
 
 	/**
 	 * Tests Framework::hasAdmin()
 	 */
 	public function testHasAdmin() {
-		$this->assertTrue ( Framework::hasAdmin () );
+		$this->assertTrue(Framework::hasAdmin());
 	}
 
 	/**
 	 * Tests Framework::getAssets()
 	 */
 	public function testGetAssets() {
-		$assets = Framework::getAssets ();
-		$this->assertInstanceOf ( AssetsManager::class, $assets );
+		$assets = Framework::getAssets();
+		$this->assertInstanceOf(AssetsManager::class, $assets);
 	}
 
 	/**
 	 * Tests Framework::diSemantic()
 	 */
 	public function testDiSemantic() {
-		$jquery = \Ajax\php\ubiquity\JsUtils::diSemantic ( new TestController () );
-		$this->assertInstanceOf ( JsUtils::class, $jquery );
-		$this->assertInstanceOf ( Semantic::class, $jquery->semantic () );
+		$jquery = \Ajax\php\ubiquity\JsUtils::diSemantic(new TestController ());
+		$this->assertInstanceOf(JsUtils::class, $jquery);
+		$this->assertInstanceOf(Semantic::class, $jquery->semantic());
 	}
 
 	/**
 	 * Tests Framework::diBootstrap()
 	 */
 	public function testDiBootstrap() {
-		$jquery = \Ajax\php\ubiquity\JsUtils::diBootstrap ( new TestController () );
-		$this->assertInstanceOf ( JsUtils::class, $jquery );
-		$this->assertInstanceOf ( Bootstrap::class, $jquery->bootstrap () );
+		$jquery = \Ajax\php\ubiquity\JsUtils::diBootstrap(new TestController ());
+		$this->assertInstanceOf(JsUtils::class, $jquery);
+		$this->assertInstanceOf(Bootstrap::class, $jquery->bootstrap());
 	}
 }
+
 
