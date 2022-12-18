@@ -5,8 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+- Nothing
+
+## [2.5.0] 2022-12-18
+
 ### Added
 - `setIsolationLevel` for transactions with `DAO` and `Database` in Mysql/MariaDb.
+### Breaking changes
+- env var support for config files:
+  - Cache initialization is required for config
+  - loaded config file is located in `app/cache/config/config.cache.php` after cache initialization
 ### Fixed
 - `Injected` attribute parsing in `DiControllerParser` (pb with name) - no open issue -
 
