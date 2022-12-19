@@ -1,4 +1,5 @@
 <?php
+
 namespace Ubiquity\utils\base;
 
 use Ubiquity\domains\DDDManager;
@@ -23,12 +24,12 @@ class UIntrospection {
 		$r = new \ReflectionClass($classname);
 		return $r->getFileName();
 	}
-	
-	public static function getMethodAtLine($class,$line){
-		$r=new \ReflectionClass($class);
-		$methods=$r->getMethods();
-		foreach ($methods as $method){
-			if($method->getStartLine()<=$line && $line<=$method->getEndLine()){
+
+	public static function getMethodAtLine($class, $line) {
+		$r = new \ReflectionClass($class);
+		$methods = $r->getMethods();
+		foreach ($methods as $method) {
+			if ($method->getStartLine() <= $line && $line <= $method->getEndLine()) {
 				return $method;
 			}
 		}
@@ -47,7 +48,7 @@ class UIntrospection {
 			$result = array_merge($result, $matches[1]);
 		}
 		if (\strpos($code, '$this->loadDefaultView') !== false || strpos($code, '$this->jquery->renderDefaultView') !== false) {
-			$result[] = DDDManager::getViewNamespace().$r->getDeclaringClass()->getShortName() . '/' . $r->getName() . '.html';
+			$result[] = DDDManager::getViewNamespace() . $r->getDeclaringClass()->getShortName() . '/' . $r->getName() . '.html';
 		}
 		return $result;
 	}
@@ -55,53 +56,53 @@ class UIntrospection {
 	public static function getMethodCode(\ReflectionMethod $r, $lines) {
 		$str = '';
 		$count = \count($lines);
-		$sLine = $r->getStartLine()-1;
+		$sLine = $r->getStartLine() - 1;
 		$eLine = $r->getEndLine();
 		if ($sLine == $eLine)
 			return $lines[$sLine];
-			$min = \min($eLine, $count);
-			for ($l = $sLine; $l < $min; $l ++) {
-				$str .= $lines[$l];
-			}
-			return $str;
+		$min = \min($eLine, $count);
+		for ($l = $sLine; $l < $min; $l++) {
+			$str .= $lines[$l];
+		}
+		return $str;
 	}
 
-	public static function getMethodEffectiveParameters($code,$methodName){
-		$tokens=\token_get_all($code);
-		$parenthesis=0;
-		$result=[];
-		$status='';
-		$current='';
-		foreach ($tokens as $tokenArray){
-			if(\is_array($tokenArray)){
-				if($tokenArray[0]=== T_STRING && $tokenArray[1]===$methodName){
-					$status='find';
-				}elseif($status==='open'){
-					$current.=$tokenArray[1];
+	public static function getMethodEffectiveParameters($code, $methodName) {
+		$tokens = \token_get_all($code);
+		$parenthesis = 0;
+		$result = [];
+		$status = '';
+		$current = '';
+		foreach ($tokens as $tokenArray) {
+			if (\is_array($tokenArray)) {
+				if ($tokenArray[0] === T_STRING && $tokenArray[1] === $methodName) {
+					$status = 'find';
+				} elseif ($status === 'open') {
+					$current .= $tokenArray[1];
 				}
-			}elseif(\is_string($tokenArray)){
-				if($tokenArray==='(' && $status==='find'){
-						$status='open';
-						$current='';
+			} elseif (\is_string($tokenArray)) {
+				if ($tokenArray === '(' && $status === 'find') {
+					$status = 'open';
+					$current = '';
+					$parenthesis++;
+				} elseif ($status === 'open') {
+					if ($tokenArray === '(') {
+						$current .= $tokenArray;
 						$parenthesis++;
-				}elseif($status==='open'){
-					if($tokenArray==='('){
-						$current.=$tokenArray;
-						$parenthesis++;
-					}elseif($tokenArray===',' && $parenthesis===1){
-						$result[]=\trim($current);
-						$current='';
-					}elseif ($tokenArray===')'){
+					} elseif ($tokenArray === ',' && $parenthesis === 1) {
+						$result[] = \trim($current);
+						$current = '';
+					} elseif ($tokenArray === ')') {
 						$parenthesis--;
-						if($parenthesis===0){
-							if($current!=''){
-								$result[]=\trim($current);
+						if ($parenthesis === 0) {
+							if ($current != '') {
+								$result[] = \trim($current);
 							}
 							return $result;
 						}
-						$current.=$tokenArray;
-					}else{
-						$current.=$tokenArray;
+						$current .= $tokenArray;
+					} else {
+						$current .= $tokenArray;
 					}
 				}
 			}
@@ -125,7 +126,7 @@ class UIntrospection {
 			if ($isArray) {
 				$s .= 'array ';
 			} else if ($type) {
-				$class = ! $type->isBuiltin() ? new \ReflectionClass($type->getName()) : null;
+				$class = !$type->isBuiltin() ? new \ReflectionClass($type->getName()) : null;
 				if ($class != null) {
 					$s .= $class . ' ';
 				}
@@ -135,7 +136,7 @@ class UIntrospection {
 			}
 			$s .= '$' . $p->name;
 			if ($p->isOptional()) {
-				$s .= ' = ' . \var_export($p->getDefaultValue(), TRUE);
+				$s .= ' = ' . \var_export($p->getDefaultValue(), true);
 			}
 			$params[] = $s;
 		}
@@ -144,15 +145,17 @@ class UIntrospection {
 		$lines = file($r->getFileName());
 		$sLine = $r->getStartLine();
 		$eLine = $r->getEndLine();
-		if ($eLine === $sLine) {
-			$match = \strstr($lines[$sLine - 1], "function");
-			$str .= \strstr(\strstr($match, "{"), "}", true) . "}";
-		} else {
-			$str .= \strrchr($lines[$sLine - 1], "{");
-			for ($l = $sLine; $l < $eLine - 1; $l ++) {
-				$str .= $lines[$l];
+		if ($sLine < count($lines)) {
+			if ($eLine === $sLine) {
+				$match = \strstr($lines[$sLine - 1], "function");
+				$str .= \strstr(\strstr($match, "{"), "}", true) . "}";
+			} else {
+				$str .= \strrchr($lines[$sLine - 1], "{");
+				for ($l = $sLine; $l < $eLine - 1; $l++) {
+					$str .= $lines[$l];
+				}
+				$str .= \strstr($lines[$eLine - 1], "}", true) . "}";
 			}
-			$str .= \strstr($lines[$eLine - 1], "}", true) . "}";
 		}
 		$vars = $r->getStaticVariables();
 
