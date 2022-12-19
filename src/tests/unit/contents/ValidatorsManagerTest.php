@@ -1,37 +1,18 @@
 <?php
-use Ubiquity\cache\CacheManager;
-use Ubiquity\contents\validation\ValidatorsManager;
-use Ubiquity\contents\validation\validators\ConstraintViolation;
-use Ubiquity\contents\validation\validators\basic\IsBooleanValidator;
-use Ubiquity\contents\validation\validators\basic\IsEmptyValidator;
-use Ubiquity\contents\validation\validators\basic\IsFalseValidator;
-use Ubiquity\contents\validation\validators\basic\IsNullValidator;
-use Ubiquity\contents\validation\validators\basic\IsTrueValidator;
-use Ubiquity\contents\validation\validators\basic\NotEmptyValidator;
-use Ubiquity\contents\validation\validators\basic\NotNullValidator;
-use Ubiquity\contents\validation\validators\basic\TypeValidator;
-use Ubiquity\contents\validation\validators\comparison\EqualsValidator;
-use Ubiquity\contents\validation\validators\comparison\GreaterThanOrEqualValidator;
-use Ubiquity\contents\validation\validators\comparison\GreaterThanValidator;
-use Ubiquity\contents\validation\validators\comparison\LessThanOrEqualValidator;
-use Ubiquity\contents\validation\validators\comparison\LessThanValidator;
-use Ubiquity\contents\validation\validators\comparison\RangeValidator;
-use Ubiquity\contents\validation\validators\multiples\IdValidator;
-use Ubiquity\contents\validation\validators\strings\EmailValidator;
-use Ubiquity\contents\validation\validators\strings\IpValidator;
-use Ubiquity\contents\validation\validators\strings\RegexValidator;
-use Ubiquity\controllers\Startup;
-use Ubiquity\db\Database;
-use Ubiquity\orm\DAO;
-use Ubiquity\orm\creator\database\DbModelsCreator;
+
 use models\Groupe;
 use models\Organization;
 use models\User;
-use services\TestClassComparison;
-use services\TestClassString;
 use services\TestClassToValidate;
-use Ubiquity\contents\validation\validators\strings\UrlValidator;
+use Ubiquity\cache\CacheManager;
+use Ubiquity\contents\validation\validators\ConstraintViolation;
+use Ubiquity\contents\validation\validators\multiples\IdValidator;
+use Ubiquity\contents\validation\ValidatorsManager;
+use Ubiquity\controllers\Startup;
+use Ubiquity\db\Database;
 use Ubiquity\db\providers\pdo\PDOWrapper;
+use Ubiquity\orm\creator\database\DbModelsCreator;
+use Ubiquity\orm\DAO;
 
 /**
  * ValidatorsManager test case.
@@ -56,12 +37,12 @@ class ValidatorsManagerTest extends BaseTest {
 	 * Prepares the environment before running a test.
 	 */
 	protected function _before() {
-		parent::_before ();
-		$db = DAO::getDbOffset ( $this->config, $this->getDatabase () );
+		parent::_before();
+		$db = DAO::getDbOffset($this->config, $this->getDatabase());
 		$this->dbType = $db ['type'];
 		$this->dbName = $db ['dbName'];
-		$this->database = new Database ( $db ['wrapper'] ?? PDOWrapper::class, $this->dbType, $this->dbName, $this->db_server );
-		ValidatorsManager::start ();
+		$this->database = new Database ($db ['wrapper'] ?? PDOWrapper::class, $this->dbType, $this->dbName, $this->db_server);
+		ValidatorsManager::start();
 	}
 
 	/**
@@ -72,16 +53,16 @@ class ValidatorsManagerTest extends BaseTest {
 	}
 
 	protected function beforeQuery() {
-		if (! $this->database->isConnected ())
-			$this->database->connect ();
+		if (!$this->database->isConnected())
+			$this->database->connect();
 	}
 
 	protected function _display($callback) {
-		ob_start ();
+		ob_start();
 		$callback ();
-		return ob_get_clean ();
+		return ob_get_clean();
 	}
-	
+
 	protected function getCacheDirectory() {
 		return "cache/";
 	}
@@ -91,25 +72,25 @@ class ValidatorsManagerTest extends BaseTest {
 	 */
 	public function testValidate() {
 		$user = new User ();
-		$result = ValidatorsManager::validate ( $user );
-		$this->assertEquals ( 4, sizeof ( $result ) );
-		$first = current ( $result );
-		$this->assertTrue ( $first instanceof ConstraintViolation );
-		$this->assertEquals ( 3, sizeof ( $first->getMessage () ) );
-		$this->assertEquals ( IdValidator::class, $first->getValidatorType () );
+		$result = ValidatorsManager::validate($user);
+		$this->assertEquals(4, sizeof($result));
+		$first = current($result);
+		$this->assertTrue($first instanceof ConstraintViolation);
+		$this->assertEquals(3, sizeof($first->getMessage()));
+		$this->assertEquals(IdValidator::class, $first->getValidatorType());
 	}
 
 	/**
 	 * Tests ValidatorsManager::validateInstances()
 	 */
 	public function testValidateInstances() {
-		$orgas = DAO::getAll ( Organization::class, '', false );
-		$result = ValidatorsManager::validateInstances ( $orgas );
-		if (sizeof ( $result ) != 0) {
-			$violation = current ( $result );
-			$this->assertTrue ( $violation instanceof ConstraintViolation );
-			$this->assertEquals ( "This value should not be null", $violation->getMessage () );
-			$this->assertEquals ( "domain", $violation->getMember () );
+		$orgas = DAO::getAll(Organization::class, '', false);
+		$result = ValidatorsManager::validateInstances($orgas);
+		if (sizeof($result) != 0) {
+			$violation = current($result);
+			$this->assertTrue($violation instanceof ConstraintViolation);
+			$this->assertEquals("This value should not be null", $violation->getMessage());
+			$this->assertEquals("domain", $violation->getMember());
 		}
 	}
 
@@ -117,10 +98,9 @@ class ValidatorsManagerTest extends BaseTest {
 	 * Tests ValidatorsManager::clearCache()
 	 */
 	public function testClearCache() {
-		// TODO Auto-generated ValidatorsManagerTest::testClearCache()
-		$this->markTestIncomplete ( "clearCache test not implemented" );
-
-		ValidatorsManager::clearCache(/* parameters */);
+		$this->assertTrue(count(ValidatorsManager::getCacheInfo(Groupe::class)) > 0);
+		ValidatorsManager::clearCache();
+		$this->assertEquals(count(ValidatorsManager::getCacheInfo(Groupe::class)), 0);
 	}
 
 	/**
@@ -128,7 +108,7 @@ class ValidatorsManagerTest extends BaseTest {
 	 */
 	public function testInitCacheInstanceValidators() {
 		// TODO Auto-generated ValidatorsManagerTest::testInitCacheInstanceValidators()
-		$this->markTestIncomplete ( "initCacheInstanceValidators test not implemented" );
+		$this->markTestIncomplete("initCacheInstanceValidators test not implemented");
 
 		ValidatorsManager::initCacheInstanceValidators(/* parameters */);
 	}
@@ -138,18 +118,18 @@ class ValidatorsManagerTest extends BaseTest {
 	 */
 	public function testValidationModelGenerator() {
 		$this->config ["cache"] ["directory"] = "new-cache/";
-		$this->config ["mvcNS"] = [ "models" => "models","controllers" => "controllers","rest" => "" ];
-		Startup::setConfig ( $this->config );
-		CacheManager::start ( $this->config );
-		(new DbModelsCreator ())->create ( $this->config, false );
+		$this->config ["mvcNS"] = ["models" => "models", "controllers" => "controllers", "rest" => ""];
+		Startup::setConfig($this->config);
+		CacheManager::start($this->config);
+		(new DbModelsCreator ())->create($this->config, false);
 		CacheManager::$cache = null;
-		CacheManager::start ( $this->config );
+		CacheManager::start($this->config);
 
-		CacheManager::initModelsCache ( $this->config );
-		ValidatorsManager::start ();
-		$groupes = DAO::getAll ( Groupe::class, '', false );
-		$result = ValidatorsManager::validateInstances ( $groupes );
-		$this->assertEquals ( count ( $result ), 9 );
+		CacheManager::initModelsCache($this->config);
+		ValidatorsManager::start();
+		$groupes = DAO::getAll(Groupe::class, '', false);
+		$result = ValidatorsManager::validateInstances($groupes);
+		$this->assertEquals(count($result), 9);
 	}
 
 	/**
@@ -158,58 +138,58 @@ class ValidatorsManagerTest extends BaseTest {
 	public function testValidatorsBase() {
 		CacheManager::start($this->config);
 		$object = new TestClassToValidate ();
-		ValidatorsManager::addClassValidators ( TestClassToValidate::class );
-		$res = ValidatorsManager::validate ( $object );
-		$this->assertEquals ( 0, count ( $res ) );
-/*
-		$object->setBool ( "not boolean" );
-		$res = ValidatorsManager::validate ( $object );
-		$this->assertEquals ( 1, count ( $res ) );
-		$current = current ( $res );
-		$this->assertInstanceOf ( ConstraintViolation::class, $current );
-		$this->assertEquals ( "This value should be a boolean", $current->getMessage () );
-		$this->assertEquals ( "not boolean", $current->getValue () );
-		$this->assertEquals ( "bool", $current->getMember () );
-		$this->assertEquals ( IsBooleanValidator::class, $current->getValidatorType () );
-		$this->assertNull ( $current->getSeverity () );
+		ValidatorsManager::addClassValidators(TestClassToValidate::class);
+		$res = ValidatorsManager::validate($object);
+		$this->assertEquals(0, count($res));
+		/*
+				$object->setBool ( "not boolean" );
+				$res = ValidatorsManager::validate ( $object );
+				$this->assertEquals ( 1, count ( $res ) );
+				$current = current ( $res );
+				$this->assertInstanceOf ( ConstraintViolation::class, $current );
+				$this->assertEquals ( "This value should be a boolean", $current->getMessage () );
+				$this->assertEquals ( "not boolean", $current->getValue () );
+				$this->assertEquals ( "bool", $current->getMember () );
+				$this->assertEquals ( IsBooleanValidator::class, $current->getValidatorType () );
+				$this->assertNull ( $current->getSeverity () );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setIsNull ( 'pas null' );
-		}, IsNullValidator::class, TestClassToValidate::class );
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$object->setIsNull ( 'pas null' );
+				}, IsNullValidator::class, TestClassToValidate::class );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setNotEmpty ( '' );
-		}, NotEmptyValidator::class, TestClassToValidate::class );
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$object->setNotEmpty ( '' );
+				}, NotEmptyValidator::class, TestClassToValidate::class );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setNotEmpty ( null );
-		}, NotEmptyValidator::class, TestClassToValidate::class );
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$object->setNotEmpty ( null );
+				}, NotEmptyValidator::class, TestClassToValidate::class );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setNotNull ( null );
-		}, NotNullValidator::class, TestClassToValidate::class );
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$object->setNotNull ( null );
+				}, NotNullValidator::class, TestClassToValidate::class );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setIsFalse ( true );
-		}, IsFalseValidator::class, TestClassToValidate::class );
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$object->setIsFalse ( true );
+				}, IsFalseValidator::class, TestClassToValidate::class );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setIsFalse ( "blop" );
-		}, IsFalseValidator::class, TestClassToValidate::class );
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$object->setIsFalse ( "blop" );
+				}, IsFalseValidator::class, TestClassToValidate::class );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setIsTrue ( false );
-		}, IsTrueValidator::class, TestClassToValidate::class );
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$object->setIsTrue ( false );
+				}, IsTrueValidator::class, TestClassToValidate::class );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$user = new User ();
-			$user->setEmail ( "email" );
-			$object->setType ( $user );
-		}, TypeValidator::class, TestClassToValidate::class );
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$user = new User ();
+					$user->setEmail ( "email" );
+					$object->setType ( $user );
+				}, TypeValidator::class, TestClassToValidate::class );
 
-		$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
-			$object->setIsEmpty ( "not empty" );
-		}, IsEmptyValidator::class, TestClassToValidate::class );*/
+				$this->testValidatorInstanceOf ( function (TestClassToValidate $object) {
+					$object->setIsEmpty ( "not empty" );
+				}, IsEmptyValidator::class, TestClassToValidate::class );*/
 	}
 
 	/**
@@ -311,15 +291,15 @@ class ValidatorsManagerTest extends BaseTest {
 
 	protected function testValidator($callback, $classname) {
 		$object = new $classname ();
-		$callback ( $object );
-		$res = ValidatorsManager::validate ( $object );
-		$this->assertEquals ( 1, count ( $res ) );
-		return current ( $res );
+		$callback ($object);
+		$res = ValidatorsManager::validate($object);
+		$this->assertEquals(1, count($res));
+		return current($res);
 	}
 
 	protected function testValidatorInstanceOf($callback, $classValidator, $classInstance) {
-		$constraint = $this->testValidator ( $callback, $classInstance );
-		$this->assertEquals ( $classValidator, $constraint->getValidatorType () );
+		$constraint = $this->testValidator($callback, $classInstance);
+		$this->assertEquals($classValidator, $constraint->getValidatorType());
 	}
 }
 
