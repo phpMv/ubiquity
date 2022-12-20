@@ -1,31 +1,34 @@
 paths:
-    tests: tests
-    output: tests/_output
-    data: tests/_data
-    support: tests/_support
-    envs: tests/_envs
+  tests: tests
+  output: tests/_output
+  data: tests/_data
+  support: tests/_support
+  envs: tests/_envs
 actor_suffix: Tester
 extensions:
-    enabled:
-        - Codeception\Extension\RunFailed
+  enabled:
+    - Codeception\Extension\RunFailed
 coverage:
-    enabled: true
-    remote: false
-    c3_url: 'http://dev.local/c3/'
-#    work_dir: '/home/scrutinizer/build/src/'
+  enabled: true
+  remote: false
+  c3_url: 'http://dev.local/c3/'
+  #    work_dir: '/home/scrutinizer/build/src/'
 
-    include:
-        - Ubiquity/*.php
-    exclude:
-        - Ubiquity/*Interface.php
-        - Ubiquity/controllers/Autoloader.php
-        - Ubiquity/controllers/admin/
-        - Ubiquity/annotations/
-        - Ubiquity/utils/git/UGitRepository.php
-        - Ubiquity/views/engine/micro/*
-        - Ubiquity/views/Gui.php
+  include:
+    - Ubiquity/*.php
+  exclude:
+    - Ubiquity/*Interface.php
+    - Ubiquity/controllers/Autoloader.php
+    - Ubiquity/controllers/admin/
+    - Ubiquity/annotations/
+    - Ubiquity/utils/git/UGitRepository.php
+    - Ubiquity/views/engine/micro/*
+    - Ubiquity/views/Gui.php
+    - Ubiquity/utils/http/session/MultisiteSession.php
+    - Ubiquity/utils/http/UFilesUpload.php
+    -
 
 reporters:
-    xml: Codeception\PHPUnit\Log\JUnit
-    html: Codeception\PHPUnit\ResultPrinter\HTML
-    report: Codeception\PHPUnit\ResultPrinter\Report
+  xml: Codeception\PHPUnit\Log\JUnit
+  html: Codeception\PHPUnit\ResultPrinter\HTML
+  report: Codeception\PHPUnit\ResultPrinter\Report
