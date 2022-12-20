@@ -99,7 +99,7 @@ class ValidatorsManagerTest extends BaseTest {
 	 */
 	public function testClearCache() {
 		$this->assertTrue(count(ValidatorsManager::getCacheInfo(Groupe::class)) > 0);
-		ValidatorsManager::clearCache();
+		ValidatorsManager::clearCache(Groupe::class);
 		$this->assertEquals(count(ValidatorsManager::getCacheInfo(Groupe::class)), 0);
 	}
 
