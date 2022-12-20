@@ -99,9 +99,9 @@ class ValidatorsManagerTest extends BaseTest {
 	 * Tests ValidatorsManager::initCacheInstanceValidators()
 	 */
 	public function testInitCacheInstanceValidators() {
-		$gr = new Groupe();
-		ValidatorsManager::initCacheInstanceValidators($gr);
-		$this->assertEquals(3, count(ValidatorsManager::getCacheInfo(Groupe::class)));
+		$us = new User();
+		ValidatorsManager::initCacheInstanceValidators($us);
+		$this->assertTrue(count(ValidatorsManager::getCacheInfo(User::class))>0);
 	}
 
 	/**
