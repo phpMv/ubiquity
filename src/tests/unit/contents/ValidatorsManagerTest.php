@@ -94,23 +94,14 @@ class ValidatorsManagerTest extends BaseTest {
 		}
 	}
 
-	/**
-	 * Tests ValidatorsManager::clearCache()
-	 */
-	public function testClearCache() {
-		$this->assertTrue(count(ValidatorsManager::getCacheInfo(Groupe::class)) > 0);
-		ValidatorsManager::clearCache(Groupe::class);
-		$this->assertEquals(count(ValidatorsManager::getCacheInfo(Groupe::class)), 0);
-	}
 
 	/**
 	 * Tests ValidatorsManager::initCacheInstanceValidators()
 	 */
 	public function testInitCacheInstanceValidators() {
-		// TODO Auto-generated ValidatorsManagerTest::testInitCacheInstanceValidators()
-		$this->markTestIncomplete("initCacheInstanceValidators test not implemented");
-
-		ValidatorsManager::initCacheInstanceValidators(/* parameters */);
+		$gr = new Groupe();
+		ValidatorsManager::initCacheInstanceValidators($gr);
+		$this->assertEquals(3, count(ValidatorsManager::getCacheInfo(Groupe::class)));
 	}
 
 	/**
