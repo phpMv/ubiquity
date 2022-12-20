@@ -1,9 +1,9 @@
 <?php
-use Ubiquity\orm\reverse\DatabaseReversor;
-use Ubiquity\db\reverse\DbGenerator;
-use Ubiquity\controllers\Startup;
-use Ubiquity\utils\base\UString;
+
 use Ubiquity\cache\CacheManager;
+use Ubiquity\controllers\Startup;
+use Ubiquity\db\reverse\DbGenerator;
+use Ubiquity\orm\reverse\DatabaseReversor;
 
 /**
  * DatabaseReversor test case.
@@ -16,12 +16,12 @@ class DatabaseReversorTest extends BaseTest {
 	private $databaseReversor;
 
 	protected function _before() {
-		parent::_before ();
-		Startup::setConfig ( $this->config );
+		parent::_before();
+		Startup::setConfig($this->config);
 		CacheManager::start($this->config);
-		$this->databaseReversor = new DatabaseReversor ( new DbGenerator (),'default' );
+		$this->databaseReversor = new DatabaseReversor(new DbGenerator(), 'default');
 	}
-	
+
 	protected function getCacheDirectory() {
 		return "cache/";
 	}
