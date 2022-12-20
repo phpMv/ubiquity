@@ -204,7 +204,7 @@ class DAOTest extends BaseTest {
 	public function testGetAllById() {
 		$users = DAO::getAllByIds(User::class, [1, 2, 3, 5]);
 		$this->assertInstanceOf(User::class, $users[0]);
-		$this->assertEquals(0, count($users));
+		$this->assertEquals(4, count($users));
 	}
 
 	public function testUpdateDatabaseParams() {
