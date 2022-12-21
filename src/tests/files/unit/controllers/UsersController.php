@@ -46,7 +46,7 @@ class UsersController extends \controllers\ControllerBase {
 	 * @param $firstname
 	 * @return void
 	 * @throws \Exception
-	 * @route("/{firstname}","name"=>"users.one","priority"=>5)
+	 * @get("/{firstname}","name"=>"users.one","priority"=>5)
 	 */
 	#[Get(path: "/{firstname}", name: "users.one", priority: 5)]
 	public function one($firstname) {
@@ -59,7 +59,7 @@ class UsersController extends \controllers\ControllerBase {
 	 * @param int $id
 	 * @return void
 	 * @throws \Exception
-	 * @route("{id}","priority"=>6)
+	 * @get("{id}","priority"=>6)
 	 */
 	#[Get(path: "{id}", name: "users.byId", priority: 6)]
 	public function byId(int $id) {
