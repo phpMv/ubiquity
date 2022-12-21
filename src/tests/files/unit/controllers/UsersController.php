@@ -25,7 +25,7 @@ class UsersController extends \controllers\ControllerBase {
 	private UserRepository $userRepo;
 
 	/**
-	 * @get()
+	 * @get("priority"=>0)
 	 */
 	#[Get]
 	public function index() {
@@ -44,9 +44,9 @@ class UsersController extends \controllers\ControllerBase {
 	}
 
 	/**
-	 * @get("/{firstname}","name"=>"users.one","priority"=>5)
+	 * @get("/{firstname}","name"=>"users.one","priority"=>4)
 	 */
-	#[Get(path: "/{firstname}", name: "users.one", priority: 5)]
+	#[Get(path: "/{firstname}", name: "users.one", priority: 4)]
 	public function one($firstname) {
 		$this->userRepo->one('firstname= ?', false, [$firstname]);
 		$this->loadView('UsersController/one.html');
@@ -62,9 +62,9 @@ class UsersController extends \controllers\ControllerBase {
 	}
 
 	/**
-	 * @get("insert/{firstname}/{lastname}","priority"=>7)
+	 * @get("insert/{firstname}/{lastname}","priority"=>5)
 	 */
-	#[Get(path: "insert/{firstname}/{lastname}", name: "users.insert", priority: 7)]
+	#[Get(path: "insert/{firstname}/{lastname}", name: "users.insert", priority: 5)]
 	public function insertAndDelete(string $firstname, string $lastname) {
 		$user = new User();
 		$user->setFirstname($firstname);
