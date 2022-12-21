@@ -8,10 +8,24 @@ class RespositoriesCest extends BaseAcceptance {
 	}
 
 	// tests
-	public function tryToGet(AcceptanceTester $I) {
+	public function tryToGetAll(AcceptanceTester $I) {
 		$I->amOnPage("/users/");
 		$I->see('Utilisateurs');
 		$I->see('Benjamin Sherman');
 		$I->see('Acton Carrillo');
+	}
+
+	// tests
+	public function tryToGetOne(AcceptanceTester $I) {
+		$I->amOnPage("/users/Solomon");
+		$I->see('Utilisateur');
+		$I->see('Solomon Tucker');
+	}
+
+	// tests
+	public function tryToGetById(AcceptanceTester $I) {
+		$I->amOnPage("/users/1");
+		$I->see('Utilisateur');
+		$I->see('Benjamin Sherman');
 	}
 }
