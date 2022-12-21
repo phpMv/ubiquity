@@ -2,11 +2,14 @@
 
 namespace controllers;
 
+use models\Organization;
+use models\User;
 use repositories\UserRepository;
 use Ubiquity\attributes\items\di\Autowired;
 use Ubiquity\attributes\items\router\Get;
 use Ubiquity\attributes\items\router\NoRoute;
 use Ubiquity\attributes\items\router\Route;
+use Ubiquity\orm\DAO;
 
 /**
  * Controller UsersController
@@ -56,5 +59,21 @@ class UsersController extends \controllers\ControllerBase {
 	public function byId(int $id) {
 		$this->userRepo->byId($id);
 		$this->loadView('UsersController/byId.html');
+	}
+
+	/**
+	 * @get("insert/{firstname}/{lastname}","priority"=>7)
+	 */
+	#[Get(path: "insert/{firstname}/{lastname}", name: "users.insert", priority: 7)]
+	public function insertAndDelete(string $firstname, string $lastname) {
+		$user = new User();
+		$user->setFirstname($firstname);
+		$user->setLastname($lastname);
+		$orga = DAO::getOne(Organization::class, '1=1', false);
+		$user->setOrganization($orga);
+		$this->userRepo->insert($user, false, 'one');
+		$this->loadView('UsersController/one.html');
+		$this->userRepo->remove($user, 'one');
+		$this->loadView('UsersController/one.html');
 	}
 }

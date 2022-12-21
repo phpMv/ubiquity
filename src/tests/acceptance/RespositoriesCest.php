@@ -28,4 +28,11 @@ class RespositoriesCest extends BaseAcceptance {
 		$I->see('Utilisateur');
 		$I->see('Benjamin Sherman');
 	}
+
+	// tests
+	public function tryToInsertAndDelete(AcceptanceTester $I) {
+		$I->amOnPage("/users/Salome/Menard");
+		$I->see('Utilisateur');
+		$I->see('Salome Menard');
+	}
 }
