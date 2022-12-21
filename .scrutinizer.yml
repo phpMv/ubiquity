@@ -22,7 +22,7 @@ build:
     coverage:
       dependencies:
         before:
-#          - sudo apt-get install -y php7.4-dev
+      #          - sudo apt-get install -y php7.4-dev
 
       environment:
         php:
@@ -33,7 +33,7 @@ build:
           dev.local: '127.0.0.1'
           worker.local: '127.0.0.1'
         apache2:
-          modules: ['rewrite']
+          modules: [ 'rewrite' ]
           sites:
             ubiquity:
               host: 'dev.local'
@@ -42,8 +42,8 @@ build:
         google_chrome:
           use_latest: true
       services:
-          # For available tags, see https://hub.docker.com/_/mysql/
-          mysql: 5.7
+        # For available tags, see https://hub.docker.com/_/mysql/
+        mysql: 5.7
       tests:
         before:
           - sudo cp src/tests/files/xdebug.ini /home/scrutinizer/.phpenv/versions/7.4.27/etc/conf.d/xdebug.ini
@@ -58,6 +58,7 @@ build:
           - cp -R src/tests/files/unit/* src/app/
           - (cd src/ && ./../vendor/bin/Ubiquity all-models -d=bench -a=public)
           - (cd src/ && ./../vendor/bin/Ubiquity init-cache)
+          - (cd src/ && ./../vendor/bin/Ubiquity info:routes)
           - sudo chmod -R 777 src
           - sudo chmod -R 777 src/app/cache-tests
           - cp -f src/tests/files/workerman/run-workerman.sh run-workerman.sh && cp -f src/tests/files/workerman/workerServices.php src/app/config/workerServices.php
@@ -78,28 +79,28 @@ build:
               file: src/tests/_output/coverage.xml
               format: clover
 filter:
-    paths: ["src/Ubiquity/*"]
-    excluded_paths:
-        - src/Ubiquity/cache/system/ApcuCache.php
-        - src/Ubiquity/cache/system/ArrayApcCache.php
-        - src/Ubiquity/cache/system/MemCachedDriver.php
-        - src/Ubiquity/cache/system/PhpFastCacheDriver.php
-        - src/Ubiquity/cache/system/RedisCacheDriver.php
-        - src/Ubiquity/cache/system/ObjectCacheDriver.php
-        - src/Ubiquity/cache/dao/DAOSerialCache.php
-        - src/Ubiquity/cache/dao/DAOCache.php
-        - src/Ubiquity/db/providers/pdo/drivers/SqliteDriverMetas.php
-        - src/Ubiquity/db/providers/pdo/drivers/PgsqlDriverMetas.php
-        - src/Ubiquity/utils/git/UGitRepository.php
-        - src/Ubiquity/utils/http/session/MultiSiteSession.php
-        - src/Ubiquity/utils/http/foundation/Psr7.php
-        - src/Ubiquity/utils/git/*
-        - src/Ubiquity/cache/Preloader.php
-        - src/Ubiquity/cache/preloading/
-        - src/Ubiquity/controllers/StartupAsync.php
-        - src/Ubiquity/controllers/crud/viewers/traits/FormModelViewerTrait.php
+  paths: [ "src/Ubiquity/*" ]
+  excluded_paths:
+    - src/Ubiquity/cache/system/ApcuCache.php
+    - src/Ubiquity/cache/system/ArrayApcCache.php
+    - src/Ubiquity/cache/system/MemCachedDriver.php
+    - src/Ubiquity/cache/system/PhpFastCacheDriver.php
+    - src/Ubiquity/cache/system/RedisCacheDriver.php
+    - src/Ubiquity/cache/system/ObjectCacheDriver.php
+    - src/Ubiquity/cache/dao/DAOSerialCache.php
+    - src/Ubiquity/cache/dao/DAOCache.php
+    - src/Ubiquity/db/providers/pdo/drivers/SqliteDriverMetas.php
+    - src/Ubiquity/db/providers/pdo/drivers/PgsqlDriverMetas.php
+    - src/Ubiquity/utils/git/UGitRepository.php
+    - src/Ubiquity/utils/http/session/MultiSiteSession.php
+    - src/Ubiquity/utils/http/foundation/Psr7.php
+    - src/Ubiquity/utils/git/*
+    - src/Ubiquity/cache/Preloader.php
+    - src/Ubiquity/cache/preloading/
+    - src/Ubiquity/controllers/StartupAsync.php
+    - src/Ubiquity/controllers/crud/viewers/traits/FormModelViewerTrait.php
 
 checks:
-    php:
-        code_rating: true
-        duplication: true
+  php:
+    code_rating: true
+    duplication: true

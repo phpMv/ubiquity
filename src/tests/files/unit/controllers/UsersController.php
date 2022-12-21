@@ -22,8 +22,6 @@ class UsersController extends \controllers\ControllerBase {
 	private UserRepository $userRepo;
 
 	/**
-	 * @return void
-	 * @throws \Exception
 	 * @get()
 	 */
 	#[Get]
@@ -43,9 +41,6 @@ class UsersController extends \controllers\ControllerBase {
 	}
 
 	/**
-	 * @param $firstname
-	 * @return void
-	 * @throws \Exception
 	 * @get("/{firstname}","name"=>"users.one","priority"=>5)
 	 */
 	#[Get(path: "/{firstname}", name: "users.one", priority: 5)]
@@ -54,11 +49,7 @@ class UsersController extends \controllers\ControllerBase {
 		$this->loadView('UsersController/one.html');
 	}
 
-
 	/**
-	 * @param int $id
-	 * @return void
-	 * @throws \Exception
 	 * @get("{id}","priority"=>6)
 	 */
 	#[Get(path: "{id}", name: "users.byId", priority: 6)]
@@ -66,5 +57,4 @@ class UsersController extends \controllers\ControllerBase {
 		$this->userRepo->byId($id);
 		$this->loadView('UsersController/byId.html');
 	}
-
 }
