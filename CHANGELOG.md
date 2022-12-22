@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.5.0] 2022-12-18
 
+Before creating a new project, be sure to update the devtools if they are installed globally:
+```bash
+composer global update
+```
 ### Added
 - `setIsolationLevel` for transactions with `DAO` and `Database` in Mysql/MariaDb.
 ### Breaking changes
