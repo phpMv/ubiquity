@@ -1,0 +1,753 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../controller/router.rst:2
+#: 855b4a2c815249acaed6468d4b444c72
+msgid "Router"
+msgstr ""
+
+#: ../../controller/router.rst:4
+#: 18732d8a73d14e4685b9a6b3c5c6e8db
+msgid "Routing can be used in addition to the default mechanism that associates ``controller/action/{parameters}`` with an url. |br|"
+msgstr ""
+
+#: ../../controller/router.rst:7
+#: 2d5e4c84a4d24a5492cdedf3559039ba
+msgid "Dynamic routes"
+msgstr ""
+
+#: ../../controller/router.rst:8
+#: 6bee78589fea4fdb8e6022f1659eef5c
+msgid "Dynamic routes are defined at runtime. |br| It is possible to define these routes in the **app/config/services.php** file."
+msgstr ""
+
+#: ../../controller/router.rst:12
+#: d1f2d2bd5dd84584a3ef98a4d64325bf
+msgid "Dynamic routes should only be used if the situation requires it:"
+msgstr ""
+
+#: ../../controller/router.rst:14
+#: 0daf825d32574d48a6fc61686464fc9f
+msgid "in the case of a micro-application"
+msgstr ""
+
+#: ../../controller/router.rst:15
+#: ac45238eec3c45e8ac712aecb79d0cc3
+msgid "if a route must be dynamically defined"
+msgstr ""
+
+#: ../../controller/router.rst:17
+#: 17616ee5983544f497efe6109a5ba807
+msgid "In all other cases, it is advisable to declare the routes with annotations, to benefit from caching."
+msgstr ""
+
+#: ../../controller/router.rst:20
+#: 968d4c65b78242dd91d8907c22e8bf81
+msgid "Callback routes"
+msgstr ""
+
+#: ../../controller/router.rst:21
+#: 710d8f8737cc4fb7935c6c003e333091
+msgid "The most basic Ubiquity routes accept a Closure. |br| In the context of micro-applications, this method avoids having to create a controller."
+msgstr ""
+
+#: ../../controller/router.rst:24
+#: ../../controller/router.rst:48
+#: ../../controller/router.rst:81
+#: db83035798cf49398e09aa58860104f6
+#: 867087ab81634eb1a17c7f3f56217253
+#: ec7d02758ebb4fdc98139b34386060b3
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../controller/router.rst:36
+#: a8a712e027b34025a52a60be15a81d18
+msgid "Callback routes can be defined for all http methods with:"
+msgstr ""
+
+#: ../../controller/router.rst:38
+#: 81082c097fe14547a4199366ba48e487
+msgid "Router::post"
+msgstr ""
+
+#: ../../controller/router.rst:39
+#: 59ac024e9d494d288587c8c6a55b11fd
+msgid "Router::put"
+msgstr ""
+
+#: ../../controller/router.rst:40
+#: 168c07b1dae949ce8e3b9764f458b24a
+msgid "Router::delete"
+msgstr ""
+
+#: ../../controller/router.rst:41
+#: c66ee43117754feaaa9b928fa0328d1a
+msgid "Router::patch"
+msgstr ""
+
+#: ../../controller/router.rst:42
+#: d2ce23c7d12946348e45a092913a0fbd
+msgid "Router::options"
+msgstr ""
+
+#: ../../controller/router.rst:45
+#: b3b1eed7f4754eab8a8b39c5264b84e6
+msgid "Controller routes"
+msgstr ""
+
+#: ../../controller/router.rst:46
+#: 0f1d1798a2ae4dee9337cca3138f51f8
+msgid "Routes can also be associated more conventionally with an action of a controller:"
+msgstr ""
+
+#: ../../controller/router.rst:57
+#: 1a1c1d04a1fa4dfea4cac41e82d9283e
+msgid "The method ``FooController::index()`` will be accessible via the url ``/bar``."
+msgstr ""
+
+#: ../../controller/router.rst:59
+#: 21974019767142f8a391519c48478403
+msgid "In this case, the **FooController** must be a class inheriting from **Ubiquity\\\\controllers\\\\Controller** or one of its subclasses, and must have an **index** method:"
+msgstr ""
+
+#: ../../controller/router.rst:62
+#: ../../controller/router.rst:712
+#: ../../controller/router.rst:734
+#: ../../controller/router.rst:765
+#: ../../controller/router.rst:784
+#: 2e91ccc9345948258c20d6214ab63148
+#: 686518de0668450585e0604af9371dd5
+#: 09eb09562eb245c1aeae014c244d30d8
+#: 97ec7bbffbc34eb0b0ab857513e89a8d
+#: 552a966af1dd4e959c435900315af845
+msgid "app/controllers/FooController.php"
+msgstr ""
+
+#: ../../controller/router.rst:77
+#: 63f80d669062472fb103f1203bff022b
+msgid "Default route"
+msgstr ""
+
+#: ../../controller/router.rst:78
+#: 42c503d6aa2540d28a4841997813848c
+msgid "The default route matches the path **/**. |br| It can be defined using the reserved path **_default**"
+msgstr ""
+
+#: ../../controller/router.rst:92
+#: 9411d96ea3154164b6ce0116ddf586d0
+msgid "Static routes"
+msgstr ""
+
+#: ../../controller/router.rst:94
+#: c020037b799f4cc393394f6e9dc69b7f
+msgid "Static routes are defined using annotation or with php native attributes since ``Ubiquity 2.4.0``."
+msgstr ""
+
+#: ../../controller/router.rst:97
+#: 4394f18105314721a607b442553d0e92
+msgid "These annotations or attributes are never read at runtime. |br| It is necessary to reset the router cache to take into account the changes made on the routes."
+msgstr ""
+
+#: ../../controller/router.rst:101
+#: 586dd1430015416596648a02b62389b0
+msgid "Creation"
+msgstr ""
+
+#: ../../controller/router.rst:105
+#: ../../controller/router.rst:157
+#: ../../controller/router.rst:205
+#: ../../controller/router.rst:250
+#: ../../controller/router.rst:301
+#: ../../controller/router.rst:358
+#: ../../controller/router.rst:410
+#: ../../controller/router.rst:454
+#: ../../controller/router.rst:507
+#: ../../controller/router.rst:557
+#: ../../controller/router.rst:615
+#: ../../controller/router.rst:661
+#: ../../controller/router.rst:710
+#: ../../controller/router.rst:763
+#: ../../controller/router.rst:815
+#: ../../controller/router.rst:870
+#: ../../controller/router.rst:893
+#: ../../controller/router.rst:983
+#: 70d1a8a14b3c47328996ac0651ce1010
+#: a5309917bfa64a3fa0c2bd76dc7a5ad3
+#: e0a861c93de3427a8d870eb9a4c3d6f9
+#: 877a24f1878147dc85f152a7ecff0416
+#: 804a4e912f4f417686a3654fa9f82c9b
+#: cf6f2022d02945cc9efcfb707f20930d
+#: 00b2e8c7ac5c47aab83d3bfaa62e05b0
+#: 418af5cc88b3459886d4869524dc5ecc
+#: 64022f751b564d34a7ab819fbdfd33b7
+#: d524cde60eaa41a58e548cd5286626d3
+#: cc40eec1f3dc40b59d294573b9d57669
+#: 8eb88b02ae4f4af486e12f610d00193f
+#: 7ba8a01e4fb4402b85f0b9aec4c5a0c9
+#: 44a6fb9ed6564d749e9017553fc3e3a5
+#: 52ff808741e04248a2a6e5575bc649e2
+#: 1087f0665e9b4dbca146b913f70013c7
+#: 26fc0285f8214dfebce27b568ed9b0a2
+#: 43202b05e56b4279bc35c1e6c9b7885b
+msgid "Attributes"
+msgstr ""
+
+#: ../../controller/router.rst:107
+#: ../../controller/router.rst:125
+#: ../../controller/router.rst:159
+#: ../../controller/router.rst:180
+#: ../../controller/router.rst:207
+#: ../../controller/router.rst:226
+#: ../../controller/router.rst:252
+#: ../../controller/router.rst:271
+#: ../../controller/router.rst:303
+#: ../../controller/router.rst:322
+#: ../../controller/router.rst:360
+#: ../../controller/router.rst:378
+#: ../../controller/router.rst:412
+#: ../../controller/router.rst:430
+#: ../../controller/router.rst:456
+#: ../../controller/router.rst:474
+#: ../../controller/router.rst:509
+#: ../../controller/router.rst:528
+#: ../../controller/router.rst:559
+#: ../../controller/router.rst:581
+#: ../../controller/router.rst:663
+#: ../../controller/router.rst:681
+#: ../../controller/router.rst:817
+#: ../../controller/router.rst:838
+#: d23bc48c6e3d49b989f0bc03164c9bf2
+#: 5108d9697cf146a3aea214f97f7790d2
+#: 4e004c3a2fdf44cf96b3fc7f9cb076af
+#: 6d81fd228d3d40b0b61f0923c1bd395b
+#: 5453deb8fd124071abbbd4a58b524c2c
+#: 8c916a1efe464507a04fa0133c3361ee
+#: 9b23bc1a9ba74073a57810971c46ebbd
+#: 58cd5f2b334b4388b58956eec3b153bf
+#: 36aa6dc995d14c1697f98f469ecc2b66
+#: 51728614379242c0b0a1a5875377f0b3
+#: ed7db9ff120f409a9df825ebe540a150
+#: 1c78adfd6fd94bb28474e0531afd0258
+#: 8e39a3c8d9354d74ad6162f99f6ea2af
+#: 82d46753c4cd49caa0ccd860e24f5cd1
+#: 94cd08eaed8b4cd1bea786894f9b93f1
+#: 6e443d4c47e348a389d6f8fd97f910ab
+#: 5377b47d355a45d4bdd8edf981bc7143
+#: 11b577ce8b684e269381a24a9bef122e
+#: 178188b96919479381e0e030c639c62f
+#: b8113b05f9b947b398cb50947748b0e1
+#: 77b3c9ac627f41d78d62c4f28b510c9f
+#: 32c58dc6c5c1407c934760c90570d3a4
+#: 9d4c8fad41eb4a4da70aa09da24898be
+#: 11b2811976844c259b67bf43c4e0e2d6
+msgid "app/controllers/ProductsController.php"
+msgstr ""
+
+#: ../../controller/router.rst:123
+#: ../../controller/router.rst:178
+#: ../../controller/router.rst:224
+#: ../../controller/router.rst:269
+#: ../../controller/router.rst:320
+#: ../../controller/router.rst:376
+#: ../../controller/router.rst:428
+#: ../../controller/router.rst:472
+#: ../../controller/router.rst:526
+#: ../../controller/router.rst:579
+#: ../../controller/router.rst:635
+#: ../../controller/router.rst:679
+#: ../../controller/router.rst:732
+#: ../../controller/router.rst:782
+#: ../../controller/router.rst:836
+#: ../../controller/router.rst:877
+#: ../../controller/router.rst:900
+#: ../../controller/router.rst:995
+#: dad935d147364a5da5ab316152998d66
+#: ba3d9f69f44346dea532d6ade92848dd
+#: 552c98659bb64a708b4e0b2721612ea9
+#: 417511371fc34b4da9fd12fd71d8e121
+#: b872747f8cec4e6e9e8d452ba66c3ed7
+#: 8cbb5b698acd4750ac5527687b265bbe
+#: 0de24f6fd18f4b5599cba96950d4060f
+#: 000522ba550a436687bc1c094ca4db3e
+#: de9a3c007b104652b9aa0784fb17fb23
+#: 219362bd880d454e878f541ffc702cea
+#: d7ae0471006f40908aa14452a047cade
+#: 7d9ac2cdae2e415fb8de4ad583351504
+#: abbaf7a37ca443549269aab5f0849e85
+#: 120601fabb9f4c08859ad498d6b8200d
+#: 53fdc8ab05de44718ae4dc8efd553ece
+#: 7fbceb7487de4b45926f99b6af276598
+#: c1bcb97378aa402eb4436416b1c568f2
+#: 08bb3a09de244eebae8cee55be1798c9
+msgid "Annotations"
+msgstr ""
+
+#: ../../controller/router.rst:142
+#: 67625976cf2542a89df41513b8d5ce25
+msgid "The method ``Products::index()`` will be accessible via the url ``/products``."
+msgstr ""
+
+#: ../../controller/router.rst:148
+#: 82f78b5c45ad47b1becdf71521facf4d
+msgid "The initial or terminal slash is ignored in the path. The following routes are therefore equivalent: |br|"
+msgstr ""
+
+#: ../../controller/router.rst:147
+#: d72ce52320cc4024b972346c3a4081ee
+msgid "``#[Route('products')]``"
+msgstr ""
+
+#: ../../controller/router.rst:148
+#: c1dc16d325e240dc8987dfefe690b098
+msgid "``#[Route('/products')]``"
+msgstr ""
+
+#: ../../controller/router.rst:149
+#: 694218cbdd2e4a8792d0bbcf2a4e43b4
+msgid "``#[Route('/products/')]``"
+msgstr ""
+
+#: ../../controller/router.rst:152
+#: 2b3c4e3208754e408384da1dd702fa31
+msgid "Route parameters"
+msgstr ""
+
+#: ../../controller/router.rst:153
+#: 4b708e5803e141ee80c3040d76df7fe4
+msgid "A route can have parameters:"
+msgstr ""
+
+#: ../../controller/router.rst:200
+#: 3c43d5d32fd14b0c965d0d6e1e35e880
+msgid "Route optional parameters"
+msgstr ""
+
+#: ../../controller/router.rst:201
+#: 7b363d5694ca4e1eb6659d99af3c8ebc
+msgid "A route can define optional parameters, if the associated method has optional arguments:"
+msgstr ""
+
+#: ../../controller/router.rst:244
+#: 56e5b384c6e74a6bae44ec13f44ccc35
+msgid "Route requirements"
+msgstr ""
+
+#: ../../controller/router.rst:246
+#: af0d76c3cfd64b3eac57eac23bee6ebe
+msgid "It is possible to add specifications on the variables passed in the url via the attribute **requirements**."
+msgstr ""
+
+#: ../../controller/router.rst:289
+#: ../../controller/router.rst:340
+#: 4843fc737350430693a95ae544a4280d
+#: eb816cc137da457cb56e1ae64396722c
+msgid "The defined route matches these urls:"
+msgstr ""
+
+#: ../../controller/router.rst:289
+#: 662651cc59424c36b2982069556de67b
+msgid "``products/all/1/20``"
+msgstr ""
+
+#: ../../controller/router.rst:290
+#: 101a09191b0c4b40af344b5945444c5f
+msgid "``products/all/5/``"
+msgstr ""
+
+#: ../../controller/router.rst:293
+#: ../../controller/router.rst:344
+#: a4e8a6e30f324ec58855643ed97f4bb6
+#: c7fa648482db4541ba4cda5476f2c6ca
+msgid "but not with that one:"
+msgstr ""
+
+#: ../../controller/router.rst:292
+#: 0da1be498acf40b5a86b3859d242cb74
+msgid "``products/all/test``"
+msgstr ""
+
+#: ../../controller/router.rst:296
+#: f61e745bed5942319678d5e4f7ee1ae5
+msgid "Parameter typing"
+msgstr ""
+
+#: ../../controller/router.rst:297
+#: 3f76af5089604b4a8a85cc68762a2fb4
+msgid "The route declaration takes into account the data types passed to the action, which avoids adding requirements for simple types (int, bool, float)."
+msgstr ""
+
+#: ../../controller/router.rst:340
+#: 36e27bec1ae348abbeab52768763e997
+msgid "``products/1``"
+msgstr ""
+
+#: ../../controller/router.rst:341
+#: 6ce0bbe473ac4035bc8de31809eeb5db
+msgid "``products/20``"
+msgstr ""
+
+#: ../../controller/router.rst:343
+#: b54de2e0a189468dbd3d611094caf659
+msgid "``products/test``"
+msgstr ""
+
+#: ../../controller/router.rst:349
+#: 525a9bffbf4e478798ba1fb12d246008
+msgid "Correct values by data type:"
+msgstr ""
+
+#: ../../controller/router.rst:347
+#: 977c7f8a33fb40ce9b590a74302deea7
+msgid "``int``: ``1``..."
+msgstr ""
+
+#: ../../controller/router.rst:348
+#: 0e74f81e19a3414fb24d9bd46d6c90d5
+msgid "``bool``: ``0`` or ``1``"
+msgstr ""
+
+#: ../../controller/router.rst:349
+#: c7ce3fe8740448d496f4bdfe34bd25ac
+msgid "``float``: ``1`` ``1.0`` ..."
+msgstr ""
+
+#: ../../controller/router.rst:352
+#: 381bff653e8142da8977a3a1ec92fdd5
+msgid "Route http methods"
+msgstr ""
+
+#: ../../controller/router.rst:354
+#: 5e9da768fd4742e19a0600e99aa65193
+msgid "It is possible to specify the http method or methods associated with a route:"
+msgstr ""
+
+#: ../../controller/router.rst:394
+#: f64a25a1ea9645e69d3811713eda863f
+msgid "The **methods** attribute can accept several methods: |br| ``@route(\"testMethods\",\"methods\"=>[\"get\",\"post\",\"delete\"])`` |br| ``#[Route('testMethods', methods: ['get','post','delete'])]``"
+msgstr ""
+
+#: ../../controller/router.rst:398
+#: 8ca85d458f904eac9cc8120993ec9c56
+msgid "The **@route** annotation or **Route** attribute defaults to all HTTP methods. |br| There is a specific annotation for each of the existing HTTP methods:"
+msgstr ""
+
+#: ../../controller/router.rst:400
+#: 2bc4e63656054368b8c1c362ac4f9331
+msgid "**@get** => **Get**"
+msgstr ""
+
+#: ../../controller/router.rst:401
+#: 20d827e0c7c94ff98a6f6748048c53f1
+msgid "**@post** => **Post**"
+msgstr ""
+
+#: ../../controller/router.rst:402
+#: ddfa922b857d4c93917bb6577146ce8a
+msgid "**@put** => **Put**"
+msgstr ""
+
+#: ../../controller/router.rst:403
+#: 694518a8f36a4cea96be72aeeb203a1f
+msgid "**@patch** => **Patch**"
+msgstr ""
+
+#: ../../controller/router.rst:404
+#: 08194ff0813f4815b42f9663b0e58677
+msgid "**@delete** => **Delete**"
+msgstr ""
+
+#: ../../controller/router.rst:405
+#: 9a7e2b769b6345248927b5d6a1701958
+msgid "**@head** => **Head**"
+msgstr ""
+
+#: ../../controller/router.rst:406
+#: 97bb00266516452e83268606e46cfad4
+msgid "**@options** => **Options**"
+msgstr ""
+
+#: ../../controller/router.rst:448
+#: a1a0f2e5129147efa645ec1835c0bbd1
+msgid "Route name"
+msgstr ""
+
+#: ../../controller/router.rst:449
+#: e66e8f54c074412d9ab89ac11743606b
+msgid "It is possible to specify the **name** of a route, this name then facilitates access to the associated url. |br| If the **name** attribute is not specified, each route has a default name, based on the pattern **controllerName_methodName**."
+msgstr ""
+
+#: ../../controller/router.rst:491
+#: 4d0ccc2965be42f1986cf365675a8fa2
+msgid "URL or path generation"
+msgstr ""
+
+#: ../../controller/router.rst:492
+#: e63186c091a4482e8dde77b880f08aa4
+msgid "Route names can be used to generate URLs or paths."
+msgstr ""
+
+#: ../../controller/router.rst:494
+#: 6d93c7c46185419b81d9e4eba00db98e
+msgid "Linking to Pages in Twig"
+msgstr ""
+
+#: ../../controller/router.rst:502
+#: ec20978ce7264bf3b529b02b68853e4a
+msgid "Global route"
+msgstr ""
+
+#: ../../controller/router.rst:503
+#: da1668ce444e4175a4ef8de22160ab41
+msgid "The **@route** annotation can be used on a controller class :"
+msgstr ""
+
+#: ../../controller/router.rst:547
+#: 2793afc1ce314a48a2c57e5326f5aa54
+msgid "In this case, the route defined on the controller is used as a prefix for all controller routes : |br| The generated route for the action **display** is ``/product/all``"
+msgstr ""
+
+#: ../../controller/router.rst:551
+#: 27b818a8d1ba4695b3bc195be9513c89
+msgid "automated routes"
+msgstr ""
+
+#: ../../controller/router.rst:553
+#: e6efa84696d4427eab7b1bbe0bc0ba66
+msgid "If a global route is defined, it is possible to add all controller actions as routes (using the global prefix), by setting the **automated** parameter :"
+msgstr ""
+
+#: ../../controller/router.rst:603
+#: 80b2da0bfbc04405a5422fa2cae8e7af
+msgid "The **automated** attribute defines the 3 routes contained in **ProductsController**:"
+msgstr ""
+
+#: ../../controller/router.rst:601
+#: 65604c02a2b04721834c09b641cfbd7a
+msgid "`/product/(index/)?`"
+msgstr ""
+
+#: ../../controller/router.rst:602
+#: af9f5c8431b14e26b520e37d22765616
+msgid "`/product/generate`"
+msgstr ""
+
+#: ../../controller/router.rst:603
+#: de3fdf66f8b7476bad2cb47b07db23ed
+msgid "`/product/display/{id}`"
+msgstr ""
+
+#: ../../controller/router.rst:606
+#: bbe7ded77d364cf0a710dabc25fa946b
+msgid "inherited routes"
+msgstr ""
+
+#: ../../controller/router.rst:608
+#: 116168d7812e4a2e834ee06db6f6a3ae
+msgid "With the **inherited** attribute, it is also possible to generate the declared routes in the base classes, or to generate routes associated with base class actions if the **automated** attribute is set to true in the same time."
+msgstr ""
+
+#: ../../controller/router.rst:611
+#: ed96352e76ce42958e77ed87289f7871
+msgid "The base class:"
+msgstr ""
+
+#: ../../controller/router.rst:617
+#: ../../controller/router.rst:637
+#: ebfe9a8d288a4dadba07c212fb0e5b39
+#: 76e3edb2de654b61a4cf6645975c1875
+msgid "app/controllers/ProductsBase.php"
+msgstr ""
+
+#: ../../controller/router.rst:657
+#: de3d7fd1547c406cb2e65deab2af76cb
+msgid "The derived class using inherited members:"
+msgstr ""
+
+#: ../../controller/router.rst:699
+#: 03d8b43849d34ccea62e5454272e0a3e
+msgid "The **inherited** attribute defines the 2 routes defined in **ProductsBase**:"
+msgstr ""
+
+#: ../../controller/router.rst:697
+#: e2853a9573784d649760a8e84d4275b5
+msgid "`/products/(index/)?`"
+msgstr ""
+
+#: ../../controller/router.rst:698
+#: 99f70bfedd1a406688cf0000fee325e3
+msgid "`/products/sort/{name}`"
+msgstr ""
+
+#: ../../controller/router.rst:701
+#: dfb93d0f0ef44073a50b040231a67452
+msgid "If the **automated** and **inherited** attributes are combined, the base class actions are also added to the routes."
+msgstr ""
+
+#: ../../controller/router.rst:704
+#: 67d0cae0fa7e45f5b88b112a8fdfe324
+msgid "Global route parameters"
+msgstr ""
+
+#: ../../controller/router.rst:705
+#: 08a3c2522dd04faf82b175f4b149fb9c
+msgid "The global part of a route can define parameters, which will be passed in all generated routes. |br| These parameters can be retrieved through a public data member:"
+msgstr ""
+
+#: ../../controller/router.rst:754
+#: 1c5f9b5f92fe412fb04f5ef1a0f61786
+msgid "Accessing the url ``/foo/bar/display`` displays the contents of the bar member."
+msgstr ""
+
+#: ../../controller/router.rst:757
+#: d7403cf484b145e981c25074dfe3f093
+msgid "Route without global prefix"
+msgstr ""
+
+#: ../../controller/router.rst:758
+#: 20ff35d35b59426da4da68053f38f593
+msgid "If the global route is defined on a controller, all the generated routes in this controller are preceded by the prefix. |br| It is possible to explicitly introduce exceptions on some routes, using the ``#/`` prefix."
+msgstr ""
+
+#: ../../controller/router.rst:803
+#: 564c9895caea410092792bf4c7a4fec1
+msgid "The controller defines the ``/noRoot`` url, which is not prefixed with the ``/foo`` part."
+msgstr ""
+
+#: ../../controller/router.rst:806
+#: 0c651e6646b14e1dab623071dfb76ac8
+msgid "Route priority"
+msgstr ""
+
+#: ../../controller/router.rst:807
+#: 9b86a4857a804d3296f040d09f9b3c3f
+msgid "The **prority** parameter of a route allows this route to be resolved in a priority order."
+msgstr ""
+
+#: ../../controller/router.rst:809
+#: 35b6f72b3aa4499ebf03b11e22c1f701
+msgid "The higher the priority parameter, the more the route will be defined at the beginning of the stack of routes in the cache."
+msgstr ""
+
+#: ../../controller/router.rst:811
+#: a0e56aa6efbf44eab20972662cb2d1b1
+msgid "In the example below, the **products/all** route will be defined before the **/products** route."
+msgstr ""
+
+#: ../../controller/router.rst:860
+#: 8b97fe25d44f43009605fc6292acaa80
+msgid "The default priority value is ``0``."
+msgstr ""
+
+#: ../../controller/router.rst:863
+#: f0ed25803dfc454fa640f08240d64af7
+msgid "Routes response caching"
+msgstr ""
+
+#: ../../controller/router.rst:864
+#: 2df6cd6599b14775bfb0953fa9681f43
+msgid "It is possible to cache the response produced by a route:"
+msgstr ""
+
+#: ../../controller/router.rst:866
+#: 4476e2d2b8434221b4e58c9859fde44c
+msgid "In this case, the response is cached and is no longer dynamic."
+msgstr ""
+
+#: ../../controller/router.rst:888
+#: 56115f84984140b4a8cba6fbef132ffb
+msgid "Cache duration"
+msgstr ""
+
+#: ../../controller/router.rst:889
+#: 8cae00c6930744318f380528783eb1ec
+msgid "The **duration** is expressed in seconds, if it is omitted, the duration of the cache is infinite."
+msgstr ""
+
+#: ../../controller/router.rst:911
+#: c2ecbf8b331d4bcba1f067f32b3b7cb1
+msgid "Cache expiration"
+msgstr ""
+
+#: ../../controller/router.rst:912
+#: 79a0709be410436b9cb0a7d1d1ded639
+msgid "It is possible to force reloading of the response by deleting the associated cache."
+msgstr ""
+
+#: ../../controller/router.rst:919
+#: fc4720d80a864093944b8a7ef3ddb6d8
+msgid "Dynamic routes caching"
+msgstr ""
+
+#: ../../controller/router.rst:921
+#: 83b63c94dc254c0bac04061be5b6bc58
+msgid "Dynamic routes can also be cached."
+msgstr ""
+
+#: ../../controller/router.rst:924
+#: 688c2fcac2074bd2adb57758c9f6dffd
+msgid "This possibility is only useful if this caching is not done in production, but at the time of initialization of the cache."
+msgstr ""
+
+#: ../../controller/router.rst:935
+#: 073f82f7ae464434a1f77d705cfe1655
+msgid "Checking routes with devtools :"
+msgstr ""
+
+#: ../../controller/router.rst:945
+#: 2caf9cc776c0464ea388adb0f74ab53b
+msgid "Error management (404 & 500 errors)"
+msgstr ""
+
+#: ../../controller/router.rst:948
+#: 38b49c0f1e4a491b90088c4882ebffe7
+msgid "Default routing system"
+msgstr ""
+
+#: ../../controller/router.rst:950
+#: 1694a8b32d284c6aad0087a5147cab27
+msgid "With the default routing system (the controller+action couple defining a route), the error handler can be redefined to customize the error management."
+msgstr ""
+
+#: ../../controller/router.rst:952
+#: 2de18ea4e70d40bd80f4f8976e48ec7e
+msgid "In the configuration file **app/config/config.php**, add the **onError** key, associated to a callback defining the error messages:"
+msgstr ""
+
+#: ../../controller/router.rst:965
+#: fc960b3d70a247aea36cd7f028aae892
+msgid "Implement the requested action **p404** in the **IndexController**:"
+msgstr ""
+
+#: ../../controller/router.rst:967
+#: ../../controller/router.rst:985
+#: ../../controller/router.rst:997
+#: 9a6ccf3b4d21428daf8479b38ee57be7
+#: 604ffd93fada4dc5a094276860b8ce06
+#: 4779f70adbc04b9d9207bc1e3eb7d97b
+msgid "app/controllers/IndexController.php"
+msgstr ""
+
+#: ../../controller/router.rst:977
+#: 126703a5df364985acc1bc82d775733b
+msgid "Routage with annotations"
+msgstr ""
+
+#: ../../controller/router.rst:979
+#: f7d45504c8044209978cc4d431686146
+msgid "It is enough in this case to add a last route disabling the default routing system, and corresponding to the management of the 404 error:"
+msgstr ""

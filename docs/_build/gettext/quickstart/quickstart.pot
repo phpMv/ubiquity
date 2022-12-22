@@ -1,0 +1,272 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../quickstart/quickstart.rst:2
+#: ce264689a36f47da94994b50cb6cb16a
+msgid "Quick start with console"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:4
+#: d56880a0a09d4aa4be7bb4d745d39097
+msgid "If you do not like console mode, you can switch to quick-start with :ref:`web tools (UbiquityMyAdmin)<quickstart-html>`."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:7
+#: 3aec31f46e5d45f6a358c37a1cec3de6
+msgid "Install Composer"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:8
+#: aed3e26e1e96442c8d6932ec4b9f1f33
+msgid "**ubiquity** utilizes Composer to manage its dependencies. So, before using, you will need to make sure you have `Composer <http://getcomposer.org/>`_ installed on your machine."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:11
+#: 0b55aa0e6feb4454bb96ace18d0dd733
+msgid "Install Ubiquity-devtools"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:12
+#: 53e3a1f742d647458dcfde4aae4d8f77
+msgid "Download the Ubiquity-devtools installer using Composer."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:18
+#: b3ef35110e4444139198b420900de879
+msgid "Test your recent installation by doing:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:27
+#: 3a15b195d6d443aba43bc2300ec971ef
+msgid "You can get at all times help with a command by typing: ``Ubiquity help`` followed by what you are looking for."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:29
+#: 73934d4319154da59c0d7a4ddac79e61
+msgid "Example :"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:37
+#: ff81722720b847cbb0213151961e89f0
+msgid "Project creation"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:38
+#: 684c0b1727e14188876b39124bb535ed
+msgid "Create the **quick-start** projet"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:45
+#: d0080ec988714ffb9e4ad14dfc2ffd66
+msgid "Directory structure"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:46
+#: e6fef196f56144f68ed9edebd91a9550
+msgid "The project created in the **quick-start** folder has a simple and readable structure:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:48
+#: 5e3b1ddb71a64cb4939fc0d2f8c38f9b
+msgid "the **app** folder contains the code of your future application:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:60
+#: 40241fbc497e4ea58b65a572c2b3288c
+msgid "Start-up"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:61
+#: c0a14780422b4c8794908a7d97adbad8
+msgid "Go to the newly created folder **quick-start** and start the build-in php server:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:67
+#: d2448a50a54a4cc1b346e8771c3d77eb
+msgid "Check the correct operation at the address **http://127.0.0.1:8090**:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:71
+#: dbd99166016447bda0612668cab027e2
+msgid "If port 8090 is busy, you can start the server on another port using -p option."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:79
+#: d6ee9262a9f14b2eab3b9fb91b5e2b7f
+msgid "Controller"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:81
+#: 6730b2c199dc4b5cb6e8d7bc3a6d7f15
+msgid "The console application **dev-tools** saves time in repetitive operations. We go through it to create a controller."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:91
+#: e9b2ba57a04d43aaa2ec1d79ceed0620
+msgid "We can then edit ``app/controllers/DefaultController`` file in our favorite IDE:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:93
+#: ../../quickstart/quickstart.rst:107
+#: ../../quickstart/quickstart.rst:135
+#: ../../quickstart/quickstart.rst:154
+#: ../../quickstart/quickstart.rst:216
+#: ../../quickstart/quickstart.rst:248
+#: e53e5d82853f443eba8d624cdb604f93
+#: 369469cee6af4b39941edbb6a4d0afa9
+#: 87a08a74002a4b4eb7da0bc8059f3cc9
+#: d7e2cf988e244dc19200812b7fa580ab
+#: 8af3995ee8664feb98e944c1e3fc9c8c
+#: 329867b2f95d41efb86e3600ed4d07bc
+msgid "app/controllers/DefaultController.php"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:105
+#: 5672614ec93b4a4d84a3d2fde5b2b8b0
+msgid "Add the traditional message, and test your page at ``http://127.0.0.1:8090/DefaultController``"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:118
+#: 3cb1bd1ed17e41e4b2d1fa57fe91bde3
+msgid "For now, we have not defined routes, |br| Access to the application is thus made according to the following scheme: |br| ``controllerName/actionName/param``"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:122
+#: 4a5f1e0ab8174f9fad8c12c921297f82
+msgid "The default action is the **index** method, we do not need to specify it in the url."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:125
+#: 4097b01bf7b04f0888e1fc500110b2c3
+msgid "Route"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:128
+#: 8d1ddebd779d4afba099356b75a50d9d
+msgid "The routing is defined with the attribute ``Route`` (with php>8) or the annotation ``@route`` and is not done in a configuration file: |br| it's a design choice."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:131
+#: 65fbb8ca0e72450ea192d2081fca82b2
+msgid "The **automated** parameter set to **true** allows the methods of our class to be defined as sub routes of the main route ``/hello``."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:133
+#: 9b7cc66033c7417bbece5d338c220136
+msgid "With annotations:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:152
+#: be7030ff680d43f18eb914fe52f63999
+msgid "With attributes (php>8):"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:171
+#: f5d6ffd587094fc0b6108f94ad65a9ce
+msgid "Router cache"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:173
+#: afad6a77c0c946078f8bd8fe7af3e4ee
+msgid "No changes on the routes are effective without initializing the cache. |br| Annotations are never read at runtime. This is also a design choice."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:176
+#: 72189069c5644671ae9eca70976a2c2a
+msgid "We can use the console for the cache re-initialization:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:185
+#: 63548f3c5bf543c2a62115ebb2ac3e80
+msgid "Let's check that the route exists:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:194
+#: 9a268bc1940343e9880febb10a084d01
+msgid "We can now test the page at ``http://127.0.0.1:8090/hello``"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:197
+#: 5152b34d6eaf4224b6793e4dc5cfba4b
+msgid "Action & route with parameters"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:199
+#: 5188293e985d4c5184571c0f1d4a42da
+msgid "We will now create an action (sayHello) with a parameter (name), and the associated route (to): |br| The route will use the parameter **name** of the action:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:209
+#: 31e26757eab64bdfb64023c61630d53b
+msgid "After re-initializing the cache (**init-cache** command), the **info:routes** command should display:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:214
+#: 733cc12c0aff466399dd716ae911faf3
+msgid "Change the code in your IDE: the action must say Hello to somebody..."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:226
+#: 52ab184858554b9aabfd01c2eac4727e
+msgid "and test the page at ``http://127.0.0.1:8090/hello/to/Mr SMITH``"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:229
+#: 1d5c63cfa47845e597d99e2f47c0bdc0
+msgid "Action, route parameters & view"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:231
+#: 389ebcd55a70406c849d109e43c96989
+msgid "We will now create an action (information) with two parameters (title and message), the associated route (info), and a view to display the message: |br| The route will use the two parameters of the action."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:239
+#: 639d3e39548e455e815db3abd2d8f2f9
+msgid "The -v (--view) parameter is used to create the view associated with the action."
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:241
+#: 1907ec27dad54126b3e85f3ce7639ef6
+msgid "After re-initializing the cache, we now have 3 routes:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:246
+#: 78c368eca9df412e8b6bea7d6979be7a
+msgid "Let's go back to our development environment and see the generated code:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:258
+#: 114add15d73a46bba531f67d7ff54b6a
+msgid "We need to pass the 2 variables to the view:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:269
+#: 378b797e5ef04151b1534af92b6de834
+msgid "And we use our 2 variables in the associated twig view:"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:271
+#: 7f03eaf385e94c819ea313011c300401
+msgid "app/views/DefaultController/information.html"
+msgstr ""
+
+#: ../../quickstart/quickstart.rst:277
+#: f9e9e9e7000040188d4c3b648c3b8250
+msgid "We can test your page at ``http://127.0.0.1:8090/hello/info/Quick start/Ubiquity is quiet simple`` |br| It's obvious"
+msgstr ""

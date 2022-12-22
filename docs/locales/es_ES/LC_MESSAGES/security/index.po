@@ -1,0 +1,161 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../security/index.rst:3 7d163b6530284e8091b899b6c3b1ec51
+msgid "Security"
+msgstr ""
+
+#: ../../security/index.rst:10 833bf85c39bc42dba2918c10e4d4e2e9
+msgid "Guiding principles"
+msgstr ""
+
+#: ../../security/index.rst:12 5570285daedf4774a2d3a65d14d90d0c
+msgid "Forms validation"
+msgstr ""
+
+#: ../../security/index.rst:14 5105cd182aa84dcdba8413b7b5806671
+msgid "Client-side validation"
+msgstr ""
+
+#: ../../security/index.rst:15 f72428b8bcdc4cfa8d95a5884da2c6f1
+msgid ""
+"It is preferable to perform an initial client-side validation to avoid "
+"submitting invalid data to the server."
+msgstr ""
+
+#: ../../security/index.rst:17 bf7e89d8fb534e41ace1119f27a1db74
+msgid ""
+"Example of the creation of a form in the action of a controller (this "
+"part could be located in a dedicated service for a better separation of "
+"layers):"
+msgstr ""
+
+#: ../../security/index.rst:19 449c1e7c9e4e4c2e9fec4479c94269ee
+msgid "app/controllers/UsersManagement.php"
+msgstr ""
+
+#: ../../security/index.rst:40 c656ed67d3bf49d4ba01ca662f5981cd
+msgid "The Associated View:"
+msgstr ""
+
+#: ../../security/index.rst:42 3d419439a27b4d0f96b845a811568f91
+msgid "app/views/UsersManagement/index.html"
+msgstr ""
+
+#: ../../security/index.rst:52 8341ed3516f64548a3627206656cedd9
+msgid ""
+"The CRUD controllers automatically integrate this client-side validation "
+"using the Validators attached to the members of the models."
+msgstr ""
+
+#: ../../security/index.rst:62 98e57fc95559425f8bbbd51499f46d87
+msgid "Server-side validation"
+msgstr ""
+
+#: ../../security/index.rst:63 282ba01b9705463f83f56be777f00417
+msgid ""
+"It is preferable to restrict the URLs allowed to modify data. |br| "
+"Beforehand, by specifying the Http method in the routes, and by testing "
+"the request :"
+msgstr ""
+
+#: ../../security/index.rst:76 1ef31fce6b714c50a60cc6a13b25b16f
+msgid ""
+"The **Ubiquity-security** module offers additional control to avoid "
+"cross-site requests."
+msgstr ""
+
+#: ../../security/index.rst:78 0d0de4ff9dda4e08abee051320a0a835
+msgid ""
+"After modifying an object, it is possible to check its validity, given "
+"the validators attached to the members of the associated Model:"
+msgstr ""
+
+#: ../../security/index.rst:100 ac54de94a05d42449339c0752f58cba7
+msgid "DAO operations"
+msgstr ""
+
+#: ../../security/index.rst:103 52c361c110494e16a7f6831358a91ae0
+msgid ""
+"It is always recommended to use parameterized queries, regardless of the "
+"operations performed on the data:"
+msgstr ""
+
+#: ../../security/index.rst:102 037ae5a33a75476c9d9819fedd93581f
+msgid "To avoid SQL injections."
+msgstr ""
+
+#: ../../security/index.rst:103 9a0efd250d3c48d2a595fd1ff507564b
+msgid "To allow the use of prepared queries, speeding up processing."
+msgstr ""
+
+#: ../../security/index.rst:113 d76cb09f170f4ecd8c6161625e4ca429
+msgid ""
+"DAO operations that take objects as parameters use this mechanism by "
+"default."
+msgstr ""
+
+#: ../../security/index.rst:122 87358ebc1bf3434ab7aa83710b64b7fd
+msgid "Passwords management"
+msgstr ""
+
+#: ../../security/index.rst:124 e32d0687883f430ebb5b2ba3f82b1904
+msgid ""
+"The ``Password`` Transformer allows a field to be of the password type "
+"when displayed in an automatically generated CRUD form."
+msgstr ""
+
+#: ../../security/index.rst:131 6c9990d154644216ae7cbd5aca677f63
+msgid ""
+"After submission from a form, it is possible to encrypt a password from "
+"the URequest class:"
+msgstr ""
+
+#: ../../security/index.rst:139 b5ca16224ac64263a8865ceb1adfc402
+msgid ""
+"The algorithm used in this case is defined by the php "
+"``PASSWORD_DEFAULT``."
+msgstr ""
+
+#: ../../security/index.rst:141 3b47b082fe414774ab2e6e23c11b4a32
+msgid ""
+"It is also possible to check a password entered by a user in the same "
+"way, to compare it to a hash:"
+msgstr ""
+
+#: ../../security/index.rst:150 6a54cfcc0fa14e11a59a37492fcfeb50
+msgid "Set up Https to avoid sending passwords in clear text."
+msgstr ""
+
+#: ../../security/index.rst:153 3bff10d7db754367abca119e0545b366
+msgid "Security module/ ACL management"
+msgstr ""
+
+#: ../../security/index.rst:155 a0d0b14f180940aa8c2cd20802121a15
+msgid "In addition to these few rules, you can install if necessary:"
+msgstr ""
+
+#: ../../security/index.rst:155 007074941df245bcb5d5f7a5543bb231
+msgid ":ref:`Ubiquity-acl<aclModule>`"
+msgstr ""
+
+#: ../../security/index.rst:156 85d99af2c3dc41b5a35d55717c39dfe8
+msgid ":ref:`Ubiquity-security<securityModule>`"
+msgstr ""
+

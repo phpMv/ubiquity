@@ -1,0 +1,172 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../extra/commands.rst:3 477b0b29cb094cac81f8f83988235ddc
+msgid "Ubiquity commands"
+msgstr ""
+
+#: ../../extra/commands.rst:8 1162ea6f104f49d9a45dae12661150e7
+msgid ""
+"This part is accessible from the **webtools**, so if you created your "
+"project with the **-a** option or with the **create-project** command.."
+msgstr ""
+
+#: ../../extra/commands.rst:11 4bb629006371483fb9e582c41d701cfb
+msgid "Commands"
+msgstr ""
+
+#: ../../extra/commands.rst:13 c3a0c04746494290adc853541676d47f
+msgid "From the webtools, activate the **commands** part,"
+msgstr ""
+
+#: ../../extra/commands.rst:18 d0dd13f478fe4ce0852d73737f571de4
+msgid "or go directly to ``http://127.0.0.1:8090/Admin/commands``."
+msgstr ""
+
+#: ../../extra/commands.rst:21 fc958751fc5d462dbef2f46670fead6d
+msgid "Commands list"
+msgstr ""
+
+#: ../../extra/commands.rst:22 7c8ec8b16b8a449da03e8dad1e08bfe0
+msgid ""
+"Activate the **Commands** tab to get the list of existing devtools "
+"commands."
+msgstr ""
+
+#: ../../extra/commands.rst:28 60acae957a8b415286f0863e3b05de01
+msgid "Command info"
+msgstr ""
+
+#: ../../extra/commands.rst:29 2d9daf40bcf84ea6a40427e5510d0572
+msgid ""
+"It is possible to get help on a command (which produces a result "
+"equivalent to ``Ubiquity help cmdName``)."
+msgstr ""
+
+#: ../../extra/commands.rst:35 e6b44df2b52e42d984da82ec5a0d7eac
+msgid "Command execution"
+msgstr ""
+
+#: ../../extra/commands.rst:36 ca83ffe2696e470192d479b2590148e2
+msgid ""
+"Clicking on the run button of a command displays a form to enter the "
+"parameters (or executes it directly if it takes none)."
+msgstr ""
+
+#: ../../extra/commands.rst:41 a86008355e864803a19702209119cb12
+msgid "After entering the parameters, the execution produces a result."
+msgstr ""
+
+#: ../../extra/commands.rst:47 dc4906d4183f474caf2e58b9f7e85f9d
+msgid "Commands suite"
+msgstr ""
+
+#: ../../extra/commands.rst:48 f4fb3314bc4249a5b031ad006906ae17
+msgid ""
+"Return to **My commands tab**: It is possible to save a sequence of "
+"commands (with stored parameters), and then execute the same sequence:"
+msgstr ""
+
+#: ../../extra/commands.rst:52 7733f6c81c064ded9c0154bc7bdc9096
+msgid "Suite creation"
+msgstr ""
+
+#: ../../extra/commands.rst:54 f8c814d606f643088f3e7f47d257517d
+msgid "Click on the **add command suite**"
+msgstr ""
+
+#: ../../extra/commands.rst:59 974c15d8ed4042f7a17c7b1aaad4ebee
+msgid "Add the desired commands and modify the parameters:"
+msgstr ""
+
+#: ../../extra/commands.rst:64 a582262de5c4481a8ee4acdd007fe53d
+msgid "The validation generates the suite:"
+msgstr ""
+
+#: ../../extra/commands.rst:71 38b50bf801eb46339ad454790d6e6046
+msgid "Commands suite execution"
+msgstr ""
+
+#: ../../extra/commands.rst:73 408b2d8ea5674829b097fd14e9c32cd9
+msgid ""
+"Clicking on the run button of the suite executes the list of commands it "
+"contains:"
+msgstr ""
+
+#: ../../extra/commands.rst:79 446d603fa6d14156ba34bc6c7b48026d
+msgid "Custom command creation"
+msgstr ""
+
+#: ../../extra/commands.rst:81 b6d44981aef242d48761ff8b16258d90
+msgid "Click on the **Create devtools command** button."
+msgstr ""
+
+#: ../../extra/commands.rst:86 34e7bc996f444cedb7aab2d9b3fd7ed9
+msgid "Enter the characteristics of the new command:"
+msgstr ""
+
+#: ../../extra/commands.rst:88 1fcdce48a8d8449391b00af2c185e4af
+msgid "The command name"
+msgstr ""
+
+#: ../../extra/commands.rst:89 6bb3fd0436ba47639703d427506de0e0
+msgid "The command value: name of the main argument"
+msgstr ""
+
+#: ../../extra/commands.rst:90 0153e931b79b4984b6e9965b7f38288e
+msgid ""
+"The command parameters: In case of multiple parameters, use comma as "
+"separator"
+msgstr ""
+
+#: ../../extra/commands.rst:91 27a28d7f25b74236b9bc7746ae502dad
+msgid "The command description"
+msgstr ""
+
+#: ../../extra/commands.rst:92 9231273f22974db19c4a409c4b03ed77
+msgid "The command aliases:  In case of multiple aliases, use comma as separator"
+msgstr ""
+
+#: ../../extra/commands.rst:97 82af4633378f4e448816634e1ec5a2ee
+msgid "Custom commands are created in the **app/commands** folder of the project."
+msgstr ""
+
+#: ../../extra/commands.rst:103 83ef3181b571493d96d1344198339fd1
+msgid "The generated class:"
+msgstr ""
+
+#: ../../extra/commands.rst:105 ../../extra/commands.rst:149
+#: 83244144181845f7a7be385bf4cd4d08 8abc481f24664a08aa1764aba2680798
+msgid "app/commands/CreateArray.php"
+msgstr ""
+
+#: ../../extra/commands.rst:147 005419210eac41e88442b057ebfb824d
+msgid "The **CreateArray** command implemented:"
+msgstr ""
+
+#: ../../extra/commands.rst:212 3ceaa17e13cf45b480ddb2fd36054514
+msgid "Custom command execution"
+msgstr ""
+
+#: ../../extra/commands.rst:214 0ea56f46c1e74c928ac5eb2dcf7b4844
+msgid ""
+"The new command is accessible from the devtools, as long as it is in the "
+"project:"
+msgstr ""
+

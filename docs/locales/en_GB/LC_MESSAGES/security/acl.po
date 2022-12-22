@@ -1,0 +1,301 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../security/acl.rst:3 9b95c352f2f64833b89da63da36ea3ef
+msgid "ACL management"
+msgstr ""
+
+#: ../../security/acl.rst:10 301f8b27181c48628fab82d3ca17e08f
+msgid "Installation"
+msgstr ""
+
+#: ../../security/acl.rst:12 cea2df0272ae44618a072ee6cfadaf6d
+msgid ""
+"Install the **Ubiquity-acl** module from the command prompt or from the "
+"**Webtools** (Composer part)."
+msgstr ""
+
+#: ../../security/acl.rst:18 bebdf55f6a5246e4928d2d8b505a11ef
+msgid "Then activate the display of the Acl part in the **Webtools**:"
+msgstr ""
+
+#: ../../security/acl.rst:23 920922bfae3b43af83798edf1d3d5055
+msgid "ACL interface in **webtools**:"
+msgstr ""
+
+#: ../../security/acl.rst:29 841f20d2e8034a439531463c279c7734
+msgid "Acl Rules"
+msgstr ""
+
+#: ../../security/acl.rst:31 f537dc6f58064ac19efb064911319d02
+msgid ""
+"ACLs are used to define access to an Ubiquity application. They are "
+"defined according to the following principles:"
+msgstr ""
+
+#: ../../security/acl.rst:36 613c0ec29adc470ba92e590f8ee92197
+msgid "An Ubiquity application is composed of :"
+msgstr ""
+
+#: ../../security/acl.rst:34 e0022af364a44d08987ad3bc41a859b1
+msgid "**Resources** (possibly controllers, or actions of these controllers)"
+msgstr ""
+
+#: ../../security/acl.rst:35 067121b1ae66484ba80a5c76382c13d6
+msgid ""
+"**Roles**, possibly assigned to users. Each **Role** can inherit parent "
+"roles."
+msgstr ""
+
+#: ../../security/acl.rst:36 065b77956efc4f51a50f16799f1f7c4d
+msgid ""
+"**Permissions**, which correspond to a right to do. Each permission has a"
+" level (represented by an integer value)."
+msgstr ""
+
+#: ../../security/acl.rst:43 20388a9426a14b538f4e4c8f7289ddd4
+msgid "Additional rules:"
+msgstr ""
+
+#: ../../security/acl.rst:39 c900743272814c07bf63f325cca6345e
+msgid "An AclElement (**Allow**) grants Permission to a Role on a Resource."
+msgstr ""
+
+#: ../../security/acl.rst:40 d65ec386e4c242d3b15a0481a5b0d1c1
+msgid ""
+"Each role inherits authorisations from its parents, in addition to its "
+"own."
+msgstr ""
+
+#: ../../security/acl.rst:41 cf261edb339648db9fad9aaee1575f5d
+msgid ""
+"If a role has a certain level of access permission on a resource, it will"
+" also have all the permissions of a lower level on that resource."
+msgstr ""
+
+#: ../../security/acl.rst:42 ec6573049c124c6ba6aecd54fe6aa6db
+msgid ""
+"The association of a resource and a permission to a controller or a "
+"controller action defines a **map** element."
+msgstr ""
+
+#: ../../security/acl.rst:54 ee51e1e4ba524433a4665db37e49b948
+msgid "Naming tips:"
+msgstr ""
+
+#: ../../security/acl.rst:49 4fdb05fe5a8f4a45aba3790d04504a25
+msgid ""
+"Role, in capital letters, beginning with an arobase (@USER, @ADMIN, "
+"@ALL...)."
+msgstr ""
+
+#: ../../security/acl.rst:50 acd211db54ab4ab3ab5d7f2830cb0961
+msgid "Permissions, in upper case, named using a verb (READ, WRITE, OPEN...)."
+msgstr ""
+
+#: ../../security/acl.rst:51 87815a4b2b3a44f2b9da9e86c197db1f
+msgid "Resource, capitalized on the first letter (Products, Customers...)"
+msgstr ""
+
+#: ../../security/acl.rst:57 93c23fc2af9743db885a8c5f195fff87
+msgid "ACL Starting"
+msgstr ""
+
+#: ../../security/acl.rst:58 7934ac99b7ec4985ac0548a08c1f7625
+msgid ""
+"The **AclManager** service can be started directly from the **webtools** "
+"interface, in the **Security** part."
+msgstr ""
+
+#: ../../security/acl.rst:60 713ef9f644664628811abd3ef472d89a
+msgid "The service is started in the ``services.php`` file."
+msgstr ""
+
+#: ../../security/acl.rst:62 32ddbe892b834d50969be1f8237dc39a
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../security/acl.rst:68 b115ce45f75a41a6a96d323d4444ee4c
+msgid "ACLCacheProvider"
+msgstr ""
+
+#: ../../security/acl.rst:69 8a65ed59fa744b01a1a55b85a2661de5
+msgid ""
+"This default provider allows you to manage ACLs defined through "
+"attributes or annotations."
+msgstr ""
+
+#: ../../security/acl.rst:72 975eae1b2a1642ed97fe3f2954aea4de
+msgid "AclController"
+msgstr ""
+
+#: ../../security/acl.rst:74 72d835f7ed6b4b15bd6d58af8f1940c6
+msgid ""
+"An AclController enables automatic access management based on ACLs to its"
+" own resources. |br| It is possible to create them automatically from "
+"**webtools**."
+msgstr ""
+
+#: ../../security/acl.rst:80 998d8644fe054e588f679ee535519123
+msgid "But it is just a basic controller, using the AclControllerTrait feature."
+msgstr ""
+
+#: ../../security/acl.rst:82 a07cc45e103b4725947adfa0201f3fd0
+msgid ""
+"This controller just goes to redefine the ``_getRole`` method, so that it"
+" returns the role of the active user, for example."
+msgstr ""
+
+#: ../../security/acl.rst:84 ../../security/acl.rst:134
+#: ../../security/acl.rst:155 ../../security/acl.rst:175
+#: ../../security/acl.rst:260 ../../security/acl.rst:314
+#: 03b96c36c39548979b1bf3b992bcff82 5e400dfe2cb6427892c60f5bc1d0f1c1
+#: 8199e6146b3b4b63b0e791525c7f8de8 957ad38af87142ab8fb881d426d1c8bb
+#: 9ac05e6061dc45409a3c498a0361f74b c74505816aae42bfab131b7031905220
+msgid "app/controllers/BaseAclController.php"
+msgstr ""
+
+#: ../../security/acl.rst:117 f0b2931ccc8f4094b6fdbd6848c18c36
+msgid "Authorisation has been granted for the resource:"
+msgstr ""
+
+#: ../../security/acl.rst:116 0c4307ed8b164f88a8a99eaf10ba40b3
+msgid ""
+"Without specifying the resource, the controller's actions are defined as "
+"a resource."
+msgstr ""
+
+#: ../../security/acl.rst:117 7161d858ace84516bc89a56f01039090
+msgid "Without specifying the permission, the ``ALL`` permission is used."
+msgstr ""
+
+#: ../../security/acl.rst:122 3765f45ddf5347a8ad45ffdaf0645477
+msgid "And this association is present in the Acls map:"
+msgstr ""
+
+#: ../../security/acl.rst:129 e81353d2b46a4f369d5664bd85757ae2
+msgid "AclController with authentication"
+msgstr ""
+
+#: ../../security/acl.rst:132 4c507cd0cf054621906b2050bde670c3
+msgid ""
+"The use of both ``WithAuthTrait`` and ``AclControllerTrait`` requires to "
+"remove the ambiguity about the ``isValid`` method."
+msgstr ""
+
+#: ../../security/acl.rst:150 1a13e9be024940aab9a48ad283d34a94
+msgid "Allow with Role, resource and permission"
+msgstr ""
+
+#: ../../security/acl.rst:151 ee1a8c81ae0a4871bc64ef28aecf89bd
+msgid "Allow without prior creation:"
+msgstr ""
+
+#: ../../security/acl.rst:153 37a10dfd6146433cb88f5788623d5ad0
+msgid ""
+"``@USER`` is allowed to access to ``Foo`` resource with ``READ`` "
+"permission."
+msgstr ""
+
+#: ../../security/acl.rst:171 1da27c996588447e8222d59a59ac325f
+msgid ""
+"The role, resource and permission are automatically created as soon as "
+"they are invoked with ``Allow``."
+msgstr ""
+
+#: ../../security/acl.rst:173 6b6b90f669a0471d8d8e8ab745693438
+msgid "Allow with explicit creation:"
+msgstr ""
+
+#: ../../security/acl.rst:193 136f7e1985bd4264b1e826227f2f13c5
+msgid "Adding ACL at runtime"
+msgstr ""
+
+#: ../../security/acl.rst:195 b711f4fb552d4000af5dacdfa7d9493a
+msgid ""
+"Whether in a controller or in a service, it is possible to add Roles, "
+"Resources, Permissions and Authorizations at runtime:"
+msgstr ""
+
+#: ../../security/acl.rst:197 fe1e2751348f4cbcaa45ed881fa202a9
+msgid "For example :\\\\ Adding a Role ``@USER`` inheriting from ``@GUEST``."
+msgstr ""
+
+#: ../../security/acl.rst:209 862a0c737c634031a1b6a922dfd2319d
+msgid "Defining ACLs with Database"
+msgstr ""
+
+#: ../../security/acl.rst:211 43345c8904b84c69a0c83b23271d6c76
+msgid ""
+"The ACLs defined in the database are additional to the ACLs defined via "
+"annotations or attributes."
+msgstr ""
+
+#: ../../security/acl.rst:214 ebf170c3279741c99654aa4d6db867e0
+msgid "Initializing"
+msgstr ""
+
+#: ../../security/acl.rst:216 dee0522fa8004da0b950087d6898985e
+msgid ""
+"The initialization allows to create the tables associated to the ACLs "
+"(Role, Resource, Permission, AclElement). It needs to be done only once, "
+"and in dev mode only."
+msgstr ""
+
+#: ../../security/acl.rst:218 370c322f7151471da74f78e45afa869b
+msgid "To place for example in ``app/config/bootstrap.php`` file:"
+msgstr ""
+
+#: ../../security/acl.rst:230 17f586891d3940f9a30c065f04a89cf8
+msgid "Starting"
+msgstr ""
+
+#: ../../security/acl.rst:231 080bfbb001514277b2c5ef730d414230
+msgid "In ``app/config/services.php`` file :"
+msgstr ""
+
+#: ../../security/acl.rst:248 34f2711e5313468a8e0bcc08edc902e1
+msgid "Strategies for defining ACLs"
+msgstr ""
+
+#: ../../security/acl.rst:251 a3a245f371534805aa6309bd886d8373
+msgid "With few resources:"
+msgstr ""
+
+#: ../../security/acl.rst:252 701106db2c32467b9e669d6010e1d162
+msgid "Defining authorisations for each controller's action or action group:"
+msgstr ""
+
+#: ../../security/acl.rst:254 96af7b835f6e436a83332770a040ebe0
+msgid ""
+"Resources logically correspond to controllers, and permissions to "
+"actions. But this rule may not be respected, and an action may be defined"
+" as a resource, as required."
+msgstr ""
+
+#: ../../security/acl.rst:257 343808d4ce7d4fbd95a956a3586445fb
+msgid ""
+"The only mandatory rule is that a Controller/action pair can only "
+"correspond to one Resource/permission pair (not necessarily unique)."
+msgstr ""
+
+#: ../../security/acl.rst:311 fad45f35185d40b4a018c01668f89ffe
+msgid "With more resources:"
+msgstr ""
+

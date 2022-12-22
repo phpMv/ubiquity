@@ -1,0 +1,151 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../http/request.rst:2
+#: 173032b4bdf24bbbb4172bb43a5db71d
+msgid "Request"
+msgstr ""
+
+#: ../../http/request.rst:7
+#: 1753a31287d645209a978adc448e8a27
+msgid "For all Http features, Ubiquity uses technical classes containing static methods. This is a design choice to avoid dependency injection that would degrade performances."
+msgstr ""
+
+#: ../../http/request.rst:10
+#: 7e36bdd69cf6403a9bbff56be197edff
+msgid "The **URequest** class provides additional functionality to more easily manipulate native **$_POST** and **$_GET** php arrays."
+msgstr ""
+
+#: ../../http/request.rst:13
+#: d94ebb5087fd461498deeb956cd74b3b
+msgid "Retrieving data"
+msgstr ""
+
+#: ../../http/request.rst:15
+#: 4f9280e7434f4b46bf6093c0ab029955
+msgid "From the get method"
+msgstr ""
+
+#: ../../http/request.rst:16
+#: 1b1ce12b7cdd438183de6bb563f94545
+msgid "The **get** method returns the `null` value if the key **name** does not exist in the get variables."
+msgstr ""
+
+#: ../../http/request.rst:24
+#: c944ed79b8d043e39929d7c228ffa1be
+msgid "The **get** method can be called with the optional second parameter returning a value if the key does not exist in the get variables."
+msgstr ""
+
+#: ../../http/request.rst:31
+#: 9b076e57cf6c4b5aa181bf881e5f8c91
+msgid "From the post method"
+msgstr ""
+
+#: ../../http/request.rst:32
+#: 995ba6e561f4455a917b9a595a865010
+msgid "The **post** method returns the `null` value if the key **name** does not exist in the post variables."
+msgstr ""
+
+#: ../../http/request.rst:40
+#: 760c6110ccce478da9f29a5a517f008b
+msgid "The **post** method can be called with the optional second parameter returning a value if the key does not exist in the post variables."
+msgstr ""
+
+#: ../../http/request.rst:46
+#: 7e8cdb788a2843e5b3d725e4cec5ca51
+msgid "The **getPost** method applies a callback to the elements of the $_POST array and return them (default callback : **htmlEntities**) :"
+msgstr ""
+
+#: ../../http/request.rst:53
+#: f47c308bf9b54070ba0c0f91087dc592
+msgid "Retrieving and assigning multiple data"
+msgstr ""
+
+#: ../../http/request.rst:54
+#: e353e165a234420a9f1ff47c9191823e
+msgid "It is common to assign the values of an associative array to the members of an object. |br| This is the case for example when validating an object modification form."
+msgstr ""
+
+#: ../../http/request.rst:57
+#: bfd15cc325974f0e9dd3bbf012467608
+msgid "The **setValuesToObject** method performs this operation :"
+msgstr ""
+
+#: ../../http/request.rst:59
+#: fef15af8546b47a9925f821fd5d460f4
+msgid "Consider a **User** class:"
+msgstr ""
+
+#: ../../http/request.rst:89
+#: b31e4437a9dd454bb413414c5c1895fb
+msgid "Consider a form to modify a user:"
+msgstr ""
+
+#: ../../http/request.rst:102
+#: b68c28c8357b47e59a4397838dc0ed86
+msgid "The **update** action of the **Users** controller must update the user instance from POST values. |br| Using the **setPostValuesToObject** method avoids the assignment of variables posted one by one to the members of the object. |br| It is also possible to use **setGetValuesToObject** for the **get** method, or **setValuesToObject** to assign the values of any associative array to an object."
+msgstr ""
+
+#: ../../http/request.rst:106
+#: ../../http/request.rst:138
+#: ../../http/request.rst:164
+#: a4aa42b0bbcb4940a5bdbf5e5058bc73
+#: 4f62859965294592afba34e12726c0e6
+#: 502436dd577948568d1d8f6c23030208
+msgid "app/controllers/Users.php"
+msgstr ""
+
+#: ../../http/request.rst:126
+#: 83df71f61b954612941b10c7f03f2361
+msgid "**SetValuesToObject** methods use setters to modify the members of an object. The class concerned must therefore implement setters for all modifiable members."
+msgstr ""
+
+#: ../../http/request.rst:130
+#: 981a1b5cc86847b5b06e32e25999b6d4
+msgid "Testing the request"
+msgstr ""
+
+#: ../../http/request.rst:133
+#: 30b7471fe42345e2a919a5c4addfa424
+msgid "isPost"
+msgstr ""
+
+#: ../../http/request.rst:135
+#: 6b609352c0a748e996563132ab967a88
+msgid "The **isPost** method returns `true` if the request was submitted via the POST method: |br| In the case below, the `initialize` method only loads the `vHeader.html` view if the request is not an Ajax request."
+msgstr ""
+
+#: ../../http/request.rst:161
+#: 5fd73311678c4c0e96bdaa2b277263ee
+msgid "isAjax"
+msgstr ""
+
+#: ../../http/request.rst:162
+#: 333789e739a042ebbf436c0eac2f57b7
+msgid "The **isAjax** method returns `true` if the query is an Ajax query:"
+msgstr ""
+
+#: ../../http/request.rst:179
+#: 89ef96636f8243c2bef6ce50a9bc67e2
+msgid "isCrossSite"
+msgstr ""
+
+#: ../../http/request.rst:180
+#: 01d330c7c2cb484e8a13ba8d89aff63f
+msgid "The **isCrossSite** method verifies that the query is not cross-site."
+msgstr ""

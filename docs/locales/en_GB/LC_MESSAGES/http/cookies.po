@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../http/cookies.rst:2 7237de60c8e246fca13adbc32d3c8c4c
+msgid "Cookie"
+msgstr ""
+
+#: ../../http/cookies.rst:3 ddfc66d467ac41e2b4a0445075f92e4c
+msgid ""
+"For all Http features, Ubiquity uses technical classes containing static "
+"methods. This is a design choice to avoid dependency injection that would"
+" degrade performances."
+msgstr ""
+
+#: ../../http/cookies.rst:6 2d3f098b09ab4db09db7e41ac2069c43
+msgid ""
+"The **UCookie** class provides additional functionality to more easily "
+"manipulate native **$_COOKIES** php array."
+msgstr ""
+
+#: ../../http/cookies.rst:9 3d8c54fe880f47918f12832235b25efe
+msgid "Cookie creation or modification"
+msgstr ""
+
+#: ../../http/cookies.rst:22 91567862758546b7a8c287b032d4b7c9
+msgid "Creating a cookie that lasts 5 days:"
+msgstr ""
+
+#: ../../http/cookies.rst:28 1f53c5573a54450c832f27877aa43269
+msgid "On a particular domain:"
+msgstr ""
+
+#: ../../http/cookies.rst:34 f73e8cc98f354ebb86a45c5c680b84fe
+msgid "Sending a cookie without urlencoding the cookie value:"
+msgstr ""
+
+#: ../../http/cookies.rst:40 4c30d05fb6fc47ec8557478ea1645301
+msgid "Testing the cookie creation:"
+msgstr ""
+
+#: ../../http/cookies.rst:49 fa6819889e164f988af26778376f4fea
+msgid "Retrieving a Cookie"
+msgstr ""
+
+#: ../../http/cookies.rst:56 cb1ece920d0e46928f8f364415ea1dfd
+msgid "Testing the existence"
+msgstr ""
+
+#: ../../http/cookies.rst:65 545d245353e14132b6ae9664d71b6b62
+msgid "Using a default value"
+msgstr ""
+
+#: ../../http/cookies.rst:66 8ece409fac4f45adac65a53ddb4c5b12
+msgid "If the page cookie does not exist, the default value of 1 is returned:"
+msgstr ""
+
+#: ../../http/cookies.rst:73 a4f62211f7224fa488287e3a1424173a
+msgid "Deleting a cookie"
+msgstr ""
+
+#: ../../http/cookies.rst:75 83545f088ccb429180e1f912440c6fc4
+msgid "Deleting the cookie with the name **page**:"
+msgstr ""
+
+#: ../../http/cookies.rst:82 ae2bbbc910904d109de5481fddf44f19
+msgid "Deleting all cookies"
+msgstr ""
+
+#: ../../http/cookies.rst:83 46bc59a33b48430cb6a5b890311581f4
+msgid "Deleting all cookies from the entire domain:"
+msgstr ""
+
+#: ../../http/cookies.rst:89 a1836d74bb054cb6909edc01473b978a
+msgid "Deleting all cookies from the domain **admin**:"
+msgstr ""
+

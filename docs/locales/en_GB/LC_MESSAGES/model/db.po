@@ -1,0 +1,120 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../model/db.rst:3 67abd93287364cd68500dcb6bda2a5c9
+msgid "Database"
+msgstr ""
+
+#: ../../model/db.rst:9 6d7b10c5d69f431b8089b34967220e55
+msgid ""
+"The **DAO** class is responsible for loading and persistence operations "
+"on models :"
+msgstr ""
+
+#: ../../model/db.rst:12 b4c7d13a7b104ffe9fcb1f5a96f97fa5
+msgid "Connecting to the database"
+msgstr ""
+
+#: ../../model/db.rst:14 1c75a8e881dc4b2babc0dc7cd035e37e
+msgid ""
+"Check that the database connection parameters are correctly entered in "
+"the configuration file:"
+msgstr ""
+
+#: ../../model/db.rst:24 94cbbf325de944e49bc3ef40943af331
+msgid "Transparent connection"
+msgstr ""
+
+#: ../../model/db.rst:25 9ecfb8415c994ff1a36f35e999a0ed78
+msgid ""
+"Since Ubiquity 2.3.0, The connection to the database is done "
+"automatically the first time you request it:"
+msgstr ""
+
+#: ../../model/db.rst:33 5ffa966f7a7f4291be00ad5328a7b288
+msgid ""
+"This is the case for all methods in the **DAO** class used to perform "
+"CRUD operations."
+msgstr ""
+
+#: ../../model/db.rst:36 7a44cbf5e83a44559f8d4bc561953e1e
+msgid "Explicit connection"
+msgstr ""
+
+#: ../../model/db.rst:38 92afdaa3f09e47be813bf795a2f52d47
+msgid ""
+"In some cases, however, it may be useful to make an explicit connection "
+"to the database, especially to check the connection."
+msgstr ""
+
+#: ../../model/db.rst:55 81b7f22eeae44148bb8873995bc59e2f
+msgid "Multiple connections"
+msgstr ""
+
+#: ../../model/db.rst:57 fd1b54714de24076a9641c8496adfbe3
+msgid "Adding a new connection"
+msgstr ""
+
+#: ../../model/db.rst:59 f01ffe8a0f23479ea561f41e9c11c30a
+msgid "Ubiquity allows you to manage several connections to databases."
+msgstr ""
+
+#: ../../model/db.rst:62 3675f98c48e04742a0546d9a9cfc8729
+msgid "With Webtools"
+msgstr ""
+
+#: ../../model/db.rst:64 bdc64436772649c19a9f07cf69dfef3a
+msgid "In the **Models** part, choose **Add new connection** button:"
+msgstr ""
+
+#: ../../model/db.rst:69 4cc4bf3f1e554adb9d5cbe0482243a60
+msgid "Define the connection configuration parameters:"
+msgstr ""
+
+#: ../../model/db.rst:74 5ea252120dd3437b9057f1422ec91758
+msgid ""
+"Generate models for the new connection:|br| The generated models include "
+"the ``@database`` annotation or the ``Database`` attribute mentioning "
+"their link to the connection."
+msgstr ""
+
+#: ../../model/db.rst:80 195a17fd2a0c4008bacfe7507bc94b21
+msgid "Attributes"
+msgstr ""
+
+#: ../../model/db.rst:95 79e1e5e9470348f99964973ab6340c93
+msgid "Annotations"
+msgstr ""
+
+#: ../../model/db.rst:109 f18526a7f3b94e0f9512c8d6b7198fd7
+msgid "Models are generated in a sub-folder of ``models``."
+msgstr ""
+
+#: ../../model/db.rst:111 d788a33a213f4f23ba7540e179eb39b6
+msgid ""
+"With several connections, do not forget to add the following line to the "
+"``services.php`` file:"
+msgstr ""
+
+#: ../../model/db.rst:118 ba60bb71bb334b0093f4b0d925b5c57f
+msgid ""
+"The ``start`` method performs the match between each model and its "
+"associated connection."
+msgstr ""
+

@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../model/generation.rst:3 49a64fd6a56a4b2cadf3d12751ec4d2a
+msgid "Models generation"
+msgstr ""
+
+#: ../../model/generation.rst:6 051cfdf9340a412eabb79da20b86100f
+msgid "From existing database"
+msgstr ""
+
+#: ../../model/generation.rst:8 78b9544e131041b881a155868d666840
+msgid ":doc:`with devtools </model/generation/db-console>`"
+msgstr ""
+
+#: ../../model/generation.rst:9 34f78613e96149d8b39bddda3145dd82
+msgid ":doc:`with webtools </model/generation/db-html>`"
+msgstr ""
+
+#: ../../model/generation.rst:12 f35650981de2451591e29d3218a89391
+msgid "From scratch"
+msgstr ""
+
+#: ../../model/generation.rst:14 bd0a8afca9114076bda301094c459124
+msgid ":doc:`Models creation with devtools </model/generation/scratch>`"
+msgstr ""
+
+#: ../../model/generation.rst:15 09e2e6815b08445f96b18051233da070
+msgid ":doc:`migrations </model/generation/migrations>`"
+msgstr ""
+

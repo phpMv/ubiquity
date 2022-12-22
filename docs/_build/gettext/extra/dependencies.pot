@@ -1,0 +1,136 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../extra/dependencies.rst:2
+#: b3fa3d18829f4fcfa04887fc19e33b35
+msgid "Ubiquity dependencies"
+msgstr ""
+
+#: ../../extra/dependencies.rst:3
+#: 9e741dce1e0c47c9a5ce739c3de45eb2
+msgid "``php >=7.4``"
+msgstr ""
+
+#: ../../extra/dependencies.rst:4
+#: e0e801f95a38412b918b6e0d372f8648
+msgid "``phpmv/ubiquity`` => Ubiquity core"
+msgstr ""
+
+#: ../../extra/dependencies.rst:6
+#: ae9cdd42804448ed82372f818fbd2f4a
+msgid "In production"
+msgstr ""
+
+#: ../../extra/dependencies.rst:8
+#: 470f077626cc4531b3b104ca8e173bd1
+msgid "Templating"
+msgstr ""
+
+#: ../../extra/dependencies.rst:9
+#: b153538b0f6b499886aafc2aa1df87bd
+msgid "Twig is required if it is used as a template engine, which is not a requirement."
+msgstr ""
+
+#: ../../extra/dependencies.rst:11
+#: 88c4d34f414449678b9346ab8a1a61e5
+msgid "``twig/twig`` => Template engine"
+msgstr ""
+
+#: ../../extra/dependencies.rst:14
+#: 1d87101121664a19a32c85eeb5644652
+msgid "Security"
+msgstr ""
+
+#: ../../extra/dependencies.rst:15
+#: 4ef369c7fc8b4fd8b0b53cf1b0febcfe
+msgid "``phpmv/ubiquity-security`` => Csrf, Csp..."
+msgstr ""
+
+#: ../../extra/dependencies.rst:16
+#: dca204980f194b3299d7824d92bff29a
+msgid "``phpmv/ubiquity-acl`` => Access Control List management"
+msgstr ""
+
+#: ../../extra/dependencies.rst:20
+#: cf9e2b09b7504d8c8324c57319eb42e7
+msgid "In development"
+msgstr ""
+
+#: ../../extra/dependencies.rst:22
+#: d5f6f7441d944aeea12c1207181c6044
+msgid "Webtools"
+msgstr ""
+
+#: ../../extra/dependencies.rst:23
+#: ../../extra/dependencies.rst:32
+#: 18ed58e3c96e41459d7b0407f2d2ad91
+#: d64a442a0b5847e9af76a7596bd96a19
+msgid "``phpmv/ubiquity-dev`` => dev classes for webtools and devtools since v2.3.0"
+msgstr ""
+
+#: ../../extra/dependencies.rst:24
+#: fe60fe5232e944369568e6fc52ec28d1
+msgid "``phpmv/php-mv-ui`` => Front library"
+msgstr ""
+
+#: ../../extra/dependencies.rst:25
+#: ../../extra/dependencies.rst:33
+#: 5db9b19084a4481db2025f97927b5d82
+#: a7604b7303324324bccd0e2644d25b72
+msgid "``mindplay/annotations`` => Annotations library, required for generating models, cache..."
+msgstr ""
+
+#: ../../extra/dependencies.rst:26
+#: 1ac69a0ad4e948d0b818633d593b569f
+msgid "``monolog/monolog`` => Logging"
+msgstr ""
+
+#: ../../extra/dependencies.rst:27
+#: c58bcc99388a44199e302d212bb64fe2
+msgid "``czproject/git-php`` => Git operations (+ require git console)"
+msgstr ""
+
+#: ../../extra/dependencies.rst:30
+#: 28a39c0c1bb4447c88090b3286b424f2
+msgid "Devtools"
+msgstr ""
+
+#: ../../extra/dependencies.rst:31
+#: bed990d1f9a94224907e2644565ae5df
+msgid "``phpmv/ubiquity-devtools`` => Cli console"
+msgstr ""
+
+#: ../../extra/dependencies.rst:36
+#: cbe4852522934dbead776869978810c8
+msgid "Testing"
+msgstr ""
+
+#: ../../extra/dependencies.rst:37
+#: bd18ffaa7ef342a4982450829c1ceb34
+msgid "``codeception/codeception`` => Tests"
+msgstr ""
+
+#: ../../extra/dependencies.rst:38
+#: 1a2d2d2b094d4860b297402b44e5e573
+msgid "``codeception/c3`` => C3 integration"
+msgstr ""
+
+#: ../../extra/dependencies.rst:39
+#: 17e4e08513244393838a75d51c26d8b7
+msgid "``phpmv/ubiquity-codeception`` => Codeception for Ubiquity"
+msgstr ""

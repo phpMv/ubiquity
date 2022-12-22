@@ -1,0 +1,415 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../model/dao.rst:2 631dcc5dc67e421cbdfbe9f778e65881
+msgid "DAO"
+msgstr ""
+
+#: ../../model/dao.rst:8 8b810f3b92084d16a96617ee8b05a77d
+msgid ""
+"The **DAO** class is responsible for loading and persistence operations "
+"on models :"
+msgstr ""
+
+#: ../../model/dao.rst:11 18ef7637df3c4c108faa634978e4b9ad
+msgid "Connecting to the database"
+msgstr ""
+
+#: ../../model/dao.rst:12 43c5fbb7e0d24ecb908c621fef947186
+msgid ""
+"Check that the database connection parameters are correctly entered in "
+"the configuration file:"
+msgstr ""
+
+#: ../../model/dao.rst:18 126ad46b0e1c4b37ba69682dd9a24df1
+msgid "Since 2.3.0 release"
+msgstr ""
+
+#: ../../model/dao.rst:20 2bfdefa08be54e709a8f30987e01fd67
+msgid ""
+"Database startup with ``DAO::startDatabase($config)`` in services.php "
+"file is useless, no need to start the database, the connection is made "
+"automatically at the first request. Use ``DAO::start()`` in "
+"**app/config/services.php** file when using several databases (with multi"
+" db feature)"
+msgstr ""
+
+#: ../../model/dao.rst:25 eaeecf73507643e28d8ea9cf8ddad033
+msgid "Loading data"
+msgstr ""
+
+#: ../../model/dao.rst:27 3989e1a938c340be81f660186d36abc7
+msgid "Loading an instance"
+msgstr ""
+
+#: ../../model/dao.rst:28 05569e5f853e478fbf110388968a1574
+msgid "Loading an instance of the `models\\\\User` class with id `5`"
+msgstr ""
+
+#: ../../model/dao.rst:37 e2bf8b429ee245e39ff9d3dff8e110cc
+msgid "Loading an instance using a condition:"
+msgstr ""
+
+#: ../../model/dao.rst:47 11a79e3f9ff243f3adf71a4a4b3ac5e7
+msgid "BelongsTo loading"
+msgstr ""
+
+#: ../../model/dao.rst:48 14a7c3bca7f14bf58be407fea4fea9ce
+msgid ""
+"By default, members defined by a **belongsTo** relationship are "
+"automatically loaded"
+msgstr ""
+
+#: ../../model/dao.rst:50 ad03cce5e99b44e8bc3d34338e8552a3
+msgid "Each user belongs to only one category:"
+msgstr ""
+
+#: ../../model/dao.rst:57 bef66ceee1604b33834724e2c3842a08
+msgid ""
+"It is possible to prevent this default loading ; the third parameter "
+"allows the loading or not of belongsTo members:"
+msgstr ""
+
+#: ../../model/dao.rst:65 bed0fafcde054109b9e2ace7fa896e23
+msgid "HasMany loading"
+msgstr ""
+
+#: ../../model/dao.rst:66 1d6eb61c913043b691198ba0bf07e6f8
+msgid ""
+"Loading **hasMany** members must always be explicit ; the third parameter"
+" allows the explicit loading of members."
+msgstr ""
+
+#: ../../model/dao.rst:68 39400888922644629c61afc6f7530d28
+msgid "Each user has many groups:"
+msgstr ""
+
+#: ../../model/dao.rst:78 bac623cc2fea41df839b0be95add48b1
+msgid "Composite primary key"
+msgstr ""
+
+#: ../../model/dao.rst:79 804c30608eec4c0d8c67cd81c9a6ebf4
+msgid ""
+"Either the `ProductDetail` model corresponding to a product ordered on a "
+"command and whose primary key is composite:"
+msgstr ""
+
+#: ../../model/dao.rst:83 a0f609b4d25c4d4783a1f04b68623eb9
+msgid "Attributes"
+msgstr ""
+
+#: ../../model/dao.rst:85 ../../model/dao.rst:106
+#: 5315f6b0dfb54ebfbbb56758dce233f4 ab7d670031c940df8b4466bc1eff5e15
+msgid "app/models/ProductDetail.php"
+msgstr ""
+
+#: ../../model/dao.rst:104 29c25768edaf4e86a05cf3c44539041a
+msgid "Annotations"
+msgstr ""
+
+#: ../../model/dao.rst:126 ea91caf559344cbca09a3b884a071a2a
+msgid ""
+"The second parameter `$keyValues` can be an array if the primary key is "
+"composite:"
+msgstr ""
+
+#: ../../model/dao.rst:135 e04ed65d14194351912276387f5aa68b
+msgid "Loading multiple objects"
+msgstr ""
+
+#: ../../model/dao.rst:136 eff33300e7004cbbadfe0df1305340a4
+msgid "Loading instances of the `User` class:"
+msgstr ""
+
+#: ../../model/dao.rst:146 b31c724baf1f4c5eacff2619ea47bdc9
+msgid "loading of related members"
+msgstr ""
+
+#: ../../model/dao.rst:148 03ac17b5d4fe441697532e8e6dbd6cbc
+msgid "Loading instances of the `User` class with its category and its groups :"
+msgstr ""
+
+#: ../../model/dao.rst:164 6773a47383e44eecb68ac265201beabe
+msgid ""
+"Descending in the hierarchy of related objects: |br| Loading instances of"
+" the `User` class with its category, its groups and the organization of "
+"each group :"
+msgstr ""
+
+#: ../../model/dao.rst:182 c6ae0b1ba9cd4c838c6602ea4ab4a584
+msgid "Using wildcards: |br|"
+msgstr ""
+
+#: ../../model/dao.rst:184 005d488cdb4045baa76662483657eafd
+msgid ""
+"Loading instances of the `User` class with its category, its groups and "
+"all related members of each group:"
+msgstr ""
+
+#: ../../model/dao.rst:191 6e0fed4386f54dc3b7c257f5479a6647
+msgid "Querying using conditions"
+msgstr ""
+
+#: ../../model/dao.rst:194 ca5d6fc1f9ff423b9e9c0bf558670bdd
+msgid "Simple queries"
+msgstr ""
+
+#: ../../model/dao.rst:196 6b8cc35322d44451b62b3dfd9e4997f4
+msgid ""
+"The `condition` parameter is equivalent to the WHERE part of an SQL "
+"statement:"
+msgstr ""
+
+#: ../../model/dao.rst:202 3d7550ce847d40868a1a24242629f501
+msgid ""
+"To avoid SQL injections and benefit from the preparation of statements, "
+"it is preferable to perform a parameterized query:"
+msgstr ""
+
+#: ../../model/dao.rst:209 790c3aeb8b2243a09ff6740e8120341d
+msgid "UQueries"
+msgstr ""
+
+#: ../../model/dao.rst:211 c7573215cf5647318a952fb0c2ab6e58
+msgid "The use of **U-queries** allows to set conditions on associate members:"
+msgstr ""
+
+#: ../../model/dao.rst:213 b4426d19d0974a2badde404b455860e4
+msgid "Selection of users whose organization has the domain **lecnam.net**:"
+msgstr ""
+
+#: ../../model/dao.rst:219 cc3e53bd32204628bae28fd7e54c260c
+msgid ""
+"It is possible to view the generated request in the logs (if logging is "
+"enabled):"
+msgstr ""
+
+#: ../../model/dao.rst:224 8fa91f1af4264b97ae4f4ed149848140
+msgid "The result can be verified by selecting all users in this organization:"
+msgstr ""
+
+#: ../../model/dao.rst:231 130fa577e06d4dc4bb415aef3800b81f
+msgid "The corresponding logs:"
+msgstr ""
+
+#: ../../model/dao.rst:237 ../../model/dao.rst:249
+#: a7f038bb52e644a8ba96337676daab97 e749769e14c741b4989040d4edc00c42
+msgid "Counting"
+msgstr ""
+
+#: ../../model/dao.rst:240 9931bb2e442d47f1a7ec6fc15c8eca87
+msgid "Existence testing"
+msgstr ""
+
+#: ../../model/dao.rst:251 e54147329f754014ba91e0a9fb9ff294
+msgid "To count the instances, what not to do, if users are not already loaded:"
+msgstr ""
+
+#: ../../model/dao.rst:258 329c2fbd46c44451a0a14b0963bbfcd8
+msgid "What needs to be done:"
+msgstr ""
+
+#: ../../model/dao.rst:265 1f0ab845ab774e40a0c81a9d92818f5c
+msgid "With a condition:"
+msgstr ""
+
+#: ../../model/dao.rst:272 f716b70b4fb849e1b63904190a49c1cd
+msgid "with a condition on associated objects:"
+msgstr ""
+
+#: ../../model/dao.rst:274 d7558c6ab3d14d61a1f53342b9644340
+msgid "Number of users belonging to the **OTAN** named organization."
+msgstr ""
+
+#: ../../model/dao.rst:282 84391697842d4bf1bbd0520a986fe135
+msgid "Modifying data"
+msgstr ""
+
+#: ../../model/dao.rst:284 ea58b8a2af494b998ac762c4cec67f19
+msgid "Adding an instance"
+msgstr ""
+
+#: ../../model/dao.rst:286 5e5d76bc6eb14b23afe6b9a44dcba4b9
+msgid "Adding an organization:"
+msgstr ""
+
+#: ../../model/dao.rst:297 e84bae3940eb4e1bad2d714f3ba11e7f
+msgid "Adding an instance of User, in an organization:"
+msgstr ""
+
+#: ../../model/dao.rst:312 0f03e62b393e4a3497e849b2488e20d8
+msgid "Updating an instance"
+msgstr ""
+
+#: ../../model/dao.rst:314 888b53ffd9244954b89b1c19813fa93f
+msgid "First, the instance must be loaded:"
+msgstr ""
+
+#: ../../model/dao.rst:325 afe5041cbc914992bf5d0964e26a9414
+msgid "Deleting an instance"
+msgstr ""
+
+#: ../../model/dao.rst:327 4f7454fba3f843a59382fdb6ee73c267
+msgid "If the instance is loaded from database:"
+msgstr ""
+
+#: ../../model/dao.rst:336 48fe2e6963414d6aaaf64c6cef079d4f
+msgid ""
+"If the instance is not loaded, it is more appropriate to use the `delete`"
+" method:"
+msgstr ""
+
+#: ../../model/dao.rst:345 d30e4d57e7614ae2b93a2973f7b10198
+msgid "Deleting multiple instances"
+msgstr ""
+
+#: ../../model/dao.rst:346 7847d94b530741a48329188b151d9d25
+msgid "Deletion of multiple instances without prior loading:"
+msgstr ""
+
+#: ../../model/dao.rst:355 4f842023a66f485c810cfbaf05a6e6a2
+msgid "Bulk queries"
+msgstr ""
+
+#: ../../model/dao.rst:356 53e977e0bea7427ab8dc244b0b717ba8
+msgid ""
+"Bulk queries allow several operations (insertion, modification or "
+"deletion) to be performed in a single query, which contributes to "
+"improved performance."
+msgstr ""
+
+#: ../../model/dao.rst:359 2b72408d92524079a29930203b273d24
+msgid "Bulk inserts"
+msgstr ""
+
+#: ../../model/dao.rst:361 cbd25ca9e0cb4063913a05bd733c8a1a
+msgid "Insertions example:"
+msgstr ""
+
+#: ../../model/dao.rst:375 574e17af84d241b3a97676f55ab33ed9
+msgid "Bulk updates"
+msgstr ""
+
+#: ../../model/dao.rst:377 f4c3412b87e64ebd89a378f3adaacb50
+msgid "Updates example:"
+msgstr ""
+
+#: ../../model/dao.rst:391 d59bb9cffd334fa0a8e31244c53764e6
+msgid "Bulk deletes"
+msgstr ""
+
+#: ../../model/dao.rst:393 b70c67248c9243f88bd71ce46417798e
+msgid "Deletions example"
+msgstr ""
+
+#: ../../model/dao.rst:404 e13cc695d56649c281bb9e020ab3a33a
+msgid ""
+"The `DAO::flush()` method can be called if insertions, updates or "
+"deletions are pending."
+msgstr ""
+
+#: ../../model/dao.rst:407 b1ff9ad30ece4371b8bd7e5f1befa44f
+msgid "Transactions"
+msgstr ""
+
+#: ../../model/dao.rst:409 b9d64e308d104680bee65eb53f8ec76e
+msgid "Explicit transactions"
+msgstr ""
+
+#: ../../model/dao.rst:410 b42ca32b930542cf98e98cec09ee3a8d
+msgid ""
+"All DAO operations can be inserted into a transaction, so that a series "
+"of changes can be atomized:"
+msgstr ""
+
+#: ../../model/dao.rst:429 6fc5651a0497466eaf390ff0c249ddc3
+msgid ""
+"In case of multiple databases defined in the configuration, transaction-"
+"related methods can take the database offset defined in parameter."
+msgstr ""
+
+#: ../../model/dao.rst:438 4c46798af6994b3bb5dbf1c91f43afb2
+msgid "Implicit transactions"
+msgstr ""
+
+#: ../../model/dao.rst:440 4b56f72d8fa84c3d94e4c06eb5024f03
+msgid ""
+"Some DAO methods implicitly use transactions to group together insert, "
+"update or delete operations."
+msgstr ""
+
+#: ../../model/dao.rst:453 ecdf4995aab340c8886c5c28becf310a
+msgid "SDAO class"
+msgstr ""
+
+#: ../../model/dao.rst:454 531cfe8cc3464d04a72ce35c45452d26
+msgid ""
+"The **SDAO** class accelerates CRUD operations for the business classes "
+"without relationships."
+msgstr ""
+
+#: ../../model/dao.rst:456 69a6659596ca4a57b1c92e845cd1807f
+msgid ""
+"Models must in this case declare public members only, and not respect the"
+" usual encapsulation."
+msgstr ""
+
+#: ../../model/dao.rst:458 d6c3cac9a6844708ba49f6727b5182e4
+msgid "app/models/Product.php"
+msgstr ""
+
+#: ../../model/dao.rst:474 cab3fb40edc449218e40ad859aa72bf7
+msgid ""
+"The **SDAO** class inherits from **DAO** and has the same methods for "
+"performing CRUD operations."
+msgstr ""
+
+#: ../../model/dao.rst:483 a9c5c0ef41254d90a14b03b7bb7f0102
+msgid "Prepared DAO queries"
+msgstr ""
+
+#: ../../model/dao.rst:484 0eb28a47ffd74a36b1fca30aa5ab9d9e
+msgid ""
+"Preparing certain requests can improve performance with Swoole, Workerman"
+" or Roadrunner servers. |br| This preparation initializes the objects "
+"that will then be used to execute the query. |br| This initialization is "
+"done at server startup, or at the startup of each worker, if such an "
+"event exists."
+msgstr ""
+
+#: ../../model/dao.rst:489 c05c7d113c264ad7bab307d8e0f50f17
+msgid "Swoole sample"
+msgstr ""
+
+#: ../../model/dao.rst:492 fd5539ee9f594d449feda10098e9aa5b
+msgid "Preparation"
+msgstr ""
+
+#: ../../model/dao.rst:494 b4467bc944b24fc3b2369ff47fa25d27
+msgid "app/config/swooleServices.php"
+msgstr ""
+
+#: ../../model/dao.rst:504 3d6a34cc7a8a490582430a19fae1cfc9
+msgid "Usage"
+msgstr ""
+
+#: ../../model/dao.rst:506 51daaaf0392d4070a5dcbe7fd435ed46
+msgid "app/controllers/UsersController.php"
+msgstr ""
+

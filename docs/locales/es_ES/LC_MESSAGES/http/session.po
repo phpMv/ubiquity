@@ -1,0 +1,116 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../http/session.rst:2 a068fbb580144124bec6616d1313f9c2
+msgid "Session"
+msgstr ""
+
+#: ../../http/session.rst:7 dd6b97a1501245c2a09810fed1b36ecd
+msgid ""
+"For all Http features, Ubiquity uses technical classes containing static "
+"methods. This is a design choice to avoid dependency injection that would"
+" degrade performances."
+msgstr ""
+
+#: ../../http/session.rst:10 a9821a0ab7a440919c16b2f223453353
+msgid ""
+"The **USession** class provides additional functionality to more easily "
+"manipulate native **$_SESSION** php array."
+msgstr ""
+
+#: ../../http/session.rst:13 2c3db095bdff4e7f84eef0ece10d1ac7
+msgid "Starting the session"
+msgstr ""
+
+#: ../../http/session.rst:14 f4c8b39f5b684f688c2a7816ff6d7957
+msgid ""
+"The Http session is started automatically if the **sessionName** key is "
+"populated in the **app/config.php** configuration file:"
+msgstr ""
+
+#: ../../http/session.rst:25 d6df2140f164401bbe6da73a438bfc40
+msgid ""
+"If the sessionName key is not populated, it is necessary to start the "
+"session explicitly to use it:"
+msgstr ""
+
+#: ../../http/session.rst:34 3d8266ecacf540cf8f403a03d11d1e92
+msgid ""
+"The **name** parameter is optional but recommended to avoid conflicting "
+"variables."
+msgstr ""
+
+#: ../../http/session.rst:38 a1efe6217cb842d896e00a7d55e36c6f
+msgid "Creating or editing a session variable"
+msgstr ""
+
+#: ../../http/session.rst:48 fbced0176fb444aab31a62e183df33a9
+msgid "Retrieving data"
+msgstr ""
+
+#: ../../http/session.rst:49 decd0568374d480a8b0b0083b6936a1f
+msgid ""
+"The **get** method returns the `null` value if the key **name** does not "
+"exist in the session variables."
+msgstr ""
+
+#: ../../http/session.rst:57 e12feb9c6068418eac44be085f858e99
+msgid ""
+"The **get** method can be called with the optional second parameter "
+"returning a value if the key does not exist in the session variables."
+msgstr ""
+
+#: ../../http/session.rst:63 38fba0ca184f4fb688929c37e778a6ad
+msgid "The **session** method is an alias of the **get** method."
+msgstr ""
+
+#: ../../http/session.rst:65 b1e3d0a3941146adaac2dbccee4f764b
+msgid "The **getAll** method returns all session vars:"
+msgstr ""
+
+#: ../../http/session.rst:72 8d29d8e05598474aa36048ae67dcedfb
+msgid "Testing"
+msgstr ""
+
+#: ../../http/session.rst:73 99a9b71cda3a4e1aab606166c13c398b
+msgid "The **exists** method tests the existence of a variable in session."
+msgstr ""
+
+#: ../../http/session.rst:81 c1c1fbb142494d018e3c85d01055d204
+msgid "The **isStarted** method checks the session start"
+msgstr ""
+
+#: ../../http/session.rst:90 ac7c76ace5444a8fa1a8c6badeba9c72
+msgid "Deleting variables"
+msgstr ""
+
+#: ../../http/session.rst:91 96899528b73a4835addf6a69311bb08c
+msgid "The **delete** method remove a session variable:"
+msgstr ""
+
+#: ../../http/session.rst:98 f6efee457091464ca5629c1e6e3cb372
+msgid "Explicit closing of the session"
+msgstr ""
+
+#: ../../http/session.rst:99 70850844e4404f3fb79e1256bb76c88d
+msgid ""
+"The **terminate** method closes the session correctly and deletes all "
+"session variables created:"
+msgstr ""
+

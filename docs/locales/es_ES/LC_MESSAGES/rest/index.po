@@ -1,0 +1,585 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../rest/index.rst:3 9e00287db7c346c8b5a1e624f7eb0369
+msgid "Rest"
+msgstr ""
+
+#: ../../rest/index.rst:5 27eabcfbb58447f69f82731fe8515a0d
+msgid ""
+"The REST module implements a basic CRUD, |br| with an authentication "
+"system, directly testable in the administration part."
+msgstr ""
+
+#: ../../rest/index.rst:9 5502f16f19d0487289d33b0396e0aeca
+msgid "REST and routing"
+msgstr ""
+
+#: ../../rest/index.rst:10 bd050be2f4374fdea4a2cf965c31d954
+msgid ""
+"The router is essential to the REST module, since REST (Respresentation "
+"State Transfer) is based on URLs and HTTP methods."
+msgstr ""
+
+#: ../../rest/index.rst:13 c6810853ec5b41efb2933be84dd85013
+msgid ""
+"For performance reasons, REST routes are cached independently of other "
+"routes. |br| It is therefore necessary to start the router in a "
+"particular way to activate the REST routes and not to obtain a recurring "
+"404 error."
+msgstr ""
+
+#: ../../rest/index.rst:16 0fbc455962e34137b3efc0f0d764ea0d
+msgid "The router is started in ``services.php``."
+msgstr ""
+
+#: ../../rest/index.rst:18 bd4e29a764c64b69ae191dee25173371
+msgid "Without activation of REST routes:"
+msgstr ""
+
+#: ../../rest/index.rst:20 ../../rest/index.rst:28 ../../rest/index.rst:43
+#: ../../rest/index.rst:280 3f86c6005c54493192a3c5adf22516bf
+#: 986a0e3bd43040bab2c3e380b405f2af e2a1d60feb8745db938124a3caa394fc
+#: ffa0f831c92f44bba6fb3bbe9b5343ba
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../rest/index.rst:26 a4350b55c8a141e289fb5302120d6ea7
+msgid "To enable REST routes in an application that also has a non-REST part:"
+msgstr ""
+
+#: ../../rest/index.rst:34 f70ba2e421874d76b350819c92eb0f95
+msgid "To activate only Rest routes:"
+msgstr ""
+
+#: ../../rest/index.rst:41 d9ede17550944404894cca014fcab96e
+msgid ""
+"It is possible to start routing conditionally (this method will only be "
+"more efficient if the number of routes is large in either part):"
+msgstr ""
+
+#: ../../rest/index.rst:54 7c1daba35b10469288480328e51c8551
+msgid "Resource REST"
+msgstr ""
+
+#: ../../rest/index.rst:56 e65cf78244fc43b384c551ca0ae6f062
+msgid "A REST controller can be directly associated with a model."
+msgstr ""
+
+#: ../../rest/index.rst:59 61f701714221428f8cc7b676e62fa694
+msgid ""
+"If you do not have a mysql database on hand, you can download this one: "
+":download:`messagerie.sql </model/messagerie.sql>`"
+msgstr ""
+
+#: ../../rest/index.rst:62 ../../rest/index.rst:573
+#: 4df36a1467344ad28f69b43f381c4568 c3d2af5cdb044e5a989e15bca2336125
+msgid "Creation"
+msgstr ""
+
+#: ../../rest/index.rst:64 ../../rest/index.rst:575
+#: 9b343f3e55214fcb8fb71b649640d55e dba5a193cffa415c918cc2af6252b6d7
+msgid "With devtools:"
+msgstr ""
+
+#: ../../rest/index.rst:70 ../../rest/index.rst:581
+#: 574776b7af45493d9362f38446b22c3a 7e608dd3d45e43bca43194e6c24c4326
+msgid "Or with webtools:"
+msgstr ""
+
+#: ../../rest/index.rst:72 ../../rest/index.rst:583
+#: 1b600ea70a964b5f8271461fe4075262 e8a71214b61f4c858e04e5eded13f1ba
+msgid "Go to the **REST** section and choose **Add a new resource**:"
+msgstr ""
+
+#: ../../rest/index.rst:77 92c5b0278ab8491491533257b1872a09
+msgid "The created controller :"
+msgstr ""
+
+#: ../../rest/index.rst:79 373eb448e063421aa35b6670756d6ba7
+msgid "app/controllers/RestUsersController.php"
+msgstr ""
+
+#: ../../rest/index.rst:94 40e241df6e35498c857fd3d99d7d3fdd
+msgid ""
+"Since the attributes **automated** and **inherited** of the route are set"
+" to true, the controller has the default routes of the parent class."
+msgstr ""
+
+#: ../../rest/index.rst:100 e2cf8c15a2564469a8c2a6ba2e058f30
+msgid "Test interface"
+msgstr ""
+
+#: ../../rest/index.rst:102 ba1c6d2ef93241cdba702448f8f70567
+msgid "Webtools provide an interface for querying datas:"
+msgstr ""
+
+#: ../../rest/index.rst:108 19d59725e88d43b99afb70ea07c7403e
+msgid "Getting an instance"
+msgstr ""
+
+#: ../../rest/index.rst:110 4b4ab035099c45fdae79dcbaae6b41db
+msgid "A user instance can be accessed by its primary key (**id**):"
+msgstr ""
+
+#: ../../rest/index.rst:115 528f337b988b446e9be114a09207ec00
+msgid "Inclusion of associated members: the organization of the user"
+msgstr ""
+
+#: ../../rest/index.rst:120 624ef8f4759a46908642ed36fb19e9e1
+msgid ""
+"Inclusion of associated members: organization, connections and groups of "
+"the user"
+msgstr ""
+
+#: ../../rest/index.rst:126 f68fb088d3654473a1fcbe629a30b914
+msgid "Getting multiple instances"
+msgstr ""
+
+#: ../../rest/index.rst:128 8f3cfbc0b6584b6b9c8f2766f32468a8
+msgid "Getting all instances:"
+msgstr ""
+
+#: ../../rest/index.rst:133 14e09973d8064b619a4e59b42e40ba73
+msgid "Setting a condition:"
+msgstr ""
+
+#: ../../rest/index.rst:138 22d0899839f642eb8308286a6aca6182
+msgid "Including associated members:"
+msgstr ""
+
+#: ../../rest/index.rst:144 ../../rest/index.rst:658
+#: 6c08c26136d0413cb0f1f45ae97b18d7 b1d8d653f4914d578829c2986fa6766b
+msgid "Adding an instance"
+msgstr ""
+
+#: ../../rest/index.rst:146 75de62507b62423ab1d3c76975683b4e
+msgid ""
+"The datas are sent by the **POST** method, with a content type defined at"
+" ``application/x-www-form-urlencoded``:"
+msgstr ""
+
+#: ../../rest/index.rst:148 fdc1dc19b092414984005165b0f24c8b
+msgid "Add name and domain parameters by clicking on the **parameters** button:"
+msgstr ""
+
+#: ../../rest/index.rst:153 3327bbce29f84d8fb66a11483d967643
+msgid ""
+"The addition requires an authentication, so an error is generated, with "
+"the status 401:"
+msgstr ""
+
+#: ../../rest/index.rst:158 f5999c3ac94242c1aa574c0ce20550a3
+msgid ""
+"The administration interface allows you to simulate the default "
+"authentication and obtain a token, by requesting the **connect** method:"
+msgstr ""
+
+#: ../../rest/index.rst:163 ed2acf2731e14cab94b329b7d2e99c53
+msgid ""
+"The token is then automatically sent in the following requests. |br| The "
+"record can then be inserted."
+msgstr ""
+
+#: ../../rest/index.rst:170 0c299ca7bed84ceda23e3ac0cdb58bdb
+msgid "Updating an instance"
+msgstr ""
+
+#: ../../rest/index.rst:171 49795679ab494774b9adc55f05fbeba8
+msgid "The update follows the same scheme as the insertion."
+msgstr ""
+
+#: ../../rest/index.rst:174 ../../rest/index.rst:673
+#: 726e85c718344ee8a1ef46e875ef23dc a0d4a8cf06754fbc8482e13f38590da2
+msgid "Deleting an instance"
+msgstr ""
+
+#: ../../rest/index.rst:180 ../../rest/index.rst:406
+#: 1d597c692364453887a4933f0f73364a 6d7aeec827324372a57db363fb2c156a
+msgid "Customizing"
+msgstr ""
+
+#: ../../rest/index.rst:183 d46598d0f7e945979520666f0578373c
+msgid "Routes"
+msgstr ""
+
+#: ../../rest/index.rst:184 baac95f638f94807a22966f194759d53
+msgid ""
+"It is of course possible to customize and simplify the routes. |br| In "
+"this case, it is preferable to use inheritance from the "
+"**RestBaseController** class, and not to enable automatic routes."
+msgstr ""
+
+#: ../../rest/index.rst:187 ../../rest/index.rst:264 ../../rest/index.rst:328
+#: ../../rest/index.rst:369 ../../rest/index.rst:413 ../../rest/index.rst:442
+#: ../../rest/index.rst:462 ../../rest/index.rst:479 ../../rest/index.rst:505
+#: ../../rest/index.rst:535 31af3d37b7544527819fc78a0014759c
+#: 508558fa63a54348a40f88501bd3aa8f 73f5b98f5a9d42c8a6ba5b09d6a33a96
+#: 93f45006e3d04c2189fee2fc86d60dec a07f9c89cf224cd2bee59096cbd7fce7
+#: a0fd4f25e0dd465cb05a4dfb202b9142 b7e1fb2e736049018c3617c10c31d987
+#: efa8c53185a34a9ca54e67cf3ec82fd0 f2b4f0306b424178aed20d3167592fab
+#: f446ca5fa6234b5e9a4881c516bb45f6
+msgid "app/controllers/RestOrgas.php"
+msgstr ""
+
+#: ../../rest/index.rst:250 a1acc6d5b90f470ba257934f24e646bb
+msgid ""
+"After re-initializing the cache, the test interface shows the accessible "
+"routes:"
+msgstr ""
+
+#: ../../rest/index.rst:256 c31b95707cd64aa39910c158d53dafa4
+msgid "Modification of sent data"
+msgstr ""
+
+#: ../../rest/index.rst:259 5c5eadd2632143be8a094ba7ca477ca7
+msgid "By overriding"
+msgstr ""
+
+#: ../../rest/index.rst:261 f32afeb7717242cbb005bae45fdb048a
+msgid ""
+"It is possible to modify the data sent to the update and add methods, in "
+"order to add, modify or delete the value of fields before sending. |br| "
+"Either by overdefining the method getDatas:"
+msgstr ""
+
+#: ../../rest/index.rst:276 8387cf366d7f4579965cbc56a0e5445f
+msgid "With events"
+msgstr ""
+
+#: ../../rest/index.rst:278 90c493b9ad56408093230960b7e2b721
+msgid "Either in a more global way by acting on the rest events:"
+msgstr ""
+
+#: ../../rest/index.rst:296 25601d259eba4578a3750dce2dabb3a2
+msgid "Authentification"
+msgstr ""
+
+#: ../../rest/index.rst:297 5b1b018f03414a3ea9915f9b16878206
+msgid ""
+"Ubiquity REST implements an Oauth2 authentication with Bearer tokens. "
+"|br| Only methods with ``@authorization`` annotation require the "
+"authentication, these are the modification methods (add, update & "
+"delete). |br|"
+msgstr ""
+
+#: ../../rest/index.rst:316 08ae236cd7ab48209cb7b43d1808c297
+msgid ""
+"The **connect** method of a REST controller establishes the connection "
+"and returns a new token. |br| It is up to the developer to override this "
+"method to manage a possible authentication with login and password."
+msgstr ""
+
+#: ../../rest/index.rst:323 761a84b29ad6450fac6e7850453050aa
+msgid "Simulation of a connection with login"
+msgstr ""
+
+#: ../../rest/index.rst:325 15ef8237be354cdc982b0994e4decbea
+msgid ""
+"In this example, the connection consists simply in sending a user "
+"variable by the post method. |br| If the user is provided, the "
+"``connect`` method of ``$server`` instance returns a valid token that is "
+"stored in session (the session acts as a database here)."
+msgstr ""
+
+#: ../../rest/index.rst:367 5687939eb68449f4acc99d6dca07f7f7
+msgid ""
+"For each request with authentication, it is possible to retrieve the "
+"connected user (it is added here in the response headers) :"
+msgstr ""
+
+#: ../../rest/index.rst:399 86471a9e86cb44b8be3c211ca54dc9d9
+msgid "Use the webtools interface to test the connection:"
+msgstr ""
+
+#: ../../rest/index.rst:408 7bd2a6c63f9943738bc3d764de93cbe6
+msgid "Api tokens"
+msgstr ""
+
+#: ../../rest/index.rst:410 af6667a93c1d4fb6ace28f58ffeb2749
+msgid ""
+"It is possible to customize the token generation, by overriding the "
+"``getRestServer`` method:"
+msgstr ""
+
+#: ../../rest/index.rst:433 dfe09fefed7a48dcbfeec99347a60690
+msgid "Allowed origins and CORS"
+msgstr ""
+
+#: ../../rest/index.rst:436 5fc46ab50920409c9c1a4d35bacd61b2
+msgid "Cross-Origin Resource Sharing (CORS)"
+msgstr ""
+
+#: ../../rest/index.rst:438 74e2455005ff48a6bf901357c205b689
+msgid ""
+"If you access your api from another site, it is necessary to set up "
+"**CORS**."
+msgstr ""
+
+#: ../../rest/index.rst:440 b4be85033d364e4caf5a4e63b619c7ac
+msgid ""
+"In this case, for requests of type ``PATCH``, ``PUT``, ``DELETE``, your "
+"api must define a route allowing CORS to carry out its control pre-"
+"request using the ``OPTIONS`` method."
+msgstr ""
+
+#: ../../rest/index.rst:457 163e0679a75a40d7aa4e89990d9cc2d5
+msgid "Allowed origins"
+msgstr ""
+
+#: ../../rest/index.rst:459 9015fe4aa7be47d3b77511fa159e2b86
+msgid ""
+"Allowed origins allow to define the clients that can access the resource "
+"in case of a cross domain request by defining The **Access-Control-Allow-"
+"Origin** response header. |br| This header field is returned by the "
+"``OPTIONS`` method."
+msgstr ""
+
+#: ../../rest/index.rst:477 274e491864234084bc15eef21d3285a8
+msgid "It is possible to authorize several origins:"
+msgstr ""
+
+#: ../../rest/index.rst:496 05f8b48139ed43c3bccf4eda7fa2d8fd
+msgid "Response"
+msgstr ""
+
+#: ../../rest/index.rst:498 9c5d98ad29a84a8e9f5772cd2c3ca949
+msgid ""
+"To change the response format, it is necessary to create a class "
+"inheriting from ``ResponseFormatter``. |br| We will take inspiration from"
+" **HAL**, and change the format of the responses by:"
+msgstr ""
+
+#: ../../rest/index.rst:501 8417f86ab88b43cf892ee6910c272cac
+msgid "adding a link to self for each resource"
+msgstr ""
+
+#: ../../rest/index.rst:502 d50038f878f34193b9d868cc00c5ca59
+msgid "adding an ``_embedded`` attribute for collections"
+msgstr ""
+
+#: ../../rest/index.rst:503 8aa5eee2d4b44413b6d0a99ed7d279c5
+msgid "removing the ``data`` attribute for unique resources"
+msgstr ""
+
+#: ../../rest/index.rst:533 80fe609317d34d188e550b001a4d5d84
+msgid ""
+"Then assign ``MyResponseFormatter`` to the REST controller by overriding "
+"the ``getResponseFormatter`` method:"
+msgstr ""
+
+#: ../../rest/index.rst:548 cbf5eb1096234a80b986e0fa07de7746
+msgid "Test the results with the getOne and get methods:"
+msgstr ""
+
+#: ../../rest/index.rst:560 a3479292567a499a99920ecae1df232f
+msgid "APIs"
+msgstr ""
+
+#: ../../rest/index.rst:561 19cdf5c9dbee4222849031bbe3d8d82e
+msgid "Unlike REST resources, APIs controllers are multi-resources."
+msgstr ""
+
+#: ../../rest/index.rst:564 6d587d1df3ea468fbafb81fdc117943a
+msgid "SimpleRestAPI"
+msgstr ""
+
+#: ../../rest/index.rst:567 46ab4124e2e1459d832c5408f4ff9225
+msgid "JsonApi"
+msgstr ""
+
+#: ../../rest/index.rst:568 b5fe270c9a1345bcb1525151e47c12a9
+msgid ""
+"Ubiquity implements the jsonApi specification with the class "
+"``JsonApiRestController``. |br| JsonApi is used by  `EmberJS "
+"<https://api.emberjs.com/ember-data/release/classes/DS.JSONAPIAdapter>`_ "
+"and others. |br| see https://jsonapi.org/ for more."
+msgstr ""
+
+#: ../../rest/index.rst:588 c26c3d2fa3504413b340c4ea9e03fd58
+msgid "Test the api in webtools:"
+msgstr ""
+
+#: ../../rest/index.rst:594 d0cf16cb084a4893b0b2f59ee1e1f57e
+msgid "Links"
+msgstr ""
+
+#: ../../rest/index.rst:596 27ff1ed4c93b486fa3802ef7fedb48e3
+msgid "The **links** route (index method) returns the list of available urls:"
+msgstr ""
+
+#: ../../rest/index.rst:602 0891d6f25b164befa8f4f779af5cd3be
+msgid "Getting an array of objects"
+msgstr ""
+
+#: ../../rest/index.rst:603 29d30958e8884a648c2b925f4c8bebcd
+msgid "By default, all associated members are included:"
+msgstr ""
+
+#: ../../rest/index.rst:609 34863027ee4f48d98ac4bcd410a708e8
+msgid "Including associated members"
+msgstr ""
+
+#: ../../rest/index.rst:610 7023228ad3c54ef58f4e8683e1b0c666
+msgid "you need to use the **include** parameter of the request:"
+msgstr ""
+
+#: ../../rest/index.rst:613 ../../rest/index.rst:631 ../../rest/index.rst:648
+#: 6928e5de5e76438fb07a58053cfd4677 b2595382f049433f8b244bb1143e22ac
+#: ccc5ae76d03942ee83408234aeaca183
+msgid "URL"
+msgstr ""
+
+#: ../../rest/index.rst:613 ../../rest/index.rst:631 ../../rest/index.rst:648
+#: a2743452f9384bd0923177c464485744 ca41eb23aa6f4d26bc100ca30c516fcf
+#: e61ab720e32e4b098831231692a0fa27
+msgid "Description"
+msgstr ""
+
+#: ../../rest/index.rst:615 0d6e67b299ca468ea8485d46c90fd64a
+msgid "``/jsonapi/user?include=false``"
+msgstr ""
+
+#: ../../rest/index.rst:615 1708d74cb1ed463f9e534ff326f4a63e
+msgid "No associated members are included"
+msgstr ""
+
+#: ../../rest/index.rst:617 1319e602cc8e45ca8b703f135dcbe711
+msgid "``/jsonapi/user?include=organization``"
+msgstr ""
+
+#: ../../rest/index.rst:617 a1d287ac872748dab7825efe53d4f92a
+msgid "Include the organization"
+msgstr ""
+
+#: ../../rest/index.rst:619 6a005a4e298a4e3ab1775ad58c1d1f49
+msgid "``/jsonapi/user?include=organization,connections``"
+msgstr ""
+
+#: ../../rest/index.rst:619 9440de1a68cf4c8fa2062945427fd75c
+msgid "Include the organization and the connections"
+msgstr ""
+
+#: ../../rest/index.rst:621 5b5b786203df4be88acfec6ca537880c
+msgid "``/jsonapi/user?include=groupes.organization``"
+msgstr ""
+
+#: ../../rest/index.rst:621 b831aca7777b4168b267005bf82fda14
+msgid "Include the groups and their organization"
+msgstr ""
+
+#: ../../rest/index.rst:626 1702c486d5264c168d752082d235d1eb
+msgid "Filtering instances"
+msgstr ""
+
+#: ../../rest/index.rst:627 81063eb6ad6b421fb4a0989167218043
+msgid ""
+"you need to use the **filter** parameter of the request, |br| **filter** "
+"parameter corresponds to the **where** part of an SQL statement:"
+msgstr ""
+
+#: ../../rest/index.rst:633 565413441268471f9246b481504734b1
+msgid "``/jsonapi/user?1=1``"
+msgstr ""
+
+#: ../../rest/index.rst:633 53dee05a6b0c42a5a9fc27a1b914509b
+msgid "No filtering"
+msgstr ""
+
+#: ../../rest/index.rst:635 5830a2b3aa2448e5b6213f760b873406
+msgid "``/jsonapi/user?firstname='Benjamin'``"
+msgstr ""
+
+#: ../../rest/index.rst:635 625f453939b14a4b8bae58cfab555e0c
+msgid "Returns all users named Benjamin"
+msgstr ""
+
+#: ../../rest/index.rst:637 972d75ee51ff4b8d9617daa70d9e001f
+msgid "``/jsonapi/user?filter=firstname like 'B*'``"
+msgstr ""
+
+#: ../../rest/index.rst:637 a658977877144bf8b5b22b7d6b25c233
+msgid "Returns all users whose first name begins with a B"
+msgstr ""
+
+#: ../../rest/index.rst:639 e50c44ea85a644899d064fdb6afd1ae0
+msgid "``/jsonapi/user?filter=suspended=0 and lastname like 'ca*'``"
+msgstr ""
+
+#: ../../rest/index.rst:639 da197fdab446446d93af56047844260e
+msgid "Returns all suspended users whose lastname begins with ca"
+msgstr ""
+
+#: ../../rest/index.rst:644 d625955b02e44d3eaac864ed7c83c208
+msgid "Pagination"
+msgstr ""
+
+#: ../../rest/index.rst:645 3a9746cd72cf49a5b6a480635247dc2d
+msgid ""
+"you need to use the **page[number]** and **page[size]** parameters of the"
+" request:"
+msgstr ""
+
+#: ../../rest/index.rst:650 d91e08dfb0254c7cb8714fd82a1c9a71
+msgid "``/jsonapi/user``"
+msgstr ""
+
+#: ../../rest/index.rst:650 bdc7d605d3014e0a8d12482289e59457
+msgid "No pagination"
+msgstr ""
+
+#: ../../rest/index.rst:652 a7d84a7ecac0496da587259cc102618e
+msgid "``/jsonapi/user?page[number]=1``"
+msgstr ""
+
+#: ../../rest/index.rst:652 7dfe21d052ec4fb0a267749b0adf6bf5
+msgid "Display the first page (page size is 1)"
+msgstr ""
+
+#: ../../rest/index.rst:654 842e875e59e04e3cbe02154868e22a09
+msgid "``/jsonapi/user?page[number]=1&&page[size]=10``"
+msgstr ""
+
+#: ../../rest/index.rst:654 5a52fc2f4bcc4db9943e4f84e744c962
+msgid "Display the first page (page size is 10)"
+msgstr ""
+
+#: ../../rest/index.rst:660 700dcc7009b64d0e9b6f0f0787e3abd4
+msgid ""
+"The datas, contained in ``data[attributes]``, are sent by the **POST** "
+"method, with a content type defined at ``application/json; "
+"charset=utf-8``. |br|"
+msgstr ""
+
+#: ../../rest/index.rst:662 ddc1c7cc32cd4870af1372d873e4a640
+msgid "Add your parameters by clicking on the **parameters** button:"
+msgstr ""
+
+#: ../../rest/index.rst:667 067ff88dcf5c489d8b539888e666ce99
+msgid ""
+"The addition requires an authentication, so an error is generated, with "
+"the status 401 if the token is absent or expired."
+msgstr ""
+
+#: ../../rest/index.rst:674 5dbf1e9a21e64bb19752e0ff690997c8
+msgid ""
+"Deletion requires the **DELETE** method, and the use of the **id** of the"
+" object to be deleted:"
+msgstr ""
+

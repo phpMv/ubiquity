@@ -1,0 +1,189 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../contributing/contributing-shem.rst:3
+#: ebc2050cc6714eefb687c7f98fbf8b1e
+msgid "Contributing"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:6
+#: a4866c6a9b394ceb88347d47eebb3479
+msgid "System requirements"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:7
+#: e51a9b09dcd84897899c84f47a902d43
+msgid "Before working on Ubiquity, setup your environment with the following software:"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:9
+#: 73e4138cc3b24e39b11ab56c5856a2b7
+msgid "Git"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:10
+#: 178434e6ad8d4171b63f45a36377e620
+msgid "PHP version 7.1 or above."
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:13
+#: 32c281d8815d4a0faf796a77c8031861
+msgid "Get Ubiquity source code"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:15
+#: 8aff75f3ecb54b4da164ccde559f3fce
+msgid "On `Ubiquity github repository <https://github.com/phpMv/ubiquity>`_ :"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:17
+#: fece4484a17c45d1865cd3c6067ffa7a
+msgid "Click `Fork` Ubiquity project"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:19
+#: a7277b2dc249403982c0d65ef85cde99
+msgid "Clone your fork locally:"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:27
+#: ../../contributing/contributing-shem.rst:49
+#: 945de6a18d7a40dd910ddd1a4b6b8e5d
+#: 2527fab66a604c04ac95ff608e317821
+msgid "Work on your Patch"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:31
+#: 8f6d85636d924698ace7e2aac3ba850f
+msgid "Before you start, you must know that all the patches you are going to submit must be released under the Apache 2.0 license, unless explicitly specified in your commits."
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:35
+#: a19283614fa2438b9f427fd14b16cefa
+msgid "Create a Topic Branch"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:39
+#: e21e0d727d22451c81b5f40f75f2db1e
+msgid "Use a descriptive name for your branch:"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:41
+#: 8066c66e692849bc85b3b1b62e809d48
+msgid "issue_xxx where xxx is the issue number is a good convention for bug fixes"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:42
+#: 032c636a42934ee895365cb7e430088a
+msgid "feature_name is a good convention for new features"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:50
+#: adbb81e932eb454ba263303171fe17ef
+msgid "Work on your code and commit as much as you want, and keep in mind the following:"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:52
+#: 82e960e2b23f4812acb8045624f04ed1
+msgid "Read about the :ref:`Ubiquity coding standards<coding>`;"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:53
+#: b312a7eee27141748cc7c1389a7df4eb
+msgid "Add unit, fonctional or acceptance tests to prove that the bug is fixed or that the new feature actually works;"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:54
+#: 44ef1102817e4898a5c8976a057182cf
+msgid "Do atomic and logically separate commits (use `git rebase` to have a clean and logical history);"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:55
+#: ed338f0cfc6e4f04bcc25f6fde622336
+msgid "Write good commit messages (see the tip below)."
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:56
+#: 3b149c08e76642629fcf6acc4aa10daa
+msgid "Increase the version numbers in any modified files, respecting `semver <https://semver.org>`_ rules:"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:58
+#: a197c93c5b054744a663538dfcc60453
+msgid "Given a version number ``MAJOR.MINOR.PATCH``, increment the:"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:60
+#: d93288d1e85b44dca2d9c5b6c95e6ccf
+msgid "``MAJOR`` version when you make incompatible API changes,"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:61
+#: c33b7db19288498aa2b47484593ec298
+msgid "``MINOR`` version when you add functionality in a backwards-compatible manner, and"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:62
+#: a658eb3a8aba49048bf1b154a2ca6da9
+msgid "``PATCH`` version when you make backwards-compatible bug fixes."
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:65
+#: 935f85d1f8764222b370649178dcf79e
+msgid "Submit your Patch"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:67
+#: 52e0240f4c61407cb632ec9f146ffff9
+msgid "Update the [Unrelease] part of the `CHANGELOG.md <https://github.com/phpMv/ubiquity/blob/master/CHANGELOG.md#changelog>`_ file by integrating your changes into the appropriate parts:"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:69
+#: c90fd3f52e374ef1b4014bedac603d72
+msgid "Added"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:70
+#: 8e3490689c6b4e29a1ac4b36aae4cf70
+msgid "Changed"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:71
+#: b97392dc79604d1ba389d8eb36b306b7
+msgid "Removed"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:72
+#: be39b2d6eb0c453c9372e808b771d05f
+msgid "Fixed"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:74
+#: 6509b2a9003b4b97ba18ae34604f7c60
+msgid "Eventualy rebase your Patch |br| Before submitting, update your branch (needed if it takes you a while to finish your changes):"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:86
+#: 5352db470b234a5bb493683ce1823a23
+msgid "Make a Pull Request"
+msgstr ""
+
+#: ../../contributing/contributing-shem.rst:88
+#: 1f8e3975718744e49870e68d5c25d5a2
+msgid "You can now make a pull request on `Ubiquity github repository <https://github.com/phpMv/ubiquity>`_ ."
+msgstr ""

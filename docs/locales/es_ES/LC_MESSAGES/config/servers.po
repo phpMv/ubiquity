@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../config/servers.rst:3 55990be1d5534f458ec089e7bb05c5f4
+msgid "Servers configuration"
+msgstr ""
+
+#: ../../config/servers.rst:5 1aac0ee66dd3402f803d8ebb5c7b4acb
+msgid ""
+"Since version 2.4.5, for security and simplification reasons, the root of"
+" an Ubiquity application is located in the public folder."
+msgstr ""
+
+#: ../../config/servers.rst:8 0270fd74140f4819a74d6dbf15be3bc7
+msgid "Apache2"
+msgstr ""
+
+#: ../../config/servers.rst:10 c3e4d3ddcc2b4094be194e0934ce9f04
+msgid "mod_php/PHP-CGI"
+msgstr ""
+
+#: ../../config/servers.rst:12 aa282e46f0f147f7bb8622adfdea657f
+msgid "Apache 2.2"
+msgstr ""
+
+#: ../../config/servers.rst:14 ../../config/servers.rst:39
+#: ../../config/servers.rst:63 ../../config/servers.rst:129
+#: 03797e9b0ccc4d778ae1ecbdb4b926cc 15cfc6e341ef4aceaf42f2d35cbc874b
+#: be59b6dfa27f4e4582df6e447524af12 d104079290ad47138ad298a1f6501893
+msgid "mydomain.conf"
+msgstr ""
+
+#: ../../config/servers.rst:60 fb39854bfd784581916dc055ee0883e0
+msgid "Apache 2.4"
+msgstr ""
+
+#: ../../config/servers.rst:61 01fbb050889a4943a990609681d62aa9
+msgid ""
+"In Apache 2.4, ``Order Allow,Deny`` has been replaced by ``Require all "
+"granted``."
+msgstr ""
+
+#: ../../config/servers.rst:83 62ba28d9d59d436ca5c32a4519e046cd
+msgid "index.php relocation in public folder"
+msgstr ""
+
+#: ../../config/servers.rst:84 8402c47bf44f41b3bf309831ff3c4d03
+msgid ""
+"If you created your project with a version prior to 2.4.5, you have to "
+"modify ``index.php`` and move the ``index.php`` and ``.htaccess`` files "
+"to the ``public`` folder."
+msgstr ""
+
+#: ../../config/servers.rst:86 902175f1e21d49238001ac8a9a3e0681
+msgid "public/index.php"
+msgstr ""
+
+#: ../../config/servers.rst:100 2e54062d4f2f43b7b0feaddf2a7e57ab
+msgid "PHP-FPM"
+msgstr ""
+
+#: ../../config/servers.rst:102 4160a785a6914e1c8d7f11f7d1bcb468
+msgid ""
+"Make sure the **libapache2-mod-fastcgi** and **php7.x-fpm** packages are "
+"installed (replace **x** with php version number)."
+msgstr ""
+
+#: ../../config/servers.rst:104 7f622de21d784514a1c624ba6221821c
+msgid "**php-pm** configuration:"
+msgstr ""
+
+#: ../../config/servers.rst:106 1f486f282e4c490fb535a88cc8dfee11
+msgid "php-pm.conf"
+msgstr ""
+
+#: ../../config/servers.rst:127 12a1317eda58432a8f01a8b315001a84
+msgid "**Apache 2.4** configuration:"
+msgstr ""
+
+#: ../../config/servers.rst:142 b3f9bb39c3d544a79ca5bdaad601f7e3
+msgid "nginX"
+msgstr ""
+
+#: ../../config/servers.rst:144 7590c98a57b24924ad780b6676357ece
+msgid "**nginX** configuration:"
+msgstr ""
+
+#: ../../config/servers.rst:146 905f0d7fbcdc42228ef2136f55875894
+msgid "nginx.conf"
+msgstr ""
+
+#: ../../config/servers.rst:187 c191371b64404bf995f004423f1695d2
+msgid "Swoole"
+msgstr ""
+
+#: ../../config/servers.rst:189 3bdf02e10ecb4f0380e90d5886d10711
+msgid "**Swoole** configuration:"
+msgstr ""
+
+#: ../../config/servers.rst:192 4b4f6dfb619a48b8a0469e830c82ecec
+msgid ".ubiquity/swoole-config.php"
+msgstr ""
+
+#: ../../config/servers.rst:206 15e5ff36fb464d76a2000fe4711d5e57
+msgid "Workerman"
+msgstr ""
+
+#: ../../config/servers.rst:208 7e84b8ec8adf49c0abde08e3863a7cd9
+msgid "**Workerman** configuration:"
+msgstr ""
+
+#: ../../config/servers.rst:211 8d09f6998ba24f7686fcd8d8b49aeb99
+msgid ".ubiquity/workerman-config.php"
+msgstr ""
+
+#: ../../config/servers.rst:225 aeb61903018a420c8c1eb5cafb96e03a
+msgid "RoadRunner"
+msgstr ""
+
+#: ../../config/servers.rst:227 cee5d06f5e4a4f89a5915476201fc16f
+msgid "**RoadRunner** configuration:"
+msgstr ""
+
+#: ../../config/servers.rst:229 336212ed02eb4a4885d8ac0ced4d5462
+msgid ".ubiquity/.rr.yml"
+msgstr ""
+

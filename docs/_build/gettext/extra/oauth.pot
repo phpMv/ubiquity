@@ -1,0 +1,144 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../extra/oauth.rst:3
+#: 4b47a223ed9b4464920e7b06ac30e2e3
+msgid "OAuth2 client module"
+msgstr ""
+
+#: ../../extra/oauth.rst:8
+#: 1a5f9245f05e4dca8822aa88134dc824
+msgid "This part is accessible from the **webtools**, so if you created your project with the **-a** option or with the **create-project** command. The OAuth module is not installed by default. It uses HybridAuth library."
+msgstr ""
+
+#: ../../extra/oauth.rst:13
+#: bad56e0e0d2d4c44a3d53667921e056c
+msgid "Installation"
+msgstr ""
+
+#: ../../extra/oauth.rst:15
+#: 972910698f204a22914fb7bc85206f9c
+msgid "In the root of your project:"
+msgstr ""
+
+#: ../../extra/oauth.rst:21
+#: 29443921566c48dc8fefb7a422e91a11
+msgid "It is also possible to add the **ubiquity-oauth** dependency using the **Composer** part of the administration module."
+msgstr ""
+
+#: ../../extra/oauth.rst:27
+#: 159f8468fe1c4fd6a4266f8676fef1b4
+msgid "OAuth configuration"
+msgstr ""
+
+#: ../../extra/oauth.rst:30
+#: e3ef0279fa4c4fed8c1847896e1a0280
+msgid "Global configuration"
+msgstr ""
+
+#: ../../extra/oauth.rst:35
+#: 1d9ed41708834bbf81c503ef87514291
+msgid "Click on the **Global configuration** button, and modify the callback URL, which corresponds to the local callback url after a successful connection."
+msgstr ""
+
+#: ../../extra/oauth.rst:41
+#: 1526e1f171da43dc8664344fbef47e52
+msgid "OAuth controller"
+msgstr ""
+
+#: ../../extra/oauth.rst:43
+#: 90e90c500b63404ca8d15898e898d9fd
+msgid "Click on the **Create Oauth controller** button and assign to the route the value previously given to the callback:"
+msgstr ""
+
+#: ../../extra/oauth.rst:48
+#: ad7276644f51442d82b2de4314922066
+msgid "Validate and reset the router cache:"
+msgstr ""
+
+#: ../../extra/oauth.rst:54
+#: 006f97e517024c018b506eea4fa58f05
+msgid "Providers"
+msgstr ""
+
+#: ../../extra/oauth.rst:56
+#: e2b9edaf9fac43188562aaa001284fff
+msgid "For an OAuth authentication, it is necessary to create an application at the provider beforehand, and to take note of the keys of the application (id and secret)."
+msgstr ""
+
+#: ../../extra/oauth.rst:58
+#: 9ef2538c82054516900d6bc49b5e0704
+msgid "Click on the **Add provider** button and select **Google**:"
+msgstr ""
+
+#: ../../extra/oauth.rst:63
+#: 087c30574b474f0eab414f5a7f31caba
+msgid "Check the connection by clicking on the **Check** button:"
+msgstr ""
+
+#: ../../extra/oauth.rst:68
+#: ce6fa6cd239d45679a203b80a93f15d7
+msgid "Post Login Information:"
+msgstr ""
+
+#: ../../extra/oauth.rst:74
+#: 83d3aaadc7d6462ba03fac2ab92a6cdc
+msgid "OAuthController customization"
+msgstr ""
+
+#: ../../extra/oauth.rst:75
+#: b596fde7ed2a4edf8fb0e3e295114e11
+msgid "The controller created is the following:"
+msgstr ""
+
+#: ../../extra/oauth.rst:77
+#: ../../extra/oauth.rst:112
+#: 0f082ffd0e7340bbac2d78fc28e69e32
+#: f10ad3c6f967425bb604350964f5ed46
+msgid "app/controllers/OAuthTest.php"
+msgstr ""
+
+#: ../../extra/oauth.rst:102
+#: 89b80b70c1914f358f81bbd1f71982e0
+msgid "The **_oauth** method corresponds to the callback url"
+msgstr ""
+
+#: ../../extra/oauth.rst:103
+#: ee907684a1a14440ae8a73d7c1bf7c0d
+msgid "The **onConnect** method is triggered on connection and can be overridden."
+msgstr ""
+
+#: ../../extra/oauth.rst:106
+#: ced618cf5ab848138bd4adea6faef410
+msgid "Example :"
+msgstr ""
+
+#: ../../extra/oauth.rst:108
+#: 8b58a3766ad94bc0b65a0729d9ba9ee6
+msgid "Possible retrieval of an associated user in the database"
+msgstr ""
+
+#: ../../extra/oauth.rst:109
+#: 2c9faadf6b3d48a89a05395351282308
+msgid "or creation of a new user"
+msgstr ""
+
+#: ../../extra/oauth.rst:110
+#: ba50c6320b3945a59a81556b277df90d
+msgid "Adding the logged-in user and redirection"
+msgstr ""

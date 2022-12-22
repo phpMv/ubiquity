@@ -1,0 +1,333 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../events/index.rst:3
+#: cf0a27eaab044a32adfde5c2a6a3d4fd
+msgid "Events"
+msgstr ""
+
+#: ../../events/index.rst:6
+#: 70492e2271f949eda4661251fae6bce2
+msgid "The Events module uses the static class **EventsManager** to manage events."
+msgstr ""
+
+#: ../../events/index.rst:10
+#: 99d1357c44544c129ba34c34c572ee89
+msgid "Framework core events"
+msgstr ""
+
+#: ../../events/index.rst:12
+#: b50b2aa132c64d15adc426e8ce4f1584
+msgid "Ubiquity emits events during the different phases of submitting a request. |br| These events are relatively few in number, to limit their impact on performance."
+msgstr ""
+
+#: ../../events/index.rst:16
+#: 58b7fce789de4b9bb5c42040b1fc609d
+msgid "Part"
+msgstr ""
+
+#: ../../events/index.rst:16
+#: 8add51bc53a04ec68c9c06ca14d0f768
+msgid "Event name"
+msgstr ""
+
+#: ../../events/index.rst:16
+#: 2e7904f2707645aabf4623c6107bccdd
+msgid "Parameters"
+msgstr ""
+
+#: ../../events/index.rst:16
+#: 4e762675157b4db9b568949e4ebb3d33
+msgid "Occures when"
+msgstr ""
+
+#: ../../events/index.rst:18
+#: ../../events/index.rst:20
+#: 5c5f262b0e7c4b43ba10a63f2366425e
+#: 58e1be95107345978a578f1661e7be4e
+msgid "ViewEvents"
+msgstr ""
+
+#: ../../events/index.rst:18
+#: 311ecfc7577d4cf68299cc97794b778e
+msgid "BEFORE_RENDER"
+msgstr ""
+
+#: ../../events/index.rst:18
+#: ../../events/index.rst:20
+#: 1438a4d4ac544f0c90175c9b5dcb8500
+#: d8463005ef164bf19555f265179f07a4
+msgid "viewname, parameters"
+msgstr ""
+
+#: ../../events/index.rst:18
+#: 16d1a31cdad143a88337535ec79ac3f1
+msgid "Before rendering a view"
+msgstr ""
+
+#: ../../events/index.rst:20
+#: 41d1c7b95cd54a078c4e52d83b1e275e
+msgid "AFTER_RENDER"
+msgstr ""
+
+#: ../../events/index.rst:20
+#: fa691dc466674df49933bc37e37ca2f0
+msgid "After rendering a view"
+msgstr ""
+
+#: ../../events/index.rst:22
+#: ../../events/index.rst:24
+#: ../../events/index.rst:26
+#: ../../events/index.rst:28
+#: ../../events/index.rst:30
+#: ../../events/index.rst:32
+#: 5b34cd573663418d822acc0e9d2c7d26
+#: b89a0b5040a9426fb0a32efe7abdffce
+#: e7077819384f42b788de773f0a9cba83
+#: d58eb6c60595476089baecd61aebe672
+#: 23d6229193d84fcd9eecf1a5f2e8ff34
+#: 9fb5e2313ab44c469c379ae9a49649f1
+msgid "DAOEvents"
+msgstr ""
+
+#: ../../events/index.rst:22
+#: 2fc81250b8394a5a9d104feadd2e3867
+msgid "GET_ALL"
+msgstr ""
+
+#: ../../events/index.rst:22
+#: 726081f91dfa4e50a1da1ccf2adf45c4
+msgid "objects, classname"
+msgstr ""
+
+#: ../../events/index.rst:22
+#: 75bdd43947db4182b8946276503b607b
+msgid "After loading multiple objects"
+msgstr ""
+
+#: ../../events/index.rst:24
+#: a70b97a63b454e1b9f5ba18eb3da46c0
+msgid "GET_ONE"
+msgstr ""
+
+#: ../../events/index.rst:24
+#: f6902989e1734866a5935fc4a15b5506
+msgid "object, classname"
+msgstr ""
+
+#: ../../events/index.rst:24
+#: 8c7740f8ecac4d358d4933afd1e8aeb8
+msgid "After loading one object"
+msgstr ""
+
+#: ../../events/index.rst:26
+#: ../../events/index.rst:36
+#: b14a58d1d80f4a9aae45a42720cb8dce
+#: 3540736a3004455990a8b9e1b5d7e69f
+msgid "BEFORE_UPDATE"
+msgstr ""
+
+#: ../../events/index.rst:26
+#: ../../events/index.rst:30
+#: ../../events/index.rst:34
+#: ../../events/index.rst:36
+#: 4b8832207b2844d88c0201e88c71e947
+#: bab31328008b41ca9aa6470997dd2169
+#: f2178dc6b5f54472bf8a454fb76deaba
+#: 8e562315e8ad44d7b64ce19fb5a8c207
+msgid "instance"
+msgstr ""
+
+#: ../../events/index.rst:26
+#: ../../events/index.rst:36
+#: 00dd52525eda4082adebc4e5244c0115
+#: ca4bf12829f644ec9a56811d4de4888c
+msgid "Before updating an object"
+msgstr ""
+
+#: ../../events/index.rst:28
+#: 67d376dc8a7343a89478c339247c328c
+msgid "AFTER_UPDATE"
+msgstr ""
+
+#: ../../events/index.rst:28
+#: ../../events/index.rst:32
+#: 38ffe5a798994d71ab1bba81546310f7
+#: ff9968e1fafe4bd4b8e7017be97d0beb
+msgid "instance, result"
+msgstr ""
+
+#: ../../events/index.rst:28
+#: 9ffebc07d7814c6bb141425d18d659a4
+msgid "After updating an object"
+msgstr ""
+
+#: ../../events/index.rst:30
+#: ../../events/index.rst:34
+#: 6df35695698f4c1e81f61ffbc207b1e4
+#: 6ce0bd5062a24fd9b57b3f09e6a26e89
+msgid "BEFORE_INSERT"
+msgstr ""
+
+#: ../../events/index.rst:30
+#: ../../events/index.rst:34
+#: 32b1d36d45aa418aad4363837cc741d0
+#: ff3130ad6dc342b8a2534d155d28c88c
+msgid "Before inserting an object"
+msgstr ""
+
+#: ../../events/index.rst:32
+#: 16b425d9dc45418db0915f3c8de52ca8
+msgid "AFTER_INSERT"
+msgstr ""
+
+#: ../../events/index.rst:32
+#: e643b342ff0d45a4b346c31460279f57
+msgid "After inserting an object"
+msgstr ""
+
+#: ../../events/index.rst:34
+#: ../../events/index.rst:36
+#: 4c13fa523b424b6bbbcf09928301d2ce
+#: 322b22b8f50e48e1947b47429b9cfa1b
+msgid "RestEvents"
+msgstr ""
+
+#: ../../events/index.rst:39
+#: 7ce42c53b1b046bebf434f2ac4d2aabc
+msgid "There is no **BeforeAction** and **AfterAction** event, since the **initialize** and **finalize** methods of the controller class perform this operation."
+msgstr ""
+
+#: ../../events/index.rst:42
+#: 1337a31f0872457d91e506cc9a0f382a
+msgid "Listening to an event"
+msgstr ""
+
+#: ../../events/index.rst:43
+#: 71a6d04b26ad4dfbb0044c5174ae033e
+msgid "**Example 1 :**"
+msgstr ""
+
+#: ../../events/index.rst:45
+#: f03dbeb6b517484489362c845552788b
+msgid "Adding an **_updated** property on modified instances in the database :"
+msgstr ""
+
+#: ../../events/index.rst:47
+#: ../../events/index.rst:69
+#: ../../events/index.rst:120
+#: 925f095842ee4d469613beb847ec1ef7
+#: ab4c22c6d0274024b17c85d5f38dab40
+#: 8edff6752fb249dc9a8fe9a8c3dcfc07
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../events/index.rst:63
+#: ed609efea1264604be8d6a4bdf830952
+msgid "The parameters passed to the callback function vary according to the event being listened to."
+msgstr ""
+
+#: ../../events/index.rst:65
+#: 5f19b82a8ec44ed1b83f8f7743baf796
+msgid "**Example 2 :**"
+msgstr ""
+
+#: ../../events/index.rst:67
+#: 79b6878566a645fc96ec91b1c58fc230
+msgid "Modification of the view rendering"
+msgstr ""
+
+#: ../../events/index.rst:83
+#: 28225fea5cf64457b350c04a5a889549
+msgid "Creating your own events"
+msgstr ""
+
+#: ../../events/index.rst:85
+#: b1fc837b335f48c0ac7b6318580d48d0
+msgid "**Example :**"
+msgstr ""
+
+#: ../../events/index.rst:87
+#: a7b9271b3f2b4af8a8f28d510ff86abe
+msgid "Creating an event to count and store the number of displays per action :"
+msgstr ""
+
+#: ../../events/index.rst:89
+#: 55f9122d4aa445f38f0eb25ffaa32503
+msgid "app/eventListener/TracePageEventListener.php"
+msgstr ""
+
+#: ../../events/index.rst:116
+#: b75773b4be964ea0867276014eeab5f0
+msgid "Registering events"
+msgstr ""
+
+#: ../../events/index.rst:118
+#: 1923df7f3ec64dd1878d137990c7f244
+msgid "Registering the **TracePageEventListener** event in ``services.php`` :"
+msgstr ""
+
+#: ../../events/index.rst:132
+#: 5ee49157683c42fab0ac8eb7365ec70c
+msgid "Triggering events"
+msgstr ""
+
+#: ../../events/index.rst:134
+#: e44702dcd1114e978d5c5f402482e82f
+msgid "An event can be triggered from anywhere, but it makes more sense to do it here in the **initialize** method of the base controller :"
+msgstr ""
+
+#: ../../events/index.rst:136
+#: 82bf933a9e884f6b86344071b78699ff
+msgid "app/controllers/ControllerBase.php"
+msgstr ""
+
+#: ../../events/index.rst:170
+#: 5791af3ceeab443c8827b11c516f90af
+msgid "The result in app/config/stats.php :"
+msgstr ""
+
+#: ../../events/index.rst:172
+#: 0b77bfd2dfc949bd8d94a490e34a1bee
+msgid "app/config/stats.php"
+msgstr ""
+
+#: ../../events/index.rst:183
+#: a1f0c54ec47b48f68a5ba00bfacd631c
+msgid "Events registering optimization"
+msgstr ""
+
+#: ../../events/index.rst:185
+#: e7038e5290324ad392d3e58bf91d22e0
+msgid "It is preferable to cache the registration of listeners, to optimize their loading time :"
+msgstr ""
+
+#: ../../events/index.rst:187
+#: 91912b9130bb4861b10245f96888d437
+msgid "Create a client script, or a controller action (not accessible in production mode) :"
+msgstr ""
+
+#: ../../events/index.rst:204
+#: 0e90da88212c4fe8a9ed2350feeb51c4
+msgid "After running, cache file is generated in ``app/cache/events/events.cache.php``."
+msgstr ""
+
+#: ../../events/index.rst:206
+#: 74bb8f7cbb8f44b186b309ac62b08e49
+msgid "Once the cache is created, the ``services.php`` file just needs to have the line :"
+msgstr ""

@@ -1,0 +1,134 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../model/generation/scratch.rst:2
+#: 5f3a53556e4646b481727b33c00b8d8e
+msgid "Models creation from scratch"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:4
+#: 8c333429f4c84b5e95853da9312bff65
+msgid "It is often preferable to design a database conceptually and then generate the models from the existing database. |br| The creation of models from scratch is only suitable for simple cases, and does not allow to skip a conceptualization phase."
+msgstr ""
+
+#: ../../model/generation/scratch.rst:8
+#: 78e0061468dd4f62b4409607bfca54b8
+msgid "Creating a model"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:9
+#: b03a3062675c4bd5a44835a7de70aee0
+msgid "Consider the following model representing a user:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:14
+#: 80814a7db899443f9bacbf1530694a6d
+msgid "We will create it with devtools, in command prompt:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:24
+#: 03712d19c8994bd0939deff494d485b5
+msgid "A primary key is automatically added at creation as an auto-increment. |br| It is possible to change the default name of the primary key when launching the command :"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:33
+#: ab76575cb32746439381a13b5d63dc0b
+msgid "Adding fields"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:34
+#: 1188f14000ac4254a6412a5cbba75848
+msgid "Select the ``Add fields`` menu item:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:36
+#: 05ec761b4067441fa3aa503cec98f5b0
+msgid "Enter the field names separated by a comma:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:47
+#: 5ae2e67202f348dc90860685bafa826e
+msgid "The added fields:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:53
+#: 019587ed86c8445886862480a47582f1
+msgid "Generating the class"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:58
+#: 54892567bf4b40248feaf6225982b053
+msgid "Below is the created model, without the accessors:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:62
+#: 34533a6700fd4bbab7f682ef8c954086
+msgid "Attributes"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:64
+#: ../../model/generation/scratch.rst:97
+#: 88a53a27fccc4965972cf7d8d20deb55
+#: c65174c793f540e6b00aebf8b88bb3a0
+msgid "app/models/User.php"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:95
+#: 4e6d9fc2aa784c25927c75fb4567a825
+msgid "Annotations"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:136
+#: 8b74c1da99594164b0c0b6b7a62e7f7f
+msgid "Modifying existing models"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:142
+#: d47e5ac2fa62426985eeff3e1612a2d1
+msgid "Without parameters, if some models exist, the ``model`` command suggests their loading:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:147
+#: 1bb8374680d24f8989f2ead7bd5fa7f1
+msgid "The model to achieve is now the following:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:152
+#: 90faf9cd7c22424ea9c162f7680f1c4b
+msgid "Select the ``Add/switch to model`` menu option, and enter ``group``"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:160
+#: ea70ce68ebdf4b3485caccb2146f4e1c
+msgid "Add:"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:158
+#: 3faa168f8d094ce58cb94a822ef4501d
+msgid "primary key ``id`` in autoinc"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:159
+#: 98b3b5cce1c84f369c3a83d9a943981a
+msgid "the ``name`` field"
+msgstr ""
+
+#: ../../model/generation/scratch.rst:160
+#: 212012ebecb74b3bac7c3b38fc0537cd
+msgid "The ``manyToMany`` relation with the ``User`` class :"
+msgstr ""

@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 20:18+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../_templates/breadcrumbs.html:31 9188fd7f0d9344efb5152ff24319a672
+msgid "Docs"
+msgstr ""
+
+#: ../../_templates/breadcrumbs.html:46 ../../_templates/breadcrumbs.html:48
+#: 4415562a4ce74df881aea2fcbd141d6d bab45d11a8b24ca9ab8a7f898b72d0b5
+msgid "Edit on GitHub"
+msgstr ""
+
+#: ../../_templates/breadcrumbs.html:53 ../../_templates/breadcrumbs.html:55
+#: 9dd51422ee0241dfb653885b20dcbdfe d4b3a9e5181642268e1dda404eacd339
+msgid "Edit on Bitbucket"
+msgstr ""
+
+#: ../../_templates/breadcrumbs.html:60 ../../_templates/breadcrumbs.html:62
+#: 64bcd99032244d34819caeaa8ef5751d d004fbd446204ece8085ac9859e1f119
+msgid "Edit on GitLab"
+msgstr ""
+
+#: ../../_templates/breadcrumbs.html:65 ../../_templates/breadcrumbs.html:67
+#: 25eb7be365cc4e2d80768890adde5f5e f796dc8acd344c6e944eb39431e81874
+msgid "View page source"
+msgstr ""
+

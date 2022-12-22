@@ -48,7 +48,7 @@ html_favicon = 'favicon.png'
 
 # General information about the project.
 project = 'Ubiquity'
-copyright = '2017-2021, phpmv'
+copyright = '2017-2022, phpmv'
 author = 'phpmv'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -65,7 +65,9 @@ author = 'phpmv'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
+gettext_uuid = True
+gettext_compact = False
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

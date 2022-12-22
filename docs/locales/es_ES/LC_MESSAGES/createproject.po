@@ -1,0 +1,269 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../createproject.rst:2 76b5736b26234d389cecc10b1df304b9
+msgid "Project creation"
+msgstr ""
+
+#: ../../createproject.rst:3 d6981da911214ce3bdbd28e5e7b42f7b
+msgid ""
+"After installing :doc:`install`, in your terminal, call the *new* command"
+" in the root folder of your web server :"
+msgstr ""
+
+#: ../../createproject.rst:7 b1a0793aa7124ecd9d1e244e1ca9b509
+msgid "Samples"
+msgstr ""
+
+#: ../../createproject.rst:8 b5ab8cab77aa43be9b8c89b9ab2f064e
+msgid "A simple project"
+msgstr ""
+
+#: ../../createproject.rst:14 6e320f91a2194d5db2c8d9b2ae0ce618
+msgid "A project with UbiquityMyAdmin interface"
+msgstr ""
+
+#: ../../createproject.rst:20 ed0cb99a62ff458c8ef47c49e6162264
+msgid "A project with bootstrap and semantic-ui themes installed"
+msgstr ""
+
+#: ../../createproject.rst:27 771887fdcbfd458cb747b352f12bcea9
+msgid "Installer arguments"
+msgstr ""
+
+#: ../../createproject.rst:30 80ed7859121e4d52bc8dd7adfedf6723
+msgid "short name"
+msgstr ""
+
+#: ../../createproject.rst:30 abb00982671d4019b3252f6dea44f642
+msgid "name"
+msgstr ""
+
+#: ../../createproject.rst:30 106d3121b4f44ab8ad93cb890d0243cd
+msgid "role"
+msgstr ""
+
+#: ../../createproject.rst:30 eee69f4b2e554a0683295b7f71631ded
+msgid "default"
+msgstr ""
+
+#: ../../createproject.rst:30 4ce3d7a617d944989b9db0c3c51247be
+msgid "Allowed values"
+msgstr ""
+
+#: ../../createproject.rst:30 6311ba3eb3c54e07987b606034e94300
+msgid "Since devtools"
+msgstr ""
+
+#: ../../createproject.rst:32 836908e2c66c4f8e8f5d6311bc6dcef3
+msgid "b"
+msgstr ""
+
+#: ../../createproject.rst:32 1f6957c43f6f423d8b58b6f73108102a
+msgid "dbName"
+msgstr ""
+
+#: ../../createproject.rst:32 7faee106887c4d8b8e485023184a5fae
+msgid "Sets the database name."
+msgstr ""
+
+#: ../../createproject.rst:34 fb2baa4461664c2ea09bcd6e428883e3
+msgid "s"
+msgstr ""
+
+#: ../../createproject.rst:34 4b3cd0450fc04ded81163e693fbb34ef
+msgid "serverName"
+msgstr ""
+
+#: ../../createproject.rst:34 3eb0757aa6ca412497524ffb1f37e88c
+msgid "Defines the db server address."
+msgstr ""
+
+#: ../../createproject.rst:34 a85313796b754a01b0de548077942264
+msgid "`127.0.0.1`"
+msgstr ""
+
+#: ../../createproject.rst:36 fed2c91114104d3caf2682577e8019ac
+msgid "p"
+msgstr ""
+
+#: ../../createproject.rst:36 96f8d5db7cd34dabafb4265c84248d88
+msgid "port"
+msgstr ""
+
+#: ../../createproject.rst:36 9bb70f629fb64eab9f51f9c729f61bf2
+msgid "Defines the db server port."
+msgstr ""
+
+#: ../../createproject.rst:36 3f2e756c437643ddbea46c8aec747973
+msgid "`3306`"
+msgstr ""
+
+#: ../../createproject.rst:38 e8d8dd5bcc3b45edbba56449481e6de5
+msgid "u"
+msgstr ""
+
+#: ../../createproject.rst:38 e851fd017b9e47f4b97a6ca92edd7b15
+msgid "user"
+msgstr ""
+
+#: ../../createproject.rst:38 9c6b1b7d4da646928693240d11069df4
+msgid "Defines the db server user."
+msgstr ""
+
+#: ../../createproject.rst:38 787f890043bd484ead7bf358cd28ef04
+msgid "`root`"
+msgstr ""
+
+#: ../../createproject.rst:40 38d66e5745004bbe805509a9601f37ba
+msgid "w"
+msgstr ""
+
+#: ../../createproject.rst:40 ee1aee894fbf4e12b9d71cdda99e83e1
+msgid "password"
+msgstr ""
+
+#: ../../createproject.rst:40 ebee3d9b69004d95813084100c700091
+msgid "Defines the db server password."
+msgstr ""
+
+#: ../../createproject.rst:40 2d0ee91fb85c4098b1f746ae51a676d1
+msgid "`''`"
+msgstr ""
+
+#: ../../createproject.rst:42 7a16dd30fafb43e4b873930221917f6e
+msgid "h"
+msgstr ""
+
+#: ../../createproject.rst:42 2eca8e698c1f470d942752aca21aee30
+msgid "themes"
+msgstr ""
+
+#: ../../createproject.rst:42 cb1652bf275445f2bc13de18427c8429
+msgid "Install themes."
+msgstr ""
+
+#: ../../createproject.rst:42 03fc42367fe44bd7aeec86f28e9e5cc8
+msgid "semantic,bootstrap,foundation"
+msgstr ""
+
+#: ../../createproject.rst:44 d0c700effb8b442a94d64b736fa2ca16
+msgid "m"
+msgstr ""
+
+#: ../../createproject.rst:44 b086d9c3c3a5482a92295a013bae9d14
+msgid "all-models"
+msgstr ""
+
+#: ../../createproject.rst:44 deb960a056a84e32ab1df35081b44ad7
+msgid "Creates all models from db."
+msgstr ""
+
+#: ../../createproject.rst:44 ../../createproject.rst:46
+#: 05b77fc67b1f450ea3d87ca16327d7fe f94acdb705254f6ba21ccb6429fb2da7
+msgid "`false`"
+msgstr ""
+
+#: ../../createproject.rst:46 6404aacb88d249f995dede6a810ee778
+msgid "a"
+msgstr ""
+
+#: ../../createproject.rst:46 e5279ae3e8e342649e93e9bd718bbcba
+msgid "admin"
+msgstr ""
+
+#: ../../createproject.rst:46 1650b93f146a433397b2cf248b1e378e
+msgid "Adds UbiquityMyAdmin interface."
+msgstr ""
+
+#: ../../createproject.rst:48 8cb72de86aca4fd0b09c1b80774605ec
+msgid "i"
+msgstr ""
+
+#: ../../createproject.rst:48 9be6cfaf30da4a6587b368e293395207
+msgid "siteUrl"
+msgstr ""
+
+#: ../../createproject.rst:48 31273c741ace4235b24c0c1b949f04e0
+msgid "Defines the site URL."
+msgstr ""
+
+#: ../../createproject.rst:48 fb0c845856a349109f21631554e688e4
+msgid "`http://127.0.0.1/{projectname}`"
+msgstr ""
+
+#: ../../createproject.rst:48 ../../createproject.rst:50
+#: 1e78391620504a6da6de77532e1791e0 d53443693aa2439da5e71188435320f7
+msgid "1.2.6"
+msgstr ""
+
+#: ../../createproject.rst:50 9074cbaec4d64414890d8ed6f2b4f22e
+msgid "e"
+msgstr ""
+
+#: ../../createproject.rst:50 8f681119917547239113869b6d0a5d0f
+msgid "rewriteBase"
+msgstr ""
+
+#: ../../createproject.rst:50 8604ae24efe04607b2b149988d9455d4
+msgid "Sets the base for rewriting."
+msgstr ""
+
+#: ../../createproject.rst:50 b2418d49bd074b23a394757b805da7da
+msgid "`/{projectname}/`"
+msgstr ""
+
+#: ../../createproject.rst:54 0d6cfa34cf9049f7a1214db53c93eeaf
+msgid "Arguments usage"
+msgstr ""
+
+#: ../../createproject.rst:57 71ee32ac5bc849219cb787e53eb8e84a
+msgid "short names"
+msgstr ""
+
+#: ../../createproject.rst:58 50256a6e86544bbd9466f84f29e0441d
+msgid ""
+"Example of creation of the **blog** project, connected to the **blogDb** "
+"database, with generation of all models"
+msgstr ""
+
+#: ../../createproject.rst:65 e63f30cad9aa4d2c92d45fabb3381de5
+msgid "long names"
+msgstr ""
+
+#: ../../createproject.rst:66 029977f663a441e3a14612a43b8670f7
+msgid ""
+"Example of creation of the **blog** project, connected to the **bogDb** "
+"database, with generation of all models and integration of semantic theme"
+msgstr ""
+
+#: ../../createproject.rst:73 7a9d5ac09613466f92cdfc7d0d9483aa
+msgid "Running"
+msgstr ""
+
+#: ../../createproject.rst:75 b62d7ee0192c4f279c8069fdbaafaf1c
+msgid ""
+"To start the embedded web server and test your pages, run from the "
+"application root folder:"
+msgstr ""
+
+#: ../../createproject.rst:81 4f17c138cf91478a8a4c0630a7ad1d65
+msgid "The web server is started at ``127.0.0.1:8090``"
+msgstr ""
+

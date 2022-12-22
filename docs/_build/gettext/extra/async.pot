@@ -1,0 +1,149 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../extra/async.rst:3
+#: 078022e87105406ba0b371ca6220b5b0
+msgid "Async platforms"
+msgstr ""
+
+#: ../../extra/async.rst:8
+#: 1f811cc43f4c48fda72ac42c2a6449ef
+msgid "Ubiquity supports multiple platforms : Swoole, Workerman, RoadRunner, PHP-PM, ngx_php."
+msgstr ""
+
+#: ../../extra/async.rst:11
+#: 61ac44992c6c48f69f24be0548e0a801
+msgid "Swoole"
+msgstr ""
+
+#: ../../extra/async.rst:13
+#: edd21d016ce04365950a7d5cea937623
+msgid "Install the Swoole extension on your system (linux) or in your Docker image :"
+msgstr ""
+
+#: ../../extra/async.rst:20
+#: 4de9bfeac6ee4d088480042dac14ee11
+msgid "Run Ubiquity Swoole (for the first time, **ubiquity-swoole** package will be installed):"
+msgstr ""
+
+#: ../../extra/async.rst:27
+#: ../../extra/async.rst:100
+#: 09be611a00e340b78dbd11d0b27a94a8
+#: 98842d2ff3d6422cad32d31635519362
+msgid "Server configuration"
+msgstr ""
+
+#: ../../extra/async.rst:29
+#: 36a5ca38bba6455bbccbdf1facddda1d
+msgid ".ubiquity/swoole-config.php"
+msgstr ""
+
+#: ../../extra/async.rst:42
+#: ../../extra/async.rst:115
+#: b129e544560b4d48a7ab0f817cf605ae
+#: 1ab0e8177a344af6a118772772dbd300
+msgid "The port can also be changed at server startup:"
+msgstr ""
+
+#: ../../extra/async.rst:49
+#: ../../extra/async.rst:122
+#: 521e636ba3674f96b55c0ce09fb1c640
+#: 5d9b9aa4ab444c1d9179a0389aa44d4b
+msgid "Services optimization"
+msgstr ""
+
+#: ../../extra/async.rst:50
+#: ../../extra/async.rst:124
+#: ddd97713d69041c6baf7f600984de93c
+#: 5aeeedbf7e5b4ac98386bf544ca5d10f
+msgid "Startup of services will be done only once, at server startup."
+msgstr ""
+
+#: ../../extra/async.rst:52
+#: ../../extra/async.rst:126
+#: 12c7392620134fdeb4fc12a188a5f54b
+#: ca32d591b5dd47b7879b6e90d7d812cb
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../extra/async.rst:75
+#: aab4654dd449483897e6e8c3488a00f0
+msgid "The warmUpControllers method:"
+msgstr ""
+
+#: ../../extra/async.rst:73
+#: 6dba95fc585346deb5cbb563fee31c81
+msgid "instantiates the controllers"
+msgstr ""
+
+#: ../../extra/async.rst:74
+#: 59cd7c66df284c8c9e2fd1f0b14fc5f9
+msgid "performs dependency injection"
+msgstr ""
+
+#: ../../extra/async.rst:75
+#: 8b326b1e39344c6698909d0c94d0b69a
+msgid "prepares the call of the initialize and finalize methods (initialization of call constants)"
+msgstr ""
+
+#: ../../extra/async.rst:77
+#: 42bc839ca2f9408e8723bdf8ab1d9254
+msgid "At the start of each Worker, the **warmup** method of the controllers can for example initialize prepared DAO queries:"
+msgstr ""
+
+#: ../../extra/async.rst:79
+#: e9c024ecdf2d4a2d84124d0bc0de70fe
+msgid "app/controllers/FooController.php"
+msgstr ""
+
+#: ../../extra/async.rst:88
+#: 1c59aebdecc240509d287a783d5b634f
+msgid "Workerman"
+msgstr ""
+
+#: ../../extra/async.rst:90
+#: 6e9e4b9489b1473f90d75daec38ebbc0
+msgid "Workerman does not require any special installation (except for **libevent** to be used in production for performance reasons)."
+msgstr ""
+
+#: ../../extra/async.rst:93
+#: bef9587ef08b42e5b5fe045c9f48d7a1
+msgid "Run Ubiquity Workerman (for the first time, **ubiquity-workerman** package will be installed):"
+msgstr ""
+
+#: ../../extra/async.rst:102
+#: 6465ecc2c1434ac3b2617c899e3c9408
+msgid ".ubiquity/workerman-config.php"
+msgstr ""
+
+#: ../../extra/async.rst:147
+#: fad051c5f8ef4de09d81f028dfab4407
+msgid "ngx_php"
+msgstr ""
+
+#: ../../extra/async.rst:149
+#: ../../extra/async.rst:154
+#: c25afcaae4a54bbf8772a6586ad7cd62
+#: 091f8b923fe845089648f8693797722a
+msgid "//TODO"
+msgstr ""
+
+#: ../../extra/async.rst:152
+#: fb085c9cc9294e5a8a0a1c316082ef49
+msgid "Roadrunner"
+msgstr ""

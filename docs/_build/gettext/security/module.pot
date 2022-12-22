@@ -1,0 +1,320 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../security/module.rst:3
+#: dcfff00ac92b47e69d08ab25083d8823
+msgid "Security module"
+msgstr ""
+
+#: ../../security/module.rst:10
+#: 9ed32da93cd14d6da67bee10a44111ac
+msgid "Installation"
+msgstr ""
+
+#: ../../security/module.rst:12
+#: a78aaf346fc34dfd878c9e3ced53b649
+msgid "Install the Ubiquity-security module from the command prompt or from the **Webtools** (Composer part)."
+msgstr ""
+
+#: ../../security/module.rst:18
+#: dbb8d0ea4e434cbdbdfbe747a0f2a7b2
+msgid "Then activate the display of the Security part in the **Webtools**:"
+msgstr ""
+
+#: ../../security/module.rst:24
+#: 147dc58692604e13a541287138dc3ad2
+msgid "Session CSRF"
+msgstr ""
+
+#: ../../security/module.rst:26
+#: df950b7299cf41b4ab8aff29026b06cd
+msgid "The session is by default protected against CSRF attacks via the ``VerifyCsrfToken`` class (even without the **Ubiquity-security** module). |br| A token instance (``CSRFToken``) is generated at the session startup. The validity of the token is then checked via a cookie at each request."
+msgstr ""
+
+#: ../../security/module.rst:32
+#: cd0995c39daf40658c42e7676ce08e91
+msgid "This protection can be customized by creating a class implementing the ``VerifySessionCsrfInterface``."
+msgstr ""
+
+#: ../../security/module.rst:34
+#: 28426c037d3e46bb810f6050b258118e
+msgid "app/session/MyCsrfProtection.php"
+msgstr ""
+
+#: ../../security/module.rst:61
+#: a7796f6a37e442ddb76905191c2723e3
+msgid "Starting the custom protection in services:"
+msgstr ""
+
+#: ../../security/module.rst:63
+#: ../../security/module.rst:76
+#: ../../security/module.rst:95
+#: ../../security/module.rst:201
+#: ../../security/module.rst:215
+#: ../../security/module.rst:232
+#: ../../security/module.rst:297
+#: 134577696c1e44c8a3e81bb6a3e3c86b
+#: 1337f71720574310a549bb96aad5ec4d
+#: 6d5ea3f8e6c2428ebd056884ca2f5a23
+#: 43bb6d5838964944bc8729eadf1c6497
+#: d2a79c3b30004c62bc20eb5f3d6e779f
+#: ae47bc6a03624fad92eccc27ceeb8739
+#: 7ea2294509ba4d27b6dc5233d4d3a70a
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../security/module.rst:73
+#: dc2e226df7874ec48fdd1481f2c3a496
+msgid "Deactivating the protection"
+msgstr ""
+
+#: ../../security/module.rst:74
+#: d7deca2b538d4ca2a2455569975808ad
+msgid "If you do not need to protect your session against Csrf attacks, start the session with the ``NoCsrfProtection`` class."
+msgstr ""
+
+#: ../../security/module.rst:86
+#: fdc7792e46a94073997a94bea9751fac
+msgid "CSRF manager"
+msgstr ""
+
+#: ../../security/module.rst:87
+#: cfa30693809c41a2bd7d39e64d86e216
+msgid "The **CsrfManager** service can be started directly from the **webtools** interface. |br| Its role is to provide tools to protect sensitive routes from Csrf attacks (the ones that allow the validation of forms for example)."
+msgstr ""
+
+#: ../../security/module.rst:93
+#: ../../security/module.rst:199
+#: ../../security/module.rst:295
+#: 788cbdeb803c432bb10b5c4cf1de9e32
+#: f374cddeaaea4273ba442e22fc0b58e3
+#: 23c97cecc1a144b9b764aca4c322e0c0
+msgid "The service is started in the ``services.php`` file."
+msgstr ""
+
+#: ../../security/module.rst:101
+#: 72d97fa70f484d63bdd4f27e04c1d507
+msgid "Example of form protection:"
+msgstr ""
+
+#: ../../security/module.rst:103
+#: 39206a8cd65b44ec8a69c05f0de4308e
+msgid "The form view:"
+msgstr ""
+
+#: ../../security/module.rst:112
+#: 447539d74d514d76a182aa051d137709
+msgid "The ``csrf`` method generates a token for the form (By adding a hidden field in the form corresponding to the token.)."
+msgstr ""
+
+#: ../../security/module.rst:114
+#: d6b5c84ac84944659963a6d80babab3e
+msgid "The form submitting in a controller:"
+msgstr ""
+
+#: ../../security/module.rst:129
+#: 93d880a1e3bd4e9eaa395d464c379f7b
+msgid "It is also possible to manage this protection via cookie."
+msgstr ""
+
+#: ../../security/module.rst:132
+#: 75caad988c804edc8c702a03c984cd52
+msgid "Example of protection with ajax:"
+msgstr ""
+
+#: ../../security/module.rst:134
+#: 4321a517882c47a28839942ec1905dfb
+msgid "The meta field ``csrf-token`` is generated on all pages."
+msgstr ""
+
+#: ../../security/module.rst:136
+#: ce2b9e487fde444baa4606ba35c9ac3c
+msgid "app/controllers/BaseController.php"
+msgstr ""
+
+#: ../../security/module.rst:152
+#: 55a68f6d3e7e407c80cc3373af26bd50
+msgid "This field is added in the headerView:"
+msgstr ""
+
+#: ../../security/module.rst:154
+#: ../../security/module.rst:357
+#: 6058172b2d72412da342bc5a04ca1127
+#: af92f513d957459480be579dc28122a0
+msgid "app/views/main/vHeader.html"
+msgstr ""
+
+#: ../../security/module.rst:167
+#: 5863a919c84741ee8ed76daa7d27b7d2
+msgid "Example with a button posting data via ajax. The parameter ``csrf`` is set to true. So when the request is posted, the ``csrf-token`` is sent in the request headers."
+msgstr ""
+
+#: ../../security/module.rst:179
+#: 674ed99d7e6f4d9c8e844a0df44d4238
+msgid "The submitting route can check the presence and validity of the token:"
+msgstr ""
+
+#: ../../security/module.rst:194
+#: e2c10b9f2abb43de9a94c696ed75e526
+msgid "Encryption manager"
+msgstr ""
+
+#: ../../security/module.rst:195
+#: c10f523368e949598aec3f4a6fe7b931
+msgid "The **EncryptionManager** service can be started directly from the **webtools** interface."
+msgstr ""
+
+#: ../../security/module.rst:197
+#: 9846be78e67a461ba4b6cefe26afc2ea
+msgid "In this case, a key is generated in the configuration file ``app/config/config.php``."
+msgstr ""
+
+#: ../../security/module.rst:206
+#: fe6ed9606708420e9bed4681215df4ba
+msgid "By default, encryption is performed in ``AES-128``."
+msgstr ""
+
+#: ../../security/module.rst:212
+#: 34f5bd7249214b3984e0c9438552a3fe
+msgid "Changing the cipher:"
+msgstr ""
+
+#: ../../security/module.rst:213
+#: ca32a86ef0a043fabe1642ce1d44fe82
+msgid "Upgrade to AES-256:"
+msgstr ""
+
+#: ../../security/module.rst:220
+#: 31ad795713c64a29a6d79314ab8bf9e2
+msgid "Generate a new key:"
+msgstr ""
+
+#: ../../security/module.rst:226
+#: 5cb1f5a193884183bfa1ced1f3ff87d2
+msgid "The new key is generated in the ``app/config/config.php`` file."
+msgstr ""
+
+#: ../../security/module.rst:229
+#: 58d3d726715945e29c85c5ee25a3a3b0
+msgid "Cookie encryption"
+msgstr ""
+
+#: ../../security/module.rst:230
+#: d7e815c9921d46889648df5248503baa
+msgid "Cookies can be encrypted by default, by adding this in ``services.php``:"
+msgstr ""
+
+#: ../../security/module.rst:244
+#: ead9afff4b8a4b57a47082032f972162
+msgid "Model data encryption"
+msgstr ""
+
+#: ../../security/module.rst:245
+#: 7e0f3432d843411c80b7ffe548a427cf
+msgid "The ``Crypt`` transformer can also be used on the members of a model:"
+msgstr ""
+
+#: ../../security/module.rst:247
+#: 2857f137e51046db9026800d1407cd38
+msgid "app/models/User.php"
+msgstr ""
+
+#: ../../security/module.rst:256
+#: 3d3aa581e78e4051bb926f304de9a1cd
+msgid "Usage:"
+msgstr ""
+
+#: ../../security/module.rst:265
+#: 6ff90b9be6894b50a2f9e3292ad3f2e2
+msgid "Generic Data encryption"
+msgstr ""
+
+#: ../../security/module.rst:266
+#: cccc40e6e21c4f7cbbb8bd404b97dafc
+msgid "Strings encryption:"
+msgstr ""
+
+#: ../../security/module.rst:272
+#: 37c29da4590542449f4475019c271812
+msgid "To then decrypt it:"
+msgstr ""
+
+#: ../../security/module.rst:279
+#: e1e2b32e1cc24331a2c4f77f7d6cc5d8
+msgid "It is possible to encrypt any type of data:"
+msgstr ""
+
+#: ../../security/module.rst:285
+#: b081e70493bc4b30bf966d64bd8078a8
+msgid "To then decrypt it, with possible serialisation/deserialisation if it is an object:"
+msgstr ""
+
+#: ../../security/module.rst:292
+#: 98cb793e97cf40b89f93db16210237de
+msgid "Content Security Policies manager"
+msgstr ""
+
+#: ../../security/module.rst:293
+#: 5a148f6a62fa4a4391646e6ce583f7b8
+msgid "The **ContentSecurityManager** service can be started directly from the **webtools** interface."
+msgstr ""
+
+#: ../../security/module.rst:306
+#: 06ba31a25c614445b79304c219a8f173
+msgid "With this default configuration, a nonce is added to jquery scripts generated with phpmv-ui. CSP control is done in Report-only mode.."
+msgstr ""
+
+#: ../../security/module.rst:313
+#: 24fbc20425df4c6f8785daaa7fde2a29
+msgid "Adding a nonce"
+msgstr ""
+
+#: ../../security/module.rst:314
+#: 21e61ca805784be2bd536c4fdcf94a67
+msgid "Example of adding nonce on the header and footer pages:"
+msgstr ""
+
+#: ../../security/module.rst:318
+#: 7261ee80caa041b4a5186fb164c77283
+msgid "Updating the base controller"
+msgstr ""
+
+#: ../../security/module.rst:320
+#: e5520474ffc14496a8f2a46abcd43a84
+msgid "app/controllers/ControllerBase.php"
+msgstr ""
+
+#: ../../security/module.rst:355
+#: e89afb2c2925427da3d1790a79151f77
+msgid "Adding the nonce in the header and footer views"
+msgstr ""
+
+#: ../../security/module.rst:365
+#: 7b4c7aeb6aa647939e335065537c387c
+msgid "app/views/main/vFooter.html"
+msgstr ""
+
+#: ../../security/module.rst:374
+#: 95575c88d0244938b7904b70efaaba2f
+msgid "Password management"
+msgstr ""
+
+#: ../../security/module.rst:378
+#: b031233db69a4aa69225c4ed257a6841
+msgid "Users token"
+msgstr ""

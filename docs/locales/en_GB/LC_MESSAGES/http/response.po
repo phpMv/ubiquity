@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../http/response.rst:2 05373064a10d4a448c7a2ba28d12de6a
+msgid "Response"
+msgstr ""
+
+#: ../../http/response.rst:3 99bb951de2ab4e51a0901dea59a3064d
+msgid ""
+"For all Http features, Ubiquity uses technical classes containing static "
+"methods. This is a design choice to avoid dependency injection that would"
+" degrade performances."
+msgstr ""
+
+#: ../../http/response.rst:6 bdcc57356589403fb32d66c990ff13f1
+msgid ""
+"The **UResponse** class handles only the headers, not the response body, "
+"which is conventionally provided by the content displayed by the calls "
+"used to output data (echo, print ...)."
+msgstr ""
+
+#: ../../http/response.rst:8 88881cbe4adc4eefa534dd7e3c66c020
+msgid ""
+"The **UResponse** class provides additional functionality to more easily "
+"manipulate response headers."
+msgstr ""
+
+#: ../../http/response.rst:11 6a09c64a56ed437b9d88df859e44c136
+msgid "Adding or modifying headers"
+msgstr ""
+
+#: ../../http/response.rst:19 8b6c2868761945ca8281fd672d219ab3
+msgid "Forcing multiple header of the same type:"
+msgstr ""
+
+#: ../../http/response.rst:25 ab84f0db82bb46a79f270b49b331ac53
+msgid "Forces the HTTP response code to the specified value:"
+msgstr ""
+
+#: ../../http/response.rst:33 fa5953ab0e1b4f708116dfd3dcd4474e
+msgid "Defining specific headers"
+msgstr ""
+
+#: ../../http/response.rst:35 7cf6cc7f340c459cb0fe6865a1f2a18e
+msgid "content-type"
+msgstr ""
+
+#: ../../http/response.rst:36 c41b6bc74a1d490db0ac9cfb267bc504
+msgid "Setting the response content-type to **application/json**:"
+msgstr ""
+
+#: ../../http/response.rst:42 5c455032dcb644b89290e9a0fa0ee04e
+msgid "Setting the response content-type to **text/html**:"
+msgstr ""
+
+#: ../../http/response.rst:48 74d8a15182344ff0b6da021d4b0ccd40
+msgid "Setting the response content-type to **plain/text**:"
+msgstr ""
+
+#: ../../http/response.rst:54 b55e716c4575448690bd9ec1bfb5d371
+msgid "Setting the response content-type to **application/xml**:"
+msgstr ""
+
+#: ../../http/response.rst:60 a495b8e20ae1420eb554370ed1220961
+msgid "Defining specific encoding (default value is always **utf-8**):"
+msgstr ""
+
+#: ../../http/response.rst:67 1a1276ab54824c158c9d4f78468088c5
+msgid "Cache"
+msgstr ""
+
+#: ../../http/response.rst:68 faf4c243e040496ca02802e995b28696
+msgid "Forcing the disabling of the browser cache:"
+msgstr ""
+
+#: ../../http/response.rst:76 e66d0d73ae0c4b02904e12213d2b2563
+msgid "Accept"
+msgstr ""
+
+#: ../../http/response.rst:77 cc0ea06644074f088c5c99acc6a48021
+msgid ""
+"Define which content types, expressed as MIME types, the client is able "
+"to understand. |br| See `Accept default values "
+"<https://developer.mozilla.org/en-"
+"US/docs/Web/HTTP/Content_negotiation/List_of_default_Accept_values>`_"
+msgstr ""
+
+#: ../../http/response.rst:86 040d00f428df497ab343c07de7772577
+msgid "CORS responses headers"
+msgstr ""
+
+#: ../../http/response.rst:88 1cbe1701e13d496eacdfe13e21a8527b
+msgid ""
+"Cross-Origin Resource Sharing (CORS) is a mechanism that uses additional "
+"HTTP headers to tell a browser to let your web application running at one"
+" origin (domain) have permission to access selected resources from a "
+"server at a different origin."
+msgstr ""
+
+#: ../../http/response.rst:91 ef819e76cf2f4386ada6c3768cfad406
+msgid "Access-Control-Allow-Origin"
+msgstr ""
+
+#: ../../http/response.rst:92 f03ce761ffff41b49f71164174d5bda5
+msgid "Setting allowed origin:"
+msgstr ""
+
+#: ../../http/response.rst:99 331cc0dd776f4f48a004e794ff4548bf
+msgid "Access-Control-Allow-methods"
+msgstr ""
+
+#: ../../http/response.rst:100 3a376b5c90db4e1ab98cd285bfc9380f
+msgid "Defining allowed methods:"
+msgstr ""
+
+#: ../../http/response.rst:107 560b705c7e6640b5b935f5c62bffdd21
+msgid "Access-Control-Allow-headers"
+msgstr ""
+
+#: ../../http/response.rst:108 74e59d9b33634e07bd354c975275d437
+msgid "Defining allowed headers:"
+msgstr ""
+
+#: ../../http/response.rst:115 e31fc0c43543423b860468679bceb9ac
+msgid "Global CORS activation"
+msgstr ""
+
+#: ../../http/response.rst:117 ce244975bf1f403cafa0a8bc2d5cce49
+msgid "enabling CORS for a domain with default values:"
+msgstr ""
+
+#: ../../http/response.rst:119 adc730025ce24f8bb580475a8275de1b
+msgid "allowed methods:  ``GET, POST, PUT, DELETE, PATCH, OPTIONS``"
+msgstr ""
+
+#: ../../http/response.rst:120 f1a86bfacae44f899ce7476f70bec19f
+msgid ""
+"allowed headers: ``X-Requested-With, Content-Type, Accept, Origin, "
+"Authorization``"
+msgstr ""
+
+#: ../../http/response.rst:128 88c88b48c8a34ef48ab4222f67667120
+msgid "Testing response headers"
+msgstr ""
+
+#: ../../http/response.rst:130 5d4f60164ca44f42bd8c6c97e610df09
+msgid "Checking if headers have been sent:"
+msgstr ""
+
+#: ../../http/response.rst:138 2aaa222a8474477ab7d72f7918dead0b
+msgid "Testing if response content-type is **application/json**:"
+msgstr ""
+
+#: ../../http/response.rst:140 e91ea7c558a84ec88d0445ff3018d91c
+msgid "This method only works if you used the UResponse class to set the headers."
+msgstr ""
+

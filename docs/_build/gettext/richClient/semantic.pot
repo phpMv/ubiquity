@@ -1,0 +1,298 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../richClient/semantic.rst:3
+#: c80f0fedcedb4c0c9a2b92c60a017245
+msgid "jQuery Semantic-UI"
+msgstr ""
+
+#: ../../richClient/semantic.rst:9
+#: 35ddb05bb6184198a4c3c7da2052e575
+msgid "By default, Ubiquity uses the `phpMv-UI <https://phpmv-ui.kobject.net>`_ library for the client-rich part. |br| **PhpMv-UI** allows to create components based on Semantic-UI or Bootstrap and to generate jQuery scripts in PHP."
+msgstr ""
+
+#: ../../richClient/semantic.rst:12
+#: 74fd9f7f40914748978e7f2b9c8a7b60
+msgid "This library is used for the **webtools** administration interface."
+msgstr ""
+
+#: ../../richClient/semantic.rst:15
+#: f93688f59ea242d39f6fd9f865a5c7f0
+msgid "Integration"
+msgstr ""
+
+#: ../../richClient/semantic.rst:17
+#: 204bc5c132214d82a101924d1936b63e
+msgid "By default, a **$jquery** variable is injected in controllers at runtime."
+msgstr ""
+
+#: ../../richClient/semantic.rst:19
+#: 5693d782d9c74e2581d33a14a73cc68b
+msgid "This operation is done using dependency injection, in ``app/config.php``:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:21
+#: eed54d83ff0c426d991d718602238e35
+msgid "app/config.php"
+msgstr ""
+
+#: ../../richClient/semantic.rst:34
+#: 83479884989d48c4bce57e85b6c3c206
+msgid "So there's nothing to do, |br| but to facilitate its use and allow code completion in a controller, it is recommended to add the following code documentation:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:37
+#: ../../richClient/semantic.rst:56
+#: ../../richClient/semantic.rst:105
+#: ../../richClient/semantic.rst:158
+#: ../../richClient/semantic.rst:201
+#: 59cafd5a887a4e85bcc6a01baf3ed164
+#: 60145a490c3d4e40a1fe54609a137ff1
+#: 38712772499345f2bf3867bf2a0606ec
+#: 11f6e8b4f31a40509b4339a6a44e1dc8
+#: 860fb7616af54ba0af479a65ccc731e2
+msgid "app/controllers/FooController.php"
+msgstr ""
+
+#: ../../richClient/semantic.rst:50
+#: 029b9faa026c4300821fb10ddb0dba09
+msgid "jQuery"
+msgstr ""
+
+#: ../../richClient/semantic.rst:52
+#: 94b251f453d64dfaaf5ca618b54bf09d
+msgid "Href to ajax requests"
+msgstr ""
+
+#: ../../richClient/semantic.rst:54
+#: 5bc3c102f3814346b08697a948049eef
+msgid "Create a new Controller and its associated view, then define the folowing routes:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:84
+#: ../../richClient/semantic.rst:172
+#: 13b03179d27b44c19b0310433478f323
+#: ff47a20de4f44ce4bf13dc6b3b594388
+msgid "The associated view:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:86
+#: ../../richClient/semantic.rst:123
+#: ../../richClient/semantic.rst:140
+#: ../../richClient/semantic.rst:174
+#: b5c2ce1966a54be4b349c360683c53ef
+#: 8b703f1b98934dd1ba54441dc98f5f25
+#: b10114b60a774e7eb4826d83ac6c7f8d
+#: bc67696a6e3d4453a1bc0b17e1a11b68
+msgid "app/views/FooController/index.html"
+msgstr ""
+
+#: ../../richClient/semantic.rst:92
+#: ac8ea1b29e054af0bcb8211e4b04bd51
+msgid "Initialize router cache:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:98
+#: 2749d70e050b42ad924c289f694692d9
+msgid "Test this page in your browser at ``http://127.0.0.1:8090/FooController``."
+msgstr ""
+
+#: ../../richClient/semantic.rst:101
+#: ab9bc268ef5940f78c33013c489c2b50
+msgid "Transformation of requests into Ajax requests"
+msgstr ""
+
+#: ../../richClient/semantic.rst:103
+#: 5dbab3d77ddc4914bd0e39275021cea1
+msgid "The result of each ajax request should be displayed in an area of the page defined by its jQuery selector (``.result span``)"
+msgstr ""
+
+#: ../../richClient/semantic.rst:135
+#: 2e3ad469c97448c8a669568bdb5fabf3
+msgid "The ``script_foot`` variable contains the generated jquery script produced by the **renderView** method. The **raw** filter marks the value as being \"safe\", which means that in an environment with automatic escaping enabled this variable will not be escaped."
+msgstr ""
+
+#: ../../richClient/semantic.rst:138
+#: 4e40dada76634a8082b7a127dd094c45
+msgid "Let's add a little css to make it more professional:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:154
+#: 07ffbc5385a44b379e9b05e288ba3014
+msgid "If we want to add a new link whose result should be displayed in another area, it is possible to specify it via the **data-target** attribute"
+msgstr ""
+
+#: ../../richClient/semantic.rst:156
+#: 8ee51c016a0346ea9d151b8d95d7a2c4
+msgid "The new action:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:194
+#: b0a8f2374e9d49f49a3fed1086f6f443
+msgid "Definition of the ajax request attributes:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:196
+#: d1c45c619e094fc3879805821511c399
+msgid "In the folowing example, the parameters passed to the **attributes** variable of the ``getHref`` method:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:198
+#: 6eb3d351d72f4cf19ee3ef4f17b6097b
+msgid "remove the history of the navigation,"
+msgstr ""
+
+#: ../../richClient/semantic.rst:199
+#: 9cbd49481c8a4c69b0ae29e99539e8f6
+msgid "make the ajax loader internal to the clicked button."
+msgstr ""
+
+#: ../../richClient/semantic.rst:223
+#: 4e5347a63aca40ea96d9e9f896c67459
+msgid "It is possible to use the ``postHref`` method to use the **POST** http method."
+msgstr ""
+
+#: ../../richClient/semantic.rst:226
+#: 57fd0c21841644c98cd9987f1c9df62d
+msgid "Classical ajax requests"
+msgstr ""
+
+#: ../../richClient/semantic.rst:227
+#: 955320f6c3b743ab975f1802f392b3ed
+msgid "For this example, create the following database:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:250
+#: 2f01604534bd4e3dbab34fc04d90a9aa
+msgid "Connect the application to the database, and generate the `User` class:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:252
+#: e33ff2fa9b634544984006d099fdfd0e
+msgid "With devtools:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:259
+#: ../../richClient/semantic.rst:443
+#: f14cfafbe0fb4c2cb0579563959dbb6e
+#: daeccb4047ab4729a74775a400f90e4d
+msgid "Create a new Controller `UsersJqueryController`"
+msgstr ""
+
+#: ../../richClient/semantic.rst:265
+#: 81e1c4d4fb0d4731b6f30bb6e7d2b126
+msgid "Create the folowing actions in `UsersJqueryController`:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:270
+#: addb25b91fbb43eabfa4b718f6451cdd
+msgid "Index action"
+msgstr ""
+
+#: ../../richClient/semantic.rst:272
+#: bde5c49d021047baaa8d13307f9caf8b
+msgid "The `index` action must display a button to obtain the list of users, loaded via an ajax request:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:274
+#: ../../richClient/semantic.rst:323
+#: ../../richClient/semantic.rst:382
+#: ../../richClient/semantic.rst:449
+#: 0b82c925618a4bc78bed762e1ccdafc8
+#: a2baa0392e35483c887330d1b2bfbc65
+#: 1083ec602cab463f9c4d57384049a3ba
+#: c8f013b8d7344af8b92ec829358df97d
+msgid "app/controllers/UsersJqueryController.php"
+msgstr ""
+
+#: ../../richClient/semantic.rst:302
+#: 9d766eb717c340908da0e1afe5193cd8
+msgid "The default view associated to `index` action:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:304
+#: 25981c68cd1a488390988c607e9ff0e3
+msgid "app/views/UsersJqueryController/index.html"
+msgstr ""
+
+#: ../../richClient/semantic.rst:320
+#: 0e2f911ca8f64c088b6294428a3c661d
+msgid "displayUsers action"
+msgstr ""
+
+#: ../../richClient/semantic.rst:321
+#: 8c9ab55854dc4b8b8aeb4c2ff0d3c610
+msgid "All users are displayed, and a click on a user must display the user details via a posted ajax request:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:356
+#: cca9fc6707a841b9b0933daa872c1f58
+msgid "The view associated to `displayUsers` action:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:358
+#: ../../richClient/semantic.rst:412
+#: 68501cb822194c6e8163f8d4e735f20b
+#: 0f0b85ef81854620b8dcdd0370862b0e
+msgid "app/views/UsersJqueryController/displayUsers.html"
+msgstr ""
+
+#: ../../richClient/semantic.rst:380
+#: 46e5ea743f7c45dab00fbf027abe6808
+msgid "displayOneUser action"
+msgstr ""
+
+#: ../../richClient/semantic.rst:410
+#: 81256df4558142faa9b53352d7877262
+msgid "The view associated to `displayOneUser` action:"
+msgstr ""
+
+#: ../../richClient/semantic.rst:436
+#: 7304c702f22b4fe99aa4a74c37bf1a6e
+msgid "Semantic components"
+msgstr ""
+
+#: ../../richClient/semantic.rst:438
+#: 945b2e6774fd49dcab663245525a6985
+msgid "Next, we are going to make a controller implementing the same functionalities as before, but using **PhpMv-UI** components (Semantic part)."
+msgstr ""
+
+#: ../../richClient/semantic.rst:441
+#: b04348b0da434ba4b8785c8f3d550308
+msgid "HtmlButton sample"
+msgstr ""
+
+#: ../../richClient/semantic.rst:484
+#: 1bf5231bb693469899a9851349130eb3
+msgid "Calling renderView or renderDefaultView on the JQuery object performs the compilation of the component, and generates the corresponding HTML and JS."
+msgstr ""
+
+#: ../../richClient/semantic.rst:487
+#: 8e001772b724445e928d2a3e7ef9e513
+msgid "The associated view integrates the button component with the `q` array available in the view :"
+msgstr ""
+
+#: ../../richClient/semantic.rst:489
+#: 78ea836b19ef4c4cb879655dbe806c0a
+msgid "app/views/UsersCompoController/index.html"
+msgstr ""
+
+#: ../../richClient/semantic.rst:500
+#: 56961dedd8f343999f39d37c6850d03d
+msgid "//todo DataTable sample +++++++++++++++++"
+msgstr ""

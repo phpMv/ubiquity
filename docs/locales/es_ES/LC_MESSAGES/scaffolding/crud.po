@@ -1,0 +1,1164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../scaffolding/crud.rst:2 76ac589f77224b7cae49ea6c9d8769d0
+msgid "CRUD Controllers"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:11 373845f8264949a1b1282fd5d23e3fa4
+msgid ""
+"The CRUD controllers allow you to perform basic operations on a Model "
+"class:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:6 5d6a97e6d9934ec6876388598d0ecb22
+msgid "Create"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:7 77cffeaf2bb543ef9dafc92f2987caf6
+msgid "Read"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:8 d248deb3841c48cda7dbdca533e11760
+msgid "Update"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:9 ea2a85a0a5c84b269e416574097fbb49
+msgid "Delete"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:10 97af9b1e172a456495b2b566a6e319ee
+msgid "..."
+msgstr ""
+
+#: ../../scaffolding/crud.rst:14 c197a7f54274421abae590033dff9dc6
+msgid "Since version 2.4.6, Two types of CrudController exist:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:15 d4a2c65303e649f18a2280c6a69d737d
+msgid "`ResourceCrudController` associated with a model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:16 92d1c711752045e8900472479f51af78
+msgid ""
+"`MultiResourceCRUDController`, displaying an index and allowing to "
+"navigate between models."
+msgstr ""
+
+#: ../../scaffolding/crud.rst:19 a9fe7f8e41d1411eb09da85cf4dc6a43
+msgid "ResourceCrudController"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:21 ../../scaffolding/crud.rst:348
+#: 3075fc5328af42d6b7825a8166c23ba6 955c4ce8cae3414a949fb9700988d908
+msgid "Creation"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:23 582663893064436a8f45e5dbbd0df1d3
+msgid ""
+"In the admin interface (web-tools), activate the **Controllers** part, "
+"and choose create **Resource Crud controller**:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:30 ../../scaffolding/crud.rst:358
+#: e0e8dfeadad04452b218f0ef09077b28 fe68c3c4892d4cfaa6f15cead68997c8
+msgid "Then fill in the form:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:28 ../../scaffolding/crud.rst:356
+#: 316fe89f6a8b4615a5c92353725d7d05 c412bb7b869b4f01993b5370471dbf54
+msgid "Enter the controller name"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:29 d14bb7b2b76d476884e7635be47342fb
+msgid "Select the associated model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:30 ../../scaffolding/crud.rst:358
+#: 64dd206d7f624455932dc482e6ce781d 90549846d673499fb46af49a1d2d5bbb
+msgid "Then click on the validate button"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:35 ../../scaffolding/crud.rst:363
+#: 45a918ef096c4fa78172d9f7bb1ec84f d40c2ab3bf8143a6a8460fd0695ed868
+msgid "Description of the features"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:37 ../../scaffolding/crud.rst:365
+#: 714f8fd11de0469c9163e4e471629271 a347475289a34e63811275891ac613ca
+msgid "The generated controller:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:39 fcb2fe25bed64cb08971de9e7634d7e4
+msgid "app/controllers/Products.php"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:61 801426bf639c4834a81bfccf0addfc6b
+msgid ""
+"Test the created controller by clicking on the get button in front of the"
+" **index** action:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:66 8016956c7b6b49fa80e9327819b4e6db
+msgid "Read (index action)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:70 6330c3a9752d45e5bd8ae982082a4b7d
+msgid ""
+"Clicking on a row of the dataTable (instance) displays the objects "
+"associated to the instance (**details** action):"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:74 96f31f7a3eee4b588af1004d05062a04
+msgid "Using the search area:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:80 0127229ccd8c46deb32b218273aa8539
+msgid "Create (newModel action)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:81 8bfb98f5979048eba130650c36aeada0
+msgid "It is possible to create an instance by clicking on the add button"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:85 ../../scaffolding/crud.rst:96
+#: 12c492ac08bb40098ef28154c58e91c1 77b558b630e54100aabf24f7b2ba6ca9
+msgid "The default form for adding an instance of User:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:91 d5904781cb1f4248ad0044e4eb4c7126
+msgid "Update (update action)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:92 89e4741843024d5192bce6b01bfc6057
+msgid "The edit button on each row allows you to edit an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:102 7d161a27a3124e30b25ee1c262d777e7
+msgid "Delete (delete action)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:103 0223846952c04a038ff9eafebdaadee6
+msgid "The delete button on each row allows you to edit an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:107 490b3027313e4b1b9b28a89eb5590e56
+msgid "Display of the confirmation message before deletion:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:112 ../../scaffolding/crud.rst:403
+#: abac9a728f6c4521ac7addca2c660471 f5804249d7534576ba8f3ba8b5a9e414
+msgid "Customization"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:113 900503f6bf784fa3b672ff48276a358c
+msgid "Create again a ResourceCrudController from the admin interface:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:117 078e965fb2be46c484292b0952cb86dc
+msgid "It is now possible to customize the module using overriding."
+msgstr ""
+
+#: ../../scaffolding/crud.rst:120 45f5e55a2d0b40d48cd50f2e92bf861a
+msgid "Overview"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:125 2992d8b0671b4aae8c2a3cfbdd9bbc92
+msgid "Classes overriding"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:128 a5ef2dd8620f4fbd853efd9916d0d4c2
+msgid "ResourceCRUDController methods to override"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:131 ../../scaffolding/crud.rst:159
+#: ../../scaffolding/crud.rst:227 ../../scaffolding/crud.rst:257
+#: ../../scaffolding/crud.rst:289 ../../scaffolding/crud.rst:417
+#: ../../scaffolding/crud.rst:458 14b17aa157bc4088b8ede862541c7305
+#: 31f08990a2e247c696b6e2f8fd58f0dd 57693415e8764b479516b4d1d66affa5
+#: ab27dd8f61ac401ca32457f13a635e5b ad50cd1391b24318b4f4a26e6f134fd3
+#: ec6574b680624aba825b23bfbdee47fd f390ed13efcd4ddb811ad6c4a66f5d80
+msgid "Method"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:131 ../../scaffolding/crud.rst:159
+#: ../../scaffolding/crud.rst:227 ../../scaffolding/crud.rst:257
+#: ../../scaffolding/crud.rst:289 ../../scaffolding/crud.rst:417
+#: ../../scaffolding/crud.rst:458 00bbdedf93d94b81891773cb11b0b4d3
+#: 130792bff38f4f64a3bf1ea3fd199ace 138dde4cb2df4fe3bb8a7a9892ed203c
+#: 647d366c6fbd4f379033c53dde6be980 98d2d560578d4f4f8836ce1c67347c49
+#: d3ec70d552a04e9a813f7c7abdcd69ca f9525bce9c4a4434843b4a925e91262e
+msgid "Signification"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:131 ../../scaffolding/crud.rst:159
+#: ../../scaffolding/crud.rst:227 ../../scaffolding/crud.rst:257
+#: ../../scaffolding/crud.rst:289 ../../scaffolding/crud.rst:417
+#: ../../scaffolding/crud.rst:458 0a861a4891304f2bb65e3cb8ba4877a1
+#: 11753bde83014cecb2255fa35f96d629 159b414b9c7441f2b8587487ebcb8ea9
+#: 3710f0f049dc4e71960feccfb5a018ec 72b0a9a087164d2a9f27794661143f62
+#: aad9e1ac91a549668769bab4b42f5345 b5bd04b7449343f0a903acd902b21b6a
+msgid "Default return"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:133 ../../scaffolding/crud.rst:419
+#: 42c5d35d03ac402a98e53f4ef7a7078b df2abc69c27c40df8c2f55823b59dcfb
+msgid "routes"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:135 08833d319c674e96b06b22b11757bf41
+msgid "index()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:135 60ac4da8f42349e982ab44408ace6b1b
+msgid "Default page : list all objects"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:137 727ade8b97c74191bc83fd2306de1ada
+msgid "edit($modal=\"no\", $ids=\"\")"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:137 1650882402fa451e8ebf28f55e383cb3
+msgid "Edits an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:139 c72b9f52e1da41faaedfdc7643be9705
+msgid "newModel($modal=\"no\")"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:139 d3bef89dd27f465cacf660870cda4fcd
+msgid "Creates a new instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:141 d4a70b87f0d14d2092231e7fbc3f8926
+msgid "display($modal=\"no\",$ids=\"\")"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:141 40098f163da747edb959b93f65525007
+msgid "Displays an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:143 de28cee761c747898b7eca358e18ac47
+msgid "delete($ids)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:143 07d4736532b1430e96a2a9b68e473c20
+msgid "Deletes an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:145 f36fe05d11444c7dbc9cffd1e7768c12
+msgid "update()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:145 df44160198ea40e3a13e6d5fa4cf5115
+msgid "Displays the result of an instance updating"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:147 152dd8d58fd047499f9a43d2a491c21a
+msgid "showDetail($ids)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:147 93d1e37d36e341bfbf7440be0c37ef7b
+msgid "Displays associated members with foreign keys"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:149 eed7ae97b43b4fc8875baedef06df6c1
+msgid "refresh_()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:149 ec2dbd8504ae4a4684ce57fe86e2ae18
+msgid "Refreshes the area corresponding to the DataTable (#lv)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:151 c953890f976e451c839caad9130a0871
+msgid "refreshTable($id=null)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:151 54fad531a2124236971031b68017db7c
+msgid "//TO COMMENT"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:156 7153dfe1424f4455ae3e28fb5b1dfb77
+msgid "ModelViewer methods to override"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:161 ../../scaffolding/crud.rst:229
+#: ../../scaffolding/crud.rst:259 5633c5fb01d84997a3af8b81418e5c8c
+#: 5c1f7682624f4bbb915d0f7e439101ce 9e315e48eca642dfbd3b973efa20e902
+msgid "**index** route"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:163 d2ffaf489ba549eea4e1ffb54ae089a1
+msgid "getModelDataTable($instances, $model,$totalCount,$page=1)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:163 219cc35da28944c3ab6844c43acb7c91
+msgid "Creates the dataTable and Adds its behavior"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:163 ../../scaffolding/crud.rst:165
+#: 4581c2f4391c43f6af3dfe53a500896f 703be5537e5b422080441920605ac82d
+msgid "DataTable"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:165 436d473a163842c29f66addbb7db665f
+msgid "getDataTableInstance($instances,$model,$totalCount,$page=1)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:165 200d3351ce23412a99657f9bee4ec5d8
+msgid "Creates the dataTable"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:167 6bd5977960f04fc387c1fba8f53d7004
+msgid "recordsPerPage($model,$totalCount=0)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:167 3830b36d8b674a98a1c5bdd3eaa6a667
+msgid "Returns the count of rows to display (if null there's no pagination)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:167 75f85bcccb3e4ab6ae2779beba2cddc7
+msgid "null or 6"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:169 4409343a733e487e98c7417b3148b6cd
+msgid "getGroupByFields()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:169 9f6078359b9d483e8f7ca98a5eee65e5
+msgid "Returns an array of members on which to perform a grouping"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:169 ../../scaffolding/crud.rst:435
+#: d426513e60ff4ab2a5bdc03312d3ed27 e8218e1c320f4d02900ece89b95f9d54
+msgid "[]"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:171 8d7b86d737e04d9789771fe2bde2195c
+msgid "getDataTableRowButtons()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:171 99e0dd3b7ea94d998ea99fadebc4d745
+msgid ""
+"Returns an array of buttons to display for each row "
+"[\"edit\",\"delete\",\"display\"]"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:171 793614f1e6d9445fa78a9c365500dcc8
+msgid "[\"edit\",\"delete\"]"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:173 5fba967aaeae478dabf742208fd20a2d
+msgid "onDataTableRowButton(HtmlButton $bt, ?string $name)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:173 001cca5427bb4d07bd4d65d49356857f
+msgid "To override for modifying the dataTable row buttons"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:175 24665f8a132d401097f6b2d78b1e688d
+msgid "getCaptions($captions, $className)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:175 6a5633ac22e646feafef581c9d5dce09
+msgid "Returns the captions of the column headers"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:175 ../../scaffolding/crud.rst:210
+#: ../../scaffolding/crud.rst:216 ../../scaffolding/crud.rst:233
+#: ../../scaffolding/crud.rst:235 ../../scaffolding/crud.rst:239
+#: ../../scaffolding/crud.rst:249 2a6c7f857e2844e78edafd0e1ae8c9c2
+#: 31fac3ff9c2f4884b9ffbafcd3796852 3935c19e3e9b455ab8f4dcd254699820
+#: 3f92ba67e48d4b4d883ca332226d57a6 606960d5ccc64c8ba2fb06ab4e46f9d3
+#: b2c09cc8e7b44735a4ffed97f4200594 b840636a604c41039331b2930396302e
+msgid "all member names"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:177 3dc20742f28a4ba288a3029af2d9a035
+msgid "**detail** route"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:179 6ce80174bdcb4473b8374e54fe77a1ee
+msgid "showDetailsOnDataTableClick()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:179 73371023af8c4914b2c666c82f34a8e9
+msgid ""
+"To override to make sure that the detail of a clicked object is displayed"
+" or not"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:179 ../../scaffolding/crud.rst:195
+#: f140d5b370e849fe8b0cd31f38c81759 f8056883696b4ccfb308d4f5d2e7dcc9
+msgid "true"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:181 ab0cf17abb094d21983444abd70c7639
+msgid "onDisplayFkElementListDetails($element,$member,$className,$object)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:181 e62e65dc3c24497daf8494f2e7b90f9f
+msgid ""
+"To modify for displaying each element in a list component of foreign "
+"objects"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:183 e3e0f038e604467298e8905259565125
+msgid "getFkHeaderElementDetails($member, $className, $object)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:183 e47a6a0fa6844522936b538d75f1d026
+msgid "Returns the header for a single foreign object (issue from ManyToOne)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:183 ../../scaffolding/crud.rst:187
+#: 941d6aa03b87475fbb1b0c95cea7ef23 ddc7a151a5fb45b28b4fadc068956ca3
+msgid "HtmlHeader"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:185 b2921b0a9c6c488eb54627bef8f8a612
+msgid "getFkElementDetails($member, $className, $object)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:185 e04744fb128d458f86d5f5f2d6302380
+msgid ""
+"Returns a component for displaying a single foreign object (manyToOne "
+"relation)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:185 acf03026f5ff4c46b4d86971762acc29
+msgid "HtmlLabel"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:187 06d6e87b26c04a21a3faaa1a4a815b33
+msgid "getFkHeaderListDetails($member, $className, $list)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:187 07b80bfc70f04c57aecbc0c066b68446
+msgid "Returns the header for a list of foreign objects (oneToMany or ManyToMany)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:189 429030643b60423bad44123bf2e9eac9
+msgid "getFkListDetails($member, $className, $list)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:189 244a604607654264a6b7429655c82004
+msgid ""
+"Returns a list component for displaying a collection of foreign objects "
+"(many)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:189 ec31ae4333d54e2281dff47940d86f44
+msgid "HtmlList"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:191 ../../scaffolding/crud.rst:237
+#: ../../scaffolding/crud.rst:267 55c991dc28da4700a9e19bb633c0122a
+#: 85cfdda069bb455c9d5af468019a4972 c5351ac32576466abe15b0992bf4ed74
+msgid "**edit** and **newModel** routes"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:193 7a65fb9670fd498498fd307e35038611
+msgid "getForm($identifier, $instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:193 b2d4887855314c58aba56e5c863d42c6
+msgid "Returns the form for adding or modifying an object"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:193 ../../scaffolding/crud.rst:202
+#: 6d5eaf4c26be435aa58cdcb85e6dd3ac c41ff3bbe7e548c6a214bba567c87786
+msgid "HtmlForm"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:195 44e51ca6b3bd4ecda8acd162d2669e20
+msgid "formHasMessage()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:195 42dc9d092c7a46f095391875cb8de7b6
+msgid "Determines if the form has a message title"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:197 ffe681c1423448a29d8860bf317924af
+msgid "getFormModalTitle($instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:197 72cd63671c3f49cea9d57765c1d4a8ff
+msgid "Returns the form modal title"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:197 5effabec6d60476b91a03d94bc95974b
+msgid "instance class"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:199 c9356b54a59b4ca7969682571a58dd6a
+msgid "onFormModalButtons($btOkay, $btCancel)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:199 d31571e62a464762aaf12d3f13757318
+msgid "Hook for updating modal buttons"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:201 113ace9d27204a57829ba7eec7c7e77e
+msgid "getFormTitle($form,$instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:201 4556e388fa2d46369556055342f47036
+msgid ""
+"Returns an associative array defining form message title with keys "
+"\"icon\",\"message\",\"subMessage\""
+msgstr ""
+
+#: ../../scaffolding/crud.rst:204 c86521abb7194f2b80cb3a51550c0651
+msgid "setFormFieldsComponent(DataForm $form,$fieldTypes)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:204 0ebb07226c66437895617a3f05324ace
+msgid "Sets the components for each field"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:206 f046dc5f62864ee4a12b915a732d7529
+msgid "onGenerateFormField($field)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:206 59483bde964f47c385c6f3dc57c9ebe5
+msgid "For doing something when $field is generated in form"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:208 682f3bdc441a4bb998433208db439df8
+msgid "isModal($objects, $model)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:208 c7539b70e2a741a089570d69549f2e2c
+msgid "Condition to determine if the edit or add form is modal for $model objects"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:208 e49d431657b44e6d9505287a9e4eee44
+msgid "count($objects)>5"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:210 9e075b72a1694113ba5da7c3d2b6ff41
+msgid "getFormCaptions($captions, $className, $instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:210 1d4cc9d911cb400c8cf3407e357ead30
+msgid "Returns the captions for form fields"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:212 ../../scaffolding/crud.rst:247
+#: 5121aba67e7b446281f7c0dd02bed8b3 9dc58114c33941c6a6a5471489513407
+msgid "**display** route"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:214 24d967679889401cab37fd83741ed313
+msgid "getModelDataElement($instance,$model,$modal)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:214 37f51233cacc4ad29fc9bebfbca88bab
+msgid "Returns a DataElement object for displaying the instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:214 d74d2f030ab74dc88283d349cd1c1a8e
+msgid "DataElement"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:216 5c79864a8c99406b85d7159b7e6f55d6
+msgid "getElementCaptions($captions, $className, $instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:216 cba73d4fd4994f598e002d8b90f77708
+msgid "Returns the captions for DataElement fields"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:218 9ec6f6d93bc24b6da5bdc029bf88806d
+msgid "**delete** route"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:220 9a94ef4c859a41a6a4d5f1dac601b21e
+msgid "onConfirmButtons(HtmlButton $confirmBtn,HtmlButton $cancelBtn)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:220 8b2b6a7d8f314acc8aba7f5632608efe
+msgid "To override for modifying delete confirmation buttons"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:224 713a1adc58c14f0aaec0e01a5d11d194
+msgid "CRUDDatas methods to override"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:231 47a032036b534b6980559c296a9b2773
+msgid "_getInstancesFilter($model)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:231 5acebfbd4c874d0a9cd1322041dbf29f
+msgid "Adds a condition for filtering the instances displayed in dataTable"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:231 bd08b64f175e466297bcc8e219383395
+msgid "1=1"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:233 79060101bf37494597310b24f0fb7e1d
+msgid "getFieldNames($model)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:233 577d723be9d54767995ad3d0372e4c24
+msgid "Returns the fields to display in the **index** action for $model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:235 b831d911bda849429d7fcf554e81fa98
+msgid "getSearchFieldNames($model)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:235 169264b40fbe4819881ab6eae323781c
+msgid "Returns the fields to use in search queries"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:239 ac1368fee03f4864a9b93b2cfc7a31b7
+msgid "getFormFieldNames($model,$instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:239 0d051beb5d4b4d36ad7eeb379b376d12
+msgid ""
+"Returns the fields to update in the **edit** and **newModel** actions for"
+" $model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:241 e90335b0dc574ab5b77d299ac28cc992
+msgid "getManyToOneDatas($fkClass,$instance,$member)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:241 ../../scaffolding/crud.rst:243
+#: ../../scaffolding/crud.rst:245 068452f2cb8d428fb3db989f30c47975
+#: c933e53516c34fedb5e7a1f7ba376036 f44a7092276d4b12864b0a6ccf9fcae1
+msgid "Returns a list (filtered) of $fkClass objects to display in an html list"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:241 ../../scaffolding/crud.rst:243
+#: ../../scaffolding/crud.rst:245 0023ee7cdc86423e9e0f57c046f08701
+#: 6b30fa73e39b49bc93bf17c63dad3a84 b4a843ff0969488eaac433835311c032
+msgid "all $fkClass instances"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:243 89e61cccf8504335ba6fcd3ae4e3271e
+msgid "getOneToManyDatas($fkClass,$instance,$member)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:245 e87ed84057674dd99cb35d4b6534b03d
+msgid "getManyToManyDatas($fkClass,$instance,$member)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:249 4fdd7021ff2a4b99903b979986ef434e
+msgid "getElementFieldNames($model)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:249 777eb4bea91f4bcfadc9242d5dac79c8
+msgid "Returns the fields to display in the **display** action for $model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:254 5f8d8638314642e0870854e09ea4da98
+msgid "CRUDEvents methods to override"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:261 1db8473276124c5aa7d8cdf26db6b4b4
+msgid "onConfDeleteMessage(CRUDMessage $message,$instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:261 8b7e835a267a419ba7bcf0a613755b28
+msgid "Returns the confirmation message displayed before deleting an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:261 ../../scaffolding/crud.rst:263
+#: ../../scaffolding/crud.rst:265 ../../scaffolding/crud.rst:269
+#: ../../scaffolding/crud.rst:271 78b6b241c51d448e8b54a7f309e0cf3a
+#: 9d026280fd9949118b4e5e9a1ad49479 b3ac2f360b27434eb2a6be76a1eb6c46
+#: eb3b2ae358ba403dbc7f9ae3c1a49352 ef8eb8fe1f6b45efa9c875706d10dbc7
+msgid "CRUDMessage"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:263 aa854206b3f14abe8819bf2bcfc83733
+msgid "onSuccessDeleteMessage(CRUDMessage $message,$instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:263 d4003873d38b478aa8276845d0219878
+msgid "RReturns the message displayed after a deletion"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:265 5de9b87a3b354164b5537cd1991a22fa
+msgid "onErrorDeleteMessage(CRUDMessage $message,$instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:265 24fbd177b65b45eda32e902bb4ab7e70
+msgid "Returns the message displayed when an error occurred when deleting"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:269 ef84a94c08fe4b43998678f23972a487
+msgid "onSuccessUpdateMessage(CRUDMessage $message)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:269 22218784eb9f491ab9679c292f770bf3
+msgid "Returns the message displayed when an instance is added or inserted"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:271 3bdefad1e97942d3b7a04a2f8a9108e1
+msgid "onErrorUpdateMessage(CRUDMessage $message)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:271 d2032ca2c8e74234bbd5624c05b12187
+msgid ""
+"Returns the message displayed when an error occurred when updating or "
+"inserting"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:273 4adee9275b194062b54e596d1190fdf0
+msgid "onNewInstance(object $instance)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:273 3474f7401fbc448184d2442676da7d79
+msgid "Triggered after the creation of a new instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:275 80ed94a008874875aa844ca7e18f232a
+msgid "onBeforeUpdate(object $instance, bool $isNew)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:275 4942fc39ba0a4bb4b2d15cfd67cfb468
+msgid "Triggered before the instance update"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:277 19419b6fc40b4129aad4703aea70f3b3
+msgid "all routes"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:279 3190adff8c1f4cfa93089dc99d3c52e1
+msgid "onNotFoundMessage(CRUDMessage $message,$ids)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:279 bc6be09430064b4cac32874a0eae3fd1
+msgid "Returns the message displayed when an instance does not exists"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:281 6173a0030a184c8e833940cc847769c3
+msgid "onDisplayElements($dataTable,$objects,$refresh)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:281 3edf90a17c484fc780cf4026efbbc180
+msgid "Triggered after displaying objects in dataTable"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:286 ../../scaffolding/crud.rst:455
+#: 27d59ac515cd4b2d9c06a24ff1dd58dd 9bb245a1bab84b43a3b162c21b8b9ba0
+msgid "CRUDFiles methods to override"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:291 ../../scaffolding/crud.rst:460
+#: 5e3f2f2ebae04d45a6b2bd12df8a3410 60ebe4ea41d244b497463bcc87da8fc7
+msgid "template files"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:293 2f4b0394fc6246e580b3190b1536bf89
+msgid "getViewBaseTemplate()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:293 42712246063c49eb8d388585fa8cd4c6
+msgid ""
+"Returns the base template for all Crud actions if getBaseTemplate return "
+"a base template filename"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:293 0eaf5699ce924cd7bbdef2d959de0a70
+msgid "@framework/crud/baseTemplate.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:295 bf375cff85c34c96aebe2ed88c3d425a
+msgid "getViewIndex()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:295 1d6fb0233f414aa2a583a01c1f2ea3d3
+msgid "Returns the template for the **index** route"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:295 4ebbfd5d46bc4bc3bbd54e8b7c44b412
+msgid "@framework/crud/index.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:297 d9a072b18fbe40a5b19b4beeb4783de8
+msgid "getViewForm()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:297 42b6faeddc7748aba61d56808180e4f6
+msgid "Returns the template for the **edit** and **newInstance** routes"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:297 63625d5a8c6d4d44a339aa9a0e34f008
+msgid "@framework/crud/form.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:299 5dec7989dcd8447c9b1629e978180b08
+msgid "getViewDisplay()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:299 e8ba44c68fab42fd83eacda19057726d
+msgid "Returns the template for the **display** route"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:299 37bfeb5a17b34640bdace0e8d29d9b9e
+msgid "@framework/crud/display.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:301 36a9f63045244a3b93ba536369a44358
+msgid "Urls"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:303 9d13ff76827745bd88a711651cd9aea7
+msgid "getRouteRefresh()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:303 d5ed6d1b69c042249c70bbb4adf7c7e1
+msgid "Returns the route for refreshing the index route"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:303 138720632dcb4a4fbd52d788e3245181
+msgid "/refresh_"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:305 0f3507b3ef01440bb4efffb0e8d3cff8
+msgid "getRouteDetails()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:305 4e3c4a725541416791e6ad0be0c1a83d
+msgid ""
+"Returns the route for the detail route, when the user click on a "
+"dataTable row"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:305 f371bae7a72849beb9bde319b9356a4a
+msgid "/showDetail"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:307 e21047e0ad09471b9d092cae4407a92b
+msgid "getRouteDelete()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:307 e31b24e01e1b41199eab860fd2747256
+msgid "Returns the route for deleting an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:307 c36beb6cd78c4561a5ac192f176c8375
+msgid "/delete"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:309 5683a8ffb62f4b798ca5a632bba3f0a0
+msgid "getRouteEdit()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:309 34ab7623e911428aaeb45646c340cff0
+msgid "Returns the route for editing an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:309 5a1b339219ff49ae8cea52bb270d1a79
+msgid "/edit"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:311 5629862728e8448c91cec0c2bb03fa9b
+msgid "getRouteDisplay()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:311 a5c0b10e5ced416e814575ce86b1fcc4
+msgid "Returns the route for displaying an instance"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:311 28608c4a71d045658eace37bd798bd18
+msgid "/display"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:313 3e8af9732dd74fc88625c8488aab0e73
+msgid "getRouteRefreshTable()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:313 ae743f21ca314b279334e11722bbae81
+msgid "Returns the route for refreshing the dataTable"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:313 9cec59aa80e14bf083d3f9222c164903
+msgid "/refreshTable"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:315 479def811c0d48da82f761ce0b9dae51
+msgid "getDetailClickURL($model)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:315 72754f7724ae43099eb81a67fe94cadd
+msgid "Returns the route associated with a foreign key instance in list"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:315 311c8430ff2a42f2a76b81b00d60016d
+msgid "\"\""
+msgstr ""
+
+#: ../../scaffolding/crud.rst:319 7768c84a8e6d4bd4aa99fdc2cfa74a15
+msgid "Twig Templates structure"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:322 9d05e5c057e6454188911cac0e2fb126
+msgid "index.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:327 4606c54e61e24c58a59781ab95a8cff0
+msgid "form.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:329 ../../scaffolding/crud.rst:336
+#: 1912e33fe5a1415fa3cd93c37348678d bdec90d59a0a4735b6bb5a82ba410221
+msgid "Displayed in **frm** block"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:334 18a9d16b3a184d838eef9796cdd4514a
+msgid "display.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:341 a844acd3ab7c45fb8e7d2894b3ec153e
+msgid "MultiResourceCrudController"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:344 abfcbee73b924a168c3d281361163efc
+msgid ""
+"The `MultiResourceCRUDController` displays an index allowing to navigate "
+"between the CRUDs of the models."
+msgstr ""
+
+#: ../../scaffolding/crud.rst:350 9d7afa19946344ee9748521a353a075b
+msgid ""
+"In the admin interface (web-tools), activate the **Controllers** part, "
+"and choose create **Index Crud controller**:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:357 fe9b28b1b9bf4ba3bb4f6036ad1df00b
+msgid "The route path (which must contain the variable part `{resource}`)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:367 7e7c65abffc54f789166407b4d7828c3
+msgid "app/controllers/CrudIndex.php"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:398 cc12683e4c50414ab6e177d235690e4a
+msgid "Test the created controller at `/home/crud` url:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:404 4878ace5cdac4583aad13b504e49edc6
+msgid "Create again a `MultiResourceCrudController` from the admin interface:"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:408 f1177b42f84e4a6ea1fa3bd0a08a79cd
+msgid ""
+"It is now possible to customize the module using overriding like the "
+"`ResourceCRUDControllers`."
+msgstr ""
+
+#: ../../scaffolding/crud.rst:411 77feb55289124a739e4fc7c78ef854c9
+msgid "Specific classes to override"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:414 5fe438d8242e4cd5a8ead0aa58c63da6
+msgid "MultiResourceCRUDController methods to override"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:421 00d4703f78d343be897cd08500e13ae1
+msgid "home ()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:421 027d02621b3249168d860f2f16d1830a
+msgid "Home page : list all models"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:423 f0d65c8097cc4aa2928395d09ada75b8
+msgid "All routes from ``CRUDController``"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:425 020762d18eab4de6823ff78a06a6f050
+msgid "Events"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:427 3b34379317634e6f8e7e01bee03a41e1
+msgid "onRenderView(array &$data)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:427 9574f61e85ed4f97871db6c20207b3ec
+msgid "On before home page rendering"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:429 32ff6c5c30ff4119a8685de320d7144b
+msgid "Configuration"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:431 f016c78dca314fee8dfe166e014ad949
+msgid "hasNavigation()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:431 f9246a6c1d8b43d8ac93244195edf4ed
+msgid "Returns True for displaying the navigation dropdown menu"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:431 072c28b53bc642ffa5789ae6dc8d452d
+msgid "True"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:433 32704f21b26c41dbaf80e1cbf1dc5c56
+msgid "getIndexModels()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:433 073650d9a54940369d3c4573f6332d3e
+msgid "Returns the list of available models to display"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:433 9e919ad875a44fe38abdd7c94d41a614
+msgid "models from default db"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:435 5f671639eb4c452ca269f7636d01bddf
+msgid "getIndexModelsDetails()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:435 132a3e4791074e9cb5601085d4f9d411
+msgid "Returns an associative array (title, icon url) for each model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:437 49ba20650b564f62b858e6f44949e50f
+msgid "getIndexDefaultIcon(string $resource)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:437 6618273c4aab44ddb5b9e4d2039fdb5e
+msgid "Returns the icon for a model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:437 f5a575d8bff64795ab1ae2da6c228515
+msgid "A random animal"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:439 d449918ffbad4d3c97faeb6e14c71a9b
+msgid "getIndexDefaultTitle(string $resource)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:439 83bb229fb85d4be7ae2880384398e37e
+msgid "Returns the title for a model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:439 d434cf3bcfca4f0fa4c3fd46ee472d6a
+msgid "The resource name"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:441 c8c9dcc07ab240cba41cb5bca6d3af99
+msgid "getIndexDefaultDesc(string $modelClass)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:441 dd6699828a0e4f95a050cc3c686bf3da
+msgid "Returns the description for a model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:441 82519a303cbe4be4ba65ea9d77ab9016
+msgid "The complete classname"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:443 3b177fd350094619b8a61e2da130d8b8
+msgid "getIndexDefaultUrl(string $resource)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:443 8d51205577c64a65ac0bb7dde34d09ce
+msgid "Returns the url associated to a model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:443 60779eeeda0a4d7b8be7fbf8188167f2
+msgid "The route path"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:445 78445e5f02ec47349d518aca68ec5a27
+msgid "getIndexDefaultMeta(string $modelClass)"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:445 8b38261909784f6bbd73b323cd40c647
+msgid "Returns the meta for a model"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:447 efcda61c3cd94c0d98a0e172276faade
+msgid "getIndexType()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:447 3175c51496ed4517acdadaeda114550c
+msgid "Defines the index component css classes"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:447 b73c65608e68472fb3a9b86ae5052b7e
+msgid "cards"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:449 f3cac51c0c1842379aafa24d6951ff10
+msgid "getModelName()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:449 3bc14b3c5bf14d5ab44fa9338b65851f
+msgid "Returns the complete model name for $this->resource"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:449 ce719f92c24f4683bb4f2d95f1eb44c7
+msgid "From default model NS"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:462 0e7e69ae96cb4c6999675cb5c92697dc
+msgid "getViewHome()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:462 5416d0891d214d88b07b69e3c45bdfbe
+msgid "Returns the base template for the home view"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:462 dd8feea9d8154c74a2ab8f8ea0850db0
+msgid "@framework/crud/home.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:464 745e7b7a8d2f4491a498ebf636555d77
+msgid "getViewItemHome()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:464 26319d72b66b439ea4a040083a74c861
+msgid "Returns the template for an item in home route"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:464 8fff7946ceb74a28ac330d174113455b
+msgid "@framework/crud/itemHome.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:466 754dc05377bc4c6ca0188d7dffc0c276
+msgid "getViewNav()"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:466 14155d44a4624f559cf9136ce98d1971
+msgid "Returns the template for displaying models in a dropdown"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:466 711e439a588545adb8a60d657152c294
+msgid "@framework/crud/nav.html"
+msgstr ""
+
+#: ../../scaffolding/crud.rst:471 1e802f38490848729f6b2d2a12bb1e7c
+msgid ""
+"All other methods of the ``CRUDController``, ``CRUDFiles``, "
+"``CRUDEvents`` and ``CRUDDatas`` classes can be overridden as for the "
+"``ResourceCRUDController``."
+msgstr ""
+

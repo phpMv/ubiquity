@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../install.rst:2 88890b993d8846e5ae3620c6938eb264
+msgid "Ubiquity-devtools installation"
+msgstr ""
+
+#: ../../install.rst:5 54d7c5516fcb46b68a93112785532d02
+msgid "Install Composer"
+msgstr ""
+
+#: ../../install.rst:6 42a6027c9d80490a9c07d271528da25f
+msgid ""
+"**ubiquity** utilizes Composer to manage its dependencies. So, before "
+"using, you will need to make sure you have `Composer "
+"<http://getcomposer.org/>`_ installed on your machine."
+msgstr ""
+
+#: ../../install.rst:9 bc85d6b2b5c848099d7e010d36e3efae
+msgid "Install Ubiquity-devtools"
+msgstr ""
+
+#: ../../install.rst:10 9e6bc6753e9642738d5f6aa2076da062
+msgid "Download the Ubiquity-devtools installer using Composer."
+msgstr ""
+
+#: ../../install.rst:16 1b44063cef0f43a9893a84692b55b6b4
+msgid ""
+"Make sure to place the ``~/.composer/vendor/bin`` directory in your PATH "
+"so the **Ubiquity** executable can be located by your system."
+msgstr ""
+
+#: ../../install.rst:19 37746ce16fe14365b65b6516fb74ca45
+msgid ""
+"Once installed, the simple ``Ubiquity new`` command will create a fresh "
+"Ubiquity installation in the directory you specify. For instance, "
+"``Ubiquity new blog`` would create a directory named **blog** containing "
+"an Ubiquity project:"
+msgstr ""
+
+#: ../../install.rst:26 4855e18325384be1bba2ed29fb6f1ed8
+msgid "The semantic option adds Semantic-UI for the front end."
+msgstr ""
+
+#: ../../install.rst:28 d81e5e841b9b4dbcb7c60a544faad39d
+msgid ""
+"You can see more options about installation by reading the "
+":doc:`createproject` section."
+msgstr ""
+

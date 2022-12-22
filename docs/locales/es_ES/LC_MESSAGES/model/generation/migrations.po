@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../model/generation/migrations.rst:2
+#: ../../model/generation/migrations.rst:25 1b08eedd153444c1bccb015f7742424f
+#: 42c824b6a0be4db4aca8f21907311a58
+msgid "Migrations"
+msgstr ""
+
+#: ../../model/generation/migrations.rst:4 41f9ab184d934736a50143f7c7de87c1
+msgid ""
+"Ubiquity migrations are not really migrations. Migrations are not done "
+"from php code, written or generated. |br| They consist in generating the "
+"SQL code allowing to update the database from the cache of the existing "
+"models."
+msgstr ""
+
+#: ../../model/generation/migrations.rst:8 151f6edd828c4d299f485c6832253952
+msgid "Updating an existing model"
+msgstr ""
+
+#: ../../model/generation/migrations.rst:9 e102c15429584f23a3aeb948da344e9d
+msgid "Consider the following model representing a user:"
+msgstr ""
+
+#: ../../model/generation/migrations.rst:14 02a8806c9b8d42e9a8972f2318a1d9af
+msgid "Let's add a phone field, with the devtools:"
+msgstr ""
+
+#: ../../model/generation/migrations.rst:27 c67b35dd13e745e8bcd4ea7419506362
+msgid "Starting by displaying the information on possible migrations:"
+msgstr ""
+
+#: ../../model/generation/migrations.rst:37 087d7e1763084816bb88687e1c4c271e
+msgid "We can then proceed to the execution:"
+msgstr ""
+

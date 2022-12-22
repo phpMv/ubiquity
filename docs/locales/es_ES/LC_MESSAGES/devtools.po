@@ -1,0 +1,275 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../devtools.rst:2 6a9f9b8aec6f45d59ad767d497234ef6
+msgid "Devtools usage"
+msgstr ""
+
+#: ../../devtools.rst:5 b05b2cc1f3944ecfb38315e25fe9c386
+msgid "Project creation"
+msgstr ""
+
+#: ../../devtools.rst:6 03659638bc19451ca0dd155ab16d8306
+msgid "See :doc:`createproject` to create a project."
+msgstr ""
+
+#: ../../devtools.rst:8 dea77eb69f0c49919257cf233078ad12
+msgid ""
+"For all other commands, you must be in your project folder or one of its "
+"subfolders."
+msgstr ""
+
+#: ../../devtools.rst:11 5f943c4c695c47a1a11f11393930438f
+msgid ""
+"The ``.ubiquity`` folder created automatically with the project allows "
+"the devtools to find the root folder of the project. |br| If it has been "
+"deleted or is no longer present, you must recreate this empty folder."
+msgstr ""
+
+#: ../../devtools.rst:15 8d58521bd7304c29b00c32eea6293eff
+msgid "Controller creation"
+msgstr ""
+
+#: ../../devtools.rst:17 ../../devtools.rst:49 aba1d0043a504cafb898df16c4749777
+#: e0e51efda7cd4088a7df7e8db0cb94ab
+msgid "Specifications"
+msgstr ""
+
+#: ../../devtools.rst:19 b6c3ad09f68a4f15909246774cab3f6a
+msgid "command : ``controller``"
+msgstr ""
+
+#: ../../devtools.rst:20 5789db23147c4106ac3ab18d36e356e8
+msgid "Argument : ``controller-name``"
+msgstr ""
+
+#: ../../devtools.rst:21 b5e1cb2838e04133820c0b0b6da3dab2
+msgid "aliases : ``create-controller``"
+msgstr ""
+
+#: ../../devtools.rst:24 ../../devtools.rst:56 7df228bffdea44d4a879a410c9a70182
+#: cbf5200123f945c0b052ddebd83eb174
+msgid "Parameters"
+msgstr ""
+
+#: ../../devtools.rst:27 ../../devtools.rst:59 c30a1f4effb74c1a813e0f216bb3cac9
+#: f2512f396d2741149ea7376722e5b08f
+msgid "short name"
+msgstr ""
+
+#: ../../devtools.rst:27 ../../devtools.rst:59 7460af8e5dbe44658f6da298fc385a0c
+#: e8c4171adf9e4550b500ca15ef65c215
+msgid "name"
+msgstr ""
+
+#: ../../devtools.rst:27 ../../devtools.rst:59 14c7fb527761498da58b0ad25b9db41d
+#: a1b109aac09e443981483c68e941f07b
+msgid "role"
+msgstr ""
+
+#: ../../devtools.rst:27 ../../devtools.rst:59 5a5f567abcc0414f8d4c6324dbce6420
+#: d9f8d33a92924ef186820fc91dccaf85
+msgid "default"
+msgstr ""
+
+#: ../../devtools.rst:27 ../../devtools.rst:59 2c68bd340a2843729c56086f5a915eee
+#: f80da3fcb249497c987da85d9ccc9f59
+msgid "Allowed values"
+msgstr ""
+
+#: ../../devtools.rst:29 ../../devtools.rst:65 387cb1e1c6cc4f78b2700c0dbd4f050e
+#: 3e00fe01f7614c44906fe7922b8d2ac2
+msgid "v"
+msgstr ""
+
+#: ../../devtools.rst:29 5259a2fc2a7a4f8b9241915e9493e6d7
+msgid "view"
+msgstr ""
+
+#: ../../devtools.rst:29 3ea7359cd3bb402d8641088d7bee94ce
+msgid "Creates the associated view index."
+msgstr ""
+
+#: ../../devtools.rst:29 1006dbed0f6a431185f9065fcf158d99
+msgid "true"
+msgstr ""
+
+#: ../../devtools.rst:29 4b96aaaa6053429f921cb69348642c41
+msgid "true, false"
+msgstr ""
+
+#: ../../devtools.rst:33 ../../devtools.rst:69 6ebf37139be5440b8d3d01cf05da4083
+#: 802d836d25114c2481affef8755b08da
+msgid "Samples:"
+msgstr ""
+
+#: ../../devtools.rst:34 b5c15c842eae412db6910a915fa8f3bc
+msgid ""
+"Creates the controller ``controllers\\ClientController`` class in "
+"``app/controllers/ClientController.php``:"
+msgstr ""
+
+#: ../../devtools.rst:40 a6f8454e6d5942189c91e24343808d8e
+msgid ""
+"Creates the controller ``controllers\\ClientController`` class in "
+"``app/controllers/ClientController.php`` and the associated view in "
+"``app/views/ClientController/index.html``:"
+msgstr ""
+
+#: ../../devtools.rst:47 e609dbb5ae164342abad760348129936
+msgid "Action creation"
+msgstr ""
+
+#: ../../devtools.rst:51 e39d5c09b8634caeaccb2d1d46404c39
+msgid "command : ``action``"
+msgstr ""
+
+#: ../../devtools.rst:52 f922f94a504347988133e95806c4781f
+msgid "Argument : ``controller-name.action-name``"
+msgstr ""
+
+#: ../../devtools.rst:53 68dda4ff8d7c4a0c8f8a75f8d3432236
+msgid "aliases : ``new-action``"
+msgstr ""
+
+#: ../../devtools.rst:61 eb3ea5ac7cb9423381a0d5d16a360b94
+msgid "p"
+msgstr ""
+
+#: ../../devtools.rst:61 ac44eba0a40e4925a9ae2dddfd7313d6
+msgid "params"
+msgstr ""
+
+#: ../../devtools.rst:61 c831b0f2d25b4a08a842490082c41d31
+msgid "The action parameters (or arguments)."
+msgstr ""
+
+#: ../../devtools.rst:61 b9bc5827c95a466c95e4cb9b9fd6dbd5
+msgid "a,b=5 or $a,$b,$c"
+msgstr ""
+
+#: ../../devtools.rst:63 d4763f6ddfaf4e4da72b8f0162f5c1bf
+msgid "r"
+msgstr ""
+
+#: ../../devtools.rst:63 4533a71b25ac483ab219de58a6c50f3e
+msgid "route"
+msgstr ""
+
+#: ../../devtools.rst:63 ae7080243c064105aba382e8e0253302
+msgid "The associated route path."
+msgstr ""
+
+#: ../../devtools.rst:63 d6a7d9e60bb4411aba2410cfb2083a79
+msgid "/path/to/route"
+msgstr ""
+
+#: ../../devtools.rst:65 020c0f3d48e94525bcaefd09c81ca733
+msgid "create-view"
+msgstr ""
+
+#: ../../devtools.rst:65 93ab522b8b814045a9025df6e276b43c
+msgid "Creates the associated view."
+msgstr ""
+
+#: ../../devtools.rst:65 c3a6321e50ed42e981e243983a967dbb
+msgid "false"
+msgstr ""
+
+#: ../../devtools.rst:65 2aedaf15e835447ab27452a6ee58b1a5
+msgid "true,false"
+msgstr ""
+
+#: ../../devtools.rst:70 2b4e3890587b49b4a5d8192c07372e66
+msgid "Adds the action ``all`` in controller ``Users``:"
+msgstr ""
+
+#: ../../devtools.rst:76 ../../devtools.rst:108 ../../devtools.rst:130
+#: ../../devtools.rst:182 247689c4f5af4b699e56d9908921f0b2
+#: 451c3230218449b98a77d655aa8f0e83 4afe30cb85c44be69d41354442596043
+#: 9a6cc162377444dc90f75dcdfc8645bf
+msgid "code result:"
+msgstr ""
+
+#: ../../devtools.rst:78 ../../devtools.rst:110 ../../devtools.rst:136
+#: ../../devtools.rst:157 ../../devtools.rst:188 ../../devtools.rst:213
+#: 616afde4312b48a59934200b7f6180b8 70c1ffd8960d4ad58a668297b33880f2
+#: d985ac250c6b407f86f3bff9b01ce6ee e86ee590bbfc48fda362b47e096a0864
+#: eaff3c450dbe44bbb674b9b7d19083f1 f946aa8edabc4b73903608ef2c22e282
+msgid "app/controllers/Users.php"
+msgstr ""
+
+#: ../../devtools.rst:98 13db9d1d637942daaa938dd771ef5560
+msgid "Adds the action ``display`` in controller ``Users`` with a parameter:"
+msgstr ""
+
+#: ../../devtools.rst:124 d3a890a5cdba49e4979b0604627ed38c
+msgid "Adds the action ``display`` with an associated route:"
+msgstr ""
+
+#: ../../devtools.rst:134 ../../devtools.rst:186
+#: 2a1ce313115e41659eb9b4807d47abba e6f86805c7f84f7fb3ea1ca339a0cd71
+msgid "Attributes"
+msgstr ""
+
+#: ../../devtools.rst:155 ../../devtools.rst:211
+#: 22fb2b1df6504ceaaedb04145edff27b 5b50df398a184a63aa6bea9b2c601650
+msgid "Annotations"
+msgstr ""
+
+#: ../../devtools.rst:176 7164722d7bb14fdb8098e561b49820dc
+msgid "Adds the action ``search`` with multiple parameters:"
+msgstr ""
+
+#: ../../devtools.rst:236 62be7a06dbc94ef7ac9fa5b8ccd28bba
+msgid "Adds the action ``search`` and creates the associated view:"
+msgstr ""
+
+#: ../../devtools.rst:244 19121101a6144d93ba9a6b125672c98b
+msgid "Model creation"
+msgstr ""
+
+#: ../../devtools.rst:246 b2dae334a0164558b79f73ba65baf84d
+msgid ""
+"Optionally check the database connection settings in the "
+"app/config/config.php file before running these commands."
+msgstr ""
+
+#: ../../devtools.rst:248 46a26f6ed08842dfbe1e95b1f1b48b78
+msgid "To generate a model corresponding to the **user** table in database:"
+msgstr ""
+
+#: ../../devtools.rst:255 078f461a1f1c4d2592b97a3128111ce3
+msgid "All models creation"
+msgstr ""
+
+#: ../../devtools.rst:257 1a52a7e43e684162b3cfea94360d374f
+msgid "For generating all models from the database:"
+msgstr ""
+
+#: ../../devtools.rst:264 71ee452f1c8044659dc0b56573afb93c
+msgid "Cache initialization"
+msgstr ""
+
+#: ../../devtools.rst:265 2bee4513e2554d0c9010ec381bed2d1a
+msgid ""
+"To initialize the cache for routing (based on annotations in controllers)"
+" and orm (based on annotations in models) :"
+msgstr ""
+

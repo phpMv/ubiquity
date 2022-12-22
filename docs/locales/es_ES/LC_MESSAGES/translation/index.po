@@ -1,0 +1,167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../translation/index.rst:2 83af04e3062a48b5adcf84ef41af0a26
+msgid "Translation module"
+msgstr ""
+
+#: ../../translation/index.rst:5 66bfd45193f04b9e8f2e828cfcefdac7
+msgid ""
+"The Translation module uses the static class **TranslatorManager** to "
+"manage translations."
+msgstr ""
+
+#: ../../translation/index.rst:8 964b8e3c0ccb487f9b68a8b159aa3f60
+msgid "Module structure"
+msgstr ""
+
+#: ../../translation/index.rst:9 71ce6a5b0ee74885a1b1f6e84001470e
+msgid "Translations are grouped by **domain**, within a **locale** :"
+msgstr ""
+
+#: ../../translation/index.rst:11 a0273af521ea44148a89d2c46de26982
+msgid "In the translation root directory (default **app/translations**):"
+msgstr ""
+
+#: ../../translation/index.rst:13 25bf6ac649ca4757896834f5be6836cf
+msgid "Each locale corresponds to a subfolder."
+msgstr ""
+
+#: ../../translation/index.rst:14 06c255ea3604456ab8997d8eac05c930
+msgid "For each locale, in a subfolder, a domain corresponds to a php file."
+msgstr ""
+
+#: ../../translation/index.rst:26 2c01dea3ae1946e88fe816cc62993d34
+msgid ""
+"each domain file contains an associative array of translations **key-> "
+"translation value**"
+msgstr ""
+
+#: ../../translation/index.rst:31 03126885b53147e689af8cbcf0ce110b
+msgid "Each key can be associated with"
+msgstr ""
+
+#: ../../translation/index.rst:28 f7227d15230741bbbcfa8d648926ebfe
+msgid "a translation"
+msgstr ""
+
+#: ../../translation/index.rst:29 26c51946be44482c918e0af4a57dccb5
+msgid "a translation containing variables (between **%** and **%**)"
+msgstr ""
+
+#: ../../translation/index.rst:30 9aafa22b2e2c43e1af1a4a88200ab590
+msgid "an array of translations for handle pluralization"
+msgstr ""
+
+#: ../../translation/index.rst:33 ../../translation/index.rst:125
+#: 316da3a66a3c46f9a7f23f0334c96af2 d0f4b9e6b2534ae19c7efd7b60154e46
+msgid "app/translations/en_EN/messages.php"
+msgstr ""
+
+#: ../../translation/index.rst:43 1c12b14c7580414f8aa005778e1ab24f
+msgid "Starting the module"
+msgstr ""
+
+#: ../../translation/index.rst:45 5b2ae3961b764ae48a00eb98489a7222
+msgid "Module startup is logically done in the **services.php** file. |br|"
+msgstr ""
+
+#: ../../translation/index.rst:47 ../../translation/index.rst:64
+#: ../../translation/index.rst:83 ../../translation/index.rst:96
+#: 42ad9b1380564b5688bfddb6b7cbd823 77a6f86620df4e6f8c8787a43ceb3d5b
+#: 86dee430e7d9417f9615cb608e71ebd3 dc8a0a88c723453a82b31249094137cd
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../translation/index.rst:55 6f8c9d63fb764391be43e627ee0c75f0
+msgid ""
+"With no parameters, the call of the **start** method uses the locale "
+"**en_EN**, without fallbacklocale."
+msgstr ""
+
+#: ../../translation/index.rst:58 52015f37e92a47838974c9090a35df16
+msgid "The translations module must be started after the cache has started."
+msgstr ""
+
+#: ../../translation/index.rst:61 0bddb6341ce94316a39ed6b23142cda0
+msgid "Setting the locale"
+msgstr ""
+
+#: ../../translation/index.rst:62 3d5233c83cae4de5b74a42e3613a55fb
+msgid "Changing the locale when the manager starts:"
+msgstr ""
+
+#: ../../translation/index.rst:72 7b26c80792314fddbfc59152fc46da20
+msgid "Changing the locale after loading the manager:"
+msgstr ""
+
+#: ../../translation/index.rst:79 3ee834fb5e8f4047a6d579a17ba3a94e
+msgid "Setting the fallbackLocale"
+msgstr ""
+
+#: ../../translation/index.rst:81 f00b65dd0467499fa44af6cd198bbbb3
+msgid "The **en_EN** locale will be used if **fr_FR** is not found:"
+msgstr ""
+
+#: ../../translation/index.rst:92 fbeafb4da4c04e278ff5bfaad9894100
+msgid "Defining the root translations dir"
+msgstr ""
+
+#: ../../translation/index.rst:94 d87ef786f5e141e4aa67d80d9d9ddc2f
+msgid ""
+"If the **rootDir** parameter is missing, the default directory used is "
+"``app/translations``."
+msgstr ""
+
+#: ../../translation/index.rst:105 e312277804dd44a29f9cb68e3a48d1ef
+msgid "Make a translation"
+msgstr ""
+
+#: ../../translation/index.rst:108 e3eec443e5bb45f0995530ae37a8d5e4
+msgid "With php"
+msgstr ""
+
+#: ../../translation/index.rst:109 ../../translation/index.rst:133
+#: 2e9f74d1860d4206b14a4a026c20dc92 fdeb2b90173b4cd6aa0acf0e00b5ab2f
+msgid ""
+"Translation of the **okayBtn** key into the default locale (specified "
+"when starting the manager):"
+msgstr ""
+
+#: ../../translation/index.rst:115 9a64911fd8184e2e8825bc66c6e7f302
+msgid ""
+"With no parameters, the call of the **trans** method uses the default "
+"locale, the domain **messages**."
+msgstr ""
+
+#: ../../translation/index.rst:117 ../../translation/index.rst:139
+#: ae536d2e747140928b66dbbbdeb6e8bd f4521a52567d4195966fe0d12a3f279e
+msgid "Translation of the **message** key using a variable:"
+msgstr ""
+
+#: ../../translation/index.rst:123 5b0cc245a62d4cf0acd80ef2ee01af89
+msgid ""
+"In this case, the translation file must contain a reference to the "
+"**user** variable for the key **message**:"
+msgstr ""
+
+#: ../../translation/index.rst:131 e4cfe24cce6146659870547be4a74567
+msgid "In twig views:"
+msgstr ""
+

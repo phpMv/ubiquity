@@ -1,0 +1,125 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../extra/libraries.rst:3 b614e86da5f5435f98fcbbb7169d1873
+msgid "Composer management"
+msgstr ""
+
+#: ../../extra/libraries.rst:8 15ce526ba64547858eb232d8d84380d6
+msgid ""
+"This part is accessible from the **webtools**, so if you created your "
+"project with the **-a** option or with the **create-project** command.."
+msgstr ""
+
+#: ../../extra/libraries.rst:11 6bb46543937045c98f16074e77057b1d
+msgid "Access"
+msgstr ""
+
+#: ../../extra/libraries.rst:13 e110afb7707a4183b43b503596cdaf65
+msgid "From the webtools, activate the **composer** part,"
+msgstr ""
+
+#: ../../extra/libraries.rst:18 8fb46e488b994671abdb8d776b56ba88
+msgid "or go directly to ``http://127.0.0.1:8090/Admin/composer``."
+msgstr ""
+
+#: ../../extra/libraries.rst:21 523ca1d6fe7347abaf2226b0e281ee86
+msgid "Dependencies list"
+msgstr ""
+
+#: ../../extra/libraries.rst:22 7e4fc393269948fb9eef9af8e3345340
+msgid ""
+"The interface displays the list of already installed dependencies, and "
+"those that are directly installable."
+msgstr ""
+
+#: ../../extra/libraries.rst:29 858aeea1495c44a5a919220082d4ed05
+msgid "Dependency installation"
+msgstr ""
+
+#: ../../extra/libraries.rst:31 f8ad1b6577d3420e8788405ec0220cd3
+msgid "Among the listed dependencies:"
+msgstr ""
+
+#: ../../extra/libraries.rst:33 5b988676cc324d8abfdd5d61988b0e9a
+msgid "Click on the **add** button of the dependencies you want to add."
+msgstr ""
+
+#: ../../extra/libraries.rst:38 94057ecd387b43eca94f7a741fabf146
+msgid "Then click on the **Generate composer update** button:"
+msgstr ""
+
+#: ../../extra/libraries.rst:43 0f629c73f14e4f7c88463a7600ad20aa
+msgid "The validation generates the update."
+msgstr ""
+
+#: ../../extra/libraries.rst:46 7ddf88a56a7f43978db8037cbac7c00e
+msgid "For non listed dependencies:"
+msgstr ""
+
+#: ../../extra/libraries.rst:48 96c75c2aca1b4f9395bcd6728b65b71e
+msgid "Click on the **Add dependency** button :"
+msgstr ""
+
+#: ../../extra/libraries.rst:53 cdcacfbf135a48e7a94a1893b3536caf
+msgid "Enter a vendor name (provider) ;"
+msgstr ""
+
+#: ../../extra/libraries.rst:54 7eb4562b99864710a3e4e06ce5a89b13
+msgid "Select a package in the list ;"
+msgstr ""
+
+#: ../../extra/libraries.rst:55 f1810bdf7e7447eb86a811003c06d86d
+msgid ""
+"Select eventually a version (if none, the last stable version will be "
+"installed)."
+msgstr ""
+
+#: ../../extra/libraries.rst:58 bc276dddf3c943c79c3b138687d4ffdf
+msgid "Dependency removal"
+msgstr ""
+
+#: ../../extra/libraries.rst:60 2fa22a5f982d4b6eaafe4f95ec48e81d
+msgid "Click on the **remove** button of the dependencies you want to add."
+msgstr ""
+
+#: ../../extra/libraries.rst:65 e68a3484d40941ef8ca60fc7ef5e35cd
+msgid ""
+"Then click on the **Generate composer update** button, and validate the "
+"update."
+msgstr ""
+
+#: ../../extra/libraries.rst:67 271570ffe19a4a5a8917bc8872cadff1
+msgid ""
+"It is possible to perform several addition or deletion operations and "
+"validate them simultaneously."
+msgstr ""
+
+#: ../../extra/libraries.rst:70 01b6a82342734ffda61c5d816b2e6a96
+msgid "Composer optimization"
+msgstr ""
+
+#: ../../extra/libraries.rst:72 37535fb8fd184ae8ba1bbe2325df1ce3
+msgid "Click on the **Optimize autoloader** button."
+msgstr ""
+
+#: ../../extra/libraries.rst:74 293c4e48414442f1b305db2b67f81015
+msgid "This optimize composer autoloading with an authoritative classmap."
+msgstr ""
+

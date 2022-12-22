@@ -1,0 +1,478 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../view/index.rst:3 ../../view/index.rst:512
+#: c27aa374359a4325a55ed1d362faef5d f8f84da45f2f44f7984f6027898b8316
+msgid "Views"
+msgstr ""
+
+#: ../../view/index.rst:8 aa8928898379496bb0ecd0ddbff588fb
+msgid ""
+"Ubiquity uses Twig as the default template engine (see `Twig "
+"documentation <https://twig.symfony.com/doc/2.x/>`_). |br| The views are "
+"located in the **app/views** folder. They must have the **.html** "
+"extension for being interpreted by Twig."
+msgstr ""
+
+#: ../../view/index.rst:11 0b996b4b35b54232b171a866b961f32a
+msgid ""
+"Ubiquity can also be used with a PHP view system, to get better "
+"performance, or simply to allow the use of php in the views."
+msgstr ""
+
+#: ../../view/index.rst:14 df4982462ffc451eae9f7a9c37aa2b58
+msgid "Loading"
+msgstr ""
+
+#: ../../view/index.rst:15 548d89ba53e54054896a5d1852a0539a
+msgid "Views are loaded from controllers:"
+msgstr ""
+
+#: ../../view/index.rst:17 ../../view/index.rst:45 ../../view/index.rst:65
+#: ../../view/index.rst:82 ../../view/index.rst:160 ../../view/index.rst:391
+#: ../../view/index.rst:410 ../../view/index.rst:516 ../../view/index.rst:542
+#: 1adc8879789643c6b32cc174c5a60d32 1ae3d37eaec147619da308d82d122ef4
+#: 2b909498d0144bd382a230f76b2cc531 2ecb9ecef693465c89032c2b207ec1e7
+#: 4460a12703a048c687136ffffb9825d9 7d68ecbd605f4a6589b7a6aa4947f45c
+#: 9872489078e1424cb0f4528c10fdbe44 f115bf9e431444698b3a932cd01c871f
+#: f5435a264e3f4fd6bb9ae5e5a5e0bc2d
+msgid "app/controllers/Users.php"
+msgstr ""
+
+#: ../../view/index.rst:33 696fec77eda6483e8c03b54e4be0ec3c
+msgid "Default view loading"
+msgstr ""
+
+#: ../../view/index.rst:34 bb7f2c5827f34c2aa0d17c14fe7df18a
+msgid ""
+"If you use the default view naming method : |br| The default view "
+"associated to an action in a controller is located in ``views/controller-"
+"name/action-name`` folder:"
+msgstr ""
+
+#: ../../view/index.rst:62 d442d989e20a4583817345adaec59de3
+msgid "Loading and passing variables"
+msgstr ""
+
+#: ../../view/index.rst:63 8a7087fe46e1411986f39f97a975be05
+msgid ""
+"Variables are passed to the view with an associative array. Each key "
+"creates a variable of the same name in the view."
+msgstr ""
+
+#: ../../view/index.rst:80 ce5eb144a31c4c868c94e9c21fc1aa33
+msgid ""
+"In this case, it is usefull to call Compact for creating an array "
+"containing variables and their values :"
+msgstr ""
+
+#: ../../view/index.rst:98 3bd98387ed95493e91da1813f3800a3d
+msgid "Displaying in view"
+msgstr ""
+
+#: ../../view/index.rst:100 8cf1a6c14879491c849ba62d97683aa3
+msgid "The view can then display the variables:"
+msgstr ""
+
+#: ../../view/index.rst:102 c2671dc226174879829d43505273fb47
+msgid "users/display.html"
+msgstr ""
+
+#: ../../view/index.rst:108 8d217728399c4c56bd65daf359c96c4a
+msgid "Variables may have attributes or elements you can access, too."
+msgstr ""
+
+#: ../../view/index.rst:110 658447b7f458447b985e3839eb8f8b4b
+msgid ""
+"You can use a dot (.) to access attributes of a variable (methods or "
+"properties of a PHP object, or items of a PHP array), or the so-called "
+"\"subscript\" syntax ([]):"
+msgstr ""
+
+#: ../../view/index.rst:118 92147283abb942d2918b53e24f44ec34
+msgid "Ubiquity extra functions"
+msgstr ""
+
+#: ../../view/index.rst:119 b8150d4a3cb34d298c79a60d011cb303
+msgid ""
+"Global ``app`` variable provides access to predefined Ubiquity Twig "
+"features:"
+msgstr ""
+
+#: ../../view/index.rst:121 a0b6387e924a4ca0a96d82e7d036d945
+msgid ""
+"``app`` is an instance of ``Framework`` and provides access to public "
+"methods of this class."
+msgstr ""
+
+#: ../../view/index.rst:123 75d622ca9aae4877bd236427c868b65b
+msgid "Get framework installed version:"
+msgstr ""
+
+#: ../../view/index.rst:130 914f86899cc440f1925a8c071415ffd3
+msgid "Return the active controller and action names:"
+msgstr ""
+
+#: ../../view/index.rst:137 15256db94e954fc5a98a78a4ea5f6046
+msgid "Return global wrapper classes :"
+msgstr ""
+
+#: ../../view/index.rst:139 458d4ab528a743aa9b03aff5cc809fdf
+msgid "For request:"
+msgstr ""
+
+#: ../../view/index.rst:145 07283b075aca4f868ac09705347b387b
+msgid "For session :"
+msgstr ""
+
+#: ../../view/index.rst:151 c5d0a187ff5747ecbea1d9ed50bce157
+msgid ""
+"see `Framework class in API "
+"<https://api.kobject.net/ubiquity/class_ubiquity_1_1core_1_1_framework.html>`_"
+" for more."
+msgstr ""
+
+#: ../../view/index.rst:154 821d602da4ae476ab58b87e67a9a3e24
+msgid "PHP view loading"
+msgstr ""
+
+#: ../../view/index.rst:156 acd8e42377cd479b991ae7912ac1b81d
+msgid ""
+"Disable if necessary Twig in the configuration file by deleting the "
+"**templateEngine** key."
+msgstr ""
+
+#: ../../view/index.rst:158 7f7afffa0b784dec8e9ccaf2e4b302f6
+msgid ""
+"Then create a controller that inherits from ``SimpleViewController``, or "
+"``SimpleViewAsyncController`` if you use **Swoole** or **Workerman**:"
+msgstr ""
+
+#: ../../view/index.rst:178 c6fa86f63cbf4d598069acbbac5abbb0
+msgid ""
+"In this case, the functions for loading assets and themes are not "
+"supported."
+msgstr ""
+
+#: ../../view/index.rst:182 8edfe62ebe274222a187ec9d291f614a
+msgid "Assets"
+msgstr ""
+
+#: ../../view/index.rst:183 14494a7b33ac40e2a8c735ebe58adf8a
+msgid ""
+"Assets correspond to javascript files, style sheets, fonts, images to "
+"include in your application. |br| They are located from the "
+"**public/assets** folder. |br| It is preferable to separate resources "
+"into sub-folders by type."
+msgstr ""
+
+#: ../../view/index.rst:201 dba6403e8b554c9581d5a937dcc9702e
+msgid "Integration of css or js files :"
+msgstr ""
+
+#: ../../view/index.rst:220 a68ae40c9c4443c2a6ff573b883df248
+msgid "CDN with extra parameters:"
+msgstr ""
+
+#: ../../view/index.rst:228 4232056536f84c5fab679b32fc87177e
+msgid "Themes"
+msgstr ""
+
+#: ../../view/index.rst:231 aba7f6d57ba5447295ac21f4947bf2a1
+msgid "The themes are totally useless if you only have one presentation to apply."
+msgstr ""
+
+#: ../../view/index.rst:233 eb624e67201e45adb802b4dfbad52c92
+msgid ""
+"Ubiquity support themes wich can have it's own assets and views according"
+" to theme template to be rendered by controller. Each controller action "
+"can render a specific theme, or they can use the default theme configured"
+" at *config.php* file in ``templateEngineOptions => array(\"activeTheme\""
+" => \"semantic\")``."
+msgstr ""
+
+#: ../../view/index.rst:236 43b490e1912c450292a502a6222a244e
+msgid ""
+"Ubiquity is shipped with 3 default themes : **Bootstrap**, **Foundation**"
+" and **Semantic-UI**."
+msgstr ""
+
+#: ../../view/index.rst:240 df34aab2c0314e5bae0629324afa2bba
+msgid "Installing a theme"
+msgstr ""
+
+#: ../../view/index.rst:242 ../../view/index.rst:258 ../../view/index.rst:267
+#: 5382879f7d3346d2b461b6b4b66568be 7f17bb18a8004466a212da94c61599c7
+#: b30a7829b6814c75971a6347b8a186d7
+msgid "With devtools, run :"
+msgstr ""
+
+#: ../../view/index.rst:248 ddecc6a8fa4b4f23b167ea29a84c3491
+msgid ""
+"The installed theme is one of **bootstrap**, **foundation** or "
+"**semantic**."
+msgstr ""
+
+#: ../../view/index.rst:250 7291b55284ed405c95aec4240af53f86
+msgid ""
+"With **webtools**, you can do the same, provided that the **devtools** "
+"are installed and accessible (Ubiquity folder added in the system path) :"
+msgstr ""
+
+#: ../../view/index.rst:256 46ebe33d292b4ee4b77cabf9059924ba
+msgid "Creating a new theme"
+msgstr ""
+
+#: ../../view/index.rst:265 a3ec2030ab6249269db917b6335e2b3d
+msgid "Creating a new theme from Bootstrap, Semantic..."
+msgstr ""
+
+#: ../../view/index.rst:274 9cbdf0bf208f44d9b3967035a269742d
+msgid "With **webtools** :"
+msgstr ""
+
+#: ../../view/index.rst:280 3019d79e539447d0bec32593bfd55cba
+msgid "Theme functioning and structure"
+msgstr ""
+
+#: ../../view/index.rst:282 a94368cfc0ec4ca291f8d2c8c4e4d708
+msgid "Structure"
+msgstr ""
+
+#: ../../view/index.rst:284 c3df420b07764371b40fa22532a3b390
+msgid "**Theme view folder**"
+msgstr ""
+
+#: ../../view/index.rst:286 4d03e259ba8d4b72a46d26d51575831d
+msgid ""
+"The views of a theme are located from the **app/views/themes/theme-name**"
+" folder"
+msgstr ""
+
+#: ../../view/index.rst:301 d3cf846aca81423c9d0d1e0a1f75684b
+msgid ""
+"The controller base class is responsible for loading views to define the "
+"header and footer of each page  :"
+msgstr ""
+
+#: ../../view/index.rst:303 fbef1fb0365245998009e87d0a053e64
+msgid "app/controllers/ControllerBase.php"
+msgstr ""
+
+#: ../../view/index.rst:333 607ffd5adaa34ec8866c8447f8b91888
+msgid "**Theme assets folder**"
+msgstr ""
+
+#: ../../view/index.rst:335 78fa8556f65d4233bf8d51d11dd232f2
+msgid ""
+"The assets of a theme are created inside ``public/assets/theme-name`` "
+"folder."
+msgstr ""
+
+#: ../../view/index.rst:337 23e3ecf6f3b04db1afe4d38e19b911bc
+msgid "The structure of the assets folder is often as follows :"
+msgstr ""
+
+#: ../../view/index.rst:354 7b258d163e5a4188b51f9715783850a9
+msgid "Change of the active theme"
+msgstr ""
+
+#: ../../view/index.rst:356 86272976da9c422a850e5d10588c9ec5
+msgid "Persistent change"
+msgstr ""
+
+#: ../../view/index.rst:358 b261d2aa89b34b2987b918b42b352f32
+msgid ""
+"**activeTheme** is defined in ``app/config/config.php`` with "
+"``templateEngineOptions => array(\"activeTheme\" => \"semantic\")``"
+msgstr ""
+
+#: ../../view/index.rst:360 17f0633984c64195b58597ca4065cec7
+msgid "The active theme can be changed with **devtools** :"
+msgstr ""
+
+#: ../../view/index.rst:366 ae20dec93b574c6eaf42e091c69e2bf0
+msgid "It can also be done from the home page, or with **webtools** :"
+msgstr ""
+
+#: ../../view/index.rst:368 b489c7ca09d146c597dcd64533854522
+msgid "**From the home page :**"
+msgstr ""
+
+#: ../../view/index.rst:372 088b34f5e2254562a90a61c501056c22
+msgid "**From the webtools :**"
+msgstr ""
+
+#: ../../view/index.rst:377 a788413d5d704f35a2fc98096841134b
+msgid "This change can also be made at runtime :"
+msgstr ""
+
+#: ../../view/index.rst:379 4fea6db67ec747ffa07588098076e744
+msgid "**From a controller :**"
+msgstr ""
+
+#: ../../view/index.rst:386 f0382fa3c608400d90f1c173c7cd0451
+msgid "Non-persistent local change"
+msgstr ""
+
+#: ../../view/index.rst:388 77b0f62384e740e5803af15d64f98a5f
+msgid ""
+"To set a specific theme for all actions within a controller, the simplest"
+" method is to override the controller's **initialize** method :"
+msgstr ""
+
+#: ../../view/index.rst:408 73fbf26f00b24e87a11faf3cc1a8279d
+msgid "Or if the change should only concern one action :"
+msgstr ""
+
+#: ../../view/index.rst:427 a9625e0f9bc948e68046e90b1587137f
+msgid "Conditional theme change, regardless of the controller :"
+msgstr ""
+
+#: ../../view/index.rst:429 695b4f8fade54c3cb777f5bffff85406
+msgid ""
+"Example with a modification of the theme according to a variable passed "
+"in the URL"
+msgstr ""
+
+#: ../../view/index.rst:431 ../../view/index.rst:473
+#: 0c8e2f81556a4f938757e65b0e8f28ee 450364ca309d489d9f745882ffff2f95
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../view/index.rst:447 169434a4ef0c41d8bda9ec275c0d7e18
+msgid "Mobile device support"
+msgstr ""
+
+#: ../../view/index.rst:448 653034bea153424f803793d9b009bd47
+msgid "Add a mobile device detection tool. |br| Installing MobileDetect:"
+msgstr ""
+
+#: ../../view/index.rst:456 d33bb239d7164ae088e40dda7d00f370
+msgid "It is generally easier to create different views per device."
+msgstr ""
+
+#: ../../view/index.rst:458 595fcdd7a9624180b0bb7d3410ddcb12
+msgid ""
+"Create a specific theme for the mobile part (by creating a folder "
+"``views/themes/mobile`` and putting the views specific to mobile devices "
+"in it). |br| It is important in this case to use the same file names for "
+"the mobile and non-mobile part."
+msgstr ""
+
+#: ../../view/index.rst:461 9c4ac4e097c149bab885becf3783c4b7
+msgid ""
+"It is also advisable in this case that all view loadings use the "
+"**@activeTheme** namespace:"
+msgstr ""
+
+#: ../../view/index.rst:468 56af8c0dec4342de8a0bf50a6b4345c9
+msgid ""
+"**index.html** must be available in this case in the folders ``views`` "
+"and ``views/themes/mobile``."
+msgstr ""
+
+#: ../../view/index.rst:471 eff0d333ea6f4aa18d75e030020860d4
+msgid "Global mobile detection (from services.php)"
+msgstr ""
+
+#: ../../view/index.rst:490 016cda32f4b54833b5d161c26eeef3eb
+msgid "Locale detection (from a controller)"
+msgstr ""
+
+#: ../../view/index.rst:492 aff766be66234b84b28f3bab149d2a2c
+msgid "app/controllers/FooController.php"
+msgstr ""
+
+#: ../../view/index.rst:509 ea450073400e473080bf837e0fe0e0dd
+msgid "View and assets loading"
+msgstr ""
+
+#: ../../view/index.rst:514 cf441f95637c42e38095f7325476dfc0
+msgid ""
+"For loading a view from the **activeTheme** folder, you can use the "
+"**@activeTheme** namespace :"
+msgstr ""
+
+#: ../../view/index.rst:531 ef6d75d658d841e3a0d8dd7f3db21381
+msgid ""
+"If the **activeTheme** is **bootstrap**, the loaded view is "
+"``app/views/themes/bootstrap/action.html``."
+msgstr ""
+
+#: ../../view/index.rst:534 ec1d4073e5cb4db59aeeb5b8a6fefe60
+msgid "DefaultView"
+msgstr ""
+
+#: ../../view/index.rst:536 ce451d7ea7374e7eb22453f23dfd50b6
+msgid ""
+"If you follow the Ubiquity view naming model, the default view loaded for"
+" an action in a controller when a theme is active is : ``app/views/themes"
+"/theme-name/controller-name/action-name.html``."
+msgstr ""
+
+#: ../../view/index.rst:539 08ccf024ad70403f9635ef734dd0c4fe
+msgid ""
+"For example, if the activeTheme is bootstrap, the default view for the "
+"action display in the Users controller must be loacated in "
+"``app/views/themes/bootstrap/Users/display.html``."
+msgstr ""
+
+#: ../../view/index.rst:558 c5fca97341b64efebb9fc32085514d5e
+msgid ""
+"The devtools commands to create a controller or an action and their "
+"associated view use the **@activeTheme** folder if a theme is active."
+msgstr ""
+
+#: ../../view/index.rst:568 237f2ffbb772401abfc9554900e8cbd2
+msgid "Assets loading"
+msgstr ""
+
+#: ../../view/index.rst:570 1df88ef4a47c4dbfb733f3dcd59e04fa
+msgid ""
+"The mechanism is the same as for the views : ``@activeTheme`` namespace "
+"refers to the ``public/assets/theme-name/`` folder"
+msgstr ""
+
+#: ../../view/index.rst:580 2fb9663469394840b54c12ea5a3b4bd6
+msgid ""
+"If the **bootstrap** theme is active, |br| the assets folder is "
+"``public/assets/bootstrap/``."
+msgstr ""
+
+#: ../../view/index.rst:584 d917720fa2b74caba79768f76b6bcd49
+msgid "Css compilation"
+msgstr ""
+
+#: ../../view/index.rst:586 828a6bc9aef149718165ab5b0bb9aca7
+msgid "For Bootstrap or foundation, install sass:"
+msgstr ""
+
+#: ../../view/index.rst:592 fe13329d89d64220bce28a2f6b9abc95
+msgid "Then run from the project root folder:"
+msgstr ""
+
+#: ../../view/index.rst:594 543d21aa0e5f441096b74422252bed76
+msgid "**For bootstrap:**"
+msgstr ""
+
+#: ../../view/index.rst:600 75ba7373a586443988c293f05e263239
+msgid "**For foundation:**"
+msgstr ""
+

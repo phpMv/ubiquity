@@ -1,0 +1,430 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../model/models.rst:2 16284e22d5904267918b6218a5673a00
+msgid "ORM"
+msgstr ""
+
+#: ../../model/models.rst:4 fd7c70eb38a94204a91bfb30d3f8c279
+msgid ""
+"if you want to automatically generate the models, consult the "
+":doc:`generating models</model/generation>` part."
+msgstr ""
+
+#: ../../model/models.rst:6 3dc120c9df9744dd909225dbdf75216a
+msgid ""
+"A model class is just a plain old php object without inheritance. |br| "
+"Models are located by default in the **app\\\\models** folder. |br| "
+"Object Relational Mapping (ORM) relies on member annotations or "
+"attributes (since PHP8) in the model class."
+msgstr ""
+
+#: ../../model/models.rst:11 61e9c1efc092422ea66d31e725dcac46
+msgid "Models definition"
+msgstr ""
+
+#: ../../model/models.rst:13 590beed087fd40ff83ebb17aba799f31
+msgid "A basic model"
+msgstr ""
+
+#: ../../model/models.rst:14 c564c41ac1d44897aa59fbe47658bc88
+msgid ""
+"A model must define its primary key using the **@id** annotation on the "
+"members concerned"
+msgstr ""
+
+#: ../../model/models.rst:15 265ebaa4bfde477eb922ef66772a574c
+msgid "Serialized members must have getters and setters"
+msgstr ""
+
+#: ../../model/models.rst:16 6230c3ae8f5340e6be4f849982871d45
+msgid ""
+"Without any other annotation, a class corresponds to a table with the "
+"same name in the database, each member corresponds to a field of this "
+"table"
+msgstr ""
+
+#: ../../model/models.rst:20 ../../model/models.rst:76
+#: ../../model/models.rst:138 ../../model/models.rst:217
+#: ../../model/models.rst:298 ../../model/models.rst:360
+#: ../../model/models.rst:414 ../../model/models.rst:470
+#: 0a5e28175d0d4169bb69587ac2de016f 20212de5ea9744c09284e53956367adb
+#: 2d97f495564242f4987ea95aa7aaf086 5fad2e4bf7bf4f5482fd0a96586a6fa5
+#: 903941c2138c45568f3d300874ab5f37 a204f8697aee4d10b2bfa616ce1d7fc0
+#: b036e8d6b02545e4bcf789329933123f c80af82a22ea4f6381d8f1e6a5249bae
+msgid "Attributes"
+msgstr ""
+
+#: ../../model/models.rst:22 ../../model/models.rst:47
+#: ../../model/models.rst:78 ../../model/models.rst:106
+#: ../../model/models.rst:140 ../../model/models.rst:170
+#: ../../model/models.rst:219 ../../model/models.rst:252
+#: ../../model/models.rst:362 ../../model/models.rst:388
+#: 3c8f5ca600e8453c8a032c1360900d68 51187d6737dc4a34b8ed0f1fee3e407b
+#: 59459fabc4ae496cbb6b3f75392aed79 68b710b714134d6292d83eb451090445
+#: 7df0cabbaa53440ca91f5c7cc64dd979 90d12647423747589e75fa5bd8c0419b
+#: d0419b7cf40747908e26a7075c455f9b ed1a45811db0438abb281f9287a2b5b9
+#: f06bc14c24174f9a9b3bbdad6eb0f01d f83f758829634e6daf923593cfefacaf
+msgid "app/models/User.php"
+msgstr ""
+
+#: ../../model/models.rst:45 ../../model/models.rst:104
+#: ../../model/models.rst:168 ../../model/models.rst:250
+#: ../../model/models.rst:386 ../../model/models.rst:440
+#: ../../model/models.rst:498 1134ff94b26d431aa2535696fde505ff
+#: 1398f38ac8fc4621958b1fa946631441 422b7b54e0554ff8a8c55ac083fa7ca6
+#: 72685edd760c4ab886b5c246e539040a 838b0b75c1ac42e9b9be4d913bab6280
+#: 8aee48075e2b43c49b1672f0152e8eb2 f8047fc32b42484eb6505bf9aa7da76e
+msgid "Annotations"
+msgstr ""
+
+#: ../../model/models.rst:69 929e544b1ee34e7599d532ae110c6f8b
+msgid "Mapping"
+msgstr ""
+
+#: ../../model/models.rst:71 fa14b6211e2e47bba16ca2619e281fd7
+msgid "Table->Class"
+msgstr ""
+
+#: ../../model/models.rst:72 8514dabb23da44c7a21ec6b31749067e
+msgid ""
+"If the name of the table is different from the name of the class, the "
+"annotation **@table** allows to specify the name of the table."
+msgstr ""
+
+#: ../../model/models.rst:133 38180a7248e7429994835ed2da69d667
+msgid "Field->Member"
+msgstr ""
+
+#: ../../model/models.rst:134 05f1c73cc8d94cf78ed9c4cd70dfcf72
+msgid ""
+"If the name of a field is different from the name of a member in the "
+"class, the annotation **@column** allows to specify a different field "
+"name."
+msgstr ""
+
+#: ../../model/models.rst:200 ../../model/models.rst:556
+#: 19bd4073839648da8ddd69480f2f0eca cfe0f5c351874951ae53848da8e0a5b6
+msgid "Associations"
+msgstr ""
+
+#: ../../model/models.rst:202 62b13cfb17bc4852899a5790487359a0
+msgid ""
+"**Naming convention** |br| Foreign key field names consist of the primary"
+" key name of the referenced table followed by the name of the referenced "
+"table whose first letter is capitalized. |br| **Example** |br| ``idUser``"
+" for the table ``user`` whose primary key is ``id``"
+msgstr ""
+
+#: ../../model/models.rst:209 5c4c67607fc24d3db8a58e4f0f3eb759
+msgid "ManyToOne"
+msgstr ""
+
+#: ../../model/models.rst:210 439d512b66cc4a6aae4b46bb02d9fc99
+msgid "A **user** belongs to an **organization**:"
+msgstr ""
+
+#: ../../model/models.rst:283 849e3fb9dba44ed7850e5d64410e7fab
+msgid ""
+"The **@joinColumn** annotation or the **JoinColumn** attribute specifies "
+"that:"
+msgstr ""
+
+#: ../../model/models.rst:285 96143df5d92341e292830f3e9a0e4ced
+msgid "The member **$organization** is an instance of **models\\Organization**"
+msgstr ""
+
+#: ../../model/models.rst:286 1f5bea1d8d6d4af78b9c40835a15e66e
+msgid ""
+"The table **user** has a foreign key **idOrganization** refering to "
+"organization primary key"
+msgstr ""
+
+#: ../../model/models.rst:287 e9c6efb54a6f42359975a113f7ba7aab
+msgid "This foreign key is not null => a user will always have an organization"
+msgstr ""
+
+#: ../../model/models.rst:290 74209576b8c24f8f99946560fa6f59d9
+msgid "OneToMany"
+msgstr ""
+
+#: ../../model/models.rst:291 b0f34c2b186043a89cffda6478641fb1
+msgid "An **organization** has many **users**:"
+msgstr ""
+
+#: ../../model/models.rst:300 ../../model/models.rst:323
+#: 8c36fa8ecd3d4bf48b31f5e0a869d112 d926521c13904929884c79f59b5b2358
+msgid "app/models/Organization.php"
+msgstr ""
+
+#: ../../model/models.rst:321 db9a5c042e694365b266f80a65fc0cf0
+msgid "Annotation"
+msgstr ""
+
+#: ../../model/models.rst:344 e66c39cf6f614ddf984ddb8494ef592d
+msgid ""
+"In this case, the association is bi-directional. |br| The **@oneToMany** "
+"annotation must just specify:"
+msgstr ""
+
+#: ../../model/models.rst:347 53b85428c55c4a98aadcb911ab4c9ab6
+msgid "The class of each user in users array : **models\\User**"
+msgstr ""
+
+#: ../../model/models.rst:348 50581d033d1e44ed818afcd0b66a719d
+msgid ""
+"the value of **@mappedBy** is the name of the association-mapping "
+"attribute on the owning side : **$organization** in **User** class"
+msgstr ""
+
+#: ../../model/models.rst:351 2138640599a74875aac58cb1950570c0
+msgid "ManyToMany"
+msgstr ""
+
+#: ../../model/models.rst:352 020a70c87ebb469b90e2c63d6675fef5
+msgid "A **user** can belong to **groups**. |br|"
+msgstr ""
+
+#: ../../model/models.rst:353 c1d3cd35636e408599fa6993a8e0bfd1
+msgid "A **group** consists of multiple **users**."
+msgstr ""
+
+#: ../../model/models.rst:416 ../../model/models.rst:442
+#: ../../model/models.rst:472 ../../model/models.rst:500
+#: 93e9fe4a87c24656846d6947dc252659 b15d7b4657804135918a5b4ba6a2f041
+#: d3f0d50508404c3385aaa73fde0629b6 d6b178b7be2348a39b5196ccd86813ff
+msgid "app/models/Group.php"
+msgstr ""
+
+#: ../../model/models.rst:465 f9f512514a4849208cbef0f5c3dfa689
+msgid ""
+"If the naming conventions are not respected for foreign keys, |br| it is "
+"possible to specify the related fields."
+msgstr ""
+
+#: ../../model/models.rst:526 e8036469ae5742ecab65f1b501095a43
+msgid "ORM Annotations"
+msgstr ""
+
+#: ../../model/models.rst:528 c82bd2de9bed47b5a793fd81823f17e0
+msgid "Annotations for classes"
+msgstr ""
+
+#: ../../model/models.rst:531 ../../model/models.rst:542
+#: 651507bb93544b4cabe89ea808de3d78 a95e15f3349744f5b62374f9207a6d70
+msgid "@annotation"
+msgstr ""
+
+#: ../../model/models.rst:531 ../../model/models.rst:542
+#: ../../model/models.rst:559 29d81d42da494a4f83953f7db42ce3eb
+#: 5ef5d5da1356494fbc900f9e73925614 6306eabcef864d128d16733bd3d82fcd
+#: 6bb2c496370148e9b0f65cc6746d914f 8560de1130ab4f64becd86abb8871541
+#: f2faddc2205c4eb2adea1d3f7e2940f4
+msgid "role"
+msgstr ""
+
+#: ../../model/models.rst:531 ../../model/models.rst:542
+#: 8c6f6385dfa94996a94b2dfda28ab8f8 c19ad3aa0eee41948e5c2fb52649579f
+msgid "properties"
+msgstr ""
+
+#: ../../model/models.rst:533 ae59d8e68de8429ebe88835f3b1c999e
+msgid "@database"
+msgstr ""
+
+#: ../../model/models.rst:533 953acb36f1434af78546e252db456f20
+msgid "Defines the associated database offset (defined in config file)"
+msgstr ""
+
+#: ../../model/models.rst:535 2e88fdaaeca64bd793b3f64274332938
+msgid "@table"
+msgstr ""
+
+#: ../../model/models.rst:535 1d91dbef47c243198aec1fdbbf8cc02c
+msgid "Defines the associated table name."
+msgstr ""
+
+#: ../../model/models.rst:539 d263f768571e41e79a2d709ddcc8e48e
+msgid "Annotations for members"
+msgstr ""
+
+#: ../../model/models.rst:544 852c6cf5ce044fa8bbd75517224e4aff
+msgid "@id"
+msgstr ""
+
+#: ../../model/models.rst:544 72b2f9b1083e439099592ccc48fe9f4f
+msgid "Defines the primary key(s)."
+msgstr ""
+
+#: ../../model/models.rst:546 bac012de2bce47cfa0066be9343f6f7d
+msgid "@column"
+msgstr ""
+
+#: ../../model/models.rst:546 14a251202ce1433284e3730ba2ab2be9
+msgid "Specify the associated field characteristics."
+msgstr ""
+
+#: ../../model/models.rst:546 ../../model/models.rst:578
+#: 79b99400cc194c428e1b2c0e846563f9 f69e709a913c491ebe4d18021a3a25b3
+msgid "name"
+msgstr ""
+
+#: ../../model/models.rst:546 255d9193942e4716ad58b132e1688ca2
+msgid "Name of the associated field"
+msgstr ""
+
+#: ../../model/models.rst:548 532ed4870e684982a0f51a59ba99cff2
+msgid "nullable"
+msgstr ""
+
+#: ../../model/models.rst:548 010721bee4ab4f74a8e51914edddade5
+msgid "true if value can be null"
+msgstr ""
+
+#: ../../model/models.rst:550 2a13d29358c546319327730522f3724c
+msgid "dbType"
+msgstr ""
+
+#: ../../model/models.rst:550 bc103521382d469b9263966c9a416567
+msgid "Type of the field in database"
+msgstr ""
+
+#: ../../model/models.rst:552 35b9d7d2e7db44968c341e38ceaa8625
+msgid "@transient"
+msgstr ""
+
+#: ../../model/models.rst:552 721cf3976c9b48a39c6621f9efed62dd
+msgid "Specify that the field is not persistent."
+msgstr ""
+
+#: ../../model/models.rst:559 f2d1805f897444f58c978a17afa2636e
+msgid "@annotation (extends)"
+msgstr ""
+
+#: ../../model/models.rst:559 d796702114fa4fde950fc1dc2946185f
+msgid "properties [optional]"
+msgstr ""
+
+#: ../../model/models.rst:561 1365bc9fee014c1297d3c1fe9804c15c
+msgid "@manyToOne"
+msgstr ""
+
+#: ../../model/models.rst:561 777dae8ddbf04620950516377afb9009
+msgid "Defines a single-valued association to another entity class."
+msgstr ""
+
+#: ../../model/models.rst:563 7c6b72c8c40b425cb667e3c05c8fcf25
+msgid "@joinColumn (@column)"
+msgstr ""
+
+#: ../../model/models.rst:563 024e0cea2baf4badb8cd2da5ffa48824
+msgid "Indicates the foreign key in manyToOne asso."
+msgstr ""
+
+#: ../../model/models.rst:563 ../../model/models.rst:567
+#: 1db7fd3ccbb747df9b4eaff023ec5f6c 1f1131ffbf4a4af8b65dd5d8f62e0d44
+msgid "className"
+msgstr ""
+
+#: ../../model/models.rst:563 899145a8a12c4e95870ab95d8db1399e
+msgid "Class of the member"
+msgstr ""
+
+#: ../../model/models.rst:565 1b2df980e89a49cdb90cb0ff14a726e7
+msgid "[referencedColumnName]"
+msgstr ""
+
+#: ../../model/models.rst:565 11bda54b7c46478dad382315d8e59b94
+msgid "Name of the associated column"
+msgstr ""
+
+#: ../../model/models.rst:567 26d8a0b7e43842b185273d30c73c7dca
+msgid "@oneToMany"
+msgstr ""
+
+#: ../../model/models.rst:567 17d5b26257c34102ae22e5a966859067
+msgid "Defines a multi-valued association to another entity class."
+msgstr ""
+
+#: ../../model/models.rst:567 ../../model/models.rst:572
+#: af44a68decb9464fa6c7330add237e86 c644fcde9b99464c9b1b2f88d1ea98aa
+msgid "Class of the objects in member"
+msgstr ""
+
+#: ../../model/models.rst:569 ../../model/models.rst:576
+#: 6479f95d08da4b1ab26107e317a6b1f4 7014956c79b54e679cbf48bba29803b3
+msgid "[mappedBy]"
+msgstr ""
+
+#: ../../model/models.rst:569 2dfc6f96c5634a618e56fa73b402f0e0
+msgid "Name of the association-mapping attribute on the owning side"
+msgstr ""
+
+#: ../../model/models.rst:572 d729f370e04a4ae39e20073e5d2aa1ef
+msgid "@manyToMany"
+msgstr ""
+
+#: ../../model/models.rst:572 940cccb060c14c088e7194a2bd261e0c
+msgid "Defines a many-valued association with many-to-many multiplicity"
+msgstr ""
+
+#: ../../model/models.rst:572 acee2310ca164ec9b4e7af494535a715
+msgid "targetEntity"
+msgstr ""
+
+#: ../../model/models.rst:574 c738bba07b2a4574bd51146b622ca723
+msgid "[inversedBy]"
+msgstr ""
+
+#: ../../model/models.rst:574 9a8f29478b0c459381be0a69817f9bc7
+msgid "Name of the association-member on the inverse-side"
+msgstr ""
+
+#: ../../model/models.rst:576 ebe44ac553cd4278ac077d4158f4efc7
+msgid "Name of the association-member on the owning side"
+msgstr ""
+
+#: ../../model/models.rst:578 b193c341cc9949a9b59d1dc98203f5ff
+msgid "@joinTable"
+msgstr ""
+
+#: ../../model/models.rst:578 20b0a23a3a8442fa81a36da8416a7a9d
+msgid "Defines the association table for many-to-many multiplicity"
+msgstr ""
+
+#: ../../model/models.rst:578 1d67815beb62447b922853568b53d173
+msgid "The name of the association table"
+msgstr ""
+
+#: ../../model/models.rst:580 7dc928c834cc405c9b5fb1d1f91634bd
+msgid "[joinColumns]"
+msgstr ""
+
+#: ../../model/models.rst:580 f49bb540a45940e9934ca0dc4d87560b
+msgid "@column => name and referencedColumnName for this side"
+msgstr ""
+
+#: ../../model/models.rst:582 b71400e33c874b279193281be41bdb6f
+msgid "[inverseJoinColumns]"
+msgstr ""
+
+#: ../../model/models.rst:582 8f3c62cfa88c4487932314e661e6afb6
+msgid "@column => name and referencedColumnName for the other side"
+msgstr ""
+

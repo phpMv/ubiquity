@@ -1,0 +1,274 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../webtools/index.rst:2 2674739d23374a36b2d635e3c11bb7e5
+msgid "Webtools"
+msgstr ""
+
+#: ../../webtools/index.rst:4 66f9ccafbc25498084ae7df17ab5827f
+msgid ""
+"Webtools allow you to manage an Ubiquity application via a web interface."
+" Since **Ubiquity 2.2.0**, webtools are in a separate `repository "
+"<https://github.com/phpMv/ubiquity-webtools>`_."
+msgstr ""
+
+#: ../../webtools/index.rst:8 7b8b5abfe68a4c29b346eff3726a4abf
+msgid "Installation"
+msgstr ""
+
+#: ../../webtools/index.rst:9 932d341079f34e3392583213228bfaec
+msgid "Update the devtools if necessary to get started:"
+msgstr ""
+
+#: ../../webtools/index.rst:16 8db7f7e8c19244978ed912b65bc5061b
+msgid "At the project creation"
+msgstr ""
+
+#: ../../webtools/index.rst:18 b28ebfbafbfe41a38aa25d32373576bf
+msgid "Create a projet with **webtools** (``-a`` option)"
+msgstr ""
+
+#: ../../webtools/index.rst:25 b469b102ec5d4619be9da2113acd4259
+msgid "In an existing project"
+msgstr ""
+
+#: ../../webtools/index.rst:27 ee143dc4ded64d6a9b1651bf477aafc9
+msgid "In a console, go to the project folder and execute:"
+msgstr ""
+
+#: ../../webtools/index.rst:34 57e8153dcf4543ccb5f5c37dda0ccdfd
+msgid "Starting"
+msgstr ""
+
+#: ../../webtools/index.rst:36 5bd666e4355e4a098fdf298a5493cfab
+msgid "Start the embedded web server, from the project folder:"
+msgstr ""
+
+#: ../../webtools/index.rst:42 8344a7096c0847f1a67534f3d7bd20de
+msgid "go to the address: ``http://127.0.0.1:8090/Admin``"
+msgstr ""
+
+#: ../../webtools/index.rst:48 8aa9fa007b33418c8738d28bec96e4de
+msgid "Customizing"
+msgstr ""
+
+#: ../../webtools/index.rst:50 2da0332a439147448098ac06db267d4d
+msgid "Click on **customize** to display only the tools you use:"
+msgstr ""
+
+#: ../../webtools/index.rst:59 4cce30581a1b4f54906e8f8ea32aa1b4
+msgid "Webtools modules"
+msgstr ""
+
+#: ../../webtools/index.rst:62 a6eb80bb754b44bea6635a610f86f995
+msgid "Routes"
+msgstr ""
+
+#: ../../webtools/index.rst:65 148131349dc1418da1e49fab2bf1d525
+msgid "Displays default (non REST) routes."
+msgstr ""
+
+#: ../../webtools/index.rst:67 ../../webtools/index.rst:79
+#: ../../webtools/index.rst:93 ../../webtools/index.rst:107
+#: ../../webtools/index.rst:121 ../../webtools/index.rst:133
+#: ../../webtools/index.rst:151 ../../webtools/index.rst:164
+#: 130277dd41eb45a2bc9fec4c2b534552 284b89ff49f9437d97536760e2f73be3
+#: 35f230a7b5f3455f9665bd4f7c5a7a59 3eb42348b338404882891c51b29080c6
+#: 4316807080b84209b0298cc3b2a0088e 750695fc56d342d69c20d1da4381d54f
+#: c68695e9a51d4eb9bbe2c30a7d6be5b9 cd7ae9e13ffc4c4a8f97c13cd44444c1
+msgid "**Operations:**"
+msgstr ""
+
+#: ../../webtools/index.rst:69 e80ee6cb2f30428eb8ab69db74593534
+msgid "Filter routes"
+msgstr ""
+
+#: ../../webtools/index.rst:70 825692728bec441a9a2c2dd0f72b5663
+msgid "Test routes (GET, POST...)"
+msgstr ""
+
+#: ../../webtools/index.rst:71 79b55fcbb97d4ae39e4d62d5ebb12916
+msgid "Initialize router cache"
+msgstr ""
+
+#: ../../webtools/index.rst:74 e1a9858e55e64a91bbbb151cd30fe0f3
+msgid "Controllers"
+msgstr ""
+
+#: ../../webtools/index.rst:77 1ef1d59c71f2409284d4a32e3ad32e06
+msgid "Displays non REST controllers."
+msgstr ""
+
+#: ../../webtools/index.rst:81 ebd63b78e0dd478d8af348a11f3002e9
+msgid ""
+"Create a controller (and optionally the view associated to the default "
+"**index** action)"
+msgstr ""
+
+#: ../../webtools/index.rst:82 1d7bfff3a0114303abd6765ead091c65
+msgid ""
+"Create an action in a controller (optionally the associated view, the "
+"associated route)"
+msgstr ""
+
+#: ../../webtools/index.rst:83 d92867a5f7874879978328e3095119db
+msgid "Create a special controller (CRUD or Auth)"
+msgstr ""
+
+#: ../../webtools/index.rst:84 6f3f8fb2c3f04ed48e27614e650ae515
+msgid "Test an action (GET, POST...)"
+msgstr ""
+
+#: ../../webtools/index.rst:87 ddb4e868bdc146d79237fb12dbd828cc
+msgid "Models"
+msgstr ""
+
+#: ../../webtools/index.rst:90 4818202880cb4a468e325686ec89cf2b
+msgid "Displays the metadatas of the models, allows to browse the entities."
+msgstr ""
+
+#: ../../webtools/index.rst:95 5b5cad28b46e49e584091173020ab574
+msgid "Create models from database"
+msgstr ""
+
+#: ../../webtools/index.rst:96 ebdd53cc69cd4b7ba696b98e23e84230
+msgid "Generate models cache"
+msgstr ""
+
+#: ../../webtools/index.rst:97 f228c374563e48f9b25892e0eb967351
+msgid "Generate database script from existing models"
+msgstr ""
+
+#: ../../webtools/index.rst:98 ../../webtools/index.rst:113
+#: 0a0e57d42d5c4ecfb8bb3644692082dd c444faca5acf4a03999f1201dd2e2374
+msgid "Performs CRUD operations on models"
+msgstr ""
+
+#: ../../webtools/index.rst:101 1fdc8fd23547434c8990c2b26667b047
+msgid "Rest"
+msgstr ""
+
+#: ../../webtools/index.rst:104 6808a001137446e8a0075403a042a70d
+msgid "Displays an manage REST services."
+msgstr ""
+
+#: ../../webtools/index.rst:109 1e58bb40ba8a438b8b696dc4a120a400
+msgid "Re-initialize Rest cache and routes"
+msgstr ""
+
+#: ../../webtools/index.rst:110 3d39b0ddd6004b25bba77f773594042a
+msgid "Create a new Service (using an api)"
+msgstr ""
+
+#: ../../webtools/index.rst:111 8e04ff1366da47d19db517ab9146ba78
+msgid "Create a new resource (associated to a model)"
+msgstr ""
+
+#: ../../webtools/index.rst:112 734506f54efa4602be2efaafee0f572c
+msgid "Test and query a web service using http methods"
+msgstr ""
+
+#: ../../webtools/index.rst:116 bffeb1b4ed414aaab0120e7f7ff34ba6
+msgid "Cache"
+msgstr ""
+
+#: ../../webtools/index.rst:119 352cd4ce9f27470db1073624dea5612a
+msgid "Displays cache files."
+msgstr ""
+
+#: ../../webtools/index.rst:123 d992d902b39a4559821037d0bb0cd13a
+msgid "Delete or re-initialize models cache"
+msgstr ""
+
+#: ../../webtools/index.rst:124 24b9888637794cfcb8605bbf9aa379c5
+msgid "Delete or re-initialize controllers cache"
+msgstr ""
+
+#: ../../webtools/index.rst:125 47b4acb6c7804c11ac366b525b4a4df5
+msgid "Delete other cache files"
+msgstr ""
+
+#: ../../webtools/index.rst:128 7476e8f3d6444334a515c24765d87845
+msgid "Maintenance"
+msgstr ""
+
+#: ../../webtools/index.rst:131 f024f8d7bea84a97941a45082fd14dbc
+msgid "Allows to manage maintenance modes."
+msgstr ""
+
+#: ../../webtools/index.rst:135 004d26f632eb404db7d1d681ff061b03
+msgid "Create or update a maintenance mode"
+msgstr ""
+
+#: ../../webtools/index.rst:136 74f65d63b182489caac7be8d372fc45c
+msgid "De/Activate a maintenance mode"
+msgstr ""
+
+#: ../../webtools/index.rst:137 70f6469479e14653ad0d61c5aefae640
+msgid "Delete a maintenance mode"
+msgstr ""
+
+#: ../../webtools/index.rst:140 c1943b09b6224bd497b7633a972b30d0
+msgid "Config"
+msgstr ""
+
+#: ../../webtools/index.rst:143 3811687818ce4169813de58ac94f3de6
+msgid "Allows the display and modification of the app configuration."
+msgstr ""
+
+#: ../../webtools/index.rst:146 883fea05ccf04114b1ee512610ff6f42
+msgid "Git"
+msgstr ""
+
+#: ../../webtools/index.rst:149 374daefe438642dfa9d8aeb0debbff3b
+msgid "Synchronizes the project using git."
+msgstr ""
+
+#: ../../webtools/index.rst:153 f2d2eaed9d204227b1e09915f11caaf6
+msgid "Configuration with external repositories"
+msgstr ""
+
+#: ../../webtools/index.rst:154 21aa321a81924845924ad83e8e587294
+msgid "Commit"
+msgstr ""
+
+#: ../../webtools/index.rst:155 14ac028a1f2f4ce9ac60b79b9e19801f
+msgid "Push"
+msgstr ""
+
+#: ../../webtools/index.rst:156 7233e7c00edf4774bcca15bafa06ce06
+msgid "Pull"
+msgstr ""
+
+#: ../../webtools/index.rst:162 56d7e4ad8ba7454cb435a3055989d466
+msgid "Manages Css themes."
+msgstr ""
+
+#: ../../webtools/index.rst:166 0eeb41207b82482fa701155c4dd9f471
+msgid "Install an existing theme"
+msgstr ""
+
+#: ../../webtools/index.rst:167 eecf9662fef54aadbe6e180313282d06
+msgid "Activate a theme"
+msgstr ""
+
+#: ../../webtools/index.rst:168 978b24a8d7754e58b291aff74503f843
+msgid "Create a new theme (eventually base on an existing theme)"
+msgstr ""
+

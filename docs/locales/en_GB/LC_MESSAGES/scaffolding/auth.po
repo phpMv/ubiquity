@@ -1,0 +1,265 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../scaffolding/auth.rst:3 f1c0f046d8e345059932f05ce8b4462d
+msgid "Auth Controllers"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:13 84bfa00256884882aa1941e451d498be
+msgid "The Auth controllers allow you to perform basic authentification with:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:10 dd2bf01d84e24c978e8b0d7bdde28c63
+msgid "login with an account"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:11 f5f6cd60321b4e85a86ee4fd4c18f6e7
+msgid "account creation"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:12 1f2409d26ed64ac99f5cc7649a7f3256
+msgid "logout"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:13 1be025b0a340412b833e6ff2d361f56f
+msgid "controllers with required authentication"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:16 bf8159e49ed54aa78ffed5daeb52b49c
+msgid "Creation"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:17 691ae7db79264a06a3d4c6739c48a2d3
+msgid ""
+"In the admin interface (web-tools), activate the **Controllers** part, "
+"and choose create **Auth controller**:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:22 03bb800a7afa412a850dd4aa56a13baa
+msgid "Then fill in the form:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:22 8c449ab6555f416dbad23279b1d3ece5
+msgid "Enter the controller name (BaseAuthController in this case)"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:26 4050c7d2085e4654954c9eac8ff3db02
+msgid "The generated controller:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:28 ../../scaffolding/auth.rst:85
+#: ../../scaffolding/auth.rst:172 a0a7ef9a22e74a83a7278ceb1b18bcac
+#: e8ff05655c27438eb0a160b230a5446a f1659d49a5234786a036affd2b5a43b6
+msgid "app/controllers/BaseAuthController.php"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:74 9a3c75b6bcd143a5a0ec91442a91a6e6
+msgid "Implementation of the authentification"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:75 0c2c2427a7a143fc86f12dcff6211d98
+msgid ""
+"Example of implementation with the administration interface : We will add"
+" an authentication check on the admin interface."
+msgstr ""
+
+#: ../../scaffolding/auth.rst:77 915019fcedb94301a59c285208008fd7
+msgid ""
+"Authentication is based on verification of the email/password pair of a "
+"model **User**:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:83 a990606da0c048348d4f29d90963b3f7
+msgid "BaseAuthController modification"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:135 5a3d9c1cd6d14bda803b6360c2859ef5
+msgid "Admin controller modification"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:137 eb29ac220edc4faab395a68ce979aa7c
+msgid "Modify the Admin Controller to use BaseAuthController:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:139 ../../scaffolding/auth.rst:249
+#: 3f1e221a3c674cf5966c717251e807b1 7cd4470252fd466f91cbc98197e79d18
+msgid "app/controllers/Admin.php"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:151 e78e2889fec9435fbf7b2e1866a0f1a9
+msgid "Test the administration interface at **/admin**:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:155 0dd6652d2e6e40acab8af284d1e0a5c7
+msgid "After clicking on **login**:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:159 5fb8ed66f9234888a552571f836683b4
+msgid "If the authentication data entered is invalid:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:163 c31c4d415da94735bc78075592e0874c
+msgid "If the authentication data entered is valid:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:168 9407016f0f9e49b49037d7a29f98cafa
+msgid "Attaching the zone info-user"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:170 41d4111a6b5b4fd79319e2684183106d
+msgid "Modify the **BaseAuthController** controller:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:187 661a8366f50642ddbd3660e073df1da3
+msgid "The **_userInfo** area is now present on every page of the administration:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:191 bf0a158abe4b41cab63d24ea9cdb31fd
+msgid "It can be displayed in any twig template:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:199 4959bc5364c74269939928d300669087
+msgid "Description of the features"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:202 2eb97194f94f48caa565fe241959d15b
+msgid "Customizing templates"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:205 3fa012b5b70a4f7b82873231fea59482
+msgid "index.html template"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:207 c07733aa0cd246aa8881e2ca9c04701c
+msgid "The index.html template manages the connection:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:211 d685d0499d524c708d7121bbefbf533f
+msgid "Example with the **_userInfo** area:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:213 5b6c73dbb6c84730a2f3b0c9cf5697d7
+msgid "Create a new AuthController named **PersoAuthController**:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:217 f03f3d1e2eb14df1a518f4f17d11d56a
+msgid "Edit the template **app/views/PersoAuthController/info.html**"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:219 b6b2fd9bba454b1fbfe539ff55042b8e
+msgid "app/views/PersoAuthController/info.html"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:247 b1fc14a7bc844caf97eca40408bfeadd
+msgid "Change the AuthController **Admin** controller:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:266 7d17c470f5bc472eac23fb40df6182e3
+msgid "Customizing messages"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:268 ../../scaffolding/auth.rst:290
+#: ../../scaffolding/auth.rst:309 ../../scaffolding/auth.rst:334
+#: ../../scaffolding/auth.rst:375 ../../scaffolding/auth.rst:426
+#: 58ab805f714b4b009f2f7d0452e97987 7207b461b7dc438c8928d96a8685f4d6
+#: b4213060b50d4fbc8b4a5526ac1b7458 f14dab76447b40198ffc18c5148c876b
+#: f1654800e3c54af2b254c92ae51d3877 f4c1c34e164a4f12a608d43e1503db79
+msgid "app/controllers/PersoAuthController.php"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:288 fac51bd3453e467590780282b2adce64
+msgid "Self-check connection"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:307 f428623becda45b181f547ce5220bf53
+msgid "Limitation of connection attempts"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:327 b576a45b484d4b51926ea68df93f85b3
+msgid "Account recovery"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:329 68b49580a129469d937f819206129cda
+msgid ""
+"account recovery is used to reset the account password. |br| A password "
+"reset email is sent, to an email address corresponding to an active "
+"account."
+msgstr ""
+
+#: ../../scaffolding/auth.rst:365 049599635bb84a49b8871866cc968e85
+msgid ""
+"By default, the link can only be used on the same machine, within a "
+"predetermined period of time (which can be modified by overriding the "
+"``accountRecoveryDuration`` method)."
+msgstr ""
+
+#: ../../scaffolding/auth.rst:368 c0bcc28a0e4e4b9a8375d9784acea0a7
+msgid "Activation of MFA/2FA"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:369 cba306c4bd93455da1cbbfec0978328c
+msgid ""
+"Multi-factor authentication can be enabled conditionally, based on the "
+"pre-logged-in user's information."
+msgstr ""
+
+#: ../../scaffolding/auth.rst:372 7510aac304c7487fa998e89f9ebe054d
+msgid ""
+"Phase 2 of the authentication is done in the example below by sending a "
+"random code by email. The AuthMailerClass class is available in the "
+"``Ubiquity-mailer`` package."
+msgstr ""
+
+#: ../../scaffolding/auth.rst:404 2d747f04f9b34a1eb7bc1654f2db3049
+msgid ""
+"It is possible to customize the creation of the generated code, as well "
+"as the prefix used. The sample below is implemented with "
+"``robthree/twofactorauth`` library."
+msgstr ""
+
+#: ../../scaffolding/auth.rst:420 a2a1d253cfbc4636ae500b29efa0ee6b
+msgid "Account creation"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:422 976ee70546ab48e88926feaab00845f4
+msgid "The activation of the account creation is also optional:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:441 fc81a9bea59e4561a605727ae087a659
+msgid ""
+"In this case, the _create method must be overridden in order to create "
+"the account:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:457 fcc1a0b08fcf4a5d9e29fe50f2b5b247
+msgid ""
+"You can check the validity/availability of the login before validating "
+"the account creation form:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:468 441912c80aea4a13b28c7bf18a032ef3
+msgid "A confirmation action (email verification) may be requested from the user:"
+msgstr ""
+
+#: ../../scaffolding/auth.rst:486 9914aa2b454e4bf08fda1e464c9aac06
+msgid ""
+"It is possible to customize these parts by overriding the associated "
+"methods, or by modifying the interfaces in the concerned templates."
+msgstr ""
+

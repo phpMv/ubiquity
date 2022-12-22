@@ -1,0 +1,193 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../controller/di/index.rst:3 e0013f8de92140c19b1b22a499e15c79
+msgid "Dependency injection"
+msgstr ""
+
+#: ../../controller/di/index.rst:6 a62ce01bdfa043779d54ae157eea628e
+msgid ""
+"For performance reasons, dependency injection is not used in the core "
+"part of the framework."
+msgstr ""
+
+#: ../../controller/di/index.rst:8 f43d7cf26f1c45ddb4c2db9d30710605
+msgid ""
+"Dependency Injection (DI) is a design pattern used to implement IoC. |br|"
+" It allows the creation of dependent objects outside of a class and "
+"provides those objects to a class through different ways. Using DI, we "
+"move the creation and binding of the dependent objects outside of the "
+"class that depends on it."
+msgstr ""
+
+#: ../../controller/di/index.rst:12 f247ff6e53d143d396e23834c67d4626
+msgid ""
+"Ubiquity only supports property injection, so as not to require "
+"introspection at execution. |br| Only controllers support dependency "
+"injection."
+msgstr ""
+
+#: ../../controller/di/index.rst:16 a2e73a87f50e4f358c862c6a122ca456
+msgid "Service autowiring"
+msgstr ""
+
+#: ../../controller/di/index.rst:18 63ef637b2c07491eb0fb902a59486146
+msgid "Service creation"
+msgstr ""
+
+#: ../../controller/di/index.rst:20 e1b67bacedc8496fb0373610653c7db5
+msgid "Create a service"
+msgstr ""
+
+#: ../../controller/di/index.rst:22 ../../controller/di/index.rst:43
+#: 3e7e5bf0c524450ab20c6fa0da598cf3 9db15d3de1f1402db983a8f8e236e91f
+msgid "app/services/Service.php"
+msgstr ""
+
+#: ../../controller/di/index.rst:39 41ec342f89d849a093d746f37ef5d5be
+msgid "Autowiring in Controller"
+msgstr ""
+
+#: ../../controller/di/index.rst:41 05e29f93bfed41d8b63146bf0f1d10ff
+msgid "Create a controller that requires the service"
+msgstr ""
+
+#: ../../controller/di/index.rst:70 39e021dd402b4bb6b7c5b4e4c0fda83e
+msgid ""
+"In the above example, Ubiquity looks for and injects **$service** when "
+"**ClientController** is created."
+msgstr ""
+
+#: ../../controller/di/index.rst:74 dea501782d514775a483e4f6a9438772
+msgid "The **@autowired** annotation requires that:"
+msgstr ""
+
+#: ../../controller/di/index.rst:73 ca7cd7e0670f4463ab6a230c52008026
+msgid "the type to be instantiated is declared with the **@var** annotation"
+msgstr ""
+
+#: ../../controller/di/index.rst:74 bc9d5f6f4e6046fa846403ea4efe34e6
+msgid "**$service** property has a setter, or whether declared public"
+msgstr ""
+
+#: ../../controller/di/index.rst:76 59ff48ec74384007a5a38f254d1a3e9f
+msgid ""
+"As the annotations are never read at runtime, it is necessary to generate"
+" the cache of the controllers:"
+msgstr ""
+
+#: ../../controller/di/index.rst:82 05723d8df8cb4b409f35742bb9a592dd
+msgid ""
+"It remains to check that the service is injected by going to the address "
+"``/ClientController``."
+msgstr ""
+
+#: ../../controller/di/index.rst:85 5fe9c06441d64a95a5076d3aba64a12b
+msgid "Service injection"
+msgstr ""
+
+#: ../../controller/di/index.rst:87 80ea4e2aef294dfcbd2dfa4b4a8c446c
+msgid "Service"
+msgstr ""
+
+#: ../../controller/di/index.rst:89 067ecb463f04406b84e3111e5777d862
+msgid "Let's now create a second service, requiring a special initialization."
+msgstr ""
+
+#: ../../controller/di/index.rst:91 97a843a16fa94de8bd6bfd254d3e71b7
+msgid "app/services/ServiceWithInit.php"
+msgstr ""
+
+#: ../../controller/di/index.rst:112 534784746f5c48d782d9a7b7880d7cd2
+msgid "Injection in controller"
+msgstr ""
+
+#: ../../controller/di/index.rst:114 8e04cda1c0344a6588047d0556fb5147
+msgid "app/controllers/ClientController.php"
+msgstr ""
+
+#: ../../controller/di/index.rst:158 b1794273737145ba9ee7b68a9063d2e8
+msgid "Di declaration"
+msgstr ""
+
+#: ../../controller/di/index.rst:160 ../../controller/di/index.rst:196
+#: a7a1aca6fb9747469c0e453be1446f36 aacd5fcb71be442faf2fc04b888b3ea2
+msgid ""
+"In ``app/config/config.php``, create a new key for **serviceToInit** "
+"property to inject in **di** part."
+msgstr ""
+
+#: ../../controller/di/index.rst:171 a0a3b98c718c4b0b87c051243723b39d
+msgid "generate the cache of the controllers:"
+msgstr ""
+
+#: ../../controller/di/index.rst:177 9063f69cf9104b8fafb540501962de92
+msgid ""
+"Check that the service is injected by going to the address "
+"``/ClientController``."
+msgstr ""
+
+#: ../../controller/di/index.rst:180 6b52f7957ed34979919411e55dff06c9
+msgid ""
+"If the same service is to be used in several controllers, use the "
+"wildcard notation :"
+msgstr ""
+
+#: ../../controller/di/index.rst:192 87540f5e7df843b5bf5c06c9201b0ccc
+msgid "Injection with a qualifier name"
+msgstr ""
+
+#: ../../controller/di/index.rst:194 688d16f9075a41e482d1614e5b380ad4
+msgid ""
+"If the name of the service to be injected is different from the key of "
+"the **di** array, it is possible to use the name attribute of the "
+"**@injected** annotation"
+msgstr ""
+
+#: ../../controller/di/index.rst:217 203872561cca4941b8b8a4f6001f3ef7
+msgid "Service injection at runtime"
+msgstr ""
+
+#: ../../controller/di/index.rst:219 a426550e288e4e0ea525f51e90a201d4
+msgid ""
+"It is possible to inject services at runtime, without these having been "
+"previously declared in the controller classes."
+msgstr ""
+
+#: ../../controller/di/index.rst:221 c2b780cc7bc747779bfb2ff913b33256
+msgid "app/services/RuntimeService.php"
+msgstr ""
+
+#: ../../controller/di/index.rst:233 509ce367093b47998c3c8eafe82cf822
+msgid "In ``app/config/config.php``, create the **@exec** key in **di** part."
+msgstr ""
+
+#: ../../controller/di/index.rst:242 a4242963c6d64a43a791cf8fc295c00a
+msgid ""
+"With this declaration, the **$rService** member, instance of "
+"**RuntimeService**, is injected into all the controllers. |br| It is then"
+" advisable to use the javadoc comments to declare **$rService** in the "
+"controllers that use it (to get the code completion on **$rService** in "
+"your IDE)."
+msgstr ""
+
+#: ../../controller/di/index.rst:245 079cb705afa94d9fa82b215389acf59a
+msgid "app/controllers/MyController.php"
+msgstr ""
+

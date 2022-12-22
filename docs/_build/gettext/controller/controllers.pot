@@ -1,0 +1,434 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../controller/controllers.rst:2
+#: 37c457ee56d54debae8f45d1f088523f
+msgid "Controllers"
+msgstr ""
+
+#: ../../controller/controllers.rst:6
+#: d12a2a3721c54bf9b59cb46bf669e7f7
+msgid "A controller is a PHP class inheriting from ``Ubiquity\\controllers\\Controller``, providing an entry point in the application. |br| Controllers and their methods define accessible URLs."
+msgstr ""
+
+#: ../../controller/controllers.rst:10
+#: 26db3c884c8346dabef873552f0f070e
+msgid "Controller creation"
+msgstr ""
+
+#: ../../controller/controllers.rst:11
+#: 40604d7522bb4e96836f5856a9768023
+msgid "The easiest way to create a controller is to do it from the devtools."
+msgstr ""
+
+#: ../../controller/controllers.rst:13
+#: 6431eebff85f48089028186859dbcb30
+msgid "From the command prompt, go to the project folder. |br| To create the Products controller, use the command:"
+msgstr ""
+
+#: ../../controller/controllers.rst:20
+#: c4a569a805bf49358e49238904d040f7
+msgid "The ``Products.php`` controller is created in the ``app/controllers`` folder of the project."
+msgstr ""
+
+#: ../../controller/controllers.rst:22
+#: ../../controller/controllers.rst:220
+#: 22268c2683dd475ea72e6141b1f9237b
+#: aa0fe0249c9c421281bc0f9eb9470716
+msgid "app/controllers/Products.php"
+msgstr ""
+
+#: ../../controller/controllers.rst:36
+#: 9f255823bde540f49796437148d9293a
+msgid "It is now possible to access URLs (the ``index`` method is solicited by default): ::"
+msgstr ""
+
+#: ../../controller/controllers.rst:41
+#: d0901c114f3d4dfdba28596fd917f17e
+msgid "A controller can be created manually. In this case, he must respect the following rules:"
+msgstr ""
+
+#: ../../controller/controllers.rst:43
+#: b861e2005e8446999a67f2e48f89e52c
+msgid "The class must be in the **app/controllers** folder"
+msgstr ""
+
+#: ../../controller/controllers.rst:44
+#: bb80b3c0b8004b8f999883678922f9a9
+msgid "The name of the class must match the name of the php file"
+msgstr ""
+
+#: ../../controller/controllers.rst:45
+#: 439f83a15c234dd08537311d8477ee01
+msgid "The class must inherit from **ControllerBase** and be defined in the namespace **controllers**"
+msgstr ""
+
+#: ../../controller/controllers.rst:46
+#: 843207053dc245c69dc6d58f9e8e6cf5
+msgid "and must override the abstract **index** method"
+msgstr ""
+
+#: ../../controller/controllers.rst:49
+#: 055e91e23c89412c96123f5973494bbe
+msgid "Methods"
+msgstr ""
+
+#: ../../controller/controllers.rst:51
+#: 499f70fd09f84fc2aa728192fe335cc6
+msgid "public"
+msgstr ""
+
+#: ../../controller/controllers.rst:52
+#: 31f5ca6c87634dc0acf3820007fd5227
+msgid "The second segment of the URI determines which public method in the controller gets called. |br| The “index” method is always loaded by default if the second segment of the URI is empty."
+msgstr ""
+
+#: ../../controller/controllers.rst:55
+#: ../../controller/controllers.rst:76
+#: ../../controller/controllers.rst:119
+#: ../../controller/controllers.rst:134
+#: ../../controller/controllers.rst:177
+#: 3097883f2f6944689166f4de08b0f72e
+#: 2e2b060c1ac74b898683778fe7ae4fbd
+#: 91c8eda0ea2c4ebaa2bd4fb57ac19da0
+#: 2bcbd10375494aeaaf380e23de73f467
+#: 1a423d74d0a644419c1487d808b74bbc
+msgid "app/controllers/First.php"
+msgstr ""
+
+#: ../../controller/controllers.rst:68
+#: 9ec5aaf018ad489da3929e3d267f3f95
+msgid "The ``hello`` method of the ``First`` controller makes the following URL available: ::"
+msgstr ""
+
+#: ../../controller/controllers.rst:73
+#: bddffbbeba8641eeb9e7ce4a361b164c
+msgid "method arguments"
+msgstr ""
+
+#: ../../controller/controllers.rst:74
+#: 2802856cbec74ec4a3885f795f1d9262
+msgid "the arguments of a method must be passed in the url, except if they are optional."
+msgstr ""
+
+#: ../../controller/controllers.rst:87
+#: 56f18967278d4a78bbe2ae3dbe1b8169
+msgid "The ``hello`` method of the ``First`` controller makes the following URLs available: ::"
+msgstr ""
+
+#: ../../controller/controllers.rst:92
+#: cf5b398c51254e24aed0387a2c9e5cb0
+msgid "private"
+msgstr ""
+
+#: ../../controller/controllers.rst:93
+#: 067c77fe9dc34f4ea39d48de649d52c0
+msgid "Private or protected methods are not accessible from the URL."
+msgstr ""
+
+#: ../../controller/controllers.rst:96
+#: 3bdd3c9a8c83419f8714862268c9c9b7
+msgid "Default controller"
+msgstr ""
+
+#: ../../controller/controllers.rst:97
+#: 932c7dd3652b40619a33050dc50a92cd
+msgid "The default controller can be set with the Router, in the ``services.php`` file"
+msgstr ""
+
+#: ../../controller/controllers.rst:99
+#: ba8f604e988c4ac0ae76329ab86d1af1
+msgid "app/config/services.php"
+msgstr ""
+
+#: ../../controller/controllers.rst:105
+#: 5b3c6e1706df4fa18fdde38e231dfa86
+msgid "In this case, access to the ``example.com/`` URL loads the controller **First** and calls the default **index** method."
+msgstr ""
+
+#: ../../controller/controllers.rst:108
+#: 3332ec8ecc8f4132b8fef975df3d4e65
+msgid "views loading"
+msgstr ""
+
+#: ../../controller/controllers.rst:110
+#: 6bb6a3e4e460466c96169860a4df68af
+msgid "loading"
+msgstr ""
+
+#: ../../controller/controllers.rst:111
+#: 1da09c1ba30c464092769bd1ae2721fe
+msgid "Views are stored in the ``app/views`` folder. They are loaded from controller methods. |br| By default, it is possible to create views in php, or with twig. |br| `Twig <https://twig.symfony.com>`_ is the default template engine for html files."
+msgstr ""
+
+#: ../../controller/controllers.rst:116
+#: d2c90e248e704b52953edd885c098468
+msgid "php view loading"
+msgstr ""
+
+#: ../../controller/controllers.rst:117
+#: 100313061c9447c98b8dc76da22b2b0c
+msgid "If the file extension is not specified, the **loadView** method loads a php file."
+msgstr ""
+
+#: ../../controller/controllers.rst:131
+#: be730fb1722443d694ee458b795de73c
+msgid "twig view loading"
+msgstr ""
+
+#: ../../controller/controllers.rst:132
+#: 567c10a2bae34851a4e64095532afbed
+msgid "If the file extension is html, the **loadView** method loads an html twig file."
+msgstr ""
+
+#: ../../controller/controllers.rst:145
+#: 3b381041038a4516b4005ef8f5a7f935
+msgid "Default view loading"
+msgstr ""
+
+#: ../../controller/controllers.rst:146
+#: fa2a389412354fa2928e12248473a5d3
+msgid "If you use the default view naming method : |br| The default view associated to an action in a controller is located in ``views/controller-name/action-name`` folder:"
+msgstr ""
+
+#: ../../controller/controllers.rst:157
+#: ce89401ee3b44fc096303de2e283eec0
+msgid "app/controllers/Users.php"
+msgstr ""
+
+#: ../../controller/controllers.rst:173
+#: b41383c9cbba41ad83b8643f445a38b6
+msgid "view parameters"
+msgstr ""
+
+#: ../../controller/controllers.rst:174
+#: 7f9176c1c9054ed99261de6e0949add0
+msgid "One of the missions of the controller is to pass variables to the view. |br| This can be done at the loading of the view, with an associative array:"
+msgstr ""
+
+#: ../../controller/controllers.rst:188
+#: 33f2230e4c3a4f859e220b2c37802fe4
+msgid "The keys of the associative array create variables of the same name in the view. |br| Using of this variables in Twig:"
+msgstr ""
+
+#: ../../controller/controllers.rst:191
+#: 71fddc02fd0c42cbb72785d08b6c1b79
+msgid "app/views/index.html"
+msgstr ""
+
+#: ../../controller/controllers.rst:196
+#: 5c816b9d10aa47d5933f863a26ec466d
+msgid "Variables can also be passed before the view is loaded:"
+msgstr ""
+
+#: ../../controller/controllers.rst:208
+#: cd66659b484049518ec32bf346f81c2c
+msgid "view result as string"
+msgstr ""
+
+#: ../../controller/controllers.rst:209
+#: 85de0eef1772489496f3bcc4efaaee86
+msgid "It is possible to load a view, and to return the result in a string, assigning true to the 3rd parameter of the loadview method :"
+msgstr ""
+
+#: ../../controller/controllers.rst:217
+#: a0bdc9f06e714948a775148b7d3355eb
+msgid "multiple views loading"
+msgstr ""
+
+#: ../../controller/controllers.rst:218
+#: abafbb219a084c61b2e03112f75002fb
+msgid "A controller can load multiple views:"
+msgstr ""
+
+#: ../../controller/controllers.rst:232
+#: 44d5b4adaaf34473a27b1f4220e0f094
+msgid "A view is often partial. It is therefore important not to systematically integrate the **html** and **body** tags defining a complete html page."
+msgstr ""
+
+#: ../../controller/controllers.rst:235
+#: 7a797b8509cd406d9e3dc69ea35bd100
+msgid "views organization"
+msgstr ""
+
+#: ../../controller/controllers.rst:236
+#: c355a56ab7b04fb3af337a2418ffa06d
+msgid "It is advisable to organize the views into folders. The most recommended method is to create a folder per controller, and store the associated views there. |br| To load the ``index.html`` view, stored in ``app/views/First``:"
+msgstr ""
+
+#: ../../controller/controllers.rst:244
+#: 40dcc318dd6b44e78cd91af8cc083e51
+msgid "initialize and finalize"
+msgstr ""
+
+#: ../../controller/controllers.rst:245
+#: 63933c0ecf97499ebeaa1dba6feb4e70
+msgid "The **initialize** method is automatically called before each requested action, the method **finalize** after each action."
+msgstr ""
+
+#: ../../controller/controllers.rst:247
+#: 00a5ee050929439c9a8308832a755763
+msgid "Example of using the initialize and finalize methods with the base class automatically created with a new project:"
+msgstr ""
+
+#: ../../controller/controllers.rst:249
+#: e563725a35fc47599fc87ecc12d5ad14
+msgid "app/controllers/ControllerBase.php"
+msgstr ""
+
+#: ../../controller/controllers.rst:278
+#: 575a59d9e7fa4fcf81fba21300f7318d
+msgid "Access control"
+msgstr ""
+
+#: ../../controller/controllers.rst:279
+#: abb7a1f123b5470b9009191a62935753
+msgid "Access control to a controller can be performed manually, using the `isValid` and `onInvalidControl` methods."
+msgstr ""
+
+#: ../../controller/controllers.rst:281
+#: 394725e85fd64ea980fa098525abf2b6
+msgid "The `isValid` method must return a boolean wich determine if access to the `action` passed as a parameter is possible:"
+msgstr ""
+
+#: ../../controller/controllers.rst:283
+#: 3156a591f576474e873264334fd79ce1
+msgid "In the following example, access to the actions of the **IndexController** controller is only possible if an **activeUser** session variable exists:"
+msgstr ""
+
+#: ../../controller/controllers.rst:285
+#: ../../controller/controllers.rst:300
+#: d2e380c7b5734b46bbda5a4e95cfbf1e
+#: 2f213b0ed534414fa6d8d610f213fab2
+msgid "app/controllers/IndexController.php"
+msgstr ""
+
+#: ../../controller/controllers.rst:296
+#: 8cca9f17a5ce4a0c855d6f5d53794908
+msgid "If the **activeUser** variable does not exist, an **unauthorized 401** error is returned."
+msgstr ""
+
+#: ../../controller/controllers.rst:298
+#: b8cb825ddb52403693719ab1c64b6b0a
+msgid "The `onInvalidControl` method allows you to customize the unauthorized access:"
+msgstr ""
+
+#: ../../controller/controllers.rst:317
+#: 04b9e38987fc402eb4be84b1d1038cb5
+msgid "app/views/unauthorized.html"
+msgstr ""
+
+#: ../../controller/controllers.rst:332
+#: 59f24a29a85f400e907fb7ac33773873
+msgid "It is also possible to automatically generate access control from :ref:`AuthControllers<auth>`"
+msgstr ""
+
+#: ../../controller/controllers.rst:335
+#: 43e05d876ca341759f3fad9c57795f56
+msgid "Forwarding"
+msgstr ""
+
+#: ../../controller/controllers.rst:337
+#: 515a912ce854440199b0d457884604bc
+msgid "A redirection is not a simple call to an action of a controller. |br| The redirection involves the `initialize` and `finalize` methods, as well as access control."
+msgstr ""
+
+#: ../../controller/controllers.rst:344
+#: 925e072d5abe4bf0a15c80278b29a7fc
+msgid "The **forward** method can be invoked without the use of the `initialize` and `finalize` methods:"
+msgstr ""
+
+#: ../../controller/controllers.rst:349
+#: e2796ef77fed4701b31d4fd4277fa296
+msgid "It is possible to redirect to a route by its name:"
+msgstr ""
+
+#: ../../controller/controllers.rst:356
+#: a8241eec2cdc4b6a9726d83916ca9049
+msgid "Dependency injection"
+msgstr ""
+
+#: ../../controller/controllers.rst:357
+#: 82c825e0102148069eb574ad4c6daa72
+msgid "See :ref:`Dependency injection<di>`"
+msgstr ""
+
+#: ../../controller/controllers.rst:360
+#: 8c7df130e596455ba6c67a1a52c3f112
+msgid "namespaces"
+msgstr ""
+
+#: ../../controller/controllers.rst:361
+#: 57031e1a9b0244abbdc0db7247fe9ac8
+msgid "The controller namespace is defined by default to `controllers` in the `app/config/config.php` file."
+msgstr ""
+
+#: ../../controller/controllers.rst:367
+#: 561ef4b0a70842578a66f9d8f5da3e61
+msgid "Super class"
+msgstr ""
+
+#: ../../controller/controllers.rst:369
+#: fe41bd3f594c41fab910c9123e63c1ef
+msgid "Inheritance can be used to factorize controller behavior. |br| The `BaseController` class created with a new project is present for this purpose."
+msgstr ""
+
+#: ../../controller/controllers.rst:373
+#: 4f56c58b043842d6af144fe5037aa9e0
+msgid "Specific controller base classes"
+msgstr ""
+
+#: ../../controller/controllers.rst:376
+#: a6cf3364031f42dd88d5413390c7a1a8
+msgid "Controller class"
+msgstr ""
+
+#: ../../controller/controllers.rst:376
+#: 1ece43521a4a47869fcacde1f409c0ba
+msgid "role"
+msgstr ""
+
+#: ../../controller/controllers.rst:378
+#: 0e2e04b7161e433f9d72f4ff5d2e4aa2
+msgid "Controller"
+msgstr ""
+
+#: ../../controller/controllers.rst:378
+#: 23b1f1273b1d493eba192c25195dbbea
+msgid "Base class for all controllers"
+msgstr ""
+
+#: ../../controller/controllers.rst:380
+#: 4a36bff3d07c431c81b51b54ca4f2da9
+msgid "SimpleViewController"
+msgstr ""
+
+#: ../../controller/controllers.rst:380
+#: fc7f13b13a904fcebe04664e9c0545e0
+msgid "Base class associated with a php template engine (for using with micro-services)"
+msgstr ""
+
+#: ../../controller/controllers.rst:382
+#: 2e5a0b2f7bf947e6a4dbd46377c9bab3
+msgid "SimpleViewAsyncController"
+msgstr ""
+
+#: ../../controller/controllers.rst:382
+#: 1596f09608bb4bc698e204c0941e4cb6
+msgid "Base class associated with a php template engine for async servers"
+msgstr ""
