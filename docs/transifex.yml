@@ -2,7 +2,7 @@ git:
   filters:
     - filter_type: dir
       source_file_extension: pot
-      source_file_dir: _build/gettext/
+      source_file_dir: /docs/_build/gettext/
       file_format: PO
       source_language: en
-      translation_files_expression: 'locale/<lang>/LC_MESSAGES/{filepath}/{filename}.po'
+      translation_files_expression: '/docs/locales/<lang>/LC_MESSAGES/{filepath}/{filename}.po'
