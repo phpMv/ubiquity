@@ -1,6 +1,7 @@
-filters:
-  - filter_type: file
-    source_file: _build/gettext/
-    file_format: PO
-    source_language: en
-    translation_files_expression: 'locale/<lang>/LC_MESSAGES/{filepath}/{filename}.po'
+git:
+  filters:
+    - filter_type: file
+      source_file: _build/gettext/
+      file_format: PO
+      source_language: en
+      translation_files_expression: 'locale/<lang>/LC_MESSAGES/{filepath}/{filename}.po'
