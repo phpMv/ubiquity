@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# jean-christophe HERON, 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:32+0000\n"
+"Last-Translator: jean-christophe HERON, 2022\n"
+"Language-Team: French (https://www.transifex.com/phpmv-1/teams/159300/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../index.rst:9
+msgid "with console"
+msgstr "with console"
+
+#: ../../index.rst:9
+msgid "with web-tools"
+msgstr "with web-tools"
+
+#: ../../index.rst:9 646ebaf00a2640e6a2b06e997ea168a7
+msgid "Quick-starts"
+msgstr "Quick-starts"
+
+#: ../../index.rst:42 cabb085ccb474b3f8162a38bc5ac37a7
+msgid "Installation & configuration"
+msgstr "Installation & configuration"
+
+#: ../../index.rst:51 1bd2ada3a0694ed58100d43f55878061
+msgid "Controller"
+msgstr "Controller"
+
+#: ../../index.rst:61 79777cd2f6534897a7dfed452323e335
+msgid "Scaffolding"
+msgstr "Scaffolding"
+
+#: ../../index.rst:68
+msgid "Database connection"
+msgstr "Database connection"
+
+#: ../../index.rst:68
+msgid "Generation"
+msgstr "Generation"
+
+#: ../../index.rst:68 1ae1cd8eac1e4521a62461afddc127bc
+msgid "Models and ORM"
+msgstr "Models and ORM"
+
+#: ../../index.rst:77 e8ab748e94704bce9fdc07d2b33e9628
+msgid "Http"
+msgstr "Http"
+
+#: ../../index.rst:86 86d28cecbc91441ca3311e1fea897c1c
+msgid "Views"
+msgstr "Views"
+
+#: ../../index.rst:92 8e8e621bae5d47978c6b5900c03fce7f
+msgid "RichClient"
+msgstr "RichClient"
+
+#: ../../index.rst:99 4a07a09c6fe44d9ab091ef0130b21d65
+msgid "Contents"
+msgstr "Contents"
+
+#: ../../index.rst:108 12daa333d6d84b9ab27a02b0f174adf1
+msgid "Security"
+msgstr "Security"
+
+#: ../../index.rst:116 3e7f8cc950ac44c182750da1db19dabe
+msgid "Rest"
+msgstr "Rest"
+
+#: ../../index.rst:122 0cdfb685bb80415f9425a1bf8b84c07c
+msgid "Webtools"
+msgstr "Webtools"
+
+#: ../../index.rst:128 b8616808f10f404baf59671c3e40cad6
+msgid "Contributing"
+msgstr "Contributing"
+
+#: ../../index.rst:136 d8220cae0a194768af88bf486df6d2aa
+msgid "Deployment"
+msgstr "Deployment"
+
+#: ../../index.rst:143 2a155ae52565473f9a30e83b0f1b986d
+msgid "Extras"
+msgstr "Extras"
+
+#: ../../index.rst:7 0ac4ab3437d14bda85fdb16edc72d6a8
+msgid "Ubiquity User guide"
+msgstr "Ubiquity User guide"
+
+#: ../../index.rst:18 0bd96f0ba1504a6b8d94628091d99e72
+msgid ":ref:`Security<security>`"
+msgstr ":ref:`Security<security>`"
+
+#: ../../index.rst:19 b3a5276bc8d8435fb4d23eb2be7e82d2
+msgid ":ref:`Async platforms<async>`"
+msgstr ":ref:`Async platforms<async>`"
+
+#: ../../index.rst:20 df987dab797c4ae397873a1b56c1f237
+msgid ":ref:`Commands module<commands>`"
+msgstr ":ref:`Commands module<commands>`"
+
+#: ../../index.rst:21 4864bcb628a44b59b86784328fa657ad
+msgid ":ref:`Composer module<composer>`"
+msgstr ":ref:`Composer module<composer>`"
+
+#: ../../index.rst:22 cdc8f24aa6054c00be3670889678ec25
+msgid ":ref:`OAuth client module<oauth>`"
+msgstr ":ref:`OAuth client module<oauth>`"
+
+#: ../../index.rst:23 848c59df8ae34ab2a0170097ad87cb08
+msgid ":ref:`Mailer module<mailer>`"
+msgstr ":ref:`Mailer module<mailer>`"
+
+#: ../../index.rst:24 ab8911cd3c7e420fa88bfb9bd40bacf4
+msgid ":ref:`Servers configuration<servers>`"
+msgstr ":ref:`Servers configuration<servers>`"
+
+#: ../../index.rst:25 4933ea8b0b8c4962a4cdfb50dbacffed
+msgid ":ref:`Database connection<db>`"
+msgstr ":ref:`Database connection<db>`"
+
+#: ../../index.rst:26 16f74ea7429648ac895c1a5fb34f7b22
+msgid ":ref:`Optimization<optimization>`"
+msgstr ":ref:`Optimization<optimization>`"
+
+#: ../../index.rst:27 ef53ffbca3ad4e83830d5c685fe3bd16
+msgid ":ref:`Rich client<richclient>`"
+msgstr ":ref:`Rich client<richclient>`"
+
+#: ../../index.rst:28 33af397f49e0482891f62f141e407e1b
+msgid ":ref:`REST module<rest>`"
+msgstr ":ref:`REST module<rest>`"
+
+#: ../../index.rst:29 5ffaa47153624c8a91d204f39e75dd48
+msgid ":ref:`Data transformers<transformers>`"
+msgstr ":ref:`Data transformers<transformers>`"
+
+#: ../../index.rst:30 fadb56c666104cd7816e808c86ff2c42
+msgid ":ref:`Dependency injection<di>`"
+msgstr ":ref:`Dependency injection<di>`"
+
+#: ../../index.rst:31 a1dea37a42874ace87b82c0cfa179b5c
+msgid ":ref:`Events<events>`"
+msgstr ":ref:`Events<events>`"
+
+#: ../../index.rst:32 736def37c70f4bb890c257ab5ebc64b6
+msgid ":ref:`Views and themes<views>`"
+msgstr ":ref:`Views and themes<views>`"
+
+#: ../../index.rst:33 ffe0ec999bb24b19962a4c8b77e6c996
+msgid ":ref:`Contributing<contributing>`"
+msgstr ":ref:`Contributing<contributing>`"
+
+#: ../../index.rst:34 738d34ac11b54eda9cec046caf4d0ba6
+msgid ":ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`"
+msgstr ":ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`"
+
+#: ../../index.rst:35 33611ca69e284128848d0a4a2c908725
+msgid "Generating models:"
+msgstr "Generating models:"
+
+#: ../../index.rst:37 b3b6d91f1de64aad9e9b17c6125bb448
+msgid ":doc:`with webtools (UbiquityMyAdmin)</model/generation/db-html>`"
+msgstr ":doc:`with webtools (UbiquityMyAdmin)</model/generation/db-html>`"
+
+#: ../../index.rst:38 a9fc8910f46f48b3a34f4cb208ac080f
+msgid ":doc:`with console (devtools)</model/generation/db-console>`"
+msgstr ":doc:`with console (devtools)</model/generation/db-console>`"
+
+#: ../../index.rst:155 b6fab76802c84d6c911e28d35fc33310
+msgid "Indices and tables"
+msgstr "Indices and tables"
+
+#: ../../index.rst:157 1053093e60e542c3a37d82dfd89a2226
+msgid ":ref:`genindex`"
+msgstr ":ref:`genindex`"
+
+#: ../../index.rst:158 bd3899aa05fc4ff5a755ba5dfc7fa75e
+msgid ":ref:`modindex`"
+msgstr ":ref:`modindex`"
+
+#: ../../index.rst:159 f6f5939c8d774e768913dbe65ebffb19
+msgid ":ref:`search`"
+msgstr ":ref:`search`"
