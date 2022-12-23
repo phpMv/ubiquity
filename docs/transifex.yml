@@ -5,4 +5,4 @@ git:
       source_file_dir: docs/_build/gettext
       file_format: PO
       source_language: en_GB
-      translation_files_expression: 'docs/locales/<lang>/LC_MESSAGES/{filepath}/{filename}.po'
+      translation_files_expression: 'docs/locales/<lang>/LC_MESSAGES'
