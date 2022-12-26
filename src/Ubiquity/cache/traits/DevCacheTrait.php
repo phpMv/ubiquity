@@ -1,10 +1,11 @@
 <?php
+
 namespace Ubiquity\cache\traits;
 
+use Ubiquity\annotations\AnnotationsEngineInterface;
 use Ubiquity\cache\system\AbstractDataCache;
 use Ubiquity\config\Configuration;
 use Ubiquity\utils\base\UFileSystem;
-use Ubiquity\annotations\AnnotationsEngineInterface;
 
 /**
  * To be Used in dev mode, not in production
@@ -20,7 +21,7 @@ trait DevCacheTrait {
 
 	private static AnnotationsEngineInterface $annotationsEngine;
 
-	abstract protected static function getCacheInstance(array &$config, string $cacheDirectory, string $postfix):AbstractDataCache;
+	abstract protected static function getCacheInstance(array &$config, string $cacheDirectory, string $postfix): AbstractDataCache;
 
 	abstract protected static function initRestCache(array &$config, bool $silent = false): void;
 
@@ -28,16 +29,16 @@ trait DevCacheTrait {
 
 	abstract public static function initModelsCache(array &$config, bool $forChecking = false, bool $silent = false): void;
 
-	private static function _getAnnotationsEngineInstance():?AnnotationsEngineInterface {
-		if(\class_exists('Ubiquity\\attributes\\AttributesEngine',true)){
+	private static function _getAnnotationsEngineInstance(): ?AnnotationsEngineInterface {
+		if (\class_exists('Ubiquity\\attributes\\AttributesEngine', true)) {
 			return new \Ubiquity\attributes\AttributesEngine();
-		}elseif(\class_exists('Ubiquity\\annotations\\AnnotationsEngine',true)){
+		} elseif (\class_exists('Ubiquity\\annotations\\AnnotationsEngine', true)) {
 			return new \Ubiquity\annotations\AnnotationsEngine();
 		}
 	}
 
 	public static function getAnnotationsEngineInstance(): ?AnnotationsEngineInterface {
-		return self::$annotationsEngine??=self::_getAnnotationsEngineInstance();
+		return self::$annotationsEngine ??= self::_getAnnotationsEngineInstance();
 	}
 
 	private static function initialGetCacheDirectory(array &$config): string {
@@ -60,7 +61,7 @@ trait DevCacheTrait {
 	/**
 	 *
 	 * @param array $nameClasses
-	 *        	an array of name=>class annotations
+	 *            an array of name=>class annotations
 	 */
 	public static function registerAnnotations(array $nameClasses): void {
 		self::getAnnotationsEngineInstance()->registerAnnotations($nameClasses);
@@ -92,7 +93,7 @@ trait DevCacheTrait {
 	public static function getCacheDirectories(array &$config, bool $silent = false): array {
 		$cacheDirectory = self::initialGetCacheDirectory($config);
 		$rootDS = \ROOT . \DS;
-		if (! $silent) {
+		if (!$silent) {
 			echo "cache directory is " . UFileSystem::cleanPathname($rootDS . $cacheDirectory) . "\n";
 		}
 		$cacheDirectory = $rootDS . $cacheDirectory . \DS;
@@ -106,7 +107,7 @@ trait DevCacheTrait {
 		$seoCacheDir = $cacheDirectory . 'seo';
 		$gitCacheDir = $cacheDirectory . 'git';
 		$contentsCacheDir = $cacheDirectory . 'contents';
-		$configCacheDir=$cacheDirectory.'config';
+		$configCacheDir = $cacheDirectory . 'config';
 		return [
 			'annotations' => $annotationCacheDir,
 			'models' => $modelsCacheDir,
@@ -116,12 +117,12 @@ trait DevCacheTrait {
 			'seo' => $seoCacheDir,
 			'git' => $gitCacheDir,
 			'contents' => $contentsCacheDir,
-			'config'=>$configCacheDir
+			'config' => $configCacheDir
 		];
 	}
 
 	private static function safeMkdir(string $dir): bool {
-		if (! \is_dir($dir)) {
+		if (!\is_dir($dir)) {
 			return \mkdir($dir, 0777, true);
 		}
 		return true;
@@ -181,8 +182,8 @@ trait DevCacheTrait {
 		if ($type === 'all' || $type === 'rest') {
 			self::initRestCache($config, $silent);
 		}
-		if($type === 'all' || $type === 'config'){
-			Configuration::generateCache();
+		if ($type === 'all' || $type === 'config') {
+			Configuration::generateCache($silent);
 		}
 	}
 }
