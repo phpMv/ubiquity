@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Leonardo D. A. Allende P., 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:34+0000\n"
+"Last-Translator: Leonardo D. A. Allende P., 2022\n"
+"Language-Team: Spanish (https://www.transifex.com/phpmv-1/teams/159300/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../contributing/doc.rst:2 4b7c39c591f943a3aad93bb5c38edca4
+msgid "Documenting guide"
+msgstr "Guía de documentación"
+
+#: ../../contributing/doc.rst:4 66c70cd213ed498aa8bf13277e70bc7a
+msgid "Ubiquity has two main sets of documentation:"
+msgstr "Ubiquity tiene dos conjuntos principales de documentación:"
+
+#: ../../contributing/doc.rst:6 a2aa6a161b34400ab7ded1e05cf77dd6
+msgid "the guides, which help you learn about manipulations or concepts ;"
+msgstr ""
+"las guías, que te ayudan a aprender sobre manipulaciones o conceptos ;"
+
+#: ../../contributing/doc.rst:7 1fd08efa2ffc4b44a60426ed86097145
+msgid "and the API, which serves as a reference for coding."
+msgstr "y la API, que sirve de referencia para la codificación."
+
+#: ../../contributing/doc.rst:9 74fef3dbb7f6487fa8c8cc822f1c40e1
+msgid ""
+"You can help improve the Ubiquity guides by making them more coherent, "
+"consistent, or readable, adding missing information, correcting factual "
+"errors, fixing typos, or bringing them up to date with the latest Ubiquity "
+"version."
+msgstr ""
+"Puede ayudar a mejorar las guías de Ubiquity haciéndolas más coherentes, "
+"consistentes o legibles, añadiendo información que falte, corrigiendo "
+"errores factuales, corrigiendo erratas o actualizándolas con la última "
+"versión de Ubiquity."
+
+#: ../../contributing/doc.rst:11 03a3272e58c14965831bc793101f21b0
+msgid ""
+"To do so, make changes to Ubiquity guides source files (located here on "
+"GitHub). Then open a pull request to apply your changes to the master "
+"branch."
+msgstr ""
+"Para ello, realice cambios en los archivos fuente de las guías Ubiquity "
+"(ubicados aquí en GitHub). A continuación, abra una solicitud de extracción "
+"para aplicar los cambios al branch principal."
+
+#: ../../contributing/doc.rst:13 02b4d863cb564da9ad69dd37f1e3df2a
+msgid ""
+"When working with documentation, please take into account the guidelines."
+msgstr "Cuando trabaje con documentación, tenga en cuenta las directrices."
