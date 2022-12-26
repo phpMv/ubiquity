@@ -1,0 +1,335 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Leonardo D. A. Allende P., 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:25+0000\n"
+"Last-Translator: Leonardo D. A. Allende P., 2022\n"
+"Language-Team: Spanish (https://www.transifex.com/phpmv-1/teams/159300/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../contents/transformers.rst:3 48027a89dc5142ef97d4749c556b3f35
+msgid "Transformers"
+msgstr "Transformers"
+
+#: ../../contents/transformers.rst:6 b6e3c81a93ac447bb20c6416b2bc5a63
+msgid ""
+"The Transformers module uses the static class **TransformersManager** to "
+"manage data transformations."
+msgstr ""
+"El módulo Transformers utiliza la clase estática **TransformersManager** "
+"para gestionar las transformaciones de datos."
+
+#: ../../contents/transformers.rst:9 2ff5be1a86ef4527bab05abddcd03f8b
+msgid ""
+"Transformers are used to transform datas after loading from the database, or"
+" before displaying in a view."
+msgstr ""
+"Los transformers se utilizan para transformar los datos después de cargarlos"
+" desde la base de datos o antes de mostrarlos en una vista."
+
+#: ../../contents/transformers.rst:12 3994c910c54248ca829ce13fa732fca4
+msgid "Adding transformers"
+msgstr "Añadir transformers"
+
+#: ../../contents/transformers.rst:14 b4e40fbcb303447cbe457bf5f586162a
+msgid "Either the **Author** class that we want to use in our application :"
+msgstr ""
+"O bien la clase **Author** que queremos utilizar en nuestra aplicación :"
+
+#: ../../contents/transformers.rst:18 ../../contents/transformers.rst:248
+#: e421415b3fad42a6ac15fd2593bb175f b5ba3776b06d466d903e1e3905a28c2c
+msgid "Attributes"
+msgstr "Atributos"
+
+#: ../../contents/transformers.rst:20 ../../contents/transformers.rst:45
+#: 27e2f8b99fca4fe68939a78dcc366d85 d0c97d58ccfa4d3b9851946f8cfef943
+msgid "app/models/Author.php"
+msgstr "app/models/Author.php"
+
+#: ../../contents/transformers.rst:43 ../../contents/transformers.rst:273
+#: 62ff77a5f24141638495fc92f8fa463b 834c78bb4b824ec8a64edf2a79e76b03
+msgid "Annotations"
+msgstr "Annotations (Anotaciones)"
+
+#: ../../contents/transformers.rst:68 246ea1af50fc4d3eb6508d2521e3d0e7
+msgid ""
+"We added a transformer on the **name** member with the **@transformer** "
+"annotation, in order to capitalize the name in the views."
+msgstr ""
+"Añadimos un transformer en el miembro **name** con la anotación "
+"**@transformer**, para poner el nombre en mayúsculas en las vistas."
+
+#: ../../contents/transformers.rst:71 ae67352b132d499d92032cefb6b4c2b5
+msgid "Generating cache"
+msgstr "Generar caché"
+
+#: ../../contents/transformers.rst:72 933fba44a2a64e34917bf28988903656
+msgid ""
+"Run this command in console mode to create the cache data of the **Author** "
+"class :"
+msgstr ""
+"Ejecute este comando en modo consola para crear los datos de caché de la "
+"clase **Author** :"
+
+#: ../../contents/transformers.rst:78 0f716f731b4944039a710876f505d23a
+msgid ""
+"transformer cache is generated with model metadatas in "
+"``app/cache/models/Author.cache.php``."
+msgstr ""
+"La caché del transformer se genera con metadatos del modelo en "
+"``app/cache/models/Author.cache.php``."
+
+#: ../../contents/transformers.rst:80 cf6a7e7fa13b48368ff78194524113df
+msgid "Transformers informations can be displayed with devtools :"
+msgstr "La información de los transformers puede visualizarse con devtools :"
+
+#: ../../contents/transformers.rst:91 fc2e0b334dcc4926b550b31d2ef47877
+msgid "Using transformers"
+msgstr "Uso de transformers"
+
+#: ../../contents/transformers.rst:93 6a557c25c0974a5995773b29f74f9225
+msgid ""
+"Start the **TransformersManager** in the file `app/config/services.php`:"
+msgstr ""
+"Inicie el **TransformersManager** en el archivo `app/config/services.php`:"
+
+#: ../../contents/transformers.rst:95 dee907927450401abe25c907dafd1a93
+msgid "app/config/services.php"
+msgstr "app/config/services.php"
+
+#: ../../contents/transformers.rst:100 9634d1cd97014e85ad5b4ec0996077ee
+msgid "You can test the result in the administration interface:"
+msgstr "Puede comprobar el resultado en la interfaz de administración:"
+
+#: ../../contents/transformers.rst:105 225448f7889d441893a65dd9a7c0a23d
+msgid "or by creating a controller:"
+msgstr "o creando un controlador:"
+
+#: ../../contents/transformers.rst:107 bf1186c834ac4998aaf493cff282e89f
+msgid "app/controllers/Authors.php"
+msgstr "app/controllers/Authors.php"
+
+#: ../../contents/transformers.rst:124 a26b455789e24be08cf7839dbba5ba31
+msgid "app/views/Authors/index.html"
+msgstr "app/views/Authors/index.html"
+
+#: ../../contents/transformers.rst:134 2b6fc9ec13364806855b54451701d2c2
+msgid "Transformer types"
+msgstr "Tipos de transformers"
+
+#: ../../contents/transformers.rst:137 8cbdb58426f24f988ca48cb10438170e
+msgid "transform"
+msgstr "transform"
+
+#: ../../contents/transformers.rst:138 2fb706e6378346e28e8fe732b71c8b38
+msgid ""
+"The **transform** type is based on the **TransformerInterface** interface. "
+"It is used when the transformed data must be converted into an object. |br| "
+"The **DateTime** transformer is a good example of such a transformer:"
+msgstr ""
+"El tipo **transform** se basa en la interfaz **TransformerInterface**. Se "
+"utiliza cuando los datos transformados deben convertirse en un objeto. |brl "
+"El transformador **DateTime** es un buen ejemplo de este tipo de "
+"transformador:"
+
+#: ../../contents/transformers.rst:141 b682de927a5242f7802d55680663f1f8
+msgid ""
+"When loading the data, the Transformer converts the date from the database "
+"into an instance of php DateTime."
+msgstr ""
+"Al cargar los datos, el Transformador convierte la fecha de la base de datos"
+" en una instancia de php DateTime."
+
+#: ../../contents/transformers.rst:142 b49baea64a7b4fcd8055e86bc62d0369
+msgid ""
+"Its **reverse** method performs the reverse operation (php date to database "
+"compatible date)."
+msgstr ""
+"Su método **reverse** realiza la operación inversa (fecha php a fecha "
+"compatible con la base de datos)."
+
+#: ../../contents/transformers.rst:145 ../../contents/transformers.rst:198
+#: ../../contents/transformers.rst:200 ../../contents/transformers.rst:202
+#: ../../contents/transformers.rst:204 ../../contents/transformers.rst:206
+#: 1168a032e59b40458914e7c8548ce76b 1a1e953f70df47bcbb4aa3d582550873
+#: 9daa704c801447e297245001577d358b 77e13cd131724291b5174ed5ffbc8fb9
+#: b9df804a7691488da5b66dcb09eab17f bd146928266b4c059550ddbc3299006f
+msgid "toView"
+msgstr "toView"
+
+#: ../../contents/transformers.rst:146 c8f42c285ea446fb8abbdbc2efbd5dc1
+msgid ""
+"The **toView** type is based on the **TransformerViewInterface** interface. "
+"It is used when the transformed data must be displayed in a view. |br|"
+msgstr ""
+"El tipo **toView** se basa en la interfaz **TransformerViewInterface**. Se "
+"utiliza cuando los datos transformados deben mostrarse en una vista. |br|"
+
+#: ../../contents/transformers.rst:149 0c616003ab244abe93ced92468f97a89
+msgid "toForm"
+msgstr "toForm"
+
+#: ../../contents/transformers.rst:150 a1ba0573b40c4019b6ddfeb6228a3aae
+msgid ""
+"The **toForm** type is based on the **TransformerFormInterface** interface. "
+"It is used when the transformed data must be used in a form. |br|"
+msgstr ""
+"El tipo **toForm** se basa en la interfaz **TransformerFormInterface**. Se "
+"utiliza cuando los datos transformados deben utilizarse en un formulario. "
+"|br|"
+
+#: ../../contents/transformers.rst:153 b1dab4a3fe654d6db1cea141a46abb3f
+msgid "Transformers usage"
+msgstr "Uso de transformers"
+
+#: ../../contents/transformers.rst:155 42583cdd0bdf4b07adf13277539fd047
+msgid "Transform on data loading"
+msgstr "Transformación en la carga de datos"
+
+#: ../../contents/transformers.rst:156 9c374f7da7914e27a46b7a96342d8a35
+msgid "If ommited, default **transformerOp** is **transform**"
+msgstr "Si se omite, **transformerOp** por defecto es **transform**."
+
+#: ../../contents/transformers.rst:163 b4ec129ee09e4d06b1f67e22df3f5978
+msgid "Set transformerOp to **toView**"
+msgstr "Establecer transformerOp a **toView**"
+
+#: ../../contents/transformers.rst:171 afda6dc4f3b544e29d635aeb589cfdf0
+msgid "Transform after loading"
+msgstr "Transformación tras la carga"
+
+#: ../../contents/transformers.rst:172 2f085ef62a94464b9d963b32bc369c0f
+msgid "Return the transformed member value:"
+msgstr "Devuelve el valor transformado del miembro:"
+
+#: ../../contents/transformers.rst:178 001065c4a1134344a05a25bf364cdb6d
+msgid "Return a transformed value:"
+msgstr "Devuelve un valor transformado:"
+
+#: ../../contents/transformers.rst:185 14fb2e34e9d44533be13c7c51c56ea71
+msgid "Transform an instance by applying all defined transformers:"
+msgstr "Transforma una instancia aplicando todos los transformers definidos:"
+
+#: ../../contents/transformers.rst:192 82c35e0a8b944b89b7b3063cd1309a66
+msgid "Existing transformers"
+msgstr "Transformers existentes"
+
+#: ../../contents/transformers.rst:194 1f71a85da0884020a691dce8aea43dde
+msgid "Transformer"
+msgstr "Transformer"
+
+#: ../../contents/transformers.rst:194 139dd1926fc040609a3c0df3457085cd
+msgid "Type(s)"
+msgstr "Tipo(s)"
+
+#: ../../contents/transformers.rst:194 8dabb2357d4a453b9228aa448f71f478
+msgid "Description"
+msgstr "Descripción"
+
+#: ../../contents/transformers.rst:196 5482c7033cdd4a98ad98a3849d20f399
+msgid "datetime"
+msgstr "datetime"
+
+#: ../../contents/transformers.rst:196 cc236304545248ebbe8153cad18ee9bd
+msgid "transform, toView, toForm"
+msgstr "transform, toView, toForm"
+
+#: ../../contents/transformers.rst:196 c4de2d9a9d1b4b0887d1b3ade6455a7b
+msgid "Transform a database datetime to a php DateTime object"
+msgstr ""
+"Transformar una fecha y hora de una base de datos en un objeto DateTime de "
+"php"
+
+#: ../../contents/transformers.rst:198 fe2611c919e54a478f70e421c175e874
+msgid "upper"
+msgstr "upper"
+
+#: ../../contents/transformers.rst:198 ca5f12025f1c4ebcbd2c4b367445fdee
+msgid "Make the member value uppercase"
+msgstr "Poner el valor en mayúsculas"
+
+#: ../../contents/transformers.rst:200 a8804a7d01344fcbbfadf531fc0b8f45
+msgid "lower"
+msgstr "lower"
+
+#: ../../contents/transformers.rst:200 04950e26ab22453fa6bcca5d10af491f
+msgid "Make the member value lowercase"
+msgstr "Poner el valor en minúsculas"
+
+#: ../../contents/transformers.rst:202 58111501327d427297e9cf41816612e5
+msgid "firstUpper"
+msgstr "firstUpper"
+
+#: ../../contents/transformers.rst:202 c57a43ae924945c59e619eddbd5dff8b
+msgid "Make the member value first character uppercase"
+msgstr "Poner en mayúsculas el primer carácter del valor"
+
+#: ../../contents/transformers.rst:204 02dc2988f1f54aa5b669108ec80bd693
+msgid "password"
+msgstr "password"
+
+#: ../../contents/transformers.rst:204 af83781d291b40888766839fef864f48
+msgid "Mask the member characters"
+msgstr "Enmascarar los caracteres"
+
+#: ../../contents/transformers.rst:206 14e0eda9c97f4cdd9ad9add6031965cb
+msgid "md5"
+msgstr "md5"
+
+#: ../../contents/transformers.rst:206 6f1d75c8ca22414d802a819aab3b4af4
+msgid "Hash the value with md5"
+msgstr "Hashear el valor con md5"
+
+#: ../../contents/transformers.rst:210 7b70edde5ad84a86aeae7d49640abde9
+msgid "Create your own"
+msgstr "Cree personalizado"
+
+#: ../../contents/transformers.rst:212 898e0437ed234540bf49e743b6f22716
+msgid "Creation"
+msgstr "Creación"
+
+#: ../../contents/transformers.rst:214 790d0da1866a420e8960d5584e1433ba
+msgid "Create a transformer to display a user name as a local email address:"
+msgstr ""
+"Crear un transformador para mostrar un nombre de usuario como una dirección "
+"de correo electrónico local:"
+
+#: ../../contents/transformers.rst:216 efc46e25748648b1b97fda3494655738
+msgid "app/transformers/toLocalEmail.php"
+msgstr "app/transformers/toLocalEmail.php"
+
+#: ../../contents/transformers.rst:234 bcfe6e19f92346d68ad0b24dba4f76f8
+msgid "Registration"
+msgstr "Registro"
+
+#: ../../contents/transformers.rst:236 ccec628fadf94c008a9ccbece2d09252
+msgid "Register the transformer by executing the following script:"
+msgstr "Registre el transformador ejecutando el siguiente script:"
+
+#: ../../contents/transformers.rst:244 329a573c3ac04647b5384de8b8e61057
+msgid "Usage"
+msgstr "Uso"
+
+#: ../../contents/transformers.rst:250 ../../contents/transformers.rst:275
+#: 625200a8f83f4300a6f0805805f3a198 f4db897ea4ad496eaac329e40ec00dc3
+msgid "app/models/User.php"
+msgstr "app/models/User.php"
+
+#: ../../contents/transformers.rst:304 b2b632cf78934c7bbd2d96229bf17561
+msgid "**Smith** user name will be displayed as **smith@mydomain.local**."
+msgstr ""
+"El nombre de usuario **Smith** aparecerá como **smith@mydomain.local**."
