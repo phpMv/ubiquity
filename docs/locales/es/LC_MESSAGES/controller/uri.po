@@ -1,0 +1,124 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Leonardo D. A. Allende P., 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:33+0000\n"
+"Last-Translator: Leonardo D. A. Allende P., 2022\n"
+"Language-Team: Spanish (https://www.transifex.com/phpmv-1/teams/159300/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../controller/uri.rst:2 6437f0065dca4feeaf60df02b0a719ab
+msgid "URLs"
+msgstr "URLs"
+
+#: ../../controller/uri.rst:3 ffae7bd665224e758f42c889642a23e8
+msgid ""
+"like many other frameworks, if you are using router with it's default "
+"behavior, there is a one-to-one relationship between a URL string and its "
+"corresponding controller class/method. The segments in a URI normally follow"
+" this pattern: ::"
+msgstr ""
+"como muchos otros frameworks, si estás usando el router con su "
+"comportamiento por defecto, hay una relación uno a uno entre una cadena URL "
+"y su correspondiente clase/método controlador. Los segmentos en una URI "
+"normalmente siguen este patrón: ::"
+
+#: ../../controller/uri.rst:10 209f1faa391e44d992096cd8c99bcbf2
+msgid "Default method"
+msgstr "Método por defecto"
+
+#: ../../controller/uri.rst:12 ec429526f69d46f591b11228f70006d1
+msgid ""
+"When the URL is composed of a single part, corresponding to the name of a "
+"controller, the index method of the controller is automatically called :"
+msgstr ""
+"Cuando la URL se compone de una sola parte, correspondiente al nombre de un "
+"controlador, se llama automáticamente al método index del controlador :"
+
+#: ../../controller/uri.rst:14 03feb5f7c5664080ad6f3d7f634a9e59
+msgid "**URL :** ::"
+msgstr "**URL :** ::"
+
+#: ../../controller/uri.rst:19 ../../controller/uri.rst:36
+#: ../../controller/uri.rst:58 ../../controller/uri.rst:77
+#: 216c03b988b2470f92ee94dae8a83510 064573431cf0407582bdd0582db1f78b
+#: 1a51824ae2a645568fd8c3826cc260a9 9234e089d5b649a496f67d46e8a59a80
+msgid "**Controller :**"
+msgstr "**Controller :**"
+
+#: ../../controller/uri.rst:21 ../../controller/uri.rst:38
+#: ../../controller/uri.rst:60 ../../controller/uri.rst:79
+#: a289a17b44414ed78bbfd2fc98d188fb 812f728ba06a41b28906bdb9aa533de1
+#: 51f37f9fddc440b48c19a32b71faa616 b0bd42117543410da9a8b0da92d72914
+msgid "app/controllers/Products.php"
+msgstr "app/controllers/Products.php"
+
+#: ../../controller/uri.rst:32 f00c4789e27343cf8ead3a41dd1c1173
+msgid "Required parameters"
+msgstr "Parámetros requeridos"
+
+#: ../../controller/uri.rst:34 30a1b193cec7477eacc4561ed0453c6b
+msgid ""
+"If the requested method requires parameters, they must be passed in the URL:"
+msgstr "Si el método solicitado requiere parámetros, deben pasarse en la URL:"
+
+#: ../../controller/uri.rst:46 ../../controller/uri.rst:67
+#: aaee93f2afc547bb9dc13c679cb25f87 6246addb2d434b639f7cc434be9e2ff9
+msgid "**Valid Urls :** ::"
+msgstr "**Valid Urls :** ::"
+
+#: ../../controller/uri.rst:53 806039aeab22482fb95881514f294273
+msgid "Optional parameters"
+msgstr "Parámetros opcionales"
+
+#: ../../controller/uri.rst:54 fcc417aabc27490ab048f1c8f6bc8fed
+msgid "The called method can accept optional parameters."
+msgstr "El método llamado puede aceptar parámetros opcionales."
+
+#: ../../controller/uri.rst:56 aaa823cd98344ea8ad92be4dcc21fe5a
+msgid ""
+"If a parameter is not present in the URL, the default value of the parameter"
+" is used."
+msgstr ""
+"Si un parámetro no está presente en la URL, se utiliza el valor por defecto "
+"del parámetro."
+
+#: ../../controller/uri.rst:74 053f0cb8afbf43da921d4d806a67701e
+msgid "Case sensitivity"
+msgstr "Se distingue entre mayúsculas y minúsculas"
+
+#: ../../controller/uri.rst:75 eeb03120f4324ce5babe95cab399eb14
+msgid "On Unix systems, the name of the controllers is case-sensitive."
+msgstr ""
+"En los sistemas Unix, el nombre de los controladores distingue entre "
+"mayúsculas y minúsculas."
+
+#: ../../controller/uri.rst:86 a8cc2a7f81b2442eb54c9f88cdf566d5
+msgid "**Urls :** ::"
+msgstr "**Urls :** ::"
+
+#: ../../controller/uri.rst:93 3fc932664aab439dbf5b7ea5c35b8b07
+msgid "Routing customization"
+msgstr "Personalización de rutas"
+
+#: ../../controller/uri.rst:94 d7fd072d919f449a889d5ab199d96234
+msgid ""
+"The :doc:`router` and annotations/attributes in controller classes allow you"
+" to customize URLs."
+msgstr ""
+"El :doc:`router` y las anotaciones/atributos en las clases de controlador "
+"permiten personalizar las URL."
