@@ -1,19 +1,20 @@
 <?php
+
 namespace Ubiquity\orm\core\prepared;
 
+use Ubiquity\cache\dao\AbstractDAOCache;
+use Ubiquity\cache\database\DbCache;
 use Ubiquity\events\DAOEvents;
 use Ubiquity\events\EventsManager;
 use Ubiquity\orm\DAO;
 use Ubiquity\orm\OrmUtils;
-use Ubiquity\cache\database\DbCache;
-use Ubiquity\cache\dao\AbstractDAOCache;
 
 /**
  * Ubiquity\orm\core\prepared$DAOPreparedQueryOne
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5
+ * @version 1.0.6
  */
 class DAOPreparedQueryById extends DAOPreparedQuery {
 
@@ -49,9 +50,9 @@ class DAOPreparedQueryById extends DAOPreparedQuery {
 		}
 		if ($row) {
 			$className = $this->className;
-			if ($this->hasIncluded || ! $this->allPublic) {
+			if ($this->hasIncluded || !$this->allPublic) {
 				$oneToManyQueries = $manyToOneQueries = $manyToManyParsers = [];
-				$object = DAO::_loadObjectFromRow($this->db, $row, $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers);
+				$object = DAO::_loadObjectFromRow($this->db, $row, $className, $this->invertedJoinColumns, $manyToOneQueries, $this->oneToManyFields, $this->manyToManyFields, $oneToManyQueries, $manyToManyParsers, $this->memberList, $this->accessors, $this->transformers, $this->primaryKeys);
 				if ($this->hasIncluded) {
 					DAO::_affectsRelationObjects($className, $this->firstPropKey, $manyToOneQueries, $oneToManyQueries, $manyToManyParsers, [
 						$object
