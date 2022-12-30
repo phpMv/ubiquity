@@ -1,0 +1,285 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# jean-christophe HERON, 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:42+0000\n"
+"Last-Translator: jean-christophe HERON, 2022\n"
+"Language-Team: French (https://www.transifex.com/phpmv-1/teams/159300/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../contents/validators.rst:2 7303bdb89ffa416aac22559f1b559272
+msgid "Validators"
+msgstr "Validateurs"
+
+#: ../../contents/validators.rst:5 96a565be4f8d48b59d19a87cd5ca3616
+msgid ""
+"The Validators module uses the static class **ValidatorsManager** to manage "
+"validation."
+msgstr ""
+"Le module Validators utilise la classe statique  **ValidatorsManager** pour "
+"gérer la validation."
+
+#: ../../contents/validators.rst:8 682101ef055542549d36edd54f5a36b9
+msgid ""
+"Validators are used to check that the member datas of an object complies "
+"with certain constraints."
+msgstr ""
+"La validation permet de vérifier que les données membres d'un objet "
+"respectent certaines contraintes."
+
+#: ../../contents/validators.rst:11 3c7614d648674daeb15c19145a859719
+msgid "Adding validators"
+msgstr "Ajout de validators"
+
+#: ../../contents/validators.rst:13 564ea48ecf46498eaec38645fb73d869
+msgid "Either the **Author** class that we want to use in our application :"
+msgstr ""
+"Soit la classe **Author** que nous souhaitons utiliser dans notre "
+"application :"
+
+#: ../../contents/validators.rst:15 ../../contents/validators.rst:101
+#: 281f819b05b04519a54355990f1ccdc8 1b5290fd7bec46f5b83f18d48f1ffe27
+msgid "app/models/Author.php"
+msgstr "app/models/Author.php"
+
+#: ../../contents/validators.rst:38 fc4425576ff646159ae29c08eb999af2
+msgid ""
+"We added a validation constraint on the **name** member with the "
+"**@validator** annotation, so that it is not empty."
+msgstr ""
+"Une contrainte de validation a été ajoutée sur le membre **name** avec "
+"l'annotation **@validator**, de façon à rendre sa saisie obligatoire."
+
+#: ../../contents/validators.rst:41 284797743d6c44ab8fe7c27586726629
+msgid "Generating cache"
+msgstr "Génération du cache"
+
+#: ../../contents/validators.rst:42 4de4987d04914ea3b26883ea25d6d16d
+msgid ""
+"Run this command in console mode to create the cache data of the **Author** "
+"class :"
+msgstr ""
+"Exécuter cette commande dans la console pour générer le cache de la classe "
+"**Author** :"
+
+#: ../../contents/validators.rst:48 3ea07645576e4d8d9c7559dd4557d519
+msgid ""
+"Validator cache is generated in "
+"``app/cache/contents/validators/models/Author.cache.php``."
+msgstr ""
+"Le cache du validateur est généré dans le fichier  "
+"``app/cache/contents/validators/models/Author.cache.php``."
+
+#: ../../contents/validators.rst:51 3215eac701464a71879420ee6e43d948
+msgid "Validating instances"
+msgstr "Validation d'instances"
+
+#: ../../contents/validators.rst:53 a26fc9a057c84b8fbf2a1dd15d20b746
+msgid "an instance"
+msgstr "Une instance"
+
+#: ../../contents/validators.rst:70 85f8e78e94a4433191673b2d2a6b4708
+msgid "if the **name** of the author is empty, this action should display:"
+msgstr ""
+"Si le **name** de l'instance de author est vide, l'action devrait afficher :"
+
+#: ../../contents/validators.rst:76 8a2de838f79744f8bbaae82ef2590281
+msgid ""
+"The **validate** method returns an array of **ConstraintViolation** "
+"instances."
+msgstr ""
+"La méthode **validate**  retroune un tableau d'instances de "
+"**ConstraintViolation** ."
+
+#: ../../contents/validators.rst:79 39eca5ff57914309a1b7c20cd98d47bc
+msgid "multiple instances"
+msgstr "Plusieurs instances"
+
+#: ../../contents/validators.rst:93 02857f8e6d8f445a8ab507aa1ddb8091
+msgid "Models generation with default validators"
+msgstr "Génération des models avec validateurs par défaut"
+
+#: ../../contents/validators.rst:95 615a07a4a57049a3a9da143141a39e4e
+msgid ""
+"When classes are automatically generated from the database, default "
+"validators are associated with members, based on the fields' metadatas."
+msgstr ""
+"Lorsque les classes sont générées automatiquement à partir de la base de "
+"données, des validateurs par défaut sont associés aux membres, basés su les "
+"méta-données des champs."
+
+#: ../../contents/validators.rst:146 8da12845a7024cd380030994ffa45d73
+msgid ""
+"These validators can then be modified. |br| Modifications must always be "
+"folowed by a re-initialization of the model cache."
+msgstr ""
+"Ces validateurs peuvent être modifiés. |br| Les modifications doivent "
+"toujours être suivies d'une ré-initialisation du cache des models."
+
+#: ../../contents/validators.rst:153 2554066552cd4883b5b0d0a6172cd7b9
+msgid "Models validation informations can be displayed with devtools :"
+msgstr ""
+"Les informations relatives aux validateurs existants sur les models peuvent "
+"être affichées avec les devtools :"
+
+#: ../../contents/validators.rst:163 1c46f7241d5249bd804cba87466c120c
+msgid "Gets validators on email field:"
+msgstr "Retourne les validateurs associés au champ email :"
+
+#: ../../contents/validators.rst:172 96b25e6840e94f34a97d0ae654f8329a
+msgid ""
+"Validation informations are also accessible from the **models** part of the "
+"webtools:"
+msgstr ""
+"Les informations de validation sont également accessibles depuis la partie "
+"**models** des webtools :"
+
+#: ../../contents/validators.rst:178 42bb2f8db4fd4623b387f8d39ce53f48
+msgid "Validator types"
+msgstr "Types de validators"
+
+#: ../../contents/validators.rst:180 073d4b4c2e9c4abf9e8769f1bfa9ae7e
+msgid "Basic"
+msgstr "Basic"
+
+#: ../../contents/validators.rst:182 835f293321bf4615899033b622f2fb60
+msgid "Validator"
+msgstr "Validator"
+
+#: ../../contents/validators.rst:182 d3669c4209f44bf2b503b84308ecf3fb
+msgid "Roles"
+msgstr "Rôles"
+
+#: ../../contents/validators.rst:182 bd7479f38f044e78af6d13d7c1c6f975
+msgid "Constraints"
+msgstr "Contraintes"
+
+#: ../../contents/validators.rst:182 0dc8a23dfc254920b662d67b84a24de4
+msgid "Accepted values"
+msgstr "Valeurs acceptées"
+
+#: ../../contents/validators.rst:184 9de51fb99170408bbdad9f7543396b20
+msgid "isBool"
+msgstr "isBool"
+
+#: ../../contents/validators.rst:184 2776bd109ddc418e87f6e6c644eb34b0
+msgid "Check if value is a boolean"
+msgstr "Vérifie si la valeur est un booléen"
+
+#: ../../contents/validators.rst:184 ad67d4741a6d451b96c1efcb56b5dac2
+msgid "true,false,0,1"
+msgstr "true,false,0,1"
+
+#: ../../contents/validators.rst:186 ed488342a44e4dea8007c6c5d5571141
+msgid "isEmpty"
+msgstr "isEmpty"
+
+#: ../../contents/validators.rst:186 d8238f1d8fb14429a98e5c7c24eab0b7
+msgid "Check if value is empty"
+msgstr "Vérifie si la valeur n'est pas vide"
+
+#: ../../contents/validators.rst:186 0cafc2e01dca4830acbdf7ae96907239
+msgid "'',null"
+msgstr "'',null"
+
+#: ../../contents/validators.rst:188 1525ed1c8a544a3195644886ba96cf79
+msgid "isFalse"
+msgstr "isFalse"
+
+#: ../../contents/validators.rst:188 6ac3fde559de4211a20608021f0b9d0c
+msgid "Check if value is false"
+msgstr "Vérifie si la valeur est false"
+
+#: ../../contents/validators.rst:188 eaacdb47810b4fe8b5c1f59034f6d872
+msgid "false,'false',0,'0'"
+msgstr "false,'false',0,'0'"
+
+#: ../../contents/validators.rst:190 68f4e6805a3d4bb397827030e33878ef
+msgid "isNull"
+msgstr "isNull"
+
+#: ../../contents/validators.rst:190 673e7bc923d8445990d80ea33856c2a9
+msgid "Check if value is null"
+msgstr "Vérifie si la valeur est nulle"
+
+#: ../../contents/validators.rst:190 3a7f74f9b0c341ff84d32473a1098f3b
+msgid "null"
+msgstr "null"
+
+#: ../../contents/validators.rst:192 0603526122344f06a6ed048e36982ed2
+msgid "isTrue"
+msgstr "isTrue"
+
+#: ../../contents/validators.rst:192 ce88d0a727f141cda9ba8681c1649037
+msgid "Check if value is true"
+msgstr "Vérifie si la valeur est true"
+
+#: ../../contents/validators.rst:192 0f1b1ddee2ad42069f143cd95454bfbd
+msgid "true,'true',1,'1'"
+msgstr "true,'true',1,'1'"
+
+#: ../../contents/validators.rst:194 34087989885b4de9af94cb888e6b13b4
+msgid "notEmpty"
+msgstr "notEmpty"
+
+#: ../../contents/validators.rst:194 0d21bb4fad4c4c32aa7e86b62f13d8a4
+msgid "Check if value is not empty"
+msgstr "Vérifie si la valeur n'est pas vide"
+
+#: ../../contents/validators.rst:194 2ecb6c3cb69c41f798afc9523ea06350
+msgid "!null && !''"
+msgstr "!null && !''"
+
+#: ../../contents/validators.rst:196 aa6460f82d4649bb970f2d6f3546709d
+msgid "notNull"
+msgstr "notNull"
+
+#: ../../contents/validators.rst:196 0f4a8b3b1f0643d8bc975cf0858ea5c2
+msgid "Check if value is not null"
+msgstr "Vérifie si la valeur n'est pas nulle"
+
+#: ../../contents/validators.rst:196 3a15f5dde7b54f3ca27357e4bd08fad0
+msgid "!null"
+msgstr "!null"
+
+#: ../../contents/validators.rst:198 295db05c980c4ec886f573e9424e56ab
+msgid "type"
+msgstr "type"
+
+#: ../../contents/validators.rst:198 b01979be8f174b778386d3369c714c1f
+msgid "Check if value is of type {type}"
+msgstr "Vérifie que la valeur est du type {type}"
+
+#: ../../contents/validators.rst:198 2b15883d33c54bbfa413e69de2d1655f
+msgid "{type}"
+msgstr "{type}"
+
+#: ../../contents/validators.rst:202 dd5db8ff09fe463b8bfed9c7cc3cba35
+msgid "Comparison"
+msgstr "Comparison"
+
+#: ../../contents/validators.rst:205 bf752ec560814efd94b39e4da59d2b88
+msgid "Dates"
+msgstr "Dates"
+
+#: ../../contents/validators.rst:208 55a5f96084ae4dd2aefa0f44fdea4988
+msgid "Multiples"
+msgstr "Multiples"
+
+#: ../../contents/validators.rst:211 63f79b04596a44358f8f62c1ddf9a90a
+msgid "Strings"
+msgstr "Strings"
