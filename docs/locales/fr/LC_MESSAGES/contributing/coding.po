@@ -1,0 +1,466 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# jean-christophe HERON, 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:27+0000\n"
+"Last-Translator: jean-christophe HERON, 2022\n"
+"Language-Team: French (https://www.transifex.com/phpmv-1/teams/159300/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../contributing/coding.rst:3 0b7c6a796020483683f74e641fce3299
+msgid "Coding guide"
+msgstr "Guide de développement"
+
+#: ../../contributing/coding.rst:7 5f74f48e308841cab770073ad10a87b2
+msgid ""
+"Although the framework is very recent, please note some early Ubiquity "
+"classes do not fully follow this guide and have not been modified for "
+"backward compatibility reasons. |br| However all new codes must follow this "
+"guide."
+msgstr ""
+"Bien que le framework soit relativement récent, veuillez noter que certaines"
+" des premières classes d'Ubiquity ne suivent pas entièrement ce guide et "
+"n'ont pas été modifiées pour des raisons de rétrocompatibilité. |br| "
+"Néanmoins, tous les nouveaux codes doivent suivre ce guide."
+
+#: ../../contributing/coding.rst:11 257e9697c0474e709dcb3311aaa6d0a0
+msgid "Design choices"
+msgstr "Choix de conception"
+
+#: ../../contributing/coding.rst:13 b2e6c5b26cc649aab2edba01d3352107
+msgid "Fetching and using Services"
+msgstr "Sollicitation et utilisation de services"
+
+#: ../../contributing/coding.rst:15 21ef2da3934a4f93a873e7c3ca3fd697
+msgid "Dependency injections"
+msgstr "Injection de dépendances"
+
+#: ../../contributing/coding.rst:16 e414125a5d08473f980317a7cca223ee
+msgid ""
+"Avoid using dependency injection for all parts of the framework, internally."
+" |br| Dependency injection is a resource-intensive mechanism:"
+msgstr ""
+"Évitez d'utiliser l'injection de dépendances pour toutes les parties du "
+"framework, en interne. |br| L'injection de dépendances est un mécanisme "
+"gourmand en ressources :"
+
+#: ../../contributing/coding.rst:19 05714548daba443daac9d83e773df22e
+msgid "it needs to identify the element to instantiate ;"
+msgstr "Elle nécessite d'identifier l'élément à instancier ;"
+
+#: ../../contributing/coding.rst:20 8ba1ba4551da4f52a1ef8c173e7f2139
+msgid "then to proceed to its instantiation ;"
+msgstr "Puis de procéder à sont instanciation :"
+
+#: ../../contributing/coding.rst:21 5cd799a008624e0e97e958180a8c2b1a
+msgid "to finally assign it to a variable."
+msgstr "Pour enfin assigner le résultat à une variable."
+
+#: ../../contributing/coding.rst:24 3ec5b08e1ac2488cba26a79e8624137a
+msgid "Getting services from a container"
+msgstr "Obtenir des services d'un conteneur"
+
+#: ../../contributing/coding.rst:25 92099d94988248fb83c438bb927a154d
+msgid ""
+"Also avoid public access to services registered in a service container. |br|"
+" This type of access involves manipulating objects whose return type is "
+"unknown, not easy to handle for the developer."
+msgstr ""
+"Evitez également les accès publics aux services enregistrés dans un "
+"conteneur de services. |br| Ce type d'accès implique la manipulation "
+"d'objets dont le type de retour est inconnu, et peu facile à manipuler pour "
+"le développeur."
+
+#: ../../contributing/coding.rst:28 662f5393a21f45ffb11d4f464e834dd2
+msgid ""
+"For example, It's hard to manipulate the untyped return of "
+"``$this->serviceContainer->get('translator')``, as some frameworks allow, "
+"and know which methods to call on it."
+msgstr ""
+"Par exemple, il est difficile de manipuler le retour non typé de "
+"``$this->serviceContainer->get('translator')``, comme le permettent certains"
+" frameworks, et de savoir quelles méthodes appeler dessus."
+
+#: ../../contributing/coding.rst:32 d7e8be33f5dd4c1b8de6d4f9b2c2b4b9
+msgid ""
+"When possible, and when it does not reduce flexibility too much, the use of "
+"static classes is suggested:"
+msgstr ""
+"Lorsque cela est possible, et lorsque cela ne réduit pas trop la "
+"flexibilité, l'utilisation de classes statiques est conseillée :"
+
+#: ../../contributing/coding.rst:34 df583d9f43dc4e1da223827cac00e398
+msgid ""
+"For a developer, the ``TranslatorManager`` class is accessible from an "
+"entire project without any object instantiation. |br| It exposes its public "
+"interface and allows code completion:"
+msgstr ""
+"Pour un développeur, la classe ``TranslatorManager`` est accessible depuis "
+"un l'ensemble du projet sans aucune instanciation d'objet. |br| Elle expose "
+"son interface publique et permet la complétion de code :"
+
+#: ../../contributing/coding.rst:37 306ac740e24a47ab8f31175cf3ed8db9
+msgid "The translator does not need to be injected to be used;"
+msgstr "Le translator n'a pas besoin d'être injecté pour être utilisé ;"
+
+#: ../../contributing/coding.rst:38 9e26288873ba408f86fbca7d3d1b6e19
+msgid "It does not need to be retrieved from a service container."
+msgstr "Il n'a pas besoin d'être récupéré depuis un conteneur de services."
+
+#: ../../contributing/coding.rst:40 108aa5905d6c4ff48b141587501e8c8d
+msgid ""
+"The use of static classes inevitably creates a strong dependency and affects"
+" flexibility. |br| But to come back to the Translator example, there is no "
+"reason to change it if it is satisfying. |br| It is not desirable to want to"
+" provide flexibility at all costs when it is not necessary, and then for the"
+" user to see that its application is a little slow."
+msgstr ""
+"L'utilisation de classes statiques crée inévitablement une forte dépendance "
+"et affecte la flexibilité. |br| Mais pour revenir à l'exemple du Traducteur,"
+" il n'y a aucune raison de le modifier s'il est satisfaisant. |brl Il n'est "
+"pas souhaitable de vouloir à tout prix apporter de la flexibilité quand elle"
+" n'est pas nécessaire, pour qu'en conséquence, l'utilisateur constate "
+"ensuite que son application est un peu lente."
+
+#: ../../contributing/coding.rst:45 39c3b92f971a478db32abfe8dbbee883
+msgid "Optimization"
+msgstr "Optimisation"
+
+#: ../../contributing/coding.rst:46 9825ef5a8c4b44bcb06909c068f604cd
+msgid ""
+"Execution of each line of code can have significant performance "
+"implications. |br| Compare and benchmark implementation solutions, "
+"especially if the code is repeatedly called:"
+msgstr ""
+"L'exécution de chaque ligne de code peut avoir des répercussions importantes"
+" sur les performances. |br| Comparez et évaluez les solutions de mise en "
+"œuvre, en particulier si le code est sollicité à plusieurs reprises :"
+
+#: ../../contributing/coding.rst:49 3ec4b8f64df34a3c8353ed7c3d717b6c
+msgid ""
+"Identify these repetitive and expensive calls with php profiling tools "
+"(`Blackfire profiler <https://blackfire.io>`_ , `Tideways "
+"<https://tideways.com>`_ ...)"
+msgstr ""
+"Identifiez ces appels répétés et coûteux avec des outils de profilage php "
+"(`Blackfire profiler <https://blackfire.io>`_ , `Tideways "
+"<https://tideways.com>`_ ...)"
+
+#: ../../contributing/coding.rst:50 930c56edab214eb8a1def25dbdd9d6f7
+msgid ""
+"Benchmark your different implementation solutions with `phpMyBenchmarks "
+"<https://phpMyBenchmarks.kobject.net>`_"
+msgstr ""
+"Benchmarkez vos différentes implémentations avec `phpMyBenchmarks "
+"<https://phpMyBenchmarks.kobject.net>`_"
+
+#: ../../contributing/coding.rst:53 850ec6864e9e4689b244b26c17c5f8fd
+msgid "Code quality"
+msgstr "Qualité du code"
+
+#: ../../contributing/coding.rst:54 bbaf14146e5b4c8380207f1792f26c12
+msgid ""
+"Ubiquity use `Scrutinizer-CI <https://scrutinizer-"
+"ci.com/g/phpMv/ubiquity/>`_ for code quality."
+msgstr ""
+"Ubiquity utilise `Scrutinizer-CI <https://scrutinizer-"
+"ci.com/g/phpMv/ubiquity/>`_ pour l'évaluation de la qualité du code."
+
+#: ../../contributing/coding.rst:56 943462d427dc42ac81f638313f2f9339
+msgid "For classes and methods :"
+msgstr "Pour les classes et les méthodes :"
+
+#: ../../contributing/coding.rst:58 8b86aa74691a46a7a17666fa95e38cee
+msgid "A or B evaluations are good"
+msgstr "Les évaluations A ou B sont satisfaisantes"
+
+#: ../../contributing/coding.rst:59 5f2c315a889c43559d083884a8b24ba0
+msgid "C is acceptable, but to avoid if possible"
+msgstr "C est acceptable, mais à éviter autant que possible"
+
+#: ../../contributing/coding.rst:60 9002736ab49e454e88da0894710f1598
+msgid "The lower notes are to be prohibited"
+msgstr "Les notes plus basses sont à prohiber"
+
+#: ../../contributing/coding.rst:63 bdf21b7fe24e4dadb299af148a73e118
+msgid "Code complexity"
+msgstr "Complexité du code"
+
+#: ../../contributing/coding.rst:65 7173e51608904f86b1c87629278116a9
+msgid ""
+"Complex methods must be split into several, to facilitate maintenance and "
+"allow reuse;"
+msgstr ""
+"Les méthodes complexes doivent être divisées en plusieurs, pour faciliter la"
+" maintenance et permettre la réutilisation ;"
+
+#: ../../contributing/coding.rst:66 9b1b75f403434afbb642cee9e9c02567
+msgid ""
+"For complex classes , do an extract-class or extract-subclass refactoring "
+"and split them using Traits;"
+msgstr ""
+"Pour les classes complexes, effectuer une refactorisation de type extract-"
+"class ou extract-subclass en utilisant les traits."
+
+#: ../../contributing/coding.rst:69 88656f70b8aa44e083169143768e7aa0
+msgid "Code duplications"
+msgstr "Duplications de code"
+
+#: ../../contributing/coding.rst:70 57e201518cb14154b9a38c59d1ff9d37
+msgid ""
+"Absolutely avoid duplication of code, except if duplication is minimal, and "
+"is justified by performance."
+msgstr ""
+"Évitez absolument la duplication du code, sauf si la duplication est minime "
+"et est justifiée par les performances."
+
+#: ../../contributing/coding.rst:73 49cdf6b7b14646b49b107b319ad27fc2
+msgid "Bugs"
+msgstr "Bugs"
+
+#: ../../contributing/coding.rst:74 972fc91440034e2e9560c01fca329552
+msgid ""
+"Try to solve all the bugs reported as you go, without letting them "
+"accumulate."
+msgstr ""
+"Essayez de résoudre tous les bugs signalés au fur et à mesure, sans les "
+"laisser s'accumuler."
+
+#: ../../contributing/coding.rst:77 bc3d137f45a441d4a08ed37e91cd1af8
+msgid "Tests"
+msgstr "Tests"
+
+#: ../../contributing/coding.rst:78 7f600a604e8a4393be18679c22229392
+msgid ""
+"Any bugfix that doesn’t include a test proving the existence of the bug "
+"being fixed, may be suspect. |br| Ditto for new features that can’t prove "
+"they actually work."
+msgstr ""
+"Toute correction de bug qui n'inclut pas un test prouvant l'existence du bug"
+" corrigé, peut être suspecte. |br| De même pour les nouvelles "
+"fonctionnalités dont on ne peut prouver qu'elles fonctionnent réellement."
+
+#: ../../contributing/coding.rst:81 19b929d9bf1e4fb1a2c11145a35f91a3
+msgid ""
+"It is also important to maintain an acceptable coverage, which may drop if a"
+" new feature is not tested."
+msgstr ""
+"Il est également important de maintenir un taux de couverture du code par "
+"les tests acceptable, qui peut baisser si une nouvelle fonctionnalité n'est "
+"pas testée."
+
+#: ../../contributing/coding.rst:84 18bf4e2fde1a46279a3a3833e0b5b1ae
+msgid "Code Documentation"
+msgstr "Documentation du code"
+
+#: ../../contributing/coding.rst:85 36c3a8c618af414c92592eee31b757a8
+msgid ""
+"The current code is not yet fully documented, feel free to contribute in "
+"order to fill this gap."
+msgstr ""
+"Le code actuel n'est pas encore entièrement documenté, n'hésitez pas à "
+"contribuer afin de combler cette lacune."
+
+#: ../../contributing/coding.rst:88 ffda759a59c1463ab47d77cf9a74bcb6
+msgid "Coding standards"
+msgstr "Standards de code"
+
+#: ../../contributing/coding.rst:90 a7734f2592624a8981e85c937bb8e783
+msgid ""
+"Ubiquity coding standards are mainly based on the `PSR-1 <https://www.php-"
+"fig.org/psr/psr-1/>`_ , `PSR-2 <https://www.php-fig.org/psr/psr-2/>`_ and "
+"`PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ standards, so you may already "
+"know most of them. |br| The few intentional exceptions to the standards are "
+"normally reported in this guide."
+msgstr ""
+"Les standards de code Ubiquity sont basés  sur les standards `PSR-1 "
+"<https://www.php-fig.org/psr/psr-1/>`_ , `PSR-2 <https://www.php-"
+"fig.org/psr/psr-2/>`_ et `PSR-4 <https://www.php-fig.org/psr/psr-4/>`_  il "
+"est donc préférable de les connaître. |br| Les quelques exceptions aux "
+"standards sont normalement reportées dans ce guide."
+
+#: ../../contributing/coding.rst:94 5d087a5f51c148f68130cacbe01c6413
+msgid "Naming Conventions"
+msgstr "Conventions de nommage"
+
+#: ../../contributing/coding.rst:96 8016522773394b769910242e12875e45
+msgid ""
+"Use camelCase for PHP variables, members, function and method names, "
+"arguments (e.g. $modelsCacheDirectory, isStarted());"
+msgstr ""
+"Utiliser camelCase pour les variables php, les membres, les fonctions et "
+"noms de méthodes, les arguments (e.g. $modelsCacheDirectory, isStarted()) ;"
+
+#: ../../contributing/coding.rst:97 eed4415d690541cc932f13cf56832d92
+msgid ""
+"Use namespaces for all PHP classes and UpperCamelCase for their names (e.g. "
+"CacheManager);"
+msgstr ""
+"Chaque classe php doit avoir un namespace (voir PSR-4) et utiliser la "
+"convention UpperCamelCase pour son nommage (e.g. CacheManager) ;"
+
+#: ../../contributing/coding.rst:98 e2e4e12ea09a44808f7136b7f930d37c
+msgid "Prefix all abstract classes with Abstract except PHPUnit BaseTests;"
+msgstr ""
+"Préfixer toutes les classes abstraites avec Abstract, à l'exception des "
+"classes PHPUnit BaseTests :"
+
+#: ../../contributing/coding.rst:99 ac047cd7d0d0486087c0a3c92cec1a1a
+msgid "Suffix interfaces with ``Interface``;"
+msgstr "Suffixer les interfaces avec ``Interface`` ;"
+
+#: ../../contributing/coding.rst:100 cbf81a6bd4fa419ebc44b68ea5a9c7a6
+msgid "Suffix traits with ``Trait``;"
+msgstr "Suffixer les traits avec ``Trait`` ;"
+
+#: ../../contributing/coding.rst:101 5ec143c72cf446059df245b3b9ed6800
+msgid "Suffix exceptions with ``Exception``;"
+msgstr "Suffixer les exceptions avec ``Exception`` ;"
+
+#: ../../contributing/coding.rst:102 fab3b7a32da046caa0975b4090cca042
+msgid ""
+"Suffix core classes manager with ``Manager`` (e.g. CacheManager, "
+"TranslatorManager);"
+msgstr ""
+"Suffixer les classes principales de type manager avec ``Manager`` (e.g. "
+"CacheManager, TranslatorManager) ;"
+
+#: ../../contributing/coding.rst:103 934fcc4445e84d36ad4b26ebfddc6be4
+msgid "Prefix Utility classes with ``U`` (e.g. UString, URequest);"
+msgstr ""
+"Préfixer les classes utilitaires avec un ``U`` (e.g. UString, URequest) ;"
+
+#: ../../contributing/coding.rst:104 8269149777304d13bf4c084cdaf45fd2
+msgid "Use UpperCamelCase for naming PHP files (e.g. CacheManager.php);"
+msgstr ""
+"Utiliser UpperCamelCase pour le nommage des fichiers PHP (e.g. "
+"CacheManager.php) ;"
+
+#: ../../contributing/coding.rst:105 a844ba17bb9940eaa4ae33b7c6154558
+msgid "Use uppercase for constants (e.g. const SESSION_NAME='Ubiquity')."
+msgstr ""
+"Utiliser les majuscules pour les constantes (e.g. const "
+"SESSION_NAME='Ubiquity')."
+
+#: ../../contributing/coding.rst:108 bae64586d65145aea5853a644a5c6b01
+msgid "Indentation, tabs, braces"
+msgstr "Indentation, tabulations, accolades"
+
+#: ../../contributing/coding.rst:110 d7390803c4b841e5bf7628c69a041a92
+msgid "Use Tabs, not spaces; (!PSR-2)"
+msgstr "Utiliser des tabulations, et non des espaces ; (! PSR-2)"
+
+#: ../../contributing/coding.rst:111 417a03b1af674bf7a51759a46ceb80eb
+msgid "Use brace always on the same line; (!PSR-2)"
+msgstr "Utiliser les accolades sans passage à la ligne suivante ; (! PSR-2)"
+
+#: ../../contributing/coding.rst:112 8f61a3106bfa49169e76037786692ae6
+msgid ""
+"Use braces to indicate control structure body regardless of the number of "
+"statements it contains;"
+msgstr ""
+"Utilisez des accolades pour indiquer le corps de la structure de contrôle, "
+"quel que soit le nombre d'instructions qu'elle contient ;"
+
+#: ../../contributing/coding.rst:115 b861aa7126a94238b2049e68e60ae105
+msgid "Classes"
+msgstr "Classes"
+
+#: ../../contributing/coding.rst:117 eaaa516dd1be4244871e2b6ce0c75a3b
+msgid "Define one class per file;"
+msgstr "Définir une classe par fichier ;"
+
+#: ../../contributing/coding.rst:118 265356c920ec484db62e2c6b760c7b6a
+msgid ""
+"Declare the class inheritance and all the implemented interfaces on the same"
+" line as the class name;"
+msgstr ""
+"Déclarer l'héritage de la classe et toutes les interfaces implémentées sur "
+"la même ligne que le nom de la classe ;"
+
+#: ../../contributing/coding.rst:119 d83408345f544991b37fa12d44f20f0a
+msgid "Declare class properties before methods;"
+msgstr "Déclarer les membres de données avant les méthodes ;"
+
+#: ../../contributing/coding.rst:120 e6d602f4388446f183ddcff2ffe3a01b
+msgid ""
+"Declare private methods first, then protected ones and finally public ones;"
+msgstr ""
+"Déclarer les méthodes privées en premier, puis celles qui sont protégées "
+"pour finir par les méthodes publiques :"
+
+#: ../../contributing/coding.rst:121 cd553c3262344705a2356ed9588c89e0
+msgid ""
+"Declare all the arguments on the same line as the method/function name, no "
+"matter how many arguments there are;"
+msgstr ""
+"Déclarer tous les arguments sur la même ligne que le nom de la "
+"méthode/fonction, quel que soit le nombre d'arguments ;"
+
+#: ../../contributing/coding.rst:122 358e5f99dad04dc6afc669126501be8d
+msgid ""
+"Use parentheses when instantiating classes regardless of the number of "
+"arguments the constructor has;"
+msgstr ""
+"Utiliser des parenthèses lors de l'instanciation d'une classe, même si le "
+"constructeur ne prend aucun argument ;"
+
+#: ../../contributing/coding.rst:123 647ff958cdbb418ca2b366b2d55ea24b
+msgid ""
+"Add a use statement for every class that is not part of the global "
+"namespace;"
+msgstr ""
+"Ajouter le statement use pour chaque classe qui ne fait pas partie de "
+"l'espace de noms global ;"
+
+#: ../../contributing/coding.rst:126 d986d8b55e774074b939e164ff7c7438
+msgid "Operators"
+msgstr "Opérateurs"
+
+#: ../../contributing/coding.rst:128 7537378d88a44b69adea5a0af2fcfbc9
+msgid "Use identical comparison and equal when you need type juggling;"
+msgstr ""
+"Utiliser la comparaison identique ou égale lorsque vous le jugez nécessaire "
+";"
+
+#: ../../contributing/coding.rst:130 f2ce3e6d055144b5952286d1e8f6c4ca
+msgid "Example"
+msgstr "Exemple"
+
+#: ../../contributing/coding.rst:188 15579e6102c44aa28576e10db9135de0
+msgid ""
+"You can import this standardization files that integrates all these rules in"
+" your IDE:"
+msgstr ""
+"Vous pouvez importer ces fichiers de standardisation intégrant ces règles "
+"dans votre IDE :"
+
+#: ../../contributing/coding.rst:187 e4c0989d49654ee6882eedaf0a9847b9
+msgid ":download:`Eclipse </contributing/phpMv-coding-standards.xml>`"
+msgstr ":download:`Eclipse </contributing/phpMv-coding-standards.xml>`"
+
+#: ../../contributing/coding.rst:188 4536efaab1914721ae0575c92a4ee955
+msgid ":download:`PhpStorm </contributing/phpMv-coding-standards-storm.xml>`"
+msgstr ":download:`PhpStorm </contributing/phpMv-coding-standards-storm.xml>`"
+
+#: ../../contributing/coding.rst:189 f7e09f4f86454d0bb6736138af1946db
+msgid ""
+"If your preferred IDE is not listed, you can submit the associated "
+"standardization file by creating a new PR."
+msgstr ""
+"Si votre IDE favori ne figure pas dans la liste, vous pouvez soumettre le "
+"fichier de normalisation associé en créant une nouvelle PR."
