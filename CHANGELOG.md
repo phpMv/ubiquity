@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 
+## [2.5.1] 2023-01-01
+### Added
+- Translations for [Ubiquity guide](https://micro-framework.readthedocs.io/es/latest/controller/router.html) into Spanish => thanks to @alnux for his work in progress
+- Translations for [Ubiquity guide](https://micro-framework.readthedocs.io/fr/latest/controller/router.html) into french
+### Updated
+In ORM:
+- support for primary keys updating (with `DAO::update($object)`)
+Tests:
+- Improvement of the test coverage => 71%
+
+### Fixed (no open issue)
+- [closuredump pb in UIntrospection](https://github.com/phpMv/ubiquity/commit/d941a7399a3c9843ddd0d2333b819c4205faf518)
+- [reload config bug with siteUrl config key](https://github.com/phpMv/ubiquity/commit/dbc71a300763a0ea80ed6e3bacbf89a2d335cf88)
+
 ## [2.5.0] 2022-12-18
 
 Before creating a new project, be sure to update the devtools if they are installed globally:
