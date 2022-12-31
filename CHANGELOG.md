@@ -9,11 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.5.1] 2023-01-01
 ### Added
-- Translations for [Ubiquity guide](https://micro-framework.readthedocs.io/es/latest/controller/router.html) into Spanish => thanks to @alnux for his work in progress
+- Translations for [Ubiquity guide](https://micro-framework.readthedocs.io/es/latest/controller/router.html) into Spanish => thanks to [@alnux](https://github.com/alnux) for his work in progress
 - Translations for [Ubiquity guide](https://micro-framework.readthedocs.io/fr/latest/controller/router.html) into french
 ### Updated
 In ORM:
 - support for primary keys updating (with `DAO::update($object)`)
+
 Tests:
 - Improvement of the test coverage => 71%
 
