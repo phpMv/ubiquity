@@ -22,7 +22,7 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 
 class Framework {
-	public const VERSION = '2.5.0';
+	public const VERSION = '2.5.1';
 
 	/**
 	 * Returns framework version.
