@@ -2,10 +2,10 @@
 
 namespace Ubiquity\controllers;
 
-use Ubiquity\views\View;
+use Ubiquity\domains\DDDManager;
 use Ubiquity\exceptions\RouterException;
 use Ubiquity\themes\ThemesManager;
-use Ubiquity\domains\DDDManager;
+use Ubiquity\views\View;
 
 /**
  * Base class for controllers.
@@ -13,9 +13,10 @@ use Ubiquity\domains\DDDManager;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.8
+ * @version 1.0.9
  *
  */
+#[\AllowDynamicProperties()]
 abstract class Controller {
 
 	/**
@@ -60,14 +61,14 @@ abstract class Controller {
 	 *        If a variable is passed, it will have the name **$data** in the view,
 	 *        If an associative array is passed, the view retrieves variables from the table's key names
 	 * @param boolean $asString If true, the view is not displayed but returned as a string (usable in a variable)
-	 * @throws \Exception
 	 * @return string null or the view content if **$asString** parameter is true
+	 * @throws \Exception
 	 */
-	public function loadView(string $viewName, $pData = NULL, bool $asString = false) {
-		if (isset ( $pData )) {
-			$this->view->setVars ( $pData );
+	public function loadView(string $viewName, $pData = null, bool $asString = false) {
+		if (isset ($pData)) {
+			$this->view->setVars($pData);
 		}
-		return $this->view->render ( $viewName, $asString );
+		return $this->view->render($viewName, $asString);
 	}
 
 	/**
@@ -78,11 +79,11 @@ abstract class Controller {
 	 *        If a variable is passed, it will have the name **$data** in the view,
 	 *        If an associative array is passed, the view retrieves variables from the table's key names
 	 * @param boolean $asString If true, the view is not displayed but returned as a string (usable in a variable)
-	 * @throws \Exception
 	 * @return string null or the view content if **$asString** parameter is true
+	 * @throws \Exception
 	 */
-	public function loadDefaultView($pData = NULL, bool $asString = false) {
-		return $this->loadView ( $this->getDefaultViewName (), $pData, $asString );
+	public function loadDefaultView($pData = null, bool $asString = false) {
+		return $this->loadView($this->getDefaultViewName(), $pData, $asString);
 	}
 
 	/**
@@ -92,10 +93,10 @@ abstract class Controller {
 	 * @return string the default view name
 	 */
 	public function getDefaultViewName(): string {
-		if (ThemesManager::getActiveTheme () !== '') {
-			return '@activeTheme/' . Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
+		if (ThemesManager::getActiveTheme() !== '') {
+			return '@activeTheme/' . Startup::getControllerSimpleName() . "/" . Startup::getAction() . "." . Startup::getViewNameFileExtension();
 		}
-		return DDDManager::getViewNamespace().Startup::getControllerSimpleName () . "/" . Startup::getAction () . "." . Startup::getViewNameFileExtension ();
+		return DDDManager::getViewNamespace() . Startup::getControllerSimpleName() . "/" . Startup::getAction() . "." . Startup::getViewNameFileExtension();
 	}
 
 	/**
@@ -114,8 +115,8 @@ abstract class Controller {
 	 * To be override in sub classes
 	 */
 	public function onInvalidControl() {
-		if (! \headers_sent ()) {
-			\header ( 'HTTP/1.1 401 Unauthorized', true, 401 );
+		if (!\headers_sent()) {
+			\header('HTTP/1.1 401 Unauthorized', true, 401);
 		}
 	}
 
@@ -130,13 +131,13 @@ abstract class Controller {
 	 * @throws \Exception
 	 */
 	public function forward(string $controller, string $action = 'index', $params = [], bool $initialize = false, bool $finalize = false) {
-		$u = ['controller'=>$controller,'action'=>$action ];
-		if (\is_array ( $params )) {
-			$u['params']= $params;
+		$u = ['controller' => $controller, 'action' => $action];
+		if (\is_array($params)) {
+			$u['params'] = $params;
 		} else {
-			$u['params'] =[ $params ];
+			$u['params'] = [$params];
 		}
-		Startup::runAction ( $u, $initialize, $finalize );
+		Startup::runAction($u, $initialize, $finalize);
 	}
 
 	/**
@@ -148,22 +149,22 @@ abstract class Controller {
 	 * @param boolean $finalize Call the **finalize** method if true
 	 * @throws RouterException
 	 */
-	public function redirectToRoute(string $routeName, $parameters = [ ], bool $initialize = false, bool $finalize = false) {
-		$infos = Router::getRouteInfoByName ( $routeName );
+	public function redirectToRoute(string $routeName, $parameters = [], bool $initialize = false, bool $finalize = false) {
+		$infos = Router::getRouteInfoByName($routeName);
 		if ($infos !== false) {
-			if (isset ( $infos ['controller'] )) {
-				$this->forward ( $infos ['controller'], $infos ['action'] ?? 'index', $parameters, $initialize, $finalize );
+			if (isset ($infos ['controller'])) {
+				$this->forward($infos ['controller'], $infos ['action'] ?? 'index', $parameters, $initialize, $finalize);
 			} else {
-				$method = \strtolower ( $_SERVER ['REQUEST_METHOD'] );
-				if (isset ( $infos [$method] )) {
+				$method = \strtolower($_SERVER ['REQUEST_METHOD']);
+				if (isset ($infos [$method])) {
 					$infos = $infos [$method];
-					$this->forward ( $infos ['controller'], $infos ['action'] ?? 'index', $parameters, $initialize, $finalize );
+					$this->forward($infos ['controller'], $infos ['action'] ?? 'index', $parameters, $initialize, $finalize);
 				} else {
-					throw new RouterException ( "Route {$routeName} not found for method {$method}", 404 );
+					throw new RouterException ("Route {$routeName} not found for method {$method}", 404);
 				}
 			}
 		} else {
-			throw new RouterException ( "Route {$routeName} not found", 404 );
+			throw new RouterException ("Route {$routeName} not found", 404);
 		}
 	}
 
