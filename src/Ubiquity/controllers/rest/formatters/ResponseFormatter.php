@@ -11,7 +11,7 @@ use Ubiquity\utils\base\UString;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 class ResponseFormatter {
@@ -24,8 +24,8 @@ class ResponseFormatter {
 	 * @return string
 	 */
 	public function get($objects, $pages = null) {
-		$objects = $this->getDatas ( $objects );
-		return $this->format ( $objects );
+		$objects = $this->getDatas($objects);
+		return $this->format($objects);
 	}
 
 	/**
@@ -36,14 +36,14 @@ class ResponseFormatter {
 	 * @return array
 	 */
 	public function getDatas($objects, &$classname = null) {
-		$objects = \array_map ( function ($o) use (&$classname) {
-			return $this->cleanRestObject ( $o, $classname );
-		}, $objects );
-		return \array_values ( $objects );
+		$objects = \array_map(function ($o) use (&$classname) {
+			return $this->cleanRestObject($o, $classname);
+		}, $objects);
+		return \array_values($objects);
 	}
 
 	public function getJSONDatas($datas) {
-		return $this->toJson ( $this->getDatas ( $datas ) );
+		return $this->toJson($this->getDatas($datas));
 	}
 
 	/**
@@ -55,14 +55,14 @@ class ResponseFormatter {
 	 */
 	public function cleanRestObject($o, &$classname = null) {
 		$o = $o->_rest;
-		foreach ( $o as $k => $v ) {
-			if (isset ( $v->_rest )) {
+		foreach ($o as $k => $v) {
+			if (isset ($v->_rest)) {
 				$o [$k] = $this->cleanRestObject($v);
 			}
-			if (\is_array ( $v )) {
-				foreach ( $v as $index => $values ) {
-					if (isset ( $values->_rest ))
-						$v [$index] = $this->cleanRestObject ( $values );
+			if (\is_array($v)) {
+				foreach ($v as $index => $values) {
+					if (isset ($values->_rest))
+						$v [$index] = $this->cleanRestObject($values);
 				}
 				$o [$k] = $v;
 			}
@@ -77,7 +77,7 @@ class ResponseFormatter {
 	 * @return string
 	 */
 	public function getOne($object) {
-		return $this->format ($this->cleanRestObject ( $object ));
+		return $this->format($this->cleanRestObject($object));
 	}
 
 	/**
@@ -90,7 +90,7 @@ class ResponseFormatter {
 		/*if(isset($arrayResponse['data'])){//To check
 			return \json_encode ( $arrayResponse['data'] );
 		}*/
-		return \json_encode ( $arrayResponse );
+		return \json_encode($arrayResponse);
 	}
 
 	/**
@@ -100,10 +100,10 @@ class ResponseFormatter {
 	 * @return string
 	 */
 	public function getModel($controllerName) {
-		$array = \explode ( "\\", $controllerName );
-		$result = \ucfirst ( end ( $array ) );
-		if (UString::endswith ( $result, "s" )) {
-			$result = \substr ( $result, 0, - 1 );
+		$array = \explode("\\", $controllerName);
+		$result = \ucfirst(end($array));
+		if (UString::endswith($result, "s")) {
+			$result = \substr($result, 0, -1);
 		}
 		return $result;
 	}
@@ -115,7 +115,7 @@ class ResponseFormatter {
 	 * @return string
 	 */
 	public function toJson($data) {
-		return \json_encode ( $data );
+		return \json_encode($data);
 	}
 
 	/**
@@ -125,20 +125,20 @@ class ResponseFormatter {
 	 * @return string
 	 */
 	public function formatException($e) {
-		$error = new RestError ( @$e->getCode (), \utf8_encode ( $e->getMessage () ), @$e->getTraceAsString (), @$e->getFile (), 500 );
-		return $this->format ( $error->asArray () );
+		$error = new RestError (@$e->getCode(), @$e->getMessage(), @$e->getTraceAsString(), @$e->getFile(), 500);
+		return $this->format($error->asArray());
 	}
 
 	public static function toXML($data, &$xml_data) {
-		foreach ( $data as $key => $value ) {
-			if (is_numeric ( $key )) {
+		foreach ($data as $key => $value) {
+			if (is_numeric($key)) {
 				$key = 'item' . $key; // dealing with <0/>..<n/> issues
 			}
-			if (is_array ( $value )) {
-				$subnode = $xml_data->addChild ( $key );
-				self::toXML ( $value, $subnode );
+			if (is_array($value)) {
+				$subnode = $xml_data->addChild($key);
+				self::toXML($value, $subnode);
 			} else {
-				$xml_data->addChild ( "$key", htmlspecialchars ( "$value" ) );
+				$xml_data->addChild("$key", htmlspecialchars("$value"));
 			}
 		}
 	}
