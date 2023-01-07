@@ -1,0 +1,223 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# jean-christophe HERON, 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:26+0000\n"
+"Last-Translator: jean-christophe HERON, 2023\n"
+"Language-Team: French (https://www.transifex.com/phpmv-1/teams/159300/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../model/generation/db-console.rst:3 ba5ec2f0762f4a468d7b69912ced91b5
+msgid "Generate models from Database with devtools"
+msgstr "Génération des models depuis la base de données avec les devtools"
+
+#: ../../model/generation/db-console.rst:5 d825c0421aa24535b55a50e75c0acba7
+msgid ""
+"In this part, your project is already created. |br| If you do not have a "
+"mysql database on hand, you can download this one: :download:`messagerie.sql"
+" </model/messagerie.sql>`"
+msgstr ""
+"Dans cette partie, votre projet est déjà créé. |br| Si vous n'avez pas de "
+"base de données mysql sous la main, vous pouvez télécharger celle-ci : "
+":download:`messagerie.sql </model/messagerie.sql>`"
+
+#: ../../model/generation/db-console.rst:9 0c99e0dfa4e846fdb55896606ecca5ba
+msgid "Configuration"
+msgstr "Configuration"
+
+#: ../../model/generation/db-console.rst:11 deec3597166e4f5aa8cf74fd0321e330
+msgid "Check the database configuration with **devtools** console program:"
+msgstr ""
+"Vérifiez la configuration de la base de données avec les **devtools** en "
+"mode console :"
+
+#: ../../model/generation/db-console.rst:21 ba3a7466661d4f7e8e923de5eebfebb6
+msgid "The configuration file is located in **app/config/config.php**"
+msgstr "Le fichier de configuration est situé dans **app/config/config.php**."
+
+#: ../../model/generation/db-console.rst:23 e16ab7b0d7cb4875b113350fb995123d
+msgid ""
+"Change the configuration of the database to use the **messagerie** database:"
+msgstr ""
+"Changez la configuration de la base de données pour utiliser la base de "
+"données **messagerie** :"
+
+#: ../../model/generation/db-console.rst:33 1899ed3260ba48d395d31d3ea4ab2d6d
+msgid "Generation"
+msgstr "Génération"
+
+#: ../../model/generation/db-console.rst:34 5a92b7377ad945d68151389891d8d58c
+msgid "To generate all models, use the **all-models** command:"
+msgstr "Pour générer tous les modèles, utilisez la commande **all-models** :"
+
+#: ../../model/generation/db-console.rst:43 07414fec2cda4eaeba69223eea27d055
+msgid "That's all! |br| The models are generated and operational."
+msgstr "C'est tout ! |br| Les modèles sont générés et opérationnels."
+
+#: ../../model/generation/db-console.rst:47 82be4ee3dd014f68a81a2bbf37ab70a7
+msgid ""
+"It is possible to generate models automatically when creating a project with"
+" the ``-m`` option for models and ``-b`` to specify the database:"
+msgstr ""
+"Il est possible de générer des modèles automatiquement lors de la création "
+"d'un projet avec l'option ``-m`` pour les modèles et ``-b`'' pour spécifier "
+"la base de données :"
+
+#: ../../model/generation/db-console.rst:54 1552ea88120e4a36b7326f5c60cec093
+msgid "Checking"
+msgstr "Vérifications"
+
+#: ../../model/generation/db-console.rst:57 bf3a5d3f847a4810a0d8a737cae5dd00
+msgid "Models meta-datas"
+msgstr "Meta-datas des models"
+
+#: ../../model/generation/db-console.rst:58 af3285eba5fc454198688b3e3ac81494
+msgid "To obtain the metadatas of all created models:"
+msgstr "Pour obtenir les métadonnées de tous les modèles créés :"
+
+#: ../../model/generation/db-console.rst:64 0b530d625aa242dc9e4bde3574003a61
+msgid "For a precise model:"
+msgstr "Pour un modèle particulier :"
+
+#: ../../model/generation/db-console.rst:74 a9863979728e41f5b0cacffe221a050c
+msgid "Models validation info"
+msgstr "Informations relatives à la validation"
+
+#: ../../model/generation/db-console.rst:75 643e9c5e60cb43c997f982b73490b9a0
+msgid "To obtain the validation rules for the model **User**:"
+msgstr "Pour obtenir les règles de validation pour le modèle **User** :"
+
+#: ../../model/generation/db-console.rst:84 fd4d09a9c9ec40ddbde99a77514c7440
+msgid "On a particular member (email):"
+msgstr "Sur un membre particulier (email) :"
+
+#: ../../model/generation/db-console.rst:94 df2a998d629648f78412d5646f9c2351
+msgid "Generated classes"
+msgstr "Classes générées"
+
+#: ../../model/generation/db-console.rst:95 b7603a6f2014432db383e45482b146ca
+msgid ""
+"Generated classes are located in **app/models** folder, if the configuration"
+" of `mvcNS.models` has not been changed."
+msgstr ""
+"Les classes générées sont situées dans le dossier **app/models**, si la "
+"configuration de `mvcNS.models` n'a pas été modifiée."
+
+#: ../../model/generation/db-console.rst:98 889e56864f5e43af9bb7c2760dbedab2
+msgid "If you want to know more about:"
+msgstr "Si vous voulez en savoir plus à ce sujet :"
+
+#: ../../model/generation/db-console.rst:100 9fdab1b9f797429fb585b44b36ff012e
+msgid ""
+"object/relational mapping rules, see the :doc:`ORM part</model/models>`"
+msgstr ""
+"règles de mappage object/relational, voir le :doc:`ORM part</model/models>`"
+
+#: ../../model/generation/db-console.rst:101 bb7cd92be45d4821a9a7305b6d25b9de
+msgid "data querying and persistence, see :doc:`DAO part</model/dao>`"
+msgstr ""
+"interrogation de données et persistance, voir :doc:`DAO part</model/dao>`"
+
+#: ../../model/generation/db-console.rst:103 01a742348c2445fca48fb5ef9cfddbb4
+msgid "The **User** class:"
+msgstr "La classe **User** :"
+
+#: ../../model/generation/db-console.rst:107 913052178deb4e9fba3518d6cfa7447a
+msgid "Attributes"
+msgstr "Attributs"
+
+#: ../../model/generation/db-console.rst:109
+#: ../../model/generation/db-console.rst:166 3643e169710747bab3616edcf0fed3b3
+#: db0838450e3f411cafa6d1d9a3c14988
+msgid "app/models/User.php"
+msgstr "app/models/User.php"
+
+#: ../../model/generation/db-console.rst:164 06b1ba450fd74881a9c345c16cebc5ee
+msgid "Annotations"
+msgstr "Annotations"
+
+#: ../../model/generation/db-console.rst:231 68cee191266a49d18d43cbe471dcda3e
+msgid ""
+"Any modification on the classes (code or annotations) requires the reset of "
+"the cache to be taken into account."
+msgstr ""
+"Toute modification sur les classes (code ou annotations) nécessite la "
+"réinitialisation du cache."
+
+#: ../../model/generation/db-console.rst:238 033a61a0d68f4c68802441bd710666b9
+msgid "Querying"
+msgstr "Interrogations"
+
+#: ../../model/generation/db-console.rst:240 9a923d63093240d6910391cab00ed64b
+msgid ""
+"Classes are generated, and models cache also. |br| At this point, we can "
+"already query the database in console mode, to give an idea of the "
+"possibilities of the :doc:`DAO part</model/dao>`:"
+msgstr ""
+"Les classes sont générées, et le cache des models également. |br| A ce "
+"stade, nous pouvons interroger la base de données en mode console, pour "
+"avoir une idée des possibilité de la partie :doc:`DAO </model/dao>`:"
+
+#: ../../model/generation/db-console.rst:244 736a2fef519345c48cfb2407428ce0bd
+msgid "Classic queries"
+msgstr "Interrogations classiques"
+
+#: ../../model/generation/db-console.rst:246 06350631352645869d0dd9c1e88de244
+msgid "Getting all the groups:"
+msgstr "Obtenir tous les groupes :"
+
+#: ../../model/generation/db-console.rst:255 d49f5cefc0cd4f79892ad2ddd756406a
+msgid "With there organization:"
+msgstr "Avec leur organisation :"
+
+#: ../../model/generation/db-console.rst:264 57c27e8b7a1940d5bc0fc97020bb5cab
+msgid ""
+"A more complete query: |br| Search for groups with the word **\"list\"** in "
+"their email, displaying the name, email and organization of each group:"
+msgstr ""
+"Une requête plus complète : |br| Rechercher les groupes ayant le mot "
+"**\"list \"** dans leur email, en affichant le nom, l'email et "
+"l'organisation de chaque groupe :"
+
+#: ../../model/generation/db-console.rst:274 1f3ddeffdf974b68acc887dffc4f19ed
+msgid "Getting one **User** by id:"
+msgstr "Obtenir un **User** à partir de son id :"
+
+#: ../../model/generation/db-console.rst:284 fa5548054a1846f38642d4068a5f2fff
+msgid "uQueries"
+msgstr "uQueries"
+
+#: ../../model/generation/db-console.rst:286 0eb0d8bf66ba4e3b9eccb860dcf5ee47
+msgid ""
+"**UQueries** are special in that they allow to set criteria on the values of"
+" the members of the associated objects:"
+msgstr ""
+"Les **UQueries** sont particulières car elles permettent de définir des "
+"critères sur les valeurs des membres des objets associés :"
+
+#: ../../model/generation/db-console.rst:289 4f8747e433c84fbbaabb459323a31abc
+msgid "Search for groups with a user named **Shermans**"
+msgstr "Rechercher les groupes avec un utilisateur de nom **Shermans**."
+
+#: ../../model/generation/db-console.rst:298 e6f614c76adb477ba88476e71b940421
+msgid "We can verify that **Shermans** belongs to the group **Auditeurs**"
+msgstr ""
+"Nous pouvons vérifier que **Shermans** appartient au groupe **Auditeurs**."
+
+#: ../../model/generation/db-console.rst:307 fc0ec3577e0b433d951454fe0e7e2afd
+msgid "The same with a parameterized query:"
+msgstr "La même chose avec une requête paramétrée :"
