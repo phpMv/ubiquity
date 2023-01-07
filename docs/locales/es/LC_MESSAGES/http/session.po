@@ -1,0 +1,137 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Leonardo D. A. Allende P., 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:24+0000\n"
+"Last-Translator: Leonardo D. A. Allende P., 2023\n"
+"Language-Team: Spanish (https://www.transifex.com/phpmv-1/teams/159300/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../http/session.rst:2 a068fbb580144124bec6616d1313f9c2
+msgid "Session"
+msgstr "Sesión (Session)"
+
+#: ../../http/session.rst:7 dd6b97a1501245c2a09810fed1b36ecd
+msgid ""
+"For all Http features, Ubiquity uses technical classes containing static "
+"methods. This is a design choice to avoid dependency injection that would "
+"degrade performances."
+msgstr ""
+"Para todas las funciones Http, Ubiquity utiliza clases técnicas que "
+"contienen métodos estáticos. Se trata de una elección de diseño para evitar "
+"la inyección de dependencias que degradaría el rendimiento."
+
+#: ../../http/session.rst:10 a9821a0ab7a440919c16b2f223453353
+msgid ""
+"The **USession** class provides additional functionality to more easily "
+"manipulate native **$_SESSION** php array."
+msgstr ""
+"La clase **USession** proporciona funcionalidad adicional para manipular más"
+" fácilmente el array nativo **$_SESSION** php."
+
+#: ../../http/session.rst:13 2c3db095bdff4e7f84eef0ece10d1ac7
+msgid "Starting the session"
+msgstr "Inicio de sesión"
+
+#: ../../http/session.rst:14 f4c8b39f5b684f688c2a7816ff6d7957
+msgid ""
+"The Http session is started automatically if the **sessionName** key is "
+"populated in the **app/config.php** configuration file:"
+msgstr ""
+"La sesión Http se inicia automáticamente si se rellena la clave "
+"**sessionName** en el fichero de configuración **app/config.php**:"
+
+#: ../../http/session.rst:25 d6df2140f164401bbe6da73a438bfc40
+msgid ""
+"If the sessionName key is not populated, it is necessary to start the "
+"session explicitly to use it:"
+msgstr ""
+"Si la clave sessionName no está rellenada, es necesario iniciar la sesión "
+"explícitamente para utilizarla:"
+
+#: ../../http/session.rst:34 3d8266ecacf540cf8f403a03d11d1e92
+msgid ""
+"The **name** parameter is optional but recommended to avoid conflicting "
+"variables."
+msgstr ""
+"El parámetro **nombre** es opcional pero se recomienda para evitar variables"
+" conflictivas."
+
+#: ../../http/session.rst:38 a1efe6217cb842d896e00a7d55e36c6f
+msgid "Creating or editing a session variable"
+msgstr "Crear o editar una variable de sesión"
+
+#: ../../http/session.rst:48 fbced0176fb444aab31a62e183df33a9
+msgid "Retrieving data"
+msgstr "Recuperación de datos"
+
+#: ../../http/session.rst:49 decd0568374d480a8b0b0083b6936a1f
+msgid ""
+"The **get** method returns the `null` value if the key **name** does not "
+"exist in the session variables."
+msgstr ""
+"El método **get** devuelve el valor `null` si la clave **name** no existe en"
+" las variables de sesión."
+
+#: ../../http/session.rst:57 e12feb9c6068418eac44be085f858e99
+msgid ""
+"The **get** method can be called with the optional second parameter "
+"returning a value if the key does not exist in the session variables."
+msgstr ""
+"El método **get** puede ser llamado con el segundo parámetro opcional "
+"devolviendo un valor si la clave no existe en las variables de sesión."
+
+#: ../../http/session.rst:63 38fba0ca184f4fb688929c37e778a6ad
+msgid "The **session** method is an alias of the **get** method."
+msgstr "El método **session** es un alias del método **get**."
+
+#: ../../http/session.rst:65 b1e3d0a3941146adaac2dbccee4f764b
+msgid "The **getAll** method returns all session vars:"
+msgstr "El método **getAll** devuelve todas las variables de sesión:"
+
+#: ../../http/session.rst:72 8d29d8e05598474aa36048ae67dcedfb
+msgid "Testing"
+msgstr "Pruebas"
+
+#: ../../http/session.rst:73 99a9b71cda3a4e1aab606166c13c398b
+msgid "The **exists** method tests the existence of a variable in session."
+msgstr ""
+"El método **exists** comprueba la existencia de una variable en sesión."
+
+#: ../../http/session.rst:81 c1c1fbb142494d018e3c85d01055d204
+msgid "The **isStarted** method checks the session start"
+msgstr "El método **isStarted** comprueba el inicio de sesión"
+
+#: ../../http/session.rst:90 ac7c76ace5444a8fa1a8c6badeba9c72
+msgid "Deleting variables"
+msgstr "Borrar variables"
+
+#: ../../http/session.rst:91 96899528b73a4835addf6a69311bb08c
+msgid "The **delete** method remove a session variable:"
+msgstr "El método **delete** elimina una variable de sesión:"
+
+#: ../../http/session.rst:98 f6efee457091464ca5629c1e6e3cb372
+msgid "Explicit closing of the session"
+msgstr "Cierre explícito de la sesión"
+
+#: ../../http/session.rst:99 70850844e4404f3fb79e1256bb76c88d
+msgid ""
+"The **terminate** method closes the session correctly and deletes all "
+"session variables created:"
+msgstr ""
+"El método **terminar** cierra la sesión correctamente y borra todas las "
+"variables de sesión creadas:"
