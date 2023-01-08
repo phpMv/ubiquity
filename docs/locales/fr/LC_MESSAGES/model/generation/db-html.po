@@ -1,0 +1,282 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017-2022, phpmv
+# This file is distributed under the same license as the Ubiquity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# jean-christophe HERON, 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ubiquity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 16:47+0100\n"
+"PO-Revision-Date: 2022-12-22 23:46+0000\n"
+"Last-Translator: jean-christophe HERON, 2023\n"
+"Language-Team: French (https://www.transifex.com/phpmv-1/teams/159300/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../../model/generation/db-html.rst:3 02e8bd3cf74f40ef82e7744f00d5472f
+msgid "Generate models from Database with webtools"
+msgstr "Génération des models depuis la base de données avec les webtools"
+
+#: ../../model/generation/db-html.rst:6 247da1b30ecb4a8997ba694ab7134753
+msgid ""
+"In this part, your project is already created. |br| If you do not have a "
+"mysql database on hand, you can download this one: :download:`messagerie.sql"
+" </model/messagerie.sql>`"
+msgstr ""
+"Dans cette partie, votre projet est déjà créé. |br| Si vous ne disposez pas "
+"d'une base de données mysql, vous pouvez télécharger celle-ci : "
+":download:`messagerie.sql </model/messagerie.sql>`"
+
+#: ../../model/generation/db-html.rst:10 021f7c748c8e490e99ad6a2c38ef0a2d
+msgid "Configuration"
+msgstr "Configuration"
+
+#: ../../model/generation/db-html.rst:12 5b5038d79bc649d1af7d44e933c54735
+msgid ""
+"Check the database configuration with **webtools** at "
+"``http://127.0.0.1:8090/Admin/``:"
+msgstr ""
+"Vérifiez la configuration de la base de données avec les **webtools** à "
+"l'adresse ``http://127.0.0.1:8090/Admin/`` :"
+
+#: ../../model/generation/db-html.rst:14 a2944e7871594f9eaefb6f924601ac1a
+msgid "Go to **models** part:"
+msgstr "Aller dans la partie **models** :"
+
+#: ../../model/generation/db-html.rst:20 ae38ca14a75c4320b7419689f2be3f32
+msgid "The configuration file is located in **app/config/config.php**"
+msgstr "Le fichier de configuration se situe dans **app/config/config.php**"
+
+#: ../../model/generation/db-html.rst:22 85a258ac6d6747ac85f6e2ff7a3bc385
+msgid ""
+"Change the configuration of the database to use the **messagerie** database:"
+msgstr ""
+"Modifier la configuration de la base de données pour utiliser la base "
+"**messagerie** :"
+
+#: ../../model/generation/db-html.rst:24 3c8734cabcb54a8ab84c122e10699f4a
+msgid "Click on the **Edit config file** button"
+msgstr "Cliquer sur le bouton **Edit config file**"
+
+#: ../../model/generation/db-html.rst:25 b3bc8624cd624a6ebfbbc2067ad89486
+msgid "Select the **database** part"
+msgstr "Sélectionner la partie **database**"
+
+#: ../../model/generation/db-html.rst:30 49a2fd91dada43e7825ef2b96feacb63
+msgid "Enter **messagerie** in the **dbName** field"
+msgstr "Saisir **messagerie** dans le champ **dbName**"
+
+#: ../../model/generation/db-html.rst:31 fdfc28954ff24c029d9e15ace51c7286
+msgid "Click on Test button to check the connection"
+msgstr "Cliquer sur le bouton **Test** pour vérifier la connexion"
+
+#: ../../model/generation/db-html.rst:32 870d1dd98cd04b8da857e9bdad0117b6
+msgid "Validate with the **Save configuration** button"
+msgstr "Valider en cliquant sur le bouton **Save configuration**"
+
+#: ../../model/generation/db-html.rst:38 97b709132aab4133962a31b08e052084
+msgid "Generation"
+msgstr "Génération"
+
+#: ../../model/generation/db-html.rst:39 e70099221a864de9b6717108b028d7c4
+msgid "To generate all models, click on **(Re-)create all models** button."
+msgstr ""
+"Pour générer tous les modèles, cliquez sur le bouton **(Re-)create all "
+"models**."
+
+#: ../../model/generation/db-html.rst:44 42254abde1a740cf907c12d0f3c78395
+msgid ""
+"Generate the models cache by clicking on **Re-init all models cache** "
+"button:"
+msgstr ""
+"Générer le cache des modèles en cliquant sur le bouton **Re-init all models "
+"cache** :"
+
+#: ../../model/generation/db-html.rst:49 dbb0208633534b94accf408bc8e508db
+msgid ""
+"That's all! |br| The models are generated and operational. |br| You can now "
+"see datas."
+msgstr ""
+"C'est tout ! |br| Les modèles sont générés et opérationnels. |br| Vous "
+"pouvez maintenant visualiser les données."
+
+#: ../../model/generation/db-html.rst:54 0c15c0ade7b04b3d9d657d48190700d1
+msgid ""
+"It is possible to generate models automatically when creating a project with"
+" the ``-m`` option for models and ``-b`` to specify the database:"
+msgstr ""
+"Il est possible de générer des modèles automatiquement lors de la création "
+"d'un projet avec l'option ``-m`` pour les modèles et ``-b`'' pour spécifier "
+"la base de données :"
+
+#: ../../model/generation/db-html.rst:61 3d626a53c2de4075ab9f4d1908e4d5e1
+msgid "Navigation between data"
+msgstr "Navigation entre les données"
+
+#: ../../model/generation/db-html.rst:63 1a5081252f9e49ac9e5b78410abeffe2
+msgid "You can now see the data and move between related objects:"
+msgstr ""
+"Vous pouvez maintenant voir les données et vous déplacer entre les objets "
+"liés :"
+
+#: ../../model/generation/db-html.rst:68 1b1c020a010a4e24ab71ae8a3be8c270
+msgid "You can also perform basic operations on objects:"
+msgstr ""
+"Vous pouvez également effectuer des opérations de base sur les objets :"
+
+#: ../../model/generation/db-html.rst:70 9f3536fd1c804b7aa2d4b46afd66e46b
+msgid "Create"
+msgstr "Création"
+
+#: ../../model/generation/db-html.rst:71 fa59e578332345d996b38252832f2b5f
+msgid "Read (navigate and see)"
+msgstr "Lire (naviguer et voir)"
+
+#: ../../model/generation/db-html.rst:72 862a6b0b62e24645ade58a6ccd813a6d
+msgid "Update"
+msgstr "Modifier"
+
+#: ../../model/generation/db-html.rst:73 f0fa43ecbfc5453eb5ed04ee8fab7316
+msgid "Delete"
+msgstr "Supprimer"
+
+#: ../../model/generation/db-html.rst:74 d3057c6cc454484c9fd03edb86bfc832
+msgid "Search"
+msgstr "Rechercher"
+
+#: ../../model/generation/db-html.rst:77 62ad4a668fd9493fbed6fbd2589ebc73
+msgid "Checking"
+msgstr "Vérification"
+
+#: ../../model/generation/db-html.rst:80 41e04de2c102439c8b6186ad497004b8
+msgid "Class diagram"
+msgstr "Diagramme de classes"
+
+#: ../../model/generation/db-html.rst:81 800804cbb62645d2b7b4ba81c9cb9cfb
+msgid "Still in the **models** part, click on the **models generation** step:"
+msgstr ""
+"Toujours dans la partie **models** , cliquez sur l'étape **models "
+"generation** :"
+
+#: ../../model/generation/db-html.rst:85 8e31a1829a65465d9cd6c51e2b10f3ee
+msgid "Then click on **Classes diagram** button:"
+msgstr "Cliquez ensuite sur le bouton **Classes diagram** :"
+
+#: ../../model/generation/db-html.rst:91 fc9f6c63b90e49d4854725ae1cbcffcc
+msgid ""
+"You can see the class diagram, using the `yUML API <https://yuml.me/>`_"
+msgstr ""
+"Vous pouvez voir le diagramme de classe, en utilisant l'API `yUML "
+"<https://yuml.me/>`_."
+
+#: ../../model/generation/db-html.rst:97 dbf39e24fef742198e424742d9fe4e95
+msgid "Models meta-datas"
+msgstr "Méta-datas des modèles"
+
+#: ../../model/generation/db-html.rst:98 1dddba215ce348758f7cac990ec0be5b
+msgid "To see the metadatas of a created model:"
+msgstr "Pour voir les métadonnées d'un modèle créé :"
+
+#: ../../model/generation/db-html.rst:100 7dfb8c736fdc493cba6f7f30e522dc5f
+msgid "Select a model, and activate the **Structure** tab:"
+msgstr "Sélectionnez un modèle, et activez l'onglet **Structure** :"
+
+#: ../../model/generation/db-html.rst:105 90b25f6c2d004272bc8bee590ebf179a
+msgid "You can also view the partial class diagram:"
+msgstr "Vous pouvez également visualiser le diagramme de classes partiel :"
+
+#: ../../model/generation/db-html.rst:111 c9bedd09d59741fd873f78ac3722dcee
+msgid "Models validation"
+msgstr "Validation des modèles"
+
+#: ../../model/generation/db-html.rst:112 1f8771b217d24ce1bf6ceb7bfa03ab55
+msgid "The third tab gives information about object validation:"
+msgstr ""
+"Le troisième onglet donne des informations sur la validation des objets :"
+
+#: ../../model/generation/db-html.rst:118 7a2a5c8ba4874e50be7cb35c7da79b41
+msgid ""
+"The validation rules were generated automatically with the classes. |br| "
+"They are defined through ``@validator`` annotations on each member of a "
+"class and are stored in cache."
+msgstr ""
+"Les règles de validation ont été générées automatiquement avec les classes. "
+"|br| Elles sont définies par des annotations ``@validator`` sur chaque "
+"membre d'une classe et sont stockées dans le cache."
+
+#: ../../model/generation/db-html.rst:121 05cdeca9d96646bc814badb8e20e0731
+msgid ""
+"The **Validate instances** button is used to check the validity of the "
+"instances:"
+msgstr ""
+"La bouton **Validate instances**  est utilisé pour vérifier la validité des "
+"instances :"
+
+#: ../../model/generation/db-html.rst:127 9ce2df6b238a46beb384ba063d48900d
+msgid ""
+"It is normal that by default all instances in the database do not check all "
+"validation rules."
+msgstr ""
+"Il est normal que, par défaut, toutes les instances de la base de données ne"
+" vérifient pas toutes les règles de validation."
+
+#: ../../model/generation/db-html.rst:130 4c7df973c48144f581013e8828d97cc1
+msgid "Generated classes"
+msgstr "Classes générées"
+
+#: ../../model/generation/db-html.rst:131 0db36dc056e24a28bd34f6a65dace036
+msgid ""
+"Generated classes are located in **app/models** folder, if the configuration"
+" of `mvcNS.models` has not been changed."
+msgstr ""
+"Les classes générées sont situées dans le dossier **app/models**, si la "
+"configuration de `mvcNS.models` n'a pas été modifiée."
+
+#: ../../model/generation/db-html.rst:134 dd09848c5c8f4f54bd2f826faf3881fe
+msgid "If you want to know more about:"
+msgstr "Si vous voulez en savoir plus à ce sujet :"
+
+#: ../../model/generation/db-html.rst:136 b895bd0ab283404a876eab57d1b47b8b
+msgid ""
+"object/relational mapping rules, see the :doc:`ORM part</model/models>`"
+msgstr ""
+"règles de mappage object/relational, voir le :doc:`ORM part</model/models>`"
+
+#: ../../model/generation/db-html.rst:137 9f7780c63b204e4d8eb9e0daa6f78bbb
+msgid "data querying and persistence, see :doc:`DAO part</model/dao>`"
+msgstr ""
+"interrogation de données et persistance, voir :doc:`DAO part</model/dao>`"
+
+#: ../../model/generation/db-html.rst:139 b3bf6f8d195d43f5932f4a1d70bb0883
+msgid "The **Settings** class:"
+msgstr "La classe **Settings** :"
+
+#: ../../model/generation/db-html.rst:143 7190e1fe6b1c4a76a363c9596e000656
+msgid "Attributes"
+msgstr "Attributs"
+
+#: ../../model/generation/db-html.rst:145
+#: ../../model/generation/db-html.rst:167 4dbefde23c4c4c5782cdd81b953e8e9c
+#: 560c4b45b88642169a51dded40c49247
+msgid "app/models/Settings.php"
+msgstr "app/models/Settings.php"
+
+#: ../../model/generation/db-html.rst:165 942d9f1aaa89462f8bd8d7dc3622d408
+msgid "Annotations"
+msgstr "Annotations"
+
+#: ../../model/generation/db-html.rst:194 35f37dadd5ec4e0aba1f4360489db29e
+msgid ""
+"Any modification on the classes (code or annotations) requires the reset of "
+"the cache to be taken into account."
+msgstr ""
+"Toute modification sur les classes (code ou annotations) nécessite la "
+"réinitialisation du cache pour être prise en compte."
