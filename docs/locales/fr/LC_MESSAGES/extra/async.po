@@ -134,8 +134,8 @@ msgid ""
 "Run Ubiquity Workerman (for the first time, **ubiquity-workerman** package "
 "will be installed):"
 msgstr ""
-"Lancer Ubiquity Workerman (la première fois, le paquet **ubiquity-swoole** "
-"sera installé) :"
+"Lancer Ubiquity Workerman (la première fois, le paquet **ubiquity-"
+"workerman** sera installé) :"
 
 #: ../../extra/async.rst:102 6465ecc2c1434ac3b2617c899e3c9408
 msgid ".ubiquity/workerman-config.php"
