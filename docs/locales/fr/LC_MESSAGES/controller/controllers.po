@@ -59,7 +59,7 @@ msgid ""
 "The ``Products.php`` controller is created in the ``app/controllers`` folder"
 " of the project."
 msgstr ""
-"Le contrôleur ``Products.php``créé dans le dossier ``app/controllers`` du "
+"Le contrôleur ``Products.php`` créé dans le dossier ``app/controllers`` du "
 "projet."
 
 #: ../../controller/controllers.rst:22 ../../controller/controllers.rst:220
