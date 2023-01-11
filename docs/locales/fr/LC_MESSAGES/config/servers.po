@@ -23,15 +23,15 @@ msgstr ""
 
 #: ../../config/servers.rst:3 55990be1d5534f458ec089e7bb05c5f4
 msgid "Servers configuration"
-msgstr "Servers configuration"
+msgstr "Serveurs configuration"
 
 #: ../../config/servers.rst:5 1aac0ee66dd3402f803d8ebb5c7b4acb
 msgid ""
 "Since version 2.4.5, for security and simplification reasons, the root of an"
 " Ubiquity application is located in the public folder."
 msgstr ""
-"Since version 2.4.5, for security and simplification reasons, the root of an"
-" Ubiquity application is located in the public folder."
+"Depuis la version 2.4.5, pour des raisons de sécurité et de simplification, "
+"la racine d'une application Ubiquity est localisée dans le dossier public."
 
 #: ../../config/servers.rst:8 0270fd74140f4819a74d6dbf15be3bc7
 msgid "Apache2"
@@ -61,12 +61,12 @@ msgid ""
 "In Apache 2.4, ``Order Allow,Deny`` has been replaced by ``Require all "
 "granted``."
 msgstr ""
-"In Apache 2.4, ``Order Allow,Deny`` has been replaced by ``Require all "
+"Avec Apache 2.4, ``Order Allow,Deny`` a été remplacé par ``Require all "
 "granted``."
 
 #: ../../config/servers.rst:83 62ba28d9d59d436ca5c32a4519e046cd
 msgid "index.php relocation in public folder"
-msgstr "index.php relocation in public folder"
+msgstr "déplacement de index.php dans le dossier public"
 
 #: ../../config/servers.rst:84 8402c47bf44f41b3bf309831ff3c4d03
 msgid ""
@@ -74,9 +74,9 @@ msgid ""
 "modify ``index.php`` and move the ``index.php`` and ``.htaccess`` files to "
 "the ``public`` folder."
 msgstr ""
-"If you created your project with a version prior to 2.4.5, you have to "
-"modify ``index.php`` and move the ``index.php`` and ``.htaccess`` files to "
-"the ``public`` folder."
+"Si vous avez créé votre projet avec une version antérieure à la 2.4.5, vous "
+"devez modifier ``index.php`` et déplacer les fichiers ``index.php`` et "
+"``.htaccess`` dans le dossier ``public``."
 
 #: ../../config/servers.rst:86 902175f1e21d49238001ac8a9a3e0681
 msgid "public/index.php"
@@ -91,12 +91,12 @@ msgid ""
 "Make sure the **libapache2-mod-fastcgi** and **php7.x-fpm** packages are "
 "installed (replace **x** with php version number)."
 msgstr ""
-"Make sure the **libapache2-mod-fastcgi** and **php7.x-fpm** packages are "
-"installed (replace **x** with php version number)."
+"Assurez-vous que les packages **libapache2-mod-fastcgi** et **php7.x-fpm** "
+"sont installés (remplacer **x** par votre version de php)."
 
 #: ../../config/servers.rst:104 7f622de21d784514a1c624ba6221821c
 msgid "**php-pm** configuration:"
-msgstr "**php-pm** configuration:"
+msgstr "Configuration **php-pm** :"
 
 #: ../../config/servers.rst:106 1f486f282e4c490fb535a88cc8dfee11
 msgid "php-pm.conf"
@@ -104,7 +104,7 @@ msgstr "php-pm.conf"
 
 #: ../../config/servers.rst:127 12a1317eda58432a8f01a8b315001a84
 msgid "**Apache 2.4** configuration:"
-msgstr "**Apache 2.4** configuration:"
+msgstr "Configuration **Apache 2.4** :"
 
 #: ../../config/servers.rst:142 b3f9bb39c3d544a79ca5bdaad601f7e3
 msgid "nginX"
@@ -112,7 +112,7 @@ msgstr "nginX"
 
 #: ../../config/servers.rst:144 7590c98a57b24924ad780b6676357ece
 msgid "**nginX** configuration:"
-msgstr "**nginX** configuration:"
+msgstr "Configuration **nginX** :"
 
 #: ../../config/servers.rst:146 905f0d7fbcdc42228ef2136f55875894
 msgid "nginx.conf"
@@ -124,7 +124,7 @@ msgstr "Swoole"
 
 #: ../../config/servers.rst:189 3bdf02e10ecb4f0380e90d5886d10711
 msgid "**Swoole** configuration:"
-msgstr "**Swoole** configuration:"
+msgstr "Configuration **Swoole** :"
 
 #: ../../config/servers.rst:192 4b4f6dfb619a48b8a0469e830c82ecec
 msgid ".ubiquity/swoole-config.php"
@@ -136,7 +136,7 @@ msgstr "Workerman"
 
 #: ../../config/servers.rst:208 7e84b8ec8adf49c0abde08e3863a7cd9
 msgid "**Workerman** configuration:"
-msgstr "**Workerman** configuration:"
+msgstr "Configuration **Workerman** :"
 
 #: ../../config/servers.rst:211 8d09f6998ba24f7686fcd8d8b49aeb99
 msgid ".ubiquity/workerman-config.php"
@@ -148,7 +148,7 @@ msgstr "RoadRunner"
 
 #: ../../config/servers.rst:227 cee5d06f5e4a4f89a5915476201fc16f
 msgid "**RoadRunner** configuration:"
-msgstr "**RoadRunner** configuration:"
+msgstr "Configuration **RoadRunner** :"
 
 #: ../../config/servers.rst:229 336212ed02eb4a4885d8ac0ced4d5462
 msgid ".ubiquity/.rr.yml"
