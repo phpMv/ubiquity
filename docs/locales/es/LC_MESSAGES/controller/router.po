@@ -68,7 +68,7 @@ msgstr ""
 
 #: ../../controller/router.rst:20 968d4c65b78242dd91d8907c22e8bf81
 msgid "Callback routes"
-msgstr "Rutas callback"
+msgstr "Rutas de devolución de llamadas (callback)"
 
 #: ../../controller/router.rst:21 710d8f8737cc4fb7935c6c003e333091
 msgid ""
@@ -726,7 +726,8 @@ msgid ""
 "key, associated to a callback defining the error messages:"
 msgstr ""
 "En el fichero de configuración **app/config/config.php**, añade la clave "
-"**onError**, asociada a un callback que defina los mensajes de error:"
+"**onError**, asociada a un devolucion de llamada (callback) que defina los "
+"mensajes de error:"
 
 #: ../../controller/router.rst:965 fc960b3d70a247aea36cd7f028aae892
 msgid "Implement the requested action **p404** in the **IndexController**:"
