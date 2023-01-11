@@ -48,7 +48,7 @@ msgstr "Ajouter des transformers"
 #: ../../contents/transformers.rst:14 b4e40fbcb303447cbe457bf5f586162a
 msgid "Either the **Author** class that we want to use in our application :"
 msgstr ""
-"Soit la classe **Author** que bous souhaitons utiliser dans notre "
+"Soit la classe **Author** que nous souhaitons utiliser dans notre "
 "application :"
 
 #: ../../contents/transformers.rst:18 ../../contents/transformers.rst:248
