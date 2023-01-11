@@ -186,7 +186,7 @@ msgstr "La commande **CreateArray** implémentée :"
 
 #: ../../extra/commands.rst:212 3ceaa17e13cf45b480ddb2fd36054514
 msgid "Custom command execution"
-msgstr "Exécution d'une commande personnaisée"
+msgstr "Exécution d'une commande personnalisée"
 
 #: ../../extra/commands.rst:214 0ea56f46c1e74c928ac5eb2dcf7b4844
 msgid ""
