@@ -109,7 +109,7 @@ abstract class TemplateGenerator {
 		return $this->insertAssets('js', $url);
 	}
 
-	public function insertCSS(string $url, array $options): string {
+	public function insertCSS(string $url): string {
 		return $this->insertAssets('css', $url);
 	}
 
