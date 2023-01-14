@@ -31,4 +31,8 @@ class ULatteFileLoader extends \Latte\Loaders\FileLoader {
 	public function getUniqueId(string $file): string {
 		return $this->getFilename($file);
 	}
+
+	public function getReferredName(string $file, string $referringFile): string {
+		return $file;
+	}
 }

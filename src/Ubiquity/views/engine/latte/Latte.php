@@ -7,6 +7,7 @@ use Latte\Loader;
 use Latte\Loaders\FileLoader;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
+use Ubiquity\core\Framework;
 use Ubiquity\events\EventsManager;
 use Ubiquity\events\ViewEvents;
 use Ubiquity\themes\ThemesManager;
@@ -44,6 +45,7 @@ class Latte extends TemplateEngine {
 	 */
 	public function render(string $fileName, ?array $pData = [], bool $asString = false) {
 		$pData ['config'] = Startup::getConfig();
+		$pData['app'] = new Framework();
 		EventsManager::trigger(ViewEvents::BEFORE_RENDER, $viewName, $pData);
 		if ($asString === true) {
 			return $this->engine->renderToString($fileName, $pData);

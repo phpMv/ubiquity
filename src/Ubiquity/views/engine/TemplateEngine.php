@@ -27,7 +27,7 @@ abstract class TemplateEngine {
 	 * @param array|null $pData
 	 * @param boolean $asString
 	 */
-	abstract public function render(string $fileName, ?array $pData = [], bool $asString = false);
+	abstract public function render(string $fileName, ?array $pData=[], bool $asString=false);
 
 	/**
 	 * Returns the defined block names.
@@ -43,17 +43,18 @@ abstract class TemplateEngine {
 	 */
 	abstract public function getCode(string $templateName): string;
 
-	abstract public function addFunction(string $name, $callback, array $options = []): void;
+	abstract public function addFunction(string $name, $callback, array $options=[]): void;
 
-	abstract protected function addFilter(string $name, $callback, array $options = []): void;
+	abstract protected function addFilter(string $name, $callback, array $options=[]): void;
 
 	abstract protected function addExtension($extension): void;
+	
 
 	protected function hasThemeResource(&$resource): bool {
 		$resource = \str_replace('@activeTheme/', '', $resource, $count);
 		return $count > 0;
 	}
-
+	
 	/**
 	 * Defines the activeTheme.
 	 * **activeTheme** namespace is @activeTheme
@@ -63,7 +64,7 @@ abstract class TemplateEngine {
 	 * @throws ThemesException
 	 */
 	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER): string {
-		$root = DDDManager::getActiveViewFolder();
+		$root=DDDManager::getActiveViewFolder();
 		$path = $root . $themeFolder . \DS . $theme;
 		if ($theme == '') {
 			$path = $root;
@@ -75,7 +76,7 @@ abstract class TemplateEngine {
 	}
 
 	protected function addFunctions(): void {
-		$safe = ['is_safe' => ['html']];
+		$safe=['is_safe' => ['html']];
 		$this->addFunction('path', function ($name, $params = [], $absolute = false) {
 			return Router::path($name, $params, $absolute);
 		});
@@ -124,7 +125,7 @@ abstract class TemplateEngine {
 	protected function safeString(string $str) {
 		return $str;
 	}
-
+	
 	abstract public function getGenerator(): ?TemplateGenerator;
 
 	/**
@@ -133,17 +134,15 @@ abstract class TemplateEngine {
 	 * @return string
 	 */
 	public function generateTemplateSourceFromFile(string $templateName): string {
-		$result = $this->getCode($templateName);
+		$result=$this->getCode($templateName);
 		return $this->generateTemplateSource($result);
 	}
 
 	public function generateTemplateSource(string $source): string {
-		$result = $source;
-		$gen = $this->getGenerator();
-		if (isset($gen)) {
-			$tp = new TemplateParser($gen);
-			$result = $tp->parseFileContent($result);
+		$gen=$this->getGenerator();
+		if($gen!=null) {
+			return $gen->parseFromTwig($source);
 		}
-		return $result;
+		return $source;
 	}
 }
