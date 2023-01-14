@@ -102,7 +102,7 @@ abstract class TemplateGenerator {
 	}
 
 	protected function insertAssets(string $funcName, string $url) {
-		return $this->openExpressionTag . "$funcName('" . $url . "," . $this->getNonceArray() . "')" . $this->closeExpressionTag;
+		return $this->openExpressionTag . "$funcName('" . $url . "'," . $this->getNonceArray() . ")" . $this->closeExpressionTag;
 	}
 
 	public function insertJS(string $url): string {
