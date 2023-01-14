@@ -176,5 +176,9 @@ class Twig extends TemplateEngine {
 	public function getGenerator(): ?TemplateGenerator {
 		return null;
 	}
-	
+
+	public function getFrameworkTemplateFolder(): string {
+		return '';
+	}
+
 }

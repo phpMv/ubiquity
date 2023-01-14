@@ -110,5 +110,9 @@ class Latte extends TemplateEngine {
 	public function getGenerator(): ?TemplateGenerator {
 		return new LatteTemplateGenerator();
 	}
+	
+	public function getFrameworkTemplateFolder(): string {
+		return 'latte/';
+	}
 
 }
