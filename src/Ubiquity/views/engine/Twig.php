@@ -3,6 +3,7 @@
 namespace Ubiquity\views\engine;
 
 use Twig\Environment;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 use Twig\Loader\FilesystemLoader;
@@ -58,54 +59,11 @@ class Twig extends TemplateEngine {
 			$this->loader->setPaths([\ROOT . \DS . 'views'], 'activeTheme');
 		}
 		
-		$this->addHelpers();
+		$this->addFunctions();
 	}
 	
-	protected function addHelpers() {
-		$this->addFunction('path', function ($name, $params = [], $absolute = false) {
-			return Router::path($name, $params, $absolute);
-		});
-			
-		$this->addFunction('url', function ($name, $params = []) {
-			return Router::url($name, $params);
-		});
-				
-		if (\class_exists('\\Ubiquity\\security\\csrf\\UCsrfHttp')) {
-			$this->addFunction('csrfMeta', function ($name) {
-				return \Ubiquity\security\csrf\UCsrfHttp::getTokenMeta($name);
-			}, true);
-				$this->addFunction('csrf', function ($name) {
-					return \Ubiquity\security\csrf\UCsrfHttp::getTokenField($name);
-				}, true);
-		}
-		
-		if (\class_exists('\\Ubiquity\security\\acl\\AclManager')) {
-			$this->addFunction('isAllowedRoute', function ($role, $routeName) {
-				return \Ubiquity\security\acl\AclManager::isAllowedRoute($role, $routeName);
-			}, true);
-		}
-		
-		$this->addFunction('css', function ($resource, $parameters = [], $absolute = false) {
-			if ($this->hasThemeResource($resource)) {
-				return AssetsManager::css_($resource, $parameters, $absolute);
-			}
-			return AssetsManager::css($resource, $parameters, $absolute);
-		}, true);
-			
-		$this->addFunction('js', function ($resource, $parameters = [], $absolute = false) {
-			if ($this->hasThemeResource($resource)) {
-				return AssetsManager::js_($resource, $parameters, $absolute);
-			}
-			return AssetsManager::js($resource, $parameters, $absolute);
-		}, true);
-		
-		$this->addFunction('img', function ($resource, $parameters = [], $absolute = false) {
-			if ($this->hasThemeResource($resource)) {
-				return AssetsManager::img_($resource, $parameters, $absolute);
-			}
-			return AssetsManager::img($resource, $parameters, $absolute);
-		}, true);
-			
+	protected function addFunctions(): void {
+		parent::addFunctions();
 		$t = new TwigFunction ('t', function ($context, $id, array $parameters = array(), $domain = null, $locale = null) {
 			$trans = TranslatorManager::trans($id, $parameters, $domain, $locale);
 			return $this->twig->createTemplate($trans)->render($context);
@@ -125,21 +83,23 @@ class Twig extends TemplateEngine {
 		$this->twig->addGlobal('app', new Framework ());
 	}
 	
-	protected function hasThemeResource(&$resource) {
-		$resource = \str_replace('@activeTheme/', '', $resource, $count);
-		return $count > 0;
-	}
-	
-	protected function addFunction($name, $callback, $safe = false) {
-		$options = ($safe) ? ['is_safe' => ['html']] : [];
+	public function addFunction(string $name, $callback, array $options=[]): void {
 		$this->twig->addFunction(new TwigFunction ($name, $callback, $options));
 	}
 	
+	protected function addFilter(string $name, $callback, array $options=[]): void {
+		$this->twig->addFilter(new TwigFilter($name,$callback,$options));
+	}
+	
+	protected function addExtension($extension): void {
+		$this->twig->addExtension($extension);
+	}
+
 	/*
 	 * (non-PHPdoc)
 	 * @see TemplateEngine::render()
 	 */
-	public function render($viewName, $pData, $asString) {
+	public function render(string $viewName, ?array $pData=[], bool $asString=false) {
 		$pData ['config'] = Startup::getConfig();
 		EventsManager::trigger(ViewEvents::BEFORE_RENDER, $viewName, $pData);
 		$render = $this->twig->render($viewName, $pData);
@@ -156,7 +116,7 @@ class Twig extends TemplateEngine {
 	 * {@inheritdoc}
 	 * @see \Ubiquity\views\engine\TemplateEngine::getBlockNames()
 	 */
-	public function getBlockNames($templateName) {
+	public function getBlockNames(string $templateName): array {
 		try {
 			$result = $this->twig->load($templateName)->getBlockNames();
 		} catch (\Error $e) {
@@ -170,7 +130,7 @@ class Twig extends TemplateEngine {
 	 * {@inheritdoc}
 	 * @see \Ubiquity\views\engine\TemplateEngine::getCode()
 	 */
-	public function getCode($templateName) {
+	public function getCode(string $templateName): string {
 		return UFileSystem::load($this->twig->load($templateName)->getSourceContext()->getPath());
 	}
 	
@@ -193,26 +153,17 @@ class Twig extends TemplateEngine {
 	public function setPaths(array $paths, string $namespace) {
 		$this->loader->setPaths($paths, $namespace);
 	}
-	
+
 	/**
-	 * Defines the activeTheme.
-	 * **activeTheme** namespace is @activeTheme
-	 *
-	 * @param string $theme
-	 * @param string $themeFolder
+	 * @param $theme
+	 * @param $themeFolder
+	 * @return string|void
 	 * @throws ThemesException
 	 */
-	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER) {
-		$root=DDDManager::getActiveViewFolder();
-		$path = $root . $themeFolder . \DS . $theme;
-		if ($theme == '') {
-			$path = $root;
-		}
-		if (\file_exists($path)) {
-			$this->loader->setPaths([$path], 'activeTheme');
-		} else {
-			throw new ThemesException (sprintf('The path `%s` does not exists!', $path));
-		}
+	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER): string {
+		$path=parent::setTheme($theme,$themeFolder);
+		$this->loader->setPaths([$path], 'activeTheme');
+		return $path;
 	}
 	
 	/**
@@ -223,5 +174,13 @@ class Twig extends TemplateEngine {
 	 */
 	public function exists($name) {
 		return $this->twig->getLoader()->exists($name);
+	}
+
+	public function getGenerator(): ?TemplateGenerator {
+		return null;
+	}
+	
+	public function getComposerVersion(): array {
+		return ['twig/twig'=>'^3.0'];
 	}
 }
