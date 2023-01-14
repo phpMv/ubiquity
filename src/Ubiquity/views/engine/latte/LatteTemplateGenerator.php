@@ -34,14 +34,18 @@ class LatteTemplateGenerator extends \Ubiquity\views\engine\TemplateGenerator {
 		if (UString::contains('(', $name)) {
 			return $this->openVarTag . $name . $filter . $this->closeVarTag;
 		}
-		return $this->openVarTag . '$' . $name . $filter . $this->closeVarTag;
+		return $this->openVarTag . $this->asVariable($name) . $filter . $this->closeVarTag;
+	}
+
+	public function asVariable(string $var): string {
+		return '$' . \ltrim($var, '$');
 	}
 
 	public function includeFile(string $filename, bool $asVariable = false): string {
 		$quote = "'";
 		if ($asVariable) {
 			$quote = '';
-			$filename = '$' . $filename;
+			$filename = $this->asVariable($filename);
 		}
 		return $this->openExpressionTag . "include {$quote}{$filename}{$quote}" . $this->closeExpressionTag;
 	}
@@ -50,19 +54,19 @@ class LatteTemplateGenerator extends \Ubiquity\views\engine\TemplateGenerator {
 		$quote = "'";
 		if ($asVariable) {
 			$quote = '';
-			$templateName = '$' . $templateName;
+			$templateName = $this->asVariable($templateName);
 		}
 		return $this->openExpressionTag . "layout {$quote}{$templateName}{$quote}" . $this->closeExpressionTag;
 	}
 
 	public function foreach(string $arrayName, string $value, ?string $key = null): string {
-		$arrayName = '$' . $arrayName;
-		$value = '$' . $value;
+		$arrayName = $this->asVariable($arrayName);
+		$value = $this->asVariable($value);
 		if ($key != null) {
-			$key = '$' . $key;
-			return $this->openExpressionTag . "for $arrayName as $key=>$value" . $this->closeExpressionTag;
+			$key = $this->asVariable($key);
+			return $this->openExpressionTag . "foreach $arrayName as $key=>$value" . $this->closeExpressionTag;
 		}
-		return $this->openExpressionTag . "for $arrayName as $value" . $this->closeExpressionTag;
+		return $this->openExpressionTag . "foreach $arrayName as $value" . $this->closeExpressionTag;
 	}
 
 	public function endForeach(): string {
@@ -70,7 +74,7 @@ class LatteTemplateGenerator extends \Ubiquity\views\engine\TemplateGenerator {
 	}
 
 	public function condition(string $condition): string {
-		$condition = '$' . \trim($condition);
+		$condition = $this->asVariable(\trim($condition));
 		return $this->openExpressionTag . "if $condition" . $this->closeExpressionTag;
 	}
 

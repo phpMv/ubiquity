@@ -51,6 +51,21 @@ class TemplateParser {
 		return $result;
 	}
 
+	protected function parseEquality(string $text): string {
+		$result = $text;
+		if (\preg_match_all('@\{\{\s?(.*?)==(.*?)\s(.*?)\s?\}\}@', $text, $matches)) {
+			$originals = $matches[0];
+			$varsLeft = $matches[1];
+			$varsRight = $matches[2];
+			foreach ($originals as $index => $original) {
+				$tmp = \str_replace($varsLeft[$index], $this->generator->asVariable($varsLeft[$index]), $original);
+				$tmp = \str_replace($varsRight[$index], $this->generator->asVariable($varsRight[$index]), $tmp);
+				$result = \str_replace($original, $tmp, $result);
+			}
+		}
+		return $result;
+	}
+
 	protected function parseAllConditions(string $text): string {
 		$result = $text;
 		if (\preg_match_all($this->getExpressionPattern('if'), $text, $matches)) {
@@ -126,6 +141,7 @@ class TemplateParser {
 		});
 		$result = $this->parseAllVars($result);
 		$result = $this->parseAllBlock($result);
+		$result = $this->parseEquality($result);
 		$result = $this->parseCallback($result, '@\{\%\s?endblock\s?\%\}@', function () {
 			return $this->generator->closeBlock();
 		});
@@ -153,5 +169,4 @@ class TemplateParser {
 		});
 		return $result;
 	}
-
 }
