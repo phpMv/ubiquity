@@ -53,7 +53,7 @@ class TemplateParser {
 
 	protected function parseEquality(string $text): string {
 		$result = $text;
-		if (\preg_match_all('@\{\{\s?(.*?)==(.*?)\s(.*?)\s?\}\}@', $text, $matches)) {
+		if (\preg_match_all('@\{\{\s?(.*?)==(.*?)\s?\}\}@', $text, $matches)) {
 			$originals = $matches[0];
 			$varsLeft = $matches[1];
 			$varsRight = $matches[2];
@@ -130,7 +130,8 @@ class TemplateParser {
 	}
 
 	public function parseFileContent(string $fileContent): string {
-		$result = $this->parseCallback($fileContent, '@\{\{\s?nonce\s?\}\}@', function () {
+		$result = $this->parseEquality($fileContent);
+		$result = $this->parseCallback($result, '@\{\{\s?nonce\s?\}\}@', function () {
 			return $this->generator->getNonce();
 		});
 		$result = $this->parseCallback($result, "@\{\s?nonce:\s?nonce\s?\}@", function () {
@@ -141,7 +142,6 @@ class TemplateParser {
 		});
 		$result = $this->parseAllVars($result);
 		$result = $this->parseAllBlock($result);
-		$result = $this->parseEquality($result);
 		$result = $this->parseCallback($result, '@\{\%\s?endblock\s?\%\}@', function () {
 			return $this->generator->closeBlock();
 		});
