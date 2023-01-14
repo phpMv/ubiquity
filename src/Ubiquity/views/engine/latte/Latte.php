@@ -5,13 +5,10 @@ namespace Ubiquity\views\engine\latte;
 use Latte\Engine;
 use Latte\Loader;
 use Latte\Loaders\FileLoader;
-use Ubiquity\assets\AssetsManager;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
-use Ubiquity\domains\DDDManager;
 use Ubiquity\events\EventsManager;
 use Ubiquity\events\ViewEvents;
-use Ubiquity\exceptions\ThemesException;
 use Ubiquity\themes\ThemesManager;
 use Ubiquity\utils\base\UFileSystem;
 use Ubiquity\views\engine\TemplateEngine;
@@ -22,11 +19,11 @@ class Latte extends TemplateEngine {
 	private ULatteFileLoader $loader;
 
 	public function __construct($options = []) {
-		$this->engine=new Engine();
-		$cacheDir=CacheManager::getAbsoluteCacheDirectory().\DS.'views';
+		$this->engine = new Engine();
+		$cacheDir = CacheManager::getAbsoluteCacheDirectory() . \DS . 'views';
 		$this->engine->setTempDirectory($cacheDir);
-		$this->loader=new ULatteFileLoader(\ROOT . \DS . 'views' . \DS);
-		$this->loader->addPath(Startup::getFrameworkDir().\DS .'..'.\DS .'core'.\DS.'views', 'framework');
+		$this->loader = new ULatteFileLoader(\ROOT . \DS . 'views' . \DS);
+		$this->loader->addPath(Startup::getFrameworkDir() . \DS . '..' . \DS . 'core' . \DS . 'views', 'framework');
 		$this->engine->setLoader($this->loader);
 
 		if (isset ($options ['activeTheme'])) {
@@ -45,13 +42,13 @@ class Latte extends TemplateEngine {
 	/**
 	 * @inheritDoc
 	 */
-	public function render(string $fileName, ?array $pData=[], bool $asString=false) {
+	public function render(string $fileName, ?array $pData = [], bool $asString = false) {
 		$pData ['config'] = Startup::getConfig();
 		EventsManager::trigger(ViewEvents::BEFORE_RENDER, $viewName, $pData);
-		if($asString===true){
-			return $this->engine->renderToString($fileName,$pData);
+		if ($asString === true) {
+			return $this->engine->renderToString($fileName, $pData);
 		}
-		$this->engine->render($fileName,$pData);
+		$this->engine->render($fileName, $pData);
 		EventsManager::trigger(ViewEvents::AFTER_RENDER, $render, $viewName, $pData);
 	}
 
@@ -59,8 +56,8 @@ class Latte extends TemplateEngine {
 	 * @inheritDoc
 	 */
 	public function getBlockNames(string $templateName): array {
-		$tpl=$this->engine->createTemplate($templateName);
-		return  $tpl->getBlockNames();
+		$tpl = $this->engine->createTemplate($templateName);
+		return $tpl->getBlockNames();
 	}
 
 	/**
@@ -78,7 +75,7 @@ class Latte extends TemplateEngine {
 	 * @inheritDoc
 	 */
 	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER): string {
-		$path=parent::setTheme($theme,$themeFolder);
+		$path = parent::setTheme($theme, $themeFolder);
 		$this->loader->addPath($path, 'activeTheme');
 		return $path;
 	}
@@ -86,14 +83,14 @@ class Latte extends TemplateEngine {
 	/**
 	 * @inheritDoc
 	 */
-	public function addFunction(string $name, $callback, array $options=[]): void {
-		$this->engine->addFunction($name,$callback);
+	public function addFunction(string $name, $callback, array $options = []): void {
+		$this->engine->addFunction($name, $callback);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	protected function addFilter(string $name, $callback, array $options=[]): void {
+	protected function addFilter(string $name, $callback, array $options = []): void {
 		$this->engine->addFilter($name, $callback);
 	}
 
@@ -107,12 +104,9 @@ class Latte extends TemplateEngine {
 	protected function safeString(string $str) {
 		return new \Latte\Runtime\Html($str);
 	}
-	
+
 	public function getGenerator(): ?TemplateGenerator {
 		return new LatteTemplateGenerator();
 	}
 
-	public function getComposerVersion(): array {
-		return ['latte/latte'=>'^3.0'];
-	}
 }
