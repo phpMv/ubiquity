@@ -7,7 +7,6 @@ use Ubiquity\controllers\Router;
 use Ubiquity\domains\DDDManager;
 use Ubiquity\exceptions\ThemesException;
 use Ubiquity\themes\ThemesManager;
-use Ubiquity\views\engine\twig\TemplateParser;
 
 /**
  * Abstract template engine.
@@ -64,7 +63,7 @@ abstract class TemplateEngine {
 	 * @param string $themeFolder
 	 * @throws ThemesException
 	 */
-	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER): string {
+	public function setTheme(string $theme, string $themeFolder = ThemesManager::THEMES_FOLDER): string {
 		$root = DDDManager::getActiveViewFolder();
 		$path = $root . $themeFolder . \DS . $theme;
 		if ($theme == '') {
@@ -123,7 +122,7 @@ abstract class TemplateEngine {
 		}, $safe);
 	}
 
-	protected function safeString(string $str) {
+	protected function safeString(string $str): string {
 		return $str;
 	}
 

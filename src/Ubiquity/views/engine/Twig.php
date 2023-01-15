@@ -152,12 +152,12 @@ class Twig extends TemplateEngine {
 	}
 
 	/**
-	 * @param $theme
-	 * @param $themeFolder
+	 * @param string $theme
+	 * @param string $themeFolder
 	 * @return string|void
 	 * @throws ThemesException
 	 */
-	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER): string {
+	public function setTheme(string $theme, string $themeFolder = ThemesManager::THEMES_FOLDER): string {
 		$path = parent::setTheme($theme, $themeFolder);
 		$this->loader->setPaths([$path], 'activeTheme');
 		return $path;

@@ -76,7 +76,7 @@ class Latte extends TemplateEngine {
 	/**
 	 * @inheritDoc
 	 */
-	public function setTheme($theme, $themeFolder = ThemesManager::THEMES_FOLDER): string {
+	public function setTheme(string $theme, string $themeFolder = ThemesManager::THEMES_FOLDER): string {
 		$path = parent::setTheme($theme, $themeFolder);
 		$this->loader->addPath($path, 'activeTheme');
 		return $path;
@@ -110,7 +110,7 @@ class Latte extends TemplateEngine {
 	public function getGenerator(): ?TemplateGenerator {
 		return new LatteTemplateGenerator();
 	}
-	
+
 	public function getFrameworkTemplateFolder(): string {
 		return 'latte/';
 	}

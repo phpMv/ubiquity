@@ -8,7 +8,7 @@ class LatteTemplateGenerator extends \Ubiquity\views\engine\TemplateGenerator {
 		return \str_replace(['$_self', '$nonce', '$config->siteUrl'], ['$this->getName()', '$nonce??""', "\$config['siteUrl']"], $code);
 	}
 
-	public function parseFromTwig(string $code) {
+	public function parseFromTwig(string $code): string {
 		if (\class_exists(\LatteTools\TwigConverter::class)) {
 			$converter = new \LatteTools\TwigConverter();
 			$code = $converter->convert($code);

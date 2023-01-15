@@ -2,8 +2,6 @@
 
 namespace Ubiquity\views\engine;
 
-use Ubiquity\utils\base\UString;
-
 /**
  * Ubiquity abstract TemplateGenerator class.
  *
@@ -16,7 +14,7 @@ use Ubiquity\utils\base\UString;
  */
 abstract class TemplateGenerator {
 
-	public function parseFromTwig(string $code){
+	public function parseFromTwig(string $code): string {
 		return $code;
 	}
 
