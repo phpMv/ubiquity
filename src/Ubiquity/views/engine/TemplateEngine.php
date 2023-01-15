@@ -122,7 +122,7 @@ abstract class TemplateEngine {
 		}, $safe);
 	}
 
-	protected function safeString(string $str): string {
+	protected function safeString(string $str) {
 		return $str;
 	}
 
