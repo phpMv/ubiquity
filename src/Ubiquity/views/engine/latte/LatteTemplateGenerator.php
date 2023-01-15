@@ -5,7 +5,7 @@ namespace Ubiquity\views\engine\latte;
 class LatteTemplateGenerator extends \Ubiquity\views\engine\TemplateGenerator {
 
 	private function replaceSpe(string $code): string {
-		return \str_replace(['$_self', '$nonce'], ['$this->getName()', '$nonce??""'], $code);
+		return \str_replace(['$_self', '$nonce', '$config->siteUrl'], ['$this->getName()', '$nonce??""', '$config["siteUrl"]'], $code);
 	}
 
 	public function parseFromTwig(string $code) {
