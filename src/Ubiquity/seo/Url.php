@@ -9,6 +9,7 @@ use Ubiquity\utils\http\URequest;
  * @author jc
  *
  */
+#[\AllowDynamicProperties()]
 class Url {
 	private $location;
 	private $lastModified;
@@ -17,13 +18,13 @@ class Url {
 	private $existing;
 	private $valid;
 
-	public function __construct($location="", $lastModified=null, $changeFrequency="daily", $priority="0.5") {
-		$this->location=$location;
-		$this->lastModified=$lastModified;
-		$this->changeFrequency=$changeFrequency;
-		$this->priority=$priority;
-		$this->existing=false;
-		$this->valid=true;
+	public function __construct($location = "", $lastModified = null, $changeFrequency = "daily", $priority = "0.5") {
+		$this->location = $location;
+		$this->lastModified = $lastModified;
+		$this->changeFrequency = $changeFrequency;
+		$this->priority = $priority;
+		$this->existing = false;
+		$this->valid = true;
 	}
 
 	/**
@@ -63,7 +64,7 @@ class Url {
 	 * @param mixed $location
 	 */
 	public function setLocation($location) {
-		$this->location=$location;
+		$this->location = $location;
 	}
 
 	/**
@@ -71,7 +72,7 @@ class Url {
 	 * @param string $lastModified
 	 */
 	public function setLastModified($lastModified) {
-		$this->lastModified=$lastModified;
+		$this->lastModified = $lastModified;
 	}
 
 	/**
@@ -79,7 +80,7 @@ class Url {
 	 * @param string $changeFrequency
 	 */
 	public function setChangeFrequency($changeFrequency) {
-		$this->changeFrequency=$changeFrequency;
+		$this->changeFrequency = $changeFrequency;
 	}
 
 	/**
@@ -87,8 +88,9 @@ class Url {
 	 * @param string $priority
 	 */
 	public function setPriority($priority) {
-		$this->priority=$priority;
+		$this->priority = $priority;
 	}
+
 	/**
 	 * @return mixed
 	 */
@@ -103,12 +105,13 @@ class Url {
 		$this->existing = $existing;
 	}
 
-	public static function fromArray($array,$existing=true){
-		$array["existing"]=$existing;
-		$object=new Url();
-		URequest::setValuesToObject($object,$array);
+	public static function fromArray($array, $existing = true) {
+		$array["existing"] = $existing;
+		$object = new Url();
+		URequest::setValuesToObject($object, $array);
 		return $object;
 	}
+
 	/**
 	 * @return boolean
 	 */
