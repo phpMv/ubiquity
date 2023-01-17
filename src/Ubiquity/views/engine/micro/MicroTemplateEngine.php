@@ -62,10 +62,6 @@ class MicroTemplateEngine extends TemplateEngine {
 		throw new \BadMethodCallException('addExtension method has no sense with MicroTemplateEngine');
 	}
 
-	public function getFrameworkTemplateFolder(): string {
-		return '';
-	}
-
 	public function getGenerator(): ?TemplateGenerator {
 		return null;
 	}

@@ -48,8 +48,6 @@ abstract class TemplateEngine {
 
 	abstract protected function addExtension($extension): void;
 
-	abstract public function getFrameworkTemplateFolder(): string;
-
 	protected function hasThemeResource(&$resource): bool {
 		$resource = \str_replace('@activeTheme/', '', $resource, $count);
 		return $count > 0;
