@@ -1,0 +1,33 @@
+{block b_before}
+<p></p>
+{/block}
+{block b_message}
+{$_message|noescape}
+{/block}
+{block b_buttons}
+	{block b_extraButtons}
+		{foreach $q as $bt}
+			{$bt|noescape}
+		{/foreach}
+	{/block}
+	{block b_loginButton}
+		<a href="{$authURL}" data-target="{$bodySelector}" class="ui button ajax _login"><i class="icon sign in"></i>{$_loginCaption}</a>
+	{/block}
+	{block b_recoveryLink}
+		{if $resetPassword}
+			{$resetPassword|noescape}
+		{/if}
+	{/block}
+	{block b_accountCreation}
+		{if $createAccountUrl}
+			<a href="{$createAccountUrl}" class="ui button black ajax _create" data-target='{$accountCreationTarget}'>Create account</a>
+		{/if}
+	{/block}
+{/block}
+{block b_after}
+{/block}
+{block script}
+	{if isset($script_foot)}
+		{$script_foot|noescape}
+	{/if}
+{/block}

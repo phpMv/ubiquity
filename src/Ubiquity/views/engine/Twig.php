@@ -33,7 +33,7 @@ class Twig extends TemplateEngine {
 
 	public function __construct($options = []) {
 		$loader = new FilesystemLoader (\ROOT . \DS . 'views' . \DS);
-		$loader->addPath(Startup::getFrameworkDir() . \DS . '..' . \DS . 'core' . \DS . 'views', 'framework');
+		$loader->addPath(Startup::getFrameworkDir() . '/../core/views/engines/twig', 'framework');
 		$this->loader = $loader;
 
 		if (($options ['cache'] ?? false) === true) {
@@ -175,10 +175,6 @@ class Twig extends TemplateEngine {
 
 	public function getGenerator(): ?TemplateGenerator {
 		return null;
-	}
-
-	public function getFrameworkTemplateFolder(): string {
-		return '';
 	}
 
 }

@@ -2,7 +2,6 @@
 
 namespace Ubiquity\core\postinstall;
 
-use Ubiquity\controllers\Startup;
 use Ubiquity\core\Framework;
 use Ubiquity\themes\ThemesManager;
 
@@ -42,8 +41,7 @@ class Display {
 		if ($activeTheme == null || ThemesManager::isCustom($activeTheme)) {
 			$activeTheme = "index";
 		}
-		$folder = Startup::getTemplateEngineInstance()->getFrameworkTemplateFolder();
-		return '@framework/index/' . $folder . $activeTheme . '.html';
+		return '@framework/index/' . $activeTheme . '.html';
 	}
 
 	public static function getThemes() {

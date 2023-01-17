@@ -1,0 +1,28 @@
+{block b_before}
+<p></p>
+{/block}
+{block b_message}
+{$_message|noescape}
+{/block}
+{block b_form}
+<form class="ui form" action="{$submitURL}" method="post" name="frm-valid-code" id="frm-valid-code" data-target="{$bodySelector}">
+	<div class="field">
+		<label for="code">Code</label>
+		{if $prefix}
+			<div class="ui labeled input">
+				<div class="ui label">{$prefix}</div>
+				<input type="text" placeholder="Enter a code" name="code" id="code">
+			</div>
+		{else}
+			<input type="text" placeholder="Enter a code" name="code" id="code">
+		{/if}
+	</div>
+<button type="submit" class="ui submit button _validate2FA">Validate code</button>
+</form>
+{/block}
+{block b_after}
+<div class="ui basic segment" id="two-step-response"></div>
+{/block}
+{block b_script}
+	{$script_foot|noescape}
+{/block}

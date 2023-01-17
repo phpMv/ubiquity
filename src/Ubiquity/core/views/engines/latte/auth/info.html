@@ -1,0 +1,33 @@
+<div id="_userInfo">
+{block b_before}
+{/block}
+{if !$connected === null}
+	{block b_beforeConnected}
+	{/block}
+	{block b_userInfo}
+	<div class="ui label">
+	{$connected|noescape}
+	</div>
+	&nbsp;
+	{/block} 
+	{block b_logoutButton}
+	<a href="{$authURL}/terminate" class="ui black button ajax _logout" data-target="{$bodySelector}">
+		{block b_logoutCaption}
+		<i class="ui sign out alternate icon"></i> Log out
+		{/block}
+	</a>
+	{/block}
+{else}
+	{block b_beforeNotConnected}
+	{/block}
+	{block b_loginButton}
+	<a href="{$authURL}" data-target="{$bodySelector}" class="ui button ajax">
+		{block b_loginCaption}
+		<i class="icon sign in"></i> Log in
+		{/block}
+	</a>
+	{/block}
+{/if}
+{block b_after}
+{/block}
+</div>

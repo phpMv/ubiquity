@@ -1,0 +1,67 @@
+{block b_before}
+<p></p>
+{/block}
+{block b_form}
+<form id="frm-login" class="ui form" name="frm-login" method="post" action="{$action}">
+{block b_header}
+<h4 class="ui header dividing">Connection</h4> 
+{/block}
+{block b_fields}
+<div class="two fields">
+	{block b_fieldLogin}
+	<div class="field required">
+	<label for="{$loginInputName}">{$loginLabel}</label> 
+	<div class="ui input">
+		{block b_login}
+		<input id="{$loginInputName}" name="{$loginInputName}" type="text" placeholder="{$loginLabel}">
+		{/block}
+	</div>
+	</div>
+	{/block}
+	{block b_fieldPassword}
+	<div class="field required">
+		<label for="{$passwordInputName}">{$passwordLabel}</label>
+		<div class="ui input">
+			{block b_password}
+			<input id="{$passwordInputName}" name="{$passwordInputName}" type="password">
+			{/block}
+		</div>
+	</div>
+	{/block}
+</div>
+{block b_extraFields}
+	<div class="inline fields">
+	{block b_fieldRemember}
+		<div class="field">
+			<div class="ui checkbox">
+				<input id="ck-remember" name="ck-remember" value="1" type="checkbox" placeholder="Remember" tabindex="0" class="hidden"> 
+				<label for="ck-remember">{$rememberCaption}</label>
+			</div>
+		</div>
+	{/block}
+	{block b_recoveryLink}
+		{if $resetPassword}
+			<div class="field">
+				{$resetPassword|noescape}
+			</div>
+		{/if}
+	{/block}
+	</div>
+	{/block}
+{/block}
+{block b_buttons}
+<button class="ui button green basic ajax _connect">Connection</button>
+	{block b_accountCreation}
+		{if $canCreateAccountMessage}
+			<div class="ui divider"></div>
+			{$canCreateAccountMessage|noescape}
+		{/if}
+	{/block}
+{/block}
+</form>
+{/block}
+{block b_after}
+{/block}
+{block b_script}
+	{$script_foot|noescape}
+{/block}

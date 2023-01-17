@@ -1,0 +1,50 @@
+{block b_before}
+<p></p>
+{/block}
+{block b_form}
+<form id="frm-create" class="ui form" name="frm-create" method="post" action="{$action}">
+{block b_header}
+<h4 class="ui header dividing">Account creation</h4> 
+{/block}
+{block b_fields}
+	{block b_fieldLogin}
+	<div class="field required">
+	<label for="{$loginInputName}">{$loginLabel}</label> 
+	<div class="ui input">
+		{block b_login}
+		<input id="{$loginInputName}" name="{$loginInputName}" type="text" placeholder="{$loginLabel}">
+		{/block}
+	</div>
+	</div>
+	{/block}
+	{block b_fieldPassword}
+	<div class="two fields">
+		<div class="field required">
+			<label for="{$passwordInputName}">{$passwordLabel}</label>
+			<div class="ui input">
+				{block b_password}
+				<input id="{$passwordInputName}" name="{$passwordInputName}" type="password">
+				{/block}
+			</div>
+		</div>
+		<div class="field required">
+			<label for="{$passwordInputName}-conf">{$passwordConfLabel}</label>
+			<div class="ui input">
+				{block b_passwordConf}
+				<input id="{$passwordInputName}-conf" name="{$passwordInputName}-conf" type="password">
+				{/block}
+			</div>
+		</div>
+	</div>
+	{/block}
+{/block}
+{block b_buttons}
+<button class="ui button black fluid ajax _create">Creation</button>
+{/block}
+</form>
+{/block}
+{block b_after}
+{/block}
+{block b_script}
+	{$script_foot|noescape}
+{/block}

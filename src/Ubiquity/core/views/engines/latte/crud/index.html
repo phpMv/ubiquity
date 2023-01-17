@@ -1,0 +1,41 @@
+{block b_before}
+<div class="ui {$inverted} segment">
+{/block}
+{block btAddNew}
+	<div class="ui secondary {$inverted} menu">
+		<div class="item">
+			<a id="btAddNew" class="ui {$inverted} button orange _new">
+			 <i class="icon plus"></i>
+			 {block b_addNewCaption}
+			Add a new {$classname}...
+			{/block}
+			</a>
+		</div>
+	</div>
+{/block}
+{block frm}
+	<div id='frm-add-update'></div>
+{/block}
+{block dataTable}
+	<div id="dataTable" style="padding: 10px 0px 10px;">
+	{$q['lv']|noescape}
+	</div>
+{/block}
+{block messages}
+	<div id='table-messages'>
+		{foreach $messages as $msg}
+			{$msg|noescape}
+		{/foreach}
+	</div>
+{/block}
+{block details}
+	<div id='table-details'></div>
+{/block}
+{block b_after}
+</div>
+{/block}
+{block script}
+	{if $hasScript}
+	{$script_foot|noescape}
+	{/if}
+{/block}

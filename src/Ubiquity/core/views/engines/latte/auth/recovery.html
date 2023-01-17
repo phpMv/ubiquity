@@ -1,0 +1,49 @@
+{block b_before}
+<p></p>
+{/block}
+{block b_form}
+<form id="frm-account-recovery" class="ui form" name="frm-account-recovery" method="post" action="{$submitURL}" data-target="{$bodySelector}">
+{block b_header}
+<h4 class="ui header dividing">Account recovery (password reset)</h4>
+{/block}
+{block b_fields}
+	{block b_fieldEmail}
+		<div class="field disabled">
+			<label for="email">Email</label>
+			<div class="ui input">
+				<input id="email" name="email" type="text" value="{$email}" readonly="">
+			</div>
+		</div>
+	{/block}
+	{block key}
+		<input type="hidden" value="{$key}" name="key" id="key">
+	{/block}
+	{block b_fieldPassword}
+		<div class="field required">
+			<label for="{$passwordInputName}">{$passwordLabel}</label>
+			<div class="ui input">
+				{block b_password}
+				<input id="{$passwordInputName}" name="{$passwordInputName}" type="password">
+				{/block}
+			</div>
+		</div>
+		<div class="field required">
+			<label for="{$passwordInputName}-conf">{$passwordConfLabel}</label>
+			<div class="ui input">
+				{block b_passwordConf}
+				<input id="{$passwordInputName}-conf" name="{$passwordInputName}-conf" type="password">
+				{/block}
+			</div>
+		</div>
+	{/block}
+{/block}
+{block b_buttons}
+<button class="ui button black fluid ajax _submit">Submit new password</button>
+{/block}
+</form>
+{/block}
+{block b_after}
+{/block}
+{block b_script}
+	{$script_foot|noescape}
+{/block}

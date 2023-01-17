@@ -1,0 +1,19 @@
+{block b_before}
+<p></p>
+{/block}
+{block b_message}
+{$_message|noescape}
+{/block}
+{block b_form}
+<form class="ui form" action="{$submitURL}" method="post" name="frm-account-recovery" id="frm-account-recovery" data-target="{$bodySelector}">
+	<div class="field">
+		<label for="email">Email</label>
+		<input type="email" placeholder="Enter your email" name="email" id="email">
+	</div>
+<button type="submit" class="ui basic submit button _recoverySend">Send email</button>
+</form>
+{/block}
+{block b_after}
+{/block}
+{block b_script}
+{/block}

@@ -1,0 +1,35 @@
+<div id="disconnected-modal" class="ui modal">
+  <div class="header">{$_title}</div>
+  <div class="content">
+  {block b_message}
+    {$_message|noescape}
+  {/block}
+  </div>
+  {block actions}
+  <div class="actions">
+  	{block b_closeButton}
+  		<div class="ui cancel _close button">
+  		{block b_closeCaption}
+  		Close window
+  		{/block}
+  		</div>
+  	{/block}
+  	{block b_stayButton}
+  		<div class="ui cancel _stay button">
+  		{block b_stayCaption}
+  		Stay on this page
+  		{/block}
+  		</div>
+  	{/block}
+  	{block b_signinButton}
+    <div id="signin" class="ui _signin labeled cancel icon button">
+      <i class="sign in icon"></i>
+      {block b_signinCaption}
+      Back to authentication
+      {/block}
+    </div>
+   {/block} 
+  </div>
+  {/block}
+</div>
+{$script_foot|noescape}
