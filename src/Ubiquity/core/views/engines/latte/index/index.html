@@ -53,22 +53,22 @@
         <div class="ui top attached inverted olive segment">
             <h4 class="ui header informations">Instance informations</h4>
         </div>
-        {var $infos = array_merge($infos, [Template => $_self])}
+        {var $infos = array_merge($infos, [Template => $this->getName()])}
         <div class="ui attached inverted segment">
             <div class="ui relaxed divided grid">
                 {foreach [0, 4] as $index}
-                    <div class="eight wide column">
-                        <div class="ui relaxed inverted divided list">
-                            {foreach ($infos|slice:$index, 4) as $key => $value}
-                                <div class="item">
-                                    <div class="content">
-                                        <div class="header">{$key}</div>
-                                        <div class="description">{$value}</div>
-                                    </div>
-                                </div>
-                            {/foreach}
+                <div class="eight wide column">
+                    <div class="ui relaxed inverted divided list">
+                        {foreach ($infos|slice:$index, 4) as $key => $value}
+                        <div class="item">
+                            <div class="content">
+                                <div class="header">{$key}</div>
+                                <div class="description">{$value}</div>
+                            </div>
                         </div>
+                        {/foreach}
                     </div>
+                </div>
                 {/foreach}
             </div>
         </div>
@@ -77,7 +77,7 @@
             <div class="ui menu inverted secondary">
                 <div class="header item">Ubiquity</div>
                 {foreach $links as $name => $link}
-                    <a class="item" href="{$link}" target="new">{$name}</a>
+                <a class="item" href="{$link}" target="new">{$name}</a>
                 {/foreach}
             </div>
         </div>
