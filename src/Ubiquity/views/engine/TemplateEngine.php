@@ -22,11 +22,11 @@ abstract class TemplateEngine {
 	/**
 	 * Renders a view.
 	 *
-	 * @param string $fileName
+	 * @param string $viewName
 	 * @param array|null $pData
 	 * @param boolean $asString
 	 */
-	abstract public function render(string $fileName, ?array $pData = [], bool $asString = false);
+	abstract public function render(string $viewName, ?array $pData = [], bool $asString = false);
 
 	/**
 	 * Returns the defined block names.
