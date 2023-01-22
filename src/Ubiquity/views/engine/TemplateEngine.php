@@ -4,6 +4,7 @@ namespace Ubiquity\views\engine;
 
 use Ubiquity\assets\AssetsManager;
 use Ubiquity\controllers\Router;
+use Ubiquity\core\Framework;
 use Ubiquity\domains\DDDManager;
 use Ubiquity\exceptions\ThemesException;
 use Ubiquity\themes\ThemesManager;
@@ -18,6 +19,8 @@ use Ubiquity\themes\ThemesManager;
  *
  */
 abstract class TemplateEngine {
+
+	protected Framework $fw;
 
 	/**
 	 * Renders a view.
@@ -75,6 +78,7 @@ abstract class TemplateEngine {
 
 	protected function addFunctions(): void {
 		$safe = ['is_safe' => ['html']];
+		$this->fw = new Framework();
 		$this->addFunction('path', function ($name, $params = [], $absolute = false) {
 			return Router::path($name, $params, $absolute);
 		});

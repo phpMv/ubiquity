@@ -9,7 +9,6 @@ use Twig\TwigFunction;
 use Twig\TwigTest;
 use Ubiquity\cache\CacheManager;
 use Ubiquity\controllers\Startup;
-use Ubiquity\core\Framework;
 use Ubiquity\events\EventsManager;
 use Ubiquity\events\ViewEvents;
 use Ubiquity\exceptions\ThemesException;
@@ -77,7 +76,7 @@ class Twig extends TemplateEngine {
 			return $var instanceof $class;
 		});
 		$this->twig->addTest($test);
-		$this->twig->addGlobal('app', new Framework ());
+		$this->twig->addGlobal('app', $this->fw);
 	}
 
 	public function addFunction(string $name, $callback, array $options = []): void {
