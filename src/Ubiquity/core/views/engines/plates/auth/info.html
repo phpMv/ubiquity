@@ -1,33 +1,29 @@
 <div id="_userInfo">
-<?php $this->start('_before')?>
-<?php $this->stop()?>
-<?php if($connected is not null)?>
-	<?php $this->start('_beforeConnected')?>
-	<?php $this->stop()?>
-	<?php $this->start('_userInfo')?>
-	<div class="ui label">
-	<?=$connected?>
-	</div>
-	&nbsp;
-	<?php $this->stop()?> 
-	<?php $this->start('_logoutButton')?>
-	<a href="<?=$this->escape($authURL)?>/terminate" class="ui black button ajax _logout" data-target="<?=$this->escape($bodySelector)?>">
-		<?php $this->start('_logoutCaption')?>
-		<i class="ui sign out alternate icon"></i> Log out
-		<?php $this->stop()?>
-	</a>
-	<?php $this->stop()?>
-<?php else?>
-	<?php $this->start('_beforeNotConnected')?>
-	<?php $this->stop()?>
-	<?php $this->start('_loginButton')?>
-	<a href="<?=$this->escape($authURL)?>" data-target="<?=$this->escape($bodySelector)?>" class="ui button ajax">
-		<?php $this->start('_loginCaption')?>
-		<i class="icon sign in"></i> Log in
-		<?php $this->stop()?>
-	</a>
-	<?php $this->stop()?>
-<?php endif?>
-<?php $this->start('_after')?>
-<?php $this->stop()?>
+    <?php $this->start('_before')?>
+    <?php $this->stop()?>
+    <?php if($connected!=null):?>
+    <?php $this->start('_beforeConnected')?>
+    <?php $this->stop()?>
+    <?php $this->start('_userInfo')?>
+    <div class="ui label">
+        <?=$connected?>
+    </div>
+    &nbsp;
+    <?=$this->stop()?>
+    <?php $this->start('_logoutButton')?>
+    <a href="<?=$authURL?>/terminate" class="ui black button ajax _logout" data-target="<?=$bodySelector?>">
+        <i class="ui sign out alternate icon"></i> Log out
+    </a>
+    <?php $this->stop()?>
+    <?php else:?>
+    <?php $this->start('_beforeNotConnected')?>
+    <?php $this->stop()?>
+    <?php $this->start('_loginButton')?>
+    <a href="<?=$authURL?>" data-target="<?=$bodySelector?>" class="ui button ajax">
+        <i class="icon sign in"></i> Log in
+    </a>
+    <?=$this->stop()?>
+    <?php endif?>
+    <?php $this->start('_after')?>
+    <?php $this->stop()?>
 </div>

@@ -1,18 +1,19 @@
 <?php $this->start('_before')?>
 <p></p>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('_message')?>
 <?=$_message?>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('_form')?>
-<form class="ui form" action="<?=$this->escape($submitURL)?>" method="post" name="frm-account-recovery" id="frm-account-recovery" data-target="<?=$this->escape($bodySelector)?>">
-	<div class="field">
-		<label for="email">Email</label>
-		<input type="email" placeholder="Enter your email" name="email" id="email">
-	</div>
-<button type="submit" class="ui basic submit button _recoverySend">Send email</button>
+<form class="ui form" action="<?=$submitURL?>" method="post" name="frm-account-recovery" id="frm-account-recovery"
+      data-target="<?=$bodySelector?>">
+    <div class="field">
+        <label for="email">Email</label>
+        <input type="email" placeholder="Enter your email" name="email" id="email">
+    </div>
+    <button type="submit" class="ui basic submit button _recoverySend">Send email</button>
 </form>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('_after')?>
 <?php $this->stop()?>
 <?php $this->start('_script')?>

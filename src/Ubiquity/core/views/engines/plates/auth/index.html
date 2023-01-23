@@ -1,67 +1,56 @@
 <?php $this->start('_before')?>
 <p></p>
-<?php $this->stop()?>
-<?php $this->start('_form')?>
+<?=$this->stop()?>
 <form id="frm-login" class="ui form" name="frm-login" method="post" action="<?=$this->escape($action)?>">
-<?php $this->start('_header')?>
-<h4 class="ui header dividing">Connection</h4> 
-<?php $this->stop()?>
-<?php $this->start('_fields')?>
-<div class="two fields">
-	<?php $this->start('_fieldLogin')?>
-	<div class="field required">
-	<label for="<?=$this->escape($loginInputName)?>"><?=$this->escape($loginLabel)?></label> 
-	<div class="ui input">
-		<?php $this->start('_login')?>
-		<input id="<?=$this->escape($loginInputName)?>" name="<?=$this->escape($loginInputName)?>" type="text" placeholder="<?=$this->escape($loginLabel)?>">
-		<?php $this->stop()?>
-	</div>
-	</div>
-	<?php $this->stop()?>
-	<?php $this->start('_fieldPassword')?>
-	<div class="field required">
-		<label for="<?=$this->escape($passwordInputName)?>"><?=$this->escape($passwordLabel)?></label>
-		<div class="ui input">
-			<?php $this->start('_password')?>
-			<input id="<?=$this->escape($passwordInputName)?>" name="<?=$this->escape($passwordInputName)?>" type="password">
-			<?php $this->stop()?>
-		</div>
-	</div>
-	<?php $this->stop()?>
-</div>
-<?php $this->start('_extraFields')?>
-	<div class="inline fields">
-	<?php $this->start('_fieldRemember')?>
-		<div class="field">
-			<div class="ui checkbox">
-				<input id="ck-remember" name="ck-remember" value="1" type="checkbox" placeholder="Remember" tabindex="0" class="hidden"> 
-				<label for="ck-remember"><?=$this->escape($rememberCaption)?></label>
-			</div>
-		</div>
-	<?php $this->stop()?>
-	<?php $this->start('_recoveryLink')?>
-		<?php if($resetPassword)?>
-			<div class="field">
-				<?=$resetPassword?>
-			</div>
-		<?php endif?>
-	<?php $this->stop()?>
-	</div>
-	<?php $this->stop()?>
-<?php $this->stop()?>
-<?php $this->start('_buttons')?>
-<button class="ui button green basic ajax _connect">Connection</button>
-	<?php $this->start('_accountCreation')?>
-		<?php if($canCreateAccountMessage)?>
-			<div class="ui divider"></div>
-			<?=$canCreateAccountMessage?>
-		<?php endif?>
-	<?php $this->stop()?>
-<?php $this->stop()?>
+    <?php $this->start('_header')?>
+    <h4 class="ui header dividing">Connection</h4>
+    <?=$this->stop()?>
+    <div class="two fields">
+        <?php $this->start('_fieldLogin')?>
+        <div class="field required">
+            <label for="<?=$this->escape($loginInputName)?>"><?=$loginLabel?></label>
+            <div class="ui input">
+                <input id="<?=$loginInputName?>" name="<?=$loginInputName?>" type="text" placeholder="<?=$loginLabel?>">
+            </div>
+        </div>
+        <?=$this->stop()?>
+        <?php $this->start('_fieldPassword')?>
+        <div class="field required">
+            <label for="<?=$passwordInputName?>"><?=$passwordLabel?></label>
+            <div class="ui input">
+                <input id="<?=$passwordInputName?>" name="<?=$passwordInputName?>" type="password">
+            </div>
+        </div>
+        <?=$this->stop()?>
+    </div>
+    <div class="inline fields">
+        <?php $this->start('_fieldRemember')?>
+        <div class="field">
+            <div class="ui checkbox">
+                <input id="ck-remember" name="ck-remember" value="1" type="checkbox" placeholder="Remember" tabindex="0"
+                       class="hidden">
+                <label for="ck-remember"><?=$rememberCaption?></label>
+            </div>
+        </div>
+        <?=$this->stop()?>
+        <?php $this->start('_recoveryLink')?>
+        <?php if($resetPassword):?>
+        <div class="field">
+            <?=$resetPassword?>
+        </div>
+        <?php endif?>
+        <?=$this->stop()?>
+    </div>
+    <?php $this->start('_buttons')?>
+    <button class="ui button green basic ajax _connect">Connection</button>
+    <?php if($canCreateAccountMessage):?>
+    <div class="ui divider"></div>
+    <?=$canCreateAccountMessage?>
+    <?php endif?>
+    <?=$this->stop()?>
 </form>
-<?php $this->stop()?>
 <?php $this->start('_after')?>
 <?php $this->stop()?>
 <?php $this->start('_script')?>
-	<?=$script_foot?>
-<?php $this->stop()?>
+<?=$script_foot?>
+<?=$this->stop()?>

@@ -1,17 +1,17 @@
 <?php $this->start('_before')?>
 <?php $this->stop()?>
 <?php $this->start('_message')?>
-<div id="<?=$this->escape($id)?>" class="ui <?=$this->escape($type)?> <?=$this->escape($icon ? 'icon':'')?> message">
-  <?php if($icon)?>
-  <i class="<?=$this->escape($icon)?> icon"></i>
-  <?php endif?>
-  <div class="content">
-    <div class="header">
-      <?=$header?>
+<div id="<?=$this->escape($id)?>" class="ui <?=$type?> <?=$icon ? 'icon':''?> message">
+    <?php if($icon):?>
+    <i class="<?=$icon?> icon"></i>
+    <?php endif?>
+    <div class="content">
+        <div class="header">
+            <?=$header?>
+        </div>
+        <?=$body?>
     </div>
-    <?=$body?>
-  </div>
 </div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('_after')?>
 <?php $this->stop()?>
