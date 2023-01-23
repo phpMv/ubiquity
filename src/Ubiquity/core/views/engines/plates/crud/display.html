@@ -1,25 +1,21 @@
 <?php $this->start('_before')?>
 <?php $this->stop()?>
 <?php $this->start('buttons')?>
-	<div id="buttons" style="padding: 10px 0px 10px;">
-	<?php $this->start('btClose')?>
-		<a class="ui _close <?=$this->escape($inverted)?> button"><i class="ui close icon"></i>Close</a>
-	<?php $this->stop()?>
-	<?php $this->start('btDelete')?>
-		<a class="ui _delete _element basic negative <?=$this->escape($inverted)?> button" data-ajax="<?=$this->escape($pk)?>"><i class="ui close icon"></i>Delete <b><?=$instance?></b>...</a>
-	<?php $this->stop()?>
-	<?php $this->start('btEdit')?>
-		<a class="ui _edit _element basic <?=$this->escape($inverted)?> button" data-ajax="<?=$this->escape($pk)?>"><i class="ui edit icon"></i>Edit <b><?=$instance?></b>...</a>
-	<?php $this->stop()?>
-	</div>
+<div id="buttons" style="padding: 10px 0px 10px;">
+    <a class="ui _close <?=$inverted?> button"><i class="ui close icon"></i>Close</a>
+    <a class="ui _delete _element basic negative <?=$inverted?> button" data-ajax="<?=$pk?>"><i
+                class="ui close icon"></i>Delete <b><?=$instance?></b>...</a>
+    <a class="ui _edit _element basic <?=$inverted?> button" data-ajax="<?=$pk?>"><i class="ui edit icon"></i>Edit
+        <b><?=$instance?></b>...</a>
+</div>
 <?php $this->stop()?>
 <?php $this->start('dataElement')?>
-	<div id="dataElement" style="padding: 10px 0px 10px;">
-	<?=$q["de"]?>
-	</div>
-<?php $this->stop()?>
+<div id="dataElement" style="padding: 10px 0px 10px;">
+    <?=$q["de"]?>
+</div>
+<?=$this->stop()?>
 <?php $this->start('_after')?>
 <?php $this->stop()?>
 <?php $this->start('_script_foot')?>
-	<?=$script_foot?>
-<?php $this->stop()?>
+<?=$script_foot?>
+<?=$this->stop()?>

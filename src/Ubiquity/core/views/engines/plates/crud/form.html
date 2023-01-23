@@ -2,22 +2,27 @@
 <?php $this->stop()?>
 <?php $this->start('_form')?>
 <div id="form-container">
-	<?php if($not modal)?>
-	<?=$q["frmEdit"]?>
-	<?php $this->start('_beforeButtons')?>
-	<div class="ui <?=$this->escape($inverted)?> segment">
-	<?php $this->stop()?>
-		<?php $this->start('_buttons')?>
-		<button id="action-modal-frmEdit-0" class="ui <?=$this->escape($inverted)?> button positive"><i id="icon-bt-okay" class="icon check circle"></i> Validate</button>
-		&nbsp;
-		<button id="bt-cancel" class="ui <?=$this->escape($inverted)?> button"><i id="icon-bt-cancel" class="icon remove circle outline"></i> Cancel</button>
-		<?php $this->stop()?>
-	</div>
-	<?php endif?>
+    <?php if($not modal):?>
+    <?=$q["frmEdit"]?>
+    <?php $this->start('_beforeButtons')?>
+    <div class="ui <?=$this->escape($inverted)?> segment">
+        <?=$this->stop()?>
+        <?php $this->start('_buttons')?>
+        <button id="action-modal-frmEdit-0" class="ui <?=$this->escape($inverted)?> button positive"><i
+                    id="icon-bt-okay" class="icon check circle"></i> Validate
+        </button>
+        &nbsp;
+        <button id="bt-cancel" class="ui <?=$this->escape($inverted)?> button"><i id="icon-bt-cancel"
+                                                                                  class="icon remove circle outline"></i>
+            Cancel
+        </button>
+        <?=$this->stop()?>
+    </div>
+    <?php endif?>
 </div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('_after')?>
 <?php $this->stop()?>
 <?php $this->start('_script_foot')?>
 <?=$script_foot?>
-<?php $this->stop()?>
+<?=$this->stop()?>

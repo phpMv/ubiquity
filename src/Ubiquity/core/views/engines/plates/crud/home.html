@@ -1,18 +1,18 @@
 <?php $this->start('menu')?>
 <div class="ui secondary menu">
-    <a href="<?=$this->escape($path(routeNamePrefix ~ 'crud->home'))?>" data-target="main .container" class="active item _home">Home</a>
-    <?php if($nav)?>
+    <a href="<?=$this->path($routeNamePrefix.'crud->home')?>" data-target="main .container" class="active item _home">Home</a>
+    <?php if($nav):?>
         <div class="item"><?=$nav?></div>
     <?php endif?>
 </div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <div class="ui basic crud segment">
     <?php $this->start('items')?>
-        <div class="ui <?=$this->escape($type)?>">
+        <div class="ui <?=$type?>">
             <?php foreach($items as $item):?>
                 <?=$item?>
             <?php endforeach?>
         </div>
-    <?php $this->stop()?>
+    <?=$this->stop()?>
 </div>
 <?=$script_foot?>

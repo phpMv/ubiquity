@@ -1,17 +1,17 @@
 <?php $this->start('_before')?>
 <?php $this->stop()?>
-<div class="ui <?=$this->escape($inverted)?> segment">
-	<a id="btAddNew" class="ui <?=$this->escape($inverted)?> button orange">
-	 <i class="icon plus"></i>
-	Add a new <?=$this->escape($classname)?>...
-	</a>
-	<div id='frm-add-update' style="padding-top: 10px"></div>
-	<?=$q["lv"]?>
-	<div id='table-messages'></div>
-	<div id='table-details'></div>
+<div class="ui <?=$inverted?> segment">
+    <a id="btAddNew" class="ui <?=$inverted?> button orange">
+        <i class="icon plus"></i>
+        Add a new <?=$classname?>...
+    </a>
+    <div id='frm-add-update' style="padding-top: 10px"></div>
+    <?=$q["lv"]?>
+    <div id='table-messages'></div>
+    <div id='table-details'></div>
 </div>
 <?php $this->start('_after')?>
 <?php $this->stop()?>
 <?php $this->start('_script_foot')?>
 <?=$script_foot?>
-<?php $this->stop()?>
+<?=$this->stop()?>

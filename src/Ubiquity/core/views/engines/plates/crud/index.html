@@ -1,41 +1,39 @@
 <?php $this->start('_before')?>
 <div class="ui <?=$this->escape($inverted)?> segment">
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('btAddNew')?>
 	<div class="ui secondary <?=$this->escape($inverted)?> menu">
 		<div class="item">
 			<a id="btAddNew" class="ui <?=$this->escape($inverted)?> button orange _new">
 			 <i class="icon plus"></i>
-			 <?php $this->start('_addNewCaption')?>
 			Add a new <?=$this->escape($classname)?>...
-			<?php $this->stop()?>
 			</a>
 		</div>
 	</div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('frm')?>
 	<div id='frm-add-update'></div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('dataTable')?>
 	<div id="dataTable" style="padding: 10px 0px 10px;">
 	<?=$q["lv"]?>
 	</div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('messages')?>
 	<div id='table-messages'>
 		<?php foreach($messages as $msg):?>
 			<?=$msg?>
 		<?php endforeach?>
 	</div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('details')?>
 	<div id='table-details'></div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('_after')?>
 </div>
-<?php $this->stop()?>
+<?=$this->stop()?>
 <?php $this->start('script')?>
-	<?php if($hasScript)?>
+	<?php if($hasScript):?>
 	<?=$script_foot?>
 	<?php endif?>
-<?php $this->stop()?>
+<?=$this->stop()?>

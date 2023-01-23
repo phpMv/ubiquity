@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<?php $this->start('header')?>
-	<base href="<?=$this->escape($config['siteUrl'])?>">
-	<meta charset="UTF-8">
-	<title>Ubiquity framework</title>
-<?php $this->stop()?>
-<?php $this->start('css')?>
-<link rel="stylesheet" nonce="<?=$nonce??''?>" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
-<?php $this->stop()?>
+    <?php $this->start('header')?>
+    <base href="<?=$config['siteUrl']?>">
+    <meta charset="UTF-8">
+    <title>Ubiquity framework</title>
+    <?=$this->stop()?>
+    <?php $this->start('css')?>
+    <link rel="stylesheet" nonce="<?=$nonce??''?>" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+    <?php $this->stop()?>
 </head>
 <body>
 <?php $this->start('body')?>
-	<div class="ui container">
-<?php $this->stop()?>
+<div class="ui container">
+    <?=$this->stop()?>
