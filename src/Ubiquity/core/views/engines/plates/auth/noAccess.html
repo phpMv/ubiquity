@@ -1,0 +1,33 @@
+<?php $this->start('_before')?>
+<p></p>
+<?php $this->stop()?>
+<?php $this->start('_message')?>
+<?=$_message?>
+<?php $this->stop()?>
+<?php $this->start('_buttons')?>
+	<?php $this->start('_extraButtons')?>
+		<?php foreach($q as $bt):?>
+			<?=$bt?>
+		<?php endforeach?>
+	<?php $this->stop()?>
+	<?php $this->start('_loginButton')?>
+		<a href="<?=$this->escape($authURL)?>" data-target="<?=$this->escape($bodySelector)?>" class="ui button ajax _login"><i class="icon sign in"></i><?=$this->escape($_loginCaption)?></a>
+	<?php $this->stop()?>
+	<?php $this->start('_recoveryLink')?>
+		<?php if($resetPassword)?>
+			<?=$resetPassword?>
+		<?php endif?>
+	<?php $this->stop()?>
+	<?php $this->start('_accountCreation')?>
+		<?php if($createAccountUrl)?>
+			<a href="<?=$this->escape($createAccountUrl)?>" class="ui button black ajax _create" data-target='<?=$this->escape($accountCreationTarget)?>'>Create account</a>
+		<?php endif?>
+	<?php $this->stop()?>
+<?php $this->stop()?>
+<?php $this->start('_after')?>
+<?php $this->stop()?>
+<?php $this->start('script')?>
+	<?php if($script_foot is defined)?>
+		<?=$script_foot?>
+	<?php endif?>
+<?php $this->stop()?>

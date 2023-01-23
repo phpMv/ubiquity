@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <?php foreach($urls as $url):?>
+        <url>
+            <loc><?=$this->escape($base ~ url->location)?></loc>
+            <?php if($url.lastModification)?>
+                <lastmod><?=$this->escape($url->lastModification)?></lastmod>
+            <?php endif?>
+            <changefreq><?=$this->escape($url->changeFrequency)?></changefreq>
+            <priority><?=$this->escape($url->priority)?></priority>
+        </url>
+    <?php endforeach?>
+</urlset>

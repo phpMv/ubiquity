@@ -1,0 +1,17 @@
+<div class="ui labeled icon top left pointing dropdown button _nav">
+    <i class="<?=$this->escape($btIcon)?> icon"></i>
+    <span class="text"><?=$this->escape($btTitle)?></span>
+    <div class="menu">
+        <div class="ui search icon input">
+            <i class="search icon"></i>
+            <input type="text" name="search" placeholder="Search...">
+        </div>
+        <div class="divider"></div>
+        <?php foreach($items as $item):?>
+        <div class="item" data-href="<?=$this->escape($item['url'])?>">
+            <i class="<?=$this->escape($item['icon'])?> icon"></i>
+            <?=$this->escape($item['title'])?>
+        </div>
+        <?php endforeach?>
+    </div>
+</div>

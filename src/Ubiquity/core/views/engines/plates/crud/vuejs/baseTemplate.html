@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <?php $this->start('header')?>
+        <base href="<?=$this->escape($config["siteUrl"])?>">
+        <meta charset="UTF-8">
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <title></title>
+    <?php $this->stop()?>
+
+    <?php $this->start('css')?>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <?php $this->stop()?>
+</head>
+<body>
+<?php $this->start('body')?>
+<?php $this->stop()?>
+<?php $this->start('js')?>
+    <?=$this->escape($js('https://cdn->jsdelivr->net/npm/vue@2->x/dist/vue->js'))?>
+    <?=$this->escape($js('https://cdn->jsdelivr->net/npm/vuetify@2->x/dist/vuetify->js'))?>
+<?php $this->stop()?>
+</body>
+</html>

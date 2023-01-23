@@ -1,0 +1,50 @@
+<?php $this->start('_before')?>
+<p></p>
+<?php $this->stop()?>
+<?php $this->start('_form')?>
+<form id="frm-create" class="ui form" name="frm-create" method="post" action="<?=$this->escape($action)?>">
+<?php $this->start('_header')?>
+<h4 class="ui header dividing">Account creation</h4> 
+<?php $this->stop()?>
+<?php $this->start('_fields')?>
+	<?php $this->start('_fieldLogin')?>
+	<div class="field required">
+	<label for="<?=$this->escape($loginInputName)?>"><?=$this->escape($loginLabel)?></label> 
+	<div class="ui input">
+		<?php $this->start('_login')?>
+		<input id="<?=$this->escape($loginInputName)?>" name="<?=$this->escape($loginInputName)?>" type="text" placeholder="<?=$this->escape($loginLabel)?>">
+		<?php $this->stop()?>
+	</div>
+	</div>
+	<?php $this->stop()?>
+	<?php $this->start('_fieldPassword')?>
+	<div class="two fields">
+		<div class="field required">
+			<label for="<?=$this->escape($passwordInputName)?>"><?=$this->escape($passwordLabel)?></label>
+			<div class="ui input">
+				<?php $this->start('_password')?>
+				<input id="<?=$this->escape($passwordInputName)?>" name="<?=$this->escape($passwordInputName)?>" type="password">
+				<?php $this->stop()?>
+			</div>
+		</div>
+		<div class="field required">
+			<label for="<?=$this->escape($passwordInputName)?>-conf"><?=$this->escape($passwordConfLabel)?></label>
+			<div class="ui input">
+				<?php $this->start('_passwordConf')?>
+				<input id="<?=$this->escape($passwordInputName)?>-conf" name="<?=$this->escape($passwordInputName)?>-conf" type="password">
+				<?php $this->stop()?>
+			</div>
+		</div>
+	</div>
+	<?php $this->stop()?>
+<?php $this->stop()?>
+<?php $this->start('_buttons')?>
+<button class="ui button black fluid ajax _create">Creation</button>
+<?php $this->stop()?>
+</form>
+<?php $this->stop()?>
+<?php $this->start('_after')?>
+<?php $this->stop()?>
+<?php $this->start('_script')?>
+	<?=$script_foot?>
+<?php $this->stop()?>

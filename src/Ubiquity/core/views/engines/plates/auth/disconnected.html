@@ -1,0 +1,35 @@
+<div id="disconnected-modal" class="ui modal">
+  <div class="header"><?=$this->escape($_title)?></div>
+  <div class="content">
+  <?php $this->start('_message')?>
+    <?=$_message?>
+  <?php $this->stop()?>
+  </div>
+  <?php $this->start('actions')?>
+  <div class="actions">
+  	<?php $this->start('_closeButton')?>
+  		<div class="ui cancel _close button">
+  		<?php $this->start('_closeCaption')?>
+  		Close window
+  		<?php $this->stop()?>
+  		</div>
+  	<?php $this->stop()?>
+  	<?php $this->start('_stayButton')?>
+  		<div class="ui cancel _stay button">
+  		<?php $this->start('_stayCaption')?>
+  		Stay on this page
+  		<?php $this->stop()?>
+  		</div>
+  	<?php $this->stop()?>
+  	<?php $this->start('_signinButton')?>
+    <div id="signin" class="ui _signin labeled cancel icon button">
+      <i class="sign in icon"></i>
+      <?php $this->start('_signinCaption')?>
+      Back to authentication
+      <?php $this->stop()?>
+    </div>
+   <?php $this->stop()?> 
+  </div>
+  <?php $this->stop()?>
+</div>
+<?=$script_foot?>

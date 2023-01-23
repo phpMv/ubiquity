@@ -1,0 +1,26 @@
+<?php $this->start('_before')?>
+<div id="bad-two-fa">
+    <?php $this->stop()?>
+    <?php $this->start('_message')?>
+    <?=$_message?>
+    <?php $this->stop()?>
+    <?php $this->start('_buttons')?>
+    <?php $this->start('_newCodeButton')?>
+    <a href="<?=$url?>" data-target="<?=$bodySelector?>" class="ui button ajax _send"><i
+                class="icon key"></i><?=$_btCaption?></a>
+    <?php $this->stop()?>
+    <?php $this->start('_extraButtons')?>
+    <?php foreach($q as $bt):?>
+    <?=$bt?>
+    <?php endforeach?>
+    <?php $this->stop()?>
+
+    <?php $this->stop()?>
+    <?php $this->start('_after')?>
+</div>
+<?php $this->stop()?>
+<?php $this->start('script')?>
+<?php if($script_foot is defined)?>
+<?=$script_foot?>
+<?php endif?>
+<?php $this->stop()?>
