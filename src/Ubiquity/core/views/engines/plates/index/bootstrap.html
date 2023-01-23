@@ -1,77 +1,88 @@
 <style>
-@import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
-.inverted {
-	background-color: #333333!important;
-	color: white;
-}
-.informations{
-	background-color: hsl(0, 8%, 25%)!important;
-}
-.logo{
-	font-family: 'Righteous', cursive;
-}
-.u{
-	color: #779F89;
-}
-.sub.header{
-	font-size: 1rem!important;
-}
-.small-image{
-	width: 2.1em;
-}
-.h1{
-	font-size: 2rem!important;
-}
+    @import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
+
+    .inverted {
+        background-color: #333333 !important;
+        color: white;
+    }
+
+    .informations {
+        background-color: hsl(0, 8%, 25%) !important;
+    }
+
+    .logo {
+        font-family: 'Righteous', cursive;
+    }
+
+    .u {
+        color: #779F89;
+    }
+
+    .sub.header {
+        font-size: 1rem !important;
+    }
+
+    .small-image {
+        width: 2.1em;
+    }
+
+    .h1 {
+        font-size: 2rem !important;
+    }
 </style>
 <br>
 <div class="container">
-	<div class="">
-		<div class="card container p-3">
-			<div class="card container bg-dark rounded p-3 inverted">
-				<div class="h1">
-					<img class="small-image rounded" src="https://github.com/phpMv/ubiquity/blob/master/Banner/ubiquity-icon.png?raw=true" alt="Ubiquity logo">
-					Hi, welcome to <span class="logo"><span class="u">U</span>biquity</span>
-									<span class="lead sub header">
-					Version <span class="badge version p-2"><?=$this->escape($app->getVersion())?></span>
+    <div class="">
+        <div class="card container p-3">
+            <div class="card container bg-dark rounded p-3 inverted">
+                <div class="h1">
+                    <img class="small-image rounded"
+                         src="https://github.com/phpMv/ubiquity/blob/master/Banner/ubiquity-icon.png?raw=true"
+                         alt="Ubiquity logo">
+                    Hi, welcome to <span class="logo"><span class="u">U</span>biquity</span>
+                    <span class="lead sub header">
+					Version <span class="badge version p-2"><?=$app->getVersion()?></span>
 				</span>
-				</div>
+                </div>
 
-			</div>
-			
+            </div>
 
-			<div class="alert alert-success mt-4" role="alert">
-			    <div class="row">
-			        <div class="col-auto align-self-start">
-			           <i class="fa fa-check-square fa-3x"></i>
-			        </div>
-			        <div class="col">
-			           	<h4>It works !</h4>
-			           	<span>Your application is now ready. You can start working by reading the <a class="alert-link" target="new" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest">Quick start guide</a>.</span>
-			        </div>
-			    </div>
-			</div>
 
-			<hr class="my-4">
-			<ul class="list-group">
-				<?php set infos = infos|merge({'Template': _self})?>
-				<li class='list-group-item inverted'><strong>Page informations</strong></li>
-				<?php foreach($infos as $key=>$value):?>
-				  <li class="list-group-item"><?=$this->escape($key)?> :&nbsp;<span class="font-weight-bold text-info"><?=$this->escape($value)?></span>
-				  </li>
-				  <?php endforeach?>
-			</ul>
-			<p></p>
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<span class="navbar-brand mb-0 h1">Ubiquity</span>
-			  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-			    <div class="navbar-nav">
-			    <?php foreach($links as $name=>$link):?>
-					<a class="nav-item nav-link" href="<?=$this->escape($link)?>" target="new"><?=$this->escape($name)?></a> 
-				<?php endforeach?>
-					</div>
-				</div>
-			</nav>
-		</div>
-	</div>
+            <div class="alert alert-success mt-4" role="alert">
+                <div class="row">
+                    <div class="col-auto align-self-start">
+                        <i class="fa fa-check-square fa-3x"></i>
+                    </div>
+                    <div class="col">
+                        <h4>It works !</h4>
+                        <span>Your application is now ready. You can start working by reading the <a class="alert-link"
+                                                                                                     target="new"
+                                                                                                     href="https://micro-framework.readthedocs.io/en/latest/?badge=latest">Quick start guide</a>.</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <ul class="list-group">
+                <?php $infos = array_merge($infos,['Template'=> $this->name->getName()])?>
+                <li class='list-group-item inverted'><strong>Page informations</strong></li>
+                <?php foreach($infos as $key=>$value):?>
+                <li class="list-group-item"><?=$key?> :&nbsp;<span class="font-weight-bold text-info"><?=$value?></span>
+                </li>
+                <?php endforeach?>
+            </ul>
+            <p></p>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <span class="navbar-brand mb-0 h1">Ubiquity</span>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <?php foreach($links as $name=>$link):?>
+                        <a class="nav-item nav-link" href="<?=$link?>" target="new"><?=$this->escape($name)?></a>
+                        <?php endforeach?>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
 </div>
 <p></p>
