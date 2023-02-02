@@ -1,6 +1,6 @@
 <?php
 
-namespace Ubiquity\views\engine;
+namespace Ubiquity\views\engine\twig;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -15,6 +15,8 @@ use Ubiquity\exceptions\ThemesException;
 use Ubiquity\themes\ThemesManager;
 use Ubiquity\translation\TranslatorManager;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\views\engine\TemplateEngine;
+use Ubiquity\views\engine\TemplateGenerator;
 
 /**
  * Ubiquity Twig template engine.
@@ -23,7 +25,7 @@ use Ubiquity\utils\base\UFileSystem;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.12
+ * @version 1.0.13
  *
  */
 class Twig extends TemplateEngine {
@@ -168,7 +170,7 @@ class Twig extends TemplateEngine {
 	 * @param string $name
 	 * @return boolean
 	 */
-	public function exists($name) {
+	public function exists(string $name): bool {
 		return $this->twig->getLoader()->exists($name);
 	}
 

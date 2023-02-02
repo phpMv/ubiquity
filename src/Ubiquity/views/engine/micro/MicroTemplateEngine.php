@@ -45,7 +45,7 @@ class MicroTemplateEngine extends TemplateEngine {
 		return UFileSystem::load($fileName);
 	}
 
-	public function exists($name): bool {
+	public function exists(string $name): bool {
 		$filename = $this->viewsFolder . $name;
 		return \file_exists($filename);
 	}

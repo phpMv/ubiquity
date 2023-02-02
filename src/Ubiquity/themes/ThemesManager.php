@@ -3,11 +3,11 @@
 namespace Ubiquity\themes;
 
 use Ubiquity\controllers\Startup;
-use Ubiquity\views\engine\Twig;
-use Ubiquity\exceptions\ThemesException;
+use Ubiquity\domains\DDDManager;
 use Ubiquity\events\EventsManager;
 use Ubiquity\events\ViewEvents;
-use Ubiquity\domains\DDDManager;
+use Ubiquity\exceptions\ThemesException;
+use Ubiquity\views\engine\twig\Twig;
 
 /**
  * Themes manager.
@@ -22,7 +22,7 @@ use Ubiquity\domains\DDDManager;
 class ThemesManager {
 	const THEMES_FOLDER = 'themes';
 	private static $activeTheme;
-	private static $refThemes = [ 'bootstrap','foundation','semantic' ];
+	private static $refThemes = ['bootstrap', 'foundation', 'semantic'];
 
 	public static function getActiveTheme() {
 		return self::$activeTheme;
@@ -34,20 +34,20 @@ class ThemesManager {
 	 * @param string $activeTheme
 	 * @throws ThemesException
 	 */
-	public static function setActiveTheme(string $activeTheme):void {
+	public static function setActiveTheme(string $activeTheme): void {
 		self::$activeTheme = $activeTheme ?? '';
 		$engineInstance = Startup::$templateEngine;
 		if ($engineInstance instanceof Twig) {
-			$engineInstance->setTheme ( $activeTheme, self::THEMES_FOLDER );
+			$engineInstance->setTheme($activeTheme, self::THEMES_FOLDER);
 		} else {
-			throw new ThemesException ( 'Template engine must be an instance of Twig for themes activation!' );
+			throw new ThemesException ('Template engine must be an instance of Twig for themes activation!');
 		}
 	}
 
 	public static function saveActiveTheme(string $theme): array {
-		$config = Startup::getConfig ();
+		$config = Startup::getConfig();
 		$config ['templateEngineOptions'] ['activeTheme'] = $theme;
-		Startup::saveConfig ( $config );
+		Startup::saveConfig($config);
 		return $config;
 	}
 
@@ -67,10 +67,10 @@ class ThemesManager {
 	 */
 	public static function getAvailableThemes(): array {
 		$path = DDDManager::getActiveViewFolder() . self::THEMES_FOLDER . \DS . '*';
-		$dirs = \glob ( $path, GLOB_ONLYDIR | GLOB_NOSORT );
-		$result = [ ];
-		foreach ( $dirs as $dir ) {
-			$result [] = \basename ( $dir );
+		$dirs = \glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
+		$result = [];
+		foreach ($dirs as $dir) {
+			$result [] = \basename($dir);
 		}
 		return $result;
 	}
@@ -91,7 +91,7 @@ class ThemesManager {
 	 * @return boolean
 	 */
 	public static function isCustom(string $theme): bool {
-		return \array_search ( $theme, self::$refThemes ) === false;
+		return \array_search($theme, self::$refThemes) === false;
 	}
 
 	/**
@@ -100,8 +100,8 @@ class ThemesManager {
 	 * @return array
 	 */
 	public static function getNotInstalledThemes(): array {
-		$AvailableThemes = self::getAvailableThemes ();
-		return \array_diff ( self::$refThemes, $AvailableThemes );
+		$AvailableThemes = self::getAvailableThemes();
+		return \array_diff(self::$refThemes, $AvailableThemes);
 	}
 
 	/**
@@ -111,7 +111,7 @@ class ThemesManager {
 	 * @param callable $callback
 	 */
 	public static function onBeforeRender($callback) {
-		EventsManager::addListener ( ViewEvents::BEFORE_RENDER, $callback );
+		EventsManager::addListener(ViewEvents::BEFORE_RENDER, $callback);
 	}
 
 	/**
@@ -121,6 +121,6 @@ class ThemesManager {
 	 * @param callable $callback
 	 */
 	public static function onAfterRender($callback) {
-		EventsManager::addListener ( ViewEvents::AFTER_RENDER, $callback );
+		EventsManager::addListener(ViewEvents::AFTER_RENDER, $callback);
 	}
 }

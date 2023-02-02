@@ -45,11 +45,31 @@ abstract class TemplateEngine {
 	 */
 	abstract public function getCode(string $templateName): string;
 
+	/**
+	 * @param string $name
+	 * @param $callback
+	 * @param array $options
+	 * @return void
+	 */
 	abstract public function addFunction(string $name, $callback, array $options = []): void;
 
+	/**
+	 * @param string $name
+	 * @param $callback
+	 * @param array $options
+	 * @return void
+	 */
 	abstract protected function addFilter(string $name, $callback, array $options = []): void;
 
 	abstract protected function addExtension($extension): void;
+
+	/**
+	 * Checks if we have the source code of a template, given its name.
+	 *
+	 * @param string $name
+	 * @return boolean
+	 */
+	abstract public function exists(string $name): bool;
 
 	protected function hasThemeResource(&$resource): bool {
 		$resource = \str_replace('@activeTheme/', '', $resource, $count);
