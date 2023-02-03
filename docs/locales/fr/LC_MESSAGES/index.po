@@ -4,7 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# jean-christophe HERON, 2022
+# jean-christophe HERON, 2023
 # 
 #, fuzzy
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-22 16:47+0100\n"
 "PO-Revision-Date: 2022-12-22 23:32+0000\n"
-"Last-Translator: jean-christophe HERON, 2022\n"
+"Last-Translator: jean-christophe HERON, 2023\n"
 "Language-Team: French (https://www.transifex.com/phpmv-1/teams/159300/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,11 +23,11 @@ msgstr ""
 
 #: ../../index.rst:9
 msgid "with console"
-msgstr "with console"
+msgstr "Avec la console (devtools)"
 
 #: ../../index.rst:9
 msgid "with web-tools"
-msgstr "with web-tools"
+msgstr "Avec les Webtools"
 
 #: ../../index.rst:9 646ebaf00a2640e6a2b06e997ea168a7
 msgid "Quick-starts"
@@ -39,7 +39,7 @@ msgstr "Installation & configuration"
 
 #: ../../index.rst:51 1bd2ada3a0694ed58100d43f55878061
 msgid "Controller"
-msgstr "Controller"
+msgstr "Contrôleur"
 
 #: ../../index.rst:61 79777cd2f6534897a7dfed452323e335
 msgid "Scaffolding"
@@ -47,11 +47,11 @@ msgstr "Scaffolding"
 
 #: ../../index.rst:68
 msgid "Database connection"
-msgstr "Database connection"
+msgstr "Connexion aux bases de données"
 
 #: ../../index.rst:68
 msgid "Generation"
-msgstr "Generation"
+msgstr "Génération"
 
 #: ../../index.rst:68 1ae1cd8eac1e4521a62461afddc127bc
 msgid "Models and ORM"
@@ -63,11 +63,11 @@ msgstr "Http"
 
 #: ../../index.rst:86 86d28cecbc91441ca3311e1fea897c1c
 msgid "Views"
-msgstr "Views"
+msgstr "Vues"
 
 #: ../../index.rst:92 8e8e621bae5d47978c6b5900c03fce7f
 msgid "RichClient"
-msgstr "RichClient"
+msgstr "Client riche"
 
 #: ../../index.rst:99 4a07a09c6fe44d9ab091ef0130b21d65
 msgid "Contents"
@@ -75,7 +75,7 @@ msgstr "Contents"
 
 #: ../../index.rst:108 12daa333d6d84b9ab27a02b0f174adf1
 msgid "Security"
-msgstr "Security"
+msgstr "Securité"
 
 #: ../../index.rst:116 3e7f8cc950ac44c182750da1db19dabe
 msgid "Rest"
@@ -87,11 +87,11 @@ msgstr "Webtools"
 
 #: ../../index.rst:128 b8616808f10f404baf59671c3e40cad6
 msgid "Contributing"
-msgstr "Contributing"
+msgstr "Contributions"
 
 #: ../../index.rst:136 d8220cae0a194768af88bf486df6d2aa
 msgid "Deployment"
-msgstr "Deployment"
+msgstr "Déploiement"
 
 #: ../../index.rst:143 2a155ae52565473f9a30e83b0f1b986d
 msgid "Extras"
@@ -99,7 +99,7 @@ msgstr "Extras"
 
 #: ../../index.rst:7 0ac4ab3437d14bda85fdb16edc72d6a8
 msgid "Ubiquity User guide"
-msgstr "Ubiquity User guide"
+msgstr "Guide d'utilisation Ubiquity"
 
 #: ../../index.rst:18 0bd96f0ba1504a6b8d94628091d99e72
 msgid ":ref:`Security<security>`"
@@ -167,7 +167,7 @@ msgstr ":ref:`Contributing<contributing>`"
 
 #: ../../index.rst:34 738d34ac11b54eda9cec046caf4d0ba6
 msgid ":ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`"
-msgstr ":ref:`Quick start with webtools (UbiquityMyAdmin)<quickstart-html>`"
+msgstr ":ref:`Quick start avec les webtools<quickstart-html>`"
 
 #: ../../index.rst:35 33611ca69e284128848d0a4a2c908725
 msgid "Generating models:"
