@@ -1,0 +1,42 @@
+<?php $this->start('_before')?>
+<p></p>
+<?=$this->stop()?>
+<form id="frm-account-recovery" class="ui form" name="frm-account-recovery" method="post" action="<?=$submitURL?>"
+      data-target="<?=$bodySelector?>">
+    <?php $this->start('_header')?>
+    <h4 class="ui header dividing">Account recovery (password reset)</h4>
+    <?=$this->stop()?>
+    <?php $this->start('_fieldEmail')?>
+    <div class="field disabled">
+        <label for="email">Email</label>
+        <div class="ui input">
+            <input id="email" name="email" type="text" value="<?=$email?>" readonly="">
+        </div>
+    </div>
+    <?=$this->stop()?>
+    <?php $this->start('key')?>
+    <input type="hidden" value="<?=$key?>" name="key" id="key">
+    <?=$this->stop()?>
+    <?php $this->start('_fieldPassword')?>
+    <div class="field required">
+        <label for="<?=$passwordInputName?>"><?=$passwordLabel?></label>
+        <div class="ui input">
+            <input id="<?=$passwordInputName?>" name="<?=$passwordInputName?>" type="password">
+        </div>
+    </div>
+    <div class="field required">
+        <label for="<?=$passwordInputName?>-conf"><?=$passwordConfLabel?></label>
+        <div class="ui input">
+            <input id="<?=$passwordInputName?>-conf" name="<?=$passwordInputName?>-conf" type="password">
+        </div>
+    </div>
+    <?=$this->stop()?>
+    <?php $this->start('_buttons')?>
+    <button class="ui button black fluid ajax _submit">Submit new password</button>
+    <?=$this->stop()?>
+</form>
+<?php $this->start('_after')?>
+<?php $this->stop()?>
+<?php $this->start('_script')?>
+<?=$script_foot?>
+<?=$this->stop()?>

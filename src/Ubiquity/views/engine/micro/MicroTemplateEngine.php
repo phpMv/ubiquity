@@ -2,16 +2,17 @@
 
 namespace Ubiquity\views\engine\micro;
 
-use Ubiquity\views\engine\TemplateEngine;
 use Ubiquity\utils\base\UFileSystem;
+use Ubiquity\views\engine\TemplateEngine;
+use Ubiquity\views\engine\TemplateGenerator;
 
 class MicroTemplateEngine extends TemplateEngine {
-	private $viewsFolder;
-	private $parsers = [ ];
+	private string $viewsFolder;
+	private array $parsers = [];
 
 	private function getTemplateParser(string $viewName): TemplateParser {
-		if (! isset ( $this->parsers [$viewName] )) {
-			$this->parsers [$viewName] = new TemplateParser ( $this->viewsFolder . $viewName );
+		if (!isset ($this->parsers [$viewName])) {
+			$this->parsers [$viewName] = new TemplateParser ($this->viewsFolder . $viewName);
 		}
 		return $this->parsers [$viewName];
 	}
@@ -24,28 +25,44 @@ class MicroTemplateEngine extends TemplateEngine {
 	 * (non-PHPdoc)
 	 * @see TemplateEngine::render()
 	 */
-	public function render($viewName, $pData, $asString) {
-		if (\is_array ( $pData )) {
-			\extract ( $pData );
+	public function render(string $viewName, ?array $pData = [], bool $asString = false) {
+		if (\is_array($pData)) {
+			\extract($pData);
 		}
-		$content = eval ( '?>' . $this->getTemplateParser ( $viewName )->__toString () );
-		if ($asString)
+		$content = eval ('?>' . $this->getTemplateParser($viewName)->__toString());
+		if ($asString) {
 			return $content;
-		else
-			echo $content;
+		}
+		echo $content;
 	}
 
-	public function getBlockNames($templateName) {
-		return [ ];
+	public function getBlockNames(string $templateName): array {
+		return [];
 	}
 
-	public function getCode($templateName) {
+	public function getCode(string $templateName): string {
 		$fileName = $this->viewsFolder . $templateName;
-		return UFileSystem::load ( $fileName );
+		return UFileSystem::load($fileName);
 	}
 
-	public function exists($name) {
+	public function exists(string $name): bool {
 		$filename = $this->viewsFolder . $name;
-		return \file_exists ( $filename );
+		return \file_exists($filename);
+	}
+
+	public function addFunction(string $name, $callback, array $options = []): void {
+		throw new \BadMethodCallException('addFunction method has no sense with MicroTemplateEngine');
+	}
+
+	protected function addFilter(string $name, $callback, array $options = []): void {
+		throw new \BadMethodCallException('addFilter method has no sense with MicroTemplateEngine');
+	}
+
+	protected function addExtension($extension): void {
+		throw new \BadMethodCallException('addExtension method has no sense with MicroTemplateEngine');
+	}
+
+	public function getGenerator(): ?TemplateGenerator {
+		return null;
 	}
 }

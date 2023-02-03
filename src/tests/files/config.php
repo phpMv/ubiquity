@@ -8,7 +8,7 @@ return array(
 		'bench' => ["wrapper" => "\\Ubiquity\\db\\providers\\pdo\\PDOWrapper", "type" => "mysql", "dbName" => "hello_world", "serverName" => "127.0.0.1", "port" => 3306, "user" => "root", "password" => "", "options" => [], "cache" => false]],
 	"sessionName" => "verif",
 	"namespaces" => array(),
-	"templateEngine" => "Ubiquity\\views\\engine\\Twig",
+	"templateEngine" => "Ubiquity\\views\\engine\\twig\\Twig",
 	"templateEngineOptions" => array("cache" => false, "activeTheme" => "semantic"),
 	"test" => false,
 	"debug" => true,

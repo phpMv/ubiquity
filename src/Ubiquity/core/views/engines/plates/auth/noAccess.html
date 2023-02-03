@@ -1,0 +1,33 @@
+<?php $this->start('_before')?>
+<p></p>
+<?=$this->stop()?>
+<?php $this->start('_message')?>
+<?=$_message?>
+<?=$this->stop()?>
+<?php $this->start('_extraButtons')?>
+<?php foreach($q as $bt):?>
+<?=$bt?>
+<?php endforeach?>
+<?=$this->stop()?>
+<?php $this->start('_loginButton')?>
+<a href="<?=$authURL?>" data-target="<?=$bodySelector?>" class="ui button ajax _login"><i
+            class="icon sign in"></i><?=$_loginCaption?></a>
+<?=$this->stop()?>
+<?php $this->start('_recoveryLink')?>
+<?php if($resetPassword):?>
+<?=$resetPassword?>
+<?php endif?>
+<?=$this->stop()?>
+<?php $this->start('_accountCreation')?>
+<?php if($createAccountUrl):?>
+<a href="<?=$createAccountUrl?>" class="ui button black ajax _create" data-target='<?=$accountCreationTarget?>'>Create
+    account</a>
+<?php endif?>
+<?=$this->stop()?>
+<?php $this->start('_after')?>
+<?php $this->stop()?>
+<?php $this->start('script')?>
+<?php if($script_foot is defined):?>
+<?=$script_foot?>
+<?php endif?>
+<?=$this->stop()?>

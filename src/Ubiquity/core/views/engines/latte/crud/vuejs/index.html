@@ -1,0 +1,13 @@
+{extends $_base}
+{block body}
+    <v-app>
+        <v-data-table :headers="headers" :items="items" item-key="{$item - $key}" class="{=($data - $table) - $class}">
+        {block items}
+        {/block}
+        </v-data-table>
+    </v-app>
+{/block}
+{block js}
+    {include parent}
+    {$script_foot|noescape}
+{/block}

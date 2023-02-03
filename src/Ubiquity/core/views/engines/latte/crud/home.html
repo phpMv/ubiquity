@@ -1,0 +1,18 @@
+{block menu}
+<div class="ui secondary menu">
+    <a href="{path(($routeNamePrefix . 'crud.home'))}" data-target="main .container" class="active item _home">Home</a>
+    {if $nav}
+        <div class="item">{$nav|noescape}</div>
+    {/if}
+</div>
+{/block}
+<div class="ui basic crud segment">
+    {block items}
+        <div class="ui {$type}">
+            {foreach $items as $item}
+                {$item|noescape}
+            {/foreach}
+        </div>
+    {/block}
+</div>
+{$script_foot|noescape}

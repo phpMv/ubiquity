@@ -1,0 +1,23 @@
+<div class="<?=$type?>">
+    <i class="ui bordered colored large <?=$this->escape($icon)?> icon">
+    </i>
+    <div class="content">
+        <a href="<?=$url?>" class="header _crud" data-target=".crud"><?=$title?></a>
+        <?php if($meta):?>
+            <div class="meta"><?=$meta?></div>
+        <?php endif?>
+        <div class="description">
+            <?=$desc?>
+        </div>
+    </div>
+    <?php if ($actions):?>
+        <div class="ui bottom attached buttons">
+            <?php foreach($actions as $action):?>
+                <div class="ui <?=$action['class']?> button">
+                    <i class="<?=$action['icon']?> icon"></i>
+                    <?=$action['caption']?>
+                </div>
+            <?php endforeach?>
+        </div>
+    <?php endif?>
+</div>

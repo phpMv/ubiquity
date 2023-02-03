@@ -1,0 +1,25 @@
+{block b_before}
+{/block}
+{block buttons}
+	<div id="buttons" style="padding: 10px 0px 10px;">
+	{block btClose}
+		<a class="ui _close {$inverted} button"><i class="ui close icon"></i>Close</a>
+	{/block}
+	{block btDelete}
+		<a class="ui _delete _element basic negative {$inverted} button" data-ajax="{$pk}"><i class="ui close icon"></i>Delete <b>{$instance|noescape}</b>...</a>
+	{/block}
+	{block btEdit}
+		<a class="ui _edit _element basic {$inverted} button" data-ajax="{$pk}"><i class="ui edit icon"></i>Edit <b>{$instance|noescape}</b>...</a>
+	{/block}
+	</div>
+{/block}
+{block dataElement}
+	<div id="dataElement" style="padding: 10px 0px 10px;">
+	{$q['de']|noescape}
+	</div>
+{/block}
+{block b_after}
+{/block}
+{block b_script_foot}
+	{$script_foot|noescape}
+{/block}

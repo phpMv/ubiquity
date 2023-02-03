@@ -1,0 +1,29 @@
+<?php $this->start('_before')?>
+<p></p>
+<?=$this->stop()?>
+<?php $this->start('_message')?>
+<?=$_message?>
+<?=$this->stop()?>
+<?php $this->start('_form')?>
+<form class="ui form" action="<?=$submitURL?>" method="post" name="frm-valid-code" id="frm-valid-code"
+      data-target="<?=$bodySelector?>">
+    <div class="field">
+        <label for="code">Code</label>
+        <?php if($prefix):?>
+        <div class="ui labeled input">
+            <div class="ui label"><?=$this->escape($prefix)?></div>
+            <input type="text" placeholder="Enter a code" name="code" id="code">
+        </div>
+        <?php else:?>
+        <input type="text" placeholder="Enter a code" name="code" id="code">
+        <?php endif?>
+    </div>
+    <button type="submit" class="ui submit button _validate2FA">Validate code</button>
+</form>
+<?=$this->stop()?>
+<?php $this->start('_after')?>
+<div class="ui basic segment" id="two-step-response"></div>
+<?=$this->stop()?>
+<?php $this->start('_script')?>
+<?=$script_foot?>
+<?=$this->stop()?>

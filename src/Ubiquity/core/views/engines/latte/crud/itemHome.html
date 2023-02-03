@@ -1,0 +1,23 @@
+<div class="{$type}">
+    <i class="ui bordered colored large {$icon} icon">
+    </i>
+    <div class="content">
+        <a href="{$url}" class="header _crud" data-target=".crud">{$title}</a>
+        {if $meta}
+            <div class="meta">{$meta|noescape}</div>
+        {/if}
+        <div class="description">
+            {$desc|noescape}
+        </div>
+    </div>
+    {if $actions}
+        <div class="ui bottom attached buttons">
+            {foreach $actions as $action}
+                <div class="ui {$action['class']} button">
+                    <i class="{$action['icon']} icon"></i>
+                    {$action['caption']}
+                </div>
+            {/foreach}
+        </div>
+    {/if}
+</div>

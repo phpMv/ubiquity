@@ -1,0 +1,25 @@
+{block b_before}
+<div id="bad-two-fa">
+{/block}
+{block b_message}
+{$_message|noescape}
+{/block}
+{block b_buttons}
+	{block b_newCodeButton}
+		<a href="{$url}" data-target="{$bodySelector}" class="ui button ajax _send"><i class="icon key"></i>{$_btCaption}</a>
+	{/block}
+	{block b_extraButtons}
+		{foreach $q as $bt}
+			{$bt|noescape}
+		{/foreach}
+	{/block}
+	
+{/block}
+{block b_after}
+</div>
+{/block}
+{block script}
+	{if isset($script_foot)}
+		{$script_foot|noescape}
+	{/if}
+{/block}

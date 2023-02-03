@@ -1,0 +1,72 @@
+<style>
+@import url('https://fonts.googleapis.com/css?family=Poiret+One|Righteous');
+.inverted {
+	background-color: #333333!important;
+	color: white;
+}
+.informations{
+	background-color: hsl(0, 8%, 25%)!important;
+}
+.logo{
+	font-family: 'Righteous', cursive;
+}
+.u{
+	color: #779F89;
+}
+.sub.header{
+	font-size: 1rem!important;
+}
+.small-image{
+	width: 1.6em;
+}
+.card.container{
+	padding: 10px;
+}
+.h1{
+	font-size: 2rem!important;
+}
+</style>
+<br>
+<div class="grid-container">
+	<div class="row">
+		<div class="card container">
+		<div class="card container bg-dark inverted">
+			<div class="h1">
+				<img class="small-image radius" src="https://github.com/phpMv/ubiquity/blob/master/Banner/ubiquity-icon.png?raw=true" alt="Ubiquity logo">
+				Hi, welcome to <span class="logo"><span class="u">U</span>biquity</span>
+				<span class="lead sub header">
+				Version <span class="label radius version">{$app->getVersion()}</span>
+				</span>
+			</div>
+		</div>
+		<div class="callout small success radius">
+		    <div class="grid-x">
+		        <div class="cell small-1">
+		           <i class="fi-checkbox large"></i>
+		        </div>
+		        <div class="cell small-11">
+		           	<h4>It works !</h4>
+		           	<span>Your application is now ready. You can start working by reading the <a class="alert-link" target="new" href="https://micro-framework.readthedocs.io/en/latest/?badge=latest">Quick start guide</a>.</span>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="callout radius small inverted"><h4>Page informations</h4></div>
+		<dl class="infos square">
+			{var $infos = array_merge($infos, [Template => $_self])}
+			{foreach $infos as $key => $value}
+			  <dt>{$key} :&nbsp;<dt>
+			  <dd class="value">{$value}</dd>
+			  {/foreach}
+		</dl>
+		<p></p>
+		<ul class="menu links">
+			<li class="menu-text">Ubiquity</li>
+			{foreach $links as $name => $link}
+				<li><a href="{$link}" target="new">{$name}</a></li>
+			{/foreach}
+		</ul>
+	</div>
+</div>
+</div>
+<p></p>

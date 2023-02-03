@@ -1,0 +1,17 @@
+{block b_before}
+{/block}
+<div class="ui {$inverted} segment">
+	<a id="btAddNew" class="ui {$inverted} button orange">
+	 <i class="icon plus"></i>
+	Add a new {$classname}...
+	</a>
+	<div id='frm-add-update' style="padding-top: 10px"></div>
+	{$q['lv']|noescape}
+	<div id='table-messages'></div>
+	<div id='table-details'></div>
+</div>
+{block b_after}
+{/block}
+{block b_script_foot}
+{$script_foot|noescape}
+{/block}

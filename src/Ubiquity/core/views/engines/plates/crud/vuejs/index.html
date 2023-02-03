@@ -1,0 +1,13 @@
+<?php $this->layout($_base)?>
+<?php $this->start('body')?>
+    <v-app>
+        <v-data-table :headers="headers" :items="items" item-key="<?=$this->escape($item-key)?>" class="<?=$this->escape($data-table-class)?>">
+        <?php $this->start('items')?>
+        <?php $this->stop()?>
+        </v-data-table>
+    </v-app>
+<?php $this->stop()?>
+<?php $this->start('js')?>
+    <?=$this->escape(parent())?>
+    <?=$script_foot?>
+<?php $this->stop()?>

@@ -1,0 +1,39 @@
+<?php $this->start('_before')?>
+<div class="ui <?=$this->escape($inverted)?> segment">
+    <?=$this->stop()?>
+    <?php $this->start('btAddNew')?>
+    <div class="ui secondary <?=$inverted?> menu">
+        <div class="item">
+            <a id="btAddNew" class="ui <?=$inverted?> button orange _new">
+                <i class="icon plus"></i>
+                Add a new <?=$classname?>...
+            </a>
+        </div>
+    </div>
+    <?=$this->stop()?>
+    <?php $this->start('frm')?>
+    <div id='frm-add-update'></div>
+    <?=$this->stop()?>
+    <?php $this->start('dataTable')?>
+    <div id="dataTable" style="padding: 10px 0px 10px;">
+        <?=$q["lv"]?>
+    </div>
+    <?=$this->stop()?>
+    <?php $this->start('messages')?>
+    <div id='table-messages'>
+        <?php foreach($messages as $msg):?>
+        <?=$msg?>
+        <?php endforeach?>
+    </div>
+    <?=$this->stop()?>
+    <?php $this->start('details')?>
+    <div id='table-details'></div>
+    <?=$this->stop()?>
+    <?php $this->start('_after')?>
+</div>
+<?=$this->stop()?>
+<?php $this->start('script')?>
+<?php if($hasScript):?>
+<?=$script_foot?>
+<?php endif?>
+<?=$this->stop()?>

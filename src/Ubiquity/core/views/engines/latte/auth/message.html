@@ -1,0 +1,17 @@
+{block b_before}
+{/block}
+{block b_message}
+<div id="{$id}" class="ui {$type} {$icon ? icon : ''} message">
+  {if $icon}
+  <i class="{$icon} icon"></i>
+  {/if}
+  <div class="content">
+    <div class="header">
+      {$header|noescape}
+    </div>
+    {$body|noescape}
+  </div>
+</div>
+{/block}
+{block b_after}
+{/block}

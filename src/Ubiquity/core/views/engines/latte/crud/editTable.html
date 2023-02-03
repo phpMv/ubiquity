@@ -1,0 +1,17 @@
+{block b_before}
+{/block}
+<div id="form-container">
+	{if !$modal}
+	{$q['frmEdit']|noescape}
+	<div class="ui {$inverted} segment">
+		<button id="action-modal-frmEdit-0" class="ui {$inverted} button positive"><i id="icon-bt-okay" class="icon check circle"></i> Validate</button>
+		&nbsp;
+		<button id="bt-cancel" class="ui {$inverted} button"><i id="icon-bt-cancel" class="icon remove circle outline"></i> Cancel</button>
+	</div>
+	{/if}
+</div>
+{block b_after}
+{/block}
+{block b_script_foot}
+{$script_foot|noescape}
+{/block}

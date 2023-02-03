@@ -1,0 +1,26 @@
+<?php $this->start('_before')?>
+<?php $this->stop()?>
+<div id="form-container">
+    <?php if($not modal):?>
+    <?=$q["frmEdit"]?>
+    <?php $this->start('_beforeButtons')?>
+    <div class="ui <?=$inverted?> segment">
+        <?=$this->stop()?>
+        <?php $this->start('_buttons')?>
+        <button id="action-modal-frmEdit-0" class="ui <?=$inverted?> button positive"><i
+                    id="icon-bt-okay" class="icon check circle"></i> Validate
+        </button>
+        &nbsp;
+        <button id="bt-cancel" class="ui <?=$inverted?> button"><i id="icon-bt-cancel"
+                                                                   class="icon remove circle outline"></i>
+            Cancel
+        </button>
+        <?=$this->stop()?>
+    </div>
+    <?php endif?>
+</div>
+<?php $this->start('_after')?>
+<?php $this->stop()?>
+<?php $this->start('_script_foot')?>
+<?=$script_foot?>
+<?=$this->stop()?>
