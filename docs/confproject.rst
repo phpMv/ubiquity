@@ -22,7 +22,7 @@ The main configuration of a project is localised in the ``app/conf/config.php`` 
    				"password"=>"%password%"
    		],
    		"namespaces"=>[],
-   		"templateEngine"=>'Ubiquity\views\engine\Twig',
+   		"templateEngine"=>'Ubiquity\views\engine\twig\Twig',
    		"templateEngineOptions"=>array("cache"=>false),
    		"test"=>false,
    		"debug"=>false,
