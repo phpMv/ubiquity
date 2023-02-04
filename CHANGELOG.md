@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrelease]
 - Nothing
 
+## [2.5.2] 2023-02-04
+> `composer global update` is required before creating a new project
+
+### Added
+- **Latte** template engine integration (see https://github.com/phpMv/ubiquity/issues/204 )
+- **Plates** template engine integration
+
+For creating a new project with **Latte** as default template engine:
+
+```bash
+Ubiquity new myProject -v=latte -a
+```
+
+### Updated (breaking change)
+- Default template engine (**Twig**) is relocated in `\Ubiquity\views\engine\twig\Twig` and was before in `\Ubiquity\views\engine\Twig`
+
 ## [2.5.1] 2023-01-01
 ### Added
 - Translations for [Ubiquity guide](https://micro-framework.readthedocs.io/es/latest/controller/router.html) into Spanish => thanks to [@alnux](https://github.com/alnux) for his work in progress
