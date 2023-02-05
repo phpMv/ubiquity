@@ -6,7 +6,7 @@
 [![License](https://poser.pugx.org/phpmv/ubiquity/license)](https://packagist.org/packages/phpmv/ubiquity)
 [![Total Downloads](https://poser.pugx.org/phpmv/ubiquity/downloads)](https://packagist.org/packages/phpmv/ubiquity)
 [![Monthly Downloads](https://poser.pugx.org/phpmv/ubiquity/d/monthly)](//packagist.org/packages/phpmv/ubiquity)
-![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/phpmv/ubiquity/2.4.0?style=flat-square)
+![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/phpmv/ubiquity/2.5.0?style=flat-square)
 [![Join the chat at https://gitter.im/ubiquity-framework/community](https://badges.gitter.im/ubiquity-framework/community.svg)](https://gitter.im/ubiquity-framework/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
 
 [Ubiquity](https://ubiquity.kobject.net), a powerful and fast framework for efficient design.
@@ -25,6 +25,7 @@
   - Console Admin interface (Devtools)
   - Assets & themes management (since 2.1.0, on a [proposal](https://github.com/phpMv/ubiquity/issues/11) from [@Gildonei](https://github.com/gildonei))
   - Managed servers: fpm/fastcgi with Apache or nginX, [ngx_php](https://github.com/rryqszq4/ngx_php7), [Workerman](https://github.com/walkor/Workerman), [Swoole](https://github.com/swoole/swoole-src), [Roadrunner](https://github.com/Lapinskas/roadrunner-ubiquity), [PHP-PM](https://github.com/php-pm/php-pm) with ReactPHP (Dev only)
+  - Multi template engines support: [Twig](https://twig.symfony.com/)(default), [Latte](https://latte.nette.org/en/) and [Plates](https://platesphp.com/) since 2.5.2
 
 # Upgrade
 If Ubiquity devtools are already globally installed, and you want to upgrade to the lastest stable version:
