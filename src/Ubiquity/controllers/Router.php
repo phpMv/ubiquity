@@ -134,6 +134,7 @@ class Router {
 				}
 			}
 		}
+    self::$statusCode = RouterStatus::NOT_FOUND;
 		return false;
 	}
 
