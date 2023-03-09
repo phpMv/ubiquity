@@ -94,7 +94,7 @@ The created controller :
 Since the attributes **automated** and **inherited** of the route are set to true, the controller has the default routes of the parent class.
 
 .. note
-   The base controller RestController is not standardized, it should be considered as an example for data interrogation.
+The base controller RestController is not standardized, it should be considered as an example for data interrogation.
 
 Test interface
 ++++++++++++++
@@ -469,7 +469,7 @@ This header field is returned by the ``OPTIONS`` method.
 		
 		protected function getRestServer(): RestServer {
 			$srv= new RestServer($this->config);
-			$srv->setAllowOrigin('http://mydomain/');
+			$srv->setAllowedOrigin('http://mydomain/');
 			return $srv;
 		}
 	}
@@ -486,7 +486,7 @@ It is possible to authorize several origins:
 		
 		protected function getRestServer(): RestServer {
 			$srv= new RestServer($this->config);
-			$srv->setAllowOrigins(['http://mydomain1/','http://mydomain2/']);
+			$srv->setAllowedOrigins(['http://mydomain1/','http://mydomain2/']);
 			return $srv;
 		}
 	}
