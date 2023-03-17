@@ -11,7 +11,7 @@ use Ubiquity\contents\transformation\TransformerViewInterface;
  *
  * @author jcheron <myaddressmail@gmail.com>
  * @version 1.0.0
- * @since 2.4.6
+ * @since 2.5.3
  */
 class HidePassword implements TransformerViewInterface {
 

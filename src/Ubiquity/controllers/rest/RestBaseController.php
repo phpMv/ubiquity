@@ -20,7 +20,7 @@ use Ubiquity\events\RestEvents;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.8
+ * @version 1.0.9
  *
  */
 abstract class RestBaseController extends Controller {
@@ -182,6 +182,7 @@ abstract class RestBaseController extends Controller {
 			$pages = $this->generatePagination ( $filter, $pageNumber, $pageSize );
 		}
 		$datas = DAO::getAll ( $this->model, $filter, $this->getInclude ( $this->getRequestParam ( 'include', false ) ) );
+		EventsManager::trigger(RestEvents::BEFORE_GET_ALL, $datas, $this);
 		echo $this->_getResponseFormatter ()->get ( $datas, $pages );
 	}
 
@@ -197,6 +198,7 @@ abstract class RestBaseController extends Controller {
 		$include = $this->getInclude ( $include );
 		$useCache = UString::isBooleanTrue ( $useCache );
 		$data = DAO::getById ( $this->model, $keyValues, $include, $useCache );
+		EventsManager::trigger(RestEvents::BEFORE_GET_ONE, $instance, $datas, $this);
 		if (isset ( $data )) {
 			$_SESSION ["_restInstance"] = $data;
 			echo $this->_getResponseFormatter ()->getOne ( $data );
@@ -261,8 +263,8 @@ abstract class RestBaseController extends Controller {
 		$instance = DAO::getById ( $this->model, $keyValues, false );
 		$this->operate_ ( $instance, function ($instance) {
 			$datas = $this->getDatas ();
-			EventsManager::trigger ( RestEvents::BEFORE_UPDATE, $instance, $datas, $this );
 			$this->_setValuesToObject ( $instance, $datas );
+			EventsManager::trigger ( RestEvents::BEFORE_UPDATE, $instance, $datas, $this );
 			if ($this->_validateInstance ( $instance, \array_keys ( $datas ) )) {
 				return $this->updateOperation ( $instance, $datas, true );
 			}
@@ -279,8 +281,8 @@ abstract class RestBaseController extends Controller {
 		$instance = new $model ();
 		$this->operate_ ( $instance, function ($instance) use ($model) {
 			$datas = $this->getDatas ();
-			EventsManager::trigger ( RestEvents::BEFORE_INSERT, $instance, $datas, $this );
 			$this->_setValuesToObject ( $instance, $datas );
+			EventsManager::trigger ( RestEvents::BEFORE_INSERT, $instance, $datas, $this );
 			$fields = \array_keys ( OrmUtils::getSerializableFields ( $model ) );
 			if ($this->_validateInstance ( $instance, $fields, [ 'id' => false ] )) {
 				return $this->addOperation ( $instance, $datas, true );
