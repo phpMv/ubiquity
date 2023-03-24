@@ -198,7 +198,7 @@ abstract class RestBaseController extends Controller {
 		$include = $this->getInclude ( $include );
 		$useCache = UString::isBooleanTrue ( $useCache );
 		$data = DAO::getById ( $this->model, $keyValues, $include, $useCache );
-		EventsManager::trigger(RestEvents::BEFORE_GET_ONE, $instance, $datas, $this);
+		EventsManager::trigger(RestEvents::BEFORE_GET_ONE, $data, $this);
 		if (isset ( $data )) {
 			$_SESSION ["_restInstance"] = $data;
 			echo $this->_getResponseFormatter ()->getOne ( $data );
