@@ -3,12 +3,12 @@
 namespace Ubiquity\controllers;
 
 use Ubiquity\cache\CacheManager;
+use Ubiquity\controllers\router\RouterStatus;
 use Ubiquity\controllers\traits\RouterAdminTrait;
 use Ubiquity\controllers\traits\RouterModifierTrait;
 use Ubiquity\controllers\traits\RouterTestTrait;
 use Ubiquity\log\Logger;
 use Ubiquity\utils\http\URequest;
-use Ubiquity\controllers\router\RouterStatus;
 
 /**
  * Router manager.
@@ -16,80 +16,81 @@ use Ubiquity\controllers\router\RouterStatus;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 class Router {
-	use RouterModifierTrait,RouterAdminTrait,RouterTestTrait;
+	use RouterModifierTrait, RouterAdminTrait, RouterTestTrait;
+
 	protected static $routes;
 	protected static $statusCode;
 
 	private static function cleanParam(string $param): string {
-		if (\substr ( $param, - 1 ) === '/') {
-			return \substr ( $param, 0, - 1 );
+		if (\substr($param, -1) === '/') {
+			return \substr($param, 0, -1);
 		}
 		return $param;
 	}
 
 	private static function getRoute_(&$routeDetails, $routePath, $matches, $cachedResponse) {
-		self::$statusCode=RouterStatus::OK;
-		if (! isset ( $routeDetails ['controller'] )) {
-			$method = \strtolower ( $_SERVER ['REQUEST_METHOD'] );
-			if (isset ( $routeDetails [$method] )) {
+		self::$statusCode = RouterStatus::OK;
+		if (!isset ($routeDetails ['controller'])) {
+			$method = \strtolower($_SERVER ['REQUEST_METHOD']);
+			if (isset ($routeDetails [$method])) {
 				$routeDetailsMethod = $routeDetails [$method];
-				return self::getRouteUrlParts ( [ 'path' => $routePath,'details' => $routeDetailsMethod ], $matches, $routeDetailsMethod ['cache'] ?? false, $routeDetailsMethod ['duration'] ?? null, $cachedResponse );
+				return self::getRouteUrlParts(['path' => $routePath, 'details' => $routeDetailsMethod], $matches, $routeDetailsMethod ['cache'] ?? false, $routeDetailsMethod ['duration'] ?? null, $cachedResponse);
 			}
-			self::$statusCode=RouterStatus::METHOD_NOT_ALLOWED;
+			self::$statusCode = RouterStatus::METHOD_NOT_ALLOWED;
 		} else {
-			return self::getRouteUrlParts ( [ 'path' => $routePath,'details' => $routeDetails ], $matches, $routeDetails ['cache'] ?? false, $routeDetails ['duration'] ?? null, $cachedResponse );
+			return self::getRouteUrlParts(['path' => $routePath, 'details' => $routeDetails], $matches, $routeDetails ['cache'] ?? false, $routeDetails ['duration'] ?? null, $cachedResponse);
 		}
-		if(self::$statusCode===RouterStatus::OK) {
+		if (self::$statusCode === RouterStatus::OK) {
 			self::$statusCode = RouterStatus::NOT_FOUND;
 		}
 		return false;
 	}
 
 	protected static function _getURL($routePath, $params) {
-		$result = \preg_replace_callback ( '~\((.*?)\)~', function () use (&$params) {
-			return \array_shift ( $params );
-		}, $routePath );
-		if (\count ( $params ) > 0) {
-			$result = \rtrim ( $result, '/' ) . '/' . \implode ( '/', $params );
+		$result = \preg_replace_callback('~\((.*?)\)~', function () use (&$params) {
+			return \array_shift($params);
+		}, $routePath);
+		if (\count($params) > 0) {
+			$result = \rtrim($result, '/') . '/' . \implode('/', $params);
 		}
 		return $result;
 	}
 
 	protected static function checkRouteName($routeDetails, $name) {
-		if (! isset ( $routeDetails ['name'] )) {
-			foreach ( $routeDetails as $methodRouteDetail ) {
-				if (isset ( $methodRouteDetail ['name'] ) && $methodRouteDetail ['name'] == $name) {
+		if (!isset ($routeDetails ['name'])) {
+			foreach ($routeDetails as $methodRouteDetail) {
+				if (isset ($methodRouteDetail ['name']) && $methodRouteDetail ['name'] == $name) {
 					return true;
 				}
 			}
 		}
-		return isset ( $routeDetails ['name'] ) && $routeDetails ['name'] == $name;
+		return isset ($routeDetails ['name']) && $routeDetails ['name'] == $name;
 	}
 
 	protected static function setParamsInOrder($paramsOrder, $params) {
 		$index = 0;
-		$newParams=[];
-		foreach ( $paramsOrder as $order ) {
+		$newParams = [];
+		foreach ($paramsOrder as $order) {
 			if ($order === '*') {
-				if (isset ( $params [$index] )) {
-					$newParams = \array_merge ( $newParams, \array_diff ( \explode ( '/', $params [$index] ), [ '' ] ) );
+				if (isset ($params [$index])) {
+					$newParams = \array_merge($newParams, \array_diff(\explode('/', $params [$index]), ['']));
 				}
 				break;
 			}
 			if (($order [0] ?? '') === '~') {
-				$order = \intval ( \substr ( $order, 1, 1 ) );
-				if (isset ( $params [$order] )) {
-					$newParams = \array_merge ( $newParams, \array_diff ( \explode ( '/', $params [$order] ), [ '' ] ) );
+				$order = \intval(\substr($order, 1, 1));
+				if (isset ($params [$order])) {
+					$newParams = \array_merge($newParams, \array_diff(\explode('/', $params [$order]), ['']));
 					break;
 				}
 			}
-			$newParams [] = self::cleanParam ( $params [$order] );
-			unset ( $params [$order] );
-			$index ++;
+			$newParams [] = self::cleanParam($params [$order]);
+			unset ($params [$order]);
+			$index++;
 		}
 		return $newParams;
 	}
@@ -98,21 +99,21 @@ class Router {
 	 * Starts the router by loading normal routes (not rest).
 	 */
 	public static function start(): void {
-		self::$routes = CacheManager::getControllerCache ();
+		self::$routes = CacheManager::getControllerCache();
 	}
 
 	/**
 	 * Starts the router by loading rest routes (not normal routes).
 	 */
 	public static function startRest(): void {
-		self::$routes = CacheManager::getControllerCache ( true );
+		self::$routes = CacheManager::getControllerCache(true);
 	}
 
 	/**
 	 * Starts the router by loading all routes (normal + rest routes).
 	 */
 	public static function startAll(): void {
-		self::$routes = \array_merge ( CacheManager::getControllerCache (), CacheManager::getControllerCache ( true ) );
+		self::$routes = \array_merge(CacheManager::getControllerCache(), CacheManager::getControllerCache(true));
 	}
 
 	/**
@@ -123,13 +124,13 @@ class Router {
 	 * @return boolean|mixed[]|string
 	 */
 	public static function getRoute($path, $cachedResponse = true, $debug = false) {
-		$path = self::slashPath ( $path );
-		if (isset ( self::$routes [$path] ) && ! $debug) { // No direct access to route in debug mode (for maintenance mode activation)
-			return self::getRoute_ ( self::$routes [$path], $path, [ $path ], $cachedResponse );
+		$path = self::slashPath($path);
+		if (isset (self::$routes [$path]) && !$debug) { // No direct access to route in debug mode (for maintenance mode activation)
+			return self::getRoute_(self::$routes [$path], $path, [$path], $cachedResponse);
 		}
-		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if (\preg_match ( "@^{$routePath}\$@s", $path, $matches )) {
-				if (($r = self::getRoute_ ( $routeDetails, $routePath, $matches, $cachedResponse )) !== false) {
+		foreach (self::$routes as $routePath => $routeDetails) {
+			if (\preg_match("@^{$routePath}\$@s", $path, $matches)) {
+				if (($r = self::getRoute_($routeDetails, $routePath, $matches, $cachedResponse)) !== false) {
 					return $r;
 				}
 			}
@@ -145,24 +146,24 @@ class Router {
 	 * @param boolean $absolute
 	 */
 	public static function getRouteByName($name, $parameters = [], $absolute = true) {
-		foreach ( self::$routes as $routePath => $routeDetails ) {
-			if (self::checkRouteName ( $routeDetails, $name )) {
-				if (\trim ( $routePath, '/' ) == '_default') {
-					return ($absolute)?'/':'';
+		foreach (self::$routes as $routePath => $routeDetails) {
+			if (self::checkRouteName($routeDetails, $name)) {
+				if (\trim($routePath, '/') == '_default') {
+					return ($absolute) ? '/' : '';
 				}
-				if (\count ( $parameters ) > 0) {
-					$routePath = self::_getURL ( $routePath, $parameters );
+				if (\count($parameters) > 0) {
+					$routePath = self::_getURL($routePath, $parameters);
 				}
-				$routePath = \str_replace('//', '/',\preg_replace('~\((.*?)\)~', '', $routePath));
-				return ($absolute)?$routePath:\ltrim ( $routePath, '/' );
+				$routePath = \str_replace('//', '/', \preg_replace('~\((.*?)\)~', '', $routePath));
+				return ($absolute) ? $routePath : \ltrim($routePath, '/');
 			}
 		}
 		return false;
 	}
 
 	public static function getRouteInfoByName($name) {
-		foreach ( self::$routes as $routeDetails ) {
-			if (self::checkRouteName ( $routeDetails, $name )) {
+		foreach (self::$routes as $routeDetails) {
+			if (self::checkRouteName($routeDetails, $name)) {
 				return $routeDetails;
 			}
 		}
@@ -178,7 +179,7 @@ class Router {
 	 * @return boolean|string|array|mixed the generated path (/path/to/route)
 	 */
 	public static function path($name, $parameters = [], $absolute = false) {
-		return self::getRouteByName ( $name, $parameters, $absolute );
+		return self::getRouteByName($name, $parameters, $absolute);
 	}
 
 	/**
@@ -189,42 +190,42 @@ class Router {
 	 * @return string the generated url (http://myApp/path/to/route)
 	 */
 	public static function url($name, $parameters = []): string {
-		return URequest::getUrl ( self::getRouteByName ( $name, $parameters, false ) );
+		return URequest::getUrl(self::getRouteByName($name, $parameters, false));
 	}
 
-	public static function getRouteUrlParts($routeArray, $params, $cached = false, $duration = NULL, $cachedResponse = true) {
-		$realPath = \current ( $params );
-		\array_shift ( $params );
+	public static function getRouteUrlParts($routeArray, $params, $cached = false, $duration = null, $cachedResponse = true) {
+		$realPath = \current($params);
+		\array_shift($params);
 		$routeDetails = $routeArray ['details'];
 		if ($routeDetails ['controller'] instanceof \Closure) {
-			$result = [ 'callback'=>$routeDetails ['controller'] ];
+			$result = ['callback' => $routeDetails ['controller']];
 			$resultStr = 'callable function';
 		} else {
-			$mainParams=null;
-			if(($mainMethodParams=$routeDetails['main.params']??null)!==null){
-				foreach ($mainMethodParams as $index=>$mainMethodParam) {
-					$mainParams[$mainMethodParam]=$params[$index];
+			$mainParams = null;
+			if (($mainMethodParams = $routeDetails['main.params'] ?? null) !== null) {
+				foreach ($mainMethodParams as $index => $mainMethodParam) {
+					$mainParams[$mainMethodParam] = $params[$index];
 				}
-				$params=\array_slice ( $params, $index+1);
+				$params = \array_slice($params, $index + 1);
 			}
-			$result = [ 'controller'=>\str_replace ( "\\\\", "\\", $routeDetails ['controller'] ),'action'=>$routeDetails ['action'],'mainParams'=>$mainParams];
+			$result = ['controller' => \str_replace("\\\\", "\\", $routeDetails ['controller']), 'action' => $routeDetails ['action'], 'mainParams' => $mainParams];
 			$resultStr = \json_encode($result);
 		}
-		if (($paramsOrder = $routeDetails ['parameters']) && (\count ( $paramsOrder ) > 0)) {
-			$result['params']=self::setParamsInOrder ( $paramsOrder, $params );
+		if (($paramsOrder = $routeDetails ['parameters']) && (\count($paramsOrder) > 0)) {
+			$result['params'] = self::setParamsInOrder($paramsOrder, $params);
 		}
-		if (! $cached || ! $cachedResponse) {
-			Logger::info ( 'Router', \sprintf ( 'Route found for %s : %s', $routeArray ['path'], $resultStr ), 'getRouteUrlParts' );
-			if (isset ( $routeDetails ['callback'] )) {
+		if (!$cached || !$cachedResponse) {
+			Logger::info('Router', \sprintf('Route found for %s : %s', $routeArray ['path'], $resultStr), 'getRouteUrlParts');
+			if (isset ($routeDetails ['callback'])) {
 				// Used for maintenance mode
 				if ($routeDetails ['callback'] instanceof \Closure) {
-					return $routeDetails ['callback'] ( $result );
+					return $routeDetails ['callback'] ($result);
 				}
 			}
 			return $result;
 		}
-		Logger::info ( 'Router', sprintf ( 'Route found for %s (from cache) : %s', $realPath, $resultStr ), 'getRouteUrlParts' );
-		return CacheManager::getRouteCache ( $realPath, $result, $duration );
+		Logger::info('Router', sprintf('Route found for %s (from cache) : %s', $realPath, $resultStr), 'getRouteUrlParts');
+		return CacheManager::getRouteCache($realPath, $result, $duration);
 	}
 
 	/**
@@ -234,10 +235,10 @@ class Router {
 	 * @return string The path with slashes
 	 */
 	public static function slashPath($path): string {
-		if (\substr ( $path, 0, 1 ) !== '/') {
+		if (\substr($path, 0, 1) !== '/') {
 			$path = '/' . $path;
 		}
-		if (\substr ( $path, - 1 ) !== '/') {
+		if (\substr($path, -1) !== '/') {
 			$path = $path . '/';
 		}
 		return $path;
@@ -249,7 +250,7 @@ class Router {
 	 * @param string $routePath
 	 */
 	public static function setExpired($routePath): void {
-		CacheManager::setExpired ( $routePath );
+		CacheManager::setExpired($routePath);
 	}
 
 	/**
@@ -260,13 +261,22 @@ class Router {
 	public static function getRoutes() {
 		return self::$routes;
 	}
-	
+
 	/**
 	 * Return router response status code.
 	 * @return int
 	 * @since 2.4.5
 	 */
-	public static function getStatusCode():int{
+	public static function getStatusCode(): int {
 		return self::$statusCode;
+	}
+
+	/**
+	 * Set router response status code.
+	 * @param mixed $statusCode
+	 * @since 2.5.2
+	 */
+	public static function setStatusCode($statusCode): void {
+		self::$statusCode = $statusCode;
 	}
 }
