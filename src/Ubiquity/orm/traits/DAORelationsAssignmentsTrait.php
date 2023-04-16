@@ -87,11 +87,13 @@ trait DAORelationsAssignmentsTrait {
 			}
 			foreach ( $objectsParsers as $objectsConditionParser ) {
 				$objectsConditionParser->compileParts ();
-				$relationObjects = self::_getAll ( self::getDb ( $class ), $class, $objectsConditionParser->getConditionParser (), $includedNext, $useCache );
-				$objects = $objectsConditionParser->getObjects ();
-				if ($accessor = self::getAccessor ( $member, current ( $objects ), $part )) {
-					foreach ( $objects as $object ) {
-						$affectsCallback ( $object, $member, $relationObjects, $fkField, $accessor, $class, $prop );
+				if($objectsConditionParser->getConditionParser()->countParts()>0) {
+					$relationObjects = self::_getAll ( self::getDb ( $class ), $class, $objectsConditionParser->getConditionParser (), $includedNext, $useCache );
+					$objects = $objectsConditionParser->getObjects ();
+					if ($accessor = self::getAccessor ( $member, current ( $objects ), $part )) {
+						foreach ( $objects as $object ) {
+							$affectsCallback ( $object, $member, $relationObjects, $fkField, $accessor, $class, $prop );
+						}
 					}
 				}
 			}
