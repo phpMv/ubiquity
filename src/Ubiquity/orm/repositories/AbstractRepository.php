@@ -12,7 +12,7 @@ use Ubiquity\views\View;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 abstract class AbstractRepository {
@@ -31,6 +31,21 @@ abstract class AbstractRepository {
 	public function all(string $condition = '', $included = false, array $parameters = [ ], bool $useCache = false): array {
 		return DAO::getAll ( $this->getModel (), $condition, $included, $parameters, $useCache );
 	}
+
+    /**
+     * Load all instances with order.
+     *
+     * @param string $field  The field to order by
+     * @param string $order The order (ASC, DESC)
+     * @param string $condition The condition
+     * @param bool|array $included The relations to include
+     * @param array $parameters The parameters for the condition
+     * @param bool $useCache If true, use the cache
+     * @return array
+     */
+    public function orderBy(string $field, string $order='ASC', string $condition = '', $included = false, array $parameters = [ ], bool $useCache = false): array {
+        return DAO::orderBy($this->getModel(), $field, $order, $condition, $included, $parameters, $useCache);
+    }
 
 	/**
 	 * Load one instance by id.
@@ -66,7 +81,7 @@ abstract class AbstractRepository {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function insert(object $instance, $insertMany = false): bool {
+	public function insert(object $instance, bool $insertMany = false): bool {
 		return DAO::insert ( $instance, $insertMany );
 	}
 
@@ -77,7 +92,7 @@ abstract class AbstractRepository {
 	 * @param bool $insertMany
 	 * @return bool
 	 */
-	public function update(object $instance, $insertMany = false): bool {
+	public function update(object $instance, bool $insertMany = false): bool {
 		return DAO::update ( $instance, $insertMany );
 	}
 
@@ -88,7 +103,7 @@ abstract class AbstractRepository {
 	 * @param bool $insertMany
 	 * @return bool|int
 	 */
-	public function save(object $instance, $insertMany = false) {
+	public function save(object $instance, bool $insertMany = false) {
 		return DAO::save ( $instance, $insertMany );
 	}
 

@@ -26,7 +26,7 @@ use Ubiquity\cache\dao\AbstractDAOCache;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.2.6
+ * @version 1.2.7
  *
  */
 class DAO {
@@ -78,7 +78,7 @@ class DAO {
 	 * @param boolean $useCache use the active cache if true
 	 * @return array
 	 */
-	public static function getAllByIds($className, $keyValues = [ ], $included = true, $condition = '', $useCache = NULL) {
+	public static function getAllByIds($className, $keyValues = [ ], $included = true, $condition = '', $useCache = NULL): array {
 		$db = self::getDb ( $className );
 		$key = OrmUtils::getFirstKey ( $className );
 		$countK = \count ( $keyValues );
@@ -96,6 +96,22 @@ class DAO {
 	public static function paginate($className, $page = 1, $rowsPerPage = 20, $condition = null, $included = true) {
 		return self::getAll ( $className, ($condition ?? '1=1') . ' LIMIT ' . $rowsPerPage . ' OFFSET ' . (($page - 1) * $rowsPerPage), $included );
 	}
+
+    /**
+     * Returns an array of $className objects from the database ordered by $field
+     *
+     * @param string $className class name of the model to load
+     * @param string $field field to order by
+     * @param string $order order of the sort (ASC or DESC)
+     * @param string $condition Part following the WHERE of an SQL statement
+     * @param boolean $included if true, loads associate members with associations
+     * @param null $parameters parameters to bind
+     * @param null $useCache use the active cache if true
+     * @return array
+     */
+    public static function orderBy(string $className, string $field, string $order = 'ASC', string $condition = '', bool $included = true, $parameters = null, $useCache = NULL): array {
+        return self::getAll ( $className, ($condition ?? '1=1') . ' ORDER BY ' . $field . ' ' . $order, $included, $parameters, $useCache );
+    }
 
 	public static function getRownum($className, $ids) {
 		$tableName = OrmUtils::getTableName ( $className );
@@ -138,7 +154,7 @@ class DAO {
 	 * @param array|null $parameters The query parameters
 	 * @return boolean
 	 */
-	public static function exists($className, $condition = '', $parameters = null) {
+	public static function exists($className, $condition = '', $parameters = null): bool {
 		$tableName = OrmUtils::getTableName ( $className );
 		if ($condition != '') {
 			$condition = SqlUtils::checkWhere($condition);
@@ -148,16 +164,17 @@ class DAO {
 		return (1 == $db->prepareAndFetchColumn ( "SELECT EXISTS(SELECT 1 FROM {$quote}{$tableName}{$quote}{$condition})", $parameters ));
 	}
 
-	/**
-	 * Returns an instance of $className from the database, from $keyvalues values of the primary key or with a condition
-	 *
-	 * @param String $className complete classname of the model to load
-	 * @param array|string $condition condition or primary key values
-	 * @param boolean|array $included if true, charges associate members with association
-	 * @param array|null $parameters the request parameters
-	 * @param boolean|null $useCache use cache if true
-	 * @return object the instance loaded or null if not found
-	 */
+    /**
+     * Returns an instance of $className from the database, from $keyvalues values of the primary key or with a condition
+     *
+     * @param String $className complete classname of the model to load
+     * @param array|string $condition condition or primary key values
+     * @param boolean|array $included if true, charges associate members with association
+     * @param array|null $parameters the request parameters
+     * @param boolean|null $useCache use cache if true
+     * @return object the instance loaded or null if not found
+     * @throws DAOException
+     */
 	public static function getOne($className, $condition, $included = true, $parameters = null, $useCache = NULL) {
 		$db = self::getDb ( $className );
 		$conditionParser = new ConditionParser ();
@@ -196,20 +213,21 @@ class DAO {
 		return self::$conditionParsers [$className];
 	}
 
-	/**
-	 * Establishes the connection to the database using the past parameters
-	 *
-	 * @param string $offset
-	 * @param string $wrapper
-	 * @param string $dbType
-	 * @param string $dbName
-	 * @param string $serverName
-	 * @param string $port
-	 * @param string $user
-	 * @param string $password
-	 * @param array $options
-	 * @param boolean $cache
-	 */
+    /**
+     * Establishes the connection to the database using the past parameters
+     *
+     * @param string $offset
+     * @param string $wrapper
+     * @param string $dbType
+     * @param string $dbName
+     * @param string $serverName
+     * @param string $port
+     * @param string $user
+     * @param string $password
+     * @param array $options
+     * @param boolean $cache
+     * @throws DAOException|\Ubiquity\exceptions\CacheException
+     */
 	public static function connect($offset, $wrapper, $dbType, $dbName, $serverName = '127.0.0.1', $port = '3306', $user = 'root', $password = '', $options = [ ], $cache = false) {
 		self::$db [$offset] = new Database ( $wrapper, $dbType, $dbName, $serverName, $port, $user, $password, $options, $cache, self::$pool );
 		try {
@@ -241,9 +259,9 @@ class DAO {
 	 *
 	 * @return boolean
 	 */
-	public static function isConnected($offset = 'default') {
+	public static function isConnected($offset = 'default'): bool {
 		$db = self::$db [$offset] ?? false;
-		return $db && ($db instanceof Database) && $db->isConnected ();
+		return ($db instanceof Database) && $db->isConnected ();
 	}
 
 	/**
@@ -251,7 +269,7 @@ class DAO {
 	 *
 	 * @param string $op
 	 */
-	public static function setTransformerOp($op) {
+	public static function setTransformerOp(string $op) {
 		self::$transformerOp = $op;
 	}
 
@@ -298,7 +316,7 @@ class DAO {
 		return self::$db [$offset]??null;
 	}
 
-	public static function getDatabases() {
+	public static function getDatabases(): array {
 		$config = Startup::getConfig ();
 		if (isset ( $config ['database'] )) {
 			if (isset ( $config ['database'] ['dbName'] )) {
