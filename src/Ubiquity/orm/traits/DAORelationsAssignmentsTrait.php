@@ -66,7 +66,7 @@ trait DAORelationsAssignmentsTrait {
 	 * @param string $class
 	 * @param \ReflectionProperty $prop
 	 */
-	private static function affectsOneToManyFromArray($instance, $member, $array = null, $mappedByAccessor = null, $accessor = "", $class = "", $prop = null, $classPropKey = null) {
+	private static function affectsOneToManyFromArray($instance, $member, $array = null, $mappedByAccessor = null, $accessor = '', $class = '', $prop = null, $classPropKey = null) {
 		$ret = [ ];
 		self::_getOneToManyFromArray ( $ret, $array, Reflexion::getPropValue ( $instance, $classPropKey ), $mappedByAccessor, $prop );
 		self::setToMember ( $member, $instance, $ret, $accessor );
@@ -75,15 +75,15 @@ trait DAORelationsAssignmentsTrait {
 	private static function _affectsObjectsFromArray($queries, $included, $affectsCallback, $part, $useCache = NULL) {
 		$includedNext = false;
 		foreach ( $queries as $key => $pendingRelationsRequest ) {
-			list ( $class, $member, $fkField, $fkClass ) = \explode ( "|", $key );
-			if (is_array ( $included )) {
+			list ( $class, $member, $fkField, $fkClass ) = \explode ( '|', $key );
+			if (\is_array ( $included )) {
 				$includedNext = self::_getIncludedNext ( $included, $member );
 			}
 			$objectsParsers = $pendingRelationsRequest->getObjectsConditionParsers ();
 			$prop = null;
 			if ('getOneToMany' === $part) {
 				$prop = OrmUtils::getFirstPropKey ( $fkClass );
-				$fkField = "get" . ucfirst ( $fkField );
+				$fkField = 'get' . \ucfirst ( $fkField );
 			}
 			foreach ( $objectsParsers as $objectsConditionParser ) {
 				$objectsConditionParser->compileParts ();
