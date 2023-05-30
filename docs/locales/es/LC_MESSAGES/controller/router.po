@@ -4,7 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Leonardo D. A. Allende P., 2022
+# Leonardo D. A. Allende P., 2023
 # 
 #, fuzzy
 msgid ""
@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-22 16:47+0100\n"
 "PO-Revision-Date: 2022-12-22 23:47+0000\n"
-"Last-Translator: Leonardo D. A. Allende P., 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/phpmv-1/teams/159300/es/)\n"
+"Last-Translator: Leonardo D. A. Allende P., 2023\n"
+"Language-Team: Spanish (https://app.transifex.com/phpmv-1/teams/159300/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: ../../controller/router.rst:2 855b4a2c815249acaed6468d4b444c72
 msgid "Router"
-msgstr "Router (Rutas)"
+msgstr "Ruteo (Router)"
 
 #: ../../controller/router.rst:4 18732d8a73d14e4685b9a6b3c5c6e8db
 msgid ""
