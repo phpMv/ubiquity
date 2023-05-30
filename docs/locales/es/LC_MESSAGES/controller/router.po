@@ -23,7 +23,7 @@ msgstr ""
 
 #: ../../controller/router.rst:2 855b4a2c815249acaed6468d4b444c72
 msgid "Router"
-msgstr "Ruteo (Router)"
+msgstr "Enrutador (Router)"
 
 #: ../../controller/router.rst:4 18732d8a73d14e4685b9a6b3c5c6e8db
 msgid ""
