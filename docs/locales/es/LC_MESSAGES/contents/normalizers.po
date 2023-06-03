@@ -4,7 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Leonardo D. A. Allende P., 2022
+# Leonardo D. A. Allende P., 2023
 # 
 #, fuzzy
 msgid ""
@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-22 16:47+0100\n"
 "PO-Revision-Date: 2022-12-22 23:34+0000\n"
-"Last-Translator: Leonardo D. A. Allende P., 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/phpmv-1/teams/159300/es/)\n"
+"Last-Translator: Leonardo D. A. Allende P., 2023\n"
+"Language-Team: Spanish (https://app.transifex.com/phpmv-1/teams/159300/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: ../../contents/normalizers.rst:2 4aff9bc76427438182985bac1e8eebcc
 msgid "Normalizers"
-msgstr "Normalizers (Normalizadores)"
+msgstr "Normalizadores (Normalizers)"
 
 #: ../../contents/normalizers.rst:5 53e1185e3be14ba8a5a15daaab0d56fe
 msgid ""
