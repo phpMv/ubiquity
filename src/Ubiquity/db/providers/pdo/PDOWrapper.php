@@ -22,6 +22,8 @@ class PDOWrapper extends AbstractDbWrapper {
 	protected $dbType;
 	protected $driverMetaDatas;
 
+    protected $isOdbc;
+
 	/**
 	 *
 	 * @throws DBException
@@ -39,9 +41,10 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $this->driverMetaDatas;
 	}
 
-	public function __construct($dbType = 'mysql') {
+	public function __construct($dbType = 'mysql', $isOdbc=false) {
 		$this->quote = self::$quotes [$dbType] ?? '';
 		$this->dbType = $dbType;
+        $this->isOdbc= $dbType==='access' || $isOdbc;
 	}
 
 	public function fetchAllColumn($statement, array $values = null, string $column = null) {
@@ -112,10 +115,13 @@ class PDOWrapper extends AbstractDbWrapper {
 	}
 
 	public function getDSN(string $serverName, string $port, string $dbName, string $dbType = 'mysql') {
-		$charsetString = [ 'mysql' => 'charset=UTF8','pgsql' => 'options=\'--client_encoding=UTF8\'','sqlite' => '','odbc'=>'' ] [$dbType] ?? 'charset=UTF8';
-		if ($dbType === 'sqlite' || $dbType === 'odbc') {
-			return "{$dbType}:{$dbName}:{$charsetString}";
+		$charsetString = [ 'mysql' => 'charset=UTF8','pgsql' => 'options=\'--client_encoding=UTF8\'','sqlite' => '','access'=>'' ] [$dbType] ?? 'charset=UTF8';
+		if ($dbType === 'sqlite') {
+			return "sqlite:{$dbName};{$charsetString}";
 		}
+        if($this->isOdbc){
+            return "odbc:{$dbName};{$charsetString}";
+        }
 		return $dbType . ":dbname={$dbName};host={$serverName};{$charsetString};port=" . $port;
 	}
 

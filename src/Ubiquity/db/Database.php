@@ -56,7 +56,7 @@ class Database {
 	 * @param mixed $pool
 	 */
 	public function __construct($dbWrapperClass, $dbType, $dbName, $serverName = "127.0.0.1", $port = "3306", $user = "root", $password = "", $options = [ ], $cache = false, $pool = null) {
-		$this->setDbWrapperClass ( $dbWrapperClass, $dbType );
+		$this->setDbWrapperClass ( $dbWrapperClass, $dbType ,$options['odbc']??false);
 		$this->dbName = $dbName;
 		$this->serverName = $serverName;
 		$this->port = $port;
@@ -79,8 +79,8 @@ class Database {
 		}
 	}
 
-	private function setDbWrapperClass($dbWrapperClass, $dbType) {
-		$this->wrapperObject = new $dbWrapperClass ( $this->dbType = $dbType );
+	private function setDbWrapperClass(string $dbWrapperClass, string $dbType, bool $isOdbc=false) {
+		$this->wrapperObject = new $dbWrapperClass ( $this->dbType = $dbType , $isOdbc);
 	}
 
 	/**
