@@ -9,7 +9,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 trait URequestTesterTrait {
@@ -89,5 +89,14 @@ trait URequestTesterTrait {
 		}
 		return null;
 	}
+
+    /**
+     * Returns true if the request is sent using https
+     *
+     * @return boolean
+     */
+    public static function isHttps(): bool {
+        return isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO']=='https' : ((isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) == 'on' ) );
+    }
 }
 
