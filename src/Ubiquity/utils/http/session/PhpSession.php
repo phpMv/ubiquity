@@ -21,27 +21,28 @@ class PhpSession extends AbstractSession {
 		return $_SESSION [$key] ?? $default;
 	}
 
-	public function start(string $name = null,$params=null) {
-		if (! $this->isStarted ()) {
-			if (isset ( $name ) && $name !== '') {
-				$this->name = $name;
-			}
+    public function start(string $name = null,$params=null) {
+        if (! $this->isStarted ()) {
+            if (isset ( $name ) && $name !== '') {
+                $this->name = $name;
+            }
+            $host = $_SERVER['HTTP_HOST'];
             $defaultParams=[
                 'lifetime' => 0,
                 'path' => '/',
-                'domain' => $_SERVER['HTTP_HOST'],
-                'secure' => false,
+                'domain' =>  ($host=='127.0.0.1' || \strpos($host, '127.0.0.1') === 0) ? '127.0.0.1' : $host ,
+                'secure' => isset($_SERVER['HTTPS']),
                 'httponly' => true,
                 'samesite' => 'Lax'
             ];
             \session_set_cookie_params(\array_merge($defaultParams,$params??[]));
-			if (isset ( $this->name )) {
-				\session_name ( $this->name );
-			}
-			\session_start ();
-			$this->verifyCsrf->start ();
-		}
-	}
+            if (isset ( $this->name )) {
+                \session_name ( $this->name );
+            }
+            \session_start ();
+            $this->verifyCsrf->start ();
+        }
+    }
 
 	public function terminate(): void {
 		if (! $this->isStarted ()) {
