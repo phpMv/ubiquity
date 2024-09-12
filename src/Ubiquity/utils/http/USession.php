@@ -11,7 +11,7 @@ use Ubiquity\controllers\Startup;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.4
+ * @version 1.1.5
  */
 class USession {
 	protected static $sessionInstance;
@@ -279,12 +279,13 @@ class USession {
 	 * Start new or resume existing session
 	 *
 	 * @param string|null $name the name of the session
+     * @param array|null $params
 	 */
-	public static function start($name = null): void {
+	public static function start($name = null, $params=null): void {
 		if (! isset ( self::$sessionInstance )) {
 			self::$sessionInstance = Startup::getSessionInstance ();
 		}
-		self::$sessionInstance->start ( $name );
+		self::$sessionInstance->start ( $name , $params);
 	}
 
 	/**

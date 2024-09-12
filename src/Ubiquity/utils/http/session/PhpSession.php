@@ -8,7 +8,7 @@ namespace Ubiquity\utils\http\session;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 class PhpSession extends AbstractSession {
@@ -21,11 +21,20 @@ class PhpSession extends AbstractSession {
 		return $_SESSION [$key] ?? $default;
 	}
 
-	public function start(string $name = null) {
+	public function start(string $name = null,$params=null) {
 		if (! $this->isStarted ()) {
 			if (isset ( $name ) && $name !== '') {
 				$this->name = $name;
 			}
+            $defaultParams=[
+                'lifetime' => 0,
+                'path' => '/',
+                'domain' => $_SERVER['HTTP_HOST'],
+                'secure' => false,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ];
+            \session_set_cookie_params(\array_merge($defaultParams,$params??[]));
 			if (isset ( $this->name )) {
 				\session_name ( $this->name );
 			}

@@ -12,7 +12,7 @@ use Ubiquity\utils\http\UCookie;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4-beta
+ * @version 1.0.5-beta
  *
  */
 class MultisiteSession extends AbstractSession {
@@ -57,12 +57,12 @@ class MultisiteSession extends AbstractSession {
 		return isset ( $val ) ? $val : $default;
 	}
 
-	public function start(string $name = null, $root = null) {
+	public function start(string $name = null, $params = null) {
 		$this->name = $name;
-		if (! isset ( $root )) {
+		if (! isset ( $params['root'] )) {
 			$this->folder = \ROOT . \DS . CacheManager::getCacheDirectory () . \DS . 'session' . \DS;
 		} else {
-			$this->folder = $root . \DS . 'session' . \DS;
+			$this->folder = $params['root'] . \DS . 'session' . \DS;
 		}
 		if (isset ( $name )) {
 			$this->folder .= $name . \DS;

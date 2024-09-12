@@ -10,7 +10,7 @@ use Ubiquity\utils\http\session\protection\VerifyCsrfToken;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.1.3
+ * @version 1.1.4
  *
  */
 abstract class AbstractSession {
@@ -27,7 +27,7 @@ abstract class AbstractSession {
 
 	abstract public function terminate(): void;
 
-	abstract public function start(string $name = null);
+	abstract public function start(string $name = null,$params=null);
 
 	abstract public function isStarted(): bool;
 
