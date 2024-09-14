@@ -33,7 +33,7 @@ class UCookie {
 	 * @param boolean $httpOnly When true the cookie will be made accessible only through the HTTPprotocol
 	 * @return boolean
 	 */
-	public static function set($name, $value, $duration = 60 * 60 * 24, $path = '/', $secure = false, $httpOnly = false): bool {
+	public static function set($name, $value, $duration = 60 * 60 * 24, $path = '/', $secure = false, $httpOnly = true): bool {
 		if ($value!=null && self::$useTransformer && isset ( self::$transformer )) {
 			$value = self::$transformer->transform ( $value );
 		}
@@ -100,7 +100,7 @@ class UCookie {
 	 * @return boolean
 	 * @since Ubiquity 2.0.11
 	 */
-	public static function setRaw($name, $value, $duration = 60 * 60 * 24, $path = '/', $secure = false, $httpOnly = false): bool {
+	public static function setRaw($name, $value, $duration = 60 * 60 * 24, $path = '/', $secure = false, $httpOnly = true): bool {
 		if ($value!=null && self::$useTransformer && isset ( self::$transformer )) {
 			$value = self::$transformer->transform ( $value );
 		}
