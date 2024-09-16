@@ -26,7 +26,7 @@ class PhpSession extends AbstractSession {
             if (isset ( $name ) && $name !== '') {
                 $this->name = $name;
             }
-            $host = $_SERVER['HTTP_HOST'];
+            $host = $_SERVER['HTTP_HOST']??'127.0.0.1';
             $defaultParams=[
                 'lifetime' => 0,
                 'path' => '/',
