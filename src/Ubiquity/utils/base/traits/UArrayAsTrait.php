@@ -9,7 +9,7 @@ use Ubiquity\utils\base\UString;
  * Ubiquity\utils\base\traits$UArrayAsTrait
  * This class is part of Ubiquity
  * @author jc
- * @version 1.0.7
+ * @version 1.0.8
  *
  */
 trait UArrayAsTrait {
@@ -45,13 +45,18 @@ trait UArrayAsTrait {
 			$tab = \str_repeat ( "\t", $depth );
 			$nl = PHP_EOL;
 		}
+        $isAsso=self::isAssociative($array);
 		foreach ( $array as $k => $v ) {
 			$v=self::parseValue ( $v, $depth + 1, $format );
-			if (\is_string ( $k )) {
+            if($isAsso){
 				if(isset($valueCallback)){
 					$exts []=$valueCallback($k,$v);
 				}else{
-					$exts [] = "\"" . UString::doubleBackSlashes ( $k ) . "\"=>" . $v;
+                    if (\is_string ( $k )) {
+                        $exts [] = "\"" . UString::doubleBackSlashes($k) . "\"=>" . $v;
+                    }else{
+                        $exts [] = "$k=>$v";
+                    }
 				}
 			} else {
 				$exts [] = $v;
