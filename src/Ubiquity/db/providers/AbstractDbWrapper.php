@@ -109,11 +109,11 @@ abstract class AbstractDbWrapper {
 
 	abstract public function getFieldsInfos($tableName);
 
-	abstract public function getForeignKeys($tableName, $pkName, $dbName = null);
+	abstract public function getForeignKeys($tableName, $pkName, ?string $dbName = null);
 
-	abstract public function _optPrepareAndExecute($sql, array $values = null, $one = false);
+	abstract public function _optPrepareAndExecute($sql, ?array $values = null, $one = false);
 
-	public function _optExecuteAndFetch($statement, array $values = null, $one = false) {
+	public function _optExecuteAndFetch($statement, ?array $values = null, $one = false) {
 	}
 
 	abstract public function getRowNum(string $tableName, string $pkName, string $condition): int;
