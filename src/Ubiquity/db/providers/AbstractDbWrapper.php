@@ -17,9 +17,9 @@ abstract class AbstractDbWrapper extends AbstractDbWrapper_ {
 
 	abstract public function query(string $sql);
 
-	abstract public function queryAll(string $sql, int $fetchStyle = null);
+	abstract public function queryAll(string $sql, ?int $fetchStyle = null);
 
-	abstract public function queryColumn(string $sql, int $columnNumber = null);
+	abstract public function queryColumn(string $sql, ?int $columnNumber = null);
 
 	public function _getStatement(string $sql) {
 		return $this->statements [\md5 ( $sql )] ??= $this->getStatement ( $sql );
@@ -39,7 +39,7 @@ abstract class AbstractDbWrapper extends AbstractDbWrapper_ {
 
 	abstract public function prepareStatement(string $sql);
 
-	abstract public function executeStatement($statement, array $values = null);
+	abstract public function executeStatement($statement, ?array $values = null);
 
 	abstract public function statementRowCount($statement);
 
@@ -54,13 +54,13 @@ abstract class AbstractDbWrapper extends AbstractDbWrapper_ {
 	 */
 	abstract public function bindValueFromStatement($statement, $parameter, $value);
 
-	abstract public function fetchColumn($statement, array $values = null, int $columnNumber = null);
+	abstract public function fetchColumn($statement, ?array $values = null, ?int $columnNumber = null);
 
-	abstract public function fetchAll($statement, array $values = null, $mode = null);
+	abstract public function fetchAll($statement, ?array $values = null, $mode = null);
 
-	abstract public function fetchOne($statement, array $values = null, $mode = null);
+	abstract public function fetchOne($statement, ?array $values = null, $mode = null);
 
-	abstract public function fetchAllColumn($statement, array $values = null, string $column = null);
+	abstract public function fetchAllColumn($statement, ?array $values = null, ?string $column = null);
 
 	abstract public function getTablesName();
 
@@ -86,9 +86,9 @@ abstract class AbstractDbWrapper extends AbstractDbWrapper_ {
 
 	abstract public function getForeignKeys($tableName, $pkName, $dbName = null);
 
-	abstract public function _optPrepareAndExecute($sql, array $values = null, $one = false);
+	abstract public function _optPrepareAndExecute($sql, ?array $values = null, ?bool $one = false);
 
-	public function _optExecuteAndFetch($statement, array $values = null, $one = false) {
+	public function _optExecuteAndFetch($statement, ?array $values = null, ?bool $one = false) {
 	}
 
 	abstract public function getRowNum(string $tableName, string $pkName, string $condition): int;

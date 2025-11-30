@@ -44,7 +44,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		$this->dbType = $dbType;
 	}
 
-	public function fetchAllColumn($statement, array $values = null, string $column = null) {
+	public function fetchAllColumn($statement, ?array $values = null, ?string $column = null) {
 		$result = false;
 		if ($statement->execute ( $values )) {
 			$result = $statement->fetchAll ( \PDO::FETCH_COLUMN, $column );
@@ -67,7 +67,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		return false;
 	}
 
-	public function fetchOne($statement, array $values = null, $mode = null) {
+	public function fetchOne($statement, ?array $values = null, $mode = null) {
 		if ($statement->execute ( $values )) {
 			$result = $statement->fetch ( $mode ?? \PDO::FETCH_ASSOC);
 			$statement->closeCursor ();
@@ -85,7 +85,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $this->dbInstance->prepare ( $sql );
 	}
 
-	public function fetchColumn($statement, array $values = null, int $columnNumber = null) {
+	public function fetchColumn($statement, ?array $values = null, ?int $columnNumber = null) {
 		if ($statement->execute ( $values )) {
 			return $statement->fetchColumn ( $columnNumber );
 		}
@@ -127,11 +127,11 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $this->dbInstance->query ( $sql );
 	}
 
-	public function queryAll(string $sql, int $fetchStyle = null) {
+	public function queryAll(string $sql, ?int $fetchStyle = null) {
 		return $this->dbInstance->query ( $sql )->fetchAll ( $fetchStyle );
 	}
 
-	public function queryColumn(string $sql, int $columnNumber = null) {
+	public function queryColumn(string $sql, ?int $columnNumber = null) {
 		return $this->dbInstance->query ( $sql )->fetchColumn ( $columnNumber );
 	}
 
@@ -195,7 +195,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $this->getDriverMetaDatas ()->getFieldsInfos ( $tableName );
 	}
 
-	public function _optPrepareAndExecute($sql, array $values = null, $one = false) {
+	public function _optPrepareAndExecute($sql, ?array $values = null, bool $one = false) {
 		$statement = $this->_getStatement ( $sql );
 		$result = false;
 		if ($statement->execute ( $values )) {
@@ -209,7 +209,7 @@ class PDOWrapper extends AbstractDbWrapper {
 		return $result;
 	}
 
-	public function _optExecuteAndFetch($statement, array $values = null, $one = false) {
+	public function _optExecuteAndFetch($statement, ?array $values = null, bool $one = false) {
 		if ($statement->execute ( $values )) {
 			if ($one) {
 				$row = $statement->fetch ( \PDO::FETCH_ASSOC );
