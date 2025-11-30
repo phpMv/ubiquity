@@ -233,7 +233,7 @@ class Database {
 	 * @param array $config Ubiquity config file content
 	 * @return \Ubiquity\db\Database|NULL
 	 */
-	public static function start(string $offset = null, ?array $config = null): ?self {
+	public static function start(?string $offset = null, ?array $config = null): ?self {
 		$config ??= Startup::$config;
 		$db = $offset ? ($config ['database'] [$offset] ?? ($config ['database'] ?? [ ])) : ($config ['database'] ?? [ ]);
 		if ($db ['dbName'] !== '') {

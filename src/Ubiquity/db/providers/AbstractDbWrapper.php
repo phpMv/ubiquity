@@ -62,7 +62,7 @@ abstract class AbstractDbWrapper {
 
 	abstract public function prepareStatement(string $sql);
 
-	abstract public function executeStatement($statement, array $values = null);
+	abstract public function executeStatement($statement, ?array $values = null);
 
 	abstract public function statementRowCount($statement);
 
@@ -77,13 +77,13 @@ abstract class AbstractDbWrapper {
 	 */
 	abstract public function bindValueFromStatement($statement, $parameter, $value);
 
-	abstract public function fetchColumn($statement, array $values = null, int $columnNumber = null);
+	abstract public function fetchColumn($statement, ?array $values = null, ?int $columnNumber = null);
 
-	abstract public function fetchAll($statement, array $values = null, $mode = null);
+	abstract public function fetchAll($statement, ?array $values = null, $mode = null);
 
-	abstract public function fetchOne($statement, array $values = null, $mode = null);
+	abstract public function fetchOne($statement, ?array $values = null, $mode = null);
 
-	abstract public function fetchAllColumn($statement, array $values = null, string $column = null);
+	abstract public function fetchAllColumn($statement, ?array $values = null, ?string $column = null);
 
 	abstract public function getTablesName();
 
