@@ -34,9 +34,9 @@ abstract class AbstractDbWrapper {
 
 	abstract public function query(string $sql);
 
-	abstract public function queryAll(string $sql, int $fetchStyle = null);
+	abstract public function queryAll(string $sql, ?int $fetchStyle = null);
 
-	abstract public function queryColumn(string $sql, int $columnNumber = null);
+	abstract public function queryColumn(string $sql, ?int $columnNumber = null);
 
 	abstract public static function getAvailableDrivers();
 
