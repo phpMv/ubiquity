@@ -30,7 +30,6 @@ class Reflexion {
 
 	public static function getMemberValue($instance, $member) {
 		$prop = self::getProperty($instance, $member);
-		$prop->setAccessible(true);
 		return $prop->getValue($instance);
 	}
 
@@ -41,7 +40,6 @@ class Reflexion {
 	public static function setMemberValue($instance, $member, $value): bool {
 		$prop = self::getProperty($instance, $member);
 		if ($prop) {
-			$prop->setAccessible(true);
 			$prop->setValue($instance, $value);
 			return true;
 		}
@@ -62,7 +60,6 @@ class Reflexion {
 			$props = self::getProperties($instance);
 		}
 		foreach ($props as $prop) {
-			$prop->setAccessible(true);
 			$v = $prop->getValue($instance);
 			if (\array_search($prop->getName(), $modelMetas ['#notSerializable']) === false && OrmUtils::isNotNullOrNullAccepted($v, $className, $prop->getName())) {
 				$name = $modelMetas ['#fieldNames'] [$prop->getName()] ?? $prop->getName();

@@ -25,7 +25,6 @@ trait BaseAnnotationTrait {
 		if (\is_null ( $props ))
 			$props = $this->getProperties ();
 			foreach ( $props as $prop ) {
-				$prop->setAccessible ( true );
 				$name=$prop->getName();
 				$v = $prop->getValue ( $this );
 				if ($v !== null && $v !== '' && isset ( $v )) {

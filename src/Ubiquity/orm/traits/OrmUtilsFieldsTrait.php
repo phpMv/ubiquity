@@ -84,7 +84,6 @@ trait OrmUtilsFieldsTrait {
 			return self::$propFirstKeys [$class];
 		}
 		$prop = new \ReflectionProperty ( $class, \array_key_first ( self::getAnnotationInfo ( $class, '#primaryKeys' ) ) );
-		$prop->setAccessible ( true );
 		return self::$propFirstKeys [$class] = $prop;
 	}
 
@@ -96,7 +95,6 @@ trait OrmUtilsFieldsTrait {
 		$pkMembers = self::getAnnotationInfo ( $class, '#primaryKeys' );
 		foreach ( $pkMembers as $member => $_field ) {
 			$prop = new \ReflectionProperty ( $class, $member );
-			$prop->setAccessible ( true );
 			$result [] = $prop;
 		}
 		return self::$propKeys [$class] = $result;
