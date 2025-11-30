@@ -19,7 +19,7 @@ class MessagesDomain {
 	protected $locale;
 	protected $domain;
 
-	public function __construct($locale=null, LoaderInterface $loader=null, $domain=null) {
+	public function __construct(?string $locale=null, ?LoaderInterface $loader=null, ?string $domain=null) {
 		$this->locale = $locale;
 		$this->loader = $loader;
 		$this->domain = $domain;
