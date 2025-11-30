@@ -12,7 +12,7 @@ use Ubiquity\utils\http\UCookie;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.5-beta
+ * @version 1.0.6-beta
  *
  */
 class MultisiteSession extends AbstractSession {
@@ -20,11 +20,11 @@ class MultisiteSession extends AbstractSession {
 	private string $id;
 	const SESSION_ID = 'multi_session_id';
 
-	private function getKey($key): string {
+	private function getKey(string $key): string {
 		return \md5 ( $key );
 	}
 
-	private function getFilename($key): string {
+	private function getFilename(string $key): string {
 		return $this->folder . $this->id . \DS . $this->getKey ( $key ) . '.cache.ser';
 	}
 
@@ -32,7 +32,7 @@ class MultisiteSession extends AbstractSession {
 		return \bin2hex ( \random_bytes ( 32 ) );
 	}
 
-	public function set(string $key, $value) {
+	public function set(string $key, mixed $value) {
 		$val = \serialize ( $value );
 		$tmp = "/tmp/$key." . \uniqid ( '', true ) . '.tmp';
 		\file_put_contents ( $tmp, $val, LOCK_EX );
@@ -48,7 +48,7 @@ class MultisiteSession extends AbstractSession {
 		return $result;
 	}
 
-	public function get(string $key, $default = null) {
+	public function get(string $key, mixed $default = null) {
 		$filename = $this->getFilename ( $key );
 		if (\file_exists ( $filename )) {
 			$f = \file_get_contents ( $filename );
@@ -57,7 +57,8 @@ class MultisiteSession extends AbstractSession {
 		return isset ( $val ) ? $val : $default;
 	}
 
-	public function start(string $name = null, $params = null) {
+	public function start(?string $name = null, mixed $params = null): void
+    {
 		$this->name = $name;
 		if (! isset ( $params['root'] )) {
 			$this->folder = \ROOT . \DS . CacheManager::getCacheDirectory () . \DS . 'session' . \DS;
@@ -78,7 +79,7 @@ class MultisiteSession extends AbstractSession {
 		UFileSystem::safeMkdir ( $this->folder . $this->id . \DS );
 	}
 
-	public function exists($key): bool {
+	public function exists(string $key): bool {
 		return file_exists ( $this->getFilename ( $key ) );
 	}
 
@@ -91,7 +92,7 @@ class MultisiteSession extends AbstractSession {
 		return isset ( $this->id );
 	}
 
-	public function delete($key) {
+	public function delete(string $key): void{
 		\unlink ( $this->getFilename ( $key ) );
 	}
 	

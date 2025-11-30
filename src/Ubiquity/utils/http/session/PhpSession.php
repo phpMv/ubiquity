@@ -8,20 +8,20 @@ namespace Ubiquity\utils\http\session;
  * This class is part of Ubiquity
  *
  * @author jcheron <myaddressmail@gmail.com>
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 class PhpSession extends AbstractSession {
 
-	public function set(string $key, $value) {
+	public function set(string $key, mixed $value) {
 		return $_SESSION [$key] = $value;
 	}
 
-	public function get(string $key, $default = null) {
+	public function get(string $key, mixed $default = null) {
 		return $_SESSION [$key] ?? $default;
 	}
 
-    public function start(string $name = null,$params=null) {
+    public function start(?string $name = null, mixed $params=null): void {
         if (! $this->isStarted ()) {
             if (isset ( $name ) && $name !== '') {
                 $this->name = $name;
@@ -70,7 +70,7 @@ class PhpSession extends AbstractSession {
 		return $_SESSION;
 	}
 
-	public function delete(string $key) {
+	public function delete(string $key): void {
 		unset ( $_SESSION [$key] );
 	}
 	

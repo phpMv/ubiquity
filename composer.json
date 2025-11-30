@@ -9,7 +9,7 @@
 		"orm"
 	],
 	"require" : {
-		"php" : ">=7.4"
+		"php" : ">=8.5"
 	},
 	"license" : "Apache-2.0",
 	"authors" : [{

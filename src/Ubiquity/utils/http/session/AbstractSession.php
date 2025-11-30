@@ -21,13 +21,13 @@ abstract class AbstractSession {
 		$this->verifyCsrf = ($verifyCsrf ??= new VerifyCsrfToken ( $this ));
 	}
 
-	abstract public function get(string $key, $default = null);
+	abstract public function get(string $key, mixed $default = null);
 
-	abstract public function set(string $key, $value);
+	abstract public function set(string $key, mixed $value);
 
 	abstract public function terminate(): void;
 
-	abstract public function start(string $name = null,$params=null);
+	abstract public function start(?string $name = null, mixed $params=null):void;
 
 	abstract public function isStarted(): bool;
 
@@ -35,7 +35,7 @@ abstract class AbstractSession {
 
 	abstract public function getAll(): array;
 
-	abstract public function delete(string $key);
+	abstract public function delete(string $key):void;
 
 	abstract public function visitorCount(): int;
 	
